@@ -330,6 +330,7 @@ object edtExpedition: TedtExpedition
           ShowHint = True
           Spacing = 0
           TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eStartDateButtonClick
           OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
@@ -351,6 +352,7 @@ object edtExpedition: TedtExpedition
           ShowHint = True
           Spacing = 0
           TabOrder = 1
+          TextHint = 'DD/MM/YYYY'
           OnButtonClick = eEndDateButtonClick
           OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown

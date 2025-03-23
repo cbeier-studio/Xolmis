@@ -1199,7 +1199,6 @@ object edtPerson: TedtPerson
             Flat = True
             Images = iButtons
             ImageIndex = 1
-            Visible = False
             ShowHint = True
             ParentShowHint = False
             OnClick = sbRemoveImageClick

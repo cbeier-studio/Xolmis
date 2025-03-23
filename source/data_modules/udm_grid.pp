@@ -3613,14 +3613,11 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  if Sender.AsString = 'P' then
-    aText := rsNestLost
-  else
-  if Sender.AsString = 'S' then
-    aText := rsNestSuccess
-  else
-  if Sender.AsString = 'U' then
-    aText := rsNestUnknown;
+  case Sender.AsString of
+    'P': aText := rsNestLost;
+    'S': aText := rsNestSuccess;
+    'U': aText := rsNestUnknown;
+  end;
 
   DisplayText := True;
 end;

@@ -45,7 +45,7 @@ uses
   function EditMolt(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditFeather(aDataSet: TDataSet; aIndividual: Integer = 0; aCapture: Integer = 0;
     aSighting: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditNest(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditNest(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNestOwner(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNestRevision(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditEgg(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
@@ -1475,9 +1475,10 @@ begin
     aDataSet.Close;
 end;
 
-function EditNest(aDataSet: TDataSet; IsNew: Boolean): Boolean;
+function EditNest(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TNest;
+  FOwner: TNestOwner;
   lstDiff: TStrings;
   D: String;
 begin
@@ -1491,6 +1492,10 @@ begin
     if IsNew then
     begin
       FRecord := TNest.Create();
+      if aIndividual > 0 then
+      begin
+        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+      end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
@@ -1526,6 +1531,18 @@ begin
         end
         else
           WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        { Is linked to an individual }
+        if aIndividual > 0 then
+        try
+          FOwner := TNestOwner.Create();
+          FOwner.IndividualId := aIndividual;
+          FOwner.NestId := Nest.Id;
+          FOwner.Role := nrlUnknown;
+          FOwner.Insert;
+        finally
+          FreeAndNil(FOwner);
+        end;
 
         DMM.sqlTrans.CommitRetaining;
       except

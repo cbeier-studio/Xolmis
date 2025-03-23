@@ -9051,6 +9051,11 @@ msgctxt "tedtexpedition.eenddate.buttonhint"
 msgid "Open calendar"
 msgstr "Abrir calendário"
 
+#: tedtexpedition.eenddate.texthint
+msgctxt "tedtexpedition.eenddate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
 #: tedtexpedition.elocality.buttonhint
 msgctxt "tedtexpedition.elocality.buttonhint"
 msgid "Find locality"
@@ -9065,6 +9070,11 @@ msgstr "Procurar projeto"
 msgctxt "tedtexpedition.estartdate.buttonhint"
 msgid "Open calendar"
 msgstr "Abrir calendário"
+
+#: tedtexpedition.estartdate.texthint
+msgctxt "tedtexpedition.estartdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtexpedition.lbldescription.caption
 msgctxt "tedtexpedition.lbldescription.caption"

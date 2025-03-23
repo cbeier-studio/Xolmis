@@ -1364,7 +1364,7 @@ end;
 
 procedure TfrmMain.pmaNewNestClick(Sender: TObject);
 begin
-  EditNest(DMG.qNests, True);
+  EditNest(DMG.qNests, 0, True);
 end;
 
 procedure TfrmMain.pmaNewNetStationClick(Sender: TObject);

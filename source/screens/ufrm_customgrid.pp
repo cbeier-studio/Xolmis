@@ -6815,7 +6815,7 @@ end;
 
 procedure TfrmCustomGrid.pmcNewNestClick(Sender: TObject);
 begin
-  EditNest(DMI.qNests, True);
+  EditNest(DMI.qNests, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
 
   UpdateChildButtons(DMI.qNests);
 end;
@@ -8711,7 +8711,7 @@ begin
             0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, True);
             1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger, 0, 0, True);
             2: EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
-            //3: EditNest(DMI.qNests, True);
+            3: EditNest(DMI.qNests, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
             4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName('individual_id').AsInteger, True);
           end;
         //tbCaptures: ;
@@ -9110,7 +9110,7 @@ begin
           0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           2: EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName('individual_id').AsInteger);
-          3: EditNest(DMI.qNests, False);
+          3: EditNest(DMI.qNests, dsLink.DataSet.FieldByName('individual_id').AsInteger);
           4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName('individual_id').AsInteger);
         end;
       //tbCaptures: ;
@@ -9269,7 +9269,7 @@ begin
       tbCaptures:      needsRefresh := EditCapture(dsLink.DataSet, 0, 0, True);
       tbMolts:         needsRefresh := EditMolt(dsLink.DataSet, 0, True);
       tbFeathers:      needsRefresh := EditFeather(dsLink.DataSet, 0, 0, 0, True);
-      tbNests:         needsRefresh := EditNest(dsLink.DataSet, True);
+      tbNests:         needsRefresh := EditNest(dsLink.DataSet, 0, True);
       tbNestOwners:    needsRefresh := EditNestOwner(dsLink.DataSet, 0, True);
       tbNestRevisions: needsRefresh := EditNestRevision(dsLink.DataSet, 0, True);
       tbEggs:          needsRefresh := EditEgg(dsLink.DataSet, 0, True);

@@ -582,11 +582,17 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNest)]);
+    if FNest.TaxonId > 0 then
+    begin
+      FTaxonId := FNest.TaxonId;
+      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    end;
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionNest)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 
   sBox.VertScrollBar.Position := 0;

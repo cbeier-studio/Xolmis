@@ -154,7 +154,7 @@ type
     procedure sbRemoveImageClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
-    FIsNew: Boolean;
+    FIsNew, FPictureChanged: Boolean;
     FPerson: TPerson;
     FMunicipalityId, FStateId, FCountryId, FInstitutionId: Integer;
     procedure SetPerson(Value: TPerson);
@@ -399,17 +399,21 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  FPictureChanged := False;
+
   cbTreatment.Items.CommaText := rsTreatmentList;
   cbGender.Items.CommaText := rsGenderList;
 
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPerson)]);
+    pProfileImage.Visible := False;
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPerson)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
@@ -475,14 +479,20 @@ procedure TedtPerson.sbAddImageClick(Sender: TObject);
 begin
   if DMM.OpenImgs.Execute then
   begin
+    dsLink.DataSet.Edit;
     imgProfile.Picture.LoadFromFile(DMM.OpenImgs.FileName);
+    FPictureChanged := True;
   end;
 end;
 
 procedure TedtPerson.sbRemoveImageClick(Sender: TObject);
 begin
   if MessageDlg(rsTitleProfilePicture, rsDeleteProfilePicture, mtConfirmation, mbYesNo, 0) = mrYes then
+  begin
+    dsLink.DataSet.Edit;
     imgProfile.Picture.Clear;
+    FPictureChanged := True;
+  end;
 end;
 
 procedure TedtPerson.sbSaveClick(Sender: TObject);
@@ -492,6 +502,9 @@ begin
     Exit;
 
   SetRecord;
+
+  if FPictureChanged then
+    dsLink.DataSet.Post;
 
   ModalResult := mrOk;
 end;

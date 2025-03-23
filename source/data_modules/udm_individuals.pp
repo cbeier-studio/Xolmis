@@ -543,6 +543,15 @@ type
     procedure qNestsAfterPost(DataSet: TDataSet);
     procedure qNestsBeforeEdit(DataSet: TDataSet);
     procedure qNestsBeforePost(DataSet: TDataSet);
+    procedure qNestsnest_fateGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qNestsnest_fateSetText(Sender: TField; const aText: string);
+    procedure qNestsnest_shapeGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qNestsnest_shapeSetText(Sender: TField; const aText: string);
+    procedure qNestssupport_typeGetText(Sender: TField;
+      var aText: string; DisplayText: Boolean);
+    procedure qNestssupport_typeSetText(Sender: TField; const aText: string);
     procedure qSightingsAfterCancel(DataSet: TDataSet);
     procedure qSightingsAfterInsert(DataSet: TDataSet);
     procedure qSightingsAfterPost(DataSet: TDataSet);
@@ -1347,6 +1356,148 @@ begin
 
   if not DataSet.FieldByName('locality_id').IsNull then
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
+procedure TDMI.qNestsnest_fateGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'P': aText := rsNestLost;
+    'S': aText := rsNestSuccess;
+    'U': aText := rsNestUnknown;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qNestsnest_fateSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsNestLost then
+    Sender.AsString := 'P'
+  else
+  if aText = rsNestSuccess then
+    Sender.AsString := 'S'
+  else
+  if aText = rsNestUnknown then
+    Sender.AsString := 'U';
+end;
+
+procedure TDMI.qNestsnest_shapeGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'SC': aText := rsNestShapeScrape;
+    'CP': aText := rsNestShapeCup;
+    'SP': aText := rsNestShapeSphere;
+    'PD': aText := rsNestShapePendent;
+    'PL': aText := rsNestShapePlatform;
+    'MN': aText := rsNestShapeMound;
+    'BR': aText := rsNestShapeBurrow;
+    'CV': aText := rsNestShapeCavity;
+    'PT': aText := rsNestShapePlate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qNestsnest_shapeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsNestShapeScrape then
+    Sender.AsString := 'SC'
+  else
+  if aText = rsNestShapeCup then
+    Sender.AsString := 'CP'
+  else
+  if aText = rsNestShapeSphere then
+    Sender.AsString := 'SP'
+  else
+  if aText = rsNestShapePendent then
+    Sender.AsString := 'PD'
+  else
+  if aText = rsNestShapePlatform then
+    Sender.AsString := 'PL'
+  else
+  if aText = rsNestShapeMound then
+    Sender.AsString := 'MN'
+  else
+  if aText = rsNestShapeBurrow then
+    Sender.AsString := 'BR'
+  else
+  if aText = rsNestShapeCavity then
+    Sender.AsString := 'CV'
+  else
+  if aText = rsNestShapePlate then
+    Sender.AsString := 'PT';
+end;
+
+procedure TDMI.qNestssupport_typeGetText(Sender: TField;
+  var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'G': aText := rsSupportGround;
+    'H': aText := rsSupportHerbBush;
+    'F': aText := rsSupportBranchFork;
+    'L': aText := rsSupportLeaves;
+    'D': aText := rsSupportLedge;
+    'C': aText := rsSupportRockCliff;
+    'R': aText := rsSupportRavine;
+    'B': aText := rsSupportNestBox;
+    'A': aText := rsSupportAnthropic;
+    'O': aText := rsSupportOther;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qNestssupport_typeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsSupportGround then
+    Sender.AsString := 'G'
+  else
+  if aText = rsSupportHerbBush then
+    Sender.AsString := 'H'
+  else
+  if aText = rsSupportBranchFork then
+    Sender.AsString := 'F'
+  else
+  if aText = rsSupportLeaves then
+    Sender.AsString := 'L'
+  else
+  if aText = rsSupportLedge then
+    Sender.AsString := 'D'
+  else
+  if aText = rsSupportRockCliff then
+    Sender.AsString := 'C'
+  else
+  if aText = rsSupportRavine then
+    Sender.AsString := 'R'
+  else
+  if aText = rsSupportNestBox then
+    Sender.AsString := 'B'
+  else
+  if aText = rsSupportAnthropic then
+    Sender.AsString := 'A'
+  else
+  if aText = rsSupportOther then
+    Sender.AsString := 'O';
 end;
 
 procedure TDMI.qSightingsAfterCancel(DataSet: TDataSet);
