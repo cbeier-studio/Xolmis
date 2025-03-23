@@ -5,7 +5,7 @@ unit ufrm_taxa;
 interface
 
 uses
-  BCPanel, Buttons, Classes, ComCtrls, DB, SQLDB, DBCtrls, DBGrids,
+  BCPanel, Buttons, Classes, ComCtrls, DB, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf,
   ExtCtrls, Menus, StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr,
   Controls, Graphics, Dialogs, cbs_datatypes, Grids, Types;
 
@@ -106,7 +106,14 @@ type
     procedure lblLinkNestsClick(Sender: TObject);
     procedure lblLinkSightingsClick(Sender: TObject);
     procedure lblLinkSpecimensClick(Sender: TObject);
+    procedure sbBirdsOfTheWorldClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
+    procedure sbEbirdClick(Sender: TObject);
+    procedure sbGBIFClick(Sender: TObject);
+    procedure sbGoogleImagesClick(Sender: TObject);
+    procedure sbGoogleScholarClick(Sender: TObject);
+    procedure sbGoogleSearchClick(Sender: TObject);
+    procedure sbIUCNRedListClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
     procedure TimerDataTimer(Sender: TObject);
@@ -518,11 +525,67 @@ begin
   frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
 end;
 
+procedure TfrmTaxa.sbBirdsOfTheWorldClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
+  OpenUrl('https://birdsoftheworld.org/bow/species/' + FUrlSearch);
+end;
+
 procedure TfrmTaxa.sbClearSearchClick(Sender: TObject);
 begin
   eSearch.Clear;
   if eSearch.CanSetFocus then
     eSearch.SetFocus;
+end;
+
+procedure TfrmTaxa.sbEbirdClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
+  OpenUrl('https://ebird.org/species/' + FUrlSearch);
+end;
+
+procedure TfrmTaxa.sbGBIFClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  OpenUrl('https://www.gbif.org/search?q=' + FUrlSearch);
+end;
+
+procedure TfrmTaxa.sbGoogleImagesClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  OpenUrl('https://www.google.com/search?tbm=isch&q="' + FUrlSearch + '"');
+end;
+
+procedure TfrmTaxa.sbGoogleScholarClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  OpenUrl('https://scholar.google.com/scholar?q="' + FUrlSearch + '"');
+end;
+
+procedure TfrmTaxa.sbGoogleSearchClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  OpenUrl('https://www.google.com/search?q="' + FUrlSearch + '"');
+end;
+
+procedure TfrmTaxa.sbIUCNRedListClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  OpenUrl('https://www.iucnredlist.org/search?query=' + FUrlSearch);
 end;
 
 procedure TfrmTaxa.sbPrintClick(Sender: TObject);
@@ -679,6 +742,21 @@ begin
     tvHierarchy.FullExpand;
   end;
 
+  if dsLink.DataSet.RecordCount > 0 then
+  begin
+    DMG.qSynonymTaxa.ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+    DMG.qChildTaxa.ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+    dsSynonyms.DataSet.Refresh;
+    dsChilds.DataSet.Refresh;
+  end
+  else
+  begin
+    DMG.qSynonymTaxa.ParamByName('taxon_id').AsInteger := 0;
+    DMG.qChildTaxa.ParamByName('taxon_id').AsInteger := 0;
+    dsSynonyms.DataSet.Refresh;
+    dsChilds.DataSet.Refresh;
+  end;
+
   GetSightingsCount;
   GetIndividualsCount;
   GetCapturesCount;
@@ -703,12 +781,20 @@ end;
 
 procedure TfrmTaxa.txtValidNameMouseEnter(Sender: TObject);
 begin
-  TDBText(Sender).Font.Style := txtValidName.Font.Style + [fsUnderline];
+  if Sender is TLabel then
+    TLabel(Sender).Font.Style := TLabel(Sender).Font.Style + [fsUnderline]
+  else
+  if Sender is TDBText then
+    TDBText(Sender).Font.Style := TDBText(Sender).Font.Style + [fsUnderline];
 end;
 
 procedure TfrmTaxa.txtValidNameMouseLeave(Sender: TObject);
 begin
-  TDBText(Sender).Font.Style := txtValidName.Font.Style - [fsUnderline];
+  if Sender is TLabel then
+    TLabel(Sender).Font.Style := TLabel(Sender).Font.Style - [fsUnderline]
+  else
+  if Sender is TDBText then
+    TDBText(Sender).Font.Style := TDBText(Sender).Font.Style - [fsUnderline];
 end;
 
 end.

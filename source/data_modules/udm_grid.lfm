@@ -16939,7 +16939,7 @@ object DMG: TDMG
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT valid_id, full_name, formatted_name FROM zoo_taxa'
-      'WHERE (zoo_taxa.valid_id = :taxon_id) AND (active_status = 1)'
+      'WHERE (valid_id = :taxon_id) AND (active_status = 1)'
       'ORDER BY full_name ASC'
       ''
     )
@@ -16950,7 +16950,6 @@ object DMG: TDMG
         ParamType = ptInput
       end>
     Macros = <>
-    DataSource = frmTaxa.dsLink
     Left = 710
     Top = 143
     object qSynonymTaxavalid_id: TLargeintField
@@ -17005,7 +17004,7 @@ object DMG: TDMG
     SQL.Strings = (
       'SELECT full_name, formatted_name'
       'FROM zoo_taxa'
-      'WHERE (zoo_taxa.parent_taxon_id = :taxon_id) AND (active_status = 1)'
+      'WHERE (parent_taxon_id = :taxon_id) AND (active_status = 1)'
       'ORDER BY full_name ASC'
       ''
     )
@@ -17016,7 +17015,6 @@ object DMG: TDMG
         ParamType = ptInput
       end>
     Macros = <>
-    DataSource = frmTaxa.dsLink
     Left = 710
     Top = 198
     object qChildTaxafull_name: TStringField
