@@ -29,6 +29,8 @@ uses
   function TrimList(aList: TStrings): String; overload;
   function TrimList(aList: String): String; overload;
 
+  function RemoveDiacritics(const aText: String): String;
+
   // Boolean treatment
   function TextToBool(aValue, aTrue, aFalse: String): Boolean;
   function BoolToText(const aValue: Boolean; aTrue, aFalse: String): String;
@@ -138,6 +140,30 @@ begin
   S := StringReplace(S, LineEnding, ' ', [rfReplaceAll]);
 
   Result := S;
+end;
+
+function RemoveDiacritics(const aText: String): String;
+const
+  AccentedChars: array[1..30] of string = (
+    'á', 'à', 'â', 'ã', 'Á', 'À', 'Â', 'Ã',
+    'é', 'ê', 'ë', 'É', 'Ê', 'Ë',
+    'í', 'Í',
+    'ó', 'ô', 'õ', 'ö', 'Ó', 'Ô', 'Õ', 'Ö',
+    'ú', 'ü', 'Ú', 'Ü',
+    'ç', 'Ç');
+  PlainChars: array[1..30] of string = (
+    'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A',
+    'e', 'e', 'e', 'E', 'E', 'E',
+    'i', 'I',
+    'o', 'o', 'o', 'o', 'O', 'O', 'O', 'O',
+    'u', 'u', 'U', 'U',
+    'c', 'C');
+var
+  I: Integer;
+begin
+  Result := aText;
+  for I := Low(AccentedChars) to High(AccentedChars) do
+    Result := StringReplace(Result, AccentedChars[I], PlainChars[I], [rfReplaceAll, rfIgnoreCase]);
 end;
 
 { --------------------------------------------------------- }

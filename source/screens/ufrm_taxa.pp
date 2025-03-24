@@ -115,6 +115,7 @@ type
     procedure sbGoogleSearchClick(Sender: TObject);
     procedure sbIUCNRedListClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
+    procedure sbWikiavesClick(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
     procedure TimerDataTimer(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
@@ -144,7 +145,8 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, ufrm_main, udm_main, udm_grid,
+  cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, cbs_conversions,
+  ufrm_main, udm_main, udm_grid,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -592,6 +594,17 @@ procedure TfrmTaxa.sbPrintClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmPrint.Popup(X, Y);
+end;
+
+procedure TfrmTaxa.sbWikiavesClick(Sender: TObject);
+var
+  FUrlSearch: String;
+begin
+  if GetRankType(dsLink.DataSet.FieldByName('rank_id').AsInteger) = trSpecies then
+    FUrlSearch := HTTPEncode(RemoveDiacritics(dsLink.DataSet.FieldByName('portuguese_name').AsString))
+  else
+    FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  OpenUrl('https://www.wikiaves.com.br/wiki/' + FUrlSearch);
 end;
 
 function TfrmTaxa.Search(AValue: String): Boolean;

@@ -415,10 +415,10 @@ object frmTaxa: TfrmTaxa
       Images = DMM.iWeb
       ImageIndex = 4
       ImageWidth = 24
-      Visible = False
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbWikiavesClick
     end
     object sbIUCNRedList: TSpeedButton
       Tag = 8
