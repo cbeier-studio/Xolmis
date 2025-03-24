@@ -7108,6 +7108,25 @@ msgctxt "tdlgconnect.sbok.caption"
 msgid "Connect"
 msgstr "Conectar"
 
+#: tdlgdiagnostic.caption
+msgctxt "tdlgdiagnostic.caption"
+msgid "Diagnostic"
+msgstr "Diagnóstico"
+
+#: tdlgdiagnostic.lblappname.caption
+msgid "Xolmis Diagnostic"
+msgstr "Diagnóstico do Xolmis"
+
+#: tdlgdiagnostic.sbclose.caption
+msgctxt "tdlgdiagnostic.sbclose.caption"
+msgid "Close"
+msgstr "Fechar"
+
+#: tdlgdiagnostic.sbcopy.caption
+msgctxt "tdlgdiagnostic.sbcopy.caption"
+msgid "Copy"
+msgstr "Copiar"
+
 #: tdlgexport.btnoptions.caption
 msgctxt "tdlgexport.btnoptions.caption"
 msgid "Options"
@@ -14693,6 +14712,7 @@ msgid "Database integrity"
 msgstr "Integridade do banco de dados"
 
 #: tfrmmaintenance.titlediagnostic.caption
+msgctxt "tfrmmaintenance.titlediagnostic.caption"
 msgid "Diagnostic"
 msgstr "Diagnóstico"
 

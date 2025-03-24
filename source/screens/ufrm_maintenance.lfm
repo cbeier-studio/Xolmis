@@ -11,7 +11,6 @@ object frmMaintenance: TfrmMaintenance
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
@@ -984,10 +983,10 @@ object frmMaintenance: TfrmMaintenance
         Width = 25
         Anchors = [akTop, akRight]
         DisabledImageIndex = 10
-        Enabled = False
         Flat = True
         Images = iIcons
         ImageIndex = 9
+        OnClick = sbDiagnosticClick
       end
     end
     object pRecreateImageThumbnails: TBCPanel

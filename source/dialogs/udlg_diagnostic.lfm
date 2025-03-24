@@ -1,0 +1,164 @@
+object dlgDiagnostic: TdlgDiagnostic
+  Left = 420
+  Height = 499
+  Top = 250
+  Width = 592
+  AutoSize = True
+  BorderIcons = [biSystemMenu]
+  Caption = 'Diagnostic'
+  ClientHeight = 499
+  ClientWidth = 592
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  OnShow = FormShow
+  object pTitle: TPanel
+    Left = 0
+    Height = 69
+    Top = 0
+    Width = 592
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 16
+    ChildSizing.VerticalSpacing = 4
+    ClientHeight = 69
+    ClientWidth = 592
+    Color = 16448250
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object lblAppName: TLabel
+      AnchorSideLeft.Control = pTitle
+      AnchorSideTop.Control = pTitle
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 37
+      Top = 16
+      Width = 213
+      Caption = 'Xolmis Diagnostic'
+      Font.Color = 13066075
+      Font.Height = -27
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 42
+    Top = 457
+    Width = 592
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 42
+    ClientWidth = 592
+    TabOrder = 1
+    object sbCopy: TBitBtn
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 98
+      Align = alLeft
+      Caption = 'Copy'
+      Images = iButtons
+      ImageIndex = 0
+      TabOrder = 1
+      OnClick = sbCopyClick
+    end
+    object sbClose: TButton
+      Left = 478
+      Height = 26
+      Top = 8
+      Width = 98
+      Align = alRight
+      Caption = 'Close'
+      ModalResult = 11
+      TabOrder = 0
+    end
+  end
+  object vlResult: TValueListEditor
+    Left = 0
+    Height = 388
+    Top = 69
+    Width = 592
+    Align = alTop
+    AutoEdit = False
+    Constraints.MinHeight = 388
+    Constraints.MinWidth = 592
+    FixedCols = 0
+    RowCount = 2
+    ScrollBars = ssVertical
+    TabOrder = 2
+    TitleStyle = tsNative
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goAlwaysShowEditor, goThumbTracking]
+    TitleCaptions.Strings = (
+      'Parameter'
+      'Value'
+    )
+    ColWidths = (
+      64
+      507
+    )
+  end
+  object iButtons: TImageList
+    Scaled = True
+    Left = 164
+    Top = 336
+    Bitmap = {
+      4C7A0100000010000000100000006F0000000000000078DA6360187C607B3C43
+      31107F06E2FF68F80B488E08FD9F3F3DBFF3FFD7AF5F2818240692C3A54F5151
+      B116AA1F432F0C83E4F0E8FF46A1FEFF235D3F10F352107FA78138154FFAF98C
+      2FFD00F52602F173204E07620E52D32D500F1B102740DDF11F097F83A5ADC106
+      00F85D1332
+    }
+    BitmapAdv = {
+      4C69020000004C7A010000001400000014000000950000000000000078DA6360
+      189A607B3C8303109F03E2FF38F021203620DE3CC6732F2EEEF8FFEBD72FACF8
+      E1C1792033371332475151D115A88E7947122B4EB340F8CBDBA720F35E1061DE
+      5D2A9BF76FD4BC51F306D0BC9F40CC0BC96FDB71E7B7037389CD6FA78138035A
+      1E9CC1531E1C24A63C009AE50BC44F813813E44E6A94554073FC80F82C10FF06
+      E2FF68F806105B0CD162980100AE71F4A44C7A010000001800000018000000F9
+      0000000000000078DA636018BE607B3C4309103F06E2FF04F06F205E01C40A24
+      98AD07D2BB274BF8C2D949C107F0E113ED4E07816AFF02F10C62CC5654549404
+      AAAD0499FFFDCB87EFBF7EFDFA4F081FAED13F0C54FF8408B32B81B80DA8B606
+      64FEAF9F3FFF1363FEB1268B4340F5CF8930FF218DCDFF3E6AFEA8F9A3E60F59
+      F35F02F154A0DA7890F98F0E2D3843C8EC6F1F5F7FDE99CA7513A8FE1411E6EF
+      00E24BF342587980EA5F1251F623E33822CC0F01E2FF40DC3C3F949517A82719
+      881B08E06A20D620B66E019A3D0B6AC73920EE03E27A3CB80E88F949A91781EA
+      1981381288F703F127A85DD8F033202EA6A40E86DA85130F741B01009BA337E7
+    }
+  end
+  object iButtonsDark: TImageList
+    Scaled = True
+    Left = 212
+    Top = 337
+    Bitmap = {
+      4C7A0100000010000000100000007C0000000000000078DA6360187CE0FFD984
+      2420BE03C42FD1F05D901C11FADF03F17F1CF83D2E7DBF7EFDCA87EAFF8F0FE3
+      D1FF8542FDFF47BA7E20E601AAF98247FF173CFACF02710A504D090E33406225
+      78F42701F133204EFFF5F515D79FC76B999031502F23BE7407D4C706C4F1407C
+      0288FF22E1CF405C3D08B31A0300E4EB55F1
+    }
+    BitmapAdv = {
+      4C69020000004C7A010000001400000014000000860000000000000078DA6360
+      189AE0FFD9044320DE04C48F71E06540AC4282794780F83F01BC829039BF7EFD
+      3205AA6326C22C107E418479D7A86CDEBF51F346CD1B40F37EFEFAF69E0FA8F6
+      0211E66D25C2BCD3409C0E54EB04C4E7F0987508888D8830CF07889F02711610
+      F3033113364C4A590554EF0DC42781F83B10FF41C35780D86C8816C30C00A76C
+      3F274C7A010000001800000018000000B30000000000000078DA636018BEE0FF
+      D9841020DE0FC47708E0EB40DC0AC4C22498AD0CC4FF80F83F09B88B18B37FFD
+      FAC503545B4AA2D920FC8008B35381B819A8B6860CF39F1361FE2D206EA3A1F9
+      DF47CD1F357FD4FC216BFE2B209E02549B4086F9A789307F07105FFA77B99C17
+      A8FE1589E6C713617E0810FF07E216A81D49405C4F005701B126B1750BD0EC19
+      503B2E00F144206EC2831B81989FD4BA11A82714887701F15B20FE8D033F00E2
+      FC61DC44600000A68FC96D
+    }
+  end
+end

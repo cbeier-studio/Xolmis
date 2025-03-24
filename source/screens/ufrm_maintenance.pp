@@ -93,6 +93,7 @@ type
     procedure sbBackupSettingsClick(Sender: TObject);
     procedure sbCheckDatabaseIntegrityClick(Sender: TObject);
     procedure sbClearTemporaryFilesClick(Sender: TObject);
+    procedure sbDiagnosticClick(Sender: TObject);
     procedure sbFactoryResetClick(Sender: TObject);
     procedure sbOptimizeDatabaseClick(Sender: TObject);
     procedure sbRestoreSettingsClick(Sender: TObject);
@@ -113,7 +114,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_blobs, cbs_system,
-  cbs_themes, udm_main, uDarkStyleParams;
+  cbs_themes, udlg_diagnostic, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -345,6 +346,16 @@ begin
   end;
 
   MsgDlg(rsTitleInformation, rsSuccessfulClearTemporaryFiles, mtInformation)
+end;
+
+procedure TfrmMaintenance.sbDiagnosticClick(Sender: TObject);
+begin
+  dlgDiagnostic := TdlgDiagnostic.Create(nil);
+  try
+    dlgDiagnostic.ShowModal;
+  finally
+    FreeAndNil(dlgDiagnostic);
+  end;
 end;
 
 procedure TfrmMaintenance.sbFactoryResetClick(Sender: TObject);

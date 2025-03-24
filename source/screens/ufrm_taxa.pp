@@ -777,6 +777,8 @@ begin
   GetNestsCount;
   GetEggsCount;
 
+  sbWikiaves.Visible := dsLink.DataSet.FieldByName('cbro_taxonomy').AsBoolean = True;
+
 end;
 
 procedure TfrmTaxa.TimerFindTimer(Sender: TObject);
