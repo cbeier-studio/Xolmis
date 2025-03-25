@@ -6,6 +6,7 @@ interface
 
 uses
   Classes, ExtCtrls, SysUtils, Forms, Controls, Graphics, StdCtrls, Buttons, Clipbrd,
+  {$IFDEF WINDOWS} Windows, Win32Proc,{$ENDIF}
   Dialogs, ValEdit;
 
 type
@@ -36,7 +37,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_data, cbs_autoupdate, cbs_system, udm_main, cbs_themes, uDarkStyleParams;
+  cbs_global, cbs_datatypes, cbs_data, cbs_autoupdate, cbs_system, udm_main, cbs_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -61,19 +62,86 @@ procedure TdlgDiagnostic.RunDiagnostic;
 begin
 
   // Application info
+  vlResult.Values['APPLICATION'] := '';
+  {$IFDEF WINDOWS}
+  case WindowsVersion of
+    wvUnknown:    vlResult.Values['OS'] := 'Windows ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv95:         vlResult.Values['OS'] := 'Windows 95 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wvNT4:        vlResult.Values['OS'] := 'Windows NT 4 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv98:         vlResult.Values['OS'] := 'Windows 98 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wvMe:         vlResult.Values['OS'] := 'Windows Me ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv2000:       vlResult.Values['OS'] := 'Windows 2000 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wvXP:         vlResult.Values['OS'] := 'Windows XP ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wvServer2003: vlResult.Values['OS'] := 'Windows Server 2003 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wvVista:      vlResult.Values['OS'] := 'Windows Vista ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv7:          vlResult.Values['OS'] := 'Windows 7 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv8:          vlResult.Values['OS'] := 'Windows 8 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv8_1:        vlResult.Values['OS'] := 'Windows 8.1 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv10:         vlResult.Values['OS'] := 'Windows 10 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wv11:         vlResult.Values['OS'] := 'Windows 11 ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+    wvLater:      vlResult.Values['OS'] := 'Windows 11+ ' + IntToStr(Win32MajorVersion) + '.' + IntToStr(Win32MinorVersion) + '.' + IntToStr(Win32BuildNumber);
+  end;
+  {$ENDIF}
+  {$IFDEF LINUX}
+  vlResult.Values['OS'] := 'Linux';
+  {$ENDIF}
+  {$IFDEF DARWIN}
+  vlResult.Values['OS'] := 'MacOS';
+  {$ENDIF}
   vlResult.Values['Instalation path'] := InstallDir;
   vlResult.Values['App data path'] := AppDataDir;
   vlResult.Values['App version'] := GetBuildInfoAsString;
   vlResult.Values['System logs'] := BoolToStr(XSettings.AllowWriteLogs, 'Enabled', 'Disabled');
   vlResult.Values['Log file'] := XSettings.SettingsFile;
   vlResult.Values['Log size'] := GetFileSizeReadable(XSettings.SettingsFile);
-
+  if FileExists(ConcatPaths([InstallDir, 'sqlite3.dll'])) then
+    vlResult.Values['sqlite3.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'sqlite3.dll']))
+  else
+    vlResult.Values['sqlite3.dll'] := 'Not found';
+  if FileExists(ConcatPaths([InstallDir, 'fbclient.dll'])) then
+    vlResult.Values['fbclient.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'fbclient.dll']))
+  else
+    vlResult.Values['fbclient.dll'] := 'Not found';
+  if FileExists(ConcatPaths([InstallDir, 'libpq.dll'])) then
+    vlResult.Values['libpq.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'libpq.dll']))
+  else
+    vlResult.Values['libpq.dll'] := 'Not found';
 
   // Database info
-  vlResult.Values['Database file'] := ConexaoDB.Database;
+  vlResult.Values['DATABASE'] := '';
+  case ConexaoDB.Manager of
+    dbSqlite:
+    begin
+      vlResult.Values['Database type'] := 'SQLite';
+      vlResult.Values['Database file'] := ConexaoDB.Database;
+      vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+    end;
+    dbFirebird:
+    begin
+      vlResult.Values['Database type'] := 'Firebird';
+      vlResult.Values['Database server'] := ConexaoDB.Server;
+      vlResult.Values['Database port'] := IntToStr(ConexaoDB.Port);
+      vlResult.Values['Database file'] := ConexaoDB.Database;
+      vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+    end;
+    dbPostgre:
+    begin
+      vlResult.Values['Database type'] := 'PostgreSQL';
+      vlResult.Values['Database server'] := ConexaoDB.Server;
+      vlResult.Values['Database port'] := IntToStr(ConexaoDB.Port);
+      vlResult.Values['Database'] := ConexaoDB.Database;
+      //vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+    end;
+    dbMaria:
+    begin
+      vlResult.Values['Database type'] := 'MariaDB';
+      vlResult.Values['Database server'] := ConexaoDB.Server;
+      vlResult.Values['Database port'] := IntToStr(ConexaoDB.Port);
+      vlResult.Values['Database'] := ConexaoDB.Database;
+      //vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+    end;
+  end;
   vlResult.Values['Schema version'] := ReadDatabaseMetadata(DMM.sqlCon, 'version');
-  vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
-
 
   vlResult.AutoSizeColumn(0);
 end;

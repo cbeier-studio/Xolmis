@@ -1320,6 +1320,7 @@
         <Filename Value="dialogs\udlg_diagnostic.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgDiagnostic"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>

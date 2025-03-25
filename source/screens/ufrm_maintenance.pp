@@ -123,7 +123,7 @@ uses
 procedure TfrmMaintenance.ApplyDarkMode;
 begin
   icoDatabaseBackup.Images := iCheckDark;
-  icoDatabaseIntegrity.Images := iCheckDark;
+  icoDatabaseIntegrity.Images := iIconsDark;
   icoOptimizeDatabase.Images := iCheckDark;
 
   icoSettingsBackup.Images := iIconsDark;

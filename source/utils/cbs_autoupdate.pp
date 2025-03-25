@@ -32,6 +32,7 @@ type
   TCheckUpdateResponse = (ckrNone, ckrUpdated, ckrNewVersion, ckrError);
 
   function GetBuildInfoAsString: String;
+  function GetFileBuildAsString(const aFilename: String): String;
   function CompareVersion(NewVersion, CurrentVersion: String): Integer;
   function IsNewVersion(NewVersion, CurrentVersion: String): Boolean;
 
@@ -48,6 +49,20 @@ var
 begin
   VerInfo := TFileVersionInfo.Create(nil);
   try
+    VerInfo.ReadFileInfo;
+    Result := VerInfo.VersionStrings.Values['FileVersion'];
+  finally
+    VerInfo.Free;
+  end;
+end;
+
+function GetFileBuildAsString(const aFilename: String): String;
+var
+  VerInfo: TFileVersionInfo;
+begin
+  VerInfo := TFileVersionInfo.Create(nil);
+  try
+    VerInfo.FileName := aFileName;
     VerInfo.ReadFileInfo;
     Result := VerInfo.VersionStrings.Values['FileVersion'];
   finally
