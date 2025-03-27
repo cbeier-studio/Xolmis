@@ -49,6 +49,7 @@ type
   TfrmCustomGrid = class(TForm)
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    sbAddFeathersBatch: TSpeedButton;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
     DropAudios: TDropFileTarget;
@@ -1011,6 +1012,7 @@ type
     procedure sbAddAudioClick(Sender: TObject);
     procedure sbAddChildClick(Sender: TObject);
     procedure sbAddDocClick(Sender: TObject);
+    procedure sbAddFeathersBatchClick(Sender: TObject);
     procedure sbAddImageClick(Sender: TObject);
     procedure sbAddNetsBatchClick(Sender: TObject);
     procedure sbAudioInfoClick(Sender: TObject);
@@ -1379,7 +1381,7 @@ uses
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, cbs_users,
   cbs_validations, cbs_setparam, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
-  udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort;
+  udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort, ubatch_feathers;
 
 {$R *.lfm}
 
@@ -1620,6 +1622,7 @@ begin
 
   FParentForm.eAddChild.Visible := False;
   FParentForm.sbAddNetsBatch.Visible := False;
+  FParentForm.sbAddFeathersBatch.Visible := False;
   FParentForm.sbShowChildSidePanel.Visible := False;
   FParentForm.pChildRightPanel.Visible := False;
 
@@ -1628,7 +1631,11 @@ begin
     tbIndividuals:
       case FParentForm.nbChilds.PageIndex of
         0: FParentForm.ChildTable := tbCaptures;
-        1: FParentForm.ChildTable := tbFeathers;
+        1:
+        begin
+          FParentForm.ChildTable := tbFeathers;
+          FParentForm.sbAddFeathersBatch.Visible := True;
+        end;
         2: FParentForm.ChildTable := tbSightings;
         3: FParentForm.ChildTable := tbNests;
         4: FParentForm.ChildTable := tbSpecimens;
@@ -2002,6 +2009,7 @@ begin
   sbLastRecord.Images := iButtonsDark;
   sbAddChild.Images := iButtonsDark;
   sbAddNetsBatch.Images := iButtonsDark;
+  sbAddFeathersBatch.Images := iButtonsDark;
   sbEditChild.Images := iButtonsDark;
   sbChildHistory.Images := iButtonsDark;
   sbChildVerifications.Images := iButtonsDark;
@@ -8764,6 +8772,25 @@ begin
     pmAddDocs.Popup(X, Y);
 end;
 
+procedure TfrmCustomGrid.sbAddFeathersBatchClick(Sender: TObject);
+begin
+  batchFeathers := TbatchFeathers.Create(nil);
+  with batchFeathers do
+  try
+    case TableType of
+      tbIndividuals: IndividualId := dsLink.DataSet.FieldByName('individual_id').AsInteger;
+      tbCaptures:    CaptureId := dsLink.DataSet.FieldByName('capture_id').AsInteger;
+      tbSightings:   SightingId := dsLink.DataSet.FieldByName('sighting_id').AsInteger;
+    end;
+
+    ShowModal;
+  finally
+    FreeAndNil(batchFeathers);
+  end;
+
+  GetChildDataSet.Refresh;
+end;
+
 procedure TfrmCustomGrid.sbAddImageClick(Sender: TObject);
 var
   i: Integer;
@@ -13204,6 +13231,7 @@ begin
   end;
   eAddChild.Enabled := sbAddChild.Enabled;
   sbAddNetsBatch.Enabled := sbAddChild.Enabled;
+  sbAddFeathersBatch.Enabled := sbAddChild.Enabled;
   pmcEdit.Enabled := sbEditChild.Enabled;
   pmcDel.Enabled := sbDelChild.Enabled;
   pmcRefresh.Enabled := sbRefreshChild.Enabled;

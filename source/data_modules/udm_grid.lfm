@@ -20301,6 +20301,7 @@ object DMG: TDMG
       DisplayValues = 'True;False'
     end
     object qFeatherssample_date: TDateField
+      Alignment = taCenter
       DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'sample_date'
@@ -20311,6 +20312,7 @@ object DMG: TDMG
       Required = True
     end
     object qFeatherssample_time: TTimeField
+      Alignment = taCenter
       DisplayLabel = 'Time'
       FieldKind = fkData
       FieldName = 'sample_time'
@@ -20319,6 +20321,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qFeatherstaxon_id: TLongintField
       DisplayLabel = 'Taxon ID'
@@ -20450,6 +20453,7 @@ object DMG: TDMG
       Visible = False
     end
     object qFeathersobserver_name: TStringField
+      Alignment = taCenter
       DisplayLabel = 'Observer'
       FieldKind = fkData
       FieldName = 'observer_name'
@@ -20461,6 +20465,7 @@ object DMG: TDMG
       Size = 10
     end
     object qFeatherssource_type: TStringField
+      Alignment = taCenter
       DisplayLabel = 'Source'
       FieldKind = fkData
       FieldName = 'source_type'
@@ -20474,6 +20479,7 @@ object DMG: TDMG
       Size = 5
     end
     object qFeatherssymmetrical: TStringField
+      Alignment = taCenter
       DisplayLabel = 'Symmetrical'
       FieldKind = fkData
       FieldName = 'symmetrical'
@@ -20487,6 +20493,7 @@ object DMG: TDMG
       Size = 5
     end
     object qFeathersfeather_trait: TStringField
+      Alignment = taCenter
       DisplayLabel = 'Feather trait'
       FieldKind = fkData
       FieldName = 'feather_trait'
@@ -20500,6 +20507,7 @@ object DMG: TDMG
       Size = 5
     end
     object qFeathersfeather_number: TLongintField
+      Alignment = taCenter
       DisplayLabel = 'Feather number'
       FieldKind = fkData
       FieldName = 'feather_number'
@@ -20510,6 +20518,7 @@ object DMG: TDMG
       Required = False
     end
     object qFeathersbody_side: TStringField
+      Alignment = taCenter
       DisplayLabel = 'Body side'
       FieldKind = fkData
       FieldName = 'body_side'
@@ -20531,6 +20540,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '0.00'
       Precision = -1
     end
     object qFeathersfeather_length: TFloatField
@@ -20542,6 +20552,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '##0.000'
       Precision = -1
     end
     object qFeathersfeather_area: TFloatField
@@ -20553,6 +20564,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '##0.000'
       Precision = -1
     end
     object qFeathersfeather_mass: TFloatField
@@ -20564,6 +20576,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '##0.000'
       Precision = -1
     end
     object qFeathersrachis_width: TFloatField
@@ -20575,6 +20588,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '##0.000'
       Precision = -1
     end
     object qFeathersgrowth_bar_width: TFloatField
@@ -20586,6 +20600,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '##0.000'
       Precision = -1
     end
     object qFeathersbarb_density: TFloatField
@@ -20597,9 +20612,11 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = '##0.000'
       Precision = -1
     end
     object qFeathersfeather_age: TStringField
+      Alignment = taCenter
       DisplayLabel = 'Feather age'
       FieldKind = fkData
       FieldName = 'feather_age'

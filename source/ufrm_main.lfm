@@ -9,7 +9,6 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.0.0.2'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -1238,7 +1237,6 @@ object frmMain: TfrmMain
     object actImportNests: TAction
       Category = 'Import'
       Caption = '&Nests data'
-      Visible = False
       OnExecute = actImportNestsExecute
     end
     object actImportCoordinates: TAction
@@ -1501,6 +1499,11 @@ object frmMain: TfrmMain
       ImageIndex = 1
       OnClick = pmaNewBandClick
     end
+    object pmaNewBandsBatch: TMenuItem
+      Caption = 'New batch of bands'
+      ImageIndex = 1
+      OnClick = actNewBandsExecute
+    end
     object pmaNewIndividual: TMenuItem
       Caption = 'New individual'
       ImageIndex = 0
@@ -1511,10 +1514,15 @@ object frmMain: TfrmMain
       ImageIndex = 9
       OnClick = pmaNewCaptureClick
     end
-    object pmaNewMolt: TMenuItem
-      Caption = 'New molt'
+    object pmaNewFeather: TMenuItem
+      Caption = 'New feather'
       ImageIndex = 19
-      OnClick = pmaNewMoltClick
+      OnClick = pmaNewFeatherClick
+    end
+    object pmaNewFeathersBatch: TMenuItem
+      Caption = 'New batch of feathers'
+      ImageIndex = 19
+      OnClick = pmaNewFeathersBatchClick
     end
     object Separator12: TMenuItem
       Caption = '-'
@@ -9272,6 +9280,12 @@ object frmMain: TfrmMain
       object mmfImport: TMenuItem
         Caption = 'Import'
         ImageIndex = 36
+        object mmfImportWizard: TMenuItem
+          Action = actImportWizard
+        end
+        object Separator1: TMenuItem
+          Caption = '-'
+        end
         object mmfImportXolmisMobile: TMenuItem
           Action = actImportXolmisMobile
         end
@@ -9295,12 +9309,6 @@ object frmMain: TfrmMain
         end
         object mmfImportCoordinates: TMenuItem
           Action = actImportCoordinates
-        end
-        object Separator1: TMenuItem
-          Caption = '-'
-        end
-        object mmfImportWizard: TMenuItem
-          Action = actImportWizard
         end
       end
       object Separator27: TMenuItem

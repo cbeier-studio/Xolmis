@@ -2,13 +2,13 @@ object dlgImport: TdlgImport
   Left = 361
   Height = 474
   Top = 250
-  Width = 560
+  Width = 920
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Import wizard'
   ClientHeight = 474
-  ClientWidth = 560
+  ClientWidth = 920
   PopupMode = pmAuto
   Position = poScreenCenter
   OnCreate = FormCreate
@@ -18,7 +18,7 @@ object dlgImport: TdlgImport
     Left = 0
     Height = 2
     Top = 430
-    Width = 560
+    Width = 920
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,7 +28,7 @@ object dlgImport: TdlgImport
     Left = 0
     Height = 42
     Top = 432
-    Width = 560
+    Width = 920
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -39,11 +39,11 @@ object dlgImport: TdlgImport
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
-    ClientWidth = 560
+    ClientWidth = 920
     TabOrder = 0
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 414
+      Left = 774
       Height = 26
       Top = 8
       Width = 130
@@ -55,7 +55,7 @@ object dlgImport: TdlgImport
     end
     object sbNext: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 268
+      Left = 628
       Height = 26
       Top = 8
       Width = 130
@@ -68,7 +68,7 @@ object dlgImport: TdlgImport
     end
     object sbPrior: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 130
+      Left = 490
       Height = 26
       Top = 8
       Width = 130
@@ -98,7 +98,7 @@ object dlgImport: TdlgImport
     Left = 0
     Height = 430
     Top = 0
-    Width = 560
+    Width = 920
     PageIndex = 0
     Align = alTop
     TabOrder = 1
@@ -107,20 +107,20 @@ object dlgImport: TdlgImport
         Left = 0
         Height = 430
         Top = 0
-        Width = 560
+        Width = 920
         Align = alClient
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 430
-        ClientWidth = 560
+        ClientWidth = 920
         Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleSource: TPanel
           Left = 16
           Height = 28
           Top = 16
-          Width = 528
+          Width = 888
           Align = alTop
           Alignment = taLeftJustify
           AutoSize = True
@@ -128,7 +128,7 @@ object dlgImport: TdlgImport
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 528
+          ClientWidth = 888
           Font.Color = 13066075
           Font.Height = -20
           ParentBackground = False
@@ -147,7 +147,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 15
           Top = 133
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 4
           Caption = 'Target table: *'
@@ -158,7 +158,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 15
           Top = 83
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 4
           Caption = 'Source file: *'
@@ -169,7 +169,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 23
           Top = 102
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 8
           ButtonHint = 'Select file'
@@ -191,7 +191,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 15
           Top = 52
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 16
           Caption = 'Select a target table and a source file to import.'
@@ -200,7 +200,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 23
           Top = 152
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 8
           ItemHeight = 15
@@ -214,13 +214,13 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 41
           Top = 183
-          Width = 528
+          Width = 888
           Align = alTop
           BevelOuter = bvNone
           ChildSizing.TopBottomSpacing = 8
           ChildSizing.HorizontalSpacing = 8
           ClientHeight = 41
-          ClientWidth = 528
+          ClientWidth = 888
           ParentBackground = False
           TabOrder = 3
           object btnOptions: TBitBtn
@@ -245,21 +245,21 @@ object dlgImport: TdlgImport
         Left = 0
         Height = 430
         Top = 0
-        Width = 900
+        Width = 920
         Align = alClient
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 430
-        ClientWidth = 900
+        ClientWidth = 920
         Constraints.MinWidth = 900
         TabOrder = 0
         object pTitleFields: TPanel
           Left = 16
           Height = 28
           Top = 16
-          Width = 868
+          Width = 888
           Align = alTop
           Alignment = taLeftJustify
           AutoSize = True
@@ -267,7 +267,7 @@ object dlgImport: TdlgImport
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 868
+          ClientWidth = 888
           Font.Color = 13066075
           Font.Height = -20
           ParentBackground = False
@@ -286,7 +286,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 15
           Top = 52
-          Width = 868
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 16
           Caption = 'Configure the field mappings from the source file to the target table.'
@@ -296,7 +296,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 331
           Top = 83
-          Width = 868
+          Width = 888
           Align = alClient
           AutoFillColumns = True
           ColCount = 6
@@ -311,12 +311,12 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 233
+              Width = 243
             end          
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Search table'
-              Width = 233
+              Width = 243
             end          
             item
               SizePriority = 0
@@ -332,8 +332,8 @@ object dlgImport: TdlgImport
             64
             154
             60
-            233
-            233
+            243
+            243
             120
           )
           Cells = (
@@ -350,21 +350,21 @@ object dlgImport: TdlgImport
         Left = 0
         Height = 430
         Top = 0
-        Width = 560
+        Width = 920
         Align = alClient
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 430
-        ClientWidth = 560
+        ClientWidth = 920
         Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleConfirm: TPanel
           Left = 16
           Height = 28
           Top = 16
-          Width = 528
+          Width = 888
           Align = alTop
           Alignment = taLeftJustify
           AutoSize = True
@@ -372,7 +372,7 @@ object dlgImport: TdlgImport
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 528
+          ClientWidth = 888
           Font.Color = 13066075
           Font.Height = -20
           ParentBackground = False
@@ -391,7 +391,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 15
           Top = 52
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 16
           Caption = 'Check if the data sampled is correct.'
@@ -401,7 +401,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 331
           Top = 83
-          Width = 528
+          Width = 888
           Align = alClient
           ColCount = 2
           RowCount = 2
@@ -414,21 +414,21 @@ object dlgImport: TdlgImport
         Left = 0
         Height = 430
         Top = 0
-        Width = 560
+        Width = 920
         Align = alClient
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 430
-        ClientWidth = 560
+        ClientWidth = 920
         Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleProgress: TPanel
           Left = 16
           Height = 28
           Top = 16
-          Width = 528
+          Width = 888
           Align = alTop
           Alignment = taLeftJustify
           AutoSize = True
@@ -436,7 +436,7 @@ object dlgImport: TdlgImport
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 528
+          ClientWidth = 888
           Font.Color = 13066075
           Font.Height = -20
           ParentBackground = False
@@ -455,7 +455,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 15
           Top = 52
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 16
           Caption = 'Please wait, while importing the data.'
@@ -465,7 +465,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 310
           Top = 104
-          Width = 528
+          Width = 888
           Align = alClient
           Font.Name = 'Fira Code'
           Lines.Strings = (
@@ -480,7 +480,7 @@ object dlgImport: TdlgImport
           Left = 16
           Height = 13
           Top = 83
-          Width = 528
+          Width = 888
           Align = alTop
           BorderSpacing.Bottom = 8
           TabOrder = 2
@@ -492,7 +492,7 @@ object dlgImport: TdlgImport
         Left = 0
         Height = 430
         Top = 0
-        Width = 560
+        Width = 920
         Align = alClient
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
@@ -534,7 +534,7 @@ object dlgImport: TdlgImport
           Left = 17
           Height = 41
           Top = 17
-          Width = 526
+          Width = 886
           Align = alTop
           Alignment = taCenter
           BorderSpacing.Top = 16
@@ -549,7 +549,7 @@ object dlgImport: TdlgImport
           Left = 17
           Height = 15
           Top = 66
-          Width = 526
+          Width = 886
           Align = alTop
           Alignment = taCenter
           BorderSpacing.Bottom = 16
@@ -561,7 +561,7 @@ object dlgImport: TdlgImport
           Left = 17
           Height = 280
           Top = 97
-          Width = 526
+          Width = 886
           Align = alClient
           BorderSpacing.Bottom = 8
           Center = True
@@ -571,7 +571,7 @@ object dlgImport: TdlgImport
           Left = 17
           Height = 28
           Top = 385
-          Width = 526
+          Width = 886
           Align = alBottom
           AutoSize = True
           ChildSizing.HorizontalSpacing = 8
@@ -627,7 +627,7 @@ object dlgImport: TdlgImport
           object sbSaveLog: TBitBtn
             AnchorSideRight.Control = pRetry
             AnchorSideRight.Side = asrBottom
-            Left = 425
+            Left = 785
             Height = 26
             Top = 1
             Width = 100

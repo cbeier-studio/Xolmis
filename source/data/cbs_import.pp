@@ -525,7 +525,7 @@ begin
   if (not CSV.FieldByName('CAP TIME').IsNull) then
     Reg.CaptureTime := CSV.FieldByName('CAP TIME').AsDateTime
   else
-    Reg.CaptureTime := StrToTime('00:00:01');
+    Reg.CaptureTime := NullTime;
   if (CSV.FieldByName('NET SITE NAME').AsString = '') then
     Reg.NetSiteName := '0'
   else
@@ -1475,42 +1475,42 @@ begin
         if (not CSV.FieldByName('OPEN TIME 1').IsNull) then
           Reg.NetBout1.OpenTime := CSV.FieldByName('OPEN TIME 1').AsDateTime
         else
-          Reg.NetBout1.OpenTime := StrToTime('00:00:01');
+          Reg.NetBout1.OpenTime := NullTime;
         { 7 - CloseTime 1 }
         if (not CSV.FieldByName('CLOSE TIME 1').IsNull) then
           Reg.NetBout1.CloseTime := CSV.FieldByName('CLOSE TIME 1').AsDateTime
         else
-          Reg.NetBout1.CloseTime := StrToTime('00:00:01');
+          Reg.NetBout1.CloseTime := NullTime;
         { 8 - OpenTime 2 }
         if (not CSV.FieldByName('OPEN TIME 2').IsNull) then
           Reg.NetBout2.OpenTime := CSV.FieldByName('OPEN TIME 2').AsDateTime
         else
-          Reg.NetBout2.OpenTime := StrToTime('00:00:01');
+          Reg.NetBout2.OpenTime := NullTime;
         { 9 - CloseTime 2 }
         if (not CSV.FieldByName('CLOSE TIME 2').IsNull) then
           Reg.NetBout2.CloseTime := CSV.FieldByName('CLOSE TIME 2').AsDateTime
         else
-          Reg.NetBout2.CloseTime := StrToTime('00:00:01');
+          Reg.NetBout2.CloseTime := NullTime;
         { 10 - OpenTime 3 }
         if (not CSV.FieldByName('OPEN TIME 3').IsNull) then
           Reg.NetBout3.OpenTime := CSV.FieldByName('OPEN TIME 3').AsDateTime
         else
-          Reg.NetBout3.OpenTime := StrToTime('00:00:01');
+          Reg.NetBout3.OpenTime := NullTime;
         { 11 - CloseTime 3 }
         if (not CSV.FieldByName('CLOSE TIME 3').IsNull) then
           Reg.NetBout3.CloseTime := CSV.FieldByName('CLOSE TIME 3').AsDateTime
         else
-          Reg.NetBout3.CloseTime := StrToTime('00:00:01');
+          Reg.NetBout3.CloseTime := NullTime;
         { 12 - OpenTime 4 }
         if (not CSV.FieldByName('OPEN TIME 4').IsNull) then
           Reg.NetBout4.OpenTime := CSV.FieldByName('OPEN TIME 4').AsDateTime
         else
-          Reg.NetBout4.OpenTime := StrToTime('00:00:01');
+          Reg.NetBout4.OpenTime := NullTime;
         { 13 - CloseTime 4 }
         if (not CSV.FieldByName('CLOSE TIME 4').IsNull) then
           Reg.NetBout4.CloseTime := CSV.FieldByName('CLOSE TIME 4').AsDateTime
         else
-          Reg.NetBout4.CloseTime := StrToTime('00:00:01');
+          Reg.NetBout4.CloseTime := NullTime;
         { 14 - Notes }
         Reg.Notes := CSV.FieldByName('NOTES').AsString;
 
@@ -2129,23 +2129,23 @@ procedure TBandingEffort.Clear;
 begin
   Locality := EmptyStr;
   NetStation := EmptyStr;
-  SamplingDate := StrToDate('30/12/1500');
+  SamplingDate := NullDate;
   NetNumber := 0;
   Longitude := 0.0;
   Latitude := 0.0;
   Notes := EmptyStr;
 
-  NetBout1.OpenTime := StrToTime('00:00:01');
-  NetBout1.CloseTime := StrToTime('00:00:01');
+  NetBout1.OpenTime := NullTime;
+  NetBout1.CloseTime := NullTime;
 
-  NetBout2.OpenTime := StrToTime('00:00:01');
-  NetBout2.CloseTime := StrToTime('00:00:01');
+  NetBout2.OpenTime := NullTime;
+  NetBout2.CloseTime := NullTime;
 
-  NetBout3.OpenTime := StrToTime('00:00:01');
-  NetBout3.CloseTime := StrToTime('00:00:01');
+  NetBout3.OpenTime := NullTime;
+  NetBout3.CloseTime := NullTime;
 
-  NetBout4.OpenTime := StrToTime('00:00:01');
-  NetBout4.CloseTime := StrToTime('00:00:01');
+  NetBout4.OpenTime := NullTime;
+  NetBout4.CloseTime := NullTime;
 end;
 
 { TBandingJournal }
@@ -2154,15 +2154,15 @@ procedure TBandingJournal.Clear;
 begin
   Locality := EmptyStr;
   NetStation := EmptyStr;
-  SamplingDate := StrToDate('30/12/1500');
-  StartTime := StrToTime('00:00:01');
-  EndTime := StrToTime('00:00:01');
+  SamplingDate := NullDate;
+  StartTime := NullTime;
+  EndTime := NullTime;
   Longitude := 0.0;
   Latitude := 0.0;
   Team := EmptyStr;
   Notes := EmptyStr;
 
-  Weather1.SamplingTime := StrToTime('00:00:01');
+  Weather1.SamplingTime := NullTime;
   Weather1.SamplingMoment := wmNone;
   Weather1.CloudCover := 0;
   Weather1.Precipitation := wpEmpty;
@@ -2170,7 +2170,7 @@ begin
   Weather1.WindSpeed := 0;
   Weather1.Humidity := 0.0;
 
-  Weather2.SamplingTime := StrToTime('00:00:01');
+  Weather2.SamplingTime := NullTime;
   Weather2.SamplingMoment := wmNone;
   Weather2.CloudCover := 0;
   Weather2.Precipitation := wpEmpty;
@@ -2178,7 +2178,7 @@ begin
   Weather2.WindSpeed := 0;
   Weather2.Humidity := 0.0;
 
-  Weather3.SamplingTime := StrToTime('00:00:01');
+  Weather3.SamplingTime := NullTime;
   Weather3.SamplingMoment := wmNone;
   Weather3.CloudCover := 0;
   Weather3.Precipitation := wpEmpty;
@@ -2186,7 +2186,7 @@ begin
   Weather3.WindSpeed := 0;
   Weather3.Humidity := 0.0;
 
-  Weather4.SamplingTime := StrToTime('00:00:01');
+  Weather4.SamplingTime := NullTime;
   Weather4.SamplingMoment := wmNone;
   Weather4.CloudCover := 0;
   Weather4.Precipitation := wpEmpty;
@@ -2203,10 +2203,10 @@ begin
   NetStation := EmptyStr;
   CaptureMonth := 0;
   CaptureDay := 0;
-  CaptureDate := StrToDate('30/12/1500');
+  CaptureDate := NullDate;
   Recorder := EmptyStr;
   Bander := EmptyStr;
-  CaptureTime := StrToTime('00:00:00');
+  CaptureTime := NullTime;
   NetSiteName := EmptyStr;
   CaptureType := EmptyStr;
   BandSize := EmptyStr;
@@ -2319,7 +2319,7 @@ begin
   Latitude := 0.0;
   Longitude := 0.0;
   RecordDate := StrToDate('01/01/1900');
-  RecordTime := StrToTime('00:00:00');
+  RecordTime := NullTime;
   Protocol := EmptyStr;
   Duration := 0;
   AllObsReported := False;

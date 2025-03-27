@@ -4772,6 +4772,10 @@ msgctxt "cbs_locale.rsprogressnewbandsbatch"
 msgid "Inserting new bands..."
 msgstr ""
 
+#: cbs_locale.rsprogressnewfeathersbatch
+msgid "Inserting new feathers..."
+msgstr ""
+
 #: cbs_locale.rsprogressoptimizingdatabase
 msgid "Optimizing database..."
 msgstr ""
@@ -6131,6 +6135,253 @@ msgstr ""
 
 #: tbatchbands.sbsave.caption
 msgctxt "tbatchbands.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tbatchfeathers.caption
+msgid "batchFeathers"
+msgstr ""
+
+#: tbatchfeathers.ecapture.buttonhint
+msgctxt "tbatchfeathers.ecapture.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tbatchfeathers.edate.buttonhint
+msgctxt "tbatchfeathers.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tbatchfeathers.edate.texthint
+msgctxt "tbatchfeathers.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tbatchfeathers.eindividual.buttonhint
+msgctxt "tbatchfeathers.eindividual.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tbatchfeathers.elocality.buttonhint
+msgctxt "tbatchfeathers.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tbatchfeathers.eobserver.buttonhint
+msgctxt "tbatchfeathers.eobserver.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tbatchfeathers.esighting.buttonhint
+msgctxt "tbatchfeathers.esighting.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tbatchfeathers.etaxon.buttonhint
+msgctxt "tbatchfeathers.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tbatchfeathers.etime.texthint
+msgctxt "tbatchfeathers.etime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tbatchfeathers.lblcapture.caption
+msgid "Capture:"
+msgstr ""
+
+#: tbatchfeathers.lblindividual.caption
+msgctxt "tbatchfeathers.lblindividual.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tbatchfeathers.lbllocality.caption
+msgctxt "tbatchfeathers.lbllocality.caption"
+msgid "Locality: *"
+msgstr ""
+
+#: tbatchfeathers.lblobserver.caption
+msgctxt "tbatchfeathers.lblobserver.caption"
+msgid "Observer:"
+msgstr ""
+
+#: tbatchfeathers.lblp1.caption
+msgctxt "tbatchfeathers.lblp1.caption"
+msgid "P1:"
+msgstr ""
+
+#: tbatchfeathers.lblp10.caption
+msgctxt "tbatchfeathers.lblp10.caption"
+msgid "P10:"
+msgstr ""
+
+#: tbatchfeathers.lblp2.caption
+msgctxt "tbatchfeathers.lblp2.caption"
+msgid "P2:"
+msgstr ""
+
+#: tbatchfeathers.lblp3.caption
+msgctxt "tbatchfeathers.lblp3.caption"
+msgid "P3:"
+msgstr ""
+
+#: tbatchfeathers.lblp4.caption
+msgctxt "tbatchfeathers.lblp4.caption"
+msgid "P4:"
+msgstr ""
+
+#: tbatchfeathers.lblp5.caption
+msgctxt "tbatchfeathers.lblp5.caption"
+msgid "P5:"
+msgstr ""
+
+#: tbatchfeathers.lblp6.caption
+msgctxt "tbatchfeathers.lblp6.caption"
+msgid "P6:"
+msgstr ""
+
+#: tbatchfeathers.lblp7.caption
+msgctxt "tbatchfeathers.lblp7.caption"
+msgid "P7:"
+msgstr ""
+
+#: tbatchfeathers.lblp8.caption
+msgctxt "tbatchfeathers.lblp8.caption"
+msgid "P8:"
+msgstr ""
+
+#: tbatchfeathers.lblp9.caption
+msgctxt "tbatchfeathers.lblp9.caption"
+msgid "P9:"
+msgstr ""
+
+#: tbatchfeathers.lblr1.caption
+msgctxt "tbatchfeathers.lblr1.caption"
+msgid "R1:"
+msgstr ""
+
+#: tbatchfeathers.lblr2.caption
+msgctxt "tbatchfeathers.lblr2.caption"
+msgid "R2:"
+msgstr ""
+
+#: tbatchfeathers.lblr3.caption
+msgctxt "tbatchfeathers.lblr3.caption"
+msgid "R3:"
+msgstr ""
+
+#: tbatchfeathers.lblr4.caption
+msgctxt "tbatchfeathers.lblr4.caption"
+msgid "R4:"
+msgstr ""
+
+#: tbatchfeathers.lblr5.caption
+msgctxt "tbatchfeathers.lblr5.caption"
+msgid "R5:"
+msgstr ""
+
+#: tbatchfeathers.lblr6.caption
+msgctxt "tbatchfeathers.lblr6.caption"
+msgid "R6:"
+msgstr ""
+
+#: tbatchfeathers.lbls1.caption
+msgctxt "tbatchfeathers.lbls1.caption"
+msgid "S1:"
+msgstr ""
+
+#: tbatchfeathers.lbls2.caption
+msgctxt "tbatchfeathers.lbls2.caption"
+msgid "S2:"
+msgstr ""
+
+#: tbatchfeathers.lbls3.caption
+msgctxt "tbatchfeathers.lbls3.caption"
+msgid "S3:"
+msgstr ""
+
+#: tbatchfeathers.lbls4.caption
+msgctxt "tbatchfeathers.lbls4.caption"
+msgid "S4:"
+msgstr ""
+
+#: tbatchfeathers.lbls5.caption
+msgctxt "tbatchfeathers.lbls5.caption"
+msgid "S5:"
+msgstr ""
+
+#: tbatchfeathers.lbls6.caption
+msgctxt "tbatchfeathers.lbls6.caption"
+msgid "S6:"
+msgstr ""
+
+#: tbatchfeathers.lbls7.caption
+msgctxt "tbatchfeathers.lbls7.caption"
+msgid "S7:"
+msgstr ""
+
+#: tbatchfeathers.lbls8.caption
+msgctxt "tbatchfeathers.lbls8.caption"
+msgid "S8:"
+msgstr ""
+
+#: tbatchfeathers.lbls9.caption
+msgctxt "tbatchfeathers.lbls9.caption"
+msgid "S9:"
+msgstr ""
+
+#: tbatchfeathers.lblsampledate.caption
+msgctxt "tbatchfeathers.lblsampledate.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tbatchfeathers.lblsampletime.caption
+msgctxt "tbatchfeathers.lblsampletime.caption"
+msgid "Time:"
+msgstr ""
+
+#: tbatchfeathers.lblsighting.caption
+msgid "Sighting:"
+msgstr ""
+
+#: tbatchfeathers.lblsource.caption
+msgctxt "tbatchfeathers.lblsource.caption"
+msgid "Source:"
+msgstr ""
+
+#: tbatchfeathers.lblsymmetry.caption
+msgctxt "tbatchfeathers.lblsymmetry.caption"
+msgid "Symmetry:"
+msgstr ""
+
+#: tbatchfeathers.lbltaxon.caption
+msgctxt "tbatchfeathers.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tbatchfeathers.lbltitleprimaries.caption
+msgctxt "tbatchfeathers.lbltitleprimaries.caption"
+msgid "Primaries"
+msgstr ""
+
+#: tbatchfeathers.lbltitlerectrices.caption
+msgctxt "tbatchfeathers.lbltitlerectrices.caption"
+msgid "Rectrices"
+msgstr ""
+
+#: tbatchfeathers.lbltitlesecondaries.caption
+msgctxt "tbatchfeathers.lbltitlesecondaries.caption"
+msgid "Secondaries"
+msgstr ""
+
+#: tbatchfeathers.sbcancel.caption
+msgctxt "tbatchfeathers.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tbatchfeathers.sbsave.caption
+msgctxt "tbatchfeathers.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -9222,10 +9473,12 @@ msgid "Time:"
 msgstr ""
 
 #: tedtfeather.lblsource.caption
+msgctxt "tedtfeather.lblsource.caption"
 msgid "Source:"
 msgstr ""
 
 #: tedtfeather.lblsymmetry.caption
+msgctxt "tedtfeather.lblsymmetry.caption"
 msgid "Symmetry:"
 msgstr ""
 
@@ -13464,6 +13717,11 @@ msgstr ""
 msgid "Add document/link"
 msgstr ""
 
+#: tfrmcustomgrid.sbaddfeathersbatch.hint
+msgctxt "tfrmcustomgrid.sbaddfeathersbatch.hint"
+msgid "New batch of feathers"
+msgstr ""
+
 #: tfrmcustomgrid.sbaddimage.hint
 msgid "Add image"
 msgstr ""
@@ -14487,6 +14745,11 @@ msgctxt "tfrmmain.pmanewband.caption"
 msgid "New band"
 msgstr ""
 
+#: tfrmmain.pmanewbandsbatch.caption
+msgctxt "tfrmmain.pmanewbandsbatch.caption"
+msgid "New batch of bands"
+msgstr ""
+
 #: tfrmmain.pmanewcapture.caption
 msgctxt "tfrmmain.pmanewcapture.caption"
 msgid "New capture"
@@ -14502,6 +14765,16 @@ msgctxt "tfrmmain.pmanewexpedition.caption"
 msgid "New expedition"
 msgstr ""
 
+#: tfrmmain.pmanewfeather.caption
+msgctxt "tfrmmain.pmanewfeather.caption"
+msgid "New feather"
+msgstr ""
+
+#: tfrmmain.pmanewfeathersbatch.caption
+msgctxt "tfrmmain.pmanewfeathersbatch.caption"
+msgid "New batch of feathers"
+msgstr ""
+
 #: tfrmmain.pmanewindividual.caption
 msgctxt "tfrmmain.pmanewindividual.caption"
 msgid "New individual"
@@ -14510,11 +14783,6 @@ msgstr ""
 #: tfrmmain.pmanewinstitution.caption
 msgctxt "tfrmmain.pmanewinstitution.caption"
 msgid "New institution"
-msgstr ""
-
-#: tfrmmain.pmanewmolt.caption
-msgctxt "tfrmmain.pmanewmolt.caption"
-msgid "New molt"
 msgstr ""
 
 #: tfrmmain.pmanewnest.caption

@@ -180,7 +180,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="437"/>
+      <BuildNr Value="439"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1320,6 +1320,13 @@
         <Filename Value="dialogs\udlg_diagnostic.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgDiagnostic"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\ubatch_feathers.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="batchFeathers"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

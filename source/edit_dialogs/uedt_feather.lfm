@@ -444,6 +444,8 @@ object edtFeather: TedtFeather
           Height = 23
           Top = 22
           Width = 175
+          Increment = 0.05
+          MaxValue = 1
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress

@@ -194,6 +194,7 @@ uses
     rsProgressStarting = 'Starting...';
     rsProgressFinishing = 'Finishing...';
     rsProgressNewBandsBatch = 'Inserting new bands...';
+    rsProgressNewFeathersBatch = 'Inserting new feathers...';
     rsProgressRewritingHierarchy = 'Rewriting %s...';
     rsProgressLoadingCSVFile = 'Loading CSV file... %d%%';
     rsProgressRecords = 'Processing %d of %d records...';

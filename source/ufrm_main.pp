@@ -96,6 +96,8 @@ type
     iPopup: TImageList;
     iSearchDark: TImageList;
     lblEmptyNotifications: TLabel;
+    pmaNewFeathersBatch: TMenuItem;
+    pmaNewBandsBatch: TMenuItem;
     pEmptyNotifications: TBCPanel;
     pNotificationList: TPanel;
     titleNotifications: TLabel;
@@ -186,7 +188,7 @@ type
     pmaNewBand: TMenuItem;
     pmaNewIndividual: TMenuItem;
     pmaNewCapture: TMenuItem;
-    pmaNewMolt: TMenuItem;
+    pmaNewFeather: TMenuItem;
     pmaNewNest: TMenuItem;
     pmaNewEgg: TMenuItem;
     pmaNewInstitution: TMenuItem;
@@ -306,9 +308,10 @@ type
     procedure pmaNewCaptureClick(Sender: TObject);
     procedure pmaNewEggClick(Sender: TObject);
     procedure pmaNewExpeditionClick(Sender: TObject);
+    procedure pmaNewFeathersBatchClick(Sender: TObject);
     procedure pmaNewIndividualClick(Sender: TObject);
     procedure pmaNewInstitutionClick(Sender: TObject);
-    procedure pmaNewMoltClick(Sender: TObject);
+    procedure pmaNewFeatherClick(Sender: TObject);
     procedure pmaNewNestClick(Sender: TObject);
     procedure pmaNewNetStationClick(Sender: TObject);
     procedure pmaNewPermitClick(Sender: TObject);
@@ -377,7 +380,8 @@ uses
   cbs_data, cbs_users, cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding,
   ucfg_database, ucfg_users, ucfg_options,
-  ubatch_bands, udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
+  ubatch_bands, ubatch_feathers,
+  udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
   udlg_importxmobile, udlg_import,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance, ufrm_taxa;
 
@@ -1357,9 +1361,20 @@ begin
   EditInstitution(DMG.qInstitutions, True);
 end;
 
-procedure TfrmMain.pmaNewMoltClick(Sender: TObject);
+procedure TfrmMain.pmaNewFeatherClick(Sender: TObject);
 begin
-  EditMolt(DMG.qMolts, 0, True);
+  EditFeather(DMG.qFeathers, 0, 0, 0, True);
+end;
+
+procedure TfrmMain.pmaNewFeathersBatchClick(Sender: TObject);
+begin
+  Application.CreateForm(TbatchFeathers, batchFeathers);
+  with batchFeathers do
+  try
+    ShowModal;
+  finally
+    FreeAndNil(batchFeathers);
+  end;
 end;
 
 procedure TfrmMain.pmaNewNestClick(Sender: TObject);

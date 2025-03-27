@@ -435,24 +435,25 @@ end;
 
 procedure TbatchBands.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  if (ssCtrl in Shift) then
+  { SAVE = Ctrl + S }
+  if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
-    { SAVE = Ctrl + S }
-    if (Key = 83) then
-    begin
-      sbSaveClick(nil);
-      Key := 0;
-    end;
+    Key := 0;
+    if not (sbSave.Enabled) then
+      Exit;
+
+    sbSaveClick(nil);
   end;
 end;
 
 procedure TbatchBands.FormKeyPress(Sender: TObject; var Key: char);
 begin
-  { CANCEL = Esc }
+  { <ESC> key }
   if (Key = #27) then
   begin
-    ModalResult := mrCancel;
     Key := #0;
+
+    ModalResult := mrCancel; { Cancel insert/edit }
   end;
 end;
 

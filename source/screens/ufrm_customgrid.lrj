@@ -212,6 +212,7 @@
 {"hash":131136003,"name":"tfrmcustomgrid.sbsharechild.hint","sourcebytes":[69,120,112,111,114,116,32,114,101,99,111,114,100,115],"value":"Export records"},
 {"hash":62395843,"name":"tfrmcustomgrid.sbaddnetsbatch.hint","sourcebytes":[78,101,119,32,98,97,116,99,104,32,111,102,32,109,105,115,116,110,101,116,115],"value":"New batch of mistnets"},
 {"hash":168454988,"name":"tfrmcustomgrid.sbshowchildsidepanel.hint","sourcebytes":[83,104,111,119,47,104,105,100,101,32,100,101,116,97,105,108,115,32,112,97,110,101,108],"value":"Show/hide details panel"},
+{"hash":144159747,"name":"tfrmcustomgrid.sbaddfeathersbatch.hint","sourcebytes":[78,101,119,32,98,97,116,99,104,32,111,102,32,102,101,97,116,104,101,114,115],"value":"New batch of feathers"},
 {"hash":120172974,"name":"tfrmcustomgrid.lblchildstatus.caption","sourcebytes":[76,111,97,100,105,110,103,32,114,101,99,111,114,100,115,46,46,46],"value":"Loading records..."},
 {"hash":56302820,"name":"tfrmcustomgrid.sbfirstchild.hint","sourcebytes":[70,105,114,115,116,32,114,101,99,111,114,100],"value":"First record"},
 {"hash":190561620,"name":"tfrmcustomgrid.sbpriorchild.hint","sourcebytes":[80,114,101,118,105,111,117,115,32,114,101,99,111,114,100],"value":"Previous record"},
