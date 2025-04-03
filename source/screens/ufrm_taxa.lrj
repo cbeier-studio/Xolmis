@@ -5,6 +5,7 @@
 {"hash":142922884,"name":"tfrmtaxa.gridtaxa.columns[2].title.caption","sourcebytes":[82,97,110,107,32,73,68],"value":"Rank ID"},
 {"hash":94079128,"name":"tfrmtaxa.esearch.texthint","sourcebytes":[83,101,97,114,99,104],"value":"Search"},
 {"hash":54079704,"name":"tfrmtaxa.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
+{"hash":108725763,"name":"tfrmtaxa.sboptionssearch.hint","sourcebytes":[79,112,116,105,111,110,115],"value":"Options"},
 {"hash":131136003,"name":"tfrmtaxa.sbsharerecords.hint","sourcebytes":[69,120,112,111,114,116,32,114,101,99,111,114,100,115],"value":"Export records"},
 {"hash":254426771,"name":"tfrmtaxa.sbprint.hint","sourcebytes":[80,114,105,110,116,32,114,101,99,111,114,100,115],"value":"Print records"},
 {"hash":25023976,"name":"tfrmtaxa.sbgooglesearch.hint","sourcebytes":[71,111,111,103,101,32,83,101,97,114,99,104],"value":"Googe Search"},
@@ -31,9 +32,16 @@
 {"hash":37653321,"name":"tfrmtaxa.lbllinkspecimens.caption","sourcebytes":[83,112,101,99,105,109,101,110,115,32,40,48,41],"value":"Specimens (0)"},
 {"hash":179666921,"name":"tfrmtaxa.lbllinknests.caption","sourcebytes":[78,101,115,116,115,32,40,48,41],"value":"Nests (0)"},
 {"hash":233123737,"name":"tfrmtaxa.lbllinkeggs.caption","sourcebytes":[69,103,103,115,32,40,48,41],"value":"Eggs (0)"},
+{"hash":78574403,"name":"tfrmtaxa.chartseasonality.axislist[0].title.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,114,101,99,111,114,100,115],"value":"Number of records"},
+{"hash":5531048,"name":"tfrmtaxa.chartseasonality.axislist[1].title.caption","sourcebytes":[77,111,110,116,104],"value":"Month"},
+{"hash":78574403,"name":"tfrmtaxa.chartyear.axislist[0].title.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,114,101,99,111,114,100,115],"value":"Number of records"},
+{"hash":392066,"name":"tfrmtaxa.chartyear.axislist[1].title.caption","sourcebytes":[89,101,97,114],"value":"Year"},
+{"hash":48,"name":"tfrmtaxa.txtnestproductivity.caption","sourcebytes":[48],"value":"0"},
+{"hash":230456041,"name":"tfrmtaxa.lblmeannestproductivity.caption","sourcebytes":[109,101,97,110,32,110,101,115,116,32,112,114,111,100,117,99,116,105,118,105,116,121],"value":"mean nest productivity"},
 {"hash":73584121,"name":"tfrmtaxa.lblemptyquery.caption","sourcebytes":[82,101,115,117,108,116,32,113,117,101,114,121,32,105,115,32,101,109,112,116,121],"value":"Result query is empty"},
 {"hash":370913,"name":"tfrmtaxa.pmprinttaxa.caption","sourcebytes":[84,97,120,97],"value":"Taxa"},
 {"hash":228404697,"name":"tfrmtaxa.pmprinttaxahierarchical.caption","sourcebytes":[84,97,120,97,32,40,104,105,101,114,97,114,99,104,105,99,97,108,41],"value":"Taxa (hierarchical)"},
 {"hash":19447140,"name":"tfrmtaxa.pmprinttaxarecorded.caption","sourcebytes":[84,97,120,97,32,114,101,99,111,114,100,101,100],"value":"Taxa recorded"},
-{"hash":47660265,"name":"tfrmtaxa.pmprinttaxarecordedbylocality.caption","sourcebytes":[84,97,120,97,32,114,101,99,111,114,100,101,100,32,98,121,32,108,111,99,97,108,105,116,121],"value":"Taxa recorded by locality"}
+{"hash":47660265,"name":"tfrmtaxa.pmprinttaxarecordedbylocality.caption","sourcebytes":[84,97,120,97,32,114,101,99,111,114,100,101,100,32,98,121,32,108,111,99,97,108,105,116,121],"value":"Taxa recorded by locality"},
+{"hash":238172657,"name":"tfrmtaxa.pmfshowrecordedtaxa.caption","sourcebytes":[83,104,111,119,32,111,110,108,121,32,116,104,101,32,114,101,99,111,114,100,101,100,32,116,97,120,97],"value":"Show only the recorded taxa"}
 ]}

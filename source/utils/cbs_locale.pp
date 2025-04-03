@@ -515,6 +515,14 @@ uses
     rsPortuguese = 'Portuguese';
     rsSpanish = 'Spanish';
 
+    { Charts }
+    rsSeasonality = 'Seasonality';
+    rsNumberOfRecords = 'Number of records';
+    rsMonth = 'Month';
+    rsRecordPerYear = 'Records per year';
+    rsYear = 'Year';
+    rsNestFate = 'Nest fate';
+
     { Geographical coordinates }
     rsLatitude = 'Latitude';
     rsLongitude = 'Longitude';

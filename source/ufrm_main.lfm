@@ -1501,7 +1501,7 @@ object frmMain: TfrmMain
     end
     object pmaNewBandsBatch: TMenuItem
       Caption = 'New batch of bands'
-      ImageIndex = 1
+      ImageIndex = 27
       OnClick = actNewBandsExecute
     end
     object pmaNewIndividual: TMenuItem
@@ -1521,7 +1521,7 @@ object frmMain: TfrmMain
     end
     object pmaNewFeathersBatch: TMenuItem
       Caption = 'New batch of feathers'
-      ImageIndex = 19
+      ImageIndex = 28
       OnClick = pmaNewFeathersBatchClick
     end
     object Separator12: TMenuItem

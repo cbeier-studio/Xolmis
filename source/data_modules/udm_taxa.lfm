@@ -1,0 +1,85 @@
+object DMT: TDMT
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 489
+  HorizontalOffset = 420
+  VerticalOffset = 250
+  Width = 597
+  object lcsMonthly: TListChartSource
+    YCount = 6
+    Left = 56
+    Top = 136
+  end
+  object lcsYearly: TListChartSource
+    YCount = 6
+    Left = 56
+    Top = 272
+  end
+  object RecordTypeStyles: TChartStyles
+    Styles = <    
+      item
+        Brush.Color = 4946723
+        Pen.Style = psClear
+        Text = 'Captures'
+        UseFont = False
+        UsePen = False
+      end    
+      item
+        Brush.Color = 4500223
+        Text = 'Sightings'
+        UseFont = False
+        UsePen = False
+      end    
+      item
+        Brush.Color = 13924352
+        Text = 'Nests'
+        UseFont = False
+        UsePen = False
+      end    
+      item
+        Brush.Color = 16226706
+        Text = 'Eggs'
+        UseFont = False
+        UsePen = False
+      end    
+      item
+        Brush.Color = 4927940
+        Text = 'Feathers'
+        UseFont = False
+        UsePen = False
+      end    
+      item
+        Brush.Color = 13066075
+        Text = 'Specimens'
+        UseFont = False
+        UsePen = False
+      end>
+    Left = 56
+    Top = 400
+  end
+  object lcsNestFate: TListChartSource
+    Left = 168
+    Top = 136
+  end
+  object NestFateStyles: TChartStyles
+    Styles = <    
+      item
+        Brush.Color = 4927940
+        Text = 'Loss'
+        UseFont = False
+        UsePen = False
+      end    
+      item
+        Brush.Color = 4500223
+        Text = 'Success'
+        UseFont = False
+        UsePen = False
+      end    
+      item
+        Brush.Color = clSilver
+        Text = 'Unknown'
+      end>
+    Left = 167
+    Top = 400
+  end
+end

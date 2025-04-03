@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #: cbs_datacolumns.rsc1stsecondarychord
 msgid "1st secondary chord"
@@ -1125,6 +1125,7 @@ msgid "Nest"
 msgstr "Ninho"
 
 #: cbs_datacolumns.rscnestfate
+msgctxt "cbs_datacolumns.rscnestfate"
 msgid "Nest fate"
 msgstr "Destino do ninho"
 
@@ -4393,6 +4394,11 @@ msgstr "Meio"
 msgid "Start"
 msgstr "Início"
 
+#: cbs_locale.rsmonth
+msgctxt "cbs_locale.rsmonth"
+msgid "Month"
+msgstr "Mês"
+
 #: cbs_locale.rsmonthly
 msgid "Monthly"
 msgstr "Mensalmente"
@@ -4423,6 +4429,11 @@ msgstr "Ativo"
 msgctxt "cbs_locale.rsnestbuilding"
 msgid "Building"
 msgstr "Construindo"
+
+#: cbs_locale.rsnestfate
+msgctxt "cbs_locale.rsnestfate"
+msgid "Nest fate"
+msgstr "Destino do ninho"
 
 #: cbs_locale.rsnestfemale
 msgid "Breeding female"
@@ -4594,6 +4605,11 @@ msgstr "Não há imagens para recriar as miniaturas!"
 msgctxt "cbs_locale.rsnouserfound"
 msgid "no user found"
 msgstr "nenhum usuário encontrado"
+
+#: cbs_locale.rsnumberofrecords
+msgctxt "cbs_locale.rsnumberofrecords"
+msgid "Number of records"
+msgstr "Nº de registros"
 
 #: cbs_locale.rsoneselected
 #, object-pascal-format
@@ -4782,7 +4798,7 @@ msgstr "Inserindo novas anilhas..."
 
 #: cbs_locale.rsprogressnewfeathersbatch
 msgid "Inserting new feathers..."
-msgstr ""
+msgstr "Inserindo novas penas..."
 
 #: cbs_locale.rsprogressoptimizingdatabase
 msgid "Optimizing database..."
@@ -4842,6 +4858,10 @@ msgstr "registro %d de %d"
 #: cbs_locale.rsrecordok
 msgid "Record OK"
 msgstr "Registro OK"
+
+#: cbs_locale.rsrecordperyear
+msgid "Records per year"
+msgstr "Registros por ano"
 
 #: cbs_locale.rsrecords
 msgctxt "cbs_locale.rsrecords"
@@ -5103,6 +5123,10 @@ msgstr "Tecidos"
 msgctxt "cbs_locale.rssampletongue"
 msgid "Tongue"
 msgstr "Língua"
+
+#: cbs_locale.rsseasonality
+msgid "Seasonality"
+msgstr "Sazonalidade"
 
 #: cbs_locale.rsseen
 msgctxt "cbs_locale.rsseen"
@@ -6032,6 +6056,11 @@ msgstr "Táxon errado"
 msgid "Wrong values"
 msgstr "Valor errado"
 
+#: cbs_locale.rsyear
+msgctxt "cbs_locale.rsyear"
+msgid "Year"
+msgstr "Ano"
+
 #: tbatchbands.caption
 msgctxt "tbatchbands.caption"
 msgid "New batch of bands"
@@ -6157,241 +6186,219 @@ msgid "batchFeathers"
 msgstr ""
 
 #: tbatchfeathers.ecapture.buttonhint
-#, fuzzy
 msgctxt "tbatchfeathers.ecapture.buttonhint"
 msgid "Find taxon"
 msgstr "Buscar táxon"
 
 #: tbatchfeathers.edate.buttonhint
-#, fuzzy
 msgctxt "tbatchfeathers.edate.buttonhint"
 msgid "Open calendar"
 msgstr "Abrir calendário"
 
 #: tbatchfeathers.edate.texthint
-#, fuzzy
 msgctxt "tbatchfeathers.edate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tbatchfeathers.eindividual.buttonhint
-#, fuzzy
 msgctxt "tbatchfeathers.eindividual.buttonhint"
 msgid "Find taxon"
 msgstr "Buscar táxon"
 
 #: tbatchfeathers.elocality.buttonhint
-#, fuzzy
 msgctxt "tbatchfeathers.elocality.buttonhint"
 msgid "Find locality"
-msgstr "Procurar localidade"
+msgstr "Buscar localidade"
 
 #: tbatchfeathers.eobserver.buttonhint
-#, fuzzy
 msgctxt "tbatchfeathers.eobserver.buttonhint"
 msgid "Find observer"
 msgstr "Buscar observador"
 
 #: tbatchfeathers.esighting.buttonhint
-#, fuzzy
 msgctxt "tbatchfeathers.esighting.buttonhint"
 msgid "Find taxon"
 msgstr "Buscar táxon"
 
 #: tbatchfeathers.etaxon.buttonhint
-#, fuzzy
 msgctxt "tbatchfeathers.etaxon.buttonhint"
 msgid "Find taxon"
 msgstr "Buscar táxon"
 
 #: tbatchfeathers.etime.texthint
-#, fuzzy
 msgctxt "tbatchfeathers.etime.texthint"
 msgid "HH:MM"
 msgstr "HH:MM"
 
 #: tbatchfeathers.lblcapture.caption
 msgid "Capture:"
-msgstr ""
+msgstr "Captura:"
 
 #: tbatchfeathers.lblindividual.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lblindividual.caption"
 msgid "Individual:"
 msgstr "Indivíduo:"
 
 #: tbatchfeathers.lbllocality.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lbllocality.caption"
 msgid "Locality: *"
 msgstr "Localidade: *"
 
 #: tbatchfeathers.lblobserver.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lblobserver.caption"
 msgid "Observer:"
 msgstr "Observador:"
 
 #: tbatchfeathers.lblp1.caption
 msgid "P1:"
-msgstr ""
+msgstr "P1:"
 
 #: tbatchfeathers.lblp10.caption
 msgid "P10:"
-msgstr ""
+msgstr "P10:"
 
 #: tbatchfeathers.lblp2.caption
 msgid "P2:"
-msgstr ""
+msgstr "P2:"
 
 #: tbatchfeathers.lblp3.caption
 msgid "P3:"
-msgstr ""
+msgstr "P3:"
 
 #: tbatchfeathers.lblp4.caption
 msgid "P4:"
-msgstr ""
+msgstr "P4:"
 
 #: tbatchfeathers.lblp5.caption
 msgid "P5:"
-msgstr ""
+msgstr "P5:"
 
 #: tbatchfeathers.lblp6.caption
 msgid "P6:"
-msgstr ""
+msgstr "P6:"
 
 #: tbatchfeathers.lblp7.caption
 msgid "P7:"
-msgstr ""
+msgstr "P7:"
 
 #: tbatchfeathers.lblp8.caption
 msgid "P8:"
-msgstr ""
+msgstr "P8:"
 
 #: tbatchfeathers.lblp9.caption
 msgid "P9:"
-msgstr ""
+msgstr "P9:"
 
 #: tbatchfeathers.lblr1.caption
 msgid "R1:"
-msgstr ""
+msgstr "R1:"
 
 #: tbatchfeathers.lblr2.caption
 msgid "R2:"
-msgstr ""
+msgstr "R2:"
 
 #: tbatchfeathers.lblr3.caption
 msgid "R3:"
-msgstr ""
+msgstr "R3:"
 
 #: tbatchfeathers.lblr4.caption
 msgid "R4:"
-msgstr ""
+msgstr "R4:"
 
 #: tbatchfeathers.lblr5.caption
 msgid "R5:"
-msgstr ""
+msgstr "R5:"
 
 #: tbatchfeathers.lblr6.caption
 msgid "R6:"
-msgstr ""
+msgstr "R6:"
 
 #: tbatchfeathers.lbls1.caption
 msgid "S1:"
-msgstr ""
+msgstr "S1:"
 
 #: tbatchfeathers.lbls2.caption
 msgid "S2:"
-msgstr ""
+msgstr "S2:"
 
 #: tbatchfeathers.lbls3.caption
 msgid "S3:"
-msgstr ""
+msgstr "S3:"
 
 #: tbatchfeathers.lbls4.caption
 msgid "S4:"
-msgstr ""
+msgstr "S4:"
 
 #: tbatchfeathers.lbls5.caption
 msgid "S5:"
-msgstr ""
+msgstr "S5:"
 
 #: tbatchfeathers.lbls6.caption
 msgid "S6:"
-msgstr ""
+msgstr "S6:"
 
 #: tbatchfeathers.lbls7.caption
 msgid "S7:"
-msgstr ""
+msgstr "S7:"
 
 #: tbatchfeathers.lbls8.caption
 msgid "S8:"
-msgstr ""
+msgstr "S8:"
 
 #: tbatchfeathers.lbls9.caption
 msgid "S9:"
-msgstr ""
+msgstr "S9:"
 
 #: tbatchfeathers.lblsampledate.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lblsampledate.caption"
 msgid "Date: *"
 msgstr "Data: *"
 
 #: tbatchfeathers.lblsampletime.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lblsampletime.caption"
 msgid "Time:"
 msgstr "Hora:"
 
 #: tbatchfeathers.lblsighting.caption
 msgid "Sighting:"
-msgstr ""
+msgstr "Observação:"
 
 #: tbatchfeathers.lblsource.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lblsource.caption"
 msgid "Source:"
 msgstr "Origem:"
 
 #: tbatchfeathers.lblsymmetry.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lblsymmetry.caption"
 msgid "Symmetry:"
 msgstr "Simetria:"
 
 #: tbatchfeathers.lbltaxon.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lbltaxon.caption"
 msgid "Taxon: *"
 msgstr "Táxon: *"
 
 #: tbatchfeathers.lbltitleprimaries.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lbltitleprimaries.caption"
 msgid "Primaries"
 msgstr "Primárias"
 
 #: tbatchfeathers.lbltitlerectrices.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lbltitlerectrices.caption"
 msgid "Rectrices"
 msgstr "Retrizes"
 
 #: tbatchfeathers.lbltitlesecondaries.caption
-#, fuzzy
 msgctxt "tbatchfeathers.lbltitlesecondaries.caption"
 msgid "Secondaries"
 msgstr "Secundárias"
 
 #: tbatchfeathers.sbcancel.caption
-#, fuzzy
 msgctxt "tbatchfeathers.sbcancel.caption"
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: tbatchfeathers.sbsave.caption
-#, fuzzy
 msgctxt "tbatchfeathers.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
@@ -13728,7 +13735,7 @@ msgstr "Adicionar documento/link"
 #: tfrmcustomgrid.sbaddfeathersbatch.hint
 msgctxt "tfrmcustomgrid.sbaddfeathersbatch.hint"
 msgid "New batch of feathers"
-msgstr ""
+msgstr "Novo lote de penas"
 
 #: tfrmcustomgrid.sbaddimage.hint
 msgid "Add image"
@@ -14765,7 +14772,6 @@ msgid "New band"
 msgstr "Nova anilha"
 
 #: tfrmmain.pmanewbandsbatch.caption
-#, fuzzy
 msgctxt "tfrmmain.pmanewbandsbatch.caption"
 msgid "New batch of bands"
 msgstr "Novo lote de anilhas"
@@ -14786,7 +14792,6 @@ msgid "New expedition"
 msgstr "Nova expedição"
 
 #: tfrmmain.pmanewfeather.caption
-#, fuzzy
 msgctxt "tfrmmain.pmanewfeather.caption"
 msgid "New feather"
 msgstr "Nova pena"
@@ -14794,7 +14799,7 @@ msgstr "Nova pena"
 #: tfrmmain.pmanewfeathersbatch.caption
 msgctxt "tfrmmain.pmanewfeathersbatch.caption"
 msgid "New batch of feathers"
-msgstr ""
+msgstr "Novo lote de penas"
 
 #: tfrmmain.pmanewindividual.caption
 msgctxt "tfrmmain.pmanewindividual.caption"
@@ -15136,6 +15141,26 @@ msgctxt "tfrmtaxa.caption"
 msgid "Taxa"
 msgstr "Táxons"
 
+#: tfrmtaxa.chartseasonality.axislist[0].title.caption
+msgctxt "tfrmtaxa.chartseasonality.axislist[0].title.caption"
+msgid "Number of records"
+msgstr "Nº de registros"
+
+#: tfrmtaxa.chartseasonality.axislist[1].title.caption
+msgctxt "tfrmtaxa.chartseasonality.axislist[1].title.caption"
+msgid "Month"
+msgstr "Mês"
+
+#: tfrmtaxa.chartyear.axislist[0].title.caption
+msgctxt "tfrmtaxa.chartyear.axislist[0].title.caption"
+msgid "Number of records"
+msgstr "Nº de registros"
+
+#: tfrmtaxa.chartyear.axislist[1].title.caption
+msgctxt "tfrmtaxa.chartyear.axislist[1].title.caption"
+msgid "Year"
+msgstr "Ano"
+
 #: tfrmtaxa.ckcbro.caption
 msgctxt "tfrmtaxa.ckcbro.caption"
 msgid "CBRO"
@@ -15226,9 +15251,17 @@ msgstr "Observações (0)"
 msgid "Specimens (0)"
 msgstr "Espécimes (0)"
 
+#: tfrmtaxa.lblmeannestproductivity.caption
+msgid "mean nest productivity"
+msgstr "produtividade média do ninho"
+
 #: tfrmtaxa.lblvalidname.caption
 msgid "Synonym of"
 msgstr "Sinônimo de"
+
+#: tfrmtaxa.pmfshowrecordedtaxa.caption
+msgid "Show only the recorded taxa"
+msgstr "Mostrar apenas táxons registrados"
 
 #: tfrmtaxa.pmprinttaxa.caption
 msgctxt "tfrmtaxa.pmprinttaxa.caption"
@@ -15282,6 +15315,11 @@ msgstr "Pesquisa do Google"
 msgid "IUCN Red List"
 msgstr "Lista Vermelha da IUCN"
 
+#: tfrmtaxa.sboptionssearch.hint
+msgctxt "tfrmtaxa.sboptionssearch.hint"
+msgid "Options"
+msgstr "Opções"
+
 #: tfrmtaxa.sbprint.hint
 msgctxt "tfrmtaxa.sbprint.hint"
 msgid "Print records"
@@ -15295,6 +15333,10 @@ msgstr "Exportar registros"
 #: tfrmtaxa.sbwikiaves.hint
 msgid "WikiAves"
 msgstr "WikiAves"
+
+#: tfrmtaxa.txtnestproductivity.caption
+msgid "0"
+msgstr ""
 
 #: tlstbreedingstatus.caption
 msgid "Breeding and behavior code"
@@ -15380,4 +15422,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

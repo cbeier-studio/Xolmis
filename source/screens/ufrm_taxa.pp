@@ -5,15 +5,28 @@ unit ufrm_taxa;
 interface
 
 uses
-  BCPanel, Buttons, Classes, ComCtrls, DB, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf,
-  ExtCtrls, Menus, StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr,
-  Controls, Graphics, Dialogs, cbs_datatypes, Grids, Types;
+  BCPanel, Buttons, Classes, ComCtrls, DB, fgl, mvDE_BGRA, mvMapViewer, mvTypes,
+  mvGpsObj, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf, ExtCtrls, Menus,
+  StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr, Controls, Graphics,
+  Dialogs, cbs_datatypes, Grids, TADbSource, TAGraph, TAGUIConnectorBGRA,
+  TASeries, TASources, Types, mvDrawingEngine;
 
 type
 
   { TfrmTaxa }
 
   TfrmTaxa = class(TForm)
+    txtNestProductivity: TLabel;
+    lblMeanNestProductivity: TLabel;
+    pNestProductivity: TBCPanel;
+    chartNestFate: TChart;
+    NestFateSeries: TPieSeries;
+    pBreedingStats: TPanel;
+    yearlySeries: TBarSeries;
+    chartSeasonality: TChart;
+    chartYear: TChart;
+    monthlySeries: TBarSeries;
+    chartBGRA: TChartGUIConnectorBGRA;
     ckCBRO: TDBCheckBox;
     ckClements: TDBCheckBox;
     ckIOC: TDBCheckBox;
@@ -28,7 +41,11 @@ type
     lblLinkSightings: TLabel;
     lblLinkIndividuals: TLabel;
     lblEmptyQuery: TLabel;
+    mapView: TMapView;
+    MvBGRA: TMvBGRADrawingEngine;
     pEmptyQuery: TPanel;
+    pmfShowRecordedTaxa: TMenuItem;
+    pmOptions: TPopupMenu;
     pTaxonData: TFlowPanel;
     gridChilds: TDBGrid;
     gridSynonyms: TDBGrid;
@@ -63,6 +80,7 @@ type
     pViews: TPanel;
     sbClearSearch: TColorSpeedButton;
     sbBirdsOfTheWorld: TSpeedButton;
+    sbOptionsSearch: TColorSpeedButton;
     sbPrint: TSpeedButton;
     sbShareRecords: TSpeedButton;
     sbGoogleScholar: TSpeedButton;
@@ -106,6 +124,9 @@ type
     procedure lblLinkNestsClick(Sender: TObject);
     procedure lblLinkSightingsClick(Sender: TObject);
     procedure lblLinkSpecimensClick(Sender: TObject);
+    procedure mapViewDrawGpsPoint
+      (Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+    procedure pmfShowRecordedTaxaClick(Sender: TObject);
     procedure sbBirdsOfTheWorldClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbEbirdClick(Sender: TObject);
@@ -114,6 +135,7 @@ type
     procedure sbGoogleScholarClick(Sender: TObject);
     procedure sbGoogleSearchClick(Sender: TObject);
     procedure sbIUCNRedListClick(Sender: TObject);
+    procedure sbOptionsSearchClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure sbWikiavesClick(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
@@ -133,6 +155,11 @@ type
     procedure GetSpecimensCount;
     procedure GetNestsCount;
     procedure GetEggsCount;
+    procedure GetNestProductivity;
+    procedure LoadMonthlyChart;
+    procedure LoadNestFateChart;
+    procedure LoadRecordsMap;
+    procedure LoadYearlyChart;
     function Search(AValue: String): Boolean;
     procedure SetSearchString(aValue: String);
   public
@@ -146,7 +173,7 @@ implementation
 
 uses
   cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, cbs_conversions,
-  ufrm_main, udm_main, udm_grid,
+  ufrm_main, udm_main, udm_grid, udm_taxa,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -165,8 +192,12 @@ begin
   sbClearSearch.StateHover.Color := clSolidBGSecondaryDark;
   sbClearSearch.StateActive.Color := clSolidBGTertiaryDark;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
+  sbOptionsSearch.StateHover.Color := clSolidBGSecondaryDark;
+  sbOptionsSearch.StateActive.Color := clSolidBGTertiaryDark;
+  sbOptionsSearch.StateNormal.Color := pSearch.Background.Color;
   iconSearch.Images := iSearchDark;
   sbClearSearch.Images := iSearchDark;
+  sbOptionsSearch.Images := iSearchDark;
 
   pToolbar.Background.Color := clCardBGDefaultDark;
   pToolbar.Border.Color := clCardBGSecondaryDark;
@@ -180,6 +211,27 @@ begin
   sbWikiaves.Images := DMM.iWebDark;
   sbIUCNRedList.Images := DMM.iWebDark;
   sbGBIF.Images := DMM.iWebDark;
+
+  chartSeasonality.Title.Font.Color := clTextPrimaryDark;
+  chartSeasonality.Legend.Font.Color := clTextPrimaryDark;
+  chartSeasonality.BottomAxis.Title.LabelFont.Color := clTextPrimaryDark;
+  chartSeasonality.BottomAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  chartSeasonality.LeftAxis.Title.LabelFont.Color := clTextPrimaryDark;
+  chartSeasonality.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+
+  chartYear.Title.Font.Color := clTextPrimaryDark;
+  chartYear.Legend.Font.Color := clTextPrimaryDark;
+  chartYear.BottomAxis.Title.LabelFont.Color := clTextPrimaryDark;
+  chartYear.BottomAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  chartYear.LeftAxis.Title.LabelFont.Color := clTextPrimaryDark;
+  chartYear.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+
+  chartNestFate.Title.Font.Color := clTextPrimaryDark;
+  chartNestFate.Legend.Font.Color := clTextPrimaryDark;
+  NestFateSeries.Marks.LabelFont.Color := clTextPrimaryDark;
+
+  pNestProductivity.Background.Color := clSolidBGSecondaryDark;
+  pNestProductivity.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
 procedure TfrmTaxa.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -243,6 +295,9 @@ end;
 procedure TfrmTaxa.FormCreate(Sender: TObject);
 begin
   CanToggle := True;
+
+  if not Assigned(DMT) then
+    DMT := TDMT.Create(nil);
 end;
 
 procedure TfrmTaxa.FormDestroy(Sender: TObject);
@@ -250,6 +305,9 @@ begin
   dsChilds.DataSet.Close;
   dsSynonyms.DataSet.Close;
   dsLink.DataSet.Close;
+
+  if Assigned(DMT) then
+    FreeAndNil(DMT);
 
   FreeAndNil(FSearch);
 end;
@@ -298,6 +356,17 @@ begin
   pEmptyQuery.AnchorSideBottom.Control := gridTaxa;
   pEmptyQuery.Anchors := [akLeft, akRight, akTop, akBottom];
   pEmptyQuery.BringToFront;
+
+  mapView.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
+  mapView.Active := True;
+
+  chartSeasonality.Title.Text.Text := rsSeasonality;
+  chartSeasonality.LeftAxis.Title.Caption := rsNumberOfRecords;
+  chartSeasonality.BottomAxis.Title.Caption := rsMonth;
+  chartYear.Title.Text.Text := rsRecordPerYear;
+  chartYear.LeftAxis.Title.Caption := rsNumberOfRecords;
+  chartYear.BottomAxis.Title.Caption := rsYear;
+  chartNestFate.Title.Text.Text := rsNestFate;
 end;
 
 procedure TfrmTaxa.GetCapturesCount;
@@ -373,6 +442,35 @@ begin
 
     lblLinkIndividuals.Caption := Format(rsTitleIndividuals + ' (%d)', [C]);
     lblLinkIndividuals.Enabled := C > 0;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmTaxa.GetNestProductivity;
+var
+  Qry: TSQLQuery;
+  C: Integer;
+begin
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+
+    Add('SELECT avg(nest_productivity) AS counter FROM nests');
+    Add('WHERE (nest_productivity > 0) AND (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY taxon_id');
+    ParamByName('taxon_id').AsInteger := DMG.qTaxa.FieldByName('taxon_id').AsInteger;
+
+    Open;
+    if RecordCount > 0 then
+      C := FieldByName('counter').AsInteger
+    else
+      C := 0;
+    Close;
+
+    txtNestProductivity.Caption := IntToStr(C);
   finally
     FreeAndNil(Qry);
   end;
@@ -527,6 +625,461 @@ begin
   frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
 end;
 
+procedure TfrmTaxa.LoadMonthlyChart;
+var
+  Qry: TSQLQuery;
+  i: Integer;
+  MonthData: specialize TFPGMap<Integer, TChartCounts>;
+  FMonth: Integer;
+  RecordTypeIndex: Integer;
+  RecordTypeMap: specialize TFPGMap<String, Integer>;
+  FCounts: TChartCounts;
+begin
+  DMT.lcsMonthly.Clear;
+
+  // Initialize the maps
+  MonthData := specialize TFPGMap<Integer, TChartCounts>.Create;
+  RecordTypeMap := specialize TFPGMap<String, Integer>.Create;
+
+  // Map record_type to indexes
+  RecordTypeMap.Add(rsTitleCaptures, 0);
+  RecordTypeMap.Add(rsTitleSightings, 1);
+  RecordTypeMap.Add(rsTitleNests, 2);
+  RecordTypeMap.Add(rsTitleEggs, 3);
+  RecordTypeMap.Add(rsCaptionFeathers, 4);
+  RecordTypeMap.Add(rsTitleSpecimens, 5);
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+
+    // Load monthly counts
+    Clear;
+    Add('SELECT');
+    Add('  CAST(strftime(''%m'', capture_date) AS INTEGER) AS mes,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleCaptures + ''' AS record_type');
+    Add('FROM captures');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY mes');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%m'', sighting_date) AS INTEGER) AS mes,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleSightings + ''' AS record_type');
+    Add('FROM sightings');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY mes');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%m'', found_date) AS INTEGER) AS mes,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleNests + ''' AS record_type');
+    Add('FROM nests');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY mes');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%m'', measure_date) AS INTEGER) AS mes,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleEggs + ''' AS record_type');
+    Add('FROM eggs');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (measure_date NOTNULL)');
+    Add('GROUP BY mes');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%m'', sample_date) AS INTEGER) AS mes,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsCaptionFeathers + ''' AS record_type');
+    Add('FROM feathers');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY mes');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  collection_month AS mes,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleSpecimens + ''' AS record_type');
+    Add('FROM specimens');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (mes > 0)');
+    Add('GROUP BY mes');
+
+    Add('ORDER BY mes, record_type');
+
+    ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+    Open;
+    if RecordCount > 0 then
+    begin
+      First;
+      while not EOF do
+      begin
+        FMonth := FieldByName('mes').AsInteger;
+        RecordTypeIndex := RecordTypeMap[FieldByName('record_type').AsString];
+
+        // Verificar se o ano já existe no YearData
+        if not MonthData.TryGetData(FMonth, FCounts) then
+        begin
+          // Criar uma nova estrutura para o ano
+          FCounts.XValue := FMonth;
+          SetLength(FCounts.YValues, RecordTypeMap.Count);
+          FillChar(FCounts.YValues[0], Length(FCounts.YValues) * SizeOf(Double), 0);
+        end;
+
+        // Atualizar a contagem para o tipo de registro correspondente
+        FCounts.YValues[RecordTypeIndex] := FieldByName('tally').AsFloat;
+
+        // Salvar de volta no dicionário
+        MonthData.AddOrSetData(FMonth, FCounts);
+
+        Next;
+      end;
+
+      // Iterar pelos anos e adicionar os dados
+      for i := 0 to MonthData.Count - 1 do
+      begin
+        // Adicionar ao ChartSource
+        DMT.lcsMonthly.AddXYList(MonthData.Keys[i], MonthData.Data[i].YValues);
+      end;
+    end;
+    Close;
+
+  finally
+    FreeAndNil(Qry);
+    RecordTypeMap.Free;
+    MonthData.Free;
+  end;
+end;
+
+procedure TfrmTaxa.LoadNestFateChart;
+var
+  Qry: TSQLQuery;
+  L, S, U: Integer;
+begin
+  DMT.lcsNestFate.Clear;
+  L := 0;
+  S := 0;
+  U := 0;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+
+    // Load monthly counts
+    Clear;
+    Add('SELECT nest_fate, count(*) AS counter FROM nests');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY nest_fate');
+    Add('ORDER BY nest_fate');
+
+    ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+    Open;
+    if RecordCount > 0 then
+    begin
+      First;
+      while not EOF do
+      begin
+        case FieldByName('nest_fate').AsString of
+          'L': L := FieldByName('counter').AsInteger;
+          'S': S := FieldByName('counter').AsInteger;
+          'U': U := FieldByName('counter').AsInteger;
+        end;
+
+        Next;
+      end;
+
+      // Adicionar ao ChartSource
+      DMT.lcsNestFate.Add(0, L, rsNestLost, clRedBG1Light);
+      DMT.lcsNestFate.Add(0, S, rsNestSuccess, clYellowBGLight);
+      DMT.lcsNestFate.Add(0, U, rsNestUnknown, clSilver);
+    end;
+    Close;
+
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmTaxa.LoadRecordsMap;
+var
+  Qry: TSQLQuery;
+  poi: TGpsPoint;
+  rp: TRealPoint;
+  category: Integer;
+begin
+  // Clear GPS points in the map
+  mapView.GPSItems.Clear(0);
+  mapView.GPSItems.Clear(1);
+  mapView.GPSItems.Clear(2);
+  mapView.GPSItems.Clear(3);
+  mapView.Refresh;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+    // Load coordinates from database
+    Add('SELECT DISTINCT longitude, latitude, ''C'' AS record_type FROM captures');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
+    Add('UNION');
+    Add('SELECT DISTINCT longitude, latitude, ''S'' AS record_type FROM sightings');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
+    Add('UNION');
+    Add('SELECT DISTINCT longitude, latitude, ''N'' AS record_type FROM nests');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
+    Add('UNION');
+    Add('SELECT DISTINCT longitude, latitude, ''E'' AS record_type FROM specimens');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
+
+    ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+    Open;
+    if RecordCount > 0 then
+    begin
+      First;
+      while not EOF do
+      begin
+        // Record type will define the marker color
+        case FieldByName('record_type').AsString of
+          'C': category := 0;
+          'S': category := 1;
+          'N': category := 2;
+          'E': category := 3;
+        end;
+
+        // Prepare and add a GPS point to the map
+        rp.Lon := FieldByName('longitude').AsFloat;
+        rp.Lat := FieldByName('latitude').AsFloat;
+        if (not (rp.Lon = 0) and not (rp.Lat = 0)) then
+        begin
+          poi := TGpsPoint.CreateFrom(rp);
+
+          mapView.GPSItems.Add(poi, category);
+        end;
+
+        Next;
+      end;
+
+      // Update zoom
+      if (mapView.GPSItems.Count > 0) then
+      begin
+        mapView.ZoomOnArea(mapView.GPSItems.BoundingBox);
+        if mapView.Zoom > 14 then
+          mapView.Zoom := 14
+        else
+          mapView.Zoom := mapView.Zoom - 1;
+      end;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmTaxa.LoadYearlyChart;
+var
+  Qry: TSQLQuery;
+  YearData: specialize TFPGMap<Integer, TChartCounts>;
+  FYear: Integer;
+  RecordTypeIndex, i: Integer;
+  RecordTypeMap: specialize TFPGMap<String, Integer>;
+  FCounts: TChartCounts;
+begin
+  DMT.lcsYearly.Clear;
+
+  // Initialize the maps
+  YearData := specialize TFPGMap<Integer, TChartCounts>.Create;
+  RecordTypeMap := specialize TFPGMap<String, Integer>.Create;
+
+  // Map record_type to indexes
+  RecordTypeMap.Add(rsTitleCaptures, 0);
+  RecordTypeMap.Add(rsTitleSightings, 1);
+  RecordTypeMap.Add(rsTitleNests, 2);
+  RecordTypeMap.Add(rsTitleEggs, 3);
+  RecordTypeMap.Add(rsCaptionFeathers, 4);
+  RecordTypeMap.Add(rsTitleSpecimens, 5);
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+
+    // Load yearly counts
+    Clear;
+    Add('SELECT');
+    Add('  CAST(strftime(''%Y'', capture_date) AS INTEGER) AS ano,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleCaptures + ''' AS record_type');
+    Add('FROM captures');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY ano');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%Y'', sighting_date) AS INTEGER) AS ano,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleSightings + ''' AS record_type');
+    Add('FROM sightings');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY ano');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%Y'', found_date) AS INTEGER) AS ano,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleNests + ''' AS record_type');
+    Add('FROM nests');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY ano');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%Y'', measure_date) AS INTEGER) AS ano,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleEggs + ''' AS record_type');
+    Add('FROM eggs');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (measure_date NOTNULL)');
+    Add('GROUP BY ano');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  CAST(strftime(''%Y'', sample_date) AS INTEGER) AS ano,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsCaptionFeathers + ''' AS record_type');
+    Add('FROM feathers');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+    Add('GROUP BY ano');
+    Add('UNION ALL');
+
+    Add('SELECT');
+    Add('  collection_year AS ano,');
+    Add('  COUNT(*) AS tally,');
+    Add('  ''' + rsTitleSpecimens + ''' AS record_type');
+    Add('FROM specimens');
+    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) and (ano > 0)');
+    Add('GROUP BY ano');
+
+    Add('ORDER BY ano, record_type');
+
+    ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+    Open;
+    if RecordCount > 0 then
+    begin
+      First;
+      while not EOF do
+      begin
+        FYear := FieldByName('ano').AsInteger;
+        RecordTypeIndex := RecordTypeMap[FieldByName('record_type').AsString];
+
+        // Verificar se o ano já existe no YearData
+        if not YearData.TryGetData(FYear, FCounts) then
+        begin
+          // Criar uma nova estrutura para o ano
+          FCounts.XValue := FYear;
+          SetLength(FCounts.YValues, RecordTypeMap.Count);
+          FillChar(FCounts.YValues[0], Length(FCounts.YValues) * SizeOf(Double), 0);
+        end;
+
+        // Atualizar a contagem para o tipo de registro correspondente
+        FCounts.YValues[RecordTypeIndex] := FieldByName('tally').AsFloat;
+
+        // Salvar de volta no dicionário
+        YearData.AddOrSetData(FYear, FCounts);
+
+        Next;
+      end;
+
+      // Iterar pelos anos e adicionar os dados
+      for i := 0 to YearData.Count - 1 do
+      begin
+        // Adicionar ao ChartSource
+        DMT.lcsYearly.AddXYList(YearData.Keys[i], YearData.Data[i].YValues);
+      end;
+    end;
+    Close;
+
+  finally
+    FreeAndNil(Qry);
+    RecordTypeMap.Free;
+    YearData.Free;
+  end;
+end;
+
+procedure TfrmTaxa.mapViewDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+const
+  R = 8;
+var
+  P: TPoint;
+  ext: TSize;
+begin
+  // Screen coordinates of the GPS point
+  P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
+
+  // Draw the GPS point with MapMarker bitmap
+  //img := TBitmap.Create;
+  //try
+  //  img.TransparentColor := clBlack;
+  //  img.Transparent := True;
+  //  img.Width := 16;
+  //  img.Height := 16;
+  //  DMM.iMaps.DrawForPPI(img.Canvas, 0, 0, APoint.IdOwner, 16, 96, 1);
+  //  ADrawer.DrawBitmap(P.X - mapGeo.POIImagesWidth div 2, P.Y - mapGeo.POIImagesWidth, img, True);
+  //finally
+  //  img.Free;
+  //end;
+  //end
+  //else
+  //begin
+    // Draw the GPS point as a circle
+    if APoint.IdOwner = 1 then
+    begin
+      ADrawer.BrushColor := clYellowFG4Dark;
+      ADrawer.PenColor := clYellowBGLight;
+    end
+    else
+    if APoint.IdOwner = 2 then
+    begin
+      ADrawer.BrushColor := clRedFGDark;
+      ADrawer.PenColor := clRedBGLight;
+    end
+    else
+    if APoint.IdOwner = 3 then
+    begin
+      ADrawer.BrushColor := clVioletFG1Dark;
+      ADrawer.PenColor := clVioletBG2Dark;
+    end
+    else
+    begin
+      ADrawer.BrushColor := clGreenBGDark;
+      ADrawer.PenColor := clGreenFG2Light;
+    end;
+    ADrawer.BrushStyle := bsSolid;
+    ADrawer.PenWidth := 2;
+    ADrawer.Ellipse(P.X - R, P.Y - R, P.X + R, P.Y + R);
+    P.Y := P.Y + R;
+  //end;
+
+  // Draw the caption of the GPS point
+  ext := ADrawer.TextExtent(APoint.Name);
+  ADrawer.BrushColor := clWhite;
+  ADrawer.BrushStyle := bsClear;
+  ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
+end;
+
+procedure TfrmTaxa.pmfShowRecordedTaxaClick(Sender: TObject);
+begin
+  TimerFind.Enabled := False;
+  TimerFind.Enabled := True;
+end;
+
 procedure TfrmTaxa.sbBirdsOfTheWorldClick(Sender: TObject);
 var
   FUrlSearch: String;
@@ -590,6 +1143,12 @@ begin
   OpenUrl('https://www.iucnredlist.org/search?query=' + FUrlSearch);
 end;
 
+procedure TfrmTaxa.sbOptionsSearchClick(Sender: TObject);
+begin
+  with TColorSpeedButton(Sender).ClientToScreen(point(0, TColorSpeedButton(Sender).Height + 1)) do
+    pmOptions.Popup(X, Y);
+end;
+
 procedure TfrmTaxa.sbPrintClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
@@ -611,8 +1170,10 @@ function TfrmTaxa.Search(AValue: String): Boolean;
 var
   i, g: Longint;
   Crit: TCriteriaType;
+  subRecorded: String;
 begin
   Result := False;
+  subRecorded := EmptyStr;
 
   {$IFDEF DEBUG}
   LogDebug('Search value: ' + aValue);
@@ -666,6 +1227,27 @@ begin
         FSearch.Fields[g].Fields.Add(TSearchField.Create('quick_code', 'Quick code', sdtText, Crit,
           False, aValue));
       end;
+    end;
+
+    if pmfShowRecordedTaxa.Checked then
+    begin
+      subRecorded := 'SELECT DISTINCT subi.taxon_id FROM individuals AS subi ' +
+        'UNION ALL ' +
+        'SELECT DISTINCT subc.taxon_id FROM captures AS subc ' +
+        'UNION ALL ' +
+        'SELECT DISTINCT subs.taxon_id FROM sightings AS subs ' +
+        'UNION ALL ' +
+        'SELECT DISTINCT subf.taxon_id FROM feathers AS subf ' +
+        'UNION ALL ' +
+        'SELECT DISTINCT subn.taxon_id FROM nests AS subn ' +
+        'UNION ALL ' +
+        'SELECT DISTINCT sube.taxon_id FROM eggs AS sube ' +
+        'UNION ALL ' +
+        'SELECT DISTINCT subsp.taxon_id FROM specimens AS subsp';
+
+      g := FSearch.Fields.Add(TSearchGroup.Create);
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_id', 'Taxon ID', sdtInteger, crIn,
+        False, subRecorded));
     end;
 
     //GetFilters;
@@ -778,7 +1360,15 @@ begin
   GetEggsCount;
 
   sbWikiaves.Visible := dsLink.DataSet.FieldByName('cbro_taxonomy').AsBoolean = True;
+  sbBirdsOfTheWorld.Visible := dsLink.DataSet.FieldByName('ebird_code').AsString <> EmptyStr;
 
+  LoadRecordsMap;
+
+  LoadMonthlyChart;
+  LoadYearlyChart;
+
+  GetNestProductivity;
+  LoadNestFateChart;
 end;
 
 procedure TfrmTaxa.TimerFindTimer(Sender: TObject);

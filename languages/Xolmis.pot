@@ -1123,6 +1123,7 @@ msgid "Nest"
 msgstr ""
 
 #: cbs_datacolumns.rscnestfate
+msgctxt "cbs_datacolumns.rscnestfate"
 msgid "Nest fate"
 msgstr ""
 
@@ -4387,6 +4388,11 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+#: cbs_locale.rsmonth
+msgctxt "cbs_locale.rsmonth"
+msgid "Month"
+msgstr ""
+
 #: cbs_locale.rsmonthly
 msgid "Monthly"
 msgstr ""
@@ -4416,6 +4422,11 @@ msgstr ""
 #: cbs_locale.rsnestbuilding
 msgctxt "cbs_locale.rsnestbuilding"
 msgid "Building"
+msgstr ""
+
+#: cbs_locale.rsnestfate
+msgctxt "cbs_locale.rsnestfate"
+msgid "Nest fate"
 msgstr ""
 
 #: cbs_locale.rsnestfemale
@@ -4585,6 +4596,11 @@ msgstr ""
 #: cbs_locale.rsnouserfound
 msgctxt "cbs_locale.rsnouserfound"
 msgid "no user found"
+msgstr ""
+
+#: cbs_locale.rsnumberofrecords
+msgctxt "cbs_locale.rsnumberofrecords"
+msgid "Number of records"
 msgstr ""
 
 #: cbs_locale.rsoneselected
@@ -4833,6 +4849,10 @@ msgstr ""
 
 #: cbs_locale.rsrecordok
 msgid "Record OK"
+msgstr ""
+
+#: cbs_locale.rsrecordperyear
+msgid "Records per year"
 msgstr ""
 
 #: cbs_locale.rsrecords
@@ -5088,6 +5108,10 @@ msgstr ""
 #: cbs_locale.rssampletongue
 msgctxt "cbs_locale.rssampletongue"
 msgid "Tongue"
+msgstr ""
+
+#: cbs_locale.rsseasonality
+msgid "Seasonality"
 msgstr ""
 
 #: cbs_locale.rsseen
@@ -6016,6 +6040,11 @@ msgstr ""
 
 #: cbs_locale.rswrongvalues
 msgid "Wrong values"
+msgstr ""
+
+#: cbs_locale.rsyear
+msgctxt "cbs_locale.rsyear"
+msgid "Year"
 msgstr ""
 
 #: tbatchbands.caption
@@ -15115,6 +15144,26 @@ msgctxt "tfrmtaxa.caption"
 msgid "Taxa"
 msgstr ""
 
+#: tfrmtaxa.chartseasonality.axislist[0].title.caption
+msgctxt "tfrmtaxa.chartseasonality.axislist[0].title.caption"
+msgid "Number of records"
+msgstr ""
+
+#: tfrmtaxa.chartseasonality.axislist[1].title.caption
+msgctxt "tfrmtaxa.chartseasonality.axislist[1].title.caption"
+msgid "Month"
+msgstr ""
+
+#: tfrmtaxa.chartyear.axislist[0].title.caption
+msgctxt "tfrmtaxa.chartyear.axislist[0].title.caption"
+msgid "Number of records"
+msgstr ""
+
+#: tfrmtaxa.chartyear.axislist[1].title.caption
+msgctxt "tfrmtaxa.chartyear.axislist[1].title.caption"
+msgid "Year"
+msgstr ""
+
 #: tfrmtaxa.ckcbro.caption
 msgctxt "tfrmtaxa.ckcbro.caption"
 msgid "CBRO"
@@ -15205,8 +15254,16 @@ msgstr ""
 msgid "Specimens (0)"
 msgstr ""
 
+#: tfrmtaxa.lblmeannestproductivity.caption
+msgid "mean nest productivity"
+msgstr ""
+
 #: tfrmtaxa.lblvalidname.caption
 msgid "Synonym of"
+msgstr ""
+
+#: tfrmtaxa.pmfshowrecordedtaxa.caption
+msgid "Show only the recorded taxa"
 msgstr ""
 
 #: tfrmtaxa.pmprinttaxa.caption
@@ -15261,6 +15318,11 @@ msgstr ""
 msgid "IUCN Red List"
 msgstr ""
 
+#: tfrmtaxa.sboptionssearch.hint
+msgctxt "tfrmtaxa.sboptionssearch.hint"
+msgid "Options"
+msgstr ""
+
 #: tfrmtaxa.sbprint.hint
 msgctxt "tfrmtaxa.sbprint.hint"
 msgid "Print records"
@@ -15273,6 +15335,11 @@ msgstr ""
 
 #: tfrmtaxa.sbwikiaves.hint
 msgid "WikiAves"
+msgstr ""
+
+#: tfrmtaxa.txtnestproductivity.caption
+msgctxt "tfrmtaxa.txtnestproductivity.caption"
+msgid "0"
 msgstr ""
 
 #: tlstbreedingstatus.caption

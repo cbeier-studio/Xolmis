@@ -190,6 +190,12 @@ type
     property OtherPortugueseNames: String read FOtherPortugueseNames write FOtherPortugueseNames;
   end;
 
+type
+  TChartCounts = record
+    XValue: Integer;
+    YValues: array of Double;
+  end;
+
 var
   ZooRankDict: specialize TFPGMap<String, TZooRank>;
 

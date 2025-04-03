@@ -120,12 +120,15 @@ object frmTaxa: TfrmTaxa
       Rounding.RoundY = 4
       TabOrder = 0
       object iconSearch: TImage
+        AnchorSideLeft.Control = pSearch
+        AnchorSideTop.Control = pSearch
+        AnchorSideTop.Side = asrCenter
         Left = 4
-        Height = 27
-        Top = 1
-        Width = 27
+        Height = 16
+        Top = 6
+        Width = 16
         AntialiasingMode = amOn
-        Align = alLeft
+        AutoSize = True
         Center = True
         ImageWidth = 16
         Images = iSearch
@@ -133,13 +136,16 @@ object frmTaxa: TfrmTaxa
         Transparent = True
       end
       object eSearch: TEdit
+        AnchorSideLeft.Control = iconSearch
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = pSearch
         AnchorSideTop.Side = asrCenter
-        Left = 39
-        Height = 24
-        Top = 3
-        Width = 217
-        Align = alClient
-        Anchors = [akLeft, akRight]
+        AnchorSideRight.Control = sbOptionsSearch
+        Left = 28
+        Height = 20
+        Top = 4
+        Width = 200
+        Anchors = [akTop, akLeft, akRight]
         BorderSpacing.Top = 3
         BorderSpacing.Bottom = 2
         BorderStyle = bsNone
@@ -154,12 +160,18 @@ object frmTaxa: TfrmTaxa
         OnKeyPress = FormKeyPress
       end
       object sbClearSearch: TColorSpeedButton
+        AnchorSideTop.Control = pSearch
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pSearch
+        AnchorSideRight.Side = asrBottom
         Left = 264
-        Height = 23
+        Height = 20
         Hint = 'Clear search'
-        Top = 3
+        Top = 4
         Width = 20
-        Align = alRight
+        AllowAllUp = True
+        Anchors = [akTop, akRight]
+        AutoSize = True
         BorderSpacing.Top = 3
         BorderSpacing.Bottom = 3
         Flat = True
@@ -173,6 +185,46 @@ object frmTaxa: TfrmTaxa
         ParentFont = False
         ParentShowHint = False
         OnClick = sbClearSearchClick
+        TextAutoSize = True
+        Toggle = False
+        Pressed = False
+        PopupMode = False
+        StateNormal.Color = 16382457
+        StateNormal.BorderColor = 11382189
+        StateNormal.BorderWidth = 0
+        StateHover.Color = 15987699
+        StateHover.BorderColor = 14120960
+        StateHover.BorderWidth = 0
+        StateActive.Color = 15658734
+        StateActive.BorderColor = 10048512
+        StateActive.BorderWidth = 0
+        StateDisabled.Color = 13158600
+        StateDisabled.BorderColor = 12566463
+        StateDisabled.BorderWidth = 0
+      end
+      object sbOptionsSearch: TColorSpeedButton
+        AnchorSideTop.Control = pSearch
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = sbClearSearch
+        Left = 236
+        Height = 20
+        Hint = 'Options'
+        Top = 4
+        Width = 20
+        AllowAllUp = True
+        Anchors = [akTop, akRight]
+        AutoSize = True
+        BorderSpacing.Top = 1
+        BorderSpacing.Bottom = 1
+        Flat = True
+        Font.Color = clBlack
+        Images = iSearch
+        ImageIndex = 2
+        ShowCaption = False
+        ShowHint = True
+        ParentFont = False
+        ParentShowHint = False
+        OnClick = sbOptionsSearchClick
         TextAutoSize = True
         Toggle = False
         Pressed = False
@@ -614,11 +666,11 @@ object frmTaxa: TfrmTaxa
         AnchorSideLeft.Side = asrCenter
         AnchorSideTop.Control = scrollData
         Left = 18
-        Height = 648
+        Height = 1872
         Top = 0
         Width = 750
         BevelOuter = bvNone
-        ClientHeight = 648
+        ClientHeight = 1872
         ClientWidth = 750
         Color = clWindow
         Constraints.MinWidth = 749
@@ -1053,6 +1105,253 @@ object frmTaxa: TfrmTaxa
             OnClick = lblLinkEggsClick
             OnMouseEnter = txtValidNameMouseEnter
             OnMouseLeave = txtValidNameMouseLeave
+          end
+        end
+        object mapView: TMapView
+          Left = 0
+          Height = 363
+          Top = 486
+          Width = 750
+          Align = alTop
+          DownloadEngine = mapView.BuiltInDLE
+          DrawingEngine = MvBGRA
+          Font.Color = clBlack
+          MapProvider = 'OpenStreetMap Mapnik'
+          OnDrawGpsPoint = mapViewDrawGpsPoint
+        end
+        object chartSeasonality: TChart
+          Left = 0
+          Height = 320
+          Top = 865
+          Width = 750
+          AxisList = <          
+            item
+              Grid.Visible = False
+              AxisPen.Visible = True
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.LabelFont.Orientation = 900
+              Title.Visible = True
+              Title.Caption = 'Number of records'
+              Title.LabelBrush.Style = bsClear
+            end          
+            item
+              Grid.Visible = False
+              Intervals.Count = 1
+              Intervals.MaxLength = 12
+              Intervals.MinLength = 12
+              Intervals.Options = [aipUseCount, aipUseMaxLength, aipUseMinLength, aipInteger]
+              Alignment = calBottom
+              AxisPen.Visible = True
+              Marks.LabelBrush.Style = bsClear
+              Marks.Range.Max = 12
+              Marks.Range.Min = 1
+              Marks.Range.UseMax = True
+              Marks.Range.UseMin = True
+              Minors = <>
+              Range.Max = 12
+              Range.Min = 1
+              Title.Visible = True
+              Title.Caption = 'Month'
+              Title.LabelBrush.Style = bsClear
+            end>
+          Extent.XMax = 12
+          Extent.XMin = 1
+          Frame.Visible = False
+          GUIConnector = chartBGRA
+          Legend.Visible = True
+          Title.Text.Strings = (
+            'Seasonality'
+          )
+          Title.Visible = True
+          Align = alTop
+          BorderSpacing.Top = 16
+          ParentColor = True
+          object monthlySeries: TBarSeries
+            Legend.Multiplicity = lmStyle
+            Title = 'Captures'
+            BarBrush.Color = 4946723
+            BarPen.Style = psClear
+            Source = DMT.lcsMonthly
+            Styles = DMT.RecordTypeStyles
+          end
+        end
+        object chartYear: TChart
+          Left = 0
+          Height = 320
+          Top = 1201
+          Width = 750
+          AxisList = <          
+            item
+              Grid.Visible = False
+              AxisPen.Visible = True
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.LabelFont.Orientation = 900
+              Title.Visible = True
+              Title.Caption = 'Number of records'
+              Title.LabelBrush.Style = bsClear
+            end          
+            item
+              Grid.Visible = False
+              Intervals.Count = 1
+              Intervals.MaxLength = 12
+              Intervals.MinLength = 12
+              Intervals.Options = [aipInteger]
+              Alignment = calBottom
+              AxisPen.Visible = True
+              Marks.LabelBrush.Style = bsClear
+              Marks.Range.Max = 12
+              Marks.Range.Min = 1
+              Minors = <>
+              Range.Max = 12
+              Range.Min = 1
+              Title.Visible = True
+              Title.Caption = 'Year'
+              Title.LabelBrush.Style = bsClear
+            end>
+          Extent.XMax = 12
+          Extent.XMin = 1
+          Frame.Visible = False
+          GUIConnector = chartBGRA
+          Legend.Visible = True
+          Title.Text.Strings = (
+            'Records per year'
+          )
+          Title.Visible = True
+          Align = alTop
+          BorderSpacing.Top = 16
+          ParentColor = True
+          object yearlySeries: TBarSeries
+            Legend.Multiplicity = lmStyle
+            BarBrush.Color = 4946723
+            BarPen.Style = psClear
+            Source = DMT.lcsYearly
+            Styles = DMT.RecordTypeStyles
+          end
+        end
+        object pBreedingStats: TPanel
+          Left = 0
+          Height = 295
+          Top = 1537
+          Width = 750
+          Align = alTop
+          BorderSpacing.Top = 16
+          BevelOuter = bvNone
+          ClientHeight = 295
+          ClientWidth = 750
+          ParentBackground = False
+          TabOrder = 5
+          object pNestProductivity: TBCPanel
+            Left = 0
+            Height = 295
+            Top = 0
+            Width = 170
+            Align = alLeft
+            BorderSpacing.Right = 16
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 16
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvRaised
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = False
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            TabOrder = 0
+            object txtNestProductivity: TLabel
+              AnchorSideLeft.Control = pNestProductivity
+              AnchorSideTop.Control = pNestProductivity
+              AnchorSideTop.Side = asrCenter
+              Left = 17
+              Height = 59
+              Top = 118
+              Width = 23
+              Caption = '0'
+              Font.Height = -43
+              ParentFont = False
+            end
+            object lblMeanNestProductivity: TLabel
+              AnchorSideLeft.Control = pNestProductivity
+              AnchorSideTop.Control = txtNestProductivity
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pNestProductivity
+              AnchorSideRight.Side = asrBottom
+              Left = 17
+              Height = 42
+              Top = 177
+              Width = 136
+              Anchors = [akTop, akLeft, akRight]
+              Caption = 'mean nest productivity'
+              Font.Height = -16
+              ParentFont = False
+              WordWrap = True
+            end
+          end
+          object chartNestFate: TChart
+            Left = 186
+            Height = 295
+            Top = 0
+            Width = 564
+            AxisList = <            
+              item
+                Visible = False
+                Marks.LabelBrush.Style = bsClear
+                Minors = <>
+                Title.LabelFont.Orientation = 900
+                Title.LabelBrush.Style = bsClear
+              end            
+              item
+                Visible = False
+                Alignment = calBottom
+                Marks.LabelBrush.Style = bsClear
+                Minors = <>
+                Title.LabelBrush.Style = bsClear
+              end>
+            Frame.Visible = False
+            GUIConnector = chartBGRA
+            Title.Text.Strings = (
+              'Nest fate'
+            )
+            Title.Visible = True
+            Align = alClient
+            Color = clWindow
+            object NestFateSeries: TPieSeries
+              Legend.Visible = False
+              Marks.Format = '%2:s'
+              Marks.Frame.Color = clWindow
+              Marks.Frame.Visible = False
+              Marks.LabelBrush.Color = clWindow
+              Marks.LinkPen.Visible = False
+              Marks.Style = smsLabel
+              Source = DMT.lcsNestFate
+            end
           end
         end
       end
@@ -1709,7 +2008,7 @@ object frmTaxa: TfrmTaxa
     Left = 144
     Top = 344
     Bitmap = {
-      4C7A0200000010000000100000004F0100000000000078DA6360183CC0425797
+      4C7A030000001000000010000000900100000000000078DA6360183CC0425797
       09887380F82010BF80D2203E13117A998178A7B59ECEDE206B35F7EA40592510
       0DE203C57780E409E82FB6D1D7D9F9B29799EFFB54065E1806F141E2207902FA
       CF84D9AADA21EB8561A0B83D50FE3401FD5FA6278A4960D30F1207C913D07F36
@@ -1719,42 +2018,57 @@ object frmTaxa: TfrmTaxa
       113920B626429D21102B60115705E29740EC8B47AF2310BF06627D1CF2A65033
       BCB1C8D943F53A10709F3910BF02624F24313BA898139161610155EF0EC43650
       B63389E16909F50B48AF0B19F16109D50BC2AE24EA25DBFD38C2CF9698F003CA
-      9B41D579911A7F4071156878F910917E0CB0C84981DC4E84FF40694C65B0E43B
-      002B3CCBAC
+      9B41D579911A7F4071156878F910917E0CB0C84981DC4E84FF40694C6534C7D3
+      07282A2A3A02F1552876C4A32E0D881BB0E027BB77EFFE0FC240F663A8580216
+      FD0924E84F23D1FD57A0D871B884379EF0C7165EE8185FF813A33F6DB88437A5
+      0000261119C3
     }
     BitmapAdv = {
-      4C69020000004C7A0200000014000000140000008B0100000000000078DA6360
-      180516BABA5C405C03C47B80F819101F06E24E201622C32C1D20BE696BA0BD38
-      D05ACDABDC5F4E25C446CDC5DE507B2250FC31103B90601607105F7337D54CFA
-      3E9581171D0759ABB903E59F02B12891E69500DDB5129B5930EC60A8DD015437
-      9548F336F8586884E2332FCE51C51CA8EE2291E65D4F725132C467DEBA5C4151
-      A0BA1F40CC4884791B81EE0BC1EB3E276533A0BA1B44BAAF14187ECBF0879F56
-      2B50DD0C22CDE304D9ED65A61187CD2C50BA01CABF03624912D28C3E10DFB633
-      D09E074A1FF521320AA1B6AA0EC078ED018ABF05E25740EC45629AE606E20620
-      DE0FC4AF81F80C104F006231200685DF4B52CD2460DF503273FD68093A0AA805
-      64B48F1C01626B22D48503F10A22D4B901F12B20B6C2A32614889F03B12E916E
-      74879A6981452E18885F00B13E89FEF604E297406C8624160435CB80CCB0F482
-      9A690AC40150B30C298C1F1FA8DF41E61A5121BEA9661E50BF37927FFDA16C43
-      32CDC2161F81E4C40750BD07D48FE694A617A4F46C49203D83CCD4A3777E1B05
-      A40100858DFE174C7A020000001800000018000000300200000000000078DAED
-      95D92B447114C767EC941765493C1A0F63504A0C43229414B2BD789292E54161
-      EC92B2EFD9CA6EB2647B52FE01CF642722CBFF4092F13D756E6962DCDF9D1949
-      F3AB4FDD997BCEE7DCDFEF77CFEFAA54CEA164C4E9741EA00C2C801370014CA0
-      1278D9E88E0487C01CAF8BB84D8CD26E1AA2B51BB8BEA6FFB856AC42B70EBCC0
-      759FAB0FCF7A9E50F97E263F5193867B3788790371826E777080FC87EEE2E050
-      4BB7C44CA97F2062AE107B09BC05FCA534FF1C7D78F6776E8902832605B1EFA0
-      46C03F4BEBF2935B02B1B4EF1B02FE43ECE58E5C3FF67C0939B702FE23F8B705
-      FC8BC87912F0CF61CE7702EB738C9C3D013FF593392F4193F993BB2829CCC0FB
-      6B14ECD9239AC3484950F077EEF50ABF00C49CD3DA001FC11E8806AFD4B79847
-      86A5BBD010968C7B17DCC75B40ADA08763C0299F0F97D8C75560C2F519AFC923
-      58E31AA30A6B78822AB002A857EFC12EA8A3352127E8B3A5868C67F88F353A1D
-      F43DA21A2D8EF23B8773FCC608D1EEE7805AA016C8710346A097115B09CC6044
-      4E0DC4B88215CEC99511AF06431C3F64AD06BB4D1C5B2F305F353F3FE50D7C55
-      83DDCB1CD3A0601FA8C618E7F77DAEC1EE45BED764C35E538D71F6F4F06F1730
-      CFFFB5D8E17D22E724FBBAC02C5FB7D9F19DA5679E622FD161E79E20FFB423FC
-      56D6A7DD4E6E697FBBBFD8DF561BDDD2FBD96BF17E528D05BED7ACD02DF557BF
-      95FE5AE2984641F730E70D0A9C0F4699FE728E1F5670BEE5CB884F07D50ACEE7
-      3690EAFCC2FDADF101E8E4C3E2
+      4C69020000004C7A030000001400000014000000250200000000000078DAED94
+      3D485B511886E36615C1165314444CA221F61ACD158C69536B2C62340A319AD0
+      2D83BB9B92451287145AD2A13F085D14FA63308BAD5B07A143337671883F3864
+      90C424125725CBF1BDE1B404B9DE9CFB8320DC0F1E48CE79F3DEEF7CE7BD3118
+      F472D9ED4D6015EC813CF803DE82470ABCFAC1F1A883FB16705B7D117F574FF0
+      B975628CE73E60FD14786478358203EF70DFE2E5BAA1E526F36EAB17FB396064
+      F45B465F2931AF7F7878EE0D74EB8C7E3F675DB690945F78BC6704BA7D46BFC3
+      C509332FE5B7B3F4D008DD156860F0DB457F41C9FE5E5A9CD01D31F6B782F925
+      A5E7F7E435749F19FD1E08CFF6396D61312F2137D8BF001D323233084E5E38B8
+      4D211FB160677768B4D7837B7D87F53228019FCC4C378335F01B9C83BFE03D78
+      0C84F915E57AD679DE7DF2FCA1FF83EAA5557572E9347033E85E816D06DD2428
+      8167129A10380376C61EBDD4D325B2B7000A6050E6B9A74111386BD6E6A99743
+      E12C7DD47318CC512F5EE5FDCCD2B30BBE431ADCB7667EF8FD4CCD79FDF433AF
+      D04BEC3E024AEE03FA297AC611B579A9C9F3D33A79163C07EEFA7DD34B2F2DCA
+      643275811428804DD0AAD26F379148905C2E47229108C1F78F75F4BF00B90D8B
+      C542CAE532A9542A2493C9DCDC4F6AD0DF270DE6B74DE7B7A1767E7AC99A7D3B
+      D80245F0151855FA25E3F178351BB1584CC8C686028FFF79369BCD249FCF57B3
+      9BCD668954CE59F25CDB5F341A55D49FC8FCBED3EC7E016D7AAAC4EB1A81C273
+      684C7A030000001800000018000000340300000000000078DAED955B48145118
+      C7DDB43B411469493DB8A082B6A624A29B6B446141846E68D9C3C282D446D643
+      B4E5B699154196E5252F156479C30A2FF95204F9EA4BFB9098952E859712237A
+      F3656D914EFF4FCEC8B2ACEE9C9931A8E6C00F6677BEEFF7CD3967BE331111FA
+      5032324DA615E0386806436018B48312B04AA53B050C009665DA3E9ABD23B9CB
+      929ADC89EB4FF41FAF95A1D06D0233704D58CD89077D8D11EB0229C84ED8877B
+      9F11330B3205DDCBC15BE47FA9288ADD16EC967858BC2906315EC48E80D502FE
+      629A7FBE39F1D0426E89424BC21EC4FE026705FC4DB42EE1DC1288A57DEF14F0
+      0F602F9FCBF563CF5B91332AE01F84BF47C0DF829C4901FF23CC794C607DDE21
+      E795809FFA891DDE9570209CFB684EBC85EF6FA960CF0ED21C6A6D9B6317723F
+      3BB5211A311F696DC01AC11E48057EEA5BCC637FB0FB88257E37EE0DF33EEE06
+      06053DBC13BCE7E7C308F6F10968C7F507BE265FC1535EE3AEC21A2BC169D001
+      A85727C00B709ED6849CA0524D0D19CFF02FD6B8BE44DF23AA51B6547E7DE8E3
+      4F8CADC9FDF9C0090C023951A0149865C49600066AE5D4404C24E8E0395619F1
+      0650CDE3AB17ABC1DDED3CF682C07C0DFCF929EF4EA81ADCDDC6635C0AF6816A
+      D4F1FCCAC01ADCDDC2EFB955EC35D568E09E9BFCF732F098FF57A6C1FB44CE7B
+      DC770334F1EB720DDF597AE6FBDC4B5CD3B827C8FF6029FC8BACCF158DDCD2FE
+      5684D8DFCB2ADDD2FB792BE8FDA41ACDFCDE25856EA9BF6E2FD25FAD3CE6A2A0
+      BB86E755099C0FA532FD27797C8D82F3AD40467C2E38A3E07C2E077BF52F9C3E
+      F4A16EC4C5C51582D7E01B6800460DDDD98059AD56E676BB595A5A1AC3EF3720
+      324C5E06B82A036F5E5E1EF3F97CCCEFF7338FC7437EA22D20262784BF8AC785
+      C5E572CDB989E9E96966341A83635EAA589FCAA4A424D6D7D7C7A6A6A698D3E9
+      24DF0C88D768FDD782A180679D05E7347E7F0C200B9C0031FF711FAD0776900B
+      A2347617819F01FB3809B668E4DE087ED8ED76363E3E3ED743E9E9E954A35385
+      B331B88FBC5EEF7C1FD5D7D733B9FD077A42F85302FABB8EE27A7B7BE7FD0E87
+      83F2BECB3C437265CCA79BFA94FAD366B349CF754CC3FD8D0615600CF40307F5
+      95FE75FABBC66FC7868B66
     }
   end
   object iSearchDark: TImageList
@@ -1762,7 +2076,7 @@ object frmTaxa: TfrmTaxa
     Left = 144
     Top = 408
     Bitmap = {
-      4C7A020000001000000010000000510100000000000078DA6360183CE0D7AF5F
+      4C7A0300000010000000100000007B0100000000000078DA6360183CE0D7AF5F
       8C409C0CC43B80F83E9406F11989D0CB04C41B81F83F107FFCF9F3C75A100DE5
       83C49908E8CF03A9FDF9FD4BEB8FE3B562DFA732F08268101F6A462E01FDA780
       F8D58F1DE12220BD300CE283C481F82401FD5F7EFEF83617592F0C83C481F21F
@@ -1772,40 +2086,50 @@ object frmTaxa: TfrmTaxa
       FD5033DA2848DFCD403C8B6114A0802533FF7B0271031033E351C308C48520B5
       58E42280F83F102FC6660654EF54A89A541CE6976133034D6F2B888FC78D2866
       90A217871924E9C5620608B793A817D9CD38C39408BD6D405C4EAC1958F43242
-      C5099A814B2F927C3981F4918C4B2F1633CAB1C81942D32023013F4602B1E360
-      C977000EFA1565
+      C5099A814B2F927C3981F4918C4B2F1633CAB1C81942D32023013F4602B1E368
+      8E27BACCE400E25028E62043FF5CA43A680E1E75C790D411C2C7A86D3F01FF87
+      4031C7687CD136FE465A7C0100E723E039
     }
     BitmapAdv = {
-      4C69020000004C7A020000001400000014000000880100000000000078DAED94
-      BB4A03411440B38AB1310A82A89D36A2AD9022F8057E4A2AB1B4B1168DAFC242
-      D04E41040DE203FF4054349A26A22868C08858189564677DC433A2615D363BB3
-      7974B9701866E772E6EEDC6102817A5896D50CA3B00557B00FE3D05A86AB0F92
-      5010C23C15666E95F180F93BDC42C4872B08E79011CF77C3F98540E80FF1988C
-      F03D05F7D0AEE91BF9A9CBE12A3A332783AC9B30AFE9DB84333757D129CC3839
-      094D5F4A98F9354F5FFE6D823C0186866F9BFD8F15F5AD9377AD59DF187C88A7
-      8B2157D7CD6E3FEB5958D6F4B5C8BDE1523C24C2FF5D7B03D476C8DA17F4FAB8
-      3361485BF29084B9C379C5183798BEC0A7ECBFECAFCEF9D99C6D3005479093F5
-      C212F4C064394E9BDB70CE2B75BAED5163677395DE21E90C55A3BE7AD43E5616
-      0B0DD00D86466E237429723AA100B35E4ED68210875785CF809897D3E6923951
-      8DFF28E9F4EBF27296EB2AE19CABC4E570CEFC7A2A72B99C97B2EF3E5C5155DF
-      FDB874EF92AECBCFFD74E437A9FAE8704E2B7C1D9055F5D1E64CD75FBDEAC637
-      88F191304C7A020000001800000018000000FC0100000000000078DAED954F28
-      44411CC7D79F84FC5B49A244E140890B07727354CAC1010717294A6E9292AB72
-      517B10F95F7B51E242EDB6CABF6437AC84A51C2822BB69977DF336B5BEEF35A4
-      657767E6ED96F4A63EF57AEF379FEFBC79336F0C06BD89B440209008DAC124D8
-      0307C0043A41B2467719D805C130D841A5A0BB02F8A8E75A7EF30CC8CFAE26F9
-      F9B201D7FDB877469F1150C3E94E02FB4A7F994866B23D982F990C99DF219BED
-      7932F14FD30C2748E1F077D17E2E62EBF9E1FE62AD391735C7B4B68FC33FA58E
-      FDCDDD1BD64D917D8F1DD46FE6F03B54FFA3B33EAAFF76ABEAF31B71F84F55FF
-      83A336AAFF7AB59CFAEF39FC73AAFFD5DD1DD5EF7D68A37E2B87BF57F5CBE450
-      3257E784F5CF18B35063A3FE610E7F2AB85033A4D70969B134FBD7B1FBBD63D4
-      FD043238F7401D78A7EFB18B79682517CB25E46CB6587EB96BC13DCBB77D7C0E
-      8C027BB851591711FE0F6E7043AF1D8219E96008AC2B6B0478C00E180559A0E0
-      732E453318C6F01F3336E2741E15D033635E3F9DF516AFB63C154C5010E9C758
-      670527A088C35D015C6081D11F0457A090D17D4FFB2C31D41B819D2523C46D01
-      E98CEF1B3543D4CD92A1D51D292356EE0819317387641C51AF822D56EE5FE69B
-      79ED0AB82DAC6B57D09DC6B33F78DD227B90D7AD3583C5AD250335A72CEE3019
-      5686FA7130CBE20EC9580123FA09FAB7DA077D76D208
+      4C69020000004C7A030000001400000014000000000200000000000078DAED97
+      CB2B44511CC7E7D260612825EC5810B2325978FC03FE0F0BB240D9D860478C67
+      518A1D25C5248FFC074218B3301A211413165E997BAEC7F81EDDD175BAEE39F7
+      3116BAA73EDDEE9CDF7CCEE3F7BBB7733D1EB7298A92093AC03238061BA01BE4
+      5870958130481022EF11F9650ED74DDCBF8273506BC295010EC035B9BF688C4F
+      787C49C84DB816BF47C015C813F4B57DCD8B717D3BAF77ABD12F833141DF1208
+      E9B9BE9D440E22665FD01721727CDED0177FEE471C0192806F05E3EF70E6B780
+      B813C1F9758137727754AFEB3A5D2B47FF039811F465D3B14194C4F66B7EBAD6
+      2B30B72DF47D8012133553032E15BA49445EC57E05705DC4ED2378A7F9A7F915
+      D93F8D33170C826DF042E70BA6413118B0E2D4B825F6DEAE536F8C143B331D7A
+      0F51A7CF89F9B92DF56D762A91068A8024109B0E0A3931052001468C9CE8CB00
+      41F0C4F1492060E4D4B8684C8BC03A7E759A751939ADBA7E718EDA7131CE61D5
+      63CBA5B35FDCBC9B70B5F0F26EC6255A4BA22E33F5C9C47B7979649C431C5F3E
+      78E0E551E3BC74DF7A6EFBA36F922CD00EE8F9B4C9EE9900FF1F57CF2A493A39
+      F1F34CBC1926757C0DA0D78033C611D2F4F92DACB70EDCAAAE0B50EA404ED241
+      C57F3C9FA96BAB04690EB8FC20A6EE3DFD3EADB2E0D0D64B94A98D434E2DF953
+      5DCF8CBB8F89EFB1B97F5ED0AA3EFBCD3437EE1B51BF7D025F56F9934C7A0300
+      00001800000018000000A20200000000000078DAED985F4814411CC7CF8A482B
+      F32ACC0AA2227D28907A2922F12DDF8220C2A2827A31A120A41709A17A12045F
+      A47B90C2CA848330A2208AEEB8A02C2A8F4A93EC120A2C3C2E3D09FFEDCC115C
+      DF59C658AED9BB99D9F1A1DA810F2C7BBFF9FC7667E7B7733B8180DF745A2693
+      5904EA4107780E5E8210380E9678746F037D20EB423FD8AEE9AE02D3DC334267
+      27CFD189442D9DF8B80FC767716E88FF46C04E45F762F082F5A7C40A93A74DE5
+      5628B0D2097954BF9692B9AB3CC70058AAE03FC1FB2548ACE10FF76FEEED5F8D
+      98B73CF68C82BFD3BEF6D974A3AB9B43A753C7B83FACE08FDBFED4C09E82FED1
+      273BE69F91827FD0F627E3BB0AFA47EE5672FF9882FFBAED9F499F2AE89F4A1E
+      E2FEA882BFD1F653F2DA0A5797B9FAAF054B1113E3FE0B0AFE6560D8CE61CDB4
+      5BDD5B5609AF7D6EEA32777F072B146B6037F8C9EFA30FE370900CF76C26435D
+      9BE88FAF07702EE2A8E30F20A851C3356C5EE4793FA4C1677E1CD7CC51029AC1
+      7D3647C02478062E825250313F96BA3924AEE15FCCF17081D6A30ABE66DCF057
+      67BF2D54EBE9CC163174FA49C645C13BB051C15D0512E0A6A43F0B3E810D92EE
+      31DEE796447C10F4CBE4C871474089E4FD16CCA1EB96C9E1D59D2F8729779E1C
+      C6DC3939DE702F2366CA2D186FE9B9ABE18EC8CE5D4D77B14A7DA8BA756A50D5
+      ED35878CDB4B0EC40CCAB85D724425E2DB40978C3B27472F68F15750BFF9CDF3
+      7FFDC3E03148822B60AB41778DE07BF215DBDB91F8EEBD2441C2E59BB5DB1153
+      2BF0B7E7F9DE55E58187F16913F8D85E59A5A1F15F0EDE3BDC6C2FE1BCE1F953
+      04F68206B0EE3FAEA3327012D479DDB315B88F00EA788EDFC07A43EE35605C30
+      0F6F7B70860CD6D71D81BFDA51DF1D2EFD5292EF903A89FBE915F88F1A7CBEE5
+      A0157CE1FB2EA7595DF9ABD3DFD57E0133DECA4E
     }
   end
   object TimerFind: TTimer
@@ -11686,5 +12010,22 @@ object frmTaxa: TfrmTaxa
       Enabled = False
       Visible = False
     end
+  end
+  object MvBGRA: TMvBGRADrawingEngine
+    Left = 216
+    Top = 409
+  end
+  object pmOptions: TPopupMenu
+    Left = 136
+    Top = 72
+    object pmfShowRecordedTaxa: TMenuItem
+      AutoCheck = True
+      Caption = 'Show only the recorded taxa'
+      OnClick = pmfShowRecordedTaxaClick
+    end
+  end
+  object chartBGRA: TChartGUIConnectorBGRA
+    Left = 208
+    Top = 265
   end
 end

@@ -158,7 +158,7 @@ type
   TCriteriaType = (crNone,
     crLike, crStartLike, crEqual, crNotEqual,
     crBetween, crMoreThan, crLessThan,
-    crNull, crNotNull
+    crNull, crNotNull, crIn
   );
   TTableFieldType = (ctString, ctInteger, ctFloat, ctDate, ctTime, ctDateTime, ctBoolean);
   TSearchDataType = (sdtText, sdtInteger, sdtFloat, sdtDate, sdtTime, sdtDateTime, sdtBoolean, sdtList,
@@ -172,7 +172,7 @@ const
   CriteriaOperators: array[TCriteriaType] of String = ('',
     'LIKE', 'LIKE', '=', '!=',
     'BETWEEN', '>=', '<=',
-    'ISNULL', 'NOTNULL');
+    'ISNULL', 'NOTNULL', 'IN');
   AndOrStr: array[TSQLAndOr] of String = ('', 'AND', 'OR');
   TiposCampo: array[TTableFieldType] of String = ('String', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean');
@@ -779,6 +779,7 @@ const
   MaskYearV2: String = '(strftime(''%%Y'', %s) %s %s AND %s)';
   MaskMonthYearV1: String = '(strftime(''%%Y-%%m'', %s) %s %s)';
   MaskMonthYearV2: String = '(strftime(''%%Y-%%m'', %s) %s %s AND %s)';
+  MaskIn: String = '(%s IN (%s))';
 var
   i, f: Integer;
   S, AndOrWhere, Msk, aSort: String;
@@ -789,56 +790,67 @@ var
   begin
     Result := MaskV1;
 
-    if aCriteriaType in [crNull, crNotNull] then
-      Result := MaskNull;
-
-    case aDataType of
-      sdtText, sdtList, sdtLookup:
-        Result := MaskV1;
-      sdtBoolean:
-        Result := MaskV1;
-      sdtInteger, sdtFloat:
-        begin
-          if aCriteriaType = crBetween then
-            Result := MaskV2
-          else
+    case aCriteriaType of
+      crNone: ;
+      crLike, crStartLike, crEqual, crNotEqual, crBetween, crMoreThan, crLessThan:
+      begin
+        case aDataType of
+          sdtText, sdtList, sdtLookup:
             Result := MaskV1;
+          sdtBoolean:
+            Result := MaskV1;
+          sdtInteger, sdtFloat:
+            begin
+              if aCriteriaType = crBetween then
+                Result := MaskV2
+              else
+                Result := MaskV1;
+            end;
+          sdtDate:
+            begin
+              if aCriteriaType = crBetween then
+                Result := MaskDateV2
+              else
+                Result := MaskDateV1;
+            end;
+          sdtTime:
+            begin
+              if aCriteriaType = crBetween then
+                Result := MaskTimeV2
+              else
+                Result := MaskTimeV1;
+            end;
+          sdtDateTime:
+            begin
+              if aCriteriaType = crBetween then
+                Result := MaskDateTimeV2
+              else
+                Result := MaskDateTimeV1;
+            end;
+          sdtYear:
+            begin
+              if aCriteriaType = crBetween then
+                Result := MaskYearV2
+              else
+                Result := MaskYearV1;
+            end;
+          sdtMonthYear:
+            begin
+              if aCriteriaType = crBetween then
+                Result := MaskMonthYearV2
+              else
+                Result := MaskMonthYearV1;
+            end;
         end;
-      sdtDate:
-        begin
-          if aCriteriaType = crBetween then
-            Result := MaskDateV2
-          else
-            Result := MaskDateV1;
-        end;
-      sdtTime:
-        begin
-          if aCriteriaType = crBetween then
-            Result := MaskTimeV2
-          else
-            Result := MaskTimeV1;
-        end;
-      sdtDateTime:
-        begin
-          if aCriteriaType = crBetween then
-            Result := MaskDateTimeV2
-          else
-            Result := MaskDateTimeV1;
-        end;
-      sdtYear:
-        begin
-          if aCriteriaType = crBetween then
-            Result := MaskYearV2
-          else
-            Result := MaskYearV1;
-        end;
-      sdtMonthYear:
-        begin
-          if aCriteriaType = crBetween then
-            Result := MaskMonthYearV2
-          else
-            Result := MaskMonthYearV1;
-        end;
+      end;
+      crNull, crNotNull:
+      begin
+        Result := MaskNull;
+      end;
+      crIn:
+      begin
+        Result := MaskIn;
+      end;
     end;
   end;
 
@@ -866,8 +878,11 @@ var
         end;
       sdtInteger, sdtFloat:
         begin
-          aValue1 := StringReplace(aValue1, ',', '.', [rfReplaceAll]);
-          aValue2 := StringReplace(aValue2, ',', '.', [rfReplaceAll]);
+          if not (aCriteriaType = crIn) then
+          begin
+            aValue1 := StringReplace(aValue1, ',', '.', [rfReplaceAll]);
+            aValue2 := StringReplace(aValue2, ',', '.', [rfReplaceAll]);
+          end;
         end;
       sdtBoolean: ;
       sdtDate: ;
@@ -948,6 +963,13 @@ begin
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria]]);
               end;
+              crIn:
+              begin
+                if FQuickFilters[i].Fields[f].Lookup then
+                  S := S + Format(Msk, [FFieldName, FValue1])
+                else
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, FValue1]);
+              end;
             end;
           end;
 
@@ -1022,6 +1044,13 @@ begin
                   S := S + Format(Msk, [FFieldName, CriteriaOperators[FCriteria]])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CriteriaOperators[FCriteria]]);
+              end;
+              crIn:
+              begin
+                if FFields[i].Fields[f].Lookup then
+                  S := S + Format(Msk, [FFieldName, FValue1])
+                else
+                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, FValue1]);
               end;
             end;
 
