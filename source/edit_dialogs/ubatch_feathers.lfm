@@ -5,7 +5,7 @@ object batchFeathers: TbatchFeathers
   Width = 424
   AutoSize = True
   BorderIcons = [biSystemMenu]
-  Caption = 'batchFeathers'
+  Caption = 'New batch of feathers'
   ClientHeight = 685
   ClientWidth = 424
   PopupMode = pmAuto
@@ -1173,7 +1173,7 @@ object batchFeathers: TbatchFeathers
           Height = 23
           Top = 22
           Width = 375
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find individual'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -1223,7 +1223,7 @@ object batchFeathers: TbatchFeathers
           Height = 23
           Top = 22
           Width = 375
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find sighting'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -1273,7 +1273,7 @@ object batchFeathers: TbatchFeathers
           Height = 23
           Top = 22
           Width = 375
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find capture'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0

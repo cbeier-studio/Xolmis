@@ -1,0 +1,5605 @@
+object DMR: TDMR
+  OldCreateOrder = False
+  Height = 479
+  HorizontalOffset = 420
+  VerticalOffset = 250
+  Width = 1032
+  object qProjects: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_title'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'short_title'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'start_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'end_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'website_uri'
+        DataType = ftString
+        Precision = -1
+        Size = 200
+      end    
+      item
+        Name = 'email_addr'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'contact_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'protocol_number'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'project_abstract'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'main_goal'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'risks'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT * FROM projects'
+      'WHERE (active_status = 1)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Left = 48
+    Top = 24
+    object qProjectsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectsproject_title: TStringField
+      DisplayLabel = 'Title'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'project_title'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 150
+    end
+    object qProjectsshort_title: TStringField
+      DisplayLabel = 'Short title'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'short_title'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qProjectsstart_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Start date'
+      DisplayWidth = 18
+      FieldKind = fkData
+      FieldName = 'start_date'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectsend_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'End date'
+      DisplayWidth = 18
+      FieldKind = fkData
+      FieldName = 'end_date'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectswebsite_uri: TStringField
+      DisplayLabel = 'Website'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'website_uri'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 200
+    end
+    object qProjectsemail_addr: TStringField
+      DisplayLabel = 'E-mail'
+      DisplayWidth = 35
+      FieldKind = fkData
+      FieldName = 'email_addr'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qProjectscontact_name: TStringField
+      DisplayLabel = 'Contact person'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'contact_name'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qProjectsprotocol_number: TStringField
+      DisplayLabel = 'Protocol nr.'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'protocol_number'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+    object qProjectsmain_goal: TMemoField
+      DisplayLabel = 'Main goal'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'main_goal'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectsrisks: TMemoField
+      DisplayLabel = 'Risks'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'risks'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectsproject_abstract: TMemoField
+      DisplayLabel = 'Abstract'
+      DisplayWidth = 60
+      FieldKind = fkData
+      FieldName = 'project_abstract'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectsproject_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qProjectTeam: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'project_member_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'person_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_manager'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'institution_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'person_acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'person_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'person_color'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'institution_name'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT pt.*,'
+      '  p.acronym AS person_acronym,'
+      '  p.full_name AS person_name,'
+      '  p.profile_color AS person_color,'
+      '  it.acronym AS institution_name'
+      'FROM project_team AS pt'
+      'LEFT JOIN people AS p ON pt.person_id = p.person_id'
+      'LEFT JOIN institutions AS it ON pt.institution_id = it.institution_id'
+      'WHERE (pt.active_status = 1)'
+      '  AND (pt.project_id = :project_id)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO project_team ('
+      '  project_id,'
+      '  person_id,'
+      '  project_manager,'
+      '  institution_id,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :project_id,'
+      '  :person_id,'
+      '  :project_manager,'
+      '  :institution_id,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE project_team SET'
+      '  project_id = :project_id,'
+      '  person_id = :person_id,'
+      '  project_manager = :project_manager,'
+      '  institution_id = :institution_id,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (project_member_id = :project_member_id)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 48
+    Top = 80
+    object qProjectTeammarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectTeamproject_id: TLongintField
+      DisplayLabel = 'Project (ID)'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectTeamperson_id: TLongintField
+      DisplayLabel = 'Person (ID)'
+      FieldKind = fkData
+      FieldName = 'person_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Visible = False
+    end
+    object qProjectTeamperson_name: TStringField
+      DisplayLabel = 'Person'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'person_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qProjectTeamperson_acronym: TStringField
+      DisplayLabel = 'Acronym'
+      FieldKind = fkData
+      FieldName = 'person_acronym'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qProjectTeamproject_manager: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Manager'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'project_manager'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectTeaminstitution_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'institution_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectTeaminstitution_name: TStringField
+      FieldKind = fkData
+      FieldName = 'institution_name'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qProjectTeamproject_member_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'project_member_id'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectTeamuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectTeamuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectTeaminsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectTeamupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectTeamexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectTeamactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectTeamperson_color: TStringField
+      DisplayLabel = 'Profile color'
+      FieldKind = fkData
+      FieldName = 'person_color'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 30
+    end
+  end
+  object qProjectGoals: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'goal_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'goal_description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'goal_status'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT *'
+      'FROM project_goals'
+      'WHERE (active_status = 1)'
+      '  AND (project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 48
+    Top = 136
+    object qProjectGoalsmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectGoalsproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsgoal_description: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'goal_description'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectGoalsgoal_status: TStringField
+      DisplayLabel = 'Status'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'goal_status'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qProjectGoalsgoal_statusGetText
+      Size = 5
+    end
+    object qProjectGoalsgoal_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'goal_id'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectGoalsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectGoalsexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectGoalsactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qProjectActivities: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'chronogram_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'start_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'target_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'end_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'goal_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'progress_status'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'goal_description'
+        DataType = ftMemo
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT pc.*,'
+      '  pg.goal_description AS goal_description'
+      'FROM project_chronograms AS pc'
+      'LEFT JOIN project_goals AS pg ON pc.goal_id = pg.goal_id'
+      'WHERE (pc.active_status = 1)'
+      '  AND (pc.project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 48
+    Top = 192
+    object qProjectActivitiesmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectActivitiesproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectActivitiesdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectActivitiesstart_date: TDateField
+      DisplayLabel = 'Start date'
+      FieldKind = fkData
+      FieldName = 'start_date'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectActivitiestarget_date: TDateField
+      DisplayLabel = 'Target date'
+      FieldKind = fkData
+      FieldName = 'target_date'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectActivitiesend_date: TDateField
+      DisplayLabel = 'End date'
+      FieldKind = fkData
+      FieldName = 'end_date'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectActivitiesgoal_id: TLongintField
+      DisplayLabel = 'Goal ID'
+      FieldKind = fkData
+      FieldName = 'goal_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectActivitiesgoal_description: TMemoField
+      DisplayLabel = 'Goal'
+      FieldKind = fkData
+      FieldName = 'goal_description'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qProjectActivitiesprogress_status: TStringField
+      DisplayLabel = 'Progress'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'progress_status'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qProjectActivitiesprogress_statusGetText
+      Size = 5
+    end
+    object qProjectActivitieschronogram_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'chronogram_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectActivitiesuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectActivitiesuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectActivitiesinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectActivitiesupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectActivitiesexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectActivitiesactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qProjectBudget: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'budget_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'funding_source'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'rubric'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'item_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'amount'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT *'
+      'FROM project_budgets'
+      'WHERE (active_status = 1)'
+      '  AND (project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 48
+    Top = 248
+    object qProjectBudgetmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectBudgetproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetfunding_source: TStringField
+      DisplayLabel = 'Funding source'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'funding_source'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qProjectBudgetrubric: TStringField
+      DisplayLabel = 'Rubric'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'rubric'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 60
+    end
+    object qProjectBudgetitem_name: TStringField
+      DisplayLabel = 'Item'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'item_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qProjectBudgetamount: TFloatField
+      DisplayLabel = 'Amount'
+      FieldKind = fkData
+      FieldName = 'amount'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qProjectBudgetbudget_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'budget_id'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectBudgetuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectBudgetexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectBudgetactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qProjectExpenses: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'expense_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'budget_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'item_description'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'expense_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'amount'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'rubric'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT px.*,'
+      '  pb.rubric AS rubric'
+      'FROM project_expenses AS px'
+      'LEFT JOIN project_budgets AS pb ON px.budget_id = pb.budget_id'
+      'WHERE (px.active_status = 1)'
+      '  AND (px.project_id = :project_id)'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'project_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsProjects
+    Left = 48
+    Top = 304
+    object qProjectExpensesmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectExpensesproject_id: TLongintField
+      DisplayLabel = 'Project ID'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesbudget_id: TLongintField
+      DisplayLabel = 'Budget ID'
+      FieldKind = fkData
+      FieldName = 'budget_id'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesrubric: TStringField
+      DisplayLabel = 'Rubric'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'rubric'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qProjectExpensesitem_description: TStringField
+      DisplayLabel = 'Item'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'item_description'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 60
+    end
+    object qProjectExpensesexpense_date: TDateField
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'expense_date'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qProjectExpensesamount: TFloatField
+      DisplayLabel = 'Amount'
+      FieldKind = fkData
+      FieldName = 'amount'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qProjectExpensesexpense_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'expense_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = True
+    end
+    object qProjectExpensesuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qProjectExpensesexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qProjectExpensesactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsProjects: TDataSource
+    AutoEdit = False
+    DataSet = qProjects
+    Left = 112
+    Top = 24
+  end
+  object qGazetteer: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'site_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'site_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'site_acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'altitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'site_rank'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'parent_site_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
+      end    
+      item
+        Name = 'ebird_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'language'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'parent_site_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'municipality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'state_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT g.*,'
+      '    gp.site_name AS parent_site_name,'
+      '    gm.site_name AS municipality_name,'
+      '    gs.site_name AS state_name,'
+      '    gc.site_name AS country_name'
+      'FROM gazetteer AS g'
+      'LEFT JOIN gazetteer AS gp ON g.parent_site_id = gp.site_id'
+      'LEFT JOIN gazetteer AS gm ON g.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON g.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON g.country_id = gc.site_id'
+      'WHERE (g.site_id = -1)'
+      '  AND (g.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO gazetteer ('
+      '  site_name,'
+      '  site_acronym,'
+      '  longitude,'
+      '  latitude,'
+      '  altitude,'
+      '  site_rank,'
+      '  parent_site_id,'
+      '  country_id,'
+      '  state_id,'
+      '  municipality_id,'
+      '  full_name,'
+      '  ebird_name,'
+      '  language,'
+      '  description,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :site_name,'
+      '  :site_acronym,'
+      '  :longitude,'
+      '  :latitude,'
+      '  :altitude,'
+      '  :site_rank,'
+      '  :parent_site_id,'
+      '  :country_id,'
+      '  :state_id,'
+      '  :municipality_id,'
+      '  :full_name,'
+      '  :ebird_name,'
+      '  :language,'
+      '  :description,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'', ''subsec''))'
+      ''
+    )
+    UpdateSQL.Strings = (
+      'UPDATE gazetteer SET'
+      '  site_name = :site_name,'
+      '  site_acronym = :site_acronym,'
+      '  longitude = :longitude,'
+      '  latitude = :latitude,'
+      '  altitude = :altitude,'
+      '  site_rank = :site_rank,'
+      '  parent_site_id = :parent_site_id,'
+      '  country_id = :country_id,'
+      '  state_id = :state_id,'
+      '  municipality_id = :municipality_id,'
+      '  full_name = :full_name,'
+      '  ebird_name = :ebird_name,'
+      '  language = :language,'
+      '  description = :description,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'', ''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (site_id = :site_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Sequence.FieldName = 'site_id'
+    Left = 200
+    Top = 136
+    object qGazetteermarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qGazetteersite_name: TStringField
+      DisplayLabel = 'Site name'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'site_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 60
+    end
+    object qGazetteersite_acronym: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Acronym'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'site_acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qGazetteersite_rank: TStringField
+      DisplayLabel = 'Type'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'site_rank'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      OnGetText = qGazetteersite_rankGetText
+      Size = 1
+    end
+    object qGazetteerlongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 180
+      MinValue = -180
+      Precision = -1
+    end
+    object qGazetteerlatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 90
+      MinValue = -90
+      Precision = -1
+    end
+    object qGazetteeraltitude: TFloatField
+      DisplayLabel = 'Altitude'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'altitude'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qGazetteerparent_site_id: TLongintField
+      DisplayLabel = 'Parent site ID'
+      FieldKind = fkData
+      FieldName = 'parent_site_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteerparent_site_name: TStringField
+      DisplayLabel = 'Parent site'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'parent_site_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qGazetteermunicipality_id: TLongintField
+      DisplayLabel = 'Municipality ID'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteermunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
+      FieldKind = fkData
+      FieldName = 'municipality_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qGazetteerstate_id: TLongintField
+      DisplayLabel = 'State ID'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteerstate_name: TStringField
+      DisplayLabel = 'State'
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qGazetteercountry_id: TLongintField
+      DisplayLabel = 'Country ID'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteercountry_name: TStringField
+      DisplayLabel = 'Country'
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qGazetteerfull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+    object qGazetteerebird_name: TStringField
+      DisplayLabel = 'eBird name'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'ebird_name'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qGazetteerlanguage: TStringField
+      DisplayLabel = 'Language'
+      FieldKind = fkData
+      FieldName = 'language'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qGazetteerdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qGazetteernotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qGazetteersite_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'site_id'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qGazetteeruser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteeruser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteerinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteerupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qGazetteerexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qGazetteeractive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qInstitutions: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'institution_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'internal_id'
+        DataType = ftLargeint
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'address_1'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'address_2'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end    
+      item
+        Name = 'neighborhood'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'zip_code'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'manager_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'email_addr'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'phone_num'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT it.*,'
+      '  gm.site_name AS municipality_name,'
+      '  gs.site_name AS state_name,'
+      '  gc.site_name AS country_name'
+      'FROM institutions AS it'
+      'LEFT JOIN gazetteer AS gm ON it.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON it.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON it.country_id = gc.site_id'
+      'WHERE (it.institution_id = -1)'
+      '  AND (it.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO institutions ('
+      '  full_name,'
+      '  acronym,'
+      '  address_1,'
+      '  address_2,'
+      '  neighborhood,'
+      '  zip_code,'
+      '  municipality_id,'
+      '  state_id,'
+      '  country_id,'
+      '  manager_name,'
+      '  email_addr,'
+      '  phone_num,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :full_name,'
+      '  :acronym,'
+      '  :address_1,'
+      '  :address_2,'
+      '  :neighborhood,'
+      '  :zip_code,'
+      '  :municipality_id,'
+      '  :state_id,'
+      '  :country_id,'
+      '  :manager_name,'
+      '  :email_addr,'
+      '  :phone_num,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE institutions SET'
+      '  full_name = :full_name,'
+      '  acronym = :acronym,'
+      '  address_1 = :address_1,'
+      '  address_2 = :address_2,'
+      '  neighborhood = :neighborhood,'
+      '  zip_code = :zip_code,'
+      '  municipality_id = :municipality_id,'
+      '  state_id = :state_id,'
+      '  country_id = :country_id,'
+      '  manager_name = :manager_name,'
+      '  email_addr = :email_addr,'
+      '  phone_num = :phone_num,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (institution_id = :institution_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Sequence.FieldName = 'institution_id'
+    Left = 200
+    Top = 24
+    object qInstitutionsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qInstitutionsfull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qInstitutionsacronym: TStringField
+      DisplayLabel = 'Acronym'
+      FieldKind = fkData
+      FieldName = 'acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 15
+    end
+    object qInstitutionszip_code: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Zip code'
+      FieldKind = fkData
+      FieldName = 'zip_code'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qInstitutionsaddress_1: TStringField
+      DisplayLabel = 'Address 1'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'address_1'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qInstitutionsaddress_2: TStringField
+      DisplayLabel = 'Address 2'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'address_2'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 40
+    end
+    object qInstitutionsneighborhood: TStringField
+      DisplayLabel = 'Neighborhood'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'neighborhood'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qInstitutionscountry_id: TLongintField
+      DisplayLabel = 'Country (ID)'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qInstitutionscountry_name: TStringField
+      DisplayLabel = 'Country'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qInstitutionsstate_id: TLongintField
+      DisplayLabel = 'State (ID)'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qInstitutionsstate_name: TStringField
+      DisplayLabel = 'State'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qInstitutionsmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality (ID)'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qInstitutionsmunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
+      DisplayWidth = 35
+      FieldKind = fkData
+      FieldName = 'municipality_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qInstitutionsmanager_name: TStringField
+      DisplayLabel = 'Manager'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'manager_name'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qInstitutionsemail_addr: TStringField
+      DisplayLabel = 'E-mail'
+      DisplayWidth = 35
+      FieldKind = fkData
+      FieldName = 'email_addr'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qInstitutionsphone_num: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Phone'
+      FieldKind = fkData
+      FieldName = 'phone_num'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qInstitutionsinstitution_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'institution_id'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qInstitutionsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qInstitutionsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qInstitutionsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qInstitutionsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qInstitutionsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qInstitutionsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qInstitutionsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qPeople: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'person_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'citation'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'title_treatment'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'national_id_card'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'social_security_number'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'gender'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'birth_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'death_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'email_addr'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'phone_1'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'phone_2'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'address_1'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'address_2'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'neighborhood'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'zip_code'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'institution_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'department'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'job_role'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'lattes_uri'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'orcid_uri'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'twitter_uri'
+        DataType = ftString
+        Precision = -1
+        Size = 50
+      end    
+      item
+        Name = 'instagram_uri'
+        DataType = ftString
+        Precision = -1
+        Size = 50
+      end    
+      item
+        Name = 'website_uri'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'profile_color'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'profile_image'
+        DataType = ftBlob
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'state_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'institution_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT p.*,'
+      '  gm.site_name AS municipality_name,'
+      '  gs.site_name AS state_name,'
+      '  gc.site_name AS country_name,'
+      '  it.full_name AS institution_name'
+      'FROM people AS p'
+      'LEFT JOIN gazetteer AS gm ON p.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON p.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON p.country_id = gc.site_id'
+      'LEFT JOIN institutions AS it ON p.institution_id = it.institution_id'
+      'WHERE (p.person_id = -1)'
+      '  AND (p.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO people ('
+      '  full_name,'
+      '  acronym,'
+      '  citation,'
+      '  title_treatment,'
+      '  national_id_card,'
+      '  social_security_number,'
+      '  gender,'
+      '  birth_date,'
+      '  death_date,'
+      '  email_addr,'
+      '  phone_1,'
+      '  phone_2,'
+      '  address_1,'
+      '  address_2,'
+      '  neighborhood,'
+      '  zip_code,'
+      '  country_id,'
+      '  state_id,'
+      '  municipality_id,'
+      '  institution_id,'
+      '  department,'
+      '  job_role,'
+      '  lattes_uri,'
+      '  orcid_uri,'
+      '  twitter_uri,'
+      '  instagram_uri,'
+      '  website_uri,'
+      '  profile_color,'
+      '  notes,'
+      '  profile_image,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :full_name,'
+      '  :acronym,'
+      '  :citation,'
+      '  :title_treatment,'
+      '  :national_id_card,'
+      '  :social_security_number,'
+      '  :gender,'
+      '  :birth_date,'
+      '  :death_date,'
+      '  :email_addr,'
+      '  :phone_1,'
+      '  :phone_2,'
+      '  :address_1,'
+      '  :address_2,'
+      '  :neighborhood,'
+      '  :zip_code,'
+      '  :country_id,'
+      '  :state_id,'
+      '  :municipality_id,'
+      '  :institution_id,'
+      '  :department,'
+      '  :job_role,'
+      '  :lattes_uri,'
+      '  :orcid_uri,'
+      '  :twitter_uri,'
+      '  :instagram_uri,'
+      '  :website_uri,'
+      '  :profile_color,'
+      '  :notes,'
+      '  :profile_image,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+      ''
+    )
+    UpdateSQL.Strings = (
+      'UPDATE people SET'
+      '  full_name = :full_name,'
+      '  acronym = :acronym,'
+      '  citation = :citation,'
+      '  title_treatment = :title_treatment,'
+      '  national_id_card = :national_id_card,'
+      '  social_security_number = :social_security_number,'
+      '  gender = :gender,'
+      '  birth_date = :birth_date,'
+      '  death_date = :death_date,'
+      '  email_addr = :email_addr,'
+      '  phone_1 = :phone_1,'
+      '  phone_2 = :phone_2,'
+      '  address_1 = :address_1,'
+      '  address_2 = :address_2,'
+      '  neighborhood = :neighborhood,'
+      '  zip_code = :zip_code,'
+      '  country_id = :country_id,'
+      '  state_id = :state_id,'
+      '  municipality_id = :municipality_id,'
+      '  institution_id = :institution_id,'
+      '  department = :department,'
+      '  job_role = :job_role,'
+      '  lattes_uri = :lattes_uri,'
+      '  orcid_uri = :orcid_uri,'
+      '  twitter_uri = :twitter_uri,'
+      '  instagram_uri = :instagram_uri,'
+      '  website_uri = :website_uri,'
+      '  profile_color = :profile_color,'
+      '  notes = :notes,'
+      '  profile_image = :profile_image,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (person_id = :person_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Sequence.FieldName = 'person_id'
+    Left = 200
+    Top = 80
+    object qPeoplemarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qPeoplefull_name: TStringField
+      DisplayLabel = 'Full name'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qPeoplecitation: TStringField
+      DisplayLabel = 'Citation'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'citation'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qPeopleacronym: TStringField
+      DisplayLabel = 'Abbreviation'
+      FieldKind = fkData
+      FieldName = 'acronym'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 10
+    end
+    object qPeopletitle_treatment: TStringField
+      DisplayLabel = 'Treatment'
+      FieldKind = fkData
+      FieldName = 'title_treatment'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qPeoplegender: TStringField
+      DisplayLabel = 'Gender'
+      FieldKind = fkData
+      FieldName = 'gender'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qPeoplenational_id_card: TStringField
+      DisplayLabel = 'RG'
+      FieldKind = fkData
+      FieldName = 'national_id_card'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qPeoplesocial_security_number: TStringField
+      DisplayLabel = 'CPF'
+      FieldKind = fkData
+      FieldName = 'social_security_number'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qPeoplebirth_date: TDateField
+      DisplayLabel = 'Birth date'
+      FieldKind = fkData
+      FieldName = 'birth_date'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qPeopledeath_date: TDateField
+      DisplayLabel = 'Death date'
+      FieldKind = fkData
+      FieldName = 'death_date'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qPeopleemail_addr: TStringField
+      DisplayLabel = 'E-mail'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'email_addr'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qPeoplephone_1: TStringField
+      DisplayLabel = 'Phone'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'phone_1'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qPeoplephone_2: TStringField
+      DisplayLabel = 'Cell phone'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'phone_2'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qPeoplezip_code: TStringField
+      DisplayLabel = 'Zip code'
+      FieldKind = fkData
+      FieldName = 'zip_code'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qPeopleaddress_1: TStringField
+      DisplayLabel = 'Address 1'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'address_1'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qPeopleaddress_2: TStringField
+      DisplayLabel = 'Address 2'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'address_2'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qPeopleneighborhood: TStringField
+      DisplayLabel = 'Neighborhood'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'neighborhood'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qPeoplemunicipality_id: TLongintField
+      DisplayLabel = 'Municipality (ID)'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeoplemunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'municipality_name'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qPeoplestate_id: TLongintField
+      DisplayLabel = 'State (ID)'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeoplestate_name: TStringField
+      DisplayLabel = 'State'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qPeoplecountry_id: TLongintField
+      DisplayLabel = 'Country (ID)'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeoplecountry_name: TStringField
+      DisplayLabel = 'Country'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qPeopleinstitution_id: TLongintField
+      DisplayLabel = 'Institution (ID)'
+      FieldKind = fkData
+      FieldName = 'institution_id'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeopleinstitution_name: TStringField
+      DisplayLabel = 'Institution'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'institution_name'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qPeopledepartment: TStringField
+      DisplayLabel = 'Department'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'department'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qPeoplejob_role: TStringField
+      DisplayLabel = 'Role'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'job_role'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qPeoplelattes_uri: TStringField
+      DisplayLabel = 'Lattes'
+      FieldKind = fkData
+      FieldName = 'lattes_uri'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+    object qPeopleorcid_uri: TStringField
+      DisplayLabel = 'Orcid'
+      FieldKind = fkData
+      FieldName = 'orcid_uri'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+    object qPeopletwitter_uri: TStringField
+      DisplayLabel = 'X (Twitter)'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'twitter_uri'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 50
+    end
+    object qPeopleinstagram_uri: TStringField
+      DisplayLabel = 'Instagram'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'instagram_uri'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 50
+    end
+    object qPeoplewebsite_uri: TStringField
+      DisplayLabel = 'Website'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'website_uri'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qPeopleperson_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'person_id'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qPeoplenotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qPeopleprofile_image: TBlobField
+      DisplayLabel = 'Profile image'
+      FieldKind = fkData
+      FieldName = 'profile_image'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate]
+      ReadOnly = False
+      Required = False
+    end
+    object qPeopleprofile_color: TStringField
+      DisplayLabel = 'Profile color'
+      FieldKind = fkData
+      FieldName = 'profile_color'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 30
+    end
+    object qPeopleuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeopleuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeopleinsert_date: TDateTimeField
+      DisplayLabel = 'Created date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeopleupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPeopleexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qPeopleactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qPermits: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'permit_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'permit_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'permit_number'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'permit_type'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'dispatcher_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'dispatch_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'expire_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'permit_filename'
+        DataType = ftString
+        Precision = -1
+        Size = 200
+      end    
+      item
+        Name = 'permit_file'
+        DataType = ftBlob
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'project_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT l.*,'
+      '  pj.short_title AS project_name'
+      'FROM legal AS l'
+      'LEFT JOIN projects AS pj ON l.project_id = pj.project_id'
+      'WHERE (l.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO legal ('
+      '  project_id,'
+      '  permit_name,'
+      '  permit_number,'
+      '  permit_type,'
+      '  dispatcher_name,'
+      '  dispatch_date,'
+      '  expire_date,'
+      '  notes,'
+      '  permit_filename,'
+      '  permit_file,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :project_id,'
+      '  :permit_name,'
+      '  :permit_number,'
+      '  :permit_type,'
+      '  :dispatcher_name,'
+      '  :dispatch_date,'
+      '  :expire_date,'
+      '  :notes,'
+      '  :permit_filename,'
+      '  :permit_file,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE legal SET'
+      '  project_id = :project_id,'
+      '  permit_name = :permit_name,'
+      '  permit_number = :permit_number,'
+      '  permit_type = :permit_type,'
+      '  dispatcher_name = :dispatcher_name,'
+      '  dispatch_date = :dispatch_date,'
+      '  expire_date = :expire_date,'
+      '  notes = :notes,'
+      '  permit_filename = :permit_filename,'
+      '  permit_file = :permit_file,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (permit_id = :permit_id)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Left = 48
+    Top = 392
+    object qPermitsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qPermitspermit_type: TStringField
+      DisplayLabel = 'Type'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'permit_type'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qPermitspermit_typeGetText
+      Size = 5
+    end
+    object qPermitspermit_name: TStringField
+      DisplayLabel = 'Name'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'permit_name'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qPermitspermit_number: TStringField
+      DisplayLabel = 'Number'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'permit_number'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+    object qPermitsdispatcher_name: TStringField
+      DisplayLabel = 'Dispatcher'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'dispatcher_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qPermitsdispatch_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Dispatch date'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'dispatch_date'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qPermitsexpire_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Expire date'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'expire_date'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qPermitsproject_id: TLongintField
+      DisplayLabel = 'Project (ID)'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPermitsproject_name: TStringField
+      DisplayLabel = 'Project'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'project_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qPermitsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qPermitspermit_filename: TStringField
+      DisplayLabel = 'File name'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'permit_filename'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 200
+    end
+    object qPermitspermit_file: TBlobField
+      DisplayLabel = 'File'
+      FieldKind = fkData
+      FieldName = 'permit_file'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPermitspermit_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'permit_id'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qPermitsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPermitsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPermitsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPermitsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPermitsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qPermitsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qBands: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'band_id'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'band_size'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'band_number'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'band_status'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'band_type'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'band_prefix'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'band_suffix'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'band_color'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'band_source'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'order_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'order_number'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'receipt_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'supplier_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'requester_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'carrier_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sender_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'use_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'discharge_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'report_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'band_reported'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 40
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT b.*,'
+      '  it.acronym AS supplier_name,'
+      '  p.full_name AS carrier_name,'
+      '  i.full_name AS individual_name,'
+      '  pj.short_title AS project_name'
+      'FROM bands AS b'
+      'LEFT JOIN institutions AS it ON b.supplier_id = it.institution_id'
+      'LEFT JOIN people AS p ON b.carrier_id = p.person_id'
+      'LEFT JOIN individuals AS i ON b.individual_id = i.individual_id'
+      'LEFT JOIN projects AS pj ON b.project_id = pj.project_id'
+      'WHERE (b.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO bands ('
+      '  band_size,'
+      '  band_number,'
+      '  band_status,'
+      '  band_type,'
+      '  band_prefix,'
+      '  band_suffix,'
+      '  band_color,'
+      '  band_source,'
+      '  supplier_id,'
+      '  carrier_id,'
+      '  individual_id,'
+      '  project_id,'
+      '  band_reported,'
+      '  notes,'
+      '  full_name,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :band_size,'
+      '  :band_number,'
+      '  :band_status,'
+      '  :band_type,'
+      '  :band_prefix,'
+      '  :band_suffix,'
+      '  :band_color,'
+      '  :band_source,'
+      '  :supplier_id,'
+      '  :carrier_id,'
+      '  :individual_id,'
+      '  :project_id,'
+      '  :band_reported,'
+      '  :notes,'
+      '  :full_name,'
+      '  :user_inserted,'
+      '  datetime(''now'', ''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE bands SET'
+      '  band_size = :band_size,'
+      '  band_number = :band_number,'
+      '  band_status = :band_status,'
+      '  band_type = :band_type,'
+      '  band_prefix = :band_prefix,'
+      '  band_suffix = :band_suffix,'
+      '  band_color = :band_color,'
+      '  band_source = :band_source,'
+      '  supplier_id = :supplier_id,'
+      '  carrier_id = :carrier_id,'
+      '  individual_id = :individual_id,'
+      '  project_id = :project_id,'
+      '  band_reported = :band_reported,'
+      '  notes = :notes,'
+      '  full_name = :full_name,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'', ''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (band_id = :band_id)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Sequence.FieldName = 'band_id'
+    Left = 328
+    Top = 24
+    object qBandsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qBandsband_size: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Size'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'band_size'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 5
+    end
+    object qBandsband_number: TLongintField
+      DisplayLabel = 'Number'
+      FieldKind = fkData
+      FieldName = 'band_number'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qBandsband_prefix: TStringField
+      DisplayLabel = 'Prefix'
+      FieldKind = fkData
+      FieldName = 'band_prefix'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qBandsband_suffix: TStringField
+      DisplayLabel = 'Suffix'
+      FieldKind = fkData
+      FieldName = 'band_suffix'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qBandsband_status: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Status'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'band_status'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      OnGetText = qBandsband_statusGetText
+      Size = 5
+    end
+    object qBandsband_type: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Type'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'band_type'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      OnGetText = qBandsband_typeGetText
+      Size = 5
+    end
+    object qBandsband_color: TStringField
+      DisplayLabel = 'Color'
+      FieldKind = fkData
+      FieldName = 'band_color'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qBandsband_source: TStringField
+      DisplayLabel = 'Source'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'band_source'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      OnGetText = qBandsband_sourceGetText
+      Size = 5
+    end
+    object qBandssupplier_id: TLongintField
+      DisplayLabel = 'Supplier (ID)'
+      FieldKind = fkData
+      FieldName = 'supplier_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Visible = False
+    end
+    object qBandssupplier_name: TStringField
+      DisplayLabel = 'Supplier'
+      FieldKind = fkData
+      FieldName = 'supplier_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qBandscarrier_id: TLongintField
+      DisplayLabel = 'Carrier (ID)'
+      FieldKind = fkData
+      FieldName = 'carrier_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandscarrier_name: TStringField
+      DisplayLabel = 'Carrier'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'carrier_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qBandsproject_id: TLongintField
+      DisplayLabel = 'Project (ID)'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandsproject_name: TStringField
+      DisplayLabel = 'Project'
+      DisplayWidth = 60
+      FieldKind = fkData
+      FieldName = 'project_name'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qBandsindividual_id: TLongintField
+      DisplayLabel = 'Individual (ID)'
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandsindividual_name: TStringField
+      DisplayLabel = 'Individual'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qBandsband_reported: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Reported'
+      FieldKind = fkData
+      FieldName = 'band_reported'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qBandsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 80
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qBandsband_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'band_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qBandsfull_name: TStringField
+      DisplayLabel = 'Full name'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 40
+    end
+    object qBandsuser_inserted: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandsuser_updated: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayFormat = 'c'
+    end
+    object qBandsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayFormat = 'c'
+    end
+    object qBandsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qBandsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsBands: TDataSource
+    AutoEdit = False
+    DataSet = qBands
+    Left = 400
+    Top = 24
+  end
+  object qBandHistory: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'event_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'band_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'event_type'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'event_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'order_number'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'supplier_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sender_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'requester_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT bh.*,'
+      '  it.acronym AS supplier_name,'
+      '  p1.full_name AS sender_name,'
+      '  p2.full_name AS requester_name'
+      'FROM band_history AS bh'
+      'LEFT JOIN institutions AS it ON bh.supplier_id = it.institution_id'
+      'LEFT JOIN people AS p1 ON bh.sender_id = p1.person_id'
+      'LEFT JOIN people AS p2 ON bh.requester_id = p2.person_id'
+      'WHERE (bh.active_status = 1) AND (bh.band_id = :band_id)'
+      'ORDER BY bh.event_date ASC'
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO band_history ('
+      '  band_id,'
+      '  event_type,'
+      '  event_date,'
+      '  order_number,'
+      '  supplier_id,'
+      '  sender_id,'
+      '  requester_id,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :band_id,'
+      '  :event_type,'
+      '  :event_date,'
+      '  :order_number,'
+      '  :supplier_id,'
+      '  :sender_id,'
+      '  :requester_id,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE band_history SET'
+      '  band_id = :band_id,'
+      '  event_type = :event_type,'
+      '  event_date = :event_date,'
+      '  order_number = :order_number,'
+      '  supplier_id = :supplier_id,'
+      '  sender_id = :sender_id,'
+      '  requester_id = :requester_id,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (event_id = :event_id)'
+      ''
+    )
+    DeleteSQL.Strings = (
+      'DELETE FROM band_history'
+      'WHERE event_id = :event_id'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'band_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsBands
+    Left = 328
+    Top = 80
+    object qBandHistorymarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qBandHistoryband_id: TLongintField
+      DisplayLabel = 'Band (ID)'
+      FieldKind = fkData
+      FieldName = 'band_id'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistoryevent_type: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Type'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'event_type'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      OnGetText = qBandHistoryevent_typeGetText
+      Size = 5
+    end
+    object qBandHistoryevent_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'event_date'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qBandHistoryorder_number: TLongintField
+      DisplayLabel = 'Order nr.'
+      FieldKind = fkData
+      FieldName = 'order_number'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qBandHistorysupplier_id: TLongintField
+      DisplayLabel = 'Supplier (ID)'
+      FieldKind = fkData
+      FieldName = 'supplier_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistorysupplier_name: TStringField
+      DisplayLabel = 'Supplier'
+      FieldKind = fkData
+      FieldName = 'supplier_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 15
+    end
+    object qBandHistorysender_id: TLongintField
+      DisplayLabel = 'Sender (ID)'
+      FieldKind = fkData
+      FieldName = 'sender_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistorysender_name: TStringField
+      DisplayLabel = 'Sender'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'sender_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qBandHistoryrequester_id: TLongintField
+      DisplayLabel = 'Requester (ID)'
+      FieldKind = fkData
+      FieldName = 'requester_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistoryrequester_name: TStringField
+      DisplayLabel = 'Requester'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'requester_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qBandHistorynotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qBandHistoryevent_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'event_id'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qBandHistoryuser_inserted: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistoryuser_updated: TLongintField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistoryinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistoryupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandHistoryexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qBandHistoryactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qSamplingPlots: TSQLQuery
+    PacketRecords = -1
+    MaxIndexesCount = 4
+    FieldDefs = <    
+      item
+        Name = 'sampling_plot_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'area_shape'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'state_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT pl.*,'
+      '  gl.site_name AS locality_name,'
+      '  gl.country_id AS country_id,'
+      '  gl.state_id AS state_id,'
+      '  gl.municipality_id AS municipality_id,'
+      '  gm.site_name AS municipality_name,'
+      '  gs.site_name AS state_name,'
+      '  gc.site_name AS country_name'
+      'FROM sampling_plots AS pl'
+      'LEFT JOIN gazetteer AS gl ON pl.locality_id = gl.site_id'
+      'LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id'
+      'WHERE (pl.sampling_plot_id = -1)'
+      '  AND (pl.active_status = 1)'
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO sampling_plots ('
+      '  full_name,'
+      '  acronym,'
+      '  longitude,'
+      '  latitude,'
+      '  area_shape,'
+      '  locality_id,'
+      '  description,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :full_name,'
+      '  :acronym,'
+      '  :longitude,'
+      '  :latitude,'
+      '  :area_shape,'
+      '  :locality_id,'
+      '  :description,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE net_stations SET'
+      '  station_name = :station_name,'
+      '  station_acronym = :station_acronym,'
+      '  longitude = :longitude,'
+      '  latitude = :latitude,'
+      '  area_shape = :area_shape,'
+      '  locality_id = :locality_id,'
+      '  description = :description,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (net_station_id = :net_station_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Left = 200
+    Top = 192
+    object qSamplingPlotsmarked_status: TBooleanField
+      DisplayLabel = 'Marked'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSamplingPlotsfull_name: TStringField
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qSamplingPlotsacronym: TStringField
+      FieldKind = fkData
+      FieldName = 'acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 10
+    end
+    object qSamplingPlotslocality_id: TLongintField
+      DisplayLabel = 'Locality (ID)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Visible = False
+    end
+    object qSamplingPlotslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+    object qSamplingPlotscountry_id: TLongintField
+      DisplayLabel = 'Country ID'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotscountry_name: TStringField
+      DisplayLabel = 'Country'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSamplingPlotsstate_id: TLongintField
+      DisplayLabel = 'State ID'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsstate_name: TStringField
+      DisplayLabel = 'State'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSamplingPlotsmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality ID'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsmunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'municipality_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSamplingPlotslongitude: TFloatField
+      DisplayLabel = 'Longitude'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 180
+      MinValue = -180
+      Precision = -1
+    end
+    object qSamplingPlotslatitude: TFloatField
+      DisplayLabel = 'Latitude'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      MaxValue = 90
+      MinValue = -90
+      Precision = -1
+    end
+    object qSamplingPlotsarea_shape: TStringField
+      DisplayLabel = 'Area shape'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'area_shape'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
+    object qSamplingPlotsdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 60
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSamplingPlotsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 60
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSamplingPlotssampling_plot_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'sampling_plot_id'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qSamplingPlotsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsinsert_date: TDateTimeField
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsupdate_date: TDateTimeField
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSamplingPlotsexported_status: TBooleanField
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSamplingPlotsactive_status: TBooleanField
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object qMethods: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'method_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'internal_id'
+        DataType = ftLargeint
+        Precision = -1
+      end    
+      item
+        Name = 'method_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'method_acronym'
+        DataType = ftString
+        Precision = -1
+        Size = 20
+      end    
+      item
+        Name = 'ebird_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT * FROM methods'
+      'WHERE (active_status = 1)'
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Left = 200
+    Top = 304
+    object qMethodsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qMethodsmethod_name: TStringField
+      DisplayLabel = 'Name'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'method_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qMethodsmethod_acronym: TStringField
+      DisplayLabel = 'Acronym'
+      FieldKind = fkData
+      FieldName = 'method_acronym'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qMethodsebird_name: TStringField
+      DisplayLabel = 'eBird name'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'ebird_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qMethodsdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qMethodsmethod_id: TLongintField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'method_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qMethodsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMethodsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMethodsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMethodsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qMethodsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qMethodsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+end

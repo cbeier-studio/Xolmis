@@ -48,6 +48,7 @@ object frmTaxa: TfrmTaxa
     Options = [dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleStyle = tsNative
+    OnMouseWheel = gridTaxaMouseWheel
     OnPrepareCanvas = gridTaxaPrepareCanvas
   end
   object pTop: TPanel
@@ -661,6 +662,7 @@ object frmTaxa: TfrmTaxa
       ParentBackground = False
       ParentColor = False
       TabOrder = 1
+      OnMouseWheel = scrollDataMouseWheel
       object pConstrainedBox: TPanel
         AnchorSideLeft.Control = scrollData
         AnchorSideLeft.Side = asrCenter
@@ -1159,6 +1161,7 @@ object frmTaxa: TfrmTaxa
           Extent.XMin = 1
           Frame.Visible = False
           GUIConnector = chartBGRA
+          Legend.SymbolFrame.Visible = False
           Legend.Visible = True
           Title.Text.Strings = (
             'Seasonality'
@@ -1344,6 +1347,7 @@ object frmTaxa: TfrmTaxa
             Color = clWindow
             object NestFateSeries: TPieSeries
               Legend.Visible = False
+              InnerRadiusPercent = 70
               Marks.Format = '%2:s'
               Marks.Frame.Color = clWindow
               Marks.Frame.Visible = False

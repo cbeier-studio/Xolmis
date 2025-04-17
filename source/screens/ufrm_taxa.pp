@@ -6,7 +6,7 @@ interface
 
 uses
   BCPanel, Buttons, Classes, ComCtrls, DB, fgl, mvDE_BGRA, mvMapViewer, mvTypes,
-  mvGpsObj, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf, ExtCtrls, Menus,
+  mvGpsObj, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf, LCLType, ExtCtrls, Menus,
   StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr, Controls, Graphics,
   Dialogs, cbs_datatypes, Grids, TADbSource, TAGraph, TAGUIConnectorBGRA,
   TASeries, TASources, Types, mvDrawingEngine;
@@ -117,6 +117,9 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure gridTaxaMouseWheel
+      (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+      var Handled: Boolean);
     procedure gridTaxaPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState);
     procedure lblLinkCapturesClick(Sender: TObject);
     procedure lblLinkEggsClick(Sender: TObject);
@@ -138,6 +141,9 @@ type
     procedure sbOptionsSearchClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure sbWikiavesClick(Sender: TObject);
+    procedure scrollDataMouseWheel
+      (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+      var Handled: Boolean);
     procedure SplitRightMoved(Sender: TObject);
     procedure TimerDataTimer(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
@@ -271,6 +277,7 @@ begin
   //pSearch.Border.Width := 2;
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
+  sbOptionsSearch.StateNormal.Color := pSearch.Background.Color;
 end;
 
 procedure TfrmTaxa.eSearchExit(Sender: TObject);
@@ -290,6 +297,7 @@ begin
   pSearch.Border.Width := 1;
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
+  sbOptionsSearch.StateNormal.Color := pSearch.Background.Color;
 end;
 
 procedure TfrmTaxa.FormCreate(Sender: TObject);
@@ -551,6 +559,32 @@ begin
     lblLinkSpecimens.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmTaxa.gridTaxaMouseWheel
+  (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+
+  function GetNumScrollLines: Integer;
+  begin
+    SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, @Result, 0);
+  end;
+
+var
+  Direction: Shortint;
+begin
+  Direction := 1;
+  if WheelDelta = 0 then
+    Exit
+  else if WheelDelta > 0 then
+    Direction := -1;
+
+  with TDBGrid(Sender) do
+  begin
+    if Assigned(DataSource) and Assigned(DataSource.DataSet) then
+      DataSource.DataSet.MoveBy(Direction * GetNumScrollLines);
+    Invalidate;
   end;
 end;
 
@@ -1164,6 +1198,32 @@ begin
   else
     FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
   OpenUrl('https://www.wikiaves.com.br/wiki/' + FUrlSearch);
+end;
+
+procedure TfrmTaxa.scrollDataMouseWheel
+  (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+
+  function GetNumScrollLines: Integer;
+  begin
+    SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, @Result, 0);
+  end;
+
+var
+  Direction: Shortint;
+begin
+  Direction := 1;
+  if WheelDelta = 0 then
+    Exit
+  else
+  if WheelDelta > 0 then
+    Direction := -1;
+
+  with TScrollBox(Sender) do
+  begin
+    ScrollBy(0, Direction * GetNumScrollLines);
+    Invalidate;
+  end;
 end;
 
 function TfrmTaxa.Search(AValue: String): Boolean;

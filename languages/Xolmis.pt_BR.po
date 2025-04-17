@@ -6182,13 +6182,14 @@ msgid "Save"
 msgstr "Salvar"
 
 #: tbatchfeathers.caption
-msgid "batchFeathers"
-msgstr ""
+msgctxt "tbatchfeathers.caption"
+msgid "New batch of feathers"
+msgstr "Novo lote de penas"
 
 #: tbatchfeathers.ecapture.buttonhint
 msgctxt "tbatchfeathers.ecapture.buttonhint"
-msgid "Find taxon"
-msgstr "Buscar táxon"
+msgid "Find capture"
+msgstr "Buscar captura"
 
 #: tbatchfeathers.edate.buttonhint
 msgctxt "tbatchfeathers.edate.buttonhint"
@@ -6202,8 +6203,8 @@ msgstr "DD/MM/AAAA"
 
 #: tbatchfeathers.eindividual.buttonhint
 msgctxt "tbatchfeathers.eindividual.buttonhint"
-msgid "Find taxon"
-msgstr "Buscar táxon"
+msgid "Find individual"
+msgstr "Buscar indivíduo"
 
 #: tbatchfeathers.elocality.buttonhint
 msgctxt "tbatchfeathers.elocality.buttonhint"
@@ -6217,8 +6218,8 @@ msgstr "Buscar observador"
 
 #: tbatchfeathers.esighting.buttonhint
 msgctxt "tbatchfeathers.esighting.buttonhint"
-msgid "Find taxon"
-msgstr "Buscar táxon"
+msgid "Find sighting"
+msgstr "Buscar observação"
 
 #: tbatchfeathers.etaxon.buttonhint
 msgctxt "tbatchfeathers.etaxon.buttonhint"
@@ -15333,10 +15334,6 @@ msgstr "Exportar registros"
 #: tfrmtaxa.sbwikiaves.hint
 msgid "WikiAves"
 msgstr "WikiAves"
-
-#: tfrmtaxa.txtnestproductivity.caption
-msgid "0"
-msgstr ""
 
 #: tlstbreedingstatus.caption
 msgid "Breeding and behavior code"

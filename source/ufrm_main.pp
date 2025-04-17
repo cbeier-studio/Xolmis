@@ -378,7 +378,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
   cbs_data, cbs_users, cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
-  udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding,
+  udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
   udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
@@ -917,6 +917,8 @@ begin
     FreeAndNil(DMI);
   if Assigned(DMS) then
     FreeAndNil(DMS);
+  if Assigned(DMR) then
+    FreeAndNil(DMR);
 
   if Assigned(ActiveUser) then
     FreeAndNil(ActiveUser);

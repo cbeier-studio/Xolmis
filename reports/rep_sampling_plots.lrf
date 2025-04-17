@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:29:13"/>
-    <ReportLastChange Value="2024-11-27 20:25:20"/>
+    <ReportLastChange Value="2025-04-10 08:06:28"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qSamplingPlots.&quot;acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSamplingPlots.&quot;acronym&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qSamplingPlots.&quot;full_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSamplingPlots.&quot;full_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -427,7 +427,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qSamplingPlots.&quot;area_shape&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSamplingPlots.&quot;area_shape&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -483,7 +483,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qSamplingPlots.&quot;longitude&quot;]; [DMG.qSamplingPlots.&quot;latitude&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSamplingPlots.&quot;longitude&quot;]; [DMR.qSamplingPlots.&quot;latitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qSamplingPlots.&quot;locality_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSamplingPlots.&quot;locality_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -595,7 +595,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qSamplingPlots.&quot;sampling_plot_id&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSamplingPlots.&quot;sampling_plot_id&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

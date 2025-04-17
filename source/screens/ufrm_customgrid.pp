@@ -22,8 +22,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
-  DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, Character, Buttons, CheckLst, DBCtrls,
-  laz.VirtualTrees, TAGraph, TASeries, TADbSource, TASources, LR_PGrid, TAGUIConnectorBGRA, atshapelinebgra,
+  DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst, DBCtrls,
+  laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra,
   BCPanel, bctypes, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch, DragDropFile,
   mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class, DropTarget;
 
@@ -1381,7 +1381,8 @@ uses
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, cbs_users,
   cbs_validations, cbs_setparam, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
-  udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, ufrm_main, ubatch_neteffort, ubatch_feathers;
+  udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
+  ufrm_main, ubatch_neteffort, ubatch_feathers;
 
 {$R *.lfm}
 
@@ -4794,6 +4795,9 @@ begin
   PanelTabs := specialize TFPGList<TCustomPanelTab>.Create;
 
   //cellMemo.Tag := -1;
+
+  if not Assigned(DMR) then
+    DMR := TDMR.Create(nil);
 end;
 
 procedure TfrmCustomGrid.FormDestroy(Sender: TObject);
@@ -7053,27 +7057,39 @@ end;
 
 procedure TfrmCustomGrid.pmPrintBandsByCarrierClick(Sender: TObject);
 begin
-  PrintPreview('rep_bands_by_carrier.lrf', dsLink);
+  DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qBands.Open;
+  PrintPreview('rep_bands_by_carrier.lrf', DMR.qBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsByStatusClick(Sender: TObject);
 begin
-  PrintPreview('rep_bands_by_status.lrf', dsLink);
+  DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qBands.Open;
+  PrintPreview('rep_bands_by_status.lrf', DMR.qBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsClick(Sender: TObject);
 begin
-  PrintPreview('rep_bands.lrf', dsLink);
+  DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qBands.Open;
+  PrintPreview('rep_bands.lrf', DMR.qBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsWithHistoryClick(Sender: TObject);
 begin
-  PrintPreview('rep_bands_history.lrf', dsLink, DMG.dsBandHistory);
+  DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qBandHistory.SQL.Text := DMG.qBandHistory.SQL.Text;
+  DMR.qBands.Open;
+  DMR.qBandHistory.Open;
+  PrintPreview('rep_bands_history.lrf', DMR.qBands, DMR.qBandHistory);
 end;
 
 procedure TfrmCustomGrid.pmPrintGazetteerClick(Sender: TObject);
 begin
-  PrintPreview('rep_gazetteer.lrf', dsLink);
+  DMR.qGazetteer.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qGazetteer.Open;
+  PrintPreview('rep_gazetteer.lrf', DMR.qGazetteer);
 end;
 
 procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
@@ -7084,37 +7100,55 @@ end;
 
 procedure TfrmCustomGrid.pmPrintInstitutionsClick(Sender: TObject);
 begin
-  PrintPreview('rep_institutions.lrf', dsLink);
+  DMR.qInstitutions.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qInstitutions.Open;
+  PrintPreview('rep_institutions.lrf', DMR.qInstitutions);
 end;
 
 procedure TfrmCustomGrid.pmPrintMethodsClick(Sender: TObject);
 begin
-  PrintPreview('rep_methods.lrf', dsLink);
+  DMR.qMethods.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qMethods.Open;
+  PrintPreview('rep_methods.lrf', DMR.qMethods);
 end;
 
 procedure TfrmCustomGrid.pmPrintPermitsClick(Sender: TObject);
 begin
-  PrintPreview('rep_permits.lrf', dsLink);
+  DMR.qPermits.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qPermits.Open;
+  PrintPreview('rep_permits.lrf', DMR.qPermits);
 end;
 
 procedure TfrmCustomGrid.pmPrintProjectsClick(Sender: TObject);
 begin
-  PrintPreview('rep_projects.lrf', dsLink);
+  DMR.qProjects.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qProjectTeam.SQL.Text := TSQLQuery(dsLink1.DataSet).SQL.Text;
+  DMR.qProjects.Open;
+  DMR.qProjectTeam.Open;
+  PrintPreview('rep_projects.lrf', DMR.qProjects, DMR.qProjectTeam);
+  DMR.qProjectTeam.Close;
+  DMR.qProjects.Close;
 end;
 
 procedure TfrmCustomGrid.pmPrintResearchersClick(Sender: TObject);
 begin
-  PrintPreview('rep_people.lrf', dsLink);
+  DMR.qPeople.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qPeople.Open;
+  PrintPreview('rep_people.lrf', DMR.qPeople);
 end;
 
 procedure TfrmCustomGrid.pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
 begin
-  PrintPreview('rep_sampling_plots_by_locality.lrf', dsLink);
+  DMR.qSamplingPlots.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qSamplingPlots.Open;
+  PrintPreview('rep_sampling_plots_by_locality.lrf', DMR.qSamplingPlots);
 end;
 
 procedure TfrmCustomGrid.pmPrintSamplingPlotsClick(Sender: TObject);
 begin
-  PrintPreview('rep_sampling_plots.lrf', dsLink);
+  DMR.qSamplingPlots.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qSamplingPlots.Open;
+  PrintPreview('rep_sampling_plots.lrf', DMR.qSamplingPlots);
 end;
 
 procedure TfrmCustomGrid.pmPrintSightingsByObserverClick(Sender: TObject);

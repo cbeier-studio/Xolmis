@@ -79,16 +79,16 @@ type
     procedure sbZoomOutClick(Sender: TObject);
     procedure tbZoomChange(Sender: TObject);
   private
-    FDataSource, FDetailSource: TDataSource;
+    FDataSource, FDetailSource: TDataSet;
     FReportName: String;
-    procedure SetDataSource(AValue: TDataSource);
-    procedure SetDetailSource(AValue: TDataSource);
+    procedure SetDataSource(AValue: TDataSet);
+    procedure SetDetailSource(AValue: TDataSet);
     procedure SetReportName(AValue: String);
     procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
-    property DataSource: TDataSource read FDataSource write SetDataSource;
-    property DetailSource: TDataSource read FDetailSource write SetDetailSource;
+    property DataSource: TDataSet read FDataSource write SetDataSource;
+    property DetailSource: TDataSet read FDetailSource write SetDetailSource;
     property ReportName: String read FReportName write SetReportName;
   end;
 
@@ -98,7 +98,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, udlg_progress, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, udlg_progress, udm_reports, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -303,44 +303,44 @@ begin
       tbZoom.Position := tbZoom.Position - 10;
 end;
 
-procedure TfrmPrintPreview.SetDataSource(AValue: TDataSource);
+procedure TfrmPrintPreview.SetDataSource(AValue: TDataSet);
 begin
   FDataSource := AValue;
   //qPrint.SQL.Text := TSQLQuery(FDataSource.DataSet).SQL.Text;
 
   if FReportName = ConcatPaths([InstallDir, 'reports\rep_bands_by_status.lrf']) then
   begin
-    FDataSource.DataSet.Close;
-    if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
-      TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
-    TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
+    FDataSource.Close;
+    if Pos('ORDER BY', TSQLQuery(FDataSource).SQL.Text) > 0 then
+      TSQLQuery(FDataSource).SQL.Delete(TSQLQuery(FDataSource).SQL.Count - 1);
+    TSQLQuery(FDataSource).SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
     //{$IFDEF DEBUG}
     //LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
     //{$ENDIF}
-    FDataSource.DataSet.Open;
+    FDataSource.Open;
   end
   else
   if FReportName = ConcatPaths([InstallDir, 'reports\rep_bands_by_carrier.lrf']) then
   begin
-    FDataSource.DataSet.Close;
-    if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
-      TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
-    TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY carrier_name ASC, b.band_size ASC, b.band_number ASC');
+    FDataSource.Close;
+    if Pos('ORDER BY', TSQLQuery(FDataSource).SQL.Text) > 0 then
+      TSQLQuery(FDataSource).SQL.Delete(TSQLQuery(FDataSource).SQL.Count - 1);
+    TSQLQuery(FDataSource).SQL.Add('ORDER BY carrier_name ASC, b.band_size ASC, b.band_number ASC');
     //{$IFDEF DEBUG}
     //LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
     //{$ENDIF}
-    FDataSource.DataSet.Open;
+    FDataSource.Open;
   end;
 
-  frDataSet.DataSource := FDataSource;
+  frDataSet.DataSet := FDataSource;
 end;
 
-procedure TfrmPrintPreview.SetDetailSource(AValue: TDataSource);
+procedure TfrmPrintPreview.SetDetailSource(AValue: TDataSet);
 begin
   FDetailSource := AValue;
   //if Assigned(FDetailSource) then
   //  qPrintDetail.SQL.Text := TSQLQuery(FDetailSource.DataSet).SQL.Text;
-  frDetails.DataSource := FDetailSource;
+  frDetails.DataSet := FDetailSource;
 end;
 
 procedure TfrmPrintPreview.SetReportName(AValue: String);

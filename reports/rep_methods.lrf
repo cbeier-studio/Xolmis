@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2024-09-24 08:38:04"/>
+    <ReportLastChange Value="2025-04-10 08:12:44"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -259,7 +259,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qMethods.&quot;method_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qMethods.&quot;method_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qMethods.&quot;method_acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qMethods.&quot;method_acronym&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -483,7 +483,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qMethods.&quot;ebird_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qMethods.&quot;ebird_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

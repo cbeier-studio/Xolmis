@@ -9,11 +9,11 @@ object frmPrintPreview: TfrmPrintPreview
   ClientWidth = 883
   PopupMode = pmAuto
   Position = poDefault
-  LCLVersion = '4.0.0.2'
+  LCLVersion = '4.0.0.3'
   OnShow = FormShow
   object pToolbar: TPanel
     Left = 0
-    Height = 32
+    Height = 38
     Top = 0
     Width = 883
     Align = alTop
@@ -21,14 +21,14 @@ object frmPrintPreview: TfrmPrintPreview
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 4
-    ClientHeight = 32
+    ClientHeight = 38
     ClientWidth = 883
     TabOrder = 0
     object sbPrint: TSpeedButton
       Left = 8
-      Height = 24
+      Height = 30
       Top = 4
-      Width = 53
+      Width = 59
       Align = alLeft
       AutoSize = True
       BorderSpacing.Right = 8
@@ -41,10 +41,10 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbPrintClick
     end
     object sbSavePDF: TSpeedButton
-      Left = 192
-      Height = 24
+      Left = 204
+      Height = 30
       Top = 4
-      Width = 76
+      Width = 82
       Align = alLeft
       AutoSize = True
       Caption = 'Save PDF'
@@ -56,10 +56,10 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbSavePDFClick
     end
     object sbPrintSettings: TSpeedButton
-      Left = 69
-      Height = 24
+      Left = 75
+      Height = 30
       Top = 4
-      Width = 107
+      Width = 113
       Align = alLeft
       AutoSize = True
       BorderSpacing.Right = 16
@@ -72,10 +72,10 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbPrintSettingsClick
     end
     object sbClose: TSpeedButton
-      Left = 818
-      Height = 24
+      Left = 812
+      Height = 30
       Top = 4
-      Width = 57
+      Width = 63
       Align = alRight
       AutoSize = True
       BorderSpacing.Left = 16
@@ -90,20 +90,20 @@ object frmPrintPreview: TfrmPrintPreview
   end
   object pStatusBar: TPanel
     Left = 0
-    Height = 36
-    Top = 568
+    Height = 38
+    Top = 566
     Width = 883
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 4
-    ClientHeight = 36
+    ClientHeight = 38
     ClientWidth = 883
     TabOrder = 1
     object tbZoom: TTrackBar
-      Left = 685
-      Height = 28
+      Left = 679
+      Height = 30
       Hint = 'Zoom'
       Top = 4
       Width = 126
@@ -118,11 +118,11 @@ object frmPrintPreview: TfrmPrintPreview
       TabOrder = 0
     end
     object sbZoomIn: TSpeedButton
-      Left = 811
-      Height = 28
+      Left = 805
+      Height = 30
       Hint = 'Zoom in'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alRight
       AutoSize = True
       DisabledImageIndex = 5
@@ -133,11 +133,11 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomInClick
     end
     object sbZoomOut: TSpeedButton
-      Left = 661
-      Height = 28
+      Left = 649
+      Height = 30
       Hint = 'Zoom out'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alRight
       AutoSize = True
       DisabledImageIndex = 3
@@ -148,11 +148,11 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomOutClick
     end
     object sbZoomAdjust: TSpeedButton
-      Left = 597
-      Height = 28
+      Left = 573
+      Height = 30
       Hint = 'Zoom page to fit'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alRight
       AutoSize = True
       BorderSpacing.Right = 8
@@ -164,11 +164,11 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomAdjustClick
     end
     object sbZoom100: TSpeedButton
-      Left = 629
-      Height = 28
+      Left = 611
+      Height = 30
       Hint = 'Zoom to actual size'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alRight
       AutoSize = True
       BorderSpacing.Right = 8
@@ -181,7 +181,7 @@ object frmPrintPreview: TfrmPrintPreview
     end
     object lblZoom: TLabel
       Left = 843
-      Height = 28
+      Height = 30
       Top = 4
       Width = 32
       Align = alRight
@@ -192,11 +192,11 @@ object frmPrintPreview: TfrmPrintPreview
       Layout = tlCenter
     end
     object sbZoomAdjustWidth: TSpeedButton
-      Left = 565
-      Height = 28
+      Left = 535
+      Height = 30
       Hint = 'Zoom page to fit width'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alRight
       AutoSize = True
       BorderSpacing.Left = 16
@@ -209,8 +209,8 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomAdjustWidthClick
     end
     object lblPage: TLabel
-      Left = 60
-      Height = 28
+      Left = 72
+      Height = 30
       Top = 4
       Width = 29
       Align = alLeft
@@ -220,10 +220,10 @@ object frmPrintPreview: TfrmPrintPreview
       Layout = tlCenter
     end
     object PBar: TProgressBar
-      Left = 157
-      Height = 20
+      Left = 181
+      Height = 22
       Top = 8
-      Width = 392
+      Width = 338
       Align = alClient
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
@@ -232,10 +232,10 @@ object frmPrintPreview: TfrmPrintPreview
     end
     object sbFirstPage: TSpeedButton
       Left = 8
-      Height = 28
+      Height = 30
       Hint = 'First page'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alLeft
       AutoSize = True
       BorderSpacing.Left = 8
@@ -251,11 +251,11 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbFirstPageClick
     end
     object sbPriorPage: TSpeedButton
-      Left = 32
-      Height = 28
+      Left = 38
+      Height = 30
       Hint = 'Previous page'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alLeft
       AutoSize = True
       DisabledImageIndex = 11
@@ -270,11 +270,11 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbPriorPageClick
     end
     object sbNextPage: TSpeedButton
-      Left = 93
-      Height = 28
+      Left = 105
+      Height = 30
       Hint = 'Next page'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alLeft
       AutoSize = True
       DisabledImageIndex = 9
@@ -289,11 +289,11 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbNextPageClick
     end
     object sbLastPage: TSpeedButton
-      Left = 117
-      Height = 28
+      Left = 135
+      Height = 30
       Hint = 'Last page'
       Top = 4
-      Width = 24
+      Width = 30
       Align = alLeft
       AutoSize = True
       BorderSpacing.Right = 16
@@ -311,8 +311,8 @@ object frmPrintPreview: TfrmPrintPreview
   end
   object frPreview: TfrPreview
     Left = 0
-    Height = 536
-    Top = 32
+    Height = 528
+    Top = 38
     Width = 883
     Align = alClient
     BevelOuter = bvNone
@@ -323,8 +323,8 @@ object frmPrintPreview: TfrmPrintPreview
   end
   object iButtons: TImageList
     Scaled = True
-    Left = 525
-    Top = 98
+    Left = 52
+    Top = 184
     Bitmap = {
       4C7A1C00000010000000100000006E0D00000000000078DAED9C7D7016C51DC7
       05315A2C5AA7FED5012A0424203301B1A58002A1B1BE00B6550798418B0CC2F8
@@ -1083,8 +1083,8 @@ object frmPrintPreview: TfrmPrintPreview
   end
   object iButtonsDark: TImageList
     Scaled = True
-    Left = 525
-    Top = 172
+    Left = 52
+    Top = 258
     Bitmap = {
       4C7A1C0000001000000010000000720C00000000000078DAED9D097055D519C7
       4D42206C05BA387681DAA95A406419D66859248184162B54812021A4842D6C15
@@ -1698,7 +1698,7 @@ object frmPrintPreview: TfrmPrintPreview
     Preview = frPreview
     PreviewButtons = [pbZoom, pbSave, pbPrint, pbFind, pbExit, pbSettings, pbPageSetup]
     DataType = dtDataSet
-    Title = 'Projects'
+    Title = 'Methods'
     OnBeginDoc = ReportBeginDoc
     OnEndDoc = ReportEndDoc
     OnProgress = ReportProgress
@@ -1710,10 +1710,11 @@ object frmPrintPreview: TfrmPrintPreview
     Top = 233
   end
   object frCheckBoxObj: TfrCheckBoxObject
-    Left = 525
-    Top = 256
+    Left = 363
+    Top = 296
   end
   object frDataSet: TfrDBDataSet
+    CloseDataSource = True
     Left = 429
     Top = 166
   end
@@ -1733,13 +1734,14 @@ object frmPrintPreview: TfrmPrintPreview
     Top = 160
   end
   object frDetails: TfrDBDataSet
+    CloseDataSource = True
     Left = 429
     Top = 233
   end
   object pmReport: TPopupMenu
     Images = iButtons
-    Left = 361
-    Top = 327
+    Left = 168
+    Top = 272
     object pmSavePdf: TMenuItem
       Caption = 'Save to PDF'
       ImageIndex = 18

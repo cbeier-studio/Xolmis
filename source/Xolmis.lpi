@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="150">
+      <ExcludedIdentifiers Count="151">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -174,13 +174,14 @@
         <Item148 Value="tfrmMaintenance.lblManageLogs.Caption"/>
         <Item149 Value="tfrmMaintenance.lblClearTemporaryFiles.Caption"/>
         <Item150 Value="tfrmMaintenance.lblRecreateImageThumbnails.Caption"/>
+        <Item151 Value="tfrmTaxa.txtNestProductivity.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="441"/>
+      <BuildNr Value="443"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1334,6 +1335,13 @@
         <Filename Value="data_modules\udm_taxa.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="DMT"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_reports.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMR"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
       </Unit>

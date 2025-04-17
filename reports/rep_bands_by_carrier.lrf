@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:45:11"/>
-    <ReportLastChange Value="2024-10-04 14:42:57"/>
+    <ReportLastChange Value="2025-04-10 08:10:02"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_size&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_size&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_number&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_number&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -427,7 +427,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_prefix&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_prefix&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -483,7 +483,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_suffix&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_suffix&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_status&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_status&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -595,7 +595,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_type&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_type&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -651,7 +651,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_source&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_source&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -707,7 +707,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;supplier_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;supplier_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -763,7 +763,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;band_id&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;band_id&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -819,7 +819,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qBands.&quot;carrier_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qBands.&quot;carrier_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

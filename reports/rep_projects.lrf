@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-03-20 13:50:29"/>
+    <ReportLastChange Value="2025-04-05 09:10:04"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -148,7 +148,7 @@
           </Frames>
           <BandType Value="btDetailData"/>
           <Condition Value=""/>
-          <DatasetStr Value="frDataSet"/>
+          <DatasetStr Value="frDetails"/>
           <Child Value=""/>
         </Object4>
         <Object5>
@@ -343,7 +343,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;project_title&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;project_title&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -399,7 +399,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;short_title&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;short_title&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -455,7 +455,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;start_date&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;start_date&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -511,7 +511,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;end_date&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;end_date&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -567,7 +567,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;website_uri&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;website_uri&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -623,7 +623,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;email_addr&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;email_addr&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -679,7 +679,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;contact_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;contact_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -735,7 +735,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjects.&quot;project_id&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjects.&quot;project_id&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1265,7 +1265,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjectTeam.&quot;person_acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjectTeam.&quot;person_acronym&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1321,7 +1321,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjectTeam.&quot;person_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjectTeam.&quot;person_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1575,7 +1575,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMG.qProjectTeam.&quot;institution_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qProjectTeam.&quot;institution_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

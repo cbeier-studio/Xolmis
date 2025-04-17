@@ -134,7 +134,8 @@ uses
   uedt_vegetation, ufrm_taxa, udlg_exportpreview, cbs_users, cbs_media,
   cbs_setparam, uedt_collector, uedt_surveymember, uedt_projectmember,
   uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
-  uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa;
+  uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
+  udm_reports;
 
 {$R *.res}
 

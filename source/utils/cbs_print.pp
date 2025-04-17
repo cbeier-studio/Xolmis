@@ -7,14 +7,14 @@ interface
 uses
   Classes, SysUtils, Dialogs, DB, LazFileUtils;
 
-  procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource: TDataSource = nil);
+  procedure PrintPreview(aReportFile: String; aDataSource: TDataSet; aDetailSource: TDataSet = nil);
 
 implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, ufrm_printpreview;
 
-procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource: TDataSource);
+procedure PrintPreview(aReportFile: String; aDataSource: TDataSet; aDetailSource: TDataSet);
 begin
 
   if not FileExists(ConcatPaths([InstallDir, 'reports\', aReportFile])) then
@@ -23,19 +23,19 @@ begin
     Exit;
   end;
 
-  if aDataSource.DataSet.RecordCount > 0 then
+  if aDataSource.RecordCount > 0 then
   begin
     frmPrintPreview := TfrmPrintPreview.Create(nil);
     with frmPrintPreview do
     try
-      aDataSource.DataSet.DisableControls;
+      aDataSource.DisableControls;
       ReportName := aReportFile;
       DataSource := aDataSource;
       DetailSource := aDetailSource;
 
       ShowModal;
     finally
-      aDataSource.DataSet.EnableControls;
+      aDataSource.EnableControls;
       FreeAndNil(frmPrintPreview);
     end;
   end

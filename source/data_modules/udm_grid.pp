@@ -2840,23 +2840,14 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  if Sender.AsString = 'P' then
-    aText := rsCaptionCountry
-  else
-  if Sender.AsString = 'E' then
-    aText := rsCaptionState
-  else
-  if Sender.AsString = 'R' then
-    aText := rsCaptionRegion
-  else
-  if Sender.AsString = 'M' then
-    aText := rsCaptionMunicipality
-  else
-  if Sender.AsString = 'D' then
-    aText := rsCaptionDistrict
-  else
-  if Sender.AsString = 'L' then
-    aText := rsCaptionLocality;
+  case Sender.AsString of
+    'P': aText := rsCaptionCountry;
+    'E': aText := rsCaptionState;
+    'R': aText := rsCaptionRegion;
+    'M': aText := rsCaptionMunicipality;
+    'D': aText := rsCaptionDistrict;
+    'L': aText := rsCaptionLocality;
+  end;
 
   DisplayText := True;
 end;
