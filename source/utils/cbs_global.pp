@@ -270,6 +270,7 @@ var
   function HelpDir: String;
   function NullDate: TDate;
   function NullTime: TTime;
+  function NullDateTime: TDateTime;
 
   { System settings and user permissions manipulation }
   function NewDatabase: Boolean;
@@ -493,6 +494,11 @@ end;
 function NullTime: TTime;
 begin
   Result := StrToTime(NullTimeStr);
+end;
+
+function NullDateTime: TDateTime;
+begin
+  Result := StrToDateTime(NullDateStr + ' ' + NullTimeStr);
 end;
 
 { ---------------------------------------------------------------------------------------- }
