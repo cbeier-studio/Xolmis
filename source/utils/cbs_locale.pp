@@ -531,6 +531,9 @@ uses
     rsExactCoordinate = 'Exact';
     rsApproximatedCoordinate = 'Approximated';
     rsReferenceCoordinate = 'Reference coordinate';
+    rsDecimalDegrees = 'Decimal degrees';
+    rsDegreesMinutesSeconds = 'Degrees, minutes and seconds';
+    rsUTM = 'UTM';
 
     { Colored bands }
     rsColorBandsRightLeft = 'r %s / l %s';

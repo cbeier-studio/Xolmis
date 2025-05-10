@@ -128,6 +128,12 @@ uses cbs_locale, cbs_global, cbs_dialogs, cbs_gis, cbs_themes, udm_main, uDarkSt
 
 procedure TfrmGeoConverter.FormCreate(Sender: TObject);
 begin
+  cbConvertFrom.Items.Clear;
+  cbConvertFrom.Items.Add(rsDecimalDegrees);
+  cbConvertFrom.Items.Add(rsDegreesMinutesSeconds);
+  cbConvertFrom.Items.Add(rsUTM);
+  cbConvertTo.Items.Assign(cbConvertFrom.Items);
+
   cbConvertFrom.ItemIndex := 0;
   cbConvertTo.ItemIndex := 1;
   UpdateButtons;

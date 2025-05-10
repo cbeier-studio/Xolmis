@@ -300,7 +300,7 @@ type
     procedure iSearchGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
     procedure navTabsContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
-    procedure navTabsTabChanged(Sender: TObject);
+    procedure navTabsTabClick(Sender: TObject);
     procedure navTabsTabClose(Sender: TObject; ATabIndex: integer; var ACanClose,
       ACanContinue: boolean);
     procedure navTabsTabEmpty(Sender: TObject);
@@ -1059,7 +1059,7 @@ begin
      11: actOpenGazetteerExecute(nil);
      12: actCoordinatesConverterExecute(nil);
     end;
-    navTabsTabChanged(nil);
+    navTabsTabClick(nil);
 
     { Check for updates }
     case XSettings.AutoUpdates of
@@ -1111,7 +1111,7 @@ begin
   pmtCloseTab.Visible := not (navTabs.GetTabData(navTabs.TabIndex).TabPinned);
 end;
 
-procedure TfrmMain.navTabsTabChanged(Sender: TObject);
+procedure TfrmMain.navTabsTabClick(Sender: TObject);
 var
   aPage: TPage;
 begin
@@ -1596,7 +1596,7 @@ begin
    11: actOpenGazetteerExecute(nil);
    12: actCoordinatesConverterExecute(nil);
   end;
-  navTabsTabChanged(nil);
+  navTabsTabClick(nil);
 
   //for i := 0 to navTabs.TabCount - 1 do
   //  if navTabs.GetTabData(i).TabCaption = rsHome then

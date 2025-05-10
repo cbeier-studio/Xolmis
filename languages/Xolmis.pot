@@ -3113,6 +3113,10 @@ msgctxt "cbs_locale.rsdeadbird"
 msgid "Dead bird"
 msgstr ""
 
+#: cbs_locale.rsdecimaldegrees
+msgid "Decimal degrees"
+msgstr ""
+
 #: cbs_locale.rsdecimalseparatorcolon
 msgctxt "cbs_locale.rsdecimalseparatorcolon"
 msgid "Colon"
@@ -3129,6 +3133,10 @@ msgstr ""
 
 #: cbs_locale.rsdefault
 msgid "Default"
+msgstr ""
+
+#: cbs_locale.rsdegreesminutesseconds
+msgid "Degrees, minutes and seconds"
 msgstr ""
 
 #: cbs_locale.rsdeleteconnectionprompt
@@ -5975,6 +5983,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rsusernumberandtotal"
 msgid "user %d of %d"
+msgstr ""
+
+#: cbs_locale.rsutm
+msgid "UTM"
 msgstr ""
 
 #: cbs_locale.rsvaluenotinrange
@@ -14456,7 +14468,7 @@ msgstr ""
 
 #: tfrmmain.actcoordinatesconverter.caption
 msgctxt "tfrmmain.actcoordinatesconverter.caption"
-msgid "&Converter"
+msgid "&Coordinates converter"
 msgstr ""
 
 #: tfrmmain.actcoordinateseditor.caption

@@ -9,7 +9,6 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.0.0.3'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -462,7 +461,7 @@ object frmMain: TfrmMain
       OptHintForUser2 = '2'
       OptHintForUser3 = '3'
       OptHintForUser4 = '4'
-      OnTabChanged = navTabsTabChanged
+      OnTabClick = navTabsTabClick
       OnTabClose = navTabsTabClose
       OnTabEmpty = navTabsTabEmpty
     end
@@ -1128,7 +1127,7 @@ object frmMain: TfrmMain
     end
     object actCoordinatesConverter: TAction
       Category = 'Geo'
-      Caption = '&Converter'
+      Caption = '&Coordinates converter'
       ImageIndex = 24
       OnExecute = actCoordinatesConverterExecute
     end

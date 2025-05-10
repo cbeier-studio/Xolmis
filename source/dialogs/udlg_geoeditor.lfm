@@ -13,7 +13,6 @@ object dlgGeoEditor: TdlgGeoEditor
   Constraints.MinWidth = 349
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
@@ -81,11 +80,14 @@ object dlgGeoEditor: TdlgGeoEditor
     CachePath = 'map-cache'
     DownloadEngine = mapGeo.BuiltInDLE
     DrawingEngine = MvBGRADraw
+    Layers = <>
     Font.Color = clBlack
-    MapProvider = 'OpenStreetMap Mapnik'
+    MapProvider = 'OpenStreetMap Standard'
+    ParentFont = False
     POIImages = DMM.iMaps
     POIImagesWidth = 20
-    UseThreads = True
+    POITextBgOpacity = 0.550000011920929
+    TabOrder = 1
     OnDrawGpsPoint = mapGeoDrawGpsPoint
   end
   object PG: TPageControl
@@ -415,17 +417,17 @@ object dlgGeoEditor: TdlgGeoEditor
         Columns = <        
           item
             Title.Caption = 'Name'
-            Width = 113
+            Width = 106
             FieldName = 'coordinate_name'
           end        
           item
             Title.Caption = 'Longitude'
-            Width = 112
+            Width = 105
             FieldName = 'longitude'
           end        
           item
             Title.Caption = 'Latitude'
-            Width = 112
+            Width = 105
             FieldName = 'latitude'
           end>
         Constraints.MinHeight = 230

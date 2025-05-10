@@ -3117,6 +3117,10 @@ msgctxt "cbs_locale.rsdeadbird"
 msgid "Dead bird"
 msgstr "Ave morta"
 
+#: cbs_locale.rsdecimaldegrees
+msgid "Decimal degrees"
+msgstr "Graus decimais"
+
 #: cbs_locale.rsdecimalseparatorcolon
 msgctxt "cbs_locale.rsdecimalseparatorcolon"
 msgid "Colon"
@@ -3134,6 +3138,10 @@ msgstr "Descompactando backup..."
 #: cbs_locale.rsdefault
 msgid "Default"
 msgstr "Padrão"
+
+#: cbs_locale.rsdegreesminutesseconds
+msgid "Degrees, minutes and seconds"
+msgstr "Graus, minutos e segundos"
 
 #: cbs_locale.rsdeleteconnectionprompt
 msgctxt "cbs_locale.rsdeleteconnectionprompt"
@@ -5990,6 +5998,10 @@ msgstr "O arquivo de banco de dados não foi encontrado. Use a opção Novo banc
 msgctxt "cbs_locale.rsusernumberandtotal"
 msgid "user %d of %d"
 msgstr "usuário %d de %d"
+
+#: cbs_locale.rsutm
+msgid "UTM"
+msgstr "UTM"
 
 #: cbs_locale.rsvaluenotinrange
 #, object-pascal-format
@@ -14453,8 +14465,8 @@ msgstr "Verificar atuali&zações"
 
 #: tfrmmain.actcoordinatesconverter.caption
 msgctxt "tfrmmain.actcoordinatesconverter.caption"
-msgid "&Converter"
-msgstr "&Conversor"
+msgid "&Coordinates converter"
+msgstr "&Conversor de coordenadas"
 
 #: tfrmmain.actcoordinateseditor.caption
 msgid "&Editor"
