@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-04-10 08:02:21"/>
+    <ReportLastChange Value="2025-05-30 08:21:45"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -92,7 +92,7 @@
           </Frames>
           <BandType Value="btMasterData"/>
           <Condition Value=""/>
-          <DatasetStr Value=""/>
+          <DatasetStr Value="frDataSet"/>
           <Child Value=""/>
         </Object2>
         <Object3>

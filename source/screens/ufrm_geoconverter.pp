@@ -126,6 +126,73 @@ uses cbs_locale, cbs_global, cbs_dialogs, cbs_gis, cbs_themes, udm_main, uDarkSt
 
 { TfrmGeoConverter }
 
+procedure TfrmGeoConverter.AddMark(aLine: Integer);
+var
+  m: TSynEditMark;
+begin
+  m := TSynEditMark.Create(seConverted);
+  m.Line := aLine;
+  m.ImageList := imgSBar;
+  m.ImageIndex := 1;
+  m.Visible := True;
+  seConverted.Marks.Add(m);
+end;
+
+procedure TfrmGeoConverter.ApplyDarkMode;
+begin
+  pLeft.Color := clSolidBGBaseDark;
+  pConvertFrom.Color := clSolidBGBaseDark;
+  pConverted.Color := clSolidBGBaseDark;
+
+  pConvert.Background.Color := clCardBGDefaultDark;
+  pConvert.Border.Color := clCardBGSecondaryDark;
+  pUtmZone.Background.Color := clCardBGDefaultDark;
+  pUtmZone.Border.Color := clCardBGSecondaryDark;
+  pUtmHemisphere.Background.Color := clCardBGDefaultDark;
+  pUtmHemisphere.Border.Color := clCardBGSecondaryDark;
+  pNorthSouth.Color := clCardBGDefaultDark;
+  pAddUnitsZone.Background.Color := clCardBGDefaultDark;
+  pAddUnitsZone.Border.Color := clCardBGSecondaryDark;
+  pCaretPos.Background.Color := clCardBGDefaultDark;
+  pCaretPos.Border.Color := clCardBGSecondaryDark;
+  pConvertFromToolbar.Background.Color := clCardBGDefaultDark;
+  pConvertFromToolbar.Border.Color := clCardBGSecondaryDark;
+  pConvertedToolbar.Background.Color := clCardBGDefaultDark;
+  pConvertedToolbar.Border.Color := clCardBGSecondaryDark;
+
+  pFormatInfo.Background.Color := clVioletBG1Dark;
+  pFormatInfo.Border.Color := clCardBGSecondaryDark;
+
+  SplitSynEdit.ParentColor := True;
+  seConvertFrom.Color := clSolidBGSecondaryDark;
+  seConvertFrom.Gutter.Color := clSolidBGSecondaryDark;
+  seConvertFrom.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
+  seConvertFrom.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
+  seConvertFrom.RightEdgeColor := clSolidBGTertiaryDark;
+  seConvertFrom.Font.Color := clTextPrimaryDark;
+  seConverted.Color := clSolidBGSecondaryDark;
+  seConverted.Gutter.Color := clSolidBGSecondaryDark;
+  seConverted.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
+  seConverted.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
+  seConverted.RightEdgeColor := clSolidBGTertiaryDark;
+  seConverted.Font.Color := clTextPrimaryDark;
+
+  pmConvertFrom.Images := iButtonsDark;
+  pmConverted.Images := iButtonsDark;
+  sbConvert.Images := iButtonsDark;
+  sbOpenFile.Images := iButtonsDark;
+  sbPaste.Images := iButtonsDark;
+  sbClear.Images := iButtonsDark;
+  sbSaveFile.Images := iButtonsDark;
+  sbCopy.Images := iButtonsDark;
+  sbAddToGeoEditor.Images := iButtonsDark;
+end;
+
+procedure TfrmGeoConverter.cbConvertToChange(Sender: TObject);
+begin
+  UpdateButtons;
+end;
+
 procedure TfrmGeoConverter.FormCreate(Sender: TObject);
 begin
   cbConvertFrom.Items.Clear;
@@ -160,9 +227,62 @@ begin
   UpdateCurrentCaretPos;
 end;
 
-procedure TfrmGeoConverter.cbConvertToChange(Sender: TObject);
+function TfrmGeoConverter.FormatCoordinates(aText: String): String;
+var
+  p: Extended;
+  X: String;
+  pcaret: TPoint;
+  aFrom: TMapCoordinateType;
 begin
+  Result := EmptyStr;
+  if Trim(aText) = EmptyStr then
+    Exit;
+
+  aFrom := mcDecimal;
+  p := 0.0;
+  pcaret := seConvertFrom.CaretXY;
+
+  // replace <Tab> separator
+  aText := ReplaceRegExpr('\t+', aText, '; ');
+  // replace separator to Semicolon
+  if Pos('.', aText) > 0 then
+    aText := StringReplace(aText, ',', ';', [rfReplaceAll, rfIgnoreCase]);
+  // replace DecimalSeparator if it is a Comma
+  if FormatSettings.DecimalSeparator = ',' then
+    aText := StringReplace(aText, '.', ',', [rfReplaceAll, rfIgnoreCase]);
+  // replace double spaces
+  aText := ReplaceRegExpr('\h+', aText, ' ');
+
+  X := Trim(ExtractDelimited(1, aText, [';']));
+  if WordCount(X, DmsSymbols + [' ']) > 2 then
+    aFrom := mcDMS
+  else
+  if (ExecRegExpr('^[0-9]{1,3}[a-zA-Z]{1}$', X)) or ((TryStrToFloat(X, p)) and (p > 180)) then
+    aFrom := mcUTM;
+
+  case aFrom of
+    mcDecimal:
+      begin
+        cbConvertFrom.ItemIndex := 0;
+        cbConvertTo.ItemIndex := 1;
+      end;
+    mcDMS:
+      begin
+        aText := RemoveSymbolsDMS(aText);
+        cbConvertFrom.ItemIndex := 1;
+        cbConvertTo.ItemIndex := 0;
+      end;
+    mcUTM:
+      begin
+        cbConvertFrom.ItemIndex := 2;
+        cbConvertTo.ItemIndex := 0;
+      end;
+  end;
+
+  Result := aText;
+  seConvertFrom.CaretXY := pcaret;
   UpdateButtons;
+  UpdateCurrentCaretPos;
 end;
 
 procedure TfrmGeoConverter.sbAddToGeoEditorClick(Sender: TObject);
@@ -443,126 +563,6 @@ procedure TfrmGeoConverter.seConvertFromPaste(Sender: TObject; var AText: String
   var AMode: TSynSelectionMode; ALogStartPos: TPoint; var AnAction: TSynCopyPasteAction);
 begin
   AText := FormatCoordinates(AText);
-  UpdateCurrentCaretPos;
-end;
-
-procedure TfrmGeoConverter.AddMark(aLine: Integer);
-var
-  m: TSynEditMark;
-begin
-  m := TSynEditMark.Create(seConverted);
-  m.Line := aLine;
-  m.ImageList := imgSBar;
-  m.ImageIndex := 1;
-  m.Visible := True;
-  seConverted.Marks.Add(m);
-end;
-
-procedure TfrmGeoConverter.ApplyDarkMode;
-begin
-  pLeft.Color := clSolidBGBaseDark;
-  pConvertFrom.Color := clSolidBGBaseDark;
-  pConverted.Color := clSolidBGBaseDark;
-
-  pConvert.Background.Color := clCardBGDefaultDark;
-  pConvert.Border.Color := clCardBGSecondaryDark;
-  pUtmZone.Background.Color := clCardBGDefaultDark;
-  pUtmZone.Border.Color := clCardBGSecondaryDark;
-  pUtmHemisphere.Background.Color := clCardBGDefaultDark;
-  pUtmHemisphere.Border.Color := clCardBGSecondaryDark;
-  pNorthSouth.Color := clCardBGDefaultDark;
-  pAddUnitsZone.Background.Color := clCardBGDefaultDark;
-  pAddUnitsZone.Border.Color := clCardBGSecondaryDark;
-  pCaretPos.Background.Color := clCardBGDefaultDark;
-  pCaretPos.Border.Color := clCardBGSecondaryDark;
-  pConvertFromToolbar.Background.Color := clCardBGDefaultDark;
-  pConvertFromToolbar.Border.Color := clCardBGSecondaryDark;
-  pConvertedToolbar.Background.Color := clCardBGDefaultDark;
-  pConvertedToolbar.Border.Color := clCardBGSecondaryDark;
-
-  pFormatInfo.Background.Color := clVioletBG1Dark;
-  pFormatInfo.Border.Color := clCardBGSecondaryDark;
-
-  SplitSynEdit.ParentColor := True;
-  seConvertFrom.Color := clSolidBGSecondaryDark;
-  seConvertFrom.Gutter.Color := clSolidBGSecondaryDark;
-  seConvertFrom.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
-  seConvertFrom.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
-  seConvertFrom.RightEdgeColor := clSolidBGTertiaryDark;
-  seConvertFrom.Font.Color := clTextPrimaryDark;
-  seConverted.Color := clSolidBGSecondaryDark;
-  seConverted.Gutter.Color := clSolidBGSecondaryDark;
-  seConverted.Gutter.Parts[1].MarkupInfo.Background := clSolidBGSecondaryDark;
-  seConverted.Gutter.Parts[1].MarkupInfo.Foreground := clTextTertiaryDark;
-  seConverted.RightEdgeColor := clSolidBGTertiaryDark;
-  seConverted.Font.Color := clTextPrimaryDark;
-
-  pmConvertFrom.Images := iButtonsDark;
-  pmConverted.Images := iButtonsDark;
-  sbConvert.Images := iButtonsDark;
-  sbOpenFile.Images := iButtonsDark;
-  sbPaste.Images := iButtonsDark;
-  sbClear.Images := iButtonsDark;
-  sbSaveFile.Images := iButtonsDark;
-  sbCopy.Images := iButtonsDark;
-  sbAddToGeoEditor.Images := iButtonsDark;
-end;
-
-function TfrmGeoConverter.FormatCoordinates(aText: String): String;
-var
-  p: Extended;
-  X: String;
-  pcaret: TPoint;
-  aFrom: TMapCoordinateType;
-begin
-  Result := EmptyStr;
-  if Trim(aText) = EmptyStr then
-    Exit;
-
-  aFrom := mcDecimal;
-  p := 0.0;
-  pcaret := seConvertFrom.CaretXY;
-
-  // replace <Tab> separator
-  aText := ReplaceRegExpr('\t+', aText, '; ');
-  // replace separator to Semicolon
-  if Pos('.', aText) > 0 then
-    aText := StringReplace(aText, ',', ';', [rfReplaceAll, rfIgnoreCase]);
-  // replace DecimalSeparator if it is a Comma
-  if FormatSettings.DecimalSeparator = ',' then
-    aText := StringReplace(aText, '.', ',', [rfReplaceAll, rfIgnoreCase]);
-  // replace double spaces
-  aText := ReplaceRegExpr('\h+', aText, ' ');
-
-  X := Trim(ExtractDelimited(1, aText, [';']));
-  if WordCount(X, DmsSymbols + [' ']) > 2 then
-    aFrom := mcDMS
-  else
-  if (ExecRegExpr('^[0-9]{1,3}[a-zA-Z]{1}$', X)) or ((TryStrToFloat(X, p)) and (p > 180)) then
-    aFrom := mcUTM;
-
-  case aFrom of
-    mcDecimal:
-      begin
-        cbConvertFrom.ItemIndex := 0;
-        cbConvertTo.ItemIndex := 1;
-      end;
-    mcDMS:
-      begin
-        aText := RemoveSymbolsDMS(aText);
-        cbConvertFrom.ItemIndex := 1;
-        cbConvertTo.ItemIndex := 0;
-      end;
-    mcUTM:
-      begin
-        cbConvertFrom.ItemIndex := 2;
-        cbConvertTo.ItemIndex := 0;
-      end;
-  end;
-
-  Result := aText;
-  seConvertFrom.CaretXY := pcaret;
-  UpdateButtons;
   UpdateCurrentCaretPos;
 end;
 

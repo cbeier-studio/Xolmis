@@ -1117,8 +1117,12 @@ object frmTaxa: TfrmTaxa
           Align = alTop
           DownloadEngine = mapView.BuiltInDLE
           DrawingEngine = MvBGRA
+          Layers = <>
           Font.Color = clBlack
-          MapProvider = 'OpenStreetMap Mapnik'
+          MapProvider = 'OpenStreetMap Standard'
+          ParentFont = False
+          POITextBgOpacity = 0.550000011920929
+          TabOrder = 2
           OnDrawGpsPoint = mapViewDrawGpsPoint
         end
         object chartSeasonality: TChart

@@ -9,7 +9,7 @@ object frmPrintPreview: TfrmPrintPreview
   ClientWidth = 883
   PopupMode = pmAuto
   Position = poDefault
-  LCLVersion = '4.0.0.3'
+  LCLVersion = '4.0.0.4'
   OnShow = FormShow
   object pToolbar: TPanel
     Left = 0

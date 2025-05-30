@@ -989,6 +989,7 @@ type
     procedure pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
     procedure pmPrintSamplingPlotsClick(Sender: TObject);
     procedure pmPrintSightingsByObserverClick(Sender: TObject);
+    procedure pmPrintSightingsClick(Sender: TObject);
     procedure pmrRefreshClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
@@ -7210,6 +7211,13 @@ begin
     FreeAndNil(qObservers);
     FreeAndNil(Qry);
   end;
+end;
+
+procedure TfrmCustomGrid.pmPrintSightingsClick(Sender: TObject);
+begin
+  DMR.qSightings.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qSightings.Open;
+  PrintPreview('rep_sightings.lrf', DMR.qSightings);
 end;
 
 procedure TfrmCustomGrid.pmrRefreshClick(Sender: TObject);
@@ -13608,7 +13616,7 @@ begin
     tbPeople:         UpdateFilterPanelsPeople;
     tbProjects:       UpdateFilterPanelsProjects;
     tbPermits:        UpdateFilterPanelsPermits;
-    tbSamplingPlots:    UpdateFilterPanelsSamplingPlots;
+    tbSamplingPlots:  UpdateFilterPanelsSamplingPlots;
     tbBotanicTaxa:    UpdateFilterPanelsBotanicTaxa;
     tbZooTaxa:        UpdateFilterPanelsZooTaxa;
     tbBands:          UpdateFilterPanelsBands;
@@ -13765,11 +13773,17 @@ begin
   pSkullOssificationFilter.Visible := False;
   pHowAgedFilter.Visible := False;
   pAgeFilter.Rounding.RoundOptions := [];
+  cbAgeFilter.Items.Clear;
+  cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
+    rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+    rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
   pAgingFilters.Visible := True;
   pCloacalProtuberanceFilter.Visible := False;
   pBroodPatchFilter.Visible := False;
   pHowSexedFilter.Visible := False;
   pSexFilter.Rounding.RoundOptions := [];
+  cbSexFilter.Items.Clear;
+  cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
   pSexingFilters.Visible := True;
   pNestFilter.Visible := True;
   pIndividualFilter.Visible := True;

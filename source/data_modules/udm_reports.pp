@@ -1,3 +1,19 @@
+{ Xolmis Reports data module
+
+  Copyright (C) 2025 Christian Beier <hello@christianbeier.studio>
+
+  This source is free software; you can redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation; either version 3 of the License, or (at your
+  option) any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  You should have received a copy of the GNU General Public License along with this program.  If not,
+  see <https://www.gnu.org/licenses/>.
+}
+
 unit udm_reports;
 
 {$mode ObjFPC}{$H+}
@@ -311,6 +327,62 @@ type
     qSamplingPlotsupdate_date: TDateTimeField;
     qSamplingPlotsuser_inserted: TLongintField;
     qSamplingPlotsuser_updated: TLongintField;
+    qSightings: TSQLQuery;
+    qSightingsactive_status: TBooleanField;
+    qSightingsadults_tally: TStringField;
+    qSightingsbreeding_status: TStringField;
+    qSightingscountry_id: TLongintField;
+    qSightingsdetection_type: TStringField;
+    qSightingsebird_available: TBooleanField;
+    qSightingsexported_status: TBooleanField;
+    qSightingsfamily_id: TLongintField;
+    qSightingsfemales_tally: TStringField;
+    qSightingsfull_name: TStringField;
+    qSightingsgenus_id: TLongintField;
+    qSightingsimmatures_tally: TStringField;
+    qSightingsindividual_id: TLongintField;
+    qSightingsindividual_name: TStringField;
+    qSightingsinsert_date: TDateTimeField;
+    qSightingslatitude: TFloatField;
+    qSightingslocality_id: TLongintField;
+    qSightingslocality_name: TStringField;
+    qSightingslongitude: TFloatField;
+    qSightingsmackinnon_list_num: TLongintField;
+    qSightingsmales_tally: TStringField;
+    qSightingsmarked_status: TBooleanField;
+    qSightingsmethod_id: TLongintField;
+    qSightingsmethod_name: TStringField;
+    qSightingsmunicipality_id: TLongintField;
+    qSightingsnew_captures_tally: TLongintField;
+    qSightingsnotes: TMemoField;
+    qSightingsnot_aged_tally: TStringField;
+    qSightingsnot_sexed_tally: TStringField;
+    qSightingsnot_surveying: TBooleanField;
+    qSightingsobserver_id: TLongintField;
+    qSightingsobserver_name: TStringField;
+    qSightingsorder_id: TLongintField;
+    qSightingsrecaptures_tally: TLongintField;
+    qSightingssighting_date: TDateField;
+    qSightingssighting_id: TAutoIncField;
+    qSightingssighting_time: TTimeField;
+    qSightingsspecies_id: TLongintField;
+    qSightingsstate_id: TLongintField;
+    qSightingssubjects_tally: TLongintField;
+    qSightingssubject_captured: TBooleanField;
+    qSightingssubject_distance: TFloatField;
+    qSightingssubject_heard: TBooleanField;
+    qSightingssubject_photographed: TBooleanField;
+    qSightingssubject_recorded: TBooleanField;
+    qSightingssubject_seen: TBooleanField;
+    qSightingssurvey_id: TLongintField;
+    qSightingssurvey_name: TStringField;
+    qSightingstaxon_formatted_name: TStringField;
+    qSightingstaxon_id: TLongintField;
+    qSightingstaxon_name: TStringField;
+    qSightingsunbanded_tally: TLongintField;
+    qSightingsupdate_date: TDateTimeField;
+    qSightingsuser_inserted: TLongintField;
+    qSightingsuser_updated: TLongintField;
     procedure qBandHistoryevent_typeGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qBandsband_sourceGetText(Sender: TField;

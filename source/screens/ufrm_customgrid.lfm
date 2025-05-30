@@ -30,6 +30,7 @@ object frmCustomGrid: TfrmCustomGrid
     ClientHeight = 614
     ClientWidth = 464
     Color = 15658734
+    Constraints.MinWidth = 464
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
@@ -39,7 +40,7 @@ object frmCustomGrid: TfrmCustomGrid
       Height = 614
       Top = 0
       Width = 464
-      PageIndex = 8
+      PageIndex = 0
       Align = alClient
       TabOrder = 0
       object cardViewRecord: TPage
@@ -3645,6 +3646,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 517
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -3732,6 +3734,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 580
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -3819,6 +3822,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 643
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -3906,6 +3910,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 706
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -3993,6 +3998,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 1021
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -4080,6 +4086,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 958
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -4167,6 +4174,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 895
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -4254,6 +4262,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 832
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -4341,6 +4350,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 769
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -4532,6 +4542,7 @@ object frmCustomGrid: TfrmCustomGrid
               Top = 1084
               Width = 429
               Align = alTop
+              AutoSize = True
               BorderSpacing.Bottom = 16
               ChildSizing.LeftRightSpacing = 16
               ChildSizing.TopBottomSpacing = 12
@@ -6480,11 +6491,11 @@ object frmCustomGrid: TfrmCustomGrid
           Left = 8
           Height = 42
           Top = 49
-          Width = 432
+          Width = 448
           Align = alTop
           BorderSpacing.Left = 8
           BorderSpacing.Top = 8
-          BorderSpacing.Right = 24
+          BorderSpacing.Right = 8
           BorderSpacing.Bottom = 8
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
@@ -6523,7 +6534,7 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundY = 8
           TabOrder = 1
           object sbClearFilters: TSpeedButton
-            Left = 382
+            Left = 398
             Height = 26
             Hint = 'Clear all quick filters'
             Top = 8
@@ -7947,6 +7958,7 @@ object frmCustomGrid: TfrmCustomGrid
       BevelOuter = bvNone
       ClientHeight = 236
       ClientWidth = 713
+      Constraints.MinWidth = 650
       ParentBackground = False
       TabOrder = 1
       Visible = False
@@ -7982,7 +7994,6 @@ object frmCustomGrid: TfrmCustomGrid
         Border.Color = 13750737
         Border.Style = bboSolid
         BorderBCStyle = bpsBorder
-        Constraints.MinWidth = 700
         FontEx.Color = clDefault
         FontEx.FontQuality = fqSystemClearType
         FontEx.Shadow = False
@@ -9072,6 +9083,7 @@ object frmCustomGrid: TfrmCustomGrid
       BevelWidth = 0
       Border.Style = bboNone
       BorderBCStyle = bpsBorder
+      Constraints.MinWidth = 650
       FontEx.Color = clDefault
       FontEx.FontQuality = fqSystemClearType
       FontEx.Shadow = False
@@ -24728,8 +24740,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintSightings: TMenuItem
       Caption = 'Sightings'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintSightingsClick
     end
     object pmPrintSightingsBySurvey: TMenuItem
       Caption = 'Sightings per survey'
