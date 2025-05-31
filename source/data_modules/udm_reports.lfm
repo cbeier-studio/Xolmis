@@ -6684,4 +6684,1480 @@ object DMR: TDMR
       DisplayValues = 'True;False'
     end
   end
+  object qExpeditions: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'expedition_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'expedition_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'start_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'end_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'duration'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'description'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'state_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'project_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT x.*,'
+      '  gl.full_name AS locality_name,'
+      '  gl.country_id AS country_id,'
+      '  gl.state_id AS state_id,'
+      '  gl.municipality_id AS municipality_id,'
+      '  gm.site_name AS municipality_name,'
+      '  gs.site_name AS state_name,'
+      '  gc.site_name AS country_name,'
+      '  pj.project_title AS project_name'
+      'FROM expeditions AS x'
+      'LEFT JOIN gazetteer AS gl ON x.locality_id = gl.site_id'
+      'LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id'
+      'LEFT JOIN projects AS pj ON x.project_id = pj.project_id'
+      'WHERE (x.expedition_id = -1)'
+      '  AND (x.active_status = 1)'
+      ''
+      ''
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO expeditions ('
+      '  expedition_name,'
+      '  start_date,'
+      '  end_date,'
+      '  project_id,'
+      '  locality_id,'
+      '  description,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :expedition_name,'
+      '  :start_date,'
+      '  :end_date,'
+      '  :project_id,'
+      '  :locality_id,'
+      '  :description,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE expeditions SET'
+      '  expedition_name = :expedition_name,'
+      '  start_date = :start_date,'
+      '  end_date = :end_date,'
+      '  project_id = :project_id,'
+      '  locality_id = :locality_id,'
+      '  description = :description,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (expedition_id = :expedition_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Sequence.FieldName = 'expedition_id'
+    Left = 504
+    Top = 25
+    object qExpeditionsmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qExpeditionsexpedition_name: TStringField
+      DisplayLabel = 'Name'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'expedition_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 150
+    end
+    object qExpeditionsstart_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Start date'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'start_date'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qExpeditionsend_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'End date'
+      DisplayWidth = 12
+      FieldKind = fkData
+      FieldName = 'end_date'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qExpeditionsduration: TLongintField
+      DisplayLabel = 'Duration (days)'
+      FieldKind = fkInternalCalc
+      FieldName = 'duration'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qExpeditionslocality_id: TLongintField
+      DisplayLabel = 'Locality (ID)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 60
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+    object qExpeditionscountry_id: TLongintField
+      DisplayLabel = 'Country ID'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionscountry_name: TStringField
+      DisplayLabel = 'Country'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 60
+    end
+    object qExpeditionsstate_id: TLongintField
+      DisplayLabel = 'State ID'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionsstate_name: TStringField
+      DisplayLabel = 'State'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 60
+    end
+    object qExpeditionsmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality ID'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionsmunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'municipality_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 60
+    end
+    object qExpeditionsproject_id: TLongintField
+      DisplayLabel = 'Project (ID)'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionsproject_name: TStringField
+      DisplayLabel = 'Project'
+      DisplayWidth = 60
+      FieldKind = fkData
+      FieldName = 'project_name'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qExpeditionsdescription: TMemoField
+      DisplayLabel = 'Description'
+      DisplayWidth = 60
+      FieldKind = fkData
+      FieldName = 'description'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qExpeditionsexpedition_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'expedition_id'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qExpeditionsuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionsuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionsinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionsupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qExpeditionsexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qExpeditionsactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsExpeditions: TDataSource
+    AutoEdit = False
+    DataSet = qExpeditions
+    Left = 581
+    Top = 25
+  end
+  object qSurveys: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'survey_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'start_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'end_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'duration'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'method_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'net_station_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'expedition_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'project_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sample_id'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'start_latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'start_longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'end_latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'end_longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'observers_tally'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'area_total'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'distance_total'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'nets_total'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'cloud_cover_start'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'cloud_cover_middle'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'cloud_cover_end'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'precipitation_start'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'precipitation_middle'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'precipitation_end'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
+      end    
+      item
+        Name = 'temperature_start'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'temperature_middle'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'temperature_end'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'wind_speed_start'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'wind_speed_middle'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'wind_speed_end'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'relative_humidity_start'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'relative_humidity_middle'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'relative_humidity_end'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'habitat'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'net_rounds'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'full_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'expedition_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 180
+      end    
+      item
+        Name = 'country_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'state_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'municipality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'state_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'country_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'net_station_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'method_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'project_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'net_effort'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT sv.*,'
+      '  x.expedition_name AS expedition_name,'
+      '  gl.full_name AS locality_name,'
+      '  gl.country_id AS country_id,'
+      '  gl.state_id AS state_id,'
+      '  gl.municipality_id AS municipality_id,'
+      '  gm.site_name AS municipality_name,'
+      '  gs.site_name AS state_name,'
+      '  gc.site_name AS country_name,'
+      '  pl.full_name AS net_station_name,'
+      '  mt.method_name AS method_name,'
+      '  pj.short_title AS project_name,'
+      '  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef'
+      '    WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort'
+      'FROM surveys AS sv'
+      'LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id'
+      'LEFT JOIN gazetteer AS gl ON sv.locality_id = gl.site_id'
+      'LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id'
+      'LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id'
+      'LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id'
+      'LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id'
+      'LEFT JOIN methods AS mt ON sv.method_id = mt.method_id'
+      'LEFT JOIN projects AS pj ON sv.project_id = pj.project_id'
+      'WHERE (sv.active_status = 1) AND (sv.expedition_id = :expedition_id)'
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO surveys ('
+      '  survey_date,'
+      '  start_time,'
+      '  end_time,'
+      '  duration,'
+      '  method_id,'
+      '  net_station_id,'
+      '  expedition_id,'
+      '  project_id,'
+      '  locality_id,'
+      '  sample_id,'
+      '  start_latitude,'
+      '  start_longitude,'
+      '  end_latitude,'
+      '  end_longitude,'
+      '  observers_tally,'
+      '  area_total,'
+      '  distance_total,'
+      '  nets_total,'
+      '  habitat,'
+      '  net_rounds,'
+      '  full_name,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :survey_date,'
+      '  :start_time,'
+      '  :end_time,'
+      '  :duration,'
+      '  :method_id,'
+      '  :net_station_id,'
+      '  :expedition_id,'
+      '  :project_id,'
+      '  :locality_id,'
+      '  :sample_id,'
+      '  :start_latitude,'
+      '  :start_longitude,'
+      '  :end_latitude,'
+      '  :end_longitude,'
+      '  :observers_tally,'
+      '  :area_total,'
+      '  :distance_total,'
+      '  :nets_total,'
+      '  :habitat,'
+      '  :net_rounds,'
+      '  :full_name,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+    )
+    UpdateSQL.Strings = (
+      'UPDATE surveys SET'
+      '  survey_date = :survey_date,'
+      '  start_time = :start_time,'
+      '  end_time = :end_time,'
+      '  duration = :duration,'
+      '  method_id = :method_id,'
+      '  net_station_id = :net_station_id,'
+      '  expedition_id = :expedition_id,'
+      '  project_id = :project_id,'
+      '  locality_id = :locality_id,'
+      '  sample_id = :sample_id,'
+      '  start_latitude = :start_latitude,'
+      '  start_longitude = :start_longitude,'
+      '  end_latitude = :end_latitude,'
+      '  end_longitude = :end_longitude,'
+      '  observers_tally = :observers_tally,'
+      '  area_total = :area_total,'
+      '  distance_total = :distance_total,'
+      '  nets_total = :nets_total,'
+      '  habitat = :habitat,'
+      '  net_rounds = :net_rounds,'
+      '  full_name = :full_name,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (survey_id = :survey_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'expedition_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsExpeditions
+    Sequence.FieldName = 'survey_id'
+    Left = 504
+    Top = 80
+    object qSurveysmarked_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Marked'
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSurveyssurvey_date: TDateField
+      Alignment = taCenter
+      DisplayLabel = 'Date'
+      FieldKind = fkData
+      FieldName = 'survey_date'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qSurveysstart_time: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Start time'
+      FieldKind = fkData
+      FieldName = 'start_time'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = 'hh:nn'
+    end
+    object qSurveysend_time: TTimeField
+      Alignment = taCenter
+      DisplayLabel = 'End time'
+      FieldKind = fkData
+      FieldName = 'end_time'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = 'hh:nn'
+    end
+    object qSurveysduration: TLongintField
+      DisplayLabel = 'Duration (min)'
+      FieldKind = fkData
+      FieldName = 'duration'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0'
+    end
+    object qSurveysmethod_id: TLongintField
+      DisplayLabel = 'Method (ID)'
+      FieldKind = fkData
+      FieldName = 'method_id'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysmethod_name: TStringField
+      DisplayLabel = 'Method'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'method_name'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSurveysnet_station_id: TLongintField
+      DisplayLabel = 'Sampling plot (ID)'
+      FieldKind = fkData
+      FieldName = 'net_station_id'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysnet_station_name: TStringField
+      DisplayLabel = 'Sampling plot'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'net_station_name'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSurveysexpedition_id: TLongintField
+      DisplayLabel = 'Expedition (ID)'
+      FieldKind = fkData
+      FieldName = 'expedition_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysexpedition_name: TStringField
+      DisplayLabel = 'Expedition'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'expedition_name'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qSurveyslocality_id: TLongintField
+      DisplayLabel = 'Locality (ID)'
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveyslocality_name: TStringField
+      DisplayLabel = 'Locality'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'locality_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 180
+    end
+    object qSurveyscountry_id: TLongintField
+      DisplayLabel = 'Country ID'
+      FieldKind = fkData
+      FieldName = 'country_id'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveyscountry_name: TStringField
+      DisplayLabel = 'Country'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'country_name'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSurveysstate_id: TLongintField
+      DisplayLabel = 'State ID'
+      FieldKind = fkData
+      FieldName = 'state_id'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysstate_name: TStringField
+      DisplayLabel = 'State'
+      DisplayWidth = 25
+      FieldKind = fkData
+      FieldName = 'state_name'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSurveysmunicipality_id: TLongintField
+      DisplayLabel = 'Municipality ID'
+      FieldKind = fkData
+      FieldName = 'municipality_id'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysmunicipality_name: TStringField
+      DisplayLabel = 'Municipality'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'municipality_name'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSurveyssample_id: TStringField
+      Alignment = taCenter
+      DisplayLabel = 'Sample ID'
+      FieldKind = fkData
+      FieldName = 'sample_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
+    end
+    object qSurveysstart_latitude: TFloatField
+      DisplayLabel = 'Latitude'
+      FieldKind = fkData
+      FieldName = 'start_latitude'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '###0.00000000'
+      MaxValue = 90
+      MinValue = -90
+      Precision = -1
+    end
+    object qSurveysstart_longitude: TFloatField
+      DisplayLabel = 'Longitude'
+      FieldKind = fkData
+      FieldName = 'start_longitude'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '###0.00000000'
+      MaxValue = 180
+      MinValue = -180
+      Precision = -1
+    end
+    object qSurveysend_latitude: TFloatField
+      DisplayLabel = 'End latitude'
+      FieldKind = fkData
+      FieldName = 'end_latitude'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '###0.00000000'
+      MaxValue = 90
+      MinValue = -90
+      Precision = -1
+    end
+    object qSurveysend_longitude: TFloatField
+      DisplayLabel = 'End longitude'
+      FieldKind = fkData
+      FieldName = 'end_longitude'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '###0.00000000'
+      MaxValue = 180
+      MinValue = -180
+      Precision = -1
+    end
+    object qSurveysobservers_tally: TLongintField
+      DisplayLabel = '# observers'
+      FieldKind = fkData
+      FieldName = 'observers_tally'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSurveysarea_total: TFloatField
+      DisplayLabel = 'Area (ha)'
+      FieldKind = fkData
+      FieldName = 'area_total'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.00'
+      Precision = -1
+    end
+    object qSurveysdistance_total: TFloatField
+      DisplayLabel = 'Distance (km)'
+      FieldKind = fkData
+      FieldName = 'distance_total'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.00'
+      Precision = -1
+    end
+    object qSurveysnets_total: TLongintField
+      DisplayLabel = '# mistnets'
+      FieldKind = fkData
+      FieldName = 'nets_total'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSurveysnet_effort: TFloatField
+      DisplayLabel = 'Mistnet effort (h•m²)'
+      FieldKind = fkInternalCalc
+      FieldName = 'net_effort'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayFormat = '#,##0.00'
+      Precision = -1
+    end
+    object qSurveysproject_id: TLongintField
+      DisplayLabel = 'Project (ID)'
+      FieldKind = fkData
+      FieldName = 'project_id'
+      Index = 29
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysproject_name: TStringField
+      DisplayLabel = 'Project'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'project_name'
+      Index = 30
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 150
+    end
+    object qSurveyshabitat: TMemoField
+      DisplayLabel = 'Habitat'
+      FieldKind = fkData
+      FieldName = 'habitat'
+      Index = 31
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSurveysnet_rounds: TMemoField
+      DisplayLabel = 'Mistnet rounds'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'net_rounds'
+      Index = 32
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSurveysfull_name: TStringField
+      DisplayLabel = 'Full name'
+      FieldKind = fkData
+      FieldName = 'full_name'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 100
+    end
+    object qSurveysnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 40
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSurveyssurvey_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 35
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qSurveysuser_inserted: TLongintField
+      DisplayLabel = 'Created by'
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysuser_updated: TLongintField
+      DisplayLabel = 'Last modified by'
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 37
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysinsert_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Creation date'
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysupdate_date: TDateTimeField
+      Alignment = taCenter
+      DisplayLabel = 'Last modified date'
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 39
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSurveysexported_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Exported'
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSurveysactive_status: TBooleanField
+      Alignment = taCenter
+      DisplayLabel = 'Active'
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+  end
+  object dsSurveys: TDataSource
+    AutoEdit = False
+    DataSet = qSurveys
+    Left = 581
+    Top = 81
+  end
+  object dsBandHistory: TDataSource
+    AutoEdit = False
+    DataSet = qBandHistory
+    Left = 400
+    Top = 80
+  end
+  object dsInstitutions: TDataSource
+    AutoEdit = False
+    DataSet = qInstitutions
+    Left = 256
+    Top = 25
+  end
+  object dsPeople: TDataSource
+    AutoEdit = False
+    DataSet = qPeople
+    Left = 256
+    Top = 81
+  end
+  object dsGazetteer: TDataSource
+    AutoEdit = False
+    DataSet = qGazetteer
+    Left = 256
+    Top = 136
+  end
+  object dsSamplingPlots: TDataSource
+    AutoEdit = False
+    DataSet = qSamplingPlots
+    Left = 256
+    Top = 192
+  end
+  object dsMethods: TDataSource
+    AutoEdit = False
+    DataSet = qMethods
+    Left = 256
+    Top = 304
+  end
+  object dsPermits: TDataSource
+    AutoEdit = False
+    DataSet = qPermits
+    Left = 112
+    Top = 392
+  end
+  object dsProjectTeam: TDataSource
+    AutoEdit = False
+    DataSet = qProjectTeam
+    Left = 112
+    Top = 80
+  end
+  object dsProjectGoals: TDataSource
+    AutoEdit = False
+    DataSet = qProjectGoals
+    Left = 112
+    Top = 136
+  end
+  object dsProjectActivities: TDataSource
+    AutoEdit = False
+    DataSet = qProjectActivities
+    Left = 112
+    Top = 192
+  end
+  object dsProjectBudget: TDataSource
+    AutoEdit = False
+    DataSet = qProjectBudget
+    Left = 112
+    Top = 248
+  end
+  object dsProjectExpenses: TDataSource
+    AutoEdit = False
+    DataSet = qProjectExpenses
+    Left = 112
+    Top = 304
+  end
+  object dsSightings: TDataSource
+    AutoEdit = False
+    DataSet = qSightings
+    Left = 581
+    Top = 136
+  end
 end

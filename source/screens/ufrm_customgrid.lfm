@@ -7,6 +7,7 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
+  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -83,7 +84,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            327
+            348
           )
         end
       end
@@ -24705,8 +24706,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintExpeditions: TMenuItem
       Caption = 'Expeditions'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintExpeditionsClick
     end
     object pmPrintExpeditionsByLocality: TMenuItem
       Caption = 'Expeditions per locality'
