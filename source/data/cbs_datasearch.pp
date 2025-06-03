@@ -555,19 +555,8 @@ begin
   begin
     Clear;
     Add('SELECT x.*,');
-    Add('  gl.full_name AS locality_name,');
-    Add('  gl.country_id AS country_id,');
-    Add('  gl.state_id AS state_id,');
-    Add('  gl.municipality_id AS municipality_id,');
-    Add('  gm.site_name AS municipality_name,');
-    Add('  gs.site_name AS state_name,');
-    Add('  gc.site_name AS country_name,');
     Add('  pj.short_title AS project_name');
     Add('FROM expeditions AS x');
-    Add('LEFT JOIN gazetteer AS gl ON x.locality_id = gl.site_id');
-    Add('LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id');
     Add('LEFT JOIN projects AS pj ON x.project_id = pj.project_id');
     case aFilter of
       fvNone:

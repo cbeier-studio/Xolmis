@@ -260,8 +260,6 @@ begin
     eStartDate.Text := DateToStr(FExpedition.StartDate);
   if (FExpedition.EndDate <> NullDate) then
     eEndDate.Text := DateToStr(FExpedition.EndDate);
-  FLocalityId := FExpedition.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
   FProjectId := FExpedition.ProjectId;
   eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
   mDescription.Text := FExpedition.Description;
@@ -303,7 +301,6 @@ begin
   FExpedition.Name := eName.Text;
   FExpedition.StartDate := StrToDate(eStartDate.Text);
   FExpedition.EndDate := StrToDate(eEndDate.Text);
-  FExpedition.LocalityId := FLocalityId;
   FExpedition.ProjectId := FProjectId;
   FExpedition.Description := mDescription.Text;
 end;

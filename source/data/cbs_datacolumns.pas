@@ -4072,18 +4072,18 @@ begin
         MacroByName('AFIELD').Value := 'x.' + aFieldName;
       end;
 
-      'locality_id', 'locality_name':
-      begin
-        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
-        Add('FROM expeditions AS x');
-        Add('JOIN gazetteer AS g ON x.locality_id = g.site_id');
-        if aWhereText <> EmptyStr then
-          AddText(aWhereText)
-        else
-          Add('WHERE x.active_status = 1');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
+      //'locality_id', 'locality_name':
+      //begin
+      //  Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+      //  Add('FROM expeditions AS x');
+      //  Add('JOIN gazetteer AS g ON x.locality_id = g.site_id');
+      //  if aWhereText <> EmptyStr then
+      //    AddText(aWhereText)
+      //  else
+      //    Add('WHERE x.active_status = 1');
+      //  Add('GROUP BY name');
+      //  Add('ORDER BY tally DESC');
+      //end;
       'project_id', 'project_name':
       begin
         Add('SELECT pj.short_title AS name, COUNT(*) AS tally');
@@ -4097,19 +4097,19 @@ begin
         Add('ORDER BY tally DESC');
       end;
 
-      'country_id', 'state_id', 'municipality_id':
-      begin
-        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
-        Add('FROM expeditions AS x');
-        Add('JOIN gazetteer AS g ON %afield = g.site_id');
-        if aWhereText <> EmptyStr then
-          AddText(aWhereText)
-        else
-          Add('WHERE x.active_status = 1');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := 'x.' + aFieldName;
-      end;
+      //'country_id', 'state_id', 'municipality_id':
+      //begin
+      //  Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+      //  Add('FROM expeditions AS x');
+      //  Add('JOIN gazetteer AS g ON %afield = g.site_id');
+      //  if aWhereText <> EmptyStr then
+      //    AddText(aWhereText)
+      //  else
+      //    Add('WHERE x.active_status = 1');
+      //  Add('GROUP BY name');
+      //  Add('ORDER BY tally DESC');
+      //  MacroByName('AFIELD').Value := 'x.' + aFieldName;
+      //end;
 
       'marked_status':
       begin

@@ -13277,10 +13277,6 @@ msgctxt "tfrmcustomgrid.pmprintexpeditions.caption"
 msgid "Expeditions"
 msgstr "Expedições"
 
-#: tfrmcustomgrid.pmprintexpeditionsbylocality.caption
-msgid "Expeditions per locality"
-msgstr "Expedições por localidade"
-
 #: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
 msgid "Expeditions per project"
 msgstr "Expedições por projeto"
@@ -15431,3 +15427,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

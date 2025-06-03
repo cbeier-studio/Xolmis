@@ -71,7 +71,6 @@ type
     FName: String;
     FStartDate: TDate;
     FEndDate: TDate;
-    FLocalityId: Integer;
     FProjectId: Integer;
     FDescription: String;
   public
@@ -91,7 +90,6 @@ type
     property Name: String read FName write FName;
     property StartDate: TDate read FStartDate write FStartDate;
     property EndDate: TDate read FEndDate write FEndDate;
-    property LocalityId: Integer read FLocalityId write FLocalityId;
     property ProjectId: Integer read FProjectId write FProjectId;
     property Description: String read FDescription write FDescription;
   end;
@@ -1821,7 +1819,6 @@ begin
   FName := EmptyStr;
   FStartDate := NullDate;
   FEndDate := NullDate;
-  FLocalityId := 0;
   FProjectId := 0;
   FDescription := EmptyStr;
 end;
@@ -1831,7 +1828,6 @@ begin
   FName := aFrom.Name;
   FStartDate := aFrom.StartDate;
   FEndDate := aFrom.EndDate;
-  FLocalityId := aFrom.LocalityId;
   FProjectId := aFrom.ProjectId;
   FDescription := aFrom.Description;
 end;
@@ -1886,7 +1882,6 @@ begin
         'end_date, ' +
         'duration, ' +
         'project_id, ' +
-        'locality_id, ' +
         'description, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -1926,7 +1921,6 @@ begin
       FEndDate := FieldByName('end_date').AsDateTime
     else
       FEndDate := NullDate;
-    FLocalityId := FieldByName('locality_id').AsInteger;
     FProjectId := FieldByName('project_id').AsInteger;
     FDescription := FieldByName('description').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -1968,7 +1962,6 @@ begin
         'start_date, ' +
         'end_date, ' +
         'project_id, ' +
-        'locality_id, ' +
         'description, ' +
         'user_inserted, ' +
         'insert_date) ');
@@ -1977,7 +1970,6 @@ begin
         'date(:start_date), ' +
         'date(:end_date), ' +
         ':project_id, ' +
-        ':locality_id, ' +
         ':description, ' +
         ':user_inserted, ' +
         'datetime(''now'',''subsec''))');
@@ -1985,7 +1977,6 @@ begin
       SetDateParam(ParamByName('start_date'), FStartDate);
       SetDateParam(ParamByName('end_date'), FEndDate);
       SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
       SetStrParam(ParamByName('description'), FDescription);
       ParamByName('user_inserted').AsInteger := FUserInserted;
 
@@ -2025,7 +2016,6 @@ begin
     JSONObject.Add('Name', FName);
     JSONObject.Add('Start date', FStartDate);
     JSONObject.Add('End date', FEndDate);
-    JSONObject.Add('Locality', FLocalityId);
     JSONObject.Add('Project', FProjectId);
     JSONObject.Add('Description', FDescription);
 
@@ -2057,7 +2047,6 @@ begin
         'start_date = date(:start_date), ' +
         'end_date = date(:end_date), ' +
         'project_id = :project_id, ' +
-        'locality_id = :locality_id, ' +
         'description = :description, ' +
         'user_updated = :user_updated, ' +
         'update_date = datetime(''now'', ''subsec''), ' +
@@ -2068,7 +2057,6 @@ begin
       SetDateParam(ParamByName('start_date'), FStartDate);
       SetDateParam(ParamByName('end_date'), FEndDate);
       SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
       SetStrParam(ParamByName('description'), FDescription);
       ParamByName('user_updated').AsInteger := FUserInserted;
       ParamByName('marked_status').AsBoolean := FMarked;
@@ -2100,8 +2088,6 @@ begin
     aList.Add(R);
   if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
     aList.Add(R);
-  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
-    aList.Add(R);
   if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
     aList.Add(R);
   if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
@@ -2130,7 +2116,6 @@ begin
         'end_date, ' +
         'duration, ' +
         'project_id, ' +
-        'locality_id, ' +
         'description, ' +
         'user_inserted, ' +
         'user_updated, ' +

@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-05-31 08:46:14"/>
+    <ReportLastChange Value="2025-06-02 09:13:02"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -1635,7 +1635,59 @@
           <Justify Value="False"/>
           <Cursor Value="0"/>
         </Object32>
-        <ObjectCount Value="32"/>
+        <Object33>
+          <Name Value="Line2"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="145"/>
+            <Top Value="253"/>
+            <Width Value="882"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
+        </Object33>
+        <Object34>
+          <Name Value="Line3"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="145"/>
+            <Top Value="274"/>
+            <Width Value="882"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
+        </Object34>
+        <ObjectCount Value="34"/>
       </Page1>
       <FVal>
         <Count Value="0"/>

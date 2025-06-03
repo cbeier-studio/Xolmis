@@ -6812,19 +6812,8 @@ object DMR: TDMR
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT x.*,'
-      '  gl.full_name AS locality_name,'
-      '  gl.country_id AS country_id,'
-      '  gl.state_id AS state_id,'
-      '  gl.municipality_id AS municipality_id,'
-      '  gm.site_name AS municipality_name,'
-      '  gs.site_name AS state_name,'
-      '  gc.site_name AS country_name,'
       '  pj.project_title AS project_name'
       'FROM expeditions AS x'
-      'LEFT JOIN gazetteer AS gl ON x.locality_id = gl.site_id'
-      'LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id'
-      'LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id'
-      'LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id'
       'LEFT JOIN projects AS pj ON x.project_id = pj.project_id'
       'WHERE (x.expedition_id = -1)'
       '  AND (x.active_status = 1)'
@@ -6931,106 +6920,11 @@ object DMR: TDMR
       ReadOnly = False
       Required = False
     end
-    object qExpeditionslocality_id: TLongintField
-      DisplayLabel = 'Locality (ID)'
-      FieldKind = fkData
-      FieldName = 'locality_id'
-      Index = 5
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qExpeditionslocality_name: TStringField
-      DisplayLabel = 'Locality'
-      DisplayWidth = 60
-      FieldKind = fkData
-      FieldName = 'locality_name'
-      Index = 6
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 180
-    end
-    object qExpeditionscountry_id: TLongintField
-      DisplayLabel = 'Country ID'
-      FieldKind = fkData
-      FieldName = 'country_id'
-      Index = 7
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qExpeditionscountry_name: TStringField
-      DisplayLabel = 'Country'
-      DisplayWidth = 25
-      FieldKind = fkData
-      FieldName = 'country_name'
-      Index = 8
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      Size = 60
-    end
-    object qExpeditionsstate_id: TLongintField
-      DisplayLabel = 'State ID'
-      FieldKind = fkData
-      FieldName = 'state_id'
-      Index = 9
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qExpeditionsstate_name: TStringField
-      DisplayLabel = 'State'
-      DisplayWidth = 25
-      FieldKind = fkData
-      FieldName = 'state_name'
-      Index = 10
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      Size = 60
-    end
-    object qExpeditionsmunicipality_id: TLongintField
-      DisplayLabel = 'Municipality ID'
-      FieldKind = fkData
-      FieldName = 'municipality_id'
-      Index = 11
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qExpeditionsmunicipality_name: TStringField
-      DisplayLabel = 'Municipality'
-      DisplayWidth = 30
-      FieldKind = fkData
-      FieldName = 'municipality_name'
-      Index = 12
-      LookupCache = False
-      ProviderFlags = [pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      Size = 60
-    end
     object qExpeditionsproject_id: TLongintField
       DisplayLabel = 'Project (ID)'
       FieldKind = fkData
       FieldName = 'project_id'
-      Index = 13
+      Index = 5
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7042,7 +6936,7 @@ object DMR: TDMR
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'project_name'
-      Index = 14
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -7054,7 +6948,7 @@ object DMR: TDMR
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'description'
-      Index = 15
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7066,7 +6960,7 @@ object DMR: TDMR
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'expedition_id'
-      Index = 16
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -7076,7 +6970,7 @@ object DMR: TDMR
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 17
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7087,7 +6981,7 @@ object DMR: TDMR
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 18
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7099,7 +6993,7 @@ object DMR: TDMR
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 19
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7111,7 +7005,7 @@ object DMR: TDMR
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 20
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7123,7 +7017,7 @@ object DMR: TDMR
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 21
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7136,7 +7030,7 @@ object DMR: TDMR
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 22
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

@@ -95,8 +95,6 @@ type
     qBandsuser_updated: TLongintField;
     qExpeditions: TSQLQuery;
     qExpeditionsactive_status: TBooleanField;
-    qExpeditionscountry_id: TLongintField;
-    qExpeditionscountry_name: TStringField;
     qExpeditionsdescription: TMemoField;
     qExpeditionsduration: TLongintField;
     qExpeditionsend_date: TDateField;
@@ -104,16 +102,10 @@ type
     qExpeditionsexpedition_name: TStringField;
     qExpeditionsexported_status: TBooleanField;
     qExpeditionsinsert_date: TDateTimeField;
-    qExpeditionslocality_id: TLongintField;
-    qExpeditionslocality_name: TStringField;
     qExpeditionsmarked_status: TBooleanField;
-    qExpeditionsmunicipality_id: TLongintField;
-    qExpeditionsmunicipality_name: TStringField;
     qExpeditionsproject_id: TLongintField;
     qExpeditionsproject_name: TStringField;
     qExpeditionsstart_date: TDateField;
-    qExpeditionsstate_id: TLongintField;
-    qExpeditionsstate_name: TStringField;
     qExpeditionsupdate_date: TDateTimeField;
     qExpeditionsuser_inserted: TLongintField;
     qExpeditionsuser_updated: TLongintField;

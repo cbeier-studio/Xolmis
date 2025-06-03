@@ -266,7 +266,6 @@ type
     pmPrintIndividualsByParents: TMenuItem;
     pmPrintCaptures: TMenuItem;
     pmPrintCapturesByProject: TMenuItem;
-    pmPrintExpeditionsByLocality: TMenuItem;
     pmPrintCapturesByDate: TMenuItem;
     pmPrintCapturesByLocality: TMenuItem;
     pmPrintCapturesByTaxon: TMenuItem;
@@ -2732,9 +2731,6 @@ end;
 
 procedure TfrmCustomGrid.ClearExpeditionFilters;
 begin
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
   lblCountDateFilter.Caption := rsNoneSelectedFemale;
   tvDateFilter.ClearChecked;
 
@@ -5430,7 +5426,6 @@ procedure TfrmCustomGrid.GetExpeditionFilters;
 var
   sf: Integer;
 begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if FProjectKeyFilter > 0 then
@@ -10102,8 +10097,6 @@ begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create('expedition_name', 'Expedition name', sdtText, Crit,
         False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('locality_name', 'Locality', sdtText, Crit,
-        True, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('description', 'Description', sdtText, Crit,
         False, aValue));
     end;
@@ -11451,8 +11444,6 @@ begin
   begin
     ColumnByFieldname('expedition_id').ReadOnly := True;
 
-    if DataSource.DataSet.FieldByName('locality_name').Visible then
-      ColumnByFieldname('locality_name').ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName('project_name').Visible then
       ColumnByFieldname('project_name').ButtonStyle := cbsEllipsis;
     ColumnByFieldName('start_date').ButtonStyle := cbsEllipsis;
@@ -12140,7 +12131,6 @@ begin
   sbShowSummary.Visible := True;
 
   pmPrintExpeditions.Visible := True;
-  pmPrintExpeditionsByLocality.Visible := True;
   pmPrintExpeditionsByProject.Visible := True;
 
   pChildsBar.Visible := True;
@@ -13740,8 +13730,6 @@ end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsExpeditions;
 begin
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
   pDatesFilters.Visible := True;
   LoadDateTreeData(FTableType, tvDateFilter);
   pProjectFilter.Visible := True;

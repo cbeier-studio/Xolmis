@@ -323,7 +323,6 @@
 {"hash":90411508,"name":"tfrmcustomgrid.pmprintgrid.caption","sourcebytes":[80,114,105,110,116,32,103,114,105,100],"value":"Print grid"},
 {"hash":63632867,"name":"tfrmcustomgrid.pmprintmethods.caption","sourcebytes":[77,101,116,104,111,100,115],"value":"Methods"},
 {"hash":189142243,"name":"tfrmcustomgrid.pmprintexpeditions.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,115],"value":"Expeditions"},
-{"hash":110836073,"name":"tfrmcustomgrid.pmprintexpeditionsbylocality.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,115,32,112,101,114,32,108,111,99,97,108,105,116,121],"value":"Expeditions per locality"},
 {"hash":164027188,"name":"tfrmcustomgrid.pmprintexpeditionsbyproject.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,115,32,112,101,114,32,112,114,111,106,101,99,116],"value":"Expeditions per project"},
 {"hash":180997459,"name":"tfrmcustomgrid.pmprintsurveys.caption","sourcebytes":[83,117,114,118,101,121,115],"value":"Surveys"},
 {"hash":188980430,"name":"tfrmcustomgrid.pmprintsurveysbyexpedition.caption","sourcebytes":[83,117,114,118,101,121,115,32,112,101,114,32,101,120,112,101,100,105,116,105,111,110],"value":"Surveys per expedition"},

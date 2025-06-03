@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-05-31 09:52:09"/>
+    <ReportLastChange Value="2025-06-02 09:10:35"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -77,7 +77,7 @@
             <Left Value="0"/>
             <Top Value="119"/>
             <Width Value="752"/>
-            <Height Value="24"/>
+            <Height Value="22"/>
           </Size>
           <Flags Value="48"/>
           <Data>
@@ -579,7 +579,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="36"/>
-            <Top Value="140"/>
+            <Top Value="139"/>
             <Width Value="679"/>
             <Height Value="0"/>
           </Size>
@@ -1157,7 +1157,59 @@
           <Justify Value="False"/>
           <Cursor Value="0"/>
         </Object23>
-        <ObjectCount Value="23"/>
+        <Object24>
+          <Name Value="Line2"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="108"/>
+            <Top Value="234"/>
+            <Width Value="607"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
+        </Object24>
+        <Object25>
+          <Name Value="Line3"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="108"/>
+            <Top Value="254"/>
+            <Width Value="607"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
+        </Object25>
+        <ObjectCount Value="25"/>
       </Page1>
       <FVal>
         <Count Value="0"/>

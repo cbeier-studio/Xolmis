@@ -13291,10 +13291,6 @@ msgctxt "tfrmcustomgrid.pmprintexpeditions.caption"
 msgid "Expeditions"
 msgstr ""
 
-#: tfrmcustomgrid.pmprintexpeditionsbylocality.caption
-msgid "Expeditions per locality"
-msgstr ""
-
 #: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
 msgid "Expeditions per project"
 msgstr ""
