@@ -23,6 +23,23 @@ interface
 uses
   Classes, SysUtils, Dialogs, DB, LazFileUtils;
 
+const
+  BandsReportFile: String                   = 'rep_bands.lrf';
+  BandsByCarrierReportFile: String          = 'rep_bands_by_carrier.lrf';
+  BandsByStatusReportFile: String           = 'rep_bands_by_status.lrf';
+  BandsHistoryReportFile: String            = 'rep_bands_history.lrf';
+  ExpeditionsReportFile: String             = 'rep_expeditions.lrf';
+  GazetteerReportFile: String               = 'rep_gazetteer.lrf';
+  InstitutionsReportFile: String            = 'rep_institutions.lrf';
+  MethodsReportFile: String                 = 'rep_methods.lrf';
+  PeopleReportFile: String                  = 'rep_people.lrf';
+  PermitsReportFile: String                 = 'rep_permits.lrf';
+  ProjectsReportFile: String                = 'rep_projects.lrf';
+  SamplingPlotsReportFile: String           = 'rep_sampling_plots.lrf';
+  SamplingPlotsByLocalityReportFile: String = 'rep_sampling_plots_by_locality.lrf';
+  SightingsReportFile: String               = 'rep_sightings.lrf';
+  SurveysReportFile: String                 = 'rep_surveys.lrf';
+
   procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource: TDataSource = nil);
 
 implementation

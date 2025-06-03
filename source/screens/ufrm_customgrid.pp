@@ -990,6 +990,7 @@ type
     procedure pmPrintSamplingPlotsClick(Sender: TObject);
     procedure pmPrintSightingsByObserverClick(Sender: TObject);
     procedure pmPrintSightingsClick(Sender: TObject);
+    procedure pmPrintSurveysClick(Sender: TObject);
     procedure pmrRefreshClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
@@ -7056,21 +7057,21 @@ procedure TfrmCustomGrid.pmPrintBandsByCarrierClick(Sender: TObject);
 begin
   DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qBands.Open;
-  PrintPreview('rep_bands_by_carrier.lrf', DMR.dsBands);
+  PrintPreview(BandsByCarrierReportFile, DMR.dsBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsByStatusClick(Sender: TObject);
 begin
   DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qBands.Open;
-  PrintPreview('rep_bands_by_status.lrf', DMR.dsBands);
+  PrintPreview(BandsByStatusReportFile, DMR.dsBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsClick(Sender: TObject);
 begin
   DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qBands.Open;
-  PrintPreview('rep_bands.lrf', DMR.dsBands);
+  PrintPreview(BandsReportFile, DMR.dsBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsWithHistoryClick(Sender: TObject);
@@ -7079,7 +7080,7 @@ begin
   DMR.qBandHistory.SQL.Text := DMG.qBandHistory.SQL.Text;
   DMR.qBands.Open;
   DMR.qBandHistory.Open;
-  PrintPreview('rep_bands_history.lrf', DMR.dsBands, DMR.dsBandHistory);
+  PrintPreview(BandsHistoryReportFile, DMR.dsBands, DMR.dsBandHistory);
 end;
 
 procedure TfrmCustomGrid.pmPrintExpeditionsClick(Sender: TObject);
@@ -7089,14 +7090,14 @@ begin
   DMR.qSurveys.DataSource := DMR.dsExpeditions;
   DMR.qExpeditions.Open;
   DMR.qSurveys.Open;
-  PrintPreview('rep_expeditions.lrf', DMR.dsExpeditions, DMR.dsSurveys);
+  PrintPreview(ExpeditionsReportFile, DMR.dsExpeditions, DMR.dsSurveys);
 end;
 
 procedure TfrmCustomGrid.pmPrintGazetteerClick(Sender: TObject);
 begin
   DMR.qGazetteer.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qGazetteer.Open;
-  PrintPreview('rep_gazetteer.lrf', DMR.dsGazetteer);
+  PrintPreview(GazetteerReportFile, DMR.dsGazetteer);
 end;
 
 procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
@@ -7109,21 +7110,21 @@ procedure TfrmCustomGrid.pmPrintInstitutionsClick(Sender: TObject);
 begin
   DMR.qInstitutions.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qInstitutions.Open;
-  PrintPreview('rep_institutions.lrf', DMR.dsInstitutions);
+  PrintPreview(InstitutionsReportFile, DMR.dsInstitutions);
 end;
 
 procedure TfrmCustomGrid.pmPrintMethodsClick(Sender: TObject);
 begin
   DMR.qMethods.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qMethods.Open;
-  PrintPreview('rep_methods.lrf', DMR.dsMethods);
+  PrintPreview(MethodsReportFile, DMR.dsMethods);
 end;
 
 procedure TfrmCustomGrid.pmPrintPermitsClick(Sender: TObject);
 begin
   DMR.qPermits.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qPermits.Open;
-  PrintPreview('rep_permits.lrf', DMR.dsPermits);
+  PrintPreview(PermitsReportFile, DMR.dsPermits);
 end;
 
 procedure TfrmCustomGrid.pmPrintProjectsClick(Sender: TObject);
@@ -7132,7 +7133,7 @@ begin
   DMR.qProjectTeam.SQL.Text := TSQLQuery(dsLink1.DataSet).SQL.Text;
   DMR.qProjects.Open;
   DMR.qProjectTeam.Open;
-  PrintPreview('rep_projects.lrf', DMR.dsProjects, DMR.dsProjectTeam);
+  PrintPreview(ProjectsReportFile, DMR.dsProjects, DMR.dsProjectTeam);
   DMR.qProjectTeam.Close;
   DMR.qProjects.Close;
 end;
@@ -7141,21 +7142,21 @@ procedure TfrmCustomGrid.pmPrintResearchersClick(Sender: TObject);
 begin
   DMR.qPeople.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qPeople.Open;
-  PrintPreview('rep_people.lrf', DMR.dsPeople);
+  PrintPreview(PeopleReportFile, DMR.dsPeople);
 end;
 
 procedure TfrmCustomGrid.pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
 begin
   DMR.qSamplingPlots.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qSamplingPlots.Open;
-  PrintPreview('rep_sampling_plots_by_locality.lrf', DMR.dsSamplingPlots);
+  PrintPreview(SamplingPlotsByLocalityReportFile, DMR.dsSamplingPlots);
 end;
 
 procedure TfrmCustomGrid.pmPrintSamplingPlotsClick(Sender: TObject);
 begin
   DMR.qSamplingPlots.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qSamplingPlots.Open;
-  PrintPreview('rep_sampling_plots.lrf', DMR.dsSamplingPlots);
+  PrintPreview(SamplingPlotsReportFile, DMR.dsSamplingPlots);
 end;
 
 procedure TfrmCustomGrid.pmPrintSightingsByObserverClick(Sender: TObject);
@@ -7164,6 +7165,7 @@ var
   aSurvey: Integer;
 begin
   aSurvey := 0;
+  // Show dialog to select a survey
   if not FindDlg(tbSurveys, nil, aSurvey) then
     Exit;
 
@@ -7175,18 +7177,21 @@ begin
     qObservers.SQLConnection := DMM.sqlCon;
     qObservers.SQLTransaction := DMM.sqlTrans;
 
+    // Load the list of distinct observers from sightings
     qObservers.SQL.Text := 'SELECT DISTINCT s.observer_id, p.acronym FROM sightings AS s ' +
       'LEFT JOIN people AS p ON s.observer_id = p.person_id ' +
       'WHERE (s.survey_id = :survey_id) and (s.observer_id NOT NULL);';
     qObservers.ParamByName('survey_id').AsInteger := aSurvey;
     qObservers.Open;
 
+    // Check if there are observers in the list
     if qObservers.RecordCount = 0 then
     begin
       MsgDlg(rsTitleInformation, rsNothingToPrint, mtInformation);
       Exit;
     end;
 
+    // Load the number of sightings per observer
     Qry.SQL.Add('SELECT z.full_name, ');
     qObservers.First;
     while not qObservers.EOF do
@@ -7202,6 +7207,7 @@ begin
 
     Qry.Open;
 
+    // Show the resulting list
     dlgExportPreview := TdlgExportPreview.Create(nil);
     with dlgExportPreview do
     try
@@ -7223,7 +7229,15 @@ procedure TfrmCustomGrid.pmPrintSightingsClick(Sender: TObject);
 begin
   DMR.qSightings.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qSightings.Open;
-  PrintPreview('rep_sightings.lrf', DMR.dsSightings);
+  PrintPreview(SightingsReportFile, DMR.dsSightings);
+end;
+
+procedure TfrmCustomGrid.pmPrintSurveysClick(Sender: TObject);
+begin
+  DMR.qSurveys.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qSurveys.DataSource := nil;
+  DMR.qSurveys.Open;
+  PrintPreview(SurveysReportFile, DMR.dsSurveys);
 end;
 
 procedure TfrmCustomGrid.pmrRefreshClick(Sender: TObject);

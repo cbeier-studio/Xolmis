@@ -24715,8 +24715,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintSurveys: TMenuItem
       Caption = 'Surveys'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintSurveysClick
     end
     object pmPrintSurveysByExpedition: TMenuItem
       Caption = 'Surveys per expedition'
