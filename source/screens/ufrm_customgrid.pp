@@ -990,6 +990,7 @@ type
     procedure pmPrintSamplingPlotsClick(Sender: TObject);
     procedure pmPrintSightingsByObserverClick(Sender: TObject);
     procedure pmPrintSightingsClick(Sender: TObject);
+    procedure pmPrintSpecimensClick(Sender: TObject);
     procedure pmPrintSurveysClick(Sender: TObject);
     procedure pmrRefreshClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
@@ -7230,6 +7231,15 @@ begin
   DMR.qSightings.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qSightings.Open;
   PrintPreview(SightingsReportFile, DMR.dsSightings);
+end;
+
+procedure TfrmCustomGrid.pmPrintSpecimensClick(Sender: TObject);
+begin
+  DMR.qSpecimens.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+  DMR.qSampleCollectors.SQL.Text := TSQLQuery(dsLink1.DataSet).SQL.Text;
+  DMR.qSpecimens.Open;
+  DMR.qSampleCollectors.Open;
+  PrintPreview(SpecimensReportFile, DMR.dsSpecimens, DMR.dsSampleCollectors);
 end;
 
 procedure TfrmCustomGrid.pmPrintSurveysClick(Sender: TObject);

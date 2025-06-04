@@ -31,6 +31,8 @@ type
     dsInstitutions: TDataSource;
     dsProjectBudget: TDataSource;
     dsProjectExpenses: TDataSource;
+    dsSampleCollectors: TDataSource;
+    dsSamplePreps: TDataSource;
     dsSightings: TDataSource;
     dsPeople: TDataSource;
     dsGazetteer: TDataSource;
@@ -41,6 +43,7 @@ type
     dsProjectGoals: TDataSource;
     dsProjectActivities: TDataSource;
     dsBandHistory: TDataSource;
+    dsSpecimens: TDataSource;
     dsSurveys: TDataSource;
     dsBands: TDataSource;
     dsExpeditions: TDataSource;
@@ -334,6 +337,41 @@ type
     qProjectTeamupdate_date: TDateTimeField;
     qProjectTeamuser_inserted: TLongintField;
     qProjectTeamuser_updated: TLongintField;
+    qSampleCollectors: TSQLQuery;
+    qSampleCollectorsactive_status: TBooleanField;
+    qSampleCollectorscollector_id: TLongintField;
+    qSampleCollectorscollector_name: TStringField;
+    qSampleCollectorscollector_seq: TLongintField;
+    qSampleCollectorsexported_status: TBooleanField;
+    qSampleCollectorsinsert_date: TDateTimeField;
+    qSampleCollectorsmarked_status: TBooleanField;
+    qSampleCollectorsperson_id: TLongintField;
+    qSampleCollectorsspecimen_id: TLongintField;
+    qSampleCollectorsupdate_date: TDateTimeField;
+    qSampleCollectorsuser_inserted: TLongintField;
+    qSampleCollectorsuser_updated: TLongintField;
+    qSamplePreps: TSQLQuery;
+    qSamplePrepsaccession_num: TStringField;
+    qSamplePrepsaccession_seq: TLongintField;
+    qSamplePrepsaccession_type: TStringField;
+    qSamplePrepsactive_status: TBooleanField;
+    qSamplePrepsegg_id: TLongintField;
+    qSamplePrepsexported_status: TBooleanField;
+    qSamplePrepsfull_name: TStringField;
+    qSamplePrepsindividual_id: TLongintField;
+    qSamplePrepsinsert_date: TDateTimeField;
+    qSamplePrepsmarked_status: TBooleanField;
+    qSamplePrepsnest_id: TLongintField;
+    qSamplePrepsnotes: TMemoField;
+    qSamplePrepspreparation_date: TDateField;
+    qSamplePrepspreparer_id: TLongintField;
+    qSamplePrepspreparer_name: TStringField;
+    qSamplePrepssample_prep_id: TLongintField;
+    qSamplePrepsspecimen_id: TLongintField;
+    qSamplePrepstaxon_id: TLongintField;
+    qSamplePrepsupdate_date: TDateTimeField;
+    qSamplePrepsuser_inserted: TLongintField;
+    qSamplePrepsuser_updated: TLongintField;
     qSamplingPlots: TSQLQuery;
     qSamplingPlotsacronym: TStringField;
     qSamplingPlotsactive_status: TBooleanField;
@@ -414,6 +452,42 @@ type
     qSightingsupdate_date: TDateTimeField;
     qSightingsuser_inserted: TLongintField;
     qSightingsuser_updated: TLongintField;
+    qSpecimens: TSQLQuery;
+    qSpecimensactive_status: TBooleanField;
+    qSpecimenscollection_date: TDateField;
+    qSpecimenscollection_day: TLongintField;
+    qSpecimenscollection_month: TLongintField;
+    qSpecimenscollection_year: TLongintField;
+    qSpecimenscountry_id: TLongintField;
+    qSpecimensegg_id: TLongintField;
+    qSpecimensegg_name: TStringField;
+    qSpecimensexported_status: TBooleanField;
+    qSpecimensfamily_id: TLongintField;
+    qSpecimensfield_number: TStringField;
+    qSpecimensfull_name: TStringField;
+    qSpecimensgenus_id: TLongintField;
+    qSpecimensindividual_id: TLongintField;
+    qSpecimensindividual_name: TStringField;
+    qSpecimensinsert_date: TDateTimeField;
+    qSpecimenslatitude: TFloatField;
+    qSpecimenslocality_id: TLongintField;
+    qSpecimenslocality_name: TStringField;
+    qSpecimenslongitude: TFloatField;
+    qSpecimensmarked_status: TBooleanField;
+    qSpecimensmunicipality_id: TLongintField;
+    qSpecimensnest_id: TLongintField;
+    qSpecimensnest_name: TStringField;
+    qSpecimensnotes: TMemoField;
+    qSpecimensorder_id: TLongintField;
+    qSpecimenssample_type: TStringField;
+    qSpecimensspecies_id: TLongintField;
+    qSpecimensspecimen_id: TAutoIncField;
+    qSpecimensstate_id: TLongintField;
+    qSpecimenstaxon_id: TLongintField;
+    qSpecimenstaxon_name: TStringField;
+    qSpecimensupdate_date: TDateTimeField;
+    qSpecimensuser_inserted: TLongintField;
+    qSpecimensuser_updated: TLongintField;
     qSurveys: TSQLQuery;
     qSurveysactive_status: TBooleanField;
     qSurveysarea_total: TFloatField;
@@ -473,6 +547,10 @@ type
       var aText: string; DisplayText: Boolean);
     procedure qProjectGoalsgoal_statusGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
+    procedure qSamplePrepsaccession_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSamplePrepsaccession_typeSetText(Sender: TField; const aText: string);
+    procedure qSpecimenssample_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSpecimenssample_typeSetText(Sender: TField; const aText: string);
   private
 
   public
@@ -634,6 +712,244 @@ begin
   end;
 
   DisplayText := True;
+end;
+
+procedure TDMR.qSamplePrepsaccession_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  if Sender.AsString = 'NS' then
+    aText := rsSampleSkinStandard
+  else
+  if Sender.AsString = 'SS' then
+    aText := rsSampleSkinShmoo
+  else
+  if Sender.AsString = 'MS' then
+    aText := rsSampleSkinMounted
+  else
+  if Sender.AsString = 'OW' then
+    aText := rsSampleOpenedWing
+  else
+  if Sender.AsString = 'WS' then
+    aText := rsSampleSkeletonWhole
+  else
+  if Sender.AsString = 'PS' then
+    aText := rsSampleSkeletonPartial
+  else
+  if Sender.AsString = 'N' then
+    aText := rsSampleNest
+  else
+  if Sender.AsString = 'EGG' then
+    aText := rsSampleEgg
+  else
+  if Sender.AsString = 'P' then
+    aText := rsSampleParasites
+  else
+  if Sender.AsString = 'F' then
+    aText := rsSampleFeathers
+  else
+  if Sender.AsString = 'BD' then
+    aText := rsSampleBloodDry
+  else
+  if Sender.AsString = 'BL' then
+    aText := rsSampleBloodWet
+  else
+  if Sender.AsString = 'BS' then
+    aText := rsSampleBloodSmear
+  else
+  if Sender.AsString = 'SX' then
+    aText := rsSampleSexing
+  else
+  if Sender.AsString = 'GS' then
+    aText := rsSampleGeneticSequence
+  else
+  if Sender.AsString = 'MC' then
+    aText := rsSampleMicrobialCulture
+  else
+  if Sender.AsString = 'TS' then
+    aText := rsSampleTissues
+  else
+  if Sender.AsString = 'EYE' then
+    aText := rsSampleEyes
+  else
+  if Sender.AsString = 'T' then
+    aText := rsSampleTongue
+  else
+  if Sender.AsString = 'S' then
+    aText := rsSampleSyrinx
+  else
+  if Sender.AsString = 'G' then
+    aText := rsSampleGonads
+  else
+  if Sender.AsString = 'M' then
+    aText := rsSampleStomach;
+
+  DisplayText := True;
+end;
+
+procedure TDMR.qSamplePrepsaccession_typeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsSampleSkinStandard then
+    Sender.AsString := 'NS'
+  else
+  if aText = rsSampleSkinShmoo then
+    Sender.AsString := 'SS'
+  else
+  if aText = rsSampleSkinMounted then
+    Sender.AsString := 'MS'
+  else
+  if aText = rsSampleOpenedWing then
+    Sender.AsString := 'OW'
+  else
+  if aText = rsSampleSkeletonWhole then
+    Sender.AsString := 'WS'
+  else
+  if aText = rsSampleSkeletonPartial then
+    Sender.AsString := 'PS'
+  else
+  if aText = rsSampleNest then
+    Sender.AsString := 'N'
+  else
+  if aText = rsSampleEgg then
+    Sender.AsString := 'EGG'
+  else
+  if aText = rsSampleParasites then
+    Sender.AsString := 'P'
+  else
+  if aText = rsSampleFeathers then
+    Sender.AsString := 'F'
+  else
+  if aText = rsSampleBloodDry then
+    Sender.AsString := 'BD'
+  else
+  if aText = rsSampleBloodWet then
+    Sender.AsString := 'BL'
+  else
+  if aText = rsSampleBloodSmear then
+    Sender.AsString := 'BS'
+  else
+  if aText = rsSampleSexing then
+    Sender.AsString := 'SX'
+  else
+  if aText = rsSampleGeneticSequence then
+    Sender.AsString := 'GS'
+  else
+  if aText = rsSampleMicrobialCulture then
+    Sender.AsString := 'MC'
+  else
+  if aText = rsSampleTissues then
+    Sender.AsString := 'TS'
+  else
+  if aText = rsSampleEyes then
+    Sender.AsString := 'EYE'
+  else
+  if aText = rsSampleTongue then
+    Sender.AsString := 'T'
+  else
+  if aText = rsSampleSyrinx then
+    Sender.AsString := 'S'
+  else
+  if aText = rsSampleGonads then
+    Sender.AsString := 'G'
+  else
+  if aText = rsSampleStomach then
+    Sender.AsString := 'M';
+end;
+
+procedure TDMR.qSpecimenssample_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  if Sender.AsString = 'WS' then
+    aText := rsSpecimenCarcassWhole
+  else
+  if Sender.AsString = 'PS' then
+    aText := rsSpecimenCarcassPartial
+  else
+  if Sender.AsString = 'N' then
+    aText := rsSpecimenNest
+  else
+  if Sender.AsString = 'B' then
+    aText := rsSpecimenBones
+  else
+  if Sender.AsString = 'E' then
+    aText := rsSpecimenEgg
+  else
+  if Sender.AsString = 'P' then
+    aText := rsSpecimenParasites
+  else
+  if Sender.AsString = 'F' then
+    aText := rsSpecimenFeathers
+  else
+  if Sender.AsString = 'BS' then
+    aText := rsSpecimenBlood
+  else
+  if Sender.AsString = 'C' then
+    aText := rsSpecimenClaw
+  else
+  if Sender.AsString = 'S' then
+    aText := rsSpecimenSwab
+  else
+  if Sender.AsString = 'T' then
+    aText := rsSpecimenTissues
+  else
+  if Sender.AsString = 'D' then
+    aText := rsSpecimenFeces
+  else
+  if Sender.AsString = 'R' then
+    aText := rsSpecimenRegurgite;
+
+  DisplayText := True;
+end;
+
+procedure TDMR.qSpecimenssample_typeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsSpecimenCarcassWhole then
+    Sender.AsString := 'WS'
+  else
+  if aText = rsSpecimenCarcassPartial then
+    Sender.AsString := 'PS'
+  else
+  if aText = rsSpecimenNest then
+    Sender.AsString := 'N'
+  else
+  if aText = rsSpecimenBones then
+    Sender.AsString := 'B'
+  else
+  if aText = rsSpecimenEgg then
+    Sender.AsString := 'E'
+  else
+  if aText = rsSpecimenParasites then
+    Sender.AsString := 'P'
+  else
+  if aText = rsSpecimenFeathers then
+    Sender.AsString := 'F'
+  else
+  if aText = rsSpecimenBlood then
+    Sender.AsString := 'BS'
+  else
+  if aText = rsSpecimenClaw then
+    Sender.AsString := 'C'
+  else
+  if aText = rsSpecimenSwab then
+    Sender.AsString := 'S'
+  else
+  if aText = rsSpecimenTissues then
+    Sender.AsString := 'T'
+  else
+  if aText = rsSpecimenFeces then
+    Sender.AsString := 'D'
+  else
+  if aText = rsSpecimenRegurgite then
+    Sender.AsString := 'R';
 end;
 
 end.

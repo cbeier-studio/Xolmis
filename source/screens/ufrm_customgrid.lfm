@@ -24765,8 +24765,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintSpecimens: TMenuItem
       Caption = 'Specimens'
-      Enabled = False
       Visible = False
+      OnClick = pmPrintSpecimensClick
     end
     object pmPrintSpecimensByProject: TMenuItem
       Caption = 'Specimens per project'

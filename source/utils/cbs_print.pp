@@ -39,6 +39,7 @@ const
   SamplingPlotsByLocalityReportFile: String = 'rep_sampling_plots_by_locality.lrf';
   SightingsReportFile: String               = 'rep_sightings.lrf';
   SurveysReportFile: String                 = 'rep_surveys.lrf';
+  SpecimensReportFile: String               = 'rep_specimens.lrf';
 
   procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource: TDataSource = nil);
 

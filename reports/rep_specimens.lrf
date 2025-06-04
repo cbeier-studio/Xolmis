@@ -2,12 +2,12 @@
 <CONFIG>
   <LazReport>
     <Version Value="31"/>
-    <Title Value="Projects"/>
+    <Title Value="Specimens"/>
     <Subject Value=""/>
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-06-04 14:50:45"/>
+    <ReportLastChange Value="2025-06-04 14:48:35"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -203,7 +203,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Projects&#xD;&#xA;"/>
+            <Memo Value="Specimens&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -356,7 +356,7 @@
           <Size>
             <Left Value="91"/>
             <Top Value="181"/>
-            <Width Value="641"/>
+            <Width Value="281"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;project_title&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;taxon_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -410,9 +410,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="738"/>
+            <Left Value="378"/>
             <Top Value="181"/>
-            <Width Value="286"/>
+            <Width Value="124"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -427,7 +427,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;short_title&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;field_number&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -466,8 +466,8 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="91"/>
-            <Top Value="200"/>
+            <Left Value="508"/>
+            <Top Value="181"/>
             <Width Value="86"/>
             <Height Value="18"/>
           </Size>
@@ -483,7 +483,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;start_date&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;collection_year&quot;].[DMR.dsSpecimens.&quot;collection_month&quot;].[DMR.dsSpecimens.&quot;collection_day&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -522,9 +522,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="183"/>
-            <Top Value="200"/>
-            <Width Value="86"/>
+            <Left Value="599"/>
+            <Top Value="181"/>
+            <Width Value="194"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;end_date&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;sample_type&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -578,9 +578,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="274"/>
+            <Left Value="112"/>
             <Top Value="200"/>
-            <Width Value="268"/>
+            <Width Value="430"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -595,7 +595,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;website_uri&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;locality_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -636,7 +636,7 @@
           <Size>
             <Left Value="548"/>
             <Top Value="200"/>
-            <Width Value="238"/>
+            <Width Value="94"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -651,7 +651,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;email_addr&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;longitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -690,9 +690,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="792"/>
+            <Left Value="648"/>
             <Top Value="200"/>
-            <Width Value="225"/>
+            <Width Value="94"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -707,7 +707,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;contact_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;latitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -763,7 +763,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjects.&quot;project_id&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSpecimens.&quot;specimen_id&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -804,7 +804,7 @@
           <Size>
             <Left Value="89"/>
             <Top Value="109"/>
-            <Width Value="36"/>
+            <Width Value="90"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -819,7 +819,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Title&#xD;&#xA;"/>
+            <Memo Value="Taxon&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -858,9 +858,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="736"/>
+            <Left Value="376"/>
             <Top Value="109"/>
-            <Width Value="72"/>
+            <Width Value="126"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -875,7 +875,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Short title&#xD;&#xA;"/>
+            <Memo Value="Field number&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -914,9 +914,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="89"/>
-            <Top Value="128"/>
-            <Width Value="50"/>
+            <Left Value="507"/>
+            <Top Value="109"/>
+            <Width Value="86"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -931,7 +931,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Start date&#xD;&#xA;"/>
+            <Memo Value="Date&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -970,9 +970,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="181"/>
-            <Top Value="128"/>
-            <Width Value="50"/>
+            <Left Value="598"/>
+            <Top Value="109"/>
+            <Width Value="194"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -987,7 +987,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="End date&#xD;&#xA;"/>
+            <Memo Value="Type&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1026,9 +1026,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="273"/>
+            <Left Value="111"/>
             <Top Value="128"/>
-            <Width Value="54"/>
+            <Width Value="90"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -1043,7 +1043,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Website&#xD;&#xA;"/>
+            <Memo Value="Locality&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1084,7 +1084,7 @@
           <Size>
             <Left Value="547"/>
             <Top Value="128"/>
-            <Width Value="54"/>
+            <Width Value="94"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -1099,7 +1099,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="E-mail&#xD;&#xA;"/>
+            <Memo Value="Longitude&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1138,9 +1138,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="792"/>
+            <Left Value="648"/>
             <Top Value="128"/>
-            <Width Value="81"/>
+            <Width Value="94"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -1155,7 +1155,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Contact person&#xD;&#xA;"/>
+            <Memo Value="Latitude&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1276,9 +1276,9 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="144"/>
+            <Left Value="432"/>
             <Top Value="306"/>
-            <Width Value="66"/>
+            <Width Value="552"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -1293,7 +1293,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjectTeam.&quot;person_acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSampleCollectors.&quot;collector_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1326,155 +1326,13 @@
           <Cursor Value="0"/>
         </Object26>
         <Object27>
-          <Name Value="Memo21"/>
-          <ClassName Value="TfrMemoView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtMemo"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="216"/>
-            <Top Value="306"/>
-            <Width Value="450"/>
-            <Height Value="18"/>
-          </Size>
-          <Flags Value="3"/>
-          <FillColor Value="clNone"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <FrameBorders Value=""/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Data>
-            <Format Value="556"/>
-            <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjectTeam.&quot;person_name&quot;]&#xD;&#xA;"/>
-            <Script Value=""/>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-            <OnClick Value=""/>
-            <OnMouseEnter Value=""/>
-            <OnMouseLeave Value=""/>
-            <DetailReport Value=""/>
-            <ParagraphGap Value="0"/>
-            <LineSpacing Value="2"/>
-          </Data>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Font>
-            <Name Value="Fira Sans"/>
-            <Size Value="8"/>
-            <Color Value="clBlack"/>
-            <Charset Value="0"/>
-            <Style Value=""/>
-          </Font>
-          <Highlight>
-            <FontStyle Value="2"/>
-            <FontColor Value="clBlack"/>
-            <FillColor Value="clWhite"/>
-            <HighlightStr Value=""/>
-          </Highlight>
-          <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
-          <Angle Value="0"/>
-          <Justify Value="False"/>
-          <Cursor Value="0"/>
-        </Object27>
-        <Object28>
-          <Name Value="Check1"/>
-          <ClassName Value="TfrCheckBoxView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtAddIn"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="684"/>
-            <Top Value="306"/>
-            <Width Value="18"/>
-            <Height Value="18"/>
-          </Size>
-          <Flags Value="1"/>
-          <FillColor Value="clNone"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <FrameBorders Value=""/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Data>
-            <Script Value="Checked := [DMR.qProjectTeam.&quot;project_manager&quot;]&#xD;&#xA;"/>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-            <Checked Value="1"/>
-          </Data>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-        </Object28>
-        <Object29>
-          <Name Value="Memo25"/>
-          <ClassName Value="TfrMemoView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtMemo"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="727"/>
-            <Top Value="306"/>
-            <Width Value="270"/>
-            <Height Value="18"/>
-          </Size>
-          <Flags Value="3"/>
-          <FillColor Value="clNone"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <FrameBorders Value=""/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Data>
-            <Format Value="556"/>
-            <FormatStr Value=""/>
-            <Memo Value="[DMR.qProjectTeam.&quot;institution_name&quot;]&#xD;&#xA;"/>
-            <Script Value=""/>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-            <OnClick Value=""/>
-            <OnMouseEnter Value=""/>
-            <OnMouseLeave Value=""/>
-            <DetailReport Value=""/>
-            <ParagraphGap Value="0"/>
-            <LineSpacing Value="2"/>
-          </Data>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Font>
-            <Name Value="Fira Sans"/>
-            <Size Value="8"/>
-            <Color Value="clBlack"/>
-            <Charset Value="0"/>
-            <Style Value=""/>
-          </Font>
-          <Highlight>
-            <FontStyle Value="2"/>
-            <FontColor Value="clBlack"/>
-            <FillColor Value="clWhite"/>
-            <HighlightStr Value=""/>
-          </Highlight>
-          <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
-          <Angle Value="0"/>
-          <Justify Value="False"/>
-          <Cursor Value="0"/>
-        </Object29>
-        <Object30>
           <Name Value="Memo22"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="145"/>
+            <Left Value="433"/>
             <Top Value="255"/>
             <Width Value="108"/>
             <Height Value="18"/>
@@ -1491,7 +1349,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Participants&#xD;&#xA;"/>
+            <Memo Value="Collectors&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1522,155 +1380,17 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object30>
-        <Object31>
-          <Name Value="Memo23"/>
-          <ClassName Value="TfrMemoView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtMemo"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="667"/>
-            <Top Value="255"/>
-            <Width Value="54"/>
-            <Height Value="18"/>
-          </Size>
-          <Flags Value="3"/>
-          <FillColor Value="clNone"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <FrameBorders Value=""/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Data>
-            <Format Value="556"/>
-            <FormatStr Value=""/>
-            <Memo Value="Manager&#xD;&#xA;"/>
-            <Script Value=""/>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-            <OnClick Value=""/>
-            <OnMouseEnter Value=""/>
-            <OnMouseLeave Value=""/>
-            <DetailReport Value=""/>
-            <ParagraphGap Value="0"/>
-            <LineSpacing Value="2"/>
-          </Data>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Font>
-            <Name Value="Fira Sans"/>
-            <Size Value="8"/>
-            <Color Value="clBlack"/>
-            <Charset Value="0"/>
-            <Style Value="fsBold"/>
-          </Font>
-          <Highlight>
-            <FontStyle Value="2"/>
-            <FontColor Value="clBlack"/>
-            <FillColor Value="clWhite"/>
-            <HighlightStr Value=""/>
-          </Highlight>
-          <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
-          <Angle Value="0"/>
-          <Justify Value="False"/>
-          <Cursor Value="0"/>
-        </Object31>
-        <Object32>
-          <Name Value="Memo24"/>
-          <ClassName Value="TfrMemoView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtMemo"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="728"/>
-            <Top Value="255"/>
-            <Width Value="90"/>
-            <Height Value="18"/>
-          </Size>
-          <Flags Value="3"/>
-          <FillColor Value="clNone"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <FrameBorders Value=""/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Data>
-            <Format Value="556"/>
-            <FormatStr Value=""/>
-            <Memo Value="Institution&#xD;&#xA;"/>
-            <Script Value=""/>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-            <OnClick Value=""/>
-            <OnMouseEnter Value=""/>
-            <OnMouseLeave Value=""/>
-            <DetailReport Value=""/>
-            <ParagraphGap Value="0"/>
-            <LineSpacing Value="2"/>
-          </Data>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Font>
-            <Name Value="Fira Sans"/>
-            <Size Value="8"/>
-            <Color Value="clBlack"/>
-            <Charset Value="0"/>
-            <Style Value="fsBold"/>
-          </Font>
-          <Highlight>
-            <FontStyle Value="2"/>
-            <FontColor Value="clBlack"/>
-            <FillColor Value="clWhite"/>
-            <HighlightStr Value=""/>
-          </Highlight>
-          <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
-          <Angle Value="0"/>
-          <Justify Value="False"/>
-          <Cursor Value="0"/>
-        </Object32>
-        <Object33>
-          <Name Value="Line2"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="145"/>
-            <Top Value="253"/>
-            <Width Value="882"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object33>
-        <Object34>
+        </Object27>
+        <Object28>
           <Name Value="Line3"/>
           <ClassName Value="TfrLineView"/>
           <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="145"/>
+            <Left Value="433"/>
             <Top Value="274"/>
-            <Width Value="882"/>
+            <Width Value="594"/>
             <Height Value="0"/>
           </Size>
           <Flags Value="0"/>
@@ -1686,8 +1406,8 @@
             <GapX Value="0"/>
             <GapY Value="0"/>
           </Data>
-        </Object34>
-        <ObjectCount Value="34"/>
+        </Object28>
+        <ObjectCount Value="28"/>
       </Page1>
       <FVal>
         <Count Value="0"/>
