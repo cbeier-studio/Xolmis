@@ -20179,7 +20179,7 @@ object DMG: TDMG
     Macros = <>
     Sequence.FieldName = 'molt_id'
     Left = 32
-    Top = 307
+    Top = 306
     object qFeathersmarked_status: TBooleanField
       DisplayLabel = 'Marked'
       FieldKind = fkData
@@ -20227,7 +20227,7 @@ object DMG: TDMG
     end
     object qFeatherstaxon_name: TStringField
       DisplayLabel = 'Taxon'
-      DisplayWidth = 30
+      DisplayWidth = 25
       FieldKind = fkData
       FieldName = 'taxon_name'
       Index = 4
@@ -20250,7 +20250,7 @@ object DMG: TDMG
     end
     object qFeatherslocality_name: TStringField
       DisplayLabel = 'Locality'
-      DisplayWidth = 30
+      DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'locality_name'
       Index = 6
@@ -20358,6 +20358,7 @@ object DMG: TDMG
     object qFeatherssource_type: TStringField
       Alignment = taCenter
       DisplayLabel = 'Source'
+      DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'source_type'
       Index = 15
@@ -20372,6 +20373,7 @@ object DMG: TDMG
     object qFeatherssymmetrical: TStringField
       Alignment = taCenter
       DisplayLabel = 'Symmetrical'
+      DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'symmetrical'
       Index = 16
@@ -20386,6 +20388,7 @@ object DMG: TDMG
     object qFeathersfeather_trait: TStringField
       Alignment = taCenter
       DisplayLabel = 'Feather trait'
+      DisplayWidth = 8
       FieldKind = fkData
       FieldName = 'feather_trait'
       Index = 17
@@ -20411,6 +20414,7 @@ object DMG: TDMG
     object qFeathersbody_side: TStringField
       Alignment = taCenter
       DisplayLabel = 'Body side'
+      DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'body_side'
       Index = 19
@@ -20509,6 +20513,7 @@ object DMG: TDMG
     object qFeathersfeather_age: TStringField
       Alignment = taCenter
       DisplayLabel = 'Feather age'
+      DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'feather_age'
       Index = 27
@@ -20522,6 +20527,7 @@ object DMG: TDMG
     end
     object qFeathersnotes: TMemoField
       DisplayLabel = 'Notes'
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'notes'
       Index = 28

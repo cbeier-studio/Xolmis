@@ -32,6 +32,10 @@ type
     frCheckBoxObj: TfrCheckBoxObject;
     frDataSet: TfrDBDataSet;
     frDetails: TfrDBDataSet;
+    frDetails5: TfrDBDataSet;
+    frDetails4: TfrDBDataSet;
+    frDetails3: TfrDBDataSet;
+    frDetails2: TfrDBDataSet;
     frPreview: TfrPreview;
     pmSavePdf: TMenuItem;
     pmZoomActualSize: TMenuItem;
@@ -95,16 +99,24 @@ type
     procedure sbZoomOutClick(Sender: TObject);
     procedure tbZoomChange(Sender: TObject);
   private
-    FDataSource, FDetailSource: TDataSource;
+    FDataSource, FDetailSource1, FDetailSource2, FDetailSource3, FDetailSource4, FDetailSource5: TDataSource;
     FReportName: String;
     procedure SetDataSource(AValue: TDataSource);
-    procedure SetDetailSource(AValue: TDataSource);
+    procedure SetDetailSource1(AValue: TDataSource);
+    procedure SetDetailSource2(AValue: TDataSource);
+    procedure SetDetailSource3(AValue: TDataSource);
+    procedure SetDetailSource4(AValue: TDataSource);
+    procedure SetDetailSource5(AValue: TDataSource);
     procedure SetReportName(AValue: String);
     procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
     property DataSource: TDataSource read FDataSource write SetDataSource;
-    property DetailSource: TDataSource read FDetailSource write SetDetailSource;
+    property DetailSource1: TDataSource read FDetailSource1 write SetDetailSource1;
+    property DetailSource2: TDataSource read FDetailSource2 write SetDetailSource2;
+    property DetailSource3: TDataSource read FDetailSource3 write SetDetailSource3;
+    property DetailSource4: TDataSource read FDetailSource4 write SetDetailSource4;
+    property DetailSource5: TDataSource read FDetailSource5 write SetDetailSource5;
     property ReportName: String read FReportName write SetReportName;
   end;
 
@@ -350,10 +362,34 @@ begin
   frDataSet.DataSource := FDataSource;
 end;
 
-procedure TfrmPrintPreview.SetDetailSource(AValue: TDataSource);
+procedure TfrmPrintPreview.SetDetailSource1(AValue: TDataSource);
 begin
-  FDetailSource := AValue;
-  frDetails.DataSource := FDetailSource;
+  FDetailSource1 := AValue;
+  frDetails.DataSource := FDetailSource1;
+end;
+
+procedure TfrmPrintPreview.SetDetailSource2(AValue: TDataSource);
+begin
+  FDetailSource2 := AValue;
+  frDetails2.DataSource := FDetailSource2;
+end;
+
+procedure TfrmPrintPreview.SetDetailSource3(AValue: TDataSource);
+begin
+  FDetailSource3 := AValue;
+  frDetails3.DataSource := FDetailSource3;
+end;
+
+procedure TfrmPrintPreview.SetDetailSource4(AValue: TDataSource);
+begin
+  FDetailSource4 := AValue;
+  frDetails4.DataSource := FDetailSource4;
+end;
+
+procedure TfrmPrintPreview.SetDetailSource5(AValue: TDataSource);
+begin
+  FDetailSource5 := AValue;
+  frDetails5.DataSource := FDetailSource5;
 end;
 
 procedure TfrmPrintPreview.SetReportName(AValue: String);

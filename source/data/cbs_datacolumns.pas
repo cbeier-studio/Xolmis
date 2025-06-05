@@ -4275,7 +4275,7 @@ begin
 
     case aFieldName of
       'full_name', 'individual_id', 'formatted_name', 'active_status', 'insert_date', 'update_date',
-      'user_inserted', 'user_updated', 'band_id', 'band_name':
+      'user_inserted', 'user_updated', 'band_id', 'band_name', 'captures_tally':
       begin
         Clear;
       end;
@@ -4391,19 +4391,19 @@ begin
 
       end;
 
-      'captures_tally':
-      begin
-        Add('SELECT z.full_name AS name, SUM(%afield) AS mean');
-        Add('FROM individuals AS i');
-        Add('JOIN zoo_taxa AS z ON i.taxon_id = z.taxon_id');
-        if aWhereText <> EmptyStr then
-          AddText(aWhereText)
-        else
-          Add('WHERE i.active_status = 1');
-        Add('GROUP BY name');
-        Add('ORDER BY mean DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+      //'captures_tally':
+      //begin
+      //  Add('SELECT z.full_name AS name, SUM(%afield) AS mean');
+      //  Add('FROM individuals AS i');
+      //  Add('JOIN zoo_taxa AS z ON i.taxon_id = z.taxon_id');
+      //  if aWhereText <> EmptyStr then
+      //    AddText(aWhereText)
+      //  else
+      //    Add('WHERE i.active_status = 1');
+      //  Add('GROUP BY name');
+      //  Add('ORDER BY mean DESC');
+      //  MacroByName('AFIELD').Value := aFieldName;
+      //end;
 
       'marked_status':
       begin

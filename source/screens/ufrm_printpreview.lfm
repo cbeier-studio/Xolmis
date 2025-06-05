@@ -1809,4 +1809,24 @@ object frmPrintPreview: TfrmPrintPreview
       end
     end
   end
+  object frDetails2: TfrDBDataSet
+    CloseDataSource = True
+    Left = 488
+    Top = 233
+  end
+  object frDetails3: TfrDBDataSet
+    CloseDataSource = True
+    Left = 552
+    Top = 233
+  end
+  object frDetails4: TfrDBDataSet
+    CloseDataSource = True
+    Left = 616
+    Top = 233
+  end
+  object frDetails5: TfrDBDataSet
+    CloseDataSource = True
+    Left = 680
+    Top = 233
+  end
 end

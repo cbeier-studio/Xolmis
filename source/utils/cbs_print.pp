@@ -41,14 +41,18 @@ const
   SurveysReportFile: String                 = 'rep_surveys.lrf';
   SpecimensReportFile: String               = 'rep_specimens.lrf';
 
-  procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource: TDataSource = nil);
+  procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource1: TDataSource = nil;
+    aDetailSource2: TDataSource = nil; aDetailSource3: TDataSource = nil; aDetailSource4: TDataSource = nil;
+    aDetailSource5: TDataSource = nil);
 
 implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, ufrm_printpreview;
 
-procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource: TDataSource);
+procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource1: TDataSource;
+  aDetailSource2: TDataSource; aDetailSource3: TDataSource; aDetailSource4: TDataSource;
+  aDetailSource5: TDataSource);
 begin
 
   if not FileExists(ConcatPaths([InstallDir, 'reports\', aReportFile])) then
@@ -64,7 +68,11 @@ begin
     try
       ReportName := aReportFile;
       DataSource := aDataSource;
-      DetailSource := aDetailSource;
+      DetailSource1 := aDetailSource1;
+      DetailSource2 := aDetailSource2;
+      DetailSource3 := aDetailSource3;
+      DetailSource4 := aDetailSource4;
+      DetailSource5 := aDetailSource5;
 
       ShowModal;
     finally
