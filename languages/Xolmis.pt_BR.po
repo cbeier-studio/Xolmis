@@ -1004,6 +1004,10 @@ msgstr "Maior diâmetro da planta"
 msgid "MC"
 msgstr "MC"
 
+#: cbs_datacolumns.rscmean
+msgid "Average"
+msgstr "Média"
+
 #: cbs_datacolumns.rscmethod
 msgctxt "cbs_datacolumns.rscmethod"
 msgid "Method"
@@ -1883,6 +1887,11 @@ msgstr "Tabela"
 msgid "Tail length"
 msgstr "Comprimento da cauda"
 
+#: cbs_datacolumns.rsctally
+msgctxt "cbs_datacolumns.rsctally"
+msgid "Count"
+msgstr "Contagem"
+
 #: cbs_datacolumns.rsctargetdate
 msgid "Target date"
 msgstr "Data pretendida"
@@ -1997,6 +2006,10 @@ msgstr "Nome válido"
 msgctxt "cbs_datacolumns.rscvalidnameid"
 msgid "Valid name ID"
 msgstr "Nome válido ID"
+
+#: cbs_datacolumns.rscvalue
+msgid "Value"
+msgstr "Valor"
 
 #: cbs_datacolumns.rscvernacularnames
 msgid "Vernacular name(s)"
@@ -7260,6 +7273,7 @@ msgid "M"
 msgstr "M"
 
 #: tdlgcolorbands.pcolor_n.caption
+msgctxt "tdlgcolorbands.pcolor_n.caption"
 msgid "N"
 msgstr "N"
 
@@ -15427,4 +15441,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

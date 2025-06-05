@@ -12855,6 +12855,7 @@ begin
       tbImages: ;
       tbAudioLibrary: ;
     end;
+    TranslateSummary(qChart);
     gridSummary.AutoAdjustColumns;
   finally
     gridSummary.EndUpdate;

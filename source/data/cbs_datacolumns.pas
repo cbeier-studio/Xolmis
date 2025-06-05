@@ -507,6 +507,10 @@ resourcestring
   rscRachisWidth = 'Rachis width';
   rscBarbDensity = 'Barb density';
 
+  rscValue = 'Value';
+  rscTally = 'Count';
+  rscMean = 'Average';
+
 
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryBotanicTaxa(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -567,6 +571,7 @@ resourcestring
   procedure TranslateSamplePreps(aDataSet: TDataSet);
   procedure TranslateVegetation(aDataSet: TDataSet);
   procedure TranslatePoiLibrary(aDataset: TDataSet);
+  procedure TranslateSummary(aDataSet: TDataSet);
 
 implementation
 
@@ -5125,6 +5130,22 @@ begin
   end;
 end;
 
+procedure TranslateSummary(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'name':          Fields[i].DisplayLabel := rscValue;
+        'tally':         Fields[i].DisplayLabel := rscTally;
+        'mean':          Fields[i].DisplayLabel := rscMean;
+      end;
+    end;
+  end;
+end;
 
 end.
 

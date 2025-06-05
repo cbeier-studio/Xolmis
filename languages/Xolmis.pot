@@ -1002,6 +1002,10 @@ msgstr ""
 msgid "MC"
 msgstr ""
 
+#: cbs_datacolumns.rscmean
+msgid "Average"
+msgstr ""
+
 #: cbs_datacolumns.rscmethod
 msgctxt "cbs_datacolumns.rscmethod"
 msgid "Method"
@@ -1881,6 +1885,11 @@ msgstr ""
 msgid "Tail length"
 msgstr ""
 
+#: cbs_datacolumns.rsctally
+msgctxt "cbs_datacolumns.rsctally"
+msgid "Count"
+msgstr ""
+
 #: cbs_datacolumns.rsctargetdate
 msgid "Target date"
 msgstr ""
@@ -1994,6 +2003,10 @@ msgstr ""
 #: cbs_datacolumns.rscvalidnameid
 msgctxt "cbs_datacolumns.rscvalidnameid"
 msgid "Valid name ID"
+msgstr ""
+
+#: cbs_datacolumns.rscvalue
+msgid "Value"
 msgstr ""
 
 #: cbs_datacolumns.rscvernacularnames
@@ -7271,6 +7284,7 @@ msgid "M"
 msgstr ""
 
 #: tdlgcolorbands.pcolor_n.caption
+msgctxt "tdlgcolorbands.pcolor_n.caption"
 msgid "N"
 msgstr ""
 
