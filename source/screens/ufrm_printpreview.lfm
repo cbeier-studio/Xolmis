@@ -1697,7 +1697,7 @@ object frmPrintPreview: TfrmPrintPreview
     Preview = frPreview
     PreviewButtons = [pbZoom, pbSave, pbPrint, pbFind, pbExit, pbSettings, pbPageSetup]
     DataType = dtDataSource
-    Title = 'Methods'
+    Title = 'Permits'
     OnBeginDoc = ReportBeginDoc
     OnEndDoc = ReportEndDoc
     OnProgress = ReportProgress

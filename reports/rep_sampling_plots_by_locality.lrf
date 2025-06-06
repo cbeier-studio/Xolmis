@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:29:13"/>
-    <ReportLastChange Value="2025-04-10 08:08:10"/>
+    <ReportLastChange Value="2025-06-06 08:57:16"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -119,7 +119,7 @@
             <Restrictions Value=""/>
           </Frames>
           <BandType Value="btGroupHeader"/>
-          <Condition Value="DMG.qSamplingPlots.&quot;locality_name&quot;"/>
+          <Condition Value="DMR.dsSamplingPlots.&quot;locality_name&quot;"/>
           <DatasetStr Value=""/>
           <Child Value=""/>
         </Object3>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qSamplingPlots.&quot;acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSamplingPlots.&quot;acronym&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -342,7 +342,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qSamplingPlots.&quot;full_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSamplingPlots.&quot;full_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -398,7 +398,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -425,9 +425,9 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="16844844"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qSamplingPlots.&quot;longitude&quot;]; [DMR.qSamplingPlots.&quot;latitude&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSamplingPlots.&quot;longitude&quot;]; [DMR.dsSamplingPlots.&quot;latitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -454,7 +454,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -483,7 +483,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qSamplingPlots.&quot;locality_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSamplingPlots.&quot;locality_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -510,7 +510,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qSamplingPlots.&quot;sampling_plot_id&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSamplingPlots.&quot;sampling_plot_id&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -566,7 +566,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -802,8 +802,8 @@
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="36"/>
-            <Top Value="92"/>
+            <Left Value="37"/>
+            <Top Value="181"/>
             <Width Value="990"/>
             <Height Value="0"/>
           </Size>

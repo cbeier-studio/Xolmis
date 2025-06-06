@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:45:11"/>
-    <ReportLastChange Value="2025-06-03 17:28:32"/>
+    <ReportLastChange Value="2025-06-06 09:37:40"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -105,7 +105,7 @@
             <Left Value="0"/>
             <Top Value="234"/>
             <Width Value="1064"/>
-            <Height Value="39"/>
+            <Height Value="41"/>
           </Size>
           <Flags Value="48"/>
           <Data>
@@ -299,7 +299,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="85"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="70"/>
             <Height Value="18"/>
           </Size>
@@ -355,8 +355,8 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="160"/>
-            <Top Value="235"/>
-            <Width Value="47"/>
+            <Top Value="236"/>
+            <Width Value="101"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -369,9 +369,9 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="50462764"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.dsSurveys.&quot;start_time&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSurveys.&quot;start_time&quot;] - [DMR.dsSurveys.&quot;end_time&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -411,8 +411,8 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="336"/>
-            <Top Value="235"/>
-            <Width Value="277"/>
+            <Top Value="236"/>
+            <Width Value="367"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -466,8 +466,8 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="618"/>
-            <Top Value="235"/>
+            <Left Value="708"/>
+            <Top Value="236"/>
             <Width Value="216"/>
             <Height Value="18"/>
           </Size>
@@ -522,8 +522,8 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="839"/>
-            <Top Value="235"/>
+            <Left Value="929"/>
+            <Top Value="236"/>
             <Width Value="85"/>
             <Height Value="18"/>
           </Size>
@@ -579,7 +579,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="85"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="165"/>
             <Height Value="18"/>
           </Size>
@@ -635,7 +635,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="255"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="126"/>
             <Height Value="18"/>
           </Size>
@@ -691,7 +691,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="36"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="43"/>
             <Height Value="18"/>
           </Size>
@@ -819,7 +819,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Start/end time&#xD;&#xA;"/>
+            <Memo Value="Start-end time&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -860,7 +860,7 @@
           <Size>
             <Left Value="336"/>
             <Top Value="127"/>
-            <Width Value="275"/>
+            <Width Value="365"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -914,7 +914,7 @@
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="616"/>
+            <Left Value="706"/>
             <Top Value="127"/>
             <Width Value="216"/>
             <Height Value="18"/>
@@ -1132,39 +1132,13 @@
           <Cursor Value="0"/>
         </Object21>
         <Object22>
-          <Name Value="Line1"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="36"/>
-            <Top Value="165"/>
-            <Width Value="990"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object22>
-        <Object23>
           <Name Value="Memo22"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="837"/>
+            <Left Value="927"/>
             <Top Value="127"/>
             <Width Value="85"/>
             <Height Value="18"/>
@@ -1212,8 +1186,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object23>
-        <Object24>
+        </Object22>
+        <Object23>
           <Name Value="Memo23"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1268,8 +1242,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object24>
-        <Object25>
+        </Object23>
+        <Object24>
           <Name Value="Memo26"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1324,8 +1298,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object25>
-        <Object26>
+        </Object24>
+        <Object25>
           <Name Value="Memo27"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1380,8 +1354,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object26>
-        <Object27>
+        </Object25>
+        <Object26>
           <Name Value="Memo28"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1436,8 +1410,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object27>
-        <Object28>
+        </Object26>
+        <Object27>
           <Name Value="Memo37"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1445,7 +1419,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="386"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="93"/>
             <Height Value="18"/>
           </Size>
@@ -1461,7 +1435,63 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.dsSurveys.&quot;area_total&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSurveys.&quot;area_total&quot;] ha&#xD;&#xA;"/>
+            <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
+          </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Font>
+            <Name Value="Fira Sans"/>
+            <Size Value="8"/>
+            <Color Value="clBlack"/>
+            <Charset Value="0"/>
+            <Style Value=""/>
+          </Font>
+          <Highlight>
+            <FontStyle Value="2"/>
+            <FontColor Value="clBlack"/>
+            <FillColor Value="clWhite"/>
+            <HighlightStr Value=""/>
+          </Highlight>
+          <Alignment Value="taLeftJustify"/>
+          <Layout Value="tlTop"/>
+          <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
+        </Object27>
+        <Object28>
+          <Name Value="Memo38"/>
+          <ClassName Value="TfrMemoView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtMemo"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="484"/>
+            <Top Value="255"/>
+            <Width Value="93"/>
+            <Height Value="18"/>
+          </Size>
+          <Flags Value="3"/>
+          <FillColor Value="clNone"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <FrameBorders Value=""/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Data>
+            <Format Value="556"/>
+            <FormatStr Value=""/>
+            <Memo Value="[DMR.dsSurveys.&quot;distance_total&quot;] km&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1494,15 +1524,15 @@
           <Cursor Value="0"/>
         </Object28>
         <Object29>
-          <Name Value="Memo38"/>
+          <Name Value="Memo42"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
           <Typ Value="gtMemo"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="484"/>
-            <Top Value="254"/>
-            <Width Value="93"/>
+            <Left Value="680"/>
+            <Top Value="255"/>
+            <Width Value="103"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -1515,9 +1545,9 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="16777516"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.dsSurveys.&quot;distance_total&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSurveys.&quot;net_effort&quot;] h•m²&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1550,62 +1580,6 @@
           <Cursor Value="0"/>
         </Object29>
         <Object30>
-          <Name Value="Memo42"/>
-          <ClassName Value="TfrMemoView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtMemo"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="680"/>
-            <Top Value="254"/>
-            <Width Value="103"/>
-            <Height Value="18"/>
-          </Size>
-          <Flags Value="3"/>
-          <FillColor Value="clNone"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <FrameBorders Value=""/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Data>
-            <Format Value="556"/>
-            <FormatStr Value=""/>
-            <Memo Value="[DMR.dsSurveys.&quot;net_effort&quot;]&#xD;&#xA;"/>
-            <Script Value=""/>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-            <OnClick Value=""/>
-            <OnMouseEnter Value=""/>
-            <OnMouseLeave Value=""/>
-            <DetailReport Value=""/>
-            <ParagraphGap Value="0"/>
-            <LineSpacing Value="2"/>
-          </Data>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Font>
-            <Name Value="Fira Sans"/>
-            <Size Value="8"/>
-            <Color Value="clBlack"/>
-            <Charset Value="0"/>
-            <Style Value=""/>
-          </Font>
-          <Highlight>
-            <FontStyle Value="2"/>
-            <FontColor Value="clBlack"/>
-            <FillColor Value="clWhite"/>
-            <HighlightStr Value=""/>
-          </Highlight>
-          <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
-          <Angle Value="0"/>
-          <Justify Value="False"/>
-          <Cursor Value="0"/>
-        </Object30>
-        <Object31>
           <Name Value="Memo43"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1613,7 +1587,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="582"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="93"/>
             <Height Value="18"/>
           </Size>
@@ -1660,64 +1634,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object31>
-        <Object32>
-          <Name Value="Memo4"/>
-          <ClassName Value="TfrMemoView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtMemo"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="212"/>
-            <Top Value="235"/>
-            <Width Value="47"/>
-            <Height Value="18"/>
-          </Size>
-          <Flags Value="3"/>
-          <FillColor Value="clNone"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <FrameBorders Value=""/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Data>
-            <Format Value="556"/>
-            <FormatStr Value=""/>
-            <Memo Value="[DMR.dsSurveys.&quot;end_time&quot;]&#xD;&#xA;"/>
-            <Script Value=""/>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-            <OnClick Value=""/>
-            <OnMouseEnter Value=""/>
-            <OnMouseLeave Value=""/>
-            <DetailReport Value=""/>
-            <ParagraphGap Value="0"/>
-            <LineSpacing Value="2"/>
-          </Data>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Font>
-            <Name Value="Fira Sans"/>
-            <Size Value="8"/>
-            <Color Value="clBlack"/>
-            <Charset Value="0"/>
-            <Style Value=""/>
-          </Font>
-          <Highlight>
-            <FontStyle Value="2"/>
-            <FontColor Value="clBlack"/>
-            <FillColor Value="clWhite"/>
-            <HighlightStr Value=""/>
-          </Highlight>
-          <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
-          <Angle Value="0"/>
-          <Justify Value="False"/>
-          <Cursor Value="0"/>
-        </Object32>
-        <Object33>
+        </Object30>
+        <Object31>
           <Name Value="Memo5"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1772,8 +1690,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object33>
-        <Object34>
+        </Object31>
+        <Object32>
           <Name Value="Memo44"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1781,7 +1699,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="266"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="65"/>
             <Height Value="18"/>
           </Size>
@@ -1797,7 +1715,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.dsSurveys.&quot;duration&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSurveys.&quot;duration&quot;] min&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1828,8 +1746,34 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object34>
-        <ObjectCount Value="34"/>
+        </Object32>
+        <Object33>
+          <Name Value="Line1"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="36"/>
+            <Top Value="234"/>
+            <Width Value="990"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
+        </Object33>
+        <ObjectCount Value="33"/>
       </Page1>
       <FVal>
         <Count Value="0"/>

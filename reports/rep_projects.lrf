@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-06-04 14:50:45"/>
+    <ReportLastChange Value="2025-06-06 08:27:58"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -355,7 +355,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="91"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="641"/>
             <Height Value="18"/>
           </Size>
@@ -398,7 +398,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -411,7 +411,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="738"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="286"/>
             <Height Value="18"/>
           </Size>
@@ -454,7 +454,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -467,7 +467,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="91"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="86"/>
             <Height Value="18"/>
           </Size>
@@ -510,7 +510,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -523,7 +523,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="183"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="86"/>
             <Height Value="18"/>
           </Size>
@@ -566,7 +566,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -579,7 +579,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="274"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="268"/>
             <Height Value="18"/>
           </Size>
@@ -622,7 +622,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -635,7 +635,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="548"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="238"/>
             <Height Value="18"/>
           </Size>
@@ -678,7 +678,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -691,7 +691,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="792"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="225"/>
             <Height Value="18"/>
           </Size>
@@ -734,7 +734,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -747,7 +747,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="37"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="50"/>
             <Height Value="18"/>
           </Size>
@@ -790,7 +790,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -1244,32 +1244,6 @@
           <Cursor Value="0"/>
         </Object24>
         <Object25>
-          <Name Value="Line1"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="37"/>
-            <Top Value="147"/>
-            <Width Value="990"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object25>
-        <Object26>
           <Name Value="Memo20"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1320,12 +1294,12 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object26>
-        <Object27>
+        </Object25>
+        <Object26>
           <Name Value="Memo21"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1376,12 +1350,12 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object27>
-        <Object28>
+        </Object26>
+        <Object27>
           <Name Value="Check1"/>
           <ClassName Value="TfrCheckBoxView"/>
           <Visible Value="True"/>
@@ -1410,8 +1384,8 @@
           </Data>
           <Tag Value=""/>
           <FURLInfo Value=""/>
-        </Object28>
-        <Object29>
+        </Object27>
+        <Object28>
           <Name Value="Memo25"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1462,12 +1436,12 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object29>
-        <Object30>
+        </Object28>
+        <Object29>
           <Name Value="Memo22"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1518,12 +1492,12 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object30>
-        <Object31>
+        </Object29>
+        <Object30>
           <Name Value="Memo23"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1574,12 +1548,12 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object31>
-        <Object32>
+        </Object30>
+        <Object31>
           <Name Value="Memo24"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1630,64 +1604,38 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
+        </Object31>
+        <Object32>
+          <Name Value="Line1"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="36"/>
+            <Top Value="180"/>
+            <Width Value="990"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object32>
-        <Object33>
-          <Name Value="Line2"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="145"/>
-            <Top Value="253"/>
-            <Width Value="882"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object33>
-        <Object34>
-          <Name Value="Line3"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="145"/>
-            <Top Value="274"/>
-            <Width Value="882"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object34>
-        <ObjectCount Value="34"/>
+        <ObjectCount Value="32"/>
       </Page1>
       <FVal>
         <Count Value="0"/>

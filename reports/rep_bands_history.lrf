@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:45:11"/>
-    <ReportLastChange Value="2025-06-04 14:53:13"/>
+    <ReportLastChange Value="2025-06-06 09:26:53"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -49,7 +49,7 @@
             <Left Value="0"/>
             <Top Value="54"/>
             <Width Value="1064"/>
-            <Height Value="62"/>
+            <Height Value="59"/>
           </Size>
           <Flags Value="48"/>
           <Data>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_size&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_size&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -342,7 +342,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_number&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_number&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -398,7 +398,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -427,7 +427,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_prefix&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_prefix&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -454,7 +454,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -483,7 +483,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_suffix&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_suffix&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -510,7 +510,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_status&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_status&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -566,7 +566,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -595,7 +595,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_type&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_type&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -622,7 +622,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -651,7 +651,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_source&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_source&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -678,7 +678,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -707,7 +707,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;supplier_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;supplier_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -734,7 +734,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -763,7 +763,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;carrier_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;carrier_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -790,7 +790,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -819,7 +819,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_id&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_id&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -846,7 +846,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -875,7 +875,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBandHistory.&quot;event_date&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBandHistory.&quot;event_date&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -902,7 +902,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -931,7 +931,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBandHistory.&quot;event_type&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBandHistory.&quot;event_type&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -958,7 +958,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -987,7 +987,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBandHistory.&quot;order_number&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBandHistory.&quot;order_number&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1014,7 +1014,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -1043,7 +1043,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBandHistory.&quot;requester_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBandHistory.&quot;requester_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1070,7 +1070,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -1099,7 +1099,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBandHistory.&quot;sender_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBandHistory.&quot;sender_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1126,7 +1126,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -1692,32 +1692,6 @@
           <Cursor Value="0"/>
         </Object31>
         <Object32>
-          <Name Value="Line1"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="36"/>
-            <Top Value="114"/>
-            <Width Value="990"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object32>
-        <Object33>
           <Name Value="Memo27"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1772,8 +1746,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object33>
-        <Object34>
+        </Object32>
+        <Object33>
           <Name Value="Memo30"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1828,8 +1802,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object34>
-        <Object35>
+        </Object33>
+        <Object34>
           <Name Value="Memo31"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1884,8 +1858,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object35>
-        <Object36>
+        </Object34>
+        <Object35>
           <Name Value="Memo32"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1940,8 +1914,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object36>
-        <Object37>
+        </Object35>
+        <Object36>
           <Name Value="Memo33"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1996,8 +1970,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object37>
-        <Object38>
+        </Object36>
+        <Object37>
           <Name Value="Line2"/>
           <ClassName Value="TfrLineView"/>
           <Visible Value="True"/>
@@ -2007,6 +1981,32 @@
             <Left Value="181"/>
             <Top Value="92"/>
             <Width Value="796"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
+        </Object37>
+        <Object38>
+          <Name Value="Line1"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="36"/>
+            <Top Value="234"/>
+            <Width Value="990"/>
             <Height Value="0"/>
           </Size>
           <Flags Value="0"/>

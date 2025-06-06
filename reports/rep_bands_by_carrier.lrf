@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:45:11"/>
-    <ReportLastChange Value="2025-04-10 08:10:02"/>
+    <ReportLastChange Value="2025-06-06 09:00:33"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -105,7 +105,7 @@
             <Left Value="0"/>
             <Top Value="126"/>
             <Width Value="1064"/>
-            <Height Value="20"/>
+            <Height Value="21"/>
           </Size>
           <Flags Value="112"/>
           <Data>
@@ -119,7 +119,7 @@
             <Restrictions Value=""/>
           </Frames>
           <BandType Value="btGroupHeader"/>
-          <Condition Value="DMG.qBands.&quot;carrier_name&quot;"/>
+          <Condition Value="DMR.dsBands.&quot;carrier_name&quot;"/>
           <DatasetStr Value="frDataSet"/>
           <Child Value=""/>
         </Object3>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_size&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_size&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -342,7 +342,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_number&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_number&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -398,7 +398,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -427,7 +427,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_prefix&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_prefix&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -454,7 +454,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -483,7 +483,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_suffix&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_suffix&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -510,7 +510,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -539,7 +539,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_status&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_status&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -566,7 +566,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -595,7 +595,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_type&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_type&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -622,7 +622,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -651,7 +651,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_source&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_source&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -678,7 +678,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -707,7 +707,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;supplier_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;supplier_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -734,7 +734,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -763,7 +763,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;band_id&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;band_id&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -790,7 +790,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -803,7 +803,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="36"/>
-            <Top Value="127"/>
+            <Top Value="128"/>
             <Width Value="376"/>
             <Height Value="18"/>
           </Size>
@@ -819,7 +819,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qBands.&quot;carrier_name&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsBands.&quot;carrier_name&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1362,8 +1362,8 @@
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="36"/>
-            <Top Value="92"/>
+            <Left Value="37"/>
+            <Top Value="127"/>
             <Width Value="990"/>
             <Height Value="0"/>
           </Size>

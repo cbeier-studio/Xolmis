@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:45:11"/>
-    <ReportLastChange Value="2025-05-30 08:10:44"/>
+    <ReportLastChange Value="2025-06-06 09:33:44"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -105,7 +105,7 @@
             <Left Value="0"/>
             <Top Value="234"/>
             <Width Value="1064"/>
-            <Height Value="59"/>
+            <Height Value="60"/>
           </Size>
           <Flags Value="48"/>
           <Data>
@@ -299,7 +299,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="85"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="188"/>
             <Height Value="18"/>
           </Size>
@@ -355,7 +355,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="278"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="70"/>
             <Height Value="18"/>
           </Size>
@@ -411,7 +411,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="355"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="47"/>
             <Height Value="18"/>
           </Size>
@@ -425,7 +425,7 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="50462764"/>
             <FormatStr Value=""/>
             <Memo Value="[DMR.qSightings.&quot;sighting_time&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
@@ -467,7 +467,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="407"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="206"/>
             <Height Value="18"/>
           </Size>
@@ -523,7 +523,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="618"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="72"/>
             <Height Value="18"/>
           </Size>
@@ -537,7 +537,7 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="16844844"/>
             <FormatStr Value=""/>
             <Memo Value="[DMR.qSightings.&quot;longitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
@@ -579,7 +579,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="695"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="72"/>
             <Height Value="18"/>
           </Size>
@@ -593,7 +593,7 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="16844844"/>
             <FormatStr Value=""/>
             <Memo Value="[DMR.qSightings.&quot;latitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
@@ -635,7 +635,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="85"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="67"/>
             <Height Value="18"/>
           </Size>
@@ -691,7 +691,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="157"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="165"/>
             <Height Value="18"/>
           </Size>
@@ -747,7 +747,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="327"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="90"/>
             <Height Value="18"/>
           </Size>
@@ -803,7 +803,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="36"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="43"/>
             <Height Value="18"/>
           </Size>
@@ -1412,32 +1412,6 @@
           <Cursor Value="0"/>
         </Object26>
         <Object27>
-          <Name Value="Line1"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="36"/>
-            <Top Value="185"/>
-            <Width Value="990"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object27>
-        <Object28>
           <Name Value="Memo22"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1492,8 +1466,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object28>
-        <Object29>
+        </Object27>
+        <Object28>
           <Name Value="Memo23"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1548,8 +1522,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object29>
-        <Object30>
+        </Object28>
+        <Object29>
           <Name Value="Memo26"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1604,8 +1578,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object30>
-        <Object31>
+        </Object29>
+        <Object30>
           <Name Value="Memo27"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1660,8 +1634,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object31>
-        <Object32>
+        </Object30>
+        <Object31>
           <Name Value="Memo28"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1716,8 +1690,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object32>
-        <Object33>
+        </Object31>
+        <Object32>
           <Name Value="Memo29"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1772,8 +1746,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object33>
-        <Object34>
+        </Object32>
+        <Object33>
           <Name Value="Memo30"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1828,8 +1802,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object34>
-        <Object35>
+        </Object33>
+        <Object34>
           <Name Value="Memo31"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1884,8 +1858,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object35>
-        <Object36>
+        </Object34>
+        <Object35>
           <Name Value="Memo32"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1940,8 +1914,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object36>
-        <Object37>
+        </Object35>
+        <Object36>
           <Name Value="Memo33"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1996,8 +1970,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object37>
-        <Object38>
+        </Object36>
+        <Object37>
           <Name Value="Memo34"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2052,8 +2026,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object38>
-        <Object39>
+        </Object37>
+        <Object38>
           <Name Value="Memo35"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2108,8 +2082,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object39>
-        <Object40>
+        </Object38>
+        <Object39>
           <Name Value="Memo36"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2164,8 +2138,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object40>
-        <Object41>
+        </Object39>
+        <Object40>
           <Name Value="Check1"/>
           <ClassName Value="TfrCheckBoxView"/>
           <Visible Value="True"/>
@@ -2173,7 +2147,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="792"/>
-            <Top Value="235"/>
+            <Top Value="236"/>
             <Width Value="18"/>
             <Height Value="18"/>
           </Size>
@@ -2194,8 +2168,8 @@
           </Data>
           <Tag Value=""/>
           <FURLInfo Value=""/>
-        </Object41>
-        <Object42>
+        </Object40>
+        <Object41>
           <Name Value="Memo37"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2203,7 +2177,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="422"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="129"/>
             <Height Value="18"/>
           </Size>
@@ -2250,8 +2224,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object42>
-        <Object43>
+        </Object41>
+        <Object42>
           <Name Value="Memo38"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2259,7 +2233,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="556"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="111"/>
             <Height Value="18"/>
           </Size>
@@ -2306,8 +2280,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object43>
-        <Object44>
+        </Object42>
+        <Object43>
           <Name Value="Check2"/>
           <ClassName Value="TfrCheckBoxView"/>
           <Visible Value="True"/>
@@ -2315,7 +2289,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="689"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="18"/>
             <Height Value="18"/>
           </Size>
@@ -2336,8 +2310,8 @@
           </Data>
           <Tag Value=""/>
           <FURLInfo Value=""/>
-        </Object44>
-        <Object45>
+        </Object43>
+        <Object44>
           <Name Value="Check3"/>
           <ClassName Value="TfrCheckBoxView"/>
           <Visible Value="True"/>
@@ -2345,7 +2319,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="751"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="18"/>
             <Height Value="18"/>
           </Size>
@@ -2366,8 +2340,8 @@
           </Data>
           <Tag Value=""/>
           <FURLInfo Value=""/>
-        </Object45>
-        <Object46>
+        </Object44>
+        <Object45>
           <Name Value="Check4"/>
           <ClassName Value="TfrCheckBoxView"/>
           <Visible Value="True"/>
@@ -2375,7 +2349,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="823"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="18"/>
             <Height Value="18"/>
           </Size>
@@ -2396,8 +2370,8 @@
           </Data>
           <Tag Value=""/>
           <FURLInfo Value=""/>
-        </Object46>
-        <Object47>
+        </Object45>
+        <Object46>
           <Name Value="Check5"/>
           <ClassName Value="TfrCheckBoxView"/>
           <Visible Value="True"/>
@@ -2405,7 +2379,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="897"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="18"/>
             <Height Value="18"/>
           </Size>
@@ -2426,8 +2400,8 @@
           </Data>
           <Tag Value=""/>
           <FURLInfo Value=""/>
-        </Object47>
-        <Object48>
+        </Object46>
+        <Object47>
           <Name Value="Check6"/>
           <ClassName Value="TfrCheckBoxView"/>
           <Visible Value="True"/>
@@ -2435,7 +2409,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="962"/>
-            <Top Value="254"/>
+            <Top Value="255"/>
             <Width Value="18"/>
             <Height Value="18"/>
           </Size>
@@ -2456,8 +2430,8 @@
           </Data>
           <Tag Value=""/>
           <FURLInfo Value=""/>
-        </Object48>
-        <Object49>
+        </Object47>
+        <Object48>
           <Name Value="Memo39"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2465,7 +2439,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="85"/>
-            <Top Value="273"/>
+            <Top Value="274"/>
             <Width Value="75"/>
             <Height Value="18"/>
           </Size>
@@ -2512,8 +2486,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object49>
-        <Object50>
+        </Object48>
+        <Object49>
           <Name Value="Memo40"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2521,7 +2495,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="181"/>
-            <Top Value="273"/>
+            <Top Value="274"/>
             <Width Value="75"/>
             <Height Value="18"/>
           </Size>
@@ -2537,7 +2511,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qSightings.&quot;subject_distance&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSightings.&quot;subject_distance&quot;] m&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -2568,8 +2542,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object50>
-        <Object51>
+        </Object49>
+        <Object50>
           <Name Value="Memo41"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2577,7 +2551,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="286"/>
-            <Top Value="273"/>
+            <Top Value="274"/>
             <Width Value="216"/>
             <Height Value="18"/>
           </Size>
@@ -2624,8 +2598,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object51>
-        <Object52>
+        </Object50>
+        <Object51>
           <Name Value="Memo42"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2633,7 +2607,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="507"/>
-            <Top Value="273"/>
+            <Top Value="274"/>
             <Width Value="265"/>
             <Height Value="18"/>
           </Size>
@@ -2680,8 +2654,8 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object52>
-        <Object53>
+        </Object51>
+        <Object52>
           <Name Value="Memo43"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -2689,7 +2663,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="778"/>
-            <Top Value="273"/>
+            <Top Value="274"/>
             <Width Value="247"/>
             <Height Value="18"/>
           </Size>
@@ -2736,6 +2710,32 @@
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
+        </Object52>
+        <Object53>
+          <Name Value="Line1"/>
+          <ClassName Value="TfrLineView"/>
+          <Visible Value="True"/>
+          <Typ Value="gtLine"/>
+          <StreamMode Value="0"/>
+          <Size>
+            <Left Value="35"/>
+            <Top Value="234"/>
+            <Width Value="990"/>
+            <Height Value="0"/>
+          </Size>
+          <Flags Value="0"/>
+          <Frames>
+            <FrameColor Value="clBlack"/>
+            <FrameStyle Value="frsSolid"/>
+            <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
+          </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object53>
         <ObjectCount Value="53"/>
       </Page1>

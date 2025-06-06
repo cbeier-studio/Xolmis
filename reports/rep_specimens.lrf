@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-06-04 14:48:35"/>
+    <ReportLastChange Value="2025-06-06 09:34:49"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -77,7 +77,7 @@
             <Left Value="0"/>
             <Top Value="180"/>
             <Width Value="1064"/>
-            <Height Value="40"/>
+            <Height Value="41"/>
           </Size>
           <Flags Value="52"/>
           <Data>
@@ -355,7 +355,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="91"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="281"/>
             <Height Value="18"/>
           </Size>
@@ -398,7 +398,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -411,7 +411,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="378"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="124"/>
             <Height Value="18"/>
           </Size>
@@ -454,7 +454,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -467,7 +467,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="508"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="86"/>
             <Height Value="18"/>
           </Size>
@@ -510,7 +510,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -523,7 +523,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="599"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="194"/>
             <Height Value="18"/>
           </Size>
@@ -566,7 +566,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -579,7 +579,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="112"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="430"/>
             <Height Value="18"/>
           </Size>
@@ -622,7 +622,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -635,7 +635,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="548"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="94"/>
             <Height Value="18"/>
           </Size>
@@ -649,7 +649,7 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="16844844"/>
             <FormatStr Value=""/>
             <Memo Value="[DMR.dsSpecimens.&quot;longitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
@@ -678,7 +678,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -691,7 +691,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="648"/>
-            <Top Value="200"/>
+            <Top Value="201"/>
             <Width Value="94"/>
             <Height Value="18"/>
           </Size>
@@ -705,7 +705,7 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Format Value="556"/>
+            <Format Value="16844844"/>
             <FormatStr Value=""/>
             <Memo Value="[DMR.dsSpecimens.&quot;latitude&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
@@ -734,7 +734,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -747,7 +747,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="37"/>
-            <Top Value="181"/>
+            <Top Value="182"/>
             <Width Value="50"/>
             <Height Value="18"/>
           </Size>
@@ -790,7 +790,7 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
@@ -1244,32 +1244,6 @@
           <Cursor Value="0"/>
         </Object24>
         <Object25>
-          <Name Value="Line1"/>
-          <ClassName Value="TfrLineView"/>
-          <Visible Value="True"/>
-          <Typ Value="gtLine"/>
-          <StreamMode Value="0"/>
-          <Size>
-            <Left Value="37"/>
-            <Top Value="147"/>
-            <Width Value="990"/>
-            <Height Value="0"/>
-          </Size>
-          <Flags Value="0"/>
-          <Frames>
-            <FrameColor Value="clBlack"/>
-            <FrameStyle Value="frsSolid"/>
-            <FrameWidth Value="1"/>
-            <Restrictions Value=""/>
-          </Frames>
-          <Tag Value=""/>
-          <FURLInfo Value=""/>
-          <Data>
-            <GapX Value="0"/>
-            <GapY Value="0"/>
-          </Data>
-        </Object25>
-        <Object26>
           <Name Value="Memo20"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1320,12 +1294,12 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object26>
-        <Object27>
+        </Object25>
+        <Object26>
           <Name Value="Memo22"/>
           <ClassName Value="TfrMemoView"/>
           <Visible Value="True"/>
@@ -1376,21 +1350,21 @@
             <HighlightStr Value=""/>
           </Highlight>
           <Alignment Value="taLeftJustify"/>
-          <Layout Value="tlTop"/>
+          <Layout Value="tlCenter"/>
           <Angle Value="0"/>
           <Justify Value="False"/>
           <Cursor Value="0"/>
-        </Object27>
-        <Object28>
-          <Name Value="Line3"/>
+        </Object26>
+        <Object27>
+          <Name Value="Line1"/>
           <ClassName Value="TfrLineView"/>
           <Visible Value="True"/>
           <Typ Value="gtLine"/>
           <StreamMode Value="0"/>
           <Size>
-            <Left Value="433"/>
-            <Top Value="274"/>
-            <Width Value="594"/>
+            <Left Value="37"/>
+            <Top Value="180"/>
+            <Width Value="990"/>
             <Height Value="0"/>
           </Size>
           <Flags Value="0"/>
@@ -1406,8 +1380,8 @@
             <GapX Value="0"/>
             <GapY Value="0"/>
           </Data>
-        </Object28>
-        <ObjectCount Value="28"/>
+        </Object27>
+        <ObjectCount Value="27"/>
       </Page1>
       <FVal>
         <Count Value="0"/>
