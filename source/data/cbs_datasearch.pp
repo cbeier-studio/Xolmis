@@ -510,8 +510,7 @@ begin
     Add('  pl.full_name AS net_station_name,');
     Add('  mt.method_name AS method_name,');
     Add('  pj.short_title AS project_name,');
-    Add('  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef');
-    Add('    WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort');
+    Add('  CAST(COALESCE(ne.net_effort, 0) AS REAL) AS net_effort');
     Add('FROM surveys AS sv');
     Add('LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id');
     Add('LEFT JOIN gazetteer AS gl ON sv.locality_id = gl.site_id');
@@ -521,6 +520,12 @@ begin
     Add('LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id');
     Add('LEFT JOIN methods AS mt ON sv.method_id = mt.method_id');
     Add('LEFT JOIN projects AS pj ON sv.project_id = pj.project_id');
+    Add('LEFT JOIN (');
+    Add('  SELECT ef.survey_id, SUM(ef.net_area * ef.open_time_total) AS net_effort');
+    Add('  FROM nets_effort AS ef');
+    Add('  WHERE ef.active_status = 1');
+    Add('  GROUP BY ef.survey_id');
+    Add(') AS ne ON sv.survey_id = ne.survey_id');
     case aFilter of
       fvNone:
         ; // do nothing

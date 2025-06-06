@@ -7362,7 +7362,7 @@ object DMR: TDMR
       '  pl.full_name AS net_station_name,'
       '  mt.method_name AS method_name,'
       '  pj.short_title AS project_name,'
-      '  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef'
+      '  (SELECT CAST((SUM(ef.net_area * ef.open_time_total)) AS REAL) FROM nets_effort AS ef'
       '    WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort'
       'FROM surveys AS sv'
       'LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id'

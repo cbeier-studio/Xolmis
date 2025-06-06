@@ -765,6 +765,7 @@ type
     qSurveysexpedition_name: TStringField;
     qSurveysmunicipality_id: TLongintField;
     qSurveysmunicipality_name: TStringField;
+    qSurveysnet_effort: TFloatField;
     qSurveysstate_id: TLongintField;
     qSurveysstate_name: TStringField;
     qTaxafamily_name: TStringField;
@@ -1081,7 +1082,6 @@ type
     qSurveysmethod_id: TLongintField;
     qSurveysmethod_name: TStringField;
     qSurveysnets_total: TLongintField;
-    qSurveysnet_effort: TFloatField;
     qSurveysnet_rounds: TMemoField;
     qSurveysnet_station_id: TLongintField;
     qSurveysnotes: TMemoField;

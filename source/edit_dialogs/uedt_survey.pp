@@ -177,7 +177,7 @@ begin
       SQLConnection := DMM.sqlCon;
       SQLTransaction := DMM.sqlTrans;
 
-      Add('SELECT CAST((SUM(net_area) + SUM(open_time_total)) AS REAL)');
+      Add('SELECT CAST(SUM(net_area * open_time_total) AS REAL)');
       Add('FROM nets_effort');
       Add('WHERE (survey_id = :survey_id) AND (active_status = 1)');
       ParamByName('survey_id').AsInteger := FSurvey.Id;

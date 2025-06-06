@@ -1903,6 +1903,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       DisplayValues = 'True;False'
     end
     object qIndividualsexported_status: TBooleanField
@@ -6605,9 +6606,8 @@ object DMG: TDMG
       end    
       item
         Name = 'net_effort'
-        DataType = ftString
+        DataType = ftFloat
         Precision = -1
-        Size = 255
       end>
     AfterCancel = qSurveysAfterCancel
     AfterPost = qSurveysAfterPost
@@ -6628,8 +6628,7 @@ object DMG: TDMG
       '  pl.full_name AS net_station_name,'
       '  mt.method_name AS method_name,'
       '  pj.short_title AS project_name,'
-      '  (SELECT CAST((SUM(ef.net_area) + SUM(ef.open_time_total)) AS REAL) FROM nets_effort AS ef'
-      '    WHERE (ef.survey_id = sv.survey_id) AND (ef.active_status = 1)) AS net_effort'
+      '  CAST(COALESCE(ne.net_effort, 0) AS REAL) AS net_effort'
       'FROM surveys AS sv'
       'LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id'
       'LEFT JOIN gazetteer AS gl ON sv.locality_id = gl.site_id'
@@ -6639,6 +6638,12 @@ object DMG: TDMG
       'LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id'
       'LEFT JOIN methods AS mt ON sv.method_id = mt.method_id'
       'LEFT JOIN projects AS pj ON sv.project_id = pj.project_id'
+      'LEFT JOIN ('
+      '    SELECT ef.survey_id, SUM(ef.net_area * ef.open_time_total) AS net_effort'
+      '    FROM nets_effort AS ef'
+      '    WHERE ef.active_status = 1'
+      '    GROUP BY ef.survey_id'
+      ') AS ne ON sv.survey_id = ne.survey_id'
       'WHERE (sv.active_status = 1)'
     )
     InsertSQL.Strings = (
@@ -7072,7 +7077,7 @@ object DMG: TDMG
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      DisplayFormat = '#,##0.00'
+      DisplayFormat = '#,##0.0'
       Precision = -1
     end
     object qSurveysproject_id: TLongintField
