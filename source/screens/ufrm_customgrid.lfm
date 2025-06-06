@@ -7,7 +7,6 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -84,7 +83,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -24680,6 +24679,10 @@ object frmCustomGrid: TfrmCustomGrid
   object PrintGrid: TFrPrintGrid
     DBGrid = DBG
     Orientation = poLandscape
+    Font.Color = clBlack
+    Font.Name = 'Fira Sans'
+    TitleFont.Color = clBlack
+    TitleFont.Name = 'Fira Sans'
     Caption = 'Grid'
     PrinterIndex = -1
     ShowCaption = True

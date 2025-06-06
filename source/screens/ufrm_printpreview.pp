@@ -126,7 +126,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_print, udlg_progress, udm_reports, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, udlg_progress, udm_reports, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -334,43 +334,6 @@ end;
 procedure TfrmPrintPreview.SetDataSource(AValue: TDataSource);
 begin
   FDataSource := AValue;
-
-  if FReportName = ConcatPaths([InstallDir, 'reports\', BandsByStatusReportFile]) then
-  begin
-    FDataSource.DataSet.Close;
-    if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
-      TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
-    TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
-    //{$IFDEF DEBUG}
-    //LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
-    //{$ENDIF}
-    FDataSource.DataSet.Open;
-  end
-  else
-  if FReportName = ConcatPaths([InstallDir, 'reports\', BandsByCarrierReportFile]) then
-  begin
-    FDataSource.DataSet.Close;
-    if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
-      TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
-    TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY carrier_name ASC, b.band_size ASC, b.band_number ASC');
-    //{$IFDEF DEBUG}
-    //LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
-    //{$ENDIF}
-    FDataSource.DataSet.Open;
-  end
-  else
-  if FReportName = ConcatPaths([InstallDir, 'reports\', SamplingPlotsByLocalityReportFile]) then
-  begin
-    FDataSource.DataSet.Close;
-    if Pos('ORDER BY', TSQLQuery(FDataSource.DataSet).SQL.Text) > 0 then
-      TSQLQuery(FDataSource.DataSet).SQL.Delete(TSQLQuery(FDataSource.DataSet).SQL.Count - 1);
-    TSQLQuery(FDataSource.DataSet).SQL.Add('ORDER BY locality_name ASC, pl.full_name ASC');
-    //{$IFDEF DEBUG}
-    //LogSQL(TSQLQuery(FDataSource.DataSet).SQL);
-    //{$ENDIF}
-    FDataSource.DataSet.Open;
-  end;
-
   frDataSet.DataSource := FDataSource;
 end;
 

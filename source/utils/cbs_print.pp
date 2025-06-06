@@ -61,6 +61,9 @@ begin
     Exit;
   end;
 
+  if not aDataSource.DataSet.Active then
+    aDataSource.DataSet.Open;
+
   if aDataSource.DataSet.RecordCount > 0 then
   begin
     frmPrintPreview := TfrmPrintPreview.Create(nil);
