@@ -21,7 +21,7 @@ unit cbs_datacolumns;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils;
+  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, jsonparser;
 
 resourcestring
   rscId = 'ID';
@@ -511,6 +511,8 @@ resourcestring
   rscTally = 'Count';
   rscMean = 'Average';
 
+  procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
+  procedure SaveFieldsSettings(aDataSet: TDataSet; const aFileName: String);
 
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryBotanicTaxa(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -574,6 +576,98 @@ resourcestring
   procedure TranslateSummary(aDataSet: TDataSet);
 
 implementation
+
+procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
+var
+  JSONData: TJSONData;
+  FieldsArray: TJSONArray;
+  I, FieldIdx: Integer;
+  FieldObj: TJSONObject;
+  FieldName: string;
+  Visible: Boolean;
+  Index: Integer;
+  Field: TField;
+  JSONStr: string;
+  SL: TStringList;
+begin
+  if not FileExists(aFileName) then Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(aFileName);
+    JSONStr := SL.Text;
+  finally
+    SL.Free;
+  end;
+
+  JSONData := GetJSON(JSONStr);
+  try
+    // Find "fields" array in JSON object
+    FieldsArray := JSONData.FindPath('fields') as TJSONArray;
+    if Assigned(FieldsArray) then
+    begin
+      for I := 0 to FieldsArray.Count - 1 do
+      begin
+        FieldObj := FieldsArray.Items[I] as TJSONObject;
+        FieldName := FieldObj.Get('name', '');
+        Visible := FieldObj.Get('visible', True);
+        Index := FieldObj.Get('index', I);
+        Field := aDataSet.FindField(FieldName);
+        if Assigned(Field) then
+        begin
+          Field.Visible := Visible;
+          // Change the index to reorder the fields.
+          // NOTE: Field.Index only works on persistent fields.
+          Field.Index := Index;
+        end;
+      end;
+    end;
+  finally
+    JSONData.Free;
+  end;
+end;
+
+procedure SaveFieldsSettings(aDataSet: TDataSet; const aFileName: String);
+var
+  Root, FieldObj: TJSONObject;
+  FieldsArray: TJSONArray;
+  i: Integer;
+  Field: TField;
+  JSONStr: string;
+  SL: TStringList;
+begin
+  Root := TJSONObject.Create;
+  try
+    FieldsArray := TJSONArray.Create;
+    // Iterate fields in the current order
+    for i := 0 to aDataSet.FieldCount - 1 do
+    begin
+      Field := aDataSet.Fields[i];
+      FieldObj := TJSONObject.Create;
+      FieldObj.Strings['name'] := Field.FieldName;
+      FieldObj.Booleans['visible'] := Field.Visible;
+      FieldObj.Integers['index'] := i;
+      // If necessary, add other properties here
+      // FieldObj.Strings['caption'] := Field.DisplayLabel;
+      FieldsArray.Add(FieldObj);
+    end;
+    Root.Add('fields', FieldsArray);
+
+    // Generate the JSON string
+    JSONStr := Root.FormatJSON();
+
+    // Save file using TStringList
+    SL := TStringList.Create;
+    try
+      SL.Text := JSONStr;
+      SL.SaveToFile(aFileName);
+    finally
+      SL.Free;
+    end;
+  finally
+    Root.Free;
+  end;
+end;
 
 procedure TranslateUsers(aDataSet: TDataSet);
 var
@@ -1580,7 +1674,7 @@ begin
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
         'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
-        'taxon_formatted_name':   Fields[i].DisplayLabel := rscTaxon;
+        'taxon_formatted_name':   Fields[i].DisplayLabel := rscTaxonFormatted;
         'order_id':               Fields[i].DisplayLabel := rscOrderID;
         'family_id':              Fields[i].DisplayLabel := rscFamilyID;
         'subfamily_id':           Fields[i].DisplayLabel := rscSubfamilyID;
@@ -1616,7 +1710,7 @@ begin
         'captures_tally':         Fields[i].DisplayLabel := rscCaptures;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
-        'formatted_name':         Fields[i].DisplayLabel := rscFullName;
+        'formatted_name':         Fields[i].DisplayLabel := rscFullNameFormatted;
         'individual_id':          Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;

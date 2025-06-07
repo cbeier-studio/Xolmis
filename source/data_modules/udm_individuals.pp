@@ -607,7 +607,7 @@ procedure TDMI.DataModuleCreate(Sender: TObject);
 begin
   TranslateCaptures(qCaptures);
   TranslateSightings(qSightings);
-  TranslateMolts(qMolts);
+  TranslateFeathers(qFeathers);
   TranslateNests(qNests);
   TranslateSpecimens(qSpecimens);
 end;

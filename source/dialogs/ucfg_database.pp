@@ -111,10 +111,11 @@ begin
 
   if not DMM.sysCon.Connected then
     DMM.sysCon.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-    (dsConn.DataSet as TSQLQuery).ReadOnly := True;
+
   if not dsConn.DataSet.Active then
     dsConn.DataSet.Open;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //  (dsConn.DataSet as TSQLQuery).ReadOnly := True;
 
   UpdateButtons;
   dsConn.DataSet.Refresh;

@@ -1188,7 +1188,8 @@ type
     procedure GetTaxonRankFilters;
     procedure GetZooTaxaFilters;
 
-    procedure LoadColumns;
+    procedure LoadColumnsConfig;
+    procedure LoadColumnsConfigGrid;
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
 
@@ -1225,7 +1226,7 @@ type
     procedure RefreshMap;
     procedure RefreshMapSurvey;
 
-    procedure SaveColumns;
+    procedure SaveColumnsConfig;
 
     procedure SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure SetColumnsBands(var aGrid: TDBGrid);
@@ -1893,12 +1894,12 @@ begin
         FSearch.SortFields[p].SortType := stAlphanumeric;
       ftSmallint, ftInteger, ftLargeint, ftWord, ftAutoInc, ftBytes, ftVarBytes:
         FSearch.SortFields[p].SortType := stNumeric;
-      ftBoolean:
-        FSearch.SortFields[p].SortType := stBoolean;
       ftFloat, ftCurrency, ftBCD, ftFMTBcd:
         FSearch.SortFields[p].SortType := stNumeric;
       ftDate, ftTime, ftDateTime, ftTimeStamp:
         FSearch.SortFields[p].SortType := stDateTime;
+      ftBoolean:
+        FSearch.SortFields[p].SortType := stBoolean;
     else
       FSearch.SortFields[p].SortType := stNone;
     end;
@@ -4721,7 +4722,7 @@ begin
   TimerUpdate.Enabled := False;
   //TimerFind.Enabled := False;
 
-  SaveColumns;
+  SaveColumnsConfig;
 
   if qRecycle.Active then
     qRecycle.Close;
@@ -4880,7 +4881,7 @@ begin
     {$IFDEF DEBUG}
     Usage.AddPart('load master grid columns');
     {$ENDIF}
-    LoadColumns;
+    LoadColumnsConfig;
     AddGridColumns(FTableType, DBG);
     if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
       (dsLink.DataSet as TSQLQuery).ReadOnly := True;
@@ -4941,7 +4942,8 @@ begin
   if DBG.CanSetFocus then
     DBG.SetFocus;
   if gridColumns.RowCount <= 2 then
-    GetColumns;
+    LoadColumnsConfigGrid;
+  //  GetColumns;
   SetImages;
   SetAudios;
   SetDocs;
@@ -5346,7 +5348,7 @@ procedure TfrmCustomGrid.GetColumns;
 var
   i: Integer;
 begin
-  //LoadColumns;
+  //LoadColumnsConfig;
 
   gridColumns.RowCount := dsLink.DataSet.Fields.Count + 1;
 
@@ -6090,7 +6092,7 @@ begin
   begin
     dsLink.DataSet.Fields[aRow - 1].Visible := aState = cbChecked;
 
-    //SaveColumns;
+    //SaveColumnsConfig;
 
     AddGridColumns(FTableType, DBG);
   end;
@@ -6168,12 +6170,9 @@ begin
   AResultWidth := AImageWidth * APPI div 96;
 end;
 
-procedure TfrmCustomGrid.LoadColumns;
+procedure TfrmCustomGrid.LoadColumnsConfig;
 var
   ColsFile, ColsFolder: String;
-  i, f: Integer;
-  FieldFound: Boolean = False;
-  FieldIndex: Integer = -1;
 begin
   {$IFDEF DEBUG}
   ColsFolder := 'debug_columns\';
@@ -6181,43 +6180,44 @@ begin
   ColsFolder := 'columns\';
   {$ENDIF}
 
-  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.xml']);
+  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.json']);
   if not FileExists(ColsFile) then
   begin
     //GetColumns;
     Exit;
   end;
 
-  gridColumns.RowCount := dsLink.DataSet.Fields.Count + 1;
-  gridColumns.LoadFromFile(ColsFile);
-  for i := 1 to gridColumns.RowCount - 1 do
-  begin
-    FieldFound := False;
-    FieldIndex := -1;
-    // Find the field in the DataSet by the DisplayLabel
-    for f := 0 to dsLink.DataSet.Fields.Count - 1 do
-    begin
-      if dsLink.DataSet.Fields[f].DisplayLabel = gridColumns.Cells[2, i] then
-      begin
-        FieldIndex := f;
-        FieldFound := True;
-        Break;
-      end;
-    end;
+  LoadFieldsSettings(dsLink.dataset, ColsFile);
 
-    if FieldFound then
-    begin
-      // Update Visible property
-      dsLink.DataSet.Fields[FieldIndex].Visible := gridColumns.Cells[1, i] = '1';
-      // Update field index
-      dsLink.DataSet.Fields[FieldIndex].Index := i - 1;
-    end
+  LoadColumnsConfigGrid;
+end;
+
+procedure TfrmCustomGrid.LoadColumnsConfigGrid;
+var
+  i: Integer;
+  Field: TField;
+begin
+  gridColumns.RowCount := dsLink.DataSet.Fields.Count + 1;
+  for i := 0 to dsLink.DataSet.Fields.Count - 1 do
+  begin
+    Field := dsLink.DataSet.Fields[i];
+
+    if Field.Visible then
+      gridColumns.Cells[1, i+1] := '1'
     else
-    begin
-      // Handle when the field is not found
-      LogError('Field not found: ' + gridColumns.Cells[2, i]);
-    end;
+      gridColumns.Cells[1, i+1] := '0';
+
+    // FieldName column (not visible)
+    gridColumns.Cells[2, i+1] := Field.FieldName;
+
+    // if DisplayLabel is empty, use FieldName
+    if Trim(Field.DisplayLabel) = EmptyStr then
+      gridColumns.Cells[3, i+1] := Field.FieldName
+    else
+      gridColumns.Cells[3, i+1] := Field.DisplayLabel;
   end;
+  gridColumns.ColWidths[0] := 40;
+
   {$IFDEF DEBUG}
   LogDebug('gridColumns loaded: ' + IntToStr(gridColumns.RowCount));
   {$ENDIF}
@@ -6743,7 +6743,7 @@ begin
 
   dsLink.DataSet.FieldByName(Column.FieldName).Visible := False;
 
-  GetColumns;
+  //GetColumns;
   AddGridColumns(FTableType, DBG);
 end;
 
@@ -7004,9 +7004,12 @@ begin
 
   try
     for i := 0 to dsLink.DataSet.Fields.Count - 1 do
-     dsLink.DataSet.Fields[i].Visible := True;
+    begin
+      gridColumns.Cells[1, i+1] := '1';
+      dsLink.DataSet.Fields[i].Visible := True;
+    end;
 
-    GetColumns;
+    //GetColumns;
     AddGridColumns(FTableType, DBG);
   finally
     FCanToggle := True;
@@ -7045,9 +7048,12 @@ begin
 
   try
     for i := 0 to dsLink.DataSet.Fields.Count - 1 do
-     dsLink.DataSet.Fields[i].Visible := False;
+    begin
+      gridColumns.Cells[1, i+1] := '0';
+      dsLink.DataSet.Fields[i].Visible := False;
+    end;
 
-    GetColumns;
+    //GetColumns;
     AddGridColumns(FTableType, DBG);
   finally
     FCanToggle := True;
@@ -8690,7 +8696,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.SaveColumns;
+procedure TfrmCustomGrid.SaveColumnsConfig;
 var
   ColsFile, ColsFolder: String;
 begin
@@ -8702,8 +8708,9 @@ begin
   if not DirectoryExists(AppDataDir + ColsFolder) then
     CreateDir(AppDataDir + ColsFolder);
 
-  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.xml']);
-  gridColumns.SaveToFile(ColsFile);
+  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.json']);
+
+  SaveFieldsSettings(dsLink.DataSet, ColsFile);
 end;
 
 procedure TfrmCustomGrid.sbAddAudioClick(Sender: TObject);
@@ -8994,9 +9001,10 @@ end;
 
 procedure TfrmCustomGrid.sbColumnHideClick(Sender: TObject);
 begin
+  gridColumns.Cells[1, gridColumns.Row] := '0';
   dsLink.DataSet.Fields[gridColumns.Row - 1].Visible := False;
 
-  GetColumns;
+  //GetColumns;
   AddGridColumns(FTableType, DBG);
 end;
 
@@ -9458,7 +9466,7 @@ begin
   dsLink.DataSet.Fields[r].Index := dsLink.DataSet.Fields[r].Index + 1;
   dsLink.DataSet.Open;
 
-  GetColumns;
+  //GetColumns;
   gridColumns.Row := gridColumns.Row + 1;
 
   AddGridColumns(FTableType, DBG);
@@ -9476,7 +9484,7 @@ begin
   dsLink.DataSet.Fields[r].Index := dsLink.DataSet.Fields[r].Index - 1;
   dsLink.DataSet.Open;
 
-  GetColumns;
+  //GetColumns;
   gridColumns.Row := gridColumns.Row - 1;
 
   AddGridColumns(FTableType, DBG);

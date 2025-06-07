@@ -40,7 +40,7 @@ object frmCustomGrid: TfrmCustomGrid
       Height = 614
       Top = 0
       Width = 464
-      PageIndex = 0
+      PageIndex = 6
       Align = alClient
       TabOrder = 0
       object cardViewRecord: TPage
@@ -7303,16 +7303,14 @@ object frmCustomGrid: TfrmCustomGrid
               Width = 70
             end          
             item
-              ReadOnly = True
-              Title.Caption = 'Field'
-              Width = 218
+              Title.Caption = 'Field name'
+              Width = 0
+              Visible = False
             end          
             item
-              Alignment = taRightJustify
-              SizePriority = 0
-              Title.Alignment = taRightJustify
-              Title.Caption = 'Size'
-              Width = 60
+              ReadOnly = True
+              Title.Caption = 'Field'
+              Width = 274
             end>
           MouseWheelOption = mwGrid
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
@@ -7325,8 +7323,8 @@ object frmCustomGrid: TfrmCustomGrid
           ColWidths = (
             100
             70
-            218
-            60
+            0
+            274
           )
           Cells = (
             1
@@ -7381,14 +7379,14 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundY = 8
           TabOrder = 1
           object sbRowHeightDecrease: TSpeedButton
-            Left = 60
+            Left = 52
             Height = 26
             Hint = 'Decrease the row height'
             Top = 8
             Width = 34
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 10
+            BorderSpacing.Right = 2
             DisabledImageIndex = 65
             Flat = True
             Images = iButtons
@@ -7406,7 +7404,7 @@ object frmCustomGrid: TfrmCustomGrid
             Width = 34
             Align = alLeft
             AutoSize = True
-            BorderSpacing.Right = 10
+            BorderSpacing.Right = 2
             DisabledImageIndex = 63
             Flat = True
             Images = iButtons
@@ -7417,7 +7415,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbRowHeightIncreaseClick
           end
           object Separator9: TShapeLineBGRA
-            Left = 148
+            Left = 132
             Height = 26
             Top = 8
             Width = 4
@@ -7428,7 +7426,7 @@ object frmCustomGrid: TfrmCustomGrid
             LineWidth = 1
           end
           object sbRowHeightDefault: TSpeedButton
-            Left = 104
+            Left = 88
             Height = 26
             Hint = 'Set the default row height'
             Top = 8
@@ -7446,7 +7444,7 @@ object frmCustomGrid: TfrmCustomGrid
             OnClick = sbRowHeightDefaultClick
           end
           object sbColumnWidthAutoAdjust: TSpeedButton
-            Left = 162
+            Left = 146
             Height = 26
             Hint = 'Autoadjust the columns width'
             Top = 8
@@ -24679,10 +24677,6 @@ object frmCustomGrid: TfrmCustomGrid
   object PrintGrid: TFrPrintGrid
     DBGrid = DBG
     Orientation = poLandscape
-    Font.Color = clBlack
-    Font.Name = 'Fira Sans'
-    TitleFont.Color = clBlack
-    TitleFont.Name = 'Fira Sans'
     Caption = 'Grid'
     PrinterIndex = -1
     ShowCaption = True

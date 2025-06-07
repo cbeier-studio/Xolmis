@@ -12556,12 +12556,17 @@ msgid "Visible"
 msgstr "Visível"
 
 #: tfrmcustomgrid.gridcolumns.columns[1].title.caption
-msgid "Field"
+#, fuzzy
+#| msgid "Field"
+msgctxt "tfrmcustomgrid.gridcolumns.columns[1].title.caption"
+msgid "Field name"
 msgstr "Campo"
 
 #: tfrmcustomgrid.gridcolumns.columns[2].title.caption
+#, fuzzy
+#| msgid "Size"
 msgctxt "tfrmcustomgrid.gridcolumns.columns[2].title.caption"
-msgid "Size"
+msgid "Field"
 msgstr "Tamanho"
 
 #: tfrmcustomgrid.griddocs.columns[0].title.caption
@@ -14904,7 +14909,7 @@ msgstr "Início"
 #: tfrmmain.sbnotifications.hint
 msgctxt "tfrmmain.sbnotifications.hint"
 msgid "Notification Center"
-msgstr "Cental de notificações"
+msgstr "Central de notificações"
 
 #: tfrmmain.titlenotifications.caption
 msgctxt "tfrmmain.titlenotifications.caption"
@@ -15441,3 +15446,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

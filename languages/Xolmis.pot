@@ -12567,12 +12567,13 @@ msgid "Visible"
 msgstr ""
 
 #: tfrmcustomgrid.gridcolumns.columns[1].title.caption
-msgid "Field"
+msgctxt "tfrmcustomgrid.gridcolumns.columns[1].title.caption"
+msgid "Field name"
 msgstr ""
 
 #: tfrmcustomgrid.gridcolumns.columns[2].title.caption
 msgctxt "tfrmcustomgrid.gridcolumns.columns[2].title.caption"
-msgid "Size"
+msgid "Field"
 msgstr ""
 
 #: tfrmcustomgrid.griddocs.columns[0].title.caption
