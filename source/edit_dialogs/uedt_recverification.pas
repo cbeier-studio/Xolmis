@@ -195,6 +195,15 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  cbStatus.Items.Clear;
+  cbStatus.Items.Add(rsRecordOK);
+  cbStatus.Items.Add(rsWrongTaxon);
+  cbStatus.Items.Add(rsWrongLocation);
+  cbStatus.Items.Add(rsWrongCoordinates);
+  cbStatus.Items.Add(rsWrongMeasurement);
+  cbStatus.Items.Add(rsWrongValues);
+  cbStatus.Items.Add(rsMissingData);
+
   eDate.Date := Today;
   FPersonId := 0;
 end;
