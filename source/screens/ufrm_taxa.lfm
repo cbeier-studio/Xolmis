@@ -1179,6 +1179,7 @@ object frmTaxa: TfrmTaxa
             Title = 'Captures'
             BarBrush.Color = 4946723
             BarPen.Style = psClear
+            BarWidthStyle = bwPercentMin
             Source = DMT.lcsMonthly
             Styles = DMT.RecordTypeStyles
           end
@@ -1233,6 +1234,7 @@ object frmTaxa: TfrmTaxa
             Legend.Multiplicity = lmStyle
             BarBrush.Color = 4946723
             BarPen.Style = psClear
+            BarWidthStyle = bwPercentMin
             Source = DMT.lcsYearly
             Styles = DMT.RecordTypeStyles
           end
