@@ -292,6 +292,7 @@ type
     property Count: Integer read GetCount;
     property DataSet: TSQLQuery read FDataSet write FDataSet;
     property RecordActive: TRecordActiveStatus read FRecordActive write FRecordActive default rsActive;
+    property SQLString: String read GetSQLString;
     property SQLWhere: TStrings read FSQLWhere;
     property SQLOrderBy: String read FSQLOrderBy;
   end;
@@ -1129,6 +1130,8 @@ begin
     FDataSet.SQL.Add('ORDER BY ' + aSort);
     FSQLOrderBy := 'ORDER BY ' + aSort;
   end;
+
+  Result := FDataSet.SQL.Text;
 
   //FDataSet.RefreshSQL.Text := FDataSet.SQL.Text;
 
