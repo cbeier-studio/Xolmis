@@ -32,14 +32,12 @@ type
   TedtExpedition = class(TForm)
     eName: TEdit;
     eStartDate: TEditButton;
-    eLocality: TEditButton;
     eEndDate: TEditButton;
     eProject: TEditButton;
     dsLink: TDataSource;
     lblStartDate: TLabel;
     lblEndDate: TLabel;
     lblDescription: TLabel;
-    lblLocality: TLabel;
     lblName: TLabel;
     lblProject: TLabel;
     lineBottom: TShapeLineBGRA;
@@ -47,7 +45,6 @@ type
     pBottom: TPanel;
     pClient: TPanel;
     pDescription: TPanel;
-    pLocality: TPanel;
     pName: TPanel;
     pProject: TPanel;
     pDate: TPanel;
@@ -56,8 +53,6 @@ type
     sbSave: TButton;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
-    procedure eLocalityButtonClick(Sender: TObject);
-    procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eNameEditingDone(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
@@ -98,7 +93,6 @@ uses
 
 procedure TedtExpedition.ApplyDarkMode;
 begin
-  eLocality.Images := DMM.iEditsDark;
   eStartDate.Images := DMM.iEditsDark;
   eEndDate.Images := DMM.iEditsDark;
   eProject.Images := DMM.iEditsDark;
@@ -117,39 +111,6 @@ var
   Dt: TDate;
 begin
   CalendarDlg(eEndDate.Text, eEndDate, Dt);
-end;
-
-procedure TedtExpedition.eLocalityButtonClick(Sender: TObject);
-begin
-  FindSiteDlg([gfAll], eLocality, FLocalityId);
-end;
-
-procedure TedtExpedition.eLocalityKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    FLocalityId := 0;
-    eLocality.Text := EmptyStr;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
-  begin
-    if (Sender is TEditButton) then
-      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
-    else
-      SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
 end;
 
 procedure TedtExpedition.eNameEditingDone(Sender: TObject);
@@ -316,7 +277,6 @@ begin
 
   // Required fields
   //RequiredIsEmpty(D, tbExpeditions, 'expedition_name', Msgs);
-  //RequiredIsEmpty(D, tbExpeditions, 'locality_id', Msgs);
   //RequiredIsEmpty(D, tbExpeditions, 'start_date', Msgs);
   //RequiredIsEmpty(D, tbExpeditions, 'end_date', Msgs);
 

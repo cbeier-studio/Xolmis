@@ -17,7 +17,7 @@ object edtExpedition: TedtExpedition
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 350
+    Top = 305
     Width = 397
     Align = alTop
     LineColor = 9276813
@@ -27,7 +27,7 @@ object edtExpedition: TedtExpedition
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 352
+    Top = 307
     Width = 397
     Align = alTop
     AutoSize = True
@@ -70,28 +70,28 @@ object edtExpedition: TedtExpedition
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 350
+    Height = 305
     Top = 0
     Width = 397
     HorzScrollBar.Page = 397
-    VertScrollBar.Page = 350
+    VertScrollBar.Page = 305
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 350
+    ClientHeight = 305
     ClientWidth = 397
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 350
+      Height = 305
       Top = 0
       Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 350
+      ClientHeight = 305
       ClientWidth = 397
       TabOrder = 0
       object pName: TPanel
@@ -137,7 +137,7 @@ object edtExpedition: TedtExpedition
       object pDescription: TPanel
         Left = 0
         Height = 112
-        Top = 222
+        Top = 177
         Width = 397
         Align = alTop
         AutoSize = True
@@ -150,7 +150,7 @@ object edtExpedition: TedtExpedition
         ClientHeight = 112
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 3
         object lblDescription: TLabel
           Left = 16
           Height = 15
@@ -175,60 +175,10 @@ object edtExpedition: TedtExpedition
           OnKeyPress = FormKeyPress
         end
       end
-      object pLocality: TPanel
-        Left = 0
-        Height = 45
-        Top = 106
-        Width = 397
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 397
-        ParentBackground = False
-        TabOrder = 2
-        object lblLocality: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 365
-          BorderSpacing.Top = 3
-          Caption = 'Locality:'
-          ParentColor = False
-          ParentFont = False
-        end
-        object eLocality: TEditButton
-          Left = 16
-          Height = 23
-          Top = 22
-          Width = 365
-          ButtonHint = 'Find locality'
-          ButtonWidth = 23
-          Images = DMM.iEdits
-          ImageIndex = 0
-          MaxLength = 0
-          NumGlyphs = 1
-          ParentShowHint = False
-          PasswordChar = #0
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eLocalityButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eLocalityKeyPress
-        end
-      end
       object pProject: TPanel
         Left = 0
         Height = 45
-        Top = 164
+        Top = 119
         Width = 397
         Align = alTop
         AutoSize = True
@@ -244,7 +194,7 @@ object edtExpedition: TedtExpedition
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 2
         object lblProject: TLabel
           Left = 16
           Height = 15
