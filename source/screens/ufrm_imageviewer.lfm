@@ -9,7 +9,6 @@ object frmImageViewer: TfrmImageViewer
   ClientWidth = 805
   PopupMode = pmAuto
   Position = poDefault
-  LCLVersion = '4.0.0.2'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -40,6 +39,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 14
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbOpenClick
     end
     object sbRotateLeft: TSpeedButton
@@ -55,6 +56,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 0
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbRotateLeftClick
     end
     object sbRotateRight: TSpeedButton
@@ -71,6 +74,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 2
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbRotateRightClick
     end
     object sbFlipHorizontal: TSpeedButton
@@ -86,6 +91,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 4
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbFlipHorizontalClick
     end
     object sbFlipVertical: TSpeedButton
@@ -101,6 +108,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 6
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbFlipVerticalClick
     end
     object sbSaveAs: TSpeedButton
@@ -180,6 +189,8 @@ object frmImageViewer: TfrmImageViewer
       ImageIndex = 16
       ImageWidth = 20
       Visible = False
+      ShowHint = True
+      ParentShowHint = False
     end
     object tbZoom: TTrackBar
       Left = 601
@@ -210,6 +221,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 12
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbZoomInClick
     end
     object sbZoomOut: TSpeedButton
@@ -225,6 +238,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 10
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbZoomOutClick
     end
     object sbZoomAdjust: TSpeedButton
@@ -241,6 +256,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 8
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbZoomAdjustClick
     end
     object sbZoom100: TSpeedButton
@@ -257,6 +274,8 @@ object frmImageViewer: TfrmImageViewer
       Images = iButtons
       ImageIndex = 26
       ImageWidth = 20
+      ShowHint = True
+      ParentShowHint = False
       OnClick = sbZoom100Click
     end
     object lblZoom: TLabel

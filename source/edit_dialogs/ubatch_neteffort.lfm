@@ -11,7 +11,6 @@ object batchNetEffort: TbatchNetEffort
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.2'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -127,6 +126,7 @@ object batchNetEffort: TbatchNetEffort
         Width = 176
         Constraints.MinWidth = 176
         DecimalPlaces = 1
+        MaxValue = 9999
         TabOrder = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = eStartNumberKeyPress
@@ -138,6 +138,7 @@ object batchNetEffort: TbatchNetEffort
         Width = 176
         Constraints.MinWidth = 176
         DecimalPlaces = 1
+        MaxValue = 9999
         TabOrder = 1
         OnKeyDown = FormKeyDown
         OnKeyPress = eStartNumberKeyPress

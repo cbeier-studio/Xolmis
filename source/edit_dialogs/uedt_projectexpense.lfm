@@ -154,6 +154,7 @@ object edtProjectExpense: TedtProjectExpense
         Height = 23
         Top = 22
         Width = 175
+        MaxValue = 999999999
         TabOrder = 1
         OnKeyDown = FormKeyDown
         OnKeyPress = eItemKeyPress

@@ -260,7 +260,7 @@ object edtWeatherLog: TedtWeatherLog
           Height = 23
           Top = 22
           Width = 176
-          MaxValue = 500
+          MaxValue = 999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
@@ -328,7 +328,7 @@ object edtWeatherLog: TedtWeatherLog
           Height = 23
           Top = 22
           Width = 176
-          MaxValue = 3000
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
@@ -508,6 +508,7 @@ object edtWeatherLog: TedtWeatherLog
           Width = 176
           Constraints.MinWidth = 176
           DecimalPlaces = 1
+          MaxValue = 9999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress

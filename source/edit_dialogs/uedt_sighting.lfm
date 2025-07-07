@@ -335,6 +335,7 @@ object edtSighting: TedtSighting
           Height = 23
           Top = 22
           Width = 194
+          MaxValue = 999999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
@@ -345,6 +346,7 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 194
           DecimalPlaces = 1
+          MaxValue = 999999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
@@ -533,6 +535,7 @@ object edtSighting: TedtSighting
           Height = 23
           Top = 22
           Width = 124
+          MaxValue = 999999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
@@ -542,6 +545,7 @@ object edtSighting: TedtSighting
           Height = 23
           Top = 22
           Width = 124
+          MaxValue = 999999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
@@ -551,6 +555,7 @@ object edtSighting: TedtSighting
           Height = 23
           Top = 22
           Width = 124
+          MaxValue = 999999999
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress

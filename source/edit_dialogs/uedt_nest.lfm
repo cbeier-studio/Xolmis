@@ -619,7 +619,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
-          MaxValue = 1000
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -670,6 +670,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -680,6 +681,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -730,6 +732,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -740,6 +743,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -790,7 +794,7 @@ object edtNest: TedtNest
           Height = 23
           Top = 22
           Width = 174
-          MaxValue = 100
+          MaxValue = 999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1041,6 +1045,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1051,6 +1056,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1101,6 +1107,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1111,6 +1118,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1161,6 +1169,7 @@ object edtNest: TedtNest
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1170,6 +1179,7 @@ object edtNest: TedtNest
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1220,6 +1230,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1230,6 +1241,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1279,6 +1291,7 @@ object edtNest: TedtNest
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1288,6 +1301,7 @@ object edtNest: TedtNest
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1387,6 +1401,7 @@ object edtNest: TedtNest
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -1396,6 +1411,7 @@ object edtNest: TedtNest
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress

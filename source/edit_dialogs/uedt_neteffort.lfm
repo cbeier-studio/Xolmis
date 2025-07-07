@@ -287,6 +287,7 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 9999
           TabOrder = 0
           OnEditingDone = eNetLengthEditingDone
           OnKeyDown = FormKeyDown
@@ -298,6 +299,7 @@ object edtNetEffort: TedtNetEffort
           Top = 22
           Width = 175
           DecimalPlaces = 1
+          MaxValue = 9999
           TabOrder = 1
           OnEditingDone = eNetLengthEditingDone
           OnKeyDown = FormKeyDown

@@ -306,7 +306,7 @@ object edtVegetation: TedtVegetation
           Top = 22
           Width = 175
           Constraints.MinWidth = 150
-          MaxValue = 5000
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
@@ -557,7 +557,7 @@ object edtVegetation: TedtVegetation
           Top = 22
           Width = 175
           Constraints.MinWidth = 150
-          MaxValue = 5000
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
@@ -693,7 +693,7 @@ object edtVegetation: TedtVegetation
           Top = 22
           Width = 175
           Constraints.MinWidth = 150
-          MaxValue = 5000
+          MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress

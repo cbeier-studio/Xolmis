@@ -184,6 +184,7 @@ object edtEgg: TedtEgg
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnEditingDone = eEggSeqEditingDone
           OnKeyDown = FormKeyDown
@@ -515,6 +516,7 @@ object edtEgg: TedtEgg
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -575,6 +577,7 @@ object edtEgg: TedtEgg
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnEditingDone = eWidthEditingDone
           OnKeyDown = FormKeyDown
@@ -585,6 +588,7 @@ object edtEgg: TedtEgg
           Height = 23
           Top = 22
           Width = 175
+          MaxValue = 999999
           TabOrder = 1
           OnEditingDone = eWidthEditingDone
           OnKeyDown = FormKeyDown

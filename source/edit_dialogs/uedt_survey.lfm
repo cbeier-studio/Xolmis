@@ -10,7 +10,6 @@ object edtSurvey: TedtSurvey
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -465,6 +464,7 @@ object edtSurvey: TedtSurvey
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
@@ -675,6 +675,7 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
@@ -685,6 +686,7 @@ object edtSurvey: TedtSurvey
           Top = 22
           Width = 174
           DecimalPlaces = 1
+          MaxValue = 999999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
@@ -734,6 +736,7 @@ object edtSurvey: TedtSurvey
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
@@ -792,6 +795,7 @@ object edtSurvey: TedtSurvey
           Height = 23
           Top = 22
           Width = 174
+          MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
