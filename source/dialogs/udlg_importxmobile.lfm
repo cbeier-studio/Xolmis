@@ -2,12 +2,12 @@ object dlgImportXMobile: TdlgImportXMobile
   Left = 363
   Height = 474
   Top = 250
-  Width = 560
+  Width = 730
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'Import from Xolmis Mobile'
   ClientHeight = 474
-  ClientWidth = 560
+  ClientWidth = 730
   PopupMode = pmAuto
   Position = poScreenCenter
   OnDestroy = FormDestroy
@@ -17,7 +17,7 @@ object dlgImportXMobile: TdlgImportXMobile
     Left = 0
     Height = 2
     Top = 430
-    Width = 560
+    Width = 730
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -27,7 +27,7 @@ object dlgImportXMobile: TdlgImportXMobile
     Left = 0
     Height = 42
     Top = 432
-    Width = 560
+    Width = 730
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -38,11 +38,11 @@ object dlgImportXMobile: TdlgImportXMobile
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
-    ClientWidth = 560
+    ClientWidth = 730
     TabOrder = 0
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 414
+      Left = 584
       Height = 26
       Top = 8
       Width = 130
@@ -54,7 +54,7 @@ object dlgImportXMobile: TdlgImportXMobile
     end
     object sbNext: TButton
       AnchorSideLeft.Side = asrBottom
-      Left = 268
+      Left = 438
       Height = 26
       Top = 8
       Width = 130
@@ -79,12 +79,25 @@ object dlgImportXMobile: TdlgImportXMobile
       TabOrder = 2
       OnClick = btnHelpClick
     end
+    object sbPrevious: TButton
+      AnchorSideLeft.Side = asrBottom
+      Left = 300
+      Height = 26
+      Top = 8
+      Width = 130
+      Align = alRight
+      Caption = '&Previous'
+      Enabled = False
+      TabOrder = 3
+      Visible = False
+      OnClick = sbPreviousClick
+    end
   end
   object nbPages: TNotebook
     Left = 0
     Height = 430
     Top = 0
-    Width = 560
+    Width = 730
     PageIndex = 0
     Align = alTop
     TabOrder = 1
@@ -93,20 +106,20 @@ object dlgImportXMobile: TdlgImportXMobile
         Left = 0
         Height = 430
         Top = 0
-        Width = 560
+        Width = 730
         Align = alClient
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 430
-        ClientWidth = 560
+        ClientWidth = 730
         Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleSource: TPanel
           Left = 16
           Height = 28
           Top = 16
-          Width = 528
+          Width = 698
           Align = alTop
           Alignment = taLeftJustify
           AutoSize = True
@@ -114,7 +127,7 @@ object dlgImportXMobile: TdlgImportXMobile
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 528
+          ClientWidth = 698
           Font.Color = 13066075
           Font.Height = -20
           ParentBackground = False
@@ -133,7 +146,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 16
           Height = 15
           Top = 83
-          Width = 528
+          Width = 698
           Align = alTop
           BorderSpacing.Bottom = 4
           Caption = 'Source file: *'
@@ -144,9 +157,9 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 16
           Height = 23
           Top = 102
-          Width = 528
+          Width = 698
           Align = alTop
-          BorderSpacing.Bottom = 8
+          BorderSpacing.Bottom = 4
           ButtonHint = 'Select file'
           ButtonWidth = 24
           Images = iButtons
@@ -166,289 +179,125 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 16
           Height = 15
           Top = 52
-          Width = 528
+          Width = 698
           Align = alTop
           BorderSpacing.Bottom = 16
           Caption = 'Select a source file to import. Fields with asterisk are required.'
         end
-        object pObserverMackinnon: TPanel
+        object msgSourceFile: TLabel
           Left = 16
-          Height = 45
-          Top = 186
-          Width = 528
+          Height = 15
+          Top = 129
+          Width = 698
           Align = alTop
-          AutoSize = True
           BorderSpacing.Bottom = 8
-          BevelOuter = bvNone
-          ChildSizing.HorizontalSpacing = 16
-          ChildSizing.VerticalSpacing = 4
-          ChildSizing.EnlargeHorizontal = crsSameSize
-          ChildSizing.ShrinkHorizontal = crsSameSize
-          ChildSizing.Layout = cclLeftToRightThenTopToBottom
-          ChildSizing.ControlsPerLine = 2
-          ClientHeight = 45
-          ClientWidth = 528
-          TabOrder = 2
-          object lblObserver: TLabel
-            Left = 0
-            Height = 15
-            Top = 3
-            Width = 256
-            BorderSpacing.Top = 3
-            Caption = 'Observer: *'
-          end
-          object lblMackinnonListNumber: TLabel
-            Left = 272
-            Height = 15
-            Top = 3
-            Width = 256
-            BorderSpacing.Top = 3
-            Caption = 'Mackinnon list number:'
-            Enabled = False
-          end
-          object eObserver: TEditButton
-            Left = 0
-            Height = 23
-            Top = 22
-            Width = 256
-            ButtonWidth = 23
-            Images = iButtons
-            ImageIndex = 10
-            MaxLength = 0
-            NumGlyphs = 1
-            PasswordChar = #0
-            Spacing = 0
-            TabOrder = 1
-            OnButtonClick = eObserverButtonClick
-            OnChange = eObserverChange
-          end
-          object eMackinnonListNumber: TEdit
-            Left = 272
-            Height = 23
-            Top = 22
-            Width = 256
-            Enabled = False
-            NumbersOnly = True
-            TabOrder = 0
-            OnChange = eObserverChange
-          end
+          Caption = 'File not selected.'
+          Layout = tlCenter
+          ParentColor = False
         end
-        object pSurvey: TPanel
+      end
+    end
+    object pgMap: TPage
+      object pContentMap: TPanel
+        Left = 0
+        Height = 430
+        Top = 0
+        Width = 730
+        Align = alClient
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        ClientHeight = 430
+        ClientWidth = 730
+        Constraints.MinWidth = 560
+        TabOrder = 0
+        object pTitleMap: TPanel
           Left = 16
-          Height = 42
-          Top = 239
-          Width = 528
+          Height = 28
+          Top = 16
+          Width = 698
           Align = alTop
+          Alignment = taLeftJustify
           AutoSize = True
+          BorderSpacing.Top = 16
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
-          ChildSizing.HorizontalSpacing = 16
-          ChildSizing.VerticalSpacing = 4
-          ChildSizing.EnlargeHorizontal = crsSameSize
-          ChildSizing.ShrinkHorizontal = crsSameSize
-          ChildSizing.Layout = cclLeftToRightThenTopToBottom
-          ChildSizing.ControlsPerLine = 1
-          ClientHeight = 42
-          ClientWidth = 528
+          ClientHeight = 28
+          ClientWidth = 698
+          Font.Color = 13066075
+          Font.Height = -20
           ParentBackground = False
-          TabOrder = 3
-          Visible = False
-          object lblSurvey: TLabel
+          ParentFont = False
+          TabOrder = 0
+          object lblTitleMap: TLabel
             Left = 0
-            Height = 15
+            Height = 28
             Top = 0
-            Width = 528
-            BorderSpacing.Bottom = 3
-            Caption = 'Survey:'
-          end
-          object eSurvey: TEditButton
-            Left = 0
-            Height = 23
-            Top = 19
-            Width = 528
-            ButtonWidth = 23
-            Images = iButtons
-            ImageIndex = 10
-            MaxLength = 0
-            NumGlyphs = 1
-            PasswordChar = #0
-            Spacing = 0
-            TabOrder = 0
-            TextHint = 'Select a survey, if it already exists'
-            OnButtonClick = eSurveyButtonClick
-            OnChange = eSurveyChange
+            Width = 69
+            Align = alLeft
+            Caption = 'Records'
           end
         end
-        object pDataListTypes: TPanel
+        object lblMapInstruction: TLabel
           Left = 16
-          Height = 45
-          Top = 133
-          Width = 528
+          Height = 15
+          Top = 52
+          Width = 698
           Align = alTop
-          AutoSize = True
-          BorderSpacing.Bottom = 8
-          BevelOuter = bvNone
-          ChildSizing.HorizontalSpacing = 16
-          ChildSizing.VerticalSpacing = 4
-          ChildSizing.EnlargeHorizontal = crsSameSize
-          ChildSizing.ShrinkHorizontal = crsSameSize
-          ChildSizing.Layout = cclLeftToRightThenTopToBottom
-          ChildSizing.ControlsPerLine = 2
-          ClientHeight = 45
-          ClientWidth = 528
-          TabOrder = 4
-          object lblDataType: TLabel
-            Left = 0
-            Height = 15
-            Top = 3
-            Width = 256
-            BorderSpacing.Bottom = 4
-            Caption = 'Type of data:'
-            Layout = tlCenter
-            ParentColor = False
-          end
-          object lblListType: TLabel
-            Left = 272
-            Height = 15
-            Top = 3
-            Width = 256
-            BorderSpacing.Top = 3
-            Caption = 'Type of list:'
-            Visible = False
-          end
-          object txtDataType: TLabel
-            Left = 0
-            Height = 15
-            Top = 22
-            Width = 256
-            BorderSpacing.Bottom = 8
-            Caption = 'Inventory/List, Nest, Specimens (0)'
-            Font.Style = [fsBold]
-            Layout = tlCenter
-            ParentColor = False
-            ParentFont = False
-          end
-          object txtListType: TLabel
-            Left = 272
-            Height = 15
-            Top = 22
-            Width = 256
-            BorderSpacing.Top = 3
-            Caption = 'List type'
-            Font.Style = [fsBold]
-            ParentFont = False
-            Visible = False
-          end
+          BorderSpacing.Left = 16
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 16
+          Caption = 'Confirm the relations between the data to be imported and the database. '
+          WordWrap = True
         end
-        object pSurveyOptions: TPanel
+        object gridMap: TStringGrid
           Left = 16
-          Height = 41
-          Top = 289
-          Width = 528
-          Align = alTop
-          BevelOuter = bvNone
-          ChildSizing.TopBottomSpacing = 8
-          ChildSizing.HorizontalSpacing = 8
-          ClientHeight = 41
-          ClientWidth = 528
-          ParentBackground = False
-          TabOrder = 5
-          Visible = False
-          object btnCreateSurvey: TBitBtn
-            AnchorSideLeft.Control = pSurveyOptions
-            AnchorSideLeft.Side = asrCenter
-            AnchorSideTop.Control = pSurveyOptions
-            Left = 193
-            Height = 26
-            Top = 8
-            Width = 142
-            AutoSize = True
-            Caption = 'Create new survey'
-            DisabledImageIndex = 4
-            Enabled = False
-            Images = iButtons
-            ImageIndex = 3
-            TabOrder = 0
-            OnClick = btnCreateSurveyClick
-          end
-        end
-        object pNest: TPanel
-          Left = 16
-          Height = 42
-          Top = 330
-          Width = 528
-          Align = alTop
-          AutoSize = True
-          BorderSpacing.Bottom = 8
-          BevelOuter = bvNone
-          ChildSizing.HorizontalSpacing = 16
-          ChildSizing.VerticalSpacing = 4
-          ChildSizing.EnlargeHorizontal = crsSameSize
-          ChildSizing.ShrinkHorizontal = crsSameSize
-          ChildSizing.Layout = cclLeftToRightThenTopToBottom
-          ChildSizing.ControlsPerLine = 1
-          ClientHeight = 42
-          ClientWidth = 528
-          ParentBackground = False
-          TabOrder = 6
-          Visible = False
-          object lblNest: TLabel
-            Left = 0
-            Height = 15
-            Top = 0
-            Width = 528
-            BorderSpacing.Bottom = 3
-            Caption = 'Nest:'
-          end
-          object eNest: TEditButton
-            Left = 0
-            Height = 23
-            Top = 19
-            Width = 528
-            ButtonWidth = 23
-            Images = iButtons
-            ImageIndex = 10
-            MaxLength = 0
-            NumGlyphs = 1
-            PasswordChar = #0
-            Spacing = 0
-            TabOrder = 0
-            TextHint = 'Select a nest, if it already exists'
-            OnButtonClick = eNestButtonClick
-            OnChange = eNestChange
-          end
-        end
-        object pNestOptions: TPanel
-          Left = 16
-          Height = 41
-          Top = 380
-          Width = 528
-          Align = alTop
-          BevelOuter = bvNone
-          ChildSizing.TopBottomSpacing = 8
-          ChildSizing.HorizontalSpacing = 8
-          ClientHeight = 41
-          ClientWidth = 528
-          ParentBackground = False
-          TabOrder = 7
-          Visible = False
-          object btnCreateNest: TBitBtn
-            AnchorSideLeft.Control = pNestOptions
-            AnchorSideLeft.Side = asrCenter
-            AnchorSideTop.Control = pNestOptions
-            Left = 199
-            Height = 26
-            Top = 8
-            Width = 130
-            AutoSize = True
-            Caption = 'Create new nest'
-            DisabledImageIndex = 4
-            Enabled = False
-            Images = iButtons
-            ImageIndex = 3
-            TabOrder = 0
-            OnClick = btnCreateNestClick
-          end
+          Height = 331
+          Top = 83
+          Width = 698
+          Align = alClient
+          AutoFillColumns = True
+          Columns = <          
+            item
+              ButtonStyle = cbsCheckboxColumn
+              SizePriority = 0
+              Title.Caption = 'Import'
+              Width = 48
+            end          
+            item
+              ReadOnly = True
+              SizePriority = 0
+              Title.Caption = 'ID'
+              Width = 150
+            end          
+            item
+              ButtonStyle = cbsEllipsis
+              SizePriority = 0
+              Title.Caption = 'Observer'
+              Width = 64
+            end          
+            item
+              SizePriority = 0
+              Title.Caption = 'List nr.'
+              Width = 64
+            end          
+            item
+              ButtonStyle = cbsEllipsis
+              Title.Caption = 'Record'
+              Width = 368
+            end>
+          FixedCols = 0
+          RowCount = 2
+          TabOrder = 1
+          OnEditButtonClick = gridMapEditButtonClick
+          ColWidths = (
+            48
+            150
+            64
+            64
+            368
+          )
         end
       end
     end
@@ -457,21 +306,21 @@ object dlgImportXMobile: TdlgImportXMobile
         Left = 0
         Height = 430
         Top = 0
-        Width = 560
+        Width = 730
         Align = alClient
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 430
-        ClientWidth = 560
+        ClientWidth = 730
         Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleProgress: TPanel
           Left = 16
           Height = 28
           Top = 16
-          Width = 528
+          Width = 698
           Align = alTop
           Alignment = taLeftJustify
           AutoSize = True
@@ -479,7 +328,7 @@ object dlgImportXMobile: TdlgImportXMobile
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 528
+          ClientWidth = 698
           Font.Color = 13066075
           Font.Height = -20
           ParentBackground = False
@@ -498,7 +347,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 16
           Height = 15
           Top = 52
-          Width = 528
+          Width = 698
           Align = alTop
           BorderSpacing.Left = 16
           BorderSpacing.Right = 16
@@ -510,7 +359,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 16
           Height = 13
           Top = 83
-          Width = 528
+          Width = 698
           Align = alTop
           BorderSpacing.Bottom = 8
           TabOrder = 1
@@ -519,7 +368,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 16
           Height = 310
           Top = 104
-          Width = 528
+          Width = 698
           Align = alClient
           Font.Name = 'Fira Code'
           Lines.Strings = (
@@ -537,7 +386,7 @@ object dlgImportXMobile: TdlgImportXMobile
         Left = 0
         Height = 430
         Top = 0
-        Width = 560
+        Width = 730
         Align = alClient
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
@@ -579,7 +428,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 17
           Height = 41
           Top = 17
-          Width = 526
+          Width = 696
           Align = alTop
           Alignment = taCenter
           BorderSpacing.Top = 16
@@ -594,7 +443,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 17
           Height = 15
           Top = 66
-          Width = 526
+          Width = 696
           Align = alTop
           Alignment = taCenter
           BorderSpacing.Bottom = 16
@@ -606,7 +455,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 17
           Height = 280
           Top = 97
-          Width = 526
+          Width = 696
           Align = alClient
           BorderSpacing.Bottom = 8
           Center = True
@@ -616,7 +465,7 @@ object dlgImportXMobile: TdlgImportXMobile
           Left = 17
           Height = 28
           Top = 385
-          Width = 526
+          Width = 696
           Align = alBottom
           AutoSize = True
           ChildSizing.HorizontalSpacing = 8
@@ -673,7 +522,7 @@ object dlgImportXMobile: TdlgImportXMobile
           object sbSaveLog: TBitBtn
             AnchorSideRight.Control = pRetry
             AnchorSideRight.Side = asrBottom
-            Left = 425
+            Left = 595
             Height = 26
             Top = 1
             Width = 100
@@ -693,7 +542,7 @@ object dlgImportXMobile: TdlgImportXMobile
   object iButtons: TImageList
     Scaled = True
     Left = 400
-    Top = 16
+    Top = 8
     Bitmap = {
       4C7A0C0000001000000010000000AF0800000000000078DAED9A7B4C96551CC7
       05BC34DB6C15CDB29B9ACE95F4879B86D14C5B57F40F6BB9E1D202C42EEBB6FA
@@ -990,7 +839,7 @@ object dlgImportXMobile: TdlgImportXMobile
   object iButtonsDark: TImageList
     Scaled = True
     Left = 456
-    Top = 16
+    Top = 8
     Bitmap = {
       4C7A0C0000001000000010000000CE0700000000000078DAED9A7B5055451CC7
       057CF55013E931E1ABF20F4B10AD01034140B00B98A8230EF214536308CB19E4
@@ -1241,13 +1090,13 @@ object dlgImportXMobile: TdlgImportXMobile
     Filter = 'Xolmis Mobile JSON|*.json|All files|*.*'
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 320
-    Top = 16
+    Top = 8
   end
   object imgFinishedDark: TImageList
     Height = 96
     Width = 96
     Left = 456
-    Top = 72
+    Top = 96
     Bitmap = {
       4C7A0200000060000000600000004F0900000000000078DAED9D7B5016551887
       3FEFA8696AA663DA38D63401A2E26D4C0125142F602022E808068A9714FEF032
@@ -1331,7 +1180,7 @@ object dlgImportXMobile: TdlgImportXMobile
     Height = 96
     Width = 96
     Left = 400
-    Top = 72
+    Top = 96
     Bitmap = {
       4C7A020000006000000060000000D50800000000000078DAED9D6B6C54451480
       B72545014DA144DB1FDB4742EA9F92D836408110A0DA120D3F88620294441A4D
@@ -1412,7 +1261,7 @@ object dlgImportXMobile: TdlgImportXMobile
     DefaultExt = '.txt'
     Filter = 'Text file (.txt)|*.txt'
     Options = [ofOverwritePrompt, ofEnableSizing, ofViewDetail]
-    Left = 518
-    Top = 16
+    Left = 520
+    Top = 8
   end
 end

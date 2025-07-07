@@ -456,13 +456,34 @@ type
   end;
 
 type
+  TSpecimenType = (
+    sptEmpty = -1,
+    sptWholeCarcass,
+    sptPartialCarcass,
+    sptNest,
+    sptBones,
+    sptEgg,
+    sptParasites,
+    sptFeathers,
+    sptBlood,
+    sptClaw,
+    sptSwab,
+    sptTissues,
+    sptFeces,
+    sptRegurgite
+  );
+
+const
+  SpecimenTypeStr: array [0..12] of String = ('WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');
+
+type
 
   { TSpecimen }
 
   TSpecimen = class(TXolmisRecord)
   protected
     FFieldNumber: String;
-    FSampleType: String;
+    FSampleType: TSpecimenType;
     FFullName: String;
     FTaxonId: Integer;
     FIndividualId: Integer;
@@ -491,7 +512,7 @@ type
     function ToJSON: String;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
-    property SampleType: String read FSampleType write FSampleType;
+    property SampleType: TSpecimenType read FSampleType write FSampleType;
     property FullName: String read FFullName write FFullName;
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
@@ -1068,7 +1089,7 @@ procedure TSpecimen.Clear;
 begin
   inherited Clear;
   FFieldNumber := EmptyStr;
-  FSampleType := EmptyStr;
+  FSampleType := sptEmpty;
   FFullName := EmptyStr;
   FTaxonId := 0;
   FIndividualId := 0;
@@ -1193,7 +1214,23 @@ begin
   begin
     FId := FieldByName('specimen_id').AsInteger;
     FFieldNumber := FieldByName('field_number').AsString;
-    FSampleType := FieldByName('sample_type').AsString;
+    case FieldByName('sample_type').AsString of
+      'WS': FSampleType := sptWholeCarcass;
+      'PS': FSampleType := sptPartialCarcass;
+      'N':  FSampleType := sptNest;
+      'B':  FSampleType := sptBones;
+      'E':  FSampleType := sptEgg;
+      'P':  FSampleType := sptParasites;
+      'F':  FSampleType := sptFeathers;
+      'BS': FSampleType := sptBlood;
+      'C':  FSampleType := sptClaw;
+      'S':  FSampleType := sptSwab;
+      'T':  FSampleType := sptTissues;
+      'D':  FSampleType := sptFeces;
+      'R':  FSampleType := sptRegurgite;
+    else
+      FSampleType := sptEmpty;
+    end;
     FFullName := FieldByName('full_name').AsString;
     FTaxonId := FieldByName('taxon_id').AsInteger;
     FIndividualId := FieldByName('individual_id').AsInteger;
@@ -1279,7 +1316,7 @@ begin
         ':user_inserted, ' +
         'datetime(''now'',''subsec''))');
       ParamByName('field_number').AsString := FFieldNumber;
-      ParamByName('sample_type').AsString := FSampleType;
+      ParamByName('sample_type').AsString := SpecimenTypeStr[Ord(FSampleType)];
       ParamByName('collection_year').AsInteger := FCollectionYear;
       ParamByName('collection_month').AsInteger := FCollectionMonth;
       ParamByName('collection_day').AsInteger := FCollectionDay;
@@ -1331,7 +1368,7 @@ begin
   JSONObject := TJSONObject.Create;
   try
     JSONObject.Add('Field number', FFieldNumber);
-    JSONObject.Add('Sample type', FSampleType);
+    JSONObject.Add('Sample type', SpecimenTypeStr[Ord(FSampleType)]);
     JSONObject.Add('Name', FFullName);
     JSONObject.Add('Taxon', FTaxonId);
     JSONObject.Add('Individual', FIndividualId);
@@ -1392,7 +1429,7 @@ begin
       Add('WHERE (specimen_id = :specimen_id)');
 
       ParamByName('field_number').AsString := FFieldNumber;
-      ParamByName('sample_type').AsString := FSampleType;
+      ParamByName('sample_type').AsString := SpecimenTypeStr[Ord(FSampleType)];
       ParamByName('collection_year').AsInteger := FCollectionYear;
       ParamByName('collection_month').AsInteger := FCollectionMonth;
       ParamByName('collection_day').AsInteger := FCollectionDay;

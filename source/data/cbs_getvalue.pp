@@ -21,7 +21,8 @@ unit cbs_getvalue;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, cbs_taxonomy, cbs_gis, cbs_sampling;
+  Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, StrUtils,
+  cbs_taxonomy, cbs_gis, cbs_sampling;
 
   function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
   function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): String;
@@ -29,6 +30,7 @@ uses
   function GetFieldValue(aTable, aField, aKeyField: String; aKeyValue: Integer): Variant;
   function GetLatLong(aTable, aLongField, aLatField, aNameField, aKeyField: String;
     aKeyValue: Integer; var aMapPoint: TMapPoint): Boolean;
+  function GetSiteKey(aNameValue: String): Integer;
   function GetRankFromSite(aSiteKey: Integer): String;
   function GetRankFromTaxon(aTaxonKey: Integer): Integer;
   function GetRank(const aKey: Integer): TZooRank;
@@ -207,6 +209,44 @@ begin
         aMapPoint.Y := FieldByName(aLatField).AsFloat;
         aMapPoint.Name := FieldByName(aNameField).AsString;
         Result := True;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+end;
+
+function GetSiteKey(aNameValue: String): Integer;
+var
+  Qry: TSQLQuery;
+  S: String;
+begin
+  Result := 0;
+  S := EmptyStr;
+
+  if aNameValue <> EmptyStr then
+  begin
+    Qry := TSQLQuery.Create(DMM.sqlCon);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Clear;
+
+      if (Pos(',', aNameValue) > 0) or (Pos(';', aNameValue) > 0) then
+        S := ExtractDelimited(1, aNameValue, [',', ';'])
+      else
+        S := aNameValue;
+
+      Add('SELECT site_id FROM gazetteer');
+      Add('WHERE (site_name = :aname)');
+      Add('   OR (site_acronym = :aname)');
+      ParamByName('ANAME').AsString := S;
+      // GravaLogSQL(SQL);
+      Open;
+      if (RecordCount > 0) then
+      begin
+        Result := FieldByName('site_id').AsInteger;
       end;
       Close;
     finally

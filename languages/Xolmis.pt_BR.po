@@ -802,6 +802,7 @@ msgid "How was sexed"
 msgstr "Como foi sexado"
 
 #: cbs_datacolumns.rscid
+msgctxt "cbs_datacolumns.rscid"
 msgid "ID"
 msgstr "ID"
 
@@ -4337,8 +4338,13 @@ msgstr "Lista de Mackinnon"
 
 #: cbs_locale.rsmobilenestcreated
 #, object-pascal-format
-msgid "Nest created: %d"
-msgstr "Ninho criado: %d"
+msgid "Nest created: %d - %s"
+msgstr "Ninho criado: %d - %s"
+
+#: cbs_locale.rsmobilenestupdated
+#, object-pascal-format
+msgid "Nest updated: %d - %s"
+msgstr "Ninho atualizado: %d - %s"
 
 #: cbs_locale.rsmobilepointcount
 msgid "Point Count"
@@ -4362,15 +4368,30 @@ msgstr "Revisão de ninho já registrada: %s"
 msgid "Species %s already recorded!"
 msgstr "Espécie %s já registrada!"
 
+#: cbs_locale.rsmobilespecimencreated
+#, object-pascal-format
+msgid "Specimen created: %d - %s"
+msgstr "Espécime criado: %d - %s"
+
 #: cbs_locale.rsmobilespecimenexists
 #, object-pascal-format
 msgid "Specimen already recorded: %s"
 msgstr "Espécime já registrado: %s"
 
+#: cbs_locale.rsmobilespecimenupdated
+#, object-pascal-format
+msgid "Specimen updated: %d - %s"
+msgstr "Espécime atualizado: %d - %s"
+
 #: cbs_locale.rsmobilesurveycreated
 #, object-pascal-format
-msgid "Survey created: %d"
-msgstr "Amostragem criada: %d"
+msgid "Survey created: %d - %s"
+msgstr "Amostragem criada: %d - %s"
+
+#: cbs_locale.rsmobilesurveyupdated
+#, object-pascal-format
+msgid "Survey updated: %d - %s"
+msgstr "Amostragem atualizada: %d - %s"
 
 #: cbs_locale.rsmobiletransectioncount
 msgid "Transection Count"
@@ -6104,7 +6125,7 @@ msgstr "Abrir calendário"
 #: tbatchbands.eorderdate.texthint
 msgctxt "tbatchbands.eorderdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tbatchbands.eproject.buttonhint
 msgctxt "tbatchbands.eproject.buttonhint"
@@ -6119,7 +6140,7 @@ msgstr "Abrir calendário"
 #: tbatchbands.ereceiptdate.texthint
 msgctxt "tbatchbands.ereceiptdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tbatchbands.erequester.buttonhint
 msgid "Find requester"
@@ -7898,14 +7919,6 @@ msgctxt "tdlgimportnests.sbrun.caption"
 msgid "Import"
 msgstr "Importar"
 
-#: tdlgimportxmobile.btncreatenest.caption
-msgid "Create new nest"
-msgstr "Criar novo ninho"
-
-#: tdlgimportxmobile.btncreatesurvey.caption
-msgid "Create new survey"
-msgstr "Criar nova amostragem"
-
 #: tdlgimportxmobile.btnhelp.caption
 msgctxt "tdlgimportxmobile.btnhelp.caption"
 msgid "&Help"
@@ -7914,10 +7927,6 @@ msgstr "A&juda"
 #: tdlgimportxmobile.caption
 msgid "Import from Xolmis Mobile"
 msgstr "Importar do Xolmis Mobile"
-
-#: tdlgimportxmobile.enest.texthint
-msgid "Select a nest, if it already exists"
-msgstr "Selecione um ninho, se já existir"
 
 #: tdlgimportxmobile.esourcefile.buttonhint
 msgctxt "tdlgimportxmobile.esourcefile.buttonhint"
@@ -7929,32 +7938,32 @@ msgctxt "tdlgimportxmobile.esourcefile.texthint"
 msgid "Select a file..."
 msgstr "Selecione um arquivo..."
 
-#: tdlgimportxmobile.esurvey.texthint
-msgid "Select a survey, if it already exists"
-msgstr "Selecione uma amostragem, se já existir"
+#: tdlgimportxmobile.gridmap.columns[0].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[0].title.caption"
+msgid "Import"
+msgstr "Importar"
 
-#: tdlgimportxmobile.lbldatatype.caption
-msgid "Type of data:"
-msgstr "Tipo de dados:"
+#: tdlgimportxmobile.gridmap.columns[1].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[1].title.caption"
+msgid "ID"
+msgstr "ID"
 
-#: tdlgimportxmobile.lbllisttype.caption
-msgid "Type of list:"
-msgstr "Tipo de lista:"
+#: tdlgimportxmobile.gridmap.columns[2].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[2].title.caption"
+msgid "Observer"
+msgstr "Observador"
 
-#: tdlgimportxmobile.lblmackinnonlistnumber.caption
-msgctxt "tdlgimportxmobile.lblmackinnonlistnumber.caption"
-msgid "Mackinnon list number:"
-msgstr "Nº da lista de Mackinnon:"
+#: tdlgimportxmobile.gridmap.columns[3].title.caption
+msgid "List nr."
+msgstr "Lista nº"
 
-#: tdlgimportxmobile.lblnest.caption
-msgctxt "tdlgimportxmobile.lblnest.caption"
-msgid "Nest:"
-msgstr "Ninho:"
+#: tdlgimportxmobile.gridmap.columns[4].title.caption
+msgid "Record"
+msgstr "Registro"
 
-#: tdlgimportxmobile.lblobserver.caption
-msgctxt "tdlgimportxmobile.lblobserver.caption"
-msgid "Observer: *"
-msgstr "Observador: *"
+#: tdlgimportxmobile.lblmapinstruction.caption
+msgid "Confirm the relations between the data to be imported and the database. "
+msgstr "Confirme as relações entre os dados a serem importados e o banco de dados."
 
 #: tdlgimportxmobile.lblprogressinstruction.caption
 msgid "Please wait while importing the data. "
@@ -7974,15 +7983,14 @@ msgctxt "tdlgimportxmobile.lblsubtitleimportfinished.caption"
 msgid "The selected file(s) were sucessfully imported."
 msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
 
-#: tdlgimportxmobile.lblsurvey.caption
-msgctxt "tdlgimportxmobile.lblsurvey.caption"
-msgid "Survey:"
-msgstr "Amostragem:"
-
 #: tdlgimportxmobile.lbltitleimportfinished.caption
 msgctxt "tdlgimportxmobile.lbltitleimportfinished.caption"
 msgid "Finished importing!"
 msgstr "Importação finalizada!"
+
+#: tdlgimportxmobile.lbltitlemap.caption
+msgid "Records"
+msgstr "Registros"
 
 #: tdlgimportxmobile.lbltitleprogress.caption
 msgctxt "tdlgimportxmobile.lbltitleprogress.caption"
@@ -7993,6 +8001,10 @@ msgstr "Importando"
 msgctxt "tdlgimportxmobile.lbltitlesource.caption"
 msgid "Source"
 msgstr "Origem"
+
+#: tdlgimportxmobile.msgsourcefile.caption
+msgid "File not selected."
+msgstr "Arquivo não selecionado."
 
 #: tdlgimportxmobile.opendlg.title
 msgctxt "tdlgimportxmobile.opendlg.title"
@@ -8013,6 +8025,11 @@ msgstr "&Cancelar"
 msgctxt "tdlgimportxmobile.sbnext.caption"
 msgid "&Next"
 msgstr "&Seguinte"
+
+#: tdlgimportxmobile.sbprevious.caption
+msgctxt "tdlgimportxmobile.sbprevious.caption"
+msgid "&Previous"
+msgstr "&Anterior"
 
 #: tdlgimportxmobile.sbretry.caption
 msgctxt "tdlgimportxmobile.sbretry.caption"
@@ -8732,7 +8749,7 @@ msgstr "Abrir calendário"
 #: tedtcapture.ecapturedate.texthint
 msgctxt "tedtcapture.ecapturedate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtcapture.ecapturetime.texthint
 msgctxt "tedtcapture.ecapturetime.texthint"
@@ -9357,11 +9374,6 @@ msgctxt "tedtexpedition.eenddate.texthint"
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/AAAA"
 
-#: tedtexpedition.elocality.buttonhint
-msgctxt "tedtexpedition.elocality.buttonhint"
-msgid "Find locality"
-msgstr "Procurar localidade"
-
 #: tedtexpedition.eproject.buttonhint
 msgctxt "tedtexpedition.eproject.buttonhint"
 msgid "Find project"
@@ -9385,11 +9397,6 @@ msgstr "Descrição:"
 #: tedtexpedition.lblenddate.caption
 msgid "End date: *"
 msgstr "Data final: *"
-
-#: tedtexpedition.lbllocality.caption
-msgctxt "tedtexpedition.lbllocality.caption"
-msgid "Locality:"
-msgstr "Localidade:"
 
 #: tedtexpedition.lblname.caption
 msgctxt "tedtexpedition.lblname.caption"
@@ -9715,7 +9722,7 @@ msgstr "MM"
 #: tedtindividual.ebirthyear.texthint
 msgctxt "tedtindividual.ebirthyear.texthint"
 msgid "YYYY"
-msgstr "YYYY"
+msgstr "AAAA"
 
 #: tedtindividual.edeathday.texthint
 msgctxt "tedtindividual.edeathday.texthint"
@@ -9730,7 +9737,7 @@ msgstr "MM"
 #: tedtindividual.edeathyear.texthint
 msgctxt "tedtindividual.edeathyear.texthint"
 msgid "YYYY"
-msgstr "YYYY"
+msgstr "AAAA"
 
 #: tedtindividual.edoubleband.buttonhint
 msgctxt "tedtindividual.edoubleband.buttonhint"
@@ -10024,7 +10031,7 @@ msgstr "Abrir calendário"
 #: tedtmolt.edate.texthint
 msgctxt "tedtmolt.edate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtmolt.esurvey.buttonhint
 msgctxt "tedtmolt.esurvey.buttonhint"
@@ -10119,7 +10126,7 @@ msgstr "Abrir calendário"
 #: tedtnest.efounddate.texthint
 msgctxt "tedtnest.efounddate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtnest.elastdate.buttonhint
 msgctxt "tedtnest.elastdate.buttonhint"
@@ -10129,7 +10136,7 @@ msgstr "Abrir calendário"
 #: tedtnest.elastdate.texthint
 msgctxt "tedtnest.elastdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtnest.elatitude.buttonhint
 msgctxt "tedtnest.elatitude.buttonhint"
@@ -10448,12 +10455,12 @@ msgstr "Status: *"
 #: tedtnestrevision.lblnidoparasite.caption
 msgctxt "tedtnestrevision.lblnidoparasite.caption"
 msgid "Nidoparasite taxon:"
-msgstr "Táxon do nidoparasite:"
+msgstr "Táxon do nidoparasita:"
 
 #: tedtnestrevision.lblnidoparasiteeggstally.caption
 msgctxt "tedtnestrevision.lblnidoparasiteeggstally.caption"
 msgid "Number of nidoparasite eggs:"
-msgstr "Nº de ovos do nidoparasite:"
+msgstr "Nº de ovos do nidoparasita:"
 
 #: tedtnestrevision.lblnidoparasitenestlingstally.caption
 msgctxt "tedtnestrevision.lblnidoparasitenestlingstally.caption"
@@ -10501,7 +10508,7 @@ msgstr "Abrir calendário"
 #: tedtneteffort.edate.texthint
 msgctxt "tedtneteffort.edate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtneteffort.elatitude.buttonhint
 msgctxt "tedtneteffort.elatitude.buttonhint"
@@ -10715,12 +10722,12 @@ msgstr "Salvar"
 #: tedtpermit.edispatchdate.texthint
 msgctxt "tedtpermit.edispatchdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtpermit.eexpiredate.texthint
 msgctxt "tedtpermit.eexpiredate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtpermit.eproject.buttonhint
 msgctxt "tedtpermit.eproject.buttonhint"
@@ -10781,7 +10788,7 @@ msgstr "Abrir calendário"
 #: tedtperson.ebirthdate.texthint
 msgctxt "tedtperson.ebirthdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtperson.ecountry.buttonhint
 msgctxt "tedtperson.ecountry.buttonhint"
@@ -10796,7 +10803,7 @@ msgstr "Abrir calendário"
 #: tedtperson.edeathdate.texthint
 msgctxt "tedtperson.edeathdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtperson.einstitution.buttonhint
 msgctxt "tedtperson.einstitution.buttonhint"
@@ -10990,7 +10997,7 @@ msgstr "Abrir calendário"
 #: tedtproject.eenddate.texthint
 msgctxt "tedtproject.eenddate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtproject.estartdate.buttonhint
 msgctxt "tedtproject.estartdate.buttonhint"
@@ -11000,7 +11007,7 @@ msgstr "Abrir calendário"
 #: tedtproject.estartdate.texthint
 msgctxt "tedtproject.estartdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtproject.lblabstract.caption
 msgid "Abstract:"
@@ -11280,7 +11287,7 @@ msgstr "Abrir calendário"
 #: tedtrecverification.edate.texthint
 msgctxt "tedtrecverification.edate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtrecverification.eresearcher.buttonhint
 msgctxt "tedtrecverification.eresearcher.buttonhint"
@@ -11325,7 +11332,7 @@ msgstr "Abrir calendário"
 #: tedtsampleprep.epreparationdate.texthint
 msgctxt "tedtsampleprep.epreparationdate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtsampleprep.epreparer.buttonhint
 msgid "Find preparer"
@@ -11476,7 +11483,7 @@ msgstr "Abrir calendário"
 #: tedtsighting.edate.texthint
 msgctxt "tedtsighting.edate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtsighting.eindividual.buttonhint
 msgctxt "tedtsighting.eindividual.buttonhint"
@@ -11729,7 +11736,7 @@ msgstr "MM"
 #: tedtspecimen.ecollectionyear.texthint
 msgctxt "tedtspecimen.ecollectionyear.texthint"
 msgid "YYYY"
-msgstr "YYYY"
+msgstr "AAAA"
 
 #: tedtspecimen.eegg.buttonhint
 msgctxt "tedtspecimen.eegg.buttonhint"
@@ -11839,7 +11846,7 @@ msgstr "Abrir calendário"
 #: tedtsurvey.edate.texthint
 msgctxt "tedtsurvey.edate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtsurvey.eendlatitude.buttonhint
 msgctxt "tedtsurvey.eendlatitude.buttonhint"
@@ -12211,7 +12218,7 @@ msgstr "Abrir calendário"
 #: tedtweatherlog.esampledate.texthint
 msgctxt "tedtweatherlog.esampledate.texthint"
 msgid "DD/MM/YYYY"
-msgstr "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
 
 #: tedtweatherlog.esampletime.texthint
 msgctxt "tedtweatherlog.esampletime.texthint"
@@ -12556,18 +12563,14 @@ msgid "Visible"
 msgstr "Visível"
 
 #: tfrmcustomgrid.gridcolumns.columns[1].title.caption
-#, fuzzy
-#| msgid "Field"
 msgctxt "tfrmcustomgrid.gridcolumns.columns[1].title.caption"
 msgid "Field name"
-msgstr "Campo"
+msgstr "Nome do campo"
 
 #: tfrmcustomgrid.gridcolumns.columns[2].title.caption
-#, fuzzy
-#| msgid "Size"
 msgctxt "tfrmcustomgrid.gridcolumns.columns[2].title.caption"
 msgid "Field"
-msgstr "Tamanho"
+msgstr "Campo"
 
 #: tfrmcustomgrid.griddocs.columns[0].title.caption
 msgctxt "tfrmcustomgrid.griddocs.columns[0].title.caption"
@@ -13932,6 +13935,11 @@ msgctxt "tfrmcustomgrid.sbpriorrecord.hint"
 msgid "Previous record"
 msgstr "Registro anterior"
 
+#: tfrmcustomgrid.sbquickentry.hint
+msgctxt "tfrmcustomgrid.sbquickentry.hint"
+msgid "Quick Entry"
+msgstr "Quick Entry"
+
 #: tfrmcustomgrid.sbrecordhistory.hint
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
@@ -14344,6 +14352,7 @@ msgid "Copy"
 msgstr "Copiar"
 
 #: tfrmgeoconverter.sbopenfile.caption
+msgctxt "tfrmgeoconverter.sbopenfile.caption"
 msgid "Open"
 msgstr "Abrir"
 
@@ -15164,6 +15173,39 @@ msgctxt "tfrmprintpreview.tbzoom.hint"
 msgid "Zoom"
 msgstr "Zoom"
 
+#: tfrmquickentry.caption
+msgctxt "tfrmquickentry.caption"
+msgid "Quick Entry"
+msgstr "Quick Entry"
+
+#: tfrmquickentry.sbaddrows.caption
+msgid "Add rows"
+msgstr "Adicionar linhas"
+
+#: tfrmquickentry.sbclose.caption
+msgctxt "tfrmquickentry.sbclose.caption"
+msgid "Close"
+msgstr "Fechar"
+
+#: tfrmquickentry.sbdelrows.caption
+msgid "Delete rows"
+msgstr "Apagar linhas"
+
+#: tfrmquickentry.sbimport.caption
+msgctxt "tfrmquickentry.sbimport.caption"
+msgid "Import"
+msgstr "Importar"
+
+#: tfrmquickentry.sbopen.caption
+msgctxt "tfrmquickentry.sbopen.caption"
+msgid "Open"
+msgstr "Abrir"
+
+#: tfrmquickentry.sbsaveas.caption
+msgctxt "tfrmquickentry.sbsaveas.caption"
+msgid "Save"
+msgstr "Salvar"
+
 #: tfrmtaxa.caption
 msgctxt "tfrmtaxa.caption"
 msgid "Taxa"
@@ -15446,4 +15488,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

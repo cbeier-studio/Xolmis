@@ -1,3 +1,19 @@
+{ Xolmis Mobile import dialog
+
+  Copyright (C) 2024 Christian Beier <hello@christianbeier.studio>
+
+  This source is free software; you can redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation; either version 3 of the License, or (at your
+  option) any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  You should have received a copy of the GNU General Public License along with this program.  If not,
+  see <https://www.gnu.org/licenses/>.
+}
+
 unit udlg_importxmobile;
 
 {$mode ObjFPC}{$H+}
@@ -6,42 +22,33 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
-  StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, StrUtils,
-  cbs_import, cbs_sampling, cbs_breeding;
+  StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, Grids, StrUtils,
+  cbs_import, cbs_sampling, cbs_breeding, cbs_xmobile;
 
 type
 
   { TdlgImportXMobile }
 
   TdlgImportXMobile = class(TForm)
-    btnCreateNest: TBitBtn;
     btnHelp: TBitBtn;
-    btnCreateSurvey: TBitBtn;
-    eSurvey: TEditButton;
-    eMackinnonListNumber: TEdit;
-    eObserver: TEditButton;
     eSourceFile: TEditButton;
-    eNest: TEditButton;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoImportFinished: TImage;
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
-    lblDataType: TLabel;
-    lblMackinnonListNumber: TLabel;
-    lblNest: TLabel;
+    lblMapInstruction: TLabel;
+    msgSourceFile: TLabel;
+    lblTitleMap: TLabel;
     mProgress: TMemo;
+    pContentMap: TPanel;
+    pgMap: TPage;
     PBar: TProgressBar;
-    pSurveyOptions: TPanel;
-    pNestOptions: TPanel;
-    pNest: TPanel;
+    pTitleMap: TPanel;
     SaveDlg: TSaveDialog;
+    sbPrevious: TButton;
     sbSaveLog: TBitBtn;
-    txtListType: TLabel;
-    lblListType: TLabel;
-    pDataListTypes: TPanel;
-    lblSurvey: TLabel;
-    lblObserver: TLabel;
+    gridMap: TStringGrid;
     lblSubtitleImportFinished: TLabel;
     lblProgressInstruction: TLabel;
     lblSourceFile: TLabel;
@@ -59,31 +66,22 @@ type
     pgProgress: TPage;
     pgFinished: TPage;
     pgSource: TPage;
-    pSurvey: TPanel;
     pRetry: TBCPanel;
-    pObserverMackinnon: TPanel;
     pTitleProgress: TPanel;
     pTitleSource: TPanel;
     sbCancel: TButton;
     sbNext: TButton;
     sbRetry: TBitBtn;
-    txtDataType: TLabel;
-    procedure btnCreateNestClick(Sender: TObject);
-    procedure btnCreateSurveyClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
-    procedure eNestButtonClick(Sender: TObject);
-    procedure eNestChange(Sender: TObject);
-    procedure eObserverButtonClick(Sender: TObject);
-    procedure eObserverChange(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
-    procedure eSurveyButtonClick(Sender: TObject);
-    procedure eSurveyChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure gridMapEditButtonClick(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
+    procedure sbPreviousClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbSaveLogClick(Sender: TObject);
   private
@@ -91,6 +89,9 @@ type
     FObserverKey, FSurveyKey, FNestKey: Integer;
     FContentType: TMobileContentType;
     FInventoryType: TMobileInventoryType;
+    FInventoryList: TMobileInventoryList;
+    FNestList: TMobileNestList;
+    FSpecimenList: TMobileSpecimenList;
     FSurvey: TSurvey;
     FNest: TNest;
     JSON: TFileStream;
@@ -103,18 +104,24 @@ type
     function AddSurvey: Integer;
     function AddNest: Integer;
     function GetContentType: TMobileContentType;
+    function GetNestFromMobile(aNest: TMobileNest): Integer;
+    function GetSpecimenFromMobile(aSpecimen: TMobileSpecimen): Integer;
+    function GetSurveyFromInventory(aInventory: TMobileInventory): Integer;
     function IsRequiredFilledSource: Boolean;
-    function LoadJSON(aJSONFile: String): Boolean;
+    function OpenJSON(aJSONFile: String): Boolean;
+    function LoadFromJSON(aJSON: TJSONData): Boolean;
+    function LoadInventoriesFromJSON(aJSON: TJSONData): Boolean;
+    function LoadNestsFromJSON(aJSON: TJSONData): Boolean;
+    function LoadSpecimensFromJSON(aJSON: TJSONData): Boolean;
     procedure ImportInventories;
-    procedure ImportInventory;
-    procedure ImportSpeciesList;
-    procedure ImportVegetationList;
-    procedure ImportWeatherList;
+    procedure ImportSpecies(Inventory: TMobileInventory);
+    procedure ImportVegetation(Inventory: TMobileInventory);
+    procedure ImportWeather(Inventory: TMobileInventory);
     procedure ImportNests;
-    procedure ImportNest;
-    procedure ImportRevisionList;
-    procedure ImportEggList;
+    procedure ImportRevisions(Nest: TMobileNest);
+    procedure ImportEggs(Nest: TMobileNest);
     procedure ImportSpecimens;
+    procedure LoadMapGrid;
   public
 
   end;
@@ -126,7 +133,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_users, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
-  cbs_birds, cbs_fullnames, uDarkStyleParams, udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest;
+  cbs_birds, cbs_fullnames, cbs_themes, uDarkStyleParams,
+  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest;
 
 {$R *.lfm}
 
@@ -256,78 +264,18 @@ procedure TdlgImportXMobile.ApplyDarkMode;
 begin
   //pContentFinished.Background.Color := ;
 
-  btnCreateSurvey.Images := iButtonsDark;
-  btnCreateNest.Images := iButtonsDark;
   btnHelp.Images := iButtonsDark;
   sbRetry.Images := iButtonsDark;
   sbSaveLog.Images := iButtonsDark;
 
   eSourceFile.Images := iButtonsDark;
-  eObserver.Images := iButtonsDark;
-  eSurvey.Images := iButtonsDark;
 
   icoImportFinished.Images := imgFinishedDark;
-end;
-
-procedure TdlgImportXMobile.btnCreateNestClick(Sender: TObject);
-begin
-  FNestKey := AddNest;
-
-  sbNext.Visible := False;
-  mProgress.Text := Format(rsImportingFile, [FSourceFile]);
-
-  if FNestKey > 0 then
-  begin
-    mProgress.Lines.Add(Format(rsMobileNestCreated, [FNestKey]));
-    FNest := TNest.Create(FNestKey);
-
-    ImportNest;
-  end;
-end;
-
-procedure TdlgImportXMobile.btnCreateSurveyClick(Sender: TObject);
-begin
-  FSurveyKey := AddSurvey;
-
-  sbNext.Visible := False;
-  mProgress.Text := Format(rsImportingFile, [FSourceFile]);
-
-  if FSurveyKey > 0 then
-  begin
-    nbPages.PageIndex := 1;
-    mProgress.Lines.Add(Format(rsMobileSurveyCreated, [FSurveyKey]));
-    FSurvey := TSurvey.Create(FSurveyKey);
-
-    ImportInventory;
-  end;
-
 end;
 
 procedure TdlgImportXMobile.btnHelpClick(Sender: TObject);
 begin
   OpenURL('https://github.com/cbeier-studio/Xolmis/wiki/Importing-data#xolmis-mobile');
-end;
-
-procedure TdlgImportXMobile.eNestButtonClick(Sender: TObject);
-begin
-  FindDlg(tbNests, eNest, FNestKey);
-end;
-
-procedure TdlgImportXMobile.eNestChange(Sender: TObject);
-begin
-  btnCreateNest.Enabled := IsRequiredFilledSource;
-end;
-
-procedure TdlgImportXMobile.eObserverButtonClick(Sender: TObject);
-begin
-  FindDlg(tbPeople, eObserver, FObserverKey);
-end;
-
-procedure TdlgImportXMobile.eObserverChange(Sender: TObject);
-begin
-  btnCreateSurvey.Enabled := IsRequiredFilledSource;
-  btnCreateNest.Enabled := IsRequiredFilledSource;
-  sbNext.Enabled := IsRequiredFilledSource;
 end;
 
 procedure TdlgImportXMobile.eSourceFileButtonClick(Sender: TObject);
@@ -346,82 +294,28 @@ begin
   begin
     FSourceFile := eSourceFile.Text;
 
-    if LoadJSON(FSourceFile) then
+    msgSourceFile.Caption := 'File selected and loaded!';
+    msgSourceFile.Font.Color := clDefault;
+
+    if OpenJSON(FSourceFile) then
     begin
-      lblListType.Visible := False;
-      txtListType.Visible := False;
-      lblMackinnonListNumber.Enabled := False;
-      eMackinnonListNumber.Enabled := False;
-      pSurvey.Visible := False;
-      pSurveyOptions.Visible := False;
-      pNest.Visible := False;
-      pNestOptions.Visible := False;
-
       FContentType := GetContentType;
-
-      case FContentType of
-        mctEmpty: txtDataType.Caption := EmptyStr;
-        mctInventory:
-          begin
-            txtDataType.Caption := rsTitleSurveys;
-            invType := JSONObject.Get('type', 0);
-
-            FInventoryType := TMobileInventoryType(invType);
-
-            case FInventoryType of
-              invQualitativeFree: txtListType.Caption := rsMobileQualitativeFree;
-              invQualitativeTimed: txtListType.Caption := rsMobileQualitativeTimed;
-              invMackinnonList:
-                begin
-                  txtListType.Caption := rsMobileMackinnonList;
-                  lblMackinnonListNumber.Enabled := True;
-                  eMackinnonListNumber.Enabled := True;
-                end;
-              invTransectionCount: txtListType.Caption := rsMobileTransectionCount;
-              invPointCount: txtListType.Caption := rsMobilePointCount;
-              invBanding: txtListType.Caption := rsMobileBanding;
-              invCasual: txtListType.Caption := rsMobileCasual;
-            end;
-            lblListType.Visible := True;
-            txtListType.Visible := True;
-
-            pSurvey.Visible := True;
-            pSurveyOptions.Visible := True;
-          end;
-        mctInventories:
-          begin
-            txtDataType.Caption := rsTitleSurveys;
-            txtListType.Caption := EmptyStr;
-          end;
-        mctNest:
-          begin
-            txtDataType.Caption := rsTitleNests;
-
-            pNest.Visible := True;
-            pNestOptions.Visible := True;
-          end;
-        mctNests:
-          begin
-            txtDataType.Caption := rsTitleNests;
-          end;
-        mctSpecimens: txtDataType.Caption := rsTitleSpecimens;
-      end;
     end;
+  end
+  else
+  begin
+    if eSourceFile.Text = EmptyStr then
+      msgSourceFile.Caption := 'File not selected.'
+    else
+      msgSourceFile.Caption := 'File not found.';
+
+    if IsDarkModeEnabled then
+      msgSourceFile.Font.Color := clSystemCriticalFGDark
+    else
+      msgSourceFile.Font.Color := clSystemCriticalFGLight;
   end;
 
-  btnCreateSurvey.Enabled := IsRequiredFilledSource;
-  btnCreateNest.Enabled := IsRequiredFilledSource;
   sbNext.Enabled := IsRequiredFilledSource;
-end;
-
-procedure TdlgImportXMobile.eSurveyButtonClick(Sender: TObject);
-begin
-  FindDlg(tbSurveys, eSurvey, FSurveyKey);
-end;
-
-procedure TdlgImportXMobile.eSurveyChange(Sender: TObject);
-begin
-  btnCreateSurvey.Enabled := IsRequiredFilledSource;
 end;
 
 procedure TdlgImportXMobile.FormDestroy(Sender: TObject);
@@ -483,10 +377,7 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  txtDataType.Caption := EmptyStr;
-  txtListType.Caption := EmptyStr;
-
-  DMM.sqlTrans.CommitRetaining;
+  eSourceFileChange(nil);
 end;
 
 function TdlgImportXMobile.GetContentType: TMobileContentType;
@@ -502,7 +393,7 @@ begin
         if JSONArray.Objects[0].Find('support') <> nil then
           Result := mctNests
         else
-        if JSONArray.Objects[0].Find('fieldNumber') <> nil then
+        if (JSONArray.Objects[0].Find('fieldNumber') <> nil) and (JSONArray.Objects[0].Find('type') <> nil) then
           Result := mctSpecimens;
       end;
     jtObject:
@@ -516,693 +407,608 @@ begin
   end;
 end;
 
-procedure TdlgImportXMobile.ImportEggList;
+function TdlgImportXMobile.GetNestFromMobile(aNest: TMobileNest): Integer;
 var
-  AItem: TEgg;
-  aDate, aTime: TDateTime;
-  aFieldNumber, aShape: String;
-  s, p, j: Integer;
+  Nest: TNest;
+  aLocality, aTaxon: Integer;
 begin
-  if Parar then
-    Exit;
+  Result := 0;
 
-  mProgress.Lines.Add(rsMobileImportingEgg);
-  EggArray := JSONObject.Arrays['eggsList'];
-  p := 0;
-  PBar.Position := p;
-  PBar.Max := EggArray.Count;
-  AItem := TEgg.Create();
+  Nest := TNest.Create();
   try
-    for j := 0 to EggArray.Count - 1 do
-    begin
-      Inc(p);
-      AItem.Clear;
+    aLocality := GetSiteKey(aNest.FLocalityName);
+    aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name', aNest.FSpeciesName);
 
-      EggObject := EggArray.Objects[j];
-      aDate := StrToDate(EggObject.Get('sampleTime', ''));
-      aFieldNumber := EggObject.Get('fieldNumber', '');
-      s := EggObject.Get('eggShape', 0);
-      case s of
-        0: aShape := 'S';
-        1: aShape := 'E';
-        2: aShape := 'O';
-        3: aShape := 'P';
-        4: aShape := 'C';
-        5: aShape := 'B';
-        6: aShape := 'Y';
-        7: aShape := 'L';
-      end;
-
-      if AItem.Find(FNestKey, aFieldNumber, DateToStr(aDate), FObserverKey) then
-      begin
-        mProgress.Lines.Add(Format(rsMobileEggExists, [EggObject.Get('fieldNumber', '')]));
-      end
-      else
-      begin
-        AItem.NestId := FNestKey;
-        AItem.MeasureDate := aDate;
-        AItem.FieldNumber := EggObject.Get('fieldNumber', '');
-        AItem.TaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', EggObject.Get('speciesName', ''));
-        case aShape of
-          'S': AItem.EggShape := esSpherical;
-          'E': AItem.EggShape := esElliptical;
-          'O': AItem.EggShape := esOval;
-          'P': AItem.EggShape := esPiriform;
-          'C': AItem.EggShape := esConical;
-          'B': AItem.EggShape := esBiconical;
-          'Y': AItem.EggShape := esCylindrical;
-          'L': AItem.EggShape := esLongitudinal;
-        else
-          AItem.EggShape := esUnknown;
-        end;
-        AItem.Width := EggObject.Get('width', 0.0);
-        AItem.Length := EggObject.Get('length', 0.0);
-        AItem.Mass := EggObject.Get('mass', 0.0);
-        AItem.ResearcherId := FObserverKey;
-
-        AItem.Insert;
-      end;
-
-      PBar.Position := p;
-      Application.ProcessMessages;
-
-      if Parar then
-        Break;
-    end;
-
+    if Nest.Find(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime) then
+      Result := Nest.Id;
   finally
-    FreeAndNil(AItem);
+    Nest.Free;
+  end;
+end;
+
+function TdlgImportXMobile.GetSpecimenFromMobile(aSpecimen: TMobileSpecimen): Integer;
+var
+  Specimen: TSpecimen;
+  aLocality, aTaxon: Integer;
+  y, m, d: Word;
+begin
+  Result := 0;
+
+  Specimen := TSpecimen.Create();
+  try
+    aLocality := GetSiteKey(aSpecimen.FLocality);
+    aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name', aSpecimen.FSpeciesName);
+    DecodeDate(aSpecimen.FSampleTime, y, m, d);
+
+    if Specimen.Find(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality) then
+      Result := Specimen.Id;
+  finally
+    Specimen.Free;
+  end;
+end;
+
+function TdlgImportXMobile.GetSurveyFromInventory(aInventory: TMobileInventory): Integer;
+var
+  aSurvey: TSurvey;
+  aLocality: Integer;
+begin
+  Result := 0;
+
+  aSurvey := TSurvey.Create();
+  try
+    aLocality := GetSiteKey(aInventory.FLocalityName);
+    if aSurvey.Find(aLocality, DateToStr(aInventory.FStartTime)) then
+      Result := aSurvey.Id;
+  finally
+    aSurvey.Free;
+  end;
+end;
+
+procedure TdlgImportXMobile.gridMapEditButtonClick(Sender: TObject);
+var
+  aKey: Integer;
+begin
+  aKey := 0;
+
+  if gridMap.Col = 4 then
+  begin
+    case FContentType of
+      mctEmpty: ;
+      mctInventory, mctInventories:
+      begin
+        if FindDlg(tbSurveys, gridMap.InplaceEditor, aKey) then
+        begin
+          FInventoryList[gridMap.Row - 1].FSurveyKey := aKey;
+          gridMap.Cells[4, gridMap.Row] := GetName('surveys', 'full_name', 'survey_id', aKey);
+        end;
+      end;
+      mctNest, mctNests:
+      begin
+        if FindDlg(tbNests, gridMap.InplaceEditor, aKey) then
+        begin
+          FNestList[gridMap.Row - 1].FNestKey := aKey;
+          gridMap.Cells[4, gridMap.Row] := GetName('nests', 'full_name', 'nest_id', aKey);
+        end;
+      end;
+      mctSpecimens:
+      begin
+        if FindDlg(tbSpecimens, gridMap.InplaceEditor, aKey) then
+        begin
+          FSpecimenList[gridMap.Row - 1].FSpecimenKey := aKey;
+          gridMap.Cells[4, gridMap.Row] := GetName('specimens', 'full_name', 'specimen_id', aKey);
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TdlgImportXMobile.ImportEggs(Nest: TMobileNest);
+var
+  aEgg: TEgg;
+  Egg: TMobileEgg;
+  aDate: TDate;
+  aObserverId: Integer;
+begin
+  if Nest.FEggList.Count > 0 then
+  begin
+    aEgg := TEgg.Create();
+    try
+      // iterate through egg list
+      for Egg in Nest.FEggList do
+      begin
+        aEgg.Clear;
+        aObserverId := GetKey('people', 'person_id', 'acronym', Nest.FObserver);
+        aDate := Egg.FSampleTime;
+
+        if aEgg.Find(Nest.FNestKey, Egg.FFieldNumber, DateToStr(aDate), aObserverId) then
+        begin
+          // if egg exists, update it
+          Egg.ToEgg(aEgg);
+          aEgg.Update;
+        end
+        else
+        begin
+          // if egg does not exist, insert it
+          Egg.ToEgg(aEgg);
+          aEgg.NestId := Nest.FNestKey;
+          aEgg.ResearcherId := aObserverId;
+          aEgg.EggSeq := StrToInt(ExtractDelimited(2, Egg.FFieldNumber, ['-']));
+          aEgg.Insert;
+        end;
+      end;
+    finally
+      aEgg.Free;
+    end;
   end;
 end;
 
 procedure TdlgImportXMobile.ImportInventories;
 var
-  p, j: Integer;
+  aSurvey: TSurvey;
+  aSighting: TSighting;
+  p, j, aSurveyKey: Integer;
+  Inventory: TMobileInventory;
+  aObserver: String;
 begin
-  nbPages.PageIndex := 1;
+  nbPages.PageIndex := 2;
 
   if Parar then
     Exit;
 
   p := 0;
   PBar.Position := p;
-  PBar.Max := JSONArray.Count;
-  FSurvey := TSurvey.Create();
+  PBar.Max := FInventoryList.Count;
+
+  // commit previous transactions before start other transaction
+  DMM.sqlTrans.CommitRetaining;
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
   try
-    for j := 0 to JSONArray.Count - 1 do
-    begin
-      Inc(p);
-      FSurvey.Clear;
-      FSurveyKey := 0;
-
-      JSONObject := JSONArray.Objects[j];
-
-      FSurveyKey := AddSurvey;
-
-      if FSurveyKey > 0 then
+    aSurvey := TSurvey.Create();
+    try
+      // iterate through inventories list
+      for Inventory in FInventoryList do
       begin
-        mProgress.Lines.Add(Format(rsMobileSurveyCreated, [FSurveyKey]));
-        FSurvey.GetData(FSurveyKey);
+        Inc(p);
+        aSurvey.Clear;
+        aSurveyKey := 0;
 
-        ImportInventory;
-      end
-      else
-        Parar := True;
+        if Inventory.FImport then
+        begin
+          if Inventory.FSurveyKey > 0 then
+          begin
+            // update survey, if already exists
+            aSurveyKey := Inventory.FSurveyKey;
+            aSurvey.GetData(aSurveyKey);
+            aSurvey.Update;
+            // insert or update sightings from species list
+            ImportSpecies(Inventory);
+            // insert or update vegetation data
+            ImportVegetation(Inventory);
+            // insert of update weather logs
+            ImportWeather(Inventory);
 
-      PBar.Position := p;
-      Application.ProcessMessages;
+            mProgress.Lines.Add(Format(rsMobileSurveyUpdated,
+              [aSurveyKey, GetName('surveys', 'full_name', 'survey_id', aSurveyKey)]));
+          end
+          else
+          begin
+            // create new survey, if not exists
+            Inventory.ToSurvey(aSurvey);
+            aSurvey.Insert;
+            aSurveyKey := aSurvey.Id;
 
-      if Parar then
-        Break;
+            // insert sightings from species list
+            ImportSpecies(Inventory);
+            // insert vegetation data
+            ImportVegetation(Inventory);
+            // insert weather logs
+            ImportWeather(Inventory);
+
+            mProgress.Lines.Add(Format(rsMobileSurveyCreated,
+              [aSurveyKey, GetName('surveys', 'full_name', 'survey_id', aSurveyKey)]));
+          end;
+        end;
+
+        PBar.Position := p;
+        Application.ProcessMessages;
+
+        if Parar then
+          Break;
+      end;
+
+    finally
+      FreeAndNil(aSurvey);
     end;
 
-  finally
-    FreeAndNil(FSurvey);
+  except
+    on E: Exception do
+    begin
+      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      DMM.sqlTrans.RollbackRetaining;
+      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      icoImportFinished.ImageIndex := 1;
+      sbCancel.Caption := rsCaptionClose;
+      nbPages.PageIndex := 3;
+    end;
   end;
 
   if Parar then
   begin
+    mProgress.Append(rsImportCanceledByUser);
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
   begin
+    mProgress.Append(rsSuccessfulImport);
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
   end;
   sbCancel.Caption := rsCaptionClose;
-  nbPages.PageIndex := 2;
-end;
-
-procedure TdlgImportXMobile.ImportInventory;
-begin
-  try
-    ImportSpeciesList;
-    ImportVegetationList;
-    ImportWeatherList;
-
-    if Parar then
-    begin
-      DMM.sqlTrans.RollbackRetaining;
-      if FContentType = mctInventory then
-      begin
-        lblTitleImportFinished.Caption := rsImportCanceled;
-        lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
-        icoImportFinished.ImageIndex := 1;
-      end;
-    end
-    else
-    begin
-      DMM.sqlTrans.CommitRetaining;
-      if FContentType = mctInventory then
-      begin
-        lblTitleImportFinished.Caption := rsFinishedImporting;
-        lblSubtitleImportFinished.Caption := rsSuccessfulImport;
-        icoImportFinished.ImageIndex := 0;
-      end;
-    end;
-  except
-    on E: Exception do
-    begin
-      mProgress.Append(Format(rsErrorImporting, [E.Message]));
-      DMM.sqlTrans.RollbackRetaining;
-      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
-      icoImportFinished.ImageIndex := 1;
-      sbCancel.Caption := rsCaptionClose;
-      nbPages.PageIndex := 2;
-    end;
-  end;
-end;
-
-procedure TdlgImportXMobile.ImportNest;
-begin
-  try
-    ImportRevisionList;
-    ImportEggList;
-
-    if Parar then
-    begin
-      DMM.sqlTrans.RollbackRetaining;
-      if FContentType = mctNest then
-      begin
-        lblTitleImportFinished.Caption := rsImportCanceled;
-        lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
-        icoImportFinished.ImageIndex := 1;
-      end;
-    end
-    else
-    begin
-      DMM.sqlTrans.CommitRetaining;
-      if FContentType = mctNest then
-      begin
-        lblTitleImportFinished.Caption := rsFinishedImporting;
-        lblSubtitleImportFinished.Caption := rsSuccessfulImport;
-        icoImportFinished.ImageIndex := 0;
-      end;
-    end;
-  except
-    on E: Exception do
-    begin
-      mProgress.Append(Format(rsErrorImporting, [E.Message]));
-      DMM.sqlTrans.RollbackRetaining;
-      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
-      icoImportFinished.ImageIndex := 1;
-      sbCancel.Caption := rsCaptionClose;
-      nbPages.PageIndex := 2;
-    end;
-  end;
+  nbPages.PageIndex := 3;
 end;
 
 procedure TdlgImportXMobile.ImportNests;
 var
-  p, j: Integer;
+  p, j, aNestKey: Integer;
+  aNest: TNest;
+  Nest: TMobileNest;
 begin
-  nbPages.PageIndex := 1;
+  nbPages.PageIndex := 2;
 
   if Parar then
     Exit;
 
   p := 0;
   PBar.Position := p;
-  PBar.Max := JSONArray.Count;
-  FNest := TNest.Create();
+  PBar.Max := FNestList.Count;
+
+  // commit previous transactions before start other transaction
+  DMM.sqlTrans.CommitRetaining;
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
   try
-    for j := 0 to JSONArray.Count - 1 do
-    begin
-      Inc(p);
-      FNest.Clear;
-      FNestKey := 0;
-
-      JSONObject := JSONArray.Objects[j];
-
-      FNestKey := AddNest;
-
-      if FNestKey > 0 then
+    aNest := TNest.Create();
+    try
+      // iterate through nests list
+      for Nest in FNestList do
       begin
-        mProgress.Lines.Add(Format(rsMobileNestCreated, [FNestKey]));
-        FNest.GetData(FNestKey);
+        Inc(p);
+        aNest.Clear;
+        aNestKey := 0;
 
-        ImportNest;
-      end
-      else
-        Parar := True;
+        if Nest.FImport then
+        begin
+          if Nest.FNestKey > 0 then
+          begin
+            // update nest, if already exists
+            aNestKey := Nest.FNestKey;
+            aNest.GetData(aNestKey);
+            aNest.Update;
+            // insert or update nest revisions
+            ImportRevisions(Nest);
+            // insert or update eggs
+            ImportEggs(Nest);
 
-      PBar.Position := p;
-      Application.ProcessMessages;
+            mProgress.Lines.Add(Format(rsMobileNestUpdated,
+              [aNestKey, GetName('nests', 'full_name', 'nest_id', aNestKey)]));
+          end
+          else
+          begin
+            // create new nest, if not exists
+            Nest.ToNest(aNest);
+            aNest.Insert;
+            aNestKey := aNest.Id;
 
-      if Parar then
-        Break;
+            // insert nest revisions
+            ImportRevisions(Nest);
+            // insert eggs
+            ImportEggs(Nest);
+
+            mProgress.Lines.Add(Format(rsMobileNestCreated,
+              [aNestKey, GetName('nests', 'full_name', 'nest_id', aNestKey)]));
+          end;
+        end;
+
+        PBar.Position := p;
+        Application.ProcessMessages;
+
+        if Parar then
+          Break;
+      end;
+
+    finally
+      FreeAndNil(aNest);
     end;
 
-  finally
-    FreeAndNil(FNest);
+  except
+    on E: Exception do
+    begin
+      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      DMM.sqlTrans.RollbackRetaining;
+      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      icoImportFinished.ImageIndex := 1;
+      sbCancel.Caption := rsCaptionClose;
+      nbPages.PageIndex := 3;
+    end;
   end;
 
   if Parar then
   begin
+    mProgress.Append(rsImportCanceledByUser);
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
   begin
+    mProgress.Append(rsSuccessfulImport);
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
   end;
   sbCancel.Caption := rsCaptionClose;
-  nbPages.PageIndex := 2;
+  nbPages.PageIndex := 3;
 end;
 
-procedure TdlgImportXMobile.ImportRevisionList;
+procedure TdlgImportXMobile.ImportRevisions(Nest: TMobileNest);
 var
-  AItem: TNestRevision;
-  aDate, aTime: TDateTime;
-  aStatus, aStage: String;
-  a, s, p, j: Integer;
+  aRevision: TNestRevision;
+  Revision: TMobileNestRevision;
+  aObserverId: Integer;
+  aDate: TDate;
+  aTime: TTime;
 begin
-  if Parar then
-    Exit;
-
-  mProgress.Lines.Add(rsMobileImportingRevision);
-  RevisionArray := JSONObject.Arrays['revisionsList'];
-  p := 0;
-  PBar.Position := p;
-  PBar.Max := RevisionArray.Count;
-  AItem := TNestRevision.Create();
-  try
-    for j := 0 to RevisionArray.Count - 1 do
-    begin
-      Inc(p);
-      AItem.Clear;
-
-      RevisionObject := RevisionArray.Objects[j];
-      aDate := StrToDate(RevisionObject.Get('sampleTime', ''));
-      aTime := StrToTime(RevisionObject.Get('sampleTime', ''));
-      a := RevisionObject.Get('nestStatus', 0);
-      case a of
-        0: aStatus := 'U';
-        1: aStatus := 'A';
-        2: aStatus := 'I';
-      end;
-      s := RevisionObject.Get('nestStage', 0);
-      case s of
-        0: aStage := 'U';
-        1: aStage := 'C';
-        2: aStage := 'L';
-        3: aStage := 'I';
-        4: aStage := 'H';
-        5: aStage := 'N';
-        6: aStage := 'X';
-      end;
-
-      if AItem.Find(FNestKey, DateToStr(aDate), TimeToStr(aTime), FObserverKey) then
+  if Nest.FRevisionList.Count > 0 then
+  begin
+    aRevision := TNestRevision.Create();
+    try
+      // iterate through nest revision list
+      for Revision in Nest.FRevisionList do
       begin
-        mProgress.Lines.Add(Format(rsMobileRevisionExists, [RevisionObject.Get('sampleTime', '')]));
-      end
-      else
-      begin
-        AItem.NestId := FNestKey;
-        AItem.RevisionDate := aDate;
-        AItem.RevisionTime := aTime;
-        case aStatus of
-          'I': AItem.NestStatus := nstInactive;
-          'A': AItem.NestStatus := nstActive;
-        else
-          AItem.NestStatus := nstUnknown;
-        end;
-        case aStage of
-          'X': AItem.NestStage := nsgInactive;
-          'C': AItem.NestStage := nsgConstruction;
-          'L': AItem.NestStage := nsgLaying;
-          'I': AItem.NestStage := nsgIncubation;
-          'H': AItem.NestStage := nsgHatching;
-          'N': AItem.NestStage := nsgNestling;
-        else
-          AItem.NestStage := nsgUnknown;
-        end;
-        AItem.HostEggsTally := RevisionObject.Get('eggsHost', 0);
-        AItem.HostNestlingsTally := RevisionObject.Get('nestlingsHost', 0);
-        AItem.NidoparasiteEggsTally := RevisionObject.Get('eggsParasite', 0);
-        AItem.NidoparasiteNestlingsTally := RevisionObject.Get('nestlingsParasite', 0);
-        AItem.HavePhilornisLarvae := RevisionObject.Get('hasPhilornisLarvae', 0) = 1;
-        AItem.Notes := RevisionObject.Get('notes', '');
-        AItem.Observer1Id := FObserverKey;
-        AItem.FullName := GetNestRevisionFullName(aDate, FNestKey, aStage, aStatus);
+        aRevision.Clear;
+        aObserverId := GetKey('people', 'person_id', 'acronym', Nest.FObserver);
+        aDate := Revision.FSampleTime;
+        aTime := Revision.FSampleTime;
 
-        AItem.Insert;
+        if aRevision.Find(Nest.FNestKey, DateToStr(aDate), TimeToStr(aTime), aObserverId) then
+        begin
+          // if nest revision exists, update it
+          Revision.ToNestRevision(aRevision);
+          aRevision.Update;
+        end
+        else
+        begin
+          // if nest revision does not exist, insert it
+          Revision.ToNestRevision(aRevision);
+          aRevision.NestId := Nest.FNestKey;
+          aRevision.Observer1Id := aObserverId;
+          aRevision.Insert;
+        end;
       end;
-
-      PBar.Position := p;
-      Application.ProcessMessages;
-
-      if Parar then
-        Break;
+    finally
+      aRevision.Free;
     end;
-
-  finally
-    FreeAndNil(AItem);
   end;
 end;
 
-procedure TdlgImportXMobile.ImportSpeciesList;
+procedure TdlgImportXMobile.ImportSpecies(Inventory: TMobileInventory);
 var
-  AItem: TSighting;
-  aTaxonKey, p, j, k: Integer;
-  sTime: String;
-  Qry: TSQLQuery;
+  Species: TMobileSpecies;
+  aSighting: TSighting;
+  aTaxonId, aObserverId: Integer;
 begin
-  if Parar then
-    Exit;
-
-  mProgress.Lines.Add(rsMobileImportingSpecies);
-  SpeciesArray := JSONObject.Arrays['speciesList'];
-  p := 0;
-  PBar.Position := p;
-  PBar.Max := SpeciesArray.Count;
-  AItem := TSighting.Create();
-  try
-    for j := 0 to SpeciesArray.Count - 1 do
-    begin
-      Inc(p);
-      sTime := EmptyStr;
-      AItem.Clear;
-
-      SpeciesObject := SpeciesArray.Objects[j];
-      aTaxonKey := GetKey('zoo_taxa', 'taxon_id', 'full_name', SpeciesObject.Get('name', ''));
-
-      if AItem.Find(FSurveyKey, aTaxonKey, FObserverKey) then
+  if Inventory.FSpeciesList.Count > 0 then
+  begin
+    aSighting := TSighting.Create();
+    try
+      // iterate through species list
+      for Species in Inventory.FSpeciesList do
       begin
-        mProgress.Lines.Add(Format(rsMobileSpeciesExists, [SpeciesObject.Get('name', '')]));
-      end
-      else
-      begin
-        AItem.SurveyId := FSurveyKey;
-        AItem.TaxonId := aTaxonKey;
-        AItem.NotSurveying := SpeciesObject.Get('isOutOfInventory', 0) = 1;
-        AItem.SubjectTally := SpeciesObject.Get('count', 0);
-        AItem.SightingDate := FSurvey.SurveyDate;
-        sTime := SpeciesObject.Get('sampleTime', '');
-        if sTime = 'null' then
-          sTime := '00:00:00';
-        AItem.SightingTime := StrToTime(sTime);
-        AItem.LocalityId := FSurvey.LocalityId;
-        AItem.MackinnonListNumber := StrToInt(eMackinnonListNumber.Text);
-        AItem.MethodId := FSurvey.MethodId;
-        AItem.ObserverId := FObserverKey;
+        aSighting.Clear;
+        aTaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', Species.FSpeciesName);
+        aObserverId := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
 
-        AItem.Insert;
-      end;
-
-      // Process POIs within each species
-      PoisArray := SpeciesObject.Arrays['pois'];
-      try
-        Qry := TSQLQuery.Create(nil);
-        Qry.SQLConnection := DMM.sqlCon;
-
-        for k := 0 to PoisArray.Count - 1 do
+        if aSighting.Find(Inventory.FSurveyKey, aTaxonId, aObserverId) then
         begin
-          PoiObject := PoisArray.Objects[k];
-          Qry.SQL.Text := 'INSERT INTO poi_library (sample_date, longitude, latitude, observer_id, ' +
-            'taxon_id, sighting_id, survey_id, user_inserted, insert_date) ' +
-            'VALUES (:adate, :alongitude, :alatitude, :aobserver, :ataxon, :asighting, :asurvey, ' +
-            ':auser, datetime(''now'',''localtime''))';
-          Qry.ParamByName('adate').AsString := DateToStr(AItem.SightingDate);
-          Qry.ParamByName('alongitude').AsFloat := PoiObject.Get('longitude', 0.0);
-          Qry.ParamByName('alatitude').AsFloat := PoiObject.Get('latitude', 0.0);
-          Qry.ParamByName('aobserver').AsInteger := AItem.ObserverId;
-          Qry.ParamByName('ataxon').AsInteger := AItem.TaxonId;
-          Qry.ParamByName('asighting').AsInteger := AItem.Id;
-          Qry.ParamByName('asurvey').AsInteger := FSurveyKey;
-          Qry.ParamByName('auser').AsInteger := ActiveUser.Id;
-
-          Qry.ExecSQL;
+          // if sighting exists, update it
+          Species.ToSighting(aSighting);
+          aSighting.Update;
+        end
+        else
+        begin
+          // if sighting does not exist, insert it
+          Species.ToSighting(aSighting);
+          aSighting.SurveyId := Inventory.FSurveyKey;
+          aSighting.ObserverId := aObserverId;
+          aSighting.Insert;
         end;
-
-      finally
-        FreeAndNil(Qry);
       end;
-
-      PBar.Position := p;
-      Application.ProcessMessages;
-
-      if Parar then
-        Break;
+    finally
+      aSighting.Free;
     end;
-
-  finally
-    FreeAndNil(AItem);
   end;
 end;
 
 procedure TdlgImportXMobile.ImportSpecimens;
 var
-  AItem: TSpecimen;
-  aDate: TDateTime;
-  aTaxon, aLocality, p, j, t: Integer;
-  aYear, aMonth, aDay: Word;
-  aLongitude, aLatitude: Extended;
-  aFieldNumber, aType: String;
+  p, aSpecimenKey: Integer;
+  aSpecimen: TSpecimen;
+  Specimen: TMobileSpecimen;
 begin
-  nbPages.PageIndex := 1;
+  nbPages.PageIndex := 2;
 
   if Parar then
     Exit;
 
-  mProgress.Lines.Add(rsMobileImportingSpecimens);
   p := 0;
   PBar.Position := p;
-  PBar.Max := JSONArray.Count;
-  AItem := TSpecimen.Create();
+  PBar.Max := FSpecimenList.Count;
+
+  // commit previous transactions before start other transaction
+  DMM.sqlTrans.CommitRetaining;
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
   try
-    for j := 0 to JSONArray.Count - 1 do
-    begin
-      Inc(p);
-      AItem.Clear;
+    aSpecimen := TSpecimen.Create();
+    try
+      // iterate through specimens list
+      for Specimen in FSpecimenList do
+      begin
+        Inc(p);
+        aSpecimen.Clear;
+        aSpecimenKey := 0;
 
-      JSONObject := JSONArray.Objects[j];
-      aDate := StrToDate(JSONObject.Get('sampleTime', ''));
-      DecodeDate(aDate, aYear, aMonth, aDay);
-      aLongitude := JSONObject.Get('longitude', 0.0);
-      aLatitude := JSONObject.Get('latitude', 0.0);
-      aFieldNumber := JSONObject.Get('fieldNumber', '');
-      aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name', JSONObject.Get('speciesName', ''));
-      aLocality := GetKey('gazetteer', 'site_id', 'site_name', JSONObject.Get('locality', ''));
-      t := JSONObject.Get('type', 0);
-      case t of
-        0: aType := 'WS';
-        1: aType := 'PS';
-        2: aType := 'N';
-        3: aType := 'B';
-        4: aType := 'E';
-        5: aType := 'P';
-        6: aType := 'F';
-        7: aType := 'BS';
-        8: aType := 'C';
-        9: aType := 'S';
-       10: aType := 'T';
-       11: aType := 'D';
-       12: aType := 'R';
+        if Specimen.FImport then
+        begin
+          if Specimen.FSpecimenKey > 0 then
+          begin
+            // update specimen, if already exists
+            aSpecimenKey := Specimen.FSpecimenKey;
+            aSpecimen.GetData(aSpecimenKey);
+            aSpecimen.Update;
+
+            mProgress.Lines.Add(Format(rsMobileSpecimenUpdated,
+              [aSpecimenKey, GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey)]));
+          end
+          else
+          begin
+            // create new specimen, if not exists
+            Specimen.ToSpecimen(aSpecimen);
+            aSpecimen.Insert;
+            aSpecimenKey := aSpecimen.Id;
+
+            mProgress.Lines.Add(Format(rsMobileSpecimenCreated,
+              [aSpecimenKey, GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey)]));
+          end;
+        end;
+
+        PBar.Position := p;
+        Application.ProcessMessages;
+
+        if Parar then
+          Break;
       end;
 
-      if AItem.Find(aFieldNumber, aYear, aMonth, aDay, aTaxon, aLocality) then
-      begin
-        mProgress.Lines.Add(Format(rsMobileSpecimenExists, [JSONObject.Get('fieldNumber', '')]));
-      end
-      else
-      begin
-        AItem.FieldNumber := aFieldNumber;
-        AItem.CollectionYear := aYear;
-        AItem.CollectionMonth := aMonth;
-        AItem.CollectionDay := aDay;
-        AItem.Longitude := aLongitude;
-        AItem.Latitude := aLatitude;
-        AItem.TaxonId := aTaxon;
-        AItem.LocalityId := aLocality;
-        AItem.SampleType := aType;
-        AItem.Notes := JSONObject.Get('notes', '');
-
-        AItem.Insert;
-      end;
-
-      PBar.Position := p;
-      Application.ProcessMessages;
-
-      if Parar then
-        Break;
+    finally
+      FreeAndNil(aSpecimen);
     end;
 
-  finally
-    FreeAndNil(AItem);
+  except
+    on E: Exception do
+    begin
+      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      DMM.sqlTrans.RollbackRetaining;
+      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      icoImportFinished.ImageIndex := 1;
+      sbCancel.Caption := rsCaptionClose;
+      nbPages.PageIndex := 3;
+    end;
   end;
 
   if Parar then
   begin
+    mProgress.Append(rsImportCanceledByUser);
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
   begin
+    mProgress.Append(rsSuccessfulImport);
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
   end;
   sbCancel.Caption := rsCaptionClose;
-  nbPages.PageIndex := 2;
+  nbPages.PageIndex := 3;
 end;
 
-procedure TdlgImportXMobile.ImportVegetationList;
+procedure TdlgImportXMobile.ImportVegetation(Inventory: TMobileInventory);
 var
-  AItem: TVegetation;
-  aDate, aTime: TDateTime;
-  p, j: Integer;
-  aLongitude, aLatitude: Extended;
+  aVegetation: TVegetation;
+  Vegetation: TMobileVegetation;
+  aDate: TDate;
+  aTime: TTime;
+  aObserverId: Integer;
 begin
-  if Parar then
-    Exit;
-
-  mProgress.Lines.Add(rsMobileImportingVegetation);
-  VegetationArray := JSONObject.Arrays['vegetationList'];
-  p := 0;
-  PBar.Position := p;
-  PBar.Max := VegetationArray.Count;
-  AItem := TVegetation.Create();
-  try
-    for j := 0 to VegetationArray.Count - 1 do
-    begin
-      Inc(p);
-      AItem.Clear;
-
-      VegetationObject := VegetationArray.Objects[j];
-      aDate := StrToDate(VegetationObject.Get('sampleTime', ''));
-      aTime := StrToTime(VegetationObject.Get('sampleTime', ''));
-      aLongitude := VegetationObject.Get('longitude', 0.0);
-      aLatitude := VegetationObject.Get('latitude', 0.0);
-
-      if AItem.Find(FSurveyKey, DateToStr(aDate), TimeToStr(aTime), aLongitude, aLatitude, FObserverKey) then
+  if Inventory.FVegetationList.Count > 0 then
+  begin
+    aVegetation := TVegetation.Create();
+    try
+      // iterate through vegetation list
+      for Vegetation in Inventory.FVegetationList do
       begin
-        mProgress.Lines.Add(Format(rsMobileVegetationExists, [VegetationObject.Get('sampleTime', '')]));
-      end
-      else
-      begin
-        AItem.SurveyId := FSurveyKey;
-        AItem.SampleDate := aDate;
-        AItem.SampleTime := aTime;
-        AItem.Longitude := aLongitude;
-        AItem.Latitude := aLatitude;
-        AItem.HerbsProportion := VegetationObject.Get('herbsProportion', 0);
-        AItem.HerbsDistribution := TStratumDistribution(VegetationObject.Get('herbsDistribution', 0));
-        AItem.HerbsAvgHeight := VegetationObject.Get('herbsHeight', 0);
-        AItem.ShrubsProportion := VegetationObject.Get('shrubsProportion', 0);
-        AItem.ShrubsDistribution := TStratumDistribution(VegetationObject.Get('shrubsDistribution', 0));
-        AItem.ShrubsAvgHeight := VegetationObject.Get('shrubsHeight', 0);
-        AItem.TreesProportion := VegetationObject.Get('treesProportion', 0);
-        AItem.TreesDistribution := TStratumDistribution(VegetationObject.Get('treesDistribution', 0));
-        AItem.TreesAvgHeight := VegetationObject.Get('treesHeight', 0);
-        AItem.ObserverId := FObserverKey;
+        aVegetation.Clear;
+        aDate := Vegetation.FSampleTime;
+        aTime := Vegetation.FSampleTime;
+        aObserverId := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
 
-        AItem.Insert;
+        if aVegetation.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), Vegetation.FLongitude, Vegetation.FLatitude, aObserverId) then
+        begin
+          // if vegetation exists, update it
+          Vegetation.ToVegetation(aVegetation);
+          aVegetation.Update;
+        end
+        else
+        begin
+          // if vegetation does not exist, insert it
+          Vegetation.ToVegetation(aVegetation);
+          aVegetation.SurveyId := Inventory.FSurveyKey;
+          aVegetation.ObserverId := aObserverId;
+          aVegetation.Insert;
+        end;
       end;
-
-      PBar.Position := p;
-      Application.ProcessMessages;
-
-      if Parar then
-        Break;
+    finally
+      aVegetation.Free;
     end;
-
-  finally
-    FreeAndNil(AItem);
   end;
 end;
 
-procedure TdlgImportXMobile.ImportWeatherList;
+procedure TdlgImportXMobile.ImportWeather(Inventory: TMobileInventory);
 var
-  AItem: TWeatherLog;
-  aDate, aTime: TDateTime;
-  p, j: Integer;
+  aWeather: TWeatherLog;
+  Weather: TMobileWeather;
+  aDate: TDate;
+  aTime: TTime;
+  aObserverId: Integer;
 begin
-  if Parar then
-    Exit;
-
-  mProgress.Lines.Add(rsMobileImportingWeather);
-  WeatherArray := JSONObject.Arrays['weatherList'];
-  p := 0;
-  PBar.Position := p;
-  PBar.Max := WeatherArray.Count;
-  AItem := TWeatherLog.Create();
-  try
-    for j := 0 to WeatherArray.Count - 1 do
-    begin
-      Inc(p);
-      AItem.Clear;
-
-      WeatherObject := WeatherArray.Objects[j];
-      aDate := StrToDate(WeatherObject.Get('sampleTime', ''));
-      aTime := StrToTime(WeatherObject.Get('sampleTime', ''));
-
-      if AItem.Find(FSurveyKey, DateToStr(aDate), TimeToStr(aTime), FObserverKey) then
+  if Inventory.FWeatherList.Count > 0 then
+  begin
+    aWeather := TWeatherLog.Create();
+    try
+      // iterate through weather list
+      for Weather in Inventory.FWeatherList do
       begin
-        mProgress.Lines.Add(Format(rsMobileWeatherExists, [WeatherObject.Get('sampleTime', '')]));
-      end
-      else
-      begin
-        AItem.SurveyId := FSurveyKey;
-        AItem.SampleDate := aDate;
-        AItem.SampleTime := aTime;
-        AItem.CloudCover := WeatherObject.Get('cloudCover', 0);
-        case WeatherObject.Get('precipitation', '') of
-          'N': AItem.Precipitation := wpNone;
-          'F': AItem.Precipitation := wpFog;
-          'M': AItem.Precipitation := wpMist;
-          'D': AItem.Precipitation := wpDrizzle;
-          'R': AItem.Precipitation := wpRain;
+        aWeather.Clear;
+        aDate := Weather.FSampleTime;
+        aTime := Weather.FSampleTime;
+        aObserverId := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+
+        if aWeather.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), aObserverId) then
+        begin
+          // if weather log exists, update it
+          Weather.ToWeatherLog(aWeather);
+          aWeather.Update;
+        end
         else
-          AItem.Precipitation := wpEmpty;
+        begin
+          // if weather log does not exist, insert it
+          Weather.ToWeatherLog(aWeather);
+          aWeather.SurveyId := Inventory.FSurveyKey;
+          aWeather.ObserverId := aObserverId;
+          aWeather.Insert;
         end;
-        AItem.Temperature := WeatherObject.Get('temperature', 0);
-        AItem.WindSpeedBft := WeatherObject.Get('windSpeed', 0);
-        AItem.SampleMoment := wmMiddle;
-        AItem.ObserverId := FObserverKey;
-
-        AItem.Insert;
       end;
-
-      PBar.Position := p;
-      Application.ProcessMessages;
-
-      if Parar then
-        Break;
+    finally
+      aWeather.Free;
     end;
-
-  finally
-    FreeAndNil(AItem);
   end;
 end;
 
@@ -1210,18 +1016,175 @@ function TdlgImportXMobile.IsRequiredFilledSource: Boolean;
 begin
   Result := False;
 
-  if (eSourceFile.Text <> EmptyStr) and
-    (eObserver.Text <> EmptyStr) then
-    if FContentType = mctInventory then
-      Result := eSurvey.Text = EmptyStr
-    else
-    if FContentType = mctNest then
-      Result := eNest.Text = EmptyStr
-    else
-      Result := True;
+  if (eSourceFile.Text <> EmptyStr) then
+    Result := True;
 end;
 
-function TdlgImportXMobile.LoadJSON(aJSONFile: String): Boolean;
+function TdlgImportXMobile.LoadFromJSON(aJSON: TJSONData): Boolean;
+begin
+  Result := False;
+
+  case FContentType of
+    mctEmpty: ;
+    mctInventory, mctInventories:
+      Result := LoadInventoriesFromJSON(aJSON);
+    mctNest, mctNests:
+      Result := LoadNestsFromJSON(aJSON);
+    mctSpecimens:
+      Result := LoadSpecimensFromJSON(aJSON);
+  end;
+end;
+
+function TdlgImportXMobile.LoadInventoriesFromJSON(aJSON: TJSONData): Boolean;
+var
+  InventoryObj: TMobileInventory;
+  i: Integer;
+begin
+  if aJSON is TJSONObject then
+  begin
+    FInventoryList.Clear;
+    InventoryObj := TMobileInventory.Create;
+    InventoryObj.FromJSON(aJSON);
+    FInventoryList.Add(InventoryObj);
+  end
+  else
+  if aJSON is TJSONArray then
+  begin
+    FInventoryList.Clear;
+    for i := 0 to aJSON.Count - 1 do
+    begin
+      InventoryObj := TMobileInventory.Create;
+      InventoryObj.FromJSON(aJSON.Items[i]);
+      FInventoryList.Add(InventoryObj);
+    end;
+  end;
+end;
+
+procedure TdlgImportXMobile.LoadMapGrid;
+var
+  Inventory: TMobileInventory;
+  Nest: TMobileNest;
+  Specimen: TMobileSpecimen;
+  r, aSurveyKey, aNestKey, aSpecimenKey: Integer;
+begin
+  gridMap.RowCount := 2;
+  gridMap.Clean([gzNormal]);
+  r := 1;
+
+  case FContentType of
+    mctEmpty: ;
+    mctInventory, mctInventories:
+    begin
+      if FInventoryList.Count = 0 then Exit;
+      gridMap.RowCount := FInventoryList.Count + 1;
+      for Inventory in FInventoryList do
+      begin
+        gridMap.Cells[0, r] := IntToStr(Integer(Inventory.FImport));
+        // ID
+        gridMap.Cells[1, r] := Inventory.FId;
+        // Observer
+        gridMap.Cells[2, r] := Inventory.FObserver;
+        // Mackinnon list number
+        if Inventory.FType = invMackinnonList then
+          gridMap.Cells[3, r] := IntToStr(Inventory.FListNumber);
+        // Survey record
+        aSurveyKey := GetSurveyFromInventory(Inventory);
+        if aSurveyKey > 0 then
+        begin
+          Inventory.FSurveyKey := aSurveyKey;
+          gridMap.Cells[4, r] := GetName('surveys', 'full_name', 'survey_id', aSurveyKey);
+        end;
+        Inc(r);
+      end;
+    end;
+    mctNest, mctNests:
+    begin
+      if FNestList.Count = 0 then Exit;
+      gridMap.RowCount := FNestList.Count + 1;
+      for Nest in FNestList do
+      begin
+        gridMap.Cells[0, r] := '1';
+        // ID
+        gridMap.Cells[1, r] := Nest.FFieldNumber;
+        // Observer
+        gridMap.Cells[2, r] := Nest.FObserver;
+        // Nest record
+        aNestKey := GetNestFromMobile(Nest);
+        if aNestKey > 0 then
+        begin
+          Nest.FNestKey := aNestKey;
+          gridMap.Cells[4, r] := GetName('nests', 'full_name', 'nest_id', aNestKey);
+        end;
+        Inc(r);
+      end;
+    end;
+    mctSpecimens:
+    begin
+      if FSpecimenList.Count = 0 then Exit;
+      gridMap.RowCount := FSpecimenList.Count + 1;
+      for Specimen in FSpecimenList do
+      begin
+        gridMap.Cells[0, r] := '1';
+        // ID
+        gridMap.Cells[1, r] := Specimen.FFieldNumber;
+        // Observer
+        gridMap.Cells[2, r] := Specimen.FObserver;
+        // Specimen record
+        aSpecimenKey := GetSpecimenFromMobile(Specimen);
+        if aSpecimenKey > 0 then
+        begin
+          Specimen.FSpecimenKey := aSpecimenKey;
+          gridMap.Cells[4, r] := GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey);
+        end;
+        Inc(r);
+      end;
+    end;
+  end;
+end;
+
+function TdlgImportXMobile.LoadNestsFromJSON(aJSON: TJSONData): Boolean;
+var
+  NestObj: TMobileNest;
+  i: Integer;
+begin
+  if aJSON is TJSONObject then
+  begin
+    FNestList.Clear;
+    NestObj := TMobileNest.Create;
+    NestObj.FromJSON(aJSON);
+    FNestList.Add(NestObj);
+  end
+  else
+  if aJSON is TJSONArray then
+  begin
+    FNestList.Clear;
+    for i := 0 to aJSON.Count - 1 do
+    begin
+      NestObj := TMobileNest.Create;
+      NestObj.FromJSON(aJSON.Items[i]);
+      FNestList.Add(NestObj);
+    end;
+  end;
+end;
+
+function TdlgImportXMobile.LoadSpecimensFromJSON(aJSON: TJSONData): Boolean;
+var
+  SpecimenObj: TMobileSpecimen;
+  i: Integer;
+begin
+  if aJSON is TJSONArray then
+  begin
+    FSpecimenList.Clear;
+    for i := 0 to aJSON.Count - 1 do
+    begin
+      SpecimenObj := TMobileSpecimen.Create;
+      SpecimenObj.FromJSON(aJSON.Items[i]);
+      FSpecimenList.Add(SpecimenObj);
+    end;
+  end;
+end;
+
+function TdlgImportXMobile.OpenJSON(aJSONFile: String): Boolean;
 begin
   Result := False;
   try
@@ -1254,47 +1217,38 @@ end;
 
 procedure TdlgImportXMobile.sbNextClick(Sender: TObject);
 begin
-  sbNext.Visible := False;
-  mProgress.Text := Format(rsImportingFile, [FSourceFile]);
-
-  if FSurveyKey > 0 then
+  // Source page
+  if nbPages.PageIndex = 0 then
   begin
     nbPages.PageIndex := 1;
-    mProgress.Lines.Add(Format(rsMobileSurveyCreated, [FSurveyKey]));
-    FSurvey := TSurvey.Create(FSurveyKey);
 
-    ImportInventory;
+    LoadMapGrid;
 
-    sbCancel.Caption := rsCaptionClose;
+    sbPrevious.Visible := True;
+  end;
+
+  // Records page
+  if nbPages.PageIndex = 1 then
+  begin
     nbPages.PageIndex := 2;
+
+    sbPrevious.Visible := False;
+    sbNext.Visible := False;
+    mProgress.Text := Format(rsImportingFile, [FSourceFile]);
+
+    case FContentType of
+      mctEmpty: ;
+      mctInventory, mctInventories: ImportInventories;
+      mctNest, mctNests: ImportNests;
+      mctSpecimens: ImportSpecimens;
+    end;
   end;
+end;
 
-  if FNestKey > 0 then
-  begin
-    nbPages.PageIndex := 1;
-    mProgress.Lines.Add(Format(rsMobileNestCreated, [FNestKey]));
-    FNest := TNest.Create(FNestKey);
-
-    ImportNest;
-
-    sbCancel.Caption := rsCaptionClose;
-    nbPages.PageIndex := 2;
-  end;
-
-  if FContentType = mctInventories then
-  begin
-    ImportInventories;
-  end;
-
-  if FContentType = mctNests then
-  begin
-    ImportNests;
-  end;
-
-  if FContentType = mctSpecimens then
-  begin
-    ImportSpecimens;
-  end;
+procedure TdlgImportXMobile.sbPreviousClick(Sender: TObject);
+begin
+  nbPages.PageIndex := 0;
+  sbNext.Visible := True;
 end;
 
 procedure TdlgImportXMobile.sbRetryClick(Sender: TObject);

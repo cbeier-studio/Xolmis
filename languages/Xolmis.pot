@@ -800,6 +800,7 @@ msgid "How was sexed"
 msgstr ""
 
 #: cbs_datacolumns.rscid
+msgctxt "cbs_datacolumns.rscid"
 msgid "ID"
 msgstr ""
 
@@ -4331,7 +4332,12 @@ msgstr ""
 
 #: cbs_locale.rsmobilenestcreated
 #, object-pascal-format
-msgid "Nest created: %d"
+msgid "Nest created: %d - %s"
+msgstr ""
+
+#: cbs_locale.rsmobilenestupdated
+#, object-pascal-format
+msgid "Nest updated: %d - %s"
 msgstr ""
 
 #: cbs_locale.rsmobilepointcount
@@ -4356,14 +4362,29 @@ msgstr ""
 msgid "Species %s already recorded!"
 msgstr ""
 
+#: cbs_locale.rsmobilespecimencreated
+#, object-pascal-format
+msgid "Specimen created: %d - %s"
+msgstr ""
+
 #: cbs_locale.rsmobilespecimenexists
 #, object-pascal-format
 msgid "Specimen already recorded: %s"
 msgstr ""
 
+#: cbs_locale.rsmobilespecimenupdated
+#, object-pascal-format
+msgid "Specimen updated: %d - %s"
+msgstr ""
+
 #: cbs_locale.rsmobilesurveycreated
 #, object-pascal-format
-msgid "Survey created: %d"
+msgid "Survey created: %d - %s"
+msgstr ""
+
+#: cbs_locale.rsmobilesurveyupdated
+#, object-pascal-format
+msgid "Survey updated: %d - %s"
 msgstr ""
 
 #: cbs_locale.rsmobiletransectioncount
@@ -7909,14 +7930,6 @@ msgctxt "tdlgimportnests.sbrun.caption"
 msgid "Import"
 msgstr ""
 
-#: tdlgimportxmobile.btncreatenest.caption
-msgid "Create new nest"
-msgstr ""
-
-#: tdlgimportxmobile.btncreatesurvey.caption
-msgid "Create new survey"
-msgstr ""
-
 #: tdlgimportxmobile.btnhelp.caption
 msgctxt "tdlgimportxmobile.btnhelp.caption"
 msgid "&Help"
@@ -7924,10 +7937,6 @@ msgstr ""
 
 #: tdlgimportxmobile.caption
 msgid "Import from Xolmis Mobile"
-msgstr ""
-
-#: tdlgimportxmobile.enest.texthint
-msgid "Select a nest, if it already exists"
 msgstr ""
 
 #: tdlgimportxmobile.esourcefile.buttonhint
@@ -7940,31 +7949,31 @@ msgctxt "tdlgimportxmobile.esourcefile.texthint"
 msgid "Select a file..."
 msgstr ""
 
-#: tdlgimportxmobile.esurvey.texthint
-msgid "Select a survey, if it already exists"
+#: tdlgimportxmobile.gridmap.columns[0].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[0].title.caption"
+msgid "Import"
 msgstr ""
 
-#: tdlgimportxmobile.lbldatatype.caption
-msgid "Type of data:"
+#: tdlgimportxmobile.gridmap.columns[1].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[1].title.caption"
+msgid "ID"
 msgstr ""
 
-#: tdlgimportxmobile.lbllisttype.caption
-msgid "Type of list:"
+#: tdlgimportxmobile.gridmap.columns[2].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[2].title.caption"
+msgid "Observer"
 msgstr ""
 
-#: tdlgimportxmobile.lblmackinnonlistnumber.caption
-msgctxt "tdlgimportxmobile.lblmackinnonlistnumber.caption"
-msgid "Mackinnon list number:"
+#: tdlgimportxmobile.gridmap.columns[3].title.caption
+msgid "List nr."
 msgstr ""
 
-#: tdlgimportxmobile.lblnest.caption
-msgctxt "tdlgimportxmobile.lblnest.caption"
-msgid "Nest:"
+#: tdlgimportxmobile.gridmap.columns[4].title.caption
+msgid "Record"
 msgstr ""
 
-#: tdlgimportxmobile.lblobserver.caption
-msgctxt "tdlgimportxmobile.lblobserver.caption"
-msgid "Observer: *"
+#: tdlgimportxmobile.lblmapinstruction.caption
+msgid "Confirm the relations between the data to be imported and the database. "
 msgstr ""
 
 #: tdlgimportxmobile.lblprogressinstruction.caption
@@ -7985,14 +7994,13 @@ msgctxt "tdlgimportxmobile.lblsubtitleimportfinished.caption"
 msgid "The selected file(s) were sucessfully imported."
 msgstr ""
 
-#: tdlgimportxmobile.lblsurvey.caption
-msgctxt "tdlgimportxmobile.lblsurvey.caption"
-msgid "Survey:"
-msgstr ""
-
 #: tdlgimportxmobile.lbltitleimportfinished.caption
 msgctxt "tdlgimportxmobile.lbltitleimportfinished.caption"
 msgid "Finished importing!"
+msgstr ""
+
+#: tdlgimportxmobile.lbltitlemap.caption
+msgid "Records"
 msgstr ""
 
 #: tdlgimportxmobile.lbltitleprogress.caption
@@ -8003,6 +8011,10 @@ msgstr ""
 #: tdlgimportxmobile.lbltitlesource.caption
 msgctxt "tdlgimportxmobile.lbltitlesource.caption"
 msgid "Source"
+msgstr ""
+
+#: tdlgimportxmobile.msgsourcefile.caption
+msgid "File not selected."
 msgstr ""
 
 #: tdlgimportxmobile.opendlg.title
@@ -8023,6 +8035,11 @@ msgstr ""
 #: tdlgimportxmobile.sbnext.caption
 msgctxt "tdlgimportxmobile.sbnext.caption"
 msgid "&Next"
+msgstr ""
+
+#: tdlgimportxmobile.sbprevious.caption
+msgctxt "tdlgimportxmobile.sbprevious.caption"
+msgid "&Previous"
 msgstr ""
 
 #: tdlgimportxmobile.sbretry.caption
@@ -9368,11 +9385,6 @@ msgctxt "tedtexpedition.eenddate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
-#: tedtexpedition.elocality.buttonhint
-msgctxt "tedtexpedition.elocality.buttonhint"
-msgid "Find locality"
-msgstr ""
-
 #: tedtexpedition.eproject.buttonhint
 msgctxt "tedtexpedition.eproject.buttonhint"
 msgid "Find project"
@@ -9395,11 +9407,6 @@ msgstr ""
 
 #: tedtexpedition.lblenddate.caption
 msgid "End date: *"
-msgstr ""
-
-#: tedtexpedition.lbllocality.caption
-msgctxt "tedtexpedition.lbllocality.caption"
-msgid "Locality:"
 msgstr ""
 
 #: tedtexpedition.lblname.caption
@@ -13942,6 +13949,11 @@ msgctxt "tfrmcustomgrid.sbpriorrecord.hint"
 msgid "Previous record"
 msgstr ""
 
+#: tfrmcustomgrid.sbquickentry.hint
+msgctxt "tfrmcustomgrid.sbquickentry.hint"
+msgid "Quick Entry"
+msgstr ""
+
 #: tfrmcustomgrid.sbrecordhistory.hint
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
@@ -14342,6 +14354,7 @@ msgid "Copy"
 msgstr ""
 
 #: tfrmgeoconverter.sbopenfile.caption
+msgctxt "tfrmgeoconverter.sbopenfile.caption"
 msgid "Open"
 msgstr ""
 
@@ -15161,6 +15174,39 @@ msgstr ""
 #: tfrmprintpreview.tbzoom.hint
 msgctxt "tfrmprintpreview.tbzoom.hint"
 msgid "Zoom"
+msgstr ""
+
+#: tfrmquickentry.caption
+msgctxt "tfrmquickentry.caption"
+msgid "Quick Entry"
+msgstr ""
+
+#: tfrmquickentry.sbaddrows.caption
+msgid "Add rows"
+msgstr ""
+
+#: tfrmquickentry.sbclose.caption
+msgctxt "tfrmquickentry.sbclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tfrmquickentry.sbdelrows.caption
+msgid "Delete rows"
+msgstr ""
+
+#: tfrmquickentry.sbimport.caption
+msgctxt "tfrmquickentry.sbimport.caption"
+msgid "Import"
+msgstr ""
+
+#: tfrmquickentry.sbopen.caption
+msgctxt "tfrmquickentry.sbopen.caption"
+msgid "Open"
+msgstr ""
+
+#: tfrmquickentry.sbsaveas.caption
+msgctxt "tfrmquickentry.sbsaveas.caption"
+msgid "Save"
 msgstr ""
 
 #: tfrmtaxa.caption

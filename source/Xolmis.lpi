@@ -1345,6 +1345,17 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
       </Unit>
+      <Unit>
+        <Filename Value="models\cbs_xmobile.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="screens\ufrm_quickentry.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmQuickEntry"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
     <Debugger>
       <StoreDebuggerClassConfInSession Value="True"/>

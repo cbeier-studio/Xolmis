@@ -972,14 +972,19 @@ uses
     rsMobilePointCount = 'Point Count';
     rsMobileBanding = 'Banding';
     rsMobileCasual = 'Casual Observation';
-    rsMobileSurveyCreated = 'Survey created: %d';
+
+    rsMobileSurveyCreated = 'Survey created: %d - %s';
+    rsMobileSurveyUpdated = 'Survey updated: %d - %s';
+    rsMobileNestCreated = 'Nest created: %d - %s';
+    rsMobileNestUpdated = 'Nest updated: %d - %s';
+    rsMobileSpecimenCreated = 'Specimen created: %d - %s';
+    rsMobileSpecimenUpdated = 'Specimen updated: %d - %s';
     rsMobileImportingSpecies = 'Importing species list...';
     rsMobileImportingVegetation = 'Importing vegetation data...';
     rsMobileImportingWeather = 'Importing weather data...';
     rsMobileSpeciesExists = 'Species %s already recorded!';
     rsMobileVegetationExists = 'Vegetation already recorded: %s';
     rsMobileWeatherExists = 'Weather already recorded: %s';
-    rsMobileNestCreated = 'Nest created: %d';
     rsMobileImportingRevision = 'Importing nest revisions...';
     rsMobileImportingEgg = 'Importing eggs...';
     rsMobileRevisionExists = 'Nest revision already recorded: %s';

@@ -493,19 +493,19 @@ procedure TedtSpecimen.GetRecord;
 begin
   eFieldNumber.Text := FSpecimen.FieldNumber;
   case FSpecimen.SampleType of
-    'WS': cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenCarcassWhole);
-    'PS': cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenCarcassPartial);
-    'N':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenNest);
-    'B':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenBones);
-    'E':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenEgg);
-    'P':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenParasites);
-    'F':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenFeathers);
-    'BS': cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenBlood);
-    'C':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenClaw);
-    'S':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenSwab);
-    'T':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenTissues);
-    'D':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenFeces);
-    'R':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenRegurgite);
+    sptWholeCarcass:   cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenCarcassWhole);
+    sptPartialCarcass: cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenCarcassPartial);
+    sptNest:           cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenNest);
+    sptBones:          cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenBones);
+    sptEgg:            cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenEgg);
+    sptParasites:      cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenParasites);
+    sptFeathers:       cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenFeathers);
+    sptBlood:          cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenBlood);
+    sptClaw:           cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenClaw);
+    sptSwab:           cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenSwab);
+    sptTissues:        cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenTissues);
+    sptFeces:          cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenFeces);
+    sptRegurgite:      cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSpecimenRegurgite);
   end;
   if (FSpecimen.CollectionYear > 0) then
   begin
@@ -562,19 +562,19 @@ procedure TedtSpecimen.SetRecord;
 begin
   FSpecimen.FieldNumber := eFieldNumber.Text;
   case cbSampleType.ItemIndex of
-    0: FSpecimen.SampleType := 'WS';
-    1: FSpecimen.SampleType := 'PS';
-    2: FSpecimen.SampleType := 'N';
-    3: FSpecimen.SampleType := 'B';
-    4: FSpecimen.SampleType := 'E';
-    5: FSpecimen.SampleType := 'P';
-    6: FSpecimen.SampleType := 'F';
-    7: FSpecimen.SampleType := 'BS';
-    8: FSpecimen.SampleType := 'C';
-    9: FSpecimen.SampleType := 'S';
-   10: FSpecimen.SampleType := 'T';
-   11: FSpecimen.SampleType := 'D';
-   12: FSpecimen.SampleType := 'R';
+    0: FSpecimen.SampleType := sptWholeCarcass;
+    1: FSpecimen.SampleType := sptPartialCarcass;
+    2: FSpecimen.SampleType := sptNest;
+    3: FSpecimen.SampleType := sptBones;
+    4: FSpecimen.SampleType := sptEgg;
+    5: FSpecimen.SampleType := sptParasites;
+    6: FSpecimen.SampleType := sptFeathers;
+    7: FSpecimen.SampleType := sptBlood;
+    8: FSpecimen.SampleType := sptClaw;
+    9: FSpecimen.SampleType := sptSwab;
+   10: FSpecimen.SampleType := sptTissues;
+   11: FSpecimen.SampleType := sptFeces;
+   12: FSpecimen.SampleType := sptRegurgite;
   end;
   FSpecimen.CollectionYear := StrToInt(eCollectionYear.Text);
   if eCollectionMonth.Text <> EmptyStr then

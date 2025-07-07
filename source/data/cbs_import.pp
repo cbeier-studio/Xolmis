@@ -64,9 +64,6 @@ const
 type
   TImportFileType = (iftCSV, iftTSV, iftExcel, iftExcelOOXML, iftOpenDocument, iftJSON, iftDBF, iftXML,
                       iftKML, iftGPX, iftGeoJSON);
-  TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
-  TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invMackinnonList, invTransectionCount,
-                          invPointCount, invBanding, invCasual);
 
   TFieldsMap = specialize TFPGMap<string, string>;
 
