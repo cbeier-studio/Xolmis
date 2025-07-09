@@ -1,0 +1,11 @@
+{"version":1,"strings":[
+{"hash":219472905,"name":"tfrmquickentry.caption","sourcebytes":[81,117,105,99,107,32,69,110,116,114,121],"value":"Quick Entry"},
+{"hash":4863637,"name":"tfrmquickentry.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
+{"hash":353982,"name":"tfrmquickentry.sbopen.caption","sourcebytes":[79,112,101,110],"value":"Open"},
+{"hash":366789,"name":"tfrmquickentry.sbsaveas.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":210992887,"name":"tfrmquickentry.sbaddrows.caption","sourcebytes":[73,110,115,101,114,116,32,114,111,119],"value":"Insert row"},
+{"hash":212063559,"name":"tfrmquickentry.sbdelrows.caption","sourcebytes":[68,101,108,101,116,101,32,114,111,119],"value":"Delete row"},
+{"hash":84178580,"name":"tfrmquickentry.sbimport.caption","sourcebytes":[73,109,112,111,114,116],"value":"Import"},
+{"hash":210992887,"name":"tfrmquickentry.pmginsertrow.caption","sourcebytes":[73,110,115,101,114,116,32,114,111,119],"value":"Insert row"},
+{"hash":212063559,"name":"tfrmquickentry.pmgdeleterow.caption","sourcebytes":[68,101,108,101,116,101,32,114,111,119],"value":"Delete row"}
+]}

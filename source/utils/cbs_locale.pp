@@ -231,6 +231,8 @@ uses
     { Deletion messages }
     rsDeleteConnectionTitle = 'Delete connection';
     rsDeleteConnectionPrompt = 'Do you really want to delete this connection?';
+    rsDeleteRowTitle = 'Delete row';
+    rsDeleteRowPrompt = 'Do you really want to delete the selected row?';
     rsDeleteRecordTitle = 'Delete record';
     rsDeleteRecordPrompt = 'Do you really want to delete this record?';
     rsDeleteRecordFooter = 'Deleted records remain in the recycle bin for a duration specified in the ' +

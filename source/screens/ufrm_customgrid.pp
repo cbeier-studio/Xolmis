@@ -50,6 +50,8 @@ type
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
     sbAddFeathersBatch: TSpeedButton;
+    sbQuickEntry: TSpeedButton;
+    sbQuickEntryChild: TSpeedButton;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
     DropAudios: TDropFileTarget;
@@ -1050,6 +1052,8 @@ type
     procedure sbPrintClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
     procedure sbPriorRecordClick(Sender: TObject);
+    procedure sbQuickEntryChildClick(Sender: TObject);
+    procedure sbQuickEntryClick(Sender: TObject);
     procedure sbRecordHistoryClick(Sender: TObject);
     procedure sbChildHistoryClick(Sender: TObject);
     procedure sbRecordVerificationsClick(Sender: TObject);
@@ -1386,7 +1390,7 @@ uses
   cbs_validations, cbs_setparam, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
-  ufrm_main, ubatch_neteffort, ubatch_feathers;
+  ufrm_main, ubatch_neteffort, ubatch_feathers, ufrm_quickentry;
 
 {$R *.lfm}
 
@@ -1998,6 +2002,7 @@ begin
   pSideToolbar.Color := clSolidBGQuaternaryDark;
 
   sbInsertRecord.Images := iButtonsDark;
+  sbQuickEntry.Images := iButtonsDark;
   sbEditRecord.Images := iButtonsDark;
   sbRecordVerifications.Images := iButtonsDark;
   sbMarkRecords.Images := iButtonsDark;
@@ -3364,7 +3369,7 @@ begin
         if FieldName = 'locality_name' then
           FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'locality_id', 'locality_name', Key);
         if FieldName = 'parent_site_name' then
-          FindSiteDlg([gfLocalities], InplaceEditor, DataSource.DataSet, 'parent_site_id', 'parent_site_name', Key);
+          FindSiteDlg([gfAll], InplaceEditor, DataSource.DataSet, 'parent_site_id', 'parent_site_name', Key);
 
         if FieldName = 'institution_name' then
           FindDlg(tbInstitutions, InplaceEditor, DataSource.DataSet, 'institution_id', 'institution_name', False, Key);
@@ -9106,6 +9111,12 @@ begin
       //tbImages: ;
       //tbAudioLibrary: ;
     end;
+    dsLink1.DataSet.Refresh;
+    dsLink2.DataSet.Refresh;
+    dsLink3.DataSet.Refresh;
+    dsLink4.DataSet.Refresh;
+    dsLink5.DataSet.Refresh;
+    dsLink6.DataSet.Refresh;
   finally
     UpdateChildBar;
     Working := False;
@@ -9573,6 +9584,30 @@ begin
     UpdateButtons(dsLink.DataSet);
   finally
     Working := False;
+  end;
+end;
+
+procedure TfrmCustomGrid.sbQuickEntryChildClick(Sender: TObject);
+begin
+  frmQuickEntry := TfrmQuickEntry.Create(nil);
+  with frmQuickEntry do
+  try
+    frmQuickEntry.TableType := FChildTable;
+    ShowModal;
+  finally
+    FreeAndNil(frmQuickEntry);
+  end;
+end;
+
+procedure TfrmCustomGrid.sbQuickEntryClick(Sender: TObject);
+begin
+  frmQuickEntry := TfrmQuickEntry.Create(nil);
+  with frmQuickEntry do
+  try
+    frmQuickEntry.TableType := FTableType;
+    ShowModal;
+  finally
+    FreeAndNil(frmQuickEntry);
   end;
 end;
 
@@ -12838,35 +12873,35 @@ begin
       tbUsers: ;
       tbRecordHistory: ;
       tbRecordVerifications: ;
-      tbGazetteer:          SummaryGazetteer(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbSamplingPlots:      SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbGazetteer:          SummaryGazetteer(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbSamplingPlots:      SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbPermanentNets: ;
-      tbInstitutions:       SummaryInstitutions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbPeople:             SummaryPeople(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbProjects:           SummaryProjects(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbInstitutions:       SummaryInstitutions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbPeople:             SummaryPeople(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbProjects:           SummaryProjects(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbProjectTeams: ;
-      tbPermits:            SummaryPermits(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbPermits:            SummaryPermits(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbTaxonRanks: ;
       tbZooTaxa: ;
-      tbBotanicTaxa:        SummaryBotanicTaxa(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbBands:              SummaryBands(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbBotanicTaxa:        SummaryBotanicTaxa(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbBands:              SummaryBands(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbBandHistory: ;
-      tbIndividuals:        SummaryIndividuals(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbIndividuals:        SummaryIndividuals(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbMolts: ;
       tbFeathers: ;
-      tbNests:              SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbNests:              SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbNestOwners: ;
-      tbNestRevisions:      SummaryNestRevisions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbEggs:               SummaryEggs(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbNestRevisions:      SummaryNestRevisions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbEggs:               SummaryEggs(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbMethods: ;
-      tbExpeditions:        SummaryExpeditions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbSurveys:            SummarySurveys(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbExpeditions:        SummaryExpeditions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbSurveys:            SummarySurveys(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbSurveyTeams: ;
       tbNetsEffort: ;
       tbWeatherLogs: ;
-      tbSightings:          SummarySightings(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
-      tbSpecimens:          SummarySpecimens(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLWhere.Text);
+      tbSightings:          SummarySightings(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
+      tbSpecimens:          SummarySpecimens(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbSamplePreps: ;
       tbSpecimenCollectors: ;
       tbImages: ;
@@ -13314,6 +13349,7 @@ begin
       pSide.Enabled := False;
     end;
   end;
+  sbQuickEntryChild.Enabled := sbAddChild.Enabled;
   eAddChild.Enabled := sbAddChild.Enabled;
   sbAddNetsBatch.Enabled := sbAddChild.Enabled;
   sbAddFeathersBatch.Enabled := sbAddChild.Enabled;

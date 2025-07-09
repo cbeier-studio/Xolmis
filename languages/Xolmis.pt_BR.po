@@ -1034,6 +1034,11 @@ msgstr "Menor diâmetro interno"
 msgid "Lesser plant diameter"
 msgstr "Menor diâmetro da planta"
 
+#: cbs_datacolumns.rscmistnet
+msgctxt "cbs_datacolumns.rscmistnet"
+msgid "Mistnet"
+msgstr "Rede"
+
 #: cbs_datacolumns.rscmistnetaream
 msgid "Mistnet area (m²)"
 msgstr "Área da rede (m²)"
@@ -1390,6 +1395,10 @@ msgstr "Rede permanente ID"
 #: cbs_datacolumns.rscpermitid
 msgid "Permit ID"
 msgstr "Licença ID"
+
+#: cbs_datacolumns.rscpermitnumber
+msgid "Permit number"
+msgstr "Nº da licença"
 
 #: cbs_datacolumns.rscperson
 msgctxt "cbs_datacolumns.rscperson"
@@ -2614,6 +2623,7 @@ msgid "Method"
 msgstr "Método"
 
 #: cbs_locale.rscaptionmistnet
+msgctxt "cbs_locale.rscaptionmistnet"
 msgid "Mistnet"
 msgstr "Rede"
 
@@ -3193,6 +3203,15 @@ msgstr "Deseja realmente apagar esse registro?"
 msgctxt "cbs_locale.rsdeleterecordtitle"
 msgid "Delete record"
 msgstr "Apagar registro"
+
+#: cbs_locale.rsdeleterowprompt
+msgid "Do you really want to delete the selected row?"
+msgstr "Deseja realmente apagar a linha selecionada?"
+
+#: cbs_locale.rsdeleterowtitle
+msgctxt "cbs_locale.rsdeleterowtitle"
+msgid "Delete row"
+msgstr "Apagar linha"
 
 #: cbs_locale.rsdelimitercolon
 msgctxt "cbs_locale.rsdelimitercolon"
@@ -13940,6 +13959,11 @@ msgctxt "tfrmcustomgrid.sbquickentry.hint"
 msgid "Quick Entry"
 msgstr "Quick Entry"
 
+#: tfrmcustomgrid.sbquickentrychild.hint
+msgctxt "tfrmcustomgrid.sbquickentrychild.hint"
+msgid "Quick Entry"
+msgstr "Quick Entry"
+
 #: tfrmcustomgrid.sbrecordhistory.hint
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
@@ -15178,9 +15202,20 @@ msgctxt "tfrmquickentry.caption"
 msgid "Quick Entry"
 msgstr "Quick Entry"
 
+#: tfrmquickentry.pmgdeleterow.caption
+msgctxt "tfrmquickentry.pmgdeleterow.caption"
+msgid "Delete row"
+msgstr "Apagar linha"
+
+#: tfrmquickentry.pmginsertrow.caption
+msgctxt "tfrmquickentry.pmginsertrow.caption"
+msgid "Insert row"
+msgstr "Inserir linha"
+
 #: tfrmquickentry.sbaddrows.caption
-msgid "Add rows"
-msgstr "Adicionar linhas"
+msgctxt "tfrmquickentry.sbaddrows.caption"
+msgid "Insert row"
+msgstr "Inserir linha"
 
 #: tfrmquickentry.sbclose.caption
 msgctxt "tfrmquickentry.sbclose.caption"
@@ -15188,8 +15223,9 @@ msgid "Close"
 msgstr "Fechar"
 
 #: tfrmquickentry.sbdelrows.caption
-msgid "Delete rows"
-msgstr "Apagar linhas"
+msgctxt "tfrmquickentry.sbdelrows.caption"
+msgid "Delete row"
+msgstr "Apagar linha"
 
 #: tfrmquickentry.sbimport.caption
 msgctxt "tfrmquickentry.sbimport.caption"

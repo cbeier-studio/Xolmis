@@ -21,7 +21,8 @@ unit cbs_finddialogs;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, DB, StdCtrls, EditBtn, cbs_system, cbs_datatypes, cbs_taxonomy, cbs_gis;
+  Classes, SysUtils, Forms, Controls, DB, StdCtrls, EditBtn, Grids,
+  cbs_system, cbs_datatypes, cbs_taxonomy, cbs_gis;
 
   { Find and select records }
   function FindDlg(aTable: TTableType; aControl: TControl; var aResultKey: Integer;
@@ -70,8 +71,16 @@ begin
     if Assigned(aControl) then
     begin
       //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
-      PControl := aControl.ClientOrigin;
-      SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+      if aControl is TStringGrid then
+      begin
+        PControl := TStringGrid(aControl).Editor.ClientOrigin;
+        SetDialogPosition(PControl.X, PControl.Y, TStringGrid(aControl).Editor.Width, TStringGrid(aControl).Editor.Height);
+      end
+      else
+      begin
+        PControl := aControl.ClientOrigin;
+        SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+      end;
     end
     else
       Position := poScreenCenter;
@@ -85,11 +94,17 @@ begin
         begin
           TCustomEdit(aControl).Text := dlgFind.NameSelected;
           TCustomEdit(aControl).Modified := True;
-        end;
+        end
+        else
         if aControl is TEditButton then
         begin
           TEditButton(aControl).Text := dlgFind.NameSelected;
           TEditButton(aControl).Modified := True;
+        end
+        else
+        if aControl is TStringGrid then
+        begin
+          TStringGrid(aControl).Cells[TStringGrid(aControl).Col, TStringGrid(aControl).Row] := dlgFind.NameSelected;
         end;
       end;
       Result := True;
@@ -150,8 +165,16 @@ begin
     FiltroTaxon := aFiltro;
     UsarValido := UseValid;
     //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
-    PControl := aControl.ClientOrigin;
-    SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    if aControl is TStringGrid then
+    begin
+      PControl := TStringGrid(aControl).Editor.ClientOrigin;
+      SetDialogPosition(PControl.X, PControl.Y, TStringGrid(aControl).Editor.Width, TStringGrid(aControl).Editor.Height);
+    end
+    else
+    begin
+      PControl := aControl.ClientOrigin;
+      SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    end;
     Init := aInit;
     if ShowModal = mrOK then
     begin
@@ -166,6 +189,11 @@ begin
       begin
         TEditButton(aControl).Text := dlgFindTaxon.Nome;
         TEditButton(aControl).Modified := True;
+      end
+      else
+      if aControl is TStringGrid then
+      begin
+        TStringGrid(aControl).Cells[TStringGrid(aControl).Col, TStringGrid(aControl).Row] := dlgFindTaxon.Nome;
       end;
       Result := True;
     end;
@@ -272,20 +300,37 @@ begin
     TableType := tbBotanicTaxa;
     TaxonFilter := aFiltro;
     //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
-    PControl := aControl.ClientOrigin;
-    SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    if aControl is TStringGrid then
+    begin
+      PControl := TStringGrid(aControl).Editor.ClientOrigin;
+      SetDialogPosition(PControl.X, PControl.Y, TStringGrid(aControl).Editor.Width, TStringGrid(aControl).Editor.Height);
+    end
+    else
+    begin
+      PControl := aControl.ClientOrigin;
+      SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    end;
     InitialValue := aInit;
     if ShowModal = mrOK then
     begin
       aCod := dlgFind.KeySelected;
-      if aControl is TCustomEditButton then
-        TCustomEditButton(aControl).Text := dlgFind.NameSelected;
-      Result := True;
-      if aControl is TCustomEditButton then
-        TCustomEditButton(aControl).Modified := True
-      else
       if aControl is TCustomEdit then
+      begin
+        TCustomEdit(aControl).Text := dlgFind.NameSelected;
         TCustomEdit(aControl).Modified := True;
+      end
+      else
+      if aControl is TEditButton then
+      begin
+        TEditButton(aControl).Text := dlgFind.NameSelected;
+        TEditButton(aControl).Modified := True;
+      end
+      else
+      if aControl is TStringGrid then
+      begin
+        TStringGrid(aControl).Cells[TStringGrid(aControl).Col, TStringGrid(aControl).Row] := dlgFind.NameSelected;
+      end;
+      Result := True;
     end;
   finally
     FreeAndNil(dlgFind);
@@ -339,8 +384,16 @@ begin
     TableType := tbGazetteer;
     SiteFilter := aFiltro;
     //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
-    PControl := aControl.ClientOrigin;
-    SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    if aControl is TStringGrid then
+    begin
+      PControl := TStringGrid(aControl).Editor.ClientOrigin;
+      SetDialogPosition(PControl.X, PControl.Y, TStringGrid(aControl).Editor.Width, TStringGrid(aControl).Editor.Height);
+    end
+    else
+    begin
+      PControl := aControl.ClientOrigin;
+      SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
+    end;
     InitialValue := aInit;
     if ShowModal = mrOK then
     begin
@@ -349,11 +402,17 @@ begin
       begin
         TCustomEdit(aControl).Text := dlgFind.NameSelected;
         TCustomEdit(aControl).Modified := True;
-      end;
+      end
+      else
       if aControl is TCustomEditButton then
       begin
         TCustomEditButton(aControl).Text := dlgFind.NameSelected;
         TCustomEditButton(aControl).Modified := True;
+      end
+      else
+      if aControl is TStringGrid then
+      begin
+        TStringGrid(aControl).Cells[TStringGrid(aControl).Col, TStringGrid(aControl).Row] := dlgFind.NameSelected;
       end;
     end;
   finally

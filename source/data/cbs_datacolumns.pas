@@ -506,6 +506,8 @@ resourcestring
   rscArea = 'Area';
   rscRachisWidth = 'Rachis width';
   rscBarbDensity = 'Barb density';
+  rscPermitNumber = 'Permit number';
+  rscMistnet = 'Mistnet';
 
   rscValue = 'Value';
   rscTally = 'Count';
@@ -1194,7 +1196,7 @@ begin
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'permit_type':            Fields[i].DisplayLabel := rscType;
         'permit_name':            Fields[i].DisplayLabel := rscName;
-        'permit_number':          Fields[i].DisplayLabel := rscNumber;
+        'permit_number':          Fields[i].DisplayLabel := rscPermitNumber;
         'dispatcher_name':        Fields[i].DisplayLabel := rscDispatcher;
         'dispatch_date':          Fields[i].DisplayLabel := rscDispatchDate;
         'expire_date':            Fields[i].DisplayLabel := rscExpireDate;
@@ -1742,7 +1744,7 @@ begin
         'net_station_id':         Fields[i].DisplayLabel := rscSamplingPlotID;
         'net_station_name':       Fields[i].DisplayLabel := rscSamplingPlot;
         'net_id':                 Fields[i].DisplayLabel := rscMistnetID;
-        'net_number':             Fields[i].DisplayLabel := rscMistnetNr;
+        'net_number':             Fields[i].DisplayLabel := rscMistnet;
         'bander_id':              Fields[i].DisplayLabel := rscBanderID;
         'bander_name':            Fields[i].DisplayLabel := rscBander;
         'annotator_id':           Fields[i].DisplayLabel := rscAnnotatorID;

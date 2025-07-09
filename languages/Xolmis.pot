@@ -1032,6 +1032,11 @@ msgstr ""
 msgid "Lesser plant diameter"
 msgstr ""
 
+#: cbs_datacolumns.rscmistnet
+msgctxt "cbs_datacolumns.rscmistnet"
+msgid "Mistnet"
+msgstr ""
+
 #: cbs_datacolumns.rscmistnetaream
 msgid "Mistnet area (m²)"
 msgstr ""
@@ -1387,6 +1392,10 @@ msgstr ""
 
 #: cbs_datacolumns.rscpermitid
 msgid "Permit ID"
+msgstr ""
+
+#: cbs_datacolumns.rscpermitnumber
+msgid "Permit number"
 msgstr ""
 
 #: cbs_datacolumns.rscperson
@@ -2610,6 +2619,7 @@ msgid "Method"
 msgstr ""
 
 #: cbs_locale.rscaptionmistnet
+msgctxt "cbs_locale.rscaptionmistnet"
 msgid "Mistnet"
 msgstr ""
 
@@ -3186,6 +3196,15 @@ msgstr ""
 #: cbs_locale.rsdeleterecordtitle
 msgctxt "cbs_locale.rsdeleterecordtitle"
 msgid "Delete record"
+msgstr ""
+
+#: cbs_locale.rsdeleterowprompt
+msgid "Do you really want to delete the selected row?"
+msgstr ""
+
+#: cbs_locale.rsdeleterowtitle
+msgctxt "cbs_locale.rsdeleterowtitle"
+msgid "Delete row"
 msgstr ""
 
 #: cbs_locale.rsdelimitercolon
@@ -13954,6 +13973,11 @@ msgctxt "tfrmcustomgrid.sbquickentry.hint"
 msgid "Quick Entry"
 msgstr ""
 
+#: tfrmcustomgrid.sbquickentrychild.hint
+msgctxt "tfrmcustomgrid.sbquickentrychild.hint"
+msgid "Quick Entry"
+msgstr ""
+
 #: tfrmcustomgrid.sbrecordhistory.hint
 msgctxt "tfrmcustomgrid.sbrecordhistory.hint"
 msgid "View record history"
@@ -15181,8 +15205,19 @@ msgctxt "tfrmquickentry.caption"
 msgid "Quick Entry"
 msgstr ""
 
+#: tfrmquickentry.pmgdeleterow.caption
+msgctxt "tfrmquickentry.pmgdeleterow.caption"
+msgid "Delete row"
+msgstr ""
+
+#: tfrmquickentry.pmginsertrow.caption
+msgctxt "tfrmquickentry.pmginsertrow.caption"
+msgid "Insert row"
+msgstr ""
+
 #: tfrmquickentry.sbaddrows.caption
-msgid "Add rows"
+msgctxt "tfrmquickentry.sbaddrows.caption"
+msgid "Insert row"
 msgstr ""
 
 #: tfrmquickentry.sbclose.caption
@@ -15191,7 +15226,8 @@ msgid "Close"
 msgstr ""
 
 #: tfrmquickentry.sbdelrows.caption
-msgid "Delete rows"
+msgctxt "tfrmquickentry.sbdelrows.caption"
+msgid "Delete row"
 msgstr ""
 
 #: tfrmquickentry.sbimport.caption

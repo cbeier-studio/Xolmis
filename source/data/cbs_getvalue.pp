@@ -47,6 +47,7 @@ uses
   //procedure GetSiteHierarchyForSpecimen(aSpecimen: TSpecimen);
 
   procedure FillComboBox(aComboBox: TComboBox; aTable, aField, aSort: String; aFilter: String = '');
+  procedure FillStrings(aStrings: TStrings; aTable, aField, aSort: String; aFilter: String);
 
 implementation
 
@@ -431,9 +432,47 @@ begin
     aComboBox.Items.Clear;
     if RecordCount > 0 then
     begin
-      // aCombo.Items.Add(''); //Adiciona uma linha em branco
+      // aCombo.Items.Add(''); //Add empty line
       repeat
         aComboBox.Items.Add(FieldByName(aField).AsString);
+        Next;
+      until EOF;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure FillStrings(aStrings: TStrings; aTable, aField, aSort: String; aFilter: String);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT %afield FROM %atable');
+    Add('WHERE (active_status = 1)');
+    MacroByName('AFIELD').Value := aField;
+    MacroByName('ATABLE').Value := aTable;
+    if aFilter <> '' then
+    begin
+      Add('AND (%afilter = 1)');
+      MacroByName('AFILTER').Value := aFilter;
+    end;
+    Add('ORDER BY %aorder ASC');
+    MacroByName('AORDER').Value := aSort;
+    //GravaLogSQL(SQL);
+    Open;
+    aStrings.Clear;
+    if RecordCount > 0 then
+    begin
+      // aCombo.Items.Add(''); //Add empty line
+      repeat
+        aStrings.Add(FieldByName(aField).AsString);
         Next;
       until EOF;
     end;
