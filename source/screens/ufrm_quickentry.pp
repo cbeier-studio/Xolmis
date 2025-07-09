@@ -41,6 +41,7 @@ type
     procedure sbCloseClick(Sender: TObject);
     procedure sbDelRowsClick(Sender: TObject);
   private
+    FColFieldNames: TStringList;
     FSearchableCols, FNumericCols, FIntegerCols, FDateCols, FTimeCols: TStringList;
     FTableType: TTableType;
     procedure ApplyDarkMode;
@@ -145,6 +146,7 @@ end;
 
 procedure TfrmQuickEntry.FormCreate(Sender: TObject);
 begin
+  FColFieldNames := TStringList.Create;
   SetDateCols;
   SetIntegerCols;
   SetNumericCols;
@@ -159,6 +161,7 @@ begin
   FreeAndNil(FNumericCols);
   FreeAndNil(FSearchableCols);
   FreeAndNil(FTimeCols);
+  FreeAndNil(FColFieldNames);
 end;
 
 procedure TfrmQuickEntry.FormShow(Sender: TObject);
@@ -184,29 +187,34 @@ begin
   CurrCol.Width := 60;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z';
+  FColFieldNames.Add('band_size');
   //Number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNumber;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('band_number');
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsBandTypeList;
+  FColFieldNames.Add('band_type');
   //Status *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsBandStatusList;
+  FColFieldNames.Add('band_status');
   //Reported
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscReported;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('band_reported');
   //Source *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
@@ -217,29 +225,34 @@ begin
     rsBandLivingBirdBandedByOthers + '","' +
     rsBandDeadBirdBandedByOthers + '","' +
     rsBandFoundLoose + '"';
+  FColFieldNames.Add('band_source');
   //Supplier *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupplier;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('supplier');
   //Carrier
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCarrier;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('carrier');
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('project');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsBotanicTaxa;
@@ -251,34 +264,40 @@ begin
   CurrCol.Title.Caption := rscScientificName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('taxon_name');
   //Authorship
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAuthorship;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('authorship');
   //Taxonomic rank *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxonomicRank;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FillStrings(CurrCol.PickList, 'taxon_ranks', 'rank_name', 'rank_seq', 'icbn');
+  FColFieldNames.Add('rank');
   //Vernacular name
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscVernacularNameS;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('vernacular_name');
   //Parent taxon
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscParentTaxon;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('parent_taxon');
   //Valid name
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscValidName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('valid_name');
 end;
 
 procedure TfrmQuickEntry.LoadColsCaptures;
@@ -292,90 +311,106 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('individual');
   //Survey
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSurvey;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('survey');
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('locality');
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('capture_date');
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('capture_time');
   //Bander *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBander;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('bander');
   //Annotator *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAnnotator;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('annotator');
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsCaptureTypeList;
+  FColFieldNames.Add('capture_type');
   //Mistnet
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnet;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('net');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Taxon
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('taxon');
   //Band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBand;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('band');
   //Removed band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRemovedBand;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('removed_band');
   //Right tarsus
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRightTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('right_tarsus');
   //Left tarsus
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLeftTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('left_tarsus');
   //Age
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAge;
@@ -384,12 +419,14 @@ begin
   CurrCol.PickList.CommaText := rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
     rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
     rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+  FColFieldNames.Add('age');
   //Escaped
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEscaped;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('escaped');
   //Status
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -397,210 +434,249 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := '"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
     rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
+  FColFieldNames.Add('subject_status');
   //Cloacal protuberance
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloacalProtuberance;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'U,N,S,M,L';
+  FColFieldNames.Add('cloacal_protuberance');
   //Brood patch
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBroodPatch;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'F,N,V,W,O';
+  FColFieldNames.Add('brood_patch');
   //Fat
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFat;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,T,L,H,S,B,G,V';
+  FColFieldNames.Add('fat');
   //Body molt
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,T,S,H,G,A,F';
+  FColFieldNames.Add('body_molt');
   //Flight feathers molt
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,S,A';
+  FColFieldNames.Add('flight_feathers_molt');
   //Flight feathers wear
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFlightFeathersWear;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,S,L,M,H,X';
+  FColFieldNames.Add('flight_feathers_wear');
   //Right wing chord
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRightWingChord;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('right_wing_chord');
   //First secondary chord
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rsc1stSecondaryChord;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('first_secondary_chord');
   //Tail length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTailLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('tail_length');
   //Tarsus length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTarsusLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('tarsus_length');
   //Tarsus diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTarsusDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('tarsus_diameter');
   //Weight
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('weight');
   //Skull length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSkullLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('skull_length');
   //Exposed culmen
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscExposedCulmen;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('exposed_culmen');
   //Nostril to bill tip distance
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNostrilToBillTip;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('nostril_to_bill_tip');
   //Bill width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBillWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('bill_width');
   //Bill height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBillHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('bill_height');
   //Total length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTotalLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('total_length');
   //Total culmen length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTotalCulmen;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('total_culmen');
   //Quantity of Philornis larvae
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscQuantPhilornisLarvae;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('philornis_larvae_tally');
   //Kipp distance
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscKippSDistance;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('kipps_distance');
   //Molt limits
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMoltLimits;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('molt_limits');
   //Skull ossification
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSkullOssification;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,T,L,H,G,A,F';
+  FColFieldNames.Add('skull_ossification');
   //Molt cycle
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMoltCycle;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('molt_cycle_code');
   //How was aged
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHowWasAged;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('how_was_aged');
   //Sex
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSex;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+  FColFieldNames.Add('sex');
   //How was sexed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHowWasSexed;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('how_was_sexed');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
   //Blood sample
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBlood;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('blood_sample');
   //Feathers
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeathers;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('feather_sample');
   //Feces
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeces;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('feces_sample');
   //Parasites
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscParasites;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('parasites_sample');
   //Recorded
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRecorded;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('subject_recorded');
   //Photographed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographed;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('subject_photographed');
   //Claw
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscClaw;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('claw_sample');
   //Collected (whole)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectedWhole;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('subject_collected');
   //Photographer 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographer1;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('photographer_1');
   //Photographer 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographer2;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('photographer_2');
   //Camera
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCamera;
@@ -615,7 +691,7 @@ begin
     Clear;
     Add('SELECT camera_name');
     Add('FROM captures');
-    Add('WHERE (active_status = 1)');
+    Add('WHERE (active_status = 1) AND (camera_name NOTNULL) AND (camera_name <> '''')');
     Add('GROUP BY camera_name');
     Add('ORDER BY camera_name ASC');
     //GravaLogSQL(SQL);
@@ -635,33 +711,40 @@ begin
   finally
     FreeAndNil(Qry);
   end;
+  FColFieldNames.Add('camera_name');
   //Initial photo nr.
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInitialPhotoNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('initial_photo_number');
   //Final photo nr.
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFinalPhotoNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('final_photo_number');
   //Field number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('field_number');
   //Hemoglobin (g/dL)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHemoglobin;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('hemoglobin');
   //Hematocrit (mm3)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHematocrit;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('hematocrit');
   //Glucose (mg/dL)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscGlucose;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('glucose');
 end;
 
 procedure TfrmQuickEntry.LoadColsEggs;
@@ -674,32 +757,38 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('nest');
   //Field number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('field_number');
   //Egg number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggNumber;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('egg_number');
   //Measure date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('measure_date');
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('taxon');
   //Observer *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('observer');
   //Egg shape
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggShape;
@@ -718,14 +807,17 @@ begin
     Add(rsEggLongitudinal);
     Add(rsEggUnknown);
   end;
+  FColFieldNames.Add('egg_shape');
   //Egg phase
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStage;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('egg_stage');
   //Eggshell color
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggshellColor;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('eggshell_color');
   //Eggshell pattern
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggshellPattern;
@@ -743,6 +835,7 @@ begin
     Add(rsEggBlotchesSquiggles);
     Add(rsEggUnknown);
   end;
+  FColFieldNames.Add('eggshell_pattern');
   //Eggshell texture
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggshellTexture;
@@ -757,38 +850,45 @@ begin
     Add(rsEggPitted);
     Add(rsEggUnknown);
   end;
+  FColFieldNames.Add('eggshell_texture');
   //Width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('egg_width');
   //Length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('egg_length');
   //Mass
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMass;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('egg_mass');
   //Hatched
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHatched;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('egg_hatched');
   //Individual
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('individual');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsExpeditions;
@@ -800,25 +900,30 @@ begin
   CurrCol.Title.Caption := rscName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('expedition_name');
   //Start date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('start_date');
   //End date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('end_date');
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('project');
   //Description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('description');
 end;
 
 procedure TfrmQuickEntry.LoadColsFeathers;
@@ -830,29 +935,34 @@ begin
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sample_date');
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sample_time');
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('taxon');
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('locality');
   //Observer
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('observer');
   //Source
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
@@ -866,6 +976,7 @@ begin
     Add(rsFeatherSighting);
     Add(rsFeatherPhoto);
   end;
+  FColFieldNames.Add('source_type');
   //Symmetry
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSymmetry;
@@ -878,6 +989,7 @@ begin
     Add(rsSymmetrical);
     Add(rsAsymmetrical);
   end;
+  FColFieldNames.Add('symmetrical');
   //Feather trait
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeatherTrait;
@@ -897,11 +1009,13 @@ begin
     Add(rsTraitCarpalCovert);
     Add(rsTraitAlula);
   end;
+  FColFieldNames.Add('feather_trait');
   //Feather number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeatherNumber;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('feather_number');
   //Body side
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBodySide;
@@ -914,41 +1028,49 @@ begin
     Add(rsSideRight);
     Add(rsSideLeft);
   end;
+  FColFieldNames.Add('body_side');
   //Percent grown
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPercentGrown;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('percent_grown');
   //Length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('feather_length');
   //Area
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscArea;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('feather_area');
   //Mass
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMass;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('feather_mass');
   //Rachis width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRachisWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('rachis_width');
   //Growth bar width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscGrowthBarWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('growth_bar_width');
   //Barb density
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBarbDensity;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('barb_density');
   //Age
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAge;
@@ -967,11 +1089,13 @@ begin
     Add(rsAgeFourthYear);
     Add(rsAgeFifthYear);
   end;
+  FColFieldNames.Add('feather_age');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsGazetteer;
@@ -983,10 +1107,12 @@ begin
   CurrCol.Title.Caption := rscName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('site_name');
   //Abbreviation
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('site_abbreviation');
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -1002,39 +1128,46 @@ begin
     Add(rsCaptionDistrict);
     Add(rsCaptionLocality);
   end;
+  FColFieldNames.Add('site_rank');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Altitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAltitude;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('altitude');
   //Parent toponym
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscParentSite;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('parent_site');
   //Full name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFullName;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('full_name');
   //eBird site name
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEBirdName;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('ebird_name');
 end;
 
 procedure TfrmQuickEntry.LoadColsIndividuals;
@@ -1047,48 +1180,57 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('taxon');
   //Band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBand;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('band');
   //Banding date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBandingDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('banding_date');
   //Double band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDoubleBand;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('double_band');
   //Removed band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRemovedBand;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('removed_band');
   //Band change date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBandChangeDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('band_change_date');
   //Right tarsus (below)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRightTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('right_tarsus');
   //Left tarsus (below)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLeftTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('left_tarsus');
   //Sex
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSex;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+  FColFieldNames.Add('sex');
   //Age
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAge;
@@ -1097,58 +1239,70 @@ begin
   CurrCol.PickList.CommaText := rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
     rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
     rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+  FColFieldNames.Add('age');
   //Birth year
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthYear;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('birth_year');
   //Birth month
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthMonth;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('birth_month');
   //Birth day
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthDay;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('birth_day');
   //Death year
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathYear;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('death_year');
   //Death month
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathMonth;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('death_month');
   //Death day
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathDay;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('death_day');
   //Nest
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNest;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('nest');
   //Father
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFather;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('father');
   //Mother
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMother;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('mother');
   //Recognizable markings
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRecognizableMarkings;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('recognizable_markings');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsInstitutions;
@@ -1160,68 +1314,81 @@ begin
   CurrCol.Title.Caption := rscName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('full_name');
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('abbreviation');
   //Contact person
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscContactPerson;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('contact_person');
   //E-mail
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEMail;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('email');
   //Phone
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhone;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('phone');
   //Zip code
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscZipCode;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('postal_code');
   //Address 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress1;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('address_1');
   //Address 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress2;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('address_2');
   //Neighborhood
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNeighborhood;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('neighborhood');
   //Municipality
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMunicipality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('municipality');
   //State
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscState;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('state');
   //Country
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCountry;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('country');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsMethods;
@@ -1233,20 +1400,24 @@ begin
   CurrCol.Title.Caption := rscName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('method_name');
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('abbreviation');
   //Method name on eBird
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEBirdName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('ebird_name');
   //Description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('description');
 end;
 
 procedure TfrmQuickEntry.LoadColsNestOwners;
@@ -1259,12 +1430,14 @@ begin
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsNestOwnersRoleList;
+  FColFieldNames.Add('role');
   //Individual *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('individual');
 end;
 
 procedure TfrmQuickEntry.LoadColsNestRevisions;
@@ -1276,23 +1449,27 @@ begin
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('revision_date');
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('revision_time');
   //Observer 1 *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver1;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('observer_1');
   //Observer 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver2;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('observer_2');
   //Nest stage
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestStage;
@@ -1300,49 +1477,58 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := '"' + rsNestBuilding + '","' + rsNestLaying + '","' + rsNestIncubating +
     '","' + rsNestHatching + '","' + rsNestNestling + '","' + rsNestInactive + '","' + rsNestUnknown+ '"';
+  FColFieldNames.Add('nest_stage');
   //Nest status
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := '"' + rsNestActive + '","' + rsNestInactive + '","' + rsNestUnknown + '"';
+  FColFieldNames.Add('nest_status');
   //Host eggs
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggsHost;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('host_eggs_tally');
   //Host nestlings
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestlingsHost;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('host_nestlings_tally');
   //Nidoparasite taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNidoparasite;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('nidoparasite_taxon');
   //Nidoparasite eggs
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggsNidoparasite;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('nidoparasite_eggs_tally');
   //Nidoparasite nestlings
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestlingsNidoparasite;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('nidoparasite_nestlings_tally');
   //Parasitized by Philornis larvae
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHasPhilornisLarvae;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('have_philornis_larvae');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsNests;
@@ -1355,63 +1541,75 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('taxon');
   //Field number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('field_number');
   //Fate
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestFate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := '"' + rsNestLost + '","' + rsNestSuccess + '","' + rsNestUnknown + '"';
+  FColFieldNames.Add('nest_fate');
   //Nest encounter date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFoundDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('found_date');
   //Last date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLastDateActive;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('last_date');
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('project');
   //Observer *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('observer');
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('locality');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Nest description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('description');
   //Productivity
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestProductivity;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('nest_productivity');
   //Nest shape
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscShape;
@@ -1420,6 +1618,7 @@ begin
   CurrCol.PickList.CommaText := '"' + rsNestShapeScrape + '","' + rsNestShapeCup + '","' +
     rsNestShapePlate + '","' + rsNestShapeSphere + '","' + rsNestShapePendent + '","' +
     rsNestShapePlatform + '","' + rsNestShapeMound + '","' + rsNestShapeBurrow + '","' + rsNestShapeCavity + '"';
+  FColFieldNames.Add('nest_shape');
   //Support
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupportType;
@@ -1429,117 +1628,140 @@ begin
     rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
     rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
     rsSupportAnthropic + '","' + rsSupportOther + '"';
+  FColFieldNames.Add('support_type');
   //Height at ground level
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHeightAboveGround;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('height_at_ground_level');
   //Support plant 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupportPlant1;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('support_plant_1');
   //Support plant 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupportPlant2;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('support_plant_2');
   //Other support
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOtherSupport;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('other_support');
   //Plant height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('plant_height');
   //Stem thickness (DBH)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantDBH;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('plant_dbh');
   //Greater plant diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMaxPlantDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('greater_plant_diameter');
   //Lesser plant diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMinPlantDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('lesser_plant_diameter');
   //Days building
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBuildingDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('building_days');
   //Days incubating
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIncubationDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('incubation_days');
   //Nestling-days
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestlingDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('nestling_days');
   //Total active-days
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscActiveDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('total_active_days');
   //Lesser internal diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMinInternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('lesser_internal_diameter');
   //Greater internal diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMaxInternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('greater_internal_diameter');
   //Lesser external diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMinExternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('lesser_external_diameter');
   //Greater external diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMaxExternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('greater_external_diameter');
   //Internal height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInternalHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('internal_height');
   //External height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscExternalHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('external_height');
   //Distance from plant edge
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantEdgeDistance;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('distance_plant_edge');
   //Distance from plant center
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantCenterDistance;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('distance_plant_center');
   //Cover (%)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCover;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('nest_cover');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsNetEfforts;
@@ -1552,32 +1774,38 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('permanent_net');
   //Net number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('net_number');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Net length (m)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetLengthM;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('net_length');
   //Net height (m)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetHeightM;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('net_height');
   //Net mesh
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetMesh;
@@ -1596,56 +1824,67 @@ begin
     Add('60x60');
     Add('70x70');
   end;
+  FColFieldNames.Add('net_mesh');
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sample_date');
   //Open time 1 *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime1;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('open_time_1');
   //Close time 1 *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime1;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('close_time_1');
   //Open time 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime2;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('open_time_2');
   //Close time 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime2;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('close_time_2');
   //Open time 3
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime3;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('open_time_3');
   //Close time 3
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime3;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('close_time_3');
   //Open time 4
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime4;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('open_time_4');
   //Close time 4
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime4;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('close_time_4');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsPermanentNets;
@@ -1656,23 +1895,27 @@ begin
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('net_number');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsPermits;
@@ -1684,10 +1927,12 @@ begin
   CurrCol.Title.Caption := rscName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('permit_name');
   //Permit number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPermitNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('permit_number');
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -1703,51 +1948,60 @@ begin
     Add(rsPermitTransport);
     Add(rsPermitOther);
   end;
+  FColFieldNames.Add('permit_type');
   //Dispatcher *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDispatcher;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('dispatcher_name');
   //Dispatch date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDispatchDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('dispatch_date');
   //Expire date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscExpireDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('expire_date');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectBudgets;
 var
   CurrCol: TGridColumn;
 begin
-  //Source *
+  //Funding source *
   CurrCol := qeGrid.Columns.Add;
-  CurrCol.Title.Caption := rscSource;
+  CurrCol.Title.Caption := rscFundingSource;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('funding_source');
   //Rubric *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRubric;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('rubric');
   //Item
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscItem;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('item_name');
   //Amount
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAmount;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('amount');
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectChronograms;
@@ -1759,6 +2013,7 @@ begin
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('description');
   //Status *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -1775,24 +2030,29 @@ begin
     Add(rsActivityNeedsReview);
     Add(rsActivityBlocked);
   end;
+  FColFieldNames.Add('progress_status');
   //Start date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('start_date');
   //Target date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTargetDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('target_date');
   //End date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('end_date');
   //Goal
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('goal');
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectExpenses;
@@ -1805,22 +2065,26 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('rubric');
   //Item description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscItem;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('item_description');
   //Date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('expense_date');
   //Amount
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAmount;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('amount');
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectGoals;
@@ -1832,6 +2096,7 @@ begin
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('goal_description');
   //Status *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -1844,6 +2109,7 @@ begin
     Add(rsGoalReached);
     Add(rsGoalCanceled);
   end;
+  FColFieldNames.Add('goal_status');
 end;
 
 procedure TfrmQuickEntry.LoadColsProjects;
@@ -1855,58 +2121,70 @@ begin
   CurrCol.Title.Caption := rscTitle;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('project_title');
   //Short title *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscShortTitle;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('short_title');
   //Protocol number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProtocolNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('protocol_number');
   //Start date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('start_date');
   //End date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('end_date');
   //Website
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWebsite;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('website');
   //E-mail
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEMail;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('email');
   //Contact person
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscContactPerson;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('contact_person');
   //Main goal
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMainGoal;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('main_goal');
   //Risks
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRisks;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('risks');
   //Abstract
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbstract;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('project_abstract');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectTeam;
@@ -1919,18 +2197,21 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('person');
   //Project manager
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscManager;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('project_manager');
   //Institution
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInstitution;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('institution');
 end;
 
 procedure TfrmQuickEntry.LoadColsResearchers;
@@ -1942,146 +2223,174 @@ begin
   CurrCol.Title.Caption := rscName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('full_name');
   //Citation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCitation;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('citation');
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('abbreviation');
   //Treatment
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTreatment;
   CurrCol.Width := 150;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsTreatmentList;
+  FColFieldNames.Add('treatment');
   //Gender
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscGender;
   CurrCol.Width := 150;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsGenderList;
+  FColFieldNames.Add('gender');
   //Birth date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('birth_date');
   //Death date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('death_date');
   //RG
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRG;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('rg_number');
   //CPF
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCPF;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('cpf_number');
   //E-mail
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEMail;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('email');
   //Phone
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhone;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('phone');
   //Mobile phone
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMobilePhone;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('mobile_phone');
   //Institution
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInstitution;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('institution');
   //Department
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDepartment;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('department');
   //Role
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRole;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('role');
   //Zip code
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscZipCode;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('postal_code');
   //Address 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress1;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('address_1');
   //Address 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress2;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('address_2');
   //Neighborhood
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNeighborhood;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('neighborhood');
   //Municipality
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMunicipality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('municipality');
   //State
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscState;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('state');
   //Country
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCountry;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('country');
   //Lattes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLattes;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('lattes');
   //Orcid
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOrcid;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('orcid');
   //X (Twitter)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscXTwitter;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('x_twitter');
   //Instagram
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInstagram;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('instagram');
   //Website
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWebsite;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('website');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsSamplePreps;
@@ -2092,10 +2401,12 @@ begin
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAccessionNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('accession_number');
   //Duplicate number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDuplicateNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('duplicate_number');
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -2127,21 +2438,25 @@ begin
     Add(rsSampleGonads);
     Add(rsSampleStomach);
   end;
+  FColFieldNames.Add('accession_type');
   //Preparation date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPreparationDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('preparation_date');
   //Preparer *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPreparer;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('preparer');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsSamplingPlots;
@@ -2153,38 +2468,45 @@ begin
   CurrCol.Title.Caption := rscName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('full_name');
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('abbreviation');
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('locality');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('description');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsSightings;
@@ -2197,172 +2519,204 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('survey');
   //Observer
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('observer');
   //Method *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMethod;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('method');
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('locality');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sighting_date');
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sighting_time');
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('taxon');
   //Individual
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('individual');
   //Quantity
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividuals;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('total_quantity');
   //Distance (m)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDistanceM;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('distance');
   //Detection type
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDetectionType;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('detection_type');
   //Breeding/behavior code
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBreedingCode;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('breeding_code');
   //Mackinnon list
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMackinnonList;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('mackinnon_list_number');
   //Captured
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCaptured;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('captured');
   //Seen
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSeen;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('seen');
   //Heard
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHeard;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('heard');
   //Photographed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographed;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('photographed');
   //Audio recorded
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAudioRecorded;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('audio_recorded');
   //New captures
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNewCaptures;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('new_captures_tally');
   //Recaptures
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRecaptures;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('recaptures_tally');
   //Unbanded
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscUnbanded;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('unbanded_tally');
   //Males
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMales;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('males_tally');
   //Females
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFemales;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('females_tally');
   //Not sexed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotSexed;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('not_sexed_tally');
   //Adults
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAdults;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('adults_tally');
   //Immatures
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscImmatures;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('juveniles_tally');
   //Not aged
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotAged;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('not_aged_tally');
   //Record in eBird
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIsInEBird;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('available_on_ebird');
   //Out of sample
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOutOfSample;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('out_of_sample');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsSpecimenCollectors;
@@ -2375,6 +2729,7 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('collector');
 end;
 
 procedure TfrmQuickEntry.LoadColsSpecimens;
@@ -2385,6 +2740,7 @@ begin
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('field_number');
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -2407,68 +2763,80 @@ begin
     Add(rsSpecimenFeces);
     Add(rsSpecimenRegurgite);
   end;
+  FColFieldNames.Add('sample_type');
   //Collection year *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectionYear;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('collection_year');
   //Collection month
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectionMonth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('collection_month');
   //Collection day
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectionDay;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('collection_day');
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('locality');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('taxon');
   //Individual
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('individual');
   //Nest
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNest;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('nest');
   //Egg
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEgg;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('egg');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsSurveys;
@@ -2481,113 +2849,134 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('expedition');
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('survey_date');
   //Duration (min)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDurationMin;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('duration_minutes');
   //Start time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('start_time');
   //End time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('end_time');
   //Method *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMethod;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('method');
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('locality');
   //Net station
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSamplingPlot;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('sampling_plot');
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('project');
   //Longitude (start)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('start_longitude');
   //Latitude (start)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('start_latitude');
   //End longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('end_longitude');
   //End latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('end_latitude');
   //Number of observers
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObservers;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('observers_tally');
   //Sample ID
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSampleID;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('sample_id');
   //Area (ha)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAreaHa;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('area');
   //Distance (km)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDistanceKm;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('distance');
   //Number of mistnets
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnets;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('total_nets');
   //Habitat
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHabitat;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('habitat');
   //Mistnet rounds
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetRounds;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('net_rounds');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsSurveyTeam;
@@ -2600,12 +2989,14 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
+  FColFieldNames.Add('researcher');
   //Visitor
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscVisitor;
   CurrCol.ButtonStyle := cbsCheckboxColumn;
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('visitor');
 end;
 
 procedure TfrmQuickEntry.LoadColsVegetation;
@@ -2617,23 +3008,27 @@ begin
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sample_date');
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sample_time');
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('longitude');
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
+  FColFieldNames.Add('latitude');
   //Herbs - Distribution *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHerbsDistribution;
@@ -2658,16 +3053,19 @@ begin
     Add(rsDistributionContinuousDense);
     Add(rsDistributionContinuousDenseEdge);
   end;
+  FColFieldNames.Add('herbs_distribution');
   //Herbs - Proportion
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProportionOfHerbs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('herbs_proportion');
   //Herbs - Average height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAvgHeightOfHerbs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('herbs_avg_height');
   //Shrubs - Distribution *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscShrubsDistribution;
@@ -2692,16 +3090,19 @@ begin
     Add(rsDistributionContinuousDense);
     Add(rsDistributionContinuousDenseEdge);
   end;
+  FColFieldNames.Add('shrubs_distribution');
   //Shrubs - Proportion
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProportionOfShrubs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('shrubs_proportion');
   //Shrubs - Average height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAvgHeightOfShrubs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('shrubs_avg_height');
   //Trees - Distribution *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTreesDistribution;
@@ -2726,21 +3127,25 @@ begin
     Add(rsDistributionContinuousDense);
     Add(rsDistributionContinuousDenseEdge);
   end;
+  FColFieldNames.Add('trees_distribution');
   //Trees - Proportion
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProportionOfTrees;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('trees_proportion');
   //Trees - Average height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAvgHeightOfTrees;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('trees_avg_height');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColsWeatherLogs;
@@ -2752,27 +3157,32 @@ begin
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sample_date');
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('sample_time');
   //Moment *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMoment;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsMomentStart + ',' + rsMomentMiddle + ',' + rsMomentEnd;
+  FColFieldNames.Add('sample_moment');
   //Cloud cover (%)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloudCover;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('cloud_cover');
   //Temperature
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTemperatureC;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('temperature');
   //Precipitation
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPrecipitation;
@@ -2783,36 +3193,43 @@ begin
                                      rsPrecipitationMist + ',' +
                                      rsPrecipitationDrizzle + ',' +
                                      rsPrecipitationRain;
+  FColFieldNames.Add('precipitation');
   //Rainfall (mm)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRainfallMm;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('rainfall');
   //Wind speed (bft)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWindBft;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('wind_speed_bft');
   //Wind speed (km/h)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWindKmH;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('wind_speed_kmh');
   //Relative humidity (%)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRelativeHumidity;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('relative_humidity');
   //Atmospheric pressure (mPa)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAtmosphericPressureH;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('atmospheric_pressure');
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
 end;
 
 procedure TfrmQuickEntry.LoadColumns;
