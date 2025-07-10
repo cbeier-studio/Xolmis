@@ -9,7 +9,6 @@ object dlgPlantminer: TdlgPlantminer
   ClientHeight = 432
   ClientWidth = 612
   PopupMode = pmAuto
-  LCLVersion = '4.0.0.2'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object VL: TValueListEditor
@@ -20,7 +19,6 @@ object dlgPlantminer: TdlgPlantminer
     Align = alClient
     AutoEdit = False
     DefaultColWidth = 188
-    FixedCols = 0
     RowCount = 1
     TabOrder = 0
     TitleStyle = tsNative
@@ -29,7 +27,7 @@ object dlgPlantminer: TdlgPlantminer
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goThumbTracking]
     ColWidths = (
       188
-      424
+      420
     )
   end
   object pBottom: TPanel

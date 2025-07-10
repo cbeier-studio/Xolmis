@@ -81,8 +81,6 @@ uses
     aSorting: String = ''; aDirection: String = '');
   procedure SetUsersSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
-  procedure SetReportsSQL(const aSQL: TStrings; aFilter: TFilterValue;
-    aSorting: String = ''; aDirection: String = '');
 
 implementation
 
@@ -848,7 +846,7 @@ begin
     Add('SELECT n.*,');
     Add('  p.full_name AS observer_name,');
     Add('  pj.project_title AS project_name,');
-    Add('  g.site_name locality_name,');
+    Add('  g.site_name AS locality_name,');
     Add('  g.country_id AS country_id,');
     Add('  g.state_id AS state_id,');
     Add('  g.municipality_id AS municipality_id,');
@@ -1387,38 +1385,6 @@ begin
   end;
 end;
 
-procedure SetReportsSQL(const aSQL: TStrings; aFilter: TFilterValue; aSorting: String = '';
-  aDirection: String = '');
-var
-  AD: String;
-begin
-  with aSQL do
-  begin
-    Clear;
-    Add('SELECT * FROM reports');
-    case aFilter of
-      fvNone:
-        ; // do nothing
-      fvReset:
-        Add('WHERE (active_status = 1)');
-      fvAll:
-        Add('WHERE (active_status = 1)');
-      fvMarked:
-        Add('WHERE (active_status = 1) AND (marked_status = 1)');
-      fvDeleted:
-        Add('WHERE (active_status = 0)');
-    end;
-    if Trim(aSorting) <> '' then
-    begin
-      if aDirection = '' then
-        AD := 'ASC'
-      else
-        AD := aDirection;
-      Add('ORDER BY ' + aSorting + {' COLLATE pt_BR ' +} AD);
-    end;
-  end;
-end;
-
 procedure SetMoltsSQL(const aSQL: TStrings; aFilter: TFilterValue; aSorting: String; aDirection: String);
 var
   AD: String;
@@ -1484,6 +1450,9 @@ begin
     Add('  p.acronym AS observer_name,');
     Add('  c.full_name AS capture_name,');
     Add('  st.full_name AS sighting_name,');
+    Add('  g.country_id AS country_id,');
+    Add('  g.state_id AS state_id,');
+    Add('  g.municipality_id AS municipality_id,');
     Add('  g.site_name AS locality_name');
     Add('FROM feathers AS ft');
     Add('LEFT JOIN zoo_taxa AS z ON ft.taxon_id = z.taxon_id');

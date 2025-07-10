@@ -166,7 +166,7 @@ begin
   dlgPlantminer := TdlgPlantminer.Create(nil);
   with dlgPlantminer do
   try
-    PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
+    PControl := aControl.ClientOrigin;
     SetDialogPosition(PControl.X, PControl.Y, aControl.Width, aControl.Height);
     ExtNome := aPlantName;
     if ShowModal = mrOK then

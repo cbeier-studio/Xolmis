@@ -5378,7 +5378,7 @@ const
 var
   sf: Integer;
 begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if ePersonFilter.Text <> EmptyStr then
@@ -5449,9 +5449,9 @@ procedure TfrmCustomGrid.GetFeatherFilters;
 var
   sf: Integer;
 begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
 
   if ePersonFilter.Text <> EmptyStr then
     PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
@@ -5557,7 +5557,6 @@ var
   sf: Integer;
 begin
   TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if cbSexFilter.ItemIndex > 0 then
@@ -5635,7 +5634,7 @@ end;
 
 procedure TfrmCustomGrid.GetInstitutionFilters;
 begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'it.');
 end;
 
 procedure TfrmCustomGrid.GetMethodFilters;
@@ -5647,7 +5646,7 @@ procedure TfrmCustomGrid.GetMoltFilters;
 var
   sf: Integer;
 begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if ePersonFilter.Text <> EmptyStr then
@@ -5686,8 +5685,8 @@ const
 var
   sf: Integer;
 begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if cbNestFateFilter.ItemIndex > 0 then
@@ -5795,14 +5794,14 @@ end;
 
 procedure TfrmCustomGrid.GetSamplingPlotFilters;
 begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
 end;
 
 procedure TfrmCustomGrid.GetPeopleFilters;
 var
   sf: Integer;
 begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'p.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if FInstitutionKeyFilter > 0 then
@@ -5845,8 +5844,8 @@ procedure TfrmCustomGrid.GetSightingFilters;
 var
   sf: Integer;
 begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if ePersonFilter.Text <> EmptyStr then
@@ -5916,8 +5915,8 @@ const
 var
   sf: Integer;
 begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if cbMaterialFilter.ItemIndex > 0 then
@@ -5952,7 +5951,7 @@ procedure TfrmCustomGrid.GetSurveyFilters;
 var
   sf: Integer;
 begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
+  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'gl.');
   DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
 
   if eStartTimeFilter.Text <> EmptyStr then
@@ -12956,13 +12955,14 @@ begin
   else
     lblCountDateFilter.Caption := rsNoneSelectedFemale;
 
-  Search(FSearchString);
+  if FCanToggle then
+    Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode;
   var NewState: TCheckState; var Allowed: Boolean);
 begin
-  Allowed := FCanToggle;
+  //Allowed := FCanToggle;
 end;
 
 procedure TfrmCustomGrid.tvDateFilterFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -13004,13 +13004,14 @@ begin
   else
     lblCountSiteFilter.Caption := rsNoneSelected;
 
-  Search(FSearchString);
+  if FCanToggle then
+    Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.tvSiteFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode;
   var NewState: TCheckState; var Allowed: Boolean);
 begin
-  Allowed := FCanToggle;
+  //Allowed := FCanToggle;
 end;
 
 procedure TfrmCustomGrid.tvSiteFilterFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -13070,7 +13071,7 @@ end;
 procedure TfrmCustomGrid.tvTaxaFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode;
   var NewState: TCheckState; var Allowed: Boolean);
 begin
-  Allowed := FCanToggle;
+  //Allowed := FCanToggle;
 end;
 
 procedure TfrmCustomGrid.tvTaxaFilterFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);

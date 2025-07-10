@@ -109,7 +109,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global;
+uses cbs_locale, cbs_global, cbs_system;
 
 {$R *.lfm}
 
@@ -237,9 +237,9 @@ end;
 
 procedure TdlgPlantminer.FormShow(Sender: TObject);
 begin
-  // Posição na tela
-  //PositionWindow(WindowPos, Self);
-  //SetRoundedCorners(Self.Handle, rcSmall);
+  {$IFDEF MSWINDOWS}
+  SetRoundedCorners(Self.Handle, rcSmall);
+  {$ENDIF}
 
   // Busca no Plantminer
   ExtNome := (StringReplace(ExtNome, ' ', '%20', [rfReplaceAll]));
@@ -333,18 +333,18 @@ end;
 
 procedure TdlgPlantminer.SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
 begin
-  if ControlWidth > Width then
-    Width := ControlWidth;
+  if ControlWidth > Self.Width then
+    Self.Width := ControlWidth;
 
-  if (X + Width) > Screen.Width then
-    Left := (X + ControlWidth) - Width
+  if (X + Self.Width) > Screen.WorkAreaWidth then
+    Self.Left := X - Self.Width
   else
-    Left := X;
+    Self.Left := X;
 
-  if (Y + ControlHeight + Height) > (Screen.WorkAreaHeight) then
-    Top := Y - Height
+  if (Y + ControlHeight + Self.Height) > (Screen.WorkAreaHeight) then
+    Self.Top := Y - Self.Height
   else
-    Top := Y + ControlHeight;
+    Self.Top := Y;
 end;
 
 end.
