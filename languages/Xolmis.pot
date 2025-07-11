@@ -3613,6 +3613,11 @@ msgctxt "cbs_locale.rserrorinvaliddate"
 msgid "Invalid date. Check if it was typed correctly."
 msgstr ""
 
+#: cbs_locale.rserrorloadingdatafromjsonfile
+#, object-pascal-format
+msgid "Error loading data from the JSON file: %s"
+msgstr ""
+
 #: cbs_locale.rserrormontadata
 #, object-pascal-format
 msgctxt "cbs_locale.rserrormontadata"
@@ -4321,6 +4326,27 @@ msgstr ""
 msgid "Egg already recorded: %s"
 msgstr ""
 
+#: cbs_locale.rsmobileerroropeningfile
+msgid "Error opening file."
+msgstr ""
+
+#: cbs_locale.rsmobilefilenotfound
+msgid "File not found."
+msgstr ""
+
+#: cbs_locale.rsmobilefilenotselected
+msgctxt "cbs_locale.rsmobilefilenotselected"
+msgid "File not selected."
+msgstr ""
+
+#: cbs_locale.rsmobilefileselectedandloaded
+msgid "File selected and loaded."
+msgstr ""
+
+#: cbs_locale.rsmobilehavemissinginvalidvaluesongrid
+msgid "The records have missing (required) or invalid values (highlighted in red) that need to be corrected before importing."
+msgstr ""
+
 #: cbs_locale.rsmobileimportingegg
 msgid "Importing eggs..."
 msgstr ""
@@ -4365,6 +4391,10 @@ msgstr ""
 
 #: cbs_locale.rsmobilequalitativefree
 msgid "Free Qualitative List"
+msgstr ""
+
+#: cbs_locale.rsmobilequalitativeinterval
+msgid "Intervaled Qualitative List"
 msgstr ""
 
 #: cbs_locale.rsmobilequalitativetimed
@@ -5049,6 +5079,16 @@ msgstr ""
 #: cbs_locale.rsrightlegempty
 msgctxt "cbs_locale.rsrightlegempty"
 msgid "r-"
+msgstr ""
+
+#: cbs_locale.rsrow
+#, object-pascal-format
+msgid "%d row"
+msgstr ""
+
+#: cbs_locale.rsrows
+#, object-pascal-format
+msgid "%d rows"
 msgstr ""
 
 #: cbs_locale.rsrunningstartupbackup
@@ -7980,7 +8020,7 @@ msgstr ""
 
 #: tdlgimportxmobile.gridmap.columns[2].title.caption
 msgctxt "tdlgimportxmobile.gridmap.columns[2].title.caption"
-msgid "Observer"
+msgid "Observer *"
 msgstr ""
 
 #: tdlgimportxmobile.gridmap.columns[3].title.caption
@@ -7988,6 +8028,12 @@ msgid "List nr."
 msgstr ""
 
 #: tdlgimportxmobile.gridmap.columns[4].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[4].title.caption"
+msgid "Locality *"
+msgstr ""
+
+#: tdlgimportxmobile.gridmap.columns[5].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[5].title.caption"
 msgid "Record"
 msgstr ""
 
@@ -8033,6 +8079,7 @@ msgid "Source"
 msgstr ""
 
 #: tdlgimportxmobile.msgsourcefile.caption
+msgctxt "tdlgimportxmobile.msgsourcefile.caption"
 msgid "File not selected."
 msgstr ""
 

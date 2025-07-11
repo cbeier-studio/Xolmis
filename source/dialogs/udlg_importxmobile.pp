@@ -23,6 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
   StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, Grids, StrUtils,
+  Character,
   cbs_import, cbs_sampling, cbs_breeding, cbs_xmobile;
 
 type
@@ -35,6 +36,7 @@ type
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoImportFinished: TImage;
+    icoFileStatus: TImage;
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
     lblMapInstruction: TLabel;
@@ -79,6 +81,9 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure gridMapEditButtonClick(Sender: TObject);
+    procedure gridMapKeyPress(Sender: TObject; var Key: char);
+    procedure gridMapPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
+    procedure gridMapSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
     procedure sbCancelClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPreviousClick(Sender: TObject);
@@ -94,7 +99,7 @@ type
     FSpecimenList: TMobileSpecimenList;
     FSurvey: TSurvey;
     FNest: TNest;
-    JSON: TFileStream;
+    //JSON: TFileStream;
     JSONData: TJSONData;
     JSONObject, SpeciesObject, PoiObject, VegetationObject, WeatherObject: TJSONObject;
     RevisionObject, EggObject: TJSONObject;
@@ -104,9 +109,11 @@ type
     function AddSurvey: Integer;
     function AddNest: Integer;
     function GetContentType: TMobileContentType;
+    function GetMethodFromInventory(aInventory: TMobileInventory): Integer;
     function GetNestFromMobile(aNest: TMobileNest): Integer;
     function GetSpecimenFromMobile(aSpecimen: TMobileSpecimen): Integer;
     function GetSurveyFromInventory(aInventory: TMobileInventory): Integer;
+    function CountErrorsOnGrid: Integer;
     function IsRequiredFilledSource: Boolean;
     function OpenJSON(aJSONFile: String): Boolean;
     function LoadFromJSON(aJSON: TJSONData): Boolean;
@@ -122,6 +129,8 @@ type
     procedure ImportEggs(Nest: TMobileNest);
     procedure ImportSpecimens;
     procedure LoadMapGrid;
+    function ObserverExists(aObserver: String): Boolean;
+    function LocalityExists(aLocality: String): Boolean;
   public
 
   end;
@@ -132,7 +141,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_users, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
+  cbs_locale, cbs_global, cbs_users, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis,
   cbs_birds, cbs_fullnames, cbs_themes, uDarkStyleParams,
   udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest;
 
@@ -270,12 +279,34 @@ begin
 
   eSourceFile.Images := iButtonsDark;
 
+  icoFileStatus.Images := imgFinishedDark;
   icoImportFinished.Images := imgFinishedDark;
 end;
 
 procedure TdlgImportXMobile.btnHelpClick(Sender: TObject);
 begin
   OpenURL('https://github.com/cbeier-studio/Xolmis/wiki/Importing-data#xolmis-mobile');
+end;
+
+function TdlgImportXMobile.CountErrorsOnGrid: Integer;
+var
+  Grid: TStringGrid;
+  r: Integer;
+  aValue: String;
+begin
+  Grid := gridMap;
+  Result := 0;
+
+  for r := Grid.FixedRows to Grid.RowCount - 1 do
+  begin
+    aValue := Trim(Grid.Cells[2, r]);
+    if (aValue = '') or (not ObserverExists(aValue)) then
+      Inc(Result);
+
+    aValue := Trim(Grid.Cells[4, r]);
+    if (aValue = '') or (not LocalityExists(aValue)) then
+      Inc(Result);
+  end;
 end;
 
 procedure TdlgImportXMobile.eSourceFileButtonClick(Sender: TObject);
@@ -287,27 +318,41 @@ begin
 end;
 
 procedure TdlgImportXMobile.eSourceFileChange(Sender: TObject);
-var
-  invType: Integer;
 begin
   if FileExists(eSourceFile.Text) then
   begin
     FSourceFile := eSourceFile.Text;
 
-    msgSourceFile.Caption := 'File selected and loaded!';
-    msgSourceFile.Font.Color := clDefault;
-
     if OpenJSON(FSourceFile) then
     begin
+      msgSourceFile.Caption := rsMobileFileSelectedAndLoaded;
+      msgSourceFile.Font.Color := clDefault;
+
       FContentType := GetContentType;
+      icoFileStatus.ImageIndex := 2;
+    end
+    else
+    begin
+      icoFileStatus.ImageIndex := 3;
+      msgSourceFile.Caption := rsMobileErrorOpeningFile;
+      if IsDarkModeEnabled then
+        msgSourceFile.Font.Color := clSystemCriticalFGDark
+      else
+        msgSourceFile.Font.Color := clSystemCriticalFGLight;
     end;
   end
   else
   begin
     if eSourceFile.Text = EmptyStr then
-      msgSourceFile.Caption := 'File not selected.'
+    begin
+      msgSourceFile.Caption := rsMobileFileNotSelected;
+      icoFileStatus.ImageIndex := -1;
+    end
     else
-      msgSourceFile.Caption := 'File not found.';
+    begin
+      msgSourceFile.Caption := rsMobileFileNotFound;
+      icoFileStatus.ImageIndex := 3;
+    end;
 
     if IsDarkModeEnabled then
       msgSourceFile.Font.Color := clSystemCriticalFGDark
@@ -349,8 +394,15 @@ begin
     JSONObject.Free;
   if Assigned(JSONArray) then
     JSONArray.Free;
-  if Assigned(JSON) then
-    JSON.Free;
+  //if Assigned(JSONData) then
+  //  FreeAndNil(JSONData);
+
+  if Assigned(FInventoryList) then
+    FInventoryList.Free;
+  if Assigned(FNestList) then
+    FNestList.Free;
+  if Assigned(FSpecimenList) then
+    FSpecimenList.Free;
 end;
 
 procedure TdlgImportXMobile.FormKeyPress(Sender: TObject; var Key: char);
@@ -407,6 +459,22 @@ begin
   end;
 end;
 
+function TdlgImportXMobile.GetMethodFromInventory(aInventory: TMobileInventory): Integer;
+begin
+  Result := 0;
+
+  case aInventory.FType of
+    invQualitativeFree: Result := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeFree);
+    invQualitativeTimed: Result := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeTimed);
+    invQualitativeInterval: Result := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeInterval);
+    invMackinnonList: Result := GetKey('methods', 'method_id', 'method_name', rsMobileMackinnonList);
+    invTransectionCount: Result := GetKey('methods', 'method_id', 'method_name', rsMobileTransectionCount);
+    invPointCount: Result := GetKey('methods', 'method_id', 'method_name', rsMobilePointCount);
+    invBanding: Result := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
+    invCasual: Result := GetKey('methods', 'method_id', 'method_name', rsMobileCasual);
+  end;
+end;
+
 function TdlgImportXMobile.GetNestFromMobile(aNest: TMobileNest): Integer;
 var
   Nest: TNest;
@@ -450,14 +518,15 @@ end;
 function TdlgImportXMobile.GetSurveyFromInventory(aInventory: TMobileInventory): Integer;
 var
   aSurvey: TSurvey;
-  aLocality: Integer;
+  aLocality, aMethod: Integer;
 begin
   Result := 0;
 
   aSurvey := TSurvey.Create();
   try
     aLocality := GetSiteKey(aInventory.FLocalityName);
-    if aSurvey.Find(aLocality, DateToStr(aInventory.FStartTime)) then
+    aMethod := GetMethodFromInventory(aInventory);
+    if aSurvey.Find(aLocality, aMethod, aInventory.FStartTime, aInventory.FId) then
       Result := aSurvey.Id;
   finally
     aSurvey.Free;
@@ -467,39 +536,136 @@ end;
 procedure TdlgImportXMobile.gridMapEditButtonClick(Sender: TObject);
 var
   aKey: Integer;
+  aLocalityName: String;
 begin
   aKey := 0;
 
   if gridMap.Col = 4 then
   begin
+    if FindSiteDlg([gfAll], gridMap, aKey) then
+    begin
+      aLocalityName := GetName('gazetteer', 'site_name', 'site_id', aKey);
+      case FContentType of
+        mctEmpty: ;
+        mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
+        mctNest, mctNests:            FNestList[gridMap.Row - 1].FLocalityName := aLocalityName;
+        mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FLocality := aLocalityName;
+      end;
+      gridMap.Cells[gridMap.Col, gridMap.Row] := aLocalityName;
+    end;
+  end
+  else
+  if gridMap.Col = 5 then
+  begin
     case FContentType of
       mctEmpty: ;
       mctInventory, mctInventories:
       begin
-        if FindDlg(tbSurveys, gridMap.InplaceEditor, aKey) then
+        if FindDlg(tbSurveys, gridMap, aKey) then
         begin
           FInventoryList[gridMap.Row - 1].FSurveyKey := aKey;
-          gridMap.Cells[4, gridMap.Row] := GetName('surveys', 'full_name', 'survey_id', aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('surveys', 'full_name', 'survey_id', aKey);
         end;
       end;
       mctNest, mctNests:
       begin
-        if FindDlg(tbNests, gridMap.InplaceEditor, aKey) then
+        if FindDlg(tbNests, gridMap, aKey) then
         begin
           FNestList[gridMap.Row - 1].FNestKey := aKey;
-          gridMap.Cells[4, gridMap.Row] := GetName('nests', 'full_name', 'nest_id', aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('nests', 'full_name', 'nest_id', aKey);
         end;
       end;
       mctSpecimens:
       begin
-        if FindDlg(tbSpecimens, gridMap.InplaceEditor, aKey) then
+        if FindDlg(tbSpecimens, gridMap, aKey) then
         begin
           FSpecimenList[gridMap.Row - 1].FSpecimenKey := aKey;
-          gridMap.Cells[4, gridMap.Row] := GetName('specimens', 'full_name', 'specimen_id', aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('specimens', 'full_name', 'specimen_id', aKey);
         end;
       end;
     end;
   end;
+end;
+
+procedure TdlgImportXMobile.gridMapKeyPress(Sender: TObject; var Key: char);
+var
+  Grid: TStringGrid;
+  aLocalityKey, aSurveyKey: Integer;
+  aLocalityName: String;
+begin
+  Grid := TStringGrid(Sender);
+  if (Grid.EditorMode) and (Grid.Col >= 4) then
+  begin
+    { Alphabetic search in numeric field }
+    if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+    begin
+      if Grid.Col = 4 then
+      begin
+        if FindSiteDlg([gfAll], Grid, aLocalityKey, Key) then
+        begin
+          aLocalityName := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+          case FContentType of
+            mctEmpty: ;
+            mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
+            mctNest, mctNests:            FNestList[gridMap.Row - 1].FLocalityName := aLocalityName;
+            mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FLocality := aLocalityName;
+          end;
+        end;
+      end
+      else
+      if Grid.Col = 5 then
+      begin
+        if FindDlg(tbSurveys, Grid, aSurveyKey, Key) then
+        begin
+          case FContentType of
+            mctEmpty: ;
+            mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FSurveyKey := aSurveyKey;
+            mctNest, mctNests:            FNestList[gridMap.Row - 1].FNestKey := aSurveyKey;
+            mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FSpecimenKey := aSurveyKey;
+          end;
+        end;
+      end;
+      Key := #0;
+    end;
+    { CLEAR FIELD VALUE = Backspace }
+    if (Key = #8) then
+    begin
+      Grid.Cells[Grid.Col, Grid.Row] := EmptyStr;
+      Key := #0;
+    end;
+  end;
+end;
+
+procedure TdlgImportXMobile.gridMapPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
+var
+  Grid: TStringGrid;
+  HaveError: Boolean;
+  aValue: String;
+begin
+  Grid := TStringGrid(Sender);
+  HaveError := False;
+  aValue := Trim(Grid.Cells[aCol, aRow]);
+
+  if aRow < Grid.FixedRows then
+    Exit;
+
+  case aCol of
+    2: // Observer
+      HaveError := (aValue = EmptyStr) or (not ObserverExists(aValue));
+    4: // Locality
+      HaveError := (aValue = EmptyStr) or (not LocalityExists(aValue));
+  end;
+
+  if HaveError then
+    if IsDarkModeEnabled then
+      Grid.Canvas.Brush.Color := clSystemCriticalBGDark
+    else
+      Grid.Canvas.Brush.Color := clSystemCriticalBGLight;
+end;
+
+procedure TdlgImportXMobile.gridMapSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
+begin
+  TStringGrid(Sender).InvalidateCell(ACol, ARow);
 end;
 
 procedure TdlgImportXMobile.ImportEggs(Nest: TMobileNest);
@@ -597,6 +763,7 @@ begin
             Inventory.ToSurvey(aSurvey);
             aSurvey.Insert;
             aSurveyKey := aSurvey.Id;
+            Inventory.FSurveyKey := aSurveyKey;
 
             // insert sightings from species list
             ImportSpecies(Inventory);
@@ -703,6 +870,7 @@ begin
             Nest.ToNest(aNest);
             aNest.Insert;
             aNestKey := aNest.Id;
+            Nest.FNestKey := aNestKey;
 
             // insert nest revisions
             ImportRevisions(Nest);
@@ -818,6 +986,9 @@ begin
         begin
           // if sighting exists, update it
           Species.ToSighting(aSighting);
+          aSighting.ObserverId := aObserverId;
+          if aSighting.SightingDate = NullDate then
+            aSighting.SightingDate := Inventory.FStartTime;
           aSighting.Update;
         end
         else
@@ -826,6 +997,8 @@ begin
           Species.ToSighting(aSighting);
           aSighting.SurveyId := Inventory.FSurveyKey;
           aSighting.ObserverId := aObserverId;
+          if aSighting.SightingDate = NullDate then
+            aSighting.SightingDate := Inventory.FStartTime;
           aSighting.Insert;
         end;
       end;
@@ -1040,22 +1213,38 @@ var
   InventoryObj: TMobileInventory;
   i: Integer;
 begin
-  if aJSON is TJSONObject then
-  begin
-    FInventoryList.Clear;
-    InventoryObj := TMobileInventory.Create;
-    InventoryObj.FromJSON(aJSON);
-    FInventoryList.Add(InventoryObj);
-  end
-  else
-  if aJSON is TJSONArray then
-  begin
-    FInventoryList.Clear;
-    for i := 0 to aJSON.Count - 1 do
+  Result := False;
+  if not Assigned(FInventoryList) then
+    FInventoryList := TMobileInventoryList.Create;
+  FInventoryList.Clear;
+
+  if aJSON = nil then
+    Exit;
+
+  try
+    if aJSON is TJSONObject then
     begin
       InventoryObj := TMobileInventory.Create;
-      InventoryObj.FromJSON(aJSON.Items[i]);
+      InventoryObj.FromJSON(aJSON);
       FInventoryList.Add(InventoryObj);
+      Result := True;
+    end
+    else
+    if aJSON is TJSONArray then
+    begin
+      for i := 0 to aJSON.Count - 1 do
+      begin
+        InventoryObj := TMobileInventory.Create;
+        InventoryObj.FromJSON(aJSON.Items[i]);
+        FInventoryList.Add(InventoryObj);
+      end;
+      Result := FInventoryList.Count > 0;
+    end;
+  except
+    on E: Exception do
+    begin
+      Result := False;
+      MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
     end;
   end;
 end;
@@ -1065,7 +1254,7 @@ var
   Inventory: TMobileInventory;
   Nest: TMobileNest;
   Specimen: TMobileSpecimen;
-  r, aSurveyKey, aNestKey, aSpecimenKey: Integer;
+  r, aSurveyKey, aNestKey, aSpecimenKey, aLocalityKey: Integer;
 begin
   gridMap.RowCount := 2;
   gridMap.Clean([gzNormal]);
@@ -1087,12 +1276,18 @@ begin
         // Mackinnon list number
         if Inventory.FType = invMackinnonList then
           gridMap.Cells[3, r] := IntToStr(Inventory.FListNumber);
+        // Locality
+        if Inventory.FLocalityName <> EmptyStr then
+        begin
+          aLocalityKey := GetSiteKey(Inventory.FLocalityName);
+          gridMap.Cells[4, r] := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+        end;
         // Survey record
         aSurveyKey := GetSurveyFromInventory(Inventory);
         if aSurveyKey > 0 then
         begin
           Inventory.FSurveyKey := aSurveyKey;
-          gridMap.Cells[4, r] := GetName('surveys', 'full_name', 'survey_id', aSurveyKey);
+          gridMap.Cells[5, r] := GetName('surveys', 'full_name', 'survey_id', aSurveyKey);
         end;
         Inc(r);
       end;
@@ -1108,12 +1303,18 @@ begin
         gridMap.Cells[1, r] := Nest.FFieldNumber;
         // Observer
         gridMap.Cells[2, r] := Nest.FObserver;
+        // Locality
+        if Nest.FLocalityName <> EmptyStr then
+        begin
+          aLocalityKey := GetSiteKey(Nest.FLocalityName);
+          gridMap.Cells[4, r] := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+        end;
         // Nest record
         aNestKey := GetNestFromMobile(Nest);
         if aNestKey > 0 then
         begin
           Nest.FNestKey := aNestKey;
-          gridMap.Cells[4, r] := GetName('nests', 'full_name', 'nest_id', aNestKey);
+          gridMap.Cells[5, r] := GetName('nests', 'full_name', 'nest_id', aNestKey);
         end;
         Inc(r);
       end;
@@ -1129,12 +1330,18 @@ begin
         gridMap.Cells[1, r] := Specimen.FFieldNumber;
         // Observer
         gridMap.Cells[2, r] := Specimen.FObserver;
+        // Locality
+        if Specimen.FLocality <> EmptyStr then
+        begin
+          aLocalityKey := GetSiteKey(Specimen.FLocality);
+          gridMap.Cells[4, r] := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+        end;
         // Specimen record
         aSpecimenKey := GetSpecimenFromMobile(Specimen);
         if aSpecimenKey > 0 then
         begin
           Specimen.FSpecimenKey := aSpecimenKey;
-          gridMap.Cells[4, r] := GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey);
+          gridMap.Cells[5, r] := GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey);
         end;
         Inc(r);
       end;
@@ -1147,22 +1354,38 @@ var
   NestObj: TMobileNest;
   i: Integer;
 begin
-  if aJSON is TJSONObject then
-  begin
-    FNestList.Clear;
-    NestObj := TMobileNest.Create;
-    NestObj.FromJSON(aJSON);
-    FNestList.Add(NestObj);
-  end
-  else
-  if aJSON is TJSONArray then
-  begin
-    FNestList.Clear;
-    for i := 0 to aJSON.Count - 1 do
+  Result := False;
+  if not Assigned(FNestList) then
+    FNestList := TMobileNestList.Create;
+  FNestList.Clear;
+
+  if aJSON = nil then
+    Exit;
+
+  try
+    if aJSON is TJSONObject then
     begin
       NestObj := TMobileNest.Create;
-      NestObj.FromJSON(aJSON.Items[i]);
+      NestObj.FromJSON(aJSON);
       FNestList.Add(NestObj);
+      Result := True;
+    end
+    else
+    if aJSON is TJSONArray then
+    begin
+      for i := 0 to aJSON.Count - 1 do
+      begin
+        NestObj := TMobileNest.Create;
+        NestObj.FromJSON(aJSON.Items[i]);
+        FNestList.Add(NestObj);
+      end;
+      Result := FNestList.Count > 0;
+    end;
+  except
+    on E: Exception do
+    begin
+      Result := False;
+      MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
     end;
   end;
 end;
@@ -1172,24 +1395,74 @@ var
   SpecimenObj: TMobileSpecimen;
   i: Integer;
 begin
-  if aJSON is TJSONArray then
-  begin
-    FSpecimenList.Clear;
-    for i := 0 to aJSON.Count - 1 do
+  Result := False;
+  if not Assigned(FSpecimenList) then
+    FSpecimenList := TMobileSpecimenList.Create;
+  FSpecimenList.Clear;
+
+  if aJSON = nil then
+    Exit;
+
+  try
+    if aJSON is TJSONArray then
     begin
-      SpecimenObj := TMobileSpecimen.Create;
-      SpecimenObj.FromJSON(aJSON.Items[i]);
-      FSpecimenList.Add(SpecimenObj);
+      for i := 0 to aJSON.Count - 1 do
+      begin
+        SpecimenObj := TMobileSpecimen.Create;
+        SpecimenObj.FromJSON(aJSON.Items[i]);
+        FSpecimenList.Add(SpecimenObj);
+        Result := FSpecimenList.Count > 0;
+      end;
+    end;
+  except
+    on E: Exception do
+    begin
+      Result := False;
+      MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
     end;
   end;
 end;
 
-function TdlgImportXMobile.OpenJSON(aJSONFile: String): Boolean;
+function TdlgImportXMobile.LocalityExists(aLocality: String): Boolean;
+var
+  aKeyName, aKeyAbbrev: Integer;
 begin
   Result := False;
+  if Trim(aLocality) = EmptyStr then
+    Exit;
+
+  aKeyName := GetKey('gazetteer', 'site_id', 'site_name', aLocality);
+  aKeyAbbrev := GetKey('gazetteer', 'site_id', 'site_acronym', aLocality);
+  Result := (aKeyName > 0) or (aKeyAbbrev > 0);
+end;
+
+function TdlgImportXMobile.ObserverExists(aObserver: String): Boolean;
+var
+  aKey: Integer;
+begin
+  Result := False;
+  if Trim(aObserver) = EmptyStr then
+    Exit;
+
+  aKey := GetKey('people', 'person_id', 'acronym', aObserver);
+  Result := (aKey > 0);
+end;
+
+function TdlgImportXMobile.OpenJSON(aJSONFile: String): Boolean;
+var
+  JSON: TFileStream;
+begin
+  Result := False;
+  if Assigned(JSONData) then
+    FreeAndNil(JSONData);
+
   try
-    JSON := TFileStream.Create(aJSONFile, fmOpenRead);
-    JSONData := GetJSON(JSON);
+    try
+      JSON := TFileStream.Create(aJSONFile, fmOpenRead);
+      JSONData := GetJSON(JSON);
+    finally
+      FreeAndNil(JSON);
+    end;
     case JSONData.JSONType of
       jtObject: JSONObject := TJSONObject(JSONData);
       jtArray: JSONArray := TJSONArray(JSONData);
@@ -1217,19 +1490,15 @@ end;
 
 procedure TdlgImportXMobile.sbNextClick(Sender: TObject);
 begin
-  // Source page
-  if nbPages.PageIndex = 0 then
-  begin
-    nbPages.PageIndex := 1;
-
-    LoadMapGrid;
-
-    sbPrevious.Visible := True;
-  end;
-
   // Records page
   if nbPages.PageIndex = 1 then
   begin
+    if CountErrorsOnGrid > 0 then
+    begin
+      MsgDlg(rsTitleInformation, rsMobileHaveMissingInvalidValuesOnGrid, mtInformation);
+      Exit;
+    end;
+
     nbPages.PageIndex := 2;
 
     sbPrevious.Visible := False;
@@ -1241,6 +1510,19 @@ begin
       mctInventory, mctInventories: ImportInventories;
       mctNest, mctNests: ImportNests;
       mctSpecimens: ImportSpecimens;
+    end;
+  end;
+
+  // Source page
+  if nbPages.PageIndex = 0 then
+  begin
+    if LoadFromJSON(JSONData) then
+    begin
+      nbPages.PageIndex := 1;
+
+      LoadMapGrid;
+
+      sbPrevious.Visible := True;
     end;
   end;
 end;

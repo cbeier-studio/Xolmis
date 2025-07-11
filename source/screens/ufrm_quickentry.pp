@@ -27,6 +27,7 @@ type
     sbSaveAs: TSpeedButton;
     qeGrid: TStringGrid;
     SBar: TStatusBar;
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -42,14 +43,19 @@ type
     procedure sbDelRowsClick(Sender: TObject);
   private
     FColFieldNames: TStringList;
+    FFileName: String;
+    FModuleName: String;
+    FSchemaVersion: Integer;
     FSearchableCols, FNumericCols, FIntegerCols, FDateCols, FTimeCols: TStringList;
     FTableType: TTableType;
     procedure ApplyDarkMode;
+    function CellErrorColor: TColor;
     function ColIsDate(aCol: Integer): Boolean;
     function ColIsInteger(aCol: Integer): Boolean;
     function ColIsNumeric(aCol: Integer): Boolean;
     function ColIsSearchable(aCol: Integer): Boolean;
     function ColIsTime(aCol: Integer): Boolean;
+    function GridHasData: Boolean;
 
     procedure LoadColsBands;
     procedure LoadColsBotanicTaxa;
@@ -85,11 +91,17 @@ type
     procedure LoadColsWeatherLogs;
     procedure LoadColumns;
 
+    procedure LoadData;
+    function RowHasData(aRow: Integer): Boolean;
+    procedure SaveData;
+
     procedure SetDateCols;
     procedure SetIntegerCols;
     procedure SetNumericCols;
     procedure SetSearchableCols;
     procedure SetTimeCols;
+
+    procedure UpdateRowCounter;
   public
     property TableType: TTableType read FTableType write FTableType;
   end;
@@ -100,7 +112,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_datacolumns, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis, cbs_taxonomy, uDarkStyleParams,
+  cbs_locale, cbs_datacolumns, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis, cbs_taxonomy,
+  cbs_themes, uDarkStyleParams,
   udm_main;
 
 {$R *.lfm}
@@ -117,6 +130,14 @@ begin
   sbClose.Images := iButtonsDark;
 
   PMGrid.Images := iButtonsDark;
+end;
+
+function TfrmQuickEntry.CellErrorColor: TColor;
+begin
+  if IsDarkModeEnabled then
+    Result := clSystemCriticalBGDark
+  else
+    Result := clSystemCriticalBGLight;
 end;
 
 function TfrmQuickEntry.ColIsDate(aCol: Integer): Boolean;
@@ -144,6 +165,20 @@ begin
   Result := FTimeCols.IndexOf(qeGrid.Columns[aCol].Title.Caption) > -1;
 end;
 
+procedure TfrmQuickEntry.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  if GridHasData then
+  begin
+    SaveData;
+  end
+  else
+  begin
+    // if the grid is empty, delete the persistence file
+    if FileExists(FFileName) then
+      DeleteFile(FFileName);
+  end;
+end;
+
 procedure TfrmQuickEntry.FormCreate(Sender: TObject);
 begin
   FColFieldNames := TStringList.Create;
@@ -169,18 +204,44 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  SBar.Panels[1].Text := Format('%d rows', [qeGrid.RowCount - 1]);
-  SBar.Panels[1].Alignment := taCenter;
+  UpdateRowCounter;
 
   SBar.Panels[2].Text := LocaleTablesDict.KeyData[FTableType];
 
+  FModuleName := TableNames[FTableType];
+
+  {$IFDEF DEBUG}
+  FFileName := ConcatPaths([AppDataDir, IncludeTrailingPathDelimiter('debug_quickentry'), FModuleName + '.json']);
+  {$ELSE}
+  FFileName := ConcatPaths([AppDataDir, IncludeTrailingPathDelimiter('quickentry'), FModuleName + '.json']);
+  {$ENDIF}
+
   LoadColumns;
+
+  if (FileExists(FFileName)) then
+    LoadData;
+end;
+
+function TfrmQuickEntry.GridHasData: Boolean;
+var
+  r, c: Integer;
+begin
+  Result := False;
+  // Ignore fixed rows and columns
+  for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+    for c := qeGrid.FixedCols to qeGrid.ColCount - 1 do
+      if Trim(qeGrid.Cells[c, r]) <> EmptyStr then
+        Exit(True); // Found some cell with data
 end;
 
 procedure TfrmQuickEntry.LoadColsBands;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Size *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSize;
@@ -259,6 +320,10 @@ procedure TfrmQuickEntry.LoadColsBotanicTaxa;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Scientific name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscScientificName;
@@ -305,6 +370,10 @@ var
   CurrCol: TGridColumn;
   Qry: TSQLQuery;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Individual *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
@@ -751,6 +820,10 @@ procedure TfrmQuickEntry.LoadColsEggs;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Nest
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNest;
@@ -895,6 +968,10 @@ procedure TfrmQuickEntry.LoadColsExpeditions;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscName;
@@ -930,6 +1007,10 @@ procedure TfrmQuickEntry.LoadColsFeathers;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
@@ -1102,6 +1183,10 @@ procedure TfrmQuickEntry.LoadColsGazetteer;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscName;
@@ -1174,6 +1259,10 @@ procedure TfrmQuickEntry.LoadColsIndividuals;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
@@ -1309,6 +1398,10 @@ procedure TfrmQuickEntry.LoadColsInstitutions;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscName;
@@ -1395,6 +1488,10 @@ procedure TfrmQuickEntry.LoadColsMethods;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscName;
@@ -1424,6 +1521,10 @@ procedure TfrmQuickEntry.LoadColsNestOwners;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Role *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRole;
@@ -1444,6 +1545,10 @@ procedure TfrmQuickEntry.LoadColsNestRevisions;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
@@ -1535,6 +1640,10 @@ procedure TfrmQuickEntry.LoadColsNests;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
@@ -1768,6 +1877,10 @@ procedure TfrmQuickEntry.LoadColsNetEfforts;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Permanent net
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPermanentNet;
@@ -1891,6 +2004,10 @@ procedure TfrmQuickEntry.LoadColsPermanentNets;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Net number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetNr;
@@ -1922,6 +2039,10 @@ procedure TfrmQuickEntry.LoadColsPermits;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscName;
@@ -1977,6 +2098,10 @@ procedure TfrmQuickEntry.LoadColsProjectBudgets;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Funding source *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFundingSource;
@@ -2008,6 +2133,10 @@ procedure TfrmQuickEntry.LoadColsProjectChronograms;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Description *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
@@ -2059,6 +2188,10 @@ procedure TfrmQuickEntry.LoadColsProjectExpenses;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Rubric *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRubric;
@@ -2091,6 +2224,10 @@ procedure TfrmQuickEntry.LoadColsProjectGoals;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Description *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
@@ -2116,6 +2253,10 @@ procedure TfrmQuickEntry.LoadColsProjects;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Title *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTitle;
@@ -2191,6 +2332,10 @@ procedure TfrmQuickEntry.LoadColsProjectTeam;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Researcher *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscResearcher;
@@ -2218,6 +2363,10 @@ procedure TfrmQuickEntry.LoadColsResearchers;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscName;
@@ -2397,6 +2546,10 @@ procedure TfrmQuickEntry.LoadColsSamplePreps;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Accession number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAccessionNr;
@@ -2463,6 +2616,10 @@ procedure TfrmQuickEntry.LoadColsSamplingPlots;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscName;
@@ -2513,6 +2670,10 @@ procedure TfrmQuickEntry.LoadColsSightings;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Survey
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSurvey;
@@ -2723,6 +2884,10 @@ procedure TfrmQuickEntry.LoadColsSpecimenCollectors;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Collector *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollector;
@@ -2736,6 +2901,10 @@ procedure TfrmQuickEntry.LoadColsSpecimens;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Field number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
@@ -2843,6 +3012,10 @@ procedure TfrmQuickEntry.LoadColsSurveys;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Expedition
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscExpedition;
@@ -2983,6 +3156,10 @@ procedure TfrmQuickEntry.LoadColsSurveyTeam;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Researcher *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscResearcher;
@@ -3003,6 +3180,10 @@ procedure TfrmQuickEntry.LoadColsVegetation;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
@@ -3152,6 +3333,10 @@ procedure TfrmQuickEntry.LoadColsWeatherLogs;
 var
   CurrCol: TGridColumn;
 begin
+  // Increase FSchemaVersion by 1 when adding or removing columns to this schema
+  // Add a comment on changes in the schema (e.g. v2)
+  FSchemaVersion := 1;
+
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
@@ -3281,16 +3466,22 @@ begin
   end;
 end;
 
+procedure TfrmQuickEntry.LoadData;
+begin
+  // Load data from file
+
+  // Validate data
+
+end;
+
 procedure TfrmQuickEntry.qeGridColRowDeleted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
 begin
-  SBar.Panels[1].Text := Format('%d rows', [qeGrid.RowCount - 1]);
-  SBar.Panels[1].Alignment := taCenter;
+  UpdateRowCounter;
 end;
 
 procedure TfrmQuickEntry.qeGridColRowInserted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
 begin
-  SBar.Panels[1].Text := Format('%d rows', [qeGrid.RowCount - 1]);
-  SBar.Panels[1].Alignment := taCenter;
+  UpdateRowCounter;
 end;
 
 procedure TfrmQuickEntry.qeGridKeyPress(Sender: TObject; var Key: char);
@@ -3402,7 +3593,6 @@ end;
 procedure TfrmQuickEntry.qeGridSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
 begin
   SBar.Panels[0].Text := Format('%d:%d', [aCol+1, aRow]);
-  SBar.Panels[1].Alignment := taCenter;
 end;
 
 procedure TfrmQuickEntry.qeGridSelectEditor(Sender: TObject; aCol, aRow: Integer; var Editor: TWinControl);
@@ -3457,6 +3647,34 @@ begin
       NewValue := EmptyStr;
       Exit;
     end;
+end;
+
+function TfrmQuickEntry.RowHasData(aRow: Integer): Boolean;
+var
+  col: Integer;
+begin
+  Result := False;
+  // Ignore fixed columns
+  for col := qeGrid.FixedCols to qeGrid.ColCount - 1 do
+    if Trim(qeGrid.Cells[col, aRow]) <> EmptyStr then
+      Exit(True); // Found a cell with data
+end;
+
+procedure TfrmQuickEntry.SaveData;
+begin
+  // Create the subfolder in AppData dir
+  {$IFDEF DEBUG}
+  if not DirectoryExists(ConcatPaths([AppDataDir, 'debug_quickentry'])) then
+    CreateDir(ConcatPaths([AppDataDir, 'debug_quickentry']));
+  {$ELSE}
+  if not DirectoryExists(ConcatPaths([AppDataDir, 'quickentry'])) then
+    CreateDir(ConcatPaths([AppDataDir, 'quickentry']));
+  {$ENDIF}
+
+  // Check for invalid data
+
+  // Save to data file
+
 end;
 
 procedure TfrmQuickEntry.sbAddRowsClick(Sender: TObject);
@@ -3679,6 +3897,14 @@ begin
   //FTimeCols.Add(rscDoubleBand);
   //FTimeCols.Add(rscRemovedBand);
   FTimeCols.Sort;
+end;
+
+procedure TfrmQuickEntry.UpdateRowCounter;
+begin
+  if (qeGrid.RowCount - 1) > 1 then
+    SBar.Panels[1].Text := Format(rsRows, [qeGrid.RowCount - 1])
+  else
+    SBar.Panels[1].Text := Format(rsRow, [qeGrid.RowCount - 1]);
 end;
 
 end.

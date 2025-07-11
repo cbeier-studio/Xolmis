@@ -183,6 +183,7 @@ uses
     rsErrorImageNotSupported = 'Image format not supported! Supported formats: JPEG and Bitmap.';
     rsErrorValidatingPassword = 'Error validating password: %s';
     rsErrorFieldsAndValuesDiffer = 'The length of field and value lists do not match.';
+    rsErrorLoadingDataFromJSONFile = 'Error loading data from the JSON file: %s';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
@@ -495,6 +496,8 @@ uses
     rsNoUserFound = 'no user found';
     rsLine = 'Line: %d';
     rsTotalResearchers = '%d researcher(s)';
+    rsRow = '%d row';
+    rsRows = '%d rows';
 
     { Settings }
     rsSettingsGeneral = 'General';
@@ -969,6 +972,7 @@ uses
     { Xolmis Mobile captions }
     rsMobileQualitativeFree = 'Free Qualitative List';
     rsMobileQualitativeTimed = 'Timed Qualitative List';
+    rsMobileQualitativeInterval = 'Intervaled Qualitative List';
     rsMobileMackinnonList = 'Mackinnon List';
     rsMobileTransectionCount = 'Transection Count';
     rsMobilePointCount = 'Point Count';
@@ -993,6 +997,11 @@ uses
     rsMobileEggExists = 'Egg already recorded: %s';
     rsMobileImportingSpecimens = 'Importing specimens...';
     rsMobileSpecimenExists = 'Specimen already recorded: %s';
+    rsMobileFileNotFound = 'File not found.';
+    rsMobileFileNotSelected = 'File not selected.';
+    rsMobileFileSelectedAndLoaded = 'File selected and loaded.';
+    rsMobileErrorOpeningFile = 'Error opening file.';
+    rsMobileHaveMissingInvalidValuesOnGrid = 'The records have missing (required) or invalid values (highlighted in red) that need to be corrected before importing.';
 
     rsDistributionNone = 'None';
     rsDistributionRare = 'Rare';

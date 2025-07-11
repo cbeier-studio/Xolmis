@@ -1331,7 +1331,7 @@ begin
       end;
 
       {$IFDEF DEBUG}
-      //LogSQL(SQL);
+      LogSQL(SQL);
       LogDebug('SQL: VALPARAM = ' + aValue);
       {$ENDIF}
       Open;

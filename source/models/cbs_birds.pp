@@ -1368,6 +1368,7 @@ begin
         ':survey_id, ' +
         ':individual_id, ' +
         'date(:sighting_date), ' +
+        //'(CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
         'time(:sighting_time), ' +
         ':locality_id, ' +
         ':longitude, ' +
@@ -1527,6 +1528,7 @@ begin
         'survey_id = :survey_id, ' +
         'individual_id = :individual_id, ' +
         'sighting_date = date(:sighting_date), ' +
+        //'sighting_time = (CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
         'sighting_time = time(:sighting_time), ' +
         'locality_id = :locality_id, ' +
         'longitude = :longitude, ' +

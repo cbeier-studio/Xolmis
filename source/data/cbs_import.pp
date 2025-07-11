@@ -374,7 +374,7 @@ var
   Toponimo: TSite;
   Survey: TSurvey;
   Sight: TSighting;
-  Quant: Integer;
+  Quant, aMethod: Integer;
   RDate: String;
 begin
   if not FileExists(aCSVFile) then
@@ -418,15 +418,16 @@ begin
         Taxon := TTaxon.Create(GetKey('zoo_taxa', 'taxon_id', 'full_name', Reg.ScientificName));
         Survey := TSurvey.Create;
         Sight := TSighting.Create;
+        aMethod := GetKey('methods', 'method_id', 'ebird_name', Reg.Protocol);
         try
           { Find survey (Amostragem) }
-          if Survey.Find(Toponimo.Id, RDate) = False then
+          if Survey.Find(Toponimo.Id, aMethod, Reg.RecordDate) = False then
           begin
             { Create a survey if it does not exist }
             Survey.SurveyDate := Reg.RecordDate;
             Survey.StartTime := Reg.RecordTime;
             Survey.Duration := Reg.Duration;
-            Survey.MethodId := GetKey('methods', 'method_id', 'ebird_name', Reg.Protocol);
+            Survey.MethodId := aMethod;
             Survey.LocalityId := Toponimo.Id;
             Survey.Notes := Reg.ChecklistComments;
             Survey.TotalArea := Reg.AreaCovered;
@@ -443,6 +444,7 @@ begin
             Sight.SurveyId := Survey.Id;
             Sight.TaxonId := Taxon.Id;
             Sight.SightingDate := Reg.RecordDate;
+            Sight.MethodId := aMethod;
             Sight.Notes := Reg.ObservationDetails;
             Sight.BreedingStatus := Reg.BreedingCode;
             Sight.SubjectTally := Quant;
@@ -618,7 +620,7 @@ var
   NetStation: TSamplingPlot;
   NetSite: TNetEffort;
   strDate, strTime: String;
-  CodAnilha: Integer;
+  CodAnilha, aMethod: Integer;
   NetLat, NetLong: Extended;
 begin
   if not FileExists(aCSVFile) then
@@ -684,6 +686,7 @@ begin
             RemovedBand := TBand.Create;
             Individuo := TIndividual.Create;
             Captura := TCapture.Create;
+            aMethod := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
 
             // Get valid taxon
             if Taxon.ValidId > 0 then
@@ -696,7 +699,7 @@ begin
             end;
 
             // Get survey
-            Survey.Find(Toponimo.Id, strDate, NetStation.Id);
+            Survey.Find(Toponimo.Id, aMethod, Reg.CaptureDate, '', NetStation.Id);
 
             // Get net and coordinates
             if (Reg.NetSiteName <> EmptyStr) then
@@ -984,7 +987,7 @@ var
   Weather1, Weather2, Weather3, Weather4: TWeatherLog;
   Member: TSurveyMember;
   strDate: String;
-  pp: Integer;
+  pp, aMethod: Integer;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -1221,6 +1224,7 @@ begin
           NetStation := TSamplingPlot.Create;
           Toponimo := TSite.Create;
           Survey := TSurvey.Create;
+          aMethod := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
 
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
@@ -1229,7 +1233,7 @@ begin
           end;
 
           // Check if the survey exists
-          if not Survey.Find(Toponimo.Id, strDate, NetStation.Id) then
+          if not Survey.Find(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id) then
           begin
             Survey.SurveyDate := Reg.SamplingDate;
             Survey.StartTime := Reg.StartTime;
@@ -1403,6 +1407,7 @@ var
   Survey: TSurvey;
   NetSite: TNetEffort;
   strDate: String;
+  aMethod: Integer;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -1516,6 +1521,7 @@ begin
           Toponimo := TSite.Create;
           Survey := TSurvey.Create;
           NetSite := TNetEffort.Create;
+          aMethod := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
 
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
@@ -1524,7 +1530,7 @@ begin
           end;
 
           // Check if the survey exists
-          if Survey.Find(Toponimo.Id, strDate, NetStation.Id) then
+          if Survey.Find(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id) then
           begin
             // Check if the net site exists
             if not NetSite.Find(Survey.Id, IntToStr(Reg.NetNumber)) then

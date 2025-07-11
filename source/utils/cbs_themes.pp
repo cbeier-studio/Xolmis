@@ -216,9 +216,10 @@ type
     IsDark: Boolean;
     Background: TBackgroundColors;
     Foreground: TForegroundColors;
-    procedure Initialize(const AName: String; AIsDark: Boolean; const ABackground: TBackgroundColors;
-      const AForeground: TForegroundColors);
   end;
+
+var
+  ActiveTheme: TColorTheme;
 
 
   {$IFDEF DARWIN}
@@ -227,6 +228,9 @@ type
   function IsMacDarkMode: Boolean;
   {$ENDIF}
   function IsDarkTheme: Boolean;
+
+  procedure SetupDarkTheme;
+  procedure SetupLightTheme;
 
 implementation
 
@@ -304,15 +308,80 @@ begin
   {$ENDIF}
 end;
 
-{ TColorTheme }
-
-procedure TColorTheme.Initialize(const AName: String; AIsDark: Boolean;
-  const ABackground: TBackgroundColors; const AForeground: TForegroundColors);
+procedure SetupDarkTheme;
 begin
-  Name := AName;
-  IsDark := AIsDark;
-  Background := ABackground;
-  Foreground := AForeground;
+  // Backgroud colors
+  with ActiveTheme.Background do
+  begin
+    SolidBase :=            clSolidBGBaseDark;
+    SolidSecondary :=       clSolidBGSecondaryDark;
+    SolidTertiary :=        clSolidBGTertiaryDark;
+    SolidQuaternary :=      clSolidBGQuaternaryDark;
+    SmokeDefault :=         clSmokeBGDefaultDark;
+    CardDefault :=          clCardBGDefaultDark;
+    CardSecondary :=        clCardBGSecondaryDark;
+    SystemAttention :=      clSystemAttentionBGDark;
+    SystemSolidAttention := clSystemSolidAttentionBGDark;
+    SystemSuccess :=        clSystemSuccessBGDark;
+    SystemCaution :=        clSystemCautionBGDark;
+    SystemCritical :=       clSystemCriticalBGDark;
+    SystemNeutral :=        clSystemNeutralBGDark;
+    SystemSolidNeutral :=   clSystemSolidNeutralBGDark;
+  end;
+  // Foreground colors
+  with ActiveTheme.Foreground do
+  begin
+    TextPrimary :=            clTextPrimaryDark;
+    TextSecondary :=          clTextSecondaryDark;
+    TextTertiary :=           clTextTertiaryDark;
+    TextDisabled :=           clTextDisabledDark;
+    AccentTextPrimary :=      clAccentTextPrimaryDark;
+    AccentTextSecondary :=    clAccentTextSecondaryDark;
+    AccentTextTertiary :=     clAccentTextTertiaryDark;
+    AccentTextDisabled :=     clAccentTextDisabledDark;
+    TextOnAccentPrimary :=    clTextOnAccentPrimaryDark;
+    TextOnAccentSecondary :=  clTextOnAccentSecondaryDark;
+    TextOnAccentTertiary :=   clTextOnAccentTertiaryDark;
+    TextOnAccentDisabled :=   clTextOnAccentDisabledDark;
+  end;
+end;
+
+procedure SetupLightTheme;
+begin
+  // Backgroud colors
+  with ActiveTheme.Background do
+  begin
+    SolidBase :=            clSolidBGBaseLight;
+    SolidSecondary :=       clSolidBGSecondaryLight;
+    SolidTertiary :=        clSolidBGTertiaryLight;
+    SolidQuaternary :=      clSolidBGQuaternaryLight;
+    SmokeDefault :=         clSmokeBGDefaultLight;
+    CardDefault :=          clCardBGDefaultLight;
+    CardSecondary :=        clCardBGSecondaryLight;
+    SystemAttention :=      clSystemAttentionBGLight;
+    SystemSolidAttention := clSystemSolidAttentionBGLight;
+    SystemSuccess :=        clSystemSuccessBGLight;
+    SystemCaution :=        clSystemCautionBGLight;
+    SystemCritical :=       clSystemCriticalBGLight;
+    SystemNeutral :=        clSystemNeutralBGLight;
+    SystemSolidNeutral :=   clSystemSolidNeutralBGLight;
+  end;
+  // Foreground colors
+  with ActiveTheme.Foreground do
+  begin
+    TextPrimary :=            clTextPrimaryLight;
+    TextSecondary :=          clTextSecondaryLight;
+    TextTertiary :=           clTextTertiaryLight;
+    TextDisabled :=           clTextDisabledLight;
+    AccentTextPrimary :=      clAccentTextPrimaryLight;
+    AccentTextSecondary :=    clAccentTextSecondaryLight;
+    AccentTextTertiary :=     clAccentTextTertiaryLight;
+    AccentTextDisabled :=     clAccentTextDisabledLight;
+    TextOnAccentPrimary :=    clTextOnAccentPrimaryLight;
+    TextOnAccentSecondary :=  clTextOnAccentSecondaryLight;
+    TextOnAccentTertiary :=   clTextOnAccentTertiaryLight;
+    TextOnAccentDisabled :=   clTextOnAccentDisabledLight;
+  end;
 end;
 
 end.

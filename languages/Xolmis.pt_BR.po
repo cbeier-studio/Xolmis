@@ -3619,6 +3619,11 @@ msgctxt "cbs_locale.rserrorinvaliddate"
 msgid "Invalid date. Check if it was typed correctly."
 msgstr "Data inválida. Verifique se foi digitada corretamente."
 
+#: cbs_locale.rserrorloadingdatafromjsonfile
+#, object-pascal-format
+msgid "Error loading data from the JSON file: %s"
+msgstr "Erro carregando dados do arquivo JSON: %s"
+
 #: cbs_locale.rserrormontadata
 #, object-pascal-format
 msgctxt "cbs_locale.rserrormontadata"
@@ -4327,6 +4332,27 @@ msgstr "Observação casual"
 msgid "Egg already recorded: %s"
 msgstr "Ovo já registrado: %s"
 
+#: cbs_locale.rsmobileerroropeningfile
+msgid "Error opening file."
+msgstr "Erro abrindo o arquivo."
+
+#: cbs_locale.rsmobilefilenotfound
+msgid "File not found."
+msgstr "Arquivo não encontrado."
+
+#: cbs_locale.rsmobilefilenotselected
+msgctxt "cbs_locale.rsmobilefilenotselected"
+msgid "File not selected."
+msgstr "Arquivo não selecionado."
+
+#: cbs_locale.rsmobilefileselectedandloaded
+msgid "File selected and loaded."
+msgstr "Arquivo selecionado e carregado."
+
+#: cbs_locale.rsmobilehavemissinginvalidvaluesongrid
+msgid "The records have missing (required) or invalid values (highlighted in red) that need to be corrected before importing."
+msgstr "Os registros possuem valores faltantes (obrigatórios) ou inválidos (grifados em vermelho) que precisam ser corrigidos antes de importar."
+
 #: cbs_locale.rsmobileimportingegg
 msgid "Importing eggs..."
 msgstr "Importando ovos..."
@@ -4372,6 +4398,10 @@ msgstr "Ponto de contagem"
 #: cbs_locale.rsmobilequalitativefree
 msgid "Free Qualitative List"
 msgstr "Lista qualitativa livre"
+
+#: cbs_locale.rsmobilequalitativeinterval
+msgid "Intervaled Qualitative List"
+msgstr "Lista Qualitativa por Intervalos"
 
 #: cbs_locale.rsmobilequalitativetimed
 msgid "Timed Qualitative List"
@@ -5064,6 +5094,16 @@ msgstr "d%s"
 msgctxt "cbs_locale.rsrightlegempty"
 msgid "r-"
 msgstr "d-"
+
+#: cbs_locale.rsrow
+#, object-pascal-format
+msgid "%d row"
+msgstr "%d linha"
+
+#: cbs_locale.rsrows
+#, object-pascal-format
+msgid "%d rows"
+msgstr "%d linhas"
 
 #: cbs_locale.rsrunningstartupbackup
 msgctxt "cbs_locale.rsrunningstartupbackup"
@@ -7695,7 +7735,7 @@ msgstr "Importando"
 
 #: tdlgimport.lbltitlesource.caption
 msgid "Source and target "
-msgstr "Origem e destino"
+msgstr "Origem e destino "
 
 #: tdlgimport.opendlg.title
 msgctxt "tdlgimport.opendlg.title"
@@ -7969,24 +8009,30 @@ msgstr "ID"
 
 #: tdlgimportxmobile.gridmap.columns[2].title.caption
 msgctxt "tdlgimportxmobile.gridmap.columns[2].title.caption"
-msgid "Observer"
-msgstr "Observador"
+msgid "Observer *"
+msgstr "Observador *"
 
 #: tdlgimportxmobile.gridmap.columns[3].title.caption
 msgid "List nr."
 msgstr "Lista nº"
 
 #: tdlgimportxmobile.gridmap.columns[4].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[4].title.caption"
+msgid "Locality *"
+msgstr "Localidade *"
+
+#: tdlgimportxmobile.gridmap.columns[5].title.caption
+msgctxt "tdlgimportxmobile.gridmap.columns[5].title.caption"
 msgid "Record"
 msgstr "Registro"
 
 #: tdlgimportxmobile.lblmapinstruction.caption
 msgid "Confirm the relations between the data to be imported and the database. "
-msgstr "Confirme as relações entre os dados a serem importados e o banco de dados."
+msgstr "Confirme as relações entre os dados a serem importados e o banco de dados. "
 
 #: tdlgimportxmobile.lblprogressinstruction.caption
 msgid "Please wait while importing the data. "
-msgstr "Por favor aguarde enquanto os dados são importados."
+msgstr "Por favor aguarde enquanto os dados são importados. "
 
 #: tdlgimportxmobile.lblsourcefile.caption
 msgctxt "tdlgimportxmobile.lblsourcefile.caption"
@@ -8022,6 +8068,7 @@ msgid "Source"
 msgstr "Origem"
 
 #: tdlgimportxmobile.msgsourcefile.caption
+msgctxt "tdlgimportxmobile.msgsourcefile.caption"
 msgid "File not selected."
 msgstr "Arquivo não selecionado."
 

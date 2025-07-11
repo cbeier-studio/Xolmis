@@ -10601,7 +10601,7 @@ begin
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('locality_name', 'Locality', sdtText, Crit,
         True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_name', 'Taxon', sdtText, Crit,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create('z.full_name', 'Taxon', sdtText, Crit,
         True, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create('observer_name', 'Observer', sdtText, Crit,
         True, aValue));

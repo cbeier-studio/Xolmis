@@ -26,8 +26,8 @@ uses
 
 type
   TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
-  TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invMackinnonList, invTransectionCount,
-                          invPointCount, invBanding, invCasual);
+  TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invQualitativeInterval, invMackinnonList,
+                          invTransectionCount, invPointCount, invBanding, invCasual);
 
 type
 
@@ -46,7 +46,7 @@ type
     procedure ToPoi(aPoi: TPoi);
   end;
 
-  TMobilePoiList = specialize TFPGList<TMobilePoi>;
+  TMobilePoiList = specialize TFPGObjectList<TMobilePoi>;
 
   { TMobileSpecies }
 
@@ -62,6 +62,7 @@ type
     FPoiList: TMobilePoiList;
   public
     constructor Create;
+    destructor Destroy; override;
     procedure Clear;
     procedure FromJSON(JSON: TJSONData);
     procedure LoadPoiList(JSON: TJSONArray);
@@ -110,9 +111,9 @@ type
     procedure ToWeatherLog(aWeatherLog: TWeatherLog);
   end;
 
-  TMobileSpeciesList = specialize TFPGList<TMobileSpecies>;
-  TMobileVegetationList = specialize TFPGList<TMobileVegetation>;
-  TMobileWeatherList = specialize TFPGList<TMobileWeather>;
+  TMobileSpeciesList = specialize TFPGObjectList<TMobileSpecies>;
+  TMobileVegetationList = specialize TFPGObjectList<TMobileVegetation>;
+  TMobileWeatherList = specialize TFPGObjectList<TMobileWeather>;
 
   { TMobileInventory }
 
@@ -141,6 +142,7 @@ type
     FWeatherList: TMobileWeatherList;
   public
     constructor Create;
+    destructor Destroy; override;
     procedure Clear;
     procedure FromJSON(JSON: TJSONData);
     procedure LoadSpeciesList(JSON: TJSONArray);
@@ -149,7 +151,7 @@ type
     procedure ToSurvey(aSurvey: TSurvey);
   end;
 
-  TMobileInventoryList = specialize TFPGList<TMobileInventory>;
+  TMobileInventoryList = specialize TFPGObjectList<TMobileInventory>;
 
 type
 
@@ -193,8 +195,8 @@ type
     procedure ToNestRevision(aRevision: TNestRevision);
   end;
 
-  TMobileEggList = specialize TFPGList<TMobileEgg>;
-  TMobileRevisionList = specialize TFPGList<TMobileNestRevision>;
+  TMobileEggList = specialize TFPGObjectList<TMobileEgg>;
+  TMobileRevisionList = specialize TFPGObjectList<TMobileNestRevision>;
 
   { TMobileNest }
 
@@ -222,6 +224,7 @@ type
     FEggList: TMobileEggList;
   public
     constructor Create;
+    destructor Destroy; override;
     procedure Clear;
     procedure FromJSON(JSON: TJSONData);
     procedure LoadRevisionList(JSON: TJSONArray);
@@ -229,7 +232,7 @@ type
     procedure ToNest(aNest: TNest);
   end;
 
-  TMobileNestList = specialize TFPGList<TMobileNest>;
+  TMobileNestList = specialize TFPGObjectList<TMobileNest>;
 
 type
 
@@ -256,13 +259,13 @@ type
     procedure ToSpecimen(aSpecimen: TSpecimen);
   end;
 
-  TMobileSpecimenList = specialize TFPGList<TMobileSpecimen>;
+  TMobileSpecimenList = specialize TFPGObjectList<TMobileSpecimen>;
 
 
 implementation
 
 uses
-  cbs_global, cbs_getvalue;
+  cbs_locale, cbs_global, cbs_getvalue, cbs_conversions;
 
 { TMobilePoi }
 
@@ -284,7 +287,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FSpeciesId := JSONObj.Get('speciesId', 0);
-    FSampleTime := ISO8601ToDate(JSONObj.Get('sampleTime', '1900-01-01T00:00:00.0'), False);
+    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
     FLongitude := JSONObj.Get('longitude', 0.0);
     FLatitude := JSONObj.Get('latitude', 0.0);
   end;
@@ -319,6 +322,12 @@ begin
   FPoiList.Clear;
 end;
 
+destructor TMobileSpecies.Destroy;
+begin
+  FPoiList.Free;
+  inherited Destroy;
+end;
+
 procedure TMobileSpecies.FromJSON(JSON: TJSONData);
 var
   JSONObj: TJSONObject;
@@ -333,7 +342,7 @@ begin
     FIsOutOfInventory := JSONObj.Get('isOutOfInventory', 0) = 1;
     FCount := JSONObj.Get('count', 0);
     FNotes := JSONObj.Get('notes', '');
-    FSampleTime := ISO8601ToDate(JSONObj.Get('sampleTime', '1900-01-01T00:00:00.0'), False);
+    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
     PoiArray := JSONObj.FindPath('pois') as TJSONArray;
     if Assigned(PoiArray) then
       LoadPoiList(PoiArray);
@@ -394,7 +403,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FInventoryId := JSONObj.Get('inventoryId', '');
-    FSampleTime := ISO8601ToDate(JSONObj.Get('sampleTime', '1900-01-01T00:00:00.0'), False);
+    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
     FLongitude := JSONObj.Get('longitude', 0.0);
     FLatitude := JSONObj.Get('latitude', 0.0);
     FHerbsProportion := JSONObj.Get('herbsProportion', 0);
@@ -450,7 +459,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FInventoryId := JSONObj.Get('inventoryId', '');
-    FSampleTime := ISO8601ToDate(JSONObj.Get('sampleTime', '1900-01-01T00:00:00.0'), False);
+    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
     FCloudCover := JSONObj.Get('cloudCover', 0);
     FPrecipitation := TPrecipitation(JSONObj.Get('precipitation', Integer(wpNone)));
     FTemperature := JSONObj.Get('temperature', 0);
@@ -503,6 +512,14 @@ begin
   FWeatherList.Clear;
 end;
 
+destructor TMobileInventory.Destroy;
+begin
+  FWeatherList.Free;
+  FVegetationList.Free;
+  FSpeciesList.Free;
+  inherited Destroy;
+end;
+
 procedure TMobileInventory.FromJSON(JSON: TJSONData);
 var
   JSONObj: TJSONObject;
@@ -517,8 +534,8 @@ begin
     FType := TMobileInventoryType(JSONObj.Get('type', Integer(invQualitativeFree)));
     FDuration := JSONObj.Get('duration', 0);
     FMaxSpecies := JSONObj.Get('maxSpecies', 0);
-    FStartTime := ISO8601ToDate(JSONObj.Get('startTime', '1900-01-01T00:00:00.0'), False);
-    FEndTime := ISO8601ToDate(JSONObj.Get('endTime', '1900-01-01T00:00:00.0'), False);
+    FStartTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('startTime', '1500-12-30T00:00:00')), True);
+    FEndTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('endTime', '1500-12-30T00:00:00')), True);
     FStartLongitude := JSONObj.Get('startLongitude', 0.0);
     FStartLatitude := JSONObj.Get('startLatitude', 0.0);
     FEndLongitude := JSONObj.Get('endLongitude', 0.0);
@@ -530,6 +547,8 @@ begin
 
     if ExecRegExpr('^[A-Za-z]{2,}-[A-Za-z]{2,}-[0-9]{8}-[A-Z]{0,1}[0-9]{2,}$', FId) then
     begin
+      // Get locality abbreviation
+      FLocalityName := ExtractDelimited(1, FId, ['-']);
       // Get observer abbreviation
       FObserver := ExtractDelimited(2, FId, ['-']);
       // Get Mackinnon list number
@@ -598,7 +617,24 @@ end;
 procedure TMobileInventory.ToSurvey(aSurvey: TSurvey);
 begin
   aSurvey.SampleId := FId;
-  //aSurvey.MethodId := FType;
+  case FType of
+    invQualitativeFree:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeFree);
+    invQualitativeTimed:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeTimed);
+    invQualitativeInterval:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeInterval);
+    invMackinnonList:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileMackinnonList);
+    invTransectionCount:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileTransectionCount);
+    invPointCount:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobilePointCount);
+    invBanding:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
+    invCasual:
+      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileCasual);
+  end;
   aSurvey.Duration := FDuration;
   aSurvey.SurveyDate := FStartTime;
   aSurvey.StartTime := FStartTime;
@@ -635,7 +671,7 @@ begin
     FId := JSONObj.Get('id', 0);
     FNestId := JSONObj.Get('nestId', 0);
     FFieldNumber := JSONObj.Get('fieldNumber', '');
-    FSampleTime := ISO8601ToDate(JSONObj.Get('sampleTime', '1900-01-01T00:00:00.0'), False);
+    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
     FEggShape := TEggShape(JSONObj.Get('cloudCover', Integer(esUnknown)));
     FWidth := JSONObj.Get('width', 0.0);
     FLength := JSONObj.Get('length', 0.0);
@@ -681,7 +717,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FNestId := JSONObj.Get('nestId', 0);
-    FSampleTime := ISO8601ToDate(JSONObj.Get('sampleTime', '1900-01-01T00:00:00.0'), False);
+    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
     FNestStatus := TNestStatus(JSONObj.Get('nestStatus', Integer(nstUnknown)));
     FNestStage := TNestStage(JSONObj.Get('nestStage', Integer(nsgUnknown)));
     FEggsHost := JSONObj.Get('eggsHost', 0);
@@ -736,6 +772,13 @@ begin
   FNestKey := 0;
 end;
 
+destructor TMobileNest.Destroy;
+begin
+  FEggList.Free;
+  FRevisionList.Free;
+  inherited Destroy;
+end;
+
 procedure TMobileNest.FromJSON(JSON: TJSONData);
 var
   JSONObj: TJSONObject;
@@ -753,8 +796,8 @@ begin
     FLatitude := JSONObj.Get('latitude', 0.0);
     FSupport := JSONObj.Get('support', '');
     FHeightAboveGround := JSONObj.Get('heightAboveGround', 0.0);
-    FFoundTime := ISO8601ToDate(JSONObj.Get('foundTime', '1900-01-01T00:00:00.0'), False);
-    FLastTime := ISO8601ToDate(JSONObj.Get('lastTime', '1900-01-01T00:00:00.0'), False);
+    FFoundTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('foundTime', '1500-12-30T00:00:00')), True);
+    FLastTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('lastTime', '1500-12-30T00:00:00')), True);
     FNestFate := TNestFate(JSONObj.Get('nestFate', Integer(nfUnknown)));
     FMale := JSONObj.Get('male', '');
     FFemale := JSONObj.Get('female', '');
@@ -854,7 +897,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FFieldNumber := JSONObj.Get('fieldNumber', '');
-    FSampleTime := ISO8601ToDate(JSONObj.Get('sampleTime', '1900-01-01T00:00:00.0'), False);
+    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
     FType := TSpecimenType(JSONObj.Get('type', Integer(sptEmpty)));
     FSpeciesName := JSONObj.Get('speciesName', '');
     FLocality := JSONObj.Get('locality', '');

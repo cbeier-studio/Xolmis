@@ -43,10 +43,10 @@ uses
   function FindBotanicDlg(aFiltro: TTaxonFilters; aControl: TControl; aDataset: TDataset;
     aKeyField, aNameField: String; const aInit: String = ''): Boolean; overload;
 
-  procedure FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; var aCod: Integer;
-    const aInit: String = ''); overload;
-  procedure FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; aDataset: TDataset;
-    aKeyField, aNameField: String; const aInit: String = ''); overload;
+  function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; var aCod: Integer;
+    const aInit: String = ''): Boolean; overload;
+  function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; aDataset: TDataset;
+    aKeyField, aNameField: String; const aInit: String = ''): Boolean; overload;
 
 implementation
 
@@ -372,11 +372,12 @@ begin
   end;
 end;
 
-procedure FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; var aCod: Integer;
-  const aInit: String = '');
+function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; var aCod: Integer;
+  const aInit: String = ''): Boolean;
 var
   PControl: TPoint;
 begin
+  Result := False;
   LogEvent(leaOpen, 'Find (gazetteer) dialog');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
@@ -414,6 +415,7 @@ begin
       begin
         TStringGrid(aControl).Cells[TStringGrid(aControl).Col, TStringGrid(aControl).Row] := dlgFind.NameSelected;
       end;
+      Result := True;
     end;
   finally
     FreeAndNil(dlgFind);
@@ -421,11 +423,12 @@ begin
   end;
 end;
 
-procedure FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; aDataset: TDataset;
-  aKeyField, aNameField: String; const aInit: String = '');
+function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; aDataset: TDataset;
+  aKeyField, aNameField: String; const aInit: String = ''): Boolean;
 var
   PControl: TPoint;
 begin
+  Result := False;
   LogEvent(leaOpen, 'Find (gazetteer) dialog');
   dlgFind := TdlgFind.Create(nil);
   with dlgFind do
@@ -441,6 +444,7 @@ begin
       CanEdit(aDataSet);
       aDataSet.FieldByName(aKeyField).AsInteger := dlgFind.KeySelected;
       aDataSet.FieldByName(aNameField).AsString := dlgFind.NameSelected;
+      Result := True;
       if aControl is TCustomEdit then
         TCustomEdit(aControl).Modified := True;
     end;

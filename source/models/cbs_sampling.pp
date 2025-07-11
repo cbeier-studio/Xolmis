@@ -129,7 +129,7 @@ type
     procedure LoadFromDataSet(aDataSet: TDataSet);
     procedure Insert;
     function Diff(aOld: TSurvey; var aList: TStrings): Boolean;
-    function Find(aLocal: Integer; aDate: String; aNetStation: Integer = 0): Boolean;
+    function Find(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String = ''; aNetStation: Integer = 0): Boolean;
     procedure Update;
     procedure Save;
     procedure Delete;
@@ -3723,7 +3723,7 @@ begin
       SetStrParam(ParamByName('habitat'), FHabitat);
       SetStrParam(ParamByName('net_rounds'), FNetRounds);
       SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
+      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, FNetStationId, FSampleId);
       ParamByName('user_inserted').AsInteger := FUserInserted;
 
       ExecSQL;
@@ -3819,7 +3819,7 @@ begin
       SetStrParam(ParamByName('habitat'), FHabitat);
       SetStrParam(ParamByName('net_rounds'), FNetRounds);
       SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, 0, '');
+      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, FNetStationId, FSampleId);
       ParamByName('user_updated').AsInteger := FUserInserted;
       ParamByName('exported_status').AsBoolean := FExported;
       ParamByName('marked_status').AsBoolean := FMarked;
@@ -3893,7 +3893,7 @@ begin
   Result := aList.Count > 0;
 end;
 
-function TSurvey.Find(aLocal: Integer; aDate: String; aNetStation: Integer): Boolean;
+function TSurvey.Find(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String; aNetStation: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
@@ -3907,13 +3907,19 @@ begin
     Clear;
     Add('SELECT survey_id FROM surveys');
     Add('WHERE (locality_id = :alocal)');
+    Add('AND (method_id = :amethod)');
+    if aSampleId <> EmptyStr then
+      Add('AND (sample_id = :asampleid)');
     if aNetStation > 0 then
       Add('AND (net_station_id = :astation)');
     Add('AND (date(survey_date) = date(:adate))');
-    ParamByName('ALOCAL').AsInteger := aLocal;
+    SetIntParam(ParamByName('ALOCAL'), aLocal);
+    SetIntParam(ParamByName('AMETHOD'), aMethod);
+    if aSampleId <> EmptyStr then
+      SetStrParam(ParamByName('ASAMPLEID'), aSampleId);
     if aNetStation > 0 then
-      ParamByName('ASTATION').AsInteger := aNetStation;
-    ParamByName('ADATE').AsString := aDate;
+      SetIntParam(ParamByName('ASTATION'), aNetStation);
+    SetDateParam(ParamByName('ADATE'), aDate);
     Open;
     Result := RecordCount > 0;
     if Result = True then

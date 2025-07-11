@@ -38,6 +38,7 @@ uses
   // Date and time treatment
   function TextToDate(aValue: String): TDate;
   function TextToTime(aValue: String): TTime;
+  function DartISO8601ToPascal(aValue: String): String;
 
   // Numeric treatment
   function StrToIntOrZero(aValue: String): Integer;
@@ -213,6 +214,13 @@ begin
     Result := Tm
   else
     Result := NullTime;
+end;
+
+function DartISO8601ToPascal(aValue: String): String;
+begin
+  Result := aValue;
+  if Pos('.', aValue) > 0 then
+    Result := Copy(aValue, 1, Pos('.', aValue) - 1);
 end;
 
 { --------------------------------------------------------- }
