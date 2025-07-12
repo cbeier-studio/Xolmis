@@ -181,7 +181,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="455"/>
+      <BuildNr Value="456"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1354,6 +1354,12 @@
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmQuickEntry"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_splash.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgSplash"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>

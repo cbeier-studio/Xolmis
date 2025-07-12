@@ -135,7 +135,7 @@ uses
   cbs_setparam, uedt_collector, uedt_surveymember, uedt_projectmember,
   uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
   uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
-  udm_reports, cbs_xmobile, ufrm_quickentry;
+  udm_reports, cbs_xmobile, ufrm_quickentry, udlg_splash;
 
 {$R *.res}
 
@@ -154,11 +154,23 @@ begin
   uMetaDarkStyle.ApplyMetaDarkStyle(DefaultDark);
 
   Application.Initialize;
+  //dlgSplash.UpdateProgress(rsLoadingConnectionDataModule, 20);
+  //Application.ProcessMessages;
   Application.CreateForm(TDMM, DMM);
+  //Application.CreateForm(TdlgSplash, dlgSplash);
+  //dlgSplash.Show;
+  //dlgSplash.UpdateProgress(rsStartingXolmis, 0);
+  //Application.ProcessMessages;
+  //dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 40);
+  //Application.ProcessMessages;
+  Application.CreateForm(TDMG, DMG);
   {$IFDEF WINDOWS}
   Application.MainFormOnTaskBar := True;
   {$ENDIF}
+  //dlgSplash.UpdateProgress(rsLoadingMainWindow, 60);
+  //Application.ProcessMessages;
   Application.CreateForm(TfrmMain, frmMain);
+  //dlgSplash.Free;
   Application.Run;
 end.
 

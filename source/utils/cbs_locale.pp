@@ -209,6 +209,13 @@ uses
     rsProgressPopulatingTables = 'Populating tables... This may take a few minutes.';
     rsProgressOptimizingDatabase = 'Optimizing database...';
 
+    { Splash screen messages }
+    rsStartingXolmis = 'Starting Xolmis...';
+    rsLoadingConnectionDataModule = 'Loading connection data module...';
+    rsLoadingDatasetsDataModule = 'Loading datasets data module...';
+    rsLoadingMainWindow = 'Loading main window...';
+    rsMainWindowLoaded = 'Main window loaded!';
+
     { Success messages }
     rsSuccessfulUpdate = '%s was updated successfully!';
     rsSuccessfulImport = 'The selected file(s) were sucessfully imported.';

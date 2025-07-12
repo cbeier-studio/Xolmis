@@ -4258,10 +4258,18 @@ msgstr "Nenhum item da lista foi selecionado!"
 msgid "Loading"
 msgstr "Carregando"
 
+#: cbs_locale.rsloadingconnectiondatamodule
+msgid "Loading connection data module..."
+msgstr "Carregando módulo de dados de conexões..."
+
 #: cbs_locale.rsloadingcsvfile
 msgctxt "cbs_locale.rsloadingcsvfile"
 msgid "Loading CSV file..."
 msgstr "Carregando arquivo CSV..."
+
+#: cbs_locale.rsloadingdatasetsdatamodule
+msgid "Loading datasets data module..."
+msgstr "Carregando módulo de dados de conjuntos de dados..."
 
 #: cbs_locale.rsloadingform
 #, object-pascal-format
@@ -4272,6 +4280,10 @@ msgstr "Carregando %s..."
 #: cbs_locale.rsloadingjsonfile
 msgid "Loading JSON file..."
 msgstr "Carregando arquivo JSON..."
+
+#: cbs_locale.rsloadingmainwindow
+msgid "Loading main window..."
+msgstr "Carregando a janela principal..."
 
 #: cbs_locale.rsloadingrecords
 msgctxt "cbs_locale.rsloadingrecords"
@@ -4293,6 +4305,10 @@ msgstr "Longitude"
 msgctxt "cbs_locale.rslongitudecaption"
 msgid "Longitude: <font color=\"$00C75F5B\">%s</font>"
 msgstr "Longitude: <font color=\"$00C75F5B\">%s</font>"
+
+#: cbs_locale.rsmainwindowloaded
+msgid "Main window loaded!"
+msgstr "Janela principal carregada!"
 
 #: cbs_locale.rsmarked
 msgctxt "cbs_locale.rsmarked"
@@ -5389,6 +5405,10 @@ msgstr "Tecidos"
 msgctxt "cbs_locale.rsstandarduser"
 msgid "Standard"
 msgstr "Padrão"
+
+#: cbs_locale.rsstartingxolmis
+msgid "Starting Xolmis..."
+msgstr "Iniciando o Xolmis..."
 
 #: cbs_locale.rsstatusdead
 msgctxt "cbs_locale.rsstatusdead"
@@ -8272,6 +8292,10 @@ msgstr "Criar usuário"
 msgid "Checking botanic taxon"
 msgstr "Verificando táxon botânico"
 
+#: tdlgplantminer.msginfo.caption
+msgid "When the verified taxon data is ready, to update the taxon being edited, click the Apply button."
+msgstr "Quando os dados do táxon verificado estiverem prontos, para atualizar o táxon sendo editado, clique no botão Aplicar."
+
 #: tdlgplantminer.sbcancel.caption
 msgctxt "tdlgplantminer.sbcancel.caption"
 msgid "Cancel"
@@ -8419,6 +8443,19 @@ msgstr "Apagar a verificação selecionada"
 msgctxt "tdlgrecverifications.sbinsertrecord.hint"
 msgid "New verification"
 msgstr "Nova verificação"
+
+#: tdlgsplash.caption
+msgid "Starting Xolmis"
+msgstr "Iniciando o Xolmis"
+
+#: tdlgsplash.lblappname.caption
+msgid "Xolmis"
+msgstr "Xolmis"
+
+#: tdlgsplash.lblprogress.caption
+msgctxt "tdlgsplash.lblprogress.caption"
+msgid "Starting..."
+msgstr "Iniciando..."
 
 #: tdlgvalidate.sbok.caption
 msgid "OK"

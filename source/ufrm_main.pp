@@ -382,7 +382,7 @@ uses
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
   udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
-  udlg_importxmobile, udlg_import,
+  udlg_importxmobile, udlg_import, udlg_splash,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
@@ -966,6 +966,10 @@ begin
 
   { Initialize notification system }
   CreateNotificationList;
+
+  //dlgSplash.UpdateProgress(rsMainWindowLoaded, 100);
+  //Application.ProcessMessages;
+  //dlgSplash.Hide;
 
   { Check if there are connections available }
   DMM.qsConn.Open;

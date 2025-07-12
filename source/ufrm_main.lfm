@@ -404,6 +404,7 @@ object frmMain: TfrmMain
       Tabs = <>
       OnContextPopup = navTabsContextPopup
       DoubleBuffered = True
+      TabIndex = -1
       ColorBg = clBtnFace
       ColorSeparator = 8945535
       ColorTabActive = clBtnFace
