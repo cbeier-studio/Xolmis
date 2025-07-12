@@ -7,7 +7,6 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -84,7 +83,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -9400,7 +9399,6 @@ object frmCustomGrid: TfrmCustomGrid
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         TabOrder = 2
-        Visible = False
         object icoEmptyQuery: TImage
           Left = 16
           Height = 48
@@ -9901,7 +9899,7 @@ object frmCustomGrid: TfrmCustomGrid
   object dsLink: TDataSource
     OnStateChange = dsLinkStateChange
     OnDataChange = dsLinkDataChange
-    Left = 432
+    Left = 520
     Top = 64
   end
   object dsLink1: TDataSource
@@ -24928,7 +24926,7 @@ object frmCustomGrid: TfrmCustomGrid
     PrinterIndex = -1
     ShowCaption = True
     ShowProgress = True
-    Left = 360
+    Left = 432
     Top = 64
   end
   object pmPrint: TPopupMenu
@@ -26880,5 +26878,12 @@ object frmCustomGrid: TfrmCustomGrid
     OnDataChange = dsLink6DataChange
     Left = 240
     Top = 512
+  end
+  object TimerOpen: TTimer
+    Enabled = False
+    Interval = 250
+    OnTimer = TimerOpenTimer
+    Left = 360
+    Top = 64
   end
 end

@@ -52,6 +52,7 @@ type
     sbAddFeathersBatch: TSpeedButton;
     sbQuickEntry: TSpeedButton;
     sbQuickEntryChild: TSpeedButton;
+    TimerOpen: TTimer;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
     DropAudios: TDropFileTarget;
@@ -1073,6 +1074,7 @@ type
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
+    procedure TimerOpenTimer(Sender: TObject);
     procedure tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode; var NewState: TCheckState;
       var Allowed: Boolean);
@@ -1197,6 +1199,7 @@ type
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
 
+    procedure OpenAsync;
     procedure OpenExpeditionChilds;
     procedure OpenIndividualChilds;
     procedure OpenNestChilds;
@@ -4855,10 +4858,10 @@ begin
 end;
 
 procedure TfrmCustomGrid.FormShow(Sender: TObject);
-{$IFDEF DEBUG}
-var
-  Usage: TElapsedTimer;
-{$ENDIF}
+//{$IFDEF DEBUG}
+//var
+//  Usage: TElapsedTimer;
+//{$ENDIF}
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
@@ -4873,94 +4876,96 @@ begin
   FChildPanelFactor := 0.4;
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
   Application.ProcessMessages;
-  {$IFDEF DEBUG}
-  Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'load master table');
-  {$ENDIF}
+  //{$IFDEF DEBUG}
+  //Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'load master table');
+  //{$ENDIF}
 
   { Load datasources }
   SetGridAndChild;
 
-  { Load master grid columns }
-  if Assigned(dsLink.DataSet) then
-  begin
-    {$IFDEF DEBUG}
-    Usage.AddPart('load master grid columns');
-    {$ENDIF}
-    LoadColumnsConfig;
-    AddGridColumns(FTableType, DBG);
-    if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-      (dsLink.DataSet as TSQLQuery).ReadOnly := True;
-    if not (dsLink.DataSet.Active) then
-      dsLink.DataSet.Open;
-    UpdateGridTitles(DBG, FSearch);
-    //SetGridColumns(FTableType, DBG);
-    {$IFDEF DEBUG}
-    LogDebug(Format('%s: %d records', [dsLink.DataSet.Name, dsLink.DataSet.RecordCount]));
-    {$ENDIF}
-    Application.ProcessMessages;
-  end;
-
-  { Load child grids columns }
-  if Assigned(gridChild1.DataSource) then
-  begin
-    {$IFDEF DEBUG}
-    Usage.AddPart('load detail table');
-    {$ENDIF}
-
-    case FTableType of
-      tbIndividuals:    OpenIndividualChilds;
-      tbNests:          OpenNestChilds;
-      tbExpeditions:    OpenExpeditionChilds;
-      tbSurveys:        OpenSurveyChilds;
-      tbSpecimens:      OpenSpecimenChilds;
-      tbSamplingPlots:  OpenSamplingPlotChilds;
-      tbProjects:       OpenProjectChilds;
-    end;
-    //SetGridColumns(FChildTable, dbgChild);
-    Application.ProcessMessages;
-  end;
-
-  { Loads images dataset }
-  //if (Assigned(imgThumb.DataSource)) and not (imgThumb.DataSource.DataSet.Active) then
+  //{ Load master grid columns }
+  //if Assigned(dsLink.DataSet) then
   //begin
   //  {$IFDEF DEBUG}
-  //  Usage.AddPart('load images table');
+  //  Usage.AddPart('load master grid columns');
   //  {$ENDIF}
-  //  dbgImages.DataSource.DataSet.Open;
+  //  LoadColumnsConfig;
+  //  AddGridColumns(FTableType, DBG);
+  //  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //    (dsLink.DataSet as TSQLQuery).ReadOnly := True;
+  //  if not (dsLink.DataSet.Active) then
+  //    dsLink.DataSet.Open;
+  //  UpdateGridTitles(DBG, FSearch);
+  //  //SetGridColumns(FTableType, DBG);
   //  {$IFDEF DEBUG}
-  //  LogDebug(Format('%s: %d records', [dbgImages.DataSource.DataSet.Name, dbgImages.DataSource.DataSet.RecordCount]));
+  //  LogDebug(Format('%s: %d records', [dsLink.DataSet.Name, dsLink.DataSet.RecordCount]));
   //  {$ENDIF}
+  //  Application.ProcessMessages;
   //end;
+  //
+  //{ Load child grids columns }
+  //if Assigned(gridChild1.DataSource) then
+  //begin
+  //  {$IFDEF DEBUG}
+  //  Usage.AddPart('load detail table');
+  //  {$ENDIF}
+  //
+  //  case FTableType of
+  //    tbIndividuals:    OpenIndividualChilds;
+  //    tbNests:          OpenNestChilds;
+  //    tbExpeditions:    OpenExpeditionChilds;
+  //    tbSurveys:        OpenSurveyChilds;
+  //    tbSpecimens:      OpenSpecimenChilds;
+  //    tbSamplingPlots:  OpenSamplingPlotChilds;
+  //    tbProjects:       OpenProjectChilds;
+  //  end;
+  //  //SetGridColumns(FChildTable, dbgChild);
+  //  Application.ProcessMessages;
+  //end;
+  //
+  //{ Loads images dataset }
+  ////if (Assigned(imgThumb.DataSource)) and not (imgThumb.DataSource.DataSet.Active) then
+  ////begin
+  ////  {$IFDEF DEBUG}
+  ////  Usage.AddPart('load images table');
+  ////  {$ENDIF}
+  ////  dbgImages.DataSource.DataSet.Open;
+  ////  {$IFDEF DEBUG}
+  ////  LogDebug(Format('%s: %d records', [dbgImages.DataSource.DataSet.Name, dbgImages.DataSource.DataSet.RecordCount]));
+  ////  {$ENDIF}
+  ////end;
+  ////Application.ProcessMessages;
+  //
+  //{ Load side panels }
+  //{$IFDEF DEBUG}
+  //Usage.AddPart('load side panels');
+  //{$ENDIF}
+  ////navTabs.OptScalePercents := Round(navTabs.OptScalePercents * navTabs.ScaleFactor);
+  //LoadRecordColumns;
+  //LoadRecordRow;
+  //UpdateFilterPanels;
+  //UpdateButtons(dsLink.DataSet);
+  ////UpdateGridTitles(DBG, FSearch);
+  //UpdateChildCount;
+  //if DBG.CanSetFocus then
+  //  DBG.SetFocus;
+  //if gridColumns.RowCount <= 2 then
+  //  LoadColumnsConfigGrid;
+  ////  GetColumns;
+  //SetImages;
+  //SetAudios;
+  //SetDocs;
+  //SetRecycle;
+  //FCanToggle := True;
   //Application.ProcessMessages;
-
-  { Load side panels }
-  {$IFDEF DEBUG}
-  Usage.AddPart('load side panels');
-  {$ENDIF}
-  //navTabs.OptScalePercents := Round(navTabs.OptScalePercents * navTabs.ScaleFactor);
-  LoadRecordColumns;
-  LoadRecordRow;
-  UpdateFilterPanels;
-  UpdateButtons(dsLink.DataSet);
-  //UpdateGridTitles(DBG, FSearch);
-  UpdateChildCount;
-  if DBG.CanSetFocus then
-    DBG.SetFocus;
-  if gridColumns.RowCount <= 2 then
-    LoadColumnsConfigGrid;
-  //  GetColumns;
-  SetImages;
-  SetAudios;
-  SetDocs;
-  SetRecycle;
-  FCanToggle := True;
-  Application.ProcessMessages;
-
-  {$IFDEF DEBUG}
-  Usage.StopTimer;
-  FreeAndNil(Usage);
-  {$ENDIF}
+  //
+  //{$IFDEF DEBUG}
+  //Usage.StopTimer;
+  //FreeAndNil(Usage);
+  //{$ENDIF}
   //TimerUpdate.Enabled := True;
+
+  TimerOpen.Enabled := True;
 end;
 
 procedure TfrmCustomGrid.GetBandFilters;
@@ -6297,6 +6302,101 @@ begin
   ADrawer.BrushColor := clWhite;
   ADrawer.BrushStyle := bsClear;
   ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
+end;
+
+procedure TfrmCustomGrid.OpenAsync;
+{$IFDEF DEBUG}
+var
+  Usage: TElapsedTimer;
+{$ENDIF}
+begin
+  {$IFDEF DEBUG}
+  Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'load master table');
+  {$ENDIF}
+
+  //{ Load datasources }
+  //SetGridAndChild;
+
+  { Load master grid columns }
+  if Assigned(dsLink.DataSet) then
+  begin
+    {$IFDEF DEBUG}
+    Usage.AddPart('load master grid columns');
+    {$ENDIF}
+    LoadColumnsConfig;
+    AddGridColumns(FTableType, DBG);
+    if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+      (dsLink.DataSet as TSQLQuery).ReadOnly := True;
+    if not (dsLink.DataSet.Active) then
+      dsLink.DataSet.Open;
+    UpdateGridTitles(DBG, FSearch);
+    //SetGridColumns(FTableType, DBG);
+    {$IFDEF DEBUG}
+    LogDebug(Format('%s: %d records', [dsLink.DataSet.Name, dsLink.DataSet.RecordCount]));
+    {$ENDIF}
+    Application.ProcessMessages;
+  end;
+
+  { Load child grids columns }
+  if Assigned(gridChild1.DataSource) then
+  begin
+    {$IFDEF DEBUG}
+    Usage.AddPart('load detail table');
+    {$ENDIF}
+
+    case FTableType of
+      tbIndividuals:    OpenIndividualChilds;
+      tbNests:          OpenNestChilds;
+      tbExpeditions:    OpenExpeditionChilds;
+      tbSurveys:        OpenSurveyChilds;
+      tbSpecimens:      OpenSpecimenChilds;
+      tbSamplingPlots:  OpenSamplingPlotChilds;
+      tbProjects:       OpenProjectChilds;
+    end;
+    //SetGridColumns(FChildTable, dbgChild);
+    Application.ProcessMessages;
+  end;
+
+  { Loads images dataset }
+  //if (Assigned(imgThumb.DataSource)) and not (imgThumb.DataSource.DataSet.Active) then
+  //begin
+  //  {$IFDEF DEBUG}
+  //  Usage.AddPart('load images table');
+  //  {$ENDIF}
+  //  dbgImages.DataSource.DataSet.Open;
+  //  {$IFDEF DEBUG}
+  //  LogDebug(Format('%s: %d records', [dbgImages.DataSource.DataSet.Name, dbgImages.DataSource.DataSet.RecordCount]));
+  //  {$ENDIF}
+  //end;
+  //Application.ProcessMessages;
+
+  { Load side panels }
+  {$IFDEF DEBUG}
+  Usage.AddPart('load side panels');
+  {$ENDIF}
+  //navTabs.OptScalePercents := Round(navTabs.OptScalePercents * navTabs.ScaleFactor);
+  LoadRecordColumns;
+  LoadRecordRow;
+  UpdateFilterPanels;
+  UpdateButtons(dsLink.DataSet);
+  //UpdateGridTitles(DBG, FSearch);
+  UpdateChildCount;
+  if DBG.CanSetFocus then
+    DBG.SetFocus;
+  if gridColumns.RowCount <= 2 then
+    LoadColumnsConfigGrid;
+  //  GetColumns;
+  SetImages;
+  SetAudios;
+  SetDocs;
+  SetRecycle;
+  FCanToggle := True;
+  Application.ProcessMessages;
+
+  {$IFDEF DEBUG}
+  Usage.StopTimer;
+  FreeAndNil(Usage);
+  {$ENDIF}
 end;
 
 procedure TfrmCustomGrid.OpenExpeditionChilds;
@@ -12911,6 +13011,17 @@ begin
   finally
     gridSummary.EndUpdate;
     pMsgSummary.Visible := False;
+  end;
+end;
+
+procedure TfrmCustomGrid.TimerOpenTimer(Sender: TObject);
+begin
+  TimerOpen.Enabled := False;
+  try
+    Screen.BeginTempCursor(crAppStart);
+    OpenAsync;
+  finally
+    Screen.EndTempCursor(crAppStart);
   end;
 end;
 
