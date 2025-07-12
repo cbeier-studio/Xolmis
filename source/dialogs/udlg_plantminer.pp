@@ -23,7 +23,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ValEdit, ExtCtrls, Buttons, Types, Grids,
-  fphttpclient, openssl, opensslsockets, LCLIntf, fpjson;
+  fphttpclient, openssl, opensslsockets, LCLIntf, StdCtrls, ATShapeLineBGRA, fpjson;
 
 type
 
@@ -75,6 +75,11 @@ type
   { TdlgPlantminer }
 
   TdlgPlantminer = class(TForm)
+    icoInfo: TImage;
+    iIcons: TImageList;
+    msgInfo: TLabel;
+    lineBottom: TShapeLineBGRA;
+    pInfo: TPanel;
     sbSave: TBitBtn;
     sbCancel: TBitBtn;
     pBottom: TPanel;

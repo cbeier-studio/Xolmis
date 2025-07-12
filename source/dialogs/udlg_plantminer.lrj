@@ -1,5 +1,6 @@
 {"version":1,"strings":[
 {"hash":101465726,"name":"tdlgplantminer.caption","sourcebytes":[67,104,101,99,107,105,110,103,32,98,111,116,97,110,105,99,32,116,97,120,111,110],"value":"Checking botanic taxon"},
 {"hash":4749113,"name":"tdlgplantminer.sbsave.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
-{"hash":77089212,"name":"tdlgplantminer.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+{"hash":77089212,"name":"tdlgplantminer.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":113035950,"name":"tdlgplantminer.msginfo.caption","sourcebytes":[87,104,101,110,32,116,104,101,32,118,101,114,105,102,105,101,100,32,116,97,120,111,110,32,100,97,116,97,32,105,115,32,114,101,97,100,121,44,32,116,111,32,117,112,100,97,116,101,32,116,104,101,32,116,97,120,111,110,32,98,101,105,110,103,32,101,100,105,116,101,100,44,32,99,108,105,99,107,32,116,104,101,32,65,112,112,108,121,32,98,117,116,116,111,110,46],"value":"When the verified taxon data is ready, to update the taxon being edited, click the Apply button."}
 ]}
