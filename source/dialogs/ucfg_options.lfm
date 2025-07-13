@@ -9,6 +9,7 @@ object cfgOptions: TcfgOptions
   ClientWidth = 857
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.4'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel

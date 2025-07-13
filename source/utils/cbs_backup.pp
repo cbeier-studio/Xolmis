@@ -31,7 +31,7 @@ uses
   udm_main;
 
   function NewBackup: Boolean;
-  function VacuumIntoBackup: Boolean;
+  function VacuumIntoBackup(const SuccessMessage: Boolean = True): Boolean;
   function RestoreBackup(aFilename: String): Boolean;
   procedure OnBkpProgress(Sender: TObject; Remaining, PageCount: integer);
   procedure ZipperProgress(Sender: TObject; const Pct: Double);
@@ -42,7 +42,7 @@ uses
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, udlg_progress;
+uses cbs_locale, cbs_global, cbs_dialogs, udlg_progress, udlg_loading;
 
 function NewBackup: boolean;
 var
@@ -152,7 +152,7 @@ begin
   Result := true;
 end;
 
-function VacuumIntoBackup: Boolean;
+function VacuumIntoBackup(const SuccessMessage: Boolean): Boolean;
 var
   fzip: TZipper;
   dbName, bkpName: String;
@@ -160,98 +160,105 @@ var
   zipName: String;
 begin
   Result := False;
+  LogEvent(leaStart, 'Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
 
-  if not MsgDlg(rsTitleBackup, rsPromptBackupNow, mtConfirmation) then
-    Exit;
+  //if not MsgDlg(rsTitleBackup, rsPromptBackupNow, mtConfirmation) then
+  //  Exit;
 
   if not FileExists(ConexaoDB.Database) then
   begin
     raise EFileNotFoundException.CreateFmt(rsErrorDatabaseNotFound, [ConexaoDB.Database]);
     // Abort;
   end;
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(rsPreparingBackup, -1);
 
+  //dlgProgress := TdlgProgress.Create(nil);
+  try
+    //dlgProgress.Show;
+    //dlgProgress.Title := rsTitleBackup;
+    //dlgProgress.Text := rsPreparingBackup;
+    //dlgProgress.Min := 0;
+    //dlgProgress.Max := 100;
+    //dlgProgress.Indeterminate := True;
 
-    dlgProgress := TdlgProgress.Create(nil);
+    if not (DirectoryExists(XSettings.BackupFolder)) then
+      CreateDir(XSettings.BackupFolder);
+    dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
+    bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
+    tmpName := ConcatPaths([TempDir, bkpName]);
+    bkpName := ConcatPaths([XSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
+
+    //F_Main.Taskbar.ProgressMaxValue := 100;
+    //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
+
+    Application.ProcessMessages;
+
     try
-      dlgProgress.Show;
-      dlgProgress.Title := rsTitleBackup;
-      dlgProgress.Text := rsPreparingBackup;
-      dlgProgress.Min := 0;
-      dlgProgress.Max := 100;
-      dlgProgress.Indeterminate := True;
+      //F_Main.Cursor := crHourGlass;
+      dlgLoading.UpdateProgress(rsCreatingBackup, -1);
+      //dlgProgress.Text := rsCreatingBackup;
+      //Application.ProcessMessages;
 
-      if not (DirectoryExists(XSettings.BackupFolder)) then
-        CreateDir(XSettings.BackupFolder);
-      dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
-      bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
-      tmpName := ConcatPaths([TempDir, bkpName]);
-      bkpName := ConcatPaths([XSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
+      DMM.sqlCon.ExecuteDirect('END TRANSACTION');
+      Sleep(200);
+      DMM.sqlCon.ExecuteDirect('VACUUM INTO ' + QuotedStr(tmpName));
+      Sleep(200);
+      DMM.sqlCon.ExecuteDirect('BEGIN TRANSACTION');
 
-      //F_Main.Taskbar.ProgressMaxValue := 100;
-      //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
-      LogEvent(leaStart, 'Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
-      Application.ProcessMessages;
-
-      try
-        //F_Main.Cursor := crHourGlass;
-        dlgProgress.Text := rsCreatingBackup;
-        Application.ProcessMessages;
-
-        DMM.sqlCon.ExecuteDirect('END TRANSACTION');
-        Sleep(200);
-        DMM.sqlCon.ExecuteDirect('VACUUM INTO ' + QuotedStr(tmpName));
-        Sleep(200);
-        DMM.sqlCon.ExecuteDirect('BEGIN TRANSACTION');
-
-        //DMM.sqlTrans.CommitRetaining;
-      except
-        //DMM.sqlTrans.RollbackRetaining;
-        raise;
-      end;
-
-      if FileExists(tmpName) then
-      begin
-        dlgProgress.Indeterminate := False;
-        dlgProgress.Text := rsCompressingBackup;
-        zipName := ChangeFileExt(tmpName, '.zip');
-        LogEvent(leaStart, 'Compressing backup: ' + ExtractFileName(zipName));
-        dlgProgress.Max := 100;
-        dlgProgress.Position := 0;
-        //F_Main.Taskbar.ProgressMaxValue := 100;
-        fzip := TZipper.Create;
-        try
-          //fzip.OnProgress := @ZipperProgress;
-          fzip.FileName := zipName;
-          fzip.Entries.AddFileEntry(tmpName, ExtractFileName(tmpName));
-          fzip.ZipAllFiles;
-        finally
-          fzip.Free;
-        end;
-        CopyFile(zipName, bkpName);
-        DeleteFile(PChar(tmpName));
-        DeleteFile(PChar(zipName));
-        LogEvent(leaFinish, 'Compressing backup: ' + ExtractFileName(zipName));
-
-        if FileExists(bkpName) then
-        begin
-          Result := True;
-          ConexaoDB.SetLastBackup;
-          MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [ExtractFileName(bkpName)]), mtInformation)
-        end
-        else
-          MsgDlg(rsTitleBackup, rsErrorBackupFailed, mtError);
-      end;
-    finally
-      dlgProgress.Position := 100;
-      dlgProgress.Text := rsProgressFinishing;
-      Application.ProcessMessages;
-      LogEvent(leaFinish, 'Backup: ' + bkpName);
-      //F_Main.Cursor := crDefault;
-      //F_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
-      dlgProgress.Close;
-      FreeAndNil(dlgProgress);
+      //DMM.sqlTrans.CommitRetaining;
+    except
+      //DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
 
+    if FileExists(tmpName) then
+    begin
+      dlgLoading.UpdateProgress(rsCompressingBackup, 0);
+      //dlgProgress.Indeterminate := False;
+      //dlgProgress.Text := rsCompressingBackup;
+      zipName := ChangeFileExt(tmpName, '.zip');
+      LogEvent(leaStart, 'Compressing backup: ' + ExtractFileName(zipName));
+      //dlgProgress.Max := 100;
+      //dlgProgress.Position := 0;
+      //F_Main.Taskbar.ProgressMaxValue := 100;
+      fzip := TZipper.Create;
+      try
+        fzip.OnProgress := @dlgLoading.ZipperProgress;
+        //fzip.OnPercent := 1;
+        fzip.FileName := zipName;
+        fzip.Entries.AddFileEntry(tmpName, ExtractFileName(tmpName));
+        fzip.ZipAllFiles;
+      finally
+        fzip.Free;
+      end;
+      CopyFile(zipName, bkpName);
+      DeleteFile(PChar(tmpName));
+      DeleteFile(PChar(zipName));
+      LogEvent(leaFinish, 'Compressing backup: ' + ExtractFileName(zipName));
+
+      if FileExists(bkpName) then
+      begin
+        dlgLoading.UpdateProgress(rsSuccessfulBackup, 100);
+        dlgLoading.Hide;
+        Result := True;
+        ConexaoDB.SetLastBackup;
+        if SuccessMessage then
+          MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [ExtractFileName(bkpName)]), mtInformation)
+      end
+      else
+        MsgDlg(rsTitleBackup, rsErrorBackupFailed, mtError);
+    end;
+  finally
+    //dlgProgress.Position := 100;
+    //dlgProgress.Text := rsProgressFinishing;
+    //Application.ProcessMessages;
+    LogEvent(leaFinish, 'Backup: ' + bkpName);
+    //F_Main.Cursor := crDefault;
+    //F_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
+    //dlgProgress.Close;
+    //FreeAndNil(dlgProgress);
+  end;
 
   Result := true;
 end;
@@ -277,28 +284,31 @@ begin
   try
     bkpName := aFilename;
     zipped := False;
-    dlgProgress := TdlgProgress.Create(nil);
+    //dlgProgress := TdlgProgress.Create(nil);
     try
-      dlgProgress.Show;
-      dlgProgress.Title := rsTitleRestore;
-      dlgProgress.Text := rsPreparingRestore;
-      dlgProgress.Min := 0;
-      dlgProgress.Max := 100;
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsPreparingRestore, -1);
+      //dlgProgress.Show;
+      //dlgProgress.Title := rsTitleRestore;
+      //dlgProgress.Text := rsPreparingRestore;
+      //dlgProgress.Min := 0;
+      //dlgProgress.Max := 100;
       LogEvent(leaStart, 'Restore backup: ' + aFilename + ' --> ' + DMM.sqlCon.DatabaseName);
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
       Application.ProcessMessages;
         //F_Main.Cursor := crHourGlass;
         if ExtractFileExt(aFilename) = '.zip' then
         begin
-          dlgProgress.Text := rsDecompressingBackup;
+          dlgLoading.UpdateProgress(rsDecompressingBackup, 0);
+          //dlgProgress.Text := rsDecompressingBackup;
           bkpName := TempDir + ChangeFileExt(ExtractFileName(aFilename), '.sbk');
           zipped := True;
           LogEvent(leaStart, 'Decompressing backup: ' + aFilename);
-          dlgProgress.Max := 100;
+          //dlgProgress.Max := 100;
           //F_Main.Taskbar.ProgressMaxValue := 100;
           fzip := TUnZipper.Create;
           try
-            //fzip.OnProgress := @ZipperProgress;
+            fzip.OnProgress := @dlgLoading.ZipperProgress;
             fzip.OutputPath := TempDir;
             fzip.Unzip(aFilename);
           finally
@@ -320,10 +330,12 @@ begin
           BckConn.Params.Add('Synchronous=Off');
           Bck := TSQLite3Backup.Create;
           try
-            TMethod(aBckProgress).Code := @OnBkpProgress;
-            TMethod(aBckProgress).Data := Pointer(Bck);
-            dlgProgress.Text := rsRestoringBackup;
-            Bck.OnBackupProgress := aBckProgress;
+            dlgLoading.UpdateProgress(rsRestoringBackup, 0);
+            //TMethod(aBckProgress).Code := @OnBkpProgress;
+            //TMethod(aBckProgress).Data := Pointer(Bck);
+            //dlgProgress.Text := rsRestoringBackup;
+            //Bck.OnBackupProgress := aBckProgress;
+            Bck.OnBackupProgress := @dlgLoading.BackupProgress;
             Result := Bck.Restore(bkpName, bckConn, False, 'main');
           finally
             Bck.Free;
@@ -335,18 +347,21 @@ begin
             DeleteFile(PChar(bkpName));
         end;
 
+        dlgLoading.UpdateProgress(rsProgressFinishing, 100);
+        dlgLoading.Hide;
+
         if Result then
           MsgDlg(rsTitleRestore, Format(rsSuccessfulRestore, [ExtractFileName(aFilename)]), mtInformation)
         else
           MsgDlg(rsTitleRestore, rsErrorRestoreFailed, mtError);
     finally
-      dlgProgress.Position := 100;
-      dlgProgress.Text := rsProgressFinishing;
+      //dlgProgress.Position := 100;
+      //dlgProgress.Text := rsProgressFinishing;
       LogEvent(leaFinish, 'Restore backup: ' + aFilename);
       //F_Main.Cursor := crDefault;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.None;
-      dlgProgress.Close;
-      FreeAndNil(dlgProgress);
+      //dlgProgress.Close;
+      //FreeAndNil(dlgProgress);
     end;
   finally
     DMM.sqlCon.Open;
@@ -389,6 +404,8 @@ begin
     dlgProgress.Position := Round(Pct);
     Application.ProcessMessages;
   end;
+  if dlgLoading.Visible then
+    dlgLoading.UpdateProgress(rsCompressingBackup, Round(Pct));
 end;
 
 function BackupSettings: Boolean;

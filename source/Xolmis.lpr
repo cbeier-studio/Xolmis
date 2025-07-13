@@ -154,23 +154,20 @@ begin
   uMetaDarkStyle.ApplyMetaDarkStyle(DefaultDark);
 
   Application.Initialize;
-  //dlgSplash.UpdateProgress(rsLoadingConnectionDataModule, 20);
-  //Application.ProcessMessages;
+  dlgSplash := TdlgSplash.Create(nil);
+  dlgSplash.Show;
+  dlgSplash.UpdateProgress(rsStartingXolmis, 0);
+  dlgSplash.UpdateProgress(rsLoadingConnectionDataModule, 20);
   Application.CreateForm(TDMM, DMM);
-  //Application.CreateForm(TdlgSplash, dlgSplash);
-  //dlgSplash.Show;
-  //dlgSplash.UpdateProgress(rsStartingXolmis, 0);
-  //Application.ProcessMessages;
-  //dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 40);
-  //Application.ProcessMessages;
+  dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 40);
   Application.CreateForm(TDMG, DMG);
   {$IFDEF WINDOWS}
   Application.MainFormOnTaskBar := True;
   {$ENDIF}
-  //dlgSplash.UpdateProgress(rsLoadingMainWindow, 60);
-  //Application.ProcessMessages;
+  dlgSplash.UpdateProgress(rsLoadingMainWindow, 60);
   Application.CreateForm(TfrmMain, frmMain);
-  //dlgSplash.Free;
+  dlgSplash.UpdateProgress(rsMainWindowLoaded, 100);
+  dlgSplash.Free;
   Application.Run;
 end.
 

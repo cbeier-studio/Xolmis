@@ -296,6 +296,7 @@ uses
     rsLoadingForm = 'Loading %s...';
     rsLoadingCSVFile = 'Loading CSV file...';
     rsLoadingJSONFile = 'Loading JSON file...';
+    rsCalculatingBandBalance = 'Calculating band balance...';
 
     { Backup messages }
     rsPromptBackupNow = 'The automatic backup will start now and may take several minutes. ' +

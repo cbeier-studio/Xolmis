@@ -151,7 +151,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_birds, cbs_finddialogs, cbs_dialogs, cbs_gis, cbs_taxonomy,
   cbs_validations, cbs_getvalue,
-  udlg_progress, udm_main, uDarkStyleParams;
+  udlg_loading, udlg_progress, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -161,10 +161,14 @@ procedure TbatchFeathers.AddFeathersBatch;
 var
   FFeather: TFeather;
 begin
-  dlgProgress := TdlgProgress.Create(nil);
-  dlgProgress.Text := rsProgressNewFeathersBatch;
-  dlgProgress.Max := 25;
-  dlgProgress.Show;
+  //dlgProgress := TdlgProgress.Create(nil);
+  //dlgProgress.Text := rsProgressNewFeathersBatch;
+  //dlgProgress.Max := 25;
+  //dlgProgress.Show;
+
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, 0);
+  dlgLoading.ringProgress.MaxValue := 25;
 
   FFeather := TFeather.Create();
   try
@@ -199,7 +203,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP2.Value > 0 then
     begin
       FFeather.FeatherNumber := 2;
@@ -207,7 +212,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP3.Value > 0 then
     begin
       FFeather.FeatherNumber := 3;
@@ -215,7 +221,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP4.Value > 0 then
     begin
       FFeather.FeatherNumber := 4;
@@ -223,7 +230,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP5.Value > 0 then
     begin
       FFeather.FeatherNumber := 5;
@@ -231,7 +239,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP6.Value > 0 then
     begin
       FFeather.FeatherNumber := 6;
@@ -239,7 +248,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP7.Value > 0 then
     begin
       FFeather.FeatherNumber := 7;
@@ -247,7 +257,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP8.Value > 0 then
     begin
       FFeather.FeatherNumber := 8;
@@ -255,7 +266,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP9.Value > 0 then
     begin
       FFeather.FeatherNumber := 9;
@@ -263,7 +275,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eP10.Value > 0 then
     begin
       FFeather.FeatherNumber := 10;
@@ -271,7 +284,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     // Secondaries
     FFeather.FeatherTrait := ftrSecondary;
     if eS1.Value > 0 then
@@ -281,7 +295,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS2.Value > 0 then
     begin
       FFeather.FeatherNumber := 2;
@@ -289,7 +304,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS3.Value > 0 then
     begin
       FFeather.FeatherNumber := 3;
@@ -297,7 +313,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS4.Value > 0 then
     begin
       FFeather.FeatherNumber := 4;
@@ -305,7 +322,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS5.Value > 0 then
     begin
       FFeather.FeatherNumber := 5;
@@ -313,7 +331,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS6.Value > 0 then
     begin
       FFeather.FeatherNumber := 6;
@@ -321,7 +340,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS7.Value > 0 then
     begin
       FFeather.FeatherNumber := 7;
@@ -329,7 +349,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS8.Value > 0 then
     begin
       FFeather.FeatherNumber := 8;
@@ -337,7 +358,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eS9.Value > 0 then
     begin
       FFeather.FeatherNumber := 9;
@@ -345,7 +367,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     // Rectrices
     FFeather.FeatherTrait := ftrRectrix;
     if eR1.Value > 0 then
@@ -355,7 +378,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eR2.Value > 0 then
     begin
       FFeather.FeatherNumber := 2;
@@ -363,7 +387,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eR3.Value > 0 then
     begin
       FFeather.FeatherNumber := 3;
@@ -371,7 +396,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eR4.Value > 0 then
     begin
       FFeather.FeatherNumber := 4;
@@ -379,7 +405,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eR5.Value > 0 then
     begin
       FFeather.FeatherNumber := 5;
@@ -387,7 +414,8 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
     if eR6.Value > 0 then
     begin
       FFeather.FeatherNumber := 6;
@@ -395,11 +423,14 @@ begin
       FFeather.Insert;
       FFeather.PercentGrown := 0;
     end;
-    dlgProgress.Position := dlgProgress.Position + 1;
-    dlgProgress.Close;
+    dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.ringProgress.Value + 1);
+    //dlgProgress.Position := dlgProgress.Position + 1;
+    //dlgProgress.Close;
   finally
     FFeather.Free;
-    FreeAndNil(dlgProgress);
+    dlgLoading.Hide;
+    dlgLoading.ringProgress.MaxValue := 100;
+    //FreeAndNil(dlgProgress);
   end;
 end;
 

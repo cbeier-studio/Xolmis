@@ -102,7 +102,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
   cbs_birds, cbs_conversions, cbs_fullnames, cbs_validations,
-  udm_main, udlg_progress, uDarkStyleParams;
+  udm_main, udlg_progress, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -120,6 +120,11 @@ var
   FFullName: String;
 begin
   LogEvent(leaStart, 'Add batch of bands');
+
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(rsProgressNewBandsBatch, 0);
+  dlgLoading.ringProgress.MaxValue := eEndNumber.Value;
+
   FRecord := TBand.Create();
   FHistory := TBandHistory.Create();
   Ini := eStartNumber.Value;
@@ -152,13 +157,13 @@ begin
   end;
 
   // Progress dialog
-  dlgProgress := TdlgProgress.Create(nil);
-  dlgProgress.Show;
-  dlgProgress.Title := rsTitleNewBandsBatch;
-  dlgProgress.Text := rsProgressNewBandsBatch;
-  dlgProgress.Min := Ini - 1;
-  dlgProgress.Max := Fim;
-  Application.ProcessMessages;
+  //dlgProgress := TdlgProgress.Create(nil);
+  //dlgProgress.Show;
+  //dlgProgress.Title := rsTitleNewBandsBatch;
+  //dlgProgress.Text := rsProgressNewBandsBatch;
+  //dlgProgress.Min := Ini - 1;
+  //dlgProgress.Max := Fim;
+  //Application.ProcessMessages;
 
   try
     if not DMM.sqlTrans.Active then
@@ -241,8 +246,12 @@ begin
           end;
         end;
 
-        dlgProgress.Position := i;
+        dlgLoading.UpdateProgress(rsProgressNewBandsBatch, i);
+        //dlgProgress.Position := i;
       end;
+
+      dlgLoading.Hide;
+      dlgLoading.ringProgress.MaxValue := 100;
 
       if Parar then
       begin
@@ -254,9 +263,9 @@ begin
         DMM.sqlTrans.CommitRetaining;
         MsgDlg(rsTitleNewBandsBatch, rsSuccessfulNewBatch, mtInformation);
       end;
-      Sleep(300);
-      dlgProgress.Close;
-      FreeAndNil(dlgProgress);
+      //Sleep(300);
+      //dlgProgress.Close;
+      //FreeAndNil(dlgProgress);
     except
       DMM.sqlTrans.RollbackRetaining;
       raise;
@@ -265,11 +274,11 @@ begin
   finally
     FHistory.Free;
     FRecord.Free;
-    if Assigned(dlgProgress) then
-    begin
-      dlgProgress.Close;
-      FreeAndNil(dlgProgress);
-    end;
+    //if Assigned(dlgProgress) then
+    //begin
+    //  dlgProgress.Close;
+    //  FreeAndNil(dlgProgress);
+    //end;
     LogEvent(leaFinish, 'Add batch of bands');
   end;
 end;

@@ -72,7 +72,8 @@ var
 
 implementation
 
-uses cbs_global, cbs_themes, udm_main, uDarkStyleParams;
+uses
+  cbs_locale, cbs_global, cbs_themes, udm_main, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -81,7 +82,9 @@ uses cbs_global, cbs_themes, udm_main, uDarkStyleParams;
 procedure TdlgBandsBalance.TimerLoadTimer(Sender: TObject);
 begin
   TimerLoad.Enabled := False;
-  pMsg.Visible := True;
+  //pMsg.Visible := True;
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(rsCalculatingBandBalance, -1);
 
   with TSQLQuery.Create(nil) do
   try
@@ -99,7 +102,8 @@ begin
   else
     qBandsBalance.Open;
 
-  pMsg.Visible := False;
+  dlgLoading.Hide;
+  //pMsg.Visible := False;
 end;
 
 procedure TdlgBandsBalance.FormDestroy(Sender: TObject);

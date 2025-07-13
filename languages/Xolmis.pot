@@ -2451,6 +2451,11 @@ msgctxt "cbs_locale.rsbroodpatch"
 msgid "brood patch"
 msgstr ""
 
+#: cbs_locale.rscalculatingbandbalance
+msgctxt "cbs_locale.rscalculatingbandbalance"
+msgid "Calculating band balance..."
+msgstr ""
+
 #: cbs_locale.rscanceleditingprompt
 msgctxt "cbs_locale.rscanceleditingprompt"
 msgid ""
@@ -7275,6 +7280,7 @@ msgid "Export CSV"
 msgstr ""
 
 #: tdlgbandsbalance.pmsg.caption
+msgctxt "tdlgbandsbalance.pmsg.caption"
 msgid "Calculating band balance..."
 msgstr ""
 

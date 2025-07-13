@@ -860,17 +860,17 @@ begin
     1:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 1 then
-        VacuumIntoBackup; // NewBackup;
+        VacuumIntoBackup(False); // NewBackup;
     end;
     2:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 7 then
-        VacuumIntoBackup; // NewBackup;
+        VacuumIntoBackup(False); // NewBackup;
     end;
     3:
     begin
       if DaysBetween(Now, ConexaoDB.LastBackup) >= 30 then
-        VacuumIntoBackup; // NewBackup;
+        VacuumIntoBackup(False); // NewBackup;
     end;
   end;
 
@@ -971,10 +971,6 @@ begin
 
   { Initialize notification system }
   CreateNotificationList;
-
-  //dlgSplash.UpdateProgress(rsMainWindowLoaded, 100);
-  //Application.ProcessMessages;
-  //dlgSplash.Hide;
 
   { Check if there are connections available }
   DMM.qsConn.Open;

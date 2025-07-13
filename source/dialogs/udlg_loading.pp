@@ -15,6 +15,8 @@ type
     ringProgress: TBCFluentProgressRing;
     lblLoading: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure BackupProgress(Sender: TObject; Remaining, PageCount: integer);
+    procedure ZipperProgress(Sender: TObject; const Pct: Double);
   private
 
   public
@@ -40,6 +42,11 @@ begin
   {$ENDIF}
 end;
 
+procedure TdlgLoading.BackupProgress(Sender: TObject; Remaining, PageCount: integer);
+begin
+  ringProgress.Value := 100 * (Remaining - PageCount) div PageCount;
+end;
+
 procedure TdlgLoading.UpdateProgress(const aMessage: String; aPercent: Integer);
 begin
   lblLoading.Caption := aMessage;
@@ -53,6 +60,11 @@ begin
     ringProgress.Value := aPercent;
   end;
   //Application.ProcessMessages;
+end;
+
+procedure TdlgLoading.ZipperProgress(Sender: TObject; const Pct: Double);
+begin
+  ringProgress.Value := Round(Pct);
 end;
 
 end.

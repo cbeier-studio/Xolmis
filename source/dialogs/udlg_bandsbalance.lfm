@@ -139,6 +139,7 @@ object dlgBandsBalance: TdlgBandsBalance
     Rounding.RoundX = 4
     Rounding.RoundY = 4
     TabOrder = 2
+    Visible = False
   end
   object TimerLoad: TTimer
     Enabled = False
