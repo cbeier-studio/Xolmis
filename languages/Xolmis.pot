@@ -4290,6 +4290,10 @@ msgctxt "cbs_locale.rsloadingrecords"
 msgid "Loading records..."
 msgstr ""
 
+#: cbs_locale.rsloadingrecordstoimport
+msgid "Loading records to import..."
+msgstr ""
+
 #: cbs_locale.rsloginbutton
 msgctxt "cbs_locale.rsloginbutton"
 msgid "Sign in"

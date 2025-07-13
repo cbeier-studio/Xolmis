@@ -143,7 +143,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_users, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis,
   cbs_birds, cbs_fullnames, cbs_themes, uDarkStyleParams,
-  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest;
+  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading;
 
 {$R *.lfm}
 
@@ -1232,12 +1232,19 @@ begin
     else
     if aJSON is TJSONArray then
     begin
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsLoadingJSONFile, 0);
+      dlgLoading.Max := aJSON.Count;
+      Application.ProcessMessages;
       for i := 0 to aJSON.Count - 1 do
       begin
         InventoryObj := TMobileInventory.Create;
         InventoryObj.FromJSON(aJSON.Items[i]);
         FInventoryList.Add(InventoryObj);
+        dlgLoading.Progress := i + 1;
       end;
+      dlgLoading.Hide;
+      dlgLoading.Max := 100;
       Result := FInventoryList.Count > 0;
     end;
   except
@@ -1266,6 +1273,10 @@ begin
     begin
       if FInventoryList.Count = 0 then Exit;
       gridMap.RowCount := FInventoryList.Count + 1;
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsLoadingRecordsToImport, 0);
+      dlgLoading.Max := FInventoryList.Count;
+      Application.ProcessMessages;
       for Inventory in FInventoryList do
       begin
         gridMap.Cells[0, r] := IntToStr(Integer(Inventory.FImport));
@@ -1289,13 +1300,20 @@ begin
           Inventory.FSurveyKey := aSurveyKey;
           gridMap.Cells[5, r] := GetName('surveys', 'full_name', 'survey_id', aSurveyKey);
         end;
+        dlgLoading.Progress := r;
         Inc(r);
       end;
+      dlgLoading.Hide;
+      dlgLoading.Max := 100;
     end;
     mctNest, mctNests:
     begin
       if FNestList.Count = 0 then Exit;
       gridMap.RowCount := FNestList.Count + 1;
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsLoadingRecordsToImport, 0);
+      dlgLoading.Max := FNestList.Count;
+      Application.ProcessMessages;
       for Nest in FNestList do
       begin
         gridMap.Cells[0, r] := '1';
@@ -1316,13 +1334,20 @@ begin
           Nest.FNestKey := aNestKey;
           gridMap.Cells[5, r] := GetName('nests', 'full_name', 'nest_id', aNestKey);
         end;
+        dlgLoading.Progress := r;
         Inc(r);
       end;
+      dlgLoading.Hide;
+      dlgLoading.Max := 100;
     end;
     mctSpecimens:
     begin
       if FSpecimenList.Count = 0 then Exit;
       gridMap.RowCount := FSpecimenList.Count + 1;
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsLoadingRecordsToImport, 0);
+      dlgLoading.Max := FSpecimenList.Count;
+      Application.ProcessMessages;
       for Specimen in FSpecimenList do
       begin
         gridMap.Cells[0, r] := '1';
@@ -1343,8 +1368,11 @@ begin
           Specimen.FSpecimenKey := aSpecimenKey;
           gridMap.Cells[5, r] := GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey);
         end;
+        dlgLoading.Progress := r;
         Inc(r);
       end;
+      dlgLoading.Hide;
+      dlgLoading.Max := 100;
     end;
   end;
 end;
@@ -1373,12 +1401,18 @@ begin
     else
     if aJSON is TJSONArray then
     begin
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsLoadingJSONFile, 0);
+      dlgLoading.Max := aJSON.Count;
+      Application.ProcessMessages;
       for i := 0 to aJSON.Count - 1 do
       begin
         NestObj := TMobileNest.Create;
         NestObj.FromJSON(aJSON.Items[i]);
         FNestList.Add(NestObj);
       end;
+      dlgLoading.Hide;
+      dlgLoading.Max := 100;
       Result := FNestList.Count > 0;
     end;
   except
@@ -1406,13 +1440,19 @@ begin
   try
     if aJSON is TJSONArray then
     begin
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsLoadingJSONFile, 0);
+      dlgLoading.Max := aJSON.Count;
+      Application.ProcessMessages;
       for i := 0 to aJSON.Count - 1 do
       begin
         SpecimenObj := TMobileSpecimen.Create;
         SpecimenObj.FromJSON(aJSON.Items[i]);
         FSpecimenList.Add(SpecimenObj);
-        Result := FSpecimenList.Count > 0;
       end;
+      dlgLoading.Hide;
+      dlgLoading.Max := 100;
+      Result := FSpecimenList.Count > 0;
     end;
   except
     on E: Exception do

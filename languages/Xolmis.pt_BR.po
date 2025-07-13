@@ -4295,6 +4295,10 @@ msgctxt "cbs_locale.rsloadingrecords"
 msgid "Loading records..."
 msgstr "Carregando registros..."
 
+#: cbs_locale.rsloadingrecordstoimport
+msgid "Loading records to import..."
+msgstr ""
+
 #: cbs_locale.rsloginbutton
 msgctxt "cbs_locale.rsloginbutton"
 msgid "Sign in"
@@ -15605,3 +15609,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

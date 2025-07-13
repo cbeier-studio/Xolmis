@@ -123,7 +123,8 @@ begin
 
   dlgLoading.Show;
   dlgLoading.UpdateProgress(rsProgressNewBandsBatch, 0);
-  dlgLoading.ringProgress.MaxValue := eEndNumber.Value;
+  dlgLoading.Min := eStartNumber.Value;
+  dlgLoading.Max := eEndNumber.Value;
 
   FRecord := TBand.Create();
   FHistory := TBandHistory.Create();
@@ -251,7 +252,8 @@ begin
       end;
 
       dlgLoading.Hide;
-      dlgLoading.ringProgress.MaxValue := 100;
+      dlgLoading.Min := 0;
+      dlgLoading.Max := 100;
 
       if Parar then
       begin

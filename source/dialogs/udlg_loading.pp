@@ -18,9 +18,18 @@ type
     procedure BackupProgress(Sender: TObject; Remaining, PageCount: integer);
     procedure ZipperProgress(Sender: TObject; const Pct: Double);
   private
-
+    function GetMin: Integer;
+    function GetMax: Integer;
+    function GetProgress: Integer;
+    procedure SetMin(aValue: Integer);
+    procedure SetMax(aValue: Integer);
+    procedure SetProgress(aValue: Integer);
   public
     procedure UpdateProgress(const aMessage: String; aPercent: Integer);
+
+    property Max: Integer read GetMax write SetMax;
+    property Min: Integer read GetMin write SetMin;
+    property Progress: Integer read GetProgress write SetProgress;
   end;
 
 var
@@ -40,6 +49,36 @@ begin
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcOn);
   {$ENDIF}
+end;
+
+function TdlgLoading.GetMax: Integer;
+begin
+  Result := ringProgress.MaxValue;
+end;
+
+function TdlgLoading.GetMin: Integer;
+begin
+  Result := ringProgress.MinValue;
+end;
+
+function TdlgLoading.GetProgress: Integer;
+begin
+  Result := ringProgress.Value;
+end;
+
+procedure TdlgLoading.SetMax(aValue: Integer);
+begin
+  ringProgress.MaxValue := aValue;
+end;
+
+procedure TdlgLoading.SetMin(aValue: Integer);
+begin
+  ringProgress.MinValue := aValue;
+end;
+
+procedure TdlgLoading.SetProgress(aValue: Integer);
+begin
+  ringProgress.Value := aValue;
 end;
 
 procedure TdlgLoading.BackupProgress(Sender: TObject; Remaining, PageCount: integer);
