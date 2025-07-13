@@ -238,7 +238,7 @@ type
     procedure Delete;
     procedure Copy(aFrom: TSurveyMember);
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function Find(const aSurveyKey, aPersonKey: Integer): Boolean;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property PersonId: Integer read FPersonId write FPersonId;
@@ -3395,7 +3395,7 @@ begin
   Result := aList.Count > 0;
 end;
 
-function TSurveyMember.Find(const FieldName: String; const Value: Variant): Boolean;
+function TSurveyMember.Find(const aSurveyKey, aPersonKey: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
@@ -3421,9 +3421,9 @@ begin
       'marked_status, ' +
       'active_status' +
       'FROM survey_team');
-    Add('WHERE %afield = :avalue');
-    MacroByName('afield').Value := FieldName;
-    ParamByName('avalue').Value := Value;
+    Add('WHERE (survey_id = :asurvey) AND (person_id = :aperson)');
+    ParamByName('asurvey').AsInteger := aSurveyKey;
+    ParamByName('aperson').AsInteger := aPersonKey;
     Open;
 
     if not EOF then

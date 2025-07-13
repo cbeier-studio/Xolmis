@@ -124,6 +124,7 @@ type
     procedure ImportSpecies(Inventory: TMobileInventory);
     procedure ImportVegetation(Inventory: TMobileInventory);
     procedure ImportWeather(Inventory: TMobileInventory);
+    procedure ImportSurveyMember(aSurvey, aObserver: Integer);
     procedure ImportNests;
     procedure ImportRevisions(Nest: TMobileNest);
     procedure ImportEggs(Nest: TMobileNest);
@@ -712,7 +713,7 @@ procedure TdlgImportXMobile.ImportInventories;
 var
   aSurvey: TSurvey;
   aSighting: TSighting;
-  p, j, aSurveyKey: Integer;
+  p, j, aSurveyKey, aObserverKey: Integer;
   Inventory: TMobileInventory;
   aObserver: String;
 begin
@@ -747,6 +748,9 @@ begin
             aSurveyKey := Inventory.FSurveyKey;
             aSurvey.GetData(aSurveyKey);
             aSurvey.Update;
+            // insert survey member, if not exists
+            aObserverKey := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+            ImportSurveyMember(aSurveyKey, aObserverKey);
             // insert or update sightings from species list
             ImportSpecies(Inventory);
             // insert or update vegetation data
@@ -764,7 +768,9 @@ begin
             aSurvey.Insert;
             aSurveyKey := aSurvey.Id;
             Inventory.FSurveyKey := aSurveyKey;
-
+            // insert survey member, if not exists
+            aObserverKey := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+            ImportSurveyMember(aSurveyKey, aObserverKey);
             // insert sightings from species list
             ImportSpecies(Inventory);
             // insert vegetation data
@@ -1101,6 +1107,25 @@ begin
   end;
   sbCancel.Caption := rsCaptionClose;
   nbPages.PageIndex := 3;
+end;
+
+procedure TdlgImportXMobile.ImportSurveyMember(aSurvey, aObserver: Integer);
+var
+  aSurveyMember: TSurveyMember;
+begin
+  aSurveyMember := TSurveyMember.Create();
+  try
+    if not aSurveyMember.Find(aSurvey, aObserver) then
+    begin
+      // if survey member does not exist, insert it
+      aSurveyMember.SurveyId := aSurvey;
+      aSurveyMember.PersonId := aObserver;
+      aSurveyMember.Visitor := False;
+      aSurveyMember.Insert;
+    end;
+  finally
+    aSurveyMember.Free;
+  end;
 end;
 
 procedure TdlgImportXMobile.ImportVegetation(Inventory: TMobileInventory);
