@@ -315,6 +315,7 @@ var
   EnglishFS: TFormatSettings;
   FieldValue: String;
 begin
+  // Get English format for date, time and numbers
   GetLocaleFormatSettings(1033, EnglishFS);
 
   Reg.Clear;

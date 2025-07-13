@@ -382,7 +382,7 @@ uses
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
   udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
-  udlg_importxmobile, udlg_import, udlg_splash,
+  udlg_importxmobile, udlg_import, udlg_splash, udlg_loading,
   ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
@@ -709,8 +709,8 @@ begin
   pSplash.Color := clSmokeBGDefaultDark;
   pMainMenu.Color := clSolidBGQuaternaryDark;
   navTabs.ColorBg := clSolidBGQuaternaryDark;
-  navTabs.ColorTabActive := clSolidBGBaseDark;
-  navTabs.ColorTabOver := clSolidBGTertiaryDark;
+  navTabs.ColorTabActive := clSolidBGQuaternaryDark;
+  navTabs.ColorTabOver := clSolidBGQuaternaryDark;
   navTabs.ColorTabPassive := clSolidBGBaseDark;
   navTabs.ColorFontActive := clTextPrimaryDark;
   navTabs.ColorFontHot := clTextPrimaryDark;
@@ -895,6 +895,8 @@ begin
   LogDebug('Opening the main form');
   {$ENDIF}
 
+  dlgLoading := TdlgLoading.Create(nil);
+
   { Get the last session termination status }
   Finalizado := XSettings.AppTerminatedOk;
 
@@ -925,6 +927,9 @@ begin
 
   if Assigned(TablesDict) then
     TablesDict.Free;
+
+  if Assigned(dlgLoading) then
+    dlgLoading.Free;
 
   DestroyNotificationList;
 end;
@@ -1246,6 +1251,10 @@ begin
 
   Opening := True;
 
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(Format(rsLoadingForm, [LowerCase(aCaption)]), -1);
+  Application.ProcessMessages;
+
   { Create data module }
   if not Assigned(DML) then
     DML := TDML.Create(Application);
@@ -1261,6 +1270,7 @@ begin
     if not (ActiveQuery.State in [dsInsert, dsEdit]) then
       ActiveQuery.Refresh;
     Opening := False;
+    dlgLoading.Hide;
     Exit;
   end;
 
@@ -1268,7 +1278,7 @@ begin
   pSplash.Top := PGW.Top + pMainMenu.Height + 1;
   pSplash.Height :=  PGW.Height;
   pSplash.Width :=  PGW.Width;
-  pSplash.Visible := True;
+  //pSplash.Visible := True;
   Screen.BeginTempCursor(crAppStart);
   sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
   aForm := TfrmCustomGrid.Create(Application);
@@ -1289,6 +1299,8 @@ begin
   sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
   pSplash.Visible := False;
+
+  //dlgLoading.Hide;
   Opening := False;
 end;
 
@@ -1301,6 +1313,11 @@ begin
     Exit;
 
   Opening := True;
+
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(Format(rsLoadingForm, [LowerCase(aCaption)]), -1);
+  Application.ProcessMessages;
+
   { Check if form is already open and show it }
   pag := PGW.FindFormInPages(aForm);
   if pag >= 0 then
@@ -1311,6 +1328,7 @@ begin
       if not (ActiveQuery.State in [dsInsert, dsEdit]) then
         ActiveQuery.Refresh;
     Opening := False;
+    dlgLoading.Hide;
     Exit;
   end;
 
@@ -1334,6 +1352,7 @@ begin
   UpdateMenu(PGW.ActivePageComponent);
   sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
+  dlgLoading.Hide;
   Opening := False;
 end;
 

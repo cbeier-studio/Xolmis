@@ -8448,15 +8448,6 @@ msgstr "Nova verificação"
 msgid "Starting Xolmis"
 msgstr "Iniciando o Xolmis"
 
-#: tdlgsplash.lblappname.caption
-msgid "Xolmis"
-msgstr "Xolmis"
-
-#: tdlgsplash.lblprogress.caption
-msgctxt "tdlgsplash.lblprogress.caption"
-msgid "Starting..."
-msgstr "Iniciando..."
-
 #: tdlgvalidate.sbok.caption
 msgid "OK"
 msgstr "OK"

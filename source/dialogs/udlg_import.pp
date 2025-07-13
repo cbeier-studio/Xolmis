@@ -6,8 +6,8 @@ interface
 
 uses
   BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf, fgl,
-  memds, dbf, csvdataset, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset,
+  dbf, csvdataset, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset, fpsTypes,
   atshapelinebgra, cbs_import, cbs_datatypes;
 
 type
@@ -17,6 +17,7 @@ type
   TdlgImport = class(TForm)
     btnHelp: TBitBtn;
     btnOptions: TBitBtn;
+    dsMem: TBufDataset;
     cbTarget: TComboBox;
     dsDbf: TDbf;
     eSourceFile: TEditButton;
@@ -39,7 +40,6 @@ type
     lblTitleConfirm: TLabel;
     lblTitleSource: TLabel;
     lineBottom: TShapeLineBGRA;
-    dsMem: TMemDataset;
     pContentFinished: TBCPanel;
     pgFinished: TPage;
     pmfSelectAll: TMenuItem;
@@ -184,6 +184,8 @@ begin
       '.csv', '.tsv':
       begin
         FDataSet := dsSdf;
+        if ExtractFileExt(eSourceFile.Text) = '.tsv' then
+          dsSdf.Delimiter := #9; // Tab character
         cfgDelimiters := TcfgDelimiters.Create(nil);
         with cfgDelimiters do
         try
@@ -203,6 +205,11 @@ begin
       begin
         FDataSet := dsWorksheet;
         dsWorksheet.FileName := eSourceFile.Text;
+        case ExtractFileExt(eSourceFile.Text) of
+          '.xlsx': dsWorksheet.FileFormat := sfOOXML;
+          '.xls': dsWorksheet.FileFormat := sfExcel8;
+          '.ods': dsWorksheet.FileFormat := sfOpenDocument;
+        end;
       end;
       '.json':
       begin
@@ -453,6 +460,16 @@ end;
 procedure TdlgImport.sbNextClick(Sender: TObject);
 begin
   nbPages.PageIndex := nbPages.PageIndex + 1;
+
+  if nbPages.PageIndex = 2 then
+  begin
+
+  end;
+
+  if nbPages.PageIndex = 1 then
+  begin
+    LoadFields;
+  end;
 
   sbPrior.Enabled := nbPages.PageIndex > 0;
   sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);

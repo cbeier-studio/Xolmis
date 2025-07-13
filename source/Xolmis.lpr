@@ -135,7 +135,7 @@ uses
   cbs_setparam, uedt_collector, uedt_surveymember, uedt_projectmember,
   uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
   uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
-  udm_reports, cbs_xmobile, ufrm_quickentry, udlg_splash;
+  udm_reports, cbs_xmobile, ufrm_quickentry, udlg_splash, udlg_loading;
 
 {$R *.res}
 

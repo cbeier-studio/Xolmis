@@ -4249,6 +4249,7 @@ msgid "No list items were checked!"
 msgstr ""
 
 #: cbs_locale.rsloading
+msgctxt "cbs_locale.rsloading"
 msgid "Loading"
 msgstr ""
 
@@ -8457,16 +8458,6 @@ msgstr ""
 
 #: tdlgsplash.caption
 msgid "Starting Xolmis"
-msgstr ""
-
-#: tdlgsplash.lblappname.caption
-msgctxt "tdlgsplash.lblappname.caption"
-msgid "Xolmis"
-msgstr ""
-
-#: tdlgsplash.lblprogress.caption
-msgctxt "tdlgsplash.lblprogress.caption"
-msgid "Starting..."
 msgstr ""
 
 #: tdlgvalidate.sbok.caption
@@ -14288,6 +14279,7 @@ msgid "Show more"
 msgstr ""
 
 #: tfrmdashboard.ploading.caption
+msgctxt "tfrmdashboard.ploading.caption"
 msgid "Loading..."
 msgstr ""
 

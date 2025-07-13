@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="151">
+      <ExcludedIdentifiers Count="155">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -175,13 +175,17 @@
         <Item149 Value="tfrmMaintenance.lblClearTemporaryFiles.Caption"/>
         <Item150 Value="tfrmMaintenance.lblRecreateImageThumbnails.Caption"/>
         <Item151 Value="tfrmTaxa.txtNestProductivity.Caption"/>
+        <Item152 Value="tdlgLoading.Caption"/>
+        <Item153 Value="tdlgLoading.lblLoading.Caption"/>
+        <Item154 Value="tdlgSplash.lblAppName.Caption"/>
+        <Item155 Value="tdlgSplash.lblProgress.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="456"/>
+      <BuildNr Value="457"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1360,6 +1364,14 @@
         <Filename Value="dialogs\udlg_splash.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgSplash"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_loading.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgLoading"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>

@@ -126,7 +126,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, udlg_progress, udm_reports, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, udlg_loading, udlg_progress, udm_reports, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -178,32 +178,38 @@ end;
 procedure TfrmPrintPreview.ReportBeginDoc;
 begin
   //if not Visible then
-  begin
-    dlgProgress := TdlgProgress.Create(nil);
-    dlgProgress.AllowCancel := False;
-    dlgProgress.Max := Report.Pages.Count;
-    dlgProgress.Title := rsTitlePrintPreview;
-    dlgProgress.Text := rsProgressGeneratingReport;
-    dlgProgress.Show;
-  end;
+  //begin
+  //  dlgProgress := TdlgProgress.Create(nil);
+  //  dlgProgress.AllowCancel := False;
+  //  dlgProgress.Max := Report.Pages.Count;
+  //  dlgProgress.Title := rsTitlePrintPreview;
+  //  dlgProgress.Text := rsProgressGeneratingReport;
+  //  dlgProgress.Show;
+  //end;
+  //dlgLoading.ringProgress.MaxValue := Report.Pages.Count;
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(rsProgressGeneratingReport, 0);
   //PBar.Max := Report.Pages.Count;
   //PBar.Visible := True;
 end;
 
 procedure TfrmPrintPreview.ReportEndDoc;
 begin
-  if Assigned(dlgProgress) then
-  begin
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
-  end;
+  //if Assigned(dlgProgress) then
+  //begin
+  //  dlgProgress.Close;
+  //  FreeAndNil(dlgProgress);
+  //end;
+  dlgLoading.Hide;
+  //dlgLoading.ringProgress.MaxValue := 100;
   //PBar.Visible := False;
 end;
 
 procedure TfrmPrintPreview.ReportProgress(n: Integer);
 begin
-  if Assigned(dlgProgress) then
-    dlgProgress.Position := n;
+  //if Assigned(dlgProgress) then
+  //  dlgProgress.Position := n;
+  dlgLoading.UpdateProgress(rsProgressGeneratingReport, n);
   //PBar.Position := n;
 end;
 

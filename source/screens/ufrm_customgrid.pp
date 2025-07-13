@@ -1390,7 +1390,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, cbs_users,
-  cbs_validations, cbs_setparam, udlg_progress, udlg_exportpreview,
+  cbs_validations, cbs_setparam, udlg_loading, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ubatch_neteffort, ubatch_feathers, ufrm_quickentry;
@@ -6392,6 +6392,8 @@ begin
   SetRecycle;
   FCanToggle := True;
   Application.ProcessMessages;
+
+  dlgLoading.Hide;
 
   {$IFDEF DEBUG}
   Usage.StopTimer;
@@ -13017,12 +13019,12 @@ end;
 procedure TfrmCustomGrid.TimerOpenTimer(Sender: TObject);
 begin
   TimerOpen.Enabled := False;
-  try
-    Screen.BeginTempCursor(crAppStart);
+  //try
+  //  Screen.BeginTempCursor(crAppStart);
     OpenAsync;
-  finally
-    Screen.EndTempCursor(crAppStart);
-  end;
+  //finally
+  //  Screen.EndTempCursor(crAppStart);
+  //end;
 end;
 
 procedure TfrmCustomGrid.tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);

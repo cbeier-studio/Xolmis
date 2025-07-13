@@ -43,11 +43,15 @@ object dlgImport: TdlgImport
     TabOrder = 0
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
       Left = 774
       Height = 26
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       BorderSpacing.Left = 16
       Caption = '&Cancel'
       TabOrder = 0
@@ -55,11 +59,14 @@ object dlgImport: TdlgImport
     end
     object sbNext: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
       Left = 628
       Height = 26
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = '&Next'
       Enabled = False
       TabOrder = 1
@@ -68,11 +75,14 @@ object dlgImport: TdlgImport
     end
     object sbPrior: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbNext
       Left = 490
       Height = 26
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = '&Previous'
       Enabled = False
       TabOrder = 2
@@ -80,11 +90,13 @@ object dlgImport: TdlgImport
       OnClick = sbPriorClick
     end
     object btnHelp: TBitBtn
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
       Left = 16
       Height = 26
       Top = 8
       Width = 71
-      Align = alLeft
       AutoSize = True
       Caption = '&Help'
       DisabledImageIndex = 6
@@ -311,12 +323,12 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 243
+              Width = 245
             end          
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Search table'
-              Width = 243
+              Width = 245
             end          
             item
               SizePriority = 0
@@ -324,7 +336,7 @@ object dlgImport: TdlgImport
               Width = 120
             end>
           FixedCols = 2
-          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goAlwaysShowEditor, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
           RowCount = 2
           TabOrder = 1
           TitleStyle = tsNative
@@ -332,8 +344,8 @@ object dlgImport: TdlgImport
             64
             154
             60
-            243
-            243
+            245
+            245
             120
           )
           Cells = (
@@ -1137,11 +1149,6 @@ object dlgImport: TdlgImport
     Left = 247
     Top = 304
   end
-  object dsMem: TMemDataset
-    FieldDefs = <>
-    Left = 329
-    Top = 304
-  end
   object dsDbf: TDbf
     IndexDefs = <>
     ReadOnly = True
@@ -1336,5 +1343,11 @@ object dlgImport: TdlgImport
     Options = [ofOverwritePrompt, ofEnableSizing, ofViewDetail]
     Left = 247
     Top = 224
+  end
+  object dsMem: TBufDataset
+    PacketRecords = -1
+    FieldDefs = <>
+    Left = 329
+    Top = 304
   end
 end
