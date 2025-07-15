@@ -671,10 +671,12 @@ end;
 
 procedure TdlgImportXMobile.ImportEggs(Nest: TMobileNest);
 var
-  aEgg: TEgg;
+  aEgg, aOldEgg: TEgg;
   Egg: TMobileEgg;
   aDate: TDate;
   aObserverId: Integer;
+  lstDiff: TStrings;
+  D: String;
 begin
   if Nest.FEggList.Count > 0 then
   begin
@@ -690,8 +692,27 @@ begin
         if aEgg.Find(Nest.FNestKey, Egg.FFieldNumber, DateToStr(aDate), aObserverId) then
         begin
           // if egg exists, update it
-          Egg.ToEgg(aEgg);
-          aEgg.Update;
+          aOldEgg := TEgg.Create(aEgg.Id);
+          try
+            Egg.ToEgg(aEgg);
+            aEgg.Update;
+            // write record history
+            lstDiff := TStringList.Create;
+            try
+              if aEgg.Diff(aOldEgg, lstDiff) then
+              begin
+                for D in lstDiff do
+                  WriteRecHistory(tbEggs, haEdited, aOldEgg.Id,
+                    ExtractDelimited(1, D, [';']),
+                    ExtractDelimited(2, D, [';']),
+                    ExtractDelimited(3, D, [';']), rsEditedByImport);
+              end;
+            finally
+              FreeAndNil(lstDiff);
+            end;
+          finally
+            FreeAndNil(aOldEgg);
+          end;
         end
         else
         begin
@@ -701,6 +722,8 @@ begin
           aEgg.ResearcherId := aObserverId;
           aEgg.EggSeq := StrToInt(ExtractDelimited(2, Egg.FFieldNumber, ['-']));
           aEgg.Insert;
+          // write record history
+          WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
@@ -711,11 +734,12 @@ end;
 
 procedure TdlgImportXMobile.ImportInventories;
 var
-  aSurvey: TSurvey;
+  aSurvey, aOldSurvey: TSurvey;
   aSighting: TSighting;
   p, j, aSurveyKey, aObserverKey: Integer;
   Inventory: TMobileInventory;
-  aObserver: String;
+  lstDiff: TStrings;
+  aObserver, D: String;
 begin
   nbPages.PageIndex := 2;
 
@@ -746,8 +770,28 @@ begin
           begin
             // update survey, if already exists
             aSurveyKey := Inventory.FSurveyKey;
-            aSurvey.GetData(aSurveyKey);
-            aSurvey.Update;
+            aOldSurvey := TSurvey.Create(aSurveyKey);
+            try
+              aSurvey.GetData(aSurveyKey);
+              Inventory.ToSurvey(aSurvey);
+              aSurvey.Update;
+              // write record history
+              lstDiff := TStringList.Create;
+              try
+                if aSurvey.Diff(aOldSurvey, lstDiff) then
+                begin
+                  for D in lstDiff do
+                    WriteRecHistory(tbSurveys, haEdited, aOldSurvey.Id,
+                      ExtractDelimited(1, D, [';']),
+                      ExtractDelimited(2, D, [';']),
+                      ExtractDelimited(3, D, [';']), rsEditedByImport);
+                end;
+              finally
+                FreeAndNil(lstDiff);
+              end;
+            finally
+              FreeAndNil(aOldSurvey);
+            end;
             // insert survey member, if not exists
             aObserverKey := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
             ImportSurveyMember(aSurveyKey, aObserverKey);
@@ -768,6 +812,8 @@ begin
             aSurvey.Insert;
             aSurveyKey := aSurvey.Id;
             Inventory.FSurveyKey := aSurveyKey;
+            // write record history
+            WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByImport);
             // insert survey member, if not exists
             aObserverKey := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
             ImportSurveyMember(aSurveyKey, aObserverKey);
@@ -828,8 +874,10 @@ end;
 procedure TdlgImportXMobile.ImportNests;
 var
   p, j, aNestKey: Integer;
-  aNest: TNest;
+  aNest, aOldNest: TNest;
   Nest: TMobileNest;
+  lstDiff: TStrings;
+  D: String;
 begin
   nbPages.PageIndex := 2;
 
@@ -860,8 +908,28 @@ begin
           begin
             // update nest, if already exists
             aNestKey := Nest.FNestKey;
-            aNest.GetData(aNestKey);
-            aNest.Update;
+            aOldNest := TNest.Create(aNestKey);
+            try
+              aNest.GetData(aNestKey);
+              Nest.ToNest(aNest);
+              aNest.Update;
+              // write record history
+              lstDiff := TStringList.Create;
+              try
+                if aNest.Diff(aOldNest, lstDiff) then
+                begin
+                  for D in lstDiff do
+                    WriteRecHistory(tbNests, haEdited, aOldNest.Id,
+                      ExtractDelimited(1, D, [';']),
+                      ExtractDelimited(2, D, [';']),
+                      ExtractDelimited(3, D, [';']), rsEditedByImport);
+                end;
+              finally
+                FreeAndNil(lstDiff);
+              end;
+            finally
+              FreeAndNil(aOldNest);
+            end;
             // insert or update nest revisions
             ImportRevisions(Nest);
             // insert or update eggs
@@ -877,6 +945,8 @@ begin
             aNest.Insert;
             aNestKey := aNest.Id;
             Nest.FNestKey := aNestKey;
+            // write record history
+            WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByImport);
 
             // insert nest revisions
             ImportRevisions(Nest);
@@ -932,11 +1002,13 @@ end;
 
 procedure TdlgImportXMobile.ImportRevisions(Nest: TMobileNest);
 var
-  aRevision: TNestRevision;
+  aRevision, aOldRevision: TNestRevision;
   Revision: TMobileNestRevision;
   aObserverId: Integer;
   aDate: TDate;
   aTime: TTime;
+  lstDiff: TStrings;
+  D: String;
 begin
   if Nest.FRevisionList.Count > 0 then
   begin
@@ -953,8 +1025,27 @@ begin
         if aRevision.Find(Nest.FNestKey, DateToStr(aDate), TimeToStr(aTime), aObserverId) then
         begin
           // if nest revision exists, update it
-          Revision.ToNestRevision(aRevision);
-          aRevision.Update;
+          aOldRevision := TNestRevision.Create(aRevision.Id);
+          try
+            Revision.ToNestRevision(aRevision);
+            aRevision.Update;
+            // write record history
+            lstDiff := TStringList.Create;
+            try
+              if aRevision.Diff(aOldRevision, lstDiff) then
+              begin
+                for D in lstDiff do
+                  WriteRecHistory(tbNestRevisions, haEdited, aOldRevision.Id,
+                    ExtractDelimited(1, D, [';']),
+                    ExtractDelimited(2, D, [';']),
+                    ExtractDelimited(3, D, [';']), rsEditedByImport);
+              end;
+            finally
+              FreeAndNil(lstDiff);
+            end;
+          finally
+            FreeAndNil(aOldRevision);
+          end;
         end
         else
         begin
@@ -963,6 +1054,8 @@ begin
           aRevision.NestId := Nest.FNestKey;
           aRevision.Observer1Id := aObserverId;
           aRevision.Insert;
+          // write record history
+          WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
@@ -974,8 +1067,10 @@ end;
 procedure TdlgImportXMobile.ImportSpecies(Inventory: TMobileInventory);
 var
   Species: TMobileSpecies;
-  aSighting: TSighting;
+  aSighting, aOldSighting: TSighting;
   aTaxonId, aObserverId: Integer;
+  lstDiff: TStrings;
+  D: String;
 begin
   if Inventory.FSpeciesList.Count > 0 then
   begin
@@ -991,11 +1086,30 @@ begin
         if aSighting.Find(Inventory.FSurveyKey, aTaxonId, aObserverId) then
         begin
           // if sighting exists, update it
-          Species.ToSighting(aSighting);
-          aSighting.ObserverId := aObserverId;
-          if aSighting.SightingDate = NullDate then
-            aSighting.SightingDate := Inventory.FStartTime;
-          aSighting.Update;
+          aOldSighting := TSighting.Create(aSighting.Id);
+          try
+            Species.ToSighting(aSighting);
+            aSighting.ObserverId := aObserverId;
+            if aSighting.SightingDate = NullDate then
+              aSighting.SightingDate := Inventory.FStartTime;
+            aSighting.Update;
+            // write record history
+            lstDiff := TStringList.Create;
+            try
+              if aSighting.Diff(aOldSighting, lstDiff) then
+              begin
+                for D in lstDiff do
+                  WriteRecHistory(tbSightings, haEdited, aOldSighting.Id,
+                    ExtractDelimited(1, D, [';']),
+                    ExtractDelimited(2, D, [';']),
+                    ExtractDelimited(3, D, [';']), rsEditedByImport);
+              end;
+            finally
+              FreeAndNil(lstDiff);
+            end;
+          finally
+            FreeAndNil(aOldSighting);
+          end;
         end
         else
         begin
@@ -1006,6 +1120,8 @@ begin
           if aSighting.SightingDate = NullDate then
             aSighting.SightingDate := Inventory.FStartTime;
           aSighting.Insert;
+          // write record history
+          WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
@@ -1017,8 +1133,10 @@ end;
 procedure TdlgImportXMobile.ImportSpecimens;
 var
   p, aSpecimenKey: Integer;
-  aSpecimen: TSpecimen;
+  aSpecimen, aOldSpecimen: TSpecimen;
   Specimen: TMobileSpecimen;
+  lstDiff: TStrings;
+  D: String;
 begin
   nbPages.PageIndex := 2;
 
@@ -1049,8 +1167,27 @@ begin
           begin
             // update specimen, if already exists
             aSpecimenKey := Specimen.FSpecimenKey;
+            aOldSpecimen := TSpecimen.Create(aSpecimenKey);
             aSpecimen.GetData(aSpecimenKey);
-            aSpecimen.Update;
+            try
+              aSpecimen.Update;
+              // write record history
+              lstDiff := TStringList.Create;
+              try
+                if aSpecimen.Diff(aOldSpecimen, lstDiff) then
+                begin
+                  for D in lstDiff do
+                    WriteRecHistory(tbSpecimens, haEdited, aOldSpecimen.Id,
+                      ExtractDelimited(1, D, [';']),
+                      ExtractDelimited(2, D, [';']),
+                      ExtractDelimited(3, D, [';']), rsEditedByImport);
+                end;
+              finally
+                FreeAndNil(lstDiff);
+              end;
+            finally
+              FreeAndNil(aOldSpecimen);
+            end;
 
             mProgress.Lines.Add(Format(rsMobileSpecimenUpdated,
               [aSpecimenKey, GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey)]));
@@ -1061,6 +1198,8 @@ begin
             Specimen.ToSpecimen(aSpecimen);
             aSpecimen.Insert;
             aSpecimenKey := aSpecimen.Id;
+            // write record history
+            WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByImport);
 
             mProgress.Lines.Add(Format(rsMobileSpecimenCreated,
               [aSpecimenKey, GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey)]));
@@ -1122,6 +1261,8 @@ begin
       aSurveyMember.PersonId := aObserver;
       aSurveyMember.Visitor := False;
       aSurveyMember.Insert;
+      // write record history
+      WriteRecHistory(tbSurveyTeams, haCreated, 0, '', '', '', rsInsertedByImport);
     end;
   finally
     aSurveyMember.Free;
@@ -1130,11 +1271,13 @@ end;
 
 procedure TdlgImportXMobile.ImportVegetation(Inventory: TMobileInventory);
 var
-  aVegetation: TVegetation;
+  aVegetation, aOldVegetation: TVegetation;
   Vegetation: TMobileVegetation;
   aDate: TDate;
   aTime: TTime;
   aObserverId: Integer;
+  lstDiff: TStrings;
+  D: String;
 begin
   if Inventory.FVegetationList.Count > 0 then
   begin
@@ -1151,8 +1294,27 @@ begin
         if aVegetation.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), Vegetation.FLongitude, Vegetation.FLatitude, aObserverId) then
         begin
           // if vegetation exists, update it
-          Vegetation.ToVegetation(aVegetation);
-          aVegetation.Update;
+          aOldVegetation := TVegetation.Create(aVegetation.Id);
+          try
+            Vegetation.ToVegetation(aVegetation);
+            aVegetation.Update;
+            // write record history
+            lstDiff := TStringList.Create;
+            try
+              if aVegetation.Diff(aOldVegetation, lstDiff) then
+              begin
+                for D in lstDiff do
+                  WriteRecHistory(tbVegetation, haEdited, aOldVegetation.Id,
+                    ExtractDelimited(1, D, [';']),
+                    ExtractDelimited(2, D, [';']),
+                    ExtractDelimited(3, D, [';']), rsEditedByImport);
+              end;
+            finally
+              FreeAndNil(lstDiff);
+            end;
+          finally
+            FreeAndNil(aOldVegetation);
+          end;
         end
         else
         begin
@@ -1161,6 +1323,8 @@ begin
           aVegetation.SurveyId := Inventory.FSurveyKey;
           aVegetation.ObserverId := aObserverId;
           aVegetation.Insert;
+          // write record history
+          WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
@@ -1171,11 +1335,13 @@ end;
 
 procedure TdlgImportXMobile.ImportWeather(Inventory: TMobileInventory);
 var
-  aWeather: TWeatherLog;
+  aWeather, aOldWeather: TWeatherLog;
   Weather: TMobileWeather;
   aDate: TDate;
   aTime: TTime;
   aObserverId: Integer;
+  lstDiff: TStrings;
+  D: String;
 begin
   if Inventory.FWeatherList.Count > 0 then
   begin
@@ -1192,8 +1358,27 @@ begin
         if aWeather.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), aObserverId) then
         begin
           // if weather log exists, update it
-          Weather.ToWeatherLog(aWeather);
-          aWeather.Update;
+          aOldWeather := TWeatherLog.Create(aWeather.Id);
+          try
+            Weather.ToWeatherLog(aWeather);
+            aWeather.Update;
+            // write record history
+            lstDiff := TStringList.Create;
+            try
+              if aWeather.Diff(aOldWeather, lstDiff) then
+              begin
+                for D in lstDiff do
+                  WriteRecHistory(tbWeatherLogs, haEdited, aOldWeather.Id,
+                    ExtractDelimited(1, D, [';']),
+                    ExtractDelimited(2, D, [';']),
+                    ExtractDelimited(3, D, [';']), rsEditedByImport);
+              end;
+            finally
+              FreeAndNil(lstDiff);
+            end;
+          finally
+            FreeAndNil(aOldWeather);
+          end;
         end
         else
         begin
@@ -1202,6 +1387,8 @@ begin
           aWeather.SurveyId := Inventory.FSurveyKey;
           aWeather.ObserverId := aObserverId;
           aWeather.Insert;
+          // write record history
+          WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally

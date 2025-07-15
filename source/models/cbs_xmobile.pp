@@ -635,7 +635,7 @@ begin
     invCasual:
       aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileCasual);
   end;
-  aSurvey.Duration := FDuration;
+  //aSurvey.Duration := FDuration;
   aSurvey.SurveyDate := FStartTime;
   aSurvey.StartTime := FStartTime;
   aSurvey.EndTime := FEndTime;
