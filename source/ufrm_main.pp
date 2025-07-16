@@ -895,6 +895,8 @@ begin
   LogDebug('Opening the main form');
   {$ENDIF}
 
+  // Create the loading dialog
+  // >> use it with (potentially) time demanding tasks
   dlgLoading := TdlgLoading.Create(nil);
 
   { Get the last session termination status }

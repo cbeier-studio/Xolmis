@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="ufrm_quickentry"><element name="TfrmQuickEntry.GridHasData"><short>Check if the grid has some data</short><descr>Return <b>True</b> if the grid has some data
+</descr>
+      </element><element name="TfrmQuickEntry.CellErrorColor"><short>Return the cell error highlight color according to the selected theme</short>
+      </element><element name="TfrmQuickEntry.ColIsDate"><short>Check if a column is of date type</short>
+      </element><element name="TfrmQuickEntry.ColIsInteger"><short>Check if a column is of integer type</short>
+      </element><element name="TfrmQuickEntry.ColIsNumeric"><short>Check if a column is of float type</short>
+      </element><element name="TfrmQuickEntry.ColIsSearchable"><short>Check if a column use the find dialog to edit cells</short>
+      </element><element name="TfrmQuickEntry.ColIsTime"><short>Check if a column is of time type</short>
+      </element><element name="TfrmQuickEntry.LoadColumns"><short>Setup the columns according to the table type</short>
+      </element><element name="TfrmQuickEntry.RowHasData"><short>Check if a row has any data</short>
+      </element><element name="TfrmQuickEntry.SetDateCols"><short>Setup the list of columns of date type</short>
+      </element><element name="TfrmQuickEntry.SetIntegerCols"><short>Setup the list of columns of integer type</short>
+      </element><element name="TfrmQuickEntry.SetNumericCols"><short>Setup the list of columns of float type</short>
+      </element><element name="TfrmQuickEntry.SetSearchableCols"><short>Setup the list of columns that use find dialog to edit the cells</short>
+      </element><element name="TfrmQuickEntry.SetTimeCols"><short>Setup the list of columns of time type</short>
+      </element><element name="TfrmQuickEntry.UpdateButtons"><short>Update the status of buttons on the toolbar</short>
+      </element><element name="TfrmQuickEntry.UpdateRowCounter"><short>Update the status bar with the row count</short>
+      </element><element name="TfrmQuickEntry.LoadColsWeatherLogs"><short>Setup the columns for weather logs</short>
+      </element><element name="TfrmQuickEntry.LoadColsVegetation"><short>Setup the columns for vegetation</short>
+      </element><element name="TfrmQuickEntry.LoadColsSurveyTeam"><short>Setup the columns for survey members</short>
+      </element><element name="TfrmQuickEntry.LoadColsSurveys"><short>Setup the columns for surveys</short>
+      </element><element name="TfrmQuickEntry.LoadColsSpecimens"><short>Setup the columns for specimens</short>
+      </element><element name="TfrmQuickEntry.LoadColsSpecimenCollectors"><short>Setup the columns for specimen collectors</short>
+      </element><element name="TfrmQuickEntry.LoadColsSightings"><short>Setup the columns for sightings</short>
+      </element><element name="TfrmQuickEntry.LoadColsSamplingPlots"><short>Setup the columns for sampling plots</short>
+      </element><element name="TfrmQuickEntry.LoadColsSamplePreps"><short>Setup the columns for sample preparations</short>
+      </element><element name="TfrmQuickEntry.LoadColsResearchers"><short>Setup the columns for researchers</short>
+      </element><element name="TfrmQuickEntry.LoadColsProjectTeam"><short>Setup the columns for project members</short>
+      </element><element name="TfrmQuickEntry.LoadColsProjects"><short>Setup the columns for projects</short>
+      </element><element name="TfrmQuickEntry.LoadColsProjectGoals"><short>Setup the columns for project goals</short>
+      </element><element name="TfrmQuickEntry.LoadColsProjectExpenses"><short>Setup the columns for project expenses</short>
+      </element><element name="TfrmQuickEntry.LoadColsProjectChronograms"><short>Setup the columns for project activities</short>
+      </element><element name="TfrmQuickEntry.LoadColsProjectBudgets"><short>Setup the columns for project budgets</short>
+      </element><element name="TfrmQuickEntry.LoadColsPermits"><short>Setup the columns for permits</short>
+      </element><element name="TfrmQuickEntry.LoadColsPermanentNets"><short>Setup the columns for permanent nets</short>
+      </element><element name="TfrmQuickEntry.LoadColsNetEfforts"><short>Setup the columns for net effort</short>
+      </element><element name="TfrmQuickEntry.LoadColsNests"><short>Setup the columns for nests</short>
+      </element><element name="TfrmQuickEntry.LoadColsNestRevisions"><short>Setup the columns for nest revisions</short>
+      </element><element name="TfrmQuickEntry.LoadColsNestOwners"><short>Setup the columns for nest owners</short>
+      </element><element name="TfrmQuickEntry.LoadColsMethods"><short>Setup the columns for methods</short>
+      </element><element name="TfrmQuickEntry.LoadColsInstitutions"><short>Setup the columns for institutions</short>
+      </element><element name="TfrmQuickEntry.LoadColsIndividuals"><short>Setup the columns for individuals</short>
+      </element><element name="TfrmQuickEntry.LoadColsGazetteer"><short>Setup the column for gazetteer</short>
+      </element><element name="TfrmQuickEntry.LoadColsFeathers"><short>Setup the columns for feathers</short>
+      </element><element name="TfrmQuickEntry.LoadColsExpeditions"><short>Setup the columns for expeditions</short>
+      </element><element name="TfrmQuickEntry.LoadColsEggs"><short>Setup the columns for eggs</short>
+      </element><element name="TfrmQuickEntry.LoadColsCaptures"><short>Setup the columns for captures</short>
+      </element><element name="TfrmQuickEntry.LoadColsBotanicTaxa"><short>Setup the columns for botanical taxa</short>
+      </element><element name="TfrmQuickEntry.LoadColsBands"><short>Setup the columns for bands</short>
+      </element><element name="TfrmQuickEntry.ApplyDarkMode"><short>Apply dark theme to this window</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

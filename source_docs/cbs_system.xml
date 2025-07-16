@@ -20,6 +20,10 @@
       </element><element name="ActiveTaxonomy"><short>Current active taxonomy</short>
       </element><element name="TUser"><short>User record object</short>
       </element>
+    <element name="GetFileSizeReadable"><short>Get the size of a file</short>
+      </element><element name="GetDirectorySize"><short>Get the size of a folder</short>
+      </element><element name="IsControlInVisibleArea"><short>Check if a control is visible within its parent control</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

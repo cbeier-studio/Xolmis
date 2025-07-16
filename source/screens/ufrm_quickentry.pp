@@ -36,6 +36,7 @@ type
     procedure qeGridKeyPress(Sender: TObject; var Key: char);
     procedure qeGridSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
     procedure qeGridSelectEditor(Sender: TObject; aCol, aRow: Integer; var Editor: TWinControl);
+    procedure qeGridSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
     procedure qeGridValidateEntry(Sender: TObject; aCol, aRow: Integer; const OldValue: string;
       var NewValue: String);
     procedure sbAddRowsClick(Sender: TObject);
@@ -101,6 +102,7 @@ type
     procedure SetSearchableCols;
     procedure SetTimeCols;
 
+    procedure UpdateButtons;
     procedure UpdateRowCounter;
   public
     property TableType: TTableType read FTableType write FTableType;
@@ -3609,6 +3611,11 @@ begin
   end;
 end;
 
+procedure TfrmQuickEntry.qeGridSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
+begin
+  UpdateButtons;
+end;
+
 procedure TfrmQuickEntry.qeGridValidateEntry(Sender: TObject; aCol, aRow: Integer; const OldValue: string;
   var NewValue: String);
 var
@@ -3897,6 +3904,12 @@ begin
   //FTimeCols.Add(rscDoubleBand);
   //FTimeCols.Add(rscRemovedBand);
   FTimeCols.Sort;
+end;
+
+procedure TfrmQuickEntry.UpdateButtons;
+begin
+  sbImport.Enabled := GridHasData;
+  sbDelRows.Enabled := sbImport.Enabled;
 end;
 
 procedure TfrmQuickEntry.UpdateRowCounter;

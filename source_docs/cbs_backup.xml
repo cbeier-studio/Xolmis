@@ -4,6 +4,12 @@
       </element><element name="OnBackupProgress"><short>Event OnProgress for the backup/restore process.</short>
       </element><element name="RunStartupBackup"><short>Create a database backup at Application start.</short>
       </element>
+    <element name="VacuumIntoBackup"><short>Create a new vacuumed database backup</short><descr>It uses the SQL command <var>VACUUM INTO</var>.
+It is faster than the standard SQLite backup.
+</descr>
+      </element><element name="BackupSettings"><short>Create a new backup of Xolmis settings</short>
+      </element><element name="RestoreSettings"><short>Restore the Xolmis settings from a backup file</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

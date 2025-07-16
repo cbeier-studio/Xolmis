@@ -7,9 +7,7 @@ object frmQuickEntry: TfrmQuickEntry
   Caption = 'Quick Entry'
   ClientHeight = 467
   ClientWidth = 893
-  PopupMode = pmAuto
   Position = poDefaultPosOnly
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -99,6 +97,7 @@ object frmQuickEntry: TfrmQuickEntry
       BorderSpacing.Right = 16
       Caption = 'Delete row'
       DisabledImageIndex = 15
+      Enabled = False
       Flat = True
       Images = iButtons
       ImageIndex = 14
@@ -113,6 +112,7 @@ object frmQuickEntry: TfrmQuickEntry
       Align = alLeft
       Caption = 'Import'
       DisabledImageIndex = 5
+      Enabled = False
       Images = iButtons
       ImageIndex = 4
       ImageWidth = 20
@@ -138,6 +138,7 @@ object frmQuickEntry: TfrmQuickEntry
     OnKeyPress = qeGridKeyPress
     OnSelectEditor = qeGridSelectEditor
     OnSelectCell = qeGridSelectCell
+    OnSetEditText = qeGridSetEditText
     OnValidateEntry = qeGridValidateEntry
   end
   object SBar: TStatusBar

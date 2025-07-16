@@ -38,6 +38,17 @@
       </element><element name="Working"><short>It is <b>True</b> if some process is running</short>
       </element><element name="FirstConfig"><short>Run the first configuration dialog</short>
       </element>
+    <element name="NullDate"><short>Get the null date constant</short>
+      </element><element name="NullTime"><short>Get the null time constant</short>
+      </element><element name="NullDateTime"><short>Get the null date and time constants</short>
+      </element><element name="NewDatabase"><short>Open the new database dialog</short>
+      </element><element name="CreateNotificationList"><short>Create the list of notifications</short>
+      </element><element name="DestroyNotificationList"><short>Destroy the list of notifications</short>
+      </element><element name="DismissNotification"><short>Dismiss a notification</short>
+      </element><element name="NewNotification"><short>Add a new notification to the notification list</short>
+      </element><element name="NewAlert"><short>Add a new alert to the notification list</short>
+      </element><element name="NewSystemNotification"><short>Add a new system notification to the notification list</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

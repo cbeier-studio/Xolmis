@@ -5,6 +5,13 @@
       </element><element name="WildcardWords"><short>Format string to query each part in diferent words</short>
       </element><element name="WildcardSyllables"><short>Format string to query each part in the same word</short>
       </element>
+    <element name="DartISO8601ToPascal"><short>Convert the ISO8601 date and time format from Dart to Pascal</short>
+      </element><element name="TextToDate"><short>Convert a string to date or return the null date</short>
+      </element><element name="TextToTime"><short>Convert a string to time or return the null time</short>
+      </element><element name="StrToIntOrZero"><short>Convert a string to integer or return zero</short>
+      </element><element name="StrToFloatOrZero"><short>Convert a string to float or return zero</short>
+      </element><element name="RemoveDiacritics"><short>Remove diacritics from a string</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

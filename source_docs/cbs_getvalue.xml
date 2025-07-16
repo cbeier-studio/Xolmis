@@ -10,6 +10,14 @@
       </element><element name="GetSiteHierarchy"><short>Fill the site hierarchy of a record</short>
       </element><element name="FillComboBox"><short>Fill a combo box item list with values from a table</short>
       </element>
+    <element name="FillStrings"><short>Fill a TStrings list with values from a table</short>
+      </element><element name="GetTimeStamp"><short>Get the date and time value from a time stamp field</short>
+      </element><element name="GetNextCollectorSeq"><short>Get the next collector sequence</short>
+      </element><element name="GetRubricBalance"><short>Get the rubric balance from a project</short>
+      </element><element name="GetProjectBalance"><short>Get the total balance from a project</short>
+      </element><element name="GetSiteKey"><short>Get the site key from a name or abbreviation</short>
+      </element><element name="GetNameConcat"><short>Get the values of two fields</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

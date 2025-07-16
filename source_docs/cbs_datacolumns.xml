@@ -51,6 +51,9 @@
       </element><element name="TranslateSpecimenCollectors"><short>Translate field display names for specimen collectors</short>
       </element><element name="TranslateSamplePreps"><short>Translate field display names for sample preparations</short>
       </element>
+    <element name="LoadFieldsSettings"><short>Load columns settings from file</short>
+      </element><element name="SaveFieldsSettings"><short>Save columns settings to file</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
