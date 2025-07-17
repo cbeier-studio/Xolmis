@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":239680692,"name":"tdlgselectrecord.caption","sourcebytes":[83,101,108,101,99,116,32,114,101,99,111,114,100],"value":"Select record"},
+{"hash":18538618,"name":"tdlgselectrecord.lblselectinfo.caption","sourcebytes":[83,101,108,101,99,116,32,116,104,101,32,115,117,114,118,101,121,32,116,111,32,103,101,110,101,114,97,116,101,32,116,104,101,32,114,101,112,111,114,116,58],"value":"Select the survey to generate the report:"},
+{"hash":130458340,"name":"tdlgselectrecord.eselected.buttonhint","sourcebytes":[70,105,110,100,32,114,101,99,111,114,100],"value":"Find record"},
+{"hash":4749113,"name":"tdlgselectrecord.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tdlgselectrecord.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

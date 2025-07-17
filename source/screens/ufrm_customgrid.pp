@@ -1393,7 +1393,7 @@ uses
   cbs_validations, cbs_setparam, udlg_loading, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
-  ufrm_main, ubatch_neteffort, ubatch_feathers, ufrm_quickentry;
+  ufrm_main, ubatch_neteffort, ubatch_feathers, ufrm_quickentry, udlg_selectrecord;
 
 {$R *.lfm}
 
@@ -7289,8 +7289,17 @@ var
 begin
   aSurvey := 0;
   // Show dialog to select a survey
-  if not FindDlg(tbSurveys, nil, aSurvey) then
-    Exit;
+  dlgSelectRecord := TdlgSelectRecord.Create(nil);
+  with dlgSelectRecord do
+  try
+    PromptString := rsPromptSelectSurvey;
+    if ShowModal = mrOK then
+      aSurvey := RecordKey
+    else
+      Exit;
+  finally
+    FreeAndNil(dlgSelectRecord);
+  end;
 
   Qry := TSQLQuery.Create(nil);
   qObservers := TSQLQuery.Create(nil);

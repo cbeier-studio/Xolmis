@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="155">
+      <ExcludedIdentifiers Count="156">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -179,6 +179,7 @@
         <Item153 Value="tdlgLoading.lblLoading.Caption"/>
         <Item154 Value="tdlgSplash.lblAppName.Caption"/>
         <Item155 Value="tdlgSplash.lblProgress.Caption"/>
+        <Item156 Value="tdlgSelectRecord.lblSelectInfo.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
@@ -1371,6 +1372,13 @@
         <Filename Value="dialogs\udlg_loading.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgLoading"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_selectrecord.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgSelectRecord"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

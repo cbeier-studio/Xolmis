@@ -4948,6 +4948,11 @@ msgstr ""
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
 msgstr ""
 
+#: cbs_locale.rspromptselectsurvey
+msgctxt "cbs_locale.rspromptselectsurvey"
+msgid "Select the survey to generate the report:"
+msgstr ""
+
 #: cbs_locale.rsqualifieronlyingenus
 msgctxt "cbs_locale.rsqualifieronlyingenus"
 msgid "The sp. qualifier can only be used with genera rank."
@@ -8464,6 +8469,24 @@ msgstr ""
 #: tdlgrecverifications.sbinsertrecord.hint
 msgctxt "tdlgrecverifications.sbinsertrecord.hint"
 msgid "New verification"
+msgstr ""
+
+#: tdlgselectrecord.caption
+msgid "Select record"
+msgstr ""
+
+#: tdlgselectrecord.eselected.buttonhint
+msgid "Find record"
+msgstr ""
+
+#: tdlgselectrecord.sbcancel.caption
+msgctxt "tdlgselectrecord.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgselectrecord.sbok.caption
+msgctxt "tdlgselectrecord.sbok.caption"
+msgid "Apply"
 msgstr ""
 
 #: tdlgsplash.caption

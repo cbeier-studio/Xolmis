@@ -344,6 +344,7 @@ uses
     { Print messages }
     rsPrintRecordsTitle = 'Print records';
     rsNothingToPrint = 'There are no records to print!';
+    rsPromptSelectSurvey = 'Select the survey to generate the report:';
 
     { Coordinates messages }
     rsCoordinatesAvailableToUse = 'Coordinates are available at the Coordinates Editor.';

@@ -4297,7 +4297,7 @@ msgstr "Carregando registros..."
 
 #: cbs_locale.rsloadingrecordstoimport
 msgid "Loading records to import..."
-msgstr ""
+msgstr "Carregando registros para importar..."
 
 #: cbs_locale.rsloginbutton
 msgctxt "cbs_locale.rsloginbutton"
@@ -4954,6 +4954,10 @@ msgstr "Despreparando..."
 #: cbs_locale.rspromptbackupnow
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
 msgstr "O backup automático irá iniciar agora e pode demorar vários minutos. Você deseja continuar com o backup?"
+
+#: cbs_locale.rspromptselectsurvey
+msgid "Select the survey to generate the report:"
+msgstr "Selecione a amostragem para gerar o relatório:"
 
 #: cbs_locale.rsqualifieronlyingenus
 msgctxt "cbs_locale.rsqualifieronlyingenus"
@@ -8453,6 +8457,24 @@ msgstr "Apagar a verificação selecionada"
 msgctxt "tdlgrecverifications.sbinsertrecord.hint"
 msgid "New verification"
 msgstr "Nova verificação"
+
+#: tdlgselectrecord.caption
+msgid "Select record"
+msgstr "Selecionar registro"
+
+#: tdlgselectrecord.eselected.buttonhint
+msgid "Find record"
+msgstr "Buscar registro"
+
+#: tdlgselectrecord.sbcancel.caption
+msgctxt "tdlgselectrecord.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tdlgselectrecord.sbok.caption
+msgctxt "tdlgselectrecord.sbok.caption"
+msgid "Apply"
+msgstr "Aplicar"
 
 #: tdlgsplash.caption
 msgid "Starting Xolmis"
@@ -15609,4 +15631,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-
