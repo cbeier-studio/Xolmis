@@ -61,7 +61,7 @@ type
     FSiteFilter: TGazetteerFilters;
     FTaxonFilter: TTaxonFilters;
     FSortField, FSortDirection: String;
-    FKeyField, FFullNameField, FFormattedNameField: String;
+    FKeyField, FFullNameField, FFormattedNameField, FResultField: String;
     function GetCriteria(aCriteria: TCriteriaType): String;
     function HashtagFilter(aValue: String): Boolean;
     function Search(aValue: String): Boolean;
@@ -105,6 +105,7 @@ type
     property NameSelected: String read FNameSelected write FNameSelected;
     property InitialValue: String read FInitial write FInitial;
     property Filter: String read FFilter write FFilter;
+    property ResultField: String read FResultField write FResultField;
     property SiteFilter: TGazetteerFilters read FSiteFilter write FSiteFilter;
     property TaxonFilter: TTaxonFilters read FTaxonFilter write FTaxonFilter;
   end;
@@ -350,7 +351,7 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT site_id, full_name, site_name FROM gazetteer ');
+    Add('SELECT site_id, full_name, site_name, site_acronym FROM gazetteer ');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -433,7 +434,7 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT institution_id, full_name FROM institutions ');
+    Add('SELECT institution_id, full_name, acronym FROM institutions ');
     case aFilter of
       fvNone:
         { nothing } ;
@@ -461,7 +462,7 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT method_id, method_name FROM methods ');
+    Add('SELECT method_id, method_name, method_acronym FROM methods ');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -597,13 +598,14 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT sampling_plot_id, full_name FROM sampling_plots ');
+    Add('SELECT sampling_plot_id, full_name, acronym FROM sampling_plots ');
     case aFilter of
       fvNone:
         ; // do nothing
       fvReset:
         begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
+          Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
+          Add('OR (acronym ' + Operador + ' :VALPARAM)) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -624,7 +626,7 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT person_id, full_name FROM people ');
+    Add('SELECT person_id, full_name, citation, acronym FROM people ');
     case aFilter of
       fvNone:
         { nothing } ;
@@ -766,13 +768,14 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT project_id, project_title FROM projects ');
+    Add('SELECT project_id, project_title, short_title FROM projects ');
     case aFilter of
       fvNone:
         { nothing } ;
       fvReset:
         begin
-          Add('WHERE (project_title ' + Operador + ' :VALPARAM) ');
+          Add('WHERE ((project_title ' + Operador + ' :VALPARAM) ');
+          Add('OR (short_title ' + Operador + ' :VALPARAM)) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -1016,7 +1019,7 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT rank_id, rank_name FROM taxon_ranks ');
+    Add('SELECT rank_id, rank_name, rank_acronym FROM taxon_ranks ');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -1044,7 +1047,7 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT user_id, user_name FROM users ');
+    Add('SELECT user_id, user_name, full_name FROM users ');
     case aFilter of
       fvNone:
         ; // do nothing
@@ -1425,7 +1428,11 @@ end;
 procedure TdlgFind.SetupResult(aKeyField, aNameField: String);
 begin
   FKeySelected := qFind.FieldByName(aKeyField).AsInteger;
-  FNameSelected := qFind.FieldByName(aNameField).AsString;
+
+  if FResultField <> EmptyStr then
+    FNameSelected := qFind.FieldByName(FResultField).AsString
+  else
+    FNameSelected := qFind.FieldByName(aNameField).AsString;
 
   if (FTableType = tbZooTaxa) then
     FNameSelected := GetName('zoo_taxa', 'full_name', 'taxon_id', FKeySelected);

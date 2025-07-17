@@ -10,7 +10,6 @@ object dlgFind: TdlgFind
   ClientWidth = 317
   PopupMode = pmAuto
   ShowInTaskBar = stNever
-  LCLVersion = '4.0.0.4'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
@@ -178,7 +177,7 @@ object dlgFind: TdlgFind
     Columns = <    
       item
         Title.Caption = 'Name'
-        Width = 317
+        Width = 296
       end>
     DataSource = dsFind
     FixedCols = 0
@@ -210,7 +209,7 @@ object dlgFind: TdlgFind
   end
   object TimerFind: TTimer
     Enabled = False
-    Interval = 250
+    Interval = 300
     OnTimer = TimerFindTimer
     Left = 154
     Top = 144

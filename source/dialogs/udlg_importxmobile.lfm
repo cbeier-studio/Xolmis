@@ -10,7 +10,6 @@ object dlgImportXMobile: TdlgImportXMobile
   ClientWidth = 813
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -310,13 +309,13 @@ object dlgImportXMobile: TdlgImportXMobile
               ButtonStyle = cbsEllipsis
               MinSize = 200
               Title.Caption = 'Locality *'
-              Width = 229
+              Width = 227
             end          
             item
               ButtonStyle = cbsEllipsis
               MinSize = 200
               Title.Caption = 'Record'
-              Width = 228
+              Width = 226
             end>
           FixedCols = 0
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goTabs, goThumbTracking, goSmoothScroll, goCellEllipsis, goRowHighlight]
@@ -331,8 +330,8 @@ object dlgImportXMobile: TdlgImportXMobile
             150
             64
             64
-            229
-            228
+            227
+            226
           )
         end
       end

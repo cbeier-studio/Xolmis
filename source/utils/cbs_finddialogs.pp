@@ -25,11 +25,11 @@ uses
   cbs_system, cbs_datatypes, cbs_taxonomy, cbs_gis;
 
   { Find and select records }
-  function FindDlg(aTable: TTableType; aControl: TControl; var aResultKey: Integer;
-    aInitialValue: String = ''): Boolean; overload;
+  function FindDlg(aTable: TTableType; aControl: TControl; out aResultKey: Integer;
+    const aInitialValue: String = ''; const aResultField: String = ''): Boolean; overload;
   function FindDlg(aTable: TTableType; aControl: TControl; aDataset: TDataset;
-    aResultKeyField, aResultNameField: String; SaveOnClose: Boolean = False;
-    aInitialValue: String = ''): Boolean; overload;
+    const aResultKeyField, aResultNameField: String; SaveOnClose: Boolean = False;
+    const aInitialValue: String = ''; const aResultField: String = ''): Boolean; overload;
 
   function FindTaxonDlg(aFiltro: TTaxonFilters; aControl: TControl;
     UseValid: Boolean; var aCod: Integer; const aInit: String = ''): Boolean; overload;
@@ -44,9 +44,9 @@ uses
     aKeyField, aNameField: String; const aInit: String = ''): Boolean; overload;
 
   function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; var aCod: Integer;
-    const aInit: String = ''): Boolean; overload;
+    const aInit: String = ''; const aResultField: String = ''): Boolean; overload;
   function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; aDataset: TDataset;
-    aKeyField, aNameField: String; const aInit: String = ''): Boolean; overload;
+    aKeyField, aNameField: String; const aInit: String = ''; const aResultField: String = ''): Boolean; overload;
 
 implementation
 
@@ -56,8 +56,8 @@ uses cbs_global, cbs_data, udlg_find, udlg_findtaxon;
 { Find and select records }
 { ------------------------------------------------------------------------------------------ }
 
-function FindDlg(aTable: TTableType; aControl: TControl; var aResultKey: Integer;
-  aInitialValue: String = ''): Boolean;
+function FindDlg(aTable: TTableType; aControl: TControl; out aResultKey: Integer;
+  const aInitialValue: String; const aResultField: String): Boolean;
 var
   PControl: TPoint;
 begin
@@ -67,6 +67,7 @@ begin
   with dlgFind do
   try
     TableType := aTable;
+    ResultField := aResultField;
     //GetFormPosition(aControl, WindowPos);
     if Assigned(aControl) then
     begin
@@ -116,7 +117,8 @@ begin
 end;
 
 function FindDlg(aTable: TTableType; aControl: TControl; aDataset: TDataset;
-  aResultKeyField, aResultNameField: String; SaveOnClose: Boolean; aInitialValue: String = ''): Boolean;
+  const aResultKeyField, aResultNameField: String; SaveOnClose: Boolean; const aInitialValue: String;
+  const aResultField: String): Boolean;
 var
   PControl: TPoint;
 begin
@@ -126,6 +128,7 @@ begin
   with dlgFind do
   try
     TableType := aTable;
+    ResultField := aResultField;
     //GetFormPosition(aControl, WindowPos);
     //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
     PControl := aControl.ClientOrigin;
@@ -373,7 +376,7 @@ begin
 end;
 
 function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; var aCod: Integer;
-  const aInit: String = ''): Boolean;
+  const aInit: String; const aResultField: String): Boolean;
 var
   PControl: TPoint;
 begin
@@ -383,6 +386,7 @@ begin
   with dlgFind do
   try
     TableType := tbGazetteer;
+    ResultField := aResultField;
     SiteFilter := aFiltro;
     //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
     if aControl is TStringGrid then
@@ -424,7 +428,7 @@ begin
 end;
 
 function FindSiteDlg(aFiltro: TGazetteerFilters; aControl: TControl; aDataset: TDataset;
-  aKeyField, aNameField: String; const aInit: String = ''): Boolean;
+  aKeyField, aNameField: String; const aInit: String; const aResultField: String): Boolean;
 var
   PControl: TPoint;
 begin
@@ -434,6 +438,7 @@ begin
   with dlgFind do
   try
     TableType := tbGazetteer;
+    ResultField := aResultField;
     SiteFilter := aFiltro;
     //PControl := aControl.ClientToScreen(Point(aControl.Left, aControl.Top));
     PControl := aControl.ClientOrigin;

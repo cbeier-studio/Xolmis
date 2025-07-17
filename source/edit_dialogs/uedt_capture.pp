@@ -399,8 +399,8 @@ end;
 
 procedure TedtCapture.eAnnotatorButtonClick(Sender: TObject);
 begin
-  if FindDlg(tbPeople, eAnnotator, FAnnotatorId) then
-    eAnnotator.Text := GetName('people', 'acronym', 'person_id', FAnnotatorId);
+  FindDlg(tbPeople, eAnnotator, FAnnotatorId, '', 'acronym');
+    //eAnnotator.Text := GetName('people', 'acronym', 'person_id', FAnnotatorId);
 end;
 
 procedure TedtCapture.eAnnotatorKeyPress(Sender: TObject; var Key: char);
@@ -410,8 +410,8 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    if FindDlg(tbPeople, eAnnotator, FAnnotatorId, Key) then
-      eAnnotator.Text := GetName('people', 'acronym', 'person_id', FAnnotatorId);
+    FindDlg(tbPeople, eAnnotator, FAnnotatorId, Key, 'acronym');
+      //eAnnotator.Text := GetName('people', 'acronym', 'person_id', FAnnotatorId);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -447,8 +447,8 @@ end;
 
 procedure TedtCapture.eBanderButtonClick(Sender: TObject);
 begin
-  if FindDlg(tbPeople, eBander, FBanderId) then
-    eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
+  FindDlg(tbPeople, eBander, FBanderId, '', 'acronym');
+    //eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
 end;
 
 procedure TedtCapture.eBanderKeyPress(Sender: TObject; var Key: char);
@@ -458,8 +458,8 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    if FindDlg(tbPeople, eBander, FBanderId, Key) then
-      eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
+    FindDlg(tbPeople, eBander, FBanderId, Key, 'acronym');
+      //eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -590,7 +590,7 @@ end;
 
 procedure TedtCapture.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, FLocalityId);
+  FindSiteDlg([gfAll], eLocality, FLocalityId, '', 'site_name');
 end;
 
 procedure TedtCapture.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -600,7 +600,7 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key, 'site_name');
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -804,8 +804,8 @@ end;
 
 procedure TedtCapture.ePhotographer1ButtonClick(Sender: TObject);
 begin
-  if FindDlg(tbPeople, ePhotographer1, FPhotographer1Id) then
-    ePhotographer1.Text := GetName('people', 'acronym', 'person_id', FPhotographer1Id);
+  FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, '', 'acronym');
+    //ePhotographer1.Text := GetName('people', 'acronym', 'person_id', FPhotographer1Id);
 end;
 
 procedure TedtCapture.ePhotographer1KeyPress(Sender: TObject; var Key: char);
@@ -815,8 +815,8 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    if FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, Key) then
-      ePhotographer1.Text := GetName('people', 'acronym', 'person_id', FPhotographer1Id);
+    FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, Key, 'acronym');
+      //ePhotographer1.Text := GetName('people', 'acronym', 'person_id', FPhotographer1Id);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -839,8 +839,8 @@ end;
 
 procedure TedtCapture.ePhotographer2ButtonClick(Sender: TObject);
 begin
-  if FindDlg(tbPeople, ePhotographer2, FPhotographer2Id) then
-    ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
+  FindDlg(tbPeople, ePhotographer2, FPhotographer2Id, '', 'acronym');
+    //ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
 end;
 
 procedure TedtCapture.ePhotographer2KeyPress(Sender: TObject; var Key: char);
@@ -850,8 +850,8 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    if FindDlg(tbPeople, ePhotographer2, FPhotographer2Id, Key) then
-      ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
+    FindDlg(tbPeople, ePhotographer2, FPhotographer2Id, Key, 'acronym');
+      //ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }

@@ -537,13 +537,30 @@ end;
 procedure TdlgImportXMobile.gridMapEditButtonClick(Sender: TObject);
 var
   aKey: Integer;
-  aLocalityName: String;
+  aLocalityName, aObserverName: String;
 begin
   aKey := 0;
 
+  // Observer
+  if gridMap.Col = 2 then
+  begin
+    if FindDlg(tbPeople, gridMap, aKey, '', 'acronym') then
+    begin
+      aObserverName := GetName('people', 'acronym', 'person_id', aKey);
+      case FContentType of
+        mctEmpty: ;
+        mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
+        mctNest, mctNests:            FNestList[gridMap.Row - 1].FObserver := aObserverName;
+        mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
+      end;
+      //gridMap.Cells[gridMap.Col, gridMap.Row] := aObserverName;
+    end;
+  end
+  else
+  // Locality
   if gridMap.Col = 4 then
   begin
-    if FindSiteDlg([gfAll], gridMap, aKey) then
+    if FindSiteDlg([gfAll], gridMap, aKey, '', 'site_name') then
     begin
       aLocalityName := GetName('gazetteer', 'site_name', 'site_id', aKey);
       case FContentType of
@@ -556,6 +573,7 @@ begin
     end;
   end
   else
+  // Record: survey, nest or specimen
   if gridMap.Col = 5 then
   begin
     case FContentType of
@@ -591,8 +609,8 @@ end;
 procedure TdlgImportXMobile.gridMapKeyPress(Sender: TObject; var Key: char);
 var
   Grid: TStringGrid;
-  aLocalityKey, aSurveyKey: Integer;
-  aLocalityName: String;
+  aObserverKey, aLocalityKey, aSurveyKey: Integer;
+  aLocalityName, aObserverName: String;
 begin
   Grid := TStringGrid(Sender);
   if (Grid.EditorMode) and (Grid.Col >= 4) then
@@ -600,6 +618,22 @@ begin
     { Alphabetic search in numeric field }
     if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
     begin
+      // Observer
+      //if gridMap.Col = 2 then
+      //begin
+      //  if FindDlg(tbPeople, gridMap, aObserverKey, Key, 'acronym') then
+      //  begin
+      //    aObserverName := GetName('people', 'acronym', 'person_id', aObserverKey);
+      //    case FContentType of
+      //      mctEmpty: ;
+      //      mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
+      //      mctNest, mctNests:            FNestList[gridMap.Row - 1].FObserver := aObserverName;
+      //      mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
+      //    end;
+      //  end;
+      //end
+      //else
+      // Locality
       if Grid.Col = 4 then
       begin
         if FindSiteDlg([gfAll], Grid, aLocalityKey, Key) then
@@ -614,6 +648,7 @@ begin
         end;
       end
       else
+      // Record: survey, nest or specimen
       if Grid.Col = 5 then
       begin
         if FindDlg(tbSurveys, Grid, aSurveyKey, Key) then
