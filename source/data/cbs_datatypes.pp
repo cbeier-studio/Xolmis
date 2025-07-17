@@ -297,28 +297,6 @@ type
     property SQLOrderBy: String read FSQLOrderBy;
   end;
 
-  { TIndividualSearch }
-
-  TIndividualSearch = class(TCustomSearch)
-  private
-    FSex: Char;
-    FAge: Char;
-    FWithRecaptures: Boolean;
-    FWithColorBands: Boolean;
-    FTaxa: TStrings;
-    FDates: TStrings;
-  public
-    constructor Create;
-    destructor Destroy; override;
-  published
-    property Sex: Char read FSex write FSex;
-    property Age: Char read FAge write FAge;
-    property WithRecaptures: Boolean read FWithRecaptures write FWithRecaptures;
-    property WithColorBands: Boolean read FWithColorBands write FWithColorBands;
-    property Taxa: TStrings read FTaxa write FTaxa;
-    property Dates: TStrings read FDates write FDates;
-  end;
-
 type
 
   { TTableField }
@@ -1159,21 +1137,6 @@ begin
 
   FDataSet.Open;
   Result := FDataSet.RecordCount;
-end;
-
-{ TIndividualSearch }
-
-constructor TIndividualSearch.Create;
-begin
-  FTaxa := TStringList.Create;
-  FDates := TStringList.Create;
-end;
-
-destructor TIndividualSearch.Destroy;
-begin
-  inherited Destroy;
-  FTaxa.Free;
-  FDates.Free;
 end;
 
 { TRecordStatus }

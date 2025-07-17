@@ -94,7 +94,6 @@ type
   procedure FilterPeopleDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
 
   { Filter and sort records }
-  function Filtrar(aTabela: TTableType; aDataset: TSQLQuery; aWhere: TStrings; aFilterShow: TStrings = nil): Boolean;
   function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String = ''): String;
   function TaxonFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
   function SiteFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String = ''): String;
@@ -1507,48 +1506,6 @@ begin
         crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
-end;
-
-function Filtrar(aTabela: TTableType; aDataset: TSQLQuery; aWhere: TStrings; aFilterShow: TStrings = nil): Boolean;
-//var
-//  i: Integer;
-//  isWhere: Boolean;
-begin
-  //GravaLog('ABRE FILTRO', aTabela.TableName);
-  //F_Filter := TF_Filter.Create(nil);
-  //with F_Filter do
-  //  try
-  //    Tabela := aTabela;
-  //    Ordenar := False;
-  //    if ShowModal = mrOK then
-  //    begin
-  //      aDataset.Close;
-  //      aDataset.SQL.Clear;
-  //      aDataset.SQL.Assign(Filtro);
-  //      GravaLogSQL(aDataset.SQL);
-  //      isWhere := False;
-  //      aWhere.Clear;
-  //      i := 0;
-  //      repeat
-  //        if TRegEx.IsMatch(Filtro[i], '^where [A-Z0-9.''_=%,;<> ]+$', [roIgnoreCase]) then
-  //          isWhere := True;
-  //        if TRegEx.IsMatch(Filtro[i], '^order by [A-Z0-9.''_=%,; ]+$', [roIgnoreCase]) then
-  //          isWhere := False;
-  //        if isWhere then
-  //          aWhere.Add(Filtro[i]);
-  //        Inc(i);
-  //        Application.ProcessMessages;
-  //      until i = Filtro.Count;
-  //      if Assigned(aFilterShow) then
-  //        aFilterShow.Assign(FiltroShow);
-  //      Result := True;
-  //    end
-  //    else
-  //      Result := False;
-  //  finally
-  //    FreeAndNil(F_Filter);
-  //    GravaLog('FECHA FILTRO', '');
-  //  end;
 end;
 
 function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String): String;
