@@ -226,7 +226,7 @@ type
     property DisplayName: String read FDisplayName write FDisplayName;
   end;
 
-  TSearchFields = specialize TObjectList<TSearchField>;
+  TSearchFields = specialize TFPGObjectList<TSearchField>;
 
 type
   TSortDirection = (sdNone, sdAscending, sdDescending);
@@ -240,7 +240,7 @@ type
     Lookup: Boolean;
   end;
 
-  TSortedFields = specialize TObjectList<TSortedField>;
+  TSortedFields = specialize TFPGObjectList<TSortedField>;
 
 const
   SortDirections: array [TSortDirection] of String = ('', 'ASC', 'DESC');
@@ -261,7 +261,7 @@ type
     property AndOr: TSQLAndOr read FAndOr write FAndOr default aoOr;
   end;
 
-  TSearchGroups = specialize TObjectList<TSearchGroup>;
+  TSearchGroups = specialize TFPGObjectList<TSearchGroup>;
 
   { TCustomSearch }
 
@@ -343,7 +343,7 @@ type
     procedure GetData(aTable: TTableType; aFieldName: String = '');
   end;
 
-  TTableFields = specialize TObjectList<TTableField>;
+  TTableFields = specialize TFPGObjectList<TTableField>;
 
 type
 
