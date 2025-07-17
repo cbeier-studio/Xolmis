@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="udlg_importxmobile"><element name="TdlgImportXMobile.ApplyDarkMode"><short>Apply the dark theme to the UI</short>
+      </element><element name="TdlgImportXMobile.GetContentType"><short>Determine the content type of a JSON file</short>
+      </element><element name="TdlgImportXMobile.GetMethodFromInventory"><short>Get the method ID from an inventory</short>
+      </element><element name="TdlgImportXMobile.GetNestFromMobile"><short>Get the nest ID from a mobile nest record</short>
+      </element><element name="TdlgImportXMobile.GetSpecimenFromMobile"><short>Get the specimen ID from a mobile specimen record</short>
+      </element><element name="TdlgImportXMobile.GetSurveyFromInventory"><short>Get the survey ID from an inventory</short>
+      </element><element name="TdlgImportXMobile.CountErrorsOnGrid"><short>Check if the grid has any errors</short>
+      </element><element name="TdlgImportXMobile.IsRequiredFilledSource"><short>Check if the required fields are filled</short>
+      </element><element name="TdlgImportXMobile.OpenJSON"><short>Open a JSON file</short>
+      </element><element name="TdlgImportXMobile.LoadFromJSON"><short>Load data from JSON according to content type</short>
+      </element><element name="TdlgImportXMobile.LoadInventoriesFromJSON"><short>Load inventory data from JSON</short>
+      </element><element name="TdlgImportXMobile.LoadNestsFromJSON"><short>Load nest data from JSON</short>
+      </element><element name="TdlgImportXMobile.LoadSpecimensFromJSON"><short>Load specimen data from JSON</short>
+      </element><element name="TdlgImportXMobile.ImportInventories"><short>Save loaded inventories to the database</short>
+      </element><element name="TdlgImportXMobile.ImportSpecies"><short>Save loaded species from an inventory to the database</short>
+      </element><element name="TdlgImportXMobile.ImportVegetation"><short>Save loaded vegetation from an inventory to the database</short>
+      </element><element name="TdlgImportXMobile.ImportWeather"><short>Save the loaded weather from an inventory to the database</short>
+      </element><element name="TdlgImportXMobile.ImportSurveyMember"><short>Save the survey member from an inventory to the database</short>
+      </element><element name="TdlgImportXMobile.ImportNests"><short>Save loaded nests to the database</short>
+      </element><element name="TdlgImportXMobile.ImportRevisions"><short>Save loaded revisions from a nest to the database</short>
+      </element><element name="TdlgImportXMobile.ImportEggs"><short>Save loaded eggs from a nest to the database</short>
+      </element><element name="TdlgImportXMobile.ImportSpecimens"><short>Save loaded specimens to the database</short>
+      </element><element name="TdlgImportXMobile.LoadMapGrid"><short>Show the loaded records on a grid</short>
+      </element><element name="TdlgImportXMobile.ObserverExists"><short>Check if an observer name or abbreviation exists in the database</short>
+      </element><element name="TdlgImportXMobile.LocalityExists"><short>Check if a locality name or abbreviation exists in the database</short>
+      </element><element name="TdlgImportXMobile.FInventoryList"><short>List of loaded inventories</short>
+      </element><element name="TdlgImportXMobile.FNestList"><short>List of loaded nests</short>
+      </element><element name="TdlgImportXMobile.FSpecimenList"><short>List of loaded specimens</short>
+      </element><element name="TdlgImportXMobile.FContentType"><short>Content type of the current JSON file</short>
+      </element><element name="TdlgImportXMobile.FInventoryType"><short>Current inventory type</short>
+      </element><element name="TdlgImportXMobile.FSourceFile"><short>Source file path</short>
+      </element><element name="TdlgImportXMobile.JSONData"><short>Loaded JSON file</short>
+      </element><element name="TdlgImportXMobile.JSONObject"><short>Loaded JSON file as an object</short>
+      </element><element name="TdlgImportXMobile.JSONArray"><short>Loaded JSON file as an array of objects</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

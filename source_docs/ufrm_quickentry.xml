@@ -50,6 +50,19 @@
       </element><element name="TfrmQuickEntry.LoadColsBands"><short>Setup the columns for bands</short>
       </element><element name="TfrmQuickEntry.ApplyDarkMode"><short>Apply dark theme to this window</short>
       </element>
+    <element name="TfrmQuickEntry.FColFieldNames"><short>List of database field names for each grid column</short>
+      </element><element name="TfrmQuickEntry.FModuleName"><short>Module name to display on status bar</short>
+      </element><element name="TfrmQuickEntry.FFileName"><short>File path of loaded data</short>
+      </element><element name="TfrmQuickEntry.FSchemaVersion"><short>Current file schema version</short><descr>It is attributed for each table type.
+</descr>
+      </element><element name="TfrmQuickEntry.FTableType"><short>Table type that designates the module</short>
+      </element><element name="TfrmQuickEntry.FSearchableCols"><short>List of columns that use find dialog</short>
+      </element><element name="TfrmQuickEntry.FNumericCols"><short>List of columns of float type</short>
+      </element><element name="TfrmQuickEntry.FIntegerCols"><short>List of columns of integer type</short>
+      </element><element name="TfrmQuickEntry.FDateCols"><short>List of columns of date type</short>
+      </element><element name="TfrmQuickEntry.FTimeCols"><short>List of columns of time type</short>
+      </element><element name="TfrmQuickEntry.TableType"><short>Table type of the Quick Entry</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

@@ -81,6 +81,11 @@
       </element><element name="ClearDeleted"><short>Delete permanently the inactive records older than a number of days</short>
       </element><element name="GetLastInsertedKey"><short>Get the last inserted key</short>
       </element>
+    <element name="UpgradeDatabaseSchema"><short>Check version and update database schema</short>
+      </element><element name="ReadDatabaseMetadata"><short>Read a property value from database metadata</short>
+      </element><element name="WriteDatabaseMetadata"><short>Write a property value to database metadata</short>
+      </element><element name="PopulateZooTaxaTable"><short>Insert predefined data in the taxa table</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

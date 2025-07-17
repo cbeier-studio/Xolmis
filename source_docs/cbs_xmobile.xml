@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_xmobile"><element name="TMobileContentType"><short>Types of content of a Xolmis Mobile file</short>
+      </element><element name="TMobileInventoryType"><short>Types of inventory from a Xolmis Mobile file</short>
+      </element><element name="TMobilePoi"><short>Object of Xolmis Mobile POI record</short>
+      </element><element name="TMobilePoiList"><short>List of loaded Xolmis Mobile POI records</short>
+      </element><element name="TMobileSpecies"><short>Object of Xolmis Mobile species record</short>
+      </element><element name="TMobilePoi.FromJSON"><short>Load POI record from JSON</short>
+      </element><element name="TMobilePoi.ToPoi"><short>Copy data to a POI object</short>
+      </element><element name="TMobilePoi.Clear"><short>Clear data from the POI object</short>
+      </element><element name="TMobileSpecies.Clear"><short>Clear data of the species object</short>
+      </element><element name="TMobileSpecies.FromJSON"><short>Load species record from JSON</short>
+      </element><element name="TMobileSpecies.LoadPoiList"><short>Load the POI list linked to the species record</short>
+      </element><element name="TMobileSpecies.ToSighting"><short>Copy data to a sighting object</short>
+      </element>
+    <element name="TMobileVegetation"><short>Object of Xolmis Mobile vegetation record</short>
+      </element><element name="TMobileWeather"><short>Object of Xolmis Mobile weather record</short>
+      </element><element name="TMobileVegetation.Clear"><short>Clear data of the vegetation object</short>
+      </element><element name="TMobileVegetation.FromJSON"><short>Load vegetation record from JSON</short>
+      </element><element name="TMobileVegetation.ToVegetation"><short>Copy data to a vegetation object</short>
+      </element><element name="TMobileWeather.Clear"><short>Clear data of the weather object</short>
+      </element><element name="TMobileWeather.FromJSON"><short>Load weather record from JSON</short>
+      </element><element name="TMobileWeather.ToWeatherLog"><short>Copy data to a weather log object</short>
+      </element><element name="TMobileSpeciesList"><short>List of loaded Xolmis Mobile species records</short>
+      </element><element name="TMobileVegetationList"><short>List of loaded Xolmis Mobile vegetation records</short>
+      </element><element name="TMobileWeatherList"><short>List of loaded Xolmis Mobile weather records</short>
+      </element><element name="TMobileInventory"><short>Object of Xolmis Mobile inventory record</short>
+      </element><element name="TMobileInventoryList"><short>List of loaded Xolmis Mobile inventory records</short>
+      </element><element name="TMobileInventory.Clear"><short>Clear data of the inventory object</short>
+      </element><element name="TMobileInventory.FromJSON"><short>Load inventory record from JSON</short>
+      </element><element name="TMobileInventory.LoadSpeciesList"><short>Load the species list linked to the inventory record</short>
+      </element><element name="TMobileInventory.LoadVegetationList"><short>Load the vegetation list linked to the inventory record</short>
+      </element><element name="TMobileInventory.LoadWeatherList"><short>Load the weather list linked to the inventory record</short>
+      </element><element name="TMobileInventory.ToSurvey"><short>Copy inventory data to a survey object</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

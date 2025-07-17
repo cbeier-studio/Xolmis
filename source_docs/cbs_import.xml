@@ -8,6 +8,11 @@
       </element><element name="ImportNestRevisionsV1"><short>Import nest revisions data from a CSV file</short>
       </element><element name="ImportEggDataV1"><short>Import eggs data from a CSV file</short>
       </element>
+    <element name="LoadBandingFile"><short>Load a banding file</short>
+      </element><element name="LoadBandingRecord"><short>Load a banding record from loaded file</short>
+      </element><element name="LoadEbirdFile"><short>Load an eBird CSV file</short>
+      </element><element name="LoadEbirdRecord"><short>Load a record from the loaded eBird file </short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

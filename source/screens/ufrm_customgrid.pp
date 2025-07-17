@@ -1828,7 +1828,7 @@ begin
 
   with aDataset do
   begin
-    // Check if the image is in the dataset
+    // Check if the document is in the dataset
     if not RecordExists(tbDocuments, 'document_path', relPath) then
     begin
       Append;

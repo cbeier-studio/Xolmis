@@ -44,6 +44,34 @@
       </element><element name="TfrmCustomGrid.SidePanelIndex"><short>Change the side panel page index</short>
       </element><element name="TfrmCustomGrid.CanToggle"><short>Variable that indicates if the filters can change</short>
       </element>
+    <element name="TfrmCustomGrid.SetDocs"><short>Set the dataset and grid of the documents side panel</short>
+      </element><element name="TfrmCustomGrid.UpdateChildRightPanel"><short>Update the child right panel</short>
+      </element><element name="TfrmCustomGrid.UpdateDocButtons"><short>Update the documents side panel buttons</short>
+      </element><element name="TfrmCustomGrid.UpdateRecycleButtons"><short>Update the recycle bin side panel buttons</short>
+      </element><element name="TfrmCustomGrid.ChildTable"><short>Table type of the current child datasource</short>
+      </element><element name="TfrmCustomGrid.SaveColumnsConfig"><short>Save the settings for grid columns</short>
+      </element><element name="TfrmCustomGrid.QuickAddChild"><short>Setup behavior of quick add field on child toolbar</short>
+      </element><element name="TfrmCustomGrid.OpenAsync"><short>Setup and open datasets after show window</short><descr>To be used with a TTimer
+</descr>
+      </element><element name="TfrmCustomGrid.LoadColumnsConfigGrid"><short>Load data from grid column settings file</short>
+      </element><element name="TfrmCustomGrid.LoadColumnsConfig"><short>Load and setup the grid columns settings</short>
+      </element><element name="TfrmCustomGrid.AddDocument"><short>Add new document to the database</short>
+      </element><element name="TfrmCustomGrid.AddAudio"><short>Add new audio recording to the database</short>
+      </element><element name="TfrmCustomGrid.CreatePanelTabs"><short>Setup child tabs</short>
+      </element><element name="TfrmCustomGrid.PanelTabs"><short>List of child tabs</short>
+      </element><element name="TfrmCustomGrid.FSearch"><short>Search settings</short>
+      </element><element name="TfrmCustomGrid.FCanToggle"><short>Determine when a control can be clicked or toggled</short>
+      </element><element name="TfrmCustomGrid.FIsResizing"><short>Determine when a column is resizing</short>
+      </element><element name="TfrmCustomGrid.FIsMoving"><short>Determine when a column is moving</short>
+      </element><element name="TfrmCustomGrid.FSidePanelFactor"><short>Calculated size factor for (right) side panel</short>
+      </element><element name="TfrmCustomGrid.FChildPanelFactor"><short>Calculated size factor for child side panel</short>
+      </element><element name="TCustomPanelTab"><short>Custom type for the child tabs</short>
+      </element><element name="TCustomPanelTab.Create"><short>Create and show new child tab</short>
+      </element><element name="TCustomPanelTab.UpdateCounter"><short>Update the counter badge in the child tab</short>
+      </element><element name="TCustomPanelTab.PageIndex"><short>Index of the child tab position</short>
+      </element><element name="TCustomPanelTab.IsActive"><short>Determine if the child tab is active</short>
+      </element><element name="TStringMemoEditor"><short>Custom type to show a memo when editing a text field in DBGrid</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

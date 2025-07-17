@@ -25,7 +25,7 @@
       </element><element name="SortDirections"><short>Strings of sorting directions</short>
       </element><element name="TSearchGroup"><short>Group of field to search</short>
       </element><element name="TSearchGroups"><short>List of search groups</short>
-      </element><element name="TCustomSearch"><short>Base type for seaches</short><descr>It has data and routines to execute searches in a database table.
+      </element><element name="TCustomSearch"><short>Base type for searches</short><descr>It has data and routines to execute searches in a database table.
 </descr>
       </element><element name="TTableField"><short>Table field parameters</short>
       </element><element name="TTableFields"><short>List of table fields</short>
@@ -33,6 +33,11 @@
       </element>
     <element name="SearchTypeByName"><short>Get type for a data type name</short>
       </element><element name="CampoByName"><short>Get type of field type name</short>
+      </element>
+    <element name="LoadTablesDict"><short>Create and load the tables dictionary (table name and table type)</short>
+      </element><element name="LoadLocaleTablesDict"><short>Create and load the translated tables dictionary (table type and translated table name)</short>
+      </element><element name="TCustomSearch.Reset"><short>Clear search parameters</short>
+      </element><element name="TCustomSearch.RunSearch"><short>Use it to run the search query</short>
       </element>
     </module>
   </package>

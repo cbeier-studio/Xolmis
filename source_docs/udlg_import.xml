@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="udlg_import"><element name="TdlgImport.ApplyDarkMode"><short>Apply dark theme to the UI</short>
+      </element><element name="TdlgImport.IsRequiredFilledSource"><short>Check if the required fields are filled</short>
+      </element><element name="TdlgImport.LoadFields"><short>Setup mapping grid with source file fields and target fields</short>
+      </element><element name="TdlgImport.LoadTargetFields"><short>Load the list of target fields for a target table</short>
+      </element><element name="TdlgImport.LoadTargetTables"><short>Load a list of target tables</short>
+      </element><element name="TdlgImport.LoadSearchTables"><short>Load a list of tables that could be used to validate data</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
