@@ -13,6 +13,25 @@
       </element><element name="LoadEbirdFile"><short>Load an eBird CSV file</short>
       </element><element name="LoadEbirdRecord"><short>Load a record from the loaded eBird file </short>
       </element>
+    <element name="EbirdSchema"><short>CSV schema of the eBird Download Format</short>
+      </element><element name="BandingJournalSchema"><short>CSV schema of the banding journal file</short>
+      </element><element name="WeatherLogSchema"><short>CSV schema of the weather logs file</short>
+      </element><element name="NetEffortSchema"><short>CSV schema of the net effort file</short>
+      </element><element name="BandingSchema"><short>CSV schema of the banding file</short>
+      </element><element name="NestSchema"><short>CSV schema of the nest file</short>
+      </element><element name="NestRevisionSchema"><short>CSV schema of the nest revision file</short>
+      </element><element name="EggSchema"><short>CSV schema of the egg file</short>
+      </element><element name="TImportFileType"><short>Types of files that can be imported</short>
+      </element><element name="TFieldsMap"><short>Fields map type</short>
+      </element><element name="TWeatherSample"><short>Weather sample record</short>
+      </element><element name="TNetBout"><short>Net bout record</short>
+      </element><element name="TBandingJournal"><short>Banding journal record to import</short>
+      </element><element name="TBandingEffort"><short>Net effort record to import</short>
+      </element><element name="TBandingData"><short>Banding data record to import</short>
+      </element><element name="TNestRecord"><short>Nest record to import</short>
+      </element><element name="TNestJournal"><short>Nest journal record to import</short>
+      </element><element name="TEggRecord"><short>Egg record to import</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

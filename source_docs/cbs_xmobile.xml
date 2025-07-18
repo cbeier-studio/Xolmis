@@ -32,6 +32,29 @@
       </element><element name="TMobileInventory.LoadWeatherList"><short>Load the weather list linked to the inventory record</short>
       </element><element name="TMobileInventory.ToSurvey"><short>Copy inventory data to a survey object</short>
       </element>
+    <element name="TMobileEgg"><short>Object of Xolmis Mobile egg record</short>
+      </element><element name="TMobileNestRevision"><short>Object of Xolmis Mobile nest revision record</short>
+      </element><element name="TMobileNest"><short>Object of Xolmis Mobile nest record</short>
+      </element><element name="TMobileSpecimen"><short>Object of Xolmis Mobile specimen record</short>
+      </element><element name="TMobileEggList"><short>List of loaded Xolmis Mobile egg records</short>
+      </element><element name="TMobileRevisionList"><short>List of loaded Xolmis Mobile nest revision records</short>
+      </element><element name="TMobileNestList"><short>List of loaded Xolmis Mobile nest records</short>
+      </element><element name="TMobileSpecimenList"><short>List of loaded Xolmis Mobile specimen records</short>
+      </element><element name="TMobileEgg.Clear"><short>Clear data of the egg object</short>
+      </element><element name="TMobileNestRevision.Clear"><short>Clear data of the nest revision object</short>
+      </element><element name="TMobileNest.Clear"><short>Clear data of the nest object</short>
+      </element><element name="TMobileSpecimen.Clear"><short>Clear data of the specimen object</short>
+      </element><element name="TMobileEgg.FromJSON"><short>Load egg record from JSON</short>
+      </element><element name="TMobileNestRevision.FromJSON"><short>Load nest revision record from JSON</short>
+      </element><element name="TMobileNest.FromJSON"><short>Load nest record from JSON</short>
+      </element><element name="TMobileSpecimen.FromJSON"><short>Load specimen record from JSON</short>
+      </element><element name="TMobileEgg.ToEgg"><short>Copy egg data to an egg object</short>
+      </element><element name="TMobileNestRevision.ToNestRevision"><short>Copy nest revision data to a nest revision object</short>
+      </element><element name="TMobileNest.ToNest"><short>Copy nest data to a nest object</short>
+      </element><element name="TMobileSpecimen.ToSpecimen"><short>Copy specimen data to a specimen object</short>
+      </element><element name="TMobileNest.LoadRevisionList"><short>Load the nest revision list linked to the nest record</short>
+      </element><element name="TMobileNest.LoadEggList"><short>Load the egg list linked to the nest record</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

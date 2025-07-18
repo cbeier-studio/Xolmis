@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="udm_main"><element name="TDMM.OpenSystemDatabase"><short>Create (if does not exist) and open the system database</short>
+      </element><element name="TDMM.WaitingConnection"><short>Flag that indicates the database was disconnected</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

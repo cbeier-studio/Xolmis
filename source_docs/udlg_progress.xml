@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="udlg_progress"><element name="TdlgProgress.Title"><short>Title of the progress dialog</short>
+      </element><element name="TdlgProgress.Text"><short>Text message of the progress dialog</short>
+      </element><element name="TdlgProgress.Min"><short>Minimum value of the progress bar</short>
+      </element><element name="TdlgProgress.Max"><short>Maximum value of the progress bar</short>
+      </element><element name="TdlgProgress.Position"><short>Position of the progress bar</short>
+      </element><element name="TdlgProgress.AllowCancel"><short>Set to <b>True</b> if the task can be cancelled</short>
+      </element><element name="TdlgProgress.Indeterminate"><short>Set the progress bar as indeterminate position</short>
+      </element><element name="TdlgProgress.ApplyDarkMode"><short>Apply dark theme to the UI</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -636,7 +636,7 @@ begin
       // Locality
       if Grid.Col = 4 then
       begin
-        if FindSiteDlg([gfAll], Grid, aLocalityKey, Key) then
+        if FindSiteDlg([gfAll], Grid, aLocalityKey, Key, 'site_name') then
         begin
           aLocalityName := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
           case FContentType of
