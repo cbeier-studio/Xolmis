@@ -42,11 +42,14 @@ object dlgImportCaptures: TdlgImportCaptures
     TabOrder = 1
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbClose
       Left = 475
       Height = 25
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = 'Cancel'
       TabOrder = 1
       Visible = False
@@ -54,11 +57,14 @@ object dlgImportCaptures: TdlgImportCaptures
     end
     object sbRun: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
       Left = 337
       Height = 25
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = 'Import'
       Enabled = False
       TabOrder = 0
@@ -66,11 +72,15 @@ object dlgImportCaptures: TdlgImportCaptures
     end
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
       Left = 613
       Height = 25
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = 'Close'
       ModalResult = 11
       TabOrder = 2
@@ -158,21 +168,27 @@ object dlgImportCaptures: TdlgImportCaptures
           Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 0
           object icoJournalFile: TImage
+            AnchorSideLeft.Control = pJournalFile
+            AnchorSideTop.Control = pJournalFile
+            AnchorSideTop.Side = asrCenter
             Left = 16
-            Height = 26
-            Top = 12
-            Width = 27
-            Align = alLeft
+            Height = 20
+            Top = 15
+            Width = 20
+            AutoSize = True
             Center = True
             Images = iIcons
             Proportional = True
           end
           object lblJournalFile: TLabel
-            Left = 51
-            Height = 26
-            Top = 12
+            AnchorSideLeft.Control = icoJournalFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pJournalFile
+            AnchorSideTop.Side = asrCenter
+            Left = 44
+            Height = 15
+            Top = 18
             Width = 65
-            Align = alLeft
             Caption = 'Field journal'
             Layout = tlCenter
             ParentColor = False
@@ -184,12 +200,13 @@ object dlgImportCaptures: TdlgImportCaptures
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = pJournalFile
             AnchorSideRight.Side = asrBottom
-            Left = 687
+            Left = 685
             Height = 26
             Hint = 'Clear field'
             Top = 12
-            Width = 24
+            Width = 26
             Anchors = [akTop, akRight]
+            AutoSize = True
             Images = iButtons
             ImageIndex = 1
             ShowHint = True
@@ -197,14 +214,16 @@ object dlgImportCaptures: TdlgImportCaptures
             OnClick = sbClearJournalFileClick
           end
           object eJournalFile: TFileNameEdit
+            AnchorSideLeft.Control = lblJournalFile
+            AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = pJournalFile
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = sbClearJournalFile
-            Left = 208
+            Left = 125
             Height = 23
             Hint = 'Select file'
             Top = 14
-            Width = 471
+            Width = 552
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -214,7 +233,8 @@ object dlgImportCaptures: TdlgImportCaptures
             NumGlyphs = 1
             Images = iButtons
             ImageIndex = 0
-            Anchors = [akTop, akRight]
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Left = 16
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -272,35 +292,43 @@ object dlgImportCaptures: TdlgImportCaptures
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 1
           object icoEffortFile: TImage
+            AnchorSideLeft.Control = pEffortFile
+            AnchorSideTop.Control = pEffortFile
+            AnchorSideTop.Side = asrCenter
             Left = 16
-            Height = 26
-            Top = 12
-            Width = 27
-            Align = alLeft
+            Height = 20
+            Top = 15
+            Width = 20
+            AutoSize = True
             Center = True
             ImageIndex = 1
             Images = iIcons
             Proportional = True
           end
           object lblEffortFile: TLabel
-            Left = 51
-            Height = 26
-            Top = 12
+            AnchorSideLeft.Control = icoEffortFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pEffortFile
+            AnchorSideTop.Side = asrCenter
+            Left = 44
+            Height = 15
+            Top = 18
             Width = 62
-            Align = alLeft
             Caption = 'Field efforts'
             Layout = tlCenter
             ParentColor = False
           end
           object eEffortFile: TFileNameEdit
+            AnchorSideLeft.Control = lblEffortFile
+            AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = pEffortFile
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = sbClearEffortFile
-            Left = 208
+            Left = 125
             Height = 23
             Hint = 'Select file'
             Top = 14
-            Width = 471
+            Width = 552
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -311,6 +339,7 @@ object dlgImportCaptures: TdlgImportCaptures
             Images = iButtons
             ImageIndex = 0
             Anchors = [akTop, akRight]
+            BorderSpacing.Left = 16
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -327,12 +356,13 @@ object dlgImportCaptures: TdlgImportCaptures
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = pEffortFile
             AnchorSideRight.Side = asrBottom
-            Left = 687
+            Left = 685
             Height = 26
             Hint = 'Clear field'
             Top = 12
-            Width = 24
+            Width = 26
             Anchors = [akTop, akRight]
+            AutoSize = True
             Images = iButtons
             ImageIndex = 1
             ShowHint = True
@@ -387,22 +417,28 @@ object dlgImportCaptures: TdlgImportCaptures
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
           TabOrder = 2
           object icoCaptureFile: TImage
+            AnchorSideLeft.Control = pCaptureFile
+            AnchorSideTop.Control = pCaptureFile
+            AnchorSideTop.Side = asrCenter
             Left = 16
-            Height = 26
-            Top = 12
-            Width = 27
-            Align = alLeft
+            Height = 20
+            Top = 15
+            Width = 20
+            AutoSize = True
             Center = True
             ImageIndex = 2
             Images = iIcons
             Proportional = True
           end
           object lblCaptureFile: TLabel
-            Left = 51
-            Height = 26
-            Top = 12
+            AnchorSideLeft.Control = icoCaptureFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pCaptureFile
+            AnchorSideTop.Side = asrCenter
+            Left = 44
+            Height = 15
+            Top = 18
             Width = 47
-            Align = alLeft
             Caption = 'Captures'
             Layout = tlCenter
             ParentColor = False
@@ -411,11 +447,11 @@ object dlgImportCaptures: TdlgImportCaptures
             AnchorSideTop.Control = pCaptureFile
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = sbClearCaptureFile
-            Left = 208
+            Left = 125
             Height = 23
             Hint = 'Select file'
             Top = 14
-            Width = 471
+            Width = 552
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -426,6 +462,7 @@ object dlgImportCaptures: TdlgImportCaptures
             Images = iButtons
             ImageIndex = 0
             Anchors = [akTop, akRight]
+            BorderSpacing.Left = 16
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -442,12 +479,13 @@ object dlgImportCaptures: TdlgImportCaptures
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = pCaptureFile
             AnchorSideRight.Side = asrBottom
-            Left = 687
+            Left = 685
             Height = 26
             Hint = 'Clear field'
             Top = 12
-            Width = 24
+            Width = 26
             Anchors = [akTop, akRight]
+            AutoSize = True
             Images = iButtons
             ImageIndex = 1
             ShowHint = True

@@ -33,19 +33,13 @@ type
     iButtonsDark: TImageList;
     pClementsVersion: TLabel;
     pAppVersion: TLabel;
-    pIocVersion: TLabel;
-    pCbroVersion: TLabel;
     pVersion: TBCPanel;
     pClements: TBCPanel;
-    pIOC: TBCPanel;
-    pCBRO: TBCPanel;
     lblAppVersion: TLabel;
     lblAppName: TLabel;
     lblAppDescription: TLabel;
     lblAppCopyright: TLabel;
-    lblCbroVersion: TLabel;
     lblClementsVersion: TLabel;
-    lblIocVersion: TLabel;
     linkPrivacy: TATLabelLink;
     linkLicense: TATLabelLink;
     linkThirdParty: TATLabelLink;
@@ -87,10 +81,10 @@ begin
   pVersion.Border.Color := clCardBGSecondaryDark;
   pClements.Background.Color := clCardBGDefaultDark;
   pClements.Border.Color := clCardBGSecondaryDark;
-  pIOC.Background.Color := clCardBGDefaultDark;
-  pIOC.Border.Color := clCardBGSecondaryDark;
-  pCBRO.Background.Color := clCardBGDefaultDark;
-  pCBRO.Border.Color := clCardBGSecondaryDark;
+  //pIOC.Background.Color := clCardBGDefaultDark;
+  //pIOC.Border.Color := clCardBGSecondaryDark;
+  //pCBRO.Background.Color := clCardBGDefaultDark;
+  //pCBRO.Border.Color := clCardBGSecondaryDark;
 
   pAppVersion.Font.Color := clTextPrimaryDark;
 
@@ -105,8 +99,8 @@ begin
   pAppVersion.Caption := GetBuildInfoAsString;
 
   pClementsVersion.Caption := XSettings.ClementsVersion;
-  pIocVersion.Caption := XSettings.IocVersion;
-  pCbroVersion.Caption := XSettings.CbroVersion;
+  //pIocVersion.Caption := XSettings.IocVersion;
+  //pCbroVersion.Caption := XSettings.CbroVersion;
 end;
 
 procedure TdlgAbout.linkLicenseClick(Sender: TObject);
@@ -136,8 +130,8 @@ begin
     Add(lblAppCopyright.Caption);
     Add(lblAppVersion.Caption + ' ' + pAppVersion.Caption);
     Add(lblClementsVersion.Caption + ' ' + pClementsVersion.Caption);
-    Add(lblIocVersion.Caption + ' ' + pIocVersion.Caption);
-    Add(lblCbroVersion.Caption + ' ' + pCbroVersion.Caption);
+    //Add(lblIocVersion.Caption + ' ' + pIocVersion.Caption);
+    //Add(lblCbroVersion.Caption + ' ' + pCbroVersion.Caption);
   end;
   Clipboard.AsText := sAbout.Text;
   ModalResult := mrClose;

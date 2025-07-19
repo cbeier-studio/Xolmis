@@ -9,7 +9,6 @@ object cfgOptions: TcfgOptions
   ClientWidth = 857
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel
@@ -31,11 +30,15 @@ object cfgOptions: TcfgOptions
     TabOrder = 1
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
       Left = 740
       Height = 25
       Top = 8
       Width = 101
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = 'Close'
       ModalResult = 11
       TabOrder = 0
@@ -56,7 +59,7 @@ object cfgOptions: TcfgOptions
     Height = 422
     Top = 0
     Width = 657
-    PageIndex = 0
+    PageIndex = 3
     Align = alClient
     TabOrder = 2
     object pgGeneral: TPage
@@ -65,7 +68,7 @@ object cfgOptions: TcfgOptions
         Height = 422
         Top = 0
         Width = 657
-        HorzScrollBar.Page = 375
+        HorzScrollBar.Page = 368
         VertScrollBar.Page = 337
         Align = alClient
         BorderStyle = bsNone
@@ -146,22 +149,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             TabOrder = 0
             object icoEnterAsTab: TImage
+              AnchorSideLeft.Control = pEnterAsTab
+              AnchorSideTop.Control = pEnterAsTab
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 16
               Images = iIcons
               Proportional = True
             end
             object lblEnterAsTab: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoEnterAsTab
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pEnterAsTab
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 276
-              Align = alLeft
               Caption = 'Use <Enter/Return> keys to jump to the next control'
               Layout = tlCenter
               ParentColor = False
@@ -229,22 +238,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             TabOrder = 1
             object icoConfirmCancel: TImage
+              AnchorSideLeft.Control = pConfirmCancel
+              AnchorSideTop.Control = pConfirmCancel
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 17
               Images = iIcons
               Proportional = True
             end
             object lblConfirmCancel: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoConfirmCancel
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pConfirmCancel
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 191
-              Align = alLeft
               Caption = 'Confirm data insert/edit cancelation'
               Layout = tlCenter
               ParentColor = False
@@ -313,32 +328,42 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             TabOrder = 2
             object icoClearDeleted: TImage
+              AnchorSideLeft.Control = pClearDeleted
+              AnchorSideTop.Control = pClearDeleted
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 18
               Images = iIcons
               Proportional = True
             end
             object lblClearDeleted: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoClearDeleted
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pClearDeleted
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 234
-              Align = alLeft
               Caption = 'Clear deleted records automatically (in days)'
               Layout = tlCenter
               ParentColor = False
             end
             object cbClearDeleted: TComboBox
+              AnchorSideTop.Control = pClearDeleted
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pClearDeleted
+              AnchorSideRight.Side = asrBottom
               Left = 436
               Height = 23
               Top = 12
               Width = 173
-              Align = alRight
+              Anchors = [akTop, akRight]
               Color = clWhite
               ItemHeight = 15
               Items.Strings = (
@@ -399,32 +424,41 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             TabOrder = 3
             object icoCheckUpdates: TImage
+              AnchorSideLeft.Control = pCheckUpdates
+              AnchorSideTop.Control = pCheckUpdates
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 25
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 14
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 19
               Images = iIcons
               Proportional = True
             end
             object lblCheckUpdates: TLabel
-              Left = 51
-              Height = 25
-              Top = 12
+              AnchorSideLeft.Control = icoCheckUpdates
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pCheckUpdates
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 17
               Width = 135
-              Align = alLeft
               Caption = 'Check for Xolmis updates'
               Layout = tlCenter
               ParentColor = False
             end
             object cbCheckUpdates: TComboBox
+              AnchorSideTop.Control = pCheckUpdates
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = sbCheckUpdatesNow
               Left = 343
               Height = 23
-              Top = 12
+              Top = 13
               Width = 173
-              Align = alRight
+              Anchors = [akTop, akRight]
               Color = clWhite
               ItemHeight = 15
               Items.Strings = (
@@ -438,11 +472,15 @@ object cfgOptions: TcfgOptions
               OnChange = cbCheckUpdatesChange
             end
             object sbCheckUpdatesNow: TBitBtn
+              AnchorSideTop.Control = pCheckUpdates
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pCheckUpdates
+              AnchorSideRight.Side = asrBottom
               Left = 524
               Height = 25
               Top = 12
               Width = 85
-              Align = alRight
+              Anchors = [akTop, akRight]
               AutoSize = True
               Caption = 'Check now'
               TabOrder = 1
@@ -495,32 +533,42 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             TabOrder = 4
             object icoStartPage: TImage
+              AnchorSideLeft.Control = pStartPage
+              AnchorSideTop.Control = pStartPage
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 25
               Images = iIcons
               Proportional = True
             end
             object lblStartPage: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoStartPage
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pStartPage
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 53
-              Align = alLeft
               Caption = 'Start page'
               Layout = tlCenter
               ParentColor = False
             end
             object cbStartPage: TComboBox
+              AnchorSideTop.Control = pStartPage
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pStartPage
+              AnchorSideRight.Side = asrBottom
               Left = 343
               Height = 23
               Top = 12
               Width = 266
-              Align = alRight
+              Anchors = [akTop, akRight]
               Color = clWhite
               ItemHeight = 15
               Items.Strings = (
@@ -633,22 +681,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
             object icoUseConditionalFormatting: TImage
+              AnchorSideLeft.Control = pUseConditionalFormatting
+              AnchorSideTop.Control = pUseConditionalFormatting
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 22
               Images = iIcons
               Proportional = True
             end
             object lblUseConditionalFormatting: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoUseConditionalFormatting
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pUseConditionalFormatting
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 184
-              Align = alLeft
               Caption = 'Use conditional formatting in grids'
               Layout = tlCenter
               ParentColor = False
@@ -717,22 +771,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 1
             object icoShowOutliers: TImage
+              AnchorSideLeft.Control = pShowOutliers
+              AnchorSideTop.Control = pShowOutliers
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 23
               Images = iIcons
               Proportional = True
             end
             object lblShowOutliers: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoShowOutliers
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pShowOutliers
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 229
-              Align = alLeft
               Caption = 'Highlight outlier measurements in captures'
               Layout = tlCenter
               ParentColor = False
@@ -801,32 +861,42 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             TabOrder = 2
             object icoSelectedTheme: TImage
+              AnchorSideLeft.Control = pSelectedTheme
+              AnchorSideTop.Control = pSelectedTheme
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 21
               Images = iIcons
               Proportional = True
             end
             object lblSelectedTheme: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoSelectedTheme
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pSelectedTheme
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 37
-              Align = alLeft
               Caption = 'Theme'
               Layout = tlCenter
               ParentColor = False
             end
             object cbSelectedTheme: TComboBox
+              AnchorSideTop.Control = pSelectedTheme
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pSelectedTheme
+              AnchorSideRight.Side = asrBottom
               Left = 436
               Height = 23
               Top = 12
               Width = 173
-              Align = alRight
+              Anchors = [akTop, akRight]
               Color = clWhite
               ItemHeight = 15
               Items.Strings = (
@@ -840,11 +910,14 @@ object cfgOptions: TcfgOptions
               OnChange = cbSelectedThemeChange
             end
             object lblSelectedThemeRestart: TLabel
+              AnchorSideTop.Control = pSelectedTheme
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = cbSelectedTheme
               Left = 191
-              Height = 23
-              Top = 12
+              Height = 15
+              Top = 16
               Width = 237
-              Align = alRight
+              Anchors = [akTop, akRight]
               Caption = 'Xolmis need to be restarted to apply changes'
               Font.Color = 13066075
               Layout = tlCenter
@@ -862,7 +935,7 @@ object cfgOptions: TcfgOptions
         Height = 422
         Top = 0
         Width = 657
-        HorzScrollBar.Page = 272
+        HorzScrollBar.Page = 265
         VertScrollBar.Page = 209
         Align = alClient
         BorderStyle = bsNone
@@ -945,32 +1018,42 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
             object icoVernacularNames: TImage
+              AnchorSideLeft.Control = pVernacularNames
+              AnchorSideTop.Control = pVernacularNames
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 13
               Images = iIcons
               Proportional = True
             end
             object lblVernacularNames: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoVernacularNames
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pVernacularNames
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 162
-              Align = alLeft
               Caption = 'Language of vernacular names'
               Layout = tlCenter
               ParentColor = False
             end
             object cbVernacularNames: TComboBox
+              AnchorSideTop.Control = pVernacularNames
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pVernacularNames
+              AnchorSideRight.Side = asrBottom
               Left = 436
               Height = 23
               Top = 12
               Width = 173
-              Align = alRight
+              Anchors = [akTop, akRight]
               Color = clWhite
               ItemHeight = 15
               Items.Strings = (
@@ -1029,32 +1112,42 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 1
             object icoMainTaxonomy: TImage
+              AnchorSideLeft.Control = pMainTaxonomy
+              AnchorSideTop.Control = pMainTaxonomy
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 14
               Images = iIcons
               Proportional = True
             end
             object lblMainTaxonomy: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoMainTaxonomy
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pMainTaxonomy
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 100
-              Align = alLeft
               Caption = 'Prefered taxonomy'
               Layout = tlCenter
               ParentColor = False
             end
             object cbMainTaxonomy: TComboBox
+              AnchorSideTop.Control = pMainTaxonomy
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pMainTaxonomy
+              AnchorSideRight.Side = asrBottom
               Left = 436
               Height = 23
               Top = 12
               Width = 173
-              Align = alRight
+              Anchors = [akTop, akRight]
               Color = clWhite
               ItemHeight = 15
               Items.Strings = (
@@ -1113,22 +1206,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 2
             object icoShowSynonyms: TImage
+              AnchorSideLeft.Control = pShowSynonyms
+              AnchorSideTop.Control = pShowSynonyms
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 15
               Images = iIcons
               Proportional = True
             end
             object lblShowSynonyms: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoShowSynonyms
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pShowSynonyms
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 173
-              Align = alLeft
               Caption = 'Show synonyms in search results'
               Layout = tlCenter
               ParentColor = False
@@ -1160,7 +1259,7 @@ object cfgOptions: TcfgOptions
         Height = 422
         Top = 0
         Width = 657
-        HorzScrollBar.Page = 481
+        HorzScrollBar.Page = 318
         VertScrollBar.Page = 272
         Align = alClient
         BorderStyle = bsNone
@@ -1243,37 +1342,50 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
             object icoImagesPath: TImage
+              AnchorSideLeft.Control = pImagesPath
+              AnchorSideTop.Control = pImagesPath
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 2
               Images = iIcons
               Proportional = True
             end
             object lblImagesPath: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoImagesPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pImagesPath
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 84
-              Align = alLeft
               Caption = 'Images location'
               Layout = tlCenter
               ParentColor = False
             end
             object eImagesPath: TDirectoryEdit
-              Left = 192
+              AnchorSideLeft.Control = lblImagesPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pImagesPath
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pImagesPath
+              AnchorSideRight.Side = asrBottom
+              Left = 144
               Height = 23
               Top = 12
-              Width = 417
+              Width = 465
               ShowHidden = False
               ButtonWidth = 24
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6
-              Align = alRight
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Left = 16
               Color = clDefault
               MaxLength = 0
               TabOrder = 0
@@ -1327,37 +1439,50 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 1
             object icoAudiosPath: TImage
+              AnchorSideLeft.Control = pAudiosPath
+              AnchorSideTop.Control = pAudiosPath
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 11
               Images = iIcons
               Proportional = True
             end
             object lblAudiosPath: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoAudiosPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pAudiosPath
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 102
-              Align = alLeft
               Caption = 'Audio files location'
               Layout = tlCenter
               ParentColor = False
             end
             object eAudiosPath: TDirectoryEdit
-              Left = 192
+              AnchorSideLeft.Control = lblAudiosPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pAudiosPath
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pAudiosPath
+              AnchorSideRight.Side = asrBottom
+              Left = 162
               Height = 23
               Top = 12
-              Width = 417
+              Width = 447
               ShowHidden = False
               ButtonWidth = 24
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6
-              Align = alRight
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Left = 16
               Color = clDefault
               MaxLength = 0
               TabOrder = 0
@@ -1412,37 +1537,50 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 2
             object icoDocumentsPath: TImage
+              AnchorSideLeft.Control = pAttachmentsPath
+              AnchorSideTop.Control = pAttachmentsPath
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 12
               Images = iIcons
               Proportional = True
             end
             object lblAttachmentsPath: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoDocumentsPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pAttachmentsPath
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 107
-              Align = alLeft
               Caption = 'Documents location'
               Layout = tlCenter
               ParentColor = False
             end
             object eAttachmentsPath: TDirectoryEdit
-              Left = 192
+              AnchorSideLeft.Control = lblAttachmentsPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pAttachmentsPath
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pAttachmentsPath
+              AnchorSideRight.Side = asrBottom
+              Left = 167
               Height = 23
               Top = 12
-              Width = 417
+              Width = 442
               ShowHidden = False
               ButtonWidth = 24
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6
-              Align = alRight
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Left = 16
               Color = clDefault
               MaxLength = 0
               TabOrder = 0
@@ -1495,22 +1633,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundY = 8
             TabOrder = 3
             object icoOpenAfterExport: TImage
+              AnchorSideLeft.Control = pOpenAfterExport
+              AnchorSideTop.Control = pOpenAfterExport
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 24
               Images = iIcons
               Proportional = True
             end
             object lblOpenAfterExport: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoOpenAfterExport
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pOpenAfterExport
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 116
-              Align = alLeft
               Caption = 'Open files after export'
               Layout = tlCenter
               ParentColor = False
@@ -1542,7 +1686,7 @@ object cfgOptions: TcfgOptions
         Height = 422
         Top = 0
         Width = 657
-        HorzScrollBar.Page = 352
+        HorzScrollBar.Page = 345
         VertScrollBar.Page = 308
         Align = alClient
         BorderStyle = bsNone
@@ -1624,22 +1768,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
             object icoRememberConnection: TImage
+              AnchorSideLeft.Control = pRememberConnection
+              AnchorSideTop.Control = pRememberConnection
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 6
               Images = iIcons
               Proportional = True
             end
             object lblRememberConnection: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoRememberConnection
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pRememberConnection
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 212
-              Align = alLeft
               Caption = 'Remember connection from last session'
               Layout = tlCenter
               ParentColor = False
@@ -1708,22 +1858,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 1
             object icoRememberUser: TImage
+              AnchorSideLeft.Control = pRememberUser
+              AnchorSideTop.Control = pRememberUser
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 7
               Images = iIcons
               Proportional = True
             end
             object lblRememberUser: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoRememberUser
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pRememberUser
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 174
-              Align = alLeft
               Caption = 'Remember user from last session'
               Layout = tlCenter
               ParentColor = False
@@ -1791,22 +1947,28 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 2
             object icoAllowWriteLog: TImage
+              AnchorSideLeft.Control = pAllowWriteLog
+              AnchorSideTop.Control = pAllowWriteLog
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 8
               Images = iIcons
               Proportional = True
             end
             object lblAllowWriteLog: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoAllowWriteLog
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pAllowWriteLog
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 253
-              Align = alLeft
               Caption = 'Allow Xolmis to log events for technical support'
               Layout = tlCenter
               ParentColor = False
@@ -1889,22 +2051,28 @@ object cfgOptions: TcfgOptions
             TabOrder = 3
             Visible = False
             object icoAllowUsageData: TImage
+              AnchorSideLeft.Control = pAllowUsageData
+              AnchorSideTop.Control = pAllowUsageData
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 9
               Images = iIcons
               Proportional = True
             end
             object lblAllowUsageData: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoAllowUsageData
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pAllowUsageData
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 247
-              Align = alLeft
               Caption = 'Allow Xolmis to collect anonymous usage data'
               Layout = tlCenter
               ParentColor = False
@@ -1987,11 +2155,13 @@ object cfgOptions: TcfgOptions
             TabOrder = 4
             OnClick = lblPrivacyTermsClick
             object lblPrivacyTerms: TLabel
+              AnchorSideLeft.Control = pPrivacyTerms
+              AnchorSideTop.Control = pPrivacyTerms
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 20
-              Top = 12
+              Height = 15
+              Top = 15
               Width = 71
-              Align = alLeft
               Caption = 'Privacy terms'
               Font.Color = 13066075
               Layout = tlCenter
@@ -2000,11 +2170,16 @@ object cfgOptions: TcfgOptions
               OnClick = lblPrivacyTermsClick
             end
             object imgPrivacyTerms: TImage
-              Left = 582
+              AnchorSideTop.Control = pPrivacyTerms
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pPrivacyTerms
+              AnchorSideRight.Side = asrBottom
+              Left = 589
               Height = 20
               Top = 12
-              Width = 27
-              Align = alRight
+              Width = 20
+              Anchors = [akTop, akRight]
+              AutoSize = True
               Center = True
               ImageIndex = 10
               Images = iIcons
@@ -2021,7 +2196,7 @@ object cfgOptions: TcfgOptions
         Height = 422
         Top = 0
         Width = 657
-        HorzScrollBar.Page = 481
+        HorzScrollBar.Page = 308
         VertScrollBar.Page = 211
         Align = alClient
         BorderStyle = bsNone
@@ -2104,37 +2279,50 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 0
             object icoBackupPath: TImage
+              AnchorSideLeft.Control = pBackupPath
+              AnchorSideTop.Control = pBackupPath
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 4
               Images = iIcons
               Proportional = True
             end
             object lblBackupPath: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoBackupPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pBackupPath
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 97
-              Align = alLeft
               Caption = 'Backup files folder'
               Layout = tlCenter
               ParentColor = False
             end
             object eBackupPath: TDirectoryEdit
-              Left = 192
+              AnchorSideLeft.Control = lblBackupPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pBackupPath
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pBackupPath
+              AnchorSideRight.Side = asrBottom
+              Left = 157
               Height = 23
               Top = 12
-              Width = 417
+              Width = 452
               ShowHidden = False
               ButtonWidth = 24
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6
-              Align = alRight
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Left = 16
               MaxLength = 0
               TabOrder = 0
               Spacing = 0
@@ -2187,32 +2375,43 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
             TabOrder = 1
             object icoStartupBackup: TImage
+              AnchorSideLeft.Control = pStartupBackup
+              AnchorSideTop.Control = pStartupBackup
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 23
-              Top = 12
-              Width = 27
-              Align = alLeft
+              Height = 20
+              Top = 13
+              Width = 20
+              AutoSize = True
               Center = True
               ImageIndex = 5
               Images = iIcons
               Proportional = True
             end
             object lblStartupBackup: TLabel
-              Left = 51
-              Height = 23
-              Top = 12
+              AnchorSideLeft.Control = icoStartupBackup
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pStartupBackup
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
               Width = 182
-              Align = alLeft
               Caption = 'Create backup when Xolmis closes'
               Layout = tlCenter
               ParentColor = False
             end
             object cbStartupBackup: TComboBox
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pStartupBackup
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pStartupBackup
+              AnchorSideRight.Side = asrBottom
               Left = 434
               Height = 23
               Top = 12
               Width = 175
-              Align = alRight
+              Anchors = [akTop, akRight]
               ItemHeight = 15
               Items.Strings = (
                 'Never'
@@ -2272,32 +2471,41 @@ object cfgOptions: TcfgOptions
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
             TabOrder = 2
             object lblManageBackups: TLabel
+              AnchorSideLeft.Control = pManageBackups
+              AnchorSideTop.Control = pManageBackups
+              AnchorSideTop.Side = asrCenter
               Left = 16
-              Height = 25
-              Top = 12
+              Height = 15
+              Top = 17
               Width = 90
-              Align = alLeft
               Caption = 'Manage backups'
               Layout = tlCenter
               ParentColor = False
             end
             object sbNewBackup: TBitBtn
+              AnchorSideTop.Control = pManageBackups
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = sbRestoreBackup
               Left = 434
               Height = 25
               Top = 12
               Width = 102
-              Align = alRight
+              Anchors = [akTop, akRight]
               AutoSize = True
               Caption = 'Create backup'
               TabOrder = 0
               OnClick = sbNewBackupClick
             end
             object sbRestoreBackup: TBitBtn
+              AnchorSideTop.Control = pManageBackups
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pManageBackups
+              AnchorSideRight.Side = asrBottom
               Left = 544
               Height = 25
               Top = 12
               Width = 65
-              Align = alRight
+              Anchors = [akTop, akRight]
               AutoSize = True
               Caption = 'Restore'
               TabOrder = 1

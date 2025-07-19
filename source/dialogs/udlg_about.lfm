@@ -15,7 +15,7 @@ object dlgAbout: TdlgAbout
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 437
+    Top = 361
     Width = 307
     Align = alTop
     LineColor = 9276813
@@ -25,7 +25,7 @@ object dlgAbout: TdlgAbout
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 439
+    Top = 363
     Width = 307
     Align = alTop
     AutoSize = True
@@ -65,7 +65,7 @@ object dlgAbout: TdlgAbout
   end
   object pContent: TPanel
     Left = 0
-    Height = 336
+    Height = 260
     Top = 101
     Width = 307
     Align = alTop
@@ -73,7 +73,7 @@ object dlgAbout: TdlgAbout
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 336
+    ClientHeight = 260
     ClientWidth = 307
     Color = 16444392
     ParentBackground = False
@@ -83,7 +83,7 @@ object dlgAbout: TdlgAbout
       Cursor = crHandPoint
       Left = 32
       Height = 15
-      Top = 282
+      Top = 206
       Width = 243
       Align = alTop
       BorderSpacing.Left = 32
@@ -104,7 +104,7 @@ object dlgAbout: TdlgAbout
       Cursor = crHandPoint
       Left = 32
       Height = 15
-      Top = 305
+      Top = 229
       Width = 243
       Align = alTop
       BorderSpacing.Left = 32
@@ -125,7 +125,7 @@ object dlgAbout: TdlgAbout
       Cursor = crHandPoint
       Left = 32
       Height = 15
-      Top = 259
+      Top = 183
       Width = 243
       Align = alTop
       BorderSpacing.Left = 32
@@ -157,7 +157,7 @@ object dlgAbout: TdlgAbout
       Left = 32
       Height = 15
       Hint = 'http://xolmis.github.io'
-      Top = 228
+      Top = 152
       Width = 243
       Align = alTop
       BorderSpacing.Left = 32
@@ -251,146 +251,6 @@ object dlgAbout: TdlgAbout
       Width = 275
       Align = alTop
       AutoSize = True
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 8
-      ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = False
-      Rounding.RoundX = 8
-      Rounding.RoundY = 8
-      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
-      TabOrder = 1
-      object lblClementsVersion: TLabel
-        Left = 17
-        Height = 20
-        Top = 9
-        Width = 82
-        Align = alLeft
-        Caption = 'Clements/eBird'
-        Layout = tlCenter
-        ParentColor = False
-      end
-      object pClementsVersion: TLabel
-        Left = 222
-        Height = 20
-        Top = 9
-        Width = 36
-        Align = alRight
-        Caption = '2021'
-        Font.Color = 13066075
-        Font.Height = -15
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        ParentColor = False
-        ParentFont = False
-      end
-    end
-    object pIOC: TBCPanel
-      Left = 16
-      Height = 38
-      Top = 136
-      Width = 275
-      Align = alTop
-      AutoSize = True
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 8
-      ChildSizing.HorizontalSpacing = 8
-      Background.Color = 16448250
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = False
-      Rounding.RoundX = 8
-      Rounding.RoundY = 8
-      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-      TabOrder = 2
-      object lblIocVersion: TLabel
-        Left = 17
-        Height = 20
-        Top = 9
-        Width = 20
-        Align = alLeft
-        Caption = 'IOC'
-        Layout = tlCenter
-        ParentColor = False
-      end
-      object pIocVersion: TLabel
-        Left = 227
-        Height = 20
-        Top = 9
-        Width = 31
-        Align = alRight
-        Caption = '11.2'
-        Font.Color = 13066075
-        Font.Height = -15
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        ParentColor = False
-        ParentFont = False
-      end
-    end
-    object pCBRO: TBCPanel
-      Left = 16
-      Height = 38
-      Top = 174
-      Width = 275
-      Align = alTop
-      AutoSize = True
       BorderSpacing.Bottom = 16
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
@@ -428,19 +288,18 @@ object dlgAbout: TdlgAbout
       ParentBackground = False
       Rounding.RoundX = 8
       Rounding.RoundY = 8
-      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-      TabOrder = 3
-      object lblCbroVersion: TLabel
+      TabOrder = 1
+      object lblClementsVersion: TLabel
         Left = 17
         Height = 20
         Top = 9
-        Width = 31
+        Width = 82
         Align = alLeft
-        Caption = 'CBRO'
+        Caption = 'Clements/eBird'
         Layout = tlCenter
         ParentColor = False
       end
-      object pCbroVersion: TLabel
+      object pClementsVersion: TLabel
         Left = 222
         Height = 20
         Top = 9

@@ -12,10 +12,6 @@
 {"hash":51647264,"name":"tdlgabout.pappversion.caption","sourcebytes":[48,46,49,46,48,46,48],"value":"0.1.0.0"},
 {"hash":144331156,"name":"tdlgabout.lblclementsversion.caption","sourcebytes":[67,108,101,109,101,110,116,115,47,101,66,105,114,100],"value":"Clements/eBird"},
 {"hash":217937,"name":"tdlgabout.pclementsversion.caption","sourcebytes":[50,48,50,49],"value":"2021"},
-{"hash":20019,"name":"tdlgabout.lbliocversion.caption","sourcebytes":[73,79,67],"value":"IOC"},
-{"hash":214034,"name":"tdlgabout.piocversion.caption","sourcebytes":[49,49,46,50],"value":"11.2"},
-{"hash":292719,"name":"tdlgabout.lblcbroversion.caption","sourcebytes":[67,66,82,79],"value":"CBRO"},
-{"hash":217937,"name":"tdlgabout.pcbroversion.caption","sourcebytes":[50,48,50,49],"value":"2021"},
 {"hash":100021251,"name":"tdlgabout.lblappname.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"},
 {"hash":246920946,"name":"tdlgabout.lblappdescription.caption","sourcebytes":[65,32,102,114,101,101,44,32,111,112,101,110,32,115,111,117,114,99,101,32,111,114,110,105,116,104,111,108,111,103,105,99,97,108,32,100,97,116,97,32,109,97,110,97,103,101,114],"value":"A free, open source ornithological data manager"}
 ]}

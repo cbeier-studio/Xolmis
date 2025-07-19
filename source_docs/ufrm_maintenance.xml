@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="ufrm_maintenance"><element name="TfrmMaintenance.ApplyDarkMode"><short>Apply dark them to the UI</short>
+      </element><element name="TfrmMaintenance.CheckDatabaseBackup"><short>Check if the automatic database backup is enabled</short>
+      </element><element name="TfrmMaintenance.CheckSystemLogs"><short>Check if the system logs are enabled</short>
+      </element><element name="TfrmMaintenance.CheckTemporaryFiles"><short>Get the temporary files size</short>
+      </element><element name="TfrmMaintenance.CheckThumbnails"><short>Get the count of images in the database</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

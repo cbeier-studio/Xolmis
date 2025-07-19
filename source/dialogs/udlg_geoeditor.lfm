@@ -2,13 +2,13 @@ object dlgGeoEditor: TdlgGeoEditor
   Left = 352
   Height = 333
   Top = 33
-  Width = 722
+  Width = 751
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Coordinates editor'
   ClientHeight = 333
-  ClientWidth = 722
+  ClientWidth = 751
   Constraints.MinHeight = 205
   Constraints.MinWidth = 349
   PopupMode = pmAuto
@@ -19,7 +19,7 @@ object dlgGeoEditor: TdlgGeoEditor
     Left = 0
     Height = 41
     Top = 292
-    Width = 722
+    Width = 751
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
@@ -30,12 +30,12 @@ object dlgGeoEditor: TdlgGeoEditor
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
-    ClientWidth = 722
+    ClientWidth = 751
     Constraints.MinWidth = 722
     ParentBackground = False
     TabOrder = 0
     object sbOK: TButton
-      Left = 458
+      Left = 487
       Height = 25
       Top = 8
       Width = 120
@@ -49,7 +49,7 @@ object dlgGeoEditor: TdlgGeoEditor
       OnClick = sbOKClick
     end
     object sbCancel: TButton
-      Left = 586
+      Left = 615
       Height = 25
       Top = 8
       Width = 120
@@ -65,17 +65,17 @@ object dlgGeoEditor: TdlgGeoEditor
     Left = 0
     Height = 2
     Top = 290
-    Width = 722
+    Width = 751
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
   end
   object mapGeo: TMapView
-    Left = 377
+    Left = 376
     Height = 290
     Top = 0
-    Width = 345
+    Width = 375
     Align = alClient
     CachePath = 'map-cache'
     DownloadEngine = mapGeo.BuiltInDLE
@@ -94,7 +94,7 @@ object dlgGeoEditor: TdlgGeoEditor
     Left = 0
     Height = 290
     Top = 0
-    Width = 377
+    Width = 376
     ActivePage = tabConvert
     Align = alLeft
     AutoSize = True
@@ -104,12 +104,12 @@ object dlgGeoEditor: TdlgGeoEditor
     object tabConvert: TTabSheet
       Caption = 'Convert'
       ClientHeight = 262
-      ClientWidth = 369
+      ClientWidth = 368
       object pContent: TBCPanel
         Left = 0
         Height = 262
         Top = 0
-        Width = 369
+        Width = 368
         Align = alLeft
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -151,7 +151,7 @@ object dlgGeoEditor: TdlgGeoEditor
           Left = 17
           Height = 49
           Top = 17
-          Width = 335
+          Width = 334
           Align = alTop
           AutoSize = True
           ChildSizing.LeftRightSpacing = 16
@@ -193,41 +193,59 @@ object dlgGeoEditor: TdlgGeoEditor
           Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 0
           object eLongDeg: TSpinEdit
+            AnchorSideLeft.Control = lblLongitude
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLong
+            AnchorSideTop.Side = asrCenter
             Left = 82
             Height = 23
             Top = 13
             Width = 50
-            Align = alLeft
             MaxValue = 180
             TabOrder = 0
             OnEditingDone = eLongDegEditingDone
           end
           object eLongMin: TSpinEdit
+            AnchorSideLeft.Control = eLongDeg
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLong
+            AnchorSideTop.Side = asrCenter
             Left = 140
             Height = 23
             Top = 13
             Width = 50
-            Align = alLeft
             MaxValue = 60
             TabOrder = 1
             OnEditingDone = eLongDegEditingDone
           end
           object eLongSec: TFloatSpinEdit
+            AnchorSideLeft.Control = eLongMin
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLong
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = cbLongHem
             Left = 198
             Height = 23
             Top = 13
-            Width = 61
-            Align = alLeft
+            Width = 60
+            Anchors = [akTop, akLeft, akRight]
+            Constraints.MinWidth = 60
             MaxValue = 60
             TabOrder = 2
             OnEditingDone = eLongDegEditingDone
           end
           object cbLongHem: TComboBox
-            Left = 267
+            AnchorSideLeft.Control = eLongSec
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLong
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pLong
+            AnchorSideRight.Side = asrBottom
+            Left = 266
             Height = 23
             Top = 13
             Width = 51
-            Align = alLeft
+            Anchors = [akTop, akRight]
             ItemHeight = 15
             Items.Strings = (
               'E'
@@ -238,11 +256,13 @@ object dlgGeoEditor: TdlgGeoEditor
             OnSelect = eLongDegEditingDone
           end
           object lblLongitude: TLabel
+            AnchorSideLeft.Control = pLong
+            AnchorSideTop.Control = pLong
+            AnchorSideTop.Side = asrCenter
             Left = 17
-            Height = 23
-            Top = 13
+            Height = 15
+            Top = 17
             Width = 57
-            Align = alLeft
             Alignment = taRightJustify
             Caption = 'Longitude:'
             Layout = tlCenter
@@ -252,7 +272,7 @@ object dlgGeoEditor: TdlgGeoEditor
           Left = 17
           Height = 49
           Top = 66
-          Width = 335
+          Width = 334
           Align = alTop
           AutoSize = True
           BorderSpacing.Bottom = 12
@@ -295,41 +315,59 @@ object dlgGeoEditor: TdlgGeoEditor
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
           TabOrder = 1
           object eLatDeg: TSpinEdit
-            Left = 81
+            AnchorSideLeft.Control = lblLatitude
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLat
+            AnchorSideTop.Side = asrCenter
+            Left = 82
             Height = 23
             Top = 13
             Width = 50
-            Align = alLeft
             MaxValue = 90
             TabOrder = 0
             OnEditingDone = eLongDegEditingDone
           end
           object eLatMin: TSpinEdit
-            Left = 139
+            AnchorSideLeft.Control = eLatDeg
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLat
+            AnchorSideTop.Side = asrCenter
+            Left = 140
             Height = 23
             Top = 13
             Width = 50
-            Align = alLeft
             MaxValue = 60
             TabOrder = 1
             OnEditingDone = eLongDegEditingDone
           end
           object eLatSec: TFloatSpinEdit
-            Left = 197
+            AnchorSideLeft.Control = eLatMin
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLat
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = cbLatHem
+            Left = 198
             Height = 23
             Top = 13
-            Width = 61
-            Align = alLeft
+            Width = 60
+            Anchors = [akTop, akLeft, akRight]
+            Constraints.MinWidth = 60
             MaxValue = 60
             TabOrder = 2
             OnEditingDone = eLongDegEditingDone
           end
           object cbLatHem: TComboBox
+            AnchorSideLeft.Control = eLatSec
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pLat
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pLat
+            AnchorSideRight.Side = asrBottom
             Left = 266
             Height = 23
             Top = 13
             Width = 51
-            Align = alLeft
+            Anchors = [akTop, akRight]
             ItemHeight = 15
             Items.Strings = (
               'N'
@@ -340,11 +378,13 @@ object dlgGeoEditor: TdlgGeoEditor
             OnSelect = eLongDegEditingDone
           end
           object lblLatitude: TLabel
+            AnchorSideLeft.Control = pLat
+            AnchorSideTop.Control = pLat
+            AnchorSideTop.Side = asrCenter
             Left = 17
-            Height = 23
-            Top = 13
-            Width = 56
-            Align = alLeft
+            Height = 15
+            Top = 17
+            Width = 57
             Alignment = taRightJustify
             AutoSize = False
             Caption = 'Latitude:'
@@ -355,7 +395,7 @@ object dlgGeoEditor: TdlgGeoEditor
           Left = 17
           Height = 42
           Top = 127
-          Width = 335
+          Width = 334
           Align = alTop
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 12
@@ -404,12 +444,12 @@ object dlgGeoEditor: TdlgGeoEditor
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.VerticalSpacing = 12
       ClientHeight = 262
-      ClientWidth = 369
+      ClientWidth = 368
       object gridBank: TDBGrid
         Left = 16
         Height = 230
         Top = 16
-        Width = 337
+        Width = 336
         Align = alClient
         AutoEdit = False
         AutoFillColumns = True
@@ -417,7 +457,7 @@ object dlgGeoEditor: TdlgGeoEditor
         Columns = <        
           item
             Title.Caption = 'Name'
-            Width = 106
+            Width = 105
             FieldName = 'coordinate_name'
           end        
           item

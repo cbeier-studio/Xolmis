@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, ExtCtrls, SysUtils, Forms, Controls, Graphics, StdCtrls, Buttons, Clipbrd,
-  {$IFDEF WINDOWS} Windows, Win32Proc,{$ENDIF}
-  Dialogs, ValEdit;
+  {$IFDEF WINDOWS} Windows, Win32Proc,{$ENDIF}{$IFDEF DARWIN} CocoaAll,{$ENDIF}
+  Dialogs, ValEdit, Grids;
 
 type
 
@@ -24,6 +24,7 @@ type
     vlResult: TValueListEditor;
     procedure FormShow(Sender: TObject);
     procedure sbCopyClick(Sender: TObject);
+    procedure vlResultPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
   private
     procedure ApplyDarkMode;
     procedure RunDiagnostic;
@@ -86,14 +87,17 @@ begin
   vlResult.Values['OS'] := 'Linux';
   {$ENDIF}
   {$IFDEF DARWIN}
-  vlResult.Values['OS'] := 'MacOS';
+  with NSProcessInfo, ProcessInfo do
+  begin
+    vlResult.Values['OS'] := 'MacOS ' + operatingSystemVersionString.UTF8String;
+  end;
   {$ENDIF}
   vlResult.Values['Instalation path'] := InstallDir;
   vlResult.Values['App data path'] := AppDataDir;
   vlResult.Values['App version'] := GetBuildInfoAsString;
   vlResult.Values['System logs'] := BoolToStr(XSettings.AllowWriteLogs, 'Enabled', 'Disabled');
-  vlResult.Values['Log file'] := XSettings.SettingsFile;
-  vlResult.Values['Log size'] := GetFileSizeReadable(XSettings.SettingsFile);
+  vlResult.Values['Settings file'] := XSettings.SettingsFile;
+  vlResult.Values['Settings size'] := GetFileSizeReadable(XSettings.SettingsFile);
   if FileExists(ConcatPaths([InstallDir, 'sqlite3.dll'])) then
     vlResult.Values['sqlite3.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'sqlite3.dll']))
   else
@@ -160,6 +164,12 @@ begin
   end;
   Clipboard.AsText := sDiag.Text;
   //ModalResult := mrClose;
+end;
+
+procedure TdlgDiagnostic.vlResultPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
+begin
+  if (vlResult.Cells[aCol, aRow] = 'APPLICATION') or (vlResult.Cells[aCol, aRow] = 'DATABASE') then
+    vlResult.Canvas.Font.Style := [fsBold];
 end;
 
 end.

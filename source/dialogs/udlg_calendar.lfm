@@ -68,7 +68,7 @@ object dlgCalendar: TdlgCalendar
     Left = 235
     Height = 195
     Top = 0
-    Width = 157
+    Width = 150
     Align = alLeft
     AutoSize = True
     ChildSizing.LeftRightSpacing = 8
@@ -110,7 +110,7 @@ object dlgCalendar: TdlgCalendar
       Left = 9
       Height = 46
       Top = 9
-      Width = 139
+      Width = 132
       Align = alTop
       BorderSpacing.Bottom = 8
       ChildSizing.LeftRightSpacing = 8
@@ -161,7 +161,7 @@ object dlgCalendar: TdlgCalendar
         Height = 28
         Hint = 'Add to date'
         Top = 9
-        Width = 58
+        Width = 55
         Down = True
         GroupIndex = 1
         Images = iCalendar
@@ -170,11 +170,11 @@ object dlgCalendar: TdlgCalendar
         ParentShowHint = False
       end
       object rbSubtract: TSpeedButton
-        Left = 71
+        Left = 68
         Height = 28
         Hint = 'Subtract from date'
         Top = 9
-        Width = 59
+        Width = 55
         GroupIndex = 1
         Images = iCalendar
         ImageIndex = 1
@@ -186,7 +186,7 @@ object dlgCalendar: TdlgCalendar
       Left = 9
       Height = 41
       Top = 63
-      Width = 139
+      Width = 132
       Align = alTop
       AutoSize = True
       ChildSizing.LeftRightSpacing = 8
@@ -228,11 +228,13 @@ object dlgCalendar: TdlgCalendar
       Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 1
       object lblYears: TLabel
+        AnchorSideLeft.Control = pYears
+        AnchorSideTop.Control = pYears
+        AnchorSideTop.Side = asrCenter
         Left = 9
-        Height = 23
-        Top = 9
-        Width = 63
-        Align = alLeft
+        Height = 15
+        Top = 13
+        Width = 56
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'Years:'
@@ -240,11 +242,17 @@ object dlgCalendar: TdlgCalendar
         ParentColor = False
       end
       object eYears: TSpinEdit
-        Left = 80
+        AnchorSideLeft.Control = lblYears
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = pYears
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pYears
+        AnchorSideRight.Side = asrBottom
+        Left = 73
         Height = 23
         Top = 9
         Width = 50
-        Align = alClient
+        Anchors = [akTop, akLeft, akRight]
         MaxValue = 99999
         TabOrder = 0
         OnChange = eYearsChange
@@ -254,7 +262,7 @@ object dlgCalendar: TdlgCalendar
       Left = 9
       Height = 41
       Top = 104
-      Width = 139
+      Width = 132
       Align = alTop
       AutoSize = True
       ChildSizing.LeftRightSpacing = 8
@@ -296,11 +304,13 @@ object dlgCalendar: TdlgCalendar
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
       TabOrder = 2
       object lblMonths: TLabel
+        AnchorSideLeft.Control = pMonths
+        AnchorSideTop.Control = pMonths
+        AnchorSideTop.Side = asrCenter
         Left = 9
-        Height = 23
-        Top = 9
-        Width = 63
-        Align = alLeft
+        Height = 15
+        Top = 13
+        Width = 56
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'Months:'
@@ -308,11 +318,17 @@ object dlgCalendar: TdlgCalendar
         ParentColor = False
       end
       object eMonths: TSpinEdit
-        Left = 80
+        AnchorSideLeft.Control = lblMonths
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = pMonths
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pMonths
+        AnchorSideRight.Side = asrBottom
+        Left = 73
         Height = 23
         Top = 9
         Width = 50
-        Align = alClient
+        Anchors = [akTop, akLeft, akRight]
         MaxValue = 999999
         TabOrder = 0
         OnChange = eYearsChange
@@ -322,7 +338,7 @@ object dlgCalendar: TdlgCalendar
       Left = 9
       Height = 41
       Top = 145
-      Width = 139
+      Width = 132
       Align = alTop
       AutoSize = True
       ChildSizing.LeftRightSpacing = 8
@@ -364,11 +380,13 @@ object dlgCalendar: TdlgCalendar
       Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
       TabOrder = 3
       object lblDays: TLabel
+        AnchorSideLeft.Control = pDays
+        AnchorSideTop.Control = pDays
+        AnchorSideTop.Side = asrCenter
         Left = 9
-        Height = 23
-        Top = 9
-        Width = 63
-        Align = alLeft
+        Height = 15
+        Top = 13
+        Width = 56
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'Days:'
@@ -376,11 +394,17 @@ object dlgCalendar: TdlgCalendar
         ParentColor = False
       end
       object eDays: TSpinEdit
-        Left = 80
+        AnchorSideLeft.Control = lblDays
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = pDays
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pDays
+        AnchorSideRight.Side = asrBottom
+        Left = 73
         Height = 23
         Top = 9
         Width = 50
-        Align = alClient
+        Anchors = [akTop, akLeft, akRight]
         MaxValue = 999999999
         TabOrder = 0
         OnChange = eYearsChange

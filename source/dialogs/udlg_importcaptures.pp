@@ -166,6 +166,9 @@ procedure TdlgImportCaptures.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  eEffortFile.Width := eJournalFile.Width;
+  eCaptureFile.Width := eJournalFile.Width;
 end;
 
 procedure TdlgImportCaptures.sbCancelClick(Sender: TObject);

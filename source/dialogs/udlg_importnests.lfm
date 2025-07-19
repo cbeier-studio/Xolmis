@@ -45,11 +45,14 @@ object dlgImportNests: TdlgImportNests
     TabOrder = 0
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbClose
       Left = 475
       Height = 25
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = 'Cancel'
       TabOrder = 0
       Visible = False
@@ -57,11 +60,14 @@ object dlgImportNests: TdlgImportNests
     end
     object sbRun: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
       Left = 337
       Height = 25
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = 'Import'
       Enabled = False
       TabOrder = 1
@@ -69,11 +75,15 @@ object dlgImportNests: TdlgImportNests
     end
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
       Left = 613
       Height = 25
       Top = 8
       Width = 130
-      Align = alRight
+      Anchors = [akTop, akRight]
       Caption = 'Close'
       ModalResult = 11
       TabOrder = 2
@@ -161,31 +171,40 @@ object dlgImportNests: TdlgImportNests
           Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 0
           object icoNestFile: TImage
+            AnchorSideLeft.Control = pNestFile
+            AnchorSideTop.Control = pNestFile
+            AnchorSideTop.Side = asrCenter
             Left = 16
-            Height = 26
-            Top = 12
-            Width = 27
-            Align = alLeft
+            Height = 20
+            Top = 15
+            Width = 20
+            AutoSize = True
             Center = True
             Images = iIcons
             Proportional = True
           end
           object lblNestFile: TLabel
-            Left = 51
-            Height = 26
-            Top = 12
+            AnchorSideLeft.Control = icoNestFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pNestFile
+            AnchorSideTop.Side = asrCenter
+            Left = 44
+            Height = 15
+            Top = 18
             Width = 29
-            Align = alLeft
             Caption = 'Nests'
             Layout = tlCenter
             ParentColor = False
           end
           object eNestFile: TFileNameEdit
-            Left = 160
-            Height = 26
+            AnchorSideTop.Control = pNestFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = sbClearNestFile
+            Left = 140
+            Height = 23
             Hint = 'Select file'
-            Top = 12
-            Width = 519
+            Top = 14
+            Width = 537
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -195,8 +214,7 @@ object dlgImportNests: TdlgImportNests
             NumGlyphs = 1
             Images = iButtons
             ImageIndex = 0
-            Align = alRight
-            Anchors = [akTop, akLeft, akRight, akBottom]
+            Anchors = [akTop, akRight]
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -208,12 +226,17 @@ object dlgImportNests: TdlgImportNests
             OnChange = eNestFileChange
           end
           object sbClearNestFile: TSpeedButton
-            Left = 687
+            AnchorSideTop.Control = pNestFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pNestFile
+            AnchorSideRight.Side = asrBottom
+            Left = 685
             Height = 26
             Hint = 'Clear field'
             Top = 12
-            Width = 24
-            Align = alRight
+            Width = 26
+            Anchors = [akTop, akRight]
+            AutoSize = True
             Images = iButtons
             ImageIndex = 1
             ShowHint = True
@@ -267,32 +290,43 @@ object dlgImportNests: TdlgImportNests
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
           TabOrder = 1
           object icoRevisionFile: TImage
+            AnchorSideLeft.Control = pRevisionFile
+            AnchorSideTop.Control = pRevisionFile
+            AnchorSideTop.Side = asrCenter
             Left = 16
-            Height = 26
-            Top = 12
-            Width = 27
-            Align = alLeft
+            Height = 20
+            Top = 15
+            Width = 20
+            AutoSize = True
             Center = True
             ImageIndex = 1
             Images = iIcons
             Proportional = True
           end
           object lblRevisionFile: TLabel
-            Left = 51
-            Height = 26
-            Top = 12
+            AnchorSideLeft.Control = icoRevisionFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pRevisionFile
+            AnchorSideTop.Side = asrCenter
+            Left = 44
+            Height = 15
+            Top = 18
             Width = 73
-            Align = alLeft
             Caption = 'Nest revisions'
             Layout = tlCenter
             ParentColor = False
           end
           object eRevisionFile: TFileNameEdit
-            Left = 160
-            Height = 26
+            AnchorSideLeft.Control = lblRevisionFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pRevisionFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = sbClearRevisionFile
+            Left = 133
+            Height = 23
             Hint = 'Select file'
-            Top = 12
-            Width = 519
+            Top = 14
+            Width = 544
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -302,8 +336,8 @@ object dlgImportNests: TdlgImportNests
             NumGlyphs = 1
             Images = iButtons
             ImageIndex = 0
-            Align = alRight
-            Anchors = [akTop, akLeft, akRight, akBottom]
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Left = 16
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -316,12 +350,17 @@ object dlgImportNests: TdlgImportNests
           end
           object sbClearRevisionFile: TSpeedButton
             Tag = 1
-            Left = 687
+            AnchorSideTop.Control = pRevisionFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pRevisionFile
+            AnchorSideRight.Side = asrBottom
+            Left = 685
             Height = 26
             Hint = 'Clear field'
             Top = 12
-            Width = 24
-            Align = alRight
+            Width = 26
+            Anchors = [akTop, akRight]
+            AutoSize = True
             Images = iButtons
             ImageIndex = 1
             ShowHint = True
@@ -376,32 +415,41 @@ object dlgImportNests: TdlgImportNests
           Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
           TabOrder = 2
           object icoEggFile: TImage
+            AnchorSideLeft.Control = pEggFile
+            AnchorSideTop.Control = pEggFile
+            AnchorSideTop.Side = asrCenter
             Left = 16
-            Height = 26
-            Top = 12
-            Width = 27
-            Align = alLeft
+            Height = 20
+            Top = 15
+            Width = 20
+            AutoSize = True
             Center = True
             ImageIndex = 2
             Images = iIcons
             Proportional = True
           end
           object lblEggFile: TLabel
-            Left = 51
-            Height = 26
-            Top = 12
+            AnchorSideLeft.Control = icoEggFile
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pEggFile
+            AnchorSideTop.Side = asrCenter
+            Left = 44
+            Height = 15
+            Top = 18
             Width = 25
-            Align = alLeft
             Caption = 'Eggs'
             Layout = tlCenter
             ParentColor = False
           end
           object eEggFile: TFileNameEdit
-            Left = 160
-            Height = 26
+            AnchorSideTop.Control = pEggFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = sbClearEggFile
+            Left = 140
+            Height = 23
             Hint = 'Select file'
-            Top = 12
-            Width = 519
+            Top = 14
+            Width = 537
             DialogTitle = 'Import from file'
             DialogOptions = [ofHideReadOnly, ofFileMustExist, ofEnableSizing, ofViewDetail]
             Filter = 'Comma separated values (CSV)|*.csv;*.txt|All files|*.*'
@@ -411,8 +459,7 @@ object dlgImportNests: TdlgImportNests
             NumGlyphs = 1
             Images = iButtons
             ImageIndex = 0
-            Align = alRight
-            Anchors = [akTop, akLeft, akRight, akBottom]
+            Anchors = [akTop, akRight]
             Color = clDefault
             MaxLength = 0
             ParentShowHint = False
@@ -425,12 +472,17 @@ object dlgImportNests: TdlgImportNests
           end
           object sbClearEggFile: TSpeedButton
             Tag = 2
-            Left = 687
+            AnchorSideTop.Control = pEggFile
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pEggFile
+            AnchorSideRight.Side = asrBottom
+            Left = 685
             Height = 26
             Hint = 'Clear field'
             Top = 12
-            Width = 24
-            Align = alRight
+            Width = 26
+            Anchors = [akTop, akRight]
+            AutoSize = True
             Images = iButtons
             ImageIndex = 1
             ShowHint = True

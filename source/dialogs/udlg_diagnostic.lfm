@@ -92,11 +92,11 @@ object dlgDiagnostic: TdlgDiagnostic
     AutoEdit = False
     Constraints.MinHeight = 388
     Constraints.MinWidth = 592
-    FixedCols = 0
     RowCount = 2
     ScrollBars = ssVertical
     TabOrder = 2
     TitleStyle = tsNative
+    OnPrepareCanvas = vlResultPrepareCanvas
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goAlwaysShowEditor, goThumbTracking]
     TitleCaptions.Strings = (
       'Parameter'

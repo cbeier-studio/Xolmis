@@ -26,12 +26,14 @@ object frmImageViewer: TfrmImageViewer
     ClientWidth = 805
     TabOrder = 0
     object sbOpen: TSpeedButton
+      AnchorSideLeft.Control = pToolbar
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
       Left = 8
       Height = 30
       Hint = 'Open with default editor'
       Top = 4
       Width = 30
-      Align = alLeft
       AutoSize = True
       BorderSpacing.Right = 16
       DisabledImageIndex = 15
@@ -44,12 +46,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbOpenClick
     end
     object sbRotateLeft: TSpeedButton
+      AnchorSideLeft.Control = sbOpen
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
       Left = 54
       Height = 30
       Hint = 'Rotate left'
       Top = 4
       Width = 30
-      Align = alLeft
       AutoSize = True
       DisabledImageIndex = 1
       Flat = True
@@ -61,12 +66,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbRotateLeftClick
     end
     object sbRotateRight: TSpeedButton
+      AnchorSideLeft.Control = sbRotateLeft
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
       Left = 84
       Height = 30
       Hint = 'Rotate right'
       Top = 4
       Width = 30
-      Align = alLeft
       AutoSize = True
       BorderSpacing.Right = 8
       DisabledImageIndex = 3
@@ -79,12 +87,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbRotateRightClick
     end
     object sbFlipHorizontal: TSpeedButton
+      AnchorSideLeft.Control = sbRotateRight
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
       Left = 122
       Height = 30
       Hint = 'Flip horizontally'
       Top = 4
       Width = 30
-      Align = alLeft
       AutoSize = True
       DisabledImageIndex = 5
       Flat = True
@@ -96,12 +107,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbFlipHorizontalClick
     end
     object sbFlipVertical: TSpeedButton
+      AnchorSideLeft.Control = sbFlipHorizontal
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
       Left = 152
       Height = 30
       Hint = 'Flip vertically'
       Top = 4
       Width = 30
-      Align = alLeft
       AutoSize = True
       DisabledImageIndex = 7
       Flat = True
@@ -113,12 +127,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbFlipVerticalClick
     end
     object sbSaveAs: TSpeedButton
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbClose
       Left = 637
       Height = 30
       Hint = 'Save an image copy'
       Top = 4
       Width = 81
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       Caption = 'Save as...'
       DisabledImageIndex = 19
@@ -129,12 +146,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbSaveAsClick
     end
     object sbCopyImage: TSpeedButton
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbSaveAs
       Left = 567
       Height = 30
       Hint = 'Copy image to clipboard'
       Top = 4
       Width = 62
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       BorderSpacing.Right = 8
       Caption = 'Copy'
@@ -146,11 +166,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbCopyImageClick
     end
     object sbClose: TSpeedButton
+      AnchorSideTop.Control = pToolbar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pToolbar
+      AnchorSideRight.Side = asrBottom
       Left = 734
       Height = 30
       Top = 4
       Width = 63
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       BorderSpacing.Left = 16
       Caption = 'Close'
@@ -176,12 +200,14 @@ object frmImageViewer: TfrmImageViewer
     ClientWidth = 805
     TabOrder = 1
     object sbImageInfo: TSpeedButton
+      AnchorSideLeft.Control = pStatusBar
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
       Left = 8
       Height = 30
       Hint = 'Image info'
       Top = 4
       Width = 30
-      Align = alLeft
       AutoSize = True
       DisabledImageIndex = 17
       Flat = True
@@ -193,10 +219,13 @@ object frmImageViewer: TfrmImageViewer
       ParentShowHint = False
     end
     object tbZoom: TTrackBar
-      Left = 601
-      Height = 30
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoomIn
+      Left = 605
+      Height = 27
       Hint = 'Zoom'
-      Top = 4
+      Top = 6
       Width = 126
       Max = 400
       Min = 10
@@ -205,16 +234,20 @@ object frmImageViewer: TfrmImageViewer
       TickMarks = tmBoth
       TickStyle = tsNone
       OnChange = tbZoomChange
-      Align = alRight
+      Anchors = [akTop, akRight]
+      Constraints.MinWidth = 126
       TabOrder = 0
     end
     object sbZoomIn: TSpeedButton
-      Left = 727
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = lblZoom
+      Left = 731
       Height = 30
       Hint = 'Zoom in'
       Top = 4
       Width = 30
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       DisabledImageIndex = 13
       Flat = True
@@ -226,12 +259,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbZoomInClick
     end
     object sbZoomOut: TSpeedButton
-      Left = 571
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = tbZoom
+      Left = 575
       Height = 30
       Hint = 'Zoom out'
       Top = 4
       Width = 30
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       DisabledImageIndex = 11
       Flat = True
@@ -243,12 +279,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbZoomOutClick
     end
     object sbZoomAdjust: TSpeedButton
-      Left = 495
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoom100
+      Left = 499
       Height = 30
       Hint = 'Zoom image to fit'
       Top = 4
       Width = 30
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       BorderSpacing.Right = 8
       DisabledImageIndex = 9
@@ -261,12 +300,15 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbZoomAdjustClick
     end
     object sbZoom100: TSpeedButton
-      Left = 533
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoomOut
+      Left = 537
       Height = 30
       Hint = 'Zoom to actual size'
       Top = 4
       Width = 30
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       BorderSpacing.Right = 8
       DisabledImageIndex = 27
@@ -279,23 +321,29 @@ object frmImageViewer: TfrmImageViewer
       OnClick = sbZoom100Click
     end
     object lblZoom: TLabel
-      Left = 765
-      Height = 30
-      Top = 4
-      Width = 32
-      Align = alRight
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pStatusBar
+      AnchorSideRight.Side = asrBottom
+      Left = 769
+      Height = 15
+      Top = 12
+      Width = 28
       Alignment = taRightJustify
-      AutoSize = False
+      Anchors = [akTop, akRight]
       BorderSpacing.Left = 8
       Caption = '100%'
       Layout = tlCenter
     end
     object lblSize: TLabel
+      AnchorSideLeft.Control = sbImageInfo
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
       Left = 46
-      Height = 30
-      Top = 4
+      Height = 15
+      Top = 12
       Width = 41
-      Align = alLeft
       BorderSpacing.Left = 8
       Caption = '0 × 0 px'
       Layout = tlCenter

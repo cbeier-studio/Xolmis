@@ -166,6 +166,9 @@ procedure TdlgImportNests.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  eNestFile.Width := eRevisionFile.Width;
+  eEggFile.Width := eRevisionFile.Width;
 end;
 
 procedure TdlgImportNests.sbCancelClick(Sender: TObject);
