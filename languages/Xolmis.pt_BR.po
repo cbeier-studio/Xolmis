@@ -7541,10 +7541,6 @@ msgstr "Usar formato Darwin Core"
 msgid "Select the columns to export:"
 msgstr "Selecione as colunas a exportar:"
 
-#: tdlgexport.lblfilename.caption
-msgid "Save to file:"
-msgstr "Salvar no arquivo:"
-
 #: tdlgexport.sbcancel.caption
 msgctxt "tdlgexport.sbcancel.caption"
 msgid "Cancel"
@@ -15631,3 +15627,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

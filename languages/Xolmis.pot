@@ -7554,10 +7554,6 @@ msgstr ""
 msgid "Select the columns to export:"
 msgstr ""
 
-#: tdlgexport.lblfilename.caption
-msgid "Save to file:"
-msgstr ""
-
 #: tdlgexport.sbcancel.caption
 msgctxt "tdlgexport.sbcancel.caption"
 msgid "Cancel"

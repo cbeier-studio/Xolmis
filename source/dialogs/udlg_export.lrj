@@ -2,7 +2,6 @@
 {"hash":153771969,"name":"tdlgexport.caption","sourcebytes":[69,120,112,111,114,116,32,100,97,116,97],"value":"Export data"},
 {"hash":77089212,"name":"tdlgexport.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":80705172,"name":"tdlgexport.sbrun.caption","sourcebytes":[69,120,112,111,114,116],"value":"Export"},
-{"hash":148937354,"name":"tdlgexport.lblfilename.caption","sourcebytes":[83,97,118,101,32,116,111,32,102,105,108,101,58],"value":"Save to file:"},
 {"hash":85680410,"name":"tdlgexport.lblcolumns.caption","sourcebytes":[83,101,108,101,99,116,32,116,104,101,32,99,111,108,117,109,110,115,32,116,111,32,101,120,112,111,114,116,58],"value":"Select the columns to export:"},
 {"hash":108725763,"name":"tdlgexport.btnoptions.caption","sourcebytes":[79,112,116,105,111,110,115],"value":"Options"},
 {"hash":36949860,"name":"tdlgexport.ckusedarwincoreformat.caption","sourcebytes":[85,115,101,32,68,97,114,119,105,110,32,67,111,114,101,32,102,111,114,109,97,116],"value":"Use Darwin Core format"}

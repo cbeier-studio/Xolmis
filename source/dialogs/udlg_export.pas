@@ -32,28 +32,27 @@ type
     btnOptions: TBitBtn;
     ckUseDarwinCoreFormat: TCheckBox;
     cklbColumns: TCheckListBox;
-    eFilename: TFileNameEdit;
     iButtonsDark: TImageList;
     iIcons: TImageList;
     iButtons: TImageList;
     iIconsDark: TImageList;
-    lblFilename: TLabel;
     lblColumns: TLabel;
     lineBottom: TShapeLineBGRA;
     pContent: TPanel;
     pBottom: TPanel;
     pOptions: TBCPanel;
+    SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbRun: TButton;
     tvFiletype: TTreeView;
     procedure btnOptionsClick(Sender: TObject);
     procedure cklbColumnsClickCheck(Sender: TObject);
-    procedure eFilenameChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
     procedure tvFiletypeSelectionChanged(Sender: TObject);
   private
     FDataSet: TDataSet;
+    FFileName: String;
     function IsRequiredFilled: Boolean;
     procedure ApplyDarkMode;
   public
@@ -75,7 +74,6 @@ uses
 procedure TdlgExport.ApplyDarkMode;
 begin
   pOptions.Background.Color := clCardBGDefaultDark;
-  eFilename.Images := iButtonsDark;
   btnOptions.Images := iButtonsDark;
   tvFiletype.Images := iIconsDark;
   tvFiletype.SelectionColor := $00C75F5B;
@@ -111,11 +109,6 @@ begin
   sbRun.Enabled := IsRequiredFilled;
 end;
 
-procedure TdlgExport.eFilenameChange(Sender: TObject);
-begin
-  sbRun.Enabled := IsRequiredFilled;
-end;
-
 procedure TdlgExport.FormShow(Sender: TObject);
 var
   i: Integer;
@@ -133,7 +126,6 @@ begin
   end;
 
   tvFiletype.Selected := tvFiletype.Items.GetFirstNode;
-  eFilename.InitialDir := XSettings.LastPathUsed;
 end;
 
 function TdlgExport.IsRequiredFilled: Boolean;
@@ -147,7 +139,7 @@ begin
     if cklbColumns.Checked[i] then
       Inc(ColCount);
 
-  Result := (tvFiletype.SelectionCount > 0) and (eFilename.FileName <> EmptyStr) and (ColCount > 0);
+  Result := (tvFiletype.SelectionCount > 0) and (ColCount > 0);
 end;
 
 procedure TdlgExport.sbRunClick(Sender: TObject);
@@ -155,19 +147,51 @@ var
   i: Integer;
   expField: TExportFieldItem;
 begin
+  SaveDlg.InitialDir := XSettings.LastPathUsed;
+  case tvFiletype.Selected.Index of
+    0: // CSV
+    begin
+      SaveDlg.DefaultExt := '.csv';
+      SaveDlg.Filter := 'Comma Separated Values (CSV)|*.csv';
+    end;
+    1: // JSON
+    begin
+      SaveDlg.DefaultExt := '.json';
+      SaveDlg.Filter := 'JavaScript Object Notation (JSON)|*.json';
+    end;
+    2: // ODS
+    begin
+      SaveDlg.DefaultExt := '.ods';
+      SaveDlg.Filter := 'Open Document Spreadsheet|*.ods';
+    end;
+    3: // XLSX
+    begin
+      SaveDlg.DefaultExt := '.xlsx';
+      SaveDlg.Filter := 'Microsoft Excel|*.xlsx';
+    end;
+    4: // XML
+    begin
+      SaveDlg.DefaultExt := '.xml';
+      SaveDlg.Filter := 'Extensible Markup Language (XML)|*.xml';
+    end;
+  end;
+  if SaveDlg.Execute then
+    FFileName := SaveDlg.FileName
+  else
+    Exit;
+
   sbRun.Enabled := False;
-  eFilename.Enabled := False;
   tvFiletype.Enabled := False;
   cklbColumns.Enabled := False;
   btnOptions.Enabled := False;
   ckUseDarwinCoreFormat.Enabled := False;
 
-  XSettings.LastPathUsed := ExtractFilePath(eFilename.FileName);
+  XSettings.LastPathUsed := ExtractFilePath(FFileName);
 
   case tvFiletype.Selected.Index of
     0: // CSV
     begin
-      DMM.CSVExport.FileName := eFilename.FileName;
+      DMM.CSVExport.FileName := FFileName;
       DMM.CSVExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
@@ -177,13 +201,13 @@ begin
         end;
 
       if DMM.CSVExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
+        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
       else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [eFilename.FileName]), mtError);
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
     end;
     1: // JSON
     begin
-      DMM.JSONExport.FileName := eFilename.FileName;
+      DMM.JSONExport.FileName := FFileName;
       DMM.JSONExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
@@ -193,14 +217,14 @@ begin
         end;
 
       if DMM.JSONExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
+        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
       else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [eFilename.FileName]), mtError);
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
     end;
     2: // ODS
     begin
       DMM.FPSExport.FormatSettings.ExportFormat := efODS;
-      DMM.FPSExport.FileName := eFilename.FileName;
+      DMM.FPSExport.FileName := FFileName;
       DMM.FPSExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
@@ -210,14 +234,14 @@ begin
         end;
 
       if DMM.FPSExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
+        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
       else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [eFilename.FileName]), mtError);
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
     end;
     3: // XLSX
     begin
       DMM.FPSExport.FormatSettings.ExportFormat := efXLSX;
-      DMM.FPSExport.FileName := eFilename.FileName;
+      DMM.FPSExport.FileName := FFileName;
       DMM.FPSExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
@@ -227,13 +251,13 @@ begin
         end;
 
       if DMM.FPSExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
+        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
       else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [eFilename.FileName]), mtError);
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
     end;
     4: // XML
     begin
-      DMM.XMLExport.FileName := eFilename.FileName;
+      DMM.XMLExport.FileName := FFileName;
       DMM.XMLExport.Dataset := FDataSet;
       for i := 0 to cklbColumns.Count - 1 do
         if cklbColumns.Checked[i] then
@@ -243,9 +267,9 @@ begin
         end;
 
       if DMM.XMLExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [eFilename.FileName]), mtInformation)
+        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
       else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [eFilename.FileName]), mtError);
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
     end;
   end;
 
@@ -253,12 +277,7 @@ begin
 end;
 
 procedure TdlgExport.tvFiletypeSelectionChanged(Sender: TObject);
-const
-  DefExt: array of String = ('.csv', '.json', '.xml', '.ods', '.xlsx');
 begin
-  eFilename.FilterIndex := tvFiletype.Selected.AbsoluteIndex + 1;
-  eFilename.DefaultExt := DefExt[tvFiletype.Selected.AbsoluteIndex];
-
   case tvFiletype.Selected.Index of
     0: // CSV
     begin
