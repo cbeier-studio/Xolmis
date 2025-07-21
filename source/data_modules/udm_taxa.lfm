@@ -18,41 +18,40 @@ object DMT: TDMT
   object RecordTypeStyles: TChartStyles
     Styles = <    
       item
-        Brush.Color = 4946723
-        Pen.Style = psClear
+        Brush.Color = 15442486
+        Pen.Color = clGray
         Text = 'Captures'
         UseFont = False
-        UsePen = False
       end    
       item
-        Brush.Color = 4500223
+        Brush.Color = 8676351
+        Pen.Color = clGray
         Text = 'Sightings'
         UseFont = False
-        UsePen = False
       end    
       item
-        Brush.Color = 13924352
+        Brush.Color = 12632139
+        Pen.Color = clGray
         Text = 'Nests'
         UseFont = False
-        UsePen = False
       end    
       item
-        Brush.Color = 16226706
+        Brush.Color = 4235263
+        Pen.Color = clGray
         Text = 'Eggs'
         UseFont = False
-        UsePen = False
       end    
       item
-        Brush.Color = 4927940
+        Brush.Color = 16737945
+        Pen.Color = clGray
         Text = 'Feathers'
         UseFont = False
-        UsePen = False
       end    
       item
-        Brush.Color = 13066075
+        Brush.Color = 5688831
+        Pen.Color = clGray
         Text = 'Specimens'
         UseFont = False
-        UsePen = False
       end>
     Left = 56
     Top = 400
@@ -64,20 +63,22 @@ object DMT: TDMT
   object NestFateStyles: TChartStyles
     Styles = <    
       item
-        Brush.Color = 4927940
+        Brush.Color = 287743
+        Pen.Color = clGray
         Text = 'Loss'
         UseFont = False
-        UsePen = False
       end    
       item
-        Brush.Color = 4500223
+        Brush.Color = 15442486
+        Pen.Color = clGray
         Text = 'Success'
         UseFont = False
-        UsePen = False
       end    
       item
-        Brush.Color = clSilver
+        Brush.Color = 13618121
+        Pen.Color = clGray
         Text = 'Unknown'
+        UseFont = False
       end>
     Left = 167
     Top = 400

@@ -176,6 +176,15 @@ const
   clGreenBG2Dark     = TColor($000D2E0D); // rgb(13, 46, 13)
   clBlueBGDark       = TColor($00482400);
 
+  // from Chart.js Default Palette
+  clBlueChart   = TColor($00EBA236); // rgb(54, 162, 235)
+  clRedChart    = TColor($008463FF); // rgb(255, 99, 132)
+  clGreenChart  = TColor($00C0C04B); // rgb(75, 192, 192)
+  clOrangeChart = TColor($00409FFF); // rgb(255, 159, 64)
+  clPurpleChart = TColor($00FF6699); // rgb(153, 102, 255)
+  clYellowChart = TColor($0056CDFF); // rgb(255, 205, 86)
+  clGrayChart   = TColor($00CFCBC9); // rgb(201, 203, 207)
+
 type
   TBackgroundColors = record
     SolidBase: TColor;

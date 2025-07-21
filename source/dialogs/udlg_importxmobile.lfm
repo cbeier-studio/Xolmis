@@ -309,13 +309,13 @@ object dlgImportXMobile: TdlgImportXMobile
               ButtonStyle = cbsEllipsis
               MinSize = 200
               Title.Caption = 'Locality *'
-              Width = 227
+              Width = 229
             end          
             item
               ButtonStyle = cbsEllipsis
               MinSize = 200
               Title.Caption = 'Record'
-              Width = 226
+              Width = 228
             end>
           FixedCols = 0
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goTabs, goThumbTracking, goSmoothScroll, goCellEllipsis, goRowHighlight]
@@ -330,8 +330,8 @@ object dlgImportXMobile: TdlgImportXMobile
             150
             64
             64
-            227
-            226
+            229
+            228
           )
         end
       end

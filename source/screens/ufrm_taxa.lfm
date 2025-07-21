@@ -7,6 +7,7 @@ object frmTaxa: TfrmTaxa
   ClientHeight = 636
   ClientWidth = 1179
   Color = clWindow
+  LCLVersion = '4.0.0.4'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
@@ -29,7 +30,7 @@ object frmTaxa: TfrmTaxa
     Columns = <    
       item
         Title.Caption = 'Taxon'
-        Width = 287
+        Width = 308
         FieldName = 'full_name'
       end    
       item
@@ -1178,7 +1179,7 @@ object frmTaxa: TfrmTaxa
             Legend.Multiplicity = lmStyle
             Title = 'Captures'
             BarBrush.Color = 4946723
-            BarPen.Style = psClear
+            BarPen.Color = clGray
             BarWidthStyle = bwPercentMin
             Source = DMT.lcsMonthly
             Styles = DMT.RecordTypeStyles
@@ -1233,7 +1234,7 @@ object frmTaxa: TfrmTaxa
           object yearlySeries: TBarSeries
             Legend.Multiplicity = lmStyle
             BarBrush.Color = 4946723
-            BarPen.Style = psClear
+            BarPen.Color = clGray
             BarWidthStyle = bwPercentMin
             Source = DMT.lcsYearly
             Styles = DMT.RecordTypeStyles
@@ -1353,6 +1354,7 @@ object frmTaxa: TfrmTaxa
             Color = clWindow
             object NestFateSeries: TPieSeries
               Legend.Visible = False
+              EdgePen.Color = clGray
               InnerRadiusPercent = 70
               Marks.Format = '%2:s'
               Marks.Frame.Color = clWindow
@@ -1361,6 +1363,7 @@ object frmTaxa: TfrmTaxa
               Marks.LinkPen.Visible = False
               Marks.Style = smsLabel
               Source = DMT.lcsNestFate
+              Styles = DMT.NestFateStyles
             end
           end
         end
