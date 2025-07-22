@@ -361,7 +361,7 @@ begin
     tbBandHistory: ;
     tbIndividuals:          FDS := DMG.qIndividuals;
     tbCaptures:             FDS := DMG.qCaptures;
-    tbMolts:                FDS := DMG.qMolts;
+    tbFeathers:             FDS := DMG.qFeathers;
     tbNests:                FDS := DMG.qNests;
     tbNestOwners: ;
     tbNestRevisions:        FDS := DMG.qNestRevisions;

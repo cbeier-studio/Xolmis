@@ -3441,7 +3441,6 @@ begin
     tbBandHistory: ;
     tbIndividuals:          LoadColsIndividuals;
     tbCaptures:             LoadColsCaptures;
-    tbMolts: ;
     tbNests:                LoadColsNests;
     tbNestOwners:           LoadColsNestOwners;
     tbNestRevisions:        LoadColsNestRevisions;

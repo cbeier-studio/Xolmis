@@ -172,8 +172,8 @@ begin
       if FChildType = tbCaptures then
         DS := DMI.dsCaptures
       else
-      if FChildType = tbMolts then
-        DS := DMI.dsMolts
+      if FChildType = tbFeathers then
+        DS := DMI.dsFeathers
       else
       if FChildType = tbSightings then
         DS := DMI.dsSightings
@@ -184,7 +184,6 @@ begin
         DS := DMG.dsIndividuals;
     end;
     tbCaptures:       DS := DMG.dsCaptures;
-    tbMolts:          DS := DMG.dsMolts;
     tbNests:
     begin
       if FChildType = tbNestOwners then

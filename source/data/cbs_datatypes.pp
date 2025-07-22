@@ -77,7 +77,7 @@ type
     tbBandHistory,
     tbIndividuals,
     tbCaptures,
-    tbMolts,
+    tbFeathers,
     tbNests,
     tbNestOwners,
     tbNestRevisions,
@@ -99,17 +99,16 @@ type
     tbProjectGoals,
     tbProjectChronograms,
     tbProjectBudgets,
-    tbProjectExpenses,
-    tbFeathers);
+    tbProjectExpenses);
 
   TTablesDictionary = specialize TFPGMap<String, TTableType>;
   TLocaleTablesDictionary = specialize TFPGMap<TTableType, String>;
 
 const
   TableAliases: array [TTableType] of String = ('',
-    'u','rh','rv','g','pl','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','m',
+    'u','rh','rv','g','pl','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','ft',
     'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg',
-    'pg','pc','pb','px','ft');
+    'pg','pc','pb','px');
   TableNames: array [TTableType] of String = ('',
     'users',
     'record_history',
@@ -129,7 +128,7 @@ const
     'band_history',
     'individuals',
     'captures',
-    'molts',
+    'feathers',
     'nests',
     'nest_owners',
     'nest_revisions',
@@ -151,8 +150,7 @@ const
     'project_goals',
     'project_chronograms',
     'project_budgets',
-    'project_expenses',
-    'feathers');
+    'project_expenses');
 
 type
   TCriteriaType = (crNone,
@@ -428,7 +426,7 @@ begin
   TablesDict.Add(rsTitleBandHistory, tbBandHistory);
   TablesDict.Add(rsTitleIndividuals, tbIndividuals);
   TablesDict.Add(rsTitleCaptures, tbCaptures);
-  TablesDict.Add(rsTitleMolts, tbMolts);
+  TablesDict.Add(rsCaptionFeathers, tbFeathers);
   TablesDict.Add(rsTitleNests, tbNests);
   TablesDict.Add(rsTitleNestOwners, tbNestOwners);
   TablesDict.Add(rsTitleNestRevisions, tbNestRevisions);
@@ -447,7 +445,6 @@ begin
   TablesDict.Add(rsTitleImages, tbImages);
   TablesDict.Add(rsTitleAudioLibrary, tbAudioLibrary);
   TablesDict.Add(rsTitleDocuments, tbDocuments);
-  TablesDict.Add(rsCaptionFeathers, tbFeathers);
 end;
 
 procedure LoadLocaleTablesDict;
@@ -479,7 +476,7 @@ begin
   LocaleTablesDict.Add(tbBandHistory, rsTitleBandHistory);
   LocaleTablesDict.Add(tbIndividuals, rsTitleIndividuals);
   LocaleTablesDict.Add(tbCaptures, rsTitleCaptures);
-  LocaleTablesDict.Add(tbMolts, rsTitleMolts);
+  LocaleTablesDict.Add(tbFeathers, rsCaptionFeathers);
   LocaleTablesDict.Add(tbNests, rsTitleNests);
   LocaleTablesDict.Add(tbNestOwners, rsTitleNestOwners);
   LocaleTablesDict.Add(tbNestRevisions, rsTitleNestRevisions);
@@ -498,7 +495,6 @@ begin
   LocaleTablesDict.Add(tbImages, rsTitleImages);
   LocaleTablesDict.Add(tbAudioLibrary, rsTitleAudioLibrary);
   LocaleTablesDict.Add(tbDocuments, rsTitleDocuments);
-  LocaleTablesDict.Add(tbFeathers, rsCaptionFeathers);
 end;
 
 { TTableInfo }

@@ -1207,12 +1207,6 @@ object frmMain: TfrmMain
       ImageIndex = 12
       OnExecute = actOpenCapturesExecute
     end
-    object actOpenMolts: TAction
-      Category = 'Individuals'
-      Caption = '&Molts'
-      ImageIndex = 13
-      OnExecute = actOpenMoltsExecute
-    end
     object actCheckUpdates: TAction
       Category = 'Help'
       Caption = 'Check &updates'
@@ -9388,9 +9382,6 @@ object frmMain: TfrmMain
       end
       object mmiCaptures: TMenuItem
         Action = actOpenCaptures
-      end
-      object mmiMolts: TMenuItem
-        Action = actOpenMolts
       end
       object mmiFeathers: TMenuItem
         Action = actOpenFeathers

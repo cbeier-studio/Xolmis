@@ -172,8 +172,8 @@ begin
 
         CreateConnectionsTable;
         CreateUsageDataTable;
-        CreateTablesMappingTable;
-        CreateFieldsMappingTable;
+        //CreateTablesMappingTable;
+        //CreateFieldsMappingTable;
 
         { Populate tables }
         DMM.scriptTablesMap.ExecuteScript;
@@ -207,6 +207,7 @@ begin
               'database_name    VARCHAR (200) NOT NULL, ' +
               'user_name        VARCHAR (20), ' +
               'user_password    TEXT, ' +
+              'last_backup      DATETIME,' +
               'insert_date      DATETIME, ' +
               'update_date      DATETIME );');
 
@@ -298,8 +299,6 @@ var
   Trans: TSQLTransaction;
 begin
   Result := False;
-  //if DMM.sqlCon.Connected then
-  //  DMM.sqlCon.Close;
 
   LogEvent(leaStart, Format('Create database: %s', [aFilename]));
   dlgProgress := TdlgProgress.Create(nil);
@@ -326,12 +325,6 @@ begin
     //LogDebug('Creating database: ' + aFilename);
     //{$ENDIF}
     try
-      //Result := CopyFile(ConcatPaths([AppDataDir, 'XolmisDB_template.sqlite3']), aFilename, False, True);
-      //
-      //if Result then
-
-      //Conn.DatabaseName := aFilename;
-      //DMM.sqlCon.ConnectorType := 'SQLite3';
       Conn.Open;
       if not Trans.Active then
         Trans.StartTransaction;
@@ -339,7 +332,6 @@ begin
       // Create database file
       dlgProgress.Text := rsProgressPreparing;
       Application.ProcessMessages;
-      //DMM.sqlCon.CreateDB;
 
       case ConexaoDB.Manager of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA foreign_keys = off;');
@@ -349,253 +341,303 @@ begin
       end;
 
       try
-        // Create tables
+        // >> Create tables
+        // Database metadata
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDBMetadata, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateDBMetadataTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Users
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleUsers, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateUsersTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Record history
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleHistory, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateRecordHistoryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Record verifications
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVerifications, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateRecordVerificationsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Taxon ranks
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleTaxonRanks, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateTaxonRanksTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Zoo taxa
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleZooTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateZooTaxaTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Botanic taxa
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBotanicTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateBotanicTaxaTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Methods
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleMethods, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateMethodsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Gazetteer
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleGazetteer, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateGazetteerTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Institutions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleInstitutions, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateInstitutionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // People
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleResearchers, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreatePeopleTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Sampling plots
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplingPlots, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateSamplingPlotsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Permanent nets
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermanentNets, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreatePermanentNetsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Permits
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermits, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreatePermitsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Projects
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjects, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateProjectsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Project members
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectMembers, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateProjectTeamTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Project goals
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectGoals, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateProjectGoalsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Project chronogram
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectChronograms, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateProjectChronogramsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Project budget
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectBudgets, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateProjectBudgetsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Project expenses
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectExpenses, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateProjectExpensesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Expeditions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsCaptionExpeditions, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateExpeditionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Surveys
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateSurveysTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Survey members
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveyTeam, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateSurveyTeamTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Nets effort
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNetsEffort, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateNetsEffortTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Weather logs
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleWeather, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateWeatherLogsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Vegetation
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVegetation, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateVegetationTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Bands
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBands, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateBandsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Band history
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBandHistory, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateBandHistoryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Individuals
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleIndividuals, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateIndividualsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Sightings
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSightings, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateSightingsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Captures
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleCaptures, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateCapturesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Feathers
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleFeathersAndMolt, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateFeathersTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Nests
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNests, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateNestsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Nest owners
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestOwners, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateNestOwnersTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Nest revisions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestRevisions, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateNestRevisionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Eggs
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleEggs, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateEggsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Specimens
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimens, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateSpecimensTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Specimen collectors
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimenCollectors, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateSpecimenCollectorsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Sample preps
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplePreps, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateSamplePrepsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // POI library
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePoiLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreatePoiLibraryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Images
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleImages, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateImagesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Documents
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDocuments, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateDocumentsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Audio recordings
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleAudioLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateAudioLibraryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
-        // Create views
+        // >> Create views
+        // Next birthdays
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleNextBirthdays, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateNextBirthdaysView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Last surveys
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateLastSurveysView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Last lifers
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastLifers, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateLastLifersView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Expired permits
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleExpiredPermits, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateExpiredPermitsView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Bands balance
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsBalance, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateBandsLeftoverView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Bands running out
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsRunningOut, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateBandsRunningOutView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Average expedition duration
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleAvgExpeditionDuration, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateAvgExpeditionDurationView(Conn);
@@ -610,6 +652,7 @@ begin
         dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
         Application.ProcessMessages;
         LogDebug('Populating database');
+        // Populate users (admin), taxon ranks, methods, botanic taxa
         DMM.scriptUserDBInit.DataBase := Conn;
         DMM.scriptUserDBInit.Transaction := Conn.Transaction;
         DMM.scriptUserDBInit.ExecuteScript;
@@ -618,6 +661,7 @@ begin
         if not Trans.Active then
         Trans.StartTransaction;
 
+        // Populate bird taxa
         PopulateZooTaxaTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
@@ -723,7 +767,7 @@ begin
       if Result then
       begin
         DMM.sqlTrans.CommitRetaining;
-        MsgDlg(rsTitleInformation, rsSuccessfulDatabaseUpgrade, mtInformation);
+        //MsgDlg(rsTitleInformation, rsSuccessfulDatabaseUpgrade, mtInformation);
         LogInfo('User database succesfully upgraded');
       end;
     except

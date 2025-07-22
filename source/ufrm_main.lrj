@@ -42,7 +42,6 @@
 {"hash":64126997,"name":"tfrmmain.actviewbandsbalance.caption","sourcebytes":[66,97,38,108,97,110,99,101],"value":"Ba&lance"},
 {"hash":239861043,"name":"tfrmmain.actopenindividuals.caption","sourcebytes":[38,73,110,100,105,118,105,100,117,97,108,115],"value":"&Individuals"},
 {"hash":142336595,"name":"tfrmmain.actopencaptures.caption","sourcebytes":[38,67,97,112,116,117,114,101,115],"value":"&Captures"},
-{"hash":45376435,"name":"tfrmmain.actopenmolts.caption","sourcebytes":[38,77,111,108,116,115],"value":"&Molts"},
 {"hash":47406211,"name":"tfrmmain.actcheckupdates.caption","sourcebytes":[67,104,101,99,107,32,38,117,112,100,97,116,101,115],"value":"Check &updates"},
 {"hash":174510117,"name":"tfrmmain.actimportxolmismobile.caption","sourcebytes":[88,111,108,109,105,115,32,109,111,98,105,108,101],"value":"Xolmis mobile"},
 {"hash":19590147,"name":"tfrmmain.actimportebird.caption","sourcebytes":[38,101,66,105,114,100,32,114,101,99,111,114,100,115],"value":"&eBird records"},

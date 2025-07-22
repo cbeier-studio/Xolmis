@@ -10135,111 +10135,6 @@ msgctxt "tedtmethod.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
-#: tedtmolt.ebander.buttonhint
-msgctxt "tedtmolt.ebander.buttonhint"
-msgid "Find bander"
-msgstr "Procurar anilhador"
-
-#: tedtmolt.ecapturetime.texthint
-msgctxt "tedtmolt.ecapturetime.texthint"
-msgid "HH:MM"
-msgstr "HH:MM"
-
-#: tedtmolt.edate.buttonhint
-msgctxt "tedtmolt.edate.buttonhint"
-msgid "Open calendar"
-msgstr "Abrir calendário"
-
-#: tedtmolt.edate.texthint
-msgctxt "tedtmolt.edate.texthint"
-msgid "DD/MM/YYYY"
-msgstr "DD/MM/AAAA"
-
-#: tedtmolt.esurvey.buttonhint
-msgctxt "tedtmolt.esurvey.buttonhint"
-msgid "Find survey"
-msgstr "Procurar amostragem"
-
-#: tedtmolt.lblbandprefix.caption
-msgctxt "tedtmolt.lblbandprefix.caption"
-msgid "Date: *"
-msgstr "Data: *"
-
-#: tedtmolt.lblbandsuffix.caption
-msgctxt "tedtmolt.lblbandsuffix.caption"
-msgid "Time:"
-msgstr "Hora:"
-
-#: tedtmolt.lblgrowthbarwidth.caption
-msgctxt "tedtmolt.lblgrowthbarwidth.caption"
-msgid "Growth bar width:"
-msgstr "Largura da barra de crescimento:"
-
-#: tedtmolt.lblnotes.caption
-msgctxt "tedtmolt.lblnotes.caption"
-msgid "Notes:"
-msgstr "Anotações:"
-
-#: tedtmolt.lblrequester.caption
-msgctxt "tedtmolt.lblrequester.caption"
-msgid "Bander: *"
-msgstr "Anilhador: *"
-
-#: tedtmolt.lblsupplier.caption
-msgctxt "tedtmolt.lblsupplier.caption"
-msgid "Survey:"
-msgstr "Amostragem:"
-
-#: tedtmolt.lbltitlealula.caption
-msgctxt "tedtmolt.lbltitlealula.caption"
-msgid "Alula"
-msgstr "Álula"
-
-#: tedtmolt.lbltitlegreatcoverts.caption
-msgctxt "tedtmolt.lbltitlegreatcoverts.caption"
-msgid "Greater coverts"
-msgstr "Grandes coberteiras"
-
-#: tedtmolt.lbltitlegrowthbars.caption
-msgctxt "tedtmolt.lbltitlegrowthbars.caption"
-msgid "Growth bars"
-msgstr "Barras de crescimento"
-
-#: tedtmolt.lbltitleothercoverts.caption
-msgctxt "tedtmolt.lbltitleothercoverts.caption"
-msgid "Other coverts"
-msgstr "Outras coberteiras"
-
-#: tedtmolt.lbltitleprimaries.caption
-msgctxt "tedtmolt.lbltitleprimaries.caption"
-msgid "Primaries"
-msgstr "Primárias"
-
-#: tedtmolt.lbltitleprimarycoverts.caption
-msgctxt "tedtmolt.lbltitleprimarycoverts.caption"
-msgid "Primary coverts"
-msgstr "Coberteiras primárias"
-
-#: tedtmolt.lbltitlerectrices.caption
-msgctxt "tedtmolt.lbltitlerectrices.caption"
-msgid "Rectrices"
-msgstr "Retrizes"
-
-#: tedtmolt.lbltitlesecondaries.caption
-msgctxt "tedtmolt.lbltitlesecondaries.caption"
-msgid "Secondaries"
-msgstr "Secundárias"
-
-#: tedtmolt.sbcancel.caption
-msgctxt "tedtmolt.sbcancel.caption"
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: tedtmolt.sbsave.caption
-msgctxt "tedtmolt.sbsave.caption"
-msgid "Save"
-msgstr "Salvar"
-
 #: tedtnest.efounddate.buttonhint
 msgctxt "tedtnest.efounddate.buttonhint"
 msgid "Open calendar"
@@ -13466,11 +13361,6 @@ msgctxt "tfrmcustomgrid.pmprintmethods.caption"
 msgid "Methods"
 msgstr "Métodos"
 
-#: tfrmcustomgrid.pmprintmolts.caption
-msgctxt "tfrmcustomgrid.pmprintmolts.caption"
-msgid "Molts"
-msgstr "Mudas"
-
 #: tfrmcustomgrid.pmprintnests.caption
 msgctxt "tfrmcustomgrid.pmprintnests.caption"
 msgid "Nests"
@@ -14782,11 +14672,6 @@ msgctxt "tfrmmain.actopenmethods.caption"
 msgid "Methods"
 msgstr "Métodos"
 
-#: tfrmmain.actopenmolts.caption
-msgctxt "tfrmmain.actopenmolts.caption"
-msgid "&Molts"
-msgstr "&Mudas"
-
 #: tfrmmain.actopennestrevisions.caption
 msgctxt "tfrmmain.actopennestrevisions.caption"
 msgid "Nest &revisions"
@@ -15627,4 +15512,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-

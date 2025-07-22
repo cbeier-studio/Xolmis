@@ -30,7 +30,6 @@ type
   TDMI = class(TDataModule)
     dsCaptures: TDataSource;
     dsFeathers: TDataSource;
-    dsMolts: TDataSource;
     dsNests: TDataSource;
     dsSightings: TDataSource;
     dsSpecimens: TDataSource;
@@ -223,7 +222,6 @@ type
     qImagesupdate_date: TDateTimeField;
     qImagesuser_inserted: TLongintField;
     qImagesuser_updated: TLongintField;
-    qMolts: TSQLQuery;
     qMoltsactive_status: TBooleanField;
     qMoltsal1_molt: TFloatField;
     qMoltsal2_molt: TFloatField;
@@ -534,11 +532,6 @@ type
     procedure qImagescoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qImagesimage_typeSetText(Sender: TField; const aText: string);
-    procedure qMoltsAfterCancel(DataSet: TDataSet);
-    procedure qMoltsAfterInsert(DataSet: TDataSet);
-    procedure qMoltsAfterPost(DataSet: TDataSet);
-    procedure qMoltsBeforeEdit(DataSet: TDataSet);
-    procedure qMoltsBeforePost(DataSet: TDataSet);
     procedure qNestsAfterCancel(DataSet: TDataSet);
     procedure qNestsAfterPost(DataSet: TDataSet);
     procedure qNestsBeforeEdit(DataSet: TDataSet);
@@ -1242,66 +1235,6 @@ begin
   else
   if aText = rsTeam then
     Sender.AsString := 'team';
-end;
-
-procedure TDMI.qMoltsAfterCancel(DataSet: TDataSet);
-begin
-  if Assigned(OldMolt) then
-    FreeAndNil(OldMolt);
-end;
-
-procedure TDMI.qMoltsAfterInsert(DataSet: TDataSet);
-begin
-  with DataSet do
-  begin
-    if Assigned(DataSource) then
-    begin
-      FieldByName('taxon_id').AsInteger := DataSource.DataSet.FieldByName('taxon_id').AsInteger;
-      //FieldByName('individual_id').AsInteger := DataSource.DataSet.FieldByName('individual_id').AsInteger;
-      FieldByName('band_id').AsInteger := DataSource.DataSet.FieldByName('band_id').AsInteger;
-    end;
-  end;
-end;
-
-procedure TDMI.qMoltsAfterPost(DataSet: TDataSet);
-var
-  NewMolt: TMolt;
-  lstDiff: TStrings;
-  D: String;
-begin
-  { Save changes to the record history }
-  if Assigned(OldMolt) then
-  begin
-    NewMolt := TMolt.Create;
-    NewMolt.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
-    try
-      if NewMolt.Diff(OldMolt, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbMolts, haEdited, OldMolt.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
-    finally
-      FreeAndNil(NewMolt);
-      FreeAndNil(OldMolt);
-      FreeAndNil(lstDiff);
-    end;
-  end
-  else
-    WriteRecHistory(tbMolts, haCreated, 0, '', '', '', rsInsertedByForm);
-end;
-
-procedure TDMI.qMoltsBeforeEdit(DataSet: TDataSet);
-begin
-  OldMolt := TMolt.Create(DataSet.FieldByName('molt_id').AsInteger);
-end;
-
-procedure TDMI.qMoltsBeforePost(DataSet: TDataSet);
-begin
-  SetRecordDateUser(DataSet);
 end;
 
 procedure TDMI.qNestsAfterCancel(DataSet: TDataSet);

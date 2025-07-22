@@ -24,7 +24,13 @@ uses
   SysUtils, Dialogs;
 
 type
-  TExportFiletype = (xfCSV, xfJSON, xfXML, xfXLSX, xfODS);
+  TExportFiletype = (xfCSV, xfJSON, xfODS, xfXLSX, xfXML);
+
+const
+  ExportFileExtensions: array of String = ('.csv','.json','.ods','.xlsx','.xml');
+  ExportFileFilters: array of String = ('Comma Separated Values (CSV)|*.csv',
+    'JavaScript Object Notation (JSON)|*.json', 'Open Document Spreadsheet|*.ods',
+    'Microsoft Excel|*.xlsx', 'Extensible Markup Language (XML)|*.xml');
 
   // Darwin Core
   procedure ExportDarwinCore(const aFileName: String);

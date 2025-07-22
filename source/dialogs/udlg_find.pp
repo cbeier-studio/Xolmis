@@ -75,7 +75,6 @@ type
     procedure FindIndividuals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindInstitutions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindMethods(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-    procedure FindMolts(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindNestRevisions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindNests(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindNetEffort(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
@@ -470,33 +469,6 @@ begin
         begin
           Add('WHERE ((method_name ' + Operador + ' :VALPARAM) ');
           Add('OR (method_acronym ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
-      fvAll:
-        Add('WHERE (active_status = 1)');
-      fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
-      fvDeleted:
-        Add('WHERE (active_status = 0)');
-    end;
-  end;
-end;
-
-procedure TdlgFind.FindMolts(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
-begin
-  Operador := GetCriteria(aCriteria);
-
-  with aSQL do
-  begin
-    Add('SELECT molt_id, full_name FROM molts ');
-    case aFilter of
-      fvNone:
-        ; // do nothing
-      fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -1189,7 +1161,6 @@ begin
     tbBands:          SetupFields('band_id', 'full_name');
     tbIndividuals:    SetupFields('individual_id', 'full_name');
     tbCaptures:       SetupFields('capture_id', 'full_name');
-    tbMolts:          SetupFields('molt_id', 'full_name');
     //tbImages: ;
     //tbAudioLibrary: ;
   end;
@@ -1401,7 +1372,6 @@ begin
       tbBands:          FindBands(aSQL, aFilter, aCriteria);
       tbIndividuals:    FindIndividuals(aSQL, aFilter, aCriteria);
       tbCaptures:       FindCaptures(aSQL, aFilter, aCriteria);
-      tbMolts:          FindMolts(aSQL, aFilter, aCriteria);
       //tbImages: ;
       //tbAudioLibrary: ;
     end;
@@ -1486,7 +1456,6 @@ begin
       tbBands:          SetupResult('band_id', 'full_name');
       tbIndividuals:    SetupResult('individual_id', 'full_name');
       tbCaptures:       SetupResult('capture_id', 'full_name');
-      tbMolts:          SetupResult('molt_id', 'full_name');
       //tbImages: ;
       //tbAudioLibrary: ;
     end;

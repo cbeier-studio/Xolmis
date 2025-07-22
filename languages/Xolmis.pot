@@ -10148,111 +10148,6 @@ msgctxt "tedtmethod.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtmolt.ebander.buttonhint
-msgctxt "tedtmolt.ebander.buttonhint"
-msgid "Find bander"
-msgstr ""
-
-#: tedtmolt.ecapturetime.texthint
-msgctxt "tedtmolt.ecapturetime.texthint"
-msgid "HH:MM"
-msgstr ""
-
-#: tedtmolt.edate.buttonhint
-msgctxt "tedtmolt.edate.buttonhint"
-msgid "Open calendar"
-msgstr ""
-
-#: tedtmolt.edate.texthint
-msgctxt "tedtmolt.edate.texthint"
-msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tedtmolt.esurvey.buttonhint
-msgctxt "tedtmolt.esurvey.buttonhint"
-msgid "Find survey"
-msgstr ""
-
-#: tedtmolt.lblbandprefix.caption
-msgctxt "tedtmolt.lblbandprefix.caption"
-msgid "Date: *"
-msgstr ""
-
-#: tedtmolt.lblbandsuffix.caption
-msgctxt "tedtmolt.lblbandsuffix.caption"
-msgid "Time:"
-msgstr ""
-
-#: tedtmolt.lblgrowthbarwidth.caption
-msgctxt "tedtmolt.lblgrowthbarwidth.caption"
-msgid "Growth bar width:"
-msgstr ""
-
-#: tedtmolt.lblnotes.caption
-msgctxt "tedtmolt.lblnotes.caption"
-msgid "Notes:"
-msgstr ""
-
-#: tedtmolt.lblrequester.caption
-msgctxt "tedtmolt.lblrequester.caption"
-msgid "Bander: *"
-msgstr ""
-
-#: tedtmolt.lblsupplier.caption
-msgctxt "tedtmolt.lblsupplier.caption"
-msgid "Survey:"
-msgstr ""
-
-#: tedtmolt.lbltitlealula.caption
-msgctxt "tedtmolt.lbltitlealula.caption"
-msgid "Alula"
-msgstr ""
-
-#: tedtmolt.lbltitlegreatcoverts.caption
-msgctxt "tedtmolt.lbltitlegreatcoverts.caption"
-msgid "Greater coverts"
-msgstr ""
-
-#: tedtmolt.lbltitlegrowthbars.caption
-msgctxt "tedtmolt.lbltitlegrowthbars.caption"
-msgid "Growth bars"
-msgstr ""
-
-#: tedtmolt.lbltitleothercoverts.caption
-msgctxt "tedtmolt.lbltitleothercoverts.caption"
-msgid "Other coverts"
-msgstr ""
-
-#: tedtmolt.lbltitleprimaries.caption
-msgctxt "tedtmolt.lbltitleprimaries.caption"
-msgid "Primaries"
-msgstr ""
-
-#: tedtmolt.lbltitleprimarycoverts.caption
-msgctxt "tedtmolt.lbltitleprimarycoverts.caption"
-msgid "Primary coverts"
-msgstr ""
-
-#: tedtmolt.lbltitlerectrices.caption
-msgctxt "tedtmolt.lbltitlerectrices.caption"
-msgid "Rectrices"
-msgstr ""
-
-#: tedtmolt.lbltitlesecondaries.caption
-msgctxt "tedtmolt.lbltitlesecondaries.caption"
-msgid "Secondaries"
-msgstr ""
-
-#: tedtmolt.sbcancel.caption
-msgctxt "tedtmolt.sbcancel.caption"
-msgid "Cancel"
-msgstr ""
-
-#: tedtmolt.sbsave.caption
-msgctxt "tedtmolt.sbsave.caption"
-msgid "Save"
-msgstr ""
-
 #: tedtnest.efounddate.buttonhint
 msgctxt "tedtnest.efounddate.buttonhint"
 msgid "Open calendar"
@@ -13482,11 +13377,6 @@ msgctxt "tfrmcustomgrid.pmprintmethods.caption"
 msgid "Methods"
 msgstr ""
 
-#: tfrmcustomgrid.pmprintmolts.caption
-msgctxt "tfrmcustomgrid.pmprintmolts.caption"
-msgid "Molts"
-msgstr ""
-
 #: tfrmcustomgrid.pmprintnests.caption
 msgctxt "tfrmcustomgrid.pmprintnests.caption"
 msgid "Nests"
@@ -14786,11 +14676,6 @@ msgstr ""
 #: tfrmmain.actopenmethods.caption
 msgctxt "tfrmmain.actopenmethods.caption"
 msgid "Methods"
-msgstr ""
-
-#: tfrmmain.actopenmolts.caption
-msgctxt "tfrmmain.actopenmolts.caption"
-msgid "&Molts"
 msgstr ""
 
 #: tfrmmain.actopennestrevisions.caption

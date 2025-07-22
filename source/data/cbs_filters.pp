@@ -68,7 +68,6 @@ type
   procedure LoadEggDateTree(aSQL: TStrings);
   procedure LoadSightingDateTree(aSQL: TStrings);
   procedure LoadCaptureDateTree(aSQL: TStrings);
-  procedure LoadMoltDateTree(aSQL: TStrings);
   procedure LoadFeatherDateTree(aSQL: TStrings);
   procedure LoadExpeditionDateTree(aSQL: TStrings);
   procedure LoadSurveyDateTree(aSQL: TStrings);
@@ -87,7 +86,6 @@ type
   procedure FilterNestDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterSightingDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterCaptureDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
-  procedure FilterMoltDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterBandDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterIndividualDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   procedure FilterProjectDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
@@ -98,7 +96,6 @@ type
   function TaxonFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
   function SiteFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String = ''): String;
   function SiteFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
-  function DateFilterToString(aTable: TTableType; aVirtualTree: TBaseVirtualTree; var aTotal: Integer): String;
   function DateFilterToSearch(aTable: TTableType; aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
   function PersonFilterToSearch(aTable: TTableType; aSearchGroup: TSearchGroups; aKey: Integer = 0): Boolean;
 
@@ -115,9 +112,7 @@ var
   Data: TTaxonNodeData;
   xNode, orderParent, familyParent: PVirtualNode;
 begin
-  //Lista := TStringList.Create;
-  //STree := TMemoryStream.Create;
-  //STree.Position := 0;
+  // Set database query for taxon hierarchy
   Qry := TSQLQuery.Create(DMM.sqlCon);
   Qry.Database := DMM.sqlCon;
   with Qry, SQL do
@@ -249,20 +244,6 @@ begin
           Add('JOIN TaxaDetails AS o ON z.order_id = o.taxon_id');
           Add('WHERE (c.active_status = 1)');
         end;
-      tbMolts:
-        begin
-          Add('SELECT m.taxon_id, z.species_id, z.family_id, z.order_id,');
-          Add('  s.full_name AS species_name,');
-          Add('  f.full_name AS family_name,');
-          Add('  o.full_name AS order_name,');
-          Add('  z.sort_num AS sort_num');
-          Add('FROM molts AS m');
-          Add('JOIN TaxaDetails AS z ON m.taxon_id = z.taxon_id');
-          Add('JOIN TaxaDetails AS s ON z.species_id = s.taxon_id');
-          Add('JOIN TaxaDetails AS f ON z.family_id = f.taxon_id');
-          Add('JOIN TaxaDetails AS o ON z.order_id = o.taxon_id');
-          Add('WHERE (m.active_status = 1)');
-        end;
       tbFeathers:
         begin
           Add('SELECT ft.taxon_id, z.species_id, z.family_id, z.order_id,');
@@ -347,9 +328,6 @@ begin
     Open;
     if RecordCount > 0 then
     try
-      // PBar.Max:= RecordCount;
-      // PBar.Position:= 0;
-      // PBar.Visible:= True;
       aVirtualTree.BeginUpdate;
       if aVirtualTree.TotalCount > 0 then
         aVirtualTree.Clear;
@@ -359,9 +337,10 @@ begin
       orderParent := nil;
       familyParent := nil;
 
-      // Cria lista para arvore
+      // Add taxa to the tree
       First;
       repeat
+        // Order
         if (FieldByName('order_name').AsString <> aOrder) and
           (FieldByName('order_name').AsString <> EmptyStr) then
         begin
@@ -376,6 +355,7 @@ begin
           xNode := aVirtualTree.AddChild(nil, Data);
           orderParent := xNode;
         end;
+        // Family
         if (FieldByName('family_name').AsString <> aFamily) and
           (FieldByName('family_name').AsString <> EmptyStr) then
         begin
@@ -392,6 +372,7 @@ begin
           xNode := aVirtualTree.AddChild(orderParent, Data);
           familyParent := xNode;
         end;
+        // Species
         if (FieldByName('species_name').AsString <> aSpecies) and
           (FieldByName('species_name').AsString <> EmptyStr) then
         begin
@@ -408,33 +389,17 @@ begin
           aVirtualTree.AddChild(familyParent, Data);
         end;
 
-        // PBar.Position:= RecNo;
         Next;
       until EOF;
-      // Lista.SaveToFile('TaxonTree.txt');
-      //Lista.SaveToStream(STree);
-      // STree.SaveToFile('TaxonTreeStream.txt');
-      //STree.Position := 0;
-      //aTree.LoadFromStream(STree);
     finally
       aVirtualTree.EndUpdate;
-      // PBar.Visible:= False;
-      // PBar.Position:= 0;
       Close;
     end;
   finally
     FreeAndNil(Qry);
-    //Lista.Free;
-    //STree.Free;
   end;
   aVirtualTree.FullCollapse;
-  //for i := 0 to aTree.Items.Count - 1 do
-  //begin
-  //  aTree.Items.Item[i].ImageIndex := aTree.Items.Item[i].Level;
-  //  aTree.Items.Item[i].SelectedIndex := aTree.Items.Item[i].Level;
-  //end;
   aVirtualTree.ClearSelection;
-  // SBarTaxon.Caption:= 'Táxons com registros: '+IntToStr(TV.Items.Count);
 end;
 
 procedure LoadSpecimenDateTree(aSQL: TStrings);
@@ -494,15 +459,6 @@ begin
   aSQL.Add('strftime(''%m'', c.capture_date) AS mes,');
   aSQL.Add('strftime(''%d'', c.capture_date) AS dia');
   aSQL.Add('FROM captures AS c WHERE (c.active_status = 1)');
-end;
-
-procedure LoadMoltDateTree(aSQL: TStrings);
-begin
-  aSQL.Add('SELECT ');
-  aSQL.Add('strftime(''%Y'', m.sample_date) AS ano,');
-  aSQL.Add('strftime(''%m'', m.sample_date) AS mes,');
-  aSQL.Add('strftime(''%d'', m.sample_date) AS dia');
-  aSQL.Add('FROM molts AS m WHERE (m.active_status = 1)');
 end;
 
 procedure LoadFeatherDateTree(aSQL: TStrings);
@@ -601,7 +557,6 @@ end;
 procedure LoadDateTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 var
   Dia, Mes, Ano, L, FBL: String;
-  // i: Integer;
   Qry: TSQLQuery;
   Q: TStrings;
   FS: TFormatSettings;
@@ -609,9 +564,7 @@ var
   Data: TBasicNodeData;
   xNode, monthParent, yearParent: PVirtualNode;
 begin
-  //Lista := TStringList.Create;
-  //STree := TMemoryStream.Create;
-  //STree.Position := 0;
+  // Set database query for date hierarchy
   Qry := TSQLQuery.Create(DMM.sqlCon);
   Q := Qry.SQL;
   try
@@ -632,8 +585,6 @@ begin
           LoadSightingDateTree(Q);
           Q.Add('UNION');
           LoadCaptureDateTree(Q);
-          Q.Add('UNION');
-          LoadMoltDateTree(Q);
           Q.Add('UNION');
           LoadExpeditionDateTree(Q);
           Q.Add('UNION');
@@ -664,7 +615,6 @@ begin
       tbBands: ;
       tbIndividuals:   LoadIndividualDateTree(Q);
       tbCaptures:      LoadCaptureDateTree(Q);
-      tbMolts:         LoadMoltDateTree(Q);
       tbFeathers:      LoadFeatherDateTree(Q);
       tbImages: ;
       tbAudioLibrary: ;
@@ -679,10 +629,6 @@ begin
 
     if Qry.RecordCount > 0 then
     try
-      // PBar.Max:= RecordCount;
-      // PBar.Position:= 0;
-      // PBar.Visible:= True;
-
       aVirtualTree.BeginUpdate;
       if aVirtualTree.TotalCount > 0 then
         aVirtualTree.Clear;
@@ -694,7 +640,7 @@ begin
       yearParent := nil;
       monthParent := nil;
 
-      //FS := TFormatSettings.Create;
+      // Get the date format settings
       L := EmptyStr;
       FBL := EmptyStr;
       GetLanguageIDs(L, FBL);
@@ -712,9 +658,10 @@ begin
       FS := FormatSettings;
       {$ENDIF}
 
-      // Create list for the treelist
+      // Add dates to the tree
       Qry.First;
       repeat
+        // Year
         if (Qry.FieldByName('ano').AsString <> Ano) and
           (Qry.FieldByName('ano').AsString <> EmptyStr) and
           (Qry.FieldByName('ano').AsInteger > 0) then
@@ -730,12 +677,12 @@ begin
           aVirtualTree.CheckType[xNode] := ctTriStateCheckBox;
           yearParent := xNode;
         end;
+        // Month
         if (Qry.FieldByName('mes').AsString <> Mes) and
           (Qry.FieldByName('mes').AsString <> EmptyStr) and
           (Qry.FieldByName('mes').AsInteger > 0) then
         begin
           Mes := Qry.FieldByName('mes').AsString;
-          //Lista.Add(#9 + FS.LongMonthNames[Qry.FieldByName('mes').AsInteger]);
           Dia := EmptyStr;
           Data := TBasicNodeData.Create;
           Data.Caption := FS.LongMonthNames[StrToInt(Mes)];
@@ -748,6 +695,7 @@ begin
           aVirtualTree.CheckType[xNode] := ctTriStateCheckBox;
           monthParent := xNode;
         end;
+        // Day
         if (Qry.FieldByName('dia').AsString <> Dia) and
           (Qry.FieldByName('dia').AsString <> EmptyStr) and
           (Qry.FieldByName('dia').AsInteger > 0) then
@@ -763,54 +711,27 @@ begin
           xNode := aVirtualTree.AddChild(monthParent, Data);
         end;
 
-        // PBar.Position:= RecNo;
         Qry.Next;
       until Qry.EOF;
-      //Lista.SaveToStream(STree);
-      // STree.SaveToFile('TaxonTreeStream.txt');
-      //STree.Position := 0;
-      //try
-        //aVirtualTree.LoadFromStream(STree);
-      //except
-      //{$IFDEF DEBUG}
-      //  Lista.SaveToFile(ConcatPaths([InstallDir, 'date_tree.txt']));
-      //{$ENDIF}
-      //  raise;
-      //end;
     finally
       aVirtualTree.EndUpdate;
-
-      // PBar.Visible:= False;
-      // PBar.Position:= 0;
     end;
     Qry.Close;
   finally
     FreeAndNil(Qry);
-    //Lista.Free;
-    //STree.Free;
   end;
   aVirtualTree.FullCollapse;
-  // for i := 0 to aVirtualTree.Items.Count-1 do
-  // begin
-  // aVirtualTree.Items.Item[i].ImageIndex:= aVirtualTree.Items.Item[i].Level + FirstIconIndex;
-  // aVirtualTree.Items.Item[i].SelectedIndex:= aVirtualTree.Items.Item[i].Level + FirstIconIndex;
-  // end;
   aVirtualTree.ClearSelection;
-  // SBarTaxon.Caption:= 'Táxons com registros: '+IntToStr(TV.Items.Count);
 end;
 
 procedure LoadSiteTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 var
   Mun, Est, Pais: String;
   Qry: TSQLQuery;
-  //Lista: TStrings;
-  //STree: TMemoryStream;
   Data: TSiteNodeData;
   xNode, stateParent, countryParent: PVirtualNode;
 begin
-  //Lista := TStringList.Create;
-  //STree := TMemoryStream.Create;
-  //STree.Position := 0;
+  // Set database query for site hierarchy
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
@@ -1050,10 +971,6 @@ begin
     Open;
     if RecordCount > 0 then
     try
-      // PBar.Max:= RecordCount;
-      // PBar.Position:= 0;
-      // PBar.Visible:= True;
-
       aVirtualTree.BeginUpdate;
       if aVirtualTree.TotalCount > 0 then
         aVirtualTree.Clear;
@@ -1065,9 +982,10 @@ begin
       countryParent := nil;
       stateParent := nil;
 
-      // Create list for the treelist
+      // Add sites for the tree
       Qry.First;
       repeat
+        // Country
         if (Qry.FieldByName('country_name').AsString <> Pais) and
           (Qry.FieldByName('country_name').AsString <> EmptyStr) then
         begin
@@ -1081,6 +999,7 @@ begin
           xNode := aVirtualTree.AddChild(nil, Data);
           countryParent := xNode;
         end;
+        // State
         if (Qry.FieldByName('state_name').AsString <> Est) and
           (Qry.FieldByName('state_name').AsString <> EmptyStr) then
         begin
@@ -1096,6 +1015,7 @@ begin
           xNode := aVirtualTree.AddChild(countryParent, Data);
           stateParent := xNode;
         end;
+        // Municipality
         if (Qry.FieldByName('municipality_name').AsString <> Mun) and
           (Qry.FieldByName('municipality_name').AsString <> EmptyStr) then
         begin
@@ -1111,31 +1031,17 @@ begin
           xNode := aVirtualTree.AddChild(stateParent, Data);
         end;
 
-        // PBar.Position:= RecNo;
         Qry.Next;
       until Qry.EOF;
-      // Lista.SaveToFile('TaxonTree.txt');
-      //Lista.SaveToStream(STree);
-      // STree.SaveToFile('TaxonTreeStream.txt');
-      //STree.Position := 0;
-      //aVirtualTree.LoadFromStream(STree);
     finally
       aVirtualTree.EndUpdate;
     end;
     Close;
   finally
     FreeAndNil(Qry);
-    //Lista.Free;
-    //STree.Free;
   end;
   aVirtualTree.FullCollapse;
-  //for i := 0 to aVirtualTree.TotalCount - 1 do
-  //begin
-  //  aVirtualTree..Items.Item[i].ImageIndex := aVirtualTree.Items.Item[i].Level + FirstIconIndex;
-  //  aVirtualTree.Items.Item[i].SelectedIndex := aVirtualTree.Items.Item[i].Level + FirstIconIndex;
-  //end;
   aVirtualTree.ClearSelection;
-  // SBarTaxon.Caption:= 'Táxons com registros: '+IntToStr(TV.Items.Count);
 end;
 
 { ------------------------------------------------------------------------------------------ }
@@ -1317,34 +1223,6 @@ begin
     begin
       sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', c.capture_date)', 'Capture date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
-    end;
-  end;
-end;
-
-procedure FilterMoltDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
-var
-  sf: Integer;
-begin
-  if aMonth <= 0 then
-  begin
-    sf := aSearchGroup.Add(TSearchGroup.Create);
-    aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y'', m.sample_date)', 'Date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
-  end
-  else
-  begin
-    if aDay <= 0 then
-    begin
-      sf := aSearchGroup.Add(TSearchGroup.Create);
-      aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m'', m.sample_date)', 'Date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
-    end
-    else
-    { Day > 0 }
-    begin
-      sf := aSearchGroup.Add(TSearchGroup.Create);
-      aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', m.sample_date)', 'Date', sdtText,
         crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
@@ -1648,165 +1526,6 @@ begin
   Result := aVirtualTree.CheckedCount;
 end;
 
-function DateFilterToString(aTable: TTableType; aVirtualTree: TBaseVirtualTree; var aTotal: Integer): String;
-var
-  Ano, Mes, Dia: Integer;
-  MesAllChecked, MesAllUnchecked, DiaAllChecked, DiaAllUnchecked: Boolean;
-  idx, i, im, Id: Integer;
-  //FS: TFormatSettings;
-  chList: TStrings;
-  //Data: PBasicNodeRec;
-  //aNode: PVirtualNode;
-
-  //function FilterDates(aYear, aMonth, aDay: Integer): String;
-  //begin
-  //  Result := EmptyStr;
-  //  if aYear <= 0 then
-  //    Exit;
-  //
-  //  case aTable of
-  //    tbNone: ;
-  //    tbRecordHistory: ;
-  //    tbPermits: ;
-  //    tbNests:
-  //      Result := FilterNestDates(aYear, aMonth, aDay);
-  //    tbNestRevisions: ;
-  //    tbEggs: ;
-  //    tbProjects:
-  //      Result := FilterProjectDates(aYear, aMonth, aDay);
-  //    tbInstitutions: ;
-  //    tbPeople:
-  //      Result := FilterPeopleDates(aYear, aMonth, aDay);
-  //    tbExpeditions:
-  //      Result := FilterExpeditionDates(aYear, aMonth, aDay);
-  //    tbSurveys:
-  //      Result := FilterSurveyDates(aYear, aMonth, aDay);
-  //    tbNetsEffort: ;
-  //    tbSightings:
-  //      Result := FilterSightingDates(aYear, aMonth, aDay);
-  //    tbSpecimens:
-  //      Result := FilterSpecimenDates(aYear, aMonth, aDay);
-  //    tbSamplePreps: ;
-  //    tbBands:
-  //      Result := FilterBandDates(aYear, aMonth, aDay);
-  //    tbIndividuals:
-  //      Result := FilterIndividualDates(aYear, aMonth, aDay);
-  //    tbCaptures:
-  //      Result := FilterCaptureDates(aYear, aMonth, aDay);
-  //    tbMolts: ;
-  //    tbImages: ;
-  //    tbAudioLibrary: ;
-  //  end;
-  //end;
-
-begin
-  Result := EmptyStr;
-
-  chList := TStringList.Create;
-  Ano := 0;
-  Mes := 0;
-  Dia := 0;
-  MesAllChecked := True;
-  MesAllUnchecked := True;
-  DiaAllChecked := True;
-  DiaAllUnchecked := True;
-  //FS := TFormatSettings.Create;
-  //aTree.NodeDataSize := SizeOf(TMyRec);
-
-  //for idx := 0 to aTree.CheckedCount - 1 do
-  //begin
-  //  aNode := aTree.GetFirstChecked();
-  //  if .Level = 0 then
-  //  begin
-  //    if aTree.Checked[aTree.Items[idx]] = True then // ano marcado
-  //    begin
-  //      Inc(aTotal);
-  //      Ano := StrToInt(aTree.Items[idx].Text);
-  //      Mes := 0;
-  //      Dia := 0;
-  //      if aTree.Items[idx].HasChildren then // ano possui meses?
-  //      begin
-  //        MesAllChecked := True;
-  //        MesAllUnchecked := True;
-  //        for im := 0 to aTree.Items[idx].Count - 1 do
-  //        begin
-  //          if aTree.Checked[aTree.Items[idx].Item[im]] = True then
-  //          // mês marcado
-  //          begin
-  //            Inc(aTotal);
-  //            MesAllUnchecked := False;
-  //            // Ano:= StrToInt(aTree.Items[idx].Text);
-  //            Mes := IndexText(aTree.Items[idx].Item[im].Text, FS.LongMonthNames) + 1;
-  //            Dia := 0;
-  //            if aTree.Items[idx].Item[im].HasChildren then // mês possui dias?
-  //            begin
-  //              DiaAllChecked := True;
-  //              DiaAllUnchecked := True;
-  //              for Id := 0 to aTree.Items[idx].Item[im].Count - 1 do
-  //              begin
-  //                if aTree.Checked[aTree.Items[idx].Item[im].Item[Id]] = True then // dia marcado
-  //                begin
-  //                  Inc(aTotal);
-  //                  DiaAllUnchecked := False;
-  //                  // Ano:= StrToInt(aTree.Items[idx].Text);
-  //                  // Mes:= IndexText(aTree.Items[idx].Item[im].Text,FS.LongMonthNames)+1;
-  //                  Dia := StrToInt(aTree.Items[idx].Item[im].Item[Id].Text);
-  //                  chList.Add(DateFilterToString(Ano, Mes, Dia));
-  //                end
-  //                else
-  //                begin
-  //                  DiaAllChecked := False;
-  //                end;
-  //              end;
-  //            end
-  //            else
-  //            begin
-  //              chList.Add(DateFilterToString(Ano, Mes, Dia));
-  //            end;
-  //            if (DiaAllChecked = True) or (DiaAllUnchecked = True) then
-  //            begin
-  //              Dia := 0;
-  //              chList.Add(DateFilterToString(Ano, Mes, Dia));
-  //            end;
-  //          end
-  //          else
-  //          begin
-  //            MesAllChecked := False;
-  //          end;
-  //        end;
-  //        if (MesAllChecked = True) or (MesAllUnchecked = True) then
-  //        begin
-  //          Mes := 0;
-  //          Dia := 0;
-  //          chList.Add(DateFilterToString(Ano, Mes, Dia));
-  //        end;
-  //      end
-  //      else
-  //      begin
-  //        chList.Add(DateFilterToString(Ano, Mes, Dia));
-  //      end;
-  //    end;
-  //  end;
-  //end;
-  //
-  //Result := chList.Count > 0;
-  //
-  //aFilterLine := '';
-  //if chList.Count > 0 then
-  //begin
-  //  for i := 0 to chList.Count - 1 do
-  //  begin
-  //    if i > 0 then
-  //      aFilterLine := aFilterLine + ' or ' + chList[i]
-  //    else
-  //      aFilterLine := chList[i];
-  //  end;
-  //  aFilterLine := '(' + aFilterLine + ')';
-  //end;
-  //
-  //FreeAndNil(chList);
-end;
-
 function DateFilterToSearch(aTable: TTableType; aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
 var
   Data, DataM, DataD: PDateNodeData;
@@ -1814,13 +1533,9 @@ var
   sf, aTotal: Integer;
   Ano, Mes, Dia: Integer;
   MesAllChecked, MesAllUnchecked, DiaAllChecked, DiaAllUnchecked: Boolean;
-  //idx, im, Id: Integer;
   L, FBL: String;
   FS: TFormatSettings;
   Lang: Integer;
-  //chList: TStrings;
-  //Data: PBasicNodeRec;
-  //aNode: PVirtualNode;
 
   procedure FilterDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
   begin
@@ -1846,7 +1561,6 @@ var
       //tbBands:         FilterBandDates(aYear, aMonth, aDay, aSearchGroup);
       tbIndividuals:   FilterIndividualDates(aYear, aMonth, aDay, aSearchGroup);
       tbCaptures:      FilterCaptureDates(aYear, aMonth, aDay, aSearchGroup);
-      tbMolts: ;
       tbImages: ;
       tbAudioLibrary: ;
     end;
@@ -1858,6 +1572,7 @@ begin
 
   if aVirtualTree.CheckedCount > 0 then
   begin
+    // Get the date format settings
     L := EmptyStr;
     FBL := EmptyStr;
     GetLanguageIDs(L, FBL);
@@ -1878,28 +1593,32 @@ begin
     Node := aVirtualTree.GetFirst;
     while Assigned(Node) do
     begin
-      if aVirtualTree.CheckState[Node] in [csCheckedNormal, csMixedNormal] then // year checked
+      // year checked
+      if aVirtualTree.CheckState[Node] in [csCheckedNormal, csMixedNormal] then
       begin
         Inc(aTotal);
         Data := aVirtualTree.GetNodeData(Node);
         Ano := StrToInt(Data^.Caption);
         Mes := 0;
         Dia := 0;
-        if aVirtualTree.HasChildren[Node] then // year have months?
+        // year have months?
+        if aVirtualTree.HasChildren[Node] then
         begin
           MesAllChecked := True;
           MesAllUnchecked := True;
           NodeM := aVirtualTree.GetFirstChild(Node);
           while Assigned(NodeM) do
           begin
-            if aVirtualTree.CheckState[NodeM] in [csCheckedNormal, csMixedNormal] then  // month checked
+            // month checked
+            if aVirtualTree.CheckState[NodeM] in [csCheckedNormal, csMixedNormal] then
             begin
               Inc(aTotal);
               DataM := aVirtualTree.GetNodeData(NodeM);
               MesAllUnchecked := False;
               Mes := IndexText(DataM^.Caption, FS.LongMonthNames) + 1;
               Dia := 0;
-              if aVirtualTree.HasChildren[NodeM] then // month have days?
+              // month have days?
+              if aVirtualTree.HasChildren[NodeM] then
               begin
                 DiaAllChecked := True;
                 DiaAllUnchecked := True;
@@ -1907,7 +1626,8 @@ begin
                 NodeD := aVirtualTree.GetFirstChild(NodeM);
                 while Assigned(NodeD) do
                 begin
-                  if aVirtualTree.CheckState[NodeD] = csCheckedNormal then  // day checked
+                  // day checked
+                  if aVirtualTree.CheckState[NodeD] = csCheckedNormal then
                   begin
                     Inc(aTotal);
                     DataD := aVirtualTree.GetNodeData(NodeD);

@@ -8,7 +8,7 @@ object dlgRecVerifications: TdlgRecVerifications
   ClientWidth = 771
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.0.0.1'
+  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow

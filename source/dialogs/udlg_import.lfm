@@ -11,6 +11,7 @@ object dlgImport: TdlgImport
   ClientWidth = 920
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.0.0.4'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

@@ -62,8 +62,6 @@ uses
     aSorting: String = ''; aDirection: String = '');
   procedure SetCapturesSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
-  procedure SetMoltsSQL(const aSQL: TStrings; aFilter: TFilterValue;
-    aSorting: String = ''; aDirection: String = '');
   procedure SetFeathersSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
   procedure SetTaxonRanksSQL(const aSQL: TStrings; aFilter: TFilterValue;
@@ -386,11 +384,6 @@ begin
     tbCaptures:
       begin
         SetCapturesSQL(aSQL, fvNone);
-        //aAlias := TableAliases[aTable] + '.';
-      end;
-    tbMolts:
-      begin
-        SetMoltsSQL(aSQL, fvNone);
         //aAlias := TableAliases[aTable] + '.';
       end;
     tbFeathers:
@@ -1373,52 +1366,6 @@ begin
         Add('WHERE (active_status = 1) AND (marked_status = 1)');
       fvDeleted:
         Add('WHERE (active_status = 0)');
-    end;
-    if Trim(aSorting) <> '' then
-    begin
-      if aDirection = '' then
-        AD := 'ASC'
-      else
-        AD := aDirection;
-      Add('ORDER BY ' + aSorting + {' COLLATE pt_BR ' +} AD);
-    end;
-  end;
-end;
-
-procedure SetMoltsSQL(const aSQL: TStrings; aFilter: TFilterValue; aSorting: String; aDirection: String);
-var
-  AD: String;
-begin
-  with aSQL do
-  begin
-    Clear;
-    Add('SELECT m.*,');
-    Add('   z.full_name AS taxon_name,');
-    Add('   z.order_id AS order_id,');
-    Add('   z.family_id AS family_id,');
-    Add('   z.genus_id AS genus_id,');
-    Add('   z.species_id AS species_id,');
-    Add('   i.full_name AS individual_name,');
-    Add('   p.acronym AS bander_name,');
-    Add('   sv.full_name AS survey_name,');
-    Add('   (b.band_size||'' ''||b.band_number) AS band_name');
-    Add('FROM molts AS m');
-    Add('LEFT JOIN zoo_taxa AS z ON m.taxon_id = z.taxon_id');
-    Add('LEFT JOIN individuals AS i ON m.individual_id = i.individual_id');
-    Add('LEFT JOIN people AS p ON m.bander_id = p.person_id');
-    Add('LEFT JOIN surveys AS sv ON m.survey_id = sv.survey_id');
-    Add('LEFT JOIN bands AS b ON m.band_id = b.band_id');
-    case aFilter of
-      fvNone:
-        ; // do nothing
-      fvReset:
-        Add('WHERE (m.molt_id = -1) AND (m.active_status = 1)');
-      fvAll:
-        Add('WHERE (m.active_status = 1)');
-      fvMarked:
-        Add('WHERE (m.active_status = 1) AND (m.marked_status = 1)');
-      fvDeleted:
-        Add('WHERE (m.active_status = 0)');
     end;
     if Trim(aSorting) <> '' then
     begin

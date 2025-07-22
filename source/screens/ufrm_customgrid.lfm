@@ -101,7 +101,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 447
+          ClientWidth = 464
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
@@ -7012,7 +7012,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 255
+              Width = 276
               FieldName = 'full_name'
             end>
           DataSource = dsAudios
@@ -7210,7 +7210,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'File path'
-              Width = 365
+              Width = 386
               FieldName = 'document_path'
             end>
           DataSource = dsDocs
@@ -7355,7 +7355,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Field'
-              Width = 274
+              Width = 278
             end>
           MouseWheelOption = mwGrid
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
@@ -7369,7 +7369,7 @@ object frmCustomGrid: TfrmCustomGrid
             100
             70
             0
-            274
+            278
           )
           Cells = (
             1
@@ -9980,7 +9980,6 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = 'New molt'
       ImageIndex = 19
       Visible = False
-      OnClick = pmcNewMoltClick
     end
     object pmcNewFeather: TMenuItem
       Caption = 'New feather'
@@ -25288,11 +25287,6 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmPrintColoredBands: TMenuItem
       Caption = 'Colored bands combinations'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintMolts: TMenuItem
-      Caption = 'Molts'
       Enabled = False
       Visible = False
     end

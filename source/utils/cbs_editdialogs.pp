@@ -42,7 +42,6 @@ uses
   function EditBand(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditIndividual(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditCapture(aDataSet: TDataSet; aIndividual: Integer = 0; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditMolt(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditFeather(aDataSet: TDataSet; aIndividual: Integer = 0; aCapture: Integer = 0;
     aSighting: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNest(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
@@ -72,7 +71,7 @@ uses
   cbs_breeding, cbs_birds, cbs_entities, cbs_media,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
-  uedt_nest, uedt_egg, uedt_molt, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
+  uedt_nest, uedt_egg, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
   uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation, uedt_database, uedt_collector,
   uedt_projectmember, uedt_surveymember, uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
@@ -1436,43 +1435,6 @@ begin
     FreeAndNil(edtCapture);
     LogEvent(leaClose, 'Capture edit dialog');
   end;
-end;
-
-function EditMolt(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
-var
-  CloseQueryAfter: Boolean;
-begin
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
-
-  Application.CreateForm(TedtMolt, edtMolt);
-  with edtMolt do
-  try
-    dsLink.DataSet := aDataSet;
-    if IsNew then
-    begin
-      aDataSet.Insert;
-      EditSourceStr := rsInsertedByForm;
-    end else
-    begin
-      aDataSet.Edit;
-      EditSourceStr := rsEditedByForm;
-    end;
-    Result := ShowModal = mrOk;
-    if Result then
-      aDataSet.Post
-    else
-      aDataSet.Cancel;
-  finally
-    FreeAndNil(edtMolt);
-  end;
-
-  if CloseQueryAfter then
-    aDataSet.Close;
 end;
 
 function EditNest(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;

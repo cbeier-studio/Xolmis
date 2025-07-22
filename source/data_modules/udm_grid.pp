@@ -54,7 +54,6 @@ type
     dsBotany: TDataSource;
     dsAudio: TDataSource;
     dsDocuments: TDataSource;
-    dsMolts: TDataSource;
     dsImages: TDataSource;
     dsExpeditions: TDataSource;
     dsSurveys: TDataSource;
@@ -524,7 +523,6 @@ type
     qMethodsupdate_date: TDateTimeField;
     qMethodsuser_inserted: TLongintField;
     qMethodsuser_updated: TLongintField;
-    qMolts: TSQLQuery;
     qImages: TSQLQuery;
     qFeathers: TSQLQuery;
     qMoltsactive_status: TBooleanField;
@@ -1335,10 +1333,6 @@ type
     procedure qMethodsAfterPost(DataSet: TDataSet);
     procedure qMethodsBeforeEdit(DataSet: TDataSet);
     procedure qMethodsBeforePost(DataSet: TDataSet);
-    procedure qMoltsAfterCancel(DataSet: TDataSet);
-    procedure qMoltsAfterPost(DataSet: TDataSet);
-    procedure qMoltsBeforeEdit(DataSet: TDataSet);
-    procedure qMoltsBeforePost(DataSet: TDataSet);
     procedure qNestRevisionsAfterCancel(DataSet: TDataSet);
     procedure qNestRevisionsAfterPost(DataSet: TDataSet);
     procedure qNestRevisionsBeforeEdit(DataSet: TDataSet);
@@ -1541,7 +1535,6 @@ begin
   TranslateBandHistory(qBandHistory);
   TranslateIndividuals(qIndividuals);
   TranslateCaptures(qCaptures);
-  TranslateMolts(qMolts);
   TranslateFeathers(qFeathers);
   TranslateNests(qNests);
   TranslateNestRevisions(qNestRevisions);
@@ -3339,53 +3332,6 @@ begin
 end;
 
 procedure TDMG.qMethodsBeforePost(DataSet: TDataSet);
-begin
-  SetRecordDateUser(DataSet);
-end;
-
-procedure TDMG.qMoltsAfterCancel(DataSet: TDataSet);
-begin
-  if Assigned(OldMolt) then
-    FreeAndNil(OldMolt);
-end;
-
-procedure TDMG.qMoltsAfterPost(DataSet: TDataSet);
-var
-  NewMolt: TMolt;
-  lstDiff: TStrings;
-  D: String;
-begin
-  { Save changes to the record history }
-  if Assigned(OldMolt) then
-  begin
-    NewMolt := TMolt.Create;
-    NewMolt.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
-    try
-      if NewMolt.Diff(OldMolt, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbMolts, haEdited, OldMolt.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
-    finally
-      FreeAndNil(NewMolt);
-      FreeAndNil(OldMolt);
-      FreeAndNil(lstDiff);
-    end;
-  end
-  else
-    WriteRecHistory(tbMolts, haCreated, 0, '', '', '', rsInsertedByForm);
-end;
-
-procedure TDMG.qMoltsBeforeEdit(DataSet: TDataSet);
-begin
-  OldMolt := TMolt.Create(DataSet.FieldByName('molt_id').AsInteger);
-end;
-
-procedure TDMG.qMoltsBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
 end;

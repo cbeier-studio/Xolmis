@@ -55,6 +55,11 @@ type
     FFileName: String;
     function IsRequiredFilled: Boolean;
     procedure ApplyDarkMode;
+    procedure ExportToCSV;
+    procedure ExportToJSON;
+    procedure ExportToODS;
+    procedure ExportToXLSX;
+    procedure ExportToXML;
   public
     property DataSet: TDataSet read FDataSet write FDataSet;
   end;
@@ -65,7 +70,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_dialogs, cbs_locale, cbs_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
+  cbs_global, cbs_dialogs, cbs_locale, cbs_export, cbs_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -109,6 +114,113 @@ begin
   sbRun.Enabled := IsRequiredFilled;
 end;
 
+procedure TdlgExport.ExportToCSV;
+var
+  i: Integer;
+  expField: TExportFieldItem;
+begin
+  DMM.CSVExport.FileName := FFileName;
+  DMM.CSVExport.Dataset := FDataSet;
+  // Set columns to export
+  for i := 0 to cklbColumns.Count - 1 do
+    if cklbColumns.Checked[i] then
+    begin
+      expField := DMM.CSVExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+      expField.ExportedName := cklbColumns.Items[i];
+    end;
+
+  if DMM.CSVExport.Execute > 0 then
+    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
+  else
+    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+end;
+
+procedure TdlgExport.ExportToJSON;
+var
+  i: Integer;
+  expField: TExportFieldItem;
+begin
+  DMM.JSONExport.FileName := FFileName;
+  DMM.JSONExport.Dataset := FDataSet;
+  // Set columns to export
+  for i := 0 to cklbColumns.Count - 1 do
+    if cklbColumns.Checked[i] then
+    begin
+      expField := DMM.JSONExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+      expField.ExportedName := cklbColumns.Items[i];
+    end;
+
+  if DMM.JSONExport.Execute > 0 then
+    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
+  else
+    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+end;
+
+procedure TdlgExport.ExportToODS;
+var
+  i: Integer;
+  expField: TExportFieldItem;
+begin
+  DMM.FPSExport.FormatSettings.ExportFormat := efODS;
+  DMM.FPSExport.FileName := FFileName;
+  DMM.FPSExport.Dataset := FDataSet;
+  // Set columns to export
+  for i := 0 to cklbColumns.Count - 1 do
+    if cklbColumns.Checked[i] then
+    begin
+      expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+      expField.ExportedName := cklbColumns.Items[i];
+    end;
+
+  if DMM.FPSExport.Execute > 0 then
+    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
+  else
+    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+end;
+
+procedure TdlgExport.ExportToXLSX;
+var
+  i: Integer;
+  expField: TExportFieldItem;
+begin
+  DMM.FPSExport.FormatSettings.ExportFormat := efXLSX;
+  DMM.FPSExport.FileName := FFileName;
+  DMM.FPSExport.Dataset := FDataSet;
+  // Set columns to export
+  for i := 0 to cklbColumns.Count - 1 do
+    if cklbColumns.Checked[i] then
+    begin
+      expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+      expField.ExportedName := cklbColumns.Items[i];
+    end;
+
+  if DMM.FPSExport.Execute > 0 then
+    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
+  else
+    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+end;
+
+procedure TdlgExport.ExportToXML;
+var
+  i: Integer;
+  expField: TExportFieldItem;
+begin
+  DMM.XMLExport.FileName := FFileName;
+  DMM.XMLExport.Dataset := FDataSet;
+  // Set columns to export
+  for i := 0 to cklbColumns.Count - 1 do
+    if cklbColumns.Checked[i] then
+    begin
+      expField := DMM.XMLExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
+      expField.ExportedName := cklbColumns.Items[i];
+    end;
+
+  if DMM.XMLExport.Execute > 0 then
+    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
+  else
+    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+end;
+
 procedure TdlgExport.FormShow(Sender: TObject);
 var
   i: Integer;
@@ -116,6 +228,7 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  // Fill the columns checklist
   with FDataSet do
   begin
     for i := 0 to FDataSet.FieldCount - 1 do
@@ -134,6 +247,7 @@ var
 begin
   Result := False;
 
+  // Check if there are columns checked
   ColCount := 0;
   for i := 0 to cklbColumns.Count - 1 do
     if cklbColumns.Checked[i] then
@@ -143,168 +257,43 @@ begin
 end;
 
 procedure TdlgExport.sbRunClick(Sender: TObject);
-var
-  i: Integer;
-  expField: TExportFieldItem;
 begin
+  // Open save dialog
   SaveDlg.InitialDir := XSettings.LastPathUsed;
-  case tvFiletype.Selected.Index of
-    0: // CSV
-    begin
-      SaveDlg.DefaultExt := '.csv';
-      SaveDlg.Filter := 'Comma Separated Values (CSV)|*.csv';
-    end;
-    1: // JSON
-    begin
-      SaveDlg.DefaultExt := '.json';
-      SaveDlg.Filter := 'JavaScript Object Notation (JSON)|*.json';
-    end;
-    2: // ODS
-    begin
-      SaveDlg.DefaultExt := '.ods';
-      SaveDlg.Filter := 'Open Document Spreadsheet|*.ods';
-    end;
-    3: // XLSX
-    begin
-      SaveDlg.DefaultExt := '.xlsx';
-      SaveDlg.Filter := 'Microsoft Excel|*.xlsx';
-    end;
-    4: // XML
-    begin
-      SaveDlg.DefaultExt := '.xml';
-      SaveDlg.Filter := 'Extensible Markup Language (XML)|*.xml';
-    end;
-  end;
+  SaveDlg.DefaultExt := ExportFileExtensions[tvFiletype.Selected.Index];
+  SaveDlg.Filter := ExportFileFilters[tvFiletype.Selected.Index];
   if SaveDlg.Execute then
     FFileName := SaveDlg.FileName
   else
     Exit;
 
+  // Disable controls
   sbRun.Enabled := False;
   tvFiletype.Enabled := False;
   cklbColumns.Enabled := False;
   btnOptions.Enabled := False;
   ckUseDarwinCoreFormat.Enabled := False;
 
+  // Save the last path used
   XSettings.LastPathUsed := ExtractFilePath(FFileName);
 
+  // Export data to the filetype selected
   case tvFiletype.Selected.Index of
-    0: // CSV
-    begin
-      DMM.CSVExport.FileName := FFileName;
-      DMM.CSVExport.Dataset := FDataSet;
-      for i := 0 to cklbColumns.Count - 1 do
-        if cklbColumns.Checked[i] then
-        begin
-          expField := DMM.CSVExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-          expField.ExportedName := cklbColumns.Items[i];
-        end;
-
-      if DMM.CSVExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-      else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
-    end;
-    1: // JSON
-    begin
-      DMM.JSONExport.FileName := FFileName;
-      DMM.JSONExport.Dataset := FDataSet;
-      for i := 0 to cklbColumns.Count - 1 do
-        if cklbColumns.Checked[i] then
-        begin
-          expField := DMM.JSONExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-          expField.ExportedName := cklbColumns.Items[i];
-        end;
-
-      if DMM.JSONExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-      else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
-    end;
-    2: // ODS
-    begin
-      DMM.FPSExport.FormatSettings.ExportFormat := efODS;
-      DMM.FPSExport.FileName := FFileName;
-      DMM.FPSExport.Dataset := FDataSet;
-      for i := 0 to cklbColumns.Count - 1 do
-        if cklbColumns.Checked[i] then
-        begin
-          expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-          expField.ExportedName := cklbColumns.Items[i];
-        end;
-
-      if DMM.FPSExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-      else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
-    end;
-    3: // XLSX
-    begin
-      DMM.FPSExport.FormatSettings.ExportFormat := efXLSX;
-      DMM.FPSExport.FileName := FFileName;
-      DMM.FPSExport.Dataset := FDataSet;
-      for i := 0 to cklbColumns.Count - 1 do
-        if cklbColumns.Checked[i] then
-        begin
-          expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-          expField.ExportedName := cklbColumns.Items[i];
-        end;
-
-      if DMM.FPSExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-      else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
-    end;
-    4: // XML
-    begin
-      DMM.XMLExport.FileName := FFileName;
-      DMM.XMLExport.Dataset := FDataSet;
-      for i := 0 to cklbColumns.Count - 1 do
-        if cklbColumns.Checked[i] then
-        begin
-          expField := DMM.XMLExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-          expField.ExportedName := cklbColumns.Items[i];
-        end;
-
-      if DMM.XMLExport.Execute > 0 then
-        MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-      else
-        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
-    end;
+    0: ExportToCSV;
+    1: ExportToJSON;
+    2: ExportToODS;
+    3: ExportToXLSX;
+    4: ExportToXML;
   end;
 
+  // Close dialog
   ModalResult := mrOk;
 end;
 
 procedure TdlgExport.tvFiletypeSelectionChanged(Sender: TObject);
 begin
-  case tvFiletype.Selected.Index of
-    0: // CSV
-    begin
-      btnOptions.Enabled := True;
-      ckUseDarwinCoreFormat.Enabled := True;
-    end;
-    1: // JSON
-    begin
-      btnOptions.Enabled := False;
-      ckUseDarwinCoreFormat.Enabled := True;
-    end;
-    2: // ODS
-    begin
-      btnOptions.Enabled := False;
-      ckUseDarwinCoreFormat.Enabled := True;
-    end;
-    3: // XLSX
-    begin
-      btnOptions.Enabled := False;
-      ckUseDarwinCoreFormat.Enabled := True;
-    end;
-    4: // XML
-    begin
-      btnOptions.Enabled := False;
-      ckUseDarwinCoreFormat.Enabled := True;
-    end;
-  end;
+  ckUseDarwinCoreFormat.Enabled := True;
+  btnOptions.Enabled := tvFiletype.Selected.Index = 0;
 
   sbRun.Enabled := IsRequiredFilled;
 end;

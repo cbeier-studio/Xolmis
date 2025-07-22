@@ -354,7 +354,6 @@
 {"hash":88651193,"name":"tfrmcustomgrid.pmprintcapturesbylocality.caption","sourcebytes":[67,97,112,116,117,114,101,115,32,112,101,114,32,108,111,99,97,108,105,116,121],"value":"Captures per locality"},
 {"hash":136807518,"name":"tfrmcustomgrid.pmprintcapturesbytaxon.caption","sourcebytes":[67,97,112,116,117,114,101,115,32,112,101,114,32,116,97,120,111,110],"value":"Captures per taxon"},
 {"hash":45226531,"name":"tfrmcustomgrid.pmprintcoloredbands.caption","sourcebytes":[67,111,108,111,114,101,100,32,98,97,110,100,115,32,99,111,109,98,105,110,97,116,105,111,110,115],"value":"Colored bands combinations"},
-{"hash":5530547,"name":"tfrmcustomgrid.pmprintmolts.caption","sourcebytes":[77,111,108,116,115],"value":"Molts"},
 {"hash":193652819,"name":"tfrmcustomgrid.pmprintfeathers.caption","sourcebytes":[70,101,97,116,104,101,114,115],"value":"Feathers"},
 {"hash":5556915,"name":"tfrmcustomgrid.pmprintnests.caption","sourcebytes":[78,101,115,116,115],"value":"Nests"},
 {"hash":45614436,"name":"tfrmcustomgrid.pmprintnestsbyproject.caption","sourcebytes":[78,101,115,116,115,32,112,101,114,32,112,114,111,106,101,99,116],"value":"Nests per project"},

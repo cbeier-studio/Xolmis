@@ -55,7 +55,6 @@ type
     actOpenTaxonRanks: TAction;
     actViewBandsBalance: TAction;
     actPrint: TAction;
-    actOpenMolts: TAction;
     actOpenEggs: TAction;
     actOpenNestRevisions: TAction;
     actNewBands: TAction;
@@ -122,7 +121,6 @@ type
     mmSampling: TMenuItem;
     mmiIndividuals: TMenuItem;
     mmiCaptures: TMenuItem;
-    mmiMolts: TMenuItem;
     mmbNests: TMenuItem;
     mmbNestRevisions: TMenuItem;
     mmbEggs: TMenuItem;
@@ -275,7 +273,6 @@ type
     procedure actOpenInstitutionsExecute(Sender: TObject);
     procedure actOpenManualExecute(Sender: TObject);
     procedure actOpenMethodsExecute(Sender: TObject);
-    procedure actOpenMoltsExecute(Sender: TObject);
     procedure actOpenNestRevisionsExecute(Sender: TObject);
     procedure actOpenNestsExecute(Sender: TObject);
     procedure actOpenNetStationsExecute(Sender: TObject);
@@ -361,7 +358,6 @@ var
   fBands: TfrmCustomGrid;
   fIndividuals: TfrmCustomGrid;
   fCaptures: TfrmCustomGrid;
-  fMolts: TfrmCustomGrid;
   fFeathers: TfrmCustomGrid;
   fNests: TfrmCustomGrid;
   fNestRevisions: TfrmCustomGrid;
@@ -628,11 +624,6 @@ end;
 procedure TfrmMain.actOpenMethodsExecute(Sender: TObject);
 begin
   OpenForm(Sender, fMethods, tbMethods, rsTitleMethods, actOpenMethods.ImageIndex);
-end;
-
-procedure TfrmMain.actOpenMoltsExecute(Sender: TObject);
-begin
-  OpenForm(Sender, fMolts, tbMolts, rsTitleMolts, actOpenMolts.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenNestRevisionsExecute(Sender: TObject);
@@ -1153,7 +1144,7 @@ begin
       tbBands:          ActiveQuery := DMG.qBands;
       tbIndividuals:    ActiveQuery := DMG.qIndividuals;
       tbCaptures:       ActiveQuery := DMG.qCaptures;
-      tbMolts:          ActiveQuery := DMG.qMolts;
+      tbFeathers:       ActiveQuery := DMG.qFeathers;
       tbNests:          ActiveQuery := DMG.qNests;
       tbNestRevisions:  ActiveQuery := DMG.qNestRevisions;
       tbEggs:           ActiveQuery := DMG.qEggs;
@@ -1214,7 +1205,7 @@ begin
       tbBands:          fBands := nil;
       tbIndividuals:    fIndividuals := nil;
       tbCaptures:       fCaptures := nil;
-      tbMolts:          fMolts := nil;
+      tbFeathers:       fFeathers := nil;
       tbNests:          fNests := nil;
       tbNestRevisions:  fNestRevisions := nil;
       tbEggs:           fEggs := nil;

@@ -134,7 +134,7 @@ begin
   end;
 end;
 
-// Mostra a imagem num TImage
+// Show image in a TImage
 procedure ExibeFoto(DataSet: TDataset; aBlobField: String; TargetImage: TImage);
 var
   thumb: TBGRABitmap;
@@ -160,7 +160,7 @@ begin
     TargetImage.Picture := nil;
 end;
 
-// Grava uma imagem em um campo Blob
+// Write an image in a Blob field
 procedure GravaFoto(DataSet: TDataset; aBlobField, FileName: String);
 var
   ext: String;
@@ -200,7 +200,7 @@ begin
   end;
 end;
 
-// Grava uma imagem em um campo Blob
+// Write an image in a Blob field
 procedure GravaJpeg(DataSet: TDataset; aBlobField: String; JpgImg: TJpegImage);
 var
   MS: TMemoryStream;
@@ -223,7 +223,7 @@ begin
   end;
 end;
 
-// Apaga um campo Blob
+// Clear a Blob field
 procedure ExcluiFoto(DataSet: TDataset; aBlobField: String);
 begin
   if (DataSet.State in [dsEdit, dsInsert]) and
@@ -231,7 +231,7 @@ begin
     (DataSet.FieldByName(aBlobField) as TBlobField).Clear;
 end;
 
-// Salva a imagem para um arquivo
+// Save an image stored in a Blob field to file
 procedure ExportaFoto(DataSet: TDataset; aBlobField, FileName: String);
 var
   MS: TMemoryStream;
@@ -467,29 +467,11 @@ begin
           if (FileExists(imgPath)) then
           begin
             Edit;
-            try
-              FieldByName('image_thumbnail').Clear;
-              //imgThumb := GetFileThumbnail(imgPath, thumbSize, thumbSize, BGRAWhite, True);
-              //
-              //jpgThumb := TJpegImage.Create;
-              //jpgThumb.SetSize(imgThumb.Width, imgThumb.Height);
-              //jpgThumb.CompressionQuality := thumbQuality;
-              //jpgThumb.Canvas.Draw(0, 0, imgThumb.Bitmap);
-              //
-              //sthumb := TMemoryStream.Create;
-              //sthumb.Position := OffsetMemoryStream;
-              //jpgThumb.SaveToStream(sthumb);
-              //sthumb.Position := OffsetMemoryStream;
-              //TBlobField(FieldByName('image_thumbnail')).LoadFromStream(CreateImageThumbnail(imgPath));
-              CreateImageThumbnail(imgPath, Qry);
+            FieldByName('image_thumbnail').Clear;
+            CreateImageThumbnail(imgPath, Qry);
 
-              Post;
-              ApplyUpdates;
-            finally
-              //sthumb.Free;
-              //imgThumb.Free;
-              //jpgThumb.Free;
-            end;
+            Post;
+            ApplyUpdates;
           end;
           dlgProgress.Position := Qry.RecNo;
           Application.ProcessMessages;

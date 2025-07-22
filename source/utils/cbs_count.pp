@@ -273,8 +273,6 @@ begin
       CountIndividualsSQL(aSQL);
     tbCaptures:
       CountCapturesSQL(aSQL);
-    tbMolts:
-      ;
     tbImages:
       ;
     tbAudioLibrary:

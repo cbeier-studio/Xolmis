@@ -564,7 +564,6 @@ resourcestring
   procedure TranslateBandHistory(aDataSet: TDataSet);
   procedure TranslateIndividuals(aDataSet: TDataSet);
   procedure TranslateCaptures(aDataSet: TDataSet);
-  procedure TranslateMolts(aDataSet: TDataSet);
   procedure TranslateFeathers(aDataSet: TDataSet);
   procedure TranslateNests(aDataSet: TDataSet);
   procedure TranslateNestOwners(aDataSet: TDataSet);
@@ -1708,6 +1707,8 @@ begin
         'death_day':              Fields[i].DisplayLabel := rscDeathDay;
         'death_month':            Fields[i].DisplayLabel := rscDeathMonth;
         'death_year':             Fields[i].DisplayLabel := rscDeathYear;
+        'banding_date':           Fields[i].DisplayLabel := rscBandingDate;
+        'band_change_date':       Fields[i].DisplayLabel := rscBandChangeDate;
         'recognizable_markings':  Fields[i].DisplayLabel := rscRecognizableMarkings;
         'captures_tally':         Fields[i].DisplayLabel := rscCaptures;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
@@ -1831,98 +1832,6 @@ begin
         'state_id':               Fields[i].DisplayLabel := rscStateID;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'capture_id':             Fields[i].DisplayLabel := rscId;
-        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
-        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
-        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
-        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
-        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
-        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
-      end;
-    end;
-  end;
-end;
-
-procedure TranslateMolts(aDataSet: TDataSet);
-var
-  i: Integer;
-begin
-  with aDataSet do
-  begin
-    for i := 0 to Fields.Count - 1 do
-    begin
-      case Fields[i].FieldName of
-        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
-        'survey_id':              Fields[i].DisplayLabel := rscSurveyID;
-        'survey_name':            Fields[i].DisplayLabel := rscSurvey;
-        'capture_id':             Fields[i].DisplayLabel := rscCaptureID;
-        'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
-        'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
-        'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
-        'individual_name':        Fields[i].DisplayLabel := rscIndividual;
-        'bander_id':              Fields[i].DisplayLabel := rscBanderID;
-        'bander_name':            Fields[i].DisplayLabel := rscBander;
-        'band_id':                Fields[i].DisplayLabel := rscBandID;
-        'band_name':              Fields[i].DisplayLabel := rscBand;
-        'sample_date':            Fields[i].DisplayLabel := rscDate;
-        'sample_time':            Fields[i].DisplayLabel := rscTime;
-        'p1_molt':                Fields[i].DisplayLabel := rscP1;
-        'p2_molt':                Fields[i].DisplayLabel := rscP2;
-        'p3_molt':                Fields[i].DisplayLabel := rscP3;
-        'p4_molt':                Fields[i].DisplayLabel := rscP4;
-        'p5_molt':                Fields[i].DisplayLabel := rscP5;
-        'p6_molt':                Fields[i].DisplayLabel := rscP6;
-        'p7_molt':                Fields[i].DisplayLabel := rscP7;
-        'p8_molt':                Fields[i].DisplayLabel := rscP8;
-        'p9_molt':                Fields[i].DisplayLabel := rscP9;
-        'p10_molt':               Fields[i].DisplayLabel := rscP10;
-        's1_molt':                Fields[i].DisplayLabel := rscS1;
-        's2_molt':                Fields[i].DisplayLabel := rscS2;
-        's3_molt':                Fields[i].DisplayLabel := rscS3;
-        's4_molt':                Fields[i].DisplayLabel := rscS4;
-        's5_molt':                Fields[i].DisplayLabel := rscS5;
-        's6_molt':                Fields[i].DisplayLabel := rscS6;
-        's7_molt':                Fields[i].DisplayLabel := rscS7;
-        's8_molt':                Fields[i].DisplayLabel := rscS8;
-        's9_molt':                Fields[i].DisplayLabel := rscS9;
-        'r1_molt':                Fields[i].DisplayLabel := rscR1;
-        'r2_molt':                Fields[i].DisplayLabel := rscR2;
-        'r3_molt':                Fields[i].DisplayLabel := rscR3;
-        'r4_molt':                Fields[i].DisplayLabel := rscR4;
-        'r5_molt':                Fields[i].DisplayLabel := rscR5;
-        'r6_molt':                Fields[i].DisplayLabel := rscR6;
-        'pc1_molt':               Fields[i].DisplayLabel := rscPC1;
-        'pc2_molt':               Fields[i].DisplayLabel := rscPC2;
-        'pc3_molt':               Fields[i].DisplayLabel := rscPC3;
-        'pc4_molt':               Fields[i].DisplayLabel := rscPC4;
-        'pc5_molt':               Fields[i].DisplayLabel := rscPC5;
-        'pc6_molt':               Fields[i].DisplayLabel := rscPC6;
-        'pc7_molt':               Fields[i].DisplayLabel := rscPC7;
-        'pc8_molt':               Fields[i].DisplayLabel := rscPC8;
-        'pc9_molt':               Fields[i].DisplayLabel := rscPC9;
-        'gc1_molt':               Fields[i].DisplayLabel := rscGC1;
-        'gc2_molt':               Fields[i].DisplayLabel := rscGC2;
-        'gc3_molt':               Fields[i].DisplayLabel := rscGC3;
-        'gc4_molt':               Fields[i].DisplayLabel := rscGC4;
-        'gc5_molt':               Fields[i].DisplayLabel := rscGC5;
-        'gc6_molt':               Fields[i].DisplayLabel := rscGC6;
-        'gc7_molt':               Fields[i].DisplayLabel := rscGC7;
-        'gc8_molt':               Fields[i].DisplayLabel := rscGC8;
-        'gc9_molt':               Fields[i].DisplayLabel := rscGC9;
-        'gc10_molt':              Fields[i].DisplayLabel := rscGC10;
-        'cc_molt':                Fields[i].DisplayLabel := rscCC;
-        'al1_molt':               Fields[i].DisplayLabel := rscAl1;
-        'al2_molt':               Fields[i].DisplayLabel := rscAl2;
-        'al3_molt':               Fields[i].DisplayLabel := rscAl3;
-        'mc_molt':                Fields[i].DisplayLabel := rscMC;
-        'lc_molt':                Fields[i].DisplayLabel := rscLC;
-        'growth_bar_size':        Fields[i].DisplayLabel := rscGrowthBarWidth;
-        'full_name':              Fields[i].DisplayLabel := rscFullName;
-        'notes':                  Fields[i].DisplayLabel := rscNotes;
-        'molt_id':                Fields[i].DisplayLabel := rscId;
-        'order_id':               Fields[i].DisplayLabel := rscOrderID;
-        'family_id':              Fields[i].DisplayLabel := rscFamilyID;
-        'genus_id':               Fields[i].DisplayLabel := rscGenusID;
-        'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
         'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
