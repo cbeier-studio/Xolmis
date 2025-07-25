@@ -30,6 +30,10 @@ type
   { TDMG }
 
   TDMG = class(TDataModule)
+    dsProjectGoals: TDataSource;
+    dsProjectChronogram: TDataSource;
+    dsProjectBudget: TDataSource;
+    dsProjectExpenses: TDataSource;
     dsFeathers: TDataSource;
     dsTaxa: TDataSource;
     dsBandHistory: TDataSource;
@@ -1451,7 +1455,6 @@ type
     OldBandHistory: TBandHistory;
     OldIndividual: TIndividual;
     OldCapture: TCapture;
-    OldMolt: TMolt;
     OldFeather: TFeather;
     OldSpecimen: TSpecimen;
     OldSamplePrep: TSamplePrep;

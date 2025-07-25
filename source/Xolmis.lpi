@@ -186,7 +186,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="461"/>
+      <BuildNr Value="462"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1206,13 +1206,6 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="screens\ufrm_dashboard.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmDashboard"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
         <Filename Value="screens\ufrm_geoconverter.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmGeoConverter"/>
@@ -1246,10 +1239,6 @@
         <ComponentName Value="frmTaxa"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="screens\uthread_dashboard.pp"/>
-        <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="models\cbs_media.pp"/>
@@ -1374,6 +1363,10 @@
         <ComponentName Value="dlgSelectRecord"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\cbs_dataconst.pp"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
     <Debugger>

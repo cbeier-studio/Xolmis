@@ -3721,26 +3721,7 @@ begin
   FDateCols.Add(rscBandChangeDate);
   FDateCols.Add(rscBirthDate);
   FDateCols.Add(rscDeathDate);
-  //FDateCols.Add(rscPlantEdgeDistance);
-  //FDateCols.Add(rscPlantCenterDistance);
-  //FDateCols.Add(rscCover);
-  //FDateCols.Add(rscObserver);
-  //FDateCols.Add(rscObserver1);
-  //FDateCols.Add(rscObserver2);
-  //FDateCols.Add(rscCarrier);
-  //FDateCols.Add(rscBander);
-  //FDateCols.Add(rscAnnotator);
-  //FDateCols.Add(rscPhotographer1);
-  //FDateCols.Add(rscPhotographer2);
-  //FDateCols.Add(rscProject);
-  //FDateCols.Add(rscIndividual);
-  //FDateCols.Add(rscFather);
-  //FDateCols.Add(rscMother);
-  //FDateCols.Add(rscNest);
-  //FDateCols.Add(rscEgg);
-  //FDateCols.Add(rscBand);
-  //FDateCols.Add(rscDoubleBand);
-  //FDateCols.Add(rscRemovedBand);
+
   FDateCols.Sort;
 end;
 
@@ -3776,10 +3757,7 @@ begin
   FIntegerCols.Add(rscNewCaptures);
   FIntegerCols.Add(rscRecaptures);
   FIntegerCols.Add(rscUnbanded);
-  //FIntegerCols.Add(rscEgg);
-  //FIntegerCols.Add(rscBand);
-  //FIntegerCols.Add(rscDoubleBand);
-  //FIntegerCols.Add(rscRemovedBand);
+
   FIntegerCols.Sort;
 end;
 
@@ -3819,6 +3797,7 @@ begin
   FNumericCols.Add(rscGrowthBarWidth);
   FNumericCols.Add(rscBarbDensity);
   FNumericCols.Add(rscPercentGrown);
+
   FNumericCols.Sort;
 end;
 
@@ -3863,6 +3842,7 @@ begin
   FSearchableCols.Add(rscRemovedBand);
   FSearchableCols.Add(rscPermanentNet);
   FSearchableCols.Add(rscMistnet);
+
   FSearchableCols.Sort;
 end;
 
@@ -3880,28 +3860,7 @@ begin
   FTimeCols.Add(rscCloseTime4);
   FTimeCols.Add(rscStartTime);
   FTimeCols.Add(rscEndTime);
-  //FTimeCols.Add(rscInternalHeight);
-  //FTimeCols.Add(rscExternalHeight);
-  //FTimeCols.Add(rscPlantEdgeDistance);
-  //FTimeCols.Add(rscPlantCenterDistance);
-  //FTimeCols.Add(rscCover);
-  //FTimeCols.Add(rscObserver);
-  //FTimeCols.Add(rscObserver1);
-  //FTimeCols.Add(rscObserver2);
-  //FTimeCols.Add(rscCarrier);
-  //FTimeCols.Add(rscBander);
-  //FTimeCols.Add(rscAnnotator);
-  //FTimeCols.Add(rscPhotographer1);
-  //FTimeCols.Add(rscPhotographer2);
-  //FTimeCols.Add(rscProject);
-  //FTimeCols.Add(rscIndividual);
-  //FTimeCols.Add(rscFather);
-  //FTimeCols.Add(rscMother);
-  //FTimeCols.Add(rscNest);
-  //FTimeCols.Add(rscEgg);
-  //FTimeCols.Add(rscBand);
-  //FTimeCols.Add(rscDoubleBand);
-  //FTimeCols.Add(rscRemovedBand);
+
   FTimeCols.Sort;
 end;
 

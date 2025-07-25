@@ -7,6 +7,7 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1243
   ParentFont = True
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -83,7 +84,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            327
+            348
           )
         end
       end
@@ -9155,9 +9156,6 @@ object frmCustomGrid: TfrmCustomGrid
         Rounding.RoundX = 4
         Rounding.RoundY = 4
         TabOrder = 0
-        OnClick = pChildTag1Click
-        OnMouseEnter = pChildTag1MouseEnter
-        OnMouseLeave = pChildTag1MouseLeave
         object lblChildTag1: TLabel
           AnchorSideLeft.Control = pChildTag1
           AnchorSideTop.Control = pChildTag1
@@ -9166,9 +9164,6 @@ object frmCustomGrid: TfrmCustomGrid
           Top = 8
           Width = 34
           Caption = 'Model'
-          OnClick = pChildTag1Click
-          OnMouseEnter = pChildTag1MouseEnter
-          OnMouseLeave = pChildTag1MouseLeave
         end
         object pChildCount1: TBCPanel
           AnchorSideLeft.Control = lblChildTag1
@@ -9220,9 +9215,6 @@ object frmCustomGrid: TfrmCustomGrid
           Rounding.RoundY = 12
           TabOrder = 0
           Visible = False
-          OnClick = pChildTag1Click
-          OnMouseEnter = pChildTag1MouseEnter
-          OnMouseLeave = pChildTag1MouseLeave
           object lblChildCount1: TLabel
             Left = 9
             Height = 15
@@ -9234,9 +9226,6 @@ object frmCustomGrid: TfrmCustomGrid
             Font.Style = [fsBold]
             Layout = tlCenter
             ParentFont = False
-            OnClick = pChildTag1Click
-            OnMouseEnter = pChildTag1MouseEnter
-            OnMouseLeave = pChildTag1MouseLeave
           end
         end
       end

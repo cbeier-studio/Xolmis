@@ -21,7 +21,7 @@ unit cbs_conversions;
 interface
 
 uses
-  Classes, SysUtils, Forms, RegExpr;
+  Classes, SysUtils, Forms, RegExpr, DateUtils;
 
   function WildcardWords(aText: String; aWildcard: String = '%'): String;
   function WildcardSyllables(aText: String; aWildcard: String = '%'): String;
@@ -38,7 +38,7 @@ uses
   // Date and time treatment
   function TextToDate(aValue: String): TDate;
   function TextToTime(aValue: String): TTime;
-  function DartISO8601ToPascal(aValue: String): String;
+  function DartISO8601ToDate(aValue: String): TDateTime;
 
   // Numeric treatment
   function StrToIntOrZero(aValue: String): Integer;
@@ -216,11 +216,14 @@ begin
     Result := NullTime;
 end;
 
-function DartISO8601ToPascal(aValue: String): String;
+function DartISO8601ToDate(aValue: String): TDateTime;
+var
+  Dt: TDateTime;
 begin
-  Result := aValue;
+  Result := NullDateTime;
   if Pos('.', aValue) > 0 then
-    Result := Copy(aValue, 1, Pos('.', aValue) - 1);
+    if TryISO8601ToDate(Copy(aValue, 1, Pos('.', aValue) - 1), Dt, True) then
+      Result := Dt;
 end;
 
 { --------------------------------------------------------- }

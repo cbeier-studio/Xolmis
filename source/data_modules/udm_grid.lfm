@@ -19060,4 +19060,24 @@ object DMG: TDMG
     Left = 115
     Top = 252
   end
+  object dsProjectGoals: TDataSource
+    DataSet = qProjectGoals
+    Left = 610
+    Top = 422
+  end
+  object dsProjectChronogram: TDataSource
+    DataSet = qProjectChronogram
+    Left = 610
+    Top = 478
+  end
+  object dsProjectBudget: TDataSource
+    DataSet = qProjectBudget
+    Left = 610
+    Top = 531
+  end
+  object dsProjectExpenses: TDataSource
+    DataSet = qProjectExpenses
+    Left = 610
+    Top = 584
+  end
 end

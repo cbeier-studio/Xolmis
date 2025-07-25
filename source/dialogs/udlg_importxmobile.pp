@@ -142,8 +142,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_users, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis,
-  cbs_birds, cbs_fullnames, cbs_themes, uDarkStyleParams,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis,
+  cbs_birds, cbs_dataconst, cbs_themes, uDarkStyleParams,
   udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading;
 
 {$R *.lfm}
@@ -465,14 +465,14 @@ begin
   Result := 0;
 
   case aInventory.FType of
-    invQualitativeFree: Result := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeFree);
-    invQualitativeTimed: Result := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeTimed);
-    invQualitativeInterval: Result := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeInterval);
-    invMackinnonList: Result := GetKey('methods', 'method_id', 'method_name', rsMobileMackinnonList);
-    invTransectionCount: Result := GetKey('methods', 'method_id', 'method_name', rsMobileTransectionCount);
-    invPointCount: Result := GetKey('methods', 'method_id', 'method_name', rsMobilePointCount);
-    invBanding: Result := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
-    invCasual: Result := GetKey('methods', 'method_id', 'method_name', rsMobileCasual);
+    invQualitativeFree: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeFree);
+    invQualitativeTimed: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeTimed);
+    invQualitativeInterval: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeInterval);
+    invMackinnonList: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileMackinnonList);
+    invTransectionCount: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectionCount);
+    invPointCount: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointCount);
+    invBanding: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
+    invCasual: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileCasual);
   end;
 end;
 
@@ -486,7 +486,7 @@ begin
   Nest := TNest.Create();
   try
     aLocality := GetSiteKey(aNest.FLocalityName);
-    aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name', aNest.FSpeciesName);
+    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, aNest.FSpeciesName);
 
     if Nest.Find(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime) then
       Result := Nest.Id;
@@ -506,7 +506,7 @@ begin
   Specimen := TSpecimen.Create();
   try
     aLocality := GetSiteKey(aSpecimen.FLocality);
-    aTaxon := GetKey('zoo_taxa', 'taxon_id', 'full_name', aSpecimen.FSpeciesName);
+    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, aSpecimen.FSpeciesName);
     DecodeDate(aSpecimen.FSampleTime, y, m, d);
 
     if Specimen.Find(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality) then
@@ -546,7 +546,7 @@ begin
   begin
     if FindDlg(tbPeople, gridMap, aKey, '', 'acronym') then
     begin
-      aObserverName := GetName('people', 'acronym', 'person_id', aKey);
+      aObserverName := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, aKey);
       case FContentType of
         mctEmpty: ;
         mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
@@ -560,9 +560,9 @@ begin
   // Locality
   if gridMap.Col = 4 then
   begin
-    if FindSiteDlg([gfAll], gridMap, aKey, '', 'site_name') then
+    if FindSiteDlg([gfAll], gridMap, aKey, '', COL_SITE_NAME) then
     begin
-      aLocalityName := GetName('gazetteer', 'site_name', 'site_id', aKey);
+      aLocalityName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aKey);
       case FContentType of
         mctEmpty: ;
         mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
@@ -583,7 +583,7 @@ begin
         if FindDlg(tbSurveys, gridMap, aKey) then
         begin
           FInventoryList[gridMap.Row - 1].FSurveyKey := aKey;
-          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('surveys', 'full_name', 'survey_id', aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aKey);
         end;
       end;
       mctNest, mctNests:
@@ -591,7 +591,7 @@ begin
         if FindDlg(tbNests, gridMap, aKey) then
         begin
           FNestList[gridMap.Row - 1].FNestKey := aKey;
-          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('nests', 'full_name', 'nest_id', aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('nests', COL_FULL_NAME, COL_NEST_ID, aKey);
         end;
       end;
       mctSpecimens:
@@ -599,7 +599,7 @@ begin
         if FindDlg(tbSpecimens, gridMap, aKey) then
         begin
           FSpecimenList[gridMap.Row - 1].FSpecimenKey := aKey;
-          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('specimens', 'full_name', 'specimen_id', aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aKey);
         end;
       end;
     end;
@@ -638,7 +638,7 @@ begin
       begin
         if FindSiteDlg([gfAll], Grid, aLocalityKey, Key, 'site_name') then
         begin
-          aLocalityName := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+          aLocalityName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
           case FContentType of
             mctEmpty: ;
             mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
@@ -721,7 +721,7 @@ begin
       for Egg in Nest.FEggList do
       begin
         aEgg.Clear;
-        aObserverId := GetKey('people', 'person_id', 'acronym', Nest.FObserver);
+        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Nest.FObserver);
         aDate := Egg.FSampleTime;
 
         if aEgg.Find(Nest.FNestKey, Egg.FFieldNumber, DateToStr(aDate), aObserverId) then
@@ -828,7 +828,7 @@ begin
               FreeAndNil(aOldSurvey);
             end;
             // insert survey member, if not exists
-            aObserverKey := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+            aObserverKey := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
             ImportSurveyMember(aSurveyKey, aObserverKey);
             // insert or update sightings from species list
             ImportSpecies(Inventory);
@@ -838,7 +838,7 @@ begin
             ImportWeather(Inventory);
 
             mProgress.Lines.Add(Format(rsMobileSurveyUpdated,
-              [aSurveyKey, GetName('surveys', 'full_name', 'survey_id', aSurveyKey)]));
+              [aSurveyKey, GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
           end
           else
           begin
@@ -850,7 +850,7 @@ begin
             // write record history
             WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByImport);
             // insert survey member, if not exists
-            aObserverKey := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+            aObserverKey := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
             ImportSurveyMember(aSurveyKey, aObserverKey);
             // insert sightings from species list
             ImportSpecies(Inventory);
@@ -860,7 +860,7 @@ begin
             ImportWeather(Inventory);
 
             mProgress.Lines.Add(Format(rsMobileSurveyCreated,
-              [aSurveyKey, GetName('surveys', 'full_name', 'survey_id', aSurveyKey)]));
+              [aSurveyKey, GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
           end;
         end;
 
@@ -971,7 +971,7 @@ begin
             ImportEggs(Nest);
 
             mProgress.Lines.Add(Format(rsMobileNestUpdated,
-              [aNestKey, GetName('nests', 'full_name', 'nest_id', aNestKey)]));
+              [aNestKey, GetName('nests', COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
           end
           else
           begin
@@ -989,7 +989,7 @@ begin
             ImportEggs(Nest);
 
             mProgress.Lines.Add(Format(rsMobileNestCreated,
-              [aNestKey, GetName('nests', 'full_name', 'nest_id', aNestKey)]));
+              [aNestKey, GetName('nests', COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
           end;
         end;
 
@@ -1053,7 +1053,7 @@ begin
       for Revision in Nest.FRevisionList do
       begin
         aRevision.Clear;
-        aObserverId := GetKey('people', 'person_id', 'acronym', Nest.FObserver);
+        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Nest.FObserver);
         aDate := Revision.FSampleTime;
         aTime := Revision.FSampleTime;
 
@@ -1115,8 +1115,8 @@ begin
       for Species in Inventory.FSpeciesList do
       begin
         aSighting.Clear;
-        aTaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', Species.FSpeciesName);
-        aObserverId := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Species.FSpeciesName);
+        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
         if aSighting.Find(Inventory.FSurveyKey, aTaxonId, aObserverId) then
         begin
@@ -1225,7 +1225,7 @@ begin
             end;
 
             mProgress.Lines.Add(Format(rsMobileSpecimenUpdated,
-              [aSpecimenKey, GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey)]));
+              [aSpecimenKey, GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
           end
           else
           begin
@@ -1237,7 +1237,7 @@ begin
             WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByImport);
 
             mProgress.Lines.Add(Format(rsMobileSpecimenCreated,
-              [aSpecimenKey, GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey)]));
+              [aSpecimenKey, GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
           end;
         end;
 
@@ -1324,7 +1324,7 @@ begin
         aVegetation.Clear;
         aDate := Vegetation.FSampleTime;
         aTime := Vegetation.FSampleTime;
-        aObserverId := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
         if aVegetation.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), Vegetation.FLongitude, Vegetation.FLatitude, aObserverId) then
         begin
@@ -1388,7 +1388,7 @@ begin
         aWeather.Clear;
         aDate := Weather.FSampleTime;
         aTime := Weather.FSampleTime;
-        aObserverId := GetKey('people', 'person_id', 'acronym', Inventory.FObserver);
+        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
         if aWeather.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), aObserverId) then
         begin
@@ -1538,14 +1538,14 @@ begin
         if Inventory.FLocalityName <> EmptyStr then
         begin
           aLocalityKey := GetSiteKey(Inventory.FLocalityName);
-          gridMap.Cells[4, r] := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+          gridMap.Cells[4, r] := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
         end;
         // Survey record
         aSurveyKey := GetSurveyFromInventory(Inventory);
         if aSurveyKey > 0 then
         begin
           Inventory.FSurveyKey := aSurveyKey;
-          gridMap.Cells[5, r] := GetName('surveys', 'full_name', 'survey_id', aSurveyKey);
+          gridMap.Cells[5, r] := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey);
         end;
         dlgLoading.Progress := r;
         Inc(r);
@@ -1572,14 +1572,14 @@ begin
         if Nest.FLocalityName <> EmptyStr then
         begin
           aLocalityKey := GetSiteKey(Nest.FLocalityName);
-          gridMap.Cells[4, r] := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+          gridMap.Cells[4, r] := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
         end;
         // Nest record
         aNestKey := GetNestFromMobile(Nest);
         if aNestKey > 0 then
         begin
           Nest.FNestKey := aNestKey;
-          gridMap.Cells[5, r] := GetName('nests', 'full_name', 'nest_id', aNestKey);
+          gridMap.Cells[5, r] := GetName('nests', COL_FULL_NAME, COL_NEST_ID, aNestKey);
         end;
         dlgLoading.Progress := r;
         Inc(r);
@@ -1606,14 +1606,14 @@ begin
         if Specimen.FLocality <> EmptyStr then
         begin
           aLocalityKey := GetSiteKey(Specimen.FLocality);
-          gridMap.Cells[4, r] := GetName('gazetteer', 'site_name', 'site_id', aLocalityKey);
+          gridMap.Cells[4, r] := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
         end;
         // Specimen record
         aSpecimenKey := GetSpecimenFromMobile(Specimen);
         if aSpecimenKey > 0 then
         begin
           Specimen.FSpecimenKey := aSpecimenKey;
-          gridMap.Cells[5, r] := GetName('specimens', 'full_name', 'specimen_id', aSpecimenKey);
+          gridMap.Cells[5, r] := GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey);
         end;
         dlgLoading.Progress := r;
         Inc(r);
@@ -1718,8 +1718,8 @@ begin
   if Trim(aLocality) = EmptyStr then
     Exit;
 
-  aKeyName := GetKey('gazetteer', 'site_id', 'site_name', aLocality);
-  aKeyAbbrev := GetKey('gazetteer', 'site_id', 'site_acronym', aLocality);
+  aKeyName := GetKey('gazetteer', COL_SITE_ID, COL_SITE_NAME, aLocality);
+  aKeyAbbrev := GetKey('gazetteer', COL_SITE_ID, COL_SITE_ABBREVIATION, aLocality);
   Result := (aKeyName > 0) or (aKeyAbbrev > 0);
 end;
 
@@ -1731,7 +1731,7 @@ begin
   if Trim(aObserver) = EmptyStr then
     Exit;
 
-  aKey := GetKey('people', 'person_id', 'acronym', aObserver);
+  aKey := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, aObserver);
   Result := (aKey > 0);
 end;
 

@@ -295,7 +295,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_users, cbs_dialogs, cbs_datatypes, cbs_data, cbs_taxonomy, cbs_birds, cbs_gis,
-  cbs_breeding, cbs_system, cbs_getvalue, cbs_fullnames, udm_main, udlg_progress, uedt_survey;
+  cbs_breeding, cbs_system, cbs_getvalue, cbs_fullnames, cbs_dataconst, udm_main, udlg_progress;
 
 procedure LoadEbirdFile(const aCSVFile: String; CSV: TSdfDataSet);
 begin
@@ -415,11 +415,11 @@ begin
         RDate := FormatDateTime(maskSQLiteDate, Reg.RecordDate);
         Quant := StrToIntDef(Reg.Count, 0);
 
-        Toponimo := TSite.Create(GetKey('gazetteer', 'site_id', 'ebird_name', Reg.LocationName));
-        Taxon := TTaxon.Create(GetKey('zoo_taxa', 'taxon_id', 'full_name', Reg.ScientificName));
+        Toponimo := TSite.Create(GetKey('gazetteer', COL_SITE_ID, COL_EBIRD_NAME, Reg.LocationName));
+        Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.ScientificName));
         Survey := TSurvey.Create;
         Sight := TSighting.Create;
-        aMethod := GetKey('methods', 'method_id', 'ebird_name', Reg.Protocol);
+        aMethod := GetKey('methods', COL_METHOD_ID, COL_EBIRD_NAME, Reg.Protocol);
         try
           { Find survey (Amostragem) }
           if Survey.Find(Toponimo.Id, aMethod, Reg.RecordDate) = False then
@@ -678,7 +678,7 @@ begin
           strTime := FormatDateTime(maskDisplayTime, Reg.CaptureTime);
 
           try
-            Taxon := TTaxon.Create(GetKey('zoo_taxa', 'taxon_id', 'full_name', Reg.SpeciesName));
+            Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName));
             NetStation := TSamplingPlot.Create;
             Toponimo := TSite.Create;
             NetSite := TNetEffort.Create;
@@ -687,7 +687,7 @@ begin
             RemovedBand := TBand.Create;
             Individuo := TIndividual.Create;
             Captura := TCapture.Create;
-            aMethod := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
+            aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
             // Get valid taxon
             if Taxon.ValidId > 0 then
@@ -721,7 +721,7 @@ begin
                 Band.Size := Reg.BandSize;
                 Band.Number := Reg.BandNumber;
                 Band.Status := bstAvailable;
-                Band.SupplierId := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
+                Band.SupplierId := GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, 'CEMAVE');
                 Band.BandType := mkButtEndBand;
                 Band.UserInserted := ActiveUser.Id;
 
@@ -742,7 +742,7 @@ begin
                   RemovedBand.Number := StrToInt(ExtractWord(2, Reg.RemovedBand, [' ']));
                   RemovedBand.Status := bstAvailable;
                   RemovedBand.SupplierId :=
-                    GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
+                    GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, 'CEMAVE');
                   RemovedBand.BandType := mkButtEndBand;
                   RemovedBand.UserInserted := ActiveUser.Id;
 
@@ -787,8 +787,8 @@ begin
               Captura.NetId := NetSite.Id;
               Captura.Latitude := NetLat;
               Captura.Longitude := NetLong;
-              Captura.BanderId := GetKey('people', 'person_id', 'acronym', Reg.Bander);
-              Captura.AnnotatorId := GetKey('people', 'person_id', 'acronym', Reg.Recorder);
+              Captura.BanderId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Bander);
+              Captura.AnnotatorId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Recorder);
               case Reg.SubjectStatus of
                 'N': Captura.SubjectStatus := sstNormal;
                 'I': Captura.SubjectStatus := sstInjured;
@@ -843,10 +843,10 @@ begin
               begin
                 Captura.SubjectPhotographed := True;
                 Captura.Photographer1Id :=
-                  GetKey('people', 'person_id', 'acronym', Reg.Photographer1);
+                  GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Photographer1);
                 if (Trim(Reg.Photographer2) <> EmptyStr) then
                   Captura.Photographer2Id :=
-                    GetKey('people', 'person_id', 'acronym', Reg.Photographer2);
+                    GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Photographer2);
               end else
               begin
                 Captura.SubjectPhotographed := False;
@@ -920,7 +920,7 @@ begin
                 Band.Size := Reg.BandSize;
                 Band.Number := Reg.BandNumber;
                 Band.Status := bstAvailable;
-                Band.SupplierId := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
+                Band.SupplierId := GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, 'CEMAVE');
                 Band.BandType := mkButtEndBand;
                 Band.UserInserted := ActiveUser.Id;
 
@@ -1225,7 +1225,7 @@ begin
           NetStation := TSamplingPlot.Create;
           Toponimo := TSite.Create;
           Survey := TSurvey.Create;
-          aMethod := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
+          aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
@@ -1241,7 +1241,7 @@ begin
             Survey.EndTime := Reg.EndTime;
 
             Survey.Duration := 0;
-            Survey.MethodId := GetKey('methods', 'method_id', 'method_acronym', 'Banding');
+            Survey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, 'Banding');
             Survey.NetStationId := NetStation.Id;
             Survey.LocalityId := Toponimo.Id;
             Survey.StartLongitude := Reg.Longitude;
@@ -1266,7 +1266,7 @@ begin
                 for pp := 0 to (WordCount(Reg.Team, [',', ';']) - 1) do
                 begin
                   Member.SurveyId := Survey.Id;
-                  Member.PersonId := GetKey('people', 'person_id', 'acronym', ExtractWord(pp, Reg.Team, [',', ';']));
+                  Member.PersonId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, ExtractWord(pp, Reg.Team, [',', ';']));
 
                   Member.Insert;
                   WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
@@ -1522,7 +1522,7 @@ begin
           Toponimo := TSite.Create;
           Survey := TSurvey.Create;
           NetSite := TNetEffort.Create;
-          aMethod := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
+          aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
@@ -1669,11 +1669,11 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
-            Taxon.GetData(GetKey('zoo_taxa', 'taxon_id', 'full_name', CSV.FieldByName('taxon').AsString));
+            Taxon.GetData(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('taxon').AsString));
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
-            Toponimo.GetData(GetKey('gazetteer', 'site_id', 'site_name', CSV.FieldByName('locality').AsString));
+            Toponimo.GetData(GetKey('gazetteer', COL_SITE_ID, COL_SITE_NAME, CSV.FieldByName('locality').AsString));
 
 
           // Check if the nest exists
@@ -1688,8 +1688,8 @@ begin
             Nest.Longitude := CSV.FieldByName('longitude').AsFloat;
             Nest.TaxonId := Taxon.Id;
             //Nest.SupportType := CSV.FieldByName('support_type').AsString;
-            Nest.SupportPlant1Id := GetKey('botanic_taxa', 'taxon_id', 'taxon_name', CSV.FieldByName('support_plant_1').AsString);
-            Nest.SupportPlant2Id := GetKey('botanic_taxa', 'taxon_id', 'taxon_name', CSV.FieldByName('support_plant_2').AsString);
+            Nest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_TAXON_NAME, CSV.FieldByName('support_plant_1').AsString);
+            Nest.SupportPlant2Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_TAXON_NAME, CSV.FieldByName('support_plant_2').AsString);
             //Nest.OtherSupport := CSV.FieldByName('other_support').AsString;
             Nest.HeightAboveGround := CSV.FieldByName('height_above_ground').AsFloat;
             //Nest.ProjectId := GetKey('projects', 'project_id', 'project_title', CSV.FieldByName('project').AsString);
@@ -1837,7 +1837,7 @@ begin
 
         if CSV.FieldByName('observer').AsString <> EmptyStr then
         begin
-          aObserver := GetKey('people', 'person_id', 'acronym', CSV.FieldByName('observer').AsString);
+          aObserver := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
         end
         else
           aObserver := 0;
@@ -1849,11 +1849,11 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            Taxon.GetData(GetKey('zoo_taxa', 'taxon_id', 'full_name', CSV.FieldByName('nidoparasite').AsString));
+            Taxon.GetData(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString));
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
-            Nest.GetData(GetKey('nests', 'nest_id', 'field_number', CSV.FieldByName('nest').AsString));
+            Nest.GetData(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString));
 
           // Check if the nest revision exists
           if not Revision.Find(Nest.Id, aDate, aTime, aObserver) then
@@ -2002,7 +2002,7 @@ begin
 
         if CSV.FieldByName('observer').AsString <> EmptyStr then
         begin
-          aObserver := GetKey('people', 'person_id', 'acronym', CSV.FieldByName('observer').AsString);
+          aObserver := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
         end
         else
           aObserver := 0;
@@ -2014,11 +2014,11 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            Taxon.GetData(GetKey('zoo_taxa', 'taxon_id', 'full_name', CSV.FieldByName('nidoparasite').AsString));
+            Taxon.GetData(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString));
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
-            Nest.GetData(GetKey('nests', 'nest_id', 'field_number', CSV.FieldByName('nest').AsString));
+            Nest.GetData(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString));
 
           // Check if the egg exists
           if not Egg.Find(Nest.Id, CSV.FieldByName('field_number').AsString, aDate, aObserver) then

@@ -105,7 +105,8 @@ const
   function GetTableType(aTableName: String): TTableType;
   function GetFieldDisplayName(const aTableType: TTableType; aFieldName: String): String;
   //function GetPrimaryKey(const aTableName: String): String; overload;
-  function GetPrimaryKey(const aDataSet: TDataSet): String; overload;
+  function GetPrimaryKey(const aDataSet: TDataSet): String;
+  function GetDataSource(const aTableType, aChildType: TTableType): TDataSource;
   function TableIsEmpty(aTableName: String): Boolean;
   function TableExists(aTableName: String): Boolean;
   function GetLastInsertedKey(const aTable: String): Integer; overload;
@@ -140,7 +141,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_conversions, cbs_users, cbs_debug,
-  cbs_count, udm_main, udlg_progress;
+  cbs_count, udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress;
 
   {
   -----------------------------------------------------------------------------------------
@@ -3094,6 +3095,101 @@ begin
       if pfInKey in Fields[i].ProviderFlags then
         Result := Fields[i].FieldName;
   end;
+end;
+
+function GetDataSource(const aTableType, aChildType: TTableType): TDataSource;
+var
+  DS: TDataSource;
+begin
+  Result := nil;
+
+  case aTableType of
+    tbNone:           DS := nil;
+    tbBands:          DS := DMG.dsBands;
+    tbGazetteer:      DS := DMG.dsGazetteer;
+    tbSamplingPlots:  DS := DMG.dsSamplingPlots;
+    tbPermanentNets:  DS := DMG.dsPermanentNets;
+    tbInstitutions:   DS := DMG.dsInstitutions;
+    tbPeople:         DS := DMG.dsPeople;
+    tbProjects:
+    begin
+      case aChildType of
+        tbProjectTeams:       DS := DMG.dsProjectTeam;
+        tbProjectGoals:       DS := DMG.dsProjectGoals;
+        tbProjectChronograms: DS := DMG.dsProjectChronogram;
+        tbProjectBudgets:     DS := DMG.dsProjectBudget;
+        tbProjectExpenses:    DS := DMG.dsProjectExpenses;
+      else
+        DS := DMG.dsProjects;
+      end;
+    end;
+    tbPermits:        DS := DMG.dsPermits;
+    //tbTaxonRanks: ;
+    tbZooTaxa:        DS := DMG.dsTaxa;
+    tbBotanicTaxa:    DS := DMG.dsBotany;
+    //tbBandHistory: ;
+    tbIndividuals:
+    begin
+      case aChildType of
+        tbCaptures:   DS := DMI.dsCaptures;
+        tbFeathers:   DS := DMI.dsFeathers;
+        tbSightings:  DS := DMI.dsSightings;
+        tbNests:      DS := DMI.dsNests;
+        tbSpecimens:  DS := DMI.dsSpecimens;
+      else
+        DS := DMG.dsIndividuals;
+      end;
+    end;
+    tbCaptures:       DS := DMG.dsCaptures;
+    tbFeathers:       DS := DMG.dsFeathers;
+    tbNests:
+    begin
+      case aChildType of
+        tbNestOwners:     DS := DMB.dsNestOwners;
+        tbNestRevisions:  DS := DMB.dsNestRevisions;
+        tbEggs:           DS := DMB.dsEggs;
+      else
+        DS := DMG.dsNests;
+      end;
+    end;
+    tbNestRevisions:  DS := DMG.dsNestRevisions;
+    tbEggs:           DS := DMG.dsEggs;
+    tbMethods:        DS := DMG.dsMethods;
+    tbExpeditions:
+    begin
+      if aChildType = tbSurveys then
+        DS := DMS.dsSurveys
+      else
+        DS := DMG.dsExpeditions;
+    end;
+    tbSurveys:
+    begin
+      case aChildType of
+        tbSurveyTeams:  DS := DMS.dsSurveyTeam;
+        tbNetsEffort:   DS := DMS.dsNetsEffort;
+        tbWeatherLogs:  DS := DMS.dsWeatherLogs;
+        tbVegetation:   DS := DMS.dsVegetation;
+        tbSightings:    DS := DMS.dsSightings;
+        tbCaptures:     DS := DMS.dsCaptures;
+      else
+        DS := DMG.dsSurveys;
+      end;
+    end;
+    tbSightings:      DS := DMG.dsSightings;
+    tbSpecimens:
+    begin
+      case aChildType of
+        tbSamplePreps:        DS := DMG.dsSamplePreps;
+        tbSpecimenCollectors: DS := DMG.dsSampleCollectors;
+      else
+        DS := DMG.dsSpecimens;
+      end;
+    end;
+    //tbImages: ;
+    //tbAudioLibrary: ;
+  end;
+
+  Result := DS;
 end;
 
 function TableIsEmpty(aTableName: String): Boolean;

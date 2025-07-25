@@ -561,7 +561,6 @@ type
   private
     OldCapture: TCapture;
     OldSighting: TSighting;
-    OldMolt: TMolt;
     OldSpecimen: TSpecimen;
     OldNest: TNest;
   public

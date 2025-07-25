@@ -265,7 +265,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_getvalue, cbs_conversions;
+  cbs_locale, cbs_global, cbs_dataconst, cbs_getvalue, cbs_conversions;
 
 { TMobilePoi }
 
@@ -287,7 +287,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FSpeciesId := JSONObj.Get('speciesId', 0);
-    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
+    FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FLongitude := JSONObj.Get('longitude', 0.0);
     FLatitude := JSONObj.Get('latitude', 0.0);
   end;
@@ -342,7 +342,7 @@ begin
     FIsOutOfInventory := JSONObj.Get('isOutOfInventory', 0) = 1;
     FCount := JSONObj.Get('count', 0);
     FNotes := JSONObj.Get('notes', '');
-    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
+    FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     PoiArray := JSONObj.FindPath('pois') as TJSONArray;
     if Assigned(PoiArray) then
       LoadPoiList(PoiArray);
@@ -365,7 +365,7 @@ end;
 
 procedure TMobileSpecies.ToSighting(aSighting: TSighting);
 begin
-  aSighting.TaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', FSpeciesName);
+  aSighting.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
   aSighting.NotSurveying := FIsOutOfInventory;
   aSighting.SubjectTally := FCount;
   aSighting.Notes := FNotes;
@@ -403,7 +403,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FInventoryId := JSONObj.Get('inventoryId', '');
-    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
+    FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FLongitude := JSONObj.Get('longitude', 0.0);
     FLatitude := JSONObj.Get('latitude', 0.0);
     FHerbsProportion := JSONObj.Get('herbsProportion', 0);
@@ -459,7 +459,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FInventoryId := JSONObj.Get('inventoryId', '');
-    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
+    FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FCloudCover := JSONObj.Get('cloudCover', 0);
     FPrecipitation := TPrecipitation(JSONObj.Get('precipitation', Integer(wpNone)));
     FTemperature := JSONObj.Get('temperature', 0);
@@ -534,8 +534,8 @@ begin
     FType := TMobileInventoryType(JSONObj.Get('type', Integer(invQualitativeFree)));
     FDuration := JSONObj.Get('duration', 0);
     FMaxSpecies := JSONObj.Get('maxSpecies', 0);
-    FStartTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('startTime', '1500-12-30T00:00:00')), True);
-    FEndTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('endTime', '1500-12-30T00:00:00')), True);
+    FStartTime := DartISO8601ToDate(JSONObj.Get('startTime', '1500-12-30T00:00:00'));
+    FEndTime := DartISO8601ToDate(JSONObj.Get('endTime', '1500-12-30T00:00:00'));
     FStartLongitude := JSONObj.Get('startLongitude', 0.0);
     FStartLatitude := JSONObj.Get('startLatitude', 0.0);
     FEndLongitude := JSONObj.Get('endLongitude', 0.0);
@@ -619,21 +619,21 @@ begin
   aSurvey.SampleId := FId;
   case FType of
     invQualitativeFree:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeFree);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeFree);
     invQualitativeTimed:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeTimed);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeTimed);
     invQualitativeInterval:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileQualitativeInterval);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeInterval);
     invMackinnonList:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileMackinnonList);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileMackinnonList);
     invTransectionCount:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileTransectionCount);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectionCount);
     invPointCount:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobilePointCount);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointCount);
     invBanding:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileBanding);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
     invCasual:
-      aSurvey.MethodId := GetKey('methods', 'method_id', 'method_name', rsMobileCasual);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileCasual);
   end;
   //aSurvey.Duration := FDuration;
   aSurvey.SurveyDate := FStartTime;
@@ -671,7 +671,7 @@ begin
     FId := JSONObj.Get('id', 0);
     FNestId := JSONObj.Get('nestId', 0);
     FFieldNumber := JSONObj.Get('fieldNumber', '');
-    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
+    FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FEggShape := TEggShape(JSONObj.Get('cloudCover', Integer(esUnknown)));
     FWidth := JSONObj.Get('width', 0.0);
     FLength := JSONObj.Get('length', 0.0);
@@ -688,7 +688,7 @@ begin
   aEgg.Width := FWidth;
   aEgg.Length := FLength;
   aEgg.Mass := FMass;
-  aEgg.TaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', FSpeciesName);
+  aEgg.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
 end;
 
 { TMobileNestRevision }
@@ -717,7 +717,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FNestId := JSONObj.Get('nestId', 0);
-    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
+    FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FNestStatus := TNestStatus(JSONObj.Get('nestStatus', Integer(nstUnknown)));
     FNestStage := TNestStage(JSONObj.Get('nestStage', Integer(nsgUnknown)));
     FEggsHost := JSONObj.Get('eggsHost', 0);
@@ -796,8 +796,8 @@ begin
     FLatitude := JSONObj.Get('latitude', 0.0);
     FSupport := JSONObj.Get('support', '');
     FHeightAboveGround := JSONObj.Get('heightAboveGround', 0.0);
-    FFoundTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('foundTime', '1500-12-30T00:00:00')), True);
-    FLastTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('lastTime', '1500-12-30T00:00:00')), True);
+    FFoundTime := DartISO8601ToDate(JSONObj.Get('foundTime', '1500-12-30T00:00:00'));
+    FLastTime := DartISO8601ToDate(JSONObj.Get('lastTime', '1500-12-30T00:00:00'));
     FNestFate := TNestFate(JSONObj.Get('nestFate', Integer(nfUnknown)));
     FMale := JSONObj.Get('male', '');
     FFemale := JSONObj.Get('female', '');
@@ -858,11 +858,11 @@ end;
 procedure TMobileNest.ToNest(aNest: TNest);
 begin
   aNest.FieldNumber := FFieldNumber;
-  aNest.TaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', FSpeciesName);
+  aNest.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
   aNest.LocalityId := GetSiteKey(FLocalityName);
   aNest.Longitude := FLongitude;
   aNest.Latitude := FLatitude;
-  aNest.SupportPlant1Id := GetKey('botanic_taxa', 'taxon_id', 'taxon_name', FSupport);
+  aNest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_TAXON_NAME, FSupport);
   aNest.HeightAboveGround := FHeightAboveGround;
   aNest.FoundDate := FFoundTime;
   aNest.LastDate := FLastTime;
@@ -897,7 +897,7 @@ begin
     JSONObj := TJSONObject(JSON);
     FId := JSONObj.Get('id', 0);
     FFieldNumber := JSONObj.Get('fieldNumber', '');
-    FSampleTime := ISO8601ToDate(DartISO8601ToPascal(JSONObj.Get('sampleTime', '1500-12-30T00:00:00')), True);
+    FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FType := TSpecimenType(JSONObj.Get('type', Integer(sptEmpty)));
     FSpeciesName := JSONObj.Get('speciesName', '');
     FLocality := JSONObj.Get('locality', '');
@@ -934,7 +934,7 @@ begin
   aSpecimen.SampleType := FType;
   aSpecimen.Longitude := FLongitude;
   aSpecimen.Latitude := FLatitude;
-  aSpecimen.TaxonId := GetKey('zoo_taxa', 'taxon_id', 'full_name', FSpeciesName);
+  aSpecimen.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
   aSpecimen.LocalityId := GetSiteKey(FLocality);
   aSpecimen.Notes := FNotes;
 end;

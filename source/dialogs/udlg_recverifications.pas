@@ -81,8 +81,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_datacolumns, cbs_data, cbs_global, cbs_system, udm_main, udm_grid, udm_breeding,
-  udm_individuals, udm_sampling, uDarkStyleParams;
+  cbs_locale, cbs_datacolumns, cbs_data, cbs_global, cbs_system, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -130,99 +129,7 @@ begin
   if qHistory.Active then
     qHistory.Close;
 
-  case FTableType of
-    tbNone:           DS := nil;
-    tbBands:          DS := DMG.dsBands;
-    tbGazetteer:      DS := DMG.dsGazetteer;
-    tbSamplingPlots:    DS := DMG.dsSamplingPlots;
-    tbPermanentNets:  DS := DMG.dsPermanentNets;
-    tbInstitutions:   DS := DMG.dsInstitutions;
-    tbPeople:         DS := DMG.dsPeople;
-    tbProjects:
-    begin
-      if FChildType = tbProjectTeams then
-        DS := DMG.dsProjectTeam
-      else
-        DS := DMG.dsProjects;
-    end;
-    tbPermits:        DS := DMG.dsPermits;
-    //tbTaxonRanks: ;
-    tbZooTaxa:        DS := DMG.dsTaxa;
-    tbBotanicTaxa:    DS := DMG.dsBotany;
-    //tbBandHistory: ;
-    tbIndividuals:
-    begin
-      if FChildType = tbCaptures then
-        DS := DMI.dsCaptures
-      else
-      if FChildType = tbFeathers then
-        DS := DMI.dsFeathers
-      else
-      if FChildType = tbSightings then
-        DS := DMI.dsSightings
-      else
-      if FChildType = tbSpecimens then
-        DS := DMI.dsSpecimens
-      else
-        DS := DMG.dsIndividuals;
-    end;
-    tbCaptures:       DS := DMG.dsCaptures;
-    tbNests:
-    begin
-      if FChildType = tbNestOwners then
-        DS := DMB.dsNestOwners
-      else
-      if FChildType = tbNestRevisions then
-        DS := DMB.dsNestRevisions
-      else
-      if FChildType = tbEggs then
-        DS := DMB.dsEggs
-      else
-      DS := DMG.dsNests;
-    end;
-    tbNestRevisions:  DS := DMG.dsNestRevisions;
-    tbEggs:           DS := DMG.dsEggs;
-    tbMethods:        DS := DMG.dsMethods;
-    tbExpeditions:
-    begin
-      if FChildType = tbSurveys then
-        DS := DMS.dsSurveys
-      else
-        DS := DMG.dsExpeditions;
-    end;
-    tbSurveys:
-    begin
-      if FChildType = tbSurveyTeams then
-        DS := DMS.dsSurveyTeam
-      else
-      if FChildType = tbNetsEffort then
-        DS := DMS.dsNetsEffort
-      else
-      if FChildType = tbWeatherLogs then
-        DS := DMS.dsWeatherLogs
-      else
-      if FChildType = tbSightings then
-        DS := DMS.dsSightings
-      else
-      if FChildType = tbCaptures then
-        DS := DMS.dsCaptures
-      else
-        DS := DMG.dsSurveys;
-    end;
-    tbSightings:      DS := DMG.dsSightings;
-    tbSpecimens:
-    begin
-      if FChildType = tbSamplePreps then
-        DS := DMG.dsSamplePreps
-      else
-      if FChildType = tbSpecimenCollectors then
-        DS := DMG.dsSampleCollectors
-      else
-        DS := DMG.dsSpecimens;
-    end;
-    //tbImages: ;
-    //tbAudioLibrary: ;
-  end;
+  DS := GetDataSource(FTableType, FChildType);
 
   if DS = nil then
     Exit;

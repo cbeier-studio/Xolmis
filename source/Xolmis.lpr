@@ -124,17 +124,17 @@ uses
   ucfg_options,
   ucfg_users,
   { Other forms }
-  ufrm_customgrid, ufrm_dashboard, ufrm_geoconverter, ufrm_maintenance,
+  ufrm_customgrid, ufrm_geoconverter, ufrm_maintenance,
   udm_breeding, uedt_method, udm_sampling, uedt_weatherlog, uedt_project,
   uedt_permit, uedt_sampleprep, uedt_specimen, uedt_nestowner, udlg_newdatabase,
   udlg_export, cbs_datacolumns, cbs_math, udlg_recverifications,
-  uedt_recverification, ufrm_imageviewer, uthread_dashboard, ufrm_printpreview,
+  uedt_recverification, ufrm_imageviewer, ufrm_printpreview,
   cbs_print, uedt_audioinfo, uedt_documentinfo, udlg_import, udlg_importxmobile,
   uedt_vegetation, ufrm_taxa, udlg_exportpreview, cbs_users, cbs_media,
   cbs_setparam, uedt_collector, uedt_surveymember, uedt_projectmember,
   uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
   uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
-  udm_reports, cbs_xmobile, ufrm_quickentry, udlg_splash, udlg_loading, udlg_selectrecord;
+  udm_reports, cbs_xmobile, ufrm_quickentry, udlg_splash, udlg_loading, udlg_selectrecord, cbs_dataconst;
 
 {$R *.res}
 
