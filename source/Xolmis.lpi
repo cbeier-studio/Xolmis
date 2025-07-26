@@ -186,7 +186,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="462"/>
+      <BuildNr Value="463"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -461,9 +461,6 @@
       </Item>
       <Item>
         <PackageName Value="lazreport"/>
-      </Item>
-      <Item>
-        <PackageName Value="LazGDIPlus"/>
       </Item>
       <Item>
         <PackageName Value="MemDSLaz"/>

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Dialogs, LazFileUtils, DB, SQLDB, Graphics, ExtCtrls,
-  BGRABitmap, BGRABitmapTypes, fpeMetadata,
+  BGRABitmap, BGRABitmapTypes, fpeMetadata, FPImage,
   cbs_datatypes;
 
 const
@@ -47,13 +47,10 @@ const
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, udm_main, udlg_progress, ufrm_imageviewer,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, cbs_dataconst, udm_main, udlg_progress, ufrm_imageviewer,
   fpeGlobal, fpeTags, fpeExifData, Math,
   {$IFDEF DEBUG}
   cbs_debug,
-  {$ENDIF}
-  {$IFDEF MSWINDOWS}
-  GDIPlus, GDIPlusHelpers,
   {$ENDIF}
   BGRAReadJpeg, BGRAWriteJpeg, BGRAThumbnail;
 
@@ -116,12 +113,12 @@ begin
         Locate(aPathField, relPath, []);
         Edit;
       end;
-      FieldByName('image_date').AsDateTime := CreationDate;
-      FieldByName('image_time').AsDateTime := CreationDate;
+      FieldByName(COL_IMAGE_DATE).AsDateTime := CreationDate;
+      FieldByName(COL_IMAGE_TIME).AsDateTime := CreationDate;
       if (long < 200) and (lat < 200) then
       begin
-        FieldByName('longitude').AsFloat := long;
-        FieldByName('latitude').AsFloat := lat;
+        FieldByName(COL_LONGITUDE).AsFloat := long;
+        FieldByName(COL_LATITUDE).AsFloat := lat;
       end;
       //(FieldByName(aBlobField) as TBlobField).LoadFromStream(CreateImageThumbnail(aFileName));
       CreateImageThumbnail(aFileName, aDataSet);
@@ -257,20 +254,10 @@ var
   imgExif: TImgInfo;
   imgOrientation: TExifOrientation;
   sthumb: TStream;
-  {$IFDEF MSWINDOWS}
-    imgThumb: IGPImage;
-    rotType: TGPRotateFlipType;
-    jpgThumb: TJpegImage;
-    //jpgThumb: ISkImage;    // FPC > 3.3.1
-    newWidth, newHeight: Integer;
-    destRect: TGPRectF;
-    Graph: IGPGraphics;
-  {$ELSE}
-    imgThumb: TBGRABitmap;
-    rotAngle: Single;
-    jpgThumb: TJpegImage;
-    bmpCenter: TPointF;
-  {$ENDIF}
+  imgThumb: TBGRABitmap;
+  rotAngle: Single;
+  jpgThumb: TJpegImage;
+  bmpCenter: TPointF;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -291,43 +278,17 @@ begin
     FreeAndNil(imgExif);
   end;
 
-  //imgThumb := GetFileThumbnail(aFileName, thumbSize, thumbSize, $000000FF, False);
-  {$IFDEF MSWINDOWS}
-    imgThumb := TGPImage.Create(aFileName);
-  {$ELSE}
-    imgThumb := TBGRABitmap.Create(aFileName);
-  {$ENDIF}
+  imgThumb := TBGRABitmap.Create(aFileName);
   try
     // Get the scale factor for thumbnail image using the larger side
-    if imgThumb.GetHeight > imgThumb.GetWidth then
-      bmpFactor := thumbSize / imgThumb.GetHeight
+    if imgThumb.Height > imgThumb.Width then
+      bmpFactor := thumbSize / imgThumb.Height
     else
-      bmpFactor := thumbSize / imgThumb.GetWidth;
-    {$IFDEF MSWINDOWS}
-    newWidth := Round(imgThumb.GetWidth * bmpFactor);
-    newHeight := Round(imgThumb.GetHeight * bmpFactor);
+      bmpFactor := thumbSize / imgThumb.Width;
 
-    {$ELSE}
-    BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor)));
-    {$ENDIF}
+    BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor), rmSimpleStretch));
 
     { Correct image orientation }
-    {$IFDEF MSWINDOWS}
-    case imgOrientation of
-      eoUnknown:          rotType := RotateNoneFlipNone;  // Unknown - do nothing
-      eoNormal:           rotType := RotateNoneFlipNone;  // Horizontal - No rotation required
-      eoMirrorHor:        rotType := RotateNoneFlipX;     // Flip horizontal
-      eoRotate180:        rotType := Rotate180FlipNone;   // Rotate 180 CW
-      eoMirrorVert:       rotType := Rotate180FlipX;      // Rotate 180 CW and flip horizontal (Flip vertical)
-      eoMirrorHorRot270:  rotType := Rotate270FlipX;      // Rotate 270 CW and flip horizontal
-      eoRotate90:         rotType := Rotate90FlipNone;    // Rotate 90 CW
-      eoMirrorHorRot90:   rotType := Rotate90FlipX;       // Rotate 90 CW and flip horizontal
-      eoRotate270:        rotType := Rotate270FlipNone;   // Rotate 270 CW
-    end;
-    // Set image rotation, if necessary
-    if rotType <> RotateNoneFlipNone then
-      imgThumb.RotateFlip(rotType);
-    {$ELSE}
     case imgOrientation of
       eoUnknown: rotAngle := 0;            // Unknown - do nothing
       eoNormal: rotAngle := 0;             // Horizontal - No rotation required
@@ -370,54 +331,21 @@ begin
           BGRAReplace(imgThumb, imgThumb.RotateCCW);
         end;
     end;
-    // Set image rotation, if necessary
-    //if rotAngle <> 0 then
-    //begin
-    //  bmpCenter.X := (imgThumb.Width - 1) / 2;
-    //  bmpCenter.Y := (imgThumb.Height - 1) / 2;
-    //  BGRAReplace(imgThumb, imgThumb.FilterRotate(bmpCenter, rotAngle));
-    //end;
-    {$ENDIF}
 
     { Encode image as JPEG }
+    sthumb := TMemoryStream.Create;
     try
-      sthumb := TMemoryStream.Create;
       sthumb.Position := OffsetMemoryStream;
-      {$IFDEF MSWINDOWS}
-      jpgThumb := TJpegImage.Create;
-      jpgThumb.CompressionQuality := thumbQuality;
-      jpgThumb.SetSize(imgThumb.Width, imgThumb.Height);
-      Graph := jpgThumb.Canvas.toGPGraphics;
-      Graph.DrawImage(imgThumb, 0, 0);
-      jpgThumb.Canvas.StretchDraw(Rect(0, 0, newWidth, newHeight), jpgThumb);
-      jpgThumb.SetSize(newWidth, newHeight);
-      jpgThumb.SaveToStream(sthumb);
-      // FPC > 3.3.1
-      //jpgThumb := TSkImage.MakeFromEncodedStream(sthumb);
-      //LSurface := TSkSurface.MakeRaster(newWidth, newHeight);
-      //LSurface.Canvas.Clear(TAlphaColors.Null);
-      //LSurface.Canvas.Scale(newWidth / jpgThumb.Width, newHeight / jpgThumb.Height);
-      //LSurface.Canvas.DrawImage(jpgThumb, 0, 0, TSkSamplingOptions.High);
-      //jpgThumb := LSurface.MakeImageSnapshot;
-      //sthumb.Position := OffsetMemoryStream;
-      //jpgThumb.EncodeToStream(sthumb, TSkEncodedImageFormat.JPEG, imgQuality);
-      {$ELSE}
-      jpgThumb := TJpegImage.Create;
-      jpgThumb.CompressionQuality := thumbQuality;
-      jpgThumb.SetSize(imgThumb.Width, imgThumb.Height);
-      jpgThumb.Canvas.Draw(0, 0, imgThumb.Bitmap);
-      jpgThumb.SaveToStream(sthumb);
-      {$ENDIF}
+
+      imgThumb.SaveToStreamAs(sthumb, TBGRAImageFormat.ifJpeg);
+
       sthumb.Position := OffsetMemoryStream;
-      TBlobField(aDataSet.FieldByName('image_thumbnail')).LoadFromStream(sthumb);
+      TBlobField(aDataSet.FieldByName(COL_IMAGE_THUMBNAIL)).LoadFromStream(sthumb);
     finally
       sthumb.Free;
-      jpgThumb.Free;
     end;
   finally
-    {$IFNDEF MSWINDOWS}
-    imgThumb.Free;
-    {$ENDIF}
+    FreeAndNil(imgThumb);
   end;
 end;
 
@@ -463,11 +391,11 @@ begin
         dlgProgress.Max := Qry.RecordCount;
         repeat
           dlgProgress.Text := Format(rsProgressImportImages, [Qry.RecNo, Qry.RecordCount]);
-          imgPath := CreateAbsolutePath(Qry.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
+          imgPath := CreateAbsolutePath(Qry.FieldByName(COL_IMAGE_FILENAME).AsString, XSettings.ImagesFolder);
           if (FileExists(imgPath)) then
           begin
             Edit;
-            FieldByName('image_thumbnail').Clear;
+            FieldByName(COL_IMAGE_THUMBNAIL).Clear;
             CreateImageThumbnail(imgPath, Qry);
 
             Post;
