@@ -55,7 +55,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_getvalue, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_dataconst, cbs_getvalue, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

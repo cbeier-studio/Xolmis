@@ -102,7 +102,7 @@ type
 
 implementation
 
-uses cbs_global, udm_main;
+uses cbs_global, cbs_dataconst, udm_main;
 
 procedure LoadTaxaTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 var
@@ -1367,6 +1367,8 @@ begin
     sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y'', p.birth_date)', 'Birth date', sdtText,
       crEqual, True, Format('%4.4d', [aYear])));
+    aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y'', p.death_date)', 'Death date', sdtText,
+      crEqual, True, Format('%4.4d', [aYear])));
   end
   else
   begin
@@ -1375,12 +1377,16 @@ begin
       sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m'', p.birth_date)', 'Birth date', sdtText,
         crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+      aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m'', p.death_date)', 'Death date', sdtText,
+        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
       sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', p.birth_date)', 'Birth date', sdtText,
+        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+      aSearchGroup[sf].Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', p.death_date)', 'Death date', sdtText,
         crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
@@ -1404,9 +1410,9 @@ begin
 
       Data := aVirtualTree.GetNodeData(Node);
       case Data^.Rank of
-        trOrder:   Result := Result + '(' + aPrefix + 'order_id = ' + IntToStr(Data^.Id) + ')';
-        trFamily:  Result := Result + '(' + aPrefix + 'family_id = ' + IntToStr(Data^.Id) + ')';
-        trSpecies: Result := Result + '(' + aPrefix + 'species_id = ' + IntToStr(Data^.Id) + ')';
+        trOrder:   Result := Result + '(' + aPrefix + COL_ORDER_ID + ' = ' + IntToStr(Data^.Id) + ')';
+        trFamily:  Result := Result + '(' + aPrefix + COL_FAMILY_ID + ' = ' + IntToStr(Data^.Id) + ')';
+        trSpecies: Result := Result + '(' + aPrefix + COL_SPECIES_ID + ' = ' + IntToStr(Data^.Id) + ')';
       end;
       if i < (aVirtualTree.CheckedCount) then
         Result := Result + ' OR ';
@@ -1439,13 +1445,13 @@ begin
       Data := aVirtualTree.GetNodeData(Node);
       case Data^.Rank of
         trOrder:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + 'order_id', 'Order', sdtInteger,
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_ORDER_ID, 'Order', sdtInteger,
             crEqual, True, IntToStr(Data^.Id)));
         trFamily:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + 'family_id', 'Family', sdtInteger,
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_FAMILY_ID, 'Family', sdtInteger,
             crEqual, True, IntToStr(Data^.Id)));
         trSpecies:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + 'species_id', 'Species', sdtInteger,
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_SPECIES_ID, 'Species', sdtInteger,
             crEqual, True, IntToStr(Data^.Id)));
       end;
 
@@ -1474,9 +1480,9 @@ begin
 
       Data := aVirtualTree.GetNodeData(Node);
       case Data^.Rank of
-        srCountry:      Result := Result + '(' + aPrefix + 'country_id = ' + IntToStr(Data^.Id) + ')';
-        srState:        Result := Result + '(' + aPrefix + 'state_id = ' + IntToStr(Data^.Id) + ')';
-        srMunicipality: Result := Result + '(' + aPrefix + 'municipality_id = ' + IntToStr(Data^.Id) + ')';
+        srCountry:      Result := Result + '(' + aPrefix + COL_COUNTRY_ID + ' = ' + IntToStr(Data^.Id) + ')';
+        srState:        Result := Result + '(' + aPrefix + COL_STATE_ID + ' = ' + IntToStr(Data^.Id) + ')';
+        srMunicipality: Result := Result + '(' + aPrefix + COL_MUNICIPALITY_ID + ' = ' + IntToStr(Data^.Id) + ')';
       end;
       if i < (aVirtualTree.CheckedCount) then
         Result := Result + ' OR ';
@@ -1509,13 +1515,13 @@ begin
       Data := aVirtualTree.GetNodeData(Node);
       case Data^.Rank of
         srCountry:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + 'country_id', 'Country', sdtInteger,
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_COUNTRY_ID, 'Country', sdtInteger,
             crEqual, True, IntToStr(Data^.Id)));
         srState:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + 'state_id', 'State', sdtInteger,
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_STATE_ID, 'State', sdtInteger,
             crEqual, True, IntToStr(Data^.Id)));
         srMunicipality:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + 'municipality_id', 'Municipality', sdtInteger,
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_MUNICIPALITY_ID, 'Municipality', sdtInteger,
             crEqual, True, IntToStr(Data^.Id)));
       end;
 
@@ -1692,47 +1698,47 @@ begin
     tbNone: ;
     tbNests:
       begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_id', 'Observer', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_ID, 'Observer', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
     tbNestRevisions:
       begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_1_id', 'Observer 1', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_1_ID, 'Observer 1', sdtInteger,
           crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_2_id', 'Observer 2', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_2_ID, 'Observer 2', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
     tbEggs:
       begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('researcher_id', 'Researcher', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_RESEARCHER_ID, 'Researcher', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
     tbSightings:
       begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_id', 'Observer', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_ID, 'Observer', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
     tbSpecimens: ;
     tbSamplePreps: ;
     tbBands:
       begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('carrier_id', 'Carrier', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_CARRIER_ID, 'Carrier', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
     tbCaptures:
       begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('bander_id', 'Bander', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_BANDER_ID, 'Bander', sdtInteger,
           crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('annotator_id', 'Annotator', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_ANNOTATOR_ID, 'Annotator', sdtInteger,
           crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('photographer_1_id', 'Photographer 1', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_PHOTOGRAPHER_1_ID, 'Photographer 1', sdtInteger,
           crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('photographer_2_id', 'Photographer 2', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_PHOTOGRAPHER_2_ID, 'Photographer 2', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
     tbFeathers:
       begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create('observer_id', 'Observer', sdtInteger,
+        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_ID, 'Observer', sdtInteger,
           crEqual, False, IntToStr(aKey)));
       end;
     tbImages: ;

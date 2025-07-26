@@ -70,7 +70,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_validations,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_dataconst,
   udm_main, udm_grid, udm_breeding, udm_individuals, udm_sampling,
   uDarkStyleParams;
 

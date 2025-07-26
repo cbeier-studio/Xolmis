@@ -69,7 +69,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst;
 
 {$R *.lfm}
 
@@ -140,8 +140,8 @@ function TedtUser.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (dsUser.DataSet.FieldByName('user_name').AsString <> EmptyStr) and
-    (dsUser.DataSet.FieldByName('user_rank').AsString <> EmptyStr) then
+  if (dsUser.DataSet.FieldByName(COL_USER_NAME).AsString <> EmptyStr) and
+    (dsUser.DataSet.FieldByName(COL_USER_RANK).AsString <> EmptyStr) then
     Result := True;
 end;
 

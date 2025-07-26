@@ -109,7 +109,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_gis,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_gis, cbs_dataconst,
   cbs_taxonomy, cbs_conversions, cbs_getvalue, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -341,17 +341,17 @@ begin
     if FFeather.TaxonId > 0 then
     begin
       FTaxonId := FFeather.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FFeather.LocalityId > 0 then
     begin
       FLocalityId := FFeather.LocalityId;
-      eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+      eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
     end;
     if FFeather.ObserverId > 0 then
     begin
       FObserverId := FFeather.ObserverId;
-      eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+      eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
     end;
   end
   else
@@ -368,11 +368,11 @@ begin
   if not TimeIsNull(FFeather.SampleTime) then
     eTime.Text := TimeToStr(FFeather.SampleTime);
   FTaxonId := FFeather.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FLocalityId := FFeather.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   FObserverId := FFeather.ObserverId;
-  eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   FIndividualId := FFeather.IndividualId;
   FCaptureId := FFeather.CaptureId;
   FSightingId := FFeather.SightingId;

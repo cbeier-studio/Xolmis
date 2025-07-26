@@ -175,7 +175,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  cbs_themes,
+  cbs_themes, cbs_dataconst,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -438,13 +438,13 @@ begin
   eAddress2.Text := FPerson.Address2;
   eNeighborhood.Text := FPerson.Neighborhood;
   FMunicipalityId := FPerson.MunicipalityId;
-  eMunicipality.Text := GetName('gazetteer', 'site_name', 'site_id', FMunicipalityId);
+  eMunicipality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FMunicipalityId);
   FStateId := FPerson.StateId;
-  eState.Text := GetName('gazetteer', 'site_name', 'site_id', FStateId);
+  eState.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FStateId);
   FCountryId := FPerson.CountryId;
-  eCountry.Text := GetName('gazetteer', 'site_name', 'site_id', FCountryId);
+  eCountry.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FCountryId);
   FInstitutionId := FPerson.InstitutionId;
-  eInstitution.Text := GetName('institutions', 'full_name', 'institution_id', FInstitutionId);
+  eInstitution.Text := GetName('institutions', COL_FULL_NAME, COL_INSTITUTION_ID, FInstitutionId);
   eDepartment.Text := FPerson.Department;
   eJobRole.Text := FPerson.JobRole;
   eLattes.Text := FPerson.LattesUri;
@@ -569,8 +569,7 @@ begin
   //RequiredIsEmpty(D, tbPeople, 'country_id', Msgs);
 
   // Registro duplicado
-  RecordDuplicated(tbPeople, 'person_id', 'acronym',
-    eAbbreviation.Text, FPerson.Id, Msgs);
+  RecordDuplicated(tbPeople, COL_PERSON_ID, COL_ABBREVIATION, eAbbreviation.Text, FPerson.Id, Msgs);
 
   // Chaves estrangeiras
   //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,

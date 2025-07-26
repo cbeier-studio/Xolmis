@@ -110,7 +110,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_validations, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -387,11 +387,11 @@ begin
     bscFoundLoose:                cbBandSource.ItemIndex := cbBandSource.Items.IndexOf(rsBandFoundLoose);
   end;
   FSupplierId := FBand.SupplierId;
-  eSupplier.Text := GetName('institutions', 'acronym', 'institution_id', FSupplierId);
+  eSupplier.Text := GetName('institutions', COL_ABBREVIATION, COL_INSTITUTION_ID, FSupplierId);
   FCarrierId := FBand.CarrierId;
-  eCarrier.Text := GetName('people', 'full_name', 'person_id', FCarrierId);
+  eCarrier.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FCarrierId);
   FProjectId := FBand.ProjectId;
-  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   mNotes.Text := FBand.Notes;
 end;
 

@@ -142,7 +142,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_themes,
-  cbs_getvalue, cbs_fullnames, udm_main, uDarkStyleParams;
+  cbs_getvalue, cbs_fullnames, cbs_dataconst, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -529,11 +529,13 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
+    AutoCalcFields;
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSurvey)]);
     GetRecord;
+    AutoCalcFields;
     sbSave.Enabled := IsRequiredFilled;
   end;
 end;
@@ -546,7 +548,7 @@ end;
 procedure TedtSurvey.GetRecord;
 begin
   FExpeditionId := FSurvey.ExpeditionId;
-  eExpedition.Text := GetName('expeditions', 'expedition_name', 'expedition_id', FExpeditionId);
+  eExpedition.Text := GetName('expeditions', COL_EXPEDITION_NAME, COL_EXPEDITION_ID, FExpeditionId);
   if not DateIsNull(FSurvey.SurveyDate) then
     eDate.Text := DateToStr(FSurvey.SurveyDate);
   eDuration.Value := FSurvey.Duration;
@@ -555,13 +557,13 @@ begin
   if (FSurvey.EndTime <> NullTime) then
     eEndTime.Text := FormatDateTime('hh:nn', FSurvey.EndTime);
   FMethodId := FSurvey.MethodId;
-  eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
+  eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
   FLocalityId := FSurvey.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   FSamplingPlotId := FSurvey.NetStationId;
-  eNetStation.Text := GetName('sampling_plots', 'full_name', 'sampling_plot_id', FSamplingPlotId);
+  eNetStation.Text := GetName('sampling_plots', COL_FULL_NAME, COL_SAMPLING_PLOT_ID, FSamplingPlotId);
   FProjectId := FSurvey.ProjectId;
-  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   if (FSurvey.StartLongitude <> 0.0) or (FSurvey.StartLatitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FSurvey.StartLongitude);
@@ -580,8 +582,6 @@ begin
   mHabitat.Text := FSurvey.Habitat;
   mNetRounds.Text := FSurvey.NetRounds;
   mNotes.Text := FSurvey.Notes;
-
-  AutoCalcFields;
 end;
 
 function TedtSurvey.IsRequiredFilled: Boolean;

@@ -278,8 +278,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_taxonomy,
-  cbs_validations, cbs_fullnames, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_getvalue, cbs_dialogs, cbs_finddialogs, cbs_gis,
+  cbs_taxonomy, cbs_validations, cbs_fullnames, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -394,13 +394,12 @@ end;
 
 procedure TedtCapture.eCycleCodeButtonClick(Sender: TObject);
 begin
-  MoltCycleDialog(dsLink.DataSet.FieldByName('cycle_code').AsString, dsLink.DataSet, 'cycle_code');
+  MoltCycleDialog(eCycleCode);
 end;
 
 procedure TedtCapture.eAnnotatorButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eAnnotator, FAnnotatorId, '', 'acronym');
-    //eAnnotator.Text := GetName('people', 'acronym', 'person_id', FAnnotatorId);
+  FindDlg(tbPeople, eAnnotator, FAnnotatorId, '', COL_ABBREVIATION);
 end;
 
 procedure TedtCapture.eAnnotatorKeyPress(Sender: TObject; var Key: char);
@@ -410,8 +409,7 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eAnnotator, FAnnotatorId, Key, 'acronym');
-      //eAnnotator.Text := GetName('people', 'acronym', 'person_id', FAnnotatorId);
+    FindDlg(tbPeople, eAnnotator, FAnnotatorId, Key, COL_ABBREVIATION);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -447,8 +445,7 @@ end;
 
 procedure TedtCapture.eBanderButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, eBander, FBanderId, '', 'acronym');
-    //eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
+  FindDlg(tbPeople, eBander, FBanderId, '', COL_ABBREVIATION);
 end;
 
 procedure TedtCapture.eBanderKeyPress(Sender: TObject; var Key: char);
@@ -458,8 +455,7 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, eBander, FBanderId, Key, 'acronym');
-      //eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
+    FindDlg(tbPeople, eBander, FBanderId, Key, COL_ABBREVIATION);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -582,7 +578,7 @@ end;
 
 procedure TedtCapture.eLeftTarsusButtonClick(Sender: TObject);
 begin
-  EditColorBands(dsLink.DataSet, 'left_leg_below', eLeftTarsus);
+  EditColorBands(eLeftTarsus);
   PaintColorBands(bpLeftTarsus);
   if eLeftTarsus.CanSetFocus then
     eLeftTarsus.SetFocus;
@@ -590,7 +586,7 @@ end;
 
 procedure TedtCapture.eLocalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfAll], eLocality, FLocalityId, '', 'site_name');
+  FindSiteDlg([gfAll], eLocality, FLocalityId, '', COL_SITE_NAME);
 end;
 
 procedure TedtCapture.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -600,7 +596,7 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindSiteDlg([gfAll], eLocality, FLocalityId, Key, 'site_name');
+    FindSiteDlg([gfAll], eLocality, FLocalityId, Key, COL_SITE_NAME);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -630,17 +626,17 @@ begin
   aDMS := '';
   if Sender = eLongitude then
   begin
-    aField := 'longitude';
+    aField := COL_LONGITUDE;
     Ax := maLongitude;
   end
   else
-    if Sender = eLatitude then
-    begin
-      aField := 'latitude';
-      Ax := maLatitude;
-    end
-    else
-      Exit;
+  if Sender = eLatitude then
+  begin
+    aField := COL_LATITUDE;
+    Ax := maLatitude;
+  end
+  else
+    Exit;
 
   C := dsLink.DataSet.FieldByName(aField).AsFloat;
   if C <> 0.0 then
@@ -747,7 +743,7 @@ end;
 
 procedure TedtCapture.eMoltLimitsButtonClick(Sender: TObject);
 begin
-  MoltLimitsDialog(dsLink.DataSet.FieldByName('molt_limits').AsString, dsLink.DataSet, 'molt_limits');
+  MoltLimitsDialog(eMoltLimits);
 end;
 
 procedure TedtCapture.eNetButtonClick(Sender: TObject);
@@ -761,7 +757,7 @@ var
 begin
   if FNetId > 0 then
   begin
-    if GetLatLong('nets_effort', 'longitude', 'latitude', 'full_name', 'net_id', FNetId, NetCoord) then
+    if GetLatLong('nets_effort', COL_LONGITUDE, COL_LATITUDE, COL_FULL_NAME, COL_NET_ID, FNetId, NetCoord) then
     begin
       if (NetCoord.X = 0) and (NetCoord.Y = 0) then
         Exit;
@@ -804,8 +800,7 @@ end;
 
 procedure TedtCapture.ePhotographer1ButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, '', 'acronym');
-    //ePhotographer1.Text := GetName('people', 'acronym', 'person_id', FPhotographer1Id);
+  FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, '', COL_ABBREVIATION);
 end;
 
 procedure TedtCapture.ePhotographer1KeyPress(Sender: TObject; var Key: char);
@@ -815,8 +810,7 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, Key, 'acronym');
-      //ePhotographer1.Text := GetName('people', 'acronym', 'person_id', FPhotographer1Id);
+    FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, Key, COL_ABBREVIATION);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -839,8 +833,7 @@ end;
 
 procedure TedtCapture.ePhotographer2ButtonClick(Sender: TObject);
 begin
-  FindDlg(tbPeople, ePhotographer2, FPhotographer2Id, '', 'acronym');
-    //ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
+  FindDlg(tbPeople, ePhotographer2, FPhotographer2Id, '', COL_ABBREVIATION);
 end;
 
 procedure TedtCapture.ePhotographer2KeyPress(Sender: TObject; var Key: char);
@@ -850,8 +843,7 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindDlg(tbPeople, ePhotographer2, FPhotographer2Id, Key, 'acronym');
-      //ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
+    FindDlg(tbPeople, ePhotographer2, FPhotographer2Id, Key, COL_ABBREVIATION);
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -907,7 +899,7 @@ end;
 
 procedure TedtCapture.eRightTarsusButtonClick(Sender: TObject);
 begin
-  EditColorBands(dsLink.DataSet, 'right_leg_below', eRightTarsus);
+  EditColorBands(eRightTarsus);
   PaintColorBands(bpRightTarsus);
   if eRightTarsus.CanSetFocus then
     eRightTarsus.SetFocus;
@@ -943,9 +935,9 @@ begin
       Qry.Open;
       if Qry.RecordCount > 0 then
       begin
-        FLocalityId := Qry.FieldByName('locality_id').AsInteger;
-        eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-        eCaptureDate.Text := DateToStr(Qry.FieldByName('survey_date').AsDateTime);
+        FLocalityId := Qry.FieldByName(COL_LOCALITY_ID).AsInteger;
+        eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+        eCaptureDate.Text := DateToStr(Qry.FieldByName(COL_SURVEY_DATE).AsDateTime);
       end;
       Qry.Close;
     finally
@@ -1065,22 +1057,22 @@ begin
     if FCapture.LocalityId > 0 then
     begin
       FLocalityId := FCapture.LocalityId;
-      eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if FCapture.SurveyId > 0 then
     begin
       FSurveyId := FCapture.SurveyId;
-      eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
+      eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
     end;
     if FCapture.TaxonId > 0 then
     begin
       FTaxonId := FCapture.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FCapture.BandId > 0 then
     begin
       FBandId := FCapture.BandId;
-      eBand.Text := GetName('bands', 'full_name', 'band_id', FBandId);
+      eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
     end;
   end
   else
@@ -1144,9 +1136,9 @@ begin
   FIndividual := TIndividual.Create(FIndividualId);
   try
     FTaxonId := FIndividual.TaxonId;
-    eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     FBandId := FIndividual.BandId;
-    eBand.Text := GetName('bands', 'full_name', 'band_id', FBandId);
+    eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
     eRightTarsus.Text := FIndividual.RightLegBelow;
     eLeftTarsus.Text := FIndividual.LeftLegBelow;
     FCapture.SubjectAge := FIndividual.Age;
@@ -1180,19 +1172,19 @@ end;
 procedure TedtCapture.GetRecord;
 begin
   FIndividualId := FCapture.IndividualId;
-  eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   FSurveyId := FCapture.SurveyId;
-  eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
+  eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
   FLocalityId := FCapture.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   if not DateIsNull(FCapture.CaptureDate) then
     eCaptureDate.Text := DateToStr(FCapture.CaptureDate);
   if (FCapture.CaptureTime <> NullTime) then
     eCaptureTime.Text := FormatDateTime('hh:nn', FCapture.CaptureTime);
   FBanderId := FCapture.BanderId;
-  eBander.Text := GetName('people', 'acronym', 'person_id', FBanderId);
+  eBander.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FBanderId);
   FAnnotatorId := FCapture.AnnotatorId;
-  eAnnotator.Text := GetName('people', 'acronym', 'person_id', FAnnotatorId);
+  eAnnotator.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FAnnotatorId);
   case FCapture.CaptureType of
     cptNew:         cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureNew);
     cptRecapture:   cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureRecapture);
@@ -1203,18 +1195,18 @@ begin
     cbCaptureType.ItemIndex := -1;
   end;
   FNetId := FCapture.NetId;
-  eNet.Text := GetName('nets_effort', 'net_number', 'net_id', FNetId);
+  eNet.Text := GetName('nets_effort', COL_NET_NUMBER, COL_NET_ID, FNetId);
   if (FCapture.Longitude <> 0.0) and (FCapture.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FCapture.Longitude);
     eLatitude.Text := FloatToStr(FCapture.Latitude);
   end;
   FTaxonId := FCapture.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FBandId := FCapture.BandId;
-  eBand.Text := GetName('bands', 'full_name', 'band_id', FBandId);
+  eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
   FRemovedBandId := FCapture.RemovedBandId;
-  eRemovedBand.Text := GetName('bands', 'full_name', 'band_id', FRemovedBandId);
+  eRemovedBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FRemovedBandId);
   eRightTarsus.Text := FCapture.RightLegBelow;
   eLeftTarsus.Text := FCapture.LeftLegBelow;
   case FCapture.SubjectAge of
@@ -1284,9 +1276,9 @@ begin
   ckClaw.Checked := FCapture.ClawSample;
   ckWholeSpecimen.Checked := FCapture.SubjectCollected;
   FPhotographer1Id := FCapture.Photographer1Id;
-  ePhotographer1.Text := GetName('people', 'acronym', 'person_id', FPhotographer1Id);
+  ePhotographer1.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FPhotographer1Id);
   FPhotographer2Id := FCapture.Photographer2Id;
-  ePhotographer2.Text := GetName('people', 'acronym', 'person_id', FPhotographer2Id);
+  ePhotographer2.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FPhotographer2Id);
   cbCamera.ItemIndex := cbCamera.Items.IndexOf(FCapture.CameraName);
   if (FCapture.StartPhotoNumber <> EmptyStr) and (FCapture.StartPhotoNumber <> '0') then
     eStartPhoto.Text := FCapture.StartPhotoNumber;

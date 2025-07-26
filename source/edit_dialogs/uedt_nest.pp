@@ -180,8 +180,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_fullnames, cbs_getvalue,
-  cbs_taxonomy, cbs_gis, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_dialogs, cbs_finddialogs, cbs_validations,
+  cbs_getvalue, cbs_taxonomy, cbs_gis, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -585,7 +585,7 @@ begin
     if FNest.TaxonId > 0 then
     begin
       FTaxonId := FNest.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     end;
   end
   else
@@ -604,7 +604,7 @@ end;
 procedure TedtNest.GetRecord;
 begin
   FTaxonId := FNest.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   eFieldNumber.Text := FNest.FieldNumber;
   case FNest.NestFate of
     nfLoss:     cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestLost);
@@ -616,11 +616,11 @@ begin
   if not DateIsNull(FNest.LastDate) then
     eLastDate.Text := DateToStr(FNest.LastDate);
   FProjectId := FNest.ProjectId;
-  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   FObserverId := FNest.ObserverId;
-  eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   FLocalityId := FNest.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   if (FNest.Longitude <> 0) and (FNest.Latitude <> 0) then
   begin
     eLongitude.Text := FloatToStr(FNest.Longitude);
@@ -653,9 +653,9 @@ begin
   end;
   eHeightAboveGround.Value := FNest.HeightAboveGround;
   FSupportPlant1Id := FNest.SupportPlant1Id;
-  eSupportPlant1.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FSupportPlant1Id);
+  eSupportPlant1.Text := GetName('botanic_taxa', COL_TAXON_NAME, COL_TAXON_ID, FSupportPlant1Id);
   FSupportPlant2Id := FNest.SupportPlant2Id;
-  eSupportPlant2.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FSupportPlant2Id);
+  eSupportPlant2.Text := GetName('botanic_taxa', COL_TAXON_NAME, COL_TAXON_ID, FSupportPlant2Id);
   eOtherSupport.Text := FNest.OtherSupport;
   ePlantHeight.Value := FNest.PlantHeight;
   ePlantDbh.Value := FNest.PlantDbh;
@@ -803,7 +803,7 @@ begin
   //RequiredIsEmpty(dsLink.DataSet, tbNests, 'locality_id', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbNests, 'nest_id', 'field_number', eFieldNumber.Text, FNest.Id);
+  RecordDuplicated(tbNests, COL_NEST_ID, COL_FIELD_NUMBER, eFieldNumber.Text, FNest.Id);
 
   // Foreign keys
   //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,

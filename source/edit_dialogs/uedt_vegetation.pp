@@ -95,7 +95,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_gis, cbs_validations, cbs_datacolumns, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, cbs_gis, cbs_validations, cbs_datacolumns, cbs_dataconst,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -207,8 +208,10 @@ begin
 end;
 
 procedure TedtVegetation.eSampleDateButtonClick(Sender: TObject);
+var
+  Dt: TDateTime;
 begin
-  CalendarDlg(eSampleDate, dsLink.DataSet, 'sample_date');
+  CalendarDlg(eSampleDate.Text, eSampleDate, Dt);
 end;
 
 procedure TedtVegetation.eSampleDateEditingDone(Sender: TObject);

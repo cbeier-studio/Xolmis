@@ -79,7 +79,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_gis, cbs_validations, cbs_fullnames,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_gis, cbs_validations, cbs_fullnames, cbs_dataconst,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}

@@ -89,7 +89,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue,
-  udm_main,
+  cbs_dataconst, udm_main,
   uDarkStyleParams;
 
 { TedtSamplePrep }
@@ -267,7 +267,7 @@ begin
   if not DateIsNull(FSamplePrep.PreparationDate) then
     ePreparationDate.Text := DateToStr(FSamplePrep.PreparationDate);
   FPreparerId := FSamplePrep.PreparerId;
-  ePreparer.Text := GetName('people', 'full_name', 'person_id', FPreparerId);
+  ePreparer.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FPreparerId);
   mNotes.Text := FSamplePrep.Notes;
 end;
 

@@ -88,7 +88,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_finddialogs, cbs_dialogs, cbs_taxonomy, cbs_validations, cbs_getvalue,
-  udm_main, uDarkStyleParams;
+  cbs_dataconst, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -230,7 +230,7 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  FillComboBox(cbRank, 'taxon_ranks', 'rank_name', 'rank_seq', 'icbn');
+  FillComboBox(cbRank, 'taxon_ranks', COL_RANK_NAME, COL_RANK_SEQUENCE, COL_ICBN);
 
   if FIsNew then
   begin
@@ -251,13 +251,13 @@ begin
   eName.Text := FTaxon.FullName;
   eAuthorship.Text := FTaxon.Authorship;
   eVernacularName.Text := FTaxon.VernacularName;
-  aRankId := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BotanicRanks[FTaxon.RankId]);
-  FRankName := GetName('taxon_ranks', 'rank_name', 'rank_id', aRankId);
+  aRankId := GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_ABBREVIATION, BotanicRanks[FTaxon.RankId]);
+  FRankName := GetName('taxon_ranks', COL_RANK_NAME, COL_RANK_ID, aRankId);
   cbRank.ItemIndex := cbRank.Items.IndexOf(FRankName);
   FParentTaxonId := FTaxon.ParentTaxonId;
-  eParentTaxon.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FParentTaxonId);
+  eParentTaxon.Text := GetName('botanic_taxa', COL_TAXON_NAME, COL_TAXON_ID, FParentTaxonId);
   FValidId := FTaxon.ValidId;
-  eValidName.Text := GetName('botanic_taxa', 'taxon_name', 'taxon_id', FValidId);
+  eValidName.Text := GetName('botanic_taxa', COL_TAXON_NAME, COL_TAXON_ID, FValidId);
 end;
 
 function TedtBotanicTaxon.IsRequiredFilled: Boolean;
@@ -290,8 +290,8 @@ begin
   FTaxon.FullName := eName.Text;
   FTaxon.Authorship := eAuthorship.Text;
   FTaxon.VernacularName := eVernacularName.Text;
-  aRankId := GetKey('taxon_ranks', 'rank_id', 'rank_name', cbRank.Text);
-  aRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', aRankId);
+  aRankId := GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_NAME, cbRank.Text);
+  aRankAbbrev := GetName('taxon_ranks', COL_RANK_ABBREVIATION, COL_RANK_ID, aRankId);
   FTaxon.RankId := StringToBotanicRank(aRankAbbrev);
   FTaxon.ParentTaxonId := FParentTaxonId;
   FTaxon.ValidId := FValidId;
@@ -317,7 +317,7 @@ begin
   //RequiredIsEmpty(D, tbBotanicTaxa, 'rank_id', Msgs);
 
   // Registro duplicado
-  RecordDuplicated(tbBotanicTaxa, 'taxon_id', 'taxon_name', eName.Text, FTaxon.Id, Msgs);
+  RecordDuplicated(tbBotanicTaxa, COL_TAXON_ID, COL_TAXON_NAME, eName.Text, FTaxon.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

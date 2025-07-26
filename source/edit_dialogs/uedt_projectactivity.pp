@@ -71,7 +71,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_getvalue, cbs_conversions,
-  cbs_finddialogs, udm_main, uDarkStyleParams;
+  cbs_finddialogs, cbs_dataconst, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -206,7 +206,7 @@ begin
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProjectActivity)]);
     if FGoalId > 0 then
-      eGoal.Text := GetName('project_goals', 'goal_description', 'goal_id', FGoalId);
+      eGoal.Text := GetName('project_goals', COL_GOAL_DESCRIPTION, COL_GOAL_ID, FGoalId);
   end
   else
   begin
@@ -235,7 +235,7 @@ begin
   if not DateIsNull(FActivity.EndDate) then
     eEndDate.Text := DateToStr(FActivity.EndDate);
   FGoalId := FActivity.GoalId;
-  eGoal.Text := GetName('project_goals', 'goal_description', 'goal_id', FGoalId);
+  eGoal.Text := GetName('project_goals', COL_GOAL_DESCRIPTION, COL_GOAL_ID, FGoalId);
 end;
 
 function TedtProjectActivity.IsRequiredFilled: Boolean;

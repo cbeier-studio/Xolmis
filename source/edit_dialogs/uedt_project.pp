@@ -102,7 +102,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_getvalue, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_dataconst, udm_main, uDarkStyleParams;
 
 { TedtProject }
 
@@ -271,8 +271,7 @@ begin
   //RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbProjects, 'project_id', 'project_title',
-    eTitle.Text, FProject.Id);
+  RecordDuplicated(tbProjects, COL_PROJECT_ID, COL_PROJECT_TITLE, eTitle.Text, FProject.Id);
 
   // Dates
   if Trim(eStartDate.Text) <> EmptyStr then

@@ -97,7 +97,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue,
-  udm_main,
+  cbs_dataconst, udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -332,7 +332,7 @@ begin
   if (Length(eParentSite.Text) > 0) then
   begin
     S := eName.Text + ', ';
-    S := S + GetName('gazetteer', 'full_name', 'site_id', FSite.ParentSiteId);
+    S := S + GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FSite.ParentSiteId);
   end
   else
     S := eName.Text;
@@ -361,7 +361,7 @@ begin
   if FSite.Altitude <> 0 then
     eAltitude.Text := FloatToStr(FSite.Altitude);
   FParentSiteId := FSite.ParentSiteId;
-  eParentSite.Text := GetName('gazetteer', 'site_name', 'site_id', FSite.ParentSiteId);
+  eParentSite.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FSite.ParentSiteId);
   eFullname.Text := FSite.FullName;
   eEbirdName.Text := FSite.EbirdName;
 end;

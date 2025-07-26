@@ -128,7 +128,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_validations, cbs_getvalue,
-  cbs_themes, udm_main, udm_breeding, uDarkStyleParams;
+  cbs_dataconst, cbs_themes, udm_main, udm_breeding, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -391,7 +391,7 @@ begin
     if FEgg.TaxonId > 0 then
     begin
       FTaxonId := FEgg.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     end;
   end
   else
@@ -406,15 +406,15 @@ procedure TedtEgg.GetRecord;
 begin
   FNestId := FEgg.NestId;
   if pNest.Visible then
-    eNest.Text := GetName('nests', 'full_name', 'nest_id', FNestId);
+    eNest.Text := GetName('nests', COL_FULL_NAME, COL_NEST_ID, FNestId);
   eFieldNumber.Text := FEgg.FieldNumber;
   eEggSeq.Value := FEgg.EggSeq;
   if not DateIsNull(FEgg.MeasureDate) then
     eMeasureDate.Text := DateToStr(FEgg.MeasureDate);
   FTaxonId := FEgg.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FObserverId := FEgg.ResearcherId;
-  eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   case FEgg.EggShape of
     esUnknown: cbShape.ItemIndex := cbShape.Items.IndexOf(rsEggUnknown);
     esSpherical: cbShape.ItemIndex := cbShape.Items.IndexOf(rsEggSpherical);
@@ -448,10 +448,10 @@ begin
   eWidth.Value := FEgg.Width;
   eLength.Value := FEgg.Length;
   eMass.Value := FEgg.Mass;
-  txtVolume.Caption := FloatToStr(FEgg.Volume);
+  txtVolume.Caption := FormatFloat('##0.000', FEgg.Volume);
   ckHatched.Checked := FEgg.EggHatched;
   FIndividualId := FEgg.IndividualId;
-  eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   mNotes.Text := FEgg.Notes;
 end;
 

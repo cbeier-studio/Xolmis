@@ -113,7 +113,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  udm_main, uDarkStyleParams;
+  cbs_dataconst, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -302,11 +302,11 @@ begin
   eComplement.Text := FInstitution.Address2;
   eNeighborhood.Text := FInstitution.Neighborhood;
   FMunicipalityId := FInstitution.MunicipalityId;
-  eMunicipality.Text := GetName('gazetteer', 'site_name', 'site_id', FMunicipalityId);
+  eMunicipality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FMunicipalityId);
   FStateId := FInstitution.StateId;
-  eState.Text := GetName('gazetteer', 'site_name', 'site_id', FStateId);
+  eState.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FStateId);
   FCountryId := FInstitution.CountryId;
-  eCountry.Text := GetName('gazetteer', 'site_name', 'site_id', FCountryId);
+  eCountry.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FCountryId);
   eManagerName.Text := FInstitution.ManagerName;
   eEmail.Text := FInstitution.Email;
   ePhone.Text := FInstitution.Phone;
@@ -370,7 +370,7 @@ begin
   //RequiredIsEmpty(D, tbInstitutions, 'acronym', Msgs);
 
   // Registro duplicado
-  RecordDuplicated(tbInstitutions, 'institution_id', 'full_name', eFullname.Text, FInstitution.Id, Msgs);
+  RecordDuplicated(tbInstitutions, COL_INSTITUTION_ID, COL_FULL_NAME, eFullname.Text, FInstitution.Id, Msgs);
 
   // Chaves estrangeiras
   //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,

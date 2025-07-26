@@ -55,7 +55,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_validations, cbs_dialogs,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_dataconst, cbs_dialogs,
   udm_sampling, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -175,7 +175,7 @@ end;
 procedure TedtSurveyMember.GetRecord;
 begin
   FMemberId := FMember.PersonId;
-  ePerson.Text := GetName('people', 'full_name', 'person_id', FMember.PersonId);
+  ePerson.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FMember.PersonId);
   ckVisitor.Checked := FMember.Visitor;
 end;
 

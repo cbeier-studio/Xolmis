@@ -74,7 +74,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
-  cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
+  cbs_dataconst, udm_breeding, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -210,7 +210,7 @@ begin
     nrlUnknown:   cbRole.ItemIndex := 4;
   end;
   FIndividualId := FNestOwner.IndividualId;
-  eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FNestOwner.IndividualId);
+  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FNestOwner.IndividualId);
 end;
 
 procedure TedtNestOwner.sbSaveClick(Sender: TObject);

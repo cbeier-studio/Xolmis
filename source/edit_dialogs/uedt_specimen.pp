@@ -115,7 +115,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_taxonomy,
-  cbs_validations, cbs_fullnames, cbs_getvalue, udm_main, uDarkStyleParams;
+  cbs_validations, cbs_dataconst, cbs_getvalue, udm_main, uDarkStyleParams;
 
 { TedtSpecimen }
 
@@ -464,12 +464,12 @@ begin
     if FSpecimen.TaxonId > 0 then
     begin
       FTaxonId := FSpecimen.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FSpecimen.IndividualId > 0 then
     begin
       FIndividualId := FSpecimen.IndividualId;
-      eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+      eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
     end;
   end
   else
@@ -483,8 +483,8 @@ procedure TedtSpecimen.GetFullName;
 var
   TaxonName, SiteName: String;
 begin
-  TaxonName := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
-  SiteName := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  TaxonName := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  SiteName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
 
   FSpecimen.FullName := Format('%s-%s, %s, %s', [FSpecimen.FieldNumber, FSpecimen.SampleType, TaxonName, SiteName]);
 end;
@@ -514,20 +514,20 @@ begin
     eCollectionDay.Text := IntToStr(FSpecimen.CollectionDay);
   end;
   FLocalityId := FSpecimen.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   if (FSpecimen.Longitude <> 0.0) or (FSpecimen.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FSpecimen.Longitude);
     eLatitude.Text := FloatToStr(FSpecimen.Latitude);
   end;
   FTaxonId := FSpecimen.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FSpecimen.IndividualId;
-  eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   FNestId := FSpecimen.NestId;
-  eNest.Text := GetName('nests', 'full_name', 'nest_id', FNestId);
+  eNest.Text := GetName('nests', COL_FULL_NAME, COL_NEST_ID, FNestId);
   FEggId := FSpecimen.EggId;
-  eEgg.Text := GetName('eggs', 'full_name', 'egg_id', FEggId);
+  eEgg.Text := GetName('eggs', COL_FULL_NAME, COL_EGG_ID, FEggId);
   mNotes.Text := FSpecimen.Notes;
 end;
 

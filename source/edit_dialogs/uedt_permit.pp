@@ -94,7 +94,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue, cbs_themes,
-  udm_main, uDarkStyleParams;
+  cbs_dataconst, udm_main, uDarkStyleParams;
 
 { TedtPermit }
 
@@ -237,7 +237,7 @@ end;
 procedure TedtPermit.GetRecord;
 begin
   FProjectId := FPermit.ProjectId;
-  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   eName.Text := FPermit.Name;
   ePermitNumber.Text := FPermit.Number;
   case FPermit.PermitType of
@@ -325,7 +325,7 @@ begin
   //RequiredIsEmpty(D, tbPermits, 'dispatch_date', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbPermits, 'permit_id', 'permit_name', eName.Text, FPermit.Id);
+  RecordDuplicated(tbPermits, COL_PERMIT_ID, COL_PERMIT_NAME, eName.Text, FPermit.Id);
 
   // Dates
   if eDispatchDate.Text <> EmptyStr then

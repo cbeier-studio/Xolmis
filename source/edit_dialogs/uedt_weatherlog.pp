@@ -98,7 +98,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, cbs_datacolumns, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, cbs_datacolumns, cbs_dataconst,
+  udm_main, uDarkStyleParams;
 
 { TedtWeatherLog }
 
@@ -116,8 +117,10 @@ begin
 end;
 
 procedure TedtWeatherLog.eSampleDateButtonClick(Sender: TObject);
+var
+  Dt: TDateTime;
 begin
-  CalendarDlg(eSampleDate, dsLink.DataSet, 'sample_date');
+  CalendarDlg(eSampleDate.Text, eSampleDate, Dt);
 end;
 
 procedure TedtWeatherLog.eSampleTimeKeyPress(Sender: TObject; var Key: char);

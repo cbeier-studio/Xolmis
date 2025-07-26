@@ -64,7 +64,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue,
-  cbs_conversions, udm_main, uDarkStyleParams;
+  cbs_conversions, cbs_dataconst, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -179,7 +179,7 @@ begin
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProjectExpense)]);
     if FRubricId > 0 then
-      eRubric.Text := GetName('project_budgets', 'rubric', 'budget_id', FRubricId);
+      eRubric.Text := GetName('project_budgets', COL_RUBRIC, COL_BUDGET_ID, FRubricId);
   end
   else
   begin
@@ -192,7 +192,7 @@ end;
 procedure TedtProjectExpense.GetRecord;
 begin
   FRubricId := FExpense.BudgetId;
-  eRubric.Text := GetNameConcat('project_budgets', 'rubric', 'item_name', 'budget_id', FRubricId);
+  eRubric.Text := GetNameConcat('project_budgets', COL_RUBRIC, COL_ITEM_NAME, COL_BUDGET_ID, FRubricId);
   eItem.Text := FExpense.Description;
   if not DateIsNull(FExpense.ExpenseDate) then
     eDate.Text := DateToStr(FExpense.ExpenseDate);

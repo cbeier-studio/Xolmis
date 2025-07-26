@@ -162,8 +162,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
-  cbs_getvalue, cbs_themes, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis,
+  cbs_validations, cbs_getvalue, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -224,7 +224,7 @@ end;
 
 procedure TedtSighting.eDetectionTypeButtonClick(Sender: TObject);
 begin
-  DetectionDialog(dsLink.DataSet.FieldByName('detection_type').AsString, dsLink.DataSet, 'detection_type');
+  DetectionDialog(eDetectionType);
 end;
 
 procedure TedtSighting.eIndividualButtonClick(Sender: TObject);
@@ -615,17 +615,17 @@ begin
     if FSighting.MethodId > 0 then
     begin
       FMethodId := FSighting.MethodId;
-      eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
+      eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
     end;
     if FSighting.LocalityId > 0 then
     begin
       FLocalityId := FSighting.LocalityId;
-      eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if FSighting.TaxonId > 0 then
     begin
       FTaxonId := FSighting.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     end;
   end
   else
@@ -639,13 +639,13 @@ end;
 procedure TedtSighting.GetRecord;
 begin
   FSurveyId := FSighting.SurveyId;
-  eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
+  eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
   FObserverId := FSighting.ObserverId;
-  eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   FMethodId := FSighting.MethodId;
-  eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
+  eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
   FLocalityId := FSighting.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   if (FSighting.Longitude <> 0.0) or (FSighting.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FSighting.Longitude);
@@ -656,9 +656,9 @@ begin
   if (FSighting.SightingTime <> NullTime) then
     eTime.Text := FormatDateTime('hh:nn', FSighting.SightingTime);
   FTaxonId := FSighting.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FSighting.IndividualId;
-  eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   eQuantity.Value := FSighting.SubjectTally;
   eDistance.Value := FSighting.SubjectDistance;
   eDetectionType.Text := FSighting.DetectionType;

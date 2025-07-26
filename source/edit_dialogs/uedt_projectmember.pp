@@ -60,7 +60,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_validations, cbs_dialogs,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_dataconst, cbs_dialogs,
   udm_grid, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -214,10 +214,10 @@ end;
 procedure TedtProjectMember.GetRecord;
 begin
   FMemberId := FMember.PersonId;
-  ePerson.Text := GetName('people', 'full_name', 'person_id', FMember.PersonId);
+  ePerson.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FMember.PersonId);
   ckManager.Checked := FMember.IsProjectManager;
   FInstitutionId := FMember.InstitutionId;
-  eInstitution.Text := GetName('institutions', 'acronym', 'institution_id', FMember.InstitutionId);
+  eInstitution.Text := GetName('institutions', COL_ABBREVIATION, COL_INSTITUTION_ID, FMember.InstitutionId);
 end;
 
 function TedtProjectMember.IsRequiredFilled: Boolean;

@@ -131,7 +131,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
+  cbs_global, cbs_locale, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_dataconst,
   cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -415,7 +415,7 @@ procedure TedtImageInfo.GetRecord;
 begin
   mSubtitle.Text := FImage.Subtitle;
   FAuthorId := FImage.AuthorId;
-  eAuthor.Text := GetName('people', 'full_name', 'person_id', FAuthorId);
+  eAuthor.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eImageDate.Text := DateToStr(FImage.ImageDate);
   eImageTime.Text := TimeToStr(FImage.ImageTime);
   case FImage.ImageType of
@@ -454,7 +454,7 @@ begin
   end;
   eImageFilename.Text := FImage.Filename;
   FLocalityId := FImage.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   case FImage.CoordinatePrecision of
     cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
     cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
@@ -465,7 +465,7 @@ begin
   eLongitude.Text := FloatToStr(FImage.Longitude);
   eLatitude.Text := FloatToStr(FImage.Latitude);
   FTaxonId := FImage.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FImage.LicenseType);
   eLicenseYear.Text := IntToStr(FImage.LicenseYear);
   eLicenseOwner.Text := FImage.LicenseOwner;

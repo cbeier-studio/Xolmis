@@ -90,7 +90,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  udm_main,
+  cbs_dataconst, udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -305,7 +305,7 @@ begin
   eName.Text := FSamplingPlot.FullName;
   eAbbreviation.Text := FSamplingPlot.Acronym;
   FLocalityId := FSamplingPlot.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   if (FSamplingPlot.Longitude <> 0.0) or (FSamplingPlot.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FSamplingPlot.Longitude);
@@ -377,7 +377,7 @@ begin
   //RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'locality_id', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbSamplingPlots, 'sampling_plot_id', 'acronym',
+  RecordDuplicated(tbSamplingPlots, COL_SAMPLING_PLOT_ID, COL_ABBREVIATION,
     eAbbreviation.Text, FSamplingPlot.Id, Msgs);
 
   // Foreign keys

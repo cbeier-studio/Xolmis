@@ -145,7 +145,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
-  cbs_validations, udm_main, uDarkStyleParams;
+  cbs_dataconst, cbs_validations, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -518,17 +518,17 @@ end;
 procedure TedtIndividual.GetRecord;
 begin
   FTaxonId := FIndividual.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FBandId := FIndividual.BandId;
-  eBand.Text := GetName('bands', 'full_name', 'band_id', FBandId);
+  eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
   if DateIsNull(FIndividual.BandingDate) then
     eBandingDate.Text := EmptyStr
   else
     eBandingDate.Text := DateToStr(FIndividual.BandingDate);
   FDoubleBandId := FIndividual.DoubleBandId;
-  eDoubleBand.Text := GetName('bands', 'full_name', 'band_id', FDoubleBandId);
+  eDoubleBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FDoubleBandId);
   FRemovedBandId := FIndividual.RemovedBandId;
-  eRemovedBand.Text := GetName('bands', 'full_name', 'band_id', FRemovedBandId);
+  eRemovedBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FRemovedBandId);
   if DateIsNull(FIndividual.BandChangeDate) then
     eBandChangeDate.Text := EmptyStr
   else
@@ -567,11 +567,11 @@ begin
     ageFifthYear: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFifthYear);
   end;
   FNestId := FIndividual.NestId;
-  eNest.Text := GetName('nests', 'full_name', 'nest_id', FNestId);
+  eNest.Text := GetName('nests', COL_FULL_NAME, COL_NEST_ID, FNestId);
   FFatherId := FIndividual.FatherId;
-  eFather.Text := GetName('individuals', 'full_name', 'individual_id', FFatherId);
+  eFather.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FFatherId);
   FMotherId := FIndividual.MotherId;
-  eMother.Text := GetName('individuals', 'full_name', 'individual_id', FMotherId);
+  eMother.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FMotherId);
   mRecognizableMarkings.Text := FIndividual.RecognizableMarkings;
   mNotes.Text := FIndividual.Notes;
 end;

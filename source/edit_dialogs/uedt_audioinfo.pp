@@ -142,7 +142,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_validations,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_dataconst,
   cbs_sampling, cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -243,7 +243,7 @@ end;
 
 procedure TedtAudioInfo.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, 'longitude', 'latitude');
+  GeoEditorDlg(TControl(Sender), dsLink.DataSet, COL_LONGITUDE, COL_LATITUDE);
 end;
 
 procedure TedtAudioInfo.eLongitudeKeyPress(Sender: TObject; var Key: char);
@@ -441,17 +441,17 @@ procedure TedtAudioInfo.GetRecord;
 begin
   mSubtitle.Text := FAudio.Subtitle;
   FAuthorId := FAudio.AuthorId;
-  eAuthor.Text := GetName('people', 'full_name', 'person_id', FAuthorId);
+  eAuthor.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eRecordingDate.Text := DateToStr(FAudio.RecordingDate);
   eRecordingTime.Text := TimeToStr(FAudio.RecordingTime);
   cbAudioType.Text := FAudio.AudioType;
   eAudioFile.Text := FAudio.Filename;
   FLocalityId := FAudio.LocalityId;
-  eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FAudio.Longitude);
   eLatitude.Text := FloatToStr(FAudio.Latitude);
   FTaxonId := FAudio.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FAudio.IndividualId;
   FSightingId := FAudio.SightingId;
   FSpecimenId := FAudio.SpecimenId;

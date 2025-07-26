@@ -128,7 +128,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  cbs_fullnames, cbs_datacolumns, cbs_themes,
+  cbs_fullnames, cbs_datacolumns, cbs_themes, cbs_dataconst,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -420,11 +420,13 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionMistnet)]);
     if not DateIsNull(FNetEffort.SampleDate) then
       eDate.Text := DateToStr(FNetEffort.SampleDate);
+    AutoCalcFields;
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionMistnet)]);
     GetRecord;
+    AutoCalcFields;
     sbSave.Enabled := IsRequiredFilled;
   end;
 end;
@@ -437,9 +439,9 @@ end;
 procedure TedtNetEffort.GetRecord;
 begin
   FSurveyId := FNetEffort.SurveyId;
-  eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
+  eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
   FPermanentNetId := FNetEffort.PermanentNetId;
-  ePermanentNet.Text := GetName('permanent_nets', 'full_name', 'permanent_net_id', FPermanentNetId);
+  ePermanentNet.Text := GetName('permanent_nets', COL_FULL_NAME, COL_PERMANENT_NET_ID, FPermanentNetId);
   eNetNumber.Text := IntToStr(FNetEffort.NetNumber);
   if (FNetEffort.Longitude <> 0.0) and (FNetEffort.Latitude <> 0.0) then
   begin

@@ -84,7 +84,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  udm_main,
+  cbs_dataconst, udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -222,7 +222,7 @@ begin
   if (FExpedition.EndDate <> NullDate) then
     eEndDate.Text := DateToStr(FExpedition.EndDate);
   FProjectId := FExpedition.ProjectId;
-  eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   mDescription.Text := FExpedition.Description;
 end;
 
@@ -281,7 +281,7 @@ begin
   //RequiredIsEmpty(D, tbExpeditions, 'end_date', Msgs);
 
   // Duplicated record
-  RecordDuplicated(tbExpeditions, 'expedition_id', 'expedition_name', eName.Text, FExpedition.Id);
+  RecordDuplicated(tbExpeditions, COL_EXPEDITION_ID, COL_EXPEDITION_NAME, eName.Text, FExpedition.Id);
 
   // Dates
   if eStartDate.Text <> EmptyStr then

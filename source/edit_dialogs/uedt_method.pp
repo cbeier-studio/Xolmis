@@ -72,7 +72,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs;
+uses cbs_locale, cbs_global, cbs_dialogs, cbs_dataconst;
 
 { TedtMethod }
 
