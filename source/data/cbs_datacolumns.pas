@@ -876,6 +876,7 @@ begin
         'order_id':               Fields[i].DisplayLabel := rscOrderID;
         'incertae_sedis':         Fields[i].DisplayLabel := rscIncertaeSedis;
         'ebird_code':             Fields[i].DisplayLabel := rscEBirdCode;
+        { --- deprecated --- }
         'clements_taxonomy':      Fields[i].DisplayLabel := rscClements;
         'ioc_taxonomy':           Fields[i].DisplayLabel := rscIOC;
         'ioc_rank_id':            Fields[i].DisplayLabel := rscTaxonomicRankID;
@@ -887,6 +888,7 @@ begin
         'ioc_sort_num':           Fields[i].DisplayLabel := rscTaxonomicSequence;
         'ioc_english_name':       Fields[i].DisplayLabel := rscEnglishName;
         'cbro_taxonomy':          Fields[i].DisplayLabel := rscCBRO;
+        { ------------------ }
         'other_portuguese_names': Fields[i].DisplayLabel := rscOtherPortugueseNames;
         { --- deprecated --- }
         'cbro_rank_id':           Fields[i].DisplayLabel := rscTaxonomicRankID;
@@ -901,7 +903,7 @@ begin
         'subspecies_epithet':     Fields[i].DisplayLabel := rscSubspeciesEpithet;
         { ------------------ }
         'distribution':           Fields[i].DisplayLabel := rscDistribution;
-        'ioc_distribution':       Fields[i].DisplayLabel := rscDistribution;
+        'ioc_distribution':       Fields[i].DisplayLabel := rscDistribution; // deprecated
         'taxon_id':               Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;

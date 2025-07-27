@@ -3308,6 +3308,7 @@ msgid "Source code"
 msgstr ""
 
 #: cbs_locale.rsdocdatabase
+msgctxt "cbs_locale.rsdocdatabase"
 msgid "Database"
 msgstr ""
 
@@ -7060,6 +7061,19 @@ msgctxt "tdlgabout.lblappversion.caption"
 msgid "Version"
 msgstr ""
 
+#: tdlgabout.linkclementsversion.caption
+msgctxt "tdlgabout.linkclementsversion.caption"
+msgid "Clements/eBird"
+msgstr ""
+
+#: tdlgabout.linkclementsversion.hint
+msgid ""
+"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
+"J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,\n"
+"and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
+"Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
+msgstr ""
+
 #: tdlgabout.linklicense.caption
 msgid "License terms"
 msgstr ""
@@ -8309,6 +8323,102 @@ msgstr ""
 #: tdlgnewdatabase.sbcreateuser.caption
 msgctxt "tdlgnewdatabase.sbcreateuser.caption"
 msgid "Create user"
+msgstr ""
+
+#: tdlgonboarding.btnhelp.caption
+msgctxt "tdlgonboarding.btnhelp.caption"
+msgid "&Help"
+msgstr ""
+
+#: tdlgonboarding.btnsavelocations.caption
+msgctxt "tdlgonboarding.btnsavelocations.caption"
+msgid "Save"
+msgstr ""
+
+#: tdlgonboarding.btnstart.caption
+msgid "Start setup"
+msgstr ""
+
+#: tdlgonboarding.caption
+msgid "dlgOnboarding"
+msgstr ""
+
+#: tdlgonboarding.lblaudiospath.caption
+msgid "Audio files"
+msgstr ""
+
+#: tdlgonboarding.lbldatabaseinstruction.caption
+msgid "Select an option to setup your database."
+msgstr ""
+
+#: tdlgonboarding.lbldocumentspath.caption
+msgid "Documents"
+msgstr ""
+
+#: tdlgonboarding.lblfinishedinstruction.caption
+msgid ""
+"Your configuration is done!\n"
+"\n"
+"You can start using Xolmis and all its features."
+msgstr ""
+
+#: tdlgonboarding.lblimagespath.caption
+msgctxt "tdlgonboarding.lblimagespath.caption"
+msgid "Images"
+msgstr ""
+
+#: tdlgonboarding.lblmediainstruction.caption
+msgid "Set the location of attachment files."
+msgstr ""
+
+#: tdlgonboarding.lblnewdatabase.caption
+msgctxt "tdlgonboarding.lblnewdatabase.caption"
+msgid "New database"
+msgstr ""
+
+#: tdlgonboarding.lblopendatabase.caption
+msgid "Open an existing database"
+msgstr ""
+
+#: tdlgonboarding.lbltitledatabase.caption
+msgctxt "tdlgonboarding.lbltitledatabase.caption"
+msgid "Database"
+msgstr ""
+
+#: tdlgonboarding.lbltitlefinished.caption
+msgid "Finished"
+msgstr ""
+
+#: tdlgonboarding.lbltitlemedia.caption
+msgid "Attachments"
+msgstr ""
+
+#: tdlgonboarding.lbltitlewelcome.caption
+msgid "Welcome to Xolmis"
+msgstr ""
+
+#: tdlgonboarding.lblwelcomeinstruction.caption
+msgid ""
+"Your companion app for ornithological data management.\n"
+"\n"
+"You need to complete just a few steps to setup your database and environment and start using Xolmis."
+msgstr ""
+
+#: tdlgonboarding.sbcancel.caption
+msgctxt "tdlgonboarding.sbcancel.caption"
+msgid "&Cancel"
+msgstr ""
+
+#: tdlgonboarding.sbclose.caption
+msgid "C&lose"
+msgstr ""
+
+#: tdlgonboarding.txtnewdatabase.caption
+msgid "Create a new database file. Recommended if you never used Xolmis or want a fresh start."
+msgstr ""
+
+#: tdlgonboarding.txtopendatabase.caption
+msgid "Add a connection to an existing Xolmis database. Recommended if you are just reinstalling Xolmis."
 msgstr ""
 
 #: tdlgplantminer.caption

@@ -14726,6 +14726,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 250
     end
     object qTaxaenglish_name: TStringField
@@ -14776,6 +14777,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = True
+      Visible = False
     end
     object qTaxarank_name: TStringField
       FieldKind = fkData
@@ -14795,6 +14797,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaparent_taxon_name: TStringField
       FieldKind = fkData
@@ -14814,6 +14817,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxavalid_name: TStringField
       FieldKind = fkData
@@ -14874,6 +14878,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       Size = 40
     end
     object qTaxaorder_id: TLargeintField
@@ -14884,6 +14889,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaorder_name: TStringField
       FieldKind = fkData
@@ -14903,6 +14909,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxafamily_name: TStringField
       FieldKind = fkData
@@ -14922,6 +14929,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxasubfamily_name: TStringField
       FieldKind = fkData
@@ -14941,6 +14949,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxagenero_name: TStringField
       FieldKind = fkData
@@ -14960,6 +14969,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaspecies_name: TStringField
       FieldKind = fkData
@@ -14979,6 +14989,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxasubspecies_group_name: TStringField
       FieldKind = fkData
@@ -14998,6 +15009,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaebird_code: TStringField
       FieldKind = fkData
@@ -15036,6 +15048,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaioc_parent_taxon_id: TLargeintField
       FieldKind = fkData
@@ -15045,6 +15058,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaioc_parent_name: TStringField
       FieldKind = fkData
@@ -15064,6 +15078,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaioc_valid_name: TStringField
       FieldKind = fkData
@@ -15156,6 +15171,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxauser_updated: TLongintField
       FieldKind = fkData
@@ -15165,6 +15181,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxainsert_date: TDateTimeField
       FieldKind = fkData
@@ -15174,6 +15191,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaupdate_date: TDateTimeField
       FieldKind = fkData
@@ -15183,6 +15201,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
     end
     object qTaxaexported_status: TBooleanField
       FieldKind = fkData
@@ -15192,6 +15211,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       DisplayValues = 'True;False'
     end
     object qTaxaactive_status: TBooleanField
@@ -15202,6 +15222,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Visible = False
       DisplayValues = 'True;False'
     end
   end

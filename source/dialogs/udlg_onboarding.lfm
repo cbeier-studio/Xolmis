@@ -14,7 +14,7 @@ object dlgOnboarding: TdlgOnboarding
     Height = 282
     Top = 0
     Width = 498
-    PageIndex = 2
+    PageIndex = 0
     Align = alTop
     AutoSize = True
     TabOrder = 0

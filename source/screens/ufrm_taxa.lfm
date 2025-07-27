@@ -7,7 +7,6 @@ object frmTaxa: TfrmTaxa
   ClientHeight = 636
   ClientWidth = 1179
   Color = clWindow
-  LCLVersion = '4.0.0.4'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
@@ -30,7 +29,7 @@ object frmTaxa: TfrmTaxa
     Columns = <    
       item
         Title.Caption = 'Taxon'
-        Width = 308
+        Width = 287
         FieldName = 'full_name'
       end    
       item
@@ -253,13 +252,12 @@ object frmTaxa: TfrmTaxa
       AnchorSideRight.Control = pTop
       AnchorSideRight.Side = asrBottom
       Left = 320
-      Height = 40
-      Top = 6
-      Width = 843
+      Height = 49
+      Top = 2
+      Width = 859
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 16
       BorderSpacing.Top = 16
-      BorderSpacing.Right = 16
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       Background.Color = 15987699
@@ -297,12 +295,14 @@ object frmTaxa: TfrmTaxa
       Rounding.RoundY = 8
       TabOrder = 1
       object sbShareRecords: TSpeedButton
+        AnchorSideLeft.Control = pToolbar
+        AnchorSideTop.Control = pToolbar
+        AnchorSideTop.Side = asrCenter
         Left = 16
-        Height = 24
+        Height = 34
         Hint = 'Export records'
-        Top = 8
+        Top = 7
         Width = 34
-        Align = alLeft
         AutoSize = True
         BorderSpacing.Right = 20
         DisabledImageIndex = 13
@@ -313,14 +313,18 @@ object frmTaxa: TfrmTaxa
         ImageWidth = 24
         ShowHint = True
         ParentShowHint = False
+        OnClick = sbShareRecordsClick
       end
       object sbPrint: TSpeedButton
+        AnchorSideLeft.Control = sbShareRecords
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = pToolbar
+        AnchorSideTop.Side = asrCenter
         Left = 70
-        Height = 24
+        Height = 34
         Hint = 'Print records'
-        Top = 8
+        Top = 7
         Width = 34
-        Align = alLeft
         AutoSize = True
         BorderSpacing.Right = 20
         DisabledImageIndex = 94
@@ -12006,7 +12010,6 @@ object frmTaxa: TfrmTaxa
     object pmPrintTaxa: TMenuItem
       Caption = 'Taxa'
       Enabled = False
-      Visible = False
     end
     object pmPrintTaxaHierarchical: TMenuItem
       Caption = 'Taxa (hierarchical)'
@@ -12016,12 +12019,10 @@ object frmTaxa: TfrmTaxa
     object pmPrintTaxaRecorded: TMenuItem
       Caption = 'Taxa recorded'
       Enabled = False
-      Visible = False
     end
     object pmPrintTaxaRecordedByLocality: TMenuItem
       Caption = 'Taxa recorded by locality'
       Enabled = False
-      Visible = False
     end
   end
   object MvBGRA: TMvBGRADrawingEngine
@@ -12034,6 +12035,7 @@ object frmTaxa: TfrmTaxa
     object pmfShowRecordedTaxa: TMenuItem
       AutoCheck = True
       Caption = 'Show only the recorded taxa'
+      Checked = True
       OnClick = pmfShowRecordedTaxaClick
     end
   end

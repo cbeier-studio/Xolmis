@@ -135,7 +135,7 @@ begin
     //Add(lblAppDescription.Caption);
     Add(lblAppCopyright.Caption);
     Add(lblAppVersion.Caption + ' ' + pAppVersion.Caption);
-    Add(lblClementsVersion.Caption + ' ' + pClementsVersion.Caption);
+    Add(linkClementsVersion.Caption + ' ' + pClementsVersion.Caption);
     //Add(lblIocVersion.Caption + ' ' + pIocVersion.Caption);
     //Add(lblCbroVersion.Caption + ' ' + pCbroVersion.Caption);
   end;

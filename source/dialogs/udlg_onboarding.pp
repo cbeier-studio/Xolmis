@@ -84,7 +84,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_themes, udm_main, uDarkStyleParams, udlg_newdatabase, uedt_database;
+  cbs_global, cbs_locale, cbs_themes, cbs_dialogs, udm_main, uDarkStyleParams, udlg_newdatabase, uedt_database;
 
 {$R *.lfm}
 
@@ -129,12 +129,12 @@ begin
   XSettings.DocumentsFolder := eDocumentsPath.Directory;
   XSettings.SaveToFile;
 
-  nbPages.ActivePageComponent := pgFinished;
+  nbPages.PageIndex := pgFinished.PageIndex;
 end;
 
 procedure TdlgOnboarding.btnStartClick(Sender: TObject);
 begin
-  nbPages.ActivePageComponent := pgDatabase;
+  nbPages.PageIndex := pgDatabase.PageIndex;
 end;
 
 procedure TdlgOnboarding.FormDestroy(Sender: TObject);
@@ -156,7 +156,7 @@ begin
   pNewDatabase.Border.Width := 2;
 
   if NewDatabase then
-    nbPages.ActivePageComponent := pgMedia;
+    nbPages.PageIndex := pgMedia.PageIndex;
 
   if IsDarkModeEnabled then
     pNewDatabase.Border.Color := clSolidBGTertiaryDark
@@ -204,7 +204,7 @@ begin
       else
         dsConn.DataSet.Post;
 
-      nbPages.ActivePageComponent := pgMedia;
+      nbPages.PageIndex := pgMedia.PageIndex;
     end
     else
       dsConn.DataSet.Cancel;

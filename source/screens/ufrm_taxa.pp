@@ -140,6 +140,7 @@ type
     procedure sbIUCNRedListClick(Sender: TObject);
     procedure sbOptionsSearchClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
+    procedure sbShareRecordsClick(Sender: TObject);
     procedure sbWikiavesClick(Sender: TObject);
     procedure scrollDataMouseWheel
       (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
@@ -168,6 +169,7 @@ type
     procedure LoadYearlyChart;
     function Search(AValue: String): Boolean;
     procedure SetSearchString(aValue: String);
+    procedure UpdateButtons;
   public
     property SearchString: String read FSearchString write SetSearchString;
   end;
@@ -178,7 +180,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, cbs_conversions,
+  cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, cbs_conversions, cbs_dialogs,
   ufrm_main, udm_main, udm_grid, udm_taxa,
   uDarkStyleParams;
 
@@ -250,6 +252,8 @@ end;
 procedure TfrmTaxa.dsLinkStateChange(Sender: TObject);
 begin
   pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
+
+  UpdateButtons;
 end;
 
 procedure TfrmTaxa.eSearchChange(Sender: TObject);
@@ -1189,6 +1193,11 @@ begin
     pmPrint.Popup(X, Y);
 end;
 
+procedure TfrmTaxa.sbShareRecordsClick(Sender: TObject);
+begin
+  ExportDlg(dsLink.DataSet);
+end;
+
 procedure TfrmTaxa.sbWikiavesClick(Sender: TObject);
 var
   FUrlSearch: String;
@@ -1429,6 +1438,8 @@ begin
 
   GetNestProductivity;
   LoadNestFateChart;
+
+  UpdateButtons;
 end;
 
 procedure TfrmTaxa.TimerFindTimer(Sender: TObject);
@@ -1460,6 +1471,12 @@ begin
   else
   if Sender is TDBText then
     TDBText(Sender).Font.Style := TDBText(Sender).Font.Style - [fsUnderline];
+end;
+
+procedure TfrmTaxa.UpdateButtons;
+begin
+  sbShareRecords.Enabled := dsLink.DataSet.RecordCount > 0;
+  sbPrint.Enabled := sbShareRecords.Enabled;
 end;
 
 end.

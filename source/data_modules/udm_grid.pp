@@ -1545,7 +1545,7 @@ begin
   TranslateSpecimens(qSpecimens);
   TranslateSpecimenCollectors(qSampleCollectors);
   TranslateSamplePreps(qSamplePreps);
-
+  TranslateZooTaxa(qTaxa);
 end;
 
 procedure TDMG.qAudioBeforePost(DataSet: TDataSet);
