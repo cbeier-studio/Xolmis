@@ -29,6 +29,7 @@ type
   { TdlgAbout }
 
   TdlgAbout = class(TForm)
+    linkClementsVersion: TATLabelLink;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     pClementsVersion: TLabel;
@@ -39,7 +40,6 @@ type
     lblAppName: TLabel;
     lblAppDescription: TLabel;
     lblAppCopyright: TLabel;
-    lblClementsVersion: TLabel;
     linkPrivacy: TATLabelLink;
     linkLicense: TATLabelLink;
     linkThirdParty: TATLabelLink;
@@ -51,6 +51,7 @@ type
     pContent: TPanel;
     pBottom: TPanel;
     procedure FormShow(Sender: TObject);
+    procedure linkClementsVersionClick(Sender: TObject);
     procedure linkLicenseClick(Sender: TObject);
     procedure linkPrivacyClick(Sender: TObject);
     procedure linkThirdPartyClick(Sender: TObject);
@@ -101,6 +102,11 @@ begin
   pClementsVersion.Caption := XSettings.ClementsVersion;
   //pIocVersion.Caption := XSettings.IocVersion;
   //pCbroVersion.Caption := XSettings.CbroVersion;
+end;
+
+procedure TdlgAbout.linkClementsVersionClick(Sender: TObject);
+begin
+  OpenURL('https://www.birds.cornell.edu/clementschecklist/download/');
 end;
 
 procedure TdlgAbout.linkLicenseClick(Sender: TObject);

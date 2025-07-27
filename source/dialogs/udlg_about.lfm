@@ -255,6 +255,7 @@ object dlgAbout: TdlgAbout
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 8
       ChildSizing.HorizontalSpacing = 8
+      ChildSizing.VerticalSpacing = 8
       Background.Color = 16448250
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
@@ -289,22 +290,15 @@ object dlgAbout: TdlgAbout
       Rounding.RoundX = 8
       Rounding.RoundY = 8
       TabOrder = 1
-      object lblClementsVersion: TLabel
-        Left = 17
-        Height = 20
-        Top = 9
-        Width = 82
-        Align = alLeft
-        Caption = 'Clements/eBird'
-        Layout = tlCenter
-        ParentColor = False
-      end
       object pClementsVersion: TLabel
+        AnchorSideTop.Control = pClements
+        AnchorSideRight.Control = pClements
+        AnchorSideRight.Side = asrBottom
         Left = 222
         Height = 20
         Top = 9
         Width = 36
-        Align = alRight
+        Anchors = [akTop, akRight]
         Caption = '2021'
         Font.Color = 13066075
         Font.Height = -15
@@ -312,6 +306,23 @@ object dlgAbout: TdlgAbout
         Layout = tlCenter
         ParentColor = False
         ParentFont = False
+      end
+      object linkClementsVersion: TATLabelLink
+        Cursor = crHandPoint
+        Left = 17
+        Height = 15
+        Hint = 'Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, '#13#10'J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,'#13#10'and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. '#13#10'Downloaded from https://www.birds.cornell.edu/clementschecklist/download/'
+        Top = 12
+        Width = 82
+        Caption = 'Clements/eBird'
+        Font.Color = 13066075
+        ParentFont = False
+        ParentShowHint = False
+        ShowAccelChar = False
+        ShowHint = True
+        OnClick = linkClementsVersionClick
+        ColorLinkNormal = 13066075
+        ColorLinkMouseover = 9520964
       end
     end
   end
