@@ -59,7 +59,7 @@ object cfgOptions: TcfgOptions
     Height = 422
     Top = 0
     Width = 657
-    PageIndex = 3
+    PageIndex = 0
     Align = alClient
     TabOrder = 2
     object pgGeneral: TPage
@@ -1379,8 +1379,10 @@ object cfgOptions: TcfgOptions
               Height = 23
               Top = 12
               Width = 465
+              DialogOptions = [ofPathMustExist, ofEnableSizing]
               ShowHidden = False
               ButtonWidth = 24
+              DirectInput = False
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6
@@ -1476,8 +1478,10 @@ object cfgOptions: TcfgOptions
               Height = 23
               Top = 12
               Width = 447
+              DialogOptions = [ofPathMustExist, ofEnableSizing]
               ShowHidden = False
               ButtonWidth = 24
+              DirectInput = False
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6
@@ -1574,8 +1578,10 @@ object cfgOptions: TcfgOptions
               Height = 23
               Top = 12
               Width = 442
+              DialogOptions = [ofPathMustExist, ofEnableSizing]
               ShowHidden = False
               ButtonWidth = 24
+              DirectInput = False
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6
@@ -2316,8 +2322,10 @@ object cfgOptions: TcfgOptions
               Height = 23
               Top = 12
               Width = 452
+              DialogOptions = [ofPathMustExist, ofEnableSizing]
               ShowHidden = False
               ButtonWidth = 24
+              DirectInput = False
               NumGlyphs = 1
               Images = DMM.iEdits
               ImageIndex = 6

@@ -1365,6 +1365,12 @@
         <Filename Value="data\cbs_dataconst.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_onboarding.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgOnboarding"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
     <Debugger>
       <StoreDebuggerClassConfInSession Value="True"/>
