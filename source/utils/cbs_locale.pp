@@ -119,6 +119,7 @@ uses
     rsTitleBackup = 'Backup';
     rsTitleRestore = 'Restore backup';
     rsTitleNewBandsBatch = 'New batch of bands';
+    rsTitleTransferBands = 'Transfer bands';
     rsTitleAutoUpdate = 'Autoupdate';
     rsTitleUpgradeDatabase = 'Upgrade database';
     rsTitleTaxonHierarchy = 'Taxa hierarchy';
@@ -195,6 +196,7 @@ uses
     rsProgressStarting = 'Starting...';
     rsProgressFinishing = 'Finishing...';
     rsProgressNewBandsBatch = 'Inserting new bands...';
+    rsProgressTransferingBands = 'Transfering bands...';
     rsProgressNewFeathersBatch = 'Inserting new feathers...';
     rsProgressRewritingHierarchy = 'Rewriting %s...';
     rsProgressLoadingCSVFile = 'Loading CSV file... %d%%';
@@ -227,6 +229,7 @@ uses
     rsSuccessfulRestore = 'Backup restored successfully: %s';
     rsSuccessfulImportCoordinates = 'Coordinates imported successfully!';
     rsSuccessfulNewBatch = 'New batch inserted successfully!';
+    rsSuccessfulTransferBands = 'Bands transfered successfully!';
     rsSuccessfulRecreateThumbnails = 'Image thumbnails recreated successfully!';
     rsSuccessfulConnectionTest = 'Connection to database was successful!';
     rsSuccessfulDatabaseCreation = 'The database file was created successfully!';

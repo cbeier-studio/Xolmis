@@ -49,9 +49,14 @@ type
   TfrmCustomGrid = class(TForm)
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmpTransferBandsTo: TMenuItem;
+    pmPrintBandsBalance: TMenuItem;
+    pmMore: TPopupMenu;
     sbAddFeathersBatch: TSpeedButton;
     sbQuickEntry: TSpeedButton;
+    sbInsertBatch: TSpeedButton;
     sbQuickEntryChild: TSpeedButton;
+    sbMoreOptions: TSpeedButton;
     TimerOpen: TTimer;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
@@ -972,6 +977,7 @@ type
     procedure pmmMarkAllColumnsClick(Sender: TObject);
     procedure pmmUnmarkAllClick(Sender: TObject);
     procedure pmmUnmarkAllColumnsClick(Sender: TObject);
+    procedure pmPrintBandsBalanceClick(Sender: TObject);
     procedure pmPrintBandsByCarrierClick(Sender: TObject);
     procedure pmPrintBandsByStatusClick(Sender: TObject);
     procedure pmPrintBandsClick(Sender: TObject);
@@ -990,6 +996,7 @@ type
     procedure pmPrintSightingsClick(Sender: TObject);
     procedure pmPrintSpecimensClick(Sender: TObject);
     procedure pmPrintSurveysClick(Sender: TObject);
+    procedure pmpTransferBandsToClick(Sender: TObject);
     procedure pmrRefreshClick(Sender: TObject);
     procedure pmtClearSelectionClick(Sender: TObject);
     procedure pmtColapseAllClick(Sender: TObject);
@@ -1034,11 +1041,13 @@ type
     procedure sbFirstChildClick(Sender: TObject);
     procedure sbFirstRecordClick(Sender: TObject);
     procedure sbImageInfoClick(Sender: TObject);
+    procedure sbInsertBatchClick(Sender: TObject);
     procedure sbInsertRecordClick(Sender: TObject);
     procedure sbLastChildClick(Sender: TObject);
     procedure sbLastRecordClick(Sender: TObject);
     procedure sbMarkColumnsClick(Sender: TObject);
     procedure sbMarkRecordsClick(Sender: TObject);
+    procedure sbMoreOptionsClick(Sender: TObject);
     procedure sbMoveColumnDownClick(Sender: TObject);
     procedure sbMoveColumnUpClick(Sender: TObject);
     procedure sbNextChildClick(Sender: TObject);
@@ -1378,7 +1387,8 @@ uses
   cbs_validations, cbs_setparam, cbs_dataconst, udlg_loading, udlg_progress, udlg_exportpreview,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
-  ufrm_main, ubatch_neteffort, ubatch_feathers, ufrm_quickentry, udlg_selectrecord;
+  ufrm_main, ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer,
+  ufrm_quickentry, udlg_selectrecord;
 
 {$R *.lfm}
 
@@ -6740,6 +6750,11 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.pmPrintBandsBalanceClick(Sender: TObject);
+begin
+  AbreForm(TdlgBandsBalance, dlgBandsBalance);
+end;
+
 procedure TfrmCustomGrid.pmPrintBandsByCarrierClick(Sender: TObject);
 begin
   DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
@@ -6952,6 +6967,34 @@ begin
   DMR.qSurveys.DataSource := nil;
 
   PrintPreview(SurveysReportFile, DMR.dsSurveys);
+end;
+
+procedure TfrmCustomGrid.pmpTransferBandsToClick(Sender: TObject);
+var
+  needsRefresh: Boolean;
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  try
+    batchBandsTransfer := TbatchBandsTransfer.Create(nil);
+    with batchBandsTransfer do
+    try
+      needsRefresh := ShowModal = mrOK;
+    finally
+      FreeAndNil(batchBandsTransfer);
+    end;
+
+    if needsRefresh then
+    begin
+      UpdateButtons(dsLink.DataSet);
+      UpdateFilterPanels;
+      UpdateChildRightPanel;
+    end;
+  finally
+    Working := False;
+  end;
 end;
 
 procedure TfrmCustomGrid.pmrRefreshClick(Sender: TObject);
@@ -8901,6 +8944,50 @@ begin
   EditImageInfo(qImages, dsLink.DataSet, FTableType);
 end;
 
+procedure TfrmCustomGrid.sbInsertBatchClick(Sender: TObject);
+var
+  needsRefresh: Boolean;
+begin
+  if Working then
+    Exit;
+
+  Working := True;
+  try
+    case FTableType of
+      //tbNone: ;
+      tbBands:
+      begin
+        batchBands := TbatchBands.Create(nil);
+        with batchBands do
+        try
+          needsRefresh := ShowModal = mrOK;
+        finally
+          FreeAndNil(batchBands);
+        end;
+      end;
+      tbFeathers:
+      begin
+        batchFeathers := TbatchFeathers.Create(nil);
+        with batchFeathers do
+        try
+          needsRefresh := ShowModal = mrOK;
+        finally
+          FreeAndNil(batchFeathers);
+        end;
+      end;
+    end;
+
+    if needsRefresh then
+    begin
+      UpdateButtons(dsLink.DataSet);
+      UpdateFilterPanels;
+      UpdateChildRightPanel;
+    end;
+  finally
+    Working := False;
+  end;
+end;
+
 procedure TfrmCustomGrid.sbInsertRecordClick(Sender: TObject);
 var
   needsRefresh: Boolean;
@@ -8995,6 +9082,12 @@ procedure TfrmCustomGrid.sbMarkRecordsClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmMark.Popup(X, Y);
+end;
+
+procedure TfrmCustomGrid.sbMoreOptionsClick(Sender: TObject);
+begin
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+    pmMore.Popup(X, Y);
 end;
 
 procedure TfrmCustomGrid.sbMoveColumnDownClick(Sender: TObject);
@@ -11530,9 +11623,14 @@ begin
   pmPrintBandsByCarrier.Visible := True;
   pmPrintBandsWithHistory.Visible := True;
   pmPrintBandsByStatus.Visible := True;
+  pmPrintBandsBalance.Visible := True;
 
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
+  sbInsertBatch.Visible := True;
+  sbMoreOptions.Visible := True;
+
+  pmpTransferBandsTo.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridBotanicTaxa;
@@ -11665,6 +11763,10 @@ begin
   sbShowImages.Visible := True;
 
   pmPrintFeathers.Visible := True;
+
+  sbInsertBatch.Visible := True;
+  sbInsertBatch.ImageIndex := 104;
+  sbInsertBatch.DisabledImageIndex := 105;
 end;
 
 procedure TfrmCustomGrid.SetGridGazetteer;
@@ -12645,6 +12747,8 @@ begin
   pmgDel.Enabled := sbDelRecord.Enabled;
   pmgRecordHistory.Enabled := sbRecordHistory.Enabled;
   pmgRecordVerifications.Enabled := sbRecordVerifications.Enabled;
+  sbInsertBatch.Enabled := sbInsertRecord.Enabled;
+  sbQuickEntry.Enabled := sbInsertRecord.Enabled;
 
   sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
   sbClearAllFilters.Enabled := sbClearFilters.Enabled;

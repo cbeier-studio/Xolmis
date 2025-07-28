@@ -18,37 +18,37 @@ object DMT: TDMT
   object RecordTypeStyles: TChartStyles
     Styles = <    
       item
-        Brush.Color = 15442486
+        Brush.Color = 11564616
         Pen.Color = clGray
         Text = 'Captures'
         UseFont = False
       end    
       item
-        Brush.Color = 8676351
+        Brush.Color = 15124148
         Pen.Color = clGray
         Text = 'Sightings'
         UseFont = False
       end    
       item
-        Brush.Color = 12632139
+        Brush.Color = 2326243
         Pen.Color = clGray
         Text = 'Nests'
         UseFont = False
       end    
       item
-        Brush.Color = 4235263
+        Brush.Color = 8108782
         Pen.Color = clGray
         Text = 'Eggs'
         UseFont = False
       end    
       item
-        Brush.Color = 16737945
+        Brush.Color = 3841633
         Pen.Color = clGray
         Text = 'Feathers'
         UseFont = False
       end    
       item
-        Brush.Color = 5688831
+        Brush.Color = 9363119
         Pen.Color = clGray
         Text = 'Specimens'
         UseFont = False
@@ -63,19 +63,19 @@ object DMT: TDMT
   object NestFateStyles: TChartStyles
     Styles = <    
       item
-        Brush.Color = 287743
+        Brush.Color = 6315471
         Pen.Color = clGray
         Text = 'Loss'
         UseFont = False
       end    
       item
-        Brush.Color = 15442486
+        Brush.Color = 11564616
         Pen.Color = clGray
         Text = 'Success'
         UseFont = False
       end    
       item
-        Brush.Color = 13618121
+        Brush.Color = 8289918
         Pen.Color = clGray
         Text = 'Unknown'
         UseFont = False

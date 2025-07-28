@@ -135,7 +135,7 @@ uses
   uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
   uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
   udm_reports, cbs_xmobile, ufrm_quickentry, udlg_splash, udlg_loading, udlg_selectrecord, cbs_dataconst, 
-udlg_onboarding;
+udlg_onboarding, ubatch_bandstransfer;
 
 {$R *.res}
 

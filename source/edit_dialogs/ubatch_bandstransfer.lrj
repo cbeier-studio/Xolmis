@@ -1,0 +1,17 @@
+{"version":1,"strings":[
+{"hash":266115455,"name":"tbatchbandstransfer.caption","sourcebytes":[84,114,97,110,115,102,101,114,32,98,97,110,100,115,32,116,111],"value":"Transfer bands to"},
+{"hash":252965066,"name":"tbatchbandstransfer.lbltransferdate.caption","sourcebytes":[84,114,97,110,115,102,101,114,32,100,97,116,101,58,32,42],"value":"Transfer date: *"},
+{"hash":168856698,"name":"tbatchbandstransfer.lblbandsize.caption","sourcebytes":[83,105,122,101,58,32,42],"value":"Size: *"},
+{"hash":38292546,"name":"tbatchbandstransfer.etransferdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
+{"hash":33581481,"name":"tbatchbandstransfer.etransferdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":186258186,"name":"tbatchbandstransfer.lblstartnumber.caption","sourcebytes":[83,116,97,114,116,32,110,117,109,98,101,114,58,32,42],"value":"Start number: *"},
+{"hash":133326058,"name":"tbatchbandstransfer.lblendnumber.caption","sourcebytes":[70,105,110,97,108,32,110,117,109,98,101,114,58,32,42],"value":"Final number: *"},
+{"hash":253810666,"name":"tbatchbandstransfer.lblrequester.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58,32,42],"value":"Requester: *"},
+{"hash":150656722,"name":"tbatchbandstransfer.erequester.buttonhint","sourcebytes":[70,105,110,100,32,114,101,113,117,101,115,116,101,114],"value":"Find requester"},
+{"hash":144242890,"name":"tbatchbandstransfer.lblcarrier.caption","sourcebytes":[67,97,114,114,105,101,114,58],"value":"Carrier:"},
+{"hash":223988130,"name":"tbatchbandstransfer.ecarrier.buttonhint","sourcebytes":[70,105,110,100,32,99,97,114,114,105,101,114],"value":"Find carrier"},
+{"hash":163884042,"name":"tbatchbandstransfer.lblsender.caption","sourcebytes":[83,101,110,100,101,114,58],"value":"Sender:"},
+{"hash":131550882,"name":"tbatchbandstransfer.esender.buttonhint","sourcebytes":[70,105,110,100,32,115,101,110,100,101,114],"value":"Find sender"},
+{"hash":366789,"name":"tbatchbandstransfer.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tbatchbandstransfer.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

@@ -1372,6 +1372,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\ubatch_bandstransfer.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="batchBandsTransfer"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
     <Debugger>
       <StoreDebuggerClassConfInSession Value="True"/>
