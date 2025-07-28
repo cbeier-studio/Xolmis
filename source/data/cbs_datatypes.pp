@@ -1202,7 +1202,7 @@ begin
         try
           while not Qry.EOF do
           begin
-            dlgValidate.Lista.Add(Qry.Fields[0].AsString);
+            dlgValidate.MessageList.Add(Qry.Fields[0].AsString);
             Qry.Next;
           end;
           dlgValidate.ShowModal;

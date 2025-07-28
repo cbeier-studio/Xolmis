@@ -15,7 +15,7 @@ object DMG: TDMG
     FieldDefs = <    
       item
         Name = 'band_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -66,21 +66,6 @@ object DMG: TDMG
         Size = 5
       end    
       item
-        Name = 'order_date'
-        DataType = ftDate
-        Precision = -1
-      end    
-      item
-        Name = 'order_number'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'receipt_date'
-        DataType = ftDate
-        Precision = -1
-      end    
-      item
         Name = 'supplier_id'
         DataType = ftInteger
         Precision = -1
@@ -96,11 +81,6 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'sender_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
         Name = 'individual_id'
         DataType = ftInteger
         Precision = -1
@@ -108,21 +88,6 @@ object DMG: TDMG
       item
         Name = 'project_id'
         DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'use_date'
-        DataType = ftDate
-        Precision = -1
-      end    
-      item
-        Name = 'discharge_date'
-        DataType = ftDate
-        Precision = -1
-      end    
-      item
-        Name = 'report_date'
-        DataType = ftDate
         Precision = -1
       end    
       item
@@ -175,6 +140,36 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'supplier_name'
+        DataType = ftString
+        Precision = -1
+        Size = 15
+      end    
+      item
+        Name = 'requester_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'carrier_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'project_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
       end>
     AfterCancel = qBandsAfterCancel
     AfterInsert = qBandsAfterInsert
@@ -186,12 +181,14 @@ object DMG: TDMG
     SQL.Strings = (
       'SELECT b.*,'
       '  it.acronym AS supplier_name,'
-      '  p.full_name AS carrier_name,'
+      '  p1.full_name AS requester_name,'
+      '  p2.full_name AS carrier_name,'
       '  i.full_name AS individual_name,'
       '  pj.short_title AS project_name'
       'FROM bands AS b'
       'LEFT JOIN institutions AS it ON b.supplier_id = it.institution_id'
-      'LEFT JOIN people AS p ON b.carrier_id = p.person_id'
+      'LEFT JOIN people AS p1 ON b.requester_id = p1.person_id'
+      'LEFT JOIN people AS p2 ON b.carrier_id = p2.person_id'
       'LEFT JOIN individuals AS i ON b.individual_id = i.individual_id'
       'LEFT JOIN projects AS pj ON b.project_id = pj.project_id'
       'WHERE (b.active_status = 1)'
@@ -208,6 +205,7 @@ object DMG: TDMG
       '  band_color,'
       '  band_source,'
       '  supplier_id,'
+      '  requester_id,'
       '  carrier_id,'
       '  individual_id,'
       '  project_id,'
@@ -226,6 +224,7 @@ object DMG: TDMG
       '  :band_color,'
       '  :band_source,'
       '  :supplier_id,'
+      '  :requester_id,'
       '  :carrier_id,'
       '  :individual_id,'
       '  :project_id,'
@@ -246,6 +245,7 @@ object DMG: TDMG
       '  band_color = :band_color,'
       '  band_source = :band_source,'
       '  supplier_id = :supplier_id,'
+      '  requester_id = :requester_id,'
       '  carrier_id = :carrier_id,'
       '  individual_id = :individual_id,'
       '  project_id = :project_id,'
@@ -395,16 +395,39 @@ object DMG: TDMG
       FieldName = 'supplier_name'
       Index = 10
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Size = 15
+    end
+    object qBandsrequester_id: TLongintField
+      DisplayLabel = 'Requester (ID)'
+      FieldKind = fkData
+      FieldName = 'requester_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qBandsrequester_name: TStringField
+      DisplayLabel = 'Requester'
+      DisplayWidth = 50
+      FieldKind = fkData
+      FieldName = 'requester_name'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
     end
     object qBandscarrier_id: TLongintField
       DisplayLabel = 'Carrier (ID)'
       FieldKind = fkData
       FieldName = 'carrier_id'
-      Index = 11
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -416,9 +439,9 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'carrier_name'
-      Index = 12
+      Index = 14
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Size = 100
@@ -427,7 +450,7 @@ object DMG: TDMG
       DisplayLabel = 'Project (ID)'
       FieldKind = fkData
       FieldName = 'project_id'
-      Index = 13
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -439,9 +462,9 @@ object DMG: TDMG
       DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'project_name'
-      Index = 14
+      Index = 16
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Size = 150
@@ -450,7 +473,7 @@ object DMG: TDMG
       DisplayLabel = 'Individual (ID)'
       FieldKind = fkData
       FieldName = 'individual_id'
-      Index = 15
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -462,9 +485,9 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'individual_name'
-      Index = 16
+      Index = 18
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Size = 120
@@ -474,7 +497,7 @@ object DMG: TDMG
       DisplayLabel = 'Reported'
       FieldKind = fkData
       FieldName = 'band_reported'
-      Index = 17
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -486,7 +509,7 @@ object DMG: TDMG
       DisplayWidth = 80
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 18
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -498,7 +521,7 @@ object DMG: TDMG
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'band_id'
-      Index = 19
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -508,7 +531,7 @@ object DMG: TDMG
       DisplayLabel = 'Full name'
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 20
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -521,7 +544,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 21
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -533,7 +556,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 22
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -545,7 +568,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 23
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -558,7 +581,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 24
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -571,7 +594,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 25
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -584,7 +607,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 26
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

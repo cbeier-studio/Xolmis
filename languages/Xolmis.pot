@@ -2313,6 +2313,16 @@ msgctxt "cbs_locale.rsbandneck"
 msgid "Neck collar"
 msgstr ""
 
+#: cbs_locale.rsbandnotavailable
+#, object-pascal-format
+msgid "The band %s is not available."
+msgstr ""
+
+#: cbs_locale.rsbandnotfound
+#, object-pascal-format
+msgid "The band %s was not found."
+msgstr ""
+
 #: cbs_locale.rsbandopen
 msgctxt "cbs_locale.rsbandopen"
 msgid "Butt-end"
@@ -2343,6 +2353,10 @@ msgstr ""
 #: cbs_locale.rsbandstatuslist
 msgctxt "cbs_locale.rsbandstatuslist"
 msgid "Available,Used,Removed,Transfered,Broken,Lost"
+msgstr ""
+
+#: cbs_locale.rsbandstransferedwitherrors
+msgid "The transfer of bands was finished, but some bands have problems and were not transfered."
 msgstr ""
 
 #: cbs_locale.rsbandtransferbetweenbanders
@@ -4940,6 +4954,10 @@ msgctxt "cbs_locale.rsprogressstarting"
 msgid "Starting..."
 msgstr ""
 
+#: cbs_locale.rsprogresstransferingbands
+msgid "Transfering bands..."
+msgstr ""
+
 #: cbs_locale.rsprogressunpreparing
 msgctxt "cbs_locale.rsprogressunpreparing"
 msgid "Unpreparing..."
@@ -5027,6 +5045,11 @@ msgstr ""
 #: cbs_locale.rsreplacedsynonym
 msgctxt "cbs_locale.rsreplacedsynonym"
 msgid "replaced synonym"
+msgstr ""
+
+#: cbs_locale.rsrequesterandsendermustbedifferent
+#, object-pascal-format
+msgid "The requester and the sender of band %s must be different."
 msgstr ""
 
 #: cbs_locale.rsrequiredbandsize
@@ -5520,6 +5543,10 @@ msgctxt "cbs_locale.rssuccessfulrestore"
 msgid "Backup restored successfully: %s"
 msgstr ""
 
+#: cbs_locale.rssuccessfultransferbands
+msgid "Bands transfered successfully!"
+msgstr ""
+
 #: cbs_locale.rssuccessfulupdate
 #, object-pascal-format
 msgctxt "cbs_locale.rssuccessfulupdate"
@@ -5983,6 +6010,10 @@ msgctxt "cbs_locale.rstitleteam"
 msgid "Team"
 msgstr ""
 
+#: cbs_locale.rstitletransferbands
+msgid "Transfer bands"
+msgstr ""
+
 #: cbs_locale.rstitleupgradedatabase
 msgid "Upgrade database"
 msgstr ""
@@ -6224,10 +6255,12 @@ msgid "DD/MM/YYYY"
 msgstr ""
 
 #: tbatchbands.erequester.buttonhint
+msgctxt "tbatchbands.erequester.buttonhint"
 msgid "Find requester"
 msgstr ""
 
 #: tbatchbands.esender.buttonhint
+msgctxt "tbatchbands.esender.buttonhint"
 msgid "Find sender"
 msgstr ""
 
@@ -6305,6 +6338,59 @@ msgstr ""
 
 #: tbatchbands.sbsave.caption
 msgctxt "tbatchbands.sbsave.caption"
+msgid "Save"
+msgstr ""
+
+#: tbatchbandstransfer.caption
+msgid "Transfer bands to"
+msgstr ""
+
+#: tbatchbandstransfer.erequester.buttonhint
+msgctxt "tbatchbandstransfer.erequester.buttonhint"
+msgid "Find requester"
+msgstr ""
+
+#: tbatchbandstransfer.etransferdate.buttonhint
+msgctxt "tbatchbandstransfer.etransferdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tbatchbandstransfer.etransferdate.texthint
+msgctxt "tbatchbandstransfer.etransferdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tbatchbandstransfer.lblbandsize.caption
+msgctxt "tbatchbandstransfer.lblbandsize.caption"
+msgid "Size: *"
+msgstr ""
+
+#: tbatchbandstransfer.lblendnumber.caption
+msgctxt "tbatchbandstransfer.lblendnumber.caption"
+msgid "Final number: *"
+msgstr ""
+
+#: tbatchbandstransfer.lblrequester.caption
+msgctxt "tbatchbandstransfer.lblrequester.caption"
+msgid "Requester: *"
+msgstr ""
+
+#: tbatchbandstransfer.lblstartnumber.caption
+msgctxt "tbatchbandstransfer.lblstartnumber.caption"
+msgid "Start number: *"
+msgstr ""
+
+#: tbatchbandstransfer.lbltransferdate.caption
+msgid "Transfer date: *"
+msgstr ""
+
+#: tbatchbandstransfer.sbcancel.caption
+msgctxt "tbatchbandstransfer.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tbatchbandstransfer.sbsave.caption
+msgctxt "tbatchbandstransfer.sbsave.caption"
 msgid "Save"
 msgstr ""
 
@@ -8340,7 +8426,7 @@ msgid "Start setup"
 msgstr ""
 
 #: tdlgonboarding.caption
-msgid "dlgOnboarding"
+msgid "Setup Xolmis"
 msgstr ""
 
 #: tdlgonboarding.lblaudiospath.caption
@@ -8860,6 +8946,11 @@ msgstr ""
 #: tedtbands.lblproject.caption
 msgctxt "tedtbands.lblproject.caption"
 msgid "Project:"
+msgstr ""
+
+#: tedtbands.lblrequester.caption
+msgctxt "tedtbands.lblrequester.caption"
+msgid "Requester: *"
 msgstr ""
 
 #: tedtbands.lblsupplier.caption
@@ -13370,6 +13461,11 @@ msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
 msgstr ""
 
+#: tfrmcustomgrid.pmprintbandsbalance.caption
+msgctxt "tfrmcustomgrid.pmprintbandsbalance.caption"
+msgid "Bands balance"
+msgstr ""
+
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption
 msgid "Bands per carrier"
 msgstr ""
@@ -13620,6 +13716,10 @@ msgstr ""
 
 #: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
 msgid "Taxa recorded per locality"
+msgstr ""
+
+#: tfrmcustomgrid.pmptransferbandsto.caption
+msgid "Transfer bands to..."
 msgstr ""
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
@@ -14009,6 +14109,10 @@ msgstr ""
 msgid "View and edit image info"
 msgstr ""
 
+#: tfrmcustomgrid.sbinsertbatch.hint
+msgid "Add new batch"
+msgstr ""
+
 #: tfrmcustomgrid.sbinsertrecord.hint
 msgctxt "tfrmcustomgrid.sbinsertrecord.hint"
 msgid "New record"
@@ -14030,6 +14134,10 @@ msgstr ""
 
 #: tfrmcustomgrid.sbmarkrecords.hint
 msgid "Mark/unmark all records in the query"
+msgstr ""
+
+#: tfrmcustomgrid.sbmoreoptions.hint
+msgid "More options"
 msgstr ""
 
 #: tfrmcustomgrid.sbmovecolumndown.hint

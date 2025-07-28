@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="156">
+      <ExcludedIdentifiers Count="158">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -180,13 +180,15 @@
         <Item154 Value="tdlgSplash.lblAppName.Caption"/>
         <Item155 Value="tdlgSplash.lblProgress.Caption"/>
         <Item156 Value="tdlgSelectRecord.lblSelectInfo.Caption"/>
+        <Item157 Value="tbatchBandsTransfer.txtSender.Caption"/>
+        <Item158 Value="tdlgAbout.linkClements.Hint"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="463"/>
+      <BuildNr Value="464"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1376,6 +1378,7 @@
         <Filename Value="edit_dialogs\ubatch_bandstransfer.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="batchBandsTransfer"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>

@@ -1,17 +1,16 @@
 object edtBands: TedtBands
   Left = 352
-  Height = 603
+  Height = 656
   Top = 33
   Width = 488
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New band'
-  ClientHeight = 603
+  ClientHeight = 656
   ClientWidth = 488
   ParentFont = True
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -19,7 +18,7 @@ object edtBands: TedtBands
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 562
+    Top = 593
     Width = 488
     Align = alTop
     AutoSize = True
@@ -33,7 +32,7 @@ object edtBands: TedtBands
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 41
     ClientWidth = 488
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       Left = 16
       Height = 25
@@ -63,7 +62,7 @@ object edtBands: TedtBands
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 560
+    Top = 591
     Width = 488
     Align = alTop
     LineColor = 9276813
@@ -72,37 +71,37 @@ object edtBands: TedtBands
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 560
+    Height = 591
     Top = 0
     Width = 488
     HorzScrollBar.Page = 488
-    VertScrollBar.Page = 560
+    VertScrollBar.Page = 591
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 560
+    ClientHeight = 591
     ClientWidth = 488
     Constraints.MinWidth = 220
     Color = clDefault
     ParentColor = False
-    TabOrder = 1
+    TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 560
+      Height = 591
       Top = 0
       Width = 488
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 560
+      ClientHeight = 591
       ClientWidth = 488
       Constraints.MinHeight = 560
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 113
-        Top = 416
+        Top = 462
         Width = 488
         Align = alTop
         AutoSize = True
@@ -116,7 +115,7 @@ object edtBands: TedtBands
         ClientHeight = 113
         ClientWidth = 488
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -516,7 +515,7 @@ object edtBands: TedtBands
       object pCarrier: TPanel
         Left = 0
         Height = 46
-        Top = 308
+        Top = 354
         Width = 488
         Align = alTop
         AutoSize = True
@@ -531,7 +530,7 @@ object edtBands: TedtBands
         ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 7
         object lblCarrier: TLabel
           Left = 16
           Height = 15
@@ -565,7 +564,7 @@ object edtBands: TedtBands
       object pProject: TPanel
         Left = 0
         Height = 46
-        Top = 354
+        Top = 400
         Width = 488
         Align = alTop
         AutoSize = True
@@ -580,7 +579,7 @@ object edtBands: TedtBands
         ClientHeight = 46
         ClientWidth = 488
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblProject: TLabel
           Left = 16
           Height = 15
@@ -609,6 +608,56 @@ object edtBands: TedtBands
           OnButtonClick = eProjectButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eProjectKeyPress
+        end
+      end
+      object pRequester: TPanel
+        Left = 0
+        Height = 46
+        Top = 308
+        Width = 488
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 46
+        ClientWidth = 488
+        ParentBackground = False
+        TabOrder = 6
+        object lblRequester: TLabel
+          Left = 16
+          Height = 15
+          Top = 4
+          Width = 456
+          BorderSpacing.Top = 4
+          Caption = 'Requester: *'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eRequester: TEditButton
+          Left = 16
+          Height = 23
+          Top = 23
+          Width = 456
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eRequesterButtonClick
+          OnEditingDone = cbBandSizeEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRequesterKeyPress
         end
       end
     end

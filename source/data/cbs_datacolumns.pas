@@ -1611,6 +1611,8 @@ begin
         'band_source':            Fields[i].DisplayLabel := rscSource;
         'supplier_id':            Fields[i].DisplayLabel := rscSupplierID;
         'supplier_name':          Fields[i].DisplayLabel := rscSupplier;
+        'requester_id':           Fields[i].DisplayLabel := rscRequesterID;
+        'requester_name':         Fields[i].DisplayLabel := rscRequester;
         'carrier_id':             Fields[i].DisplayLabel := rscCarrierID;
         'carrier_name':           Fields[i].DisplayLabel := rscCarrier;
         'project_id':             Fields[i].DisplayLabel := rscProjectID;

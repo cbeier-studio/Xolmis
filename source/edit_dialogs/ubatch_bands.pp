@@ -70,6 +70,7 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     procedure cbBandSizeChange(Sender: TObject);
+    procedure cbBandSizeEditingDone(Sender: TObject);
     procedure cbBandSizeKeyPress(Sender: TObject; var Key: char);
     procedure cbBandTypeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure eCarrierButtonClick(Sender: TObject);
@@ -90,6 +91,7 @@ type
     function ValidateData(aInitial, aFinal: Integer): Boolean;
     procedure AddBandsBatch;
     procedure ApplyDarkMode;
+    function IsRequiredFilled: Boolean;
   public
 
   end;
@@ -189,7 +191,11 @@ begin
           FRecord.SupplierId := FSupplierId;
           FRecord.Source := FBandSource;
           FRecord.ProjectId := FProjectId;
-          FRecord.CarrierId := FCarrierId;
+          FRecord.RequesterId := FRequesterId;
+          if FCarrierId > 0 then
+            FRecord.CarrierId := FCarrierId
+          else
+            FRecord.CarrierId := FRequesterId;
 
           FRecord.Insert;
 
@@ -305,6 +311,11 @@ begin
     sbSave.Enabled := True
   else
     sbSave.Enabled := False;
+end;
+
+procedure TbatchBands.cbBandSizeEditingDone(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TbatchBands.cbBandSizeKeyPress(Sender: TObject; var Key: char);
@@ -488,6 +499,20 @@ begin
     rsBandFoundLoose + '"';
   cbBandSource.ItemIndex := 0;
   eReceiptDate.Text := DateToStr(Today);
+end;
+
+function TbatchBands.IsRequiredFilled: Boolean;
+begin
+  Result := False;
+
+  if (cbBandSize.ItemIndex >= 0) and
+    (eStartNumber.Value > 0) and
+    (eEndNumber.Value > 0) and
+    (cbBandType.ItemIndex >= 0) and
+    (cbBandSource.ItemIndex >= 0) and
+    (FRequesterId > 0) and
+    (FSupplierId > 0) then
+    Result := True;
 end;
 
 procedure TbatchBands.sbCancelClick(Sender: TObject);

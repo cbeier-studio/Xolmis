@@ -78,6 +78,7 @@ type
     FBandColor: String;
     FBandType: TMarkType;
     FSupplierId: Integer;
+    FRequesterId: Integer;
     FCarrierId: Integer;
     FIndividualId: Integer;
     FProjectId: Integer;
@@ -107,6 +108,7 @@ type
     property BandColor: String read FBandColor write FBandColor;
     property BandType: TMarkType read FBandType write FBandType;
     property SupplierId: Integer read FSupplierId write FSupplierId;
+    property RequesterId: Integer read FRequesterId write FRequesterId;
     property CarrierId: Integer read FCarrierId write FCarrierId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property ProjectId: Integer read FProjectId write FProjectId;
@@ -3959,6 +3961,7 @@ begin
   FSupplierId := 0;
   FBandColor := EmptyStr;
   FBandType := mkButtEndBand;
+  FRequesterId := 0;
   FCarrierId := 0;
   FIndividualId := 0;
   FProjectId := 0;
@@ -3978,6 +3981,7 @@ begin
   FSupplierId := aFrom.SupplierId;
   FBandColor := aFrom.BandColor;
   FBandType := aFrom.BandType;
+  FRequesterId := aFrom.RequesterId;
   FCarrierId := aFrom.CarrierId;
   FIndividualId := aFrom.IndividualId;
   FProjectId := aFrom.ProjectId;
@@ -4039,6 +4043,7 @@ begin
       'band_color, ' +
       'band_source, ' +
       'supplier_id, ' +
+      'requester_id, ' +
       'carrier_id, ' +
       'individual_id, ' +
       'project_id, ' +
@@ -4105,6 +4110,7 @@ begin
       'C': FBandType := mkClosedBand;
       'O': FBandType := mkOther;
     end;
+    FRequesterId := FieldByName('requester_id').AsInteger;
     FCarrierId := FieldByName('carrier_id').AsInteger;
     FIndividualId := FieldByName('individual_id').AsInteger;
     FProjectId := FieldByName('project_id').AsInteger;
@@ -4146,6 +4152,7 @@ begin
         'band_color, ' +
         'band_source, ' +
         'supplier_id, ' +
+        'requester_id, ' +
         'carrier_id, ' +
         'project_id, ' +
         'notes, ' +
@@ -4162,6 +4169,7 @@ begin
         ':band_color, ' +
         ':band_source, ' +
         ':supplier_id, ' +
+        ':requester_id, ' +
         ':carrier_id, ' +
         ':project_id, ' +
         ':notes, ' +
@@ -4178,6 +4186,7 @@ begin
       SetStrParam(ParamByName('band_color'), FBandColor);
       SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
       SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+      SetForeignParam(ParamByName('requester_id'), FRequesterId);
       SetForeignParam(ParamByName('carrier_id'), FCarrierId);
       SetForeignParam(ParamByName('project_id'), FProjectId);
       FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
@@ -4228,6 +4237,7 @@ begin
     JSONObject.Add('Color', FBandColor);
     JSONObject.Add('Type', MarkTypesStr[FBandType]);
     JSONObject.Add('Supplier', FSupplierId);
+    JSONObject.Add('Requester', FRequesterId);
     JSONObject.Add('Carrier', FCarrierId);
     JSONObject.Add('Individual', FIndividualId);
     JSONObject.Add('Project', FProjectId);
@@ -4267,6 +4277,7 @@ begin
         'band_color = :band_color, ' +
         'band_source = :band_source, ' +
         'supplier_id = :supplier_id, ' +
+        'requester_id = :requester_id, ' +
         'carrier_id = :carrier_id, ' +
         'project_id = :project_id, ' +
         'notes = :notes, ' +
@@ -4286,6 +4297,7 @@ begin
       SetStrParam(ParamByName('band_color'), FBandColor);
       SetStrParam(ParamByName('band_source'), BandSourceStr[FSource]);
       SetForeignParam(ParamByName('supplier_id'), FSupplierId);
+      SetForeignParam(ParamByName('requester_id'), FRequesterId);
       SetForeignParam(ParamByName('carrier_id'), FCarrierId);
       SetForeignParam(ParamByName('project_id'), FProjectId);
       FFullName := GetBandFullname(FSize, FNumber, FSupplierId);
@@ -4363,6 +4375,8 @@ begin
   if FieldValuesDiff(rscColor, aOld.BandColor, FBandColor, R) then
     aList.Add(R);
   if FieldValuesDiff(rscType, aOld.BandType, FBandType, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscRequesterID, aOld.RequesterId, FRequesterId, R) then
     aList.Add(R);
   if FieldValuesDiff(rscCarrierID, aOld.CarrierId, FCarrierId, R) then
     aList.Add(R);

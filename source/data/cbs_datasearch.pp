@@ -1316,12 +1316,14 @@ begin
     Clear;
     Add('SELECT b.*,');
     Add('  it.acronym AS supplier_name,');
-    Add('  p.full_name AS carrier_name,');
+    Add('  p1.full_name AS requester_name,');
+    Add('  p2.full_name AS carrier_name,');
     Add('  i.full_name AS individual_name,');
     Add('  pj.short_title AS project_name');
     Add('FROM bands AS b');
     Add('LEFT JOIN institutions AS it ON b.supplier_id = it.institution_id');
-    Add('LEFT JOIN people AS p ON b.carrier_id = p.person_id');
+    Add('LEFT JOIN people AS p1 ON b.requester_id = p1.person_id');
+    Add('LEFT JOIN people AS p2 ON b.carrier_id = p2.person_id');
     Add('LEFT JOIN individuals AS i ON b.individual_id = i.individual_id');
     Add('LEFT JOIN projects AS pj ON b.project_id = pj.project_id');
     case aFilter of

@@ -4,9 +4,10 @@ object dlgOnboarding: TdlgOnboarding
   Top = 250
   Width = 498
   AutoSize = True
-  Caption = 'dlgOnboarding'
+  Caption = 'Setup Xolmis'
   ClientHeight = 356
   ClientWidth = 498
+  LCLVersion = '4.2.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object nbPages: TNotebook

@@ -14,5 +14,6 @@
 {"hash":210359882,"name":"tedtbands.lblbandsource.caption","sourcebytes":[83,111,117,114,99,101,58,32,42],"value":"Source: *"},
 {"hash":44473178,"name":"tedtbands.lblsupplier.caption","sourcebytes":[83,117,112,112,108,105,101,114,58,32,42],"value":"Supplier: *"},
 {"hash":144242890,"name":"tedtbands.lblcarrier.caption","sourcebytes":[67,97,114,114,105,101,114,58],"value":"Carrier:"},
-{"hash":157335306,"name":"tedtbands.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"}
+{"hash":157335306,"name":"tedtbands.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
+{"hash":253810666,"name":"tedtbands.lblrequester.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58,32,42],"value":"Requester: *"}
 ]}

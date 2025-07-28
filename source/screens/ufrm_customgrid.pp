@@ -1384,7 +1384,7 @@ implementation
 uses
   cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, cbs_users,
-  cbs_validations, cbs_setparam, cbs_dataconst, udlg_loading, udlg_progress, udlg_exportpreview,
+  cbs_validations, cbs_setparam, cbs_dataconst, udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer,
@@ -12749,6 +12749,7 @@ begin
   pmgRecordVerifications.Enabled := sbRecordVerifications.Enabled;
   sbInsertBatch.Enabled := sbInsertRecord.Enabled;
   sbQuickEntry.Enabled := sbInsertRecord.Enabled;
+  sbMoreOptions.Enabled := sbShareRecords.Enabled;
 
   sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
   sbClearAllFilters.Enabled := sbClearFilters.Enabled;

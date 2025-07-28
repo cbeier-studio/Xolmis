@@ -25,7 +25,7 @@ uses
 
   function MsgDlg(aTitle, aText: String; aType: TMsgDlgType): Boolean;
   procedure ProgressDlg(aTitle, aText: String; aMin: Integer = 0; aMax: Integer = 100);
-  procedure ValidateDlg(aList: TStrings);
+  procedure ValidateDlg(aList: TStrings; aHeader: String = '');
 
   procedure ExportDlg(aDataSet: TDataSet);
 
@@ -137,13 +137,14 @@ begin
   M.Execute;
 end;
 
-procedure ValidateDlg(aList: TStrings);
+procedure ValidateDlg(aList: TStrings; aHeader: String);
 begin
   LogEvent(leaOpen, 'Validation dialog');
   dlgValidate := TdlgValidate.Create(nil);
   with dlgValidate do
   try
-    Lista.Assign(aList);
+    Header := aHeader;
+    MessageList.Assign(aList);
     ShowModal;
   finally
     FreeAndNil(dlgValidate);

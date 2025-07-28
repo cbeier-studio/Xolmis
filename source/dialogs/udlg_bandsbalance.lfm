@@ -9,6 +9,7 @@ object dlgBandsBalance: TdlgBandsBalance
   ClientWidth = 320
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel

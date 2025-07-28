@@ -8,10 +8,6 @@
 {"hash":133326058,"name":"tbatchbandstransfer.lblendnumber.caption","sourcebytes":[70,105,110,97,108,32,110,117,109,98,101,114,58,32,42],"value":"Final number: *"},
 {"hash":253810666,"name":"tbatchbandstransfer.lblrequester.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58,32,42],"value":"Requester: *"},
 {"hash":150656722,"name":"tbatchbandstransfer.erequester.buttonhint","sourcebytes":[70,105,110,100,32,114,101,113,117,101,115,116,101,114],"value":"Find requester"},
-{"hash":144242890,"name":"tbatchbandstransfer.lblcarrier.caption","sourcebytes":[67,97,114,114,105,101,114,58],"value":"Carrier:"},
-{"hash":223988130,"name":"tbatchbandstransfer.ecarrier.buttonhint","sourcebytes":[70,105,110,100,32,99,97,114,114,105,101,114],"value":"Find carrier"},
-{"hash":163884042,"name":"tbatchbandstransfer.lblsender.caption","sourcebytes":[83,101,110,100,101,114,58],"value":"Sender:"},
-{"hash":131550882,"name":"tbatchbandstransfer.esender.buttonhint","sourcebytes":[70,105,110,100,32,115,101,110,100,101,114],"value":"Find sender"},
 {"hash":366789,"name":"tbatchbandstransfer.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tbatchbandstransfer.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
 ]}

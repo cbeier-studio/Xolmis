@@ -157,6 +157,8 @@ type
     qBandsnotes: TMemoField;
     qBandsproject_id: TLongintField;
     qBandsproject_name: TStringField;
+    qBandsrequester_id: TLongintField;
+    qBandsrequester_name: TStringField;
     qBandssupplier_id: TLongintField;
     qBandssupplier_name: TStringField;
     qBandsupdate_date: TDateTimeField;

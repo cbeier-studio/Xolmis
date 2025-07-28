@@ -38,6 +38,7 @@ type
     cbBandStatus: TComboBox;
     dsLink: TDataSource;
     eBandNumber: TEdit;
+    eRequester: TEditButton;
     ePrefix: TEdit;
     eSuffix: TEdit;
     eProject: TEditButton;
@@ -53,6 +54,7 @@ type
     lblBandSuffix: TLabel;
     lblBandType: TLabel;
     lblCarrier: TLabel;
+    lblRequester: TLabel;
     lblNotes: TLabel;
     lblPlaceholder1: TLabel;
     lblProject: TLabel;
@@ -60,6 +62,7 @@ type
     mNotes: TMemo;
     pBottom: TPanel;
     pCarrier: TPanel;
+    pRequester: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
     pPrefixSuffix: TPanel;
@@ -82,6 +85,8 @@ type
     procedure eCarrierKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
     procedure eProjectKeyPress(Sender: TObject; var Key: char);
+    procedure eRequesterButtonClick(Sender: TObject);
+    procedure eRequesterKeyPress(Sender: TObject; var Key: char);
     procedure eSupplierButtonClick(Sender: TObject);
     procedure eSupplierKeyPress(Sender: TObject; var Key: char);
     procedure FormCreate(Sender: TObject);
@@ -92,7 +97,7 @@ type
   private
     FIsNew: Boolean;
     FBand: TBand;
-    FSupplierId, FCarrierId, FProjectId: Integer;
+    FSupplierId, FRequesterId, FCarrierId, FProjectId: Integer;
     procedure SetBand(Value: TBand);
     procedure GetRecord;
     procedure SetRecord;
@@ -120,6 +125,7 @@ uses
 procedure TedtBands.ApplyDarkMode;
 begin
   eSupplier.Images := DMM.iEditsDark;
+  eRequester.Images := DMM.iEditsDark;
   eCarrier.Images := DMM.iEditsDark;
   eProject.Images := DMM.iEditsDark;
 end;
@@ -266,6 +272,39 @@ begin
   end;
 end;
 
+procedure TedtBands.eRequesterButtonClick(Sender: TObject);
+begin
+  FindDlg(tbPeople, eRequester, FRequesterId);
+end;
+
+procedure TedtBands.eRequesterKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbPeople, eRequester, FRequesterId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    FRequesterId := 0;
+    eRequester.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> key }
+  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
+
 procedure TedtBands.eSupplierButtonClick(Sender: TObject);
 begin
   FindDlg(tbInstitutions, eSupplier, FSupplierId);
@@ -388,6 +427,8 @@ begin
   end;
   FSupplierId := FBand.SupplierId;
   eSupplier.Text := GetName('institutions', COL_ABBREVIATION, COL_INSTITUTION_ID, FSupplierId);
+  FRequesterId := FBand.RequesterId;
+  eRequester.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FRequesterId);
   FCarrierId := FBand.CarrierId;
   eCarrier.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FCarrierId);
   FProjectId := FBand.ProjectId;
@@ -404,6 +445,7 @@ begin
     (cbBandType.ItemIndex >= 0) and
     (cbBandStatus.ItemIndex >= 0) and
     (cbBandSource.ItemIndex >= 0) and
+    (FRequesterId > 0) and
     (FSupplierId > 0) then
     Result := True;
 end;
@@ -459,10 +501,11 @@ begin
     3: FBand.Source := bscDeadBirdBandedByOthers;
     4: FBand.Source := bscFoundLoose;
   end;
-  FBand.SupplierId := FSupplierId;
-  FBand.CarrierId  := FCarrierId;
-  FBand.ProjectId  := FProjectId;
-  FBand.Notes      := mNotes.Text;
+  FBand.SupplierId  := FSupplierId;
+  FBand.RequesterId := FRequesterId;
+  FBand.CarrierId   := FCarrierId;
+  FBand.ProjectId   := FProjectId;
+  FBand.Notes       := mNotes.Text;
 end;
 
 function TedtBands.ValidateFields: Boolean;

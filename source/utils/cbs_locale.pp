@@ -415,6 +415,10 @@ uses
     rsCycleNotSelected = 'No item were selected in one or more columns.';
     rsUpdateSumCaptures = 'The sum of new captures, recaptures, and unmarked individuals does not match the total count. Update it?';
     rsRequiredVerificationStatus = 'A verification status must be selected.';
+    rsRequesterAndSenderMustBeDifferent = 'The requester and the sender of band %s must be different.';
+    rsBandNotAvailable = 'The band %s is not available.';
+    rsBandNotFound = 'The band %s was not found.';
+    rsBandsTransferedWithErrors = 'The transfer of bands was finished, but some bands have problems and were not transfered.';
 
     { HTML validation messages }
     //rsForeignNotExist = 'Selected <b>%s</b> does not exist. Select a valid record.';

@@ -2315,6 +2315,16 @@ msgctxt "cbs_locale.rsbandneck"
 msgid "Neck collar"
 msgstr "Colar"
 
+#: cbs_locale.rsbandnotavailable
+#, object-pascal-format
+msgid "The band %s is not available."
+msgstr "A anilha %s não está disponível."
+
+#: cbs_locale.rsbandnotfound
+#, object-pascal-format
+msgid "The band %s was not found."
+msgstr "A anilha %s não foi encontrada."
+
 #: cbs_locale.rsbandopen
 msgctxt "cbs_locale.rsbandopen"
 msgid "Butt-end"
@@ -2346,6 +2356,10 @@ msgstr "Anilha acabando"
 msgctxt "cbs_locale.rsbandstatuslist"
 msgid "Available,Used,Removed,Transfered,Broken,Lost"
 msgstr "Disponível,Usada,Removida,Transferida,Quebrada,Perdida"
+
+#: cbs_locale.rsbandstransferedwitherrors
+msgid "The transfer of bands was finished, but some bands have problems and were not transfered."
+msgstr "A transferência de anilhas foi finalizada, mas algumas anilhas têm problemas e não foram transferidas."
 
 #: cbs_locale.rsbandtransferbetweenbanders
 msgctxt "cbs_locale.rsbandtransferbetweenbanders"
@@ -4947,6 +4961,10 @@ msgctxt "cbs_locale.rsprogressstarting"
 msgid "Starting..."
 msgstr "Iniciando..."
 
+#: cbs_locale.rsprogresstransferingbands
+msgid "Transfering bands..."
+msgstr "Transferindo anilhas..."
+
 #: cbs_locale.rsprogressunpreparing
 msgctxt "cbs_locale.rsprogressunpreparing"
 msgid "Unpreparing..."
@@ -5036,6 +5054,11 @@ msgstr "Lembrar depois"
 msgctxt "cbs_locale.rsreplacedsynonym"
 msgid "replaced synonym"
 msgstr "sinônimo substituído"
+
+#: cbs_locale.rsrequesterandsendermustbedifferent
+#, object-pascal-format
+msgid "The requester and the sender of band %s must be different."
+msgstr "O solicitante e o remetente da anilha %s devem ser diferentes."
 
 #: cbs_locale.rsrequiredbandsize
 msgctxt "cbs_locale.rsrequiredbandsize"
@@ -5532,6 +5555,10 @@ msgctxt "cbs_locale.rssuccessfulrestore"
 msgid "Backup restored successfully: %s"
 msgstr "Backup restaurado com sucesso: %s"
 
+#: cbs_locale.rssuccessfultransferbands
+msgid "Bands transfered successfully!"
+msgstr "Anilhas transferidas com sucesso!"
+
 #: cbs_locale.rssuccessfulupdate
 #, object-pascal-format
 msgctxt "cbs_locale.rssuccessfulupdate"
@@ -5995,6 +6022,10 @@ msgctxt "cbs_locale.rstitleteam"
 msgid "Team"
 msgstr "Equipe"
 
+#: cbs_locale.rstitletransferbands
+msgid "Transfer bands"
+msgstr "Transferir anilhas"
+
 #: cbs_locale.rstitleupgradedatabase
 msgid "Upgrade database"
 msgstr "Atualizar banco de dados"
@@ -6236,10 +6267,12 @@ msgid "DD/MM/YYYY"
 msgstr "DD/MM/AAAA"
 
 #: tbatchbands.erequester.buttonhint
+msgctxt "tbatchbands.erequester.buttonhint"
 msgid "Find requester"
 msgstr "Procurar solicitante"
 
 #: tbatchbands.esender.buttonhint
+msgctxt "tbatchbands.esender.buttonhint"
 msgid "Find sender"
 msgstr "Procurar remetente"
 
@@ -6317,6 +6350,59 @@ msgstr "Cancelar"
 
 #: tbatchbands.sbsave.caption
 msgctxt "tbatchbands.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
+#: tbatchbandstransfer.caption
+msgid "Transfer bands to"
+msgstr "Transferir anilhas para"
+
+#: tbatchbandstransfer.erequester.buttonhint
+msgctxt "tbatchbandstransfer.erequester.buttonhint"
+msgid "Find requester"
+msgstr "Procurar solicitante"
+
+#: tbatchbandstransfer.etransferdate.buttonhint
+msgctxt "tbatchbandstransfer.etransferdate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tbatchbandstransfer.etransferdate.texthint
+msgctxt "tbatchbandstransfer.etransferdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tbatchbandstransfer.lblbandsize.caption
+msgctxt "tbatchbandstransfer.lblbandsize.caption"
+msgid "Size: *"
+msgstr "Tamanho: *"
+
+#: tbatchbandstransfer.lblendnumber.caption
+msgctxt "tbatchbandstransfer.lblendnumber.caption"
+msgid "Final number: *"
+msgstr "Número final: *"
+
+#: tbatchbandstransfer.lblrequester.caption
+msgctxt "tbatchbandstransfer.lblrequester.caption"
+msgid "Requester: *"
+msgstr "Solicitante: *"
+
+#: tbatchbandstransfer.lblstartnumber.caption
+msgctxt "tbatchbandstransfer.lblstartnumber.caption"
+msgid "Start number: *"
+msgstr "Número inicial: *"
+
+#: tbatchbandstransfer.lbltransferdate.caption
+msgid "Transfer date: *"
+msgstr "Data da transferência: *"
+
+#: tbatchbandstransfer.sbcancel.caption
+msgctxt "tbatchbandstransfer.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tbatchbandstransfer.sbsave.caption
+msgctxt "tbatchbandstransfer.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
@@ -7049,7 +7135,6 @@ msgid "Version"
 msgstr "Versão"
 
 #: tdlgabout.linkclementsversion.caption
-#, fuzzy
 msgctxt "tdlgabout.linkclementsversion.caption"
 msgid "Clements/eBird"
 msgstr "Clements/eBird"
@@ -7061,6 +7146,10 @@ msgid ""
 "and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
 "Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
 msgstr ""
+"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
+"J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,\n"
+"and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
+"Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
 
 #: tdlgabout.linklicense.caption
 msgid "License terms"
@@ -8314,36 +8403,34 @@ msgid "Create user"
 msgstr "Criar usuário"
 
 #: tdlgonboarding.btnhelp.caption
-#, fuzzy
 msgctxt "tdlgonboarding.btnhelp.caption"
 msgid "&Help"
 msgstr "A&juda"
 
 #: tdlgonboarding.btnsavelocations.caption
-#, fuzzy
 msgctxt "tdlgonboarding.btnsavelocations.caption"
 msgid "Save"
 msgstr "Salvar"
 
 #: tdlgonboarding.btnstart.caption
 msgid "Start setup"
-msgstr ""
+msgstr "Iniciar configuração"
 
 #: tdlgonboarding.caption
-msgid "dlgOnboarding"
-msgstr ""
+msgid "Setup Xolmis"
+msgstr "Configurar o Xolmis"
 
 #: tdlgonboarding.lblaudiospath.caption
 msgid "Audio files"
-msgstr ""
+msgstr "Arquivos de áudio"
 
 #: tdlgonboarding.lbldatabaseinstruction.caption
 msgid "Select an option to setup your database."
-msgstr ""
+msgstr "Selecione uma opção para configurar o seu banco de dados."
 
 #: tdlgonboarding.lbldocumentspath.caption
 msgid "Documents"
-msgstr ""
+msgstr "Documentos"
 
 #: tdlgonboarding.lblfinishedinstruction.caption
 msgid ""
@@ -8351,44 +8438,44 @@ msgid ""
 "\n"
 "You can start using Xolmis and all its features."
 msgstr ""
+"A sua configuração foi concluída!\n"
+"\n"
+"Você pode começar a usar o Xolmis e todos os seus recursos."
 
 #: tdlgonboarding.lblimagespath.caption
-#, fuzzy
 msgctxt "tdlgonboarding.lblimagespath.caption"
 msgid "Images"
 msgstr "Imagens"
 
 #: tdlgonboarding.lblmediainstruction.caption
 msgid "Set the location of attachment files."
-msgstr ""
+msgstr "Defina o local dos arquivos anexos."
 
 #: tdlgonboarding.lblnewdatabase.caption
-#, fuzzy
 msgctxt "tdlgonboarding.lblnewdatabase.caption"
 msgid "New database"
 msgstr "Novo banco de dados"
 
 #: tdlgonboarding.lblopendatabase.caption
 msgid "Open an existing database"
-msgstr ""
+msgstr "Abrir um banco de dados existente"
 
 #: tdlgonboarding.lbltitledatabase.caption
-#, fuzzy
 msgctxt "tdlgonboarding.lbltitledatabase.caption"
 msgid "Database"
 msgstr "Banco de dados"
 
 #: tdlgonboarding.lbltitlefinished.caption
 msgid "Finished"
-msgstr ""
+msgstr "Concluído"
 
 #: tdlgonboarding.lbltitlemedia.caption
 msgid "Attachments"
-msgstr ""
+msgstr "Anexos"
 
 #: tdlgonboarding.lbltitlewelcome.caption
 msgid "Welcome to Xolmis"
-msgstr ""
+msgstr "Bem-vindo(a) ao Xolmis"
 
 #: tdlgonboarding.lblwelcomeinstruction.caption
 msgid ""
@@ -8396,24 +8483,26 @@ msgid ""
 "\n"
 "You need to complete just a few steps to setup your database and environment and start using Xolmis."
 msgstr ""
+"O seu app parceiro para gerenciamento de dados ornitológicos.\n"
+"\n"
+"Você precisa completar alguns passos para configurar o seu banco de dados e ambiente e começar a usar o Xolmis."
 
 #: tdlgonboarding.sbcancel.caption
-#, fuzzy
 msgctxt "tdlgonboarding.sbcancel.caption"
 msgid "&Cancel"
 msgstr "&Cancelar"
 
 #: tdlgonboarding.sbclose.caption
 msgid "C&lose"
-msgstr ""
+msgstr "&Fechar"
 
 #: tdlgonboarding.txtnewdatabase.caption
 msgid "Create a new database file. Recommended if you never used Xolmis or want a fresh start."
-msgstr ""
+msgstr "Criar um novo arquivo de banco de dados. Recomendado se você nunca usou o Xolmis ou quer começar do zero."
 
 #: tdlgonboarding.txtopendatabase.caption
 msgid "Add a connection to an existing Xolmis database. Recommended if you are just reinstalling Xolmis."
-msgstr ""
+msgstr "Adiciona a conexão para um banco de dados do Xolmis existente. Recomendado se você está apenas reinstalando o Xolmis."
 
 #: tdlgplantminer.caption
 msgid "Checking botanic taxon"
@@ -8855,6 +8944,11 @@ msgstr "Anotações:"
 msgctxt "tedtbands.lblproject.caption"
 msgid "Project:"
 msgstr "Projeto:"
+
+#: tedtbands.lblrequester.caption
+msgctxt "tedtbands.lblrequester.caption"
+msgid "Requester: *"
+msgstr "Solicitante: *"
 
 #: tedtbands.lblsupplier.caption
 msgctxt "tedtbands.lblsupplier.caption"
@@ -13362,6 +13456,11 @@ msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
 msgstr "Anilhas"
 
+#: tfrmcustomgrid.pmprintbandsbalance.caption
+msgctxt "tfrmcustomgrid.pmprintbandsbalance.caption"
+msgid "Bands balance"
+msgstr "Saldo de anilhas"
+
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption
 msgid "Bands per carrier"
 msgstr "Anilhas por portador"
@@ -13613,6 +13712,10 @@ msgstr "Táxons registrados"
 #: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
 msgid "Taxa recorded per locality"
 msgstr "Táxon registrados por localidade"
+
+#: tfrmcustomgrid.pmptransferbandsto.caption
+msgid "Transfer bands to..."
+msgstr "Transferir anilhas para..."
 
 #: tfrmcustomgrid.pmrdelpermanently.caption
 msgid "&Delete permanently"
@@ -14001,6 +14104,10 @@ msgstr "Primeiro registro"
 msgid "View and edit image info"
 msgstr "Visualizar e editar info da imagem"
 
+#: tfrmcustomgrid.sbinsertbatch.hint
+msgid "Add new batch"
+msgstr "Adicionar novo lote"
+
 #: tfrmcustomgrid.sbinsertrecord.hint
 msgctxt "tfrmcustomgrid.sbinsertrecord.hint"
 msgid "New record"
@@ -14023,6 +14130,10 @@ msgstr "Marcar/desmarcar todas colunas"
 #: tfrmcustomgrid.sbmarkrecords.hint
 msgid "Mark/unmark all records in the query"
 msgstr "Marcar/desmarcar todos registro da consulta"
+
+#: tfrmcustomgrid.sbmoreoptions.hint
+msgid "More options"
+msgstr "Mais opções"
 
 #: tfrmcustomgrid.sbmovecolumndown.hint
 msgid "Move the column position down"
@@ -15488,4 +15599,3 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
-
