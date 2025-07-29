@@ -1604,7 +1604,7 @@ begin
   FCounterBadge.Color := Self.Background.Color;
   if (FParentForm.pChild.Visible) and (Self.PageIndex = FParentForm.nbChilds.PageIndex) then
   begin
-    // Hide child grid, if clicked then active tab
+    // Hide child grid, if clicked then activate tab
     FParentForm.pChild.Visible := False;
     if IsDarkModeEnabled then
       Self.Border.Color := clSolidBGTertiaryDark
@@ -1858,10 +1858,12 @@ begin
     aGrid.Columns.Clear;
 
     for i := 0 to (aGrid.DataSource.DataSet.FieldCount-1) do
+      // Add only fields set as visible
       if aGrid.DataSource.DataSet.Fields[i].Visible then
       begin
         C := aGrid.Columns.Add;
         C.FieldName := aGrid.DataSource.DataSet.Fields[i].FieldName;
+        // Set all fields as read only, except marked_status
         C.ReadOnly := not (C.FieldName = COL_MARKED_STATUS);
         //C := nil;
       end;
@@ -1967,6 +1969,7 @@ begin
 
   FSearch.SortFields[p].FieldName := aFieldName;
   if Assigned(FSearch.DataSet) then
+    // Define the sort type by field type
     case FSearch.DataSet.FieldByName(aFieldName).DataType of
       ftUnknown, ftGuid:
         FSearch.SortFields[p].SortType := stNone;
@@ -1992,6 +1995,7 @@ end;
 
 procedure TfrmCustomGrid.ApplyDarkMode;
 begin
+  // Set panels colors
   pClient.Color := clSolidBGBaseDark;
   pSide.Color := clSolidBGTertiaryDark;
   scrollFilter.Color := clSolidBGTertiaryDark;
@@ -2012,26 +2016,10 @@ begin
   pRecycleToolbar.Border.Color := clCardBGSecondaryDark;
   pRecycleWarning.Background.Color := clSystemAttentionBGDark;
   pRecycleWarning.Border.Color := clSystemAttentionFGDark;
-  icoRecycleWarning.Images := iIconsDark;
   pMsgSummary.Background.Color := clCardBGDefaultDark;
   pMsgSummary.Border.Color := clCardBGSecondaryDark;
   pMsgSummary.FontEx.Color := clTextPrimaryDark;
   pMsgSummary.Color := gridSummary.Color;
-
-  DBG.TitleImageList := iHeadersDark;
-  pmGrid.Images := iButtonsDark;
-  pmGridChild.Images := iButtonsDark;
-  pmColumn.Images := iButtonsDark;
-  pmPrint.Images := iButtonsDark;
-  pmTree.Images := iButtonsDark;
-  pmRecycle.Images := iButtonsDark;
-  pmMark.Images := iButtonsDark;
-  pmMarkColumns.Images := iButtonsDark;
-  pmVerifications.Images := iButtonsDark;
-  pmImages.Images := iButtonsDark;
-  pmAudios.Images := iButtonsDark;
-  pmDocs.Images := iButtonsDark;
-  pmAddChild.Images := DMM.iAddMenuDark;
 
   pEmptyQuery.Background.Color := clCardBGDefaultDark;
   pEmptyQuery.Border.Color := clCardBGSecondaryDark;
@@ -2053,6 +2041,23 @@ begin
 
   pSideToolbar.Color := clSolidBGQuaternaryDark;
 
+  // Set images
+  DBG.TitleImageList := iHeadersDark;
+  pmGrid.Images := iButtonsDark;
+  pmGridChild.Images := iButtonsDark;
+  pmColumn.Images := iButtonsDark;
+  pmPrint.Images := iButtonsDark;
+  pmTree.Images := iButtonsDark;
+  pmRecycle.Images := iButtonsDark;
+  pmMark.Images := iButtonsDark;
+  pmMarkColumns.Images := iButtonsDark;
+  pmVerifications.Images := iButtonsDark;
+  pmImages.Images := iButtonsDark;
+  pmAudios.Images := iButtonsDark;
+  pmDocs.Images := iButtonsDark;
+  pmAddChild.Images := DMM.iAddMenuDark;
+  icoRecycleWarning.Images := iIconsDark;
+  // Set buttons images
   sbInsertRecord.Images := iButtonsDark;
   sbQuickEntry.Images := iButtonsDark;
   sbEditRecord.Images := iButtonsDark;
@@ -2118,6 +2123,7 @@ begin
   sbRestoreRecord.Images := iButtonsDark;
   sbDelPermanently.Images := iButtonsDark;
 
+  // Set filter cards colors
   pSiteFilters.Background.Color := clCardBGDefaultDark;
   pSiteFilters.Border.Color := clSystemSolidNeutralFGDark;
   pTitleSiteFilter.Color := clCardBGDefaultDark;
@@ -2251,6 +2257,7 @@ begin
   pReplacedBandFilter.Background.Color := clCardBGDefaultDark;
   pReplacedBandFilter.Border.Color := clSystemSolidNeutralFGDark;
 
+  // Set filter edits images
   eEggFilter.Images := DMM.iEditsDark;
   ePlantFilter.Images := DMM.iEditsDark;
   eExpeditionFilter.Images := DMM.iEditsDark;
@@ -2268,6 +2275,8 @@ begin
   eMoltLimitsFilter.Images := DMM.iEditsDark;
   eHowSexedFilter.Images := DMM.iEditsDark;
   eMethodFilter.Images := DMM.iEditsDark;
+
+  // Set filter trees colors
   tvSiteFilter.Colors.TreeLineColor := clTextSecondaryDark;
   tvDateFilter.Colors.TreeLineColor := clTextSecondaryDark;
   tvTaxaFilter.Colors.TreeLineColor := clTextSecondaryDark;
@@ -2275,6 +2284,7 @@ begin
   tsTaxonomyIoc.Color := pTaxonomyIocFilter.Background.Color;
   tsTaxonomyCbro.Color := pTaxonomyCbroFilter.Background.Color;
 
+  // Set filter icons
   icoSiteFilter.Images := iIconsDark;
   icoSiteRankFilter.Images := iIconsDark;
   icoTaxonRanksFilter.Images := iIconsDark;
@@ -2324,7 +2334,6 @@ begin
   icoEggPatternFilter.Images := iIconsDark;
   icoPermitTypeFilter.Images := iIconsDark;
   icoReplacedBandFilter.Images := iIconsDark;
-
 end;
 
 procedure TfrmCustomGrid.CellKeyPress(Sender: TObject; var Key: Char);
@@ -3083,11 +3092,13 @@ end;
 
 procedure TfrmCustomGrid.DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
 begin
+  // if right clicked column header, open the column menu
   if MousePos.Y < TDBGrid(Sender).DefaultRowHeight then
   begin
     pmColumn.PopUp;
     Handled := True;
   end;
+  // else, open the grid menu
 end;
 
 procedure TfrmCustomGrid.DBGDblClick(Sender: TObject);
@@ -3100,6 +3111,7 @@ procedure TfrmCustomGrid.DBGEditButtonClick(Sender: TObject);
 begin
   with (Sender as TDBGrid), SelectedColumn do
   begin
+    // Open find dialog
     if FieldName = COL_TAXON_NAME then
       FindTaxonDlg([tfSpecies,tfSubspecies,tfSubspeciesGroups], InplaceEditor,
         DataSource.DataSet, COL_TAXON_ID, COL_TAXON_NAME, True);
@@ -3185,22 +3197,28 @@ begin
     if FieldName = COL_REMOVED_BAND_NAME then
       FindDlg(tbBands, InplaceEditor, DataSource.DataSet, COL_REMOVED_BAND_ID, COL_REMOVED_BAND_NAME, False);
 
+    // Open detection dialog
     if FieldName = COL_DETECTION_TYPE then
       DetectionDialog(DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).AsString,
         DataSource.DataSet, COL_DETECTION_TYPE);
+    // Open breeding and behavior dialog
     if FieldName = COL_BREEDING_STATUS then
       BreedingDialog(DataSource.DataSet.FieldByName(COL_BREEDING_STATUS).AsString,
         DataSource.DataSet, COL_BREEDING_STATUS);
 
+    // Open molt limits dialog
     if FieldName = COL_MOLT_LIMITS then
       MoltLimitsDialog(DataSource.DataSet.FieldByName(COL_MOLT_LIMITS).AsString, DataSource.DataSet, COL_MOLT_LIMITS);
+    // Open molt cycle code dialog
     if FieldName = COL_CYCLE_CODE then
       MoltCycleDialog(DataSource.DataSet.FieldByName(COL_CYCLE_CODE).AsString, DataSource.DataSet, COL_CYCLE_CODE);
+    // Open how was aged/sexed dialog
     if FieldName = COL_HOW_AGED then
       HowAgedDialog(DataSource.DataSet.FieldByName(COL_HOW_AGED).AsString,  DataSource.DataSet, COL_HOW_AGED);
     if FieldName = COL_HOW_SEXED then
       HowAgedDialog(DataSource.DataSet.FieldByName(COL_HOW_SEXED).AsString, DataSource.DataSet, COL_HOW_SEXED);
 
+    // Open band colors dialog
     if FieldName = COL_RIGHT_TARSUS then
       EditColorBands(DataSource.DataSet, COL_RIGHT_TARSUS, InplaceEditor);
     if FieldName = COL_LEFT_TARSUS then
@@ -3210,6 +3228,7 @@ begin
     if FieldName = COL_LEFT_TIBIA then
       EditColorBands(DataSource.DataSet, COL_LEFT_TIBIA, InplaceEditor);
 
+    // Open calendar dialog
     if (FieldName = COL_SIGHTING_DATE) or
       (FieldName = COL_MEASURE_DATE) or
       (FieldName = COL_START_DATE) or
@@ -3228,15 +3247,14 @@ begin
       (FieldName = COL_CAPTURE_DATE) then
       CalendarDlg(InplaceEditor, DataSource.DataSet, FieldName);
 
+    // Open GeoAssist dialog
     if (FieldName = COL_LONGITUDE) or (FieldName = COL_LATITUDE) then
       GeoEditorDlg(InplaceEditor, DataSource.DataSet, COL_LONGITUDE, COL_LATITUDE);
     if (FieldName = COL_START_LONGITUDE) or (FieldName = COL_START_LATITUDE) then
       GeoEditorDlg(InplaceEditor, DataSource.DataSet, COL_START_LONGITUDE, COL_START_LATITUDE);
     if (FieldName = COL_END_LONGITUDE) or (FieldName = COL_END_LATITUDE) then
       GeoEditorDlg(InplaceEditor, DataSource.DataSet, COL_END_LONGITUDE, COL_END_LATITUDE);
-
   end;
-
 end;
 
 procedure TfrmCustomGrid.DBGEditingDone(Sender: TObject);
@@ -3661,8 +3679,11 @@ begin
       end;
     end;
 
+    // column header click holding Ctrl key, adds column to the sorting
+    // if not, sort only the column clicked
     if not (ssCtrl in Shift) then
       FSearch.SortFields.Clear;
+
     if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
       AddSortedField(Column.FieldName, Direction, '', True)
     else
@@ -3759,11 +3780,17 @@ begin
           aTable := tbCaptures
         else
         if Sender = gridChild5 then
-          aTable := tbSightings;
+          aTable := tbSightings
+        else
+        if Sender = gridChild6 then
+          aTable := tbVegetation;
       end;
       tbSpecimens:
       begin
         if Sender = gridChild1 then
+          aTable := tbSpecimenCollectors
+        else
+        if Sender = gridChild2 then
           aTable := tbSamplePreps;
       end;
       tbSamplingPlots:
@@ -4680,8 +4707,10 @@ begin
   TimerUpdate.Enabled := False;
   //TimerFind.Enabled := False;
 
+  // Save the columns layout
   SaveColumnsConfig;
 
+  // Close the datasets
   if qRecycle.Active then
     qRecycle.Close;
 
@@ -4747,14 +4776,17 @@ begin
   OldSidePanel := False;
   OldSideIndex := -1;
 
+  // Initialize the filter trees
   tvTaxaFilter.NodeDataSize := SizeOf(PTaxonNodeData);
   tvSiteFilter.NodeDataSize := SizeOf(PSiteNodeData);
   tvDateFilter.NodeDataSize := SizeOf(PDateNodeData);
 
+  // Initialize the child tabs
   PanelTabs := specialize TFPGList<TCustomPanelTab>.Create;
 
   //cellMemo.Tag := -1;
 
+  // Open reports data module
   if not Assigned(DMR) then
     DMR := TDMR.Create(nil);
 end;
@@ -4768,6 +4800,7 @@ begin
   //if Assigned(DMB) then
   //  FreeAndNil(DMB);
 
+  // Destroy the child tabs
   for PanelTab in PanelTabs do
     PanelTab.Free;
   PanelTabs.Free;
@@ -4813,6 +4846,7 @@ begin
     ApplyDarkMode;
 
   FSearch := TCustomSearch.Create(FTableType);
+
   mapGeo.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
 
   { Resize panels }
@@ -4826,6 +4860,7 @@ begin
   { Load datasources }
   SetGridAndChild;
 
+  // Use a timer to load the rest to speed up opening
   TimerOpen.Enabled := True;
 end;
 
@@ -6138,9 +6173,6 @@ begin
   Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'load master table');
   {$ENDIF}
 
-  //{ Load datasources }
-  //SetGridAndChild;
-
   { Load master grid columns }
   if Assigned(dsLink.DataSet) then
   begin
@@ -6588,7 +6620,7 @@ end;
 
 procedure TfrmCustomGrid.pmcNewSpecimenClick(Sender: TObject);
 begin
-  //EditSpecimen(DMI.qSpecimens, True);
+  EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, True);
 end;
 
 procedure TfrmCustomGrid.pmcNewSurveyClick(Sender: TObject);
@@ -7313,10 +7345,11 @@ begin
     end;
   end;
 
-  { Paint the cell background red for invalid values }
+  { Check if UseConditionalFormatting setting is enabled }
   if not XSettings.UseConditionalFormatting then
     Exit;
 
+  { Paint the cell background red for invalid values }
   if (Column.FieldName = COL_CLOACAL_PROTUBERANCE) then
   begin
     if (Column.Field.AsString <> '') and
@@ -7401,10 +7434,11 @@ begin
     end;
   end;
 
-  { Paint the cell background yellow for outliers }
+  { Check if ShowOutliersOnGrid setting is enabled }
   if not XSettings.ShowOutliersOnGrid then
     Exit;
 
+  { Paint the cell background yellow for outliers }
   if (Column.FieldName = COL_RIGHT_WING_CHORD) then
   begin
     if (Column.Field.AsFloat <> 0.0) then
@@ -9179,6 +9213,7 @@ end;
 
 procedure TfrmCustomGrid.sbPlayAudioClick(Sender: TObject);
 begin
+  { #todo : Audio player }
   // Temporary solution
   OpenDocument(qAudios.FieldByName(COL_AUDIO_FILE).AsString);
 end;
@@ -9368,6 +9403,7 @@ var
   aFilename: String;
   Pts: TMapPointList;
 begin
+  // Export map points
   DMM.SaveKmlDlg.InitialDir := XSettings.LastPathUsed;
   if DMM.SaveKmlDlg.Execute then
   begin
@@ -9408,7 +9444,10 @@ begin
   if (Sender as TSpeedButton).Down then
     cpSide.PageIndex := (Sender as TSpeedButton).Tag;
 
-  frmMain.UpdateMenu(frmMain.PGW.ActivePageComponent);
+  if (pSide.Visible) and (cpSide.ActivePageComponent = cardSummary) then
+    Summary;
+
+  //frmMain.UpdateMenu(frmMain.PGW.ActivePageComponent);
 end;
 
 procedure TfrmCustomGrid.sbViewImageClick(Sender: TObject);
@@ -11375,7 +11414,7 @@ end;
 
 procedure TfrmCustomGrid.SetColumnsPermits(var aGrid: TDBGrid);
 begin
-  with aGrid.Columns do
+  with aGrid, Columns do
   begin
     if DataSource.DataSet.FieldByName(COL_PERMIT_ID).Visible then
       ColumnByFieldname(COL_PERMIT_ID).ReadOnly := True;
@@ -11726,22 +11765,28 @@ procedure TfrmCustomGrid.SetGridBands;
 begin
   Caption := rsTitleBands;
   FSearch.DataSet := DMG.qBands;
+  // Set the default data sorting
   AddSortedField(COL_BAND_SIZE, sdAscending);
   AddSortedField(COL_BAND_NUMBER, sdAscending);
 
+  // Set the print menu
   pmPrintBands.Visible := True;
   pmPrintBandsByCarrier.Visible := True;
   pmPrintBandsWithHistory.Visible := True;
   pmPrintBandsByStatus.Visible := True;
   pmPrintBandsBalance.Visible := True;
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
   sbInsertBatch.Visible := True;
   sbMoreOptions.Visible := True;
 
+  // Set the more options menu
   pmpTransferBandsTo.Visible := True;
   pmpBandHistory.Visible := True;
+
+  // Set grid menu
   pmgBandHistory.Visible := True;
 end;
 
@@ -11749,11 +11794,14 @@ procedure TfrmCustomGrid.SetGridBotanicTaxa;
 begin
   Caption := rsTitleBotanicTaxa;
   FSearch.DataSet := DMG.qBotany;
+  // Set the default data sorting
   AddSortedField(COL_TAXON_NAME, sdAscending);
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
 
+  // Set the print menu
   pmPrintBotanicTaxa.Visible := True;
   pmPrintBotanicTaxaHierarchical.Visible := True;
   pmPrintBotanicTaxaRecorded.Visible := True;
@@ -11763,8 +11811,10 @@ procedure TfrmCustomGrid.SetGridCaptures;
 begin
   Caption := rsTitleCaptures;
   FSearch.DataSet := DMG.qCaptures;
+  // Set the default data sorting
   AddSortedField(COL_CAPTURE_DATE, sdDescending);
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
@@ -11772,6 +11822,7 @@ begin
   sbShowImages.Visible := True;
   sbShowDocs.Visible := True;
 
+  // Set the print menu
   pmPrintCaptures.Visible := True;
   pmPrintCapturesByDate.Visible := True;
   pmPrintCapturesByProject.Visible := True;
@@ -11824,13 +11875,16 @@ procedure TfrmCustomGrid.SetGridEggs;
 begin
   Caption := rsTitleEggs;
   FSearch.DataSet := DMG.qEggs;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
   sbShowImages.Visible := True;
   //sbShowDocs.Visible := True;
 
+  // Set the print menu
   pmPrintEggs.Visible := True;
   pmPrintEggsByNest.Visible := True;
   pmPrintEggsByLocality.Visible := True;
@@ -11841,58 +11895,66 @@ procedure TfrmCustomGrid.SetGridExpeditions;
 begin
   Caption := rsCaptionExpeditions;
   FSearch.DataSet := DMG.qExpeditions;
+  // Set the default data sorting
   AddSortedField(COL_START_DATE, sdDescending);
 
-  //lblChildTag1.Caption := rsTitleSurveys;
-  //pChildTag1.Visible := True;
+  // Set visible buttons
+  sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
+  //sbShowImages.Visible := True;
+  //sbShowAudio.Visible := True;
+  sbShowDocs.Visible := True;
+
+  // Set the print menu
+  pmPrintExpeditions.Visible := True;
+  pmPrintExpeditionsByProject.Visible := True;
+
+  // Set the childs panel
   nbChilds.PageIndex := 0;
   if not Assigned(DMS) then
     DMS := TDMS.Create(nil);
   FChildTable := tbSurveys;
   dsLink1.DataSet := DMS.qSurveys;
-  pmcNewSurvey.Visible := True;
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-
-  pmPrintExpeditions.Visible := True;
-  pmPrintExpeditionsByProject.Visible := True;
-
   pChildsBar.Visible := True;
+  // Set the new child menu
+  pmcNewSurvey.Visible := True;
+  // Set visible child buttons
   sbChildVerifications.Visible := True;
-
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridFeathers;
 begin
   Caption := rsCaptionFeathers;
   FSearch.DataSet := DMG.qFeathers;
+  // Set the default data sorting
   AddSortedField(COL_SAMPLE_DATE, sdDescending);
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowImages.Visible := True;
-
-  pmPrintFeathers.Visible := True;
-
-  sbInsertBatch.Visible := True;
   sbInsertBatch.ImageIndex := 104;
   sbInsertBatch.DisabledImageIndex := 105;
+  sbInsertBatch.Visible := True;
+
+  // Set the print menu
+  pmPrintFeathers.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridGazetteer;
 begin
   Caption := rsTitleGazetteer;
   FSearch.DataSet := DMG.qGazetteer;
+  // Set the default data sorting
   AddSortedField(COL_SITE_NAME, sdAscending);
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
   //sbShowDocs.Visible := True;
 
+  // Set the print menu
   pmPrintGazetteer.Visible := True;
   pmPrintGazetteerHierarchical.Visible := True;
 end;
@@ -11901,18 +11963,23 @@ procedure TfrmCustomGrid.SetGridIndividuals;
 begin
   Caption := rsTitleIndividuals;
   FSearch.DataSet := DMG.qIndividuals;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
-  //lblChildTag1.Caption := rsTitleCaptures;
-  //lblChildTag2.Caption := rsTitleMolts;
-  //lblChildTag3.Caption := rsTitleSightings;
-  //lblChildTag4.Caption := rsTitleNests;
-  //lblChildTag5.Caption := rsTitleSpecimens;
-  //pChildTag1.Visible := True;
-  //pChildTag2.Visible := True;
-  //pChildTag3.Visible := True;
-  //pChildTag4.Visible := True;
-  //pChildTag5.Visible := True;
+  // Set visible buttons
+  sbShowImages.Visible := True;
+  sbShowAudio.Visible := True;
+  sbShowDocs.Visible := True;
+  sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
+
+  // Set the print menu
+  pmPrintIndividuals.Visible := True;
+  pmPrintIndividualsByTaxon.Visible := True;
+  pmPrintIndividualsByParents.Visible := True;
+  pmPrintColoredBands.Visible := True;
+
+  //Set the childs panel
   nbChilds.PageIndex := 0;
   if not Assigned(DMI) then
     DMI := TDMI.Create(nil);
@@ -11922,35 +11989,28 @@ begin
   dsLink3.DataSet := DMI.qSightings;
   dsLink4.DataSet := DMI.qNests;
   dsLink5.DataSet := DMI.qSpecimens;
+  pChildsBar.Visible := True;
+  // Set the new child menu
   pmcNewCapture.Visible := True;
   pmcNewFeather.Visible := True;
   pmcNewSighting.Visible := True;
   pmcNewNest.Visible := True;
   pmcNewSpecimen.Visible := True;
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-
-  pmPrintIndividuals.Visible := True;
-  pmPrintIndividualsByTaxon.Visible := True;
-  pmPrintIndividualsByParents.Visible := True;
-  pmPrintColoredBands.Visible := True;
-
-  pChildsBar.Visible := True;
+  // Set visible child buttons
   sbChildVerifications.Visible := True;
-
-  sbShowImages.Visible := True;
-  sbShowAudio.Visible := True;
-  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridInstitutions;
 begin
   Caption := rsTitleInstitutions;
   FSearch.DataSet := DMG.qInstitutions;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
+  // Set visible buttons
   sbShowSummary.Visible := True;
 
+  // Set the print menu
   pmPrintInstitutions.Visible := True;
 end;
 
@@ -11958,25 +12018,39 @@ procedure TfrmCustomGrid.SetGridMethods;
 begin
   Caption := rsTitleMethods;
   FSearch.DataSet := DMG.qMethods;
+  // Set the default data sorting
   AddSortedField(COL_METHOD_NAME, sdAscending);
 
-  pmPrintMethods.Visible := True;
-
+  // Set visible buttons
   sbShowDocs.Visible := True;
+
+  // Set the print menu
+  pmPrintMethods.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridNests;
 begin
   Caption := rsTitleNests;
   FSearch.DataSet := DMG.qNests;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
-  //lblChildTag1.Caption := rsTitleNestOwners;
-  //lblChildTag2.Caption := rsTitleNestRevisions;
-  //lblChildTag3.Caption := rsTitleEggs;
-  //pChildTag1.Visible := True;
-  //pChildTag2.Visible := True;
-  //pChildTag3.Visible := True;
+  // Set visible buttons
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
+  sbShowSummary.Visible := True;
+  sbShowImages.Visible := True;
+  sbShowDocs.Visible := True;
+  sbRecordVerifications.Visible := True;
+
+  // Set the print menu
+  pmPrintNests.Visible := True;
+  pmPrintNestsByPeriod.Visible := True;
+  pmPrintNestsByProject.Visible := True;
+  pmPrintNestsByLocality.Visible := True;
+  pmPrintNestsByTaxon.Visible := True;
+
+  // Set the childs panel
   nbChilds.PageIndex := 0;
   if not Assigned(DMB) then
     DMB := TDMB.Create(nil);
@@ -11984,36 +12058,25 @@ begin
   dsLink1.DataSet := DMB.qNestOwners;
   dsLink2.DataSet := DMB.qNestRevisions;
   dsLink3.DataSet := DMB.qEggs;
+  pChildsBar.Visible := True;
+  // Set the new child menu
   pmcNewNestOwner.Visible := True;
   pmcNewNestRevision.Visible := True;
   pmcNewEgg.Visible := True;
-  sbRecordVerifications.Visible := True;
-
-  pmPrintNests.Visible := True;
-  pmPrintNestsByPeriod.Visible := True;
-  pmPrintNestsByProject.Visible := True;
-  pmPrintNestsByLocality.Visible := True;
-  pmPrintNestsByTaxon.Visible := True;
-
-  pChildsBar.Visible := True;
+  // Set visible child buttons
   sbChildVerifications.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowSummary.Visible := True;
-
-  sbShowImages.Visible := True;
-  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridNestRevisions;
 begin
   Caption := rsTitleNestRevisions;
   FSearch.DataSet := DMG.qNestRevisions;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
-
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
   //sbShowDocs.Visible := True;
@@ -12023,36 +12086,43 @@ procedure TfrmCustomGrid.SetGridSamplingPlots;
 begin
   Caption := rsTitleSamplingPlots;
   FSearch.DataSet := DMG.qSamplingPlots;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
-  //lblChildTag1.Caption := rsTitlePermanentNets;
-  //pChildTag1.Visible := True;
-  nbChilds.PageIndex := 0;
-  FChildTable := tbPermanentNets;
-  dsLink1.DataSet := DMG.qPermanentNets;
-  pmcNewPermanentNet.Visible := True;
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
-
-  pmPrintSamplingPlots.Visible := True;
-  pmPrintSamplingPlotsByLocality.Visible := True;
-
-  pChildsBar.Visible := True;
-  sbChildVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
   sbShowDocs.Visible := True;
+
+  // Set the print menu
+  pmPrintSamplingPlots.Visible := True;
+  pmPrintSamplingPlotsByLocality.Visible := True;
+
+  // Set the childs panel
+  nbChilds.PageIndex := 0;
+  FChildTable := tbPermanentNets;
+  dsLink1.DataSet := DMG.qPermanentNets;
+  pChildsBar.Visible := True;
+  // Set the new child menu
+  pmcNewPermanentNet.Visible := True;
+  // Set visible child buttons
+  sbChildVerifications.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridPeople;
 begin
   Caption := rsTitleResearchers;
   FSearch.DataSet := DMG.qPeople;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
+  // Set visible buttons
   sbShowSummary.Visible := True;
   sbShowDocs.Visible := True;
 
+  // Set the print menu
   pmPrintResearchers.Visible := True;
 end;
 
@@ -12060,11 +12130,14 @@ procedure TfrmCustomGrid.SetGridPermits;
 begin
   Caption := rsTitlePermits;
   FSearch.DataSet := DMG.qPermits;
+  // Set the default data sorting
   AddSortedField(COL_PERMIT_NAME, sdAscending);
 
+  // Set visible buttons
   sbShowSummary.Visible := True;
   sbShowDocs.Visible := True;
 
+  // Set the print menu
   pmPrintPermits.Visible := True;
   pmPrintPermitsByExpiration.Visible := True;
   pmPrintPermitsByProject.Visible := True;
@@ -12074,10 +12147,17 @@ procedure TfrmCustomGrid.SetGridProjects;
 begin
   Caption := rsTitleProjects;
   FSearch.DataSet := DMG.qProjects;
+  // Set the default data sorting
   AddSortedField(COL_PROJECT_TITLE, sdAscending);
 
-  //lblChildTag1.Caption := rsTitleTeam;
-  //pChildTag1.Visible := True;
+  // Set visible buttons
+  sbShowSummary.Visible := True;
+  sbShowDocs.Visible := True;
+
+  // Set the print menu
+  pmPrintProjects.Visible := True;
+
+  // Set the childs panel
   nbChilds.PageIndex := 0;
   FChildTable := tbProjectTeams;
   dsLink1.DataSet := DMG.qProjectTeam;
@@ -12085,84 +12165,98 @@ begin
   dsLink3.DataSet := DMG.qProjectChronogram;
   dsLink4.DataSet := DMG.qProjectBudget;
   dsLink5.DataSet := DMG.qProjectExpenses;
+  pChildsBar.Visible := True;
+  // Set the new child menu
   pmcNewProjectMember.Visible := True;
   pmcNewProjectGoal.Visible := True;
   pmcNewChronogramActivity.Visible := True;
   pmcNewBudgetItem.Visible := True;
   pmcNewExpense.Visible := True;
-  sbShowSummary.Visible := True;
-
-  pmPrintProjects.Visible := True;
-
-  pChildsBar.Visible := True;
-
-  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridSightings;
 begin
   Caption := rsTitleSightings;
   FSearch.DataSet := DMG.qSightings;
+  // Set the default data sorting
   AddSortedField(COL_SIGHTING_DATE, sdDescending);
 
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   mapGeo.Active := True;
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
+  sbShowImages.Visible := True;
+  sbShowAudio.Visible := True;
+  sbShowDocs.Visible := True;
 
+  // Set the print menu
   pmPrintSightings.Visible := True;
   pmPrintSightingsBySurvey.Visible := True;
   pmPrintSightingsByObserver.Visible := True;
   pmPrintSightingsByProject.Visible := True;
   pmPrintSightingsByLocality.Visible := True;
   pmPrintSightingsByTaxon.Visible := True;
-
-  sbShowImages.Visible := True;
-  sbShowAudio.Visible := True;
-  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridSpecimens;
 begin
   Caption := rsTitleSpecimens;
   FSearch.DataSet := DMG.qSpecimens;
+  // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
-  //lblChildTag1.Caption := rsTitleCollectors;
-  //lblChildTag2.Caption := rsTitleSamplePreps;
-  //pChildTag1.Visible := True;
-  //pChildTag2.Visible := True;
-  nbChilds.PageIndex := 0;
-  FChildTable := tbSpecimenCollectors;
-  dsLink1.DataSet := DMG.qSampleCollectors;
-  dsLink2.DataSet := DMG.qSamplePreps;
-  pmcNewCollector.Visible := True;
-  pmcNewSamplePrep.Visible := True;
+  // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
+  sbShowImages.Visible := True;
+  sbShowAudio.Visible := True;
+  sbShowDocs.Visible := True;
 
+  // Set the print menu
   pmPrintSpecimens.Visible := True;
   pmPrintSpecimensByYear.Visible := True;
   pmPrintSpecimensByProject.Visible := True;
   pmPrintSpecimensByLocality.Visible := True;
   pmPrintSpecimensByTaxon.Visible := True;
 
+  // Set the childs panel
+  nbChilds.PageIndex := 0;
+  FChildTable := tbSpecimenCollectors;
+  dsLink1.DataSet := DMG.qSampleCollectors;
+  dsLink2.DataSet := DMG.qSamplePreps;
   pChildsBar.Visible := True;
+  // Set the new child menu
+  pmcNewCollector.Visible := True;
+  pmcNewSamplePrep.Visible := True;
+  // Set visible child buttons
   sbChildVerifications.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-
-  sbShowImages.Visible := True;
-  sbShowAudio.Visible := True;
-  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridSurveys;
 begin
   Caption := rsTitleSurveys;
   FSearch.DataSet := DMG.qSurveys;
+  // Set the default data sorting
   AddSortedField(COL_SURVEY_DATE, sdDescending);
 
+  // Set visible buttons
+  sbRecordVerifications.Visible := True;
+  sbShowSummary.Visible := True;
+  mapGeo.Active := True;
+  sbShowMap.Visible := True;
+  sbShowImages.Visible := True;
+  sbShowDocs.Visible := True;
+
+  // Set the print menu
+  pmPrintSurveys.Visible := True;
+  pmPrintSurveysByExpedition.Visible := True;
+  pmPrintSurveysByLocality.Visible := True;
+  pmPrintSurveysByProject.Visible := True;
+
+  // Set the childs panel
   nbChilds.PageIndex := 0;
   if not Assigned(DMS) then
     DMS := TDMS.Create(nil);
@@ -12173,33 +12267,23 @@ begin
   dsLink4.DataSet := DMS.qCaptures;
   dsLink5.DataSet := DMS.qSightings;
   dsLink6.DataSet := DMS.qVegetation;
+  pChildsBar.Visible := True;
+  // Set the new child menu
   pmcNewSurveyMember.Visible := True;
   pmcNewMistnet.Visible := True;
   pmcNewWeatherLog.Visible := True;
   pmcNewCapture.Visible := True;
   pmcNewSighting.Visible := True;
   pmcNewVegetation.Visible := True;
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-
-  pmPrintSurveys.Visible := True;
-  pmPrintSurveysByExpedition.Visible := True;
-  pmPrintSurveysByLocality.Visible := True;
-  pmPrintSurveysByProject.Visible := True;
-
-  pChildsBar.Visible := True;
+  // Set visible child buttons
   sbChildVerifications.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-
-  sbShowImages.Visible := True;
-  sbShowDocs.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridTaxonRanks;
 begin
   Caption := rsTitleTaxonRanks;
   FSearch.DataSet := DMG.qTaxonRanks;
+  // Set the default data sorting
   AddSortedField(COL_RANK_SEQUENCE, sdAscending);
 end;
 
@@ -12209,42 +12293,29 @@ begin
   begin
     case FTableType of
       tbNone: ;
-      //tbUsers: ;
-      //tbRecordHistory: ;
-      //tbRecordVerifications: ;
       //tbGazetteer: ;
       //tbSamplingPlots: ;
       //tbPermanentNets: ;
       //tbInstitutions: ;
       //tbPeople: ;
       //tbProjects: ;
-      //tbProjectTeams: ;
       //tbPermits: ;
-      //tbTaxonRanks: ;
       //tbZooTaxa: ;
       //tbBotanicTaxa: ;
-      //tbBands: ;
-      //tbBandHistory: ;
       tbIndividuals:    Add('WHERE (img.active_status = 1) AND (img.individual_id = :individual_id)');
       tbCaptures:       Add('WHERE (img.active_status = 1) AND (img.capture_id = :capture_id)');
-      //tbMolts: ;
       tbFeathers:       Add('WHERE (img.active_status = 1) AND (img.feather_id = :feather_id)');
       tbNests:          Add('WHERE (img.active_status = 1) AND (img.nest_id = :nest_id)');
-      //tbNestOwners: ;
       tbNestRevisions:  Add('WHERE (img.active_status = 1) AND (img.nest_revision_id = :nest_revision_id)');
       tbEggs:           Add('WHERE (img.active_status = 1) AND (img.egg_id = :egg_id)');
       //tbMethods: ;
       //tbExpeditions: ;
       tbSurveys:        Add('WHERE (img.active_status = 1) AND (img.survey_id = :survey_id)');
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
       //tbWeatherLogs: ;
       tbSightings:      Add('WHERE (img.active_status = 1) AND (img.sighting_id = :sighting_id)');
       tbSpecimens:      Add('WHERE (img.active_status = 1) AND (img.specimen_id = :specimen_id)');
       //tbSamplePreps: ;
-      //tbSpecimenCollectors: ;
-      //tbImages: ;
-      //tbAudioLibrary: ;
+      //tbVegetation: ;
     end;
   end;
 
@@ -12437,41 +12508,35 @@ begin
     gridSummary.BeginUpdate;
     case FTableType of
       tbNone: ;
-      tbUsers: ;
-      tbRecordHistory: ;
-      tbRecordVerifications: ;
       tbGazetteer:          SummaryGazetteer(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbSamplingPlots:      SummarySamplingPlots(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbPermanentNets: ;
+      //tbPermanentNets: ;
       tbInstitutions:       SummaryInstitutions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbPeople:             SummaryPeople(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbProjects:           SummaryProjects(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbProjectTeams: ;
+      //tbProjectTeams: ;
       tbPermits:            SummaryPermits(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbTaxonRanks: ;
-      tbZooTaxa: ;
+      //tbTaxonRanks: ;
+      //tbZooTaxa: ;
       tbBotanicTaxa:        SummaryBotanicTaxa(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbBands:              SummaryBands(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbBandHistory: ;
       tbIndividuals:        SummaryIndividuals(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbFeathers: ;
       tbNests:              SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbNestOwners: ;
+      //tbNestOwners: ;
       tbNestRevisions:      SummaryNestRevisions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbEggs:               SummaryEggs(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbMethods: ;
+      //tbMethods: ;
       tbExpeditions:        SummaryExpeditions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbSurveys:            SummarySurveys(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbSurveyTeams: ;
-      tbNetsEffort: ;
-      tbWeatherLogs: ;
+      //tbSurveyTeams: ;
+      //tbNetsEffort: ;
+      //tbWeatherLogs: ;
       tbSightings:          SummarySightings(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbSpecimens:          SummarySpecimens(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbSamplePreps: ;
-      tbSpecimenCollectors: ;
-      tbImages: ;
-      tbAudioLibrary: ;
+      //tbSamplePreps: ;
+      //tbSpecimenCollectors: ;
     end;
     TranslateSummary(qChart);
     gridSummary.AutoAdjustColumns;

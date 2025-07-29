@@ -1660,11 +1660,11 @@ begin
   if (TTDIPage(aTab).FormInPage is TfrmCustomGrid) then
   begin
     pSearch.Visible := True;
-    actOpenBandHistory.Visible := ActiveQuery = DMG.qBands;
+    //actOpenBandHistory.Visible := ActiveQuery = DMG.qBands;
   end else
   begin
     pSearch.Visible := False;
-    actOpenBandHistory.Visible := False;
+    //actOpenBandHistory.Visible := False;
   end;
 end;
 
