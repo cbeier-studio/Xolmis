@@ -14453,8 +14453,8 @@ msgid "South"
 msgstr "Sul"
 
 #: tfrmgeoconverter.sbaddtogeoeditor.caption
-msgid "Add to Editor"
-msgstr "Adicionar ao Editor"
+msgid "Add to GeoAssist"
+msgstr "Adicionar ao GeoAssist"
 
 #: tfrmgeoconverter.sbclear.caption
 msgid "Clear all"

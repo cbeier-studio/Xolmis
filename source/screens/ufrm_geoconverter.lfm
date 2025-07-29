@@ -1843,9 +1843,9 @@ object frmGeoConverter: TfrmGeoConverter
         Left = 161
         Height = 34
         Top = 9
-        Width = 108
+        Width = 128
         AutoSize = True
-        Caption = 'Add to Editor'
+        Caption = 'Add to GeoAssist'
         DisabledImageIndex = 13
         Flat = True
         Images = iButtons

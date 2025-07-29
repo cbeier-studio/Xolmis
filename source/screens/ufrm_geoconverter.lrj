@@ -19,7 +19,7 @@
 {"hash":127853539,"name":"tfrmgeoconverter.sbswapvalues.caption","sourcebytes":[83,119,97,112,32,118,97,108,117,101,115],"value":"Swap values"},
 {"hash":366789,"name":"tfrmgeoconverter.sbsavefile.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":304761,"name":"tfrmgeoconverter.sbcopy.caption","sourcebytes":[67,111,112,121],"value":"Copy"},
-{"hash":52261426,"name":"tfrmgeoconverter.sbaddtogeoeditor.caption","sourcebytes":[65,100,100,32,116,111,32,69,100,105,116,111,114],"value":"Add to Editor"},
+{"hash":71284548,"name":"tfrmgeoconverter.sbaddtogeoeditor.caption","sourcebytes":[65,100,100,32,116,111,32,71,101,111,65,115,115,105,115,116],"value":"Add to GeoAssist"},
 {"hash":201759301,"name":"tfrmgeoconverter.opendlg.title","sourcebytes":[79,112,101,110,32,102,105,108,101],"value":"Open file"},
 {"hash":201759301,"name":"tfrmgeoconverter.pmfopenfile.caption","sourcebytes":[79,112,101,110,32,102,105,108,101],"value":"Open file"},
 {"hash":5671589,"name":"tfrmgeoconverter.pmfpaste.caption","sourcebytes":[80,97,115,116,101],"value":"Paste"},
