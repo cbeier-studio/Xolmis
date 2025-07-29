@@ -9,7 +9,6 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.2.0.0'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -894,15 +893,18 @@ object frmMain: TfrmMain
     AnchorSideLeft.Side = asrCenter
     AnchorSideTop.Control = Owner
     AnchorSideTop.Side = asrCenter
-    Left = 533
-    Height = 87
-    Top = 406
-    Width = 127
-    AutoSize = True
+    Left = 393
+    Height = 93
+    Top = 403
+    Width = 407
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ChildSizing.HorizontalSpacing = 8
-    ChildSizing.VerticalSpacing = 8
+    ChildSizing.HorizontalSpacing = 4
+    ChildSizing.VerticalSpacing = 4
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 5
     Background.Color = 15987699
     Background.Gradient1.StartColor = clWhite
     Background.Gradient1.EndColor = clBlack
@@ -938,37 +940,84 @@ object frmMain: TfrmMain
     Rounding.RoundX = 8
     Rounding.RoundY = 8
     TabOrder = 4
-    object icoEmptyTabs: TImage
+    object sbEmptyOpenSurveys: TSpeedButton
       Left = 16
-      Height = 32
+      Height = 61
       Top = 16
-      Width = 95
-      Align = alTop
+      Width = 72
       AutoSize = True
-      Center = True
-      ImageIndex = 10
+      Caption = 'Surveys'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 3
       ImageWidth = 32
-      Images = iPopup
-      Transparent = True
+      Layout = blGlyphTop
+      OnClick = actOpenSurveysExecute
     end
-    object lblEmptyTabs: TLabel
-      Left = 16
-      Height = 15
-      Top = 56
-      Width = 95
-      Align = alTop
-      Alignment = taCenter
-      Caption = 'All tabs are closed'
-      ParentFont = False
+    object sbEmptyOpenSpecimens: TSpeedButton
+      Left = 92
+      Height = 61
+      Top = 16
+      Width = 72
+      AutoSize = True
+      Caption = 'Specimens'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 6
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenSpecimensExecute
+    end
+    object sbEmptyOpenIndividuals: TSpeedButton
+      Left = 168
+      Height = 61
+      Top = 16
+      Width = 71
+      AutoSize = True
+      Caption = 'Individuals'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 11
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenIndividualsExecute
+    end
+    object sbEmptyOpenNests: TSpeedButton
+      Left = 243
+      Height = 61
+      Top = 16
+      Width = 72
+      AutoSize = True
+      Caption = 'Nests'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 14
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenNestsExecute
+    end
+    object sbEmptyOpenProjects: TSpeedButton
+      Left = 319
+      Height = 61
+      Top = 16
+      Width = 72
+      AutoSize = True
+      Caption = 'Projects'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 19
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenProjectsExecute
     end
   end
   object pSplash: TPanel
-    Left = 608
-    Height = 416
-    Top = 136
+    Left = 440
+    Height = 336
+    Top = 48
     Width = 376
     BevelOuter = bvNone
-    ClientHeight = 416
+    ClientHeight = 336
     ClientWidth = 376
     Color = clBtnFace
     ParentBackground = False
@@ -982,7 +1031,7 @@ object frmMain: TfrmMain
       AnchorSideTop.Side = asrBottom
       Left = 137
       Height = 35
-      Top = 336
+      Top = 296
       Width = 103
       BorderSpacing.Bottom = 12
       Caption = 'Welcome'
@@ -999,7 +1048,7 @@ object frmMain: TfrmMain
       AnchorSideTop.Side = asrCenter
       Left = 60
       Height = 256
-      Top = 80
+      Top = 40
       Width = 256
       AutoSize = True
       Images = DMM.iLogos

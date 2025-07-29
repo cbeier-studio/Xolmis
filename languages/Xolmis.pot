@@ -14880,11 +14880,6 @@ msgstr ""
 msgid "All taken care of"
 msgstr ""
 
-#: tfrmmain.lblemptytabs.caption
-msgctxt "tfrmmain.lblemptytabs.caption"
-msgid "All tabs are closed"
-msgstr ""
-
 #: tfrmmain.lblloading.caption
 msgctxt "tfrmmain.lblloading.caption"
 msgid "Welcome"
@@ -15045,6 +15040,31 @@ msgstr ""
 #: tfrmmain.sbclearsearch.hint
 msgctxt "tfrmmain.sbclearsearch.hint"
 msgid "Clear search"
+msgstr ""
+
+#: tfrmmain.sbemptyopenindividuals.caption
+msgctxt "tfrmmain.sbemptyopenindividuals.caption"
+msgid "Individuals"
+msgstr ""
+
+#: tfrmmain.sbemptyopennests.caption
+msgctxt "tfrmmain.sbemptyopennests.caption"
+msgid "Nests"
+msgstr ""
+
+#: tfrmmain.sbemptyopenprojects.caption
+msgctxt "tfrmmain.sbemptyopenprojects.caption"
+msgid "Projects"
+msgstr ""
+
+#: tfrmmain.sbemptyopenspecimens.caption
+msgctxt "tfrmmain.sbemptyopenspecimens.caption"
+msgid "Specimens"
+msgstr ""
+
+#: tfrmmain.sbemptyopensurveys.caption
+msgctxt "tfrmmain.sbemptyopensurveys.caption"
+msgid "Surveys"
 msgstr ""
 
 #: tfrmmain.sbhome.hint

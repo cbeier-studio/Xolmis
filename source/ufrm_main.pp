@@ -86,7 +86,6 @@ type
     ActList: TActionList;
     AppEvents: TApplicationProperties;
     bStatusBarDark: TImageList;
-    icoEmptyTabs: TImage;
     icoEmptyNotifications: TImage;
     iMenuDark: TImageList;
     iPopupDark: TImageList;
@@ -99,8 +98,12 @@ type
     pmaNewBandsBatch: TMenuItem;
     pEmptyNotifications: TBCPanel;
     pNotificationList: TPanel;
+    sbEmptyOpenSurveys: TSpeedButton;
+    sbEmptyOpenSpecimens: TSpeedButton;
+    sbEmptyOpenIndividuals: TSpeedButton;
+    sbEmptyOpenNests: TSpeedButton;
+    sbEmptyOpenProjects: TSpeedButton;
     titleNotifications: TLabel;
-    lblEmptyTabs: TLabel;
     lblSbarVersion: TLabel;
     mmiFeathers: TMenuItem;
     mmfNewDB: TMenuItem;
@@ -703,7 +706,11 @@ begin
   navTabs.ColorFontActive := clTextPrimaryDark;
   navTabs.ColorFontHot := clTextPrimaryDark;
 
-  icoEmptyTabs.Images := iPopupDark;
+  sbEmptyOpenSurveys.Images := iMenuDark;
+  sbEmptyOpenSpecimens.Images := iMenuDark;
+  sbEmptyOpenIndividuals.Images := iMenuDark;
+  sbEmptyOpenNests.Images := iMenuDark;
+  sbEmptyOpenProjects.Images := iMenuDark;
   pEmptyTabs.Background.Color := clCardBGDefaultDark;
   pEmptyTabs.Border.Color := clSolidBGSecondaryDark;
   pEmptyTabs.ParentBackground := True;
