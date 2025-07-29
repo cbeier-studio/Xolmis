@@ -55,10 +55,14 @@ type
     pmPrintBandsBalance: TMenuItem;
     pmMore: TPopupMenu;
     sbAddFeathersBatch: TSpeedButton;
+    sbEmptyQuickEntry: TSpeedButton;
     sbQuickEntry: TSpeedButton;
     sbInsertBatch: TSpeedButton;
     sbQuickEntryChild: TSpeedButton;
     sbMoreOptions: TSpeedButton;
+    sbEmptyNewRecord: TSpeedButton;
+    sbEmptyImport: TSpeedButton;
+    sbEmptyClearAll: TSpeedButton;
     TimerOpen: TTimer;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
@@ -219,7 +223,6 @@ type
     icoInstitutionFilter: TImage;
     icoProjectFilter: TImage;
     iHeaders: TImageList;
-    icoEmptyQuery: TImage;
     lblEggShapeFilter: TLabel;
     lblReplacedBandFilter: TLabel;
     lblPermitTypeFilter: TLabel;
@@ -1041,6 +1044,7 @@ type
     procedure sbDocInfoClick(Sender: TObject);
     procedure sbEditChildClick(Sender: TObject);
     procedure sbEditRecordClick(Sender: TObject);
+    procedure sbEmptyClearAllClick(Sender: TObject);
     procedure sbFirstChildClick(Sender: TObject);
     procedure sbFirstRecordClick(Sender: TObject);
     procedure sbImageInfoClick(Sender: TObject);
@@ -2024,7 +2028,6 @@ begin
   pEmptyQuery.Background.Color := clCardBGDefaultDark;
   pEmptyQuery.Border.Color := clCardBGSecondaryDark;
   pEmptyQuery.Color := DBG.Color;
-  icoEmptyQuery.Images := iButtonsDark;
 
   pRecordToolbar.Background.Color := clCardBGDefaultDark;
   pRecordToolbar.Border.Color := clCardBGSecondaryDark;
@@ -2122,6 +2125,10 @@ begin
   sbClearAllFilters.Images := iButtonsDark;
   sbRestoreRecord.Images := iButtonsDark;
   sbDelPermanently.Images := iButtonsDark;
+  sbEmptyNewRecord.Images := iButtonsDark;
+  sbEmptyQuickEntry.Images := iButtonsDark;
+  sbEmptyImport.Images := iButtonsDark;
+  sbEmptyClearAll.Images := iButtonsDark;
 
   // Set filter cards colors
   pSiteFilters.Background.Color := clCardBGDefaultDark;
@@ -4168,7 +4175,7 @@ begin
   if Assigned(dsLink.DataSet) then
     UpdateButtons(dsLink.DataSet);
 
-  pEmptyQuery.Visible := (not Working) and (dsLink.DataSet.RecordCount = 0);
+  pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
 
   UpdateChildBar;
 end;
@@ -8948,6 +8955,15 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.sbEmptyClearAllClick(Sender: TObject);
+begin
+  ClearSearch;
+  if frmMain.eSearch.CanSetFocus then
+  begin
+    frmMain.sbClearSearchClick(nil);
+  end;
+end;
+
 procedure TfrmCustomGrid.sbFirstChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
@@ -9463,49 +9479,51 @@ begin
     Exit;
 
   Working := True;
-  {$IFDEF DEBUG}
-  LogDebug('Search value: ' + aValue);
-  {$ENDIF}
-  FSearch.Fields.Clear;
-  FSearch.QuickFilters.Clear;
-  lblRecordStatus.Caption := rsLoadingRecords;
   DBG.BeginUpdate;
+  try
+    {$IFDEF DEBUG}
+    LogDebug('Search value: ' + aValue);
+    {$ENDIF}
+    FSearch.Fields.Clear;
+    FSearch.QuickFilters.Clear;
+    lblRecordStatus.Caption := rsLoadingRecords;
 
-  case TableType of
-    tbNone: ;
-    tbProjectTeams: ;
-    tbPermits:       Result := SearchPermits(aValue);
-    tbGazetteer:     Result := SearchGazetteer(aValue);
-    tbBotanicTaxa:   Result := SearchBotanicTaxa(aValue);
-    tbNests:         Result := SearchNests(aValue);
-    tbNestRevisions: Result := SearchNestRevisions(aValue);
-    tbEggs:          Result := SearchEggs(aValue);
-    tbSamplingPlots: Result := SearchSamplingPlots(aValue);
-    tbTaxonRanks:    Result := SearchTaxonRanks(aValue);
-    tbZooTaxa:       Result := SearchZooTaxa(aValue);
-    tbProjects:      Result := SearchProjects(aValue);
-    tbInstitutions:  Result := SearchInstitutions(aValue);
-    tbPeople:        Result := SearchPeople(aValue);
-    tbExpeditions:   Result := SearchExpeditions(aValue);
-    tbSurveys:       Result := SearchSurveys(aValue);
-    tbMethods:       Result := SearchMethods(aValue);
-    tbSurveyTeams: ;
-    tbNetsEffort: ;
-    tbSightings:     Result := SearchSightings(aValue);
-    tbSpecimens:     Result := SearchSpecimens(aValue);
-    tbSamplePreps: ;
-    tbPermanentNets: ;
-    tbBands:         Result := SearchBands(aValue);
-    tbIndividuals:   Result := SearchIndividuals(aValue);
-    tbCaptures:      Result := SearchCaptures(aValue);
-    tbFeathers:      Result := SearchFeathers(aValue);
-    tbImages: ;
-    tbAudioLibrary: ;
+    case TableType of
+      tbNone: ;
+      tbProjectTeams: ;
+      tbPermits:       Result := SearchPermits(aValue);
+      tbGazetteer:     Result := SearchGazetteer(aValue);
+      tbBotanicTaxa:   Result := SearchBotanicTaxa(aValue);
+      tbNests:         Result := SearchNests(aValue);
+      tbNestRevisions: Result := SearchNestRevisions(aValue);
+      tbEggs:          Result := SearchEggs(aValue);
+      tbSamplingPlots: Result := SearchSamplingPlots(aValue);
+      tbTaxonRanks:    Result := SearchTaxonRanks(aValue);
+      tbZooTaxa:       Result := SearchZooTaxa(aValue);
+      tbProjects:      Result := SearchProjects(aValue);
+      tbInstitutions:  Result := SearchInstitutions(aValue);
+      tbPeople:        Result := SearchPeople(aValue);
+      tbExpeditions:   Result := SearchExpeditions(aValue);
+      tbSurveys:       Result := SearchSurveys(aValue);
+      tbMethods:       Result := SearchMethods(aValue);
+      tbSurveyTeams: ;
+      tbNetsEffort: ;
+      tbSightings:     Result := SearchSightings(aValue);
+      tbSpecimens:     Result := SearchSpecimens(aValue);
+      tbSamplePreps: ;
+      tbPermanentNets: ;
+      tbBands:         Result := SearchBands(aValue);
+      tbIndividuals:   Result := SearchIndividuals(aValue);
+      tbCaptures:      Result := SearchCaptures(aValue);
+      tbFeathers:      Result := SearchFeathers(aValue);
+      tbImages: ;
+      tbAudioLibrary: ;
+    end;
+    UpdateButtons(dsLink.DataSet);
+  finally
+    Working := False;
+    DBG.EndUpdate;
   end;
-  Working := False;
-  DBG.EndUpdate;
-
-  UpdateButtons(dsLink.DataSet);
 end;
 
 function TfrmCustomGrid.SearchBands(aValue: String): Boolean;
@@ -12918,6 +12936,7 @@ begin
 
   sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
   sbClearAllFilters.Enabled := sbClearFilters.Enabled;
+  sbEmptyClearAll.Visible := (FSearch.QuickFilters.Count > 0) or (FSearchString <> EmptyStr);
 
   if dsLink.DataSet.RecordCount = 1 then
     lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount, rsRecords])

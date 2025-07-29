@@ -14110,6 +14110,23 @@ msgctxt "tfrmcustomgrid.sbeditrecord.hint"
 msgid "Edit selected record"
 msgstr ""
 
+#: tfrmcustomgrid.sbemptyclearall.caption
+msgctxt "tfrmcustomgrid.sbemptyclearall.caption"
+msgid "Clear all filters"
+msgstr ""
+
+#: tfrmcustomgrid.sbemptyimport.caption
+msgid "Import records from file"
+msgstr ""
+
+#: tfrmcustomgrid.sbemptynewrecord.caption
+msgid "Create new record"
+msgstr ""
+
+#: tfrmcustomgrid.sbemptyquickentry.caption
+msgid "Add records using Quick Entry"
+msgstr ""
+
 #: tfrmcustomgrid.sbfirstchild.hint
 msgctxt "tfrmcustomgrid.sbfirstchild.hint"
 msgid "First record"
