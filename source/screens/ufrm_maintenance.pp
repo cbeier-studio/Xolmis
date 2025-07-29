@@ -76,6 +76,7 @@ type
     sbBackupDatabase: TSpeedButton;
     sbCheckDatabaseIntegrity: TSpeedButton;
     sbRecreateImageThumbnails: TSpeedButton;
+    TimerOpen: TTimer;
     titleRecreateThumbnails: TLabel;
     titleDatabaseBackup: TLabel;
     titleDatabaseIntegrity: TLabel;
@@ -97,9 +98,11 @@ type
     procedure sbFactoryResetClick(Sender: TObject);
     procedure sbOptimizeDatabaseClick(Sender: TObject);
     procedure sbRestoreSettingsClick(Sender: TObject);
+    procedure TimerOpenTimer(Sender: TObject);
   private
     procedure ApplyDarkMode;
     procedure CheckDatabaseBackup;
+    procedure CheckDatabaseIntegrity;
     procedure CheckSystemLogs;
     procedure CheckTemporaryFiles;
     procedure CheckThumbnails;
@@ -123,7 +126,7 @@ uses
 procedure TfrmMaintenance.ApplyDarkMode;
 begin
   icoDatabaseBackup.Images := iCheckDark;
-  icoDatabaseIntegrity.Images := iIconsDark;
+  icoDatabaseIntegrity.Images := iCheckDark;
   icoOptimizeDatabase.Images := iCheckDark;
 
   icoSettingsBackup.Images := iIconsDark;
@@ -215,6 +218,21 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TfrmMaintenance.CheckDatabaseIntegrity;
+begin
+  if ConexaoDB.IntegrityCheck(False) then
+  begin
+    icoDatabaseIntegrity.ImageIndex := 0;
+    icoDatabaseIntegrity.Hint := rsSuccessfulDatabaseIntegrityCheck;
+  end
+  else
+  begin
+    icoDatabaseIntegrity.ImageIndex := 2;
+    icoDatabaseIntegrity.Hint := rsIntegrityCheckReturnedErrors;
+  end;
+  icoDatabaseIntegrity.ShowHint := True;
 end;
 
 procedure TfrmMaintenance.CheckSystemLogs;
@@ -339,6 +357,9 @@ begin
   CheckSystemLogs;
   CheckTemporaryFiles;
   CheckThumbnails;
+  //CheckDatabaseIntegrity;
+
+  TimerOpen.Enabled := True;
 end;
 
 procedure TfrmMaintenance.sbBackupSettingsClick(Sender: TObject);
@@ -415,6 +436,17 @@ begin
   if OpenDlg.Execute then
     if RestoreSettings(OpenDlg.FileName) then
       XSettings.LoadFromFile;
+end;
+
+procedure TfrmMaintenance.TimerOpenTimer(Sender: TObject);
+begin
+  TimerOpen.Enabled := False;
+
+  //CheckDatabaseBackup;
+  //CheckSystemLogs;
+  //CheckTemporaryFiles;
+  //CheckThumbnails;
+  CheckDatabaseIntegrity;
 end;
 
 procedure TfrmMaintenance.btnBackupDatabaseClick(Sender: TObject);

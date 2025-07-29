@@ -366,6 +366,7 @@ uses
     rsFactoryResetPrompt = 'Do you really want to reset settings to factory defaults?';
     rsClearLogsPrompt = 'Do you really want to delete all log files?';
     rsSuccessfulClearTemporaryFiles = 'The temporary files were deleted!';
+    rsIntegrityCheckReturnedErrors = 'The database integrity check returned some errors.';
 
     { Authentication messages }
     rsInvalidLogin = 'User not found.';

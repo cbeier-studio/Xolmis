@@ -49,7 +49,7 @@ type
     Password: String;
     LastBackup: TDateTime;
     procedure Clear;
-    procedure IntegrityCheck;
+    function IntegrityCheck(const ShowResults: Boolean = True): Boolean;
     procedure LoadParams;
     procedure Optimize;
     procedure SetLastBackup;
@@ -1169,12 +1169,14 @@ begin
   LastBackup := StrToDateTime('30/12/1500 00:00:00');
 end;
 
-procedure TDBParams.IntegrityCheck;
+function TDBParams.IntegrityCheck(const ShowResults: Boolean): Boolean;
 var
   uCon: TSQLConnector;
   uTrans: TSQLTransaction;
   Qry: TSQLQuery;
 begin
+  Result := False;
+
   uCon := TSQLConnector.Create(nil);
   uTrans := TSQLTransaction.Create(uCon);
   Qry := TSQLQuery.Create(nil);
@@ -1194,20 +1196,27 @@ begin
       Qry.First;
       if Qry.Fields[0].AsString = 'ok' then
       begin
-        MsgDlg(rsTitleInformation, rsSuccessfulDatabaseIntegrityCheck, mtInformation);
+        Result := True;
+        if ShowResults then
+          MsgDlg(rsTitleInformation, rsSuccessfulDatabaseIntegrityCheck, mtInformation);
       end
       else
       begin
-        dlgValidate := TdlgValidate.Create(nil);
-        try
-          while not Qry.EOF do
-          begin
-            dlgValidate.MessageList.Add(Qry.Fields[0].AsString);
-            Qry.Next;
+        Result := False;
+        if ShowResults then
+        begin
+          dlgValidate := TdlgValidate.Create(nil);
+          try
+            dlgValidate.Header := rsIntegrityCheckReturnedErrors;
+            while not Qry.EOF do
+            begin
+              dlgValidate.MessageList.Add(Qry.Fields[0].AsString);
+              Qry.Next;
+            end;
+            dlgValidate.ShowModal;
+          finally
+            FreeAndNil(dlgValidate);
           end;
-          dlgValidate.ShowModal;
-        finally
-          FreeAndNil(dlgValidate);
         end;
       end;
       Qry.Close;

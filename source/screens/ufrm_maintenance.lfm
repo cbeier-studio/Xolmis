@@ -249,7 +249,7 @@ object frmMaintenance: TfrmMaintenance
         Center = True
         ImageIndex = -1
         ImageWidth = 24
-        Images = iIcons
+        Images = iCheck
         Proportional = True
       end
       object lblDatabaseIntegrity: TLabel
@@ -2128,7 +2128,18 @@ object frmMaintenance: TfrmMaintenance
     }
   end
   object OpenDlg: TOpenDialog
+    Title = 'Open backup file'
+    DefaultExt = '.zip'
+    Filter = 'Backup files|*.zip'
+    Options = [ofFileMustExist, ofEnableSizing]
     Left = 16
     Top = 224
+  end
+  object TimerOpen: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = TimerOpenTimer
+    Left = 152
+    Top = 382
   end
 end

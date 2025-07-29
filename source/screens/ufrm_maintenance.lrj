@@ -29,5 +29,6 @@
 {"hash":22974,"name":"tfrmmaintenance.sbdiagnostic.hint","sourcebytes":[82,117,110],"value":"Run"},
 {"hash":17692190,"name":"tfrmmaintenance.lblrecreateimagethumbnails.caption","sourcebytes":[82,101,99,114,101,97,116,101,32,105,109,97,103,101,32,116,104,117,109,98,110,97,105,108,115,32,105,110,32,116,104,101,32,100,97,116,97,98,97,115,101,46],"value":"Recreate image thumbnails in the database."},
 {"hash":22633539,"name":"tfrmmaintenance.titlerecreatethumbnails.caption","sourcebytes":[82,101,99,114,101,97,116,101,32,116,104,117,109,98,110,97,105,108,115],"value":"Recreate thumbnails"},
-{"hash":195607845,"name":"tfrmmaintenance.sbrecreateimagethumbnails.hint","sourcebytes":[82,101,99,114,101,97,116,101],"value":"Recreate"}
+{"hash":195607845,"name":"tfrmmaintenance.sbrecreateimagethumbnails.hint","sourcebytes":[82,101,99,114,101,97,116,101],"value":"Recreate"},
+{"hash":206303429,"name":"tfrmmaintenance.opendlg.title","sourcebytes":[79,112,101,110,32,98,97,99,107,117,112,32,102,105,108,101],"value":"Open backup file"}
 ]}

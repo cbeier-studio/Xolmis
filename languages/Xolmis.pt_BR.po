@@ -4152,6 +4152,10 @@ msgctxt "cbs_locale.rsinsertedbyimport"
 msgid "Inserted by import"
 msgstr "Inserido por importação"
 
+#: cbs_locale.rsintegritycheckreturnederrors
+msgid "The database integrity check returned some errors."
+msgstr "A verificação de integridade do banco de dados retornou alguns erros."
+
 #: cbs_locale.rsinvalidcpf
 msgctxt "cbs_locale.rsinvalidcpf"
 msgid "The CPF number entered is invalid."
@@ -15057,6 +15061,10 @@ msgstr "Reindexar e otimizar o banco de dados."
 #: tfrmmaintenance.lblsettingsbackup.caption
 msgid "Create and restore settings backups."
 msgstr "Criar e restaurar backups das configurações."
+
+#: tfrmmaintenance.opendlg.title
+msgid "Open backup file"
+msgstr "Abrir arquivo de backup"
 
 #: tfrmmaintenance.sbbackupdatabase.hint
 msgctxt "tfrmmaintenance.sbbackupdatabase.hint"
