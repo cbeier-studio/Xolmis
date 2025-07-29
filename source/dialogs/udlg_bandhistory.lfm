@@ -6,18 +6,23 @@ object dlgBandHistory: TdlgBandHistory
   Caption = 'Band history'
   ClientHeight = 305
   ClientWidth = 672
+  Constraints.MinHeight = 305
+  Constraints.MinWidth = 672
+  PopupMode = pmAuto
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poScreenCenter
-  LCLVersion = '3.4.0.0'
   object pHeader: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
     Left = 0
     Height = 41
     Top = 0
     Width = 672
-    Align = alTop
+    Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
@@ -25,6 +30,7 @@ object dlgBandHistory: TdlgBandHistory
     ChildSizing.HorizontalSpacing = 8
     ClientHeight = 41
     ClientWidth = 672
+    Constraints.MinWidth = 672
     TabOrder = 0
     object lblBandNameCaption: TLabel
       Left = 16
@@ -55,11 +61,16 @@ object dlgBandHistory: TdlgBandHistory
     end
   end
   object pBottom: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 41
     Top = 264
     Width = 672
-    Align = alBottom
+    Anchors = [akLeft, akRight, akBottom]
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
@@ -79,11 +90,17 @@ object dlgBandHistory: TdlgBandHistory
     end
   end
   object DBG: TDBGrid
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = pHeader
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = SBox
+    AnchorSideBottom.Control = pBottom
     Left = 0
     Height = 223
     Top = 41
     Width = 336
-    Align = alLeft
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    AutoFillColumns = True
     Color = clWindow
     Columns = <    
       item
@@ -102,7 +119,7 @@ object dlgBandHistory: TdlgBandHistory
       item
         Alignment = taCenter
         Title.Caption = 'Date'
-        Width = 100
+        Width = 111
         FieldName = 'event_date'
       end    
       item
@@ -117,13 +134,13 @@ object dlgBandHistory: TdlgBandHistory
           'Baixa'
         )
         Title.Caption = 'Type'
-        Width = 100
+        Width = 111
         FieldName = 'event_type'
       end    
       item
         Alignment = taCenter
         Title.Caption = 'Order number'
-        Width = 104
+        Width = 110
         FieldName = 'order_number'
       end    
       item
@@ -212,6 +229,7 @@ object dlgBandHistory: TdlgBandHistory
         Visible = False
         FieldName = 'active_status'
       end>
+    Constraints.MinWidth = 336
     DataSource = DMG.dsBandHistory
     FixedCols = 0
     Options = [dgEditing, dgTitles, dgColumnResize, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgDisableDelete, dgDisableInsert, dgCellEllipsis, dgRowHighlight, dgThumbTracking, dgDisplayMemoText]
@@ -222,20 +240,26 @@ object dlgBandHistory: TdlgBandHistory
     TitleStyle = tsNative
   end
   object SBox: TScrollBox
+    AnchorSideTop.Control = pHeader
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = pBottom
     Left = 336
     Height = 223
     Top = 41
     Width = 336
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 207
-    Align = alLeft
+    VertScrollBar.Page = 200
+    Anchors = [akTop, akRight, akBottom]
     BorderStyle = bsNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
     ChildSizing.VerticalSpacing = 4
     ClientHeight = 223
     ClientWidth = 336
+    Constraints.MinHeight = 223
     Constraints.MinWidth = 336
     Color = 15066599
     ParentBackground = False
@@ -278,11 +302,18 @@ object dlgBandHistory: TdlgBandHistory
       ParentFont = False
     end
     object mNotes: TDBMemo
+      AnchorSideLeft.Control = SBox
+      AnchorSideTop.Control = Label4
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = SBox
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = SBox
+      AnchorSideBottom.Side = asrBottom
       Left = 16
       Height = 46
       Top = 161
       Width = 304
-      Align = alTop
+      Anchors = [akTop, akLeft, akRight, akBottom]
       BorderSpacing.Bottom = 8
       Color = 15987699
       DataField = 'notes'
@@ -297,6 +328,7 @@ object dlgBandHistory: TdlgBandHistory
       Top = 35
       Width = 304
       Align = alTop
+      AutoSize = False
       BorderSpacing.Bottom = 8
       DataField = 'supplier_name'
       DataSource = DMG.dsBandHistory
@@ -309,6 +341,7 @@ object dlgBandHistory: TdlgBandHistory
       Top = 77
       Width = 304
       Align = alTop
+      AutoSize = False
       BorderSpacing.Bottom = 8
       DataField = 'requester_name'
       DataSource = DMG.dsBandHistory
@@ -333,6 +366,7 @@ object dlgBandHistory: TdlgBandHistory
       Top = 119
       Width = 304
       Align = alTop
+      AutoSize = False
       BorderSpacing.Bottom = 8
       DataField = 'sender_name'
       DataSource = DMG.dsBandHistory

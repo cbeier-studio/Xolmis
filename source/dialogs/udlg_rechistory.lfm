@@ -7,9 +7,10 @@ object dlgRecHistory: TdlgRecHistory
   Caption = 'History'
   ClientHeight = 370
   ClientWidth = 824
+  Constraints.MinHeight = 370
+  Constraints.MinWidth = 824
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -28,11 +29,13 @@ object dlgRecHistory: TdlgRecHistory
     ClientWidth = 824
     TabOrder = 0
     object lblRecordId: TLabel
+      AnchorSideLeft.Control = pTop
+      AnchorSideTop.Control = pTop
+      AnchorSideTop.Side = asrCenter
       Left = 16
-      Height = 19
-      Top = 8
+      Height = 15
+      Top = 10
       Width = 53
-      Align = alLeft
       Alignment = taRightJustify
       Caption = 'Record id:'
       Font.Color = 6579300
@@ -41,22 +44,28 @@ object dlgRecHistory: TdlgRecHistory
       ParentFont = False
     end
     object txtRecordId: TDBText
+      AnchorSideLeft.Control = lblRecordId
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pTop
+      AnchorSideTop.Side = asrCenter
       Left = 77
-      Height = 19
-      Top = 8
+      Height = 15
+      Top = 10
       Width = 60
-      Align = alLeft
       Font.Color = 13066075
       Layout = tlCenter
       ParentColor = False
       ParentFont = False
     end
     object ckAtivo: TDBCheckBox
+      AnchorSideTop.Control = pTop
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = ckMarcado
       Left = 619
       Height = 19
       Top = 8
       Width = 51
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       Caption = 'Active'
       DataField = 'active_status'
@@ -66,11 +75,14 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckMarcado: TDBCheckBox
+      AnchorSideTop.Control = pTop
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = ckExportado
       Left = 678
       Height = 19
       Top = 8
       Width = 58
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       Caption = 'Marked'
       DataField = 'marked_status'
@@ -80,11 +92,15 @@ object dlgRecHistory: TdlgRecHistory
       ValueUnchecked = 'False'
     end
     object ckExportado: TDBCheckBox
+      AnchorSideTop.Control = pTop
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pTop
+      AnchorSideRight.Side = asrBottom
       Left = 744
       Height = 19
       Top = 8
       Width = 64
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       Caption = 'Exported'
       DataField = 'exported_status'
@@ -123,23 +139,24 @@ object dlgRecHistory: TdlgRecHistory
     Height = 294
     Top = 35
     Width = 488
-    Align = alLeft
+    Align = alClient
+    AutoFillColumns = True
     Color = clWindow
     Columns = <    
       item
         Alignment = taCenter
         Title.Caption = 'Date'
-        Width = 140
+        Width = 162
         FieldName = 'event_date'
       end    
       item
         Title.Caption = 'Action'
-        Width = 120
+        Width = 161
         FieldName = 'event_action'
       end    
       item
         Title.Caption = 'Property'
-        Width = 200
+        Width = 161
         FieldName = 'event_field'
       end>
     DataSource = dsHistory
@@ -161,7 +178,7 @@ object dlgRecHistory: TdlgRecHistory
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 285
-    Align = alLeft
+    Align = alRight
     BorderStyle = bsNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
