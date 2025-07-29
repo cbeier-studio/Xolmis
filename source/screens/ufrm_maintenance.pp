@@ -218,7 +218,18 @@ begin
 end;
 
 procedure TfrmMaintenance.CheckSystemLogs;
+const
+  KB = 1024;         // 1 KB = 1024 bytes
+  MB = 1024 * KB;    // 1 MB = 1024 KB
+  GB = 1024 * MB;    // 1 GB = 1024 MB
+var
+  FileInfo: TSearchRec;
+  TotalSize: string;
+  SizeInBytes: Int64;
 begin
+  SizeInBytes := 0;
+  TotalSize := EmptyStr;
+
   if XSettings.AllowWriteLogs then
   begin
     icoManageLogs.ImageIndex := 0;
@@ -230,7 +241,34 @@ begin
     icoManageLogs.Hint := rsCaptionDisabled;
   end;
 
-  lblManageLogs.Caption := GetFileSizeReadable(ConcatPaths([AppDataDir, LogFile]));
+  // Check if directory exists
+  if not DirectoryExists(AppDataDir) then
+    raise EDirectoryNotFoundException.CreateFmt(rsErrorFolderNotFound, [AppDataDir]);
+
+  // Find files in directory
+  if FindFirst(IncludeTrailingPathDelimiter(AppDataDir) + '*.txt', faAnyFile, FileInfo) = 0 then
+  try
+    repeat
+      // Ignore "." and ".."
+      if (FileInfo.Name <> '.') and (FileInfo.Name <> '..') then
+      begin
+        SizeInBytes := SizeInBytes + FileInfo.Size;
+      end;
+    until FindNext(FileInfo) <> 0;
+  finally
+    FindClose(FileInfo);
+  end;
+
+  if SizeInBytes >= GB then
+    TotalSize := Format('%.2f GB', [SizeInBytes / GB])
+  else if SizeInBytes >= MB then
+    TotalSize := Format('%.2f MB', [SizeInBytes / MB])
+  else if SizeInBytes >= KB then
+    TotalSize := Format('%.2f KB', [SizeInBytes / KB])
+  else
+    TotalSize := Format('%d bytes', [SizeInBytes]);
+
+  lblManageLogs.Caption := Format('%s / %s', [GetFileSizeReadable(ConcatPaths([AppDataDir, LogFile])), TotalSize]);
 end;
 
 procedure TfrmMaintenance.CheckTemporaryFiles;
@@ -388,14 +426,37 @@ end;
 
 procedure TfrmMaintenance.btnClearLogsClick(Sender: TObject);
 var
-  FLog: String;
+  FileInfo: TSearchRec;
+  FilePath: string;
+  //FLog: String;
 begin
   if not MsgDlg(rsTitleConfirmation, rsClearLogsPrompt, mtConfirmation) then
     Exit;
 
-  FLog := ConcatPaths([AppDataDir, LogFile]);
-  if FileExists(FLog) then
-    DeleteFile(FLog);
+  // Find files in directory
+  if FindFirst(IncludeTrailingPathDelimiter(AppDataDir) + '*.txt', faAnyFile, FileInfo) = 0 then
+  try
+    repeat
+      // Ignore "." and ".."
+      if (FileInfo.Name <> '.') and (FileInfo.Name <> '..') then
+      begin
+        FilePath := IncludeTrailingPathDelimiter(AppDataDir) + FileInfo.Name;
+
+        // Check if is a file and delete it
+        if (FileInfo.Attr and faDirectory) = 0 then
+        begin
+          if not DeleteFile(FilePath) then
+            raise Exception.CreateFmt(rsErrorDeletingFile, [FilePath]);
+        end;
+      end;
+    until FindNext(FileInfo) <> 0;
+  finally
+    FindClose(FileInfo);
+  end;
+
+  //FLog := ConcatPaths([AppDataDir, LogFile]);
+  //if FileExists(FLog) then
+  //  DeleteFile(FLog);
 end;
 
 procedure TfrmMaintenance.btnRecreateImageThumbnailsClick(Sender: TObject);
