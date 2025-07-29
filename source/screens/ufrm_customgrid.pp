@@ -49,6 +49,8 @@ type
   TfrmCustomGrid = class(TForm)
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmgBandHistory: TMenuItem;
+    pmpBandHistory: TMenuItem;
     pmpTransferBandsTo: TMenuItem;
     pmPrintBandsBalance: TMenuItem;
     pmMore: TPopupMenu;
@@ -977,6 +979,7 @@ type
     procedure pmmMarkAllColumnsClick(Sender: TObject);
     procedure pmmUnmarkAllClick(Sender: TObject);
     procedure pmmUnmarkAllColumnsClick(Sender: TObject);
+    procedure pmpBandHistoryClick(Sender: TObject);
     procedure pmPrintBandsBalanceClick(Sender: TObject);
     procedure pmPrintBandsByCarrierClick(Sender: TObject);
     procedure pmPrintBandsByStatusClick(Sender: TObject);
@@ -1388,7 +1391,7 @@ uses
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer,
-  ufrm_quickentry, udlg_selectrecord;
+  ufrm_quickentry, udlg_selectrecord, udlg_bandhistory;
 
 {$R *.lfm}
 
@@ -6750,6 +6753,11 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.pmpBandHistoryClick(Sender: TObject);
+begin
+  AbreForm(TdlgBandHistory, dlgBandHistory);
+end;
+
 procedure TfrmCustomGrid.pmPrintBandsBalanceClick(Sender: TObject);
 begin
   AbreForm(TdlgBandsBalance, dlgBandsBalance);
@@ -9103,7 +9111,8 @@ begin
   dsLink.DataSet.Open;
 
   //GetColumns;
-  gridColumns.Row := gridColumns.Row + 1;
+  gridColumns.MoveColRow(False, gridColumns.Row, gridColumns.Row + 1);
+  //gridColumns.Row := gridColumns.Row + 1;
 
   AddGridColumns(FTableType, DBG);
 end;
@@ -9121,7 +9130,8 @@ begin
   dsLink.DataSet.Open;
 
   //GetColumns;
-  gridColumns.Row := gridColumns.Row - 1;
+  gridColumns.MoveColRow(False, gridColumns.Row, gridColumns.Row - 1);
+  //gridColumns.Row := gridColumns.Row - 1;
 
   AddGridColumns(FTableType, DBG);
 end;
@@ -10853,41 +10863,14 @@ begin
   begin
     case FTableType of
       tbNone: ;
-      //tbUsers: ;
-      //tbRecordHistory: ;
-      //tbRecordVerifications: ;
-      //tbGazetteer: ;
-      //tbSamplingPlots: ;
-      //tbPermanentNets: ;
-      //tbInstitutions: ;
-      //tbPeople: ;
-      //tbProjects: ;
-      //tbProjectTeams: ;
-      //tbPermits: ;
-      //tbTaxonRanks: ;
       //tbZooTaxa: ;
-      //tbBotanicTaxa: ;
-      //tbBands: ;
-      //tbBandHistory: ;
       tbIndividuals:    Add('WHERE (snd.active_status = 1) AND (snd.individual_id = :individual_id)');
       //tbCaptures: ;
-      //tbMolts: ;
-      //tbNests: ;
-      //tbNestOwners: ;
-      //tbNestRevisions: ;
-      //tbEggs: ;
-      //tbMethods: ;
       //tbExpeditions: ;
       //tbSurveys: ;
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
-      //tbWeatherLogs: ;
       tbSightings:      Add('WHERE (snd.active_status = 1) AND (snd.sighting_id = :sighting_id)');
       tbSpecimens:      Add('WHERE (snd.active_status = 1) AND (snd.specimen_id = :specimen_id)');
       //tbSamplePreps: ;
-      //tbSpecimenCollectors: ;
-      //tbImages: ;
-      //tbAudioLibrary: ;
     end;
   end;
 
@@ -10906,24 +10889,36 @@ procedure TfrmCustomGrid.SetColumnsBands(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_BAND_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_BAND_ID).Visible then
+      ColumnByFieldname(COL_BAND_ID).ReadOnly := True;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_ID).Visible then
       ColumnByFieldname(COL_INDIVIDUAL_ID).ReadOnly := True;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldname(COL_INDIVIDUAL_NAME).ReadOnly := True;
 
-    ColumnByFieldName(COL_BAND_SIZE).PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
-    ColumnByFieldName(COL_BAND_STATUS).PickList.AddCommaText(rsBandStatusList);
-    ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandAcquiredFromSupplier);
-    ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandTransferBetweenBanders);
-    ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandLivingBirdBandedByOthers);
-    ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandDeadBirdBandedByOthers);
-    ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandFoundLoose);
-    ColumnByFieldName(COL_BAND_TYPE).PickList.AddCommaText(rsBandTypeList);
+    if DataSource.DataSet.FieldByName(COL_BAND_SIZE).Visible then
+      ColumnByFieldName(COL_BAND_SIZE).PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
+    if DataSource.DataSet.FieldByName(COL_BAND_STATUS).Visible then
+      ColumnByFieldName(COL_BAND_STATUS).PickList.AddCommaText(rsBandStatusList);
+    if DataSource.DataSet.FieldByName(COL_BAND_SOURCE).Visible then
+    begin
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandAcquiredFromSupplier);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandTransferBetweenBanders);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandLivingBirdBandedByOthers);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandDeadBirdBandedByOthers);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandFoundLoose);
+    end;
+    if DataSource.DataSet.FieldByName(COL_BAND_TYPE).Visible then
+      ColumnByFieldName(COL_BAND_TYPE).PickList.AddCommaText(rsBandTypeList);
 
-    ColumnByFieldName(COL_SUPPLIER_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_CARRIER_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_SUPPLIER_NAME).Visible then
+      ColumnByFieldName(COL_SUPPLIER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_REQUESTER_NAME).Visible then
+      ColumnByFieldname(COL_REQUESTER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_CARRIER_NAME).Visible then
+      ColumnByFieldName(COL_CARRIER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
+      ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -10931,10 +10926,13 @@ procedure TfrmCustomGrid.SetColumnsBotanicTaxa(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_TAXON_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_TAXON_ID).Visible then
+      ColumnByFieldname(COL_TAXON_ID).ReadOnly := True;
 
-    ColumnByFieldname(COL_PARENT_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_VALID_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_PARENT_TAXON_NAME).Visible then
+      ColumnByFieldname(COL_PARENT_TAXON_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_VALID_NAME).Visible then
+      ColumnByFieldname(COL_VALID_NAME).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11036,38 +11034,51 @@ procedure TfrmCustomGrid.SetColumnsEggs(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_EGG_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_EGG_ID).Visible then
+      ColumnByFieldname(COL_EGG_ID).ReadOnly := True;
 
     if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
       ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_MEASURE_DATE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_RESEARCHER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_MEASURE_DATE).Visible then
+      ColumnByFieldName(COL_MEASURE_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
+      ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_RESEARCHER_NAME).Visible then
+      ColumnByFieldName(COL_RESEARCHER_NAME).ButtonStyle := cbsEllipsis;
 
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggSpherical);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggElliptical);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggOval);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggPyriform);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggConical);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggBiconical);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggCylindrical);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggLongitudinal);
-    ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggUnknown);
+    if DataSource.DataSet.FieldByName(COL_EGG_SHAPE).Visible then
+    begin
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggSpherical);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggElliptical);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggOval);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggPyriform);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggConical);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggBiconical);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggCylindrical);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggLongitudinal);
+      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggUnknown);
+    end;
 
-    ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggChalky);
-    ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggShiny);
-    ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggGlossy);
-    ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggPitted);
-    ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggUnknown);
+    if DataSource.DataSet.FieldByName(COL_EGGSHELL_TEXTURE).Visible then
+    begin
+      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggChalky);
+      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggShiny);
+      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggGlossy);
+      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggPitted);
+      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggUnknown);
+    end;
 
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSpots);
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggBlotches);
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSquiggles);
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggStreaks);
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggScrawls);
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSpotsSquiggles);
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggBlotchesSquiggles);
-    ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggUnknown);
+    if DataSource.DataSet.FieldByName(COL_EGGSHELL_PATTERN).Visible then
+    begin
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSpots);
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggBlotches);
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSquiggles);
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggStreaks);
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggScrawls);
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSpotsSquiggles);
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggBlotchesSquiggles);
+      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggUnknown);
+    end;
   end;
 end;
 
@@ -11075,12 +11086,15 @@ procedure TfrmCustomGrid.SetColumnsExpeditions(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_EXPEDITION_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_EXPEDITION_ID).Visible then
+      ColumnByFieldname(COL_EXPEDITION_ID).ReadOnly := True;
 
     if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
       ColumnByFieldname(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_START_DATE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_END_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_START_DATE).Visible then
+      ColumnByFieldName(COL_START_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_END_DATE).Visible then
+      ColumnByFieldName(COL_END_DATE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11088,7 +11102,8 @@ procedure TfrmCustomGrid.SetColumnsFeathers(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_FEATHER_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_FEATHER_ID).Visible then
+      ColumnByFieldname(COL_FEATHER_ID).ReadOnly := True;
 
     if DataSource.DataSet.FieldByName(COL_SAMPLE_DATE).Visible then
       ColumnByFieldName(COL_SAMPLE_DATE).ButtonStyle := cbsEllipsis;
@@ -11109,19 +11124,25 @@ procedure TfrmCustomGrid.SetColumnsGazetteer(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_SITE_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_SITE_ID).Visible then
+      ColumnByFieldname(COL_SITE_ID).ReadOnly := True;
 
-    ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionCountry);
-    ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionState);
-    ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionRegion);
-    ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionMunicipality);
-    ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionDistrict);
-    ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionLocality);
+    if DataSource.DataSet.FieldByName(COL_SITE_RANK).Visible then
+    begin
+      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionCountry);
+      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionState);
+      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionRegion);
+      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionMunicipality);
+      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionDistrict);
+      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionLocality);
+    end;
 
     if DataSource.DataSet.FieldByName(COL_PARENT_SITE_NAME).Visible then
       ColumnByFieldname(COL_PARENT_SITE_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
+      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
+      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11185,11 +11206,15 @@ procedure TfrmCustomGrid.SetColumnsInstitutions(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_INSTITUTION_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_INSTITUTION_ID).Visible then
+      ColumnByFieldname(COL_INSTITUTION_ID).ReadOnly := True;
 
-    ColumnByFieldname(COL_COUNTRY_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_STATE_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_MUNICIPALITY_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_COUNTRY_NAME).Visible then
+      ColumnByFieldname(COL_COUNTRY_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_STATE_NAME).Visible then
+      ColumnByFieldname(COL_STATE_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_MUNICIPALITY_NAME).Visible then
+      ColumnByFieldname(COL_MUNICIPALITY_NAME).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11197,7 +11222,8 @@ procedure TfrmCustomGrid.SetColumnsMethods(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_METHOD_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_METHOD_ID).Visible then
+      ColumnByFieldname(COL_METHOD_ID).ReadOnly := True;
   end;
 end;
 
@@ -11207,7 +11233,8 @@ begin
   begin
     //ColumnByFieldname('nest_owner_id').ReadOnly:= True;
 
-    ColumnByFieldName(COL_ROLE).PickList.CommaText := rsNestOwnersRoleList;
+    if DataSource.DataSet.FieldByName(COL_ROLE).Visible then
+      ColumnByFieldName(COL_ROLE).PickList.CommaText := rsNestOwnersRoleList;
 
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
@@ -11218,7 +11245,8 @@ procedure TfrmCustomGrid.SetColumnsNestRevisions(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_NEST_REVISION_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_NEST_REVISION_ID).Visible then
+      ColumnByFieldname(COL_NEST_REVISION_ID).ReadOnly := True;
 
     if DataSource.DataSet.FieldByName(COL_REVISION_DATE).Visible then
       ColumnByFieldName(COL_REVISION_DATE).ButtonStyle := cbsEllipsis;
@@ -11246,8 +11274,10 @@ begin
       ColumnByFieldName(COL_LAST_DATE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
       ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
+      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
+      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
       ColumnByFieldName(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_SUPPORT_PLANT_1_NAME).Visible then
@@ -11257,26 +11287,32 @@ begin
     if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
       ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
 
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeScrape);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeCup);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePlate);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeSphere);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePendent);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePlatform);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeMound);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeBurrow);
-    ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeCavity);
+    if DataSource.DataSet.FieldByName(COL_NEST_SHAPE).Visible then
+    begin
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeScrape);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeCup);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePlate);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeSphere);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePendent);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePlatform);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeMound);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeBurrow);
+      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeCavity);
+    end;
 
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportGround);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportHerbBush);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportBranchFork);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportLeaves);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportLedge);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportRockCliff);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportRavine);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportNestBox);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportAnthropic);
-    ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportOther);
+    if DataSource.DataSet.FieldByName(COL_SUPPORT_TYPE).Visible then
+    begin
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportGround);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportHerbBush);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportBranchFork);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportLeaves);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportLedge);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportRockCliff);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportRavine);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportNestBox);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportAnthropic);
+      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportOther);
+    end;
   end;
 end;
 
@@ -11284,12 +11320,15 @@ procedure TfrmCustomGrid.SetColumnsSamplingPlots(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_SAMPLING_PLOT_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_SAMPLING_PLOT_ID).Visible then
+      ColumnByFieldname(COL_SAMPLING_PLOT_ID).ReadOnly := True;
 
     if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
       ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
+      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
+      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11297,10 +11336,13 @@ procedure TfrmCustomGrid.SetColumnsPeople(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_PERSON_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_PERSON_ID).Visible then
+      ColumnByFieldname(COL_PERSON_ID).ReadOnly := True;
 
-    ColumnByFieldName(COL_GENDER).PickList.AddCommaText(rsGenderList);
-    ColumnByFieldName(COL_TITLE_TREATMENT).PickList.AddCommaText(rsTreatmentList);
+    if DataSource.DataSet.FieldByName(COL_GENDER).Visible then
+      ColumnByFieldName(COL_GENDER).PickList.AddCommaText(rsGenderList);
+    if DataSource.DataSet.FieldByName(COL_TITLE_TREATMENT).Visible then
+      ColumnByFieldName(COL_TITLE_TREATMENT).PickList.AddCommaText(rsTreatmentList);
 
     if DataSource.DataSet.FieldByName(COL_INSTITUTION_NAME).Visible then
       ColumnByFieldname(COL_INSTITUTION_NAME).ButtonStyle := cbsEllipsis;
@@ -11310,8 +11352,10 @@ begin
       ColumnByFieldname(COL_STATE_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_MUNICIPALITY_NAME).Visible then
       ColumnByFieldname(COL_MUNICIPALITY_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_BIRTH_DATE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_DEATH_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_BIRTH_DATE).Visible then
+      ColumnByFieldName(COL_BIRTH_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_DEATH_DATE).Visible then
+      ColumnByFieldName(COL_DEATH_DATE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11319,10 +11363,13 @@ procedure TfrmCustomGrid.SetColumnsPermanentNets(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_PERMANENT_NET_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_PERMANENT_NET_ID).Visible then
+      ColumnByFieldname(COL_PERMANENT_NET_ID).ReadOnly := True;
 
-    ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
+      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
+      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11330,22 +11377,27 @@ procedure TfrmCustomGrid.SetColumnsPermits(var aGrid: TDBGrid);
 begin
   with aGrid.Columns do
   begin
-    ColumnByFieldname(COL_PERMIT_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_PERMIT_ID).Visible then
+      ColumnByFieldname(COL_PERMIT_ID).ReadOnly := True;
 
-    ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_DISPATCH_DATE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_EXPIRE_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
+      ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_DISPATCH_DATE).Visible then
+      ColumnByFieldName(COL_DISPATCH_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_EXPIRE_DATE).Visible then
+      ColumnByFieldName(COL_EXPIRE_DATE).ButtonStyle := cbsEllipsis;
 
-    with ColumnByFieldName(COL_PERMIT_TYPE).PickList do
-    begin
-      Clear;
-      Add(rsPermitBanding);
-      Add(rsPermitCollection);
-      Add(rsPermitResearch);
-      Add(rsPermitEntry);
-      Add(rsPermitTransport);
-      Add(rsPermitOther);
-    end;
+    if DataSource.DataSet.FieldByName(COL_PERMIT_TYPE).Visible then
+      with ColumnByFieldName(COL_PERMIT_TYPE).PickList do
+      begin
+        Clear;
+        Add(rsPermitBanding);
+        Add(rsPermitCollection);
+        Add(rsPermitResearch);
+        Add(rsPermitEntry);
+        Add(rsPermitTransport);
+        Add(rsPermitOther);
+      end;
   end;
 end;
 
@@ -11353,10 +11405,13 @@ procedure TfrmCustomGrid.SetColumnsProjects(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_PROJECT_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_PROJECT_ID).Visible then
+      ColumnByFieldname(COL_PROJECT_ID).ReadOnly := True;
 
-    ColumnByFieldName(COL_START_DATE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_END_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_START_DATE).Visible then
+      ColumnByFieldName(COL_START_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_END_DATE).Visible then
+      ColumnByFieldName(COL_END_DATE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11383,8 +11438,10 @@ begin
       ColumnByFieldname(COL_BREEDING_STATUS).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_SIGHTING_DATE).Visible then
       ColumnByFieldname(COL_SIGHTING_DATE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
+      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
+      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11399,23 +11456,24 @@ begin
       //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
     end;
 
-    with ColumnByFieldName(COL_SAMPLE_TYPE).PickList do
-    begin
-      Clear;
-      Add(rsSpecimenCarcassWhole);
-      Add(rsSpecimenCarcassPartial);
-      Add(rsSpecimenNest);
-      Add(rsSpecimenBones);
-      Add(rsSpecimenEgg);
-      Add(rsSpecimenParasites);
-      Add(rsSpecimenFeathers);
-      Add(rsSpecimenBlood);
-      Add(rsSpecimenClaw);
-      Add(rsSpecimenSwab);
-      Add(rsSpecimenTissues);
-      Add(rsSpecimenFeces);
-      Add(rsSpecimenRegurgite);
-    end;
+    if DataSource.DataSet.FieldByName(COL_SAMPLE_TYPE).Visible then
+      with ColumnByFieldName(COL_SAMPLE_TYPE).PickList do
+      begin
+        Clear;
+        Add(rsSpecimenCarcassWhole);
+        Add(rsSpecimenCarcassPartial);
+        Add(rsSpecimenNest);
+        Add(rsSpecimenBones);
+        Add(rsSpecimenEgg);
+        Add(rsSpecimenParasites);
+        Add(rsSpecimenFeathers);
+        Add(rsSpecimenBlood);
+        Add(rsSpecimenClaw);
+        Add(rsSpecimenSwab);
+        Add(rsSpecimenTissues);
+        Add(rsSpecimenFeces);
+        Add(rsSpecimenRegurgite);
+      end;
 
     if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
       ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
@@ -11427,8 +11485,10 @@ begin
       ColumnByFieldName(COL_NEST_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_EGG_NAME).Visible then
       ColumnByFieldName(COL_EGG_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
+      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
+      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -11436,20 +11496,27 @@ procedure TfrmCustomGrid.SetColumnsSurveys(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_SURVEY_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_SURVEY_ID).Visible then
+      ColumnByFieldname(COL_SURVEY_ID).ReadOnly := True;
 
-    ColumnByFieldName(COL_SURVEY_DATE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldName(COL_METHOD_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_SURVEY_DATE).Visible then
+      ColumnByFieldName(COL_SURVEY_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_METHOD_NAME).Visible then
+      ColumnByFieldName(COL_METHOD_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
       ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_EXPEDITION_NAME).Visible then
       ColumnByFieldname(COL_EXPEDITION_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_NET_STATION_NAME).Visible then
       ColumnByFieldname(COL_NET_STATION_NAME).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_START_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_START_LATITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_END_LONGITUDE).ButtonStyle := cbsEllipsis;
-    ColumnByFieldname(COL_END_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_START_LONGITUDE).Visible then
+      ColumnByFieldname(COL_START_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_START_LATITUDE).Visible then
+      ColumnByFieldname(COL_START_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_END_LONGITUDE).Visible then
+      ColumnByFieldname(COL_END_LONGITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_END_LATITUDE).Visible then
+      ColumnByFieldname(COL_END_LATITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
       ColumnByFieldname(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
   end;
@@ -11459,7 +11526,8 @@ procedure TfrmCustomGrid.SetColumnsTaxonRanks(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_RANK_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_RANK_ID).Visible then
+      ColumnByFieldname(COL_RANK_ID).ReadOnly := True;
   end;
 end;
 
@@ -11467,32 +11535,69 @@ procedure TfrmCustomGrid.SetColumnsVegetation(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_VEGETATION_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_VEGETATION_ID).Visible then
+      ColumnByFieldname(COL_VEGETATION_ID).ReadOnly := True;
 
     if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
       ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
 
-    with ColumnByFieldname(COL_HERBS_DISTRIBUTION).PickList do
-    begin
-      Add(rsDistributionNone);
-      Add(rsDistributionRare);
-      Add(rsDistributionFewSparse);
-      Add(rsDistributionOnePatch);
-      Add(rsDistributionOnePatchFewSparse);
-      Add(rsDistributionManySparse);
-      Add(rsDistributionOnePatchManySparse);
-      Add(rsDistributionFewPatches);
-      Add(rsDistributionFewPatchesSparse);
-      Add(rsDistributionManyPatches);
-      Add(rsDistributionManyPatchesSparse);
-      Add(rsDistributionEvenHighDensity);
-      Add(rsDistributionContinuousFewGaps);
-      Add(rsDistributionContinuousDense);
-      Add(rsDistributionContinuousDenseEdge);
-    end;
-
-    ColumnByFieldname(COL_SHRUBS_DISTRIBUTION).PickList.Assign(ColumnByFieldname(COL_HERBS_DISTRIBUTION).PickList);
-    ColumnByFieldname(COL_TREES_DISTRIBUTION).PickList.Assign(ColumnByFieldname(COL_HERBS_DISTRIBUTION).PickList);
+    if DataSource.DataSet.FieldByName(COL_HERBS_DISTRIBUTION).Visible then
+      with ColumnByFieldname(COL_HERBS_DISTRIBUTION).PickList do
+      begin
+        Add(rsDistributionNone);
+        Add(rsDistributionRare);
+        Add(rsDistributionFewSparse);
+        Add(rsDistributionOnePatch);
+        Add(rsDistributionOnePatchFewSparse);
+        Add(rsDistributionManySparse);
+        Add(rsDistributionOnePatchManySparse);
+        Add(rsDistributionFewPatches);
+        Add(rsDistributionFewPatchesSparse);
+        Add(rsDistributionManyPatches);
+        Add(rsDistributionManyPatchesSparse);
+        Add(rsDistributionEvenHighDensity);
+        Add(rsDistributionContinuousFewGaps);
+        Add(rsDistributionContinuousDense);
+        Add(rsDistributionContinuousDenseEdge);
+      end;
+    if DataSource.DataSet.FieldByName(COL_SHRUBS_DISTRIBUTION).Visible then
+      with ColumnByFieldname(COL_SHRUBS_DISTRIBUTION).PickList do
+      begin
+        Add(rsDistributionNone);
+        Add(rsDistributionRare);
+        Add(rsDistributionFewSparse);
+        Add(rsDistributionOnePatch);
+        Add(rsDistributionOnePatchFewSparse);
+        Add(rsDistributionManySparse);
+        Add(rsDistributionOnePatchManySparse);
+        Add(rsDistributionFewPatches);
+        Add(rsDistributionFewPatchesSparse);
+        Add(rsDistributionManyPatches);
+        Add(rsDistributionManyPatchesSparse);
+        Add(rsDistributionEvenHighDensity);
+        Add(rsDistributionContinuousFewGaps);
+        Add(rsDistributionContinuousDense);
+        Add(rsDistributionContinuousDenseEdge);
+      end;
+    if DataSource.DataSet.FieldByName(COL_TREES_DISTRIBUTION).Visible then
+      with ColumnByFieldname(COL_TREES_DISTRIBUTION).PickList do
+      begin
+        Add(rsDistributionNone);
+        Add(rsDistributionRare);
+        Add(rsDistributionFewSparse);
+        Add(rsDistributionOnePatch);
+        Add(rsDistributionOnePatchFewSparse);
+        Add(rsDistributionManySparse);
+        Add(rsDistributionOnePatchManySparse);
+        Add(rsDistributionFewPatches);
+        Add(rsDistributionFewPatchesSparse);
+        Add(rsDistributionManyPatches);
+        Add(rsDistributionManyPatchesSparse);
+        Add(rsDistributionEvenHighDensity);
+        Add(rsDistributionContinuousFewGaps);
+        Add(rsDistributionContinuousDense);
+        Add(rsDistributionContinuousDenseEdge);
+      end;
   end;
 end;
 
@@ -11500,17 +11605,24 @@ procedure TfrmCustomGrid.SetColumnsWeatherLogs(var aGrid: TDBGrid);
 begin
   with aGrid, Columns do
   begin
-    ColumnByFieldname(COL_WEATHER_ID).ReadOnly:= True;
+    if DataSource.DataSet.FieldByName(COL_WEATHER_ID).Visible then
+      ColumnByFieldname(COL_WEATHER_ID).ReadOnly:= True;
 
-    ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentStart);
-    ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentMiddle);
-    ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentEnd);
+    if DataSource.DataSet.FieldByName(COL_SAMPLE_MOMENT).Visible then
+    begin
+      ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentStart);
+      ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentMiddle);
+      ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentEnd);
+    end;
 
-    ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationNone);
-    ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationFog);
-    ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationMist);
-    ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationDrizzle);
-    ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationRain);
+    if DataSource.DataSet.FieldByName(COL_PRECIPITATION).Visible then
+    begin
+      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationNone);
+      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationFog);
+      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationMist);
+      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationDrizzle);
+      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationRain);
+    end;
   end;
 end;
 
@@ -11553,8 +11665,6 @@ begin
       tbSpecimens:      Add('WHERE (active_status = 1) AND (specimen_id = :specimen_id)');
       //tbSamplePreps: ;
       //tbSpecimenCollectors: ;
-      //tbImages: ;
-      //tbAudioLibrary: ;
     end;
   end;
 
@@ -11631,6 +11741,8 @@ begin
   sbMoreOptions.Visible := True;
 
   pmpTransferBandsTo.Visible := True;
+  pmpBandHistory.Visible := True;
+  pmgBandHistory.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridBotanicTaxa;
@@ -12051,18 +12163,6 @@ begin
   FSearch.DataSet := DMG.qSurveys;
   AddSortedField(COL_SURVEY_DATE, sdDescending);
 
-  //lblChildTag1.Caption := rsTitleTeam;
-  //lblChildTag2.Caption := rsTitleNetsEffort;
-  //lblChildTag3.Caption := rsTitleWeather;
-  //lblChildTag4.Caption := rsTitleCaptures;
-  //lblChildTag5.Caption := rsTitleSightings;
-  //lblChildTag6.Caption := rsTitleVegetation;
-  //pChildTag1.Visible := True;
-  //pChildTag2.Visible := True;
-  //pChildTag3.Visible := True;
-  //pChildTag4.Visible := True;
-  //pChildTag5.Visible := True;
-  //pChildTag6.Visible := True;
   nbChilds.PageIndex := 0;
   if not Assigned(DMS) then
     DMS := TDMS.Create(nil);

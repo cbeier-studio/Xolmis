@@ -431,6 +431,7 @@ const
   COL_ORDER_NUMBER = 'order_number';
   COL_SENDER_ID = 'sender_id';
   COL_REQUESTER_ID = 'requester_id';
+  COL_REQUESTER_NAME = 'requester_name';
 
   // Individuals columns
 const

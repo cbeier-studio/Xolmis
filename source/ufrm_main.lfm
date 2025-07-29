@@ -9,7 +9,6 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.0.0.4'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -9361,15 +9360,6 @@ object frmMain: TfrmMain
       Caption = '&Individuals'
       object mmiBands: TMenuItem
         Action = actOpenBands
-      end
-      object mmiNewBandsBatch: TMenuItem
-        Action = actNewBands
-      end
-      object mmiBandsHistory: TMenuItem
-        Action = actOpenBandHistory
-      end
-      object mmiBandsBalance: TMenuItem
-        Action = actViewBandsBalance
       end
       object Separator17: TMenuItem
         Caption = '-'

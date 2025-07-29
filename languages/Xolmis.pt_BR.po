@@ -13359,6 +13359,11 @@ msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
 msgid "Adjust columns' &width to content"
 msgstr "Ajustar co&lunas ao conteúdo"
 
+#: tfrmcustomgrid.pmgbandhistory.caption
+msgctxt "tfrmcustomgrid.pmgbandhistory.caption"
+msgid "Band history"
+msgstr "Histórico da anilha"
+
 #: tfrmcustomgrid.pmgdecreaserowheight.caption
 msgid "De&crease"
 msgstr "Di&minuir"
@@ -13450,6 +13455,11 @@ msgstr "&Desmarcar todos"
 msgctxt "tfrmcustomgrid.pmmunmarkallcolumns.caption"
 msgid "&Unmark all"
 msgstr "&Desmarcar todos"
+
+#: tfrmcustomgrid.pmpbandhistory.caption
+msgctxt "tfrmcustomgrid.pmpbandhistory.caption"
+msgid "Band history"
+msgstr "Histórico da anilha"
 
 #: tfrmcustomgrid.pmprintbands.caption
 msgctxt "tfrmcustomgrid.pmprintbands.caption"

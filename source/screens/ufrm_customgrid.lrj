@@ -266,6 +266,7 @@
 {"hash":146640424,"name":"tfrmcustomgrid.pmgrefresh.caption","sourcebytes":[38,82,101,102,114,101,115,104],"value":"&Refresh"},
 {"hash":254428355,"name":"tfrmcustomgrid.pmgrecordverifications.caption","sourcebytes":[82,101,99,111,114,100,32,38,118,101,114,105,102,105,99,97,116,105,111,110,115],"value":"Record &verifications"},
 {"hash":90352873,"name":"tfrmcustomgrid.pmgrecordhistory.caption","sourcebytes":[82,101,99,111,114,100,32,38,104,105,115,116,111,114,121],"value":"Record &history"},
+{"hash":193130745,"name":"tfrmcustomgrid.pmgbandhistory.caption","sourcebytes":[66,97,110,100,32,104,105,115,116,111,114,121],"value":"Band history"},
 {"hash":179055749,"name":"tfrmcustomgrid.pmgdel.caption","sourcebytes":[38,68,101,108,101,116,101],"value":"&Delete"},
 {"hash":113191780,"name":"tfrmcustomgrid.pmgrowheight.caption","sourcebytes":[82,38,111,119,32,104,101,105,103,104,116],"value":"R&ow height"},
 {"hash":130846868,"name":"tfrmcustomgrid.pmgdefaultrowheight.caption","sourcebytes":[68,101,38,102,97,117,108,116],"value":"De&fault"},
@@ -398,5 +399,6 @@
 {"hash":146640424,"name":"tfrmcustomgrid.pmdrefreshdocs.caption","sourcebytes":[38,82,101,102,114,101,115,104],"value":"&Refresh"},
 {"hash":14781075,"name":"tfrmcustomgrid.pmadddocument.caption","sourcebytes":[65,100,100,32,38,100,111,99,117,109,101,110,116,115],"value":"Add &documents"},
 {"hash":103639531,"name":"tfrmcustomgrid.pmaddlink.caption","sourcebytes":[65,100,100,32,38,108,105,110,107],"value":"Add &link"},
-{"hash":161021646,"name":"tfrmcustomgrid.pmptransferbandsto.caption","sourcebytes":[84,114,97,110,115,102,101,114,32,98,97,110,100,115,32,116,111,46,46,46],"value":"Transfer bands to..."}
+{"hash":161021646,"name":"tfrmcustomgrid.pmptransferbandsto.caption","sourcebytes":[84,114,97,110,115,102,101,114,32,98,97,110,100,115,32,116,111,46,46,46],"value":"Transfer bands to..."},
+{"hash":193130745,"name":"tfrmcustomgrid.pmpbandhistory.caption","sourcebytes":[66,97,110,100,32,104,105,115,116,111,114,121],"value":"Band history"}
 ]}

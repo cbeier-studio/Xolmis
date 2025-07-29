@@ -413,7 +413,7 @@ object DMG: TDMG
     end
     object qBandsrequester_name: TStringField
       DisplayLabel = 'Requester'
-      DisplayWidth = 50
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'requester_name'
       Index = 12
@@ -436,7 +436,7 @@ object DMG: TDMG
     end
     object qBandscarrier_name: TStringField
       DisplayLabel = 'Carrier'
-      DisplayWidth = 50
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'carrier_name'
       Index = 14
@@ -459,7 +459,7 @@ object DMG: TDMG
     end
     object qBandsproject_name: TStringField
       DisplayLabel = 'Project'
-      DisplayWidth = 60
+      DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'project_name'
       Index = 16
@@ -482,7 +482,7 @@ object DMG: TDMG
     end
     object qBandsindividual_name: TStringField
       DisplayLabel = 'Individual'
-      DisplayWidth = 50
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'individual_name'
       Index = 18
@@ -506,7 +506,7 @@ object DMG: TDMG
     end
     object qBandsnotes: TMemoField
       DisplayLabel = 'Notes'
-      DisplayWidth = 80
+      DisplayWidth = 60
       FieldKind = fkData
       FieldName = 'notes'
       Index = 20

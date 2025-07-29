@@ -115,9 +115,6 @@ type
     mmsMethods: TMenuItem;
     mmsSpecimens: TMenuItem;
     mmiBands: TMenuItem;
-    mmiNewBandsBatch: TMenuItem;
-    mmiBandsHistory: TMenuItem;
-    mmiBandsBalance: TMenuItem;
     mmSampling: TMenuItem;
     mmiIndividuals: TMenuItem;
     mmiCaptures: TMenuItem;
