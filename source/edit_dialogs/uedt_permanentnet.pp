@@ -102,7 +102,7 @@ end;
 
 procedure TedtPermanentNet.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtPermanentNet.eLongitudeKeyPress(Sender: TObject; var Key: char);

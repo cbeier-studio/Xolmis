@@ -98,7 +98,7 @@
         <Item72 Value="tfrmcustomgrid.lblrecyclewarning.caption"/>
         <Item73 Value="tfrmcustomgrid.txtProjectBalance.caption"/>
         <Item74 Value="tfrmcustomgrid.txtRubricBalance.caption"/>
-        <Item75 Value="tdlgGeoEditor.pDecimal.caption"/>
+        <Item75 Value="tdlgGeoAssist.pDecimal.caption"/>
         <Item76 Value="tdlgImportCaptures.lblTitleImportFinished.Caption"/>
         <Item77 Value="tdlgImportCaptures.lblSubtitleImportFinished.Caption"/>
         <Item78 Value="tcfgDatabase.vtConnections.Columns[0].Text"/>
@@ -760,9 +760,9 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\udlg_geoeditor.pp"/>
+        <Filename Value="dialogs\udlg_geoassist.pp"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="dlgGeoEditor"/>
+        <ComponentName Value="dlgGeoAssist"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

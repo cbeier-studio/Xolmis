@@ -259,7 +259,7 @@ end;
 
 procedure TedtImageInfo.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtImageInfo.eLongitudeKeyPress(Sender: TObject; var Key: char);

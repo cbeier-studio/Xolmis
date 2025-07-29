@@ -1,4 +1,4 @@
-{ Xolmis Geo Editor dialog
+{ Xolmis GeoAssist dialog
 
   Copyright (C) 2023 Christian Beier <hello@christianbeier.studio>
 
@@ -14,7 +14,7 @@
   see <https://www.gnu.org/licenses/>.
 }
 
-unit udlg_geoeditor;
+unit udlg_geoassist;
 
 {$mode objfpc}{$H+}
 
@@ -27,9 +27,9 @@ uses
 
 type
 
-  { TdlgGeoEditor }
+  { TdlgGeoAssist }
 
-  TdlgGeoEditor = class(TForm)
+  TdlgGeoAssist = class(TForm)
     cbLatHem: TComboBox;
     cbLongHem: TComboBox;
     dsGeoBank: TDataSource;
@@ -91,7 +91,7 @@ type
   end;
 
 var
-  dlgGeoEditor: TdlgGeoEditor;
+  dlgGeoAssist: TdlgGeoAssist;
 
 implementation
 
@@ -100,9 +100,9 @@ uses
 
 {$R *.lfm}
 
-{ TdlgGeoEditor }
+{ TdlgGeoAssist }
 
-procedure TdlgGeoEditor.longSecKeyPress(Sender: TObject; var Key: char);
+procedure TdlgGeoAssist.longSecKeyPress(Sender: TObject; var Key: char);
 var
   s, d: String;
   // f: Extended;
@@ -124,7 +124,7 @@ begin
     Key := #0;
 end;
 
-procedure TdlgGeoEditor.mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+procedure TdlgGeoAssist.mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
 const
   R = 8;
 var
@@ -174,7 +174,7 @@ begin
   ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
 end;
 
-procedure TdlgGeoEditor.PGChange(Sender: TObject);
+procedure TdlgGeoAssist.PGChange(Sender: TObject);
 begin
   FChangeZoom := True;
   RefreshMap;
@@ -182,7 +182,7 @@ begin
   UpdateButtons;
 end;
 
-procedure TdlgGeoEditor.RefreshMap;
+procedure TdlgGeoAssist.RefreshMap;
 var
   poi: TGpsPoint;
   rp, rpsel: TRealPoint;
@@ -264,14 +264,14 @@ begin
   end;
 end;
 
-procedure TdlgGeoEditor.sbCancelClick(Sender: TObject);
+procedure TdlgGeoAssist.sbCancelClick(Sender: TObject);
 begin
   GravaStat(Name, 'sbCancel', 'click');
   // Cancelar
   ModalResult := mrCancel;
 end;
 
-procedure TdlgGeoEditor.sbOKClick(Sender: TObject);
+procedure TdlgGeoAssist.sbOKClick(Sender: TObject);
 begin
   GravaStat(Name, 'sbOK', 'click');
 
@@ -285,7 +285,7 @@ begin
   ModalResult := mrOK;
 end;
 
-procedure TdlgGeoEditor.SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
+procedure TdlgGeoAssist.SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
 begin
   if ControlWidth > Self.Width then
     Self.Width := ControlWidth;
@@ -301,12 +301,12 @@ begin
     Self.Top := Y + ControlHeight;
 end;
 
-procedure TdlgGeoEditor.UpdateButtons;
+procedure TdlgGeoAssist.UpdateButtons;
 begin
   sbOK.Enabled := (FDecPoint.X <> 0) and (FDecPoint.Y <> 0);
 end;
 
-procedure TdlgGeoEditor.ApplyDarkMode;
+procedure TdlgGeoAssist.ApplyDarkMode;
 begin
   pLong.Background.Color := clCardBGDefaultDark;
   pLong.Border.Color := clSystemSolidNeutralFGDark;
@@ -316,7 +316,7 @@ begin
   pDecimal.Border.Color := clSystemSolidNeutralFGDark;
 end;
 
-procedure TdlgGeoEditor.ConvertCoordinate;
+procedure TdlgGeoAssist.ConvertCoordinate;
 begin
   FDmsPoint.X.Degrees := elongDeg.Value;
   FDmsPoint.X.Minutes := elongMin.Value;
@@ -340,7 +340,7 @@ begin
   FChangeZoom := True;
 end;
 
-procedure TdlgGeoEditor.eLongDegEditingDone(Sender: TObject);
+procedure TdlgGeoAssist.eLongDegEditingDone(Sender: TObject);
 begin
   ConvertCoordinate;
 
@@ -349,7 +349,7 @@ begin
   UpdateButtons;
 end;
 
-procedure TdlgGeoEditor.FormKeyPress(Sender: TObject; var Key: char);
+procedure TdlgGeoAssist.FormKeyPress(Sender: TObject; var Key: char);
 begin
   { FECHAR = Esc }
   if (Key = #27) then
@@ -369,7 +369,7 @@ begin
   end;
 end;
 
-procedure TdlgGeoEditor.FormShow(Sender: TObject);
+procedure TdlgGeoAssist.FormShow(Sender: TObject);
 begin
   //{$IFDEF MSWINDOWS}
   //SetRoundedCorners(Self.Handle, rcSmall);
@@ -416,7 +416,7 @@ begin
   UpdateButtons;
 end;
 
-procedure TdlgGeoEditor.gridBankCellClick(Column: TColumn);
+procedure TdlgGeoAssist.gridBankCellClick(Column: TColumn);
 begin
   FDecPoint.X := dsGeoBank.DataSet.FieldByName('longitude').AsFloat;
   FDecPoint.Y := dsGeoBank.DataSet.FieldByName('latitude').AsFloat;

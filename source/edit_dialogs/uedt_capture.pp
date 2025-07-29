@@ -389,7 +389,7 @@ end;
 
 procedure TedtCapture.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtCapture.eCycleCodeButtonClick(Sender: TObject);

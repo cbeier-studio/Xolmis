@@ -119,7 +119,7 @@ end;
 
 procedure TedtVegetation.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtVegetation.eLongitudeKeyPress(Sender: TObject; var Key: char);

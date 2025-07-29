@@ -150,7 +150,7 @@ end;
 
 procedure TedtSamplingPlot.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtSamplingPlot.eLongitudeKeyPress(Sender: TObject; var Key: char);

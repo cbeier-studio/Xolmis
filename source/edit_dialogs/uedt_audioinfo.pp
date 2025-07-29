@@ -243,7 +243,7 @@ end;
 
 procedure TedtAudioInfo.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), dsLink.DataSet, COL_LONGITUDE, COL_LATITUDE);
+  GeoAssistDlg(TControl(Sender), dsLink.DataSet, COL_LONGITUDE, COL_LATITUDE);
 end;
 
 procedure TedtAudioInfo.eLongitudeKeyPress(Sender: TObject; var Key: char);

@@ -3249,11 +3249,11 @@ begin
 
     // Open GeoAssist dialog
     if (FieldName = COL_LONGITUDE) or (FieldName = COL_LATITUDE) then
-      GeoEditorDlg(InplaceEditor, DataSource.DataSet, COL_LONGITUDE, COL_LATITUDE);
+      GeoAssistDlg(InplaceEditor, DataSource.DataSet, COL_LONGITUDE, COL_LATITUDE);
     if (FieldName = COL_START_LONGITUDE) or (FieldName = COL_START_LATITUDE) then
-      GeoEditorDlg(InplaceEditor, DataSource.DataSet, COL_START_LONGITUDE, COL_START_LATITUDE);
+      GeoAssistDlg(InplaceEditor, DataSource.DataSet, COL_START_LONGITUDE, COL_START_LATITUDE);
     if (FieldName = COL_END_LONGITUDE) or (FieldName = COL_END_LATITUDE) then
-      GeoEditorDlg(InplaceEditor, DataSource.DataSet, COL_END_LONGITUDE, COL_END_LATITUDE);
+      GeoAssistDlg(InplaceEditor, DataSource.DataSet, COL_END_LONGITUDE, COL_END_LATITUDE);
   end;
 end;
 

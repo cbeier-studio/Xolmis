@@ -7736,51 +7736,52 @@ msgctxt "tdlgfindtaxon.sboptions.hint"
 msgid "Options"
 msgstr ""
 
-#: tdlggeoeditor.caption
-msgid "Coordinates editor"
+#: tdlggeoassist.caption
+msgid "GeoAssist"
 msgstr ""
 
-#: tdlggeoeditor.gridbank.columns[0].title.caption
-msgctxt "tdlggeoeditor.gridbank.columns[0].title.caption"
+#: tdlggeoassist.gridbank.columns[0].title.caption
+msgctxt "tdlggeoassist.gridbank.columns[0].title.caption"
 msgid "Name"
 msgstr ""
 
-#: tdlggeoeditor.gridbank.columns[1].title.caption
-msgctxt "tdlggeoeditor.gridbank.columns[1].title.caption"
+#: tdlggeoassist.gridbank.columns[1].title.caption
+msgctxt "tdlggeoassist.gridbank.columns[1].title.caption"
 msgid "Longitude"
 msgstr ""
 
-#: tdlggeoeditor.gridbank.columns[2].title.caption
-msgctxt "tdlggeoeditor.gridbank.columns[2].title.caption"
+#: tdlggeoassist.gridbank.columns[2].title.caption
+msgctxt "tdlggeoassist.gridbank.columns[2].title.caption"
 msgid "Latitude"
 msgstr ""
 
-#: tdlggeoeditor.lbllatitude.caption
-msgctxt "tdlggeoeditor.lbllatitude.caption"
+#: tdlggeoassist.lbllatitude.caption
+msgctxt "tdlggeoassist.lbllatitude.caption"
 msgid "Latitude:"
 msgstr ""
 
-#: tdlggeoeditor.lbllongitude.caption
-msgctxt "tdlggeoeditor.lbllongitude.caption"
+#: tdlggeoassist.lbllongitude.caption
+msgctxt "tdlggeoassist.lbllongitude.caption"
 msgid "Longitude:"
 msgstr ""
 
-#: tdlggeoeditor.sbcancel.caption
-msgctxt "tdlggeoeditor.sbcancel.caption"
+#: tdlggeoassist.sbcancel.caption
+msgctxt "tdlggeoassist.sbcancel.caption"
 msgid "Cancel"
 msgstr ""
 
-#: tdlggeoeditor.sbok.caption
-msgctxt "tdlggeoeditor.sbok.caption"
+#: tdlggeoassist.sbok.caption
+msgctxt "tdlggeoassist.sbok.caption"
 msgid "Apply"
 msgstr ""
 
-#: tdlggeoeditor.tabconvert.caption
-msgctxt "tdlggeoeditor.tabconvert.caption"
+#: tdlggeoassist.tabconvert.caption
+msgctxt "tdlggeoassist.tabconvert.caption"
 msgid "Convert"
 msgstr ""
 
-#: tdlggeoeditor.tabimported.caption
+#: tdlggeoassist.tabimported.caption
+msgctxt "tdlggeoassist.tabimported.caption"
 msgid "Imported"
 msgstr ""
 

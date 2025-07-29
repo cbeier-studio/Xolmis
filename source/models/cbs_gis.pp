@@ -256,20 +256,20 @@ var
   procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView);
 
   { Dialogs }
-  function GeoEditorDlg(aDMS: String; aAxis: TMapAxis; aControl: TControl;
+  function GeoAssistDlg(aDMS: String; aAxis: TMapAxis; aControl: TControl;
     var aDecimal: Extended): Boolean; overload;
-  function GeoEditorDlg(aDMS: TDMS; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended)
+  function GeoAssistDlg(aDMS: TDMS; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended)
     : Boolean; overload;
-  function GeoEditorDlg(aControl: TControl; aDataSet: TDataSet; LongitudeField, LatitudeField: String)
+  function GeoAssistDlg(aControl: TControl; aDataSet: TDataSet; LongitudeField, LatitudeField: String)
     : Boolean; overload;
-  function GeoEditorDlg(aControl: TControl; LongitudeEdit, LatitudeEdit: TCustomEditButton)
+  function GeoAssistDlg(aControl: TControl; LongitudeEdit, LatitudeEdit: TCustomEditButton)
     : Boolean; overload;
 
 implementation
 
 uses
   cbs_locale, cbs_global, cbs_users, cbs_conversions, cbs_validations, cbs_datacolumns, cbs_setparam,
-  udm_main, udlg_geoeditor;
+  udm_main, udlg_geoassist;
 
 procedure InitSitePropsDict;
 begin
@@ -1090,17 +1090,17 @@ begin
 
 end;
 
-function GeoEditorDlg(aDMS: String; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended): Boolean;
+function GeoAssistDlg(aDMS: String; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended): Boolean;
 //var
 //  PControl: TPoint;
 begin
   Result := False;
   if aAxis = maLatitude then
-    LogEvent(leaOpen, 'GeoEditor (Latitude)')
+    LogEvent(leaOpen, 'GeoAssist (Latitude)')
   else
-    LogEvent(leaOpen, 'GeoEditor (Longitude)');
-  dlgGeoEditor := TdlgGeoEditor.Create(nil);
-  with dlgGeoEditor do
+    LogEvent(leaOpen, 'GeoAssist (Longitude)');
+  dlgGeoAssist := TdlgGeoAssist.Create(nil);
+  with dlgGeoAssist do
   try
     Axis := aAxis;
     Linha := aDMS;
@@ -1112,23 +1112,23 @@ begin
       Result := True;
     end;
   finally
-    FreeAndNil(dlgGeoEditor);
-    LogEvent(leaClose, 'GeoEditor');
+    FreeAndNil(dlgGeoAssist);
+    LogEvent(leaClose, 'GeoAssist');
   end;
 end;
 
-function GeoEditorDlg(aDMS: TDMS; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended): Boolean;
+function GeoAssistDlg(aDMS: TDMS; aAxis: TMapAxis; aControl: TControl; var aDecimal: Extended): Boolean;
 //var
 //  PControl: TPoint;
 begin
   Result := False;
   if aAxis = maLatitude then
-    LogEvent(leaOpen, 'GeoEditor (Latitude)')
+    LogEvent(leaOpen, 'GeoAssist (Latitude)')
   else
-    LogEvent(leaOpen, 'GeoEditor (Longitude)');
+    LogEvent(leaOpen, 'GeoAssist (Longitude)');
 
-  dlgGeoEditor := TdlgGeoEditor.Create(nil);
-  with dlgGeoEditor do
+  dlgGeoAssist := TdlgGeoAssist.Create(nil);
+  with dlgGeoAssist do
   try
     Axis := aAxis;
     Linha := '';
@@ -1142,20 +1142,20 @@ begin
       Result := True;
     end;
   finally
-    FreeAndNil(dlgGeoEditor);
-    LogEvent(leaClose, 'GeoEditor');
+    FreeAndNil(dlgGeoAssist);
+    LogEvent(leaClose, 'GeoAssist');
   end;
 end;
 
-function GeoEditorDlg(aControl: TControl; aDataSet: TDataSet; LongitudeField, LatitudeField: String): Boolean;
+function GeoAssistDlg(aControl: TControl; aDataSet: TDataSet; LongitudeField, LatitudeField: String): Boolean;
 //var
 //  PControl: TPoint;
 begin
   Result := False;
-  LogEvent(leaOpen, 'GeoEditor');
+  LogEvent(leaOpen, 'GeoAssist');
 
-  dlgGeoEditor := TdlgGeoEditor.Create(nil);
-  with dlgGeoEditor do
+  dlgGeoAssist := TdlgGeoAssist.Create(nil);
+  with dlgGeoAssist do
   try
     PointStr := EmptyStr;
     DecimalPoint.FromString(aDataSet.FieldByName(LongitudeField).AsString + '; ' +
@@ -1176,18 +1176,18 @@ begin
       Result := True;
     end;
   finally
-    FreeAndNil(dlgGeoEditor);
-    LogEvent(leaClose, 'GeoEditor');
+    FreeAndNil(dlgGeoAssist);
+    LogEvent(leaClose, 'GeoAssist');
   end;
 end;
 
-function GeoEditorDlg(aControl: TControl; LongitudeEdit, LatitudeEdit: TCustomEditButton): Boolean;
+function GeoAssistDlg(aControl: TControl; LongitudeEdit, LatitudeEdit: TCustomEditButton): Boolean;
 begin
   Result := False;
-  LogEvent(leaOpen, 'GeoEditor');
+  LogEvent(leaOpen, 'GeoAssist');
 
-  dlgGeoEditor := TdlgGeoEditor.Create(nil);
-  with dlgGeoEditor do
+  dlgGeoAssist := TdlgGeoAssist.Create(nil);
+  with dlgGeoAssist do
   try
     PointStr := EmptyStr;
     DecimalPoint.FromString(LongitudeEdit.Text + '; ' + LatitudeEdit.Text);
@@ -1207,8 +1207,8 @@ begin
       Result := True;
     end;
   finally
-    FreeAndNil(dlgGeoEditor);
-    LogEvent(leaClose, 'GeoEditor');
+    FreeAndNil(dlgGeoAssist);
+    LogEvent(leaClose, 'GeoAssist');
   end;
 end;
 

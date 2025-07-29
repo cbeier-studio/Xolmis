@@ -259,7 +259,7 @@ end;
 
 procedure TedtSpecimen.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtSpecimen.eLongitudeKeyPress(Sender: TObject; var Key: char);

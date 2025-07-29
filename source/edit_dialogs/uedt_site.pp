@@ -206,7 +206,7 @@ end;
 
 procedure TedtSite.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtSite.eNameEditingDone(Sender: TObject);

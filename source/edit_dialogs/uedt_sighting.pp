@@ -295,7 +295,7 @@ end;
 
 procedure TedtSighting.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtSighting.eLongitudeKeyPress(Sender: TObject; var Key: char);

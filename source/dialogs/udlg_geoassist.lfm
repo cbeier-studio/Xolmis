@@ -1,4 +1,4 @@
-object dlgGeoEditor: TdlgGeoEditor
+object dlgGeoAssist: TdlgGeoAssist
   Left = 352
   Height = 333
   Top = 33
@@ -6,7 +6,7 @@ object dlgGeoEditor: TdlgGeoEditor
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
-  Caption = 'Coordinates editor'
+  Caption = 'GeoAssist'
   ClientHeight = 333
   ClientWidth = 751
   Constraints.MinHeight = 205

@@ -231,7 +231,7 @@ end;
 
 procedure TedtSurvey.eEndLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eEndLongitude, eEndLatitude);
+  GeoAssistDlg(TControl(Sender), eEndLongitude, eEndLatitude);
 end;
 
 procedure TedtSurvey.eExpeditionButtonClick(Sender: TObject);
@@ -304,7 +304,7 @@ end;
 
 procedure TedtSurvey.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtSurvey.eLongitudeKeyPress(Sender: TObject; var Key: char);

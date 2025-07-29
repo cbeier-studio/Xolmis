@@ -1,0 +1,13 @@
+{"version":1,"strings":[
+{"hash":59436388,"name":"tdlggeoassist.caption","sourcebytes":[71,101,111,65,115,115,105,115,116],"value":"GeoAssist"},
+{"hash":4749113,"name":"tdlggeoassist.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tdlggeoassist.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":174443732,"name":"tdlggeoassist.tabconvert.caption","sourcebytes":[67,111,110,118,101,114,116],"value":"Convert"},
+{"hash":235834570,"name":"tdlggeoassist.lbllongitude.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58],"value":"Longitude:"},
+{"hash":185329674,"name":"tdlggeoassist.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58],"value":"Latitude:"},
+{"hash":63963136,"name":"tdlggeoassist.pdecimal.caption","sourcebytes":[48,44,48,48,48,48,48,48,48,48,59,32,48,44,48,48,48,48,48,48,48,48],"value":"0,00000000; 0,00000000"},
+{"hash":74882996,"name":"tdlggeoassist.tabimported.caption","sourcebytes":[73,109,112,111,114,116,101,100],"value":"Imported"},
+{"hash":346165,"name":"tdlggeoassist.gridbank.columns[0].title.caption","sourcebytes":[78,97,109,101],"value":"Name"},
+{"hash":81848517,"name":"tdlggeoassist.gridbank.columns[1].title.caption","sourcebytes":[76,111,110,103,105,116,117,100,101],"value":"Longitude"},
+{"hash":145800837,"name":"tdlggeoassist.gridbank.columns[2].title.caption","sourcebytes":[76,97,116,105,116,117,100,101],"value":"Latitude"}
+]}

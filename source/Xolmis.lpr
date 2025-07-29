@@ -84,7 +84,7 @@ uses
   udlg_connect,
   udlg_find,
   udlg_findtaxon,
-  udlg_geoeditor,
+  udlg_geoassist,
   udlg_importnests,
   udlg_login,
   udlg_plantminer,

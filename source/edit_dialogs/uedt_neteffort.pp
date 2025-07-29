@@ -194,7 +194,7 @@ end;
 
 procedure TedtNetEffort.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoEditorDlg(TControl(Sender), eLongitude, eLatitude);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtNetEffort.eLongitudeKeyPress(Sender: TObject; var Key: char);
