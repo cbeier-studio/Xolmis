@@ -13765,14 +13765,6 @@ msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "&Refresh"
 msgstr "Atuali&zar"
 
-#: tfrmcustomgrid.pmvaddverification.caption
-msgid "&Add record verification"
-msgstr "&Adicionar verificação do registro"
-
-#: tfrmcustomgrid.pmvviewverifications.caption
-msgid "&View record verifications"
-msgstr "&Visualizar verificações do registro"
-
 #: tfrmcustomgrid.rbescapedall.caption
 msgctxt "tfrmcustomgrid.rbescapedall.caption"
 msgid "All"
@@ -15654,3 +15646,4 @@ msgstr "Cancelar"
 msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
+

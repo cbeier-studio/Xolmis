@@ -13770,14 +13770,6 @@ msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "&Refresh"
 msgstr ""
 
-#: tfrmcustomgrid.pmvaddverification.caption
-msgid "&Add record verification"
-msgstr ""
-
-#: tfrmcustomgrid.pmvviewverifications.caption
-msgid "&View record verifications"
-msgstr ""
-
 #: tfrmcustomgrid.rbescapedall.caption
 msgctxt "tfrmcustomgrid.rbescapedall.caption"
 msgid "All"

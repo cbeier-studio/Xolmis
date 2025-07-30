@@ -38,6 +38,7 @@ type
   function GetRankFromTaxon(aTaxonKey: Integer): Integer;
   function GetRank(const aKey: Integer): TZooRank;
   function GetProjectBalance(const aProjectId: Integer): Double;
+  function GetProjectTotalBudget(const aProjectId: Integer): Double;
   function GetRubricBalance(const aRubricId: Integer): Double;
   function GetNextCollectorSeq(aSpecimenId: Integer): Integer;
   function GetRecordVerification(aTableName: String; aRecordId: Integer; out ProblemsCount: Integer): TRecordReviewStatus;
@@ -512,6 +513,38 @@ begin
     Open;
     if RecordCount > 0 then
       Result := FieldByName('total_balance').AsFloat;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetProjectTotalBudget(const aProjectId: Integer): Double;
+var
+  Qry: TSQLQuery;
+begin
+  Result := 0.0;
+
+  if aProjectId = 0 then
+    Exit;
+
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT');
+    Add('    pb.project_id,');
+    Add('    SUM(pb.amount) AS total_budget');
+    Add('FROM project_budgets AS pb');
+    Add('LEFT JOIN project_expenses AS px ON pb.project_id = px.project_id AND pb.budget_id = px.budget_id');
+    Add('WHERE pb.project_id = :project_id');
+    Add('GROUP BY pb.project_id');
+    ParamByName('project_id').AsInteger := aProjectId;
+    Open;
+    if RecordCount > 0 then
+      Result := FieldByName('total_budget').AsFloat;
     Close;
   finally
     FreeAndNil(Qry);

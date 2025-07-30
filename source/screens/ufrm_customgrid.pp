@@ -2051,7 +2051,6 @@ begin
   pmRecycle.Images := iButtonsDark;
   pmMark.Images := iButtonsDark;
   pmMarkColumns.Images := iButtonsDark;
-  pmVerifications.Images := iButtonsDark;
   pmImages.Images := iButtonsDark;
   pmAudios.Images := iButtonsDark;
   pmDocs.Images := iButtonsDark;
@@ -12577,6 +12576,9 @@ begin
   TimerUpdate.Enabled := False;
   aTotalProblems := 0;
 
+  if (Closing) then
+    Exit;
+
   case nbChilds.PageIndex of
     0: DS := dsLink1.DataSet;
     1: DS := dsLink2.DataSet;
@@ -12622,6 +12624,9 @@ var
 begin
   TimerUpdate.Enabled := False;
   aTotalProblems := 0;
+
+  if (Closing) then
+    Exit;
 
   DS := dsLink.DataSet;
   aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
@@ -13185,11 +13190,18 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateChildRightPanel;
+var
+  aProjectId, aRubricId: Integer;
 begin
+  aProjectId := dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger;
+  aRubricId := dsLink4.DataSet.FieldByName(COL_BUDGET_ID).AsInteger;
+
   if FTableType = tbProjects then
   begin
-    txtProjectBalance.Caption := FormatFloat(maskTwoDecimal, GetProjectBalance(dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger));
-    txtRubricBalance.Caption := FormatFloat(maskTwoDecimal, GetRubricBalance(dsLink4.DataSet.FieldByName(COL_BUDGET_ID).AsInteger));
+    txtProjectBalance.Caption := Format('%s / %s', [FormatFloat(maskTwoDecimal, GetProjectBalance(aProjectId)),
+      FormatFloat(maskTwoDecimal, GetProjectTotalBudget(aProjectId))]);
+    txtRubricBalance.Caption := Format('%s / %s', [FormatFloat(maskTwoDecimal, GetRubricBalance(aRubricId)),
+      FormatFloat(maskTwoDecimal, dsLink4.DataSet.FieldByName(COL_AMOUNT).AsFloat)]);
   end;
 end;
 
