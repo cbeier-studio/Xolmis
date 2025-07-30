@@ -11,7 +11,6 @@ object edtCapture: TedtCapture
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -89,7 +88,7 @@ object edtCapture: TedtCapture
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1106
+      Height = 1109
       Top = 0
       Width = 775
       Align = alTop
@@ -97,12 +96,12 @@ object edtCapture: TedtCapture
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1106
+      ClientHeight = 1109
       ClientWidth = 775
       TabOrder = 0
       object pAgeEscapedStatus: TPanel
         Left = 0
-        Height = 46
+        Height = 49
         Top = 334
         Width = 775
         Align = alTop
@@ -115,7 +114,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 46
+        ClientHeight = 49
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 7
@@ -169,7 +168,7 @@ object edtCapture: TedtCapture
         end
         object ckEscaped: TCheckBox
           Left = 206
-          Height = 23
+          Height = 26
           Top = 23
           Width = 174
           Caption = 'Escaped'
@@ -187,11 +186,23 @@ object edtCapture: TedtCapture
           OnKeyDown = FormKeyDown
           OnKeyPress = cbStatusKeyPress
         end
+        object btnNewBand: TBitBtn
+          Left = 585
+          Height = 26
+          Top = 23
+          Width = 174
+          AutoSize = True
+          Caption = 'New band'
+          Images = DMM.iEdits
+          ImageIndex = 8
+          TabOrder = 3
+          OnClick = btnNewBandClick
+        end
       end
       object pSamples: TPanel
         Left = 0
         Height = 42
-        Top = 889
+        Top = 892
         Width = 775
         Align = alTop
         AutoSize = True
@@ -837,7 +848,7 @@ object edtCapture: TedtCapture
       object pNotes: TPanel
         Left = 0
         Height = 79
-        Top = 756
+        Top = 759
         Width = 775
         Align = alTop
         AutoSize = True
@@ -876,7 +887,7 @@ object edtCapture: TedtCapture
       object pPhotographersCamera: TPanel
         Left = 0
         Height = 46
-        Top = 936
+        Top = 939
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1017,7 +1028,7 @@ object edtCapture: TedtCapture
       object pTitleMetrics: TPanel
         Left = 0
         Height = 38
-        Top = 396
+        Top = 399
         Width = 775
         Align = alTop
         Alignment = taLeftJustify
@@ -1046,7 +1057,7 @@ object edtCapture: TedtCapture
       object pTitleCollection: TPanel
         Left = 0
         Height = 38
-        Top = 851
+        Top = 854
         Width = 775
         Align = alTop
         Alignment = taLeftJustify
@@ -1210,7 +1221,7 @@ object edtCapture: TedtCapture
       object pMetrics1: TPanel
         Left = 0
         Height = 46
-        Top = 434
+        Top = 437
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1343,7 +1354,7 @@ object edtCapture: TedtCapture
       object pMetrics2: TPanel
         Left = 0
         Height = 46
-        Top = 480
+        Top = 483
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1458,7 +1469,7 @@ object edtCapture: TedtCapture
       object pMetrics3: TPanel
         Left = 0
         Height = 46
-        Top = 526
+        Top = 529
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1561,7 +1572,7 @@ object edtCapture: TedtCapture
       object pMetrics5: TPanel
         Left = 0
         Height = 46
-        Top = 618
+        Top = 621
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1664,7 +1675,7 @@ object edtCapture: TedtCapture
       object pMetrics4: TPanel
         Left = 0
         Height = 46
-        Top = 572
+        Top = 575
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1768,7 +1779,7 @@ object edtCapture: TedtCapture
       object pKippMoltLimitsSkull: TPanel
         Left = 0
         Height = 46
-        Top = 664
+        Top = 667
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1878,7 +1889,7 @@ object edtCapture: TedtCapture
       object pCycleSex: TPanel
         Left = 0
         Height = 46
-        Top = 710
+        Top = 713
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2008,7 +2019,7 @@ object edtCapture: TedtCapture
       object pPhotosFieldNumber: TPanel
         Left = 0
         Height = 46
-        Top = 982
+        Top = 985
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2106,7 +2117,7 @@ object edtCapture: TedtCapture
       object pHemoglobinGlucose: TPanel
         Left = 0
         Height = 46
-        Top = 1028
+        Top = 1031
         Width = 775
         Align = alTop
         AutoSize = True

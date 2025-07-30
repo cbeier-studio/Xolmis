@@ -9034,6 +9034,11 @@ msgctxt "tedtbotanictaxon.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtcapture.btnnewband.caption
+msgctxt "tedtcapture.btnnewband.caption"
+msgid "New band"
+msgstr "Nova anilha"
+
 #: tedtcapture.btnnewindividual.caption
 msgctxt "tedtcapture.btnnewindividual.caption"
 msgid "New individual"
@@ -10035,6 +10040,11 @@ msgstr "Cancelar"
 msgctxt "tedtimageinfo.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtindividual.btnnewband.caption
+msgctxt "tedtindividual.btnnewband.caption"
+msgid "New band"
+msgstr "Nova anilha"
 
 #: tedtindividual.eband.buttonhint
 msgctxt "tedtindividual.eband.buttonhint"

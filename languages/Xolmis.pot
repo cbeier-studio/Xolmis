@@ -9037,6 +9037,11 @@ msgctxt "tedtbotanictaxon.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtcapture.btnnewband.caption
+msgctxt "tedtcapture.btnnewband.caption"
+msgid "New band"
+msgstr ""
+
 #: tedtcapture.btnnewindividual.caption
 msgctxt "tedtcapture.btnnewindividual.caption"
 msgid "New individual"
@@ -10037,6 +10042,11 @@ msgstr ""
 #: tedtimageinfo.sbsave.caption
 msgctxt "tedtimageinfo.sbsave.caption"
 msgid "Save"
+msgstr ""
+
+#: tedtindividual.btnnewband.caption
+msgctxt "tedtindividual.btnnewband.caption"
+msgid "New band"
 msgstr ""
 
 #: tedtindividual.eband.buttonhint

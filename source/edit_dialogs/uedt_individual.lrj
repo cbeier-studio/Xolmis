@@ -40,6 +40,7 @@
 {"hash":33581481,"name":"tedtindividual.ebandchangedate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":64937306,"name":"tedtindividual.lbldoubleband.caption","sourcebytes":[68,111,117,98,108,101,32,98,97,110,100,58],"value":"Double band:"},
 {"hash":68763028,"name":"tedtindividual.edoubleband.buttonhint","sourcebytes":[70,105,110,100,32,100,111,117,98,108,101,32,98,97,110,100],"value":"Find double band"},
+{"hash":211190532,"name":"tedtindividual.btnnewband.caption","sourcebytes":[78,101,119,32,98,97,110,100],"value":"New band"},
 {"hash":367802,"name":"tedtindividual.lblsex.caption","sourcebytes":[83,101,120,58],"value":"Sex:"},
 {"hash":294282,"name":"tedtindividual.lblage.caption","sourcebytes":[65,103,101,58],"value":"Age:"}
 ]}

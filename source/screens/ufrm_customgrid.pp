@@ -8872,9 +8872,12 @@ begin
 
   Working := True;
   try
+    // Inactivate the selected record
     DeleteRecord(FTableType, dsLink.DataSet);
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+
+    // Update the recycle bin
     dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);
   finally
@@ -9366,11 +9369,13 @@ begin
 
   Working := True;
   try
+    // Restore the selected record
     RestoreRecord(FTableType, dsRecycle.DataSet);
-    dsRecycle.DataSet.Refresh;
-    UpdateRecycleButtons(dsRecycle.DataSet);
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+    // Update the recycle bin
+    dsRecycle.DataSet.Refresh;
+    UpdateRecycleButtons(dsRecycle.DataSet);
     dbgRecycle.Refresh;
   finally
     Working := False;

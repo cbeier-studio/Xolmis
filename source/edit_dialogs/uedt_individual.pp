@@ -29,6 +29,7 @@ type
   { TedtIndividual }
 
   TedtIndividual = class(TForm)
+    btnNewBand: TBitBtn;
     cbSex: TComboBox;
     cbAge: TComboBox;
     eBand: TEditButton;
@@ -94,6 +95,7 @@ type
     sbCancel: TButton;
     scrollContent: TScrollBox;
     sbSave: TButton;
+    procedure btnNewBandClick(Sender: TObject);
     procedure cbSexKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBandButtonClick(Sender: TObject);
@@ -145,7 +147,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
-  cbs_dataconst, cbs_validations, udm_main, uDarkStyleParams;
+  cbs_dataconst, cbs_validations, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -166,6 +168,12 @@ begin
   eNest.Images := DMM.iEditsDark;
   eFather.Images := DMM.iEditsDark;
   eMother.Images := DMM.iEditsDark;
+  btnNewBand.Images := DMM.iEditsDark;
+end;
+
+procedure TedtIndividual.btnNewBandClick(Sender: TObject);
+begin
+  EditBand(DMG.qBands, True);
 end;
 
 procedure TedtIndividual.cbSexKeyPress(Sender: TObject; var Key: char);

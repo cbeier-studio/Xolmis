@@ -30,6 +30,7 @@ type
   { TedtCapture }
 
   TedtCapture = class(TForm)
+    btnNewBand: TBitBtn;
     btnNewIndividual: TBitBtn;
     cbCamera: TComboBox;
     ckEscaped: TCheckBox;
@@ -202,6 +203,7 @@ type
     shpRightBelowBand3: TShape;
     shpRightBelowBand4: TShape;
     ePhilornisLarvae: TSpinEdit;
+    procedure btnNewBandClick(Sender: TObject);
     procedure btnNewIndividualClick(Sender: TObject);
     procedure cbAgeKeyPress(Sender: TObject; var Key: char);
     procedure cbCaptureTypeKeyPress(Sender: TObject; var Key: char);
@@ -289,6 +291,7 @@ procedure TedtCapture.ApplyDarkMode;
 begin
   eIndividual.Images := DMM.iEditsDark;
   btnNewIndividual.Images := DMM.iEditsDark;
+  btnNewBand.Images := DMM.iEditsDark;
   eSurvey.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eCaptureDate.Images := DMM.iEditsDark;
@@ -308,6 +311,11 @@ begin
   eHowSexed.Images := DMM.iEditsDark;
   ePhotographer1.Images := DMM.iEditsDark;
   ePhotographer2.Images := DMM.iEditsDark;
+end;
+
+procedure TedtCapture.btnNewBandClick(Sender: TObject);
+begin
+  EditBand(DMG.qBands, True);
 end;
 
 procedure TedtCapture.btnNewIndividualClick(Sender: TObject);

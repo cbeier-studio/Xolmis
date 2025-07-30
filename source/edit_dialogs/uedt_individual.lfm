@@ -85,7 +85,7 @@ object edtIndividual: TedtIndividual
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 787
+      Height = 790
       Top = 0
       Width = 411
       Align = alTop
@@ -93,13 +93,13 @@ object edtIndividual: TedtIndividual
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 787
+      ClientHeight = 790
       ClientWidth = 411
       TabOrder = 0
       object pMother: TPanel
         Left = 0
         Height = 45
-        Top = 492
+        Top = 495
         Width = 411
         Align = alTop
         AutoSize = True
@@ -273,7 +273,7 @@ object edtIndividual: TedtIndividual
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 643
+        Top = 646
         Width = 411
         Align = alTop
         AutoSize = True
@@ -314,7 +314,7 @@ object edtIndividual: TedtIndividual
       object pNest: TPanel
         Left = 0
         Height = 45
-        Top = 402
+        Top = 405
         Width = 411
         Align = alTop
         AutoSize = True
@@ -363,7 +363,7 @@ object edtIndividual: TedtIndividual
       object pFather: TPanel
         Left = 0
         Height = 45
-        Top = 447
+        Top = 450
         Width = 411
         Align = alTop
         AutoSize = True
@@ -411,7 +411,7 @@ object edtIndividual: TedtIndividual
       object pBirthDeath: TPanel
         Left = 0
         Height = 45
-        Top = 299
+        Top = 302
         Width = 411
         Align = alTop
         AutoSize = True
@@ -574,7 +574,7 @@ object edtIndividual: TedtIndividual
       object pColorTarsi: TPanel
         Left = 0
         Height = 45
-        Top = 196
+        Top = 199
         Width = 411
         Align = alTop
         AutoSize = True
@@ -650,7 +650,7 @@ object edtIndividual: TedtIndividual
       object pRecognizableMarkings: TPanel
         Left = 0
         Height = 80
-        Top = 550
+        Top = 553
         Width = 411
         Align = alTop
         AutoSize = True
@@ -690,7 +690,7 @@ object edtIndividual: TedtIndividual
       object pColorTibiae: TPanel
         Left = 0
         Height = 45
-        Top = 241
+        Top = 244
         Width = 411
         Align = alTop
         AutoSize = True
@@ -766,7 +766,7 @@ object edtIndividual: TedtIndividual
       object pRemovedBand: TPanel
         Left = 0
         Height = 45
-        Top = 151
+        Top = 154
         Width = 411
         Align = alTop
         AutoSize = True
@@ -842,7 +842,7 @@ object edtIndividual: TedtIndividual
       end
       object pDoubleBand: TPanel
         Left = 0
-        Height = 45
+        Height = 48
         Top = 106
         Width = 411
         Align = alTop
@@ -855,7 +855,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
+        ClientHeight = 48
         ClientWidth = 411
         ParentBackground = False
         TabOrder = 2
@@ -880,7 +880,7 @@ object edtIndividual: TedtIndividual
         end
         object eDoubleBand: TEditButton
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 182
           ButtonHint = 'Find double band'
@@ -896,11 +896,23 @@ object edtIndividual: TedtIndividual
           OnKeyDown = FormKeyDown
           OnKeyPress = eDoubleBandKeyPress
         end
+        object btnNewBand: TBitBtn
+          Left = 214
+          Height = 26
+          Top = 22
+          Width = 181
+          AutoSize = True
+          Caption = 'New band'
+          Images = DMM.iEdits
+          ImageIndex = 8
+          TabOrder = 1
+          OnClick = btnNewBandClick
+        end
       end
       object pSexAge: TPanel
         Left = 0
         Height = 45
-        Top = 344
+        Top = 347
         Width = 411
         Align = alTop
         AutoSize = True

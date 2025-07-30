@@ -5,6 +5,7 @@
 {"hash":294282,"name":"tedtcapture.lblage.caption","sourcebytes":[65,103,101,58],"value":"Age:"},
 {"hash":178830394,"name":"tedtcapture.lblstatus.caption","sourcebytes":[83,116,97,116,117,115,58],"value":"Status:"},
 {"hash":211388148,"name":"tedtcapture.ckescaped.caption","sourcebytes":[69,115,99,97,112,101,100],"value":"Escaped"},
+{"hash":211190532,"name":"tedtcapture.btnnewband.caption","sourcebytes":[78,101,119,32,98,97,110,100],"value":"New band"},
 {"hash":4798036,"name":"tedtcapture.ckbloodsample.caption","sourcebytes":[66,108,111,111,100],"value":"Blood"},
 {"hash":183010521,"name":"tedtcapture.ckfeathers.caption","sourcebytes":[70,101,97,116,104,101,114,40,115,41],"value":"Feather(s)"},
 {"hash":5028291,"name":"tedtcapture.ckfeces.caption","sourcebytes":[70,101,99,101,115],"value":"Feces"},

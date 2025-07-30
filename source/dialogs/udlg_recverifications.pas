@@ -211,11 +211,15 @@ begin
   end;
 
   qHistory.Delete;
+
+  //qHistory.Refresh;
 end;
 
 procedure TdlgRecVerifications.sbInsertRecordClick(Sender: TObject);
 begin
   AddVerification(FTableType, FChildType, FId);
+
+  qHistory.Refresh;
 end;
 
 end.
