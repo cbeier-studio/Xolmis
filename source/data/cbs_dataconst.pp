@@ -113,6 +113,22 @@ const
   COL_PROPERTY_NAME = 'property_name';
   COL_PROPERTY_VALUE = 'property_value';
 
+  // Record history columns
+const
+  COL_EVENT_ACTION = 'event_action';
+  COL_EVENT_TABLE = 'event_table';
+  COL_EVENT_FIELD = 'event_field';
+  COL_RECORD_ID = 'record_id';
+  COL_OLD_VALUE = 'old_value';
+  COL_NEW_VALUE = 'new_value';
+
+  // Record verifications columns
+const
+  COL_VERIFICATION_ID = 'verification_id';
+  COL_TABLE_NAME = 'table_name';
+  COL_VERIFICATION_DATE = 'verification_date';
+  COL_VERIFICATION_STATUS = 'verification_status';
+
   // Gazetteer columns
 const
   COL_SITE_ID = 'site_id';

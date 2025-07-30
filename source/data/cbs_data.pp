@@ -104,8 +104,8 @@ const
   { Database information and management }
   function GetTableType(aTableName: String): TTableType;
   function GetFieldDisplayName(const aTableType: TTableType; aFieldName: String): String;
-  //function GetPrimaryKey(const aTableName: String): String; overload;
-  function GetPrimaryKey(const aDataSet: TDataSet): String;
+  function GetPrimaryKey(const aTable: TTableType): String; overload;
+  function GetPrimaryKey(const aDataSet: TDataSet): String; overload;
   function GetDataSource(const aTableType, aChildType: TTableType): TDataSource;
   function TableIsEmpty(aTableName: String): Boolean;
   function TableExists(aTableName: String): Boolean;
@@ -121,7 +121,9 @@ const
   { Record manipulations }
   function CanEdit(aDataset: TDataset): Boolean;
   procedure DeleteRecord(aTable: TTableType; aDataSet: TDataSet);
+  procedure DeleteChildRecords(ChildTable: TTableType; ParentField: String; ParentId: Integer);
   procedure RestoreRecord(aTable: TTableType; aDataSet: TDataSet);
+  procedure RestoreChildRecords(ChildTable: TTableType; ParentField: String; ParentId: Integer);
   procedure MarkRecord(aTableName, aFieldName: String; aKeyValue: Integer);
   procedure UnmarkRecord(aTableName, aFieldName: String; aKeyValue: Integer);
   procedure MarkAllRecords(const aTable: TTableType; IsChecked: Boolean; aKeyField: String;
@@ -140,7 +142,7 @@ const
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_conversions, cbs_users, cbs_debug,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_conversions, cbs_users, cbs_debug, cbs_dataconst,
   cbs_count, udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress;
 
   {
@@ -3059,26 +3061,55 @@ begin
   end;
 end;
 
-//function GetPrimaryKey(const aTableName: String): String;
-//var
-//  Qry: TSQLQuery;
-//begin
-//  Result := EmptyStr;
-//
-//  Qry := TSQLQuery.Create(DMM.sqlCon);
-//  with Qry, SQL do
-//  try
-//    Database := DMM.sqlCon;
-//    Add('SELECT field_name FROM fields_mapping WHERE (table_name = :tabela) AND (integer_key = 1)');
-//    ParamByName('TABELA').AsString := aTableName;
-//    Open;
-//    if RecordCount > 0 then
-//      Result := Fields[0].AsString;
-//    Close;
-//  finally
-//    FreeAndNil(Qry);
-//  end;
-//end;
+function GetPrimaryKey(const aTable: TTableType): String;
+begin
+  Result := EmptyStr;
+
+  case aTable of
+    tbNone:               Result := EmptyStr;
+    tbUsers:              Result := COL_USER_ID;
+    tbRecordHistory:      Result := COL_EVENT_ID;
+    tbRecordVerifications: Result := COL_VERIFICATION_ID;
+    tbGazetteer:          Result := COL_SITE_ID;
+    tbSamplingPlots:      Result := COL_SAMPLING_PLOT_ID;
+    tbPermanentNets:      Result := COL_PERMANENT_NET_ID;
+    tbInstitutions:       Result := COL_INSTITUTION_ID;
+    tbPeople:             Result := COL_PERSON_ID;
+    tbProjects:           Result := COL_PROJECT_ID;
+    tbProjectTeams:       Result := COL_PROJECT_MEMBER_ID;
+    tbPermits:            Result := COL_PERMIT_ID;
+    tbTaxonRanks:         Result := COL_RANK_ID;
+    tbZooTaxa:            Result := COL_TAXON_ID;
+    tbBotanicTaxa:        Result := COL_TAXON_ID;
+    tbBands:              Result := COL_BAND_ID;
+    tbBandHistory:        Result := COL_EVENT_ID;
+    tbIndividuals:        Result := COL_INDIVIDUAL_ID;
+    tbCaptures:           Result := COL_CAPTURE_ID;
+    tbFeathers:           Result := COL_FEATHER_ID;
+    tbNests:              Result := COL_NEST_ID;
+    tbNestOwners:         Result := COL_NEST_OWNER_ID;
+    tbNestRevisions:      Result := COL_NEST_REVISION_ID;
+    tbEggs:               Result := COL_EGG_ID;
+    tbMethods:            Result := COL_METHOD_ID;
+    tbExpeditions:        Result := COL_EXPEDITION_ID;
+    tbSurveys:            Result := COL_SURVEY_ID;
+    tbSurveyTeams:        Result := COL_SURVEY_MEMBER_ID;
+    tbNetsEffort:         Result := COL_NET_ID;
+    tbWeatherLogs:        Result := COL_WEATHER_ID;
+    tbSightings:          Result := COL_SIGHTING_ID;
+    tbSpecimens:          Result := COL_SPECIMEN_ID;
+    tbSamplePreps:        Result := COL_SAMPLE_PREP_ID;
+    tbSpecimenCollectors: Result := COL_COLLECTOR_ID;
+    tbImages:             Result := COL_IMAGE_ID;
+    tbAudioLibrary:       Result := COL_AUDIO_ID;
+    tbDocuments:          Result := COL_DOCUMENT_ID;
+    tbVegetation:         Result := COL_VEGETATION_ID;
+    tbProjectGoals:       Result := COL_GOAL_ID;
+    tbProjectChronograms: Result := COL_CHRONOGRAM_ID;
+    tbProjectBudgets:     Result := COL_BUDGET_ID;
+    tbProjectExpenses:    Result := COL_EXPENSE_ID;
+  end;
+end;
 
 function GetPrimaryKey(const aDataSet: TDataSet): String;
 var
@@ -3506,6 +3537,66 @@ begin
   end;
 end;
 
+procedure DeleteChildRecords(ChildTable: TTableType; ParentField: String; ParentId: Integer);
+var
+  Qry: TSQLQuery;
+begin
+  LogDebug(Format('Child records of parent %d from %s set inactive', [ParentId, TableNames[ChildTable]]));
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE %table_name SET');
+      Add('  active_status = 0,');
+      Add('  update_date = datetime(''now'',''localtime''),');
+      Add('  user_updated = :auser');
+      Add('WHERE %parent_key = :parent_id');
+      MacroByName('table_name').Value := TableNames[ChildTable];
+      MacroByName('parent_key').Value := ParentField;
+      ParamByName('auser').AsInteger := ActiveUser.Id;
+      ParamByName('parent_id').AsInteger := ParentId;
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
+      ExecSQL;
+
+      // Write the records history
+      Clear;
+      Add('SELECT %child_key FROM %table_name');
+      Add('WHERE %parent_key = :parent_id');
+      MacroByName('child_key').Value := GetPrimaryKey(ChildTable);
+      MacroByName('table_name').Value := TableNames[ChildTable];
+      MacroByName('parent_key').Value := ParentField;
+      ParamByName('parent_id').AsInteger := ParentId;
+      Open;
+      if RecordCount > 0 then
+      begin
+        First;
+        repeat
+          WriteRecHistory(ChildTable, haDeleted, FieldByName(GetPrimaryKey(ChildTable)).AsInteger);
+
+          Next;
+        until EOF;
+      end;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 // Activate record
 procedure RestoreRecord(aTable: TTableType; aDataSet: TDataSet);
 var
@@ -3554,6 +3645,66 @@ begin
         DMM.sqlTrans.RollbackRetaining;
         raise;
       end;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure RestoreChildRecords(ChildTable: TTableType; ParentField: String; ParentId: Integer);
+var
+  Qry: TSQLQuery;
+begin
+  LogDebug(Format('Child records of parent %d from %s set active', [ParentId, TableNames[ChildTable]]));
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      Clear;
+      Add('UPDATE %table_name SET');
+      Add('  active_status = 1,');
+      Add('  update_date = datetime(''now'',''localtime''),');
+      Add('  user_updated = :auser');
+      Add('WHERE %parent_key = :parent_id');
+      MacroByName('table_name').Value := TableNames[ChildTable];
+      MacroByName('parent_key').Value := ParentField;
+      ParamByName('auser').AsInteger := ActiveUser.Id;
+      ParamByName('parent_id').AsInteger := ParentId;
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
+      ExecSQL;
+
+      // Write the records history
+      Clear;
+      Add('SELECT %child_key FROM %table_name');
+      Add('WHERE %parent_key = :parent_id');
+      MacroByName('child_key').Value := GetPrimaryKey(ChildTable);
+      MacroByName('table_name').Value := TableNames[ChildTable];
+      MacroByName('parent_key').Value := ParentField;
+      ParamByName('parent_id').AsInteger := ParentId;
+      Open;
+      if RecordCount > 0 then
+      begin
+        First;
+        repeat
+          WriteRecHistory(ChildTable, haRestored, FieldByName(GetPrimaryKey(ChildTable)).AsInteger);
+
+          Next;
+        until EOF;
+      end;
+      Close;
+
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
     end;
   finally
     FreeAndNil(Qry);
