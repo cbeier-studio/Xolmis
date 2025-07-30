@@ -22,13 +22,14 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, atshapelinebgra,
-  StdCtrls;
+  StdCtrls, Buttons;
 
 type
 
   { TedtUser }
 
   TedtUser = class(TForm)
+    btnHelp: TSpeedButton;
     cbUserRank: TDBComboBox;
     ckAllowCollectionEdit: TDBCheckBox;
     ckAllowExport: TDBCheckBox;
@@ -57,6 +58,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    procedure ApplyDarkMode;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
@@ -69,11 +71,16 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TedtUser }
+
+procedure TedtUser.ApplyDarkMode;
+begin
+  btnHelp.Images := DMM.iEditsDark;
+end;
 
 procedure TedtUser.dsUserDataChange(Sender: TObject; Field: TField);
 begin
@@ -121,6 +128,9 @@ end;
 
 procedure TedtUser.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   cbUserRank.Items.CommaText := rsStandardUser + ',' + rsAdminUser + ',' + rsGuestUser;
 
   cbUserRank.ItemIndex := cbUserRank.Items.IndexOf(dsUser.DataSet.FieldByName(cbUserRank.DataField).DisplayText);

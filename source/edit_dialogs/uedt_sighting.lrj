@@ -2,6 +2,7 @@
 {"hash":177420759,"name":"tedtsighting.caption","sourcebytes":[78,101,119,32,115,105,103,104,116,105,110,103],"value":"New sighting"},
 {"hash":366789,"name":"tedtsighting.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtsighting.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtsighting.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":89566314,"name":"tedtsighting.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
 {"hash":235834570,"name":"tedtsighting.lbllongitude.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58],"value":"Longitude:"},
 {"hash":185329674,"name":"tedtsighting.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58],"value":"Latitude:"},
@@ -42,5 +43,10 @@
 {"hash":59933028,"name":"tedtsighting.ckisinebird.caption","sourcebytes":[82,101,99,111,114,100,32,105,115,32,111,110,32,101,66,105,114,100],"value":"Record is on eBird"},
 {"hash":223520967,"name":"tedtsighting.cknotsurveying.caption","sourcebytes":[79,117,116,115,105,100,101,32,116,104,101,32,115,97,109,112,108,105,110,103],"value":"Outside the sampling"},
 {"hash":180997274,"name":"tedtsighting.lblsurvey.caption","sourcebytes":[83,117,114,118,101,121,58],"value":"Survey:"},
-{"hash":132225193,"name":"tedtsighting.esurvey.buttonhint","sourcebytes":[70,105,110,100,32,115,117,114,118,101,121],"value":"Find survey"}
+{"hash":132225193,"name":"tedtsighting.esurvey.buttonhint","sourcebytes":[70,105,110,100,32,115,117,114,118,101,121],"value":"Find survey"},
+{"hash":128569433,"name":"tedtsighting.pmnnewsurvey.caption","sourcebytes":[78,101,119,32,115,117,114,118,101,121],"value":"New survey"},
+{"hash":214961042,"name":"tedtsighting.pmnnewperson.caption","sourcebytes":[78,101,119,32,111,98,115,101,114,118,101,114],"value":"New observer"},
+{"hash":121234372,"name":"tedtsighting.pmnnewmethod.caption","sourcebytes":[78,101,119,32,109,101,116,104,111,100],"value":"New method"},
+{"hash":14469001,"name":"tedtsighting.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"},
+{"hash":207141516,"name":"tedtsighting.pmnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"}
 ]}

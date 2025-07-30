@@ -22,25 +22,30 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, atshapelinebgra, cbs_breeding;
+  StdCtrls, ExtCtrls, Buttons, Menus, atshapelinebgra, cbs_breeding;
 
 type
 
   { TedtNestOwner }
 
   TedtNestOwner = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbRole: TComboBox;
     dsLink: TDataSource;
     eIndividual: TEditButton;
     lblRole: TLabel;
     lblIndividual: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewIndividual: TMenuItem;
     pBottom: TPanel;
     pContent: TPanel;
+    pmNew: TPopupMenu;
     pRole: TPanel;
     pIndividual: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure cbRoleChange(Sender: TObject);
     procedure cbRoleKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -50,6 +55,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewIndividualClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -74,7 +80,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
-  cbs_dataconst, udm_breeding, udm_main, uDarkStyleParams;
+  cbs_dataconst, cbs_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -83,6 +89,14 @@ uses
 procedure TedtNestOwner.ApplyDarkMode;
 begin
   eIndividual.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtNestOwner.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtNestOwner.cbRoleChange(Sender: TObject);
@@ -251,6 +265,11 @@ begin
   if (cbRole.ItemIndex >= 0) and
     (FIndividualId > 0) then
     Result := True;
+end;
+
+procedure TedtNestOwner.pmnNewIndividualClick(Sender: TObject);
+begin
+  EditIndividual(DMG.qIndividuals, True);
 end;
 
 function TedtNestOwner.ValidateFields: Boolean;

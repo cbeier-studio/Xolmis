@@ -6,13 +6,15 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Character, atshapelinebgra, cbs_media;
+  StdCtrls, ExtCtrls, Buttons, Menus, Character, atshapelinebgra, cbs_media;
 
 type
 
   { TedtAudioInfo }
 
   TedtAudioInfo = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     ckPlaybackUsed: TCheckBox;
     cbLicenseType: TComboBox;
     cbPrecipitation: TComboBox;
@@ -67,6 +69,8 @@ type
     lblFilterModel: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
+    pmnNewLocality: TMenuItem;
     mSubtitle: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
@@ -75,6 +79,7 @@ type
     pLicenseOwner: TPanel;
     pLicenseTypeYear: TPanel;
     pLicenseUri: TPanel;
+    pmNew: TPopupMenu;
     pSubjectsTallyDistance: TPanel;
     pHumidityPlayback: TPanel;
     pPrecipitationWindSpeed: TPanel;
@@ -97,6 +102,7 @@ type
     eWindSpeed: TSpinEdit;
     eCloudCover: TSpinEdit;
     eSubjectsTally: TSpinEdit;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAudioFileButtonClick(Sender: TObject);
     procedure eAuthorButtonClick(Sender: TObject);
@@ -113,6 +119,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -143,7 +151,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_dataconst,
-  cbs_sampling, cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
+  cbs_sampling, cbs_getvalue, cbs_conversions, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -158,6 +166,14 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtAudioInfo.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtAudioInfo.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -490,6 +506,16 @@ begin
   if (eRecordingDate.Text <> EmptyStr) and
     (eAudioFile.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtAudioInfo.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtAudioInfo.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtAudioInfo.sbSaveClick(Sender: TObject);

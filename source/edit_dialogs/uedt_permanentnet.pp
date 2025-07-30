@@ -22,13 +22,14 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, atshapelinebgra, cbs_sampling;
+  StdCtrls, Buttons, atshapelinebgra, cbs_sampling;
 
 type
 
   { TedtPermanentNet }
 
   TedtPermanentNet = class(TForm)
+    btnHelp: TSpeedButton;
     eLongitude: TEditButton;
     eLatitude: TEditButton;
     eNetNumber: TEdit;
@@ -90,6 +91,7 @@ procedure TedtPermanentNet.ApplyDarkMode;
 begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtPermanentNet.dsLinkDataChange(Sender: TObject; Field: TField);

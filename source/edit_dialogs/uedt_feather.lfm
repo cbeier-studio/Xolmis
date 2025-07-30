@@ -2,16 +2,16 @@ object edtFeather: TedtFeather
   Left = 420
   Height = 679
   Top = 250
-  Width = 397
+  Width = 420
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'New feather'
   ClientHeight = 679
-  ClientWidth = 397
+  ClientWidth = 420
+  Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -19,7 +19,7 @@ object edtFeather: TedtFeather
     Left = 0
     Height = 2
     Top = 636
-    Width = 397
+    Width = 420
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -29,7 +29,7 @@ object edtFeather: TedtFeather
     Left = 0
     Height = 636
     Top = 0
-    Width = 397
+    Width = 420
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 636
@@ -37,26 +37,26 @@ object edtFeather: TedtFeather
     AutoSize = True
     BorderStyle = bsNone
     ClientHeight = 636
-    ClientWidth = 397
+    ClientWidth = 420
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 636
       Top = 0
-      Width = 397
+      Width = 420
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 636
-      ClientWidth = 397
+      ClientWidth = 420
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
         Height = 45
         Top = 106
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -68,14 +68,14 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 2
         object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 388
           BorderSpacing.Top = 3
           Caption = 'Locality: *'
           ParentColor = False
@@ -85,7 +85,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 388
           ButtonHint = 'Find locality'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -107,7 +107,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 196
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -119,24 +119,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 4
         object lblSource: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Source:'
           ParentColor = False
           ParentFont = False
         end
         object lblSymmetry: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Symmetry:'
           ParentColor = False
@@ -146,7 +146,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -154,10 +154,10 @@ object edtFeather: TedtFeather
           OnKeyPress = eDateKeyPress
         end
         object cbSymmetry: TComboBox
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 186
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 1
@@ -169,7 +169,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 96
         Top = 524
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -180,14 +180,14 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 96
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 11
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 388
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -198,7 +198,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 74
           Top = 22
-          Width = 365
+          Width = 388
           Align = alTop
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
@@ -211,7 +211,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 61
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -223,14 +223,14 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 1
         object lblTaxon: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 388
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
           ParentColor = False
@@ -240,7 +240,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 388
           ButtonHint = 'Find taxon'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -262,7 +262,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 16
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -274,24 +274,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 0
         object lblSampleDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Date: *'
           ParentColor = False
           ParentFont = False
         end
         object lblSampleTime: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Time:'
           ParentColor = False
@@ -301,7 +301,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           ButtonHint = 'Open calendar'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -320,10 +320,10 @@ object edtFeather: TedtFeather
           OnKeyPress = eDateKeyPress
         end
         object eTime: TEdit
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 186
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -334,7 +334,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 241
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -346,24 +346,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 5
         object lblFeatherTrait: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Feather trait:'
           ParentColor = False
           ParentFont = False
         end
         object lblFeatherNumber: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Feather number:'
           ParentColor = False
@@ -373,7 +373,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -381,10 +381,10 @@ object edtFeather: TedtFeather
           OnKeyPress = eDateKeyPress
         end
         object eFeatherNumber: TSpinEdit
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 186
           MaxValue = 999999
           TabOrder = 1
           OnKeyDown = FormKeyDown
@@ -395,7 +395,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 286
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -407,24 +407,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 6
         object lblBodySide: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Side:'
           ParentColor = False
           ParentFont = False
         end
         object lblPercentGrown: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Caption = '% grown:'
           ParentColor = False
@@ -434,7 +434,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -442,10 +442,10 @@ object edtFeather: TedtFeather
           OnKeyPress = eDateKeyPress
         end
         object ePercentGrown: TFloatSpinEdit
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 186
           Increment = 0.05
           MaxValue = 1
           TabOrder = 1
@@ -457,7 +457,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 376
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -469,24 +469,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 8
         object lblMass: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Mass:'
           ParentColor = False
           ParentFont = False
         end
         object lblRachisWidth: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Rachis width:'
           ParentColor = False
@@ -496,7 +496,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           DecimalPlaces = 3
           MaxValue = 999999
           TabOrder = 0
@@ -504,10 +504,10 @@ object edtFeather: TedtFeather
           OnKeyPress = eDateKeyPress
         end
         object eRachisWidth: TFloatSpinEdit
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 186
           DecimalPlaces = 3
           MaxValue = 999999
           TabOrder = 1
@@ -519,7 +519,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 421
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -531,24 +531,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 9
         object lblGrowthBarWidth: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Growth bar width:'
           ParentColor = False
           ParentFont = False
         end
         object lblBarbDensity: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Barb density:'
           ParentColor = False
@@ -558,7 +558,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           DecimalPlaces = 3
           MaxValue = 999999
           TabOrder = 0
@@ -566,10 +566,10 @@ object edtFeather: TedtFeather
           OnKeyPress = eDateKeyPress
         end
         object eBarbDensity: TFloatSpinEdit
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 186
           DecimalPlaces = 3
           MaxValue = 999999
           TabOrder = 1
@@ -581,7 +581,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 331
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -593,24 +593,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 7
         object lblLength: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Length:'
           ParentColor = False
           ParentFont = False
         end
         object lblArea: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Area:'
           ParentColor = False
@@ -620,7 +620,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           DecimalPlaces = 3
           MaxValue = 999999
           TabOrder = 0
@@ -628,10 +628,10 @@ object edtFeather: TedtFeather
           OnKeyPress = eDateKeyPress
         end
         object eArea: TFloatSpinEdit
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 186
           DecimalPlaces = 3
           MaxValue = 999999
           TabOrder = 1
@@ -643,7 +643,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 151
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -655,14 +655,14 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 3
         object lblObserver: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 388
           BorderSpacing.Top = 3
           Caption = 'Observer:'
           ParentColor = False
@@ -672,7 +672,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 388
           ButtonHint = 'Find observer'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -693,7 +693,7 @@ object edtFeather: TedtFeather
         Left = 0
         Height = 45
         Top = 466
-        Width = 397
+        Width = 420
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -705,24 +705,24 @@ object edtFeather: TedtFeather
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 420
         ParentBackground = False
         TabOrder = 10
         object lblFeatherAge: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Feather age:'
           ParentColor = False
           ParentFont = False
         end
         object lblFeatherAge1: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 186
           BorderSpacing.Top = 3
           Font.Color = 6579300
           ParentColor = False
@@ -732,7 +732,7 @@ object edtFeather: TedtFeather
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -744,9 +744,9 @@ object edtFeather: TedtFeather
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 638
-    Width = 397
+    Width = 420
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -755,16 +755,20 @@ object edtFeather: TedtFeather
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 397
+    ClientHeight = 42
+    ClientWidth = 420
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 156
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -774,10 +778,16 @@ object edtFeather: TedtFeather
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 284
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -785,11 +795,51 @@ object edtFeather: TedtFeather
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object dsLink: TDataSource
     DataSet = DMG.qFeathers
     OnDataChange = dsLinkDataChange
     Left = 280
     Top = 80
+  end
+  object pmNew: TPopupMenu
+    Left = 128
+    Top = 623
+    object pmnNewLocality: TMenuItem
+      Caption = 'New locality'
+      OnClick = pmnNewLocalityClick
+    end
+    object pmnNewPerson: TMenuItem
+      Caption = 'New observer'
+      OnClick = pmnNewPersonClick
+    end
   end
 end

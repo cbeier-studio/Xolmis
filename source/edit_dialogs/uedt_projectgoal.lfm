@@ -10,7 +10,6 @@ object edtProjectGoal: TedtProjectGoal
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -26,7 +25,7 @@ object edtProjectGoal: TedtProjectGoal
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 199
     Width = 397
     Align = alTop
@@ -37,16 +36,20 @@ object edtProjectGoal: TedtProjectGoal
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 397
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 133
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -56,16 +59,34 @@ object edtProjectGoal: TedtProjectGoal
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 261
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
     end
   end
   object pContent: TPanel

@@ -6,13 +6,14 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Character, atshapelinebgra, cbs_media;
+  ExtCtrls, Buttons, Character, atshapelinebgra, cbs_media;
 
 type
 
   { TedtDocumentInfo }
 
   TedtDocumentInfo = class(TForm)
+    btnHelp: TSpeedButton;
     cbDocumentType: TComboBox;
     cbLicenseType: TComboBox;
     dsLink: TDataSource;
@@ -103,6 +104,7 @@ procedure TedtDocumentInfo.ApplyDarkMode;
 begin
   eDocumentDate.Images := DMM.iEditsDark;
   eDocumentPath.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtDocumentInfo.cbDocumentTypeKeyPress(Sender: TObject; var Key: char);

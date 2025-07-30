@@ -22,13 +22,15 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Character, atshapelinebgra, cbs_sampling;
+  ExtCtrls, Buttons, Menus, Character, atshapelinebgra, cbs_sampling;
 
 type
 
   { TedtSamplingPlot }
 
   TedtSamplingPlot = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     eName: TEdit;
     eAbbreviation: TEdit;
     eLocality: TEditButton;
@@ -45,6 +47,7 @@ type
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
     mDescription: TMemo;
+    pmnNewLocality: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
@@ -54,9 +57,11 @@ type
     pAcronym: TPanel;
     pLongitudeLatitude: TPanel;
     pLocality: TPanel;
+    pmNew: TPopupMenu;
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -67,6 +72,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -90,7 +96,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  cbs_dataconst, udm_main,
+  cbs_dataconst, cbs_editdialogs, udm_main, udm_grid,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -102,6 +108,14 @@ begin
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSamplingPlot.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtSamplingPlot.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -326,6 +340,11 @@ begin
     (eAbbreviation.Text <> EmptyStr) and
     (FLocalityId > 0) then
     Result := True;
+end;
+
+procedure TedtSamplingPlot.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
 end;
 
 procedure TedtSamplingPlot.sbSaveClick(Sender: TObject);

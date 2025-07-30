@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, Character, StdCtrls, atshapelinebgra,
+  ExtCtrls, Character, StdCtrls, Buttons, Menus, atshapelinebgra,
   BCPanel, cbs_birds;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtSighting }
 
   TedtSighting = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     ckCaptured: TCheckBox;
     ckSeen: TCheckBox;
     ckHeard: TCheckBox;
@@ -87,6 +89,11 @@ type
     lblHowWasRecorded: TLabel;
     lblUseDate1: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewSurvey: TMenuItem;
+    pmnNewPerson: TMenuItem;
+    pmnNewMethod: TMenuItem;
+    pmnNewLocality: TMenuItem;
+    pmnNewIndividual: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pMethod: TPanel;
@@ -100,6 +107,7 @@ type
     pDateTime: TPanel;
     pIndividual: TPanel;
     pObserver: TPanel;
+    pmNew: TPopupMenu;
     pTaxon: TPanel;
     pLongitudeLatitude: TPanel;
     pDetectionBreeding: TPanel;
@@ -114,6 +122,7 @@ type
     eRecapturesTally: TSpinEdit;
     eUnbandedTally: TSpinEdit;
     eQuantity: TSpinEdit;
+    procedure btnNewClick(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBreedingStatusButtonClick(Sender: TObject);
@@ -138,6 +147,11 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewIndividualClick(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewMethodClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
+    procedure pmnNewSurveyClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -163,7 +177,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis,
-  cbs_validations, cbs_getvalue, cbs_themes, udm_main, uDarkStyleParams;
+  cbs_validations, cbs_getvalue, cbs_themes, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -185,6 +199,14 @@ begin
   eIndividual.Images := DMM.iEditsDark;
   eDetectionType.Images := DMM.iEditsDark;
   eBreedingStatus.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSighting.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtSighting.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -693,6 +715,31 @@ begin
     (FTaxonId > 0) and
     (eDate.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtSighting.pmnNewIndividualClick(Sender: TObject);
+begin
+  EditIndividual(DMG.qIndividuals, True);
+end;
+
+procedure TedtSighting.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtSighting.pmnNewMethodClick(Sender: TObject);
+begin
+  EditMethod(DMG.qMethods, True);
+end;
+
+procedure TedtSighting.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
+end;
+
+procedure TedtSighting.pmnNewSurveyClick(Sender: TObject);
+begin
+  EditSurvey(DMG.qSurveys, 0, True);
 end;
 
 procedure TedtSighting.sbSaveClick(Sender: TObject);

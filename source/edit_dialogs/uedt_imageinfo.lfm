@@ -7,11 +7,11 @@ object edtImageInfo: TedtImageInfo
   BorderIcons = [biSystemMenu]
   Caption = 'Image info'
   ClientHeight = 681
-  ClientWidth = 413
+  ClientWidth = 416
+  Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -19,7 +19,7 @@ object edtImageInfo: TedtImageInfo
     Left = 0
     Height = 2
     Top = 638
-    Width = 413
+    Width = 416
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -27,9 +27,9 @@ object edtImageInfo: TedtImageInfo
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 640
-    Width = 413
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -38,16 +38,20 @@ object edtImageInfo: TedtImageInfo
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 413
+    ClientHeight = 42
+    ClientWidth = 416
     TabOrder = 0
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 25
-      Top = 8
-      Width = 186
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -57,10 +61,16 @@ object edtImageInfo: TedtImageInfo
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 210
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
       Height = 25
-      Top = 8
-      Width = 187
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -68,39 +78,67 @@ object edtImageInfo: TedtImageInfo
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object SBox: TScrollBox
     Left = 0
     Height = 638
     Top = 0
-    Width = 413
+    Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 638
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 638
-    ClientWidth = 396
+    ClientWidth = 399
     Constraints.MinWidth = 176
     TabOrder = 1
     object pClient: TPanel
       Left = 0
       Height = 707
       Top = 0
-      Width = 396
+      Width = 399
       Align = alTop
       AutoSize = True
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 707
-      ClientWidth = 396
+      ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
         Height = 45
         Top = 289
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -113,14 +151,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
         object lblLocality: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Locality:'
           ParentColor = False
@@ -130,7 +168,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           ButtonHint = 'Find locality'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -151,7 +189,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 96
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -163,14 +201,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
         object lblAuthor: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Author:'
           ParentColor = False
@@ -180,7 +218,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           ButtonHint = 'Find author'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -201,7 +239,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 80
         Top = 16
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -210,14 +248,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 80
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
         object lblSubtitle: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Subtitle:'
@@ -228,7 +266,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 58
           Top = 22
-          Width = 365
+          Width = 367
           Align = alTop
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
@@ -241,7 +279,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 141
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -253,24 +291,24 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
         object lblImageDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 176
           BorderSpacing.Top = 3
           Caption = 'Image date: *'
           ParentColor = False
           ParentFont = False
         end
         object lblImageTime: TLabel
-          Left = 206
+          Left = 208
           Height = 15
           Top = 3
-          Width = 174
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Image time:'
           ParentColor = False
@@ -280,7 +318,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 176
           ButtonHint = 'Open calendar'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -299,10 +337,10 @@ object edtImageInfo: TedtImageInfo
           OnKeyPress = eImageTimeKeyPress
         end
         object eImageTime: TEdit
-          Left = 206
+          Left = 208
           Height = 23
           Top = 22
-          Width = 174
+          Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -313,7 +351,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 186
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -325,14 +363,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
         object lblImageType: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Image type:'
           ParentColor = False
@@ -342,7 +380,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -354,7 +392,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 334
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -366,14 +404,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
         object lblCoordinatesPrecision: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Coordinates precision:'
           ParentColor = False
@@ -383,7 +421,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -395,7 +433,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 379
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -407,24 +445,24 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
         object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 176
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
           ParentColor = False
           ParentFont = False
         end
         object lblLatitude: TLabel
-          Left = 206
+          Left = 208
           Height = 15
           Top = 3
-          Width = 174
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
           ParentColor = False
@@ -434,7 +472,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 176
           ButtonHint = 'Edit/import coordinate'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -451,10 +489,10 @@ object edtImageInfo: TedtImageInfo
           OnKeyPress = eLongitudeKeyPress
         end
         object eLatitude: TEditButton
-          Left = 206
+          Left = 208
           Height = 23
           Top = 22
-          Width = 174
+          Width = 175
           ButtonHint = 'Edit/import coordinate'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -475,7 +513,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 437
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -488,14 +526,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 8
         object lblTaxon: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Taxon:'
           ParentColor = False
@@ -505,7 +543,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           ButtonHint = 'Find taxon'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -526,7 +564,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 231
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -538,14 +576,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
         object lblImageFilename: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'Image file: *'
           ParentColor = False
@@ -555,7 +593,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           ButtonHint = 'Choose file'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -577,7 +615,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 495
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -590,24 +628,24 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 9
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 176
           BorderSpacing.Top = 3
           Caption = 'License type:'
           ParentColor = False
           ParentFont = False
         end
         object lblLicenseYear: TLabel
-          Left = 206
+          Left = 208
           Height = 15
           Top = 3
-          Width = 174
+          Width = 175
           BorderSpacing.Top = 3
           Caption = 'License year:'
           ParentColor = False
@@ -617,7 +655,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 176
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -625,10 +663,10 @@ object edtImageInfo: TedtImageInfo
           OnKeyPress = eImageTimeKeyPress
         end
         object eLicenseYear: TEdit
-          Left = 206
+          Left = 208
           Height = 23
           Top = 22
-          Width = 174
+          Width = 175
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
@@ -638,7 +676,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 540
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -650,14 +688,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'License owner:'
           ParentColor = False
@@ -667,7 +705,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
@@ -677,7 +715,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 585
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -689,14 +727,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'License notes:'
           ParentColor = False
@@ -706,7 +744,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
@@ -716,7 +754,7 @@ object edtImageInfo: TedtImageInfo
         Left = 0
         Height = 45
         Top = 630
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -728,14 +766,14 @@ object edtImageInfo: TedtImageInfo
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 12
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 3
           Caption = 'License URL:'
           ParentColor = False
@@ -745,7 +783,7 @@ object edtImageInfo: TedtImageInfo
           Left = 16
           Height = 23
           Top = 22
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
@@ -758,5 +796,17 @@ object edtImageInfo: TedtImageInfo
     OnDataChange = dsLinkDataChange
     Left = 352
     Top = 26
+  end
+  object pmNew: TPopupMenu
+    Left = 129
+    Top = 618
+    object pmnNewPerson: TMenuItem
+      Caption = 'New author'
+      OnClick = pmnNewPersonClick
+    end
+    object pmnNewLocality: TMenuItem
+      Caption = 'New locality'
+      OnClick = pmnNewLocalityClick
+    end
   end
 end

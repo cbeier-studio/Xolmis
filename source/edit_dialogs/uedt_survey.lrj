@@ -2,6 +2,7 @@
 {"hash":128569433,"name":"tedtsurvey.caption","sourcebytes":[78,101,119,32,115,117,114,118,101,121],"value":"New survey"},
 {"hash":366789,"name":"tedtsurvey.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtsurvey.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtsurvey.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":56137130,"name":"tedtsurvey.lbllocality.caption","sourcebytes":[76,111,99,97,108,105,116,121,58,32,42],"value":"Locality: *"},
 {"hash":143939529,"name":"tedtsurvey.elocality.buttonhint","sourcebytes":[70,105,110,100,32,108,111,99,97,108,105,116,121],"value":"Find locality"},
 {"hash":66283626,"name":"tedtsurvey.lblstarttime.caption","sourcebytes":[83,116,97,114,116,105,110,103,32,116,105,109,101,58],"value":"Starting time:"},
@@ -37,5 +38,10 @@
 {"hash":71314330,"name":"tedtsurvey.lblhabitat.caption","sourcebytes":[69,110,118,105,114,111,110,109,101,110,116,32,100,101,115,99,114,105,112,116,105,111,110,58],"value":"Environment description:"},
 {"hash":98335322,"name":"tedtsurvey.lblnetrounds.caption","sourcebytes":[77,105,115,116,110,101,116,115,32,99,104,101,99,107,105,110,103,32,116,105,109,101,115,58],"value":"Mistnets checking times:"},
 {"hash":189142186,"name":"tedtsurvey.lblexpedition.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,58],"value":"Expedition:"},
-{"hash":265694782,"name":"tedtsurvey.eexpedition.buttonhint","sourcebytes":[70,105,110,100,32,101,120,112,101,100,105,116,105,111,110],"value":"Find expedition"}
+{"hash":265694782,"name":"tedtsurvey.eexpedition.buttonhint","sourcebytes":[70,105,110,100,32,101,120,112,101,100,105,116,105,111,110],"value":"Find expedition"},
+{"hash":122054270,"name":"tedtsurvey.pmnnewexpedition.caption","sourcebytes":[78,101,119,32,101,120,112,101,100,105,116,105,111,110],"value":"New expedition"},
+{"hash":121234372,"name":"tedtsurvey.pmnnewmethod.caption","sourcebytes":[78,101,119,32,109,101,116,104,111,100],"value":"New method"},
+{"hash":14469001,"name":"tedtsurvey.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"},
+{"hash":81075838,"name":"tedtsurvey.pmnnewmistnetstation.caption","sourcebytes":[78,101,119,32,109,105,115,116,110,101,116,32,115,116,97,116,105,111,110],"value":"New mistnet station"},
+{"hash":132301524,"name":"tedtsurvey.pmnnewproject.caption","sourcebytes":[78,101,119,32,112,114,111,106,101,99,116],"value":"New project"}
 ]}

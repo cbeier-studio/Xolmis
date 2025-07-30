@@ -2,6 +2,7 @@
 {"hash":229108468,"name":"tedtsamplingplot.caption","sourcebytes":[78,101,119,32,115,97,109,112,108,105,110,103,32,112,108,111,116],"value":"New sampling plot"},
 {"hash":366789,"name":"tedtsamplingplot.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtsamplingplot.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtsamplingplot.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":56137130,"name":"tedtsamplingplot.lbllocality.caption","sourcebytes":[76,111,99,97,108,105,116,121,58,32,42],"value":"Locality: *"},
 {"hash":143939529,"name":"tedtsamplingplot.elocality.buttonhint","sourcebytes":[70,105,110,100,32,108,111,99,97,108,105,116,121],"value":"Find locality"},
 {"hash":89566314,"name":"tedtsamplingplot.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
@@ -11,5 +12,6 @@
 {"hash":185329674,"name":"tedtsamplingplot.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58],"value":"Latitude:"},
 {"hash":110507173,"name":"tedtsamplingplot.elongitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
 {"hash":110507173,"name":"tedtsamplingplot.elatitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
-{"hash":81166474,"name":"tedtsamplingplot.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"}
+{"hash":81166474,"name":"tedtsamplingplot.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"},
+{"hash":14469001,"name":"tedtsamplingplot.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"}
 ]}

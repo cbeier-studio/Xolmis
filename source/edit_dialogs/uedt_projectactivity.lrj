@@ -2,6 +2,7 @@
 {"hash":268199625,"name":"tedtprojectactivity.caption","sourcebytes":[78,101,119,32,97,99,116,105,118,105,116,121],"value":"New activity"},
 {"hash":366789,"name":"tedtprojectactivity.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtprojectactivity.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtprojectactivity.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":109086970,"name":"tedtprojectactivity.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58,32,42],"value":"Description: *"},
 {"hash":146552458,"name":"tedtprojectactivity.lblstatus.caption","sourcebytes":[83,116,97,116,117,115,58,32,42],"value":"Status: *"},
 {"hash":103817754,"name":"tedtprojectactivity.lblstartdate.caption","sourcebytes":[83,116,97,114,116,32,100,97,116,101,58],"value":"Start date:"},
@@ -14,5 +15,6 @@
 {"hash":38292546,"name":"tedtprojectactivity.etargetdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
 {"hash":33581481,"name":"tedtprojectactivity.etargetdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":38292546,"name":"tedtprojectactivity.eenddate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
-{"hash":33581481,"name":"tedtprojectactivity.eenddate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"}
+{"hash":33581481,"name":"tedtprojectactivity.eenddate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":211214396,"name":"tedtprojectactivity.pmnnewgoal.caption","sourcebytes":[78,101,119,32,103,111,97,108],"value":"New goal"}
 ]}

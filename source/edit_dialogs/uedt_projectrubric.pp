@@ -6,13 +6,14 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, StdCtrls, ExtCtrls, Spin, SysUtils, Forms, Controls, EditBtn,
-  Graphics, Dialogs, cbs_entities;
+  Graphics, Dialogs, Buttons, cbs_entities;
 
 type
 
   { TedtProjectRubric }
 
   TedtProjectRubric = class(TForm)
+    btnHelp: TSpeedButton;
     dsLink: TDataSource;
     eRubric: TEdit;
     eFundingSource: TEdit;
@@ -69,7 +70,7 @@ uses
 
 procedure TedtProjectRubric.ApplyDarkMode;
 begin
-  // Nothing
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtProjectRubric.dsLinkDataChange(Sender: TObject; Field: TField);

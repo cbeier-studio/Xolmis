@@ -8,10 +8,10 @@ object edtSighting: TedtSighting
   Caption = 'New sighting'
   ClientHeight = 706
   ClientWidth = 453
+  Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -27,7 +27,7 @@ object edtSighting: TedtSighting
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 665
     Width = 453
     Align = alTop
@@ -38,17 +38,21 @@ object edtSighting: TedtSighting
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 453
     ParentBackground = False
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 189
       Height = 25
-      Top = 8
-      Width = 206
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -56,14 +60,48 @@ object edtSighting: TedtSighting
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 230
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 317
       Height = 25
-      Top = 8
-      Width = 207
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
     end
   end
   object SBox: TScrollBox
@@ -1189,5 +1227,29 @@ object edtSighting: TedtSighting
     OnDataChange = dsLinkDataChange
     Left = 301
     Top = 19
+  end
+  object pmNew: TPopupMenu
+    Left = 144
+    Top = 647
+    object pmnNewSurvey: TMenuItem
+      Caption = 'New survey'
+      OnClick = pmnNewSurveyClick
+    end
+    object pmnNewPerson: TMenuItem
+      Caption = 'New observer'
+      OnClick = pmnNewPersonClick
+    end
+    object pmnNewMethod: TMenuItem
+      Caption = 'New method'
+      OnClick = pmnNewMethodClick
+    end
+    object pmnNewLocality: TMenuItem
+      Caption = 'New locality'
+      OnClick = pmnNewLocalityClick
+    end
+    object pmnNewIndividual: TMenuItem
+      Caption = 'New individual'
+      OnClick = pmnNewIndividualClick
+    end
   end
 end

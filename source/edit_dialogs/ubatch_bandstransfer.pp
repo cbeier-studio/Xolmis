@@ -5,14 +5,16 @@ unit ubatch_bandstransfer;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, Spin, StdCtrls, ATShapeLineBGRA,
-  DateUtils, Character, StrUtils;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, Spin, StdCtrls, Buttons, Menus,
+  ATShapeLineBGRA, DateUtils, Character, StrUtils;
 
 type
 
   { TbatchBandsTransfer }
 
   TbatchBandsTransfer = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbBandSize: TComboBox;
     eEndNumber: TSpinEdit;
     eTransferDate: TEditButton;
@@ -24,13 +26,16 @@ type
     lblRequester: TLabel;
     lblStartNumber: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
     pBottom: TPanel;
     pEdit: TPanel;
     pFromToNumber: TPanel;
+    pmNew: TPopupMenu;
     pRequester: TPanel;
     pSizeType: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure eRequesterButtonClick(Sender: TObject);
     procedure eRequesterKeyPress(Sender: TObject; var Key: char);
     procedure eTransferDateButtonClick(Sender: TObject);
@@ -39,6 +44,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FRequesterId, FCarrierId, FSenderId: Integer;
@@ -57,7 +63,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_datatypes, cbs_validations, cbs_birds, cbs_conversions,
-  udm_main, udlg_loading, uDarkStyleParams;
+  cbs_editdialogs, udm_main, udm_grid, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -67,6 +73,14 @@ procedure TbatchBandsTransfer.ApplyDarkMode;
 begin
   eTransferDate.Images := DMM.iEditsDark;
   eRequester.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TbatchBandsTransfer.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TbatchBandsTransfer.eRequesterButtonClick(Sender: TObject);
@@ -165,6 +179,11 @@ begin
     (eEndNumber.Value > 0) and
     (FRequesterId > 0) then
     Result := True;
+end;
+
+procedure TbatchBandsTransfer.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TbatchBandsTransfer.sbSaveClick(Sender: TObject);

@@ -6,13 +6,15 @@ interface
 
 uses
   Classes, DB, ExtCtrls, SysUtils, Forms, Controls, Graphics, EditBtn, atshapelinebgra, Buttons, StdCtrls,
-  Character, Dialogs, cbs_entities;
+  Character, Dialogs, Menus, cbs_entities;
 
 type
 
   { TedtProjectMember }
 
   TedtProjectMember = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     ckManager: TCheckBox;
     dsLink: TDataSource;
     ePerson: TEditButton;
@@ -20,13 +22,17 @@ type
     lblPerson: TLabel;
     lblInstitution: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
+    pmnNewInstitution: TMenuItem;
     pBottom: TPanel;
     pContent: TPanel;
+    pmNew: TPopupMenu;
     pPerson: TPanel;
     pManager: TPanel;
     pInstitution: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure ckManagerKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eInstitutionButtonClick(Sender: TObject);
@@ -37,6 +43,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewInstitutionClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -61,7 +69,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_dataconst, cbs_dialogs,
-  udm_grid, udm_main, uDarkStyleParams;
+  cbs_editdialogs, udm_grid, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -71,6 +79,14 @@ procedure TedtProjectMember.ApplyDarkMode;
 begin
   ePerson.Images := DMM.iEditsDark;
   eInstitution.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProjectMember.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtProjectMember.ckManagerKeyPress(Sender: TObject; var Key: char);
@@ -226,6 +242,16 @@ begin
 
   if (FMemberId > 0) then
     Result := True;
+end;
+
+procedure TedtProjectMember.pmnNewInstitutionClick(Sender: TObject);
+begin
+  EditInstitution(DMG.qInstitutions, True);
+end;
+
+procedure TedtProjectMember.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtProjectMember.sbSaveClick(Sender: TObject);

@@ -22,7 +22,7 @@ interface
 
 uses
   BCPanel, Classes, EditBtn, Spin, SysUtils, Character, DB, Forms, Controls,
-  Graphics, Dialogs, ExtCtrls, StdCtrls, DateUtils,
+  Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DateUtils,
   atshapelinebgra, cbs_breeding;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtNestRevision }
 
   TedtNestRevision = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     ckHasPhilornisLarvae: TCheckBox;
     cbNestStage: TComboBox;
     cbNestStatus: TComboBox;
@@ -54,6 +56,8 @@ type
     lblNotes: TLabel;
     lblRevisionTime: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewNest: TMenuItem;
+    pmnNewPerson: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pContent: TPanel;
@@ -61,6 +65,7 @@ type
     pNest: TBCPanel;
     pNidoparasiteEggsTally: TPanel;
     pNestStage: TPanel;
+    pmNew: TPopupMenu;
     pPhilornis: TPanel;
     pRevisionDate: TPanel;
     pNotes: TPanel;
@@ -73,6 +78,7 @@ type
     eHostNestlingsTally: TSpinEdit;
     eNidoparasiteEggsTally: TSpinEdit;
     eNidoparasiteNestlingsTally: TSpinEdit;
+    procedure btnNewClick(Sender: TObject);
     procedure cbNestStageSelect(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eNestButtonClick(Sender: TObject);
@@ -90,6 +96,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewNestClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -114,7 +122,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue, cbs_dataconst,
-  cbs_themes, cbs_validations, udm_breeding, udm_main, uDarkStyleParams;
+  cbs_themes, cbs_validations, cbs_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -130,6 +138,14 @@ begin
   eObserver1.Images := DMM.iEditsDark;
   eObserver2.Images := DMM.iEditsDark;
   eNidoparasite.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtNestRevision.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtNestRevision.cbNestStageSelect(Sender: TObject);
@@ -410,6 +426,16 @@ begin
     (cbNestStage.ItemIndex >= 0) and
     (cbNestStatus.ItemIndex >= 0) then
     Result := True;
+end;
+
+procedure TedtNestRevision.pmnNewNestClick(Sender: TObject);
+begin
+  EditNest(DMG.qNests, 0, True);
+end;
+
+procedure TedtNestRevision.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtNestRevision.sbSaveClick(Sender: TObject);

@@ -2,6 +2,7 @@
 {"hash":225707967,"name":"tedtimageinfo.caption","sourcebytes":[73,109,97,103,101,32,105,110,102,111],"value":"Image info"},
 {"hash":366789,"name":"tedtimageinfo.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtimageinfo.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtimageinfo.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":159602842,"name":"tedtimageinfo.lbllocality.caption","sourcebytes":[76,111,99,97,108,105,116,121,58],"value":"Locality:"},
 {"hash":143939529,"name":"tedtimageinfo.elocality.buttonhint","sourcebytes":[70,105,110,100,32,108,111,99,97,108,105,116,121],"value":"Find locality"},
 {"hash":147519002,"name":"tedtimageinfo.lblauthor.caption","sourcebytes":[65,117,116,104,111,114,58],"value":"Author:"},
@@ -26,5 +27,7 @@
 {"hash":92700058,"name":"tedtimageinfo.lbllicenseyear.caption","sourcebytes":[76,105,99,101,110,115,101,32,121,101,97,114,58],"value":"License year:"},
 {"hash":183635978,"name":"tedtimageinfo.lbllicenseowner.caption","sourcebytes":[76,105,99,101,110,115,101,32,111,119,110,101,114,58],"value":"License owner:"},
 {"hash":183169082,"name":"tedtimageinfo.lbllicensenotes.caption","sourcebytes":[76,105,99,101,110,115,101,32,110,111,116,101,115,58],"value":"License notes:"},
-{"hash":207239850,"name":"tedtimageinfo.lbllicenseuri.caption","sourcebytes":[76,105,99,101,110,115,101,32,85,82,76,58],"value":"License URL:"}
+{"hash":207239850,"name":"tedtimageinfo.lbllicenseuri.caption","sourcebytes":[76,105,99,101,110,115,101,32,85,82,76,58],"value":"License URL:"},
+{"hash":109700082,"name":"tedtimageinfo.pmnnewperson.caption","sourcebytes":[78,101,119,32,97,117,116,104,111,114],"value":"New author"},
+{"hash":14469001,"name":"tedtimageinfo.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"}
 ]}

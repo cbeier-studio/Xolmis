@@ -1,11 +1,11 @@
 {"version":1,"strings":[
 {"hash":164853221,"name":"tedtcapture.caption","sourcebytes":[78,101,119,32,99,97,112,116,117,114,101],"value":"New capture"},
-{"hash":93863042,"name":"tedtcapture.sbsave.caption","sourcebytes":[83,97,108,118,97,114],"value":"Salvar"},
-{"hash":139052562,"name":"tedtcapture.sbcancel.caption","sourcebytes":[67,97,110,99,101,108,97,114],"value":"Cancelar"},
+{"hash":366789,"name":"tedtcapture.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tedtcapture.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtcapture.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":294282,"name":"tedtcapture.lblage.caption","sourcebytes":[65,103,101,58],"value":"Age:"},
 {"hash":178830394,"name":"tedtcapture.lblstatus.caption","sourcebytes":[83,116,97,116,117,115,58],"value":"Status:"},
 {"hash":211388148,"name":"tedtcapture.ckescaped.caption","sourcebytes":[69,115,99,97,112,101,100],"value":"Escaped"},
-{"hash":211190532,"name":"tedtcapture.btnnewband.caption","sourcebytes":[78,101,119,32,98,97,110,100],"value":"New band"},
 {"hash":4798036,"name":"tedtcapture.ckbloodsample.caption","sourcebytes":[66,108,111,111,100],"value":"Blood"},
 {"hash":183010521,"name":"tedtcapture.ckfeathers.caption","sourcebytes":[70,101,97,116,104,101,114,40,115,41],"value":"Feather(s)"},
 {"hash":5028291,"name":"tedtcapture.ckfeces.caption","sourcebytes":[70,101,99,101,115],"value":"Feces"},
@@ -92,5 +92,9 @@
 {"hash":168304554,"name":"tedtcapture.lblglucose.caption","sourcebytes":[71,108,117,99,111,115,101,32,40,109,103,47,100,76,41,58],"value":"Glucose (mg/dL):"},
 {"hash":201126026,"name":"tedtcapture.lblindividual.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,58,32,42],"value":"Individual: *"},
 {"hash":78213836,"name":"tedtcapture.eindividual.buttonhint","sourcebytes":[70,105,110,100,32,105,110,100,105,118,105,100,117,97,108],"value":"Find individual"},
-{"hash":207141516,"name":"tedtcapture.btnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"}
+{"hash":207141516,"name":"tedtcapture.pmnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"},
+{"hash":211190532,"name":"tedtcapture.pmnnewband.caption","sourcebytes":[78,101,119,32,98,97,110,100],"value":"New band"},
+{"hash":128569433,"name":"tedtcapture.pmnnewsurvey.caption","sourcebytes":[78,101,119,32,115,117,114,118,101,121],"value":"New survey"},
+{"hash":119478034,"name":"tedtcapture.pmnnewperson.caption","sourcebytes":[78,101,119,32,114,101,115,101,97,114,99,104,101,114],"value":"New researcher"},
+{"hash":14469001,"name":"tedtcapture.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"}
 ]}

@@ -2,15 +2,15 @@ object edtExpedition: TedtExpedition
   Left = 352
   Height = 393
   Top = 33
-  Width = 397
+  Width = 416
   AutoSize = True
   Caption = 'New expedition'
   ClientHeight = 393
-  ClientWidth = 397
+  ClientWidth = 416
+  Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -18,7 +18,7 @@ object edtExpedition: TedtExpedition
     Left = 0
     Height = 2
     Top = 305
-    Width = 397
+    Width = 416
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -26,9 +26,9 @@ object edtExpedition: TedtExpedition
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 307
-    Width = 397
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -37,16 +37,20 @@ object edtExpedition: TedtExpedition
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 397
+    ClientHeight = 42
+    ClientWidth = 416
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -56,10 +60,16 @@ object edtExpedition: TedtExpedition
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -67,38 +77,66 @@ object edtExpedition: TedtExpedition
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object SBox: TScrollBox
     Left = 0
     Height = 305
     Top = 0
-    Width = 397
-    HorzScrollBar.Page = 397
+    Width = 416
+    HorzScrollBar.Page = 416
     VertScrollBar.Page = 305
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
     ClientHeight = 305
-    ClientWidth = 397
+    ClientWidth = 416
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 305
       Top = 0
-      Width = 397
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 305
-      ClientWidth = 397
+      ClientWidth = 416
       TabOrder = 0
       object pName: TPanel
         Left = 0
         Height = 45
         Top = 16
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -110,14 +148,14 @@ object edtExpedition: TedtExpedition
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 0
         object lblName: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           BorderSpacing.Top = 3
           Caption = 'Name: *'
           ParentColor = False
@@ -127,7 +165,7 @@ object edtExpedition: TedtExpedition
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 384
           TabOrder = 0
           OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
@@ -138,7 +176,7 @@ object edtExpedition: TedtExpedition
         Left = 0
         Height = 112
         Top = 177
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -148,14 +186,14 @@ object edtExpedition: TedtExpedition
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 3
         object lblDescription: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Description:'
@@ -166,9 +204,9 @@ object edtExpedition: TedtExpedition
           Left = 16
           Height = 90
           Top = 22
-          Width = 365
+          Width = 384
           Align = alTop
-          Constraints.MinWidth = 365
+          Constraints.MinWidth = 384
           ScrollBars = ssAutoVertical
           TabOrder = 0
           OnKeyDown = FormKeyDown
@@ -179,7 +217,7 @@ object edtExpedition: TedtExpedition
         Left = 0
         Height = 45
         Top = 119
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -192,14 +230,14 @@ object edtExpedition: TedtExpedition
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 2
         object lblProject: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           BorderSpacing.Top = 3
           Caption = 'Project:'
           ParentColor = False
@@ -209,7 +247,7 @@ object edtExpedition: TedtExpedition
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 384
           ButtonHint = 'Find project'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -230,7 +268,7 @@ object edtExpedition: TedtExpedition
         Left = 0
         Height = 45
         Top = 61
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -242,24 +280,24 @@ object edtExpedition: TedtExpedition
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 1
         object lblStartDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Start date: *'
           ParentColor = False
           ParentFont = False
         end
         object lblEndDate: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'End date: *'
           ParentColor = False
@@ -269,7 +307,7 @@ object edtExpedition: TedtExpedition
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ButtonHint = 'Open calendar'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -288,10 +326,10 @@ object edtExpedition: TedtExpedition
           OnKeyPress = eNameKeyPress
         end
         object eEndDate: TEditButton
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           ButtonHint = 'Open calendar'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -317,5 +355,13 @@ object edtExpedition: TedtExpedition
     OnDataChange = dsLinkDataChange
     Left = 326
     Top = 109
+  end
+  object pmNew: TPopupMenu
+    Left = 126
+    Top = 283
+    object pmnNewProject: TMenuItem
+      Caption = 'New project'
+      OnClick = pmnNewProjectClick
+    end
   end
 end

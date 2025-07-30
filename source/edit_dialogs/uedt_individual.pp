@@ -22,14 +22,14 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, atshapelinebgra, Buttons, LCLType, cbs_birds;
+  StdCtrls, ExtCtrls, atshapelinebgra, Buttons, LCLType, Menus, cbs_birds;
 
 type
 
   { TedtIndividual }
 
   TedtIndividual = class(TForm)
-    btnNewBand: TBitBtn;
+    btnNew: TBitBtn;
     cbSex: TComboBox;
     cbAge: TComboBox;
     eBand: TEditButton;
@@ -73,6 +73,8 @@ type
     lblMother: TLabel;
     lblNest: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewBand: TMenuItem;
+    pmnNewNest: TMenuItem;
     mRecognizableMarkings: TMemo;
     mNotes: TMemo;
     pBirthDate: TPanel;
@@ -80,6 +82,7 @@ type
     pBottom: TPanel;
     pContent: TPanel;
     pNotes: TPanel;
+    pmNew: TPopupMenu;
     pRecognizableMarkings: TPanel;
     pBand: TPanel;
     pFather: TPanel;
@@ -95,7 +98,8 @@ type
     sbCancel: TButton;
     scrollContent: TScrollBox;
     sbSave: TButton;
-    procedure btnNewBandClick(Sender: TObject);
+    btnHelp: TSpeedButton;
+    procedure btnNewClick(Sender: TObject);
     procedure cbSexKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBandButtonClick(Sender: TObject);
@@ -123,6 +127,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewBandClick(Sender: TObject);
+    procedure pmnNewNestClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -168,12 +174,14 @@ begin
   eNest.Images := DMM.iEditsDark;
   eFather.Images := DMM.iEditsDark;
   eMother.Images := DMM.iEditsDark;
-  btnNewBand.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
-procedure TedtIndividual.btnNewBandClick(Sender: TObject);
+procedure TedtIndividual.btnNewClick(Sender: TObject);
 begin
-  EditBand(DMG.qBands, True);
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtIndividual.cbSexKeyPress(Sender: TObject; var Key: char);
@@ -591,6 +599,16 @@ begin
   //if (dsLink.DataSet.FieldByName('taxon_id').AsInteger <> 0) then
   if (FTaxonId > 0) then
     Result := True;
+end;
+
+procedure TedtIndividual.pmnNewBandClick(Sender: TObject);
+begin
+  EditBand(DMG.qBands, True);
+end;
+
+procedure TedtIndividual.pmnNewNestClick(Sender: TObject);
+begin
+  EditNest(DMG.qNests, 0, True);
 end;
 
 procedure TedtIndividual.sbSaveClick(Sender: TObject);

@@ -2,15 +2,15 @@ object edtEgg: TedtEgg
   Left = 352
   Height = 771
   Top = 33
-  Width = 397
+  Width = 417
   AutoSize = True
   Caption = 'New egg'
   ClientHeight = 771
-  ClientWidth = 397
+  ClientWidth = 417
+  Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -18,7 +18,7 @@ object edtEgg: TedtEgg
     Left = 0
     Height = 2
     Top = 728
-    Width = 397
+    Width = 417
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -26,9 +26,9 @@ object edtEgg: TedtEgg
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 730
-    Width = 397
+    Width = 417
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -37,16 +37,20 @@ object edtEgg: TedtEgg
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 397
+    ClientHeight = 42
+    ClientWidth = 417
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 153
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -56,10 +60,16 @@ object edtEgg: TedtEgg
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 281
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -67,37 +77,65 @@ object edtEgg: TedtEgg
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object sBox: TScrollBox
     Left = 0
     Height = 728
     Top = 0
-    Width = 397
+    Width = 417
     HorzScrollBar.Page = 397
     VertScrollBar.Page = 728
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
     ClientHeight = 728
-    ClientWidth = 397
+    ClientWidth = 417
     TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 728
       Top = 0
-      Width = 397
+      Width = 417
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 728
-      ClientWidth = 397
+      ClientWidth = 417
       TabOrder = 0
       object pFieldNumber: TPanel
         Left = 0
         Height = 45
         Top = 89
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -109,24 +147,24 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 1
         object lblFieldNumber: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Field number:'
           ParentColor = False
           ParentFont = False
         end
         object lblFieldNumber1: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 185
           BorderSpacing.Top = 3
           ParentColor = False
           ParentFont = False
@@ -135,7 +173,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -145,7 +183,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 134
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -157,24 +195,24 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 2
         object lblEggSeq: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Egg number: *'
           ParentColor = False
           ParentFont = False
         end
         object lblMeasureDate: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 185
           BorderSpacing.Top = 3
           Caption = 'Measurement date:'
           ParentColor = False
@@ -184,7 +222,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           MaxValue = 999999
           TabOrder = 0
           OnEditingDone = eEggSeqEditingDone
@@ -192,10 +230,10 @@ object edtEgg: TedtEgg
           OnKeyPress = eFieldNumberKeyPress
         end
         object eMeasureDate: TEditButton
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 185
           ButtonHint = 'Open calendar'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -215,7 +253,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 179
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -226,14 +264,14 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 3
         object lblTaxon: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 385
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
           ParentColor = False
@@ -243,7 +281,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 385
           ButtonHint = 'Find taxon'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -263,7 +301,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 224
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -274,14 +312,14 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 4
         object lblObserver: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 385
           BorderSpacing.Top = 3
           Caption = 'Observer: *'
           ParentColor = False
@@ -291,7 +329,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 385
           ButtonHint = 'Find observer'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -311,7 +349,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 542
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -322,14 +360,14 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 11
         object lblIndividual: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 385
           BorderSpacing.Top = 3
           Caption = 'Individual hatched:'
           ParentColor = False
@@ -339,7 +377,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 385
           ButtonHint = 'Find individual'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -358,7 +396,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 282
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -371,24 +409,24 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 5
         object lblShape: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Shape:'
           ParentColor = False
           ParentFont = False
         end
         object lblStage: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 185
           BorderSpacing.Top = 3
           Caption = 'Phase:'
           ParentColor = False
@@ -398,7 +436,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -406,10 +444,10 @@ object edtEgg: TedtEgg
           OnKeyPress = eFieldNumberKeyPress
         end
         object eStage: TEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 185
           TabOrder = 1
         end
       end
@@ -417,7 +455,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 327
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -429,24 +467,24 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 6
         object lblShellColor: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Eggshell color:'
           ParentColor = False
           ParentFont = False
         end
         object lblShellPattern: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 185
           BorderSpacing.Top = 3
           Caption = 'Eggshell pattern:'
           ParentColor = False
@@ -456,16 +494,16 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object cbShellPattern: TComboBox
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 185
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 1
@@ -477,7 +515,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 462
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -489,24 +527,24 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 9
         object lblWeight: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Mass:'
           ParentColor = False
           ParentFont = False
         end
         object lblVolume: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 185
           BorderSpacing.Top = 3
           Caption = 'Volume:'
           ParentColor = False
@@ -516,17 +554,17 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           MaxValue = 999999
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
         object txtVolume: TLabel
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 185
           Caption = 'txtVolume'
           Font.Height = -12
           Font.Style = [fsBold]
@@ -538,7 +576,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 417
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -550,24 +588,24 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 8
         object lblWidth: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Width:'
           ParentColor = False
           ParentFont = False
         end
         object lblLength: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 185
           BorderSpacing.Top = 3
           Caption = 'Length:'
           ParentColor = False
@@ -577,7 +615,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           MaxValue = 999999
           TabOrder = 0
           OnEditingDone = eWidthEditingDone
@@ -585,10 +623,10 @@ object edtEgg: TedtEgg
           OnKeyPress = eFieldNumberKeyPress
         end
         object eLength: TFloatSpinEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 185
           MaxValue = 999999
           TabOrder = 1
           OnEditingDone = eWidthEditingDone
@@ -600,7 +638,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 112
         Top = 600
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -610,14 +648,14 @@ object edtEgg: TedtEgg
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 12
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 385
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -628,7 +666,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 90
           Top = 22
-          Width = 365
+          Width = 385
           Align = alTop
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
@@ -641,7 +679,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 35
         Top = 507
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -651,7 +689,7 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 35
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 10
         object ckHatched: TCheckBox
@@ -669,7 +707,7 @@ object edtEgg: TedtEgg
         Left = 0
         Height = 45
         Top = 372
-        Width = 397
+        Width = 417
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -681,24 +719,24 @@ object edtEgg: TedtEgg
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 417
         ParentBackground = False
         TabOrder = 7
         object lblShellTexture: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Eggshell texture:'
           ParentColor = False
           ParentFont = False
         end
         object lblShellTexture1: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 185
           BorderSpacing.Top = 3
           ParentColor = False
           ParentFont = False
@@ -707,7 +745,7 @@ object edtEgg: TedtEgg
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -719,7 +757,7 @@ object edtEgg: TedtEgg
         Left = 13
         Height = 60
         Top = 16
-        Width = 371
+        Width = 391
         Align = alTop
         AutoSize = True
         BorderSpacing.Left = 13
@@ -770,7 +808,7 @@ object edtEgg: TedtEgg
           Left = 17
           Height = 15
           Top = 9
-          Width = 337
+          Width = 357
           BorderSpacing.Bottom = 3
           Caption = 'Nest:'
           ParentColor = False
@@ -780,7 +818,7 @@ object edtEgg: TedtEgg
           Left = 17
           Height = 23
           Top = 28
-          Width = 337
+          Width = 357
           ButtonHint = 'Find nest'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -804,5 +842,21 @@ object edtEgg: TedtEgg
     OnDataChange = dsLinkDataChange
     Left = 344
     Top = 32
+  end
+  object pmNew: TPopupMenu
+    Left = 128
+    Top = 706
+    object pmnNewNest: TMenuItem
+      Caption = 'New nest'
+      OnClick = pmnNewNestClick
+    end
+    object pmnNewPerson: TMenuItem
+      Caption = 'New observer'
+      OnClick = pmnNewPersonClick
+    end
+    object pmnNewIndividual: TMenuItem
+      Caption = 'New individual'
+      OnClick = pmnNewIndividualClick
+    end
   end
 end

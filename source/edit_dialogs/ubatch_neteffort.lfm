@@ -26,7 +26,7 @@ object batchNetEffort: TbatchNetEffort
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 457
     Width = 400
     Align = alTop
@@ -37,16 +37,20 @@ object batchNetEffort: TbatchNetEffort
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 400
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 136
       Height = 25
-      Top = 8
-      Width = 180
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -54,14 +58,32 @@ object batchNetEffort: TbatchNetEffort
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
-      Left = 204
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 264
       Height = 25
-      Top = 8
-      Width = 180
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
     end
   end
   object pEdit: TPanel

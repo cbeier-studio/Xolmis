@@ -21,7 +21,7 @@ unit uedt_method;
 interface
 
 uses
-  Classes, SysUtils, DB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  Classes, SysUtils, DB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons,
   atshapelinebgra, cbs_sampling;
 
 type
@@ -29,6 +29,7 @@ type
   { TedtMethod }
 
   TedtMethod = class(TForm)
+    btnHelp: TSpeedButton;
     dsLink: TDataSource;
     eName: TEdit;
     eAbbreviation: TEdit;
@@ -60,6 +61,7 @@ type
     procedure SetMethod(Value: TMethod);
     procedure GetRecord;
     procedure SetRecord;
+    procedure ApplyDarkMode;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
@@ -72,9 +74,14 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, cbs_dataconst;
+uses cbs_locale, cbs_global, cbs_dialogs, cbs_dataconst, udm_main, uDarkStyleParams;
 
 { TedtMethod }
+
+procedure TedtMethod.ApplyDarkMode;
+begin
+  btnHelp.Images := DMM.iEditsDark;
+end;
 
 procedure TedtMethod.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
@@ -125,6 +132,9 @@ end;
 
 procedure TedtMethod.FormShow(Sender: TObject);
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionMethod)]);

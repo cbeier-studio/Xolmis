@@ -22,13 +22,15 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, Character, DB, SQLDB, Forms, Controls, Graphics,
-  Dialogs, ExtCtrls, StdCtrls, atshapelinebgra, BCPanel, cbs_sampling;
+  Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, atshapelinebgra, BCPanel, cbs_sampling;
 
 type
 
   { TedtSurvey }
 
   TedtSurvey = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     eSampleId: TEdit;
     eEndLatitude: TEditButton;
     eLongitude: TEditButton;
@@ -45,6 +47,12 @@ type
     dsLink: TDataSource;
     eArea: TFloatSpinEdit;
     eDistance: TFloatSpinEdit;
+    pmnNewExpedition: TMenuItem;
+    pmnNewMethod: TMenuItem;
+    pmnNewLocality: TMenuItem;
+    pmnNewMistnetStation: TMenuItem;
+    pmnNewProject: TMenuItem;
+    pmNew: TPopupMenu;
     txtNetEffort: TLabel;
     lblNetStation: TLabel;
     lblEndLatitude: TLabel;
@@ -95,6 +103,7 @@ type
     eDuration: TSpinEdit;
     eObserversTally: TSpinEdit;
     eTotalNets: TSpinEdit;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
     procedure eDateEditingDone(Sender: TObject);
@@ -115,6 +124,11 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewExpeditionClick(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewMethodClick(Sender: TObject);
+    procedure pmnNewMistnetStationClick(Sender: TObject);
+    procedure pmnNewProjectClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -142,7 +156,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_themes,
-  cbs_getvalue, cbs_fullnames, cbs_dataconst, udm_main, uDarkStyleParams;
+  cbs_getvalue, cbs_fullnames, cbs_dataconst, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -163,6 +177,8 @@ begin
   eLatitude.Images := DMM.iEditsDark;
   eEndLongitude.Images := DMM.iEditsDark;
   eEndLatitude.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
 end;
 
 procedure TedtSurvey.AutoCalcFields;
@@ -192,6 +208,12 @@ begin
     end;
   end else
     txtNetEffort.Caption := '0';
+end;
+
+procedure TedtSurvey.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtSurvey.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -525,6 +547,7 @@ begin
     ApplyDarkMode;
 
   pExpedition.Visible := FExpeditionId = 0;
+  pmnNewExpedition.Visible := FExpeditionId = 0;
 
   if FIsNew then
   begin
@@ -595,6 +618,31 @@ begin
     (FMethodId > 0) and
     (FLocalityId > 0) then
     Result := True;
+end;
+
+procedure TedtSurvey.pmnNewExpeditionClick(Sender: TObject);
+begin
+  EditExpedition(DMG.qExpeditions, True);
+end;
+
+procedure TedtSurvey.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtSurvey.pmnNewMethodClick(Sender: TObject);
+begin
+  EditMethod(DMG.qMethods, True);
+end;
+
+procedure TedtSurvey.pmnNewMistnetStationClick(Sender: TObject);
+begin
+  EditSamplingPlot(DMG.qSamplingPlots, True);
+end;
+
+procedure TedtSurvey.pmnNewProjectClick(Sender: TObject);
+begin
+  EditProject(DMG.qProjects, True);
 end;
 
 procedure TedtSurvey.sbSaveClick(Sender: TObject);

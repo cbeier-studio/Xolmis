@@ -2,6 +2,7 @@
 {"hash":80309127,"name":"tedtegg.caption","sourcebytes":[78,101,119,32,101,103,103],"value":"New egg"},
 {"hash":366789,"name":"tedtegg.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtegg.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtegg.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":157264490,"name":"tedtegg.lblfieldnumber.caption","sourcebytes":[70,105,101,108,100,32,110,117,109,98,101,114,58],"value":"Field number:"},
 {"hash":139799082,"name":"tedtegg.lbleggseq.caption","sourcebytes":[69,103,103,32,110,117,109,98,101,114,58,32,42],"value":"Egg number: *"},
 {"hash":179506810,"name":"tedtegg.lblmeasuredate.caption","sourcebytes":[77,101,97,115,117,114,101,109,101,110,116,32,100,97,116,101,58],"value":"Measurement date:"},
@@ -26,5 +27,8 @@
 {"hash":243965684,"name":"tedtegg.ckhatched.caption","sourcebytes":[72,97,116,99,104,101,100],"value":"Hatched"},
 {"hash":66253242,"name":"tedtegg.lblshelltexture.caption","sourcebytes":[69,103,103,115,104,101,108,108,32,116,101,120,116,117,114,101,58],"value":"Eggshell texture:"},
 {"hash":5556858,"name":"tedtegg.lblnest.caption","sourcebytes":[78,101,115,116,58],"value":"Nest:"},
-{"hash":73859492,"name":"tedtegg.enest.buttonhint","sourcebytes":[70,105,110,100,32,110,101,115,116],"value":"Find nest"}
+{"hash":73859492,"name":"tedtegg.enest.buttonhint","sourcebytes":[70,105,110,100,32,110,101,115,116],"value":"Find nest"},
+{"hash":211241444,"name":"tedtegg.pmnnewnest.caption","sourcebytes":[78,101,119,32,110,101,115,116],"value":"New nest"},
+{"hash":214961042,"name":"tedtegg.pmnnewperson.caption","sourcebytes":[78,101,119,32,111,98,115,101,114,118,101,114],"value":"New observer"},
+{"hash":207141516,"name":"tedtegg.pmnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"}
 ]}

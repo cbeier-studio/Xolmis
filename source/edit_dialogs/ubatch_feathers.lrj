@@ -2,6 +2,7 @@
 {"hash":144159747,"name":"tbatchfeathers.caption","sourcebytes":[78,101,119,32,98,97,116,99,104,32,111,102,32,102,101,97,116,104,101,114,115],"value":"New batch of feathers"},
 {"hash":366789,"name":"tbatchfeathers.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tbatchfeathers.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tbatchfeathers.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":56137130,"name":"tbatchfeathers.lbllocality.caption","sourcebytes":[76,111,99,97,108,105,116,121,58,32,42],"value":"Locality: *"},
 {"hash":143939529,"name":"tbatchfeathers.elocality.buttonhint","sourcebytes":[70,105,110,100,32,108,111,99,97,108,105,116,121],"value":"Find locality"},
 {"hash":174885338,"name":"tbatchfeathers.lblsource.caption","sourcebytes":[83,111,117,114,99,101,58],"value":"Source:"},
@@ -48,5 +49,10 @@
 {"hash":234536282,"name":"tbatchfeathers.lblsighting.caption","sourcebytes":[83,105,103,104,116,105,110,103,58],"value":"Sighting:"},
 {"hash":47958423,"name":"tbatchfeathers.esighting.buttonhint","sourcebytes":[70,105,110,100,32,115,105,103,104,116,105,110,103],"value":"Find sighting"},
 {"hash":142330906,"name":"tbatchfeathers.lblcapture.caption","sourcebytes":[67,97,112,116,117,114,101,58],"value":"Capture:"},
-{"hash":223869669,"name":"tbatchfeathers.ecapture.buttonhint","sourcebytes":[70,105,110,100,32,99,97,112,116,117,114,101],"value":"Find capture"}
+{"hash":223869669,"name":"tbatchfeathers.ecapture.buttonhint","sourcebytes":[70,105,110,100,32,99,97,112,116,117,114,101],"value":"Find capture"},
+{"hash":164853221,"name":"tbatchfeathers.pmnnewcapture.caption","sourcebytes":[78,101,119,32,99,97,112,116,117,114,101],"value":"New capture"},
+{"hash":177420759,"name":"tbatchfeathers.pmnnewsighting.caption","sourcebytes":[78,101,119,32,115,105,103,104,116,105,110,103],"value":"New sighting"},
+{"hash":207141516,"name":"tbatchfeathers.pmnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"},
+{"hash":14469001,"name":"tbatchfeathers.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"},
+{"hash":214961042,"name":"tbatchfeathers.pmnnewobserver.caption","sourcebytes":[78,101,119,32,111,98,115,101,114,118,101,114],"value":"New observer"}
 ]}

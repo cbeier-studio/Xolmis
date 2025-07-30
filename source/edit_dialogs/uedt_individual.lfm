@@ -10,7 +10,6 @@ object edtIndividual: TedtIndividual
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -27,7 +26,7 @@ object edtIndividual: TedtIndividual
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 600
     Width = 428
     Align = alTop
@@ -38,16 +37,20 @@ object edtIndividual: TedtIndividual
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 428
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 164
       Height = 25
-      Top = 8
-      Width = 194
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -57,16 +60,50 @@ object edtIndividual: TedtIndividual
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 218
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 292
       Height = 25
-      Top = 8
-      Width = 194
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
     end
   end
   object scrollContent: TScrollBox
@@ -85,7 +122,7 @@ object edtIndividual: TedtIndividual
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 790
+      Height = 787
       Top = 0
       Width = 411
       Align = alTop
@@ -93,13 +130,13 @@ object edtIndividual: TedtIndividual
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 790
+      ClientHeight = 787
       ClientWidth = 411
       TabOrder = 0
       object pMother: TPanel
         Left = 0
         Height = 45
-        Top = 495
+        Top = 492
         Width = 411
         Align = alTop
         AutoSize = True
@@ -273,7 +310,7 @@ object edtIndividual: TedtIndividual
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 646
+        Top = 643
         Width = 411
         Align = alTop
         AutoSize = True
@@ -314,7 +351,7 @@ object edtIndividual: TedtIndividual
       object pNest: TPanel
         Left = 0
         Height = 45
-        Top = 405
+        Top = 402
         Width = 411
         Align = alTop
         AutoSize = True
@@ -363,7 +400,7 @@ object edtIndividual: TedtIndividual
       object pFather: TPanel
         Left = 0
         Height = 45
-        Top = 450
+        Top = 447
         Width = 411
         Align = alTop
         AutoSize = True
@@ -411,7 +448,7 @@ object edtIndividual: TedtIndividual
       object pBirthDeath: TPanel
         Left = 0
         Height = 45
-        Top = 302
+        Top = 299
         Width = 411
         Align = alTop
         AutoSize = True
@@ -574,7 +611,7 @@ object edtIndividual: TedtIndividual
       object pColorTarsi: TPanel
         Left = 0
         Height = 45
-        Top = 199
+        Top = 196
         Width = 411
         Align = alTop
         AutoSize = True
@@ -650,7 +687,7 @@ object edtIndividual: TedtIndividual
       object pRecognizableMarkings: TPanel
         Left = 0
         Height = 80
-        Top = 553
+        Top = 550
         Width = 411
         Align = alTop
         AutoSize = True
@@ -690,7 +727,7 @@ object edtIndividual: TedtIndividual
       object pColorTibiae: TPanel
         Left = 0
         Height = 45
-        Top = 244
+        Top = 241
         Width = 411
         Align = alTop
         AutoSize = True
@@ -766,7 +803,7 @@ object edtIndividual: TedtIndividual
       object pRemovedBand: TPanel
         Left = 0
         Height = 45
-        Top = 154
+        Top = 151
         Width = 411
         Align = alTop
         AutoSize = True
@@ -842,7 +879,7 @@ object edtIndividual: TedtIndividual
       end
       object pDoubleBand: TPanel
         Left = 0
-        Height = 48
+        Height = 45
         Top = 106
         Width = 411
         Align = alTop
@@ -855,7 +892,7 @@ object edtIndividual: TedtIndividual
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 48
+        ClientHeight = 45
         ClientWidth = 411
         ParentBackground = False
         TabOrder = 2
@@ -880,7 +917,7 @@ object edtIndividual: TedtIndividual
         end
         object eDoubleBand: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 22
           Width = 182
           ButtonHint = 'Find double band'
@@ -896,23 +933,11 @@ object edtIndividual: TedtIndividual
           OnKeyDown = FormKeyDown
           OnKeyPress = eDoubleBandKeyPress
         end
-        object btnNewBand: TBitBtn
-          Left = 214
-          Height = 26
-          Top = 22
-          Width = 181
-          AutoSize = True
-          Caption = 'New band'
-          Images = DMM.iEdits
-          ImageIndex = 8
-          TabOrder = 1
-          OnClick = btnNewBandClick
-        end
       end
       object pSexAge: TPanel
         Left = 0
         Height = 45
-        Top = 347
+        Top = 344
         Width = 411
         Align = alTop
         AutoSize = True
@@ -978,5 +1003,17 @@ object edtIndividual: TedtIndividual
     OnDataChange = dsLinkDataChange
     Left = 314
     Top = 26
+  end
+  object pmNew: TPopupMenu
+    Left = 128
+    Top = 576
+    object pmnNewBand: TMenuItem
+      Caption = 'New band'
+      OnClick = pmnNewBandClick
+    end
+    object pmnNewNest: TMenuItem
+      Caption = 'New nest'
+      OnClick = pmnNewNestClick
+    end
   end
 end

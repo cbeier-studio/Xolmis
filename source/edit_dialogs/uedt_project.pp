@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, DateUtils, LResources, Forms, Controls,
-  Graphics, Dialogs, ExtCtrls, StdCtrls, atshapelinebgra,
+  Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, atshapelinebgra,
   cbs_entities;
 
 type
@@ -30,6 +30,7 @@ type
   { TedtProject }
 
   TedtProject = class(TForm)
+    btnHelp: TSpeedButton;
     dsLink: TDataSource;
     eProtocolNumber: TEdit;
     eTitle: TEdit;

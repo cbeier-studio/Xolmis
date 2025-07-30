@@ -22,13 +22,15 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, atshapelinebgra, cbs_entities;
+  StdCtrls, ExtCtrls, Buttons, Menus, atshapelinebgra, cbs_entities;
 
 type
 
   { TedtInstitution }
 
   TedtInstitution = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     eMunicipality: TEditButton;
     eState: TEditButton;
     eCountry: TEditButton;
@@ -59,6 +61,7 @@ type
     lblState: TLabel;
     lblCountry: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewToponym: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
@@ -69,6 +72,7 @@ type
     pManagerName: TPanel;
     pEmail: TPanel;
     pFullname: TPanel;
+    pmNew: TPopupMenu;
     pPhone: TPanel;
     pAcronym: TPanel;
     pPostalCode: TPanel;
@@ -78,6 +82,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eCountryButtonClick(Sender: TObject);
     procedure eCountryKeyPress(Sender: TObject; var Key: char);
@@ -90,6 +95,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewToponymClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -113,7 +119,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  cbs_dataconst, udm_main, uDarkStyleParams;
+  cbs_dataconst, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -124,6 +130,14 @@ begin
   eMunicipality.Images := DMM.iEditsDark;
   eState.Images := DMM.iEditsDark;
   eCountry.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtInstitution.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtInstitution.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -320,6 +334,11 @@ begin
   if (eFullname.Text <> EmptyStr) and
     (eAcronym.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtInstitution.pmnNewToponymClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
 end;
 
 procedure TedtInstitution.sbSaveClick(Sender: TObject);

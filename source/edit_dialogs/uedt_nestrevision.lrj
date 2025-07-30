@@ -2,6 +2,7 @@
 {"hash":141439662,"name":"tedtnestrevision.caption","sourcebytes":[78,101,119,32,110,101,115,116,32,114,101,118,105,115,105,111,110],"value":"New nest revision"},
 {"hash":366789,"name":"tedtnestrevision.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtnestrevision.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtnestrevision.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":175999370,"name":"tedtnestrevision.lblneststage.caption","sourcebytes":[83,116,97,103,101,58,32,42],"value":"Stage: *"},
 {"hash":146552458,"name":"tedtnestrevision.lblneststatus.caption","sourcebytes":[83,116,97,116,117,115,58,32,42],"value":"Status: *"},
 {"hash":11143770,"name":"tedtnestrevision.lblhosteggstally.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,101,103,103,115,32,40,104,111,115,116,41,58],"value":"Number of eggs (host):"},
@@ -22,5 +23,7 @@
 {"hash":7184666,"name":"tedtnestrevision.lblnidoparasiteeggstally.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,110,105,100,111,112,97,114,97,115,105,116,101,32,101,103,103,115,58],"value":"Number of nidoparasite eggs:"},
 {"hash":237593914,"name":"tedtnestrevision.lblnidoparasitenestlingstally.caption","sourcebytes":[78,117,109,98,101,114,32,111,102,32,110,105,100,111,112,97,114,97,115,105,116,101,32,110,101,115,116,108,105,110,103,115,58],"value":"Number of nidoparasite nestlings:"},
 {"hash":5556858,"name":"tedtnestrevision.lblnest.caption","sourcebytes":[78,101,115,116,58],"value":"Nest:"},
-{"hash":73859492,"name":"tedtnestrevision.enest.buttonhint","sourcebytes":[70,105,110,100,32,110,101,115,116],"value":"Find nest"}
+{"hash":73859492,"name":"tedtnestrevision.enest.buttonhint","sourcebytes":[70,105,110,100,32,110,101,115,116],"value":"Find nest"},
+{"hash":211241444,"name":"tedtnestrevision.pmnnewnest.caption","sourcebytes":[78,101,119,32,110,101,115,116],"value":"New nest"},
+{"hash":214961042,"name":"tedtnestrevision.pmnnewperson.caption","sourcebytes":[78,101,119,32,111,98,115,101,114,118,101,114],"value":"New observer"}
 ]}

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
-  ExtCtrls, Character, StdCtrls, atshapelinebgra,
+  ExtCtrls, Character, StdCtrls, Buttons, Menus, atshapelinebgra,
   BCPanel, cbs_sampling;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtNetEffort }
 
   TedtNetEffort = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbNetMesh: TComboBox;
     eNetClose2: TEdit;
     eNetClose3: TEdit;
@@ -47,6 +49,8 @@ type
     eDate: TEditButton;
     eNetLength: TFloatSpinEdit;
     eNetHeight: TFloatSpinEdit;
+    pmnNewSurvey: TMenuItem;
+    pmNew: TPopupMenu;
     txtTotalOpenTime: TLabel;
     txtNetArea: TLabel;
     lblNetClose4: TLabel;
@@ -88,6 +92,7 @@ type
     sbCancel: TButton;
     sBox: TScrollBox;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
     procedure eLongitudeButtonClick(Sender: TObject);
@@ -102,6 +107,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewSurveyClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -128,8 +134,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  cbs_fullnames, cbs_datacolumns, cbs_themes, cbs_dataconst,
-  udm_main, uDarkStyleParams;
+  cbs_fullnames, cbs_datacolumns, cbs_themes, cbs_dataconst, cbs_editdialogs,
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -145,6 +151,8 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   eDate.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
 end;
 
 procedure TedtNetEffort.AutoCalcFields;
@@ -175,6 +183,12 @@ begin
       Interval4 := HourSpan(StrToTime(eNetOpen4.Text), StrToTime(eNetClose4.Text));
 
   txtTotalOpenTime.Caption := FloatToStr(Interval1 + Interval2 + Interval3 + Interval4);
+end;
+
+procedure TedtNetEffort.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtNetEffort.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -487,6 +501,11 @@ begin
     (eNetOpen1.Text <> EmptyStr) and
     (eNetClose1.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtNetEffort.pmnNewSurveyClick(Sender: TObject);
+begin
+  EditSurvey(DMG.qSurveys, 0, True);
 end;
 
 procedure TedtNetEffort.sbSaveClick(Sender: TObject);

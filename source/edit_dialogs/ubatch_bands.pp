@@ -22,13 +22,15 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DB, SqlDB, DBCtrls,
-  Spin, EditBtn, atshapelinebgra, Character, DateUtils, Types;
+  Spin, EditBtn, Buttons, Menus, atshapelinebgra, Character, DateUtils, Types;
 
 type
 
   { TbatchBands }
 
   TbatchBands = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbBandSize: TComboBox;
     cbBandType: TComboBox;
     cbBandSource: TComboBox;
@@ -54,6 +56,10 @@ type
     lblProject: TLabel;
     lblBandSource: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewProject: TMenuItem;
+    pmnNewInstitution: TMenuItem;
+    pmnNewPerson: TMenuItem;
+    pmNew: TPopupMenu;
     pSender: TPanel;
     pSizeType: TPanel;
     pFromToNumber: TPanel;
@@ -69,6 +75,7 @@ type
     eEndNumber: TSpinEdit;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure cbBandSizeChange(Sender: TObject);
     procedure cbBandSizeEditingDone(Sender: TObject);
     procedure cbBandSizeKeyPress(Sender: TObject; var Key: char);
@@ -83,6 +90,9 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewInstitutionClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
+    procedure pmnNewProjectClick(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
@@ -102,9 +112,9 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_editdialogs,
   cbs_birds, cbs_conversions, cbs_fullnames, cbs_validations,
-  udm_main, udlg_progress, udlg_loading, uDarkStyleParams;
+  udm_main, udm_grid, udlg_progress, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -302,6 +312,14 @@ begin
   eRequester.Images := DMM.iEditsDark;
   eSender.Images := DMM.iEditsDark;
   eCarrier.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TbatchBands.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TbatchBands.cbBandSizeChange(Sender: TObject);
@@ -513,6 +531,21 @@ begin
     (FRequesterId > 0) and
     (FSupplierId > 0) then
     Result := True;
+end;
+
+procedure TbatchBands.pmnNewInstitutionClick(Sender: TObject);
+begin
+  EditInstitution(DMG.qInstitutions, True);
+end;
+
+procedure TbatchBands.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
+end;
+
+procedure TbatchBands.pmnNewProjectClick(Sender: TObject);
+begin
+  EditProject(DMG.qProjects, True);
 end;
 
 procedure TbatchBands.sbCancelClick(Sender: TObject);

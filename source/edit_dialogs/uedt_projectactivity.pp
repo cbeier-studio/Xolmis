@@ -6,13 +6,15 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, StdCtrls, SysUtils, Forms, Character,
-  Controls, Graphics, Dialogs, cbs_entities;
+  Controls, Graphics, Dialogs, Buttons, Menus, cbs_entities;
 
 type
 
   { TedtProjectActivity }
 
   TedtProjectActivity = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbStatus: TComboBox;
     dsLink: TDataSource;
     eEndDate: TEditButton;
@@ -27,14 +29,17 @@ type
     lblStartDate: TLabel;
     lineBottom: TShapeLineBGRA;
     mDescription: TMemo;
+    pmnNewGoal: TMenuItem;
     pBottom: TPanel;
     pContent: TPanel;
     pDescription: TPanel;
     pGoal: TPanel;
+    pmNew: TPopupMenu;
     pTargetEndDate: TPanel;
     pStatusStartDate: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure cbStatusKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
@@ -46,6 +51,7 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure mDescriptionEditingDone(Sender: TObject);
+    procedure pmnNewGoalClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -71,7 +77,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_getvalue, cbs_conversions,
-  cbs_finddialogs, cbs_dataconst, udm_main, uDarkStyleParams;
+  cbs_finddialogs, cbs_dataconst, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -83,6 +89,14 @@ begin
   eTargetDate.Images := DMM.iEditsDark;
   eEndDate.Images := DMM.iEditsDark;
   eGoal.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProjectActivity.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtProjectActivity.cbStatusKeyPress(Sender: TObject; var Key: char);
@@ -250,6 +264,11 @@ end;
 procedure TedtProjectActivity.mDescriptionEditingDone(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
+end;
+
+procedure TedtProjectActivity.pmnNewGoalClick(Sender: TObject);
+begin
+  EditProjectGoal(DMG.qProjectGoals, FProjectId, True);
 end;
 
 procedure TedtProjectActivity.sbSaveClick(Sender: TObject);

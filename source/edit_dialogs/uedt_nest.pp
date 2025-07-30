@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, Character, DB, Forms, Controls, Graphics,
-  Dialogs, StdCtrls, ExtCtrls, atshapelinebgra,
+  Dialogs, StdCtrls, ExtCtrls, Buttons, Menus, atshapelinebgra,
   cbs_breeding;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtNest }
 
   TedtNest = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbNestFate: TComboBox;
     cbNestShape: TComboBox;
     cbSupportType: TComboBox;
@@ -102,6 +104,10 @@ type
     lblSupplier1: TLabel;
     lineBottom: TShapeLineBGRA;
     mDescription: TMemo;
+    pmnNewProject: TMenuItem;
+    pmnNewPerson: TMenuItem;
+    pmnNewLocality: TMenuItem;
+    pmnNewBotanicTaxon: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
@@ -110,6 +116,7 @@ type
     pFieldNumberFate: TPanel;
     pObserver: TPanel;
     pExternalDiameter: TPanel;
+    pmNew: TPopupMenu;
     pSupportPlant2: TPanel;
     pNestCover: TPanel;
     pProductivity: TPanel;
@@ -133,6 +140,7 @@ type
     sbSave: TButton;
     eNestCover: TSpinEdit;
     eProductivity: TSpinEdit;
+    procedure btnNewClick(Sender: TObject);
     procedure cbSupportTypeSelect(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
@@ -157,6 +165,10 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewBotanicTaxonClick(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
+    procedure pmnNewProjectClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -181,7 +193,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_dialogs, cbs_finddialogs, cbs_validations,
-  cbs_getvalue, cbs_taxonomy, cbs_gis, udm_main, uDarkStyleParams;
+  cbs_getvalue, cbs_taxonomy, cbs_gis, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -199,6 +211,14 @@ begin
   eLatitude.Images := DMM.iEditsDark;
   eSupportPlant1.Images := DMM.iEditsDark;
   eSupportPlant2.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtNest.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtNest.cbSupportTypeSelect(Sender: TObject);
@@ -690,6 +710,26 @@ begin
     (FObserverId > 0) and
     (FLocalityId > 0) then
     Result := True;
+end;
+
+procedure TedtNest.pmnNewBotanicTaxonClick(Sender: TObject);
+begin
+  EditBotanicTaxon(DMG.qBotany, True);
+end;
+
+procedure TedtNest.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtNest.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
+end;
+
+procedure TedtNest.pmnNewProjectClick(Sender: TObject);
+begin
+  EditProject(DMG.qProjects, True);
 end;
 
 procedure TedtNest.sbSaveClick(Sender: TObject);

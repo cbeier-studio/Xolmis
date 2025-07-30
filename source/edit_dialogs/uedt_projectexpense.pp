@@ -6,13 +6,15 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, StdCtrls, ExtCtrls, SysUtils, Forms, Controls, Spin, Character,
-  Graphics, Dialogs, cbs_entities;
+  Graphics, Dialogs, Buttons, Menus, cbs_entities;
 
 type
 
   { TedtProjectExpense }
 
   TedtProjectExpense = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     dsLink: TDataSource;
     eRubric: TEditButton;
     eDate: TEditButton;
@@ -23,13 +25,16 @@ type
     lblDate: TLabel;
     lblItem: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewRubric: TMenuItem;
     pBottom: TPanel;
     pClient: TPanel;
+    pmNew: TPopupMenu;
     pRubric: TPanel;
     pDateAmount: TPanel;
     pItem: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
     procedure eItemKeyPress(Sender: TObject; var Key: char);
@@ -39,6 +44,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewRubricClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -64,7 +70,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue,
-  cbs_conversions, cbs_dataconst, udm_main, uDarkStyleParams;
+  cbs_conversions, cbs_dataconst, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -74,6 +80,14 @@ procedure TedtProjectExpense.ApplyDarkMode;
 begin
   eRubric.Images := DMM.iEditsDark;
   eDate.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProjectExpense.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtProjectExpense.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -205,6 +219,11 @@ begin
 
   if (eRubric.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtProjectExpense.pmnNewRubricClick(Sender: TObject);
+begin
+  EditProjectRubric(DMG.qProjectBudget, FProjectId, True);
 end;
 
 procedure TedtProjectExpense.sbSaveClick(Sender: TObject);

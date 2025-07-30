@@ -30,6 +30,8 @@ type
   { TedtPerson }
 
   TedtPerson = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbTreatment: TComboBox;
     cbGender: TComboBox;
     eDepartment: TEdit;
@@ -67,6 +69,7 @@ type
     lblOrcid: TLabel;
     lblPhone2: TLabel;
     lblZipCode1: TLabel;
+    pmnNewToponym: TMenuItem;
     mNotes: TMemo;
     pImageToolbar: TBCPanel;
     imgProfile: TDBImage;
@@ -100,6 +103,7 @@ type
     mmPasteImage: TMenuItem;
     mmRemoveImage: TMenuItem;
     pmImage: TPopupMenu;
+    pmNew: TPopupMenu;
     pTreatment: TPanel;
     pBottom: TPanel;
     pContent: TPanel;
@@ -132,6 +136,7 @@ type
     Separator2: TMenuItem;
     sbAddImage: TSpeedButton;
     sbRemoveImage: TSpeedButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBirthDateButtonClick(Sender: TObject);
     procedure eCountryButtonClick(Sender: TObject);
@@ -150,6 +155,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure mmCopyImageClick(Sender: TObject);
     procedure mmPasteImageClick(Sender: TObject);
+    procedure pmnNewToponymClick(Sender: TObject);
     procedure sbAddImageClick(Sender: TObject);
     procedure sbRemoveImageClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
@@ -175,8 +181,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  cbs_themes, cbs_dataconst,
-  udm_main, uDarkStyleParams;
+  cbs_themes, cbs_dataconst, cbs_editdialogs,
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -194,6 +200,14 @@ begin
   eState.Images := DMM.iEditsDark;
   eCountry.Images := DMM.iEditsDark;
   eInstitution.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtPerson.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtPerson.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -473,6 +487,11 @@ end;
 procedure TedtPerson.mmPasteImageClick(Sender: TObject);
 begin
   imgProfile.PasteFromClipboard;
+end;
+
+procedure TedtPerson.pmnNewToponymClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
 end;
 
 procedure TedtPerson.sbAddImageClick(Sender: TObject);

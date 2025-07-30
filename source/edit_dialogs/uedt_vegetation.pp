@@ -6,13 +6,14 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, Spin, SysUtils, Forms,
-  Controls, Graphics, StdCtrls, Dialogs, cbs_sampling;
+  Controls, Graphics, StdCtrls, Dialogs, Buttons, cbs_sampling;
 
 type
 
   { TedtVegetation }
 
   TedtVegetation = class(TForm)
+    btnHelp: TSpeedButton;
     cbShrubsDistribution: TComboBox;
     cbTreesDistribution: TComboBox;
     cbHerbsDistribution: TComboBox;
@@ -107,6 +108,7 @@ begin
   eSampleDate.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtVegetation.dsLinkDataChange(Sender: TObject; Field: TField);

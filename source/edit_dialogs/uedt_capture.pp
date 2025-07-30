@@ -22,7 +22,7 @@ interface
 
 uses
   Buttons, Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls,
-  Graphics, Dialogs, Character, DateUtils, ExtCtrls, StdCtrls, atshapelinebgra,
+  Graphics, Dialogs, Character, DateUtils, ExtCtrls, StdCtrls, Menus, atshapelinebgra,
   cbs_birds;
 
 type
@@ -30,8 +30,8 @@ type
   { TedtCapture }
 
   TedtCapture = class(TForm)
-    btnNewBand: TBitBtn;
-    btnNewIndividual: TBitBtn;
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbCamera: TComboBox;
     ckEscaped: TCheckBox;
     ckBloodSample: TCheckBox;
@@ -97,6 +97,11 @@ type
     eFirstSecondaryChord: TFloatSpinEdit;
     lblIndividual1: TLabel;
     lblIndividual: TLabel;
+    pmnNewLocality: TMenuItem;
+    pmnNewIndividual: TMenuItem;
+    pmnNewBand: TMenuItem;
+    pmnNewSurvey: TMenuItem;
+    pmnNewPerson: TMenuItem;
     mNotes: TMemo;
     lblAge: TLabel;
     Label10: TLabel;
@@ -168,6 +173,7 @@ type
     pBottom: TPanel;
     pClient: TPanel;
     pLeftBands: TPanel;
+    pmNew: TPopupMenu;
     pRightBands: TPanel;
     pSamples: TPanel;
     pPhotographersCamera: TPanel;
@@ -203,8 +209,7 @@ type
     shpRightBelowBand3: TShape;
     shpRightBelowBand4: TShape;
     ePhilornisLarvae: TSpinEdit;
-    procedure btnNewBandClick(Sender: TObject);
-    procedure btnNewIndividualClick(Sender: TObject);
+    procedure btnNewClick(Sender: TObject);
     procedure cbAgeKeyPress(Sender: TObject; var Key: char);
     procedure cbCaptureTypeKeyPress(Sender: TObject; var Key: char);
     procedure cbSexKeyPress(Sender: TObject; var Key: char);
@@ -251,6 +256,11 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewBandClick(Sender: TObject);
+    procedure pmnNewIndividualClick(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
+    procedure pmnNewSurveyClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -290,8 +300,8 @@ uses
 procedure TedtCapture.ApplyDarkMode;
 begin
   eIndividual.Images := DMM.iEditsDark;
-  btnNewIndividual.Images := DMM.iEditsDark;
-  btnNewBand.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
   eSurvey.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eCaptureDate.Images := DMM.iEditsDark;
@@ -313,14 +323,10 @@ begin
   ePhotographer2.Images := DMM.iEditsDark;
 end;
 
-procedure TedtCapture.btnNewBandClick(Sender: TObject);
+procedure TedtCapture.btnNewClick(Sender: TObject);
 begin
-  EditBand(DMG.qBands, True);
-end;
-
-procedure TedtCapture.btnNewIndividualClick(Sender: TObject);
-begin
-  EditIndividual(DMG.qIndividuals, True);
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtCapture.cbAgeKeyPress(Sender: TObject; var Key: char);
@@ -1094,7 +1100,7 @@ begin
 
   PaintColorBands(bpRightTarsus);
   PaintColorBands(bpLeftTarsus);
-  eSurvey.SetFocus;
+  //eSurvey.SetFocus;
 
   //eLongitudeExit(eLongitude);
   //eLongitudeExit(eLatitude);
@@ -1442,6 +1448,31 @@ begin
     end;
     B.Free;
   end;
+end;
+
+procedure TedtCapture.pmnNewBandClick(Sender: TObject);
+begin
+  EditBand(DMG.qBands, True);
+end;
+
+procedure TedtCapture.pmnNewIndividualClick(Sender: TObject);
+begin
+  EditIndividual(DMG.qIndividuals, True);
+end;
+
+procedure TedtCapture.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtCapture.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
+end;
+
+procedure TedtCapture.pmnNewSurveyClick(Sender: TObject);
+begin
+  EditSurvey(DMG.qSurveys, 0, True);
 end;
 
 procedure TedtCapture.sbSaveClick(Sender: TObject);

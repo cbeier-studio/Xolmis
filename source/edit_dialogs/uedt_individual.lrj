@@ -2,6 +2,7 @@
 {"hash":207141516,"name":"tedtindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"},
 {"hash":366789,"name":"tedtindividual.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtindividual.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtindividual.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":74116106,"name":"tedtindividual.lblmother.caption","sourcebytes":[77,111,116,104,101,114,58],"value":"Mother:"},
 {"hash":183625068,"name":"tedtindividual.emother.buttonhint","sourcebytes":[70,105,110,100,32,109,111,116,104,101,114,32,105,110,100,105,118,105,100,117,97,108],"value":"Find mother individual"},
 {"hash":4752506,"name":"tedtindividual.lblband.caption","sourcebytes":[66,97,110,100,58],"value":"Band:"},
@@ -40,7 +41,8 @@
 {"hash":33581481,"name":"tedtindividual.ebandchangedate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":64937306,"name":"tedtindividual.lbldoubleband.caption","sourcebytes":[68,111,117,98,108,101,32,98,97,110,100,58],"value":"Double band:"},
 {"hash":68763028,"name":"tedtindividual.edoubleband.buttonhint","sourcebytes":[70,105,110,100,32,100,111,117,98,108,101,32,98,97,110,100],"value":"Find double band"},
-{"hash":211190532,"name":"tedtindividual.btnnewband.caption","sourcebytes":[78,101,119,32,98,97,110,100],"value":"New band"},
 {"hash":367802,"name":"tedtindividual.lblsex.caption","sourcebytes":[83,101,120,58],"value":"Sex:"},
-{"hash":294282,"name":"tedtindividual.lblage.caption","sourcebytes":[65,103,101,58],"value":"Age:"}
+{"hash":294282,"name":"tedtindividual.lblage.caption","sourcebytes":[65,103,101,58],"value":"Age:"},
+{"hash":211190532,"name":"tedtindividual.pmnnewband.caption","sourcebytes":[78,101,119,32,98,97,110,100],"value":"New band"},
+{"hash":211241444,"name":"tedtindividual.pmnnewnest.caption","sourcebytes":[78,101,119,32,110,101,115,116],"value":"New nest"}
 ]}

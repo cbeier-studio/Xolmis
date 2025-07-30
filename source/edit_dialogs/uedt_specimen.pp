@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, LResources, Forms, Controls, Graphics,
-  Dialogs, StdCtrls, ExtCtrls, DB, DateUtils,
+  Dialogs, StdCtrls, ExtCtrls, Buttons, Menus, DB, DateUtils,
   atshapelinebgra, cbs_sampling;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtSpecimen }
 
   TedtSpecimen = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbSampleType: TComboBox;
     dsLink: TDataSource;
     eCollectionYear: TEdit;
@@ -56,6 +58,10 @@ type
     lblSampleType: TLabel;
     lblTaxon: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewLocality: TMenuItem;
+    pmnNewIndividual: TMenuItem;
+    pmnNewNest: TMenuItem;
+    pmnNewEgg: TMenuItem;
     mNotes: TMemo;
     pBirthDate: TPanel;
     pBottom: TPanel;
@@ -67,11 +73,13 @@ type
     pNest: TPanel;
     pEgg: TPanel;
     pLocality: TPanel;
+    pmNew: TPopupMenu;
     pStatus4: TPanel;
     pTaxon: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
     scrollContent: TScrollBox;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEggButtonClick(Sender: TObject);
     procedure eEggKeyPress(Sender: TObject; var Key: char);
@@ -90,6 +98,10 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewEggClick(Sender: TObject);
+    procedure pmnNewIndividualClick(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewNestClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -115,7 +127,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_taxonomy,
-  cbs_validations, cbs_dataconst, cbs_getvalue, udm_main, uDarkStyleParams;
+  cbs_validations, cbs_dataconst, cbs_getvalue, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 { TedtSpecimen }
 
@@ -128,6 +140,14 @@ begin
   eIndividual.Images := DMM.iEditsDark;
   eNest.Images := DMM.iEditsDark;
   eEgg.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSpecimen.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtSpecimen.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -546,6 +566,26 @@ begin
     (FLocalityId > 0) and
     (FTaxonId > 0) then
     Result := True;
+end;
+
+procedure TedtSpecimen.pmnNewEggClick(Sender: TObject);
+begin
+  EditEgg(DMG.qEggs, 0, True);
+end;
+
+procedure TedtSpecimen.pmnNewIndividualClick(Sender: TObject);
+begin
+  EditIndividual(DMG.qIndividuals, True);
+end;
+
+procedure TedtSpecimen.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtSpecimen.pmnNewNestClick(Sender: TObject);
+begin
+  EditNest(DMG.qNests, 0, True);
 end;
 
 procedure TedtSpecimen.sbSaveClick(Sender: TObject);

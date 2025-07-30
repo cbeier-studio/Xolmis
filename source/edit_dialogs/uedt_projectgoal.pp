@@ -6,13 +6,14 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, ExtCtrls, StdCtrls, SysUtils, Forms, Controls, EditBtn,
-  Graphics, Dialogs, cbs_entities;
+  Graphics, Dialogs, Buttons, cbs_entities;
 
 type
 
   { TedtProjectGoal }
 
   TedtProjectGoal = class(TForm)
+    btnHelp: TSpeedButton;
     cbStatus: TComboBox;
     dsLink: TDataSource;
     lblDescription: TLabel;
@@ -63,7 +64,7 @@ uses
 
 procedure TedtProjectGoal.ApplyDarkMode;
 begin
-  // Nothing
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtProjectGoal.cbStatusKeyPress(Sender: TObject; var Key: char);

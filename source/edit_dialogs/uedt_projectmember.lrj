@@ -6,5 +6,8 @@
 {"hash":248475418,"name":"tedtprojectmember.lblinstitution.caption","sourcebytes":[73,110,115,116,105,116,117,116,105,111,110,58],"value":"Institution:"},
 {"hash":114304686,"name":"tedtprojectmember.einstitution.buttonhint","sourcebytes":[70,105,110,100,32,105,110,115,116,105,116,117,116,105,111,110],"value":"Find institution"},
 {"hash":366789,"name":"tedtprojectmember.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
-{"hash":77089212,"name":"tedtprojectmember.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+{"hash":77089212,"name":"tedtprojectmember.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtprojectmember.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
+{"hash":119478034,"name":"tedtprojectmember.pmnnewperson.caption","sourcebytes":[78,101,119,32,114,101,115,101,97,114,99,104,101,114],"value":"New researcher"},
+{"hash":164405806,"name":"tedtprojectmember.pmnnewinstitution.caption","sourcebytes":[78,101,119,32,105,110,115,116,105,116,117,116,105,111,110],"value":"New institution"}
 ]}

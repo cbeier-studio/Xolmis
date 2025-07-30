@@ -2,6 +2,7 @@
 {"hash":119478034,"name":"tedtperson.caption","sourcebytes":[78,101,119,32,114,101,115,101,97,114,99,104,101,114],"value":"New researcher"},
 {"hash":366789,"name":"tedtperson.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtperson.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtperson.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":46657946,"name":"tedtperson.lblmunicipality.caption","sourcebytes":[77,117,110,105,99,105,112,97,108,105,116,121,58],"value":"Municipality:"},
 {"hash":123829433,"name":"tedtperson.emunicipality.buttonhint","sourcebytes":[70,105,110,100,32,109,117,110,105,99,105,112,97,108,105,116,121],"value":"Find municipality"},
 {"hash":75730042,"name":"tedtperson.lblfullname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
@@ -44,5 +45,6 @@
 {"hash":211536606,"name":"tedtperson.mmsaveimageas.caption","sourcebytes":[83,97,118,101,32,112,114,111,102,105,108,101,32,112,105,99,116,117,114,101,32,97,115,46,46,46],"value":"Save profile picture as..."},
 {"hash":89123013,"name":"tedtperson.mmcopyimage.caption","sourcebytes":[67,111,112,121,32,112,114,111,102,105,108,101,32,112,105,99,116,117,114,101],"value":"Copy profile picture"},
 {"hash":160676581,"name":"tedtperson.mmpasteimage.caption","sourcebytes":[80,97,115,116,101,32,112,114,111,102,105,108,101,32,112,105,99,116,117,114,101],"value":"Paste profile picture"},
-{"hash":99901477,"name":"tedtperson.mmremoveimage.caption","sourcebytes":[82,101,109,111,118,101,32,112,114,111,102,105,108,101,32,112,105,99,116,117,114,101],"value":"Remove profile picture"}
+{"hash":99901477,"name":"tedtperson.mmremoveimage.caption","sourcebytes":[82,101,109,111,118,101,32,112,114,111,102,105,108,101,32,112,105,99,116,117,114,101],"value":"Remove profile picture"},
+{"hash":187935885,"name":"tedtperson.pmnnewtoponym.caption","sourcebytes":[78,101,119,32,116,111,112,111,110,121,109],"value":"New toponym"}
 ]}

@@ -22,13 +22,15 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Character, atshapelinebgra, cbs_media;
+  ExtCtrls, Buttons, Menus, Character, atshapelinebgra, cbs_media;
 
 type
 
   { TedtImageInfo }
 
   TedtImageInfo = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbLicenseType: TComboBox;
     cbImageType: TComboBox;
     cbCoordinatePrecision: TComboBox;
@@ -62,6 +64,8 @@ type
     lblTaxon: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
+    pmnNewLocality: TMenuItem;
     mSubtitle: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
@@ -69,6 +73,7 @@ type
     pLicenseOwner: TPanel;
     pLicenseTypeYear: TPanel;
     pLicenseUri: TPanel;
+    pmNew: TPopupMenu;
     pSubtitle: TPanel;
     pDateTime: TPanel;
     pImageFilename: TPanel;
@@ -81,6 +86,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorButtonClick(Sender: TObject);
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
@@ -97,6 +103,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -132,7 +140,7 @@ implementation
 
 uses
   cbs_global, cbs_locale, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_dataconst,
-  cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
+  cbs_getvalue, cbs_conversions, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -147,6 +155,14 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtImageInfo.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtImageInfo.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -480,6 +496,16 @@ begin
   if (eImageDate.Text <> EmptyStr) and
     (eImageFilename.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtImageInfo.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtImageInfo.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtImageInfo.sbSaveClick(Sender: TObject);

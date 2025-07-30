@@ -6,13 +6,15 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, ExtCtrls, Spin, StdCtrls, SysUtils, Forms, EditBtn, Character,
-  Controls, Graphics, Dialogs, cbs_birds;
+  Controls, Graphics, Dialogs, Buttons, Menus, cbs_birds;
 
 type
 
   { TedtFeather }
 
   TedtFeather = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbSource: TComboBox;
     cbSymmetry: TComboBox;
     cbFeatherTrait: TComboBox;
@@ -52,11 +54,14 @@ type
     lblSource: TLabel;
     lblSampleDate: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewLocality: TMenuItem;
+    pmnNewPerson: TMenuItem;
     mNotes: TMemo;
     pMassRachisWidth: TPanel;
     pBottom: TPanel;
     pClient: TPanel;
     pDateTime: TPanel;
+    pmNew: TPopupMenu;
     pSideGrown: TPanel;
     pLocality: TPanel;
     pAge: TPanel;
@@ -71,6 +76,7 @@ type
     SBox: TScrollBox;
     sbSave: TButton;
     eFeatherNumber: TSpinEdit;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
     procedure eDateEditingDone(Sender: TObject);
@@ -84,6 +90,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -110,7 +118,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_gis, cbs_dataconst,
-  cbs_taxonomy, cbs_conversions, cbs_getvalue, udm_main, uDarkStyleParams;
+  cbs_taxonomy, cbs_conversions, cbs_getvalue, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -122,6 +130,14 @@ begin
   eTaxon.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eObserver.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtFeather.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtFeather.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -433,6 +449,16 @@ begin
     (FTaxonId > 0) and
     (FLocalityId > 0) then
     Result := True;
+end;
+
+procedure TedtFeather.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TedtFeather.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtFeather.sbSaveClick(Sender: TObject);

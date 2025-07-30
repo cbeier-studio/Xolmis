@@ -6249,6 +6249,11 @@ msgctxt "cbs_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
 
+#: tbatchbands.btnnew.caption
+msgctxt "tbatchbands.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
 #: tbatchbands.caption
 msgctxt "tbatchbands.caption"
 msgid "New batch of bands"
@@ -6361,6 +6366,21 @@ msgctxt "tbatchbands.lblsupplier.caption"
 msgid "Supplier: *"
 msgstr "Fornecedor: *"
 
+#: tbatchbands.pmnnewinstitution.caption
+msgctxt "tbatchbands.pmnnewinstitution.caption"
+msgid "New supplier"
+msgstr "Novo fornecedor"
+
+#: tbatchbands.pmnnewperson.caption
+msgctxt "tbatchbands.pmnnewperson.caption"
+msgid "New researcher"
+msgstr "Novo pesquisador"
+
+#: tbatchbands.pmnnewproject.caption
+msgctxt "tbatchbands.pmnnewproject.caption"
+msgid "New project"
+msgstr "Novo projeto"
+
 #: tbatchbands.sbcancel.caption
 msgctxt "tbatchbands.sbcancel.caption"
 msgid "Cancel"
@@ -6370,6 +6390,11 @@ msgstr "Cancelar"
 msgctxt "tbatchbands.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tbatchbandstransfer.btnnew.caption
+msgctxt "tbatchbandstransfer.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tbatchbandstransfer.caption
 msgid "Transfer bands to"
@@ -6414,6 +6439,11 @@ msgstr "Número inicial: *"
 msgid "Transfer date: *"
 msgstr "Data da transferência: *"
 
+#: tbatchbandstransfer.pmnnewperson.caption
+msgctxt "tbatchbandstransfer.pmnnewperson.caption"
+msgid "New researcher"
+msgstr "Novo pesquisador"
+
 #: tbatchbandstransfer.sbcancel.caption
 msgctxt "tbatchbandstransfer.sbcancel.caption"
 msgid "Cancel"
@@ -6423,6 +6453,11 @@ msgstr "Cancelar"
 msgctxt "tbatchbandstransfer.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tbatchfeathers.btnnew.caption
+msgctxt "tbatchfeathers.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tbatchfeathers.caption
 msgctxt "tbatchfeathers.caption"
@@ -6636,6 +6671,31 @@ msgstr "Retrizes"
 msgctxt "tbatchfeathers.lbltitlesecondaries.caption"
 msgid "Secondaries"
 msgstr "Secundárias"
+
+#: tbatchfeathers.pmnnewcapture.caption
+msgctxt "tbatchfeathers.pmnnewcapture.caption"
+msgid "New capture"
+msgstr "Nova captura"
+
+#: tbatchfeathers.pmnnewindividual.caption
+msgctxt "tbatchfeathers.pmnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
+#: tbatchfeathers.pmnnewlocality.caption
+msgctxt "tbatchfeathers.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tbatchfeathers.pmnnewobserver.caption
+msgctxt "tbatchfeathers.pmnnewobserver.caption"
+msgid "New observer"
+msgstr "Novo observador"
+
+#: tbatchfeathers.pmnnewsighting.caption
+msgctxt "tbatchfeathers.pmnnewsighting.caption"
+msgid "New sighting"
+msgstr "Nova observação"
 
 #: tbatchfeathers.sbcancel.caption
 msgctxt "tbatchfeathers.sbcancel.caption"
@@ -8717,6 +8777,11 @@ msgstr "Adicionar documentos"
 msgid "Add images"
 msgstr "Adicionar imagens"
 
+#: tedtaudioinfo.btnnew.caption
+msgctxt "tedtaudioinfo.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
 #: tedtaudioinfo.caption
 msgid "Audio recording info"
 msgstr "Info da gravação de áudio"
@@ -8894,6 +8959,16 @@ msgstr "Temperatura (°C):"
 msgid "Wind speed (bft):"
 msgstr "Velocidade do vento (bft):"
 
+#: tedtaudioinfo.pmnnewlocality.caption
+msgctxt "tedtaudioinfo.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtaudioinfo.pmnnewperson.caption
+msgctxt "tedtaudioinfo.pmnnewperson.caption"
+msgid "New author"
+msgstr "Novo autor"
+
 #: tedtaudioinfo.sbcancel.caption
 msgctxt "tedtaudioinfo.sbcancel.caption"
 msgid "Cancel"
@@ -8903,6 +8978,11 @@ msgstr "Cancelar"
 msgctxt "tedtaudioinfo.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtbands.btnnew.caption
+msgctxt "tedtbands.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtbands.ckreported.caption
 msgctxt "tedtbands.ckreported.caption"
@@ -8974,6 +9054,21 @@ msgctxt "tedtbands.lblsupplier.caption"
 msgid "Supplier: *"
 msgstr "Fornecedor: *"
 
+#: tedtbands.pmnnewinstitution.caption
+msgctxt "tedtbands.pmnnewinstitution.caption"
+msgid "New supplier"
+msgstr "Novo fornecedor"
+
+#: tedtbands.pmnnewperson.caption
+msgctxt "tedtbands.pmnnewperson.caption"
+msgid "New researcher"
+msgstr "Novo pesquisador"
+
+#: tedtbands.pmnnewproject.caption
+msgctxt "tedtbands.pmnnewproject.caption"
+msgid "New project"
+msgstr "Novo projeto"
+
 #: tedtbands.sbcancel.caption
 msgctxt "tedtbands.sbcancel.caption"
 msgid "Cancel"
@@ -9034,15 +9129,10 @@ msgctxt "tedtbotanictaxon.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
-#: tedtcapture.btnnewband.caption
-msgctxt "tedtcapture.btnnewband.caption"
-msgid "New band"
-msgstr "Nova anilha"
-
-#: tedtcapture.btnnewindividual.caption
-msgctxt "tedtcapture.btnnewindividual.caption"
-msgid "New individual"
-msgstr "Novo indivíduo"
+#: tedtcapture.btnnew.caption
+msgctxt "tedtcapture.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtcapture.ckaudiorecordings.caption
 msgid "Audio(s)"
@@ -9437,15 +9527,45 @@ msgstr "Comprimento total:"
 msgid "Weight:"
 msgstr "Peso:"
 
+#: tedtcapture.pmnnewband.caption
+msgctxt "tedtcapture.pmnnewband.caption"
+msgid "New band"
+msgstr "Nova anilha"
+
+#: tedtcapture.pmnnewindividual.caption
+msgctxt "tedtcapture.pmnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
+#: tedtcapture.pmnnewlocality.caption
+msgctxt "tedtcapture.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtcapture.pmnnewperson.caption
+msgctxt "tedtcapture.pmnnewperson.caption"
+msgid "New researcher"
+msgstr "Novo pesquisador"
+
+#: tedtcapture.pmnnewsurvey.caption
+msgctxt "tedtcapture.pmnnewsurvey.caption"
+msgid "New survey"
+msgstr "Nova amostragem"
+
 #: tedtcapture.sbcancel.caption
 msgctxt "tedtcapture.sbcancel.caption"
-msgid "Cancelar"
+msgid "Cancel"
 msgstr "Cancelar"
 
 #: tedtcapture.sbsave.caption
 msgctxt "tedtcapture.sbsave.caption"
-msgid "Salvar"
+msgid "Save"
 msgstr "Salvar"
+
+#: tedtcollector.btnnew.caption
+msgctxt "tedtcollector.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtcollector.ecollector.buttonhint
 msgctxt "tedtcollector.ecollector.buttonhint"
@@ -9455,6 +9575,10 @@ msgstr "Buscar coletor"
 #: tedtcollector.lblcollector.caption
 msgid "Collector: *"
 msgstr "Coletor: *"
+
+#: tedtcollector.pmnnewperson.caption
+msgid "New collector"
+msgstr "Novo coletor"
 
 #: tedtcollector.sbcancel.caption
 msgctxt "tedtcollector.sbcancel.caption"
@@ -9601,6 +9725,11 @@ msgctxt "tedtdocumentinfo.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtegg.btnnew.caption
+msgctxt "tedtegg.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
 #: tedtegg.ckhatched.caption
 msgctxt "tedtegg.ckhatched.caption"
 msgid "Hatched"
@@ -9711,6 +9840,21 @@ msgstr "Massa:"
 msgid "Width:"
 msgstr "Largura:"
 
+#: tedtegg.pmnnewindividual.caption
+msgctxt "tedtegg.pmnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
+#: tedtegg.pmnnewnest.caption
+msgctxt "tedtegg.pmnnewnest.caption"
+msgid "New nest"
+msgstr "Novo ninho"
+
+#: tedtegg.pmnnewperson.caption
+msgctxt "tedtegg.pmnnewperson.caption"
+msgid "New observer"
+msgstr "Novo observador"
+
 #: tedtegg.sbcancel.caption
 msgctxt "tedtegg.sbcancel.caption"
 msgid "Cancel"
@@ -9720,6 +9864,11 @@ msgstr "Cancelar"
 msgctxt "tedtegg.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtexpedition.btnnew.caption
+msgctxt "tedtexpedition.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtexpedition.eenddate.buttonhint
 msgctxt "tedtexpedition.eenddate.buttonhint"
@@ -9769,6 +9918,11 @@ msgstr "Projeto:"
 msgid "Start date: *"
 msgstr "Data inicial: *"
 
+#: tedtexpedition.pmnnewproject.caption
+msgctxt "tedtexpedition.pmnnewproject.caption"
+msgid "New project"
+msgstr "Novo projeto"
+
 #: tedtexpedition.sbcancel.caption
 msgctxt "tedtexpedition.sbcancel.caption"
 msgid "Cancel"
@@ -9778,6 +9932,11 @@ msgstr "Cancelar"
 msgctxt "tedtexpedition.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtfeather.btnnew.caption
+msgctxt "tedtfeather.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtfeather.edate.buttonhint
 msgctxt "tedtfeather.edate.buttonhint"
@@ -9896,6 +10055,16 @@ msgctxt "tedtfeather.lbltaxon.caption"
 msgid "Taxon: *"
 msgstr "Táxon: *"
 
+#: tedtfeather.pmnnewlocality.caption
+msgctxt "tedtfeather.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtfeather.pmnnewperson.caption
+msgctxt "tedtfeather.pmnnewperson.caption"
+msgid "New observer"
+msgstr "Novo observador"
+
 #: tedtfeather.sbcancel.caption
 msgctxt "tedtfeather.sbcancel.caption"
 msgid "Cancel"
@@ -9905,6 +10074,11 @@ msgstr "Cancelar"
 msgctxt "tedtfeather.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtimageinfo.btnnew.caption
+msgctxt "tedtimageinfo.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtimageinfo.eauthor.buttonhint
 msgctxt "tedtimageinfo.eauthor.buttonhint"
@@ -10031,6 +10205,16 @@ msgctxt "tedtimageinfo.lbltaxon.caption"
 msgid "Taxon:"
 msgstr "Táxon:"
 
+#: tedtimageinfo.pmnnewlocality.caption
+msgctxt "tedtimageinfo.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtimageinfo.pmnnewperson.caption
+msgctxt "tedtimageinfo.pmnnewperson.caption"
+msgid "New author"
+msgstr "Novo autor"
+
 #: tedtimageinfo.sbcancel.caption
 msgctxt "tedtimageinfo.sbcancel.caption"
 msgid "Cancel"
@@ -10041,10 +10225,10 @@ msgctxt "tedtimageinfo.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
-#: tedtindividual.btnnewband.caption
-msgctxt "tedtindividual.btnnewband.caption"
-msgid "New band"
-msgstr "Nova anilha"
+#: tedtindividual.btnnew.caption
+msgctxt "tedtindividual.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtindividual.eband.buttonhint
 msgctxt "tedtindividual.eband.buttonhint"
@@ -10246,6 +10430,16 @@ msgctxt "tedtindividual.lbltaxon.caption"
 msgid "Taxon: *"
 msgstr "Táxon: *"
 
+#: tedtindividual.pmnnewband.caption
+msgctxt "tedtindividual.pmnnewband.caption"
+msgid "New band"
+msgstr "Nova anilha"
+
+#: tedtindividual.pmnnewnest.caption
+msgctxt "tedtindividual.pmnnewnest.caption"
+msgid "New nest"
+msgstr "Novo ninho"
+
 #: tedtindividual.sbcancel.caption
 msgctxt "tedtindividual.sbcancel.caption"
 msgid "Cancel"
@@ -10255,6 +10449,11 @@ msgstr "Cancelar"
 msgctxt "tedtindividual.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtinstitution.btnnew.caption
+msgctxt "tedtinstitution.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtinstitution.ecountry.buttonhint
 msgctxt "tedtinstitution.ecountry.buttonhint"
@@ -10336,6 +10535,11 @@ msgctxt "tedtinstitution.lblstate.caption"
 msgid "State:"
 msgstr "Estado:"
 
+#: tedtinstitution.pmnnewtoponym.caption
+msgctxt "tedtinstitution.pmnnewtoponym.caption"
+msgid "New toponym"
+msgstr "Novo topônimo"
+
 #: tedtinstitution.sbcancel.caption
 msgctxt "tedtinstitution.sbcancel.caption"
 msgid "Cancel"
@@ -10374,6 +10578,11 @@ msgstr "Cancelar"
 msgctxt "tedtmethod.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtnest.btnnew.caption
+msgctxt "tedtnest.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtnest.efounddate.buttonhint
 msgctxt "tedtnest.efounddate.buttonhint"
@@ -10605,6 +10814,25 @@ msgctxt "tedtnest.lblsupporttype.caption"
 msgid "Support type:"
 msgstr "Tipo de suporte:"
 
+#: tedtnest.pmnnewbotanictaxon.caption
+msgid "New plant taxon"
+msgstr "Novo táxon de planta"
+
+#: tedtnest.pmnnewlocality.caption
+msgctxt "tedtnest.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtnest.pmnnewperson.caption
+msgctxt "tedtnest.pmnnewperson.caption"
+msgid "New observer"
+msgstr "Novo observador"
+
+#: tedtnest.pmnnewproject.caption
+msgctxt "tedtnest.pmnnewproject.caption"
+msgid "New project"
+msgstr "Novo projeto"
+
 #: tedtnest.sbcancel.caption
 msgctxt "tedtnest.sbcancel.caption"
 msgid "Cancel"
@@ -10614,6 +10842,11 @@ msgstr "Cancelar"
 msgctxt "tedtnest.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtnestowner.btnnew.caption
+msgctxt "tedtnestowner.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtnestowner.caption
 msgctxt "tedtnestowner.caption"
@@ -10635,6 +10868,11 @@ msgctxt "tedtnestowner.lblrole.caption"
 msgid "Role: *"
 msgstr "Função: *"
 
+#: tedtnestowner.pmnnewindividual.caption
+msgctxt "tedtnestowner.pmnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
 #: tedtnestowner.sbcancel.caption
 msgctxt "tedtnestowner.sbcancel.caption"
 msgid "Cancel"
@@ -10644,6 +10882,11 @@ msgstr "Cancelar"
 msgctxt "tedtnestowner.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtnestrevision.btnnew.caption
+msgctxt "tedtnestrevision.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtnestrevision.ckhasphilornislarvae.caption
 msgctxt "tedtnestrevision.ckhasphilornislarvae.caption"
@@ -10747,6 +10990,16 @@ msgctxt "tedtnestrevision.lblrevisiontime.caption"
 msgid "Nest revision time:"
 msgstr "Hora da revisão:"
 
+#: tedtnestrevision.pmnnewnest.caption
+msgctxt "tedtnestrevision.pmnnewnest.caption"
+msgid "New nest"
+msgstr "Novo ninho"
+
+#: tedtnestrevision.pmnnewperson.caption
+msgctxt "tedtnestrevision.pmnnewperson.caption"
+msgid "New observer"
+msgstr "Novo observador"
+
 #: tedtnestrevision.sbcancel.caption
 msgctxt "tedtnestrevision.sbcancel.caption"
 msgid "Cancel"
@@ -10756,6 +11009,11 @@ msgstr "Cancelar"
 msgctxt "tedtnestrevision.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtneteffort.btnnew.caption
+msgctxt "tedtneteffort.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtneteffort.edate.buttonhint
 msgctxt "tedtneteffort.edate.buttonhint"
@@ -10926,6 +11184,11 @@ msgctxt "tedtneteffort.lbltotalopentime.caption"
 msgid "Total open time (h):"
 msgstr "Total de tempo aberta (h):"
 
+#: tedtneteffort.pmnnewsurvey.caption
+msgctxt "tedtneteffort.pmnnewsurvey.caption"
+msgid "New survey"
+msgstr "Nova amostragem"
+
 #: tedtneteffort.sbcancel.caption
 msgctxt "tedtneteffort.sbcancel.caption"
 msgid "Cancel"
@@ -10975,6 +11238,11 @@ msgstr "Cancelar"
 msgctxt "tedtpermanentnet.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtpermit.btnnew.caption
+msgctxt "tedtpermit.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtpermit.edispatchdate.texthint
 msgctxt "tedtpermit.edispatchdate.texthint"
@@ -11027,6 +11295,11 @@ msgctxt "tedtpermit.lblproject.caption"
 msgid "Project:"
 msgstr "Projeto:"
 
+#: tedtpermit.pmnnewproject.caption
+msgctxt "tedtpermit.pmnnewproject.caption"
+msgid "New project"
+msgstr "Novo projeto"
+
 #: tedtpermit.sbcancel.caption
 msgctxt "tedtpermit.sbcancel.caption"
 msgid "Cancel"
@@ -11036,6 +11309,11 @@ msgstr "Cancelar"
 msgctxt "tedtpermit.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtperson.btnnew.caption
+msgctxt "tedtperson.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtperson.ebirthdate.buttonhint
 msgctxt "tedtperson.ebirthdate.buttonhint"
@@ -11227,6 +11505,11 @@ msgstr "Remover imagem de perfil"
 msgid "Save profile picture as..."
 msgstr "Salvar imagem de perfil como..."
 
+#: tedtperson.pmnnewtoponym.caption
+msgctxt "tedtperson.pmnnewtoponym.caption"
+msgid "New toponym"
+msgstr "Novo topônimo"
+
 #: tedtperson.sbaddimage.hint
 msgid "Add/change profile picture"
 msgstr "Adicionar/trocar imagem de perfil"
@@ -11330,6 +11613,11 @@ msgctxt "tedtproject.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtprojectactivity.btnnew.caption
+msgctxt "tedtprojectactivity.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
 #: tedtprojectactivity.eenddate.buttonhint
 msgctxt "tedtprojectactivity.eenddate.buttonhint"
 msgid "Open calendar"
@@ -11394,6 +11682,10 @@ msgctxt "tedtprojectactivity.lbltargetdate.caption"
 msgid "Target date:"
 msgstr "Data pretendida:"
 
+#: tedtprojectactivity.pmnnewgoal.caption
+msgid "New goal"
+msgstr "Novo objetivo"
+
 #: tedtprojectactivity.sbcancel.caption
 msgctxt "tedtprojectactivity.sbcancel.caption"
 msgid "Cancel"
@@ -11403,6 +11695,11 @@ msgstr "Cancelar"
 msgctxt "tedtprojectactivity.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtprojectexpense.btnnew.caption
+msgctxt "tedtprojectexpense.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtprojectexpense.edate.buttonhint
 msgctxt "tedtprojectexpense.edate.buttonhint"
@@ -11438,6 +11735,10 @@ msgctxt "tedtprojectexpense.lblrubric.caption"
 msgid "Rubric: *"
 msgstr "Rubrica: *"
 
+#: tedtprojectexpense.pmnnewrubric.caption
+msgid "New rubric"
+msgstr "Nova rubrica"
+
 #: tedtprojectexpense.sbcancel.caption
 msgctxt "tedtprojectexpense.sbcancel.caption"
 msgid "Cancel"
@@ -11468,6 +11769,11 @@ msgctxt "tedtprojectgoal.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtprojectmember.btnnew.caption
+msgctxt "tedtprojectmember.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
 #: tedtprojectmember.ckmanager.caption
 msgid "Project manager"
 msgstr "Gerente do projeto"
@@ -11491,6 +11797,16 @@ msgstr "Instituição:"
 msgctxt "tedtprojectmember.lblperson.caption"
 msgid "Researcher: *"
 msgstr "Pesquisador: *"
+
+#: tedtprojectmember.pmnnewinstitution.caption
+msgctxt "tedtprojectmember.pmnnewinstitution.caption"
+msgid "New institution"
+msgstr "Nova instituição"
+
+#: tedtprojectmember.pmnnewperson.caption
+msgctxt "tedtprojectmember.pmnnewperson.caption"
+msgid "New researcher"
+msgstr "Novo pesquisador"
 
 #: tedtprojectmember.sbcancel.caption
 msgctxt "tedtprojectmember.sbcancel.caption"
@@ -11532,6 +11848,11 @@ msgctxt "tedtprojectrubric.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtrecverification.btnnew.caption
+msgctxt "tedtrecverification.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
 #: tedtrecverification.caption
 msgid "New record verification"
 msgstr "Nova verificação do registro"
@@ -11556,6 +11877,11 @@ msgctxt "tedtrecverification.lblstatus.caption"
 msgid "Status: *"
 msgstr "Status: *"
 
+#: tedtrecverification.pmnnewperson.caption
+msgctxt "tedtrecverification.pmnnewperson.caption"
+msgid "New researcher"
+msgstr "Novo pesquisador"
+
 #: tedtrecverification.sbcancel.caption
 msgctxt "tedtrecverification.sbcancel.caption"
 msgid "Cancel"
@@ -11565,6 +11891,11 @@ msgstr "Cancelar"
 msgctxt "tedtrecverification.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtsampleprep.btnnew.caption
+msgctxt "tedtsampleprep.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtsampleprep.epreparationdate.buttonhint
 msgctxt "tedtsampleprep.epreparationdate.buttonhint"
@@ -11608,6 +11939,10 @@ msgctxt "tedtsampleprep.lblsampletype.caption"
 msgid "Type: *"
 msgstr "Tipo: *"
 
+#: tedtsampleprep.pmnnewperson.caption
+msgid "New preparer"
+msgstr "Novo preparador"
+
 #: tedtsampleprep.sbcancel.caption
 msgctxt "tedtsampleprep.sbcancel.caption"
 msgid "Cancel"
@@ -11617,6 +11952,11 @@ msgstr "Cancelar"
 msgctxt "tedtsampleprep.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtsamplingplot.btnnew.caption
+msgctxt "tedtsamplingplot.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtsamplingplot.caption
 msgid "New sampling plot"
@@ -11672,6 +12012,11 @@ msgctxt "tedtsamplingplot.lblnotes.caption"
 msgid "Notes:"
 msgstr "Anotações:"
 
+#: tedtsamplingplot.pmnnewlocality.caption
+msgctxt "tedtsamplingplot.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
 #: tedtsamplingplot.sbcancel.caption
 msgctxt "tedtsamplingplot.sbcancel.caption"
 msgid "Cancel"
@@ -11681,6 +12026,11 @@ msgstr "Cancelar"
 msgctxt "tedtsamplingplot.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtsighting.btnnew.caption
+msgctxt "tedtsighting.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtsighting.ckaudiorecording.caption
 msgctxt "tedtsighting.ckaudiorecording.caption"
@@ -11887,6 +12237,31 @@ msgctxt "tedtsighting.lblunbandedtally.caption"
 msgid "Nr. of unbanded:"
 msgstr "Nº de não marcados:"
 
+#: tedtsighting.pmnnewindividual.caption
+msgctxt "tedtsighting.pmnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
+#: tedtsighting.pmnnewlocality.caption
+msgctxt "tedtsighting.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtsighting.pmnnewmethod.caption
+msgctxt "tedtsighting.pmnnewmethod.caption"
+msgid "New method"
+msgstr "Novo método"
+
+#: tedtsighting.pmnnewperson.caption
+msgctxt "tedtsighting.pmnnewperson.caption"
+msgid "New observer"
+msgstr "Novo observador"
+
+#: tedtsighting.pmnnewsurvey.caption
+msgctxt "tedtsighting.pmnnewsurvey.caption"
+msgid "New survey"
+msgstr "Nova amostragem"
+
 #: tedtsighting.sbcancel.caption
 msgctxt "tedtsighting.sbcancel.caption"
 msgid "Cancel"
@@ -11964,6 +12339,11 @@ msgstr "Cancelar"
 msgctxt "tedtsite.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtspecimen.btnnew.caption
+msgctxt "tedtspecimen.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtspecimen.ecollectionday.texthint
 msgctxt "tedtspecimen.ecollectionday.texthint"
@@ -12070,6 +12450,26 @@ msgctxt "tedtspecimen.lbltaxon.caption"
 msgid "Taxon: *"
 msgstr "Táxon: *"
 
+#: tedtspecimen.pmnnewegg.caption
+msgctxt "tedtspecimen.pmnnewegg.caption"
+msgid "New egg"
+msgstr "Novo ovo"
+
+#: tedtspecimen.pmnnewindividual.caption
+msgctxt "tedtspecimen.pmnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
+#: tedtspecimen.pmnnewlocality.caption
+msgctxt "tedtspecimen.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtspecimen.pmnnewnest.caption
+msgctxt "tedtspecimen.pmnnewnest.caption"
+msgid "New nest"
+msgstr "Novo ninho"
+
 #: tedtspecimen.sbcancel.caption
 msgctxt "tedtspecimen.sbcancel.caption"
 msgid "Cancel"
@@ -12079,6 +12479,11 @@ msgstr "Cancelar"
 msgctxt "tedtspecimen.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtsurvey.btnnew.caption
+msgctxt "tedtsurvey.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtsurvey.edate.buttonhint
 msgctxt "tedtsurvey.edate.buttonhint"
@@ -12248,6 +12653,31 @@ msgctxt "tedtsurvey.lblsurveydate.caption"
 msgid "Survey date: *"
 msgstr "Data da amostragem: *"
 
+#: tedtsurvey.pmnnewexpedition.caption
+msgctxt "tedtsurvey.pmnnewexpedition.caption"
+msgid "New expedition"
+msgstr "Nova expedição"
+
+#: tedtsurvey.pmnnewlocality.caption
+msgctxt "tedtsurvey.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tedtsurvey.pmnnewmethod.caption
+msgctxt "tedtsurvey.pmnnewmethod.caption"
+msgid "New method"
+msgstr "Novo método"
+
+#: tedtsurvey.pmnnewmistnetstation.caption
+msgctxt "tedtsurvey.pmnnewmistnetstation.caption"
+msgid "New mistnet station"
+msgstr "Nova estação de redes"
+
+#: tedtsurvey.pmnnewproject.caption
+msgctxt "tedtsurvey.pmnnewproject.caption"
+msgid "New project"
+msgstr "Novo projeto"
+
 #: tedtsurvey.sbcancel.caption
 msgctxt "tedtsurvey.sbcancel.caption"
 msgid "Cancel"
@@ -12257,6 +12687,11 @@ msgstr "Cancelar"
 msgctxt "tedtsurvey.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
+
+#: tedtsurveymember.btnnew.caption
+msgctxt "tedtsurveymember.btnnew.caption"
+msgid "New"
+msgstr "Novo"
 
 #: tedtsurveymember.ckvisitor.caption
 msgctxt "tedtsurveymember.ckvisitor.caption"
@@ -12272,6 +12707,11 @@ msgstr "Buscar pesquisador"
 msgctxt "tedtsurveymember.lblperson.caption"
 msgid "Researcher: *"
 msgstr "Pesquisador: *"
+
+#: tedtsurveymember.pmnnewperson.caption
+msgctxt "tedtsurveymember.pmnnewperson.caption"
+msgid "New researcher"
+msgstr "Novo pesquisador"
 
 #: tedtsurveymember.sbcancel.caption
 msgctxt "tedtsurveymember.sbcancel.caption"

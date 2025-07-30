@@ -9,5 +9,7 @@
 {"hash":253810666,"name":"tbatchbandstransfer.lblrequester.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58,32,42],"value":"Requester: *"},
 {"hash":150656722,"name":"tbatchbandstransfer.erequester.buttonhint","sourcebytes":[70,105,110,100,32,114,101,113,117,101,115,116,101,114],"value":"Find requester"},
 {"hash":366789,"name":"tbatchbandstransfer.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
-{"hash":77089212,"name":"tbatchbandstransfer.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+{"hash":77089212,"name":"tbatchbandstransfer.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tbatchbandstransfer.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
+{"hash":119478034,"name":"tbatchbandstransfer.pmnnewperson.caption","sourcebytes":[78,101,119,32,114,101,115,101,97,114,99,104,101,114],"value":"New researcher"}
 ]}

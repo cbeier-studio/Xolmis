@@ -6,11 +6,11 @@ object edtInstitution: TedtInstitution
   AutoSize = True
   Caption = 'New institution'
   ClientHeight = 689
-  ClientWidth = 413
+  ClientWidth = 416
+  Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -18,7 +18,7 @@ object edtInstitution: TedtInstitution
     Left = 0
     Height = 2
     Top = 646
-    Width = 413
+    Width = 416
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -26,9 +26,9 @@ object edtInstitution: TedtInstitution
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 648
-    Width = 413
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -37,16 +37,20 @@ object edtInstitution: TedtInstitution
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 413
+    ClientHeight = 42
+    ClientWidth = 416
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 25
-      Top = 8
-      Width = 186
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -56,10 +60,16 @@ object edtInstitution: TedtInstitution
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 210
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
       Height = 25
-      Top = 8
-      Width = 187
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -67,39 +77,67 @@ object edtInstitution: TedtInstitution
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object SBox: TScrollBox
     Left = 0
     Height = 646
     Top = 0
-    Width = 413
+    Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 646
     Align = alTop
     BorderStyle = bsNone
     ClientHeight = 646
-    ClientWidth = 396
+    ClientWidth = 399
     Constraints.MinWidth = 220
     TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 761
       Top = 0
-      Width = 396
+      Width = 399
       Align = alTop
       AutoSize = True
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 761
-      ClientWidth = 396
+      ClientWidth = 399
       TabOrder = 0
       object pMunicipality: TPanel
         Left = 0
         Height = 46
         Top = 308
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -111,14 +149,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 6
         object lblMunicipality: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'Municipality:'
           ParentColor = False
@@ -128,7 +166,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           ButtonHint = 'Find municipality'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -149,7 +187,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 16
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -161,14 +199,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
         object lblFullname: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'Name: *'
           ParentColor = False
@@ -178,7 +216,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnEditingDone = eFullnameEditingDone
           OnKeyDown = FormKeyDown
@@ -189,7 +227,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 62
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -201,24 +239,24 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
         object lblAcronym: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 174
+          Width = 176
           BorderSpacing.Top = 4
           Caption = 'Acronym: *'
           ParentColor = False
           ParentFont = False
         end
         object lblAcronym1: TLabel
-          Left = 206
+          Left = 208
           Height = 15
           Top = 4
-          Width = 174
+          Width = 175
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
@@ -228,7 +266,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 174
+          Width = 176
           TabOrder = 0
           OnEditingDone = eFullnameEditingDone
           OnKeyDown = FormKeyDown
@@ -239,7 +277,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 216
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -251,14 +289,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 4
         object lblComplement: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'Address detail:'
           ParentColor = False
@@ -268,7 +306,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -278,7 +316,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 170
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -290,14 +328,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 3
         object lblAddress: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'Address:'
           ParentColor = False
@@ -307,7 +345,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -317,7 +355,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 554
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -329,24 +367,24 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 11
         object lblPhone: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 174
+          Width = 176
           BorderSpacing.Top = 4
           Caption = 'Telephone:'
           ParentColor = False
           ParentFont = False
         end
         object lblPhone1: TLabel
-          Left = 206
+          Left = 208
           Height = 15
           Top = 4
-          Width = 174
+          Width = 175
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
@@ -356,7 +394,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 174
+          Width = 176
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -366,7 +404,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 124
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 16
@@ -379,24 +417,24 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 2
         object lblPostalCode: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 174
+          Width = 176
           BorderSpacing.Top = 4
           Caption = 'Postal code:'
           ParentColor = False
           ParentFont = False
         end
         object lblPostalCode1: TLabel
-          Left = 206
+          Left = 208
           Height = 15
           Top = 4
-          Width = 174
+          Width = 175
           BorderSpacing.Top = 4
           Font.Color = 6579300
           ParentColor = False
@@ -406,7 +444,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 174
+          Width = 176
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -416,7 +454,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 113
         Top = 616
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 16
@@ -426,14 +464,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 113
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 12
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           Align = alTop
           BorderSpacing.Top = 4
           Caption = 'Notes:'
@@ -444,7 +482,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 90
           Top = 23
-          Width = 365
+          Width = 367
           Align = alTop
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
@@ -457,7 +495,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 262
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -469,14 +507,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 5
         object lblNeighborhood: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'Neighborhood:'
           ParentColor = False
@@ -486,7 +524,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -496,7 +534,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 354
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -508,14 +546,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 7
         object lblState: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'State:'
           ParentColor = False
@@ -525,7 +563,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           ButtonHint = 'Find state'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -546,7 +584,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 400
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -558,14 +596,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 8
         object lblCountry: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'Country:'
           ParentColor = False
@@ -575,7 +613,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           ButtonHint = 'Find country'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -596,7 +634,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 462
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 16
@@ -609,14 +647,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 9
         object lblManagerName: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'Contact person:'
           ParentColor = False
@@ -626,7 +664,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -636,7 +674,7 @@ object edtInstitution: TedtInstitution
         Left = 0
         Height = 46
         Top = 508
-        Width = 396
+        Width = 399
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -648,14 +686,14 @@ object edtInstitution: TedtInstitution
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 46
-        ClientWidth = 396
+        ClientWidth = 399
         ParentBackground = False
         TabOrder = 10
         object lblEmail: TLabel
           Left = 16
           Height = 15
           Top = 4
-          Width = 364
+          Width = 367
           BorderSpacing.Top = 4
           Caption = 'E-mail:'
           ParentColor = False
@@ -665,7 +703,7 @@ object edtInstitution: TedtInstitution
           Left = 16
           Height = 23
           Top = 23
-          Width = 364
+          Width = 367
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -678,5 +716,13 @@ object edtInstitution: TedtInstitution
     OnDataChange = dsLinkDataChange
     Left = 426
     Top = 74
+  end
+  object pmNew: TPopupMenu
+    Left = 127
+    Top = 628
+    object pmnNewToponym: TMenuItem
+      Caption = 'New toponym'
+      OnClick = pmnNewToponymClick
+    end
   end
 end

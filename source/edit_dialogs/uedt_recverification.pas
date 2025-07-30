@@ -22,33 +22,39 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, DateUtils, StdCtrls, ExtCtrls, atshapelinebgra,
-  EditBtn, DB, SQLDB, Character, cbs_datatypes;
+  EditBtn, Buttons, Menus, DB, SQLDB, Character, cbs_datatypes;
 
 type
 
   { TedtRecVerification }
 
   TedtRecVerification = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbStatus: TComboBox;
     eResearcher: TEditButton;
     lblNotes: TLabel;
     lblResearcher: TLabel;
     lblStatus: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pContent: TPanel;
+    pmNew: TPopupMenu;
     pResearcher: TPanel;
     pNotes: TPanel;
     pDate: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
     procedure eResearcherButtonClick(Sender: TObject);
     procedure eResearcherKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FTableType, FChildType: TTableType;
@@ -68,7 +74,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_dataconst,
+  cbs_locale, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_dataconst, cbs_editdialogs,
   udm_main, udm_grid, udm_breeding, udm_individuals, udm_sampling,
   uDarkStyleParams;
 
@@ -121,6 +127,14 @@ procedure TedtRecVerification.ApplyDarkMode;
 begin
   //eDate.Images := DMM.iEditsDark;
   eResearcher.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtRecVerification.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtRecVerification.eDateKeyPress(Sender: TObject; var Key: char);
@@ -204,6 +218,11 @@ begin
 
   //eDate.Date := Today;
   FPersonId := 0;
+end;
+
+procedure TedtRecVerification.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtRecVerification.sbSaveClick(Sender: TObject);

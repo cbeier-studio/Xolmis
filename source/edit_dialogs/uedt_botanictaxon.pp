@@ -22,13 +22,14 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, atshapelinebgra, cbs_botany;
+  StdCtrls, ExtCtrls, Buttons, atshapelinebgra, cbs_botany;
 
 type
 
   { TedtBotanicTaxon }
 
   TedtBotanicTaxon = class(TForm)
+    btnHelp: TSpeedButton;
     cbRank: TComboBox;
     eAuthorship: TEdit;
     eVernacularName: TEdit;
@@ -99,6 +100,7 @@ begin
   eName.Images := DMM.iEditsDark;
   eParentTaxon.Images := DMM.iEditsDark;
   eValidName.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtBotanicTaxon.dsLinkDataChange(Sender: TObject; Field: TField);

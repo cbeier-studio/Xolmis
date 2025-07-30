@@ -22,22 +22,27 @@ interface
 
 uses
   Classes, DB, ExtCtrls, SysUtils, Forms, Controls, Graphics, EditBtn, atshapelinebgra, Buttons, StdCtrls,
-  Character, Dialogs, cbs_sampling;
+  Character, Dialogs, Menus, cbs_sampling;
 
 type
 
   { TedtCollector }
 
   TedtCollector = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     dsLink: TDataSource;
     eCollector: TEditButton;
     lblCollector: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
     pBottom: TPanel;
     pContent: TPanel;
     pCollector: TPanel;
+    pmNew: TPopupMenu;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eCollectorButtonClick(Sender: TObject);
     procedure eCollectorChange(Sender: TObject);
@@ -45,6 +50,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -68,8 +74,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_dataconst, cbs_dialogs,
-  udm_sampling, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_dataconst, cbs_dialogs, cbs_editdialogs,
+  udm_sampling, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -78,6 +84,14 @@ uses
 procedure TedtCollector.ApplyDarkMode;
 begin
   eCollector.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtCollector.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtCollector.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -182,6 +196,11 @@ begin
 
   if (FCollectorId > 0) then
     Result := True;
+end;
+
+procedure TedtCollector.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtCollector.sbSaveClick(Sender: TObject);

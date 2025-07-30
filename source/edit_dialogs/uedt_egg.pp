@@ -22,7 +22,7 @@ interface
 
 uses
   BCPanel, Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics,
-  Dialogs, ExtCtrls, StdCtrls, DateUtils, Character,
+  Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DateUtils, Character,
   atshapelinebgra, cbs_breeding;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtEgg }
 
   TedtEgg = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     ckHatched: TCheckBox;
     cbShape: TComboBox;
     cbShellPattern: TComboBox;
@@ -47,7 +49,11 @@ type
     eLength: TFloatSpinEdit;
     eEggSeq: TSpinEdit;
     lblNest: TLabel;
+    pmnNewNest: TMenuItem;
+    pmnNewPerson: TMenuItem;
+    pmnNewIndividual: TMenuItem;
     pNest: TBCPanel;
+    pmNew: TPopupMenu;
     txtVolume: TLabel;
     lblFieldNumber1: TLabel;
     lblLength: TLabel;
@@ -87,6 +93,7 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     sBox: TScrollBox;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEggSeqEditingDone(Sender: TObject);
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
@@ -103,6 +110,9 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewIndividualClick(Sender: TObject);
+    procedure pmnNewNestClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -128,7 +138,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_validations, cbs_getvalue,
-  cbs_dataconst, cbs_themes, udm_main, udm_breeding, uDarkStyleParams;
+  cbs_dataconst, cbs_themes, cbs_editdialogs, udm_main, udm_grid, udm_breeding, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -144,6 +154,14 @@ begin
   eTaxon.Images := DMM.iEditsDark;
   eObserver.Images := DMM.iEditsDark;
   eIndividual.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtEgg.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtEgg.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -349,6 +367,7 @@ begin
     ApplyDarkMode;
 
   pNest.Visible := FNestId = 0;
+  pmnNewNest.Visible := FNestId = 0;
 
   with cbShape.Items do
   begin
@@ -478,6 +497,21 @@ begin
     (FTaxonId > 0) and
     (FObserverId > 0) then
     Result := True;
+end;
+
+procedure TedtEgg.pmnNewIndividualClick(Sender: TObject);
+begin
+  EditIndividual(DMG.qIndividuals, True);
+end;
+
+procedure TedtEgg.pmnNewNestClick(Sender: TObject);
+begin
+  EditNest(DMG.qNests, 0, True);
+end;
+
+procedure TedtEgg.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtEgg.sbSaveClick(Sender: TObject);

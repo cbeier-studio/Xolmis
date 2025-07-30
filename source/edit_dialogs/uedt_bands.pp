@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Types, DB, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, Buttons, Character,
+  ExtCtrls, StdCtrls, Buttons, Menus, Character,
   atshapelinebgra, cbs_system, cbs_birds;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtBands }
 
   TedtBands = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     ckReported: TCheckBox;
     cbBandSource: TComboBox;
     cbBandSize: TComboBox;
@@ -59,9 +61,13 @@ type
     lblPlaceholder1: TLabel;
     lblProject: TLabel;
     lblSupplier: TLabel;
+    pmnNewInstitution: TMenuItem;
+    pmnNewPerson: TMenuItem;
+    pmnNewProject: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pCarrier: TPanel;
+    pmNew: TPopupMenu;
     pRequester: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
@@ -76,6 +82,7 @@ type
     SBox: TScrollBox;
     sbSave: TButton;
     lineBottom: TShapeLineBGRA;
+    procedure btnNewClick(Sender: TObject);
     procedure cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure cbBandSizeEditingDone(Sender: TObject);
     procedure cbBandSizeKeyPress(Sender: TObject; var Key: char);
@@ -93,6 +100,9 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewInstitutionClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
+    procedure pmnNewProjectClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -116,7 +126,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
-  udm_main, uDarkStyleParams;
+  cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -128,6 +138,14 @@ begin
   eRequester.Images := DMM.iEditsDark;
   eCarrier.Images := DMM.iEditsDark;
   eProject.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtBands.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtBands.cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
@@ -448,6 +466,21 @@ begin
     (FRequesterId > 0) and
     (FSupplierId > 0) then
     Result := True;
+end;
+
+procedure TedtBands.pmnNewInstitutionClick(Sender: TObject);
+begin
+  EditInstitution(DMG.qInstitutions, True);
+end;
+
+procedure TedtBands.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
+end;
+
+procedure TedtBands.pmnNewProjectClick(Sender: TObject);
+begin
+  EditProject(DMG.qProjects, True);
 end;
 
 procedure TedtBands.sbSaveClick(Sender: TObject);

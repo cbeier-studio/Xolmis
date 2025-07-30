@@ -6,13 +6,15 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, ExtCtrls, Spin, SysUtils, Forms, Controls, StdCtrls, EditBtn, Character,
-  Graphics, Dialogs;
+  Graphics, Dialogs, Buttons, Menus;
 
 type
 
   { TbatchFeathers }
 
   TbatchFeathers = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbSource: TComboBox;
     cbSymmetry: TComboBox;
     eDate: TEditButton;
@@ -92,11 +94,17 @@ type
     lblTitleRectrices: TLabel;
     lblTitleSecondaries: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewCapture: TMenuItem;
+    pmnNewSighting: TMenuItem;
+    pmnNewIndividual: TMenuItem;
+    pmnNewLocality: TMenuItem;
+    pmnNewObserver: TMenuItem;
     pBottom: TPanel;
     pClient: TPanel;
     pDateTime: TPanel;
     pLocality: TPanel;
     pObserver: TPanel;
+    pmNew: TPopupMenu;
     pPrimaries: TPanel;
     pRectrices: TPanel;
     pSecondaries: TPanel;
@@ -111,6 +119,7 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     ScrollBox1: TScrollBox;
+    procedure btnNewClick(Sender: TObject);
     procedure eCaptureButtonClick(Sender: TObject);
     procedure eCaptureKeyPress(Sender: TObject; var Key: char);
     procedure eDateButtonClick(Sender: TObject);
@@ -129,6 +138,11 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewCaptureClick(Sender: TObject);
+    procedure pmnNewIndividualClick(Sender: TObject);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewObserverClick(Sender: TObject);
+    procedure pmnNewSightingClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FCaptureId, FSightingId, FIndividualId: Integer;
@@ -150,8 +164,8 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_birds, cbs_finddialogs, cbs_dialogs, cbs_gis, cbs_taxonomy,
-  cbs_validations, cbs_getvalue,
-  udlg_loading, udlg_progress, udm_main, uDarkStyleParams;
+  cbs_validations, cbs_getvalue, cbs_editdialogs,
+  udlg_loading, udlg_progress, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -442,6 +456,14 @@ begin
   eTaxon.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eObserver.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TbatchFeathers.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TbatchFeathers.eCaptureButtonClick(Sender: TObject);
@@ -793,6 +815,31 @@ begin
     (FTaxonId > 0) and
     (FLocalityId > 0) then
     Result := True;
+end;
+
+procedure TbatchFeathers.pmnNewCaptureClick(Sender: TObject);
+begin
+  EditCapture(DMG.qCaptures, 0, 0, True);
+end;
+
+procedure TbatchFeathers.pmnNewIndividualClick(Sender: TObject);
+begin
+  EditIndividual(DMG.qIndividuals, True);
+end;
+
+procedure TbatchFeathers.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TbatchFeathers.pmnNewObserverClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
+end;
+
+procedure TbatchFeathers.pmnNewSightingClick(Sender: TObject);
+begin
+  EditSighting(DMG.qSightings, 0, 0, True);
 end;
 
 procedure TbatchFeathers.sbSaveClick(Sender: TObject);

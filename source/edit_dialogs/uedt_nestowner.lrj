@@ -4,5 +4,7 @@
 {"hash":201126026,"name":"tedtnestowner.lblindividual.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,58,32,42],"value":"Individual: *"},
 {"hash":78213836,"name":"tedtnestowner.eindividual.buttonhint","sourcebytes":[70,105,110,100,32,105,110,100,105,118,105,100,117,97,108],"value":"Find individual"},
 {"hash":366789,"name":"tedtnestowner.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
-{"hash":77089212,"name":"tedtnestowner.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+{"hash":77089212,"name":"tedtnestowner.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtnestowner.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
+{"hash":207141516,"name":"tedtnestowner.pmnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"}
 ]}

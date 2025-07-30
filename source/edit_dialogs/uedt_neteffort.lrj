@@ -37,5 +37,7 @@
 {"hash":5029661,"name":"tedtneteffort.enetopen4.texthint","sourcebytes":[72,72,58,77,77],"value":"HH:MM"},
 {"hash":5029661,"name":"tedtneteffort.enetclose4.texthint","sourcebytes":[72,72,58,77,77],"value":"HH:MM"},
 {"hash":366789,"name":"tedtneteffort.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
-{"hash":77089212,"name":"tedtneteffort.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+{"hash":77089212,"name":"tedtneteffort.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtneteffort.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
+{"hash":128569433,"name":"tedtneteffort.pmnnewsurvey.caption","sourcebytes":[78,101,119,32,115,117,114,118,101,121],"value":"New survey"}
 ]}

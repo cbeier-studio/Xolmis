@@ -2,6 +2,7 @@
 {"hash":164405806,"name":"tedtinstitution.caption","sourcebytes":[78,101,119,32,105,110,115,116,105,116,117,116,105,111,110],"value":"New institution"},
 {"hash":366789,"name":"tedtinstitution.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtinstitution.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtinstitution.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":46657946,"name":"tedtinstitution.lblmunicipality.caption","sourcebytes":[77,117,110,105,99,105,112,97,108,105,116,121,58],"value":"Municipality:"},
 {"hash":123829433,"name":"tedtinstitution.emunicipality.buttonhint","sourcebytes":[70,105,110,100,32,109,117,110,105,99,105,112,97,108,105,116,121],"value":"Find municipality"},
 {"hash":75730042,"name":"tedtinstitution.lblfullname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
@@ -17,5 +18,6 @@
 {"hash":113622378,"name":"tedtinstitution.lblcountry.caption","sourcebytes":[67,111,117,110,116,114,121,58],"value":"Country:"},
 {"hash":247209465,"name":"tedtinstitution.ecountry.buttonhint","sourcebytes":[70,105,110,100,32,99,111,117,110,116,114,121],"value":"Find country"},
 {"hash":57575946,"name":"tedtinstitution.lblmanagername.caption","sourcebytes":[67,111,110,116,97,99,116,32,112,101,114,115,111,110,58],"value":"Contact person:"},
-{"hash":138641338,"name":"tedtinstitution.lblemail.caption","sourcebytes":[69,45,109,97,105,108,58],"value":"E-mail:"}
+{"hash":138641338,"name":"tedtinstitution.lblemail.caption","sourcebytes":[69,45,109,97,105,108,58],"value":"E-mail:"},
+{"hash":187935885,"name":"tedtinstitution.pmnnewtoponym.caption","sourcebytes":[78,101,119,32,116,111,112,111,110,121,109],"value":"New toponym"}
 ]}

@@ -22,13 +22,14 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, Character, atshapelinebgra, cbs_gis;
+  ExtCtrls, StdCtrls, Buttons, Character, atshapelinebgra, cbs_gis;
 
 type
 
   { TedtSite }
 
   TedtSite = class(TForm)
+    btnHelp: TSpeedButton;
     cbRank: TComboBox;
     eAbbreviation: TEdit;
     eAltitude: TEdit;
@@ -109,6 +110,7 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   eParentSite.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtSite.dsLinkDataChange(Sender: TObject; Field: TField);

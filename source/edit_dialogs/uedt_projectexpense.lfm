@@ -2,16 +2,16 @@ object edtProjectExpense: TedtProjectExpense
   Left = 414
   Height = 210
   Top = 250
-  Width = 397
+  Width = 416
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'New expense'
   ClientHeight = 210
-  ClientWidth = 397
+  ClientWidth = 416
+  Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -19,7 +19,7 @@ object edtProjectExpense: TedtProjectExpense
     Left = 0
     Height = 2
     Top = 167
-    Width = 397
+    Width = 416
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -29,20 +29,20 @@ object edtProjectExpense: TedtProjectExpense
     Left = 0
     Height = 167
     Top = 0
-    Width = 397
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
     ClientHeight = 167
-    ClientWidth = 397
+    ClientWidth = 416
     ParentBackground = False
     TabOrder = 0
     object pRubric: TPanel
       Left = 0
       Height = 45
       Top = 16
-      Width = 397
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -54,14 +54,14 @@ object edtProjectExpense: TedtProjectExpense
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
-      ClientWidth = 397
+      ClientWidth = 416
       ParentBackground = False
       TabOrder = 0
       object lblRubric: TLabel
         Left = 16
         Height = 15
         Top = 3
-        Width = 365
+        Width = 384
         BorderSpacing.Top = 3
         Caption = 'Rubric: *'
         ParentColor = False
@@ -71,7 +71,7 @@ object edtProjectExpense: TedtProjectExpense
         Left = 16
         Height = 23
         Top = 22
-        Width = 365
+        Width = 384
         ButtonHint = 'Find rubric'
         ButtonWidth = 23
         Constraints.MinWidth = 365
@@ -94,7 +94,7 @@ object edtProjectExpense: TedtProjectExpense
       Left = 0
       Height = 45
       Top = 106
-      Width = 397
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -106,24 +106,24 @@ object edtProjectExpense: TedtProjectExpense
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 45
-      ClientWidth = 397
+      ClientWidth = 416
       ParentBackground = False
       TabOrder = 2
       object lblDate: TLabel
         Left = 16
         Height = 15
         Top = 3
-        Width = 174
+        Width = 184
         BorderSpacing.Top = 3
         Caption = 'Date:'
         ParentColor = False
         ParentFont = False
       end
       object lblAmount: TLabel
-        Left = 206
+        Left = 216
         Height = 15
         Top = 3
-        Width = 175
+        Width = 184
         BorderSpacing.Top = 3
         Caption = 'Amount:'
         ParentColor = False
@@ -133,7 +133,7 @@ object edtProjectExpense: TedtProjectExpense
         Left = 16
         Height = 23
         Top = 22
-        Width = 174
+        Width = 184
         ButtonHint = 'Open calendar'
         ButtonWidth = 23
         Images = DMM.iEdits
@@ -151,10 +151,10 @@ object edtProjectExpense: TedtProjectExpense
         OnKeyPress = eItemKeyPress
       end
       object eAmount: TFloatSpinEdit
-        Left = 206
+        Left = 216
         Height = 23
         Top = 22
-        Width = 175
+        Width = 184
         MaxValue = 999999999
         TabOrder = 1
         OnKeyDown = FormKeyDown
@@ -165,7 +165,7 @@ object edtProjectExpense: TedtProjectExpense
       Left = 0
       Height = 45
       Top = 61
-      Width = 397
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -177,14 +177,14 @@ object edtProjectExpense: TedtProjectExpense
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
-      ClientWidth = 397
+      ClientWidth = 416
       ParentBackground = False
       TabOrder = 1
       object lblItem: TLabel
         Left = 16
         Height = 15
         Top = 3
-        Width = 365
+        Width = 384
         BorderSpacing.Top = 3
         Caption = 'Item description:'
         ParentColor = False
@@ -194,7 +194,7 @@ object edtProjectExpense: TedtProjectExpense
         Left = 16
         Height = 23
         Top = 22
-        Width = 365
+        Width = 384
         TabOrder = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = eItemKeyPress
@@ -203,9 +203,9 @@ object edtProjectExpense: TedtProjectExpense
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 169
-    Width = 397
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -214,16 +214,20 @@ object edtProjectExpense: TedtProjectExpense
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 397
+    ClientHeight = 42
+    ClientWidth = 416
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -233,10 +237,16 @@ object edtProjectExpense: TedtProjectExpense
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -244,11 +254,47 @@ object edtProjectExpense: TedtProjectExpense
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object dsLink: TDataSource
     DataSet = DMG.qProjectExpenses
     OnDataChange = dsLinkDataChange
     Left = 312
     Top = 40
+  end
+  object pmNew: TPopupMenu
+    Left = 127
+    Top = 152
+    object pmnNewRubric: TMenuItem
+      Caption = 'New rubric'
+      OnClick = pmnNewRubricClick
+    end
   end
 end

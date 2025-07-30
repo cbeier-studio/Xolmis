@@ -2,15 +2,15 @@ object edtNetEffort: TedtNetEffort
   Left = 352
   Height = 703
   Top = 33
-  Width = 397
+  Width = 416
   AutoSize = True
   Caption = 'New mistnet effort'
   ClientHeight = 703
-  ClientWidth = 397
+  ClientWidth = 416
+  Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -18,7 +18,7 @@ object edtNetEffort: TedtNetEffort
     Left = 0
     Height = 2
     Top = 660
-    Width = 397
+    Width = 416
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -28,7 +28,7 @@ object edtNetEffort: TedtNetEffort
     Left = 0
     Height = 660
     Top = 0
-    Width = 397
+    Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 660
@@ -36,25 +36,25 @@ object edtNetEffort: TedtNetEffort
     AutoSize = True
     BorderStyle = bsNone
     ClientHeight = 660
-    ClientWidth = 397
+    ClientWidth = 416
     TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 660
       Top = 0
-      Width = 397
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 660
-      ClientWidth = 397
+      ClientWidth = 416
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
         Top = 532
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -64,14 +64,14 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 10
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -82,7 +82,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 90
           Top = 22
-          Width = 365
+          Width = 384
           Align = alTop
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
@@ -95,7 +95,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 88
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -107,24 +107,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 1
         object lblPermanentNet: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Permanent mistnet:'
           ParentColor = False
           ParentFont = False
         end
         object lblNetNumber: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Mistnet number: *'
           ParentColor = False
@@ -134,7 +134,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ButtonHint = 'Find permanent mistnet'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -151,10 +151,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = ePermanentNetKeyPress
         end
         object eNetNumber: TEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           NumbersOnly = True
           TabOrder = 1
           OnEditingDone = eNetNumberEditingDone
@@ -166,7 +166,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 133
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -178,24 +178,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 2
         object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
           ParentColor = False
           ParentFont = False
         end
         object lblLatitude: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
           ParentColor = False
@@ -205,7 +205,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ButtonHint = 'Edit/import coordinate'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -222,10 +222,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eLongitudeKeyPress
         end
         object eLatitude: TEditButton
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           ButtonHint = 'Edit/import coordinate'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -246,7 +246,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 191
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -259,24 +259,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 3
         object lblNetLength: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Mistnet length (m):'
           ParentColor = False
           ParentFont = False
         end
         object lblNetHeight: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Mistnet height (m):'
           ParentColor = False
@@ -286,7 +286,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           DecimalPlaces = 1
           MaxValue = 9999
           TabOrder = 0
@@ -295,10 +295,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
         object eNetHeight: TFloatSpinEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           DecimalPlaces = 1
           MaxValue = 9999
           TabOrder = 1
@@ -311,7 +311,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 236
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -323,24 +323,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 4
         object lblNetMesh: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Mesh size:'
           ParentColor = False
           ParentFont = False
         end
         object lblNetArea: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Mistnet area (m²):'
           ParentColor = False
@@ -350,7 +350,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ItemHeight = 15
           Items.Strings = (
             '14x14'
@@ -368,10 +368,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
         object txtNetArea: TLabel
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           Caption = 'txtNetArea'
           Font.Height = -12
           Font.Style = [fsBold]
@@ -383,7 +383,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 294
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -396,24 +396,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 5
         object lblDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Survey date: *'
           ParentColor = False
           ParentFont = False
         end
         object lblTotalOpenTime: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Total open time (h):'
           ParentColor = False
@@ -423,7 +423,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ButtonHint = 'Open calendar'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -442,10 +442,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
         object txtTotalOpenTime: TLabel
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           Caption = 'txtTotalOpenTime'
           Font.Height = -12
           Font.Style = [fsBold]
@@ -457,7 +457,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 339
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -469,24 +469,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 6
         object lblNetOpen1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Opening time 1: *'
           ParentColor = False
           ParentFont = False
         end
         object lblNetClose1: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Closing time 1: *'
           ParentColor = False
@@ -496,7 +496,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           TabOrder = 0
           TextHint = 'HH:MM'
           OnEditingDone = eNetNumberEditingDone
@@ -504,10 +504,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
         object eNetClose1: TEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           TabOrder = 1
           TextHint = 'HH:MM'
           OnEditingDone = eNetNumberEditingDone
@@ -519,7 +519,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 384
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -531,24 +531,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 7
         object lblNetOpen2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Opening time 2:'
           ParentColor = False
           ParentFont = False
         end
         object lblNetClose2: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Closing time 2:'
           ParentColor = False
@@ -558,7 +558,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           TabOrder = 0
           TextHint = 'HH:MM'
           OnEditingDone = eNetLengthEditingDone
@@ -566,10 +566,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
         object eNetClose2: TEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           TabOrder = 1
           TextHint = 'HH:MM'
           OnEditingDone = eNetLengthEditingDone
@@ -581,7 +581,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 429
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -593,24 +593,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 8
         object lblNetOpen3: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Opening time 3:'
           ParentColor = False
           ParentFont = False
         end
         object lblNetClose3: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Closing time 3:'
           ParentColor = False
@@ -620,7 +620,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           TabOrder = 0
           TextHint = 'HH:MM'
           OnEditingDone = eNetLengthEditingDone
@@ -628,10 +628,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
         object eNetClose3: TEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           TabOrder = 1
           TextHint = 'HH:MM'
           OnEditingDone = eNetLengthEditingDone
@@ -643,7 +643,7 @@ object edtNetEffort: TedtNetEffort
         Left = 13
         Height = 59
         Top = 16
-        Width = 371
+        Width = 390
         Align = alTop
         AutoSize = True
         BorderSpacing.Left = 13
@@ -694,7 +694,7 @@ object edtNetEffort: TedtNetEffort
           Left = 17
           Height = 15
           Top = 9
-          Width = 337
+          Width = 356
           BorderSpacing.Bottom = 3
           Caption = 'Survey:'
           ParentColor = False
@@ -704,7 +704,7 @@ object edtNetEffort: TedtNetEffort
           Left = 17
           Height = 23
           Top = 27
-          Width = 337
+          Width = 356
           ButtonHint = 'Find survey'
           ButtonWidth = 23
           Color = clDefault
@@ -726,7 +726,7 @@ object edtNetEffort: TedtNetEffort
         Left = 0
         Height = 45
         Top = 474
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -738,24 +738,24 @@ object edtNetEffort: TedtNetEffort
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 9
         object lblNetOpen4: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Opening time 4:'
           ParentColor = False
           ParentFont = False
         end
         object lblNetClose4: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Closing time 4:'
           ParentColor = False
@@ -765,7 +765,7 @@ object edtNetEffort: TedtNetEffort
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           TabOrder = 0
           TextHint = 'HH:MM'
           OnEditingDone = eNetLengthEditingDone
@@ -773,10 +773,10 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
         object eNetClose4: TEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           TabOrder = 1
           TextHint = 'HH:MM'
           OnEditingDone = eNetLengthEditingDone
@@ -788,9 +788,9 @@ object edtNetEffort: TedtNetEffort
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 662
-    Width = 397
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -799,16 +799,20 @@ object edtNetEffort: TedtNetEffort
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 397
+    ClientHeight = 42
+    ClientWidth = 416
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -818,10 +822,16 @@ object edtNetEffort: TedtNetEffort
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -829,11 +839,47 @@ object edtNetEffort: TedtNetEffort
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object dsLink: TDataSource
     DataSet = DMS.qNetsEffort
     OnDataChange = dsLinkDataChange
     Left = 314
     Top = 10
+  end
+  object pmNew: TPopupMenu
+    Left = 126
+    Top = 637
+    object pmnNewSurvey: TMenuItem
+      Caption = 'New survey'
+      OnClick = pmnNewSurveyClick
+    end
   end
 end

@@ -2,6 +2,7 @@
 {"hash":124379284,"name":"tedtpermit.caption","sourcebytes":[78,101,119,32,112,101,114,109,105,116],"value":"New permit"},
 {"hash":366789,"name":"tedtpermit.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtpermit.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtpermit.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":89566314,"name":"tedtpermit.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
 {"hash":75730042,"name":"tedtpermit.lblname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
 {"hash":48641226,"name":"tedtpermit.lbldispatcher.caption","sourcebytes":[68,105,115,112,97,116,99,104,101,114,58,32,42],"value":"Dispatcher: *"},
@@ -12,5 +13,6 @@
 {"hash":154636106,"name":"tedtpermit.lblpermitnumber.caption","sourcebytes":[80,101,114,109,105,116,32,110,117,109,98,101,114,58],"value":"Permit number:"},
 {"hash":201755770,"name":"tedtpermit.lblpermittype.caption","sourcebytes":[84,121,112,101,58,32,42],"value":"Type: *"},
 {"hash":157335306,"name":"tedtpermit.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
-{"hash":57036244,"name":"tedtpermit.eproject.buttonhint","sourcebytes":[70,105,110,100,32,112,114,111,106,101,99,116],"value":"Find project"}
+{"hash":57036244,"name":"tedtpermit.eproject.buttonhint","sourcebytes":[70,105,110,100,32,112,114,111,106,101,99,116],"value":"Find project"},
+{"hash":132301524,"name":"tedtpermit.pmnnewproject.caption","sourcebytes":[78,101,119,32,112,114,111,106,101,99,116],"value":"New project"}
 ]}

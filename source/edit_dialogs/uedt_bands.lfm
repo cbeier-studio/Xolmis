@@ -17,7 +17,7 @@ object edtBands: TedtBands
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 593
     Width = 488
     Align = alTop
@@ -28,16 +28,20 @@ object edtBands: TedtBands
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 488
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 224
       Height = 25
-      Top = 8
-      Width = 224
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -47,16 +51,50 @@ object edtBands: TedtBands
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 248
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 352
       Height = 25
-      Top = 8
-      Width = 224
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
     end
   end
   object lineBottom: TShapeLineBGRA
@@ -667,5 +705,21 @@ object edtBands: TedtBands
     OnDataChange = dsLinkDataChange
     Left = 336
     Top = 208
+  end
+  object pmNew: TPopupMenu
+    Left = 138
+    Top = 584
+    object pmnNewInstitution: TMenuItem
+      Caption = 'New supplier'
+      OnClick = pmnNewInstitutionClick
+    end
+    object pmnNewPerson: TMenuItem
+      Caption = 'New researcher'
+      OnClick = pmnNewPersonClick
+    end
+    object pmnNewProject: TMenuItem
+      Caption = 'New project'
+      OnClick = pmnNewProjectClick
+    end
   end
 end

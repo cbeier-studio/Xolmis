@@ -6,24 +6,29 @@ interface
 
 uses
   Classes, DB, ExtCtrls, SysUtils, Forms, Controls, Graphics, EditBtn, atshapelinebgra, Buttons, StdCtrls,
-  Character, Dialogs, cbs_sampling;
+  Character, Dialogs, Menus, cbs_sampling;
 
 type
 
   { TedtSurveyMember }
 
   TedtSurveyMember = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     ckVisitor: TCheckBox;
     dsLink: TDataSource;
     ePerson: TEditButton;
     lblPerson: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
     pBottom: TPanel;
+    pmNew: TPopupMenu;
     pPerson: TPanel;
     pContent: TPanel;
     pVisitor: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure ckVisitorKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure ePersonButtonClick(Sender: TObject);
@@ -32,6 +37,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -55,8 +61,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_dataconst, cbs_dialogs,
-  udm_sampling, udm_main, uDarkStyleParams;
+  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_finddialogs, cbs_dataconst, cbs_dialogs, cbs_editdialogs,
+  udm_sampling, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -65,6 +71,14 @@ uses
 procedure TedtSurveyMember.ApplyDarkMode;
 begin
   ePerson.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSurveyMember.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtSurveyMember.ckVisitorKeyPress(Sender: TObject; var Key: char);
@@ -185,6 +199,11 @@ begin
 
   if (FMemberId > 0) then
     Result := True;
+end;
+
+procedure TedtSurveyMember.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtSurveyMember.sbSaveClick(Sender: TObject);

@@ -1,13 +1,14 @@
 object edtCapture: TedtCapture
   Left = 352
-  Height = 643
+  Height = 667
   Top = 33
   Width = 792
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New capture'
-  ClientHeight = 643
+  ClientHeight = 667
   ClientWidth = 792
+  Constraints.MinWidth = 792
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
@@ -27,7 +28,7 @@ object edtCapture: TedtCapture
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 602
     Width = 792
     Align = alTop
@@ -38,19 +39,20 @@ object edtCapture: TedtCapture
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 792
     TabOrder = 1
     object sbSave: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideRight.Control = sbCancel
       Left = 528
       Height = 25
       Top = 8
       Width = 120
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
-      Caption = 'Salvar'
+      Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
       TabOrder = 0
@@ -59,18 +61,49 @@ object edtCapture: TedtCapture
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
       Left = 656
       Height = 25
       Top = 8
       Width = 120
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
-      Caption = 'Cancelar'
+      Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
     end
   end
   object sBox: TScrollBox
@@ -88,7 +121,7 @@ object edtCapture: TedtCapture
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1109
+      Height = 1103
       Top = 0
       Width = 775
       Align = alTop
@@ -96,13 +129,13 @@ object edtCapture: TedtCapture
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1109
+      ClientHeight = 1103
       ClientWidth = 775
       TabOrder = 0
       object pAgeEscapedStatus: TPanel
         Left = 0
-        Height = 49
-        Top = 334
+        Height = 46
+        Top = 331
         Width = 775
         Align = alTop
         AutoSize = True
@@ -114,7 +147,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 4
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 7
@@ -168,7 +201,7 @@ object edtCapture: TedtCapture
         end
         object ckEscaped: TCheckBox
           Left = 206
-          Height = 26
+          Height = 23
           Top = 23
           Width = 174
           Caption = 'Escaped'
@@ -186,23 +219,11 @@ object edtCapture: TedtCapture
           OnKeyDown = FormKeyDown
           OnKeyPress = cbStatusKeyPress
         end
-        object btnNewBand: TBitBtn
-          Left = 585
-          Height = 26
-          Top = 23
-          Width = 174
-          AutoSize = True
-          Caption = 'New band'
-          Images = DMM.iEdits
-          ImageIndex = 8
-          TabOrder = 3
-          OnClick = btnNewBandClick
-        end
       end
       object pSamples: TPanel
         Left = 0
         Height = 42
-        Top = 892
+        Top = 886
         Width = 775
         Align = alTop
         AutoSize = True
@@ -303,7 +324,7 @@ object edtCapture: TedtCapture
       object pDateTimeBander: TPanel
         Left = 0
         Height = 46
-        Top = 149
+        Top = 146
         Width = 775
         Align = alTop
         AutoSize = True
@@ -437,7 +458,7 @@ object edtCapture: TedtCapture
       object pSurveyLocality: TPanel
         Left = 0
         Height = 46
-        Top = 103
+        Top = 100
         Width = 775
         Align = alTop
         AutoSize = True
@@ -519,7 +540,7 @@ object edtCapture: TedtCapture
       object pColorBands: TPanel
         Left = 0
         Height = 47
-        Top = 287
+        Top = 284
         Width = 775
         Align = alTop
         AutoSize = True
@@ -735,7 +756,7 @@ object edtCapture: TedtCapture
       object pTaxonBand: TPanel
         Left = 0
         Height = 46
-        Top = 241
+        Top = 238
         Width = 775
         Align = alTop
         AutoSize = True
@@ -848,7 +869,7 @@ object edtCapture: TedtCapture
       object pNotes: TPanel
         Left = 0
         Height = 79
-        Top = 759
+        Top = 753
         Width = 775
         Align = alTop
         AutoSize = True
@@ -887,7 +908,7 @@ object edtCapture: TedtCapture
       object pPhotographersCamera: TPanel
         Left = 0
         Height = 46
-        Top = 939
+        Top = 933
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1028,7 +1049,7 @@ object edtCapture: TedtCapture
       object pTitleMetrics: TPanel
         Left = 0
         Height = 38
-        Top = 399
+        Top = 393
         Width = 775
         Align = alTop
         Alignment = taLeftJustify
@@ -1057,7 +1078,7 @@ object edtCapture: TedtCapture
       object pTitleCollection: TPanel
         Left = 0
         Height = 38
-        Top = 854
+        Top = 848
         Width = 775
         Align = alTop
         Alignment = taLeftJustify
@@ -1086,7 +1107,7 @@ object edtCapture: TedtCapture
       object pTypeNetLongLat: TPanel
         Left = 0
         Height = 46
-        Top = 195
+        Top = 192
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1221,7 +1242,7 @@ object edtCapture: TedtCapture
       object pMetrics1: TPanel
         Left = 0
         Height = 46
-        Top = 437
+        Top = 431
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1354,7 +1375,7 @@ object edtCapture: TedtCapture
       object pMetrics2: TPanel
         Left = 0
         Height = 46
-        Top = 483
+        Top = 477
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1469,7 +1490,7 @@ object edtCapture: TedtCapture
       object pMetrics3: TPanel
         Left = 0
         Height = 46
-        Top = 529
+        Top = 523
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1572,7 +1593,7 @@ object edtCapture: TedtCapture
       object pMetrics5: TPanel
         Left = 0
         Height = 46
-        Top = 621
+        Top = 615
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1675,7 +1696,7 @@ object edtCapture: TedtCapture
       object pMetrics4: TPanel
         Left = 0
         Height = 46
-        Top = 575
+        Top = 569
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1779,7 +1800,7 @@ object edtCapture: TedtCapture
       object pKippMoltLimitsSkull: TPanel
         Left = 0
         Height = 46
-        Top = 667
+        Top = 661
         Width = 775
         Align = alTop
         AutoSize = True
@@ -1889,7 +1910,7 @@ object edtCapture: TedtCapture
       object pCycleSex: TPanel
         Left = 0
         Height = 46
-        Top = 713
+        Top = 707
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2019,7 +2040,7 @@ object edtCapture: TedtCapture
       object pPhotosFieldNumber: TPanel
         Left = 0
         Height = 46
-        Top = 985
+        Top = 979
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2117,7 +2138,7 @@ object edtCapture: TedtCapture
       object pHemoglobinGlucose: TPanel
         Left = 0
         Height = 46
-        Top = 1031
+        Top = 1025
         Width = 775
         Align = alTop
         AutoSize = True
@@ -2206,7 +2227,7 @@ object edtCapture: TedtCapture
       end
       object pIndividual: TPanel
         Left = 0
-        Height = 49
+        Height = 46
         Top = 54
         Width = 775
         Align = alTop
@@ -2219,7 +2240,7 @@ object edtCapture: TedtCapture
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
-        ClientHeight = 49
+        ClientHeight = 46
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 1
@@ -2244,7 +2265,7 @@ object edtCapture: TedtCapture
         end
         object eIndividual: TEditButton
           Left = 16
-          Height = 26
+          Height = 23
           Top = 23
           Width = 364
           ButtonHint = 'Find individual'
@@ -2263,17 +2284,6 @@ object edtCapture: TedtCapture
           OnKeyDown = FormKeyDown
           OnKeyPress = eIndividualKeyPress
         end
-        object btnNewIndividual: TBitBtn
-          Left = 396
-          Height = 26
-          Top = 23
-          Width = 363
-          Caption = 'New individual'
-          Images = DMM.iEdits
-          ImageIndex = 8
-          TabOrder = 1
-          OnClick = btnNewIndividualClick
-        end
       end
     end
   end
@@ -2282,5 +2292,29 @@ object edtCapture: TedtCapture
     OnDataChange = dsLinkDataChange
     Left = 673
     Top = 24
+  end
+  object pmNew: TPopupMenu
+    Left = 202
+    Top = 600
+    object pmnNewIndividual: TMenuItem
+      Caption = 'New individual'
+      OnClick = pmnNewIndividualClick
+    end
+    object pmnNewBand: TMenuItem
+      Caption = 'New band'
+      OnClick = pmnNewBandClick
+    end
+    object pmnNewSurvey: TMenuItem
+      Caption = 'New survey'
+      OnClick = pmnNewSurveyClick
+    end
+    object pmnNewPerson: TMenuItem
+      Caption = 'New researcher'
+      OnClick = pmnNewPersonClick
+    end
+    object pmnNewLocality: TMenuItem
+      Caption = 'New locality'
+      OnClick = pmnNewLocalityClick
+    end
   end
 end

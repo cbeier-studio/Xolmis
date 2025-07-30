@@ -21,7 +21,7 @@ unit ubatch_neteffort;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, StdCtrls, Graphics, Dialogs, DB, SQLDB, ExtCtrls, EditBtn, Spin,
+  Classes, SysUtils, Forms, Controls, StdCtrls, Graphics, Dialogs, DB, SQLDB, ExtCtrls, EditBtn, Spin, Buttons,
   atshapelinebgra, BCPanel, Character, cbs_sampling;
 
 type
@@ -29,6 +29,7 @@ type
   { TbatchNetEffort }
 
   TbatchNetEffort = class(TForm)
+    btnHelp: TSpeedButton;
     eCloseTime4: TTimeEdit;
     eOpenTime4: TTimeEdit;
     lblCloseTime4: TLabel;

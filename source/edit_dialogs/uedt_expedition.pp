@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Character, DateUtils, Buttons,
+  ExtCtrls, Character, DateUtils, Buttons, Menus,
   atshapelinebgra, cbs_sampling;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtExpedition }
 
   TedtExpedition = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     eName: TEdit;
     eStartDate: TEditButton;
     eEndDate: TEditButton;
@@ -42,15 +44,18 @@ type
     lblProject: TLabel;
     lineBottom: TShapeLineBGRA;
     mDescription: TMemo;
+    pmnNewProject: TMenuItem;
     pBottom: TPanel;
     pClient: TPanel;
     pDescription: TPanel;
     pName: TPanel;
+    pmNew: TPopupMenu;
     pProject: TPanel;
     pDate: TPanel;
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
     procedure eNameEditingDone(Sender: TObject);
@@ -61,6 +66,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewProjectClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -84,7 +90,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_gis, cbs_validations, cbs_getvalue,
-  cbs_dataconst, udm_main,
+  cbs_dataconst, cbs_editdialogs, udm_main, udm_grid,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -96,6 +102,14 @@ begin
   eStartDate.Images := DMM.iEditsDark;
   eEndDate.Images := DMM.iEditsDark;
   eProject.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtExpedition.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtExpedition.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -238,6 +252,11 @@ begin
     (eStartDate.Text <> EmptyStr) and
     (eEndDate.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtExpedition.pmnNewProjectClick(Sender: TObject);
+begin
+  EditProject(DMG.qProjects, True);
 end;
 
 procedure TedtExpedition.sbSaveClick(Sender: TObject);

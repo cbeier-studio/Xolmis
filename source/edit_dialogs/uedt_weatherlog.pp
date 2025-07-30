@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls,
-  Graphics, Dialogs, ExtCtrls, StdCtrls, atshapelinebgra,
+  Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, atshapelinebgra,
   cbs_sampling;
 
 type
@@ -30,6 +30,7 @@ type
   { TedtWeatherLog }
 
   TedtWeatherLog = class(TForm)
+    btnHelp: TSpeedButton;
     cbSampleMoment: TComboBox;
     cbPrecipitation: TComboBox;
     dsLink: TDataSource;
@@ -106,6 +107,7 @@ uses
 procedure TedtWeatherLog.ApplyDarkMode;
 begin
   eSampleDate.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtWeatherLog.dsLinkDataChange(Sender: TObject; Field: TField);

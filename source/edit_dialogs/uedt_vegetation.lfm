@@ -2,15 +2,15 @@ object edtVegetation: TedtVegetation
   Left = 363
   Height = 714
   Top = 250
-  Width = 397
+  Width = 416
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New vegetation sample'
   ClientHeight = 714
-  ClientWidth = 397
+  ClientWidth = 416
+  Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -18,7 +18,7 @@ object edtVegetation: TedtVegetation
     Left = 0
     Height = 2
     Top = 671
-    Width = 397
+    Width = 416
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -26,9 +26,9 @@ object edtVegetation: TedtVegetation
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 673
-    Width = 397
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -37,16 +37,20 @@ object edtVegetation: TedtVegetation
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 397
+    ClientHeight = 42
+    ClientWidth = 416
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -56,10 +60,16 @@ object edtVegetation: TedtVegetation
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -67,38 +77,50 @@ object edtVegetation: TedtVegetation
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
   end
   object scrollContent: TScrollBox
     Left = 0
     Height = 671
     Top = 0
-    Width = 397
+    Width = 416
     HorzScrollBar.Page = 397
     VertScrollBar.Page = 671
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
     ClientHeight = 671
-    ClientWidth = 397
+    ClientWidth = 416
     Constraints.MinWidth = 176
     TabOrder = 0
     object pContent: TPanel
       Left = 0
       Height = 671
       Top = 0
-      Width = 397
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 8
       ClientHeight = 671
-      ClientWidth = 397
+      ClientWidth = 416
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
         Top = 543
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -109,14 +131,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 11
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -127,7 +149,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 90
           Top = 22
-          Width = 365
+          Width = 384
           Align = alTop
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
@@ -140,7 +162,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 8
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -152,24 +174,24 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 0
         object lblSampleDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Date: *'
           ParentColor = False
           ParentFont = False
         end
         object lblSampleTime: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Time:'
           ParentColor = False
@@ -179,7 +201,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           ButtonHint = 'Open calendar'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -198,10 +220,10 @@ object edtVegetation: TedtVegetation
           OnKeyPress = eSampleTimeKeyPress
         end
         object eSampleTime: TEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           TabOrder = 1
           TextHint = 'HH:MM'
           OnKeyDown = FormKeyDown
@@ -212,7 +234,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 152
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -224,14 +246,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 3
         object lblSampleMoment: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           BorderSpacing.Top = 3
           Caption = 'Distribution: *'
           ParentColor = False
@@ -241,7 +263,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 384
           Constraints.MinWidth = 150
           ItemHeight = 15
           Style = csDropDownList
@@ -255,7 +277,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 197
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -267,24 +289,24 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 4
         object lblCloudCover: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
           ParentColor = False
           ParentFont = False
         end
         object lblTemperature: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
           ParentColor = False
@@ -294,7 +316,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           Constraints.MinWidth = 150
           MaxValue = 100
           TabOrder = 0
@@ -302,10 +324,10 @@ object edtVegetation: TedtVegetation
           OnKeyPress = eSampleTimeKeyPress
         end
         object eHerbsAvgHeight: TSpinEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           Constraints.MinWidth = 150
           MaxValue = 999999
           TabOrder = 1
@@ -317,7 +339,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 53
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -329,24 +351,24 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 1
         object lblLongitude: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Longitude:'
           ParentColor = False
           ParentFont = False
         end
         object lblLatitude: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Latitude:'
           ParentColor = False
@@ -356,7 +378,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           Alignment = taRightJustify
           ButtonHint = 'Open coordinates editor'
           ButtonWidth = 23
@@ -374,10 +396,10 @@ object edtVegetation: TedtVegetation
           OnKeyPress = eLongitudeKeyPress
         end
         object eLatitude: TEditButton
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           Alignment = taRightJustify
           ButtonHint = 'Open coordinates editor'
           ButtonWidth = 23
@@ -399,7 +421,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 38
         Top = 114
-        Width = 397
+        Width = 416
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -407,7 +429,7 @@ object edtVegetation: TedtVegetation
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 397
+        ClientWidth = 416
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -431,7 +453,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 38
         Top = 258
-        Width = 397
+        Width = 416
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -439,7 +461,7 @@ object edtVegetation: TedtVegetation
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 397
+        ClientWidth = 416
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -463,7 +485,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 296
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -475,14 +497,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 6
         object lblSampleMoment1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           BorderSpacing.Top = 3
           Caption = 'Distribution: *'
           ParentColor = False
@@ -492,7 +514,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 384
           Constraints.MinWidth = 150
           ItemHeight = 15
           Style = csDropDownList
@@ -506,7 +528,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 341
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -518,24 +540,24 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 7
         object lblCloudCover1: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
           ParentColor = False
           ParentFont = False
         end
         object lblTemperature1: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
           ParentColor = False
@@ -545,7 +567,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           Constraints.MinWidth = 150
           MaxValue = 100
           TabOrder = 0
@@ -553,10 +575,10 @@ object edtVegetation: TedtVegetation
           OnKeyPress = eSampleTimeKeyPress
         end
         object eShrubsAvgHeight: TSpinEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           Constraints.MinWidth = 150
           MaxValue = 999999
           TabOrder = 1
@@ -568,7 +590,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 38
         Top = 402
-        Width = 397
+        Width = 416
         Align = alTop
         Alignment = taLeftJustify
         AutoSize = True
@@ -576,7 +598,7 @@ object edtVegetation: TedtVegetation
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ClientHeight = 38
-        ClientWidth = 397
+        ClientWidth = 416
         Font.Color = 13066075
         Font.Height = -20
         ParentBackground = False
@@ -600,7 +622,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 440
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -612,14 +634,14 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 9
         object lblSampleMoment2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 384
           BorderSpacing.Top = 3
           Caption = 'Distribution: *'
           ParentColor = False
@@ -629,7 +651,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 384
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
@@ -642,7 +664,7 @@ object edtVegetation: TedtVegetation
         Left = 0
         Height = 45
         Top = 485
-        Width = 397
+        Width = 416
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -654,24 +676,24 @@ object edtVegetation: TedtVegetation
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 416
         ParentBackground = False
         TabOrder = 10
         object lblCloudCover2: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Proportion (%):'
           ParentColor = False
           ParentFont = False
         end
         object lblTemperature2: TLabel
-          Left = 206
+          Left = 216
           Height = 15
           Top = 3
-          Width = 175
+          Width = 184
           BorderSpacing.Top = 3
           Caption = 'Average height (cm):'
           ParentColor = False
@@ -681,7 +703,7 @@ object edtVegetation: TedtVegetation
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 184
           Constraints.MinWidth = 150
           MaxValue = 100
           TabOrder = 0
@@ -689,10 +711,10 @@ object edtVegetation: TedtVegetation
           OnKeyPress = eSampleTimeKeyPress
         end
         object eTreesAvgHeight: TSpinEdit
-          Left = 206
+          Left = 216
           Height = 23
           Top = 22
-          Width = 175
+          Width = 184
           Constraints.MinWidth = 150
           MaxValue = 999999
           TabOrder = 1

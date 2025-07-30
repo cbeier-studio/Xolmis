@@ -2,16 +2,16 @@ object edtPermit: TedtPermit
   Left = 373
   Height = 452
   Top = 34
-  Width = 397
+  Width = 421
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New permit'
   ClientHeight = 452
-  ClientWidth = 397
+  ClientWidth = 421
+  Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -19,7 +19,7 @@ object edtPermit: TedtPermit
     Left = 0
     Height = 2
     Top = 409
-    Width = 397
+    Width = 421
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -27,9 +27,9 @@ object edtPermit: TedtPermit
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 411
-    Width = 397
+    Width = 421
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -38,16 +38,20 @@ object edtPermit: TedtPermit
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 397
+    ClientHeight = 42
+    ClientWidth = 421
     TabOrder = 0
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 157
       Height = 25
-      Top = 8
-      Width = 178
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -57,10 +61,16 @@ object edtPermit: TedtPermit
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 202
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 285
       Height = 25
-      Top = 8
-      Width = 179
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
@@ -68,12 +78,40 @@ object edtPermit: TedtPermit
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
   end
   object SBox: TScrollBox
     Left = 0
     Height = 409
     Top = 0
-    Width = 397
+    Width = 421
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
     VertScrollBar.Page = 409
@@ -81,26 +119,26 @@ object edtPermit: TedtPermit
     AutoSize = True
     BorderStyle = bsNone
     ClientHeight = 409
-    ClientWidth = 397
+    ClientWidth = 421
     Constraints.MinWidth = 176
     TabOrder = 1
     object pClient: TPanel
       Left = 0
       Height = 409
       Top = 0
-      Width = 397
+      Width = 421
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
       ClientHeight = 409
-      ClientWidth = 397
+      ClientWidth = 421
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
         Top = 281
-        Width = 397
+        Width = 421
         Align = alTop
         AutoSize = True
         BorderSpacing.Top = 13
@@ -110,14 +148,14 @@ object edtPermit: TedtPermit
         ChildSizing.VerticalSpacing = 4
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 112
-        ClientWidth = 397
+        ClientWidth = 421
         ParentBackground = False
         TabOrder = 4
         object lblNotes: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 389
           Align = alTop
           BorderSpacing.Top = 3
           Caption = 'Notes:'
@@ -128,7 +166,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 90
           Top = 22
-          Width = 365
+          Width = 389
           Align = alTop
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
@@ -141,7 +179,7 @@ object edtPermit: TedtPermit
         Left = 0
         Height = 45
         Top = 88
-        Width = 397
+        Width = 421
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -153,14 +191,14 @@ object edtPermit: TedtPermit
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 421
         ParentBackground = False
         TabOrder = 0
         object lblName: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 389
           BorderSpacing.Top = 3
           Caption = 'Name: *'
           ParentColor = False
@@ -170,7 +208,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 389
           TabOrder = 0
           OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
@@ -181,7 +219,7 @@ object edtPermit: TedtPermit
         Left = 0
         Height = 45
         Top = 178
-        Width = 397
+        Width = 421
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -193,14 +231,14 @@ object edtPermit: TedtPermit
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 421
         ParentBackground = False
         TabOrder = 2
         object lblDispatcher: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 365
+          Width = 389
           BorderSpacing.Top = 3
           Caption = 'Dispatcher: *'
           ParentColor = False
@@ -210,7 +248,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 23
           Top = 22
-          Width = 365
+          Width = 389
           TabOrder = 0
           OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
@@ -221,7 +259,7 @@ object edtPermit: TedtPermit
         Left = 0
         Height = 45
         Top = 223
-        Width = 397
+        Width = 421
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -233,24 +271,24 @@ object edtPermit: TedtPermit
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 421
         ParentBackground = False
         TabOrder = 3
         object lblDispatchDate: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Dispatch date: *'
           ParentColor = False
           ParentFont = False
         end
         object lblExpireDate: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 187
           BorderSpacing.Top = 3
           Caption = 'Expire date:'
           ParentColor = False
@@ -260,7 +298,7 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 1
@@ -278,10 +316,10 @@ object edtPermit: TedtPermit
           OnKeyPress = eNameKeyPress
         end
         object eExpireDate: TEditButton
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 187
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 1
@@ -302,7 +340,7 @@ object edtPermit: TedtPermit
         Left = 0
         Height = 45
         Top = 133
-        Width = 397
+        Width = 421
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
@@ -314,24 +352,24 @@ object edtPermit: TedtPermit
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 2
         ClientHeight = 45
-        ClientWidth = 397
+        ClientWidth = 421
         ParentBackground = False
         TabOrder = 1
         object lblPermitNumber: TLabel
           Left = 16
           Height = 15
           Top = 3
-          Width = 174
+          Width = 186
           BorderSpacing.Top = 3
           Caption = 'Permit number:'
           ParentColor = False
           ParentFont = False
         end
         object lblPermitType: TLabel
-          Left = 206
+          Left = 218
           Height = 15
           Top = 3
-          Width = 175
+          Width = 187
           BorderSpacing.Top = 3
           Caption = 'Type: *'
           ParentColor = False
@@ -341,16 +379,16 @@ object edtPermit: TedtPermit
           Left = 16
           Height = 23
           Top = 22
-          Width = 174
+          Width = 186
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
         object cbPermitType: TComboBox
-          Left = 206
+          Left = 218
           Height = 23
           Top = 22
-          Width = 175
+          Width = 187
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 1
@@ -363,7 +401,7 @@ object edtPermit: TedtPermit
         Left = 13
         Height = 59
         Top = 16
-        Width = 371
+        Width = 395
         Align = alTop
         AutoSize = True
         BorderSpacing.Left = 13
@@ -414,7 +452,7 @@ object edtPermit: TedtPermit
           Left = 17
           Height = 15
           Top = 9
-          Width = 337
+          Width = 361
           BorderSpacing.Bottom = 3
           Caption = 'Project:'
           ParentColor = False
@@ -424,7 +462,7 @@ object edtPermit: TedtPermit
           Left = 17
           Height = 23
           Top = 27
-          Width = 337
+          Width = 361
           ButtonHint = 'Find project'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -448,5 +486,13 @@ object edtPermit: TedtPermit
     OnDataChange = dsLinkDataChange
     Left = 301
     Top = 64
+  end
+  object pmNew: TPopupMenu
+    Left = 127
+    Top = 385
+    object pmnNewProject: TMenuItem
+      Caption = 'New project'
+      OnClick = pmnNewProjectClick
+    end
   end
 end

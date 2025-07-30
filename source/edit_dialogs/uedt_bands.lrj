@@ -2,6 +2,7 @@
 {"hash":211190532,"name":"tedtbands.caption","sourcebytes":[78,101,119,32,98,97,110,100],"value":"New band"},
 {"hash":366789,"name":"tedtbands.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtbands.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtbands.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":89566314,"name":"tedtbands.lblnotes.caption","sourcebytes":[78,111,116,101,115,58],"value":"Notes:"},
 {"hash":168856698,"name":"tedtbands.lblbandsize.caption","sourcebytes":[83,105,122,101,58,32,42],"value":"Size: *"},
 {"hash":59509226,"name":"tedtbands.lblbandnumber.caption","sourcebytes":[78,117,109,98,101,114,58,32,42],"value":"Number: *"},
@@ -15,5 +16,8 @@
 {"hash":44473178,"name":"tedtbands.lblsupplier.caption","sourcebytes":[83,117,112,112,108,105,101,114,58,32,42],"value":"Supplier: *"},
 {"hash":144242890,"name":"tedtbands.lblcarrier.caption","sourcebytes":[67,97,114,114,105,101,114,58],"value":"Carrier:"},
 {"hash":157335306,"name":"tedtbands.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
-{"hash":253810666,"name":"tedtbands.lblrequester.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58,32,42],"value":"Requester: *"}
+{"hash":253810666,"name":"tedtbands.lblrequester.caption","sourcebytes":[82,101,113,117,101,115,116,101,114,58,32,42],"value":"Requester: *"},
+{"hash":154908770,"name":"tedtbands.pmnnewinstitution.caption","sourcebytes":[78,101,119,32,115,117,112,112,108,105,101,114],"value":"New supplier"},
+{"hash":119478034,"name":"tedtbands.pmnnewperson.caption","sourcebytes":[78,101,119,32,114,101,115,101,97,114,99,104,101,114],"value":"New researcher"},
+{"hash":132301524,"name":"tedtbands.pmnnewproject.caption","sourcebytes":[78,101,119,32,112,114,111,106,101,99,116],"value":"New project"}
 ]}

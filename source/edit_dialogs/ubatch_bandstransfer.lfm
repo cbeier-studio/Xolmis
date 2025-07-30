@@ -2,12 +2,13 @@ object batchBandsTransfer: TbatchBandsTransfer
   Left = 361
   Height = 278
   Top = 250
-  Width = 400
+  Width = 416
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'Transfer bands to'
   ClientHeight = 278
-  ClientWidth = 400
+  ClientWidth = 416
+  Constraints.MinWidth = 416
   Position = poScreenCenter
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -16,13 +17,13 @@ object batchBandsTransfer: TbatchBandsTransfer
     Left = 0
     Height = 159
     Top = 0
-    Width = 400
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 8
     ClientHeight = 159
-    ClientWidth = 400
+    ClientWidth = 416
     ParentBackground = False
     ParentColor = False
     ParentFont = False
@@ -31,7 +32,7 @@ object batchBandsTransfer: TbatchBandsTransfer
       Left = 0
       Height = 45
       Top = 8
-      Width = 400
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -43,23 +44,23 @@ object batchBandsTransfer: TbatchBandsTransfer
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 45
-      ClientWidth = 400
+      ClientWidth = 416
       ParentBackground = False
       TabOrder = 0
       object lblTransferDate: TLabel
         Left = 16
         Height = 15
         Top = 3
-        Width = 176
+        Width = 184
         BorderSpacing.Top = 3
         Caption = 'Transfer date: *'
         ParentFont = False
       end
       object lblBandSize: TLabel
-        Left = 208
+        Left = 216
         Height = 15
         Top = 3
-        Width = 176
+        Width = 184
         BorderSpacing.Top = 3
         Caption = 'Size: *'
         ParentFont = False
@@ -68,7 +69,7 @@ object batchBandsTransfer: TbatchBandsTransfer
         Left = 16
         Height = 23
         Top = 22
-        Width = 176
+        Width = 184
         ButtonHint = 'Open calendar'
         ButtonWidth = 23
         Images = DMM.iEdits
@@ -87,10 +88,10 @@ object batchBandsTransfer: TbatchBandsTransfer
         OnKeyPress = eTransferDateKeyPress
       end
       object cbBandSize: TComboBox
-        Left = 208
+        Left = 216
         Height = 23
         Top = 22
-        Width = 176
+        Width = 184
         Constraints.MinWidth = 176
         DropDownCount = 12
         ItemHeight = 15
@@ -126,7 +127,7 @@ object batchBandsTransfer: TbatchBandsTransfer
       Left = 0
       Height = 45
       Top = 53
-      Width = 400
+      Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
@@ -138,23 +139,23 @@ object batchBandsTransfer: TbatchBandsTransfer
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 2
       ClientHeight = 45
-      ClientWidth = 400
+      ClientWidth = 416
       ParentBackground = False
       TabOrder = 1
       object lblStartNumber: TLabel
         Left = 16
         Height = 15
         Top = 3
-        Width = 176
+        Width = 184
         BorderSpacing.Top = 3
         Caption = 'Start number: *'
         ParentFont = False
       end
       object lblEndNumber: TLabel
-        Left = 208
+        Left = 216
         Height = 15
         Top = 3
-        Width = 176
+        Width = 184
         BorderSpacing.Top = 3
         Caption = 'Final number: *'
         ParentFont = False
@@ -163,7 +164,7 @@ object batchBandsTransfer: TbatchBandsTransfer
         Left = 16
         Height = 23
         Top = 22
-        Width = 176
+        Width = 184
         Constraints.MinWidth = 176
         MaxValue = 999999
         MinValue = 1
@@ -174,10 +175,10 @@ object batchBandsTransfer: TbatchBandsTransfer
         OnKeyPress = eTransferDateKeyPress
       end
       object eEndNumber: TSpinEdit
-        Left = 208
+        Left = 216
         Height = 23
         Top = 22
-        Width = 176
+        Width = 184
         Constraints.MinWidth = 176
         MaxValue = 999999
         MinValue = 1
@@ -192,7 +193,7 @@ object batchBandsTransfer: TbatchBandsTransfer
       Left = 0
       Height = 45
       Top = 98
-      Width = 400
+      Width = 416
       Align = alTop
       AutoSize = True
       BorderSpacing.Bottom = 16
@@ -205,14 +206,14 @@ object batchBandsTransfer: TbatchBandsTransfer
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
-      ClientWidth = 400
+      ClientWidth = 416
       ParentBackground = False
       TabOrder = 2
       object lblRequester: TLabel
         Left = 16
         Height = 15
         Top = 3
-        Width = 368
+        Width = 384
         BorderSpacing.Top = 3
         Caption = 'Requester: *'
         ParentFont = False
@@ -221,7 +222,7 @@ object batchBandsTransfer: TbatchBandsTransfer
         Left = 16
         Height = 23
         Top = 22
-        Width = 368
+        Width = 384
         ButtonHint = 'Find requester'
         ButtonWidth = 23
         Images = DMM.iEdits
@@ -244,7 +245,7 @@ object batchBandsTransfer: TbatchBandsTransfer
     Left = 0
     Height = 2
     Top = 159
-    Width = 400
+    Width = 416
     Align = alTop
     LineColor = 9276813
     ArrowColor = clBlack
@@ -252,9 +253,9 @@ object batchBandsTransfer: TbatchBandsTransfer
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
+    Height = 42
     Top = 161
-    Width = 400
+    Width = 416
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
@@ -263,16 +264,20 @@ object batchBandsTransfer: TbatchBandsTransfer
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
-    ClientWidth = 400
+    ClientHeight = 42
+    ClientWidth = 416
     TabOrder = 1
     object sbSave: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 25
-      Top = 8
-      Width = 180
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
@@ -282,16 +287,58 @@ object batchBandsTransfer: TbatchBandsTransfer
       OnKeyPress = FormKeyPress
     end
     object sbCancel: TButton
-      Left = 204
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
       Height = 25
-      Top = 8
-      Width = 180
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+    end
+  end
+  object pmNew: TPopupMenu
+    Left = 126
+    Top = 138
+    object pmnNewPerson: TMenuItem
+      Caption = 'New researcher'
+      OnClick = pmnNewPersonClick
     end
   end
 end

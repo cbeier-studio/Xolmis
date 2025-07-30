@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, DB, Character, DateUtils,
+  StdCtrls, ExtCtrls, Buttons, Menus, DB, Character, DateUtils,
   atshapelinebgra, cbs_sampling;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtSamplePrep }
 
   TedtSamplePrep = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbSampleType: TComboBox;
     dsLink: TDataSource;
     eAccessionNumber: TEdit;
@@ -43,18 +45,21 @@ type
     lblPreparer: TLabel;
     lblSampleType: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewPerson: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pContent: TPanel;
     pNotes: TPanel;
     pAccessionNumber: TPanel;
     pAccessionSeq: TPanel;
+    pmNew: TPopupMenu;
     pPreparationDate: TPanel;
     pPreparer: TPanel;
     pSampleType: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
     scrollContent: TScrollBox;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAccessionNumberEditingDone(Sender: TObject);
     procedure eAccessionNumberKeyPress(Sender: TObject; var Key: char);
@@ -64,6 +69,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -89,7 +95,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue,
-  cbs_dataconst, udm_main,
+  cbs_dataconst, cbs_editdialogs, udm_main, udm_grid,
   uDarkStyleParams;
 
 { TedtSamplePrep }
@@ -98,6 +104,14 @@ procedure TedtSamplePrep.ApplyDarkMode;
 begin
   ePreparationDate.Images := DMM.iEditsDark;
   ePreparer.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSamplePrep.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtSamplePrep.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -280,6 +294,11 @@ begin
   if (eAccessionNumber.Text <> EmptyStr) and
     (eAccessionSeq.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtSamplePrep.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
 end;
 
 procedure TedtSamplePrep.sbSaveClick(Sender: TObject);

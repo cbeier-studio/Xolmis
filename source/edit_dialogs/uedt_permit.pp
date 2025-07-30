@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, LResources, DateUtils, Character, Forms,
-  Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus,
   atshapelinebgra, BCPanel, cbs_entities;
 
 type
@@ -30,6 +30,8 @@ type
   { TedtPermit }
 
   TedtPermit = class(TForm)
+    btnHelp: TSpeedButton;
+    btnNew: TBitBtn;
     cbPermitType: TComboBox;
     dsLink: TDataSource;
     eName: TEdit;
@@ -47,18 +49,21 @@ type
     lblName: TLabel;
     lblProject: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewProject: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
     pNotes: TPanel;
     pDispatcher: TPanel;
     pDispatchExpireDate: TPanel;
+    pmNew: TPopupMenu;
     pPermitNumberType: TPanel;
     pName: TPanel;
     pProject: TBCPanel;
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDispatchDateButtonClick(Sender: TObject);
     procedure eExpireDateButtonClick(Sender: TObject);
@@ -69,6 +74,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewProjectClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -94,7 +100,7 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue, cbs_themes,
-  cbs_dataconst, udm_main, uDarkStyleParams;
+  cbs_dataconst, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 { TedtPermit }
 
@@ -106,6 +112,14 @@ begin
   eProject.Images := DMM.iEditsDark;
   eDispatchDate.Images := DMM.iEditsDark;
   eExpireDate.Images := DMM.iEditsDark;
+  btnHelp.Images := DMM.iEditsDark;
+  btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtPermit.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 procedure TedtPermit.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -265,6 +279,11 @@ begin
     (eDispatcher.Text <> EmptyStr) and
     (eDispatchDate.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtPermit.pmnNewProjectClick(Sender: TObject);
+begin
+  EditProject(DMG.qProjects, True);
 end;
 
 procedure TedtPermit.sbSaveClick(Sender: TObject);

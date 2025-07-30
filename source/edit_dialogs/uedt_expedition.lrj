@@ -2,6 +2,7 @@
 {"hash":122054270,"name":"tedtexpedition.caption","sourcebytes":[78,101,119,32,101,120,112,101,100,105,116,105,111,110],"value":"New expedition"},
 {"hash":366789,"name":"tedtexpedition.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
 {"hash":77089212,"name":"tedtexpedition.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":21703,"name":"tedtexpedition.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":75730042,"name":"tedtexpedition.lblname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
 {"hash":81166474,"name":"tedtexpedition.lbldescription.caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110,58],"value":"Description:"},
 {"hash":157335306,"name":"tedtexpedition.lblproject.caption","sourcebytes":[80,114,111,106,101,99,116,58],"value":"Project:"},
@@ -11,5 +12,6 @@
 {"hash":38292546,"name":"tedtexpedition.estartdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
 {"hash":33581481,"name":"tedtexpedition.estartdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":38292546,"name":"tedtexpedition.eenddate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
-{"hash":33581481,"name":"tedtexpedition.eenddate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"}
+{"hash":33581481,"name":"tedtexpedition.eenddate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":132301524,"name":"tedtexpedition.pmnnewproject.caption","sourcebytes":[78,101,119,32,112,114,111,106,101,99,116],"value":"New project"}
 ]}
