@@ -516,6 +516,8 @@ uses
     rsTotalResearchers = '%d researcher(s)';
     rsRow = '%d row';
     rsRows = '%d rows';
+    rsTotalProblems = '%d problem';
+    rsTotalProblemsPlural = '%d problems';
 
     { Settings }
     rsSettingsGeneral = 'General';
@@ -945,6 +947,7 @@ uses
     rsWrongMeasurement = 'Wrong measurement';
     rsWrongValues = 'Wrong values';
     rsMissingData = 'Missing data';
+    rsNotReviewed = 'Not reviewed';
 
     { Documents }
     rsDocDocument = 'Document';

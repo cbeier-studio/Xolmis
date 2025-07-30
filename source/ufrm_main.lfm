@@ -893,17 +893,17 @@ object frmMain: TfrmMain
     AnchorSideLeft.Side = asrCenter
     AnchorSideTop.Control = Owner
     AnchorSideTop.Side = asrCenter
-    Left = 393
+    Left = 433
     Height = 93
     Top = 403
-    Width = 407
+    Width = 326
+    AutoSize = True
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
     ChildSizing.HorizontalSpacing = 4
     ChildSizing.VerticalSpacing = 4
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 5
     Background.Color = 15987699
     Background.Gradient1.StartColor = clWhite
@@ -941,10 +941,13 @@ object frmMain: TfrmMain
     Rounding.RoundY = 8
     TabOrder = 4
     object sbEmptyOpenSurveys: TSpeedButton
+      AnchorSideLeft.Control = pEmptyTabs
+      AnchorSideTop.Control = pEmptyTabs
+      AnchorSideTop.Side = asrCenter
       Left = 16
       Height = 61
       Top = 16
-      Width = 72
+      Width = 50
       AutoSize = True
       Caption = 'Surveys'
       Flat = True
@@ -955,10 +958,14 @@ object frmMain: TfrmMain
       OnClick = actOpenSurveysExecute
     end
     object sbEmptyOpenSpecimens: TSpeedButton
-      Left = 92
+      AnchorSideLeft.Control = sbEmptyOpenSurveys
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pEmptyTabs
+      AnchorSideTop.Side = asrCenter
+      Left = 70
       Height = 61
       Top = 16
-      Width = 72
+      Width = 67
       AutoSize = True
       Caption = 'Specimens'
       Flat = True
@@ -969,10 +976,14 @@ object frmMain: TfrmMain
       OnClick = actOpenSpecimensExecute
     end
     object sbEmptyOpenIndividuals: TSpeedButton
-      Left = 168
+      AnchorSideLeft.Control = sbEmptyOpenSpecimens
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pEmptyTabs
+      AnchorSideTop.Side = asrCenter
+      Left = 141
       Height = 61
       Top = 16
-      Width = 71
+      Width = 67
       AutoSize = True
       Caption = 'Individuals'
       Flat = True
@@ -983,10 +994,14 @@ object frmMain: TfrmMain
       OnClick = actOpenIndividualsExecute
     end
     object sbEmptyOpenNests: TSpeedButton
-      Left = 243
+      AnchorSideLeft.Control = sbEmptyOpenIndividuals
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pEmptyTabs
+      AnchorSideTop.Side = asrCenter
+      Left = 212
       Height = 61
       Top = 16
-      Width = 72
+      Width = 42
       AutoSize = True
       Caption = 'Nests'
       Flat = True
@@ -997,10 +1012,14 @@ object frmMain: TfrmMain
       OnClick = actOpenNestsExecute
     end
     object sbEmptyOpenProjects: TSpeedButton
-      Left = 319
+      AnchorSideLeft.Control = sbEmptyOpenNests
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pEmptyTabs
+      AnchorSideTop.Side = asrCenter
+      Left = 258
       Height = 61
       Top = 16
-      Width = 72
+      Width = 52
       AutoSize = True
       Caption = 'Projects'
       Flat = True

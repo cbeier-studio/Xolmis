@@ -9921,7 +9921,8 @@ object frmCustomGrid: TfrmCustomGrid
   end
   object TimerUpdate: TTimer
     Enabled = False
-    Interval = 500
+    Interval = 200
+    OnTimer = TimerUpdateTimer
     Left = 352
     Top = 64
   end
@@ -9956,7 +9957,6 @@ object frmCustomGrid: TfrmCustomGrid
     object pmgRecordVerifications: TMenuItem
       Caption = 'Record &verifications'
       ImageIndex = 85
-      OnClick = pmvViewVerificationsClick
     end
     object pmgRecordHistory: TMenuItem
       Caption = 'Record &history'
@@ -10327,7 +10327,6 @@ object frmCustomGrid: TfrmCustomGrid
     object pmcRecordVerifications: TMenuItem
       Caption = 'Record &verifications'
       ImageIndex = 85
-      OnClick = pmvViewVerificationsClick
     end
     object pmcRecordHistory: TMenuItem
       Caption = 'Record &history'
@@ -25065,24 +25064,6 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmmUnmarkAllClick
     end
   end
-  object pmVerifications: TPopupMenu
-    Images = iButtons
-    Left = 48
-    Top = 179
-    object pmvAddVerification: TMenuItem
-      Caption = '&Add record verification'
-      ImageIndex = 0
-      OnClick = pmvAddVerificationClick
-    end
-    object Separator21: TMenuItem
-      Caption = '-'
-    end
-    object pmvViewVerifications: TMenuItem
-      Caption = '&View record verifications'
-      ImageIndex = 85
-      OnClick = pmvViewVerificationsClick
-    end
-  end
   object pmMarkColumns: TPopupMenu
     Images = iButtons
     Left = 200
@@ -27998,8 +27979,8 @@ object frmCustomGrid: TfrmCustomGrid
   end
   object pmMore: TPopupMenu
     Images = iButtons
-    Left = 272
-    Top = 64
+    Left = 48
+    Top = 179
     object pmpTransferBandsTo: TMenuItem
       Caption = 'Transfer bands to...'
       ImageIndex = 110
@@ -28012,5 +27993,12 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
       OnClick = pmpBandHistoryClick
     end
+  end
+  object TimerChildUpdate: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = TimerChildUpdateTimer
+    Left = 280
+    Top = 64
   end
 end

@@ -4729,6 +4729,10 @@ msgctxt "cbs_locale.rsnothumbnails"
 msgid "There are no images to recreate the thumbnails!"
 msgstr ""
 
+#: cbs_locale.rsnotreviewed
+msgid "Not reviewed"
+msgstr ""
+
 #: cbs_locale.rsnouserfound
 msgctxt "cbs_locale.rsnouserfound"
 msgid "no user found"
@@ -6059,6 +6063,16 @@ msgstr ""
 #, object-pascal-format
 msgctxt "cbs_locale.rstotalmarked"
 msgid "%d of %d %s"
+msgstr ""
+
+#: cbs_locale.rstotalproblems
+#, object-pascal-format
+msgid "%d problem"
+msgstr ""
+
+#: cbs_locale.rstotalproblemsplural
+#, object-pascal-format
+msgid "%d problems"
 msgstr ""
 
 #: cbs_locale.rstotalrecords
@@ -11515,24 +11529,9 @@ msgstr ""
 msgid "New record verification"
 msgstr ""
 
-#: tedtrecverification.edate.buttonhint
-msgctxt "tedtrecverification.edate.buttonhint"
-msgid "Open calendar"
-msgstr ""
-
-#: tedtrecverification.edate.texthint
-msgctxt "tedtrecverification.edate.texthint"
-msgid "DD/MM/YYYY"
-msgstr ""
-
 #: tedtrecverification.eresearcher.buttonhint
 msgctxt "tedtrecverification.eresearcher.buttonhint"
 msgid "Find researcher"
-msgstr ""
-
-#: tedtrecverification.lbldate.caption
-msgctxt "tedtrecverification.lbldate.caption"
-msgid "Date: *"
 msgstr ""
 
 #: tedtrecverification.lblnotes.caption

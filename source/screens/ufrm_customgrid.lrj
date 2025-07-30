@@ -316,8 +316,6 @@
 {"hash":143478044,"name":"tfrmcustomgrid.pmmmarkall.caption","sourcebytes":[38,77,97,114,107,32,97,108,108],"value":"&Mark all"},
 {"hash":124017252,"name":"tfrmcustomgrid.pmminvertmarked.caption","sourcebytes":[38,73,110,118,101,114,116,32,109,97,114,107,101,100],"value":"&Invert marked"},
 {"hash":145138460,"name":"tfrmcustomgrid.pmmunmarkall.caption","sourcebytes":[38,85,110,109,97,114,107,32,97,108,108],"value":"&Unmark all"},
-{"hash":38530958,"name":"tfrmcustomgrid.pmvaddverification.caption","sourcebytes":[38,65,100,100,32,114,101,99,111,114,100,32,118,101,114,105,102,105,99,97,116,105,111,110],"value":"&Add record verification"},
-{"hash":37235683,"name":"tfrmcustomgrid.pmvviewverifications.caption","sourcebytes":[38,86,105,101,119,32,114,101,99,111,114,100,32,118,101,114,105,102,105,99,97,116,105,111,110,115],"value":"&View record verifications"},
 {"hash":143478044,"name":"tfrmcustomgrid.pmmmarkallcolumns.caption","sourcebytes":[38,77,97,114,107,32,97,108,108],"value":"&Mark all"},
 {"hash":145138460,"name":"tfrmcustomgrid.pmmunmarkallcolumns.caption","sourcebytes":[38,85,110,109,97,114,107,32,97,108,108],"value":"&Unmark all"},
 {"hash":266888167,"name":"tfrmcustomgrid.pmccolumnsortasc.caption","sourcebytes":[83,111,114,116,32,99,111,108,117,109,110,32,38,97,115,99,101,110,100,105,110,103],"value":"Sort column &ascending"},

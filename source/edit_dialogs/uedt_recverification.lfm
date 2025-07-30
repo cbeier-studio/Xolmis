@@ -10,7 +10,6 @@ object edtRecVerification: TedtRecVerification
   ClientWidth = 400
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -130,57 +129,26 @@ object edtRecVerification: TedtRecVerification
       ChildSizing.EnlargeHorizontal = crsSameSize
       ChildSizing.ShrinkHorizontal = crsSameSize
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
-      ChildSizing.ControlsPerLine = 2
+      ChildSizing.ControlsPerLine = 1
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
       TabOrder = 0
-      object lblDate: TLabel
+      object lblStatus: TLabel
         Left = 16
         Height = 15
         Top = 3
-        Width = 176
-        BorderSpacing.Top = 3
-        Caption = 'Date: *'
-        ParentColor = False
-        ParentFont = False
-      end
-      object lblStatus: TLabel
-        Left = 208
-        Height = 15
-        Top = 3
-        Width = 176
+        Width = 368
         BorderSpacing.Top = 3
         Caption = 'Status: *'
         ParentColor = False
         ParentFont = False
       end
-      object eDate: TDateEdit
+      object cbStatus: TComboBox
         Left = 16
         Height = 23
         Top = 22
-        Width = 176
-        CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-        DateOrder = doNone
-        DateFormat = 'dd/mm/yyyy'
-        ButtonHint = 'Open calendar'
-        ButtonWidth = 24
-        Constraints.MinWidth = 120
-        NumGlyphs = 1
-        Images = DMM.iEdits
-        ImageIndex = 1
-        MaxLength = 0
-        TabOrder = 0
-        Spacing = 0
-        TextHint = 'DD/MM/YYYY'
-        OnKeyDown = FormKeyDown
-        OnKeyPress = eDateKeyPress
-      end
-      object cbStatus: TComboBox
-        Left = 208
-        Height = 23
-        Top = 22
-        Width = 176
+        Width = 368
         Constraints.MinWidth = 120
         ItemHeight = 15
         Items.Strings = (
@@ -193,7 +161,7 @@ object edtRecVerification: TedtRecVerification
           'Missing data'
         )
         Style = csDropDownList
-        TabOrder = 1
+        TabOrder = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = eDateKeyPress
       end

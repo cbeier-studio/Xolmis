@@ -4736,6 +4736,10 @@ msgctxt "cbs_locale.rsnothumbnails"
 msgid "There are no images to recreate the thumbnails!"
 msgstr "Não há imagens para recriar as miniaturas!"
 
+#: cbs_locale.rsnotreviewed
+msgid "Not reviewed"
+msgstr "Não revisado"
+
 #: cbs_locale.rsnouserfound
 msgctxt "cbs_locale.rsnouserfound"
 msgid "no user found"
@@ -6072,6 +6076,16 @@ msgstr "O número final deve ser maior que zero."
 msgctxt "cbs_locale.rstotalmarked"
 msgid "%d of %d %s"
 msgstr "%d de %d %s"
+
+#: cbs_locale.rstotalproblems
+#, object-pascal-format
+msgid "%d problem"
+msgstr "%d problema"
+
+#: cbs_locale.rstotalproblemsplural
+#, object-pascal-format
+msgid "%d problems"
+msgstr "%d problemas"
 
 #: cbs_locale.rstotalrecords
 #, object-pascal-format
@@ -11512,25 +11526,10 @@ msgstr "Salvar"
 msgid "New record verification"
 msgstr "Nova verificação do registro"
 
-#: tedtrecverification.edate.buttonhint
-msgctxt "tedtrecverification.edate.buttonhint"
-msgid "Open calendar"
-msgstr "Abrir calendário"
-
-#: tedtrecverification.edate.texthint
-msgctxt "tedtrecverification.edate.texthint"
-msgid "DD/MM/YYYY"
-msgstr "DD/MM/AAAA"
-
 #: tedtrecverification.eresearcher.buttonhint
 msgctxt "tedtrecverification.eresearcher.buttonhint"
 msgid "Find researcher"
 msgstr "Buscar pesquisador"
-
-#: tedtrecverification.lbldate.caption
-msgctxt "tedtrecverification.lbldate.caption"
-msgid "Date: *"
-msgstr "Data: *"
 
 #: tedtrecverification.lblnotes.caption
 msgctxt "tedtrecverification.lblnotes.caption"

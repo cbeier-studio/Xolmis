@@ -64,6 +64,7 @@ type
     sbEmptyImport: TSpeedButton;
     sbEmptyClearAll: TSpeedButton;
     TimerOpen: TTimer;
+    TimerChildUpdate: TTimer;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
     DropAudios: TDropFileTarget;
@@ -328,8 +329,6 @@ type
     pmmMarkAllColumns: TMenuItem;
     pmmUnmarkAllColumns: TMenuItem;
     pMsgSummary: TBCPanel;
-    pmvAddVerification: TMenuItem;
-    pmvViewVerifications: TMenuItem;
     pmmMarkAll: TMenuItem;
     pmmUnmarkAll: TMenuItem;
     pmmInvertMarked: TMenuItem;
@@ -347,7 +346,6 @@ type
     pEggTraitsFilters: TBCPanel;
     pmRecycle: TPopupMenu;
     pmMark: TPopupMenu;
-    pmVerifications: TPopupMenu;
     pmColumn: TPopupMenu;
     pmImages: TPopupMenu;
     pmPrint: TPopupMenu;
@@ -782,7 +780,6 @@ type
     Separator18: TMenuItem;
     Separator19: TMenuItem;
     Separator20: TShapeLineBGRA;
-    Separator21: TMenuItem;
     Separator22: TMenuItem;
     Separator23: TMenuItem;
     Separator24: TMenuItem;
@@ -1008,8 +1005,6 @@ type
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
     procedure pmtRefreshClick(Sender: TObject);
-    procedure pmvAddVerificationClick(Sender: TObject);
-    procedure pmvViewVerificationsClick(Sender: TObject);
     procedure qAudiosaudio_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qAudiosaudio_typeSetText(Sender: TField; const aText: string);
     procedure qAudiosBeforePost(DataSet: TDataSet);
@@ -1085,7 +1080,9 @@ type
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
+    procedure TimerChildUpdateTimer(Sender: TObject);
     procedure TimerOpenTimer(Sender: TObject);
+    procedure TimerUpdateTimer(Sender: TObject);
     procedure tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode; var NewState: TCheckState;
       var Allowed: Boolean);
@@ -2078,6 +2075,7 @@ begin
   sbNextRecord.Images := iButtonsDark;
   sbLastRecord.Images := iButtonsDark;
   sbAddChild.Images := iButtonsDark;
+  sbQuickEntryChild.Images := iButtonsDark;
   sbAddNetsBatch.Images := iButtonsDark;
   sbAddFeathersBatch.Images := iButtonsDark;
   sbEditChild.Images := iButtonsDark;
@@ -4094,6 +4092,12 @@ end;
 procedure TfrmCustomGrid.dsLink1DataChange(Sender: TObject; Field: TField);
 begin
   UpdateChildCount;
+
+  if nbChilds.PageIndex = 0 then
+  begin
+    TimerChildUpdate.Enabled := False;
+    TimerChildUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.dsLink1StateChange(Sender: TObject);
@@ -4105,6 +4109,12 @@ end;
 procedure TfrmCustomGrid.dsLink2DataChange(Sender: TObject; Field: TField);
 begin
   UpdateChildCount;
+
+  if nbChilds.PageIndex = 1 then
+  begin
+    TimerChildUpdate.Enabled := False;
+    TimerChildUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.dsLink2StateChange(Sender: TObject);
@@ -4116,6 +4126,12 @@ end;
 procedure TfrmCustomGrid.dsLink3DataChange(Sender: TObject; Field: TField);
 begin
   UpdateChildCount;
+
+  if nbChilds.PageIndex = 2 then
+  begin
+    TimerChildUpdate.Enabled := False;
+    TimerChildUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.dsLink3StateChange(Sender: TObject);
@@ -4129,6 +4145,12 @@ begin
   UpdateChildCount;
   if FChildTable = tbProjectBudgets then
     UpdateChildRightPanel;
+
+  if nbChilds.PageIndex = 3 then
+  begin
+    TimerChildUpdate.Enabled := False;
+    TimerChildUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.dsLink4StateChange(Sender: TObject);
@@ -4140,6 +4162,12 @@ end;
 procedure TfrmCustomGrid.dsLink5DataChange(Sender: TObject; Field: TField);
 begin
   UpdateChildCount;
+
+  if nbChilds.PageIndex = 4 then
+  begin
+    TimerChildUpdate.Enabled := False;
+    TimerChildUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.dsLink5StateChange(Sender: TObject);
@@ -4151,6 +4179,12 @@ end;
 procedure TfrmCustomGrid.dsLink6DataChange(Sender: TObject; Field: TField);
 begin
   UpdateChildCount;
+
+  if nbChilds.PageIndex = 5 then
+  begin
+    TimerChildUpdate.Enabled := False;
+    TimerChildUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.dsLink6StateChange(Sender: TObject);
@@ -4168,6 +4202,9 @@ begin
 
   UpdateChildBar;
   UpdateChildRightPanel;
+
+  TimerUpdate.Enabled := False;
+  TimerUpdate.Enabled := True;
 end;
 
 procedure TfrmCustomGrid.dsLinkStateChange(Sender: TObject);
@@ -7088,56 +7125,6 @@ begin
     LoadDateTreeData(FTableType, tvDateFilter);
 end;
 
-procedure TfrmCustomGrid.pmvAddVerificationClick(Sender: TObject);
-var
-  DS: TDataSet;
-begin
-  if pmVerifications.PopupComponent = sbRecordVerifications then
-  begin
-    DS := dsLink.DataSet;
-    AddVerification(FTableType, tbNone, DS.FieldByName(GetPrimaryKey(DS)).AsInteger)
-  end
-  else
-  if pmVerifications.PopupComponent = sbChildVerifications then
-  begin
-    case nbChilds.PageIndex of
-      0: DS := dsLink1.DataSet;
-      1: DS := dsLink2.DataSet;
-      2: DS := dsLink3.DataSet;
-      3: DS := dsLink4.DataSet;
-      4: DS := dsLink5.DataSet;
-      5: DS := dsLink6.DataSet;
-    end;
-    AddVerification(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
-  end;
-end;
-
-procedure TfrmCustomGrid.pmvViewVerificationsClick(Sender: TObject);
-var
-  DS: TDataSet;
-begin
-  DS := nil;
-
-  if (pmVerifications.PopupComponent = sbRecordVerifications) or (Sender = pmgRecordVerifications) then
-  begin
-    DS := dsLink.DataSet;
-    ShowVerifications(FTableType, tbNone, DS.FieldByName(GetPrimaryKey(DS)).AsInteger)
-  end
-  else
-  if (pmVerifications.PopupComponent = sbChildVerifications) or (Sender = pmcRecordVerifications) then
-  begin
-    case nbChilds.PageIndex of
-      0: DS := dsLink1.DataSet;
-      1: DS := dsLink2.DataSet;
-      2: DS := dsLink3.DataSet;
-      3: DS := dsLink4.DataSet;
-      4: DS := dsLink5.DataSet;
-      5: DS := dsLink6.DataSet;
-    end;
-    ShowVerifications(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
-  end;
-end;
-
 procedure TfrmCustomGrid.PrepareCanvasBands(var Column: TColumn; var sender: TObject);
 begin
   if Column.FieldName = COL_BAND_SIZE then
@@ -8680,12 +8667,24 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbChildVerificationsClick(Sender: TObject);
+var
+  DS: TDataSet;
 begin
-  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
-  begin
-    pmVerifications.PopupComponent := sbChildVerifications;
-    pmVerifications.Popup(X, Y);
+  //with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+  //begin
+  //  pmVerifications.PopupComponent := sbChildVerifications;
+  //  pmVerifications.Popup(X, Y);
+  //end;
+
+  case nbChilds.PageIndex of
+    0: DS := dsLink1.DataSet;
+    1: DS := dsLink2.DataSet;
+    2: DS := dsLink3.DataSet;
+    3: DS := dsLink4.DataSet;
+    4: DS := dsLink5.DataSet;
+    5: DS := dsLink6.DataSet;
   end;
+  ShowVerifications(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
 end;
 
 procedure TfrmCustomGrid.sbClearFiltersClick(Sender: TObject);
@@ -9306,12 +9305,17 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbRecordVerificationsClick(Sender: TObject);
+var
+  DS: TDataSet;
 begin
-  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
-  begin
-    pmVerifications.PopupComponent := sbRecordVerifications;
-    pmVerifications.Popup(X, Y);
-  end;
+  //with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+  //begin
+  //  pmVerifications.PopupComponent := sbRecordVerifications;
+  //  pmVerifications.Popup(X, Y);
+  //end;
+
+  DS := dsLink.DataSet;
+  ShowVerifications(FTableType, tbNone, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
 end;
 
 procedure TfrmCustomGrid.sbRefreshChildClick(Sender: TObject);
@@ -12564,6 +12568,41 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.TimerChildUpdateTimer(Sender: TObject);
+var
+  DS: TDataSet;
+  aId, aTotalProblems: Integer;
+  aStatus: TRecordReviewStatus;
+begin
+  TimerUpdate.Enabled := False;
+  aTotalProblems := 0;
+
+  case nbChilds.PageIndex of
+    0: DS := dsLink1.DataSet;
+    1: DS := dsLink2.DataSet;
+    2: DS := dsLink3.DataSet;
+    3: DS := dsLink4.DataSet;
+    4: DS := dsLink5.DataSet;
+    5: DS := dsLink6.DataSet;
+  end;
+
+  aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
+
+  aStatus := GetRecordVerification(TableNames[FChildTable], aId, aTotalProblems);
+
+  case aStatus of
+    rvwNotReviewed: sbChildVerifications.Caption := rsNotReviewed;
+    rvwRecordOk: sbChildVerifications.Caption := rsRecordOK;
+    rvwRecordWithProblems:
+    begin
+      if aTotalProblems > 1 then
+        sbChildVerifications.Caption := Format(rsTotalProblemsPlural, [aTotalProblems])
+      else
+        sbChildVerifications.Caption := Format(rsTotalProblems, [aTotalProblems]);
+    end;
+  end;
+end;
+
 procedure TfrmCustomGrid.TimerOpenTimer(Sender: TObject);
 begin
   TimerOpen.Enabled := False;
@@ -12573,6 +12612,33 @@ begin
   //finally
   //  Screen.EndTempCursor(crAppStart);
   //end;
+end;
+
+procedure TfrmCustomGrid.TimerUpdateTimer(Sender: TObject);
+var
+  aStatus: TRecordReviewStatus;
+  aId, aTotalProblems: Integer;
+  DS: TDataSet;
+begin
+  TimerUpdate.Enabled := False;
+  aTotalProblems := 0;
+
+  DS := dsLink.DataSet;
+  aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
+
+  aStatus := GetRecordVerification(TableNames[FTableType], aId, aTotalProblems);
+
+  case aStatus of
+    rvwNotReviewed: sbRecordVerifications.Caption := rsNotReviewed;
+    rvwRecordOk: sbRecordVerifications.Caption := rsRecordOK;
+    rvwRecordWithProblems:
+    begin
+      if aTotalProblems > 1 then
+        sbRecordVerifications.Caption := Format(rsTotalProblemsPlural, [aTotalProblems])
+      else
+        sbRecordVerifications.Caption := Format(rsTotalProblems, [aTotalProblems]);
+    end;
+  end;
 end;
 
 procedure TfrmCustomGrid.tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);

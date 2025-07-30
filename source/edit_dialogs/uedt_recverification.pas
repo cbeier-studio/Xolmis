@@ -30,11 +30,9 @@ type
 
   TedtRecVerification = class(TForm)
     cbStatus: TComboBox;
-    eDate: TDateEdit;
     eResearcher: TEditButton;
     lblNotes: TLabel;
     lblResearcher: TLabel;
-    lblDate: TLabel;
     lblStatus: TLabel;
     lineBottom: TShapeLineBGRA;
     mNotes: TMemo;
@@ -57,7 +55,7 @@ type
     FId, FPersonId: Integer;
     procedure AddVerification;
     procedure ApplyDarkMode;
-    function ValidateData(aDate: String): Boolean;
+    function ValidateData: Boolean;
   public
     property TableType: TTableType read FTableType write FTableType default tbNone;
     property ChildType: TTableType read FChildType write FChildType default tbNone;
@@ -103,7 +101,7 @@ begin
       Add('VALUES (:atable, :aid, :adate, :astatus, :aperson, :anote)');
       ParamByName('ATABLE').AsString := Tabela;
       ParamByName('AID').AsInteger := FId;
-      ParamByName('ADATE').AsDateTime := eDate.Date;
+      ParamByName('ADATE').AsDateTime := Now;
       ParamByName('ASTATUS').AsString := Tipo;
       ParamByName('APERSON').AsInteger := FPersonId;
       ParamByName('ANOTE').AsString := mNotes.Lines.Text;
@@ -121,7 +119,7 @@ end;
 
 procedure TedtRecVerification.ApplyDarkMode;
 begin
-  eDate.Images := DMM.iEditsDark;
+  //eDate.Images := DMM.iEditsDark;
   eResearcher.Images := DMM.iEditsDark;
 end;
 
@@ -204,13 +202,13 @@ begin
   cbStatus.Items.Add(rsWrongValues);
   cbStatus.Items.Add(rsMissingData);
 
-  eDate.Date := Today;
+  //eDate.Date := Today;
   FPersonId := 0;
 end;
 
 procedure TedtRecVerification.sbSaveClick(Sender: TObject);
 begin
-  if not ValidateData(DateToStr(eDate.Date)) then
+  if not ValidateData then
     Exit;
 
   AddVerification;
@@ -218,7 +216,7 @@ begin
   ModalResult := mrOk;
 end;
 
-function TedtRecVerification.ValidateData(aDate: String): Boolean;
+function TedtRecVerification.ValidateData: Boolean;
 var
   Msgs: TStringList;
 begin
@@ -228,8 +226,8 @@ begin
   // Required fields
   if (cbStatus.ItemIndex < 0) or (cbStatus.Text = '') then
     Msgs.Add(rsRequiredVerificationStatus);
-  if Length(aDate) < 10 then
-    Msgs.Add(Format(rsRequiredField, [rsCaptionDate]));
+  //if Length(aDate) < 10 then
+  //  Msgs.Add(Format(rsRequiredField, [rsCaptionDate]));
   if FPersonId <= 0 then
     Msgs.Add(Format(rsRequiredField, [rsCaptionPerson]));
 

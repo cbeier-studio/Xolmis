@@ -24,6 +24,9 @@ uses
   Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, StrUtils,
   cbs_taxonomy, cbs_gis, cbs_sampling;
 
+type
+  TRecordReviewStatus = (rvwNotReviewed, rvwRecordOk, rvwRecordWithProblems);
+
   function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
   function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): String;
   function GetNameConcat(aTable, aNameField1, aNameField2, aKeyField: String; aKeyValue: Integer): String;
@@ -37,6 +40,7 @@ uses
   function GetProjectBalance(const aProjectId: Integer): Double;
   function GetRubricBalance(const aRubricId: Integer): Double;
   function GetNextCollectorSeq(aSpecimenId: Integer): Integer;
+  function GetRecordVerification(aTableName: String; aRecordId: Integer; out ProblemsCount: Integer): TRecordReviewStatus;
 
   procedure GetTimeStamp(aField: TField; aTimeStampField: TDateTime);
 
@@ -571,6 +575,64 @@ begin
       Result := FieldByName('seq').AsInteger + 1;
     Close;
   finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetRecordVerification(aTableName: String; aRecordId: Integer; out ProblemsCount: Integer): TRecordReviewStatus;
+var
+  Qry: TSQLQuery;
+begin
+  Result := rvwNotReviewed;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+
+    // Check for verifications
+    Add('SELECT * FROM record_verifications');
+    Add('WHERE (table_name = :table_name) AND (record_id = :record_id)');
+    ParamByName('table_name').AsString := aTableName;
+    ParamByName('record_id').AsInteger := aRecordId;
+    Open;
+    if RecordCount = 0 then
+      Exit;
+
+    // Get most recent status
+    Close;
+    Clear;
+    Add('WITH last_ok AS (');
+    Add('  SELECT verification_date');
+    Add('  FROM record_verifications');
+    Add('  WHERE (table_name = :table_name) AND (record_id = :record_id) AND (verification_status = ''OK'')');
+    Add('  ORDER BY verification_date DESC');
+    Add('  LIMIT 1');
+    Add('),');
+    Add('recent_problems AS (');
+    Add('  SELECT COUNT(*) AS total_problems');
+    Add('  FROM record_verifications');
+    Add('  WHERE (table_name = :table_name) AND (record_id = :record_id)');
+    Add('    AND verification_status <> ''OK''');
+    Add('    AND (');
+    Add('      (SELECT COUNT(*) FROM last_ok) = 0');
+    Add('      OR verification_date > (SELECT verification_date FROM last_ok)');
+    Add('    )');
+    Add(')');
+    Add('SELECT recent_problems.total_problems');
+    Add('FROM recent_problems');
+    ParamByName('table_name').AsString := aTableName;
+    ParamByName('record_id').AsInteger := aRecordId;
+    Open;
+    ProblemsCount := FieldByName('total_problems').AsInteger;
+    if ProblemsCount > 0 then
+      Result := rvwRecordWithProblems
+    else
+      Result := rvwRecordOk;
+  finally
+    if Active then
+      Close;
     FreeAndNil(Qry);
   end;
 end;

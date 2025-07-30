@@ -193,22 +193,22 @@ object dlgRecVerifications: TdlgRecVerifications
       item
         SizePriority = 0
         Title.Caption = 'Date'
-        Width = 90
+        Width = 120
         FieldName = 'verification_date'
       end    
       item
         Title.Caption = 'Status'
-        Width = 226
+        Width = 216
         FieldName = 'verification_status'
       end    
       item
         Title.Caption = 'Researcher'
-        Width = 226
+        Width = 216
         FieldName = 'person_name'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 225
+        Width = 215
         FieldName = 'notes'
       end>
     DataSource = dsHistory
@@ -304,6 +304,7 @@ object dlgRecVerifications: TdlgRecVerifications
     Top = 204
     object qHistoryverification_date: TDateTimeField
       DisplayLabel = 'Date'
+      DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'verification_date'
       Index = 0
@@ -311,6 +312,7 @@ object dlgRecVerifications: TdlgRecVerifications
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'dd/mm/yyyy hh:nn:ss'
     end
     object qHistoryverification_status: TStringField
       DisplayLabel = 'Status'
