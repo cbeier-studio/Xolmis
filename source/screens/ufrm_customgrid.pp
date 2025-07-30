@@ -13193,6 +13193,9 @@ procedure TfrmCustomGrid.UpdateChildRightPanel;
 var
   aProjectId, aRubricId: Integer;
 begin
+  if FChildTable <> tbProjectBudgets then
+    Exit;
+
   aProjectId := dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger;
   aRubricId := dsLink4.DataSet.FieldByName(COL_BUDGET_ID).AsInteger;
 

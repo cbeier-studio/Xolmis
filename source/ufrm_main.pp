@@ -167,11 +167,9 @@ type
     sbClearSearch: TColorSpeedButton;
     icoSbarDatabase: TImage;
     icoSbarUser: TImage;
-    icoSbarTaxonomy: TImage;
     imgSplash: TImage;
     lblSbarDatabase: TLabel;
     lblSbarUser: TLabel;
-    lblSbarTaxonomy: TLabel;
     lblLoading: TLabel;
     progressBar: TProgressBar;
     pSplash: TPanel;
@@ -200,7 +198,6 @@ type
     pSearch: TBCPanel;
     sbarProgress: TBCPanel;
     sbarUser: TBCPanel;
-    sbarTaxonomy: TBCPanel;
     sbarStatus: TBCPanel;
     pMainMenu: TPanel;
     pmtCloseTab: TMenuItem;
@@ -727,10 +724,8 @@ begin
 
   icoSbarDatabase.Images := bStatusBarDark;
   icoSbarUser.Images := bStatusBarDark;
-  icoSbarTaxonomy.Images := bStatusBarDark;
   sbarDatabase.Border.Color := clSolidBGSecondaryDark;
   sbarUser.Border.Color := clSolidBGSecondaryDark;
-  sbarTaxonomy.Border.Color := clSolidBGSecondaryDark;
   sbarStatus.Border.Color := clSolidBGSecondaryDark;
   sbarStatus.FontEx.Color := clTextPrimaryDark;
   sbarProgress.Border.Color := clSolidBGSecondaryDark;
@@ -1682,7 +1677,7 @@ begin
   lblSbarDatabase.Hint := sbarDatabase.Hint;
   icoSbarDatabase.Hint := sbarDatabase.Hint;
   lblSbarUser.Caption := ActiveUser.UserName;
-  lblSbarTaxonomy.Caption := TaxonomyName[ActiveTaxonomy];
+  //lblSbarTaxonomy.Caption := TaxonomyName[ActiveTaxonomy];
 end;
 
 end.

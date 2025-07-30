@@ -665,78 +665,11 @@ object frmMain: TfrmMain
         Proportional = True
       end
     end
-    object sbarTaxonomy: TBCPanel
+    object sbarStatus: TBCPanel
       Left = 78
       Height = 26
       Top = 0
-      Width = 39
-      Align = alLeft
-      AutoSize = True
-      ChildSizing.LeftRightSpacing = 8
-      ChildSizing.TopBottomSpacing = 2
-      ChildSizing.HorizontalSpacing = 4
-      Background.Color = clBtnFace
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = False
-      Rounding.RoundX = 1
-      Rounding.RoundY = 1
-      TabOrder = 2
-      object lblSbarTaxonomy: TLabel
-        Left = 29
-        Height = 20
-        Top = 3
-        Width = 1
-        Align = alLeft
-        Layout = tlCenter
-        ShowAccelChar = False
-      end
-      object icoSbarTaxonomy: TImage
-        Left = 9
-        Height = 20
-        Top = 3
-        Width = 16
-        Align = alLeft
-        AutoSize = True
-        Center = True
-        ImageIndex = 2
-        ImageWidth = 16
-        Images = bStatusBar
-        Proportional = True
-      end
-    end
-    object sbarStatus: TBCPanel
-      Left = 117
-      Height = 26
-      Top = 0
-      Width = 667
+      Width = 706
       Align = alClient
       Background.Color = clBtnFace
       Background.Gradient1.StartColor = clWhite
@@ -777,7 +710,7 @@ object frmMain: TfrmMain
       ParentBackground = False
       Rounding.RoundX = 1
       Rounding.RoundY = 1
-      TabOrder = 3
+      TabOrder = 2
     end
     object sbarProgress: TBCPanel
       Left = 784
@@ -821,7 +754,7 @@ object frmMain: TfrmMain
       ParentBackground = False
       Rounding.RoundX = 1
       Rounding.RoundY = 1
-      TabOrder = 4
+      TabOrder = 3
       object progressBar: TProgressBar
         Left = 5
         Height = 20
@@ -876,7 +809,7 @@ object frmMain: TfrmMain
       Rounding.RoundX = 1
       Rounding.RoundY = 1
       ShowHint = True
-      TabOrder = 5
+      TabOrder = 4
       object lblSbarVersion: TLabel
         Left = 9
         Height = 20
