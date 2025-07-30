@@ -98,6 +98,11 @@ type
     pmaNewBandsBatch: TMenuItem;
     pEmptyNotifications: TBCPanel;
     pNotificationList: TPanel;
+    sbEmptyOpenBands: TSpeedButton;
+    sbEmptyOpenPeople: TSpeedButton;
+    sbEmptyOpenPermits: TSpeedButton;
+    sbEmptyOpenGazetteer: TSpeedButton;
+    sbEmptyOpenGeoConverter: TSpeedButton;
     sbEmptyOpenSurveys: TSpeedButton;
     sbEmptyOpenSpecimens: TSpeedButton;
     sbEmptyOpenIndividuals: TSpeedButton;
@@ -708,6 +713,11 @@ begin
   sbEmptyOpenIndividuals.Images := iMenuDark;
   sbEmptyOpenNests.Images := iMenuDark;
   sbEmptyOpenProjects.Images := iMenuDark;
+  sbEmptyOpenBands.Images := iMenuDark;
+  sbEmptyOpenPeople.Images := iMenuDark;
+  sbEmptyOpenPermits.Images := iMenuDark;
+  sbEmptyOpenGazetteer.Images := iMenuDark;
+  sbEmptyOpenGeoConverter.Images := iMenuDark;
   pEmptyTabs.Background.Color := clCardBGDefaultDark;
   pEmptyTabs.Border.Color := clSolidBGSecondaryDark;
   pEmptyTabs.ParentBackground := True;
@@ -798,7 +808,7 @@ begin
   if IsDarkModeEnabled then
   begin
     pSearch.Background.Color := clSolidBGBaseDark;
-    pSearch.Border.Color := clSolidBGTertiaryDark;
+    pSearch.Border.Color := clAccentDark1; //clSolidBGTertiaryDark;
   end
   else
   begin

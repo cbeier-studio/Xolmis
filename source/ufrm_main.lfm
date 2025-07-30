@@ -535,10 +535,10 @@ object frmMain: TfrmMain
       Left = 0
       Height = 26
       Top = 0
-      Width = 39
+      Width = 55
       Align = alLeft
       AutoSize = True
-      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 2
       ChildSizing.HorizontalSpacing = 4
       Background.Color = clBtnFace
@@ -577,7 +577,7 @@ object frmMain: TfrmMain
       ShowHint = True
       TabOrder = 0
       object icoSbarDatabase: TImage
-        Left = 9
+        Left = 17
         Height = 20
         Top = 3
         Width = 16
@@ -589,7 +589,7 @@ object frmMain: TfrmMain
         Proportional = True
       end
       object lblSbarDatabase: TLabel
-        Left = 29
+        Left = 37
         Height = 20
         Top = 3
         Width = 1
@@ -599,13 +599,13 @@ object frmMain: TfrmMain
       end
     end
     object sbarUser: TBCPanel
-      Left = 39
+      Left = 55
       Height = 26
       Top = 0
-      Width = 39
+      Width = 55
       Align = alLeft
       AutoSize = True
-      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 2
       ChildSizing.HorizontalSpacing = 4
       Background.Color = clBtnFace
@@ -643,7 +643,7 @@ object frmMain: TfrmMain
       Rounding.RoundY = 1
       TabOrder = 1
       object lblSbarUser: TLabel
-        Left = 29
+        Left = 37
         Height = 20
         Top = 3
         Width = 1
@@ -652,7 +652,7 @@ object frmMain: TfrmMain
         ShowAccelChar = False
       end
       object icoSbarUser: TImage
-        Left = 9
+        Left = 17
         Height = 20
         Top = 3
         Width = 16
@@ -666,10 +666,10 @@ object frmMain: TfrmMain
       end
     end
     object sbarStatus: TBCPanel
-      Left = 78
+      Left = 110
       Height = 26
       Top = 0
-      Width = 706
+      Width = 658
       Align = alClient
       Background.Color = clBtnFace
       Background.Gradient1.StartColor = clWhite
@@ -713,7 +713,7 @@ object frmMain: TfrmMain
       TabOrder = 2
     end
     object sbarProgress: TBCPanel
-      Left = 784
+      Left = 768
       Height = 26
       Top = 0
       Width = 390
@@ -766,13 +766,13 @@ object frmMain: TfrmMain
       end
     end
     object sbarVersion: TBCPanel
-      Left = 1174
+      Left = 1158
       Height = 26
       Top = 0
-      Width = 19
+      Width = 35
       Align = alRight
       AutoSize = True
-      ChildSizing.LeftRightSpacing = 8
+      ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 2
       ChildSizing.HorizontalSpacing = 4
       Background.Color = clBtnFace
@@ -811,7 +811,7 @@ object frmMain: TfrmMain
       ShowHint = True
       TabOrder = 4
       object lblSbarVersion: TLabel
-        Left = 9
+        Left = 17
         Height = 20
         Top = 3
         Width = 1
@@ -826,10 +826,10 @@ object frmMain: TfrmMain
     AnchorSideLeft.Side = asrCenter
     AnchorSideTop.Control = Owner
     AnchorSideTop.Side = asrCenter
-    Left = 433
-    Height = 93
-    Top = 403
-    Width = 326
+    Left = 430
+    Height = 158
+    Top = 370
+    Width = 333
     AutoSize = True
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
@@ -876,7 +876,6 @@ object frmMain: TfrmMain
     object sbEmptyOpenSurveys: TSpeedButton
       AnchorSideLeft.Control = pEmptyTabs
       AnchorSideTop.Control = pEmptyTabs
-      AnchorSideTop.Side = asrCenter
       Left = 16
       Height = 61
       Top = 16
@@ -894,7 +893,6 @@ object frmMain: TfrmMain
       AnchorSideLeft.Control = sbEmptyOpenSurveys
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pEmptyTabs
-      AnchorSideTop.Side = asrCenter
       Left = 70
       Height = 61
       Top = 16
@@ -912,7 +910,6 @@ object frmMain: TfrmMain
       AnchorSideLeft.Control = sbEmptyOpenSpecimens
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pEmptyTabs
-      AnchorSideTop.Side = asrCenter
       Left = 141
       Height = 61
       Top = 16
@@ -930,7 +927,6 @@ object frmMain: TfrmMain
       AnchorSideLeft.Control = sbEmptyOpenIndividuals
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pEmptyTabs
-      AnchorSideTop.Side = asrCenter
       Left = 212
       Height = 61
       Top = 16
@@ -948,7 +944,6 @@ object frmMain: TfrmMain
       AnchorSideLeft.Control = sbEmptyOpenNests
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pEmptyTabs
-      AnchorSideTop.Side = asrCenter
       Left = 258
       Height = 61
       Top = 16
@@ -962,11 +957,100 @@ object frmMain: TfrmMain
       Layout = blGlyphTop
       OnClick = actOpenProjectsExecute
     end
+    object sbEmptyOpenBands: TSpeedButton
+      AnchorSideLeft.Control = pEmptyTabs
+      AnchorSideTop.Control = sbEmptyOpenSurveys
+      AnchorSideTop.Side = asrBottom
+      Left = 16
+      Height = 61
+      Top = 81
+      Width = 42
+      AutoSize = True
+      Caption = 'Bands'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 7
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenBandsExecute
+    end
+    object sbEmptyOpenPeople: TSpeedButton
+      AnchorSideLeft.Control = sbEmptyOpenBands
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = sbEmptyOpenSurveys
+      AnchorSideTop.Side = asrBottom
+      Left = 62
+      Height = 61
+      Top = 81
+      Width = 72
+      AutoSize = True
+      Caption = 'Researchers'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 18
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenResearchersExecute
+    end
+    object sbEmptyOpenPermits: TSpeedButton
+      AnchorSideLeft.Control = sbEmptyOpenPeople
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = sbEmptyOpenSurveys
+      AnchorSideTop.Side = asrBottom
+      Left = 138
+      Height = 61
+      Top = 81
+      Width = 50
+      AutoSize = True
+      Caption = 'Permits'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 20
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenPermitsExecute
+    end
+    object sbEmptyOpenGazetteer: TSpeedButton
+      AnchorSideLeft.Control = sbEmptyOpenPermits
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = sbEmptyOpenSurveys
+      AnchorSideTop.Side = asrBottom
+      Left = 192
+      Height = 61
+      Top = 81
+      Width = 59
+      AutoSize = True
+      Caption = 'Gazetteer'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 21
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actOpenGazetteerExecute
+    end
+    object sbEmptyOpenGeoConverter: TSpeedButton
+      AnchorSideLeft.Control = sbEmptyOpenGazetteer
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = sbEmptyOpenSurveys
+      AnchorSideTop.Side = asrBottom
+      Left = 255
+      Height = 61
+      Top = 81
+      Width = 62
+      AutoSize = True
+      Caption = 'Converter'
+      Flat = True
+      Images = iMenu
+      ImageIndex = 24
+      ImageWidth = 32
+      Layout = blGlyphTop
+      OnClick = actCoordinatesConverterExecute
+    end
   end
   object pSplash: TPanel
     Left = 440
     Height = 336
-    Top = 48
+    Top = 24
     Width = 376
     BevelOuter = bvNone
     ClientHeight = 336

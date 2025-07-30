@@ -15033,6 +15033,20 @@ msgctxt "tfrmmain.sbclearsearch.hint"
 msgid "Clear search"
 msgstr ""
 
+#: tfrmmain.sbemptyopenbands.caption
+msgctxt "tfrmmain.sbemptyopenbands.caption"
+msgid "Bands"
+msgstr ""
+
+#: tfrmmain.sbemptyopengazetteer.caption
+msgctxt "tfrmmain.sbemptyopengazetteer.caption"
+msgid "Gazetteer"
+msgstr ""
+
+#: tfrmmain.sbemptyopengeoconverter.caption
+msgid "Converter"
+msgstr ""
+
 #: tfrmmain.sbemptyopenindividuals.caption
 msgctxt "tfrmmain.sbemptyopenindividuals.caption"
 msgid "Individuals"
@@ -15041,6 +15055,16 @@ msgstr ""
 #: tfrmmain.sbemptyopennests.caption
 msgctxt "tfrmmain.sbemptyopennests.caption"
 msgid "Nests"
+msgstr ""
+
+#: tfrmmain.sbemptyopenpeople.caption
+msgctxt "tfrmmain.sbemptyopenpeople.caption"
+msgid "Researchers"
+msgstr ""
+
+#: tfrmmain.sbemptyopenpermits.caption
+msgctxt "tfrmmain.sbemptyopenpermits.caption"
+msgid "Permits"
 msgstr ""
 
 #: tfrmmain.sbemptyopenprojects.caption
