@@ -49,10 +49,10 @@ type
   TfrmCustomGrid = class(TForm)
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmpBandsBalance: TMenuItem;
     pmgBandHistory: TMenuItem;
     pmpBandHistory: TMenuItem;
     pmpTransferBandsTo: TMenuItem;
-    pmPrintBandsBalance: TMenuItem;
     pmMore: TPopupMenu;
     sbAddFeathersBatch: TSpeedButton;
     sbEmptyQuickEntry: TSpeedButton;
@@ -74,8 +74,8 @@ type
     dsLink6: TDataSource;
     gridChild6: TDBGrid;
     gridDocs: TDBGrid;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
+    pmdAddDocument: TMenuItem;
+    pmdAddLink: TMenuItem;
     pmcNewFeather: TMenuItem;
     pmPrintFeathers: TMenuItem;
     pmcNewExpenseFromRubric: TMenuItem;
@@ -980,7 +980,7 @@ type
     procedure pmmUnmarkAllClick(Sender: TObject);
     procedure pmmUnmarkAllColumnsClick(Sender: TObject);
     procedure pmpBandHistoryClick(Sender: TObject);
-    procedure pmPrintBandsBalanceClick(Sender: TObject);
+    procedure pmpBandsBalanceClick(Sender: TObject);
     procedure pmPrintBandsByCarrierClick(Sender: TObject);
     procedure pmPrintBandsByStatusClick(Sender: TObject);
     procedure pmPrintBandsClick(Sender: TObject);
@@ -2055,6 +2055,7 @@ begin
   pmAudios.Images := iButtonsDark;
   pmDocs.Images := iButtonsDark;
   pmAddChild.Images := DMM.iAddMenuDark;
+  pmMore.Images := iButtonsDark;
   icoRecycleWarning.Images := iIconsDark;
   // Set buttons images
   sbInsertRecord.Images := iButtonsDark;
@@ -2126,6 +2127,7 @@ begin
   sbEmptyQuickEntry.Images := iButtonsDark;
   sbEmptyImport.Images := iButtonsDark;
   sbEmptyClearAll.Images := iButtonsDark;
+  sbMoreOptions.Images := iButtonsDark;
 
   // Set filter cards colors
   pSiteFilters.Background.Color := clCardBGDefaultDark;
@@ -6833,7 +6835,7 @@ begin
   AbreForm(TdlgBandHistory, dlgBandHistory);
 end;
 
-procedure TfrmCustomGrid.pmPrintBandsBalanceClick(Sender: TObject);
+procedure TfrmCustomGrid.pmpBandsBalanceClick(Sender: TObject);
 begin
   AbreForm(TdlgBandsBalance, dlgBandsBalance);
 end;
@@ -11800,7 +11802,6 @@ begin
   pmPrintBandsByCarrier.Visible := True;
   pmPrintBandsWithHistory.Visible := True;
   pmPrintBandsByStatus.Visible := True;
-  pmPrintBandsBalance.Visible := True;
 
   // Set visible buttons
   sbRecordVerifications.Visible := True;
@@ -11811,6 +11812,7 @@ begin
   // Set the more options menu
   pmpTransferBandsTo.Visible := True;
   pmpBandHistory.Visible := True;
+  pmpBandsBalance.Visible := True;
 
   // Set grid menu
   pmgBandHistory.Visible := True;
@@ -11958,6 +11960,7 @@ begin
   // Set visible buttons
   sbRecordVerifications.Visible := True;
   sbShowImages.Visible := True;
+  sbShowSummary.Visible := True;
   sbInsertBatch.ImageIndex := 104;
   sbInsertBatch.DisabledImageIndex := 105;
   sbInsertBatch.Visible := True;
@@ -12548,7 +12551,7 @@ begin
       tbBands:              SummaryBands(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbIndividuals:        SummaryIndividuals(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbCaptures:           SummaryCaptures(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      tbFeathers: ;
+      tbFeathers:           SummaryFeathers(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbNests:              SummaryNests(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       //tbNestOwners: ;
       tbNestRevisions:      SummaryNestRevisions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);

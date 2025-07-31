@@ -13599,15 +13599,6 @@ msgstr "Tem anilhas coloridas"
 msgid "Have recaptures"
 msgstr "Tem recapturas"
 
-#: tfrmcustomgrid.menuitem1.caption
-msgctxt "tfrmcustomgrid.menuitem1.caption"
-msgid "&Documents"
-msgstr "&Documentos"
-
-#: tfrmcustomgrid.menuitem2.caption
-msgid "&Link"
-msgstr "&Link"
-
 #: tfrmcustomgrid.pmaaddaudio.caption
 msgid "Add &new audio recording(s)"
 msgstr "Adicionar &nova(s) gravação(ões) de áudio"
@@ -13789,6 +13780,16 @@ msgstr "Atuali&zar"
 msgid "Add &new"
 msgstr "Adicionar &novo"
 
+#: tfrmcustomgrid.pmdadddocument.caption
+msgctxt "tfrmcustomgrid.pmdadddocument.caption"
+msgid "&Documents"
+msgstr "&Documentos"
+
+#: tfrmcustomgrid.pmdaddlink.caption
+msgctxt "tfrmcustomgrid.pmdaddlink.caption"
+msgid "&Link"
+msgstr "&Link"
+
 #: tfrmcustomgrid.pmddeldoc.caption
 msgctxt "tfrmcustomgrid.pmddeldoc.caption"
 msgid "&Delete"
@@ -13915,15 +13916,15 @@ msgctxt "tfrmcustomgrid.pmpbandhistory.caption"
 msgid "Band history"
 msgstr "Histórico da anilha"
 
+#: tfrmcustomgrid.pmpbandsbalance.caption
+msgctxt "tfrmcustomgrid.pmpbandsbalance.caption"
+msgid "Bands balance"
+msgstr "Saldo de anilhas"
+
 #: tfrmcustomgrid.pmprintbands.caption
 msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
 msgstr "Anilhas"
-
-#: tfrmcustomgrid.pmprintbandsbalance.caption
-msgctxt "tfrmcustomgrid.pmprintbandsbalance.caption"
-msgid "Bands balance"
-msgstr "Saldo de anilhas"
 
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption
 msgid "Bands per carrier"

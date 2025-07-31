@@ -521,6 +521,7 @@ resourcestring
   procedure SummaryCaptures(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryEggs(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryExpeditions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryFeathers(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryGazetteer(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryIndividuals(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryInstitutions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -2970,6 +2971,13 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
       end;
+      'requester_id', 'requester_name':
+      begin
+        Add('SELECT requester_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
       'carrier_id', 'carrier_name':
       begin
         Add('SELECT carrier_name AS name, COUNT(*) AS tally');
@@ -4296,9 +4304,155 @@ begin
     begin
       case Fields[i].FieldName of
         'name':          Fields[i].DisplayLabel := rscValue;
+        'number':        Fields[i].DisplayLabel := rscNumber;
         'tally':         Fields[i].DisplayLabel := rscTally;
         'mean':          Fields[i].DisplayLabel := rscMean;
       end;
+    end;
+  end;
+end;
+
+procedure SummaryFeathers(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'full_name', 'feather_id', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
+      'sample_date', 'sample_time':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'taxon_id', 'taxon_name':
+      begin
+        Add('SELECT taxon_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'locality_id', 'locality_name':
+      begin
+        Add('SELECT locality_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'individual_id', 'individual_name':
+      begin
+        Add('SELECT individual_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'capture_id', 'capture_name':
+      begin
+        Add('SELECT capture_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'sighting_id', 'sighting_name':
+      begin
+        Add('SELECT sighting_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'observer_id', 'observer_name':
+      begin
+        Add('SELECT observer_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'country_id', 'state_id', 'municipality_id':
+      begin
+        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('JOIN gazetteer AS g ON %afield = g.site_id');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := aFieldName;
+      end;
+      'country_name', 'state_name', 'municipality_name':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'source_type', 'symmetrical', 'feather_trait', 'body_side', 'feather_age':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'feather_number':
+      begin
+        Add('SELECT feather_trait AS name, feather_number AS number, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name, number');
+        Add('ORDER BY tally DESC');
+        //MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'grown_percent', 'feather_length', 'feather_area', 'feather_mass', 'rachis_width', 'growth_bar_width',
+        'barb_density':
+      begin
+        Add('SELECT taxon_name AS name, AVG(%afield) AS mean');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY mean DESC');
+        MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('WHERE ((notes != '''') OR (notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
     end;
   end;
 end;

@@ -350,7 +350,6 @@
 {"hash":213372690,"name":"tfrmcustomgrid.pmprintbandsbycarrier.caption","sourcebytes":[66,97,110,100,115,32,112,101,114,32,99,97,114,114,105,101,114],"value":"Bands per carrier"},
 {"hash":217673667,"name":"tfrmcustomgrid.pmprintbandsbystatus.caption","sourcebytes":[66,97,110,100,115,32,112,101,114,32,115,116,97,116,117,115],"value":"Bands per status"},
 {"hash":241325993,"name":"tfrmcustomgrid.pmprintbandswithhistory.caption","sourcebytes":[66,97,110,100,115,32,119,105,116,104,32,104,105,115,116,111,114,121],"value":"Bands with history"},
-{"hash":17224117,"name":"tfrmcustomgrid.pmprintbandsbalance.caption","sourcebytes":[66,97,110,100,115,32,98,97,108,97,110,99,101],"value":"Bands balance"},
 {"hash":212598067,"name":"tfrmcustomgrid.pmprintindividuals.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,115],"value":"Individuals"},
 {"hash":155407470,"name":"tfrmcustomgrid.pmprintindividualsbytaxon.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,115,32,112,101,114,32,116,97,120,111,110],"value":"Individuals per taxon"},
 {"hash":257268979,"name":"tfrmcustomgrid.pmprintindividualsbyparents.caption","sourcebytes":[73,110,100,105,118,105,100,117,97,108,115,32,112,101,114,32,112,97,114,101,110,116,115],"value":"Individuals per parents"},
@@ -393,8 +392,8 @@
 {"hash":179055749,"name":"tfrmcustomgrid.pmadelaudio.caption","sourcebytes":[38,68,101,108,101,116,101],"value":"&Delete"},
 {"hash":146640424,"name":"tfrmcustomgrid.pmarefreshaudios.caption","sourcebytes":[38,82,101,102,114,101,115,104],"value":"&Refresh"},
 {"hash":174248119,"name":"tfrmcustomgrid.pmdadddoc.caption","sourcebytes":[65,100,100,32,38,110,101,119],"value":"Add &new"},
-{"hash":180432611,"name":"tfrmcustomgrid.menuitem1.caption","sourcebytes":[38,68,111,99,117,109,101,110,116,115],"value":"&Documents"},
-{"hash":2830411,"name":"tfrmcustomgrid.menuitem2.caption","sourcebytes":[38,76,105,110,107],"value":"&Link"},
+{"hash":180432611,"name":"tfrmcustomgrid.pmdadddocument.caption","sourcebytes":[38,68,111,99,117,109,101,110,116,115],"value":"&Documents"},
+{"hash":2830411,"name":"tfrmcustomgrid.pmdaddlink.caption","sourcebytes":[38,76,105,110,107],"value":"&Link"},
 {"hash":214397871,"name":"tfrmcustomgrid.pmddocinfo.caption","sourcebytes":[86,105,101,119,47,38,101,100,105,116,32,105,110,102,111],"value":"View/&edit info"},
 {"hash":124431435,"name":"tfrmcustomgrid.pmdopendoc.caption","sourcebytes":[38,79,112,101,110,32,100,111,99,117,109,101,110,116,47,108,105,110,107],"value":"&Open document/link"},
 {"hash":179055749,"name":"tfrmcustomgrid.pmddeldoc.caption","sourcebytes":[38,68,101,108,101,116,101],"value":"&Delete"},
@@ -402,5 +401,6 @@
 {"hash":14781075,"name":"tfrmcustomgrid.pmadddocument.caption","sourcebytes":[65,100,100,32,38,100,111,99,117,109,101,110,116,115],"value":"Add &documents"},
 {"hash":103639531,"name":"tfrmcustomgrid.pmaddlink.caption","sourcebytes":[65,100,100,32,38,108,105,110,107],"value":"Add &link"},
 {"hash":161021646,"name":"tfrmcustomgrid.pmptransferbandsto.caption","sourcebytes":[84,114,97,110,115,102,101,114,32,98,97,110,100,115,32,116,111,46,46,46],"value":"Transfer bands to..."},
-{"hash":193130745,"name":"tfrmcustomgrid.pmpbandhistory.caption","sourcebytes":[66,97,110,100,32,104,105,115,116,111,114,121],"value":"Band history"}
+{"hash":193130745,"name":"tfrmcustomgrid.pmpbandhistory.caption","sourcebytes":[66,97,110,100,32,104,105,115,116,111,114,121],"value":"Band history"},
+{"hash":17224117,"name":"tfrmcustomgrid.pmpbandsbalance.caption","sourcebytes":[66,97,110,100,115,32,98,97,108,97,110,99,101],"value":"Bands balance"}
 ]}

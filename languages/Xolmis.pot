@@ -13603,15 +13603,6 @@ msgstr ""
 msgid "Have recaptures"
 msgstr ""
 
-#: tfrmcustomgrid.menuitem1.caption
-msgctxt "tfrmcustomgrid.menuitem1.caption"
-msgid "&Documents"
-msgstr ""
-
-#: tfrmcustomgrid.menuitem2.caption
-msgid "&Link"
-msgstr ""
-
 #: tfrmcustomgrid.pmaaddaudio.caption
 msgid "Add &new audio recording(s)"
 msgstr ""
@@ -13795,6 +13786,16 @@ msgstr ""
 msgid "Add &new"
 msgstr ""
 
+#: tfrmcustomgrid.pmdadddocument.caption
+msgctxt "tfrmcustomgrid.pmdadddocument.caption"
+msgid "&Documents"
+msgstr ""
+
+#: tfrmcustomgrid.pmdaddlink.caption
+msgctxt "tfrmcustomgrid.pmdaddlink.caption"
+msgid "&Link"
+msgstr ""
+
 #: tfrmcustomgrid.pmddeldoc.caption
 msgctxt "tfrmcustomgrid.pmddeldoc.caption"
 msgid "&Delete"
@@ -13921,14 +13922,14 @@ msgctxt "tfrmcustomgrid.pmpbandhistory.caption"
 msgid "Band history"
 msgstr ""
 
+#: tfrmcustomgrid.pmpbandsbalance.caption
+msgctxt "tfrmcustomgrid.pmpbandsbalance.caption"
+msgid "Bands balance"
+msgstr ""
+
 #: tfrmcustomgrid.pmprintbands.caption
 msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
-msgstr ""
-
-#: tfrmcustomgrid.pmprintbandsbalance.caption
-msgctxt "tfrmcustomgrid.pmprintbandsbalance.caption"
-msgid "Bands balance"
 msgstr ""
 
 #: tfrmcustomgrid.pmprintbandsbycarrier.caption
