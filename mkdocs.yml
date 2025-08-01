@@ -1,0 +1,25 @@
+site_name: Xolmis Documentation
+repo_url: https://github.com/cbeier-studio/Xolmis
+site_author: Christian Beier
+nav:
+  - Home: index.md
+theme:
+  name: material
+markdown_extensions: 
+  - abbr
+  - admonition
+  - codehilite
+  - footnotes
+  - def_list
+  - attr_list
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+plugins: 
+  - search
+  - badges
