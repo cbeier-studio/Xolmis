@@ -22,13 +22,14 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, ComCtrls, StdCtrls, BCButton,
-  LCLIntf, ExtDlgs, Menus, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
+  BCFluentSlider, LCLIntf, ExtDlgs, Menus, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
 
 type
 
   { TfrmImageViewer }
 
   TfrmImageViewer = class(TForm)
+    tbZoom: TBCFluentSlider;
     btnPrior: TBCButton;
     btnNext: TBCButton;
     dsLink: TDataSource;
@@ -64,7 +65,6 @@ type
     sbZoomOut: TSpeedButton;
     Separator1: TMenuItem;
     Separator2: TMenuItem;
-    tbZoom: TTrackBar;
     procedure btnNextClick(Sender: TObject);
     procedure btnPriorClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -85,7 +85,7 @@ type
     procedure sbZoomOutClick(Sender: TObject);
     procedure scrollViewMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
       var Handled: Boolean);
-    procedure tbZoomChange(Sender: TObject);
+    procedure tbZoomChangeValue(Sender: TObject);
   private
     FImage: TBitmap;
     FOriginal, FZoomed: TBGRABitmap;
@@ -174,7 +174,7 @@ begin
     ApplyDarkMode;
 
   LoadImage;
-  tbZoom.Position := (scrollView.Height * 100) div FOrigHeight;
+  tbZoom.Value := (scrollView.Height * 100) div FOrigHeight;
 end;
 
 procedure TfrmImageViewer.LoadImage;
@@ -316,30 +316,30 @@ end;
 
 procedure TfrmImageViewer.sbZoom100Click(Sender: TObject);
 begin
-  tbZoom.Position := 100;
+  tbZoom.Value := 100;
 end;
 
 procedure TfrmImageViewer.sbZoomAdjustClick(Sender: TObject);
 begin
-  tbZoom.Position := (scrollView.Height * 100) div FOrigHeight;
+  tbZoom.Value := (scrollView.Height * 100) div FOrigHeight;
 end;
 
 procedure TfrmImageViewer.sbZoomInClick(Sender: TObject);
 begin
-  if tbZoom.Position < tbZoom.Max then
-    if tbZoom.Position >= 100 then
-      tbZoom.Position := tbZoom.Position + 100
+  if tbZoom.Value < tbZoom.MaxValue then
+    if tbZoom.Value >= 100 then
+      tbZoom.Value := tbZoom.Value + 100
     else
-      tbZoom.Position := tbZoom.Position + 10;
+      tbZoom.Value := tbZoom.Value + 10;
 end;
 
 procedure TfrmImageViewer.sbZoomOutClick(Sender: TObject);
 begin
-  if tbZoom.Position > tbZoom.Min then
-    if tbZoom.Position > 100 then
-      tbZoom.Position := tbZoom.Position - 100
+  if tbZoom.Value > tbZoom.MinValue then
+    if tbZoom.Value > 100 then
+      tbZoom.Value := tbZoom.Value - 100
     else
-      tbZoom.Position := tbZoom.Position - 10;
+      tbZoom.Value := tbZoom.Value - 10;
 end;
 
 procedure TfrmImageViewer.scrollViewMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
@@ -353,17 +353,17 @@ begin
   Handled := True;
 end;
 
-procedure TfrmImageViewer.tbZoomChange(Sender: TObject);
+procedure TfrmImageViewer.tbZoomChangeValue(Sender: TObject);
 begin
-  lblZoom.Caption := IntToStr(tbZoom.Position) + '%';
+  lblZoom.Caption := IntToStr(tbZoom.Value) + '%';
 
   UpdateZoom;
 end;
 
 procedure TfrmImageViewer.UpdateZoom;
 begin
-  FZoomWidth := Round(FOrigWidth * (tbZoom.Position / 100));
-  FZoomHeight := Round(FOrigHeight * (tbZoom.Position / 100));
+  FZoomWidth := Round(FOrigWidth * (tbZoom.Value / 100));
+  FZoomHeight := Round(FOrigHeight * (tbZoom.Value / 100));
 
   //BGRAReplace(FZoomed, FOriginal.Resample(FZoomWidth, FZoomHeight));
   if FNeedRedraw then
@@ -379,8 +379,8 @@ begin
   end;
   //imgView.Stretch := True;
   //imgView.Proportional := True;
-  imgView.Width := Round(imgView.Picture.Width * (tbZoom.Position / 100));
-  imgView.Height := Round(imgView.Picture.Height * (tbZoom.Position / 100));
+  imgView.Width := Round(imgView.Picture.Width * (tbZoom.Value / 100));
+  imgView.Height := Round(imgView.Picture.Height * (tbZoom.Value / 100));
   if imgView.Width > scrollView.ClientWidth then
     imgView.Left := 0
   else

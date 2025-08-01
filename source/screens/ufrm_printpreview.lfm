@@ -2,11 +2,11 @@ object frmPrintPreview: TfrmPrintPreview
   Left = 361
   Height = 604
   Top = 250
-  Width = 883
+  Width = 892
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Print preview'
   ClientHeight = 604
-  ClientWidth = 883
+  ClientWidth = 892
   PopupMode = pmAuto
   Position = poDefault
   OnShow = FormShow
@@ -14,14 +14,14 @@ object frmPrintPreview: TfrmPrintPreview
     Left = 0
     Height = 38
     Top = 0
-    Width = 883
+    Width = 892
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 4
     ClientHeight = 38
-    ClientWidth = 883
+    ClientWidth = 892
     TabOrder = 0
     object sbPrint: TSpeedButton
       Left = 8
@@ -71,7 +71,7 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbPrintSettingsClick
     end
     object sbClose: TSpeedButton
-      Left = 812
+      Left = 821
       Height = 30
       Top = 4
       Width = 63
@@ -89,40 +89,27 @@ object frmPrintPreview: TfrmPrintPreview
   end
   object pStatusBar: TPanel
     Left = 0
-    Height = 38
-    Top = 566
-    Width = 883
+    Height = 40
+    Top = 564
+    Width = 892
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 4
-    ClientHeight = 38
-    ClientWidth = 883
+    ClientHeight = 40
+    ClientWidth = 892
     TabOrder = 1
-    object tbZoom: TTrackBar
-      Left = 679
-      Height = 30
-      Hint = 'Zoom'
-      Top = 4
-      Width = 126
-      Max = 200
-      Min = 10
-      Position = 100
-      ShowSelRange = False
-      TickMarks = tmBoth
-      TickStyle = tsNone
-      OnChange = tbZoomChange
-      Align = alRight
-      TabOrder = 0
-    end
     object sbZoomIn: TSpeedButton
-      Left = 805
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = lblZoom
+      Left = 818
       Height = 30
       Hint = 'Zoom in'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alRight
+      Anchors = [akTop, akRight]
       AutoSize = True
       DisabledImageIndex = 5
       Flat = True
@@ -132,12 +119,15 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomInClick
     end
     object sbZoomOut: TSpeedButton
-      Left = 649
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = tbZoom
+      Left = 656
       Height = 30
       Hint = 'Zoom out'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alRight
+      Anchors = [akTop]
       AutoSize = True
       DisabledImageIndex = 3
       Flat = True
@@ -147,12 +137,15 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomOutClick
     end
     object sbZoomAdjust: TSpeedButton
-      Left = 573
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoom100
+      Left = 579
       Height = 30
       Hint = 'Zoom page to fit'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alRight
+      Anchors = [akTop]
       AutoSize = True
       BorderSpacing.Right = 8
       DisabledImageIndex = 1
@@ -163,12 +156,15 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomAdjustClick
     end
     object sbZoom100: TSpeedButton
-      Left = 611
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoomOut
+      Left = 617
       Height = 30
       Hint = 'Zoom to actual size'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alRight
+      Anchors = [akTop]
       AutoSize = True
       BorderSpacing.Right = 8
       DisabledImageIndex = 13
@@ -179,24 +175,30 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoom100Click
     end
     object lblZoom: TLabel
-      Left = 843
-      Height = 30
-      Top = 4
-      Width = 32
-      Align = alRight
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pStatusBar
+      AnchorSideRight.Side = asrBottom
+      Left = 856
+      Height = 15
+      Top = 13
+      Width = 28
       Alignment = taRightJustify
-      AutoSize = False
+      Anchors = [akTop, akRight]
       BorderSpacing.Left = 8
       Caption = '100%'
       Layout = tlCenter
     end
     object sbZoomAdjustWidth: TSpeedButton
-      Left = 535
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoomAdjust
+      Left = 541
       Height = 30
       Hint = 'Zoom page to fit width'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alRight
+      Anchors = [akTop]
       AutoSize = True
       BorderSpacing.Left = 16
       BorderSpacing.Right = 8
@@ -208,34 +210,44 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbZoomAdjustWidthClick
     end
     object lblPage: TLabel
+      AnchorSideLeft.Control = sbPriorPage
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
       Left = 72
-      Height = 30
-      Top = 4
+      Height = 15
+      Top = 13
       Width = 29
-      Align = alLeft
       BorderSpacing.Left = 4
       BorderSpacing.Right = 4
       Caption = '0 of 0'
       Layout = tlCenter
     end
     object PBar: TProgressBar
+      AnchorSideLeft.Control = sbLastPage
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoomAdjustWidth
       Left = 181
-      Height = 22
-      Top = 8
-      Width = 338
-      Align = alClient
+      Height = 15
+      Top = 13
+      Width = 344
+      Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
-      TabOrder = 1
+      TabOrder = 0
       Visible = False
     end
     object sbFirstPage: TSpeedButton
+      AnchorSideLeft.Control = pStatusBar
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
       Left = 8
       Height = 30
       Hint = 'First page'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alLeft
       AutoSize = True
       BorderSpacing.Left = 8
       DisabledImageIndex = 23
@@ -250,12 +262,15 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbFirstPageClick
     end
     object sbPriorPage: TSpeedButton
+      AnchorSideLeft.Control = sbFirstPage
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
       Left = 38
       Height = 30
       Hint = 'Previous page'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alLeft
       AutoSize = True
       DisabledImageIndex = 11
       Enabled = False
@@ -269,12 +284,15 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbPriorPageClick
     end
     object sbNextPage: TSpeedButton
+      AnchorSideLeft.Control = lblPage
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
       Left = 105
       Height = 30
       Hint = 'Next page'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alLeft
       AutoSize = True
       DisabledImageIndex = 9
       Enabled = False
@@ -288,12 +306,15 @@ object frmPrintPreview: TfrmPrintPreview
       OnClick = sbNextPageClick
     end
     object sbLastPage: TSpeedButton
+      AnchorSideLeft.Control = sbNextPage
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
       Left = 135
       Height = 30
       Hint = 'Last page'
-      Top = 4
+      Top = 5
       Width = 30
-      Align = alLeft
       AutoSize = True
       BorderSpacing.Right = 16
       DisabledImageIndex = 25
@@ -307,12 +328,28 @@ object frmPrintPreview: TfrmPrintPreview
       ParentShowHint = False
       OnClick = sbLastPageClick
     end
+    object tbZoom: TBCFluentSlider
+      AnchorSideTop.Control = pStatusBar
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbZoomIn
+      Left = 688
+      Height = 32
+      Top = 4
+      Width = 128
+      MinValue = 10
+      MaxValue = 200
+      Value = 100
+      OnChangeValue = tbZoomChangeValue
+      Anchors = [akTop, akRight]
+      BorderSpacing.Left = 2
+      BorderSpacing.Right = 2
+    end
   end
   object frPreview: TfrPreview
     Left = 0
-    Height = 528
+    Height = 526
     Top = 38
-    Width = 883
+    Width = 892
     Align = alClient
     BevelOuter = bvNone
     PopupMenu = pmReport

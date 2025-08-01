@@ -518,6 +518,7 @@ uses
     rsRows = '%d rows';
     rsTotalProblems = '%d problem';
     rsTotalProblemsPlural = '%d problems';
+    rsPageOfPages = '%d of %d';
 
     { Settings }
     rsSettingsGeneral = 'General';

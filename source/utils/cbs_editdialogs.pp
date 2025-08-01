@@ -2566,6 +2566,7 @@ begin
       DMM.qUsers.FieldByName('user_password').AsString := Pass;
       if not IsNew then
         DMM.qUsers.Post;
+      LogDebug('Password changed');
     end else
     begin
       if not IsNew then

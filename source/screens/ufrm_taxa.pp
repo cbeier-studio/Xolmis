@@ -1077,27 +1077,31 @@ begin
   //else
   //begin
     // Draw the GPS point as a circle
+    // >> Sighting
     if APoint.IdOwner = 1 then
     begin
-      ADrawer.BrushColor := clYellowFG4Dark;
-      ADrawer.PenColor := clYellowBGLight;
+      ADrawer.BrushColor := clLightYellowChart; //clYellowFG4Dark;
+      ADrawer.PenColor := clYellowChart; //clYellowBGLight;
     end
     else
+    // >> Nest
     if APoint.IdOwner = 2 then
     begin
-      ADrawer.BrushColor := clRedFGDark;
-      ADrawer.PenColor := clRedBGLight;
+      ADrawer.BrushColor := clLightRedChart; //clRedFGDark;
+      ADrawer.PenColor := clRedChart; //clRedBGLight;
     end
     else
+    // >> Specimen
     if APoint.IdOwner = 3 then
     begin
-      ADrawer.BrushColor := clVioletFG1Dark;
-      ADrawer.PenColor := clVioletBG2Dark;
+      ADrawer.BrushColor := clLightVioletChart; //clVioletFG1Dark;
+      ADrawer.PenColor := clVioletChart; //clVioletBG2Dark;
     end
     else
+    // >> Capture
     begin
-      ADrawer.BrushColor := clGreenBGDark;
-      ADrawer.PenColor := clGreenFG2Light;
+      ADrawer.BrushColor := clLightLimeGreenChart; //clGreenBGDark;
+      ADrawer.PenColor := clLimeGreenChart; //clGreenFG2Light;
     end;
     ADrawer.BrushStyle := bsSolid;
     ADrawer.PenWidth := 2;

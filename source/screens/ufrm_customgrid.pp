@@ -17,6 +17,8 @@
 unit ufrm_customgrid;
 
 {$mode objfpc}{$H+}
+// Disable hint "marked as inline is not inlined"
+{$WARN 6058 OFF}
 
 interface
 
@@ -1822,6 +1824,8 @@ begin
   finally
     FindClose(SearchRec);
   end;
+
+  { #todo : Get document type from file extension }
 
   relPath := ExtractRelativePath(XSettings.DocumentsFolder, aFileName);
 
@@ -3922,6 +3926,7 @@ begin
 
         if (ExtractFileExt(DropAudios.Files[i]) in SupportedAudios) then
           AddAudio(qAudios, DropAudios.Files[i]);
+        { #todo : Better treatment of not supported audio files }
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;
@@ -4023,6 +4028,7 @@ begin
 
         if (ExtractFileExt(DropImages.Files[i]) in SupportedImages) then
           AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, DropImages.Files[i]);
+        { #todo : Better treatment of not supported image files }
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;

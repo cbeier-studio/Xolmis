@@ -47,6 +47,7 @@ object dlgLogin: TdlgLogin
       Font.Name = 'Segoe UI Semibold'
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
     object sbCancel: TButton
       Left = 144

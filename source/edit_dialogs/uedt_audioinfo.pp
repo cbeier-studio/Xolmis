@@ -442,6 +442,8 @@ begin
   FSightingId := 0;
   FSpecimenId := 0;
 
+  { #todo : Recording types combobox list }
+
   cbPrecipitation.Items.Clear;
   cbPrecipitation.Items.Add(rsPrecipitationNone);
   cbPrecipitation.Items.Add(rsPrecipitationFog);

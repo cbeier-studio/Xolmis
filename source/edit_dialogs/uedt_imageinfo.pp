@@ -423,6 +423,47 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  with cbImageType.Items do
+  begin
+    Add(rsBirdInHandFlank);
+    Add(rsBirdInHandBelly);
+    Add(rsBirdInHandBack);
+    Add(rsBirdInHandWing);
+    Add(rsBirdInHandTail);
+    Add(rsBirdInHandHead);
+    Add(rsBirdInHandFeet);
+    Add(rsFreeBirdStanding);
+    Add(rsFreeBirdFlying);
+    Add(rsFreeBirdSwimming);
+    Add(rsFreeBirdForraging);
+    Add(rsFreeBirdCopulating);
+    Add(rsFreeBirdBuildingNest);
+    Add(rsFreeBirdDisplaying);
+    Add(rsFreeBirdIncubating);
+    Add(rsFreeBirdVocalizing);
+    Add(rsFreeBirdAgonistic);
+    Add(rsDeadBird);
+    Add(rsBirdFlock);
+    Add(rsBirdNest);
+    Add(rsBirdEgg);
+    Add(rsBirdNestling);
+    Add(rsEctoparasite);
+    Add(rsFootprint);
+    Add(rsFeather);
+    Add(rsFeces);
+    Add(rsFood);
+    Add(rsEnvironment);
+    Add(rsFieldwork);
+    Add(rsTeam);
+  end;
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+  { #todo : License types combobox list }
+
   if not FIsNew then
     GetRecord;
 end;

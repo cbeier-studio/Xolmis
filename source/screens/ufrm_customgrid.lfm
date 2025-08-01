@@ -7,6 +7,7 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1267
   ParentFont = True
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -83,7 +84,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            327
+            348
           )
         end
       end
@@ -7012,7 +7013,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 255
+              Width = 276
               FieldName = 'full_name'
             end>
           DataSource = dsAudios
@@ -7211,7 +7212,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'File path'
-              Width = 365
+              Width = 386
               FieldName = 'document_path'
             end>
           DataSource = dsDocs
@@ -7357,7 +7358,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Field'
-              Width = 274
+              Width = 278
             end>
           MouseWheelOption = mwGrid
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
@@ -7371,7 +7372,7 @@ object frmCustomGrid: TfrmCustomGrid
             100
             70
             0
-            274
+            278
           )
           Cells = (
             1
@@ -8306,7 +8307,7 @@ object frmCustomGrid: TfrmCustomGrid
         Height = 164
         Top = 40
         Width = 504
-        PageIndex = 5
+        PageIndex = 0
         Align = alClient
         TabOrder = 1
         object pgChild1: TPage

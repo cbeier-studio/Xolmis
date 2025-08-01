@@ -22,7 +22,8 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons,
-  LCLIntf, LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, Menus, PrintersDlgs, lrPDFExport, lr_e_fclpdf;
+  LCLIntf, LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, Menus, BCFluentSlider, PrintersDlgs, lrPDFExport,
+  lr_e_fclpdf;
 
 type
 
@@ -78,7 +79,7 @@ type
     Separator1: TMenuItem;
     Separator2: TMenuItem;
     Separator3: TMenuItem;
-    tbZoom: TTrackBar;
+    tbZoom: TBCFluentSlider;
     procedure FormShow(Sender: TObject);
     procedure frPreviewScrollPage(Sender: TObject);
     procedure ReportBeginDoc;
@@ -97,7 +98,7 @@ type
     procedure sbZoomAdjustWidthClick(Sender: TObject);
     procedure sbZoomInClick(Sender: TObject);
     procedure sbZoomOutClick(Sender: TObject);
-    procedure tbZoomChange(Sender: TObject);
+    procedure tbZoomChangeValue(Sender: TObject);
   private
     FDataSource, FDetailSource1, FDetailSource2, FDetailSource3, FDetailSource4, FDetailSource5: TDataSource;
     FReportName: String;
@@ -170,7 +171,7 @@ end;
 
 procedure TfrmPrintPreview.frPreviewScrollPage(Sender: TObject);
 begin
-  lblPage.Caption := Format('%d of %d', [frPreview.Page, frPreview.AllPages]);
+  lblPage.Caption := Format(rsPageOfPages, [frPreview.Page, frPreview.AllPages]);
 
   UpdateButtons;
 end;
@@ -304,37 +305,37 @@ end;
 
 procedure TfrmPrintPreview.sbZoom100Click(Sender: TObject);
 begin
-  tbZoom.Position := 100;
+  tbZoom.Value := 100;
 end;
 
 procedure TfrmPrintPreview.sbZoomAdjustClick(Sender: TObject);
 begin
   frPreview.OnePage;
-  tbZoom.Position := Round(frPreview.Zoom);
+  tbZoom.Value := Round(frPreview.Zoom);
 end;
 
 procedure TfrmPrintPreview.sbZoomAdjustWidthClick(Sender: TObject);
 begin
   frPreview.PageWidth;
-  tbZoom.Position := Round(frPreview.Zoom);
+  tbZoom.Value := Round(frPreview.Zoom);
 end;
 
 procedure TfrmPrintPreview.sbZoomInClick(Sender: TObject);
 begin
-  if tbZoom.Position < tbZoom.Max then
-    if tbZoom.Position >= 100 then
-      tbZoom.Position := tbZoom.Position + 50
+  if tbZoom.Value < tbZoom.MaxValue then
+    if tbZoom.Value >= 100 then
+      tbZoom.Value := tbZoom.Value + 50
     else
-      tbZoom.Position := tbZoom.Position + 10;
+      tbZoom.Value := tbZoom.Value + 10;
 end;
 
 procedure TfrmPrintPreview.sbZoomOutClick(Sender: TObject);
 begin
-  if tbZoom.Position > tbZoom.Min then
-    if tbZoom.Position > 100 then
-      tbZoom.Position := tbZoom.Position - 50
+  if tbZoom.Value > tbZoom.MinValue then
+    if tbZoom.Value > 100 then
+      tbZoom.Value := tbZoom.Value - 50
     else
-      tbZoom.Position := tbZoom.Position - 10;
+      tbZoom.Value := tbZoom.Value - 10;
 end;
 
 procedure TfrmPrintPreview.SetDataSource(AValue: TDataSource);
@@ -380,10 +381,10 @@ begin
     MsgDlg(rsTitleError, Format(rsErrorReportNotFound, [AValue]), mtError);
 end;
 
-procedure TfrmPrintPreview.tbZoomChange(Sender: TObject);
+procedure TfrmPrintPreview.tbZoomChangeValue(Sender: TObject);
 begin
-  lblZoom.Caption := IntToStr(tbZoom.Position) + '%';
-  frPreview.Zoom := tbZoom.Position;
+  lblZoom.Caption := IntToStr(tbZoom.Value) + '%';
+  frPreview.Zoom := tbZoom.Value;
 
   UpdateButtons;
 end;
@@ -401,8 +402,8 @@ begin
   sbZoomAdjustWidth.Enabled := frPreview.AllPages > 0;
   sbZoomAdjust.Enabled := frPreview.AllPages > 0;
   sbZoom100.Enabled := frPreview.AllPages > 0;
-  sbZoomOut.Enabled := (frPreview.AllPages > 0) or (tbZoom.Position > tbZoom.Min);
-  sbZoomIn.Enabled := (frPreview.AllPages > 0) or (tbZoom.Position < tbZoom.Max);
+  sbZoomOut.Enabled := (frPreview.AllPages > 0) or (tbZoom.Value > tbZoom.MinValue);
+  sbZoomIn.Enabled := (frPreview.AllPages > 0) or (tbZoom.Value < tbZoom.MaxValue);
   tbZoom.Enabled := frPreview.AllPages > 0;
 
   pmPrint.Enabled := sbPrint.Enabled;

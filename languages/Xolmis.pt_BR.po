@@ -4771,6 +4771,11 @@ msgctxt "cbs_locale.rsoriginalsearch"
 msgid "Original search"
 msgstr "Busca original"
 
+#: cbs_locale.rspageofpages
+#, object-pascal-format
+msgid "%d of %d"
+msgstr "%d de %d"
+
 #: cbs_locale.rspartialdateempty
 #, object-pascal-format
 msgctxt "cbs_locale.rspartialdateempty"
@@ -15050,11 +15055,6 @@ msgctxt "tfrmimageviewer.sbzoomout.hint"
 msgid "Zoom out"
 msgstr "Diminuir zoom"
 
-#: tfrmimageviewer.tbzoom.hint
-msgctxt "tfrmimageviewer.tbzoom.hint"
-msgid "Zoom"
-msgstr "Zoom"
-
 #: tfrmmain.actabout.caption
 msgctxt "tfrmmain.actabout.caption"
 msgid "&About"
@@ -15788,11 +15788,6 @@ msgstr "Aumentar zoom"
 msgctxt "tfrmprintpreview.sbzoomout.hint"
 msgid "Zoom out"
 msgstr "Diminuir zoom"
-
-#: tfrmprintpreview.tbzoom.hint
-msgctxt "tfrmprintpreview.tbzoom.hint"
-msgid "Zoom"
-msgstr "Zoom"
 
 #: tfrmquickentry.caption
 msgctxt "tfrmquickentry.caption"
