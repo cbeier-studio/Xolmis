@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_math"><element name="Median"><short>Calculate the median of a array of extended values</short>
-      </element><element name="MedianQuartiles"><short>Calculate the median quartiles of a array of float values</short>
-      </element><element name="Zscore"><short>Calculate the z-score for measurements of a taxon</short>
-      </element><element name="ModifiedZScore"><short>Calculate the modified z-score for measurements of a taxon</short>
-      </element><element name="IsOutlier"><short>Return if the value is an outlier based on median quartiles</short>
-      </element><element name="IsOutlierZscore"><short>Return if a value is an outlier based on modified z-score</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_math"><element name="Median"><short>calculates the median of a given dynamic array of <var>Extended</var> floating-point numbers</short>
+      <descr><dl><dt>Values</dt><dd>A dynamic array of <var>Extended</var> type numbers.</dd>
+          </dl><p>Returns the median value of the array. If the array has an even number of elements, it returns the average of the two middle values.</p>
+        </descr>
+      </element><element name="MedianQuartiles"><short>calculates the median and the first and third quartiles of a sorted dynamic array of <var>Double</var> values</short>
+      <descr><dl><dt>Values</dt><dd>A dynamic array of <var>Double</var> values. The array should be sorted for correct results.</dd><dt>Quartile1</dt><dd>An <b>out</b> parameter that will hold the calculated first quartile (Q1).</dd><dt>Quartile3</dt><dd>An <b>out</b> parameter that will hold the calculated third quartile (Q3).</dd>
+          </dl><p>Returns the median of the dataset.</p>
+        </descr>
+      </element><element name="Zscore"><short>Calculate the standard Z-Score for measurements of a taxon</short>
+      <descr><p>The Z-Score measures how many standard deviations an element is from the mean.</p><dl><dt>aTaxon</dt><dd>An <var>Integer</var> representing the <var>taxon_id</var> for filtering the data.</dd><dt>aField</dt><dd>A <var>String</var> representing the database field (measurement) to analyze.</dd><dt>aValue</dt><dd>An <var>Extended</var> value to be tested.</dd>
+          </dl><p>Returns the calculated Z-Score</p>
+        </descr>
+      </element><element name="ModifiedZScore"><short>Calculate the Modified Z-Score for measurements of a taxon</short>
+      <descr><p>It is a robust alternative to the standard Z-Score that uses the median and Median Absolute Deviation (MAD) to detect outliers, making it less sensitive to extreme values.</p><dl><dt>aTaxon</dt><dd>An <var>Integer</var> representing the <var>taxon_id</var> for filtering the data.</dd><dt>aField</dt><dd>A <var>String</var> representing the database field (measurement) to analyze.</dd><dt>aValue</dt><dd>An <var>Extended</var> value to be tested.</dd>
+          </dl><p>Returns the calculated Z-Score</p>
+        </descr>
+      </element><element name="IsOutlier"><short>Determines if a value is an outlier based on the Interquartile Range (IQR) method.</short>
+      <descr><p>An outlier is a value that falls below the first quartile (Q1) minus a factor times the IQR, or above the third quartile (Q3) plus a factor times the IQR.</p><dl><dt>aTaxon</dt><dd>An <var>Integer</var> representing the <var>taxon_id</var> for filtering the data.</dd><dt>aField</dt><dd>A <var>String</var> representing the database field (measurement) to analyze.</dd><dt>aValue</dt><dd>An <var>Extended</var> value to be tested.</dd><dt>Factor</dt><dd>A <var>Double</var> value (default is 1.5) to multiply the IQR.</dd>
+          </dl><p>Returns <b>True</b> if the value is an outlier, otherwise <b>False</b>.</p>
+        </descr>
+      </element><element name="IsOutlierZscore"><short>Determines if a value is an outlier based on its Modified Z-Score.</short>
+      <descr><p>A value is considered an outlier if its absolute Modified Z-Score is greater than a predefined threshold.</p><p><dl><dt>aTaxon</dt><dd>An <var>Integer</var> representing the <var>taxon_id</var> for filtering the data.</dd><dt>aField</dt><dd>A <var>String</var> representing the database field (measurement) to analyze.</dd><dt>aValue</dt><dd>An <var>Extended</var> value to be tested.</dd>
+            </dl>
+Returns <b>True</b> if the absolute Modified Z-Score is greater than 3.5 (the common threshold), otherwise <b>False</b>.</p>
+        </descr>
       </element>
     </module>
   </package>

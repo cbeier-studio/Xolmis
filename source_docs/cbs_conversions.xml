@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_conversions"><element name="TrimList"><short>Trim a list and return it as a string</short>
-      </element><element name="TextToBool"><short>Convert string to boolean</short>
-      </element><element name="BoolToText"><short>Convert boolean to string</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="cbs_conversions"><element name="TrimList"><short>Concatenates a <var>TStrings</var> list into a single, space-separated string or replaces all line endings in a string with a single space.</short>
+      <descr><dl><dt>aList</dt><dd>A <var>TStrings</var> object containing the list of strings or an input string.</dd>
+          </dl><p>Returns a single string with all list items joined by spaces or the string with all line endings replaced by spaces</p>
+        </descr>
+      </element><element name="TextToBool"><short>Converts a string value to a boolean, based on specified string representations for <b>True</b> and <b>False</b>.</short>
+      <descr><p>The comparison is case-insensitive.</p><dl><dt>aValue</dt><dd>The string to convert.</dd><dt>aTrue</dt><dd>The string that represents <b>True</b>.</dd><dt>aFalse</dt><dd>The string that represents <b>False</b>.</dd>
+          </dl><p>Returns <b>True</b> if <var>aValue</var> matches <var>aTrue</var>, otherwise <b>False</b>.</p>
+        </descr>
+      </element><element name="BoolToText"><short>Converts a boolean value to a string, based on specified string representations for <b>True</b> and <b>False</b>.</short>
+      <descr><dl><dt>aValue</dt><dd>The boolean value to convert.</dd><dt>aTrue</dt><dd>The string to return for <b>True</b>.</dd><dt>aFalse</dt><dd>The string to return for <b>False</b>.</dd>
+          </dl><p>Returns the corresponding <var>aTrue</var> or <var>aFalse</var> string.</p>
+        </descr>
       </element><element name="WildcardWords"><short>Format string to query each part in diferent words</short>
+      <descr><p>Processes a string of words to add a wildcard character (% by default) between them. It handles quoted strings and ignores hashtags (words starting with #).</p><dl><dt>aText</dt><dd>The input string containing words to be wildcarded.</dd><dt>aWildcard</dt><dd>The wildcard character to insert. Defaults to %.</dd>
+          </dl><p>Returns a new string with the wildcard character between each word.</p>
+        </descr>
       </element><element name="WildcardSyllables"><short>Format string to query each part in the same word</short>
+      <descr><p>Similar to <var>WildcardWords</var>, this function adds a wildcard character (% by default) to a string, but it treats spaces and + symbols as delimiters. It also ignores hashtags.</p><dl><dt>aText</dt><dd>The input string containing syllables or parts of words.</dd><dt>aWildcard</dt><dd>The wildcard character to insert. Defaults to %.</dd>
+          </dl><p>Returns a new string with the wildcard character inserted based on syllable delimiters.</p>
+        </descr>
       </element>
     <element name="DartISO8601ToPascal"><short>Convert the ISO8601 date and time format from Dart to Pascal</short>
       </element><element name="TextToDate"><short>Convert a string to date or return the null date</short>
+      <descr><p>It uses <var>TryStrToDate</var> for safe conversion. If the conversion fails, it returns the <var>NullDate</var>.</p><dl><dt>aValue</dt><dd>The string to convert to a date.</dd>
+          </dl><p>Returns the converted <var>TDate</var> or <var>NullDate</var>.</p>
+        </descr>
       </element><element name="TextToTime"><short>Convert a string to time or return the null time</short>
-      </element><element name="StrToIntOrZero"><short>Convert a string to integer or return zero</short>
-      </element><element name="StrToFloatOrZero"><short>Convert a string to float or return zero</short>
-      </element><element name="RemoveDiacritics"><short>Remove diacritics from a string</short>
+      <descr><p>It uses <var>TryStrToTime</var> for safe conversion. If the conversion fails, it returns the <var>NullTime</var>.</p><dl><dt>aValue</dt><dd>The string to convert to a time.</dd>
+          </dl><p>Returns the converted <var>TTime</var> or <var>NullTime</var>.</p>
+        </descr>
+      </element><element name="StrToIntOrZero"><short>Safely converts a string to an Integer. If the conversion fails, it returns 0.</short>
+      </element><element name="StrToFloatOrZero"><short>Safely converts a string to a Double. If the conversion fails, it returns 0.0.</short>
+      </element><element name="RemoveDiacritics"><short>Removes diacritical marks (accents, cedilla, etc.) from a string by replacing accented characters with their unaccented counterparts.</short>
+      <descr><p>The function is case-insensitive.</p><dl><dt>aText</dt><dd>The input string.</dd>
+          </dl><p>Returns the string with all diacritics removed.</p>
+        </descr>
       </element>
+    <element name="DartISO8601ToDate"><short>Converts ISO 8601 timestamp in Dart language format to Pascal's TDateTime</short><descr><p>Dart language timestamp uses ISO 8601 with milliseconds (2025-08-01T23:03:45.457879), which cause an error in <var>ISO8601ToDate</var>. It handles parsing by truncating the fractional seconds part.</p><dl><dt>aValue</dt><dd>The ISO 8601 string in Dart format.</dd>
+          </dl><p>Returns the converted <var>TDateTime</var> or <var>NullDateTime</var>.</p>
+        </descr>
+      </element>
+    <short>Provides a set of functions for data conversion and manipulation</short>
     </module>
   </package>
 </fpdoc-descriptions>

@@ -60,17 +60,26 @@
       </element><element name="TfrmCustomGrid.CreatePanelTabs"><short>Setup child tabs</short>
       </element><element name="TfrmCustomGrid.PanelTabs"><short>List of child tabs</short>
       </element><element name="TfrmCustomGrid.FSearch"><short>Search settings</short>
+      <seealso><link id="cbs_datatypes.TCustomSearch"/>
+        </seealso>
       </element><element name="TfrmCustomGrid.FCanToggle"><short>Determine when a control can be clicked or toggled</short>
       </element><element name="TfrmCustomGrid.FIsResizing"><short>Determine when a column is resizing</short>
       </element><element name="TfrmCustomGrid.FIsMoving"><short>Determine when a column is moving</short>
       </element><element name="TfrmCustomGrid.FSidePanelFactor"><short>Calculated size factor for (right) side panel</short>
-      </element><element name="TfrmCustomGrid.FChildPanelFactor"><short>Calculated size factor for child side panel</short>
+      </element><element name="TfrmCustomGrid.FChildPanelFactor"><short>Calculated size factor for child bottom panel</short>
       </element><element name="TCustomPanelTab"><short>Custom type for the child tabs</short>
       </element><element name="TCustomPanelTab.Create"><short>Create and show new child tab</short>
       </element><element name="TCustomPanelTab.UpdateCounter"><short>Update the counter badge in the child tab</short>
       </element><element name="TCustomPanelTab.PageIndex"><short>Index of the child tab position</short>
       </element><element name="TCustomPanelTab.IsActive"><short>Determine if the child tab is active</short>
       </element><element name="TStringMemoEditor"><short>Custom type to show a memo when editing a text field in DBGrid</short>
+      </element>
+    <element name="TfrmCustomGrid.FTableType"><short>Main table</short><descr>Specifies which table to use in this form.
+</descr><seealso><link id="cbs_datatypes.TTableType"/>
+        </seealso>
+      </element><element name="TfrmCustomGrid.FChildTable"><short>Current related detail table</short><descr><p>Specifies which is the current detail table being used.</p><p>If the module does not have related tables, it is set to <var>tbNone</var>.</p>
+        </descr><seealso><link id="cbs_datatypes.TTableType"/>
+        </seealso>
       </element>
     </module>
   </package>

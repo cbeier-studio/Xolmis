@@ -3,7 +3,9 @@
       </element><element name="TDBParams"><short>Database connection parameters</short>
       </element><element name="TCriteriaType"><short>Search criteria types</short>
       </element><element name="CriteriaOperators"><short>Operators for each search criteria type</short>
-      </element><element name="TTableType"><short>Table types</short>
+      </element><element name="TTableType"><short>Enumeration defining table types present in the user database</short>
+      <descr>Each table type represents a table in the database.
+</descr>
       </element><element name="TableNames"><short>Table names for each table type</short>
       </element>
     <element name="TableAliases"><short>Table aliases for each table type.</short>
@@ -12,10 +14,12 @@
       </element><element name="SearchDataTypes"><short>Strings for search data types.</short>
       </element><element name="StrSeparators"><short>Strings for types of separators.</short>
       </element>
-    <element name="TCustomSearchField"><short>Base to search field types</short><descr>It has fields for data types, criteria, values to search, and if it is a lookup field.
+    <element name="TCustomSearchField"><short>Ancestor type of search fields</short><descr>It has fields for data types, criteria, values to search, and if it is a lookup field.
 </descr>
-      </element><element name="TSearchField"><short>Default search field type</short><descr>It adds field name and display name to TCustomSearchField.
+      </element><element name="TSearchField"><short>Search field class used on advanced filters</short><descr>Inherits from <var>TCustomSearchField</var> and adds field name and display name.
 </descr>
+      <seealso><link id="TCustomSearchField"/>
+        </seealso>
       </element><element name="TSearchFields"><short>List of search fields</short>
       </element><element name="TSortDirection"><short>Direction of sorting types</short>
       </element><element name="TSortType"><short>Types of sorting</short>
@@ -23,9 +27,11 @@
 </descr>
       </element><element name="TSortedFields"><short>List of sorted fields</short>
       </element><element name="SortDirections"><short>Strings of sorting directions</short>
-      </element><element name="TSearchGroup"><short>Group of field to search</short>
+      </element><element name="TSearchGroup"><short>Represents a group of fields used in a search</short>
+      <descr>Each group may contain multiple fields and define a conditional logic between them (AND/OR).
+</descr>
       </element><element name="TSearchGroups"><short>List of search groups</short>
-      </element><element name="TCustomSearch"><short>Base type for searches</short><descr>It has data and routines to execute searches in a database table.
+      </element><element name="TCustomSearch"><short>Structure that manage complex database searches</short><descr>It combines parameters to generate SQL queries for a database table.
 </descr>
       </element><element name="TTableField"><short>Table field parameters</short>
       </element><element name="TTableFields"><short>List of table fields</short>
@@ -36,8 +42,33 @@
       </element>
     <element name="LoadTablesDict"><short>Create and load the tables dictionary (table name and table type)</short>
       </element><element name="LoadLocaleTablesDict"><short>Create and load the translated tables dictionary (table type and translated table name)</short>
-      </element><element name="TCustomSearch.Reset"><short>Clear search parameters</short>
-      </element><element name="TCustomSearch.RunSearch"><short>Use it to run the search query</short>
+      </element><element name="TCustomSearch.Reset"><short>Clear all search parameters</short>
+      </element><element name="TCustomSearch.RunSearch"><short>Run the search query using the defined filters and sortings</short>
+      <descr>Returns the number of records found.
+</descr>
+      </element>
+    <element name="TDBParams.Vacuum"><short>Vacuum the database</short>
+      </element><element name="TDBParams.Clear"><short>Clear the database parameters</short>
+      </element><element name="TDBParams.IntegrityCheck"><short>Check integrity of SQLite database</short>
+      </element><element name="TDBParams.Optimize"><short>Optimize the database</short>
+      </element><element name="TDBParams.TestConnection"><short>Test the database connection</short>
+      </element><element name="TDBParams.LoadParams"><short>Load params from connections table of the system database</short>
+      </element><element name="TTablesDictionary"><short>Type to map table names to table types</short>
+      </element><element name="TLocaleTablesDictionary"><short>Type to map table types to localized table names</short>
+      </element><element name="TRecordActiveStatus"><short>Types of record active status</short>
+      </element><element name="TSearchField.FieldName"><short>Field name in the database</short>
+      </element><element name="TSearchField.DisplayName"><short>Friendly field name displayed to users</short>
+      </element><element name="TCustomSearch.GetSQLString"><short>Generate the SQL for the query</short><descr>Returns a SQL string.
+</descr>
+      </element><element name="TCustomSearch.Create"><short>Search constructor</short><descr><dl><dt>aTable</dt><dd>Type of table to be searched.</dd>
+          </dl>
+        </descr>
+      </element><element name="TSearchGroup.Create"><short>Create an instance of search group with conditional logic (AND/OR)</short><descr><dl><dt>aAndOr</dt><dd>Type of logical operator used to combine fields: <var>aoAnd</var> or <var>aoOr</var>.</dd>
+          </dl>
+        </descr>
+      </element><element name="TSearchGroup.Destroy"><short>Destroys the search group, freeing the allocated memory for the fields</short>
+      </element><element name="TSearchGroup.Fields"><short>List of fields that compose this search group</short>
+      </element><element name="TSearchGroup.AndOr"><short>Type of logical operator used to connect the fields of the group</short>
       </element>
     </module>
   </package>
