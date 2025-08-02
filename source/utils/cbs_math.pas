@@ -112,72 +112,66 @@ end;
 
 function Median(Values: array of Extended): Extended;
 var
-  n, i: Integer;
   Middle: Integer;
 begin
   Result := 0;
 
-  // Calcular a mediana
+  // The function assumes the input array is already sorted.
   Middle := Length(Values) div 2;
   if Length(Values) mod 2 = 0 then
-    // Se o número de valores for par, a mediana é a média dos dois valores do meio
+    // If the number of values is even, the median is the average of the two middle values
     Result := (Values[Middle - 1] + Values[Middle]) / 2
   else
-    // Se o número de valores for ímpar, a mediana é o valor do meio
+    // If the number of values is odd, the median is the middle value
     Result := Values[Middle];
 end;
 
 function MedianQuartiles(Values: TDoubleDynArray; out Quartile1, Quartile3: Extended): Extended;
 var
-  n, iq1, iq3: Integer;
-  M, Q1, Q3: Extended;
-  vq1, vq3: TDoubleDynArray;
+  n, i: Integer;
+  sortedValues: TDoubleDynArray;
+  lowerHalf, upperHalf: TDoubleDynArray;
 begin
   Result := 0;
-  M := 0;
-  Q1 := 0;
-  Q3 := 0;
+  Quartile1 := 0;
+  Quartile3 := 0;
 
-  // Median
   n := High(Values);
-  M := Median(Values);
 
-  // Q1
-  if n > 1 then
+  // 1. Sort the input array.
+  SetLength(sortedValues, n);
+  for i := 0 to n - 1 do
+    sortedValues[i] := Values[i];
+  TArray.Sort<Extended>(sortedValues);
+
+  // 2. Calculate the median first using the now-sorted array.
+  Result := Median(sortedValues);
+
+  // Guard against small datasets that don't have quartiles.
+  if n < 4 then
   begin
-    if Odd(n) then
-      iq1 := ((n + 1) div 2) - 1
-    else
-      iq1 := n div 2;
-    //while Values[iq1] = M do
-    //  Dec(iq1);
-    SetLength(vq1, iq1);
-    vq1 := Copy(Values, 0, iq1);
-    Q1 := Median(vq1);
-  end
-  else
-    Q1 := Values[0];
+    Quartile1 := sortedValues[0];
+    Quartile3 := sortedValues[n-1];
+    Exit;
+  end;
 
-  // Q3
-  if n > 1 then
-  begin
-    if Odd(n) then
-      iq3 := iq1 + 2
-    else
-      iq3 := iq1 + 1;
-    //while Values[iq3] = M do
-    //  Inc(iq3);
-    SetLength(vq3, iq1);
-    vq3 := Copy(Values, iq3 - 1, iq1);
-    Q3 := Median(vq3);
-  end
-  else
-    Q3 := Values[0];
+  // 3. Create the lower half of the dataset to find the first quartile (Q1).
+  // The lower half includes the median for odd-sized datasets.
+  SetLength(lowerHalf, n div 2);
+  for i := 0 to (n div 2) - 1 do
+    lowerHalf[i] := sortedValues[i];
 
-  Quartile1 := Q1;
-  Quartile3 := Q3;
-  Result := M;
+  // Calculate the median of the lower half to get Q1.
+  Quartile1 := Median(lowerHalf);
 
+  // 4. Create the upper half of the dataset to find the third quartile (Q3).
+  // The upper half also includes the median for odd-sized datasets.
+  SetLength(upperHalf, n div 2);
+  for i := 0 to (n div 2) - 1 do
+    upperHalf[i] := sortedValues[i + (n - (n div 2))]; // Adjust index for upper half
+
+  // Calculate the median of the upper half to get Q3.
+  Quartile3 := Median(upperHalf);
 end;
 
 function ModifiedZScore(aTaxon: Integer; aField: String; aValue: Extended): Extended;
