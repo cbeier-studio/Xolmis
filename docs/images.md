@@ -1,6 +1,6 @@
 # Images
 
-Some modules support attach images to records. Open the images panel clicking in the image icon :material-image: on the right toolbar, if present.
+Some modules support attach images to records. Open the images side panel clicking in the image icon :material-image: on the right toolbar, if present.
 
 !!! danger
 
@@ -8,13 +8,13 @@ Some modules support attach images to records. Open the images panel clicking in
 
 ## Adding images
 
-You can add images clicking in the plus sign :material-plus-circle: at the top toolbar of the images panel. Then select all the images that you want to attach to the current record and click **Open**. The progress of adding the images is shown. Some image files have metadata, that is used to get some info about the image, such as date of creation and geographical coordinates. Other image info must be edited manually afterwards.
+You can add images clicking in the plus sign :material-plus-circle: at the top toolbar of the images side panel. Then select all the images that you want to attach to the current record and click **Open**. The progress of adding the images is shown. Some image files have metadata, that is used to get some info about the image, such as date of creation and geographical coordinates. Other image info must be edited manually afterwards.
 
-Alternatively, you can add images simply dragging the files from a file explorer and dropping on the images panel.
+Alternatively, you can add images simply dragging the files from a file explorer and dropping on the images side panel.
 
 ## Editing image info
 
-To edit the image info, click in the pencil :material-pencil: at the top toolbar of the images panel.
+To edit the image info, click in the pencil :material-pencil: at the top toolbar of the images side panel.
 
 Field | Required | Description
 --- | --- | ---

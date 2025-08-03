@@ -1,10 +1,20 @@
 # Audio recordings
 
+Some modules support attach audio recordings to records. Open the audio recordings side panel clicking in the microphone icon :material-microphone: on the right toolbar, if present.
+
 !!! danger
 
     Before adding any recordings, go to [Settings](settings.md) in the Media section and set the audio files location. The recordings added save the file path relative to this location. Changing the location afterwards can be problematic, at the moment. We are working on a solution.
 
-## Adding or editing info
+## Adding audio recordings
+
+You can add audio recordings clicking in the add button :material-plus-circle: at the toolbar of the audio recordings side panel. Then select all the files that you want to attach to the current record and click **Open**. The progress of adding the recordings is shown. Some audio files have metadata, that is used to get some info about the recording, such as date of creation. Other audio recording info must be edited manually afterwards.
+
+Alternatively, you can add audio recordings simply dragging the files from a file explorer and dropping on the audio recordings side panel.
+
+## Editing audio recording info
+
+To edit the audio recording info, click in the edit button :material-pencil: at the toolbar of the audio recordings side panel.
 
 Field | Required | Description
 --- | --- | ---

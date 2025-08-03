@@ -4,7 +4,7 @@
 
 The search field appears in the right-top corner of the window when a tab with data if active. Click the search field or type ++ctrl+f++ to set the focus.
 
-Just type the value that you want to search in the field. You get the search results as you type, and it supports partial values.
+Just type the value that you want to search in the field. You get the search results as you type, and it supports partial values and modifiers.
 
 ### Search the exact value
 
@@ -30,7 +30,7 @@ Search and filter values can be used simultaneously.
 
 ### Quick filters
 
-The quick filters are accessible at the right toolbar, clicking on the funnel button, it opens a panel with contextual filtering options.
+The quick filters are accessible at the right toolbar, clicking on the funnel button :material-filter:, it opens a side panel with contextual filtering options.
 
 #### Boolean filters
 
@@ -42,7 +42,7 @@ The boolean filters present three options:
 
 #### Tree filters
 
-The values to filter are presented in a hierarchical tree with checkboxes for each value. Check one or multiple values to filter.
+The values to filter are presented in a hierarchical tree with checkboxes for each value. It applies to dates (year-month-day), toponyms (country-state-municipality), and taxa (order-family-species). Check one or multiple values to filter.
 
 #### List filters
 
