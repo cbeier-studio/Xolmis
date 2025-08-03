@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
   StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, Grids, StrUtils,
   Character,
-  cbs_import, cbs_sampling, cbs_breeding, cbs_xmobile;
+  data_import, models_sampling, models_breeding, models_xmobile;
 
 type
 
@@ -142,8 +142,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, models_geo,
-  cbs_birds, cbs_dataconst, cbs_themes, uDarkStyleParams,
+  utils_locale, utils_global, data_types, data_management, utils_dialogs, utils_finddialogs, data_getvalue, models_geo,
+  models_birds, data_consts, utils_themes, uDarkStyleParams,
   udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading;
 
 {$R *.lfm}

@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType,
   StdCtrls, Buttons, Grids, DBGrids, Menus, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
-  cbs_system, cbs_datatypes, models_geo, cbs_taxonomy;
+  utils_system, data_types, models_geo, models_taxonomy;
 
 type
 
@@ -115,7 +115,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_conversions, cbs_getvalue, cbs_dialogs, cbs_themes, uDarkStyleParams;
+  utils_locale, utils_global, utils_conversions, data_getvalue, utils_dialogs, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -1126,7 +1126,7 @@ begin
 
   if FTableType = tbNone then
   begin
-    MsgDlg(rsCaptionFind, Format(rsErrorTableNotFound, [TableNames[FTableType]]), mtError);
+    MsgDlg(rsCaptionFind, Format(rsErrorTableNotFound, [TABLE_NAMES[FTableType]]), mtError);
     ModalResult := mrCancel;
   end;
 
@@ -1183,7 +1183,7 @@ end;
 
 function TdlgFind.GetCriteria(aCriteria: TCriteriaType): String;
 begin
-  Result := CriteriaOperators[aCriteria];
+  Result := CRITERIA_OPERATORS[aCriteria];
 end;
 
 function TdlgFind.HashtagFilter(aValue: String): Boolean;

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, fpsexport, UniqueInstance, DB,
-  SdfData, SQLDB, SQLDBLib, SQLite3Conn, fpjson, eventlog, cbs_users, SQLScript,
+  SdfData, SQLDB, SQLDBLib, SQLite3Conn, fpjson, eventlog, models_users, SQLScript,
   fpcsvexport, fpSimpleXMLExport, fpsimplejsonexport, fpDBExport, memds, ImgList;
 
 type
@@ -159,7 +159,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_dialogs;
+uses utils_locale, utils_global, data_types, data_management, data_columns, utils_dialogs;
 
 {$R *.lfm}
 

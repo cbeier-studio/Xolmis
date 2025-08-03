@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, ExtCtrls, Spin, StdCtrls, SysUtils, Forms, EditBtn, Character,
-  Controls, Graphics, Dialogs, Buttons, Menus, cbs_birds;
+  Controls, Graphics, Dialogs, Buttons, Menus, models_birds;
 
 type
 
@@ -117,8 +117,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, models_geo, cbs_dataconst,
-  cbs_taxonomy, cbs_conversions, cbs_getvalue, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_validations, models_geo, data_consts,
+  models_taxonomy, utils_conversions, data_getvalue, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 

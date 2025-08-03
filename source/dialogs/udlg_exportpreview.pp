@@ -38,7 +38,7 @@ var
 implementation
 
 uses
-  cbs_dialogs;
+  utils_dialogs;
 
 {$R *.lfm}
 

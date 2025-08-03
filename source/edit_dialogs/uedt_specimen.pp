@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, SysUtils, Character, LResources, Forms, Controls, Graphics,
   Dialogs, StdCtrls, ExtCtrls, Buttons, Menus, DB, DateUtils,
-  atshapelinebgra, cbs_sampling;
+  atshapelinebgra, models_sampling;
 
 type
 
@@ -126,8 +126,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_system, cbs_datatypes, cbs_dialogs, cbs_finddialogs, models_geo, cbs_taxonomy,
-  cbs_validations, cbs_dataconst, cbs_getvalue, cbs_editdialogs, utils_gis,
+  utils_locale, utils_global, utils_system, data_types, utils_dialogs, utils_finddialogs, models_geo, models_taxonomy,
+  utils_validations, data_consts, data_getvalue, utils_editdialogs, utils_gis,
   udm_main, udm_grid, uDarkStyleParams;
 
 { TedtSpecimen }

@@ -14,7 +14,7 @@ object dlgLoading: TdlgLoading
   Constraints.MinWidth = 350
   FormStyle = fsStayOnTop
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
+  LCLVersion = '4.2.0.0'
   OnShow = FormShow
   object ringProgress: TBCFluentProgressRing
     AnchorSideLeft.Control = Owner

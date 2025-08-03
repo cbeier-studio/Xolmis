@@ -10,6 +10,7 @@ object cfgUsers: TcfgUsers
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -72,7 +73,7 @@ object cfgUsers: TcfgUsers
       Columns = <      
         item
           Title.Caption = 'Username'
-          Width = 154
+          Width = 156
           FieldName = 'user_name'
         end      
         item
@@ -83,7 +84,7 @@ object cfgUsers: TcfgUsers
             'Visitante'
           )
           Title.Caption = 'Access level'
-          Width = 154
+          Width = 156
           FieldName = 'user_rank'
         end>
       DataSource = dsUsers

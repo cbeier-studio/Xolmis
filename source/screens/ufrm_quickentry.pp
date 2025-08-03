@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids, Buttons, ComCtrls, StdCtrls, Menus,
-  Character, cbs_datatypes, DB, SQLDB;
+  Character, data_types, DB, SQLDB;
 
 type
 
@@ -114,8 +114,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_datacolumns, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_getvalue, models_geo, cbs_taxonomy,
-  cbs_themes, uDarkStyleParams,
+  utils_locale, data_columns, utils_global, utils_dialogs, utils_finddialogs, data_getvalue, models_geo, models_taxonomy,
+  utils_themes, uDarkStyleParams,
   udm_main;
 
 {$R *.lfm}
@@ -210,7 +210,7 @@ begin
 
   SBar.Panels[2].Text := LocaleTablesDict.KeyData[FTableType];
 
-  FModuleName := TableNames[FTableType];
+  FModuleName := TABLE_NAMES[FTableType];
 
   {$IFDEF DEBUG}
   FFileName := ConcatPaths([AppDataDir, IncludeTrailingPathDelimiter('debug_quickentry'), FModuleName + '.json']);

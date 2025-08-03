@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin, DBGrids,
   ComCtrls, mvMapViewer, mvTypes, mvGpsObj, mvDE_BGRA, atshapelinebgra, BCPanel, SpinEx, Types,
-  cbs_system, utils_gis, DB, mvDrawingEngine;
+  utils_system, utils_gis, DB, mvDrawingEngine;
 
 type
 
@@ -96,7 +96,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_themes, udm_main, uDarkStyleParams;
+  utils_global, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

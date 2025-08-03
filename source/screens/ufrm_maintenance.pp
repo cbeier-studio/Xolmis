@@ -116,8 +116,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_backup, cbs_blobs, cbs_system,
-  cbs_themes, udlg_diagnostic, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_backup, data_blobs, utils_system,
+  utils_themes, udlg_diagnostic, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

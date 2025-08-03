@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, DateUtils, StdCtrls, ExtCtrls, atshapelinebgra,
-  EditBtn, Buttons, Menus, DB, SQLDB, Character, cbs_datatypes;
+  EditBtn, Buttons, Menus, DB, SQLDB, Character, data_types;
 
 type
 
@@ -74,7 +74,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_dataconst, cbs_editdialogs,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, data_consts, utils_editdialogs,
   udm_main, udm_grid, udm_breeding, udm_individuals, udm_sampling,
   uDarkStyleParams;
 
@@ -90,9 +90,9 @@ var
   Tabela, Tipo: String;
 begin
   if FChildType <> tbNone then
-    Tabela := TableNames[FChildType]
+    Tabela := TABLE_NAMES[FChildType]
   else
-    Tabela := TableNames[FTableType];
+    Tabela := TABLE_NAMES[FTableType];
   Tipo := VerificationTypes[cbStatus.ItemIndex];
 
   Qry := TSQLQuery.Create(DMM.sqlCon);

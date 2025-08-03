@@ -41,7 +41,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_datatypes, cbs_finddialogs, udm_main, uDarkStyleParams;
+  utils_global, data_types, utils_finddialogs, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

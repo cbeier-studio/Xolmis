@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, atshapelinebgra, cbs_botany;
+  StdCtrls, ExtCtrls, Buttons, atshapelinebgra, models_botany;
 
 type
 
@@ -88,8 +88,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_finddialogs, cbs_dialogs, cbs_taxonomy, cbs_validations, cbs_getvalue,
-  cbs_dataconst, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, data_types, utils_finddialogs, utils_dialogs, models_taxonomy, utils_validations, data_getvalue,
+  data_consts, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -253,7 +253,7 @@ begin
   eName.Text := FTaxon.FullName;
   eAuthorship.Text := FTaxon.Authorship;
   eVernacularName.Text := FTaxon.VernacularName;
-  aRankId := GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_ABBREVIATION, BotanicRanks[FTaxon.RankId]);
+  aRankId := GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_ABBREVIATION, BOTANICAL_RANKS[FTaxon.RankId]);
   FRankName := GetName('taxon_ranks', COL_RANK_NAME, COL_RANK_ID, aRankId);
   cbRank.ItemIndex := cbRank.Items.IndexOf(FRankName);
   FParentTaxonId := FTaxon.ParentTaxonId;

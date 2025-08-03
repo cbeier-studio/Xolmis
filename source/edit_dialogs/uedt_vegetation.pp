@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, Spin, SysUtils, Forms,
-  Controls, Graphics, StdCtrls, Dialogs, Buttons, cbs_sampling;
+  Controls, Graphics, StdCtrls, Dialogs, Buttons, models_sampling;
 
 type
 
@@ -96,7 +96,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, models_geo, cbs_validations, cbs_datacolumns, cbs_dataconst, utils_gis,
+  utils_locale, utils_global, utils_dialogs, models_geo, utils_validations, data_columns, data_consts, utils_gis,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}

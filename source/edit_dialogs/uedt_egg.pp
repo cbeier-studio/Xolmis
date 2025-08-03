@@ -23,7 +23,7 @@ interface
 uses
   BCPanel, Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics,
   Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, DateUtils, Character,
-  atshapelinebgra, cbs_breeding;
+  atshapelinebgra, models_breeding;
 
 type
 
@@ -137,8 +137,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_validations, cbs_getvalue,
-  cbs_dataconst, cbs_themes, cbs_editdialogs, udm_main, udm_grid, udm_breeding, uDarkStyleParams;
+  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, utils_validations, data_getvalue,
+  data_consts, utils_themes, utils_editdialogs, udm_main, udm_grid, udm_breeding, uDarkStyleParams;
 
 {$R *.lfm}
 

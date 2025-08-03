@@ -11,6 +11,7 @@ object lstDetectionType: TlstDetectionType
   ClientWidth = 246
   PopupMode = pmAuto
   Position = poOwnerFormCenter
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow

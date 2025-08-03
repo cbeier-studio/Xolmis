@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, Menus, atshapelinebgra, cbs_breeding;
+  StdCtrls, ExtCtrls, Buttons, Menus, atshapelinebgra, models_breeding;
 
 type
 
@@ -79,8 +79,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_getvalue,
-  cbs_dataconst, cbs_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, data_getvalue,
+  data_consts, utils_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 

@@ -71,7 +71,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, data_types, data_consts, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls,
   Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, atshapelinebgra,
-  cbs_sampling;
+  models_sampling;
 
 type
 
@@ -99,7 +99,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_validations, cbs_datacolumns, cbs_dataconst,
+  utils_locale, utils_global, utils_dialogs, utils_validations, data_columns, data_consts,
   udm_main, uDarkStyleParams;
 
 { TedtWeatherLog }

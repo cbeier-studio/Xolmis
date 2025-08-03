@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, StdCtrls, Graphics, Dialogs, DB, SQLDB, ExtCtrls, EditBtn, Spin, Buttons,
-  atshapelinebgra, BCPanel, Character, cbs_sampling;
+  atshapelinebgra, BCPanel, Character, models_sampling;
 
 type
 
@@ -98,7 +98,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_themes, udm_main,
+  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_themes, udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}

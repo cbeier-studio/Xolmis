@@ -38,7 +38,7 @@ var
 implementation
 
 uses
-  cbs_system;
+  utils_system;
 
 {$R *.lfm}
 

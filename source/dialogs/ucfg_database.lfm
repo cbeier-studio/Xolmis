@@ -9,7 +9,7 @@ object cfgDatabase: TcfgDatabase
   ClientWidth = 344
   Font.Height = -12
   Position = poScreenCenter
-  LCLVersion = '4.0.0.4'
+  LCLVersion = '4.2.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pClient: TPanel

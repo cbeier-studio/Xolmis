@@ -73,7 +73,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_locale, cbs_graphics, cbs_themes, uDarkStyleParams;
+uses utils_global, utils_locale, utils_graphics, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 

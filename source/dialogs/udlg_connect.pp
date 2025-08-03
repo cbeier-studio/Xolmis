@@ -72,7 +72,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_users, cbs_dialogs, cbs_graphics, udm_main, ucfg_database, uDarkStyleParams;
+uses utils_locale, utils_global, models_users, utils_dialogs, utils_graphics, udm_main, ucfg_database, uDarkStyleParams;
 
 {$R *.lfm}
 

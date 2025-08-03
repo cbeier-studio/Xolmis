@@ -70,7 +70,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_dialogs, cbs_locale, cbs_export, cbs_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
+  utils_global, utils_dialogs, utils_locale, data_export, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -260,8 +260,8 @@ procedure TdlgExport.sbRunClick(Sender: TObject);
 begin
   // Open save dialog
   SaveDlg.InitialDir := xSettings.LastPathUsed;
-  SaveDlg.DefaultExt := ExportFileExtensions[tvFiletype.Selected.Index];
-  SaveDlg.Filter := ExportFileFilters[tvFiletype.Selected.Index];
+  SaveDlg.DefaultExt := EXPORT_FILE_EXTENSIONS[tvFiletype.Selected.Index];
+  SaveDlg.Filter := EXPORT_FILE_FILTERS[tvFiletype.Selected.Index];
   if SaveDlg.Execute then
     FFileName := SaveDlg.FileName
   else

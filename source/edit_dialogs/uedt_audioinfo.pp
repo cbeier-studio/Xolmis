@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, Menus, Character, atshapelinebgra, cbs_media;
+  StdCtrls, ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
 
 type
 
@@ -150,8 +150,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, models_geo, cbs_dataconst,
-  cbs_sampling, cbs_getvalue, cbs_conversions, cbs_editdialogs, utils_gis,
+  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, models_geo, data_consts,
+  models_sampling, data_getvalue, utils_conversions, utils_editdialogs, utils_gis,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}

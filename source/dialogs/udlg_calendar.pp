@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Calendar, DBCtrls, StdCtrls,
-  Spin, ExtCtrls, Buttons, SpinEx, DateUtils, cbs_system, atshapelinebgra, BCPanel;
+  Spin, ExtCtrls, Buttons, SpinEx, DateUtils, utils_system, atshapelinebgra, BCPanel;
 
 type
 
@@ -74,7 +74,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_themes, uDarkStyleParams;
+  utils_global, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 

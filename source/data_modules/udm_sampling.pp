@@ -21,7 +21,7 @@ unit udm_sampling;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, cbs_birds, cbs_sampling;
+  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, models_birds, models_sampling;
 
 type
 
@@ -488,7 +488,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_getvalue;
+  utils_locale, utils_global, data_types, data_management, data_columns, data_getvalue;
 
 { TDMS }
 

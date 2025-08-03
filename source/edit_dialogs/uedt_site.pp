@@ -97,8 +97,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue, utils_gis,
-  cbs_dataconst, udm_main,
+  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_validations, data_getvalue, utils_gis,
+  data_consts, udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}

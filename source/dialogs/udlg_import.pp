@@ -8,7 +8,7 @@ uses
   BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf, fgl,
   dbf, csvdataset, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset, fpsTypes,
-  atshapelinebgra, cbs_import, cbs_datatypes;
+  atshapelinebgra, data_import, data_types;
 
 type
 
@@ -109,7 +109,7 @@ var
 implementation
 
 uses
-  cbs_locale, udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
+  utils_locale, udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 

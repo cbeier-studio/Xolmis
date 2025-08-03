@@ -62,8 +62,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_datatypes, cbs_validations, cbs_birds, cbs_conversions,
-  cbs_editdialogs, udm_main, udm_grid, udlg_loading, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, data_types, utils_validations, models_birds, utils_conversions,
+  utils_editdialogs, udm_main, udm_grid, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 

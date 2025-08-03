@@ -80,7 +80,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_graphics, cbs_datatypes, udm_main, uDarkStyleParams;
+uses utils_locale, utils_global, utils_graphics, data_types, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

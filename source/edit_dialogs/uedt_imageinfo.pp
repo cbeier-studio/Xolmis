@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Buttons, Menus, Character, atshapelinebgra, cbs_media;
+  ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
 
 type
 
@@ -139,8 +139,8 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, models_geo, cbs_dataconst,
-  cbs_getvalue, cbs_conversions, cbs_editdialogs, utils_gis,
+  utils_global, utils_locale, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, models_geo, data_consts,
+  data_getvalue, utils_conversions, utils_editdialogs, utils_gis,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}

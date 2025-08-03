@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, SysUtils, DB, DateUtils, LResources, Forms, Controls,
   Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, atshapelinebgra,
-  cbs_entities;
+  models_entities;
 
 type
 
@@ -103,7 +103,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_dataconst, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, data_types, utils_dialogs, utils_validations, data_consts, udm_main, uDarkStyleParams;
 
 { TedtProject }
 

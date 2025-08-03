@@ -8,7 +8,7 @@ uses
   BCPanel, Buttons, Classes, ComCtrls, DB, fgl, mvDE_BGRA, mvMapViewer, mvTypes,
   mvGpsObj, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf, LCLType, ExtCtrls, Menus,
   StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr, Controls, Graphics,
-  Dialogs, cbs_datatypes, Grids, TADbSource, TAGraph, TAGUIConnectorBGRA,
+  Dialogs, data_types, Grids, TADbSource, TAGraph, TAGUIConnectorBGRA,
   TASeries, TASources, Types, mvDrawingEngine;
 
 type
@@ -180,7 +180,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_themes, cbs_datasearch, cbs_taxonomy, cbs_getvalue, cbs_conversions, cbs_dialogs,
+  utils_global, utils_locale, utils_themes, data_search, models_taxonomy, data_getvalue, utils_conversions, utils_dialogs,
   ufrm_main, udm_main, udm_grid, udm_taxa,
   uDarkStyleParams;
 

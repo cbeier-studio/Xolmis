@@ -26,7 +26,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst, DBCtrls,
   laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra,
-  BCPanel, bctypes, DBControlGrid, cbs_datatypes, cbs_filters, Types, ImgList, ToggleSwitch, DragDropFile,
+  BCPanel, bctypes, DBControlGrid, data_types, data_filters, Types, ImgList, ToggleSwitch, DragDropFile,
   mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class, DropTarget;
 
 type
@@ -1388,11 +1388,11 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_system, cbs_themes, models_geo, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
-  cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, cbs_users,
-  cbs_validations, cbs_setparam, cbs_dataconst, utils_gis,
+  utils_locale, utils_global, utils_system, utils_themes, models_geo, models_birds, utils_editdialogs, utils_dialogs, utils_math,
+  utils_finddialogs, data_management, data_getvalue, models_taxonomy, data_columns, data_blobs, utils_print, models_users,
+  utils_validations, data_setparam, data_consts, utils_gis,
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
-  {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
+  {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer,
   ufrm_quickentry, udlg_selectrecord, udlg_bandhistory;
@@ -6100,7 +6100,7 @@ begin
   ColsFolder := 'columns\';
   {$ENDIF}
 
-  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.json']);
+  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TABLE_NAMES[FTableType] + '_columns.json']);
   if not FileExists(ColsFile) then
   begin
     //GetColumns;
@@ -6856,7 +6856,7 @@ begin
     DMR.qBands.SQL.Delete(DMR.qBands.SQL.Count - 1);
   DMR.qBands.SQL.Add('ORDER BY carrier_name ASC, b.band_size ASC, b.band_number ASC');
 
-  PrintPreview(BandsByCarrierReportFile, DMR.dsBands);
+  PrintPreview(BANDS_BY_CARRIER_REPORT_FILE, DMR.dsBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsByStatusClick(Sender: TObject);
@@ -6868,14 +6868,14 @@ begin
     DMR.qBands.SQL.Delete(DMR.qBands.SQL.Count - 1);
   DMR.qBands.SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
 
-  PrintPreview(BandsByStatusReportFile, DMR.dsBands);
+  PrintPreview(BANDS_BY_STATUS_REPORT_FILE, DMR.dsBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsClick(Sender: TObject);
 begin
   DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(BandsReportFile, DMR.dsBands);
+  PrintPreview(BANDS_REPORT_FILE, DMR.dsBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsWithHistoryClick(Sender: TObject);
@@ -6883,7 +6883,7 @@ begin
   DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qBandHistory.SQL.Text := DMG.qBandHistory.SQL.Text;
 
-  PrintPreview(BandsHistoryReportFile, DMR.dsBands, DMR.dsBandHistory);
+  PrintPreview(BANDS_HISTORY_REPORT_FILE, DMR.dsBands, DMR.dsBandHistory);
 end;
 
 procedure TfrmCustomGrid.pmPrintExpeditionsClick(Sender: TObject);
@@ -6892,14 +6892,14 @@ begin
   DMR.qSurveys.SQL.Text := TSQLQuery(dsLink1.DataSet).SQL.Text;
   DMR.qSurveys.DataSource := DMR.dsExpeditions;
 
-  PrintPreview(ExpeditionsReportFile, DMR.dsExpeditions, DMR.dsSurveys);
+  PrintPreview(EXPEDITIONS_REPORT_FILE, DMR.dsExpeditions, DMR.dsSurveys);
 end;
 
 procedure TfrmCustomGrid.pmPrintGazetteerClick(Sender: TObject);
 begin
   DMR.qGazetteer.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(GazetteerReportFile, DMR.dsGazetteer);
+  PrintPreview(GAZETTEER_REPORT_FILE, DMR.dsGazetteer);
 end;
 
 procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
@@ -6912,21 +6912,21 @@ procedure TfrmCustomGrid.pmPrintInstitutionsClick(Sender: TObject);
 begin
   DMR.qInstitutions.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(InstitutionsReportFile, DMR.dsInstitutions);
+  PrintPreview(INSTITUTIONS_REPORT_FILE, DMR.dsInstitutions);
 end;
 
 procedure TfrmCustomGrid.pmPrintMethodsClick(Sender: TObject);
 begin
   DMR.qMethods.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(MethodsReportFile, DMR.dsMethods);
+  PrintPreview(METHODS_REPORT_FILE, DMR.dsMethods);
 end;
 
 procedure TfrmCustomGrid.pmPrintPermitsClick(Sender: TObject);
 begin
   DMR.qPermits.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(PermitsReportFile, DMR.dsPermits);
+  PrintPreview(PERMITS_REPORT_FILE, DMR.dsPermits);
 end;
 
 procedure TfrmCustomGrid.pmPrintProjectsClick(Sender: TObject);
@@ -6934,14 +6934,14 @@ begin
   DMR.qProjects.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qProjectTeam.SQL.Text := TSQLQuery(dsLink1.DataSet).SQL.Text;
 
-  PrintPreview(ProjectsReportFile, DMR.dsProjects, DMR.dsProjectTeam);
+  PrintPreview(PROJECTS_REPORT_FILE, DMR.dsProjects, DMR.dsProjectTeam);
 end;
 
 procedure TfrmCustomGrid.pmPrintResearchersClick(Sender: TObject);
 begin
   DMR.qPeople.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(PeopleReportFile, DMR.dsPeople);
+  PrintPreview(PEOPLE_REPORT_FILE, DMR.dsPeople);
 end;
 
 procedure TfrmCustomGrid.pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
@@ -6953,14 +6953,14 @@ begin
     DMR.qSamplingPlots.SQL.Delete(DMR.qSamplingPlots.SQL.Count - 1);
   DMR.qSamplingPlots.SQL.Add('ORDER BY locality_name ASC, pl.full_name ASC');
 
-  PrintPreview(SamplingPlotsByLocalityReportFile, DMR.dsSamplingPlots);
+  PrintPreview(SAMPLING_PLOTS_BY_LOCALITY_REPORT_FILE, DMR.dsSamplingPlots);
 end;
 
 procedure TfrmCustomGrid.pmPrintSamplingPlotsClick(Sender: TObject);
 begin
   DMR.qSamplingPlots.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(SamplingPlotsReportFile, DMR.dsSamplingPlots);
+  PrintPreview(SAMPLING_PLOTS_REPORT_FILE, DMR.dsSamplingPlots);
 end;
 
 procedure TfrmCustomGrid.pmPrintSightingsByObserverClick(Sender: TObject);
@@ -7042,7 +7042,7 @@ procedure TfrmCustomGrid.pmPrintSightingsClick(Sender: TObject);
 begin
   DMR.qSightings.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
-  PrintPreview(SightingsReportFile, DMR.dsSightings);
+  PrintPreview(SIGHTINGS_REPORT_FILE, DMR.dsSightings);
 end;
 
 procedure TfrmCustomGrid.pmPrintSpecimensClick(Sender: TObject);
@@ -7050,7 +7050,7 @@ begin
   DMR.qSpecimens.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qSampleCollectors.SQL.Text := TSQLQuery(dsLink1.DataSet).SQL.Text;
 
-  PrintPreview(SpecimensReportFile, DMR.dsSpecimens, DMR.dsSampleCollectors);
+  PrintPreview(SPECIMENS_REPORT_FILE, DMR.dsSpecimens, DMR.dsSampleCollectors);
 end;
 
 procedure TfrmCustomGrid.pmPrintSurveysClick(Sender: TObject);
@@ -7058,7 +7058,7 @@ begin
   DMR.qSurveys.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
   DMR.qSurveys.DataSource := nil;
 
-  PrintPreview(SurveysReportFile, DMR.dsSurveys);
+  PrintPreview(SURVEYS_REPORT_FILE, DMR.dsSurveys);
 end;
 
 procedure TfrmCustomGrid.pmpTransferBandsToClick(Sender: TObject);
@@ -7355,7 +7355,7 @@ begin
   if (Column.FieldName = COL_CLOACAL_PROTUBERANCE) then
   begin
     if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, CloacalProtuberanceValues)) then
+      not (MatchStr(Column.Field.AsString, CLOACAL_PROTUBERANCE_VALUES)) then
     begin
       if IsDarkModeEnabled then
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
@@ -7367,7 +7367,7 @@ begin
   if (Column.FieldName = COL_BROOD_PATCH) then
   begin
     if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, BroodPatchValues)) then
+      not (MatchStr(Column.Field.AsString, BROOD_PATCH_VALUES)) then
     begin
       if IsDarkModeEnabled then
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
@@ -7379,7 +7379,7 @@ begin
   if (Column.FieldName = COL_FAT) then
   begin
     if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, FatValues)) then
+      not (MatchStr(Column.Field.AsString, FAT_VALUES)) then
     begin
       if IsDarkModeEnabled then
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
@@ -7391,7 +7391,7 @@ begin
   if (Column.FieldName = COL_BODY_MOLT) then
   begin
     if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, BodyMoltValues)) then
+      not (MatchStr(Column.Field.AsString, BODY_MOLT_VALUES)) then
     begin
       if IsDarkModeEnabled then
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
@@ -7403,7 +7403,7 @@ begin
   if (Column.FieldName = COL_FLIGHT_FEATHERS_MOLT) then
   begin
     if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, FlightMoltValues)) then
+      not (MatchStr(Column.Field.AsString, FLIGHT_MOLT_VALUES)) then
     begin
       if IsDarkModeEnabled then
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
@@ -7415,7 +7415,7 @@ begin
   if (Column.FieldName = COL_FLIGHT_FEATHERS_WEAR) then
   begin
     if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, FeatherWearValues)) then
+      not (MatchStr(Column.Field.AsString, FEATHER_WEAR_VALUES)) then
     begin
       if IsDarkModeEnabled then
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
@@ -7427,7 +7427,7 @@ begin
   if (Column.FieldName = COL_SKULL_OSSIFICATION) then
   begin
     if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, SkullValues)) then
+      not (MatchStr(Column.Field.AsString, SKULL_OSSIFICATION_VALUES)) then
     begin
       if IsDarkModeEnabled then
         TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
@@ -8467,7 +8467,7 @@ begin
   if not DirectoryExists(AppDataDir + ColsFolder) then
     CreateDir(AppDataDir + ColsFolder);
 
-  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TableNames[FTableType] + '_columns.json']);
+  ColsFile := ConcatPaths([AppDataDir, ColsFolder, TABLE_NAMES[FTableType] + '_columns.json']);
 
   SaveFieldsSettings(dsLink.DataSet, ColsFile);
 end;
@@ -8863,7 +8863,7 @@ begin
       SQLConnection := DMM.sqlCon;
       MacroCheck := True;
       SQL.Add('DELETE FROM %ftable WHERE (active_status = 0)');
-      MacroByName('FTABLE').AsString := TableNames[FTableType];
+      MacroByName('FTABLE').AsString := TABLE_NAMES[FTableType];
       ExecSQL;
       qRecycle.Refresh;
     finally
@@ -12482,7 +12482,7 @@ begin
     tbImages: ;
     tbAudioLibrary: ;
   end;
-  qRecycle.MacroByName('FTABLE').AsString := TableNames[FTableType];
+  qRecycle.MacroByName('FTABLE').AsString := TABLE_NAMES[FTableType];
   lblRecycleId.DataField := qRecycle.MacroByName('FID').AsString;
   lblRecycleName.DataField := qRecycle.MacroByName('FNAME').AsString;
 
@@ -12605,7 +12605,7 @@ begin
 
   aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
 
-  aStatus := GetRecordVerification(TableNames[FChildTable], aId, aTotalProblems);
+  aStatus := GetRecordVerification(TABLE_NAMES[FChildTable], aId, aTotalProblems);
 
   case aStatus of
     rvwNotReviewed: sbChildVerifications.Caption := rsNotReviewed;
@@ -12646,7 +12646,7 @@ begin
   DS := dsLink.DataSet;
   aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
 
-  aStatus := GetRecordVerification(TableNames[FTableType], aId, aTotalProblems);
+  aStatus := GetRecordVerification(TABLE_NAMES[FTableType], aId, aTotalProblems);
 
   case aStatus of
     rvwNotReviewed: sbRecordVerifications.Caption := rsNotReviewed;

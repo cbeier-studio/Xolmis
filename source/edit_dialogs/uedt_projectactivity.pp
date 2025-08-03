@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, StdCtrls, SysUtils, Forms, Character,
-  Controls, Graphics, Dialogs, Buttons, Menus, cbs_entities;
+  Controls, Graphics, Dialogs, Buttons, Menus, models_entities;
 
 type
 
@@ -76,8 +76,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_validations, cbs_getvalue, cbs_conversions,
-  cbs_finddialogs, cbs_dataconst, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, data_types, utils_dialogs, utils_validations, data_getvalue, utils_conversions,
+  utils_finddialogs, data_consts, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 

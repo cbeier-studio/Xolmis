@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, LCLType, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
   DBControlGrid, StdCtrls, Buttons, BCPanel, ColorSpeedButton, HtmlView, RegExpr, StrUtils,
-  cbs_system, cbs_taxonomy, cbs_datatypes, Grids, HTMLUn2, HtmlGlobals;
+  utils_system, models_taxonomy, data_types, Grids, HTMLUn2, HtmlGlobals;
 
 type
 
@@ -86,7 +86,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_getvalue, cbs_conversions, cbs_themes, uDarkStyleParams;
+  utils_global, data_getvalue, utils_conversions, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -527,7 +527,7 @@ procedure TdlgFindTaxon.SetSelect(const aSQL: TStrings; aFilter: TFilterValue;
 var
   AD, Operador: String;
 begin
-  Operador := CriteriaOperators[aCriteria];
+  Operador := CRITERIA_OPERATORS[aCriteria];
   AD := 'ASC';
 
   with aSQL do

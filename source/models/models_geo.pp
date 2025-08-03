@@ -26,7 +26,7 @@ uses
   { VCL }
   Forms, Controls, ExtCtrls, laz.VirtualTrees, mvMapViewer, EditBtn,
   { Data }
-  DB, SQLDB, cbs_record_types, cbs_datatypes;
+  DB, SQLDB, models_record_types, data_types;
 
 type
   TSiteRank = (srNone, srCountry, srState, srRegion, srMunicipality, srDistrict, srLocality);
@@ -145,7 +145,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_users, cbs_conversions, cbs_validations, cbs_datacolumns, cbs_setparam,
+  utils_locale, utils_global, models_users, utils_conversions, utils_validations, data_columns, data_setparam,
   udm_main, udlg_geoassist;
 
 procedure InitSitePropsDict;

@@ -11,12 +11,12 @@ object lstCycleCode: TlstCycleCode
   ChildSizing.ControlsPerLine = 3
   ClientHeight = 255
   ClientWidth = 538
+  PopupMode = pmAuto
+  Position = poOwnerFormCenter
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PopupMode = pmAuto
-  Position = poOwnerFormCenter
-  LCLVersion = '3.2.0.0'
   object pBottom: TPanel
     Left = 0
     Height = 41
@@ -39,9 +39,9 @@ object lstCycleCode: TlstCycleCode
       Align = alRight
       Caption = 'Apply'
       Font.Name = 'Segoe UI Semibold'
-      OnClick = sbOKClick
       ParentFont = False
       TabOrder = 0
+      OnClick = sbOKClick
     end
     object sbCancel: TBitBtn
       Left = 392
@@ -50,8 +50,8 @@ object lstCycleCode: TlstCycleCode
       Width = 130
       Align = alRight
       Caption = 'Cancel'
-      OnClick = sbCancelClick
       TabOrder = 1
+      OnClick = sbCancelClick
     end
   end
   object lineBottom: TShapeLineBGRA
@@ -154,8 +154,8 @@ object lstCycleCode: TlstCycleCode
         '4 - Fourth molt cycle'
         '5 - Fifth molt cycle'
       )
-      OnClick = rgFirstClick
       TabOrder = 0
+      OnClick = rgFirstClick
     end
     object rgSecond: TRadioGroup
       Left = 178
@@ -182,8 +182,8 @@ object lstCycleCode: TlstCycleCode
         'P - molting (Pre)'
         'A - After a given plumage'
       )
-      OnClick = rgFirstClick
       TabOrder = 1
+      OnClick = rgFirstClick
     end
     object rgThird: TRadioGroup
       Left = 356
@@ -213,8 +213,8 @@ object lstCycleCode: TlstCycleCode
         'B - Basic plumage'
         'A - Alternate plumage'
       )
-      OnClick = rgFirstClick
       TabOrder = 2
+      OnClick = rgFirstClick
     end
   end
 end

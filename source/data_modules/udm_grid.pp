@@ -21,9 +21,9 @@ unit udm_grid;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils, Graphics, DateUtils,
+  Classes, SysUtils, DB, SQLDB, StrUtils, Graphics, DateUtils, BufDataset,
   { CBS }
-  models_geo, cbs_entities, cbs_botany, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_breeding, BufDataset;
+  models_geo, models_entities, models_botany, models_taxonomy, models_birds, models_sampling, models_breeding;
 
 type
 
@@ -1474,8 +1474,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_getvalue, cbs_fullnames, cbs_graphics,
-  cbs_validations,
+  utils_locale, utils_global, data_types, data_management, data_columns, data_getvalue, utils_fullnames, utils_graphics,
+  utils_validations,
   udm_main;
 
 {$R *.lfm}
@@ -1965,14 +1965,14 @@ var
   SS, m: String;
   i: Integer;
 begin
-  if not ValueInSet(Sender.AsString, rsBodyMolt, BodyMoltValues) then
+  if not ValueInSet(Sender.AsString, rsBodyMolt, BODY_MOLT_VALUES) then
   begin
     SS := EmptyStr;
-    for i := 0 to High(BodyMoltValues) do
-      if i = High(BodyMoltValues) then
-        SS := SS + BodyMoltValues[i]
+    for i := 0 to High(BODY_MOLT_VALUES) do
+      if i = High(BODY_MOLT_VALUES) then
+        SS := SS + BODY_MOLT_VALUES[i]
       else
-        SS := SS + BodyMoltValues[i] + ', ';
+        SS := SS + BODY_MOLT_VALUES[i] + ', ';
     m := Format(rsValueNotInSet, [rsBodyMolt, SS]);
 
     raise EValueNotInSet.Create(m);
@@ -1984,14 +1984,14 @@ var
   SS, m: String;
   i: Integer;
 begin
-  if not ValueInSet(Sender.AsString, rsBroodPatch, BroodPatchValues) then
+  if not ValueInSet(Sender.AsString, rsBroodPatch, BROOD_PATCH_VALUES) then
   begin
     SS := EmptyStr;
-    for i := 0 to High(BroodPatchValues) do
-      if i = High(BroodPatchValues) then
-        SS := SS + BroodPatchValues[i]
+    for i := 0 to High(BROOD_PATCH_VALUES) do
+      if i = High(BROOD_PATCH_VALUES) then
+        SS := SS + BROOD_PATCH_VALUES[i]
       else
-        SS := SS + BroodPatchValues[i] + ', ';
+        SS := SS + BROOD_PATCH_VALUES[i] + ', ';
     m := Format(rsValueNotInSet, [rsBroodPatch, SS]);
 
     raise EValueNotInSet.Create(m);
@@ -2046,14 +2046,14 @@ var
   SS, m: String;
   i: Integer;
 begin
-  if not ValueInSet(Sender.AsString, rsCloacalProtuberance, CloacalProtuberanceValues) then
+  if not ValueInSet(Sender.AsString, rsCloacalProtuberance, CLOACAL_PROTUBERANCE_VALUES) then
   begin
     SS := EmptyStr;
-    for i := 0 to High(CloacalProtuberanceValues) do
-      if i = High(CloacalProtuberanceValues) then
-        SS := SS + CloacalProtuberanceValues[i]
+    for i := 0 to High(CLOACAL_PROTUBERANCE_VALUES) do
+      if i = High(CLOACAL_PROTUBERANCE_VALUES) then
+        SS := SS + CLOACAL_PROTUBERANCE_VALUES[i]
       else
-        SS := SS + CloacalProtuberanceValues[i] + ', ';
+        SS := SS + CLOACAL_PROTUBERANCE_VALUES[i] + ', ';
     m := Format(rsValueNotInSet, [rsCloacalProtuberance, SS]);
 
     raise EValueNotInSet.Create(m);
@@ -2065,14 +2065,14 @@ var
   SS, m: String;
   i: Integer;
 begin
-  if not ValueInSet(Sender.AsString, rsSubcutaneousFat, FatValues) then
+  if not ValueInSet(Sender.AsString, rsSubcutaneousFat, FAT_VALUES) then
   begin
     SS := EmptyStr;
-    for i := 0 to High(FatValues) do
-      if i = High(FatValues) then
-        SS := SS + FatValues[i]
+    for i := 0 to High(FAT_VALUES) do
+      if i = High(FAT_VALUES) then
+        SS := SS + FAT_VALUES[i]
       else
-        SS := SS + FatValues[i] + ', ';
+        SS := SS + FAT_VALUES[i] + ', ';
     m := Format(rsValueNotInSet, [rsSubcutaneousFat, SS]);
 
     raise EValueNotInSet.Create(m);
@@ -2084,14 +2084,14 @@ var
   SS, m: String;
   i: Integer;
 begin
-  if not ValueInSet(Sender.AsString, rsFlightMolt, FlightMoltValues) then
+  if not ValueInSet(Sender.AsString, rsFlightMolt, FLIGHT_MOLT_VALUES) then
   begin
     SS := EmptyStr;
-    for i := 0 to High(FlightMoltValues) do
-      if i = High(FlightMoltValues) then
-        SS := SS + FlightMoltValues[i]
+    for i := 0 to High(FLIGHT_MOLT_VALUES) do
+      if i = High(FLIGHT_MOLT_VALUES) then
+        SS := SS + FLIGHT_MOLT_VALUES[i]
       else
-        SS := SS + FlightMoltValues[i] + ', ';
+        SS := SS + FLIGHT_MOLT_VALUES[i] + ', ';
     m := Format(rsValueNotInSet, [rsFlightMolt, SS]);
 
     raise EValueNotInSet.Create(m);
@@ -2103,14 +2103,14 @@ var
   SS, m: String;
   i: Integer;
 begin
-  if not ValueInSet(Sender.AsString, rsFlightWear, FeatherWearValues) then
+  if not ValueInSet(Sender.AsString, rsFlightWear, FEATHER_WEAR_VALUES) then
   begin
     SS := EmptyStr;
-    for i := 0 to High(FeatherWearValues) do
-      if i = High(FeatherWearValues) then
-        SS := SS + FeatherWearValues[i]
+    for i := 0 to High(FEATHER_WEAR_VALUES) do
+      if i = High(FEATHER_WEAR_VALUES) then
+        SS := SS + FEATHER_WEAR_VALUES[i]
       else
-        SS := SS + FeatherWearValues[i] + ', ';
+        SS := SS + FEATHER_WEAR_VALUES[i] + ', ';
     m := Format(rsValueNotInSet, [rsFlightWear, SS]);
 
     raise EValueNotInSet.Create(m);
@@ -2122,14 +2122,14 @@ var
   SS, m: String;
   i: Integer;
 begin
-  if not ValueInSet(Sender.AsString, rsSkullOssification, SkullValues) then
+  if not ValueInSet(Sender.AsString, rsSkullOssification, SKULL_OSSIFICATION_VALUES) then
   begin
     SS := EmptyStr;
-    for i := 0 to High(SkullValues) do
-      if i = High(SkullValues) then
-        SS := SS + SkullValues[i]
+    for i := 0 to High(SKULL_OSSIFICATION_VALUES) do
+      if i = High(SKULL_OSSIFICATION_VALUES) then
+        SS := SS + SKULL_OSSIFICATION_VALUES[i]
       else
-        SS := SS + SkullValues[i] + ', ';
+        SS := SS + SKULL_OSSIFICATION_VALUES[i] + ', ';
     m := Format(rsValueNotInSet, [rsSkullOssification, SS]);
 
     raise EValueNotInSet.Create(m);

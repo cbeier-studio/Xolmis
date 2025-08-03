@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids, Buttons,
-  StdCtrls, DBCtrls, cbs_datatypes;
+  StdCtrls, DBCtrls, data_types;
 
 type
 
@@ -79,7 +79,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_data, cbs_datacolumns, cbs_themes, uDarkStyleParams;
+  utils_locale, utils_global, data_management, data_columns, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -160,9 +160,9 @@ begin
   begin
     ParamByName('TABNAME').Bound := True;
     if FChildType <> tbNone then
-      ParamByName('TABNAME').AsString := TableNames[FChildType]
+      ParamByName('TABNAME').AsString := TABLE_NAMES[FChildType]
     else
-      ParamByName('TABNAME').AsString := TableNames[FTableType];
+      ParamByName('TABNAME').AsString := TABLE_NAMES[FTableType];
     ParamByName('COD').AsInteger := FId;
     //DataSource := DS;
     Open;

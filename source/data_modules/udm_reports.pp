@@ -563,7 +563,7 @@ var
 implementation
 
 uses
-  cbs_locale;
+  utils_locale;
 
 {$R *.lfm}
 

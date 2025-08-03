@@ -9,6 +9,7 @@ object dlgExportPreview: TdlgExportPreview
   ClientWidth = 839
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnShow = FormShow
   object pToolbar: TPanel
     Left = 0

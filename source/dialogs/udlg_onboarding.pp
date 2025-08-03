@@ -84,7 +84,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_themes, cbs_dialogs, udm_main, uDarkStyleParams, udlg_newdatabase, uedt_database;
+  utils_global, utils_locale, utils_themes, utils_dialogs, udm_main, uDarkStyleParams, udlg_newdatabase, uedt_database;
 
 {$R *.lfm}
 

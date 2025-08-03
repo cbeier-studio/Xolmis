@@ -120,7 +120,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, utils_gis, cbs_themes, udm_main, uDarkStyleParams;
+uses utils_locale, utils_global, utils_dialogs, utils_gis, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -254,7 +254,7 @@ begin
   aText := ReplaceRegExpr('\h+', aText, ' ');
 
   X := Trim(ExtractDelimited(1, aText, [';']));
-  if WordCount(X, DmsSymbols + [' ']) > 2 then
+  if WordCount(X, DMS_SYMBOLS + [' ']) > 2 then
     aFrom := mcDMS
   else
   if (ExecRegExpr('^[0-9]{1,3}[a-zA-Z]{1}$', X)) or ((TryStrToFloat(X, p)) and (p > 180)) then

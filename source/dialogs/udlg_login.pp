@@ -71,7 +71,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_graphics, cbs_themes, cbs_dialogs, cbs_getvalue, udm_main, LCLType,
+  utils_locale, utils_global, utils_graphics, utils_themes, utils_dialogs, data_getvalue, udm_main, LCLType,
   uDarkStyleParams;
 
 {$R *.lfm}

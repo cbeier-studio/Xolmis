@@ -15,6 +15,7 @@ object dlgSplash: TdlgSplash
   Constraints.MinWidth = 420
   FormStyle = fsStayOnTop
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnShow = FormShow
   object icoAppIcon: TImage
     AnchorSideLeft.Control = Owner

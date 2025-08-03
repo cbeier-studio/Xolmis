@@ -23,7 +23,7 @@ interface
 uses
   Buttons, Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls,
   Graphics, Dialogs, Character, DateUtils, ExtCtrls, StdCtrls, Menus, atshapelinebgra,
-  cbs_birds;
+  models_birds;
 
 type
 
@@ -290,8 +290,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_getvalue, cbs_dialogs, cbs_finddialogs, utils_gis,
-  cbs_taxonomy, cbs_validations, cbs_fullnames, cbs_editdialogs, models_geo,
+  utils_locale, utils_global, data_types, data_consts, data_getvalue, utils_dialogs, utils_finddialogs, utils_gis,
+  models_taxonomy, utils_validations, utils_fullnames, utils_editdialogs, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -1358,7 +1358,7 @@ var
       Exit;
     end;
 
-    for Cores in BandColors do
+    for Cores in BAND_COLORS do
     begin
       if Cores[0].Equals(aColor) then
       begin
@@ -1623,13 +1623,13 @@ begin
   IsFutureDate(StrToDate(eCaptureDate.Text), Today, rsDateCapture, rsDateToday);
 
   // Set of values
-  ValueInSet(cbCloacalProtuberance.Text, rsCloacalProtuberance, CloacalProtuberanceValues, Msgs);
-  ValueInSet(cbBroodPatch.Text, rsBroodPatch, BroodPatchValues, Msgs);
-  ValueInSet(cbFat.Text, rsSubcutaneousFat, FatValues, Msgs);
-  ValueInSet(cbBodyMolt.Text, rsBodyMolt, BodyMoltValues, Msgs);
-  ValueInSet(cbFlightFeatherMolt.Text, rsFlightMolt, FlightMoltValues, Msgs);
-  ValueInSet(cbFlightFeatherWear.Text, rsFlightWear, FeatherWearValues, Msgs);
-  ValueInSet(cbSkullOssification.Text, rsSkullOssification, SkullValues, Msgs);
+  ValueInSet(cbCloacalProtuberance.Text, rsCloacalProtuberance, CLOACAL_PROTUBERANCE_VALUES, Msgs);
+  ValueInSet(cbBroodPatch.Text, rsBroodPatch, BROOD_PATCH_VALUES, Msgs);
+  ValueInSet(cbFat.Text, rsSubcutaneousFat, FAT_VALUES, Msgs);
+  ValueInSet(cbBodyMolt.Text, rsBodyMolt, BODY_MOLT_VALUES, Msgs);
+  ValueInSet(cbFlightFeatherMolt.Text, rsFlightMolt, FLIGHT_MOLT_VALUES, Msgs);
+  ValueInSet(cbFlightFeatherWear.Text, rsFlightWear, FEATHER_WEAR_VALUES, Msgs);
+  ValueInSet(cbSkullOssification.Text, rsSkullOssification, SKULL_OSSIFICATION_VALUES, Msgs);
 
   if Msgs.Count > 0 then
   begin

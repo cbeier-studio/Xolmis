@@ -10,6 +10,7 @@ object dlgColorBands: TdlgColorBands
   ClientHeight = 213
   ClientWidth = 324
   PopupMode = pmAuto
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress

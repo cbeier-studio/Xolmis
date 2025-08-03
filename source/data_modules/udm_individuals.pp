@@ -21,7 +21,7 @@ unit udm_individuals;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, DB, StrUtils, cbs_birds, cbs_sampling, cbs_breeding;
+  Classes, SysUtils, SQLDB, DB, StrUtils, models_birds, models_sampling, models_breeding;
 
 type
 
@@ -573,7 +573,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_datacolumns, cbs_getvalue;
+  utils_locale, utils_global, data_types, data_management, data_columns, data_getvalue;
 
 {$R *.lfm}
 

@@ -28,14 +28,14 @@ uses
   { VCL }
   Forms, Controls, ExtCtrls, laz.VirtualTrees, mvMapViewer, EditBtn,
   { Data }
-  DB, SQLDB, cbs_record_types, cbs_datatypes;
+  DB, SQLDB, models_record_types, data_types;
 
 const
-  datumA: Extended = 6378137;          // equatorial radius (in meters), semi major axis
-  datumB: Extended = 6356752.31424518; // semi minor axis
-  N0: Integer = 10000000;              // in meters (10000 km)
-  k0: Double = 0.9996;
-  E0: Integer = 500000;                // in meters (500 km)
+  DATUM_A: Extended = 6378137;          // equatorial radius (in meters), semi major axis
+  DATUM_B: Extended = 6356752.31424518; // semi minor axis
+  N_0: Integer = 10000000;              // in meters (10000 km)
+  K_0: Double = 0.9996;
+  E_0: Integer = 500000;                // in meters (500 km)
 
 type
   TMapCoordinateType = (mcDecimal, mcDMS, mcUTM);
@@ -43,10 +43,10 @@ type
   TMapHemisphere = (mhNorth, mhSouth, mhEast, mhWest);
 
 const
-  GlobeHemispheres: array[TMapHemisphere] of Char = ('N', 'S', 'E', 'W');
-  UtmBands: array[-9..10] of Char = ('C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P',
+  GLOBE_HEMISPHERES: array[TMapHemisphere] of Char = ('N', 'S', 'E', 'W');
+  UTM_BANDS: array[-9..10] of Char = ('C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P',
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X');
-  DmsSymbols: set of Char = [#176, #186, #39, #146, #180, #34, #148];  { °, º, ', ’, ´, ", ” }
+  DMS_SYMBOLS: set of Char = [#176, #186, #39, #146, #180, #34, #148];  { °, º, ', ’, ´, ", ” }
 
 type
 
@@ -154,7 +154,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_users, cbs_conversions, cbs_validations, cbs_datacolumns, cbs_setparam,
+  utils_locale, utils_global, utils_conversions, utils_validations, data_columns, data_setparam, models_users,
   udm_main, udlg_geoassist;
 
 function RemoveSymbolsDMS(aCoord: String): String;
@@ -235,21 +235,21 @@ var
   E2S, cPolar, Fi, FiRad, b, SenhXi, Tau: Extended;
   IsNegative: Boolean;
 begin
-  // Eccent:= (Sqrt(sqr(datumA)-sqr(datumB))/datumA);
-  // Eccent2:= (Sqrt(sqr(datumA)-sqr(datumB))/datumB);
-  E2S := Sqr(Sqrt(Sqr(datumA) - Sqr(datumB)) / datumB); // 2a Eccentricity
-  cPolar := +(Sqr(datumA)) / datumB;                    // Polar radius of curvature
+  // Eccent:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_A);
+  // Eccent2:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_B);
+  E2S := Sqr(Sqrt(Sqr(DATUM_A) - Sqr(DATUM_B)) / DATUM_B); // 2a Eccentricity
+  cPolar := +(Sqr(DATUM_A)) / DATUM_B;                    // Polar radius of curvature
 
   IsNegative:= Ord(aUtm.Band) > Ord('N');
   X := aUtm.X;
   Y := aUtm.Y;
   MeridCentral := 6 * aUtm.Zone - 183;
   if IsNegative then
-    Y := Y - N0;
+    Y := Y - N_0;
 
-  Fi := Y / (6366197.724 * k0);
-  Ni := (cPolar / Power(1 + E2S * Sqr(cos(Fi)), 0.5)) * k0;
-  A := (X - E0) / Ni;
+  Fi := Y / (6366197.724 * K_0);
+  Ni := (cPolar / Power(1 + E2S * Sqr(cos(Fi)), 0.5)) * K_0;
+  A := (X - E_0) / Ni;
   A1 := sin(2 * Fi);
   A2 := A1 * Sqr(cos(Fi));
   J2 := Fi + (A1 / 2);
@@ -258,7 +258,7 @@ begin
   Alfa := (3 / 4) * E2S;
   Beta := (5 / 3) * Sqr(Alfa);
   Gamma := (35 / 27) * Power(Alfa, 3);
-  Bfi := k0 * cPolar * (Fi - (Alfa * J2) + (Beta * J4) - (Gamma * J6));
+  Bfi := K_0 * cPolar * (Fi - (Alfa * J2) + (Beta * J4) - (Gamma * J6));
   b := (Y - Bfi) / Ni;
   Zeta := ((E2S * Sqr(A)) / 2) * Sqr(cos(Fi));
   Xi := A * (1 - (Zeta / 3));
@@ -280,13 +280,13 @@ var
   E2S, cPolar: Extended;
   IsNegative: Boolean;
 begin
-  // Eccent:= (Sqrt(sqr(datumA)-sqr(datumB))/datumA);
-  // Eccent2:= (Sqrt(sqr(datumA)-sqr(datumB))/datumB);
-  E2S := Sqr(Sqrt(Sqr(datumA) - Sqr(datumB)) / datumB); // 2a Eccentricity
-  cPolar := +(Sqr(datumA)) / datumB;                    // Polar radius of curvature
+  // Eccent:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_A);
+  // Eccent2:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_B);
+  E2S := Sqr(Sqrt(Sqr(DATUM_A) - Sqr(DATUM_B)) / DATUM_B); // 2a Eccentricity
+  cPolar := +(Sqr(DATUM_A)) / DATUM_B;                    // Polar radius of curvature
 
   IsNegative := Sign(aDec.Y) = NegativeValue;
-  Result.Band := UtmBands[Trunc(aDec.Y / 8)];
+  Result.Band := UTM_BANDS[Trunc(aDec.Y / 8)];
   Result.Zone := Trunc((aDec.X / 6) + 31);
 
   RadX := (aDec.X * pi) / 180;   // Longitude in radians
@@ -296,7 +296,7 @@ begin
   DeltaLambda := +(RadX) - ((MeridHuso * pi) / 180);
   Xi := (0.5) * ln((1 + (cos(RadY) * sin(DeltaLambda))) / (1 - (cos(RadY) * sin(DeltaLambda))));
   Eta := ArcTan(Tan(RadY) / cos(DeltaLambda)) - RadY;
-  Ni := (cPolar / Power(1 + E2S * Sqr(cos(RadY)), 0.5)) * k0;
+  Ni := (cPolar / Power(1 + E2S * Sqr(cos(RadY)), 0.5)) * K_0;
   Zeta := (E2S / 2) * Sqr(Xi) * Sqr(cos(RadY));
   A2 := +(sin(2 * RadY)) * Sqr(cos(RadY));
   J2 := RadY + (sin(2 * RadY) / 2);
@@ -305,12 +305,12 @@ begin
   Alfa := (3 / 4) * E2S;
   Beta := (5 / 3) * Sqr(Alfa);
   Gamma := (35 / 27) * Power(Alfa, 3);
-  Bfi := k0 * cPolar * (RadY - (Alfa * J2) + (Beta * J4) - (Gamma * J6));
+  Bfi := K_0 * cPolar * (RadY - (Alfa * J2) + (Beta * J4) - (Gamma * J6));
 
-  Result.X := Xi * Ni * (1 + Zeta / 3) + E0;
+  Result.X := Xi * Ni * (1 + Zeta / 3) + E_0;
   Result.Y := Eta * Ni * (1 + Zeta) + Bfi;
   if IsNegative then
-    Result.Y := Result.Y + N0;
+    Result.Y := Result.Y + N_0;
 end;
 
 function DmsToUtm(aDms: TDMSPoint): TUTMPoint;
@@ -620,7 +620,7 @@ var
 begin
   CSV := TCSVDocument.Create;
   try
-    CSV.Delimiter := StrSeparators[spSemicolon];
+    CSV.Delimiter := SEPARATORS[spSemicolon];
     CSV.AddRow('Name'); // Header
     CSV.AddCell(0, 'Longitude');
     CSV.AddCell(0, 'Latitude');
@@ -1063,14 +1063,14 @@ begin
   lat := DegToRad(aDec.Y);
   lon := DegToRad(aDec.X);
 
-  Result.X := datumA * lon;
-  Result.Y := datumA * ln(tan(Pi/4 + lat/2));
+  Result.X := DATUM_A * lon;
+  Result.Y := DATUM_A * ln(tan(Pi/4 + lat/2));
 end;
 
 function MercatorToDecimal(aMerc: TMercatorPoint): TMapPoint;
 begin
-  Result.X := aMerc.X / datumA;
-  Result.Y := RadToDeg(2 * ArcTan(Exp(aMerc.Y / datumA)) - Pi / 2);
+  Result.X := aMerc.X / DATUM_A;
+  Result.Y := RadToDeg(2 * ArcTan(Exp(aMerc.Y / DATUM_A)) - Pi / 2);
 end;
 
 { TUTMPoint }
@@ -1081,7 +1081,7 @@ var
   Sep: set of Char;
 begin
   Result := False;
-  Sep := [StrSeparators[aSeparator]];
+  Sep := [SEPARATORS[aSeparator]];
 
   if (WordCount(aCoord, Sep) < 2) then
     Exit;
@@ -1115,7 +1115,7 @@ function TUTMPoint.ToString(WithZone: Boolean; aSeparator: TSeparator): String;
 var
   sX, sY, sep: String;
 begin
-  sep:= StrSeparators[aSeparator];
+  sep:= SEPARATORS[aSeparator];
 
   if aSeparator = spComma then
   begin
@@ -1151,7 +1151,7 @@ var
   Sep: set of Char;
 begin
   Result := False;
-  Sep := [StrSeparators[aSeparator]];
+  Sep := [SEPARATORS[aSeparator]];
   aCoord := RemoveSymbolsDMS(aCoord);
 
   if (WordCount(aCoord, Sep) <> 2) then
@@ -1171,7 +1171,7 @@ function TDMSPoint.ToString(WithSymbols: Boolean; aSeparator: TSeparator): Strin
 var
   sX, sY, sep: String;
 begin
-  sep:= StrSeparators[aSeparator];
+  sep:= SEPARATORS[aSeparator];
 
   if aSeparator = spComma then
   begin
@@ -1242,7 +1242,7 @@ var
   Sep: set of Char;
 begin
   Result := False;
-  Sep := [StrSeparators[aSeparator]];
+  Sep := [SEPARATORS[aSeparator]];
 
   if (WordCount(aCoord, Sep) <> 2) then
     Exit;
@@ -1259,7 +1259,7 @@ function TMapPoint.ToString(aSeparator: TSeparator): String;
 var
   sX, sY, sep: String;
 begin
-  sep:= StrSeparators[aSeparator];
+  sep:= SEPARATORS[aSeparator];
 
   if aSeparator = spComma then
   begin

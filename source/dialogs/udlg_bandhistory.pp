@@ -58,7 +58,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_themes, udm_grid, uDarkStyleParams;
+  utils_locale, utils_themes, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 

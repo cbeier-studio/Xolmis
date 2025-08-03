@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
   ActnList, ExtCtrls, StdCtrls, atTabs, BCPanel, BCTypes, ColorSpeedButton, DateUtils,
   DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
-  cbs_datatypes, Types, ImgList;
+  data_types, Types, ImgList;
 
 type
 
@@ -374,8 +374,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
-  cbs_data, cbs_users, models_geo, cbs_taxonomy, cbs_editdialogs, cbs_themes, utils_gis, uDarkStyleParams,
+  utils_locale, utils_global, utils_dialogs, utils_system, data_import, utils_autoupdate, utils_permissions, utils_backup,
+  data_management, models_users, models_geo, models_taxonomy, utils_editdialogs, utils_themes, utils_gis, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
@@ -756,7 +756,7 @@ procedure TfrmMain.ApplyFormSettings;
 begin
   // Update active taxonomy
   ActiveTaxonomy := xSettings.Taxonomy;
-  // SBarTaxonomy.Caption:= TaxonomyName[ActiveTaxonomy];
+  // SBarTaxonomy.Caption:= TAXONOMY_NAMES[ActiveTaxonomy];
 
   // Get user permissions
   actMaintenance.Enabled := ActiveUser.Rank = urAdministrator;
@@ -1687,7 +1687,7 @@ begin
   lblSbarDatabase.Hint := sbarDatabase.Hint;
   icoSbarDatabase.Hint := sbarDatabase.Hint;
   lblSbarUser.Caption := ActiveUser.UserName;
-  //lblSbarTaxonomy.Caption := TaxonomyName[ActiveTaxonomy];
+  //lblSbarTaxonomy.Caption := TAXONOMY_NAMES[ActiveTaxonomy];
 end;
 
 end.

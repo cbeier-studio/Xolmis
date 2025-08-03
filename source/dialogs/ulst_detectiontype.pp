@@ -53,7 +53,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs;
+uses utils_locale, utils_global, utils_dialogs;
 
 {$R *.lfm}
 

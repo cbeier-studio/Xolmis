@@ -21,7 +21,7 @@ unit udm_breeding;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, cbs_breeding, cbs_datatypes;
+  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, models_breeding, data_types;
 
 type
 
@@ -147,7 +147,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_data, cbs_datacolumns;
+  utils_locale, utils_global, data_management, data_columns;
 
 { TDMB }
 
@@ -548,9 +548,6 @@ begin
   if aText = rsNestUnknown then
     Sender.AsString := 'U';
 end;
-
-initialization
-  {$I udm_breeding.lrs}
 
 end.
 

@@ -51,7 +51,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global;
+uses utils_locale, utils_global;
 
 {$R *.lfm}
 

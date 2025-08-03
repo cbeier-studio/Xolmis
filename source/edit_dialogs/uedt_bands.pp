@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, SysUtils, Types, DB, Forms, Controls, Graphics, Dialogs,
   ExtCtrls, StdCtrls, Buttons, Menus, Character,
-  atshapelinebgra, cbs_system, cbs_birds;
+  atshapelinebgra, utils_system, models_birds;
 
 type
 
@@ -125,8 +125,8 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dataconst, cbs_dialogs, cbs_finddialogs, cbs_getvalue,
-  cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, data_types, data_consts, utils_dialogs, utils_finddialogs, data_getvalue,
+  utils_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -175,7 +175,7 @@ begin
       cbBandColor.Canvas.Brush.Style := bsBDiagonal;
     end
     else
-      cbBandColor.Canvas.Brush.Color := StringToColor(BandColors[Index + 2, 1]);
+      cbBandColor.Canvas.Brush.Color := StringToColor(BAND_COLORS[Index + 2, 1]);
     cbBandColor.Canvas.FillRect(aColorRect);
   end;
 end;

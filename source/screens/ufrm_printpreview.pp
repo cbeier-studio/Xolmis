@@ -127,7 +127,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_dialogs, udlg_loading, udlg_progress, udm_reports, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, udlg_loading, udlg_progress, udm_reports, uDarkStyleParams;
 
 {$R *.lfm}
 

@@ -38,7 +38,7 @@ var
 implementation
 
 uses
-  cbs_global, cbs_datatypes, cbs_data, cbs_autoupdate, cbs_system, udm_main, cbs_themes, uDarkStyleParams;
+  utils_global, data_types, data_management, utils_autoupdate, utils_system, udm_main, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons,
-  atshapelinebgra, cbs_sampling;
+  atshapelinebgra, models_sampling;
 
 type
 
@@ -74,7 +74,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, cbs_dataconst, udm_main, uDarkStyleParams;
+uses utils_locale, utils_global, utils_dialogs, data_consts, udm_main, uDarkStyleParams;
 
 { TedtMethod }
 

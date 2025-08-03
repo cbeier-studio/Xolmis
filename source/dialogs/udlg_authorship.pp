@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, LCLType,
-  Character, cbs_system, cbs_sampling;
+  Character, utils_system, models_sampling;
 
 type
 
@@ -73,7 +73,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_getvalue, cbs_themes, udlg_find, uDarkStyleParams;
+  utils_locale, utils_global, data_types, data_getvalue, utils_themes, udlg_find, uDarkStyleParams;
 
 {$R *.lfm}
 

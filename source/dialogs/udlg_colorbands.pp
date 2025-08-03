@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons,
-  BCPanel, atshapelinebgra, cbs_birds;
+  BCPanel, atshapelinebgra, models_birds;
 
 type
 
@@ -108,7 +108,7 @@ var
 
 implementation
 
-uses cbs_global, cbs_themes, cbs_system, uDarkStyleParams;
+uses utils_global, utils_themes, utils_system, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -179,7 +179,7 @@ begin
   BL := TStringList.Create;
   try
     for i := 0 to FBands.Count -1 do
-      BL.Add(BandColors[Ord(FBands.Items[i].Color), 0]);
+      BL.Add(BAND_COLORS[Ord(FBands.Items[i].Color), 0]);
 
     BandsStr := BL.CommaText;
   finally
@@ -275,7 +275,7 @@ begin
       aPanel.Border.Color := $00D1D1D1;
       aPanel.Border.Width := 1;
     end;
-    aPanel.Background.Color := StringToColor(BandColors[Ord(aBand), 1]);
+    aPanel.Background.Color := StringToColor(BAND_COLORS[Ord(aBand), 1]);
     if aBand in [ccAnotherMetal, ccViolet, ccBlue, ccGreen, ccUmber, ccSilver, ccBlack] then
     begin
       aPanel.FontEx.Color := clTextOnAccentPrimaryLight;
@@ -286,7 +286,7 @@ begin
       aPanel.FontEx.Color := clTextPrimaryLight;
       aButton.ImageIndex := 0;
     end;
-    aPanel.Caption := BandColors[Ord(aBand), 0];
+    aPanel.Caption := BAND_COLORS[Ord(aBand), 0];
     aButton.Visible := True;
   end
   else
@@ -558,7 +558,7 @@ begin
 
   if aLetter <> '' then
   begin
-    for cCode in BandColors do
+    for cCode in BAND_COLORS do
     begin
       if AnsiString(cCode[0]).Equals(aLetter) then
       begin
