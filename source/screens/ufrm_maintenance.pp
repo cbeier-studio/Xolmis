@@ -184,9 +184,9 @@ begin
   icoDatabaseBackup.Hint := rsHintBackupEnabledDone;
   lblDatabaseBackup.Caption := rsCaptionEnabled;
 
-  ConexaoDB.LoadParams;
+  databaseConnection.LoadParams;
 
-  case XSettings.AutomaticBackup of
+  case xSettings.AutomaticBackup of
     0:
     begin
       icoDatabaseBackup.ImageIndex := 1;
@@ -195,7 +195,7 @@ begin
     end;
     1:
     begin
-      if DaysBetween(Now, ConexaoDB.LastBackup) >= 1 then
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 1 then
       begin
         icoDatabaseBackup.ImageIndex := 1;
         icoDatabaseBackup.Hint := rsHintBackupEnabledNotDone;
@@ -203,7 +203,7 @@ begin
     end;
     2:
     begin
-      if DaysBetween(Now, ConexaoDB.LastBackup) >= 7 then
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 7 then
       begin
         icoDatabaseBackup.ImageIndex := 1;
         icoDatabaseBackup.Hint := rsHintBackupEnabledNotDone;
@@ -211,7 +211,7 @@ begin
     end;
     3:
     begin
-      if DaysBetween(Now, ConexaoDB.LastBackup) >= 30 then
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 30 then
       begin
         icoDatabaseBackup.ImageIndex := 1;
         icoDatabaseBackup.Hint := rsHintBackupEnabledNotDone;
@@ -222,7 +222,7 @@ end;
 
 procedure TfrmMaintenance.CheckDatabaseIntegrity;
 begin
-  if ConexaoDB.IntegrityCheck(False) then
+  if databaseConnection.IntegrityCheck(False) then
   begin
     icoDatabaseIntegrity.ImageIndex := 0;
     icoDatabaseIntegrity.Hint := rsSuccessfulDatabaseIntegrityCheck;
@@ -248,7 +248,7 @@ begin
   SizeInBytes := 0;
   TotalSize := EmptyStr;
 
-  if XSettings.AllowWriteLogs then
+  if xSettings.AllowWriteLogs then
   begin
     icoManageLogs.ImageIndex := 0;
     icoManageLogs.Hint := rsCaptionEnabled
@@ -286,7 +286,7 @@ begin
   else
     TotalSize := Format('%d bytes', [SizeInBytes]);
 
-  lblManageLogs.Caption := Format('%s / %s', [GetFileSizeReadable(ConcatPaths([AppDataDir, LogFile])), TotalSize]);
+  lblManageLogs.Caption := Format('%s / %s', [GetFileSizeReadable(ConcatPaths([AppDataDir, LOG_FILE])), TotalSize]);
 end;
 
 procedure TfrmMaintenance.CheckTemporaryFiles;
@@ -369,7 +369,7 @@ end;
 
 procedure TfrmMaintenance.sbCheckDatabaseIntegrityClick(Sender: TObject);
 begin
-  ConexaoDB.IntegrityCheck;
+  databaseConnection.IntegrityCheck;
 end;
 
 procedure TfrmMaintenance.sbClearTemporaryFilesClick(Sender: TObject);
@@ -421,21 +421,21 @@ procedure TfrmMaintenance.sbFactoryResetClick(Sender: TObject);
 begin
   if MsgDlg(rsTitleConfirmation, rsFactoryResetPrompt, mtConfirmation) then
   begin
-    XSettings.Reset;
+    xSettings.Reset;
   end;
 end;
 
 procedure TfrmMaintenance.sbOptimizeDatabaseClick(Sender: TObject);
 begin
-  ConexaoDB.Optimize;
+  databaseConnection.Optimize;
 end;
 
 procedure TfrmMaintenance.sbRestoreSettingsClick(Sender: TObject);
 begin
-  OpenDlg.InitialDir := XSettings.BackupFolder;
+  OpenDlg.InitialDir := xSettings.BackupFolder;
   if OpenDlg.Execute then
     if RestoreSettings(OpenDlg.FileName) then
-      XSettings.LoadFromFile;
+      xSettings.LoadFromFile;
 end;
 
 procedure TfrmMaintenance.TimerOpenTimer(Sender: TObject);
@@ -486,7 +486,7 @@ begin
     FindClose(FileInfo);
   end;
 
-  //FLog := ConcatPaths([AppDataDir, LogFile]);
+  //FLog := ConcatPaths([AppDataDir, LOG_FILE]);
   //if FileExists(FLog) then
   //  DeleteFile(FLog);
 end;
@@ -502,7 +502,7 @@ begin
   if not MsgDlg(rsTitleRestore, rsRestoreBackupPrompt, mtConfirmation) then
     Exit;
 
-  OpenDlg.InitialDir := XSettings.BackupFolder;
+  OpenDlg.InitialDir := xSettings.BackupFolder;
   if OpenDlg.Execute then
     RestoreBackup(OpenDlg.FileName);
 end;

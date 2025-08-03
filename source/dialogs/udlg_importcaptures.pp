@@ -144,7 +144,7 @@ end;
 procedure TdlgImportCaptures.eJournalFileButtonClick(Sender: TObject);
 begin
   if Sender is TFileNameEdit then
-    TFileNameEdit(Sender).InitialDir := XSettings.LastPathUsed;
+    TFileNameEdit(Sender).InitialDir := xSettings.LastPathUsed;
 end;
 
 procedure TdlgImportCaptures.eJournalFileChange(Sender: TObject);
@@ -173,7 +173,7 @@ end;
 
 procedure TdlgImportCaptures.sbCancelClick(Sender: TObject);
 begin
-  Parar := True;
+  stopProcess := True;
 
   sbCancel.Visible := False;
   sbClose.Visible := True;
@@ -206,7 +206,7 @@ procedure TdlgImportCaptures.sbRunClick(Sender: TObject);
 begin
   { #todo : Validate fields }
 
-  Parar := False;
+  stopProcess := False;
   FProgressList.Clear;
 
   nbContent.PageIndex := 1;
@@ -219,13 +219,13 @@ begin
   hvProgress.LoadFromString(FProgressList.Text);
   ImportBandingJournalV1(eJournalFile.FileName, barProgress);
 
-  if not Parar then
+  if not stopProcess then
   begin
     FProgressList.Add(rsProgressImportBandingEffort);
     hvProgress.LoadFromString(FProgressList.Text);
     ImportBandingEffortV1(eEffortFile.FileName, barProgress);
 
-    if not Parar then
+    if not stopProcess then
     begin
       FProgressList.Add(rsProgressImportCaptures);
       hvProgress.LoadFromString(FProgressList.Text);
@@ -234,7 +234,7 @@ begin
   end;
 
   nbContent.PageIndex := 2;
-  if Parar then
+  if stopProcess then
   begin
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;

@@ -212,7 +212,7 @@ end;
 
 procedure TcfgOptions.tsConfirmCancelChange(Sender: TObject);
 begin
-  XSettings.ConfirmCancel := tsConfirmCancel.Checked;
+  xSettings.ConfirmCancel := tsConfirmCancel.Checked;
 end;
 
 procedure TcfgOptions.sbRestoreBackupClick(Sender: TObject);
@@ -221,14 +221,14 @@ begin
   if not MsgDlg(rsTitleRestore, rsRestoreBackupPrompt, mtConfirmation) then
     Exit;
 
-  OpenDlg.InitialDir:= XSettings.BackupFolder;
+  OpenDlg.InitialDir:= xSettings.BackupFolder;
   if OpenDlg.Execute then
     RestoreBackup(OpenDlg.FileName);
 end;
 
 procedure TcfgOptions.tsAllowUsageDataChange(Sender: TObject);
 begin
-  XSettings.AllowSendUsageData := tsAllowUsageData.Checked;
+  xSettings.AllowSendUsageData := tsAllowUsageData.Checked;
 end;
 
 procedure TcfgOptions.sbNewBackupClick(Sender: TObject);
@@ -240,33 +240,33 @@ end;
 
 procedure TcfgOptions.eAttachmentsPathChange(Sender: TObject);
 begin
-  XSettings.DocumentsFolder := eAttachmentsPath.Text;
+  xSettings.DocumentsFolder := eAttachmentsPath.Text;
 end;
 
 procedure TcfgOptions.cbMainTaxonomyChange(Sender: TObject);
 begin
-  XSettings.Taxonomy := cbMainTaxonomy.ItemIndex;
+  xSettings.Taxonomy := cbMainTaxonomy.ItemIndex;
 end;
 
 procedure TcfgOptions.cbSelectedThemeChange(Sender: TObject);
 begin
-  XSettings.SelectedTheme := cbSelectedTheme.ItemIndex;
+  xSettings.SelectedTheme := cbSelectedTheme.ItemIndex;
   lblSelectedThemeRestart.Visible := True;
 end;
 
 procedure TcfgOptions.cbStartPageChange(Sender: TObject);
 begin
-  XSettings.StartPage := cbStartPage.ItemIndex;
+  xSettings.StartPage := cbStartPage.ItemIndex;
 end;
 
 procedure TcfgOptions.cbStartupBackupSelect(Sender: TObject);
 begin
-  XSettings.AutomaticBackup := cbStartupBackup.ItemIndex;
+  xSettings.AutomaticBackup := cbStartupBackup.ItemIndex;
 end;
 
 procedure TcfgOptions.cbClearDeletedChange(Sender: TObject);
 begin
-  XSettings.ClearDeletedPeriod := cbClearDeleted.ItemIndex;
+  xSettings.ClearDeletedPeriod := cbClearDeleted.ItemIndex;
 end;
 
 procedure TcfgOptions.ApplyDarkMode;
@@ -361,32 +361,32 @@ end;
 
 procedure TcfgOptions.cbCheckUpdatesChange(Sender: TObject);
 begin
-  XSettings.AutoUpdates := cbCheckUpdates.ItemIndex;
+  xSettings.AutoUpdates := cbCheckUpdates.ItemIndex;
 end;
 
 procedure TcfgOptions.cbVernacularNamesChange(Sender: TObject);
 begin
-  XSettings.VernacularNamesLanguage := cbVernacularNames.ItemIndex;
+  xSettings.VernacularNamesLanguage := cbVernacularNames.ItemIndex;
 end;
 
 procedure TcfgOptions.eAudiosPathChange(Sender: TObject);
 begin
-  XSettings.AudiosFolder := eAudiosPath.Text;
+  xSettings.AudiosFolder := eAudiosPath.Text;
 end;
 
 procedure TcfgOptions.eBackupPathChange(Sender: TObject);
 begin
-  XSettings.BackupFolder := eBackupPath.Text;
+  xSettings.BackupFolder := eBackupPath.Text;
 end;
 
 procedure TcfgOptions.eImagesPathChange(Sender: TObject);
 begin
-  XSettings.ImagesFolder := eImagesPath.Text;
+  xSettings.ImagesFolder := eImagesPath.Text;
 end;
 
 procedure TcfgOptions.FormDestroy(Sender: TObject);
 begin
-  XSettings.SaveToFile;
+  xSettings.SaveToFile;
 end;
 
 procedure TcfgOptions.FormShow(Sender: TObject);
@@ -457,7 +457,7 @@ begin
     ckrUpdated: MsgDlg(rsCheckUpdates, rsIsUpToDate, mtInformation);
     ckrNewVersion:
     begin
-      if MsgDlg(rsCheckUpdates, Format(rsNewUpdateAvailable, [NomeApp]), mtConfirmation) then
+      if MsgDlg(rsCheckUpdates, Format(rsNewUpdateAvailable, [APP_NAME]), mtConfirmation) then
         RunUpdate;
     end;
     ckrError: ;
@@ -468,52 +468,52 @@ procedure TcfgOptions.sbClearLogFilesClick(Sender: TObject);
 var
   FLog: String;
 begin
-  FLog := ConcatPaths([AppDataDir, LogFile]);
+  FLog := ConcatPaths([AppDataDir, LOG_FILE]);
   if FileExists(FLog) then
     DeleteFile(FLog);
 end;
 
 procedure TcfgOptions.tsEnterAsTabChange(Sender: TObject);
 begin
-  XSettings.UseEnterAsTab := tsEnterAsTab.Checked;
+  xSettings.UseEnterAsTab := tsEnterAsTab.Checked;
 end;
 
 procedure TcfgOptions.tsOpenAfterExportChange(Sender: TObject);
 begin
-  XSettings.OpenFileAfterExport := tsOpenAfterExport.Checked;
+  xSettings.OpenFileAfterExport := tsOpenAfterExport.Checked;
 end;
 
 procedure TcfgOptions.tsRememberConnectionChange(Sender: TObject);
 begin
-  XSettings.RememberConnection := tsRememberConnection.Checked;
+  xSettings.RememberConnection := tsRememberConnection.Checked;
   if tsRememberConnection.Checked then
-    XSettings.LastConnection := ConexaoDB.Name
+    xSettings.LastConnection := databaseConnection.Name
   else
-    XSettings.Delete('SECURITY', 'LastConnection');
+    xSettings.Delete('SECURITY', 'LastConnection');
 end;
 
 procedure TcfgOptions.tsRememberUserChange(Sender: TObject);
 begin
-  XSettings.RememberUser := tsRememberUser.Checked;
+  xSettings.RememberUser := tsRememberUser.Checked;
   if tsRememberUser.Checked then
-    XSettings.LastUser := ActiveUser.UserName
+    xSettings.LastUser := ActiveUser.UserName
   else
-    XSettings.Delete('SECURITY', 'LastUser');
+    xSettings.Delete('SECURITY', 'LastUser');
 end;
 
 procedure TcfgOptions.tsShowOutliersChange(Sender: TObject);
 begin
-  XSettings.ShowOutliersOnGrid := tsShowOutliers.Checked;
+  xSettings.ShowOutliersOnGrid := tsShowOutliers.Checked;
 end;
 
 procedure TcfgOptions.tsShowSynonymsChange(Sender: TObject);
 begin
-  XSettings.ShowSynonyms := tsShowSynonyms.Checked;
+  xSettings.ShowSynonyms := tsShowSynonyms.Checked;
 end;
 
 procedure TcfgOptions.tsUseConditionalFormattingChange(Sender: TObject);
 begin
-  XSettings.UseConditionalFormatting := tsUseConditionalFormatting.Checked;
+  xSettings.UseConditionalFormatting := tsUseConditionalFormatting.Checked;
 
   lblShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
   tsShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
@@ -521,44 +521,44 @@ end;
 
 procedure TcfgOptions.tsWriteLogsChange(Sender: TObject);
 begin
-  XSettings.AllowWriteLogs := tsWriteLogs.Checked;
+  xSettings.AllowWriteLogs := tsWriteLogs.Checked;
 end;
 
 procedure TcfgOptions.LoadConfig;
 begin
   { GENERAL PARAMETERS AND INTERFACE }
-  cbStartPage.ItemIndex := XSettings.StartPage;
-  tsConfirmCancel.Checked := XSettings.ConfirmCancel;
-  cbClearDeleted.ItemIndex := XSettings.ClearDeletedPeriod;
-  tsEnterAsTab.Checked := XSettings.UseEnterAsTab;
+  cbStartPage.ItemIndex := xSettings.StartPage;
+  tsConfirmCancel.Checked := xSettings.ConfirmCancel;
+  cbClearDeleted.ItemIndex := xSettings.ClearDeletedPeriod;
+  tsEnterAsTab.Checked := xSettings.UseEnterAsTab;
 
   { APPEARANCE }
-  cbSelectedTheme.ItemIndex := XSettings.SelectedTheme;
-  tsUseConditionalFormatting.Checked := XSettings.UseConditionalFormatting;
-  tsShowOutliers.Checked := XSettings.ShowOutliersOnGrid;
+  cbSelectedTheme.ItemIndex := xSettings.SelectedTheme;
+  tsUseConditionalFormatting.Checked := xSettings.UseConditionalFormatting;
+  tsShowOutliers.Checked := xSettings.ShowOutliersOnGrid;
 
   { COLLECTION }
-  cbVernacularNames.ItemIndex := XSettings.VernacularNamesLanguage;
-  cbMainTaxonomy.ItemIndex := XSettings.Taxonomy;
-  tsShowSynonyms.Checked := XSettings.ShowSynonyms;
+  cbVernacularNames.ItemIndex := xSettings.VernacularNamesLanguage;
+  cbMainTaxonomy.ItemIndex := xSettings.Taxonomy;
+  tsShowSynonyms.Checked := xSettings.ShowSynonyms;
 
   { MEDIA }
-  eImagesPath.Text := XSettings.ImagesFolder;
-  eAudiosPath.Text := XSettings.AudiosFolder;
-  eAttachmentsPath.Text := XSettings.DocumentsFolder;
+  eImagesPath.Text := xSettings.ImagesFolder;
+  eAudiosPath.Text := xSettings.AudiosFolder;
+  eAttachmentsPath.Text := xSettings.DocumentsFolder;
 
   { SECURITY }
-  tsRememberUser.Checked := XSettings.RememberUser;
-  tsRememberConnection.Checked := XSettings.RememberConnection;
-  cbCheckUpdates.ItemIndex := XSettings.AutoUpdates;
+  tsRememberUser.Checked := xSettings.RememberUser;
+  tsRememberConnection.Checked := xSettings.RememberConnection;
+  cbCheckUpdates.ItemIndex := xSettings.AutoUpdates;
 
   { PRIVACY }
-  tsWriteLogs.Checked := XSettings.AllowWriteLogs;
-  tsAllowUsageData.Checked := XSettings.AllowSendUsageData;
+  tsWriteLogs.Checked := xSettings.AllowWriteLogs;
+  tsAllowUsageData.Checked := xSettings.AllowSendUsageData;
 
   { BACKUP AND RESTORE }
-  eBackupPath.Text := XSettings.BackupFolder;
-  cbStartupBackup.ItemIndex := XSettings.AutomaticBackup;
+  eBackupPath.Text := xSettings.BackupFolder;
+  cbStartupBackup.ItemIndex := xSettings.AutomaticBackup;
 
 end;
 

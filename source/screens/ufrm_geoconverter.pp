@@ -120,7 +120,7 @@ var
 
 implementation
 
-uses cbs_locale, cbs_global, cbs_dialogs, cbs_gis, cbs_themes, udm_main, uDarkStyleParams;
+uses cbs_locale, cbs_global, cbs_dialogs, utils_gis, cbs_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

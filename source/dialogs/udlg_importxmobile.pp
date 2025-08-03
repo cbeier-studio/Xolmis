@@ -142,7 +142,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_data, cbs_dialogs, cbs_finddialogs, cbs_getvalue, models_geo,
   cbs_birds, cbs_dataconst, cbs_themes, uDarkStyleParams,
   udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading;
 
@@ -416,7 +416,7 @@ begin
     if sbCancel.Caption = rsCaptionCancel then
     begin
       if nbPages.ActivePageComponent = pgProgress then
-        Parar := True
+        stopProcess := True
       else
         ModalResult := mrCancel;
     end
@@ -778,7 +778,7 @@ var
 begin
   nbPages.PageIndex := 2;
 
-  if Parar then
+  if stopProcess then
     Exit;
 
   p := 0;
@@ -867,7 +867,7 @@ begin
         PBar.Position := p;
         Application.ProcessMessages;
 
-        if Parar then
+        if stopProcess then
           Break;
       end;
 
@@ -887,7 +887,7 @@ begin
     end;
   end;
 
-  if Parar then
+  if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
     lblTitleImportFinished.Caption := rsImportCanceled;
@@ -916,7 +916,7 @@ var
 begin
   nbPages.PageIndex := 2;
 
-  if Parar then
+  if stopProcess then
     Exit;
 
   p := 0;
@@ -996,7 +996,7 @@ begin
         PBar.Position := p;
         Application.ProcessMessages;
 
-        if Parar then
+        if stopProcess then
           Break;
       end;
 
@@ -1016,7 +1016,7 @@ begin
     end;
   end;
 
-  if Parar then
+  if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
     lblTitleImportFinished.Caption := rsImportCanceled;
@@ -1175,7 +1175,7 @@ var
 begin
   nbPages.PageIndex := 2;
 
-  if Parar then
+  if stopProcess then
     Exit;
 
   p := 0;
@@ -1244,7 +1244,7 @@ begin
         PBar.Position := p;
         Application.ProcessMessages;
 
-        if Parar then
+        if stopProcess then
           Break;
       end;
 
@@ -1264,7 +1264,7 @@ begin
     end;
   end;
 
-  if Parar then
+  if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
     lblTitleImportFinished.Caption := rsImportCanceled;
@@ -1767,7 +1767,7 @@ begin
   if sbCancel.Caption = rsCaptionCancel then
   begin
     if nbPages.ActivePageComponent = pgProgress then
-      Parar := True
+      stopProcess := True
     else
       ModalResult := mrCancel;
   end
@@ -1822,7 +1822,7 @@ end;
 
 procedure TdlgImportXMobile.sbRetryClick(Sender: TObject);
 begin
-  Parar := False;
+  stopProcess := False;
   nbPages.PageIndex := 0;
   sbNext.Visible := True;
   sbCancel.Caption := rsCaptionCancel;

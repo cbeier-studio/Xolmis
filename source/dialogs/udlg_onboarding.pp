@@ -124,10 +124,10 @@ end;
 
 procedure TdlgOnboarding.btnSaveLocationsClick(Sender: TObject);
 begin
-  XSettings.ImagesFolder := eImagesPath.Directory;
-  XSettings.AudiosFolder := eAudiosPath.Directory;
-  XSettings.DocumentsFolder := eDocumentsPath.Directory;
-  XSettings.SaveToFile;
+  xSettings.ImagesFolder := eImagesPath.Directory;
+  xSettings.AudiosFolder := eAudiosPath.Directory;
+  xSettings.DocumentsFolder := eDocumentsPath.Directory;
+  xSettings.SaveToFile;
 
   nbPages.PageIndex := pgFinished.PageIndex;
 end;
@@ -145,9 +145,9 @@ end;
 
 procedure TdlgOnboarding.FormShow(Sender: TObject);
 begin
-  eImagesPath.Directory := XSettings.ImagesFolder;
-  eAudiosPath.Directory := XSettings.AudiosFolder;
-  eDocumentsPath.Directory := XSettings.DocumentsFolder;
+  eImagesPath.Directory := xSettings.ImagesFolder;
+  eAudiosPath.Directory := xSettings.AudiosFolder;
+  eDocumentsPath.Directory := xSettings.DocumentsFolder;
 end;
 
 procedure TdlgOnboarding.pNewDatabaseClick(Sender: TObject);

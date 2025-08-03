@@ -7,11 +7,12 @@ object edtNestRevision: TedtNestRevision
   BorderIcons = [biSystemMenu]
   Caption = 'New nest revision'
   ClientHeight = 620
-  ClientWidth = 416
+  ClientWidth = 413
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress

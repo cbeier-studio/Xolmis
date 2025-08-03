@@ -106,7 +106,7 @@ begin
     Key := #0;
   end;
   { <ENTER/RETURN> key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;
@@ -130,7 +130,7 @@ begin
   FormKeyPress(Sender, Key);
 
   { <ENTER/RETURN> key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;
@@ -220,10 +220,10 @@ begin
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
     try
-      Parar := False;
+      stopProcess := False;
       for i := Ini to Fim do
       begin
-        if Parar then
+        if stopProcess then
           Break;
 
         FRecord.Clear;
@@ -290,7 +290,7 @@ begin
       dlgLoading.Min := 0;
       dlgLoading.Max := 100;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.RollbackRetaining;
         MsgDlg(rsTitleTransferBands, rsBatchCanceledByUser, mtWarning);

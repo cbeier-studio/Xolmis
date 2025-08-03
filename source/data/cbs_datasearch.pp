@@ -252,19 +252,19 @@ function GetModifier(aModifier: String): TFilterValue;
 begin
   Result := fvNone;
 
-  if MatchStr(aModifier, AllQS) then { #tudo }
+  if MatchStr(aModifier, HASHTAG_ALL) then { #tudo }
     Result := fvAll
   else
-  if MatchStr(aModifier, MarkedQS) then { #marcados }
+  if MatchStr(aModifier, HASHTAG_MARKED) then { #marcados }
     Result := fvMarked
   else
-  if MatchStr(aModifier, UnmarkedQS) then { #naomarcados }
+  if MatchStr(aModifier, HASHTAG_UNMARKED) then { #naomarcados }
     Result := fvUnmarked
   else
-  if MatchStr(aModifier, DeletedQS) then { #lixo }
+  if MatchStr(aModifier, HASHTAG_DELETED) then { #lixo }
     Result := fvDeleted
   else
-  if MatchStr(aModifier, PrintQueueQS) then { #fila }
+  if MatchStr(aModifier, HASHTAG_PRINT_QUEUE) then { #fila }
     Result := fvQueued;
 end;
 

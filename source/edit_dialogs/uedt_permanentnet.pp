@@ -80,7 +80,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_gis, cbs_validations, cbs_fullnames, cbs_dataconst,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, utils_gis, cbs_validations, cbs_fullnames, cbs_dataconst,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -130,7 +130,7 @@ begin
   end;
 
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -202,7 +202,7 @@ begin
   FormKeyPress(Sender, Key);
 
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)

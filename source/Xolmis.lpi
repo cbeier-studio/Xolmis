@@ -900,21 +900,21 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="edit_dialogs\uedt_nestowner.pas"/>
+        <Filename Value="edit_dialogs\uedt_nestowner.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtNestOwner"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\udlg_newdatabase.pas"/>
+        <Filename Value="dialogs\udlg_newdatabase.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgNewDatabase"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\udlg_export.pas"/>
+        <Filename Value="dialogs\udlg_export.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgExport"/>
         <HasResources Value="True"/>
@@ -928,14 +928,14 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\udlg_recverifications.pas"/>
+        <Filename Value="dialogs\udlg_recverifications.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgRecVerifications"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="edit_dialogs\uedt_recverification.pas"/>
+        <Filename Value="edit_dialogs\uedt_recverification.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtRecVerification"/>
         <HasResources Value="True"/>
@@ -1012,7 +1012,7 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="models\cbs_gis.pp"/>
+        <Filename Value="models\models_geo.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -1024,7 +1024,7 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="data\cbs_datacolumns.pas"/>
+        <Filename Value="data\cbs_datacolumns.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -1100,7 +1100,7 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="utils\cbs_math.pas"/>
+        <Filename Value="utils\cbs_math.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -1380,6 +1380,10 @@
         <ComponentName Value="batchBandsTransfer"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\utils_gis.pp"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
     <Debugger>

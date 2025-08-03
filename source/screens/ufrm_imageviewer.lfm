@@ -9,6 +9,7 @@ object frmImageViewer: TfrmImageViewer
   ClientWidth = 805
   PopupMode = pmAuto
   Position = poDefault
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

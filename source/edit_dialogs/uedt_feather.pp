@@ -117,7 +117,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_gis, cbs_dataconst,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, models_geo, cbs_dataconst,
   cbs_taxonomy, cbs_conversions, cbs_getvalue, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -165,7 +165,7 @@ begin
   FormKeyPress(Sender, Key);
 
   // <ENTER/RETURN> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -199,7 +199,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -233,7 +233,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -267,7 +267,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)

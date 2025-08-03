@@ -122,7 +122,7 @@ end;
 procedure TdlgConnect.eUsernameKeyPress(Sender: TObject; var Key: char);
 begin
   { <ENTER> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     GravaStat(Name, '', 'Enter');
     if ePassword.Focused and sbOK.Enabled then
@@ -159,9 +159,9 @@ begin
   LoadConnectionList;
 
   // Load connection of last session
-  if (XSettings.RememberConnection) then
+  if (xSettings.RememberConnection) then
   begin
-    LastConn := cbConnection.Items.IndexOf(XSettings.LastConnection);
+    LastConn := cbConnection.Items.IndexOf(xSettings.LastConnection);
     if LastConn >= 0 then
     begin
       cbConnection.ItemIndex := LastConn;
@@ -170,8 +170,8 @@ begin
   end;
 
   // Load username of last session
-  if (XSettings.RememberUser) then
-    eUsername.Text := XSettings.LastUser;
+  if (xSettings.RememberUser) then
+    eUsername.Text := xSettings.LastUser;
 
   if (eUsername.Text <> EmptyStr) then
     ePassword.SetFocus;
@@ -236,13 +236,13 @@ begin
   SelectedConnection := cbConnection.Text;
   ActiveUser.GetData(sUser);
 
-  if XSettings.RememberConnection then
-    XSettings.LastConnection := SelectedConnection;
+  if xSettings.RememberConnection then
+    xSettings.LastConnection := SelectedConnection;
   //else
   //  DelPreference('SECURITY', 'LastConnection');
 
-  if XSettings.RememberUser then
-    XSettings.LastUser := eUsername.Text;
+  if xSettings.RememberUser then
+    xSettings.LastUser := eUsername.Text;
   //else
   //  DelPreference('SECURITY', 'LastUser');
 
@@ -301,7 +301,7 @@ begin
         end;
 
         { Check password }
-        BCrypt.InitStr(BFKey, TDCP_sha256);
+        BCrypt.InitStr(BF_KEY, TDCP_sha256);
         S := BCrypt.EncryptString(ePassword.Text);
         BCrypt.Burn;
         if (FieldByName('user_password').AsString <> EmptyStr) and

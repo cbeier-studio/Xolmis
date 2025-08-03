@@ -336,7 +336,7 @@ begin
       dlgProgress.Text := rsProgressPreparing;
       Application.ProcessMessages;
 
-      case ConexaoDB.Manager of
+      case databaseConnection.Manager of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA foreign_keys = off;');
         dbFirebird: ;
         dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL DEFERRED;');
@@ -672,7 +672,7 @@ begin
         Trans.StartTransaction;
 
       finally
-        case ConexaoDB.Manager of
+        case databaseConnection.Manager of
           dbSqlite:   Conn.ExecuteDirect('PRAGMA foreign_keys = on;');
           dbFirebird: ;
           dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL IMMEDIATE;');
@@ -697,7 +697,7 @@ begin
       dlgProgress.Text := rsProgressOptimizingDatabase;
       Application.ProcessMessages;
       LogDebug('Optimize database');
-      case ConexaoDB.Manager of
+      case databaseConnection.Manager of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA optimize;');
         dbFirebird: ;
         dbPostgre:
@@ -828,7 +828,7 @@ begin
     SQLConnection := Connection;
     SQLTransaction := Connection.Transaction;
 
-    case ConexaoDB.Manager of
+    case databaseConnection.Manager of
       dbSqlite:
       begin
         Add('INSERT OR REPLACE INTO db_metadata (property_name, property_value)');
@@ -858,7 +858,7 @@ procedure CreateDBMetadataTable(Connection: TSQLConnector);
 begin
   { Create table "db_metadata" }
   LogDebug('Creating db_metadata table');
-  case ConexaoDB.Manager of
+  case databaseConnection.Manager of
     dbSqlite, dbPostgre, dbMaria:
     begin
       Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS db_metadata (' +
@@ -3352,7 +3352,7 @@ begin
   LogEvent(leaStart, 'Clear deleted records');
 
   if OlderThan < 0 then
-    OlderThan := XSettings.ClearDeletedPeriod * 30;
+    OlderThan := xSettings.ClearDeletedPeriod * 30;
 
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
@@ -3380,7 +3380,7 @@ begin
       end;
 
       DMM.sqlTrans.CommitRetaining;
-      XSettings.LastClearDeleted := DateOf(Now);
+      xSettings.LastClearDeleted := DateOf(Now);
     except
       DMM.sqlTrans.RollbackRetaining;
       raise;
@@ -3393,15 +3393,15 @@ end;
 
 procedure OptimizeDB;
 begin
-  LogInfo('Vacuum database: ' + ConexaoDB.Name);
+  LogInfo('Vacuum database: ' + databaseConnection.Name);
   DMM.sqlCon.ExecuteDirect('END TRANSACTION;');
   DMM.sqlCon.ExecuteDirect('VACUUM;');
 
-  LogInfo('Optimize database: ' + ConexaoDB.Name);
+  LogInfo('Optimize database: ' + databaseConnection.Name);
   DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
 
   CheckDB;
-  XSettings.LastDatabaseOptimization := DateOf(Now);
+  xSettings.LastDatabaseOptimization := DateOf(Now);
   DMM.sqlCon.Open;
 end;
 
@@ -3424,11 +3424,11 @@ begin
   end;
   if not Result then
   begin
-    LogWarning('Database integrity check with errors: ' + ConexaoDB.Name);
+    LogWarning('Database integrity check with errors: ' + databaseConnection.Name);
     MsgDlg('', rsErrorDatabaseCorrupted, mtWarning);
   end
   else
-    LogInfo('Database integrity check is OK: ' + ConexaoDB.Name);
+    LogInfo('Database integrity check is OK: ' + databaseConnection.Name);
 end;
 
 procedure OpenLookupDataSets(aDataSet: TDataSet);
@@ -4059,7 +4059,7 @@ end;
 
 procedure CancelRecord(aDataSet: TDataSet; aFocusControl: TWinControl);
 begin
-  if (aDataSet.Modified) and (XSettings.ConfirmCancel) then
+  if (aDataSet.Modified) and (xSettings.ConfirmCancel) then
     if not MsgDlg('', rsCancelEditingPrompt, mtConfirmation) then
       Exit;
 

@@ -6,11 +6,12 @@ object edtNest: TedtNest
   AutoSize = True
   Caption = 'New nest'
   ClientHeight = 643
-  ClientWidth = 416
+  ClientWidth = 413
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress

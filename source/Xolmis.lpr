@@ -52,7 +52,7 @@ uses
   cbs_finddialogs,
   cbs_fullnames,
   cbs_getvalue,
-  cbs_gis,
+  models_geo,
   cbs_global,
   cbs_graphics,
   cbs_import,
@@ -135,7 +135,7 @@ uses
   uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
   uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
   udm_reports, cbs_xmobile, ufrm_quickentry, udlg_splash, udlg_loading, udlg_selectrecord, cbs_dataconst, 
-udlg_onboarding, ubatch_bandstransfer;
+udlg_onboarding, ubatch_bandstransfer, utils_gis;
 
 {$R *.res}
 
@@ -143,9 +143,9 @@ begin
   RequireDerivedFormResource := True;
   Application.Scaled := True;
 
-  XSettings := TXolmisSettings.Create;
+  xSettings := TXolmisSettings.Create;
   XSettings.LoadFromFile;
-  case XSettings.SelectedTheme of
+  case xSettings.SelectedTheme of
     0: PreferredAppMode := pamDefault;
     1: PreferredAppMode := pamAllowDark;
     2: PreferredAppMode := pamForceDark;

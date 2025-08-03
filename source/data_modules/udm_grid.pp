@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, StrUtils, Graphics, DateUtils,
   { CBS }
-  cbs_gis, cbs_entities, cbs_botany, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_breeding, BufDataset;
+  models_geo, cbs_entities, cbs_botany, cbs_taxonomy, cbs_birds, cbs_sampling, cbs_breeding, BufDataset;
 
 type
 

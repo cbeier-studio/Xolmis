@@ -116,7 +116,7 @@ end;
 procedure TdlgLogin.eUsernameKeyPress(Sender: TObject; var Key: char);
 begin
   { <ENTER/RETURN> key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     GravaStat(Name, '', 'Enter');
     if ePassword.Focused and SBOK.Enabled then
@@ -146,8 +146,8 @@ end;
 procedure TdlgLogin.FormCreate(Sender: TObject);
 begin
   { Load username of last login }
-  if not(NeedAdmin) and (XSettings.RememberUser) then
-    eUsername.Text := XSettings.LastUser;
+  if not(NeedAdmin) and (xSettings.RememberUser) then
+    eUsername.Text := xSettings.LastUser;
 end;
 
 procedure TdlgLogin.FormShow(Sender: TObject);
@@ -178,7 +178,7 @@ begin
       //eUsername.RightButton.ImageIndex:= 33;
       //eUsername.RightButton.Visible := True;
     end;
-    //Caption := Format('%s - %s', [NomeApp, rsTitleLogin]);
+    //Caption := Format('%s - %s', [APP_NAME, rsTitleLogin]);
     sbOK.Caption := rsLoginButton;
     //eUsername.RightButton.Visible := False;
   end;
@@ -201,8 +201,8 @@ begin
 
   { Save settings }
   if not NeedAdmin then
-    if XSettings.RememberUser then
-      XSettings.LastUser := eUsername.Text;
+    if xSettings.RememberUser then
+      xSettings.LastUser := eUsername.Text;
     //else
     //  DelPreference('SECURITY', 'LastUser');
 
@@ -244,7 +244,7 @@ begin
     end;
 
     { Check password }
-    BCrypt.InitStr(BFKey, TDCP_sha256);
+    BCrypt.InitStr(BF_KEY, TDCP_sha256);
     S := BCrypt.EncryptString(ePassword.Text);
     BCrypt.Burn;
     if (FieldByName('user_password').AsString <> S) and

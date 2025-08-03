@@ -33,56 +33,56 @@ uses
   udm_main, ucfg_database;
 
 const
-  NomeApp: String           = 'Xolmis';
-  PrereleaseStage: String   = 'Beta';
+  APP_NAME: String           = 'Xolmis';
+  PRE_RELEASE_STAGE: String   = 'Beta';
 
 const
-  DefaultSettingsFile: String   = 'settings.json';
-  DebugSettingsFile: String     = 'settings_debug.json';
-  LogFile: String               = 'xlmslog.txt';
-  GeoBankFile: String           = 'geobank.dat';
-  BFKey: String                 = 'support lottery birds sample';
-  NullDateStr: String           = '30/12/1500';
-  NullTimeStr: String           = '00:00:00';
+  DEFAULT_SETTINGS_FILE: String   = 'settings.json';
+  DEBUG_SETTINGS_FILE: String     = 'settings_debug.json';
+  LOG_FILE: String               = 'xlmslog.txt';
+  GEO_BANK_FILE: String           = 'geobank.dat';
+  BF_KEY: String                 = 'support lottery birds sample';
+  NULL_DATE_STR: String           = '30/12/1500';
+  NULL_TIME_STR: String           = '00:00:00';
 
   { Format masks constants }
 const
-  maskLongitude: String          = '##00.00000000';
-  maskLatitude: String           = '#00.00000000';
-  maskLongitudeZeroBlank: String = '##00.00000000;;''''';
-  maskLatitudeZeroBlank: String  = '#00.00000000;;''''';
-  maskNumInterno: String         = '###,###,###,###,###';
-  maskInteiro: String            = '#,##0';
-  maskInteiroNegative: String    = '#,##0;##,##0';
-  maskOneDecimal: String         = '#,##0.0';
-  maskTwoDecimal: String         = '#,##0.00';
-  maskShortDate: String          = 'dd/mm/yyyy';
-  maskSQLiteDate: String         = 'yyyy-mm-dd';
-  maskSQLiteDateTime: String     = 'yyyy-mm-dd hh:nn:ss';
-  maskDisplayTime: String        = 'hh:nn';
-  maskShortTime: String          = '!90:00;1;_';
-  maskCEP: String                = '!00000-000;0;_';
-  maskPhone: String              = '!(00)_0000-0000;0;_';
-  maskCellPhone: String          = '!(00)_000_000_000;0;_';
+  MASK_LONGITUDE: String            = '##00.00000000';
+  MASK_LATITUDE: String             = '#00.00000000';
+  MASK_LONGITUDE_ZERO_BLANK: String = '##00.00000000;;''''';
+  MASK_LATITUDE_ZERO_BLANK: String  = '#00.00000000;;''''';
+  MASK_NUM_INTERNO: String          = '###,###,###,###,###';
+  MASK_INTEGER: String              = '#,##0';
+  MASK_INTEGER_NEGATIVE: String     = '#,##0;##,##0';
+  MASK_ONE_DECIMAL: String          = '#,##0.0';
+  MASK_TWO_DECIMAL: String          = '#,##0.00';
+  MASK_SHORT_DATE: String           = 'dd/mm/yyyy';
+  MASK_ISO_DATE: String             = 'yyyy-mm-dd';
+  MASK_ISO_DATE_TIME: String        = 'yyyy-mm-dd hh:nn:ss';
+  MASK_DISPLAY_TIME: String         = 'hh:nn';
+  MASK_EDIT_TIME: String            = '!90:00;1;_';
+  MASK_EDIT_CEP: String             = '!00000-000;0;_';
+  MASK_EDIT_PHONE: String           = '!(00)_0000-0000;0;_';
+  MASK_EDIT_MOBILE_PHONE: String    = '!(00)_000_000_000;0;_';
 
   { Hashtags }
 const
-  AllQS: array of String        = ('#tudo', '#all');
-  MarkedQS: array of String     = ('#marcados', '#marked');
-  UnmarkedQS: array of String   = ('#naomarcados', '#unmarked');
-  FilterQS: array of String     = ('#filtro', '#filter');
-  DeletedQS: array of String    = ('#lixo', '#deleted');
-  PrintQueueQS: array of String = ('#fila', '#queued', '#toprint');
-  OrderQS: array of String      = ('#ordem', '#order', '#ord');
-  FamilyQS: array of String     = ('#familia', '#family', '#fam');
-  GenusQS: array of String      = ('#genero', '#genus', '#gen');
-  SpeciesQS: array of String    = ('#especie', '#species', '#sp');
-  SiteQS: array of String       = ('#local', '#site');
-  QualifierQS: array of String  = ('#quali', '#qualifier');
-  ParentQS: array of String     = ('#superior', '#parent');
-  RankQS: array of String       = ('#nivel', '#categoria', '#rank');
-  ListsQS: array of String      = ('#listas', '#lists');
-  SqlQS: array of String        = ('#sql', '#sqlfilter');
+  HASHTAG_ALL: array of String        = ('#tudo', '#all');
+  HASHTAG_MARKED: array of String     = ('#marcados', '#marked');
+  HASHTAG_UNMARKED: array of String   = ('#naomarcados', '#unmarked');
+  HASHTAG_FILTER: array of String     = ('#filtro', '#filter');
+  HASHTAG_DELETED: array of String    = ('#lixo', '#deleted');
+  HASHTAG_PRINT_QUEUE: array of String = ('#fila', '#queued', '#toprint');
+  HASHTAG_ORDER: array of String      = ('#ordem', '#order', '#ord');
+  HASHTAG_FAMILY: array of String     = ('#familia', '#family', '#fam');
+  HASHTAG_GENUS: array of String      = ('#genero', '#genus', '#gen');
+  HASHTAG_SPECIES: array of String    = ('#especie', '#species', '#sp');
+  HASHTAG_SITE: array of String       = ('#local', '#site');
+  HASHTAG_QUALIFIER: array of String  = ('#quali', '#qualifier');
+  HASHTAG_PARENT: array of String     = ('#superior', '#parent');
+  HASHTAG_RANK: array of String       = ('#nivel', '#categoria', '#rank');
+  HASHTAG_LISTS: array of String      = ('#listas', '#lists');
+  HASHTAG_SQL: array of String        = ('#sql', '#sqlfilter');
 
 type
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);
@@ -90,8 +90,8 @@ type
     leaExecute, leaCommit, leaRollback);
 
 const
-  HistoryActions: array [THistoryAction] of String = ('I', 'U', 'D', 'R');
-  LogEventActions: array[TLogEventAction] of String = ('STARTING', 'END', 'START', 'FINISH', 'OPEN', 'CLOSE',
+  HISTORY_ACTIONS: array [THistoryAction] of String = ('I', 'U', 'D', 'R');
+  LOG_EVENT_ACTIONS: array[TLogEventAction] of String = ('STARTING', 'END', 'START', 'FINISH', 'OPEN', 'CLOSE',
     'ACTIVE TAB', 'EXECUTE', 'COMMIT', 'ROLLBACK');
 
 type
@@ -235,17 +235,16 @@ type
 
   TNotificationList = specialize TFPGObjectList<TNotification>;
 
+var
+  wasSafelyTerminated: Boolean;
+  databaseConnection: TDBParams;
+  xSettings: TXolmisSettings;
+  xNotifications: TNotificationList;
 
 var
-  Finalizado: Boolean;
-  ConexaoDB: TDBParams;
-  XSettings: TXolmisSettings;
-  XNotifications: TNotificationList;
-
-var
-  Opening, Working, Closing: Boolean;
-  Parar: Boolean;
-  IsRunning: Boolean;
+  isOpening, isWorking, isClosing: Boolean;
+  stopProcess: Boolean;
+  isRunning: Boolean;
   FNotificationsNeedUpdate: Boolean;
   MsgValor: String;
   EditSourceStr: String;
@@ -299,15 +298,15 @@ uses
 
 procedure LogEvent(aAction: TLogEventAction; Msg: String);
 begin
-  if not XSettings.AllowWriteLogs then
+  if not xSettings.AllowWriteLogs then
     Exit;
 
-  DMM.evLog.Debug(LogEventActions[aAction] + ' | ' + Msg);
+  DMM.evLog.Debug(LOG_EVENT_ACTIONS[aAction] + ' | ' + Msg);
 end;
 
 procedure LogDebug(Msg: String);
 begin
-  if not XSettings.AllowWriteLogs then
+  if not xSettings.AllowWriteLogs then
     Exit;
 
   DMM.evLog.Debug(Msg);
@@ -315,7 +314,7 @@ end;
 
 procedure LogSQL(aSQL: TStrings);
 begin
-  if not XSettings.AllowWriteLogs then
+  if not xSettings.AllowWriteLogs then
     Exit;
 
   DMM.evLog.Debug(TrimList(aSQL));
@@ -323,7 +322,7 @@ end;
 
 procedure LogError(Msg: String);
 begin
-  if not XSettings.AllowWriteLogs then
+  if not xSettings.AllowWriteLogs then
     Exit;
 
   DMM.evLog.Error(Msg);
@@ -331,7 +330,7 @@ end;
 
 procedure LogWarning(Msg: String);
 begin
-  if not XSettings.AllowWriteLogs then
+  if not xSettings.AllowWriteLogs then
     Exit;
 
   DMM.evLog.Warning(Msg);
@@ -339,7 +338,7 @@ end;
 
 procedure LogInfo(Msg: String);
 begin
-  if not XSettings.AllowWriteLogs then
+  if not xSettings.AllowWriteLogs then
     Exit;
 
   DMM.evLog.Info(Msg);
@@ -360,7 +359,7 @@ begin
 
   LogSizeMB := 0.0;
   oldLog := EmptyStr;
-  currLog := ConcatPaths([AppDataDir, LogFile]);
+  currLog := ConcatPaths([AppDataDir, LOG_FILE]);
   if FileExists(currLog) then
   begin
     Logs := TStringList.Create;
@@ -408,7 +407,7 @@ begin
     Add('VALUES (datetime(''now'',''localtime''), :auser, :oper, :tabname, :afield, :keyv, ' +
       ':oldvalue, :newvalue, :note)');
     ParamByName('AUSER').AsInteger := ActiveUser.Id;
-    ParamByName('OPER').AsString := HistoryActions[aAction];
+    ParamByName('OPER').AsString := HISTORY_ACTIONS[aAction];
     ParamByName('TABNAME').AsString := TableNames[aTable];
     ParamByName('AFIELD').AsString := aField;
     ParamByName('KEYV').AsInteger := Cod;
@@ -431,7 +430,7 @@ procedure GravaStat(const aModule, aControl, aEvent: String);
 var
   aStat: TUsageStat;
 begin
-  if XSettings.AllowSendUsageData then
+  if xSettings.AllowSendUsageData then
   begin
     aStat.Module := aModule;
     aStat.Control := aControl;
@@ -473,7 +472,7 @@ function TempDir: String;
 var
   s: String;
 begin
-  s := ConcatPaths([GetTempDir(False), NomeApp]);
+  s := ConcatPaths([GetTempDir(False), APP_NAME]);
   s := IncludeTrailingPathDelimiter(s);
 
   Result := s;
@@ -488,17 +487,17 @@ end;
 
 function NullDate: TDate;
 begin
-  Result := StrToDate(NullDateStr);
+  Result := StrToDate(NULL_DATE_STR);
 end;
 
 function NullTime: TTime;
 begin
-  Result := StrToTime(NullTimeStr);
+  Result := StrToTime(NULL_TIME_STR);
 end;
 
 function NullDateTime: TDateTime;
 begin
-  Result := StrToDateTime(NullDateStr + ' ' + NullTimeStr);
+  Result := StrToDateTime(NULL_DATE_STR + ' ' + NULL_TIME_STR);
 end;
 
 { ---------------------------------------------------------------------------------------- }
@@ -533,21 +532,21 @@ const
   fbProtocols: array of String = ('Local', 'TCPIP', 'NetBEUI', 'SPX');
   fbGUIDEndians: array of String = ('Little', 'Big');
 begin
-  ConexaoDB.Clear;
+  databaseConnection.Clear;
 
-  ConexaoDB.Name := aConnectionName;
-  ConexaoDB.LoadParams;
+  databaseConnection.Name := aConnectionName;
+  databaseConnection.LoadParams;
 
-  case ConexaoDB.Manager of
+  case databaseConnection.Manager of
     dbSqlite:
       begin
-        //aConnector.ConnectionDefName := ConexaoDB.Name;
+        //aConnector.ConnectionDefName := databaseConnection.Name;
         aConnector.Params.Clear;
         aConnector.ConnectorType := 'SQLite3';
-        aConnector.DatabaseName := ConexaoDB.Database;
-        aConnector.Params.Add('StringFormat=' + sqliteStringFormats[Ord(ConexaoDB.StringFormat)]);
-        aConnector.Params.Add('OpenMode=' + sqliteOpenModes[Ord(ConexaoDB.OpenMode)]);
-        aConnector.Params.Add('GUIDFormat=' + sqliteGUIDFormats[Ord(ConexaoDB.GUIDFormat)]);
+        aConnector.DatabaseName := databaseConnection.Database;
+        aConnector.Params.Add('StringFormat=' + sqliteStringFormats[Ord(databaseConnection.StringFormat)]);
+        aConnector.Params.Add('OpenMode=' + sqliteOpenModes[Ord(databaseConnection.OpenMode)]);
+        aConnector.Params.Add('GUIDFormat=' + sqliteGUIDFormats[Ord(databaseConnection.GUIDFormat)]);
         {$IFDEF DEBUG}
         aConnector.Params.Add('LockingMode=Normal');
         aConnector.Params.Add('Synchronous=Full');
@@ -558,18 +557,18 @@ begin
       end;
     dbFirebird:
       begin
-        //aConnector.ConnectionDefName := ConexaoDB.Name;
+        //aConnector.ConnectionDefName := databaseConnection.Name;
         aConnector.Params.Clear;
         aConnector.ConnectorType := 'Firebird';
-        aConnector.DatabaseName := ConexaoDB.Database;
-        aConnector.HostName := ConexaoDB.Server;
-        aConnector.UserName := ConexaoDB.UserName;
-        aConnector.Password := ConexaoDB.Password;
-        aConnector.Params.Add('Protocol=' + fbProtocols[Ord(ConexaoDB.Protocol)]);
-        aConnector.Params.Add('Port=' + IntToStr(ConexaoDB.Port));
-        aConnector.Params.Add('CharacterSet=' + ConexaoDB.CharacterSet);
-        aConnector.Params.Add('OpenMode=' + fbOpenModes[Ord(ConexaoDB.OpenMode)]);
-        aConnector.Params.Add('PageSize=' + IntToStr(ConexaoDB.PageSize));
+        aConnector.DatabaseName := databaseConnection.Database;
+        aConnector.HostName := databaseConnection.Server;
+        aConnector.UserName := databaseConnection.UserName;
+        aConnector.Password := databaseConnection.Password;
+        aConnector.Params.Add('Protocol=' + fbProtocols[Ord(databaseConnection.Protocol)]);
+        aConnector.Params.Add('Port=' + IntToStr(databaseConnection.Port));
+        aConnector.Params.Add('CharacterSet=' + databaseConnection.CharacterSet);
+        aConnector.Params.Add('OpenMode=' + fbOpenModes[Ord(databaseConnection.OpenMode)]);
+        aConnector.Params.Add('PageSize=' + IntToStr(databaseConnection.PageSize));
       end;
   end;
   //aConnector.CheckConnectionDef;
@@ -597,7 +596,7 @@ begin
         raise EDatabaseError.Create(rsErrorConnectingDatabase);
       end;
 
-      UpgradeDatabaseSchema(ConexaoDB.Manager);
+      UpgradeDatabaseSchema(databaseConnection.Manager);
 
       Result := True;
     end;
@@ -611,7 +610,7 @@ begin
   if DMM.sqlCon.Connected then
     DMM.sqlCon.Close;
 
-  ConexaoDB.Clear;
+  databaseConnection.Clear;
 end;
 
 function NewDatabase: Boolean;
@@ -639,20 +638,20 @@ procedure CreateNotificationList;
 begin
   FNotificationsNeedUpdate := False;
 
-  XNotifications := TNotificationList.Create;
+  xNotifications := TNotificationList.Create;
 
   // Add notifications to the list
 end;
 
 procedure DestroyNotificationList;
 begin
-  if Assigned(XNotifications) then
-    XNotifications.Free;
+  if Assigned(xNotifications) then
+    xNotifications.Free;
 end;
 
 procedure DismissNotification(AIndex: Integer);
 begin
-  XNotifications[AIndex].Dismiss;
+  xNotifications[AIndex].Dismiss;
 
   FNotificationsNeedUpdate := True;
 end;
@@ -663,7 +662,7 @@ var
 begin
   ANotification := TNotification.Create(ATitle, AMessage, ncMessage, APriority);
 
-  XNotifications.Add(ANotification);
+  xNotifications.Add(ANotification);
 
   FNotificationsNeedUpdate := True;
 end;
@@ -674,7 +673,7 @@ var
 begin
   ANotification := TNotification.Create(ATitle, AMessage, ncAlert, APriority);
 
-  XNotifications.Add(ANotification);
+  xNotifications.Add(ANotification);
 
   FNotificationsNeedUpdate := True;
 end;
@@ -685,7 +684,7 @@ var
 begin
   ANotification := TNotification.Create(ATitle, AMessage, ncSystem, APriority);
 
-  XNotifications.Add(ANotification);
+  xNotifications.Add(ANotification);
 
   FNotificationsNeedUpdate := True;
 end;
@@ -728,7 +727,7 @@ constructor TXolmisSettings.Create;
 begin
   inherited;
   {$IFDEF DEBUG}
-  FFileName := ConcatPaths([AppDataDir, DebugSettingsFile]);
+  FFileName := ConcatPaths([AppDataDir, DEBUG_SETTINGS_FILE]);
   {$ELSE}
   FFileName := ConcatPaths([AppDataDir, DefaultSettingsFile]);
   {$ENDIF}

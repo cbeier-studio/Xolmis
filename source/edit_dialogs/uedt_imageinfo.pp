@@ -139,8 +139,9 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_dataconst,
-  cbs_getvalue, cbs_conversions, cbs_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  cbs_global, cbs_locale, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, models_geo, cbs_dataconst,
+  cbs_getvalue, cbs_conversions, cbs_editdialogs, utils_gis,
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -196,7 +197,7 @@ begin
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -220,7 +221,7 @@ end;
 
 procedure TedtImageInfo.eImageFilenameButtonClick(Sender: TObject);
 begin
-  DMM.OpenImgs.InitialDir := XSettings.LastPathUsed;
+  DMM.OpenImgs.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenImgs.Execute then
     eImageFilename.Text := DMM.OpenImgs.FileName;
 end;
@@ -230,7 +231,7 @@ begin
   FormKeyPress(Sender, Key);
 
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -263,7 +264,7 @@ begin
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -299,7 +300,7 @@ begin
   end;
 
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -384,7 +385,7 @@ begin
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)

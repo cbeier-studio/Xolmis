@@ -190,7 +190,7 @@ end;
 
 procedure TdlgBandsBalance.pmgSavesAsClick(Sender: TObject);
 begin
-  SaveDlg.InitialDir := XSettings.LastPathUsed;
+  SaveDlg.InitialDir := xSettings.LastPathUsed;
   if SaveDlg.Execute then
   begin
     CSVExporter1.FileName := SaveDlg.FileName;

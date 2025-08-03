@@ -259,7 +259,7 @@ end;
 procedure TdlgExport.sbRunClick(Sender: TObject);
 begin
   // Open save dialog
-  SaveDlg.InitialDir := XSettings.LastPathUsed;
+  SaveDlg.InitialDir := xSettings.LastPathUsed;
   SaveDlg.DefaultExt := ExportFileExtensions[tvFiletype.Selected.Index];
   SaveDlg.Filter := ExportFileFilters[tvFiletype.Selected.Index];
   if SaveDlg.Execute then
@@ -275,7 +275,7 @@ begin
   ckUseDarwinCoreFormat.Enabled := False;
 
   // Save the last path used
-  XSettings.LastPathUsed := ExtractFilePath(FFileName);
+  xSettings.LastPathUsed := ExtractFilePath(FFileName);
 
   // Export data to the filetype selected
   case tvFiletype.Selected.Index of

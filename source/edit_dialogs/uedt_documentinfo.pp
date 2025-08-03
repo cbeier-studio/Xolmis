@@ -93,7 +93,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, cbs_gis, cbs_dataconst,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_taxonomy, models_geo, cbs_dataconst,
   cbs_getvalue, cbs_conversions, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -112,7 +112,7 @@ begin
   FormKeyPress(Sender, Key);
 
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -144,7 +144,7 @@ end;
 
 procedure TedtDocumentInfo.eDocumentPathButtonClick(Sender: TObject);
 begin
-  DMM.OpenDocs.InitialDir := XSettings.LastPathUsed;
+  DMM.OpenDocs.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenDocs.Execute then
     eDocumentPath.Text := DMM.OpenDocs.FileName;
 end;

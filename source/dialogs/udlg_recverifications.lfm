@@ -8,6 +8,7 @@ object dlgRecVerifications: TdlgRecVerifications
   ClientWidth = 771
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -198,17 +199,17 @@ object dlgRecVerifications: TdlgRecVerifications
       end    
       item
         Title.Caption = 'Status'
-        Width = 216
+        Width = 217
         FieldName = 'verification_status'
       end    
       item
         Title.Caption = 'Researcher'
-        Width = 216
+        Width = 217
         FieldName = 'person_name'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 215
+        Width = 217
         FieldName = 'notes'
       end>
     DataSource = dsHistory

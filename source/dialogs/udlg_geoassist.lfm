@@ -13,6 +13,7 @@ object dlgGeoAssist: TdlgGeoAssist
   Constraints.MinWidth = 349
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
@@ -457,17 +458,17 @@ object dlgGeoAssist: TdlgGeoAssist
         Columns = <        
           item
             Title.Caption = 'Name'
-            Width = 105
+            Width = 112
             FieldName = 'coordinate_name'
           end        
           item
             Title.Caption = 'Longitude'
-            Width = 105
+            Width = 112
             FieldName = 'longitude'
           end        
           item
             Title.Caption = 'Latitude'
-            Width = 105
+            Width = 112
             FieldName = 'latitude'
           end>
         Constraints.MinHeight = 230

@@ -59,7 +59,7 @@
       </element><element name="TfrmCustomGrid.AddAudio"><short>Add new audio recording to the database</short>
       </element><element name="TfrmCustomGrid.CreatePanelTabs"><short>Setup child tabs</short>
       </element><element name="TfrmCustomGrid.PanelTabs"><short>List of child tabs</short>
-      </element><element name="TfrmCustomGrid.FSearch"><short>Search settings</short>
+      </element><element name="TfrmCustomGrid.FSearch"><short>Search parameters</short>
       <seealso><link id="cbs_datatypes.TCustomSearch"/>
         </seealso>
       </element><element name="TfrmCustomGrid.FCanToggle"><short>Determine when a control can be clicked or toggled</short>

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, DB, StdCtrls, EditBtn, Grids,
-  cbs_system, cbs_datatypes, cbs_taxonomy, cbs_gis;
+  cbs_system, cbs_datatypes, cbs_taxonomy, models_geo;
 
   { Find and select records }
   function FindDlg(aTable: TTableType; aControl: TControl; out aResultKey: Integer;

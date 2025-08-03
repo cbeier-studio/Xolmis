@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, Buttons, Character, atshapelinebgra, cbs_gis;
+  ExtCtrls, StdCtrls, Buttons, Character, atshapelinebgra, models_geo;
 
 type
 
@@ -97,7 +97,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_dialogs, cbs_finddialogs, cbs_validations, cbs_getvalue, utils_gis,
   cbs_dataconst, udm_main,
   uDarkStyleParams;
 
@@ -144,7 +144,7 @@ begin
   end;
 
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -221,7 +221,7 @@ begin
   FormKeyPress(Sender, Key);
 
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;
@@ -257,7 +257,7 @@ begin
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)

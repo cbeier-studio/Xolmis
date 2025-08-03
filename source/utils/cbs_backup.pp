@@ -58,9 +58,9 @@ begin
   if not MsgDlg(rsTitleBackup, rsPromptBackupNow, mtConfirmation) then
     Exit;
 
-  if not FileExists(ConexaoDB.Database) then
+  if not FileExists(databaseConnection.Database) then
   begin
-    raise EFileNotFoundException.CreateFmt(rsErrorDatabaseNotFound, [ConexaoDB.Database]);
+    raise EFileNotFoundException.CreateFmt(rsErrorDatabaseNotFound, [databaseConnection.Database]);
     // Abort;
   end;
 
@@ -73,16 +73,16 @@ begin
       dlgProgress.Text := rsPreparingBackup;
       dlgProgress.Min := 0;
       dlgProgress.Max := 100;
-      if not (DirectoryExists(XSettings.BackupFolder)) then
-        CreateDir(XSettings.BackupFolder);
+      if not (DirectoryExists(xSettings.BackupFolder)) then
+        CreateDir(xSettings.BackupFolder);
       dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
       bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
       tmpName := ConcatPaths([TempDir, bkpName]);
-      bkpName := ConcatPaths([XSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
+      bkpName := ConcatPaths([xSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
       dlgProgress.Max := 100;
       //F_Main.Taskbar.ProgressMaxValue := 100;
       //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
-      LogEvent(leaStart, 'Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
+      LogEvent(leaStart, 'Backup: ' + databaseConnection.Database + ' -> ' + tmpName);
       Application.ProcessMessages;
       BckConn := TSQLite3Connection.Create(nil);
       BckTrans := TSQLTransaction.Create(BckConn);
@@ -130,7 +130,7 @@ begin
 
         if FileExists(bkpName) then
         begin
-          ConexaoDB.SetLastBackup;
+          databaseConnection.SetLastBackup;
           MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [ExtractFileName(bkpName)]), mtInformation)
         end
         else
@@ -160,14 +160,14 @@ var
   zipName: String;
 begin
   Result := False;
-  LogEvent(leaStart, 'Backup: ' + ConexaoDB.Database + ' -> ' + tmpName);
+  LogEvent(leaStart, 'Backup: ' + databaseConnection.Database + ' -> ' + tmpName);
 
   //if not MsgDlg(rsTitleBackup, rsPromptBackupNow, mtConfirmation) then
   //  Exit;
 
-  if not FileExists(ConexaoDB.Database) then
+  if not FileExists(databaseConnection.Database) then
   begin
-    raise EFileNotFoundException.CreateFmt(rsErrorDatabaseNotFound, [ConexaoDB.Database]);
+    raise EFileNotFoundException.CreateFmt(rsErrorDatabaseNotFound, [databaseConnection.Database]);
     // Abort;
   end;
   dlgLoading.Show;
@@ -182,12 +182,12 @@ begin
     //dlgProgress.Max := 100;
     //dlgProgress.Indeterminate := True;
 
-    if not (DirectoryExists(XSettings.BackupFolder)) then
-      CreateDir(XSettings.BackupFolder);
+    if not (DirectoryExists(xSettings.BackupFolder)) then
+      CreateDir(xSettings.BackupFolder);
     dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
     bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
     tmpName := ConcatPaths([TempDir, bkpName]);
-    bkpName := ConcatPaths([XSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
+    bkpName := ConcatPaths([xSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
 
     //F_Main.Taskbar.ProgressMaxValue := 100;
     //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
@@ -243,7 +243,7 @@ begin
         dlgLoading.UpdateProgress(rsSuccessfulBackup, 100);
         dlgLoading.Hide;
         Result := True;
-        ConexaoDB.SetLastBackup;
+        databaseConnection.SetLastBackup;
         if SuccessMessage then
           MsgDlg(rsTitleBackup, Format(rsSuccessfulBackup, [ExtractFileName(bkpName)]), mtInformation)
       end
@@ -387,11 +387,11 @@ begin
   if DMM.sqlCon.Connected then
     DMM.sqlCon.Close;
 
-  if FileExists(ConexaoDB.Database) then
+  if FileExists(databaseConnection.Database) then
   begin
-    if not(DirectoryExists(XSettings.BackupFolder)) then
+    if not(DirectoryExists(xSettings.BackupFolder)) then
     begin
-      CreateDir(XSettings.BackupFolder);
+      CreateDir(xSettings.BackupFolder);
     end;
 
     NewBackup;
@@ -417,12 +417,12 @@ var
 begin
   Result := False;
 
-  if not (DirectoryExists(XSettings.BackupFolder)) then
-    CreateDir(XSettings.BackupFolder);
+  if not (DirectoryExists(xSettings.BackupFolder)) then
+    CreateDir(xSettings.BackupFolder);
 
-  settingsPath := ConcatPaths([AppDataDir, DefaultSettingsFile]);
+  settingsPath := ConcatPaths([AppDataDir, DEFAULT_SETTINGS_FILE]);
   zipName := Format('backup_settings_%s.zip', [FormatDateTime('yyyyMMdd_HHmm', Now)]);
-  zipPath := ConcatPaths([XSettings.BackupFolder, zipName]);
+  zipPath := ConcatPaths([xSettings.BackupFolder, zipName]);
   colsPath := ConcatPaths([AppDataDir, 'columns\']);
   LogEvent(leaStart, 'Compressing settings backup: ' + zipName);
 

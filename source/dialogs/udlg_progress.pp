@@ -76,7 +76,7 @@ uses cbs_global, cbs_themes, uDarkStyleParams;
 
 procedure TdlgProgress.sbCancelClick(Sender: TObject);
 begin
-  Parar := True;
+  stopProcess := True;
 end;
 
 procedure TdlgProgress.ApplyDarkMode;

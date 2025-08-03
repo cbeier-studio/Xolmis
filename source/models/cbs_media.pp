@@ -21,7 +21,7 @@ unit cbs_media;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, cbs_record_types, cbs_sampling, cbs_gis;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, cbs_record_types, cbs_sampling, models_geo;
 
 type
 

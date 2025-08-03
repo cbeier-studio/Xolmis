@@ -227,7 +227,7 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  Verna := XSettings.VernacularNamesLanguage;
+  Verna := xSettings.VernacularNamesLanguage;
   case Verna of
     0:
       lblVernacular.DataField := 'portuguese_name';
@@ -364,7 +364,7 @@ end;
 
 function TdlgFindTaxon.PesquisarHashtag(aValor: String): Boolean;
 begin
-  if MatchStr(aValor, MarkedQS) then { #marcados }
+  if MatchStr(aValor, HASHTAG_MARKED) then { #marcados }
   begin
     {$IFDEF DEBUG}
     LogDebug('Search hashtag: ' + aValor);
@@ -379,7 +379,7 @@ begin
       Open;
     end;
   end;
-  if MatchStr(aValor, AllQS) then { #tudo }
+  if MatchStr(aValor, HASHTAG_ALL) then { #tudo }
   begin
     {$IFDEF DEBUG}
     LogDebug('Search hashtag: ' + aValor);
@@ -561,12 +561,12 @@ begin
         Add('WHERE (active_status = 0)');
     end;
 
-    case XSettings.Taxonomy of
+    case xSettings.Taxonomy of
       0: Add('AND (clements_taxonomy = 1)');
       1: Add('AND (ioc_taxonomy = 1)');
       2: Add('AND (cbro_taxonomy = 1)');
     end;
-    if not XSettings.ShowSynonyms then
+    if not xSettings.ShowSynonyms then
       Add('AND ((valid_id = 0) OR (valid_id ISNULL))');
 
     if Trim(oOrder) <> EmptyStr then

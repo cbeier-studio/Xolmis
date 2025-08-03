@@ -1118,7 +1118,7 @@ type
   private
     FTableType, FChildTable: TTableType;
     FSearch: TCustomSearch;
-    Filtrado: Boolean;
+    isFiltered: Boolean;
     FSidePanel, OldSidePanel: Boolean;
     FSideIndex, OldSideIndex: Integer;
     FSearchString, OldSearchString: String;
@@ -1145,7 +1145,7 @@ type
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure AddOrEditChild(const aTableType: TTableType; const IsNew: Boolean);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
-      IsAnAlias: Boolean = False);
+      isAnAlias: Boolean = False);
     procedure ApplyDarkMode;
     procedure CellKeyPress(Sender: TObject; var Key: Char);
 
@@ -1388,9 +1388,10 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_system, cbs_themes, cbs_gis, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
+  cbs_locale, cbs_global, cbs_system, cbs_themes, models_geo, cbs_birds, cbs_editdialogs, cbs_dialogs, cbs_math,
   cbs_finddialogs, cbs_data, cbs_getvalue, cbs_taxonomy, cbs_datacolumns, cbs_blobs, cbs_print, cbs_users,
-  cbs_validations, cbs_setparam, cbs_dataconst, udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
+  cbs_validations, cbs_setparam, cbs_dataconst, utils_gis,
+  udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
   {$IFDEF DEBUG}cbs_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer,
@@ -1585,10 +1586,10 @@ var
   Panel: TBCPanel;
   PanelTab: TCustomPanelTab;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   Panel := Owner as TBCPanel;
   // Iterate all tabs and deactivate them
   for i := 0 to Panel.ComponentCount - 1 do
@@ -1728,7 +1729,7 @@ begin
   end;
 
   FParentForm.UpdateChildStatus;
-  Working := False;
+  isWorking := False;
 end;
 
 procedure TCustomPanelTab.TabMouseEnter(Sender: TObject);
@@ -1783,7 +1784,7 @@ begin
     FindClose(SearchRec);
   end;
 
-  relPath := ExtractRelativePath(XSettings.AudiosFolder, aFileName);
+  relPath := ExtractRelativePath(xSettings.AudiosFolder, aFileName);
 
   with aDataset do
   begin
@@ -1827,7 +1828,7 @@ begin
 
   { #todo : Get document type from file extension }
 
-  relPath := ExtractRelativePath(XSettings.DocumentsFolder, aFileName);
+  relPath := ExtractRelativePath(xSettings.DocumentsFolder, aFileName);
 
   with aDataset do
   begin
@@ -1956,7 +1957,7 @@ begin
 end;
 
 procedure TfrmCustomGrid.AddSortedField(aFieldName: String; aDirection: TSortDirection;
-  aCollation: String = ''; IsAnAlias: Boolean = False);
+  aCollation: String = ''; isAnAlias: Boolean = False);
 var
   p, idx: Integer;
 begin
@@ -1993,7 +1994,7 @@ begin
     end;
   FSearch.SortFields[p].Direction := aDirection;
   FSearch.SortFields[p].Collation := aCollation;
-  FSearch.SortFields[p].Lookup    := IsAnAlias;
+  FSearch.SortFields[p].Lookup    := isAnAlias;
 
   UpdateGridTitles(DBG, FSearch);
 end;
@@ -3883,7 +3884,7 @@ end;
 
 procedure TfrmCustomGrid.DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
 begin
-  if Opening or Closing then
+  if isOpening or isClosing then
     Exit;
 
   case Column.Field.DataType of
@@ -3915,7 +3916,7 @@ begin
     dlgProgress.Title := rsImportAudiosTitle;
     dlgProgress.Text := rsProgressPreparing;
     dlgProgress.Max := DropAudios.Files.Count;
-    Parar := False;
+    stopProcess := False;
     Application.ProcessMessages;
     if not DMM.sqlTrans.Active then
       DMM.sqlCon.StartTransaction;
@@ -3930,10 +3931,10 @@ begin
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;
-        if Parar then
+        if stopProcess then
           Break;
       end;
-      if Parar then
+      if stopProcess then
         DMM.sqlTrans.RollbackRetaining
       else
         DMM.sqlTrans.CommitRetaining;
@@ -3944,7 +3945,7 @@ begin
     dlgProgress.Text := rsProgressFinishing;
     dlgProgress.Position := DropAudios.Files.Count;
     Application.ProcessMessages;
-    Parar := False;
+    stopProcess := False;
   finally
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
@@ -3966,7 +3967,7 @@ begin
     dlgProgress.Title := rsImportDocsTitle;
     dlgProgress.Text := rsProgressPreparing;
     dlgProgress.Max := DropDocs.Files.Count;
-    Parar := False;
+    stopProcess := False;
     Application.ProcessMessages;
     if not DMM.sqlTrans.Active then
       DMM.sqlCon.StartTransaction;
@@ -3979,10 +3980,10 @@ begin
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;
-        if Parar then
+        if stopProcess then
           Break;
       end;
-      if Parar then
+      if stopProcess then
         DMM.sqlTrans.RollbackRetaining
       else
         DMM.sqlTrans.CommitRetaining;
@@ -3993,7 +3994,7 @@ begin
     dlgProgress.Text := rsProgressFinishing;
     dlgProgress.Position := DropDocs.Files.Count;
     Application.ProcessMessages;
-    Parar := False;
+    stopProcess := False;
   finally
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
@@ -4017,7 +4018,7 @@ begin
     dlgProgress.Title := rsImportImagesTitle;
     dlgProgress.Text := rsProgressPreparing;
     dlgProgress.Max := DropImages.Files.Count;
-    Parar := False;
+    stopProcess := False;
     Application.ProcessMessages;
     if not DMM.sqlTrans.Active then
       DMM.sqlCon.StartTransaction;
@@ -4032,10 +4033,10 @@ begin
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;
-        if Parar then
+        if stopProcess then
           Break;
       end;
-      if Parar then
+      if stopProcess then
         DMM.sqlTrans.RollbackRetaining
       else
         DMM.sqlTrans.CommitRetaining;
@@ -4046,7 +4047,7 @@ begin
     dlgProgress.Text := rsProgressFinishing;
     dlgProgress.Position := DropImages.Files.Count;
     Application.ProcessMessages;
-    Parar := False;
+    stopProcess := False;
   finally
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
@@ -4262,7 +4263,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4298,7 +4299,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4334,7 +4335,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4363,7 +4364,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4392,7 +4393,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4428,7 +4429,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4464,7 +4465,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4500,7 +4501,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4529,7 +4530,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4565,7 +4566,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4601,7 +4602,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4637,7 +4638,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4673,7 +4674,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4709,7 +4710,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4745,7 +4746,7 @@ begin
     Key := #0;
   end;
   //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (XSettings.UseEnterAsTab) then
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
   //begin
   //  SelectNext(Sender as TWinControl, True, True);
   //  Key := #0;
@@ -4795,7 +4796,7 @@ end;
 
 procedure TfrmCustomGrid.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-  { If editing when closing, ask what the user want to do }
+  { If editing when isClosing, ask what the user want to do }
   if (dsLink.State in [dsInsert, dsEdit]) then
   begin
     case MessageDlg(rsModificationsNotSaved, rsPostBeforeClosePrompt, mtConfirmation,
@@ -4822,7 +4823,7 @@ end;
 procedure TfrmCustomGrid.FormCreate(Sender: TObject);
 begin
   FCanToggle := False;
-  Filtrado := False;
+  isFiltered := False;
 
   OldSidePanel := False;
   OldSideIndex := -1;
@@ -4911,7 +4912,7 @@ begin
   { Load datasources }
   SetGridAndChild;
 
-  // Use a timer to load the rest to speed up opening
+  // Use a timer to load the rest to speed up isOpening
   TimerOpen.Enabled := True;
 end;
 
@@ -5482,7 +5483,7 @@ begin
     tbAudioLibrary: ;
   end;
 
-  Filtrado := FSearch.QuickFilters.Count > 0;
+  isFiltered := FSearch.QuickFilters.Count > 0;
   FCanToggle := True;
 end;
 
@@ -6170,7 +6171,7 @@ procedure TfrmCustomGrid.LoadRecordRow;
 var
   i: Integer;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
   for i := 0 to (DBG.Columns.Count - 1) do
@@ -6417,7 +6418,7 @@ procedure TfrmCustomGrid.pmAddDocumentClick(Sender: TObject);
 var
   i: Integer;
 begin
-  DMM.OpenDocs.InitialDir := XSettings.DocumentsFolder;
+  DMM.OpenDocs.InitialDir := xSettings.DocumentsFolder;
   if DMM.OpenDocs.Execute then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -6426,7 +6427,7 @@ begin
       dlgProgress.Title := rsImportDocsTitle;
       dlgProgress.Text := rsProgressPreparing;
       dlgProgress.Max := DMM.OpenDocs.Files.Count;
-      Parar := False;
+      stopProcess := False;
       Application.ProcessMessages;
       if not DMM.sqlTrans.Active then
         DMM.sqlCon.StartTransaction;
@@ -6439,10 +6440,10 @@ begin
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
-          if Parar then
+          if stopProcess then
             Break;
         end;
-        if Parar then
+        if stopProcess then
           DMM.sqlTrans.RollbackRetaining
         else
           DMM.sqlTrans.CommitRetaining;
@@ -6453,7 +6454,7 @@ begin
       dlgProgress.Text := rsProgressFinishing;
       dlgProgress.Position := DMM.OpenDocs.Files.Count;
       Application.ProcessMessages;
-      Parar := False;
+      stopProcess := False;
     finally
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
@@ -6468,7 +6469,7 @@ end;
 
 procedure TfrmCustomGrid.pmaRefreshAudiosClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
   qAudios.Refresh;
@@ -6704,7 +6705,7 @@ end;
 
 procedure TfrmCustomGrid.pmdRefreshDocsClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
   qDocs.Refresh;
@@ -6718,7 +6719,7 @@ end;
 
 procedure TfrmCustomGrid.pmiRefreshImagesClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
   qImages.Refresh;
@@ -7064,10 +7065,10 @@ procedure TfrmCustomGrid.pmpTransferBandsToClick(Sender: TObject);
 var
   needsRefresh: Boolean;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     batchBandsTransfer := TbatchBandsTransfer.Create(nil);
     with batchBandsTransfer do
@@ -7084,16 +7085,16 @@ begin
       UpdateChildRightPanel;
     end;
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.pmrRefreshClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     if not dsRecycle.DataSet.Active then
       dsRecycle.DataSet.Open;
@@ -7101,7 +7102,7 @@ begin
     UpdateRecycleButtons(dsRecycle.DataSet);
     UpdateButtons(dsLink.DataSet);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -7347,7 +7348,7 @@ begin
   end;
 
   { Check if UseConditionalFormatting setting is enabled }
-  if not XSettings.UseConditionalFormatting then
+  if not xSettings.UseConditionalFormatting then
     Exit;
 
   { Paint the cell background red for invalid values }
@@ -7436,7 +7437,7 @@ begin
   end;
 
   { Check if ShowOutliersOnGrid setting is enabled }
-  if not XSettings.ShowOutliersOnGrid then
+  if not xSettings.ShowOutliersOnGrid then
     Exit;
 
   { Paint the cell background yellow for outliers }
@@ -8475,7 +8476,7 @@ procedure TfrmCustomGrid.sbAddAudioClick(Sender: TObject);
 var
   i: Integer;
 begin
-  DMM.OpenAudios.InitialDir := XSettings.AudiosFolder;
+  DMM.OpenAudios.InitialDir := xSettings.AudiosFolder;
   if DMM.OpenAudios.Execute then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -8484,7 +8485,7 @@ begin
       dlgProgress.Title := rsImportAudiosTitle;
       dlgProgress.Text := rsProgressPreparing;
       dlgProgress.Max := DMM.OpenAudios.Files.Count;
-      Parar := False;
+      stopProcess := False;
       Application.ProcessMessages;
       if not DMM.sqlTrans.Active then
         DMM.sqlCon.StartTransaction;
@@ -8497,10 +8498,10 @@ begin
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
-          if Parar then
+          if stopProcess then
             Break;
         end;
-        if Parar then
+        if stopProcess then
           DMM.sqlTrans.RollbackRetaining
         else
           DMM.sqlTrans.CommitRetaining;
@@ -8511,7 +8512,7 @@ begin
       dlgProgress.Text := rsProgressFinishing;
       dlgProgress.Position := DMM.OpenAudios.Files.Count;
       Application.ProcessMessages;
-      Parar := False;
+      stopProcess := False;
     finally
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
@@ -8521,7 +8522,7 @@ end;
 
 procedure TfrmCustomGrid.sbAddChildClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
   if not pChild.Visible then
@@ -8531,13 +8532,13 @@ begin
   end
   else
   begin
-    Working := True;
+    isWorking := True;
     try
       AddOrEditChild(FTableType, True);
     finally
       UpdateChildBar;
       UpdateChildRightPanel;
-      Working := False;
+      isWorking := False;
     end;
   end;
 end;
@@ -8571,7 +8572,7 @@ procedure TfrmCustomGrid.sbAddImageClick(Sender: TObject);
 var
   i: Integer;
 begin
-  DMM.OpenImgs.InitialDir := XSettings.ImagesFolder;
+  DMM.OpenImgs.InitialDir := xSettings.ImagesFolder;
   if DMM.OpenImgs.Execute then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -8580,7 +8581,7 @@ begin
       dlgProgress.Title := rsImportImagesTitle;
       dlgProgress.Text := rsProgressPreparing;
       dlgProgress.Max := DMM.OpenImgs.Files.Count;
-      Parar := False;
+      stopProcess := False;
       Application.ProcessMessages;
       if not DMM.sqlTrans.Active then
         DMM.sqlCon.StartTransaction;
@@ -8593,10 +8594,10 @@ begin
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
-          if Parar then
+          if stopProcess then
             Break;
         end;
-        if Parar then
+        if stopProcess then
           DMM.sqlTrans.RollbackRetaining
         else
           DMM.sqlTrans.CommitRetaining;
@@ -8607,7 +8608,7 @@ begin
       dlgProgress.Text := rsProgressFinishing;
       dlgProgress.Position := DMM.OpenImgs.Files.Count;
       Application.ProcessMessages;
-      Parar := False;
+      stopProcess := False;
     finally
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
@@ -8636,12 +8637,12 @@ end;
 
 procedure TfrmCustomGrid.sbCancelRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
-    if (dsLink.DataSet.Modified) and (XSettings.ConfirmCancel) then
+    if (dsLink.DataSet.Modified) and (xSettings.ConfirmCancel) then
     begin
       if not MsgDlg(rsDiscardChangesTitle, rsCancelEditingPrompt, mtConfirmation) then
         Exit;
@@ -8649,7 +8650,7 @@ begin
 
     dsLink.DataSet.Cancel;
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -8716,24 +8717,24 @@ end;
 
 procedure TfrmCustomGrid.sbDelAudioClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     DeleteRecord(tbAudioLibrary, qAudios);
     UpdateAudioButtons(qAudios);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbDelChildClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     case FTableType of
       //tbNone: ;
@@ -8814,35 +8815,35 @@ begin
     dsLink6.DataSet.Refresh;
   finally
     UpdateChildBar;
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbDelDocClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     DeleteRecord(tbDocuments, qDocs);
     UpdateDocButtons(qDocs);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbDelImageClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     DeleteRecord(tbImages, qImages);
     UpdateImageButtons(qImages);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -8850,10 +8851,10 @@ procedure TfrmCustomGrid.sbDelPermanentlyClick(Sender: TObject);
 var
   Qry: TSQLQuery;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   if MsgDlg(rsRecycleDeleteTitle, rsRecycleDeletePermanentlyPrompt, mtConfirmation) then
   begin
     Qry := TSQLQuery.Create(nil);
@@ -8870,15 +8871,15 @@ begin
     end;
   end;
   UpdateRecycleButtons(dsRecycle.DataSet);
-  Working := False;
+  isWorking := False;
 end;
 
 procedure TfrmCustomGrid.sbDelRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     // Inactivate the selected record
     DeleteRecord(FTableType, dsLink.DataSet);
@@ -8889,7 +8890,7 @@ begin
     dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -8900,16 +8901,16 @@ end;
 
 procedure TfrmCustomGrid.sbEditChildClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     AddOrEditChild(FTableType, False);
   finally
     UpdateChildBar;
     UpdateChildRightPanel;
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -8917,10 +8918,10 @@ procedure TfrmCustomGrid.sbEditRecordClick(Sender: TObject);
 var
   needsRefresh: Boolean;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     case FTableType of
       //tbNone: ;
@@ -8960,7 +8961,7 @@ begin
       UpdateChildRightPanel;
     end;
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -8977,10 +8978,10 @@ procedure TfrmCustomGrid.sbFirstChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     aDataSet := GetChildDataSet;
 
@@ -8988,21 +8989,21 @@ begin
       aDataSet.First;
   finally
     UpdateChildButtons(aDataSet);
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbFirstRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     dsLink.DataSet.First;
     UpdateButtons(dsLink.DataSet);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9015,10 +9016,10 @@ procedure TfrmCustomGrid.sbInsertBatchClick(Sender: TObject);
 var
   needsRefresh: Boolean;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     case FTableType of
       //tbNone: ;
@@ -9051,7 +9052,7 @@ begin
       UpdateChildRightPanel;
     end;
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9059,10 +9060,10 @@ procedure TfrmCustomGrid.sbInsertRecordClick(Sender: TObject);
 var
   needsRefresh: Boolean;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     case FTableType of
       //tbNone: ;
@@ -9102,7 +9103,7 @@ begin
       UpdateChildRightPanel;
     end;
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9110,10 +9111,10 @@ procedure TfrmCustomGrid.sbLastChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     aDataSet := GetChildDataSet;
 
@@ -9121,21 +9122,21 @@ begin
       aDataSet.Last;
   finally
     UpdateChildButtons(aDataSet);
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbLastRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     dsLink.DataSet.Last;
     UpdateButtons(dsLink.DataSet);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9199,10 +9200,10 @@ procedure TfrmCustomGrid.sbNextChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     aDataSet := GetChildDataSet;
 
@@ -9210,21 +9211,21 @@ begin
       aDataSet.Next;
   finally
     UpdateChildButtons(aDataSet);
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbNextRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     dsLink.DataSet.Next;
     UpdateButtons(dsLink.DataSet);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9253,10 +9254,10 @@ procedure TfrmCustomGrid.sbPriorChildClick(Sender: TObject);
 var
   aDataSet: TDataSet;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     aDataSet := GetChildDataSet;
 
@@ -9264,21 +9265,21 @@ begin
       aDataSet.Prior;
   finally
     UpdateChildButtons(aDataSet);
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbPriorRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     dsLink.DataSet.Prior;
     UpdateButtons(dsLink.DataSet);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9332,10 +9333,10 @@ procedure TfrmCustomGrid.sbRefreshChildClick(Sender: TObject);
 var
   DS: TDataSet;
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     case nbChilds.PageIndex of
       0: DS := dsLink1.DataSet;
@@ -9350,32 +9351,32 @@ begin
     DS.Refresh;
     UpdateChildButtons(DS);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbRefreshRecordsClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     if not dsLink.DataSet.Active then
       dsLink.DataSet.Open;
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
 procedure TfrmCustomGrid.sbRestoreRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     // Restore the selected record
     RestoreRecord(FTableType, dsRecycle.DataSet);
@@ -9386,7 +9387,7 @@ begin
     UpdateRecycleButtons(dsRecycle.DataSet);
     dbgRecycle.Refresh;
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9407,14 +9408,14 @@ end;
 
 procedure TfrmCustomGrid.sbSaveRecordClick(Sender: TObject);
 begin
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   try
     dsLink.DataSet.Post;
   finally
-    Working := False;
+    isWorking := False;
   end;
 end;
 
@@ -9436,7 +9437,7 @@ var
   Pts: TMapPointList;
 begin
   // Export map points
-  DMM.SaveKmlDlg.InitialDir := XSettings.LastPathUsed;
+  DMM.SaveKmlDlg.InitialDir := xSettings.LastPathUsed;
   if DMM.SaveKmlDlg.Execute then
   begin
     aFilename := DMM.SaveKmlDlg.FileName;
@@ -9491,10 +9492,10 @@ function TfrmCustomGrid.Search(aValue: String): Boolean;
 begin
   Result := False;
 
-  if Working then
+  if isWorking then
     Exit;
 
-  Working := True;
+  isWorking := True;
   DBG.BeginUpdate;
   try
     {$IFDEF DEBUG}
@@ -9537,7 +9538,7 @@ begin
     end;
     UpdateButtons(dsLink.DataSet);
   finally
-    Working := False;
+    isWorking := False;
     DBG.EndUpdate;
   end;
 end;
@@ -12487,8 +12488,8 @@ begin
 
   qRecycle.Open;
 
-  lblRecycleWarning.Caption := Format(rsRecycleAutoDeleteInfo, [XSettings.ClearDeletedPeriod * 30]);
-  pRecycleWarning.Visible := XSettings.ClearDeletedPeriod > 0;
+  lblRecycleWarning.Caption := Format(rsRecycleAutoDeleteInfo, [xSettings.ClearDeletedPeriod * 30]);
+  pRecycleWarning.Visible := xSettings.ClearDeletedPeriod > 0;
 end;
 
 procedure TfrmCustomGrid.SetSidePanel(aValue: Boolean);
@@ -12590,7 +12591,7 @@ begin
   TimerUpdate.Enabled := False;
   aTotalProblems := 0;
 
-  if (Closing) then
+  if (isClosing) then
     Exit;
 
   case nbChilds.PageIndex of
@@ -12639,7 +12640,7 @@ begin
   TimerUpdate.Enabled := False;
   aTotalProblems := 0;
 
-  if (Closing) then
+  if (isClosing) then
     Exit;
 
   DS := dsLink.DataSet;
@@ -12865,7 +12866,7 @@ end;
 
 procedure TfrmCustomGrid.UpdateAudioButtons(aDataSet: TDataSet);
 begin
-  if Closing then
+  if isClosing then
     Exit;
 
   case aDataSet.State of
@@ -13047,7 +13048,7 @@ end;
 
 procedure TfrmCustomGrid.UpdateChildButtons(aDataSet: TDataSet);
 begin
-  if Closing then
+  if isClosing then
     Exit;
 
   case aDataSet.State of
@@ -13117,7 +13118,7 @@ procedure TfrmCustomGrid.UpdateChildCount;
 var
   PanelTab: TCustomPanelTab;
 begin
-  if Closing then
+  if isClosing then
     Exit;
 
   if not dsLink.DataSet.Active then
@@ -13215,10 +13216,10 @@ begin
 
   if FTableType = tbProjects then
   begin
-    txtProjectBalance.Caption := Format('%s / %s', [FormatFloat(maskTwoDecimal, GetProjectBalance(aProjectId)),
-      FormatFloat(maskTwoDecimal, GetProjectTotalBudget(aProjectId))]);
-    txtRubricBalance.Caption := Format('%s / %s', [FormatFloat(maskTwoDecimal, GetRubricBalance(aRubricId)),
-      FormatFloat(maskTwoDecimal, dsLink4.DataSet.FieldByName(COL_AMOUNT).AsFloat)]);
+    txtProjectBalance.Caption := Format('%s / %s', [FormatFloat(MASK_TWO_DECIMAL, GetProjectBalance(aProjectId)),
+      FormatFloat(MASK_TWO_DECIMAL, GetProjectTotalBudget(aProjectId))]);
+    txtRubricBalance.Caption := Format('%s / %s', [FormatFloat(MASK_TWO_DECIMAL, GetRubricBalance(aRubricId)),
+      FormatFloat(MASK_TWO_DECIMAL, dsLink4.DataSet.FieldByName(COL_AMOUNT).AsFloat)]);
   end;
 end;
 
@@ -13323,7 +13324,7 @@ end;
 
 procedure TfrmCustomGrid.UpdateDocButtons(aDataSet: TDataSet);
 begin
-  if Closing then
+  if isClosing then
     Exit;
 
   case aDataSet.State of
@@ -13390,7 +13391,7 @@ end;
 
 procedure TfrmCustomGrid.UpdateImageButtons(aDataSet: TDataSet);
 begin
-  if Closing then
+  if isClosing then
     Exit;
 
   case aDataSet.State of

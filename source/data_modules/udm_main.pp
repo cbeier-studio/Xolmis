@@ -175,13 +175,13 @@ begin
 
   { >> Create active user and settings objects }
   ActiveUser := TUser.Create;
-  //XSettings := TXolmisSettings.Create;
-  //XSettings.LoadFromFile;
+  //xSettings := TXolmisSettings.Create;
+  //xSettings.LoadFromFile;
 
   { >> Log file }
   logFull := CheckLogsFull;
 
-  evLog.FileName := ConcatPaths([AppDataDir, LogFile]);
+  evLog.FileName := ConcatPaths([AppDataDir, LOG_FILE]);
   evLog.Active := True;
 
   LogEvent(leaStarting, '=========================================');
@@ -202,8 +202,8 @@ begin
 
   OpenSystemDatabase;
 
-  tabGeoBank.FileName := ConcatPaths([AppDataDir, GeoBankFile]);
-  //if not FileExists(ConcatPaths([AppDataDir, GeoBankFile])) then
+  tabGeoBank.FileName := ConcatPaths([AppDataDir, GEO_BANK_FILE]);
+  //if not FileExists(ConcatPaths([AppDataDir, GEO_BANK_FILE])) then
   //  tabGeoBank.CreateDataset;
   tabGeoBank.Open;
 
@@ -215,9 +215,9 @@ begin
   if Assigned(LocaleTablesDict) then
     LocaleTablesDict.Free;
 
-  //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GeoBankFile]));
-  //tabGeoBank.SaveFileAs(ConcatPaths([AppDataDir, GeoBankFile]));
-  //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GeoBankFile]), True);
+  //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GEO_BANK_FILE]));
+  //tabGeoBank.SaveFileAs(ConcatPaths([AppDataDir, GEO_BANK_FILE]));
+  //tabGeoBank.SaveToFile(ConcatPaths([AppDataDir, GEO_BANK_FILE]), True);
   tabGeoBank.Close;
 
   sqlCon.Close;
@@ -390,7 +390,7 @@ end;
 
 procedure TDMM.sqlConBeforeConnect(Sender: TObject);
 begin
-  sqlCon.DatabaseName := ConexaoDB.Database;
+  sqlCon.DatabaseName := databaseConnection.Database;
 end;
 
 procedure TDMM.sqlConLog(Sender: TSQLConnection; EventType: TDBEventType;

@@ -95,9 +95,9 @@ begin
   vlResult.Values['Instalation path'] := InstallDir;
   vlResult.Values['App data path'] := AppDataDir;
   vlResult.Values['App version'] := GetBuildInfoAsString;
-  vlResult.Values['System logs'] := BoolToStr(XSettings.AllowWriteLogs, 'Enabled', 'Disabled');
+  vlResult.Values['System logs'] := BoolToStr(xSettings.AllowWriteLogs, 'Enabled', 'Disabled');
   vlResult.Values['Settings file'] := XSettings.SettingsFile;
-  vlResult.Values['Settings size'] := GetFileSizeReadable(XSettings.SettingsFile);
+  vlResult.Values['Settings size'] := GetFileSizeReadable(xSettings.SettingsFile);
   if FileExists(ConcatPaths([InstallDir, 'sqlite3.dll'])) then
     vlResult.Values['sqlite3.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'sqlite3.dll']))
   else
@@ -113,36 +113,36 @@ begin
 
   // Database info
   vlResult.Values['DATABASE'] := '';
-  case ConexaoDB.Manager of
+  case databaseConnection.Manager of
     dbSqlite:
     begin
       vlResult.Values['Database type'] := 'SQLite';
-      vlResult.Values['Database file'] := ConexaoDB.Database;
-      vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+      vlResult.Values['Database file'] := databaseConnection.Database;
+      vlResult.Values['Database size'] := GetFileSizeReadable(databaseConnection.Database);
     end;
     dbFirebird:
     begin
       vlResult.Values['Database type'] := 'Firebird';
-      vlResult.Values['Database server'] := ConexaoDB.Server;
-      vlResult.Values['Database port'] := IntToStr(ConexaoDB.Port);
-      vlResult.Values['Database file'] := ConexaoDB.Database;
-      vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+      vlResult.Values['Database server'] := databaseConnection.Server;
+      vlResult.Values['Database port'] := IntToStr(databaseConnection.Port);
+      vlResult.Values['Database file'] := databaseConnection.Database;
+      vlResult.Values['Database size'] := GetFileSizeReadable(databaseConnection.Database);
     end;
     dbPostgre:
     begin
       vlResult.Values['Database type'] := 'PostgreSQL';
-      vlResult.Values['Database server'] := ConexaoDB.Server;
-      vlResult.Values['Database port'] := IntToStr(ConexaoDB.Port);
-      vlResult.Values['Database'] := ConexaoDB.Database;
-      //vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+      vlResult.Values['Database server'] := databaseConnection.Server;
+      vlResult.Values['Database port'] := IntToStr(databaseConnection.Port);
+      vlResult.Values['Database'] := databaseConnection.Database;
+      //vlResult.Values['Database size'] := GetFileSizeReadable(databaseConnection.Database);
     end;
     dbMaria:
     begin
       vlResult.Values['Database type'] := 'MariaDB';
-      vlResult.Values['Database server'] := ConexaoDB.Server;
-      vlResult.Values['Database port'] := IntToStr(ConexaoDB.Port);
-      vlResult.Values['Database'] := ConexaoDB.Database;
-      //vlResult.Values['Database size'] := GetFileSizeReadable(ConexaoDB.Database);
+      vlResult.Values['Database server'] := databaseConnection.Server;
+      vlResult.Values['Database port'] := IntToStr(databaseConnection.Port);
+      vlResult.Values['Database'] := databaseConnection.Database;
+      //vlResult.Values['Database size'] := GetFileSizeReadable(databaseConnection.Database);
     end;
   end;
   vlResult.Values['Schema version'] := ReadDatabaseMetadata(DMM.sqlCon, 'version');

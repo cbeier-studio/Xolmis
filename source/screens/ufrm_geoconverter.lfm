@@ -6,6 +6,7 @@ object frmGeoConverter: TfrmGeoConverter
   Caption = 'Coordinates converter'
   ClientHeight = 720
   ClientWidth = 1193
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
@@ -602,7 +603,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnKeyUp = seConvertFromKeyUp
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 61
+      Gutter.Width = 71
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1259,7 +1260,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 61
+      Gutter.Width = 71
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>

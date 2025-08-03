@@ -76,7 +76,7 @@ begin
 
   long := 500.0;
   lat := 500.0;
-  relPath := ExtractRelativePath(XSettings.ImagesFolder, aFileName);
+  relPath := ExtractRelativePath(xSettings.ImagesFolder, aFileName);
 
   { Load image EXIF data }
   imgExif := TImgInfo.Create;
@@ -360,7 +360,7 @@ var
   Usage: TElapsedTimer;
   {$ENDIF}
 begin
-  Parar := False;
+  stopProcess := False;
   dlgProgress := TdlgProgress.Create(nil);
   dlgProgress.Show;
   dlgProgress.Title := rsTitleRecreateThumbnails;
@@ -391,7 +391,7 @@ begin
         dlgProgress.Max := Qry.RecordCount;
         repeat
           dlgProgress.Text := Format(rsProgressImportImages, [Qry.RecNo, Qry.RecordCount]);
-          imgPath := CreateAbsolutePath(Qry.FieldByName(COL_IMAGE_FILENAME).AsString, XSettings.ImagesFolder);
+          imgPath := CreateAbsolutePath(Qry.FieldByName(COL_IMAGE_FILENAME).AsString, xSettings.ImagesFolder);
           if (FileExists(imgPath)) then
           begin
             Edit;
@@ -404,9 +404,9 @@ begin
           dlgProgress.Position := Qry.RecNo;
           Application.ProcessMessages;
           Next;
-        until Eof or Parar;
+        until Eof or stopProcess;
 
-        if Parar then
+        if stopProcess then
         begin
           DMM.sqlTrans.RollbackRetaining;
           MsgDlg(rsTitleRecreateThumbnails, rsBatchCanceledByUser, mtWarning);

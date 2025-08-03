@@ -163,10 +163,10 @@ end;
 
 procedure AbreForm(aClasseForm: TComponentClass; aForm: TForm);
 begin
-  if Opening then
+  if isOpening then
     Exit;
 
-  Opening := True;
+  isOpening := True;
   Application.CreateForm(aClasseForm, aForm);
   try
     LogEvent(leaOpen, aForm.Caption);
@@ -175,16 +175,16 @@ begin
   finally
     LogEvent(leaClose, aForm.Caption);
     FreeAndNil(aForm);
-    Opening := False;
+    isOpening := False;
   end;
 end;
 
 procedure ShowHistory(aTable, aChild: TTableType; aKey: Integer);
 begin
-  if Opening then
+  if isOpening then
     Exit;
 
-  Opening := True;
+  isOpening := True;
   LogEvent(leaOpen, 'Record history');
   dlgRecHistory := TdlgRecHistory.Create(nil);
   with dlgRecHistory do
@@ -197,16 +197,16 @@ begin
   finally
     FreeAndNil(dlgRecHistory);
     LogEvent(leaClose, 'Record history');
-    Opening := False;
+    isOpening := False;
   end;
 end;
 
 procedure ShowVerifications(aTable, aChild: TTableType; aKey: Integer);
 begin
-  if Opening then
+  if isOpening then
     Exit;
 
-  Opening := True;
+  isOpening := True;
   LogEvent(leaOpen, 'Record verifications');
   dlgRecVerifications := TdlgRecVerifications.Create(nil);
   with dlgRecVerifications do
@@ -219,7 +219,7 @@ begin
   finally
     FreeAndNil(dlgRecVerifications);
     LogEvent(leaClose, 'Record verifications');
-    Opening := False;
+    isOpening := False;
   end;
 end;
 

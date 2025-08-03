@@ -152,7 +152,7 @@ end;
 procedure TdlgNewDatabase.eNameKeyPress(Sender: TObject; var Key: char);
 begin
   { <ENTER/RETURN> key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     //if eConfirmPass.Focused and sbSave.Enabled then
     //  sbSaveClick(nil)
@@ -177,7 +177,7 @@ end;
 procedure TdlgNewDatabase.eNewPassKeyPress(Sender: TObject; var Key: char);
 begin
   { <ENTER/RETURN> key }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     //if eConfirmPass.Focused and sbSave.Enabled then
     //  sbSaveClick(nil)
@@ -330,7 +330,7 @@ begin
   if not ValidateDatabase then
     Exit;
 
-  BCrypt.InitStr(BFKey, TDCP_sha256);
+  BCrypt.InitStr(BF_KEY, TDCP_sha256);
   aPass := BCrypt.EncryptString(eUserNewPass.Text);
   BCrypt.Burn;
 
@@ -391,7 +391,7 @@ var
 begin
   Result := False;
 
-  BCrypt.InitStr(BFKey, TDCP_sha256);
+  BCrypt.InitStr(BF_KEY, TDCP_sha256);
   FPass := BCrypt.EncryptString(eNewPass.Text);
   BCrypt.Burn;
 

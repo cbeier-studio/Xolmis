@@ -119,10 +119,10 @@ begin
     ApplyDarkMode;
 
   // Get values from settings
-  FHaveHeader := XSettings.HaveHeader;
-  FQuotedAsText := XSettings.QuotedAsText;
-  FDelimiter := XSettings.Delimiter;
-  FDecimalSeparator := XSettings.DecimalSeparator;
+  FHaveHeader := xSettings.HaveHeader;
+  FQuotedAsText := xSettings.QuotedAsText;
+  FDelimiter := xSettings.Delimiter;
+  FDecimalSeparator := xSettings.DecimalSeparator;
 
   // Translate comboboxes' items
   cbDelimiter.Items.Clear;
@@ -188,12 +188,12 @@ begin
   { Have a header line with column names }
   FHaveHeader := tsHaveHeader.Checked;
 
-  XSettings.HaveHeader := FHaveHeader;
-  XSettings.QuotedAsText := FQuotedAsText;
-  XSettings.DelimiterIndex := cbDelimiter.ItemIndex;
-  XSettings.Delimiter := FDelimiter;
-  XSettings.DecimalSeparator := FDecimalSeparator;
-  XSettings.SaveToFile;
+  xSettings.HaveHeader := FHaveHeader;
+  xSettings.QuotedAsText := FQuotedAsText;
+  xSettings.DelimiterIndex := cbDelimiter.ItemIndex;
+  xSettings.Delimiter := FDelimiter;
+  xSettings.DecimalSeparator := FDecimalSeparator;
+  xSettings.SaveToFile;
 
   ModalResult := mrOK;
 end;

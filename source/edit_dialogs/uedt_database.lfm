@@ -13,6 +13,7 @@ object edtDatabase: TedtDatabase
   PopupMode = pmExplicit
   PopupParent = cfgDatabase.Owner
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -301,7 +302,6 @@ object edtDatabase: TedtDatabase
       Align = alTop
       AutoSize = True
       ButtonCursor = crDefault
-      ButtonOnlyWhenFocused = False
       ButtonWidth = 24
       CharCase = ecNormal
       Color = clDefault
@@ -313,6 +313,7 @@ object edtDatabase: TedtDatabase
       ImageIndex = 6
       Images = DMM.iEdits
       MaxLength = 0
+      ShowHint = False
       Spacing = 0
       TabOrder = 5
       OnButtonClick = eDBFileButtonClick

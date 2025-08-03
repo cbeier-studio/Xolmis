@@ -114,7 +114,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_datacolumns, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_getvalue, cbs_gis, cbs_taxonomy,
+  cbs_locale, cbs_datacolumns, cbs_global, cbs_dialogs, cbs_finddialogs, cbs_getvalue, models_geo, cbs_taxonomy,
   cbs_themes, uDarkStyleParams,
   udm_main;
 

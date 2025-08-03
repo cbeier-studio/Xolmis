@@ -13,6 +13,7 @@ object dlgLogin: TdlgLogin
   PopupMode = pmAuto
   Position = poScreenCenter
   ShowInTaskBar = stAlways
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow

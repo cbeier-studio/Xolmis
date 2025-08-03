@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin, DBGrids,
   ComCtrls, mvMapViewer, mvTypes, mvGpsObj, mvDE_BGRA, atshapelinebgra, BCPanel, SpinEx, Types,
-  cbs_system, cbs_gis, DB, mvDrawingEngine;
+  cbs_system, utils_gis, DB, mvDrawingEngine;
 
 type
 
@@ -362,7 +362,7 @@ begin
     ModalResult := mrCancel;
   end;
   { PROXIMO CAMPO = Enter }
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;

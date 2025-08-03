@@ -28,7 +28,7 @@ uses
   { Data }
   DB, SQLDB,
   { CBS }
-  cbs_datatypes, cbs_taxonomy, cbs_gis;
+  cbs_datatypes, cbs_taxonomy, models_geo;
 
 type
 

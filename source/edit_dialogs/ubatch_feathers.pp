@@ -163,7 +163,7 @@ var
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_datatypes, cbs_birds, cbs_finddialogs, cbs_dialogs, cbs_gis, cbs_taxonomy,
+  cbs_locale, cbs_global, cbs_datatypes, cbs_birds, cbs_finddialogs, cbs_dialogs, models_geo, cbs_taxonomy,
   cbs_validations, cbs_getvalue, cbs_editdialogs,
   udlg_loading, udlg_progress, udm_main, udm_grid, uDarkStyleParams;
 
@@ -518,7 +518,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -545,7 +545,7 @@ begin
   FormKeyPress(Sender, Key);
 
   // <ENTER/RETURN> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -587,7 +587,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -621,7 +621,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -655,7 +655,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -717,7 +717,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
@@ -751,7 +751,7 @@ begin
   end;
 
   // <ENTER> Key
-  if (Key = #13) and (XSettings.UseEnterAsTab) then
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
       Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)

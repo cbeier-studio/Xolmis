@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, StrUtils,
-  cbs_taxonomy, cbs_gis, cbs_sampling;
+  cbs_taxonomy, utils_gis, cbs_sampling;
 
 type
   TRecordReviewStatus = (rvwNotReviewed, rvwRecordOk, rvwRecordWithProblems);

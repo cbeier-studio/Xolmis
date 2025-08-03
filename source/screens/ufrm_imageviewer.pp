@@ -183,7 +183,7 @@ var
   imgExif: TImgInfo;
   imgOrientation: TExifOrientation;
 begin
-  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
+  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, xSettings.ImagesFolder);
   if not FileExists(FPath) then
     raise EFileNotFoundException.CreateFmt(rsErrorFileNotFound, [FPath]);
 
@@ -280,7 +280,7 @@ procedure TfrmImageViewer.sbOpenClick(Sender: TObject);
 var
   FPath: String;
 begin
-  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, XSettings.ImagesFolder);
+  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, xSettings.ImagesFolder);
 
   OpenDocument(FPath);
 end;
@@ -309,7 +309,7 @@ end;
 
 procedure TfrmImageViewer.sbSaveAsClick(Sender: TObject);
 begin
-  SaveDlg.InitialDir := XSettings.LastPathUsed;
+  SaveDlg.InitialDir := xSettings.LastPathUsed;
   if SaveDlg.Execute then
     FOriginal.SaveToFile(SaveDlg.FileName);
 end;

@@ -99,9 +99,9 @@ begin
 
   pAppVersion.Caption := GetBuildInfoAsString;
 
-  pClementsVersion.Caption := XSettings.ClementsVersion;
-  //pIocVersion.Caption := XSettings.IocVersion;
-  //pCbroVersion.Caption := XSettings.CbroVersion;
+  pClementsVersion.Caption := xSettings.ClementsVersion;
+  //pIocVersion.Caption := xSettings.IocVersion;
+  //pCbroVersion.Caption := xSettings.CbroVersion;
 end;
 
 procedure TdlgAbout.linkClementsVersionClick(Sender: TObject);

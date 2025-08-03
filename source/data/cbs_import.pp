@@ -294,7 +294,7 @@ type
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_users, cbs_dialogs, cbs_datatypes, cbs_data, cbs_taxonomy, cbs_birds, cbs_gis,
+  cbs_locale, cbs_global, cbs_users, cbs_dialogs, cbs_datatypes, cbs_data, cbs_taxonomy, cbs_birds, models_geo,
   cbs_breeding, cbs_system, cbs_getvalue, cbs_fullnames, cbs_dataconst, udm_main, udlg_progress;
 
 procedure LoadEbirdFile(const aCSVFile: String; CSV: TSdfDataSet);
@@ -385,7 +385,7 @@ begin
   end;
 
   LogEvent(leaStart, Format('Import eBird file: %s', [aCSVFile]));
-  Parar := False;
+  stopProcess := False;
   dlgProgress := TdlgProgress.Create(nil);
   dlgProgress.Show;
   dlgProgress.Title := rsTitleImportFile;
@@ -403,7 +403,7 @@ begin
       CSV.First;
       while not CSV.EOF do
       begin
-        if Parar then
+        if stopProcess then
           Break;
 
         dlgProgress.Text := Format(rsProgressRecords,[CSV.RecNo, CSV.RecordCount]);
@@ -412,7 +412,7 @@ begin
         LoadEbirdRecord(CSV, Reg);
 
         { Load other variables }
-        RDate := FormatDateTime(maskSQLiteDate, Reg.RecordDate);
+        RDate := FormatDateTime(MASK_ISO_DATE, Reg.RecordDate);
         Quant := StrToIntDef(Reg.Count, 0);
 
         Toponimo := TSite.Create(GetKey('gazetteer', COL_SITE_ID, COL_EBIRD_NAME, Reg.LocationName));
@@ -475,7 +475,7 @@ begin
         CSV.Next;
       end;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
@@ -631,7 +631,7 @@ begin
   end;
 
   LogEvent(leaStart, Format('Import banding file: %s', [aCSVFile]));
-  Parar := False;
+  stopProcess := False;
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -674,8 +674,8 @@ begin
         // If it is a capture record (including recapture and band change)
         if (Trim(Reg.SpeciesName) <> EmptyStr) then
         begin
-          strDate := FormatDateTime(maskSQLiteDate, Reg.CaptureDate);
-          strTime := FormatDateTime(maskDisplayTime, Reg.CaptureTime);
+          strDate := FormatDateTime(MASK_ISO_DATE, Reg.CaptureDate);
+          strTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.CaptureTime);
 
           try
             Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName));
@@ -946,10 +946,10 @@ begin
           dlgProgress.Position := CSV.RecNo;
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or Parar;
+      until CSV.Eof or stopProcess;
       // end;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
@@ -997,7 +997,7 @@ begin
   end;
 
   LogEvent(leaStart, Format('Import banding journal: %s', [aCSVFile]));
-  Parar := False;
+  stopProcess := False;
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -1194,29 +1194,29 @@ begin
         if (not CSV.FieldByName('HUMIDITY 4').IsNull) then
           Reg.Weather4.Humidity := CSV.FieldByName('HUMIDITY 4').AsFloat;
 
-        strDate := FormatDateTime(maskSQLiteDate, Reg.SamplingDate);
+        strDate := FormatDateTime(MASK_ISO_DATE, Reg.SamplingDate);
         //if not CSV.FieldByName('START TIME').IsNull then
-        //  strStartTime := FormatDateTime(maskDisplayTime, Reg.StartTime)
+        //  strStartTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.StartTime)
         //else
         //  strStartTime := EmptyStr;
         //if not CSV.FieldByName('END TIME').IsNull then
-        //  strEndTime := FormatDateTime(maskDisplayTime, Reg.EndTime)
+        //  strEndTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.EndTime)
         //else
         //  strEndTime := EmptyStr;
         //if not CSV.FieldByName('WEATHER TIME 1').IsNull then
-        //  strWeatherTime1 := FormatDateTime(maskDisplayTime, Reg.Weather1.SamplingTime)
+        //  strWeatherTime1 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather1.SamplingTime)
         //else
         //  strWeatherTime1 := EmptyStr;
         //if not CSV.FieldByName('WEATHER TIME 2').IsNull then
-        //  strWeatherTime2 := FormatDateTime(maskDisplayTime, Reg.Weather2.SamplingTime)
+        //  strWeatherTime2 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather2.SamplingTime)
         //else
         //  strWeatherTime2 := EmptyStr;
         //if not CSV.FieldByName('WEATHER TIME 3').IsNull then
-        //  strWeatherTime3 := FormatDateTime(maskDisplayTime, Reg.Weather3.SamplingTime)
+        //  strWeatherTime3 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather3.SamplingTime)
         //else
         //  strWeatherTime3 := EmptyStr;
         //if not CSV.FieldByName('WEATHER TIME 4').IsNull then
-        //  strWeatherTime4 := FormatDateTime(maskDisplayTime, Reg.Weather4.SamplingTime)
+        //  strWeatherTime4 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather4.SamplingTime)
         //else
         //  strWeatherTime4 := EmptyStr;
 
@@ -1368,9 +1368,9 @@ begin
           dlgProgress.Position := CSV.RecNo;
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or Parar;
+      until CSV.Eof or stopProcess;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
@@ -1417,7 +1417,7 @@ begin
   end;
 
   LogEvent(leaStart, Format('Import banding effort: %s', [aCSVFile]));
-  Parar := False;
+  stopProcess := False;
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -1575,9 +1575,9 @@ begin
           dlgProgress.Position := CSV.RecNo;
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or Parar;
+      until CSV.Eof or stopProcess;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
@@ -1621,7 +1621,7 @@ begin
   end;
 
   LogEvent(leaStart, Format('Import nests file: %s', [aCSVFile]));
-  Parar := False;
+  stopProcess := False;
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -1743,9 +1743,9 @@ begin
           dlgProgress.Position := CSV.RecNo;
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or Parar;
+      until CSV.Eof or stopProcess;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
@@ -1792,7 +1792,7 @@ begin
   end;
 
   LogEvent(leaStart, Format('Import nest revisions: %s', [aCSVFile]));
-  Parar := False;
+  stopProcess := False;
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -1909,9 +1909,9 @@ begin
           dlgProgress.Position := CSV.RecNo;
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or Parar;
+      until CSV.Eof or stopProcess;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
@@ -1958,7 +1958,7 @@ begin
   end;
 
   LogEvent(leaStart, Format('Import eggs file: %s', [aCSVFile]));
-  Parar := False;
+  stopProcess := False;
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -2094,9 +2094,9 @@ begin
           dlgProgress.Position := CSV.RecNo;
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or Parar;
+      until CSV.Eof or stopProcess;
 
-      if Parar then
+      if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);

@@ -67,7 +67,7 @@ uses
 implementation
 
 uses
-  cbs_locale, cbs_global, cbs_permissions, cbs_getvalue, cbs_dialogs, cbs_gis, cbs_sampling, cbs_botany,
+  cbs_locale, cbs_global, cbs_permissions, cbs_getvalue, cbs_dialogs, models_geo, cbs_sampling, cbs_botany,
   cbs_breeding, cbs_birds, cbs_entities, cbs_media,
   udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,

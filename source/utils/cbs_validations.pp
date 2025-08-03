@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Dialogs, DB, SQLDB, Controls, StdCtrls, DBCtrls, RegExpr, StrUtils,
   DateUtils, Variants,
-  cbs_system, cbs_datatypes, cbs_gis;
+  cbs_system, cbs_datatypes, utils_gis;
 
 type
   { Exceptions }

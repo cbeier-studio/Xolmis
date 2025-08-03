@@ -375,13 +375,13 @@ implementation
 
 uses
   cbs_locale, cbs_global, cbs_dialogs, cbs_system, cbs_import, cbs_autoupdate, cbs_permissions, cbs_backup,
-  cbs_data, cbs_users, cbs_gis, cbs_taxonomy, cbs_editdialogs, cbs_themes, uDarkStyleParams,
+  cbs_data, cbs_users, models_geo, cbs_taxonomy, cbs_editdialogs, cbs_themes, utils_gis, uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
   udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
   udlg_importxmobile, udlg_import, udlg_splash, udlg_loading,
-  ufrm_geoconverter, ufrm_dashboard, ufrm_maintenance, ufrm_taxa;
+  ufrm_geoconverter, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
 
@@ -399,7 +399,7 @@ begin
     ckrUpdated: MsgDlg(rsCheckUpdates, rsIsUpToDate, mtInformation);
     ckrNewVersion:
     begin
-      if MsgDlg(rsCheckUpdates, Format(rsNewUpdateAvailable, [NomeApp]), mtConfirmation) then
+      if MsgDlg(rsCheckUpdates, Format(rsNewUpdateAvailable, [APP_NAME]), mtConfirmation) then
         RunUpdate;
     end;
     ckrError: ;
@@ -755,7 +755,7 @@ end;
 procedure TfrmMain.ApplyFormSettings;
 begin
   // Update active taxonomy
-  ActiveTaxonomy := XSettings.Taxonomy;
+  ActiveTaxonomy := xSettings.Taxonomy;
   // SBarTaxonomy.Caption:= TaxonomyName[ActiveTaxonomy];
 
   // Get user permissions
@@ -778,7 +778,7 @@ begin
   navTabs.Tabs.BeginUpdate;
   try
     for i := (navTabs.TabCount - 1) downto 0 do
-      if not (navTabs.GetTabData(i).TabPinned) or (ClosePinned) or (Closing) then
+      if not (navTabs.GetTabData(i).TabPinned) or (ClosePinned) or (isClosing) then
         if not (navTabs.GetTabData(i).Index = ExceptIndex) then
           if not navTabs.DeleteTab(i, True, False, aocNone) then
             Break;
@@ -786,7 +786,7 @@ begin
     navTabs.Tabs.EndUpdate;
   end;
 
-  if not (Closing) and (navTabs.TabCount > 0) then
+  if not (isClosing) and (navTabs.TabCount > 0) then
   begin
     navTabs.TabIndex := PGW.PageIndex;
     UpdateMenu(PGW.ActivePageComponent);
@@ -840,7 +840,7 @@ end;
 
 procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  Closing := True;
+  isClosing := True;
   TimerScreen.Enabled := False;
 
   CloseAllTabs(True);
@@ -849,37 +849,37 @@ begin
   pSplash.Visible := True;
 
   { Clear deleted records }
-  if XSettings.ClearDeletedPeriod > 0 then
+  if xSettings.ClearDeletedPeriod > 0 then
   begin
-    ClearDeleted(XSettings.ClearDeletedPeriod * 30);
+    ClearDeleted(xSettings.ClearDeletedPeriod * 30);
   end;
 
   { Run backup }
-  case XSettings.AutomaticBackup of
+  case xSettings.AutomaticBackup of
     0: ;
     1:
     begin
-      if DaysBetween(Now, ConexaoDB.LastBackup) >= 1 then
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 1 then
         VacuumIntoBackup(False); // NewBackup;
     end;
     2:
     begin
-      if DaysBetween(Now, ConexaoDB.LastBackup) >= 7 then
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 7 then
         VacuumIntoBackup(False); // NewBackup;
     end;
     3:
     begin
-      if DaysBetween(Now, ConexaoDB.LastBackup) >= 30 then
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 30 then
         VacuumIntoBackup(False); // NewBackup;
     end;
   end;
 
   //LogInfo('END -----------------------------------------');
-  if Assigned(XSettings) then
+  if Assigned(xSettings) then
   begin
-    XSettings.AppTerminatedOk := True;
-    XSettings.SaveToFile;
-    XSettings.Free;
+    xSettings.AppTerminatedOk := True;
+    xSettings.SaveToFile;
+    xSettings.Free;
   end;
 
   CloseAction := caFree;
@@ -887,9 +887,9 @@ end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-  Closing := False;
-  Opening := False;
-  Working := False;
+  isClosing := False;
+  isOpening := False;
+  isWorking := False;
 
   {$IFDEF DEBUG}
   LogDebug('Opening the main form');
@@ -900,14 +900,14 @@ begin
   dlgLoading := TdlgLoading.Create(nil);
 
   { Get the last session termination status }
-  Finalizado := XSettings.AppTerminatedOk;
+  wasSafelyTerminated := xSettings.AppTerminatedOk;
 
   { Delete temporary files }
   //if FileExists(ConcatPaths([TempDir, 'xolmis_setup.exe'])) then
   //begin
   //  DeleteFile(ConcatPaths([TempDir, 'xolmis_setup.exe']));
   //  LogInfo('Xolmis updated to the newest version ' + GetBuildInfoAsString);
-    //MsgDlg(Format(rsSuccessfulUpdate, [NomeApp]),
+    //MsgDlg(Format(rsSuccessfulUpdate, [APP_NAME]),
     //  Format(rsUpdatedNewVersion, [GetBuildInfoAsString]), mtInformation);
   //end;
   Application.ProcessMessages;
@@ -1051,7 +1051,7 @@ begin
     Application.ProcessMessages;
 
     { Load the start page }
-    case XSettings.StartPage of
+    case xSettings.StartPage of
       0: actOpenExpeditionsExecute(nil);
       1: actOpenSurveysExecute(nil);
       2: actOpenSightingsExecute(nil);
@@ -1069,21 +1069,21 @@ begin
     navTabsTabClick(nil);
 
     { Check for updates }
-    case XSettings.AutoUpdates of
+    case xSettings.AutoUpdates of
       0: ;
       1:
       begin
-        if DaysBetween(Now, XSettings.LastAutoUpdate) >= 1 then
+        if DaysBetween(Now, xSettings.LastAutoUpdate) >= 1 then
           actCheckUpdatesExecute(nil);
       end;
       2:
       begin
-        if DaysBetween(Now, XSettings.LastAutoUpdate) >= 7 then
+        if DaysBetween(Now, xSettings.LastAutoUpdate) >= 7 then
           actCheckUpdatesExecute(nil);
       end;
       3:
       begin
-        if DaysBetween(Now, XSettings.LastAutoUpdate) >= 30 then
+        if DaysBetween(Now, xSettings.LastAutoUpdate) >= 30 then
           actCheckUpdatesExecute(nil);
       end;
     end;
@@ -1091,17 +1091,17 @@ begin
     {$IFDEF DEBUG}
     LogDebug('Main form opened');
     {$ENDIF}
-    Finalizado := False;
-    XSettings.AppTerminatedOk := False;
-    XSettings.SaveToFile;
+    wasSafelyTerminated := False;
+    xSettings.AppTerminatedOk := False;
+    xSettings.SaveToFile;
 
     pSplash.Visible := False;
   end
   else
   begin
     LogEvent(leaEnd, '-----------------------------------------');
-    if Assigned(XSettings) then
-      XSettings.Free;
+    if Assigned(xSettings) then
+      xSettings.Free;
     if Assigned(ActiveUser) then
       FreeAndNil(ActiveUser);
   end;
@@ -1122,7 +1122,7 @@ procedure TfrmMain.navTabsTabClick(Sender: TObject);
 var
   aPage: TPage;
 begin
-  if Closing then
+  if isClosing then
     Exit;
   if navTabs.TabCount = 0 then
     Exit;
@@ -1189,8 +1189,8 @@ end;
 procedure TfrmMain.navTabsTabClose(Sender: TObject; ATabIndex: integer; var ACanClose,
   ACanContinue: boolean);
 begin
-  if Closing then
-    ACanClose := Closing
+  if isClosing then
+    ACanClose := isClosing
   else
     ACanClose := PGW.CanCloseAPage(ATabIndex);
 
@@ -1230,7 +1230,7 @@ begin
     PGW.DoCloseTabClicked(PGW.Page[ATabIndex]);
   end;
 
-  if (PGW.PageCount > 0) and not (Closing) then
+  if (PGW.PageCount > 0) and not (isClosing) then
     UpdateMenu(PGW.ActivePageComponent);
 end;
 
@@ -1244,10 +1244,10 @@ procedure TfrmMain.OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableTy
 var
   pag: Integer;
 begin
-  if Opening then
+  if isOpening then
     Exit;
 
-  Opening := True;
+  isOpening := True;
 
   dlgLoading.Show;
   dlgLoading.UpdateProgress(Format(rsLoadingForm, [LowerCase(aCaption)]), -1);
@@ -1267,7 +1267,7 @@ begin
     PGW.PageIndex := pag;
     if not (ActiveQuery.State in [dsInsert, dsEdit]) then
       ActiveQuery.Refresh;
-    Opening := False;
+    isOpening := False;
     dlgLoading.Hide;
     Exit;
   end;
@@ -1299,7 +1299,7 @@ begin
   pSplash.Visible := False;
 
   //dlgLoading.Hide;
-  Opening := False;
+  isOpening := False;
 end;
 
 procedure TfrmMain.OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponentClass; aCaption: String;
@@ -1307,10 +1307,10 @@ procedure TfrmMain.OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponent
 var
   pag: Integer;
 begin
-  if Opening then
+  if isOpening then
     Exit;
 
-  Opening := True;
+  isOpening := True;
 
   dlgLoading.Show;
   dlgLoading.UpdateProgress(Format(rsLoadingForm, [LowerCase(aCaption)]), -1);
@@ -1325,7 +1325,7 @@ begin
     if (ActiveQuery <> nil) then
       if not (ActiveQuery.State in [dsInsert, dsEdit]) then
         ActiveQuery.Refresh;
-    Opening := False;
+    isOpening := False;
     dlgLoading.Hide;
     Exit;
   end;
@@ -1351,7 +1351,7 @@ begin
   sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
   dlgLoading.Hide;
-  Opening := False;
+  isOpening := False;
 end;
 
 procedure TfrmMain.pmaNewBandClick(Sender: TObject);
@@ -1470,7 +1470,7 @@ begin
   //pNotificationList.BeginUpdate;
   try
     pNotificationList.AutoSize := False;
-    pEmptyNotifications.Visible := XNotifications.Count = 0;
+    pEmptyNotifications.Visible := xNotifications.Count = 0;
 
     // Clear notification list
     for i := (pNotificationList.ComponentCount - 1) downto 0 do
@@ -1478,11 +1478,11 @@ begin
         pNotificationList.Components[i].Free;
 
     // Do not create notification cards if list is empty
-    if XNotifications.Count = 0 then
+    if xNotifications.Count = 0 then
       Exit;
 
     // Create notification cards
-    for i := 0 to XNotifications.Count - 1 do
+    for i := 0 to xNotifications.Count - 1 do
     begin
       // Create card
       B := TBCPanel.Create(pNotificationList);
@@ -1520,7 +1520,7 @@ begin
       begin
         //Align := alClient;
         Layout := tlCenter;
-        Caption := XNotifications[i].Title;
+        Caption := xNotifications[i].Title;
         Font.Style := Font.Style + [fsBold];
         N.Parent := B;
         AnchorSide[akTop].Side := asrTop;
@@ -1536,7 +1536,7 @@ begin
       begin
         //Align := alClient;
         Layout := tlCenter;
-        Caption := XNotifications[i].Message;
+        Caption := xNotifications[i].Message;
         S.Parent := B;
         AnchorSide[akTop].Side := asrBottom;
         AnchorSide[akTop].Control := N;
@@ -1602,7 +1602,7 @@ procedure TfrmMain.sbHomeClick(Sender: TObject);
 //  i: Integer;
 begin
   { Load the start page }
-  case XSettings.StartPage of
+  case xSettings.StartPage of
     0: actOpenExpeditionsExecute(nil);
     1: actOpenSurveysExecute(nil);
     2: actOpenSightingsExecute(nil);
@@ -1682,8 +1682,8 @@ end;
 
 procedure TfrmMain.UpdateStatusBar;
 begin
-  lblSbarDatabase.Caption := ConexaoDB.Name;
-  sbarDatabase.Hint := ConexaoDB.Database;
+  lblSbarDatabase.Caption := databaseConnection.Name;
+  sbarDatabase.Hint := databaseConnection.Database;
   lblSbarDatabase.Hint := sbarDatabase.Hint;
   icoSbarDatabase.Hint := sbarDatabase.Hint;
   lblSbarUser.Caption := ActiveUser.UserName;

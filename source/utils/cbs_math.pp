@@ -5,7 +5,7 @@ unit cbs_math;
 interface
 
 uses
-  Classes, SysUtils, Types, DB, SQLDB, Math;
+  Classes, SysUtils, Types, DB, SQLDB, Math, Generics.Collections;
 
   function Median(Values: array of Extended): Extended;
   function MedianQuartiles(Values: TDoubleDynArray; out Quartile1, Quartile3: Extended): Extended;
@@ -142,7 +142,7 @@ begin
   SetLength(sortedValues, n);
   for i := 0 to n - 1 do
     sortedValues[i] := Values[i];
-  TArray.Sort<Extended>(sortedValues);
+  specialize TArrayHelper<Extended>.Sort(sortedValues);
 
   // 2. Calculate the median first using the now-sorted array.
   Result := Median(sortedValues);

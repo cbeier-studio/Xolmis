@@ -297,7 +297,7 @@ begin
       Report.ExportFilename := SaveDlg.FileName;
       Report.ExportTo(TlrPdfExportFilter, SaveDlg.FileName);
 
-      if XSettings.OpenFileAfterExport then
+      if xSettings.OpenFileAfterExport then
         OpenDocument(SaveDlg.FileName);
     end;
   end;

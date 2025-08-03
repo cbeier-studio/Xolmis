@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, fgl, fpjson, jsonparser, DateUtils, RegExpr, StrUtils,
-  cbs_sampling, cbs_birds, cbs_gis, cbs_breeding;
+  cbs_sampling, cbs_birds, models_geo, cbs_breeding;
 
 type
   TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);

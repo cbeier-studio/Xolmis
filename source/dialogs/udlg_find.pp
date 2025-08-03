@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType,
   StdCtrls, Buttons, Grids, DBGrids, Menus, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
-  cbs_system, cbs_datatypes, cbs_gis, cbs_taxonomy;
+  cbs_system, cbs_datatypes, models_geo, cbs_taxonomy;
 
 type
 
@@ -1188,7 +1188,7 @@ end;
 
 function TdlgFind.HashtagFilter(aValue: String): Boolean;
 begin
-  if MatchStr(aValue, MarkedQS) then { #marked }
+  if MatchStr(aValue, HASHTAG_MARKED) then { #marked }
   begin
     {$IFDEF DEBUG}
     LogDebug('Search hashtag: ' + aValue);
@@ -1203,7 +1203,7 @@ begin
       Open;
     end;
   end;
-  if MatchStr(aValue, AllQS) then { #all }
+  if MatchStr(aValue, HASHTAG_ALL) then { #all }
   begin
     {$IFDEF DEBUG}
     LogDebug('Search hashtag: ' + aValue);

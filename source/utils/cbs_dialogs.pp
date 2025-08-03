@@ -124,7 +124,7 @@ begin
   M := DMM.TaskDlg;
   M.Title := aTitle;
   M.Text := aText;
-  M.Caption := NomeApp;
+  M.Caption := APP_NAME;
   M.CommonButtons := [tcbCancel];
   M.MainIcon := tdiNone;
   M.DefaultButton := tcbCancel;
