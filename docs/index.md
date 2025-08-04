@@ -1,25 +1,34 @@
-# Welcome to Xolmis Documentation
+# Xolmis User Manual
 
-Select an item from the list below or use the search box.
+Welcome to the manual for Xolmis Desktop, the ornithological data management system.
+
+You can download the latest version of Xolmis [here](https://github.com/cbeier-studio/Xolmis/releases/latest).
 
 ## About Xolmis
+
+This section describes Xolmis, including its legal notices.
 
 - [Introduction](introduction.md)
 - [Release notes](release-notes.md)
 - [Privacy Policy](privacy.md)
 - [License](license.md)
 - [Third party announcements](third-party.md)
-- [Feedback](feedback.md)
 - [Glossary](glossary.md)
 
 ## Getting started
+
+This section first steps in Xolmis.
 
 - [Installing](installing.md)
 - [Connections](connections.md)
 - [Users](users.md)
 - [Settings](settings.md)
+- [User interface](interface.md)
+- [Feedback](feedback.md)
 
 ## Using Xolmis
+
+This section describes the interface and general features of Xolmis.
 
 - [Adding and editing data](adding-and-editing-data.md)
 - [Search and filtering data](search-and-filtering-data.md)
@@ -35,6 +44,8 @@ Select an item from the list below or use the search box.
 - [Print data](print-data.md)
 
 ## Modules
+
+This section describes each module (type of data) of Xolmis.
 
 ### Geo
 
