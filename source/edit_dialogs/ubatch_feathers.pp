@@ -164,7 +164,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, models_birds, utils_finddialogs, utils_dialogs, models_geo, models_taxonomy,
-  utils_validations, data_getvalue, utils_editdialogs,
+  utils_validations, data_getvalue, utils_editdialogs, models_record_types,
   udlg_loading, udlg_progress, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}

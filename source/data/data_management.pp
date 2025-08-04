@@ -382,7 +382,7 @@ begin
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Botanic taxa
-        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBotanicTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBotanicalTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateBotanicTaxaTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;

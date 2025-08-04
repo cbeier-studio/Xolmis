@@ -1388,14 +1388,15 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_system, utils_themes, models_geo, models_birds, utils_editdialogs, utils_dialogs, utils_math,
-  utils_finddialogs, data_management, data_getvalue, models_taxonomy, data_columns, data_blobs, utils_print, models_users,
-  utils_validations, data_setparam, data_consts, utils_gis,
+  utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
+  utils_finddialogs, utils_print, utils_validations, utils_gis,
+  data_management, data_getvalue, data_columns, data_blobs, data_setparam, data_consts,
+  models_taxonomy, models_users, models_record_types,
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
-  ufrm_main, ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer,
-  ufrm_quickentry, udlg_selectrecord, udlg_bandhistory;
+  ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory,
+  ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer;
 
 {$R *.lfm}
 
@@ -11827,7 +11828,7 @@ end;
 
 procedure TfrmCustomGrid.SetGridBotanicTaxa;
 begin
-  Caption := rsTitleBotanicTaxa;
+  Caption := rsTitleBotanicalTaxa;
   FSearch.DataSet := DMG.qBotany;
   // Set the default data sorting
   AddSortedField(COL_TAXON_NAME, sdAscending);

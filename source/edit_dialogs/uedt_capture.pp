@@ -23,7 +23,7 @@ interface
 uses
   Buttons, Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls,
   Graphics, Dialogs, Character, DateUtils, ExtCtrls, StdCtrls, Menus, atshapelinebgra,
-  models_birds;
+  models_birds, models_record_types;
 
 type
 
@@ -290,8 +290,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_consts, data_getvalue, utils_dialogs, utils_finddialogs, utils_gis,
-  models_taxonomy, utils_validations, utils_fullnames, utils_editdialogs, models_geo,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations,
+  utils_editdialogs, data_types, data_consts, data_getvalue, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}

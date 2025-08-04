@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, LCLType,
-  Character, utils_system, models_sampling;
+  Character, utils_system, models_sampling, models_record_types;
 
 type
 

@@ -327,7 +327,7 @@ begin
     Add(rsTitleGazetteer);
     Add(rsTitleSamplingPlots);
     Add(rsTitlePermanentNets);
-    Add(rsTitleBotanicTaxa);
+    Add(rsTitleBotanicalTaxa);
   end;
 end;
 
@@ -422,7 +422,7 @@ begin
     Add(rsTitleGazetteer);
     Add(rsTitleSamplingPlots);
     Add(rsTitlePermanentNets);
-    Add(rsTitleBotanicTaxa);
+    Add(rsTitleBotanicalTaxa);
   end;
 end;
 

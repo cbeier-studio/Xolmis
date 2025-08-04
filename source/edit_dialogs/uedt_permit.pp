@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, SysUtils, DB, LResources, DateUtils, Character, Forms,
   Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, Menus,
-  atshapelinebgra, BCPanel, models_entities;
+  atshapelinebgra, BCPanel, models_permits;
 
 type
 

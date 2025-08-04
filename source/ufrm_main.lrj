@@ -31,7 +31,7 @@
 {"hash":13174354,"name":"tfrmmain.actopengazetteer.caption","sourcebytes":[38,71,97,122,101,116,116,101,101,114],"value":"&Gazetteer"},
 {"hash":20067171,"name":"tfrmmain.actopennetstations.caption","sourcebytes":[38,83,97,109,112,108,105,110,103,32,112,108,111,116,115],"value":"&Sampling plots"},
 {"hash":2861281,"name":"tfrmmain.actopentaxa.caption","sourcebytes":[38,84,97,120,97],"value":"&Taxa"},
-{"hash":96534657,"name":"tfrmmain.actopenbotany.caption","sourcebytes":[38,66,111,116,97,110,105,99,32,116,97,120,97],"value":"&Botanic taxa"},
+{"hash":22007265,"name":"tfrmmain.actopenbotany.caption","sourcebytes":[38,66,111,116,97,110,105,99,97,108,32,116,97,120,97],"value":"&Botanical taxa"},
 {"hash":63632867,"name":"tfrmmain.actopenmethods.caption","sourcebytes":[77,101,116,104,111,100,115],"value":"Methods"},
 {"hash":250769278,"name":"tfrmmain.actopenmanual.caption","sourcebytes":[38,68,111,99,117,109,101,110,116,97,116,105,111,110],"value":"&Documentation"},
 {"hash":44537540,"name":"tfrmmain.actabout.caption","sourcebytes":[38,65,98,111,117,116],"value":"&About"},

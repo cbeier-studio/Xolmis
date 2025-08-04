@@ -25,12 +25,6 @@ uses
   Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
 
 type
-  TNestFate = (nfLoss, nfSuccess, nfUnknown);
-
-const
-  NEST_FATES: array [TNestFate] of Char = ('L', 'S', 'U');
-
-type
 
   { TNest }
 
@@ -127,12 +121,6 @@ type
   end;
 
 type
-  TNestRole = (nrlUnknown, nrlMale, nrlFemale, nrlHelper, nrlOffspring);
-
-const
-  NEST_ROLES: array[TNestRole] of Char = ('U', 'M', 'F', 'H', 'O');
-
-type
 
   { TNestOwner }
 
@@ -159,18 +147,6 @@ type
     property Role: TNestRole read FRole write FRole;
     property IndividualId: Integer read FIndividualId write FIndividualId;
   end;
-
-type
-  TEggShape = (esUnknown, esSpherical, esElliptical, esOval, esPiriform, esConical, esBiconical, esCylindrical,
-    esLongitudinal);
-  TEggshellPattern = (espUnknown, espSpots, espBlotches, espSquiggles, espStreaks, espScrawls, espSpotsSquiggles,
-    espBlotchesSquiggles);
-  TEggshellTexture = (estUnknown, estChalky, estShiny, estGlossy, estPitted);
-
-const
-  EGG_SHAPES: array [TEggShape] of Char = ('U', 'S', 'E', 'O', 'P', 'C', 'B', 'Y', 'L');
-  EGGSHELL_PATTERNS: array[TEggshellPattern] of String = ('U', 'P', 'B', 'S', 'T', 'W', 'PS', 'BS');
-  EGGSHELL_TEXTURES: array[TEggshellTexture] of Char = ('U', 'C', 'S', 'G', 'P');
 
 type
 
@@ -235,14 +211,6 @@ type
     property Description: String read FDescription write FDescription;
     property Notes: String read FNotes write FNotes;
   end;
-
-type
-  TNestStatus = (nstInactive, nstActive, nstUnknown);
-  TNestStage = (nsgInactive, nsgConstruction, nsgLaying, nsgIncubation, nsgHatching, nsgNestling, nsgUnknown);
-
-const
-  NEST_STATUSES: array[TNestStatus] of Char = ('I', 'A', 'U');
-  NEST_STAGES: array[TNestStage] of Char = ('X', 'C', 'L', 'I', 'H', 'N', 'U');
 
 type
 

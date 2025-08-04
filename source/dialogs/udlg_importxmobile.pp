@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
   StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, Grids, StrUtils,
   Character,
-  data_import, models_sampling, models_breeding, models_xmobile;
+  data_import, models_sampling, models_breeding, models_xmobile, models_record_types;
 
 type
 
@@ -143,7 +143,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, data_management, utils_dialogs, utils_finddialogs, data_getvalue, models_geo,
-  models_birds, data_consts, utils_themes, uDarkStyleParams,
+  models_sightings, data_consts, utils_themes, uDarkStyleParams, models_specimens,
   udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading;
 
 {$R *.lfm}

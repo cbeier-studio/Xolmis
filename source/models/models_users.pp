@@ -24,12 +24,6 @@ uses
   Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
 
 type
-  TUserRank = (urAdministrator, urStandard, urVisitor);
-
-const
-  USER_RANKS: array[TUserRank] of Char = ('A', 'S', 'V');
-
-type
   { TUser }
 
   TUser = class(TXolmisRecord)

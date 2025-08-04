@@ -23,7 +23,8 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, StrUtils, Graphics, DateUtils, BufDataset,
   { CBS }
-  models_geo, models_entities, models_botany, models_taxonomy, models_birds, models_sampling, models_breeding;
+  models_geo, models_projects, models_botany, models_taxonomy, models_birds, models_sampling, models_breeding,
+  models_sightings, models_bands, models_institutions, models_people, models_permits, models_specimens;
 
 type
 
@@ -1475,7 +1476,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, data_management, data_columns, data_getvalue, utils_fullnames, utils_graphics,
-  utils_validations,
+  utils_validations, models_record_types,
   udm_main;
 
 {$R *.lfm}

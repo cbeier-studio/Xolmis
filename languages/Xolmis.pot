@@ -11383,7 +11383,7 @@ msgstr ""
 
 #: tfrmmain.actopenbotany.caption
 msgctxt "tfrmmain.actopenbotany.caption"
-msgid "&Botanic taxa"
+msgid "&Botanical taxa"
 msgstr ""
 
 #: tfrmmain.actopencaptures.caption
@@ -16263,9 +16263,8 @@ msgctxt "utils_locale.rstitlebandsrunningout"
 msgid "Bands running out"
 msgstr ""
 
-#: utils_locale.rstitlebotanictaxa
-msgctxt "utils_locale.rstitlebotanictaxa"
-msgid "Botanic taxa"
+#: utils_locale.rstitlebotanicaltaxa
+msgid "Botanical taxa"
 msgstr ""
 
 #: utils_locale.rstitlebudget

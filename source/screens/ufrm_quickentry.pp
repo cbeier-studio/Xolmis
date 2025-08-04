@@ -115,7 +115,7 @@ implementation
 
 uses
   utils_locale, data_columns, utils_global, utils_dialogs, utils_finddialogs, data_getvalue, models_geo, models_taxonomy,
-  utils_themes, uDarkStyleParams,
+  utils_themes, uDarkStyleParams, models_record_types,
   udm_main;
 
 {$R *.lfm}

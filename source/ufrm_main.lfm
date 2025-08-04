@@ -1176,7 +1176,7 @@ object frmMain: TfrmMain
     end
     object actOpenBotany: TAction
       Category = 'Taxonomy'
-      Caption = '&Botanic taxa'
+      Caption = '&Botanical taxa'
       ImageIndex = 26
       OnExecute = actOpenBotanyExecute
     end

@@ -45,7 +45,7 @@ uses
 implementation
 
 uses
-  utils_themes, utils_locale, utils_count, models_birds;
+  utils_themes, utils_locale, utils_count, models_bands, models_record_types;
 
 procedure MakeRounded(Control: TWinControl);
 var

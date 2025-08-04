@@ -988,7 +988,7 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="models\models_entities.pp"/>
+        <Filename Value="models\models_projects.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -1064,7 +1064,7 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="utils\utils_count.pp"/>
+        <Filename Value="data\data_count.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -1383,6 +1383,30 @@
       </Unit>
       <Unit>
         <Filename Value="utils\utils_gis.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\models_bands.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\models_sightings.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\models_institutions.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\models_people.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\models_permits.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\models_specimens.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

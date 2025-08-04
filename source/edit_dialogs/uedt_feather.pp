@@ -118,7 +118,8 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_validations, models_geo, data_consts,
-  models_taxonomy, utils_conversions, data_getvalue, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  models_taxonomy, utils_conversions, data_getvalue, utils_editdialogs, models_record_types,
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 

@@ -57,7 +57,7 @@ uses
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_management, models_sampling, udm_main,
+  utils_locale, utils_global, data_types, data_management, models_sampling, udm_main, models_record_types,
   udlg_find, udlg_validate, udlg_plantminer, udlg_authorship, udlg_export,
   udlg_calendar, udlg_colorbands, ulst_cyclecode, ulst_moltlimits, ulst_howsexedaged,
   ulst_detectiontype, ulst_breedingstatus;

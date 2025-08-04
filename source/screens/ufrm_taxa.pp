@@ -181,7 +181,7 @@ implementation
 
 uses
   utils_global, utils_locale, utils_themes, data_search, models_taxonomy, data_getvalue, utils_conversions, utils_dialogs,
-  ufrm_main, udm_main, udm_grid, udm_taxa,
+  ufrm_main, udm_main, udm_grid, udm_taxa, models_record_types,
   uDarkStyleParams;
 
 {$R *.lfm}

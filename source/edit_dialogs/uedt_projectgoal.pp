@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, ExtCtrls, StdCtrls, SysUtils, Forms, Controls, EditBtn,
-  Graphics, Dialogs, Buttons, models_entities;
+  Graphics, Dialogs, Buttons, models_projects;
 
 type
 
@@ -56,7 +56,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, data_consts, data_getvalue, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, data_types, utils_dialogs, data_consts, data_getvalue, models_record_types,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

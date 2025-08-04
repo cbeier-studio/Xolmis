@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, StdCtrls, SysUtils, Forms, Character,
-  Controls, Graphics, Dialogs, Buttons, Menus, models_entities;
+  Controls, Graphics, Dialogs, Buttons, Menus, models_projects;
 
 type
 
@@ -77,7 +77,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, utils_dialogs, utils_validations, data_getvalue, utils_conversions,
-  utils_finddialogs, data_consts, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  utils_finddialogs, data_consts, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams, models_record_types;
 
 {$R *.lfm}
 

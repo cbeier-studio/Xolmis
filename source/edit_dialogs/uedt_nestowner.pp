@@ -80,7 +80,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, data_getvalue,
-  data_consts, utils_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams;
+  data_consts, utils_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams, models_record_types;
 
 {$R *.lfm}
 

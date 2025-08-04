@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, StrUtils,
-  models_taxonomy, utils_gis, models_sampling;
+  models_record_types, models_taxonomy, utils_gis, models_sampling;
 
 type
   TRecordReviewStatus = (rvwNotReviewed, rvwRecordOk, rvwRecordWithProblems);

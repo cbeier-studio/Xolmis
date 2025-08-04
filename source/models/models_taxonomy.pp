@@ -24,68 +24,6 @@ uses
   Classes, SysUtils, Forms, StrUtils, ComCtrls, DB, SQLDB, RegExpr, laz.VirtualTrees, CheckLst, fpjson,
   fgl, models_record_types;
 
-const
-  TAXONOMY_NAMES: array [0 .. 2] of String = ('Clements/eBird', 'IOC', 'CBRO');
-
-type
-  TBirdTaxonomy = (btClements, btIoc, btCbro);
-  TBirdTaxonomies = set of TBirdTaxonomy;
-
-  TTaxonomyAction = (taNew, taSplit, taLump, taMove, taUpdate);
-
-type
-  TZooRank = ({Domain} trDomain, trSubDomain,
-    {Kingdom}
-    trHyperkingdom, trSuperkingdom, trKingdom, trSubkingdom, trInfrakingdom, trParvkingdom,
-    {Phylum}
-    trSuperphylum, trPhylum, trSubphylum, trInfraphylum, trMicrophylum,
-    {Class}
-    trSuperclass, trClass, trSubclass, trInfraclass, trSubterclass, trParvclass,
-    {Division}
-    trSuperdivision, trDivision, trSubdivision, trInfradivision,
-    {Legion}
-    trSuperlegion, trLegion, trSublegion, trInfralegion,
-    {Cohort}
-    trSupercohort, trCohort, trSubcohort, trInfracohort,
-    {Order}
-    trGigaorder, trMegaorder, trGrandorder, trHyperorder, trSuperorder, trSeriesOrder,
-    trOrder, trNanorder, trHypoorder, trMinorder, trSuborder, trInfraorder, trParvorder,
-    {Section}
-    trSection, trSubsection,
-    {Family}
-    trGigafamily, trMegafamily, trGrandfamily, trHyperfamily, trSuperfamily, trEpifamily,
-    trSeriesFamily, trGroupFamily, trFamily, trSubfamily, trInfrafamily,
-    {Tribe}
-    trSupertribe, trTribe, trSubtribe, trInfratribe,
-    {Genus}
-    trSupergenus, trGenus, trSubgenus,
-    {Species}
-    trSuperspecies, trSpecies,
-    {Subspecies}
-    trSubspecies, trMonotypicGroup, trPolitypicGroup,
-    {eBird special taxa}
-    trForm, trSpuh, trHybrid, trIntergrade, trDomestic, trSlash);
-
-type
-  TEbirdRank = (erSpuh, erHybrid, erIntergrade, erDomestic, erSlash, erForm);
-
-const
-  ZOOLOGICAL_RANKS: array[TZooRank] of String = ('D.', 'SD.', 'HK.', 'SK.', 'K.', 'sk.', 'ik.', 'pk.', 'SPh.', 'ph.',
-    'subph.', 'infraph.', 'microph.', 'sc.', 'c.', 'subc.', 'infrac.', 'stc.', 'parvc.', 'sdiv.',
-    'div.', 'subdiv.', 'infradiv.', 'sleg.', 'leg.', 'subleg.', 'infraleg.', 'scoh.', 'coh.',
-    'subcoh.', 'infracoh.', 'Gord.', 'Mord.', 'grandord.', 'Hord.', 'superod.', 'seriesord.',
-    'ord.', 'nord.', 'hypoord.', 'minord.', 'subord.', 'infraord.', 'parvord.', 'sect.', 'subsect.',
-    'Gfam.', 'Mfam.', 'grandfam.', 'hyperfam.', 'superfam.', 'epifam.', 'seriesfam.', 'groupfam.',
-    'fam.', 'subfam.', 'infrafam.', 'supertr.', 'tr.', 'subtr.', 'infratr.', 'superg.', 'g.',
-    'subg.', 'supersp.', 'sp.', 'ssp.', 'grp. (mono)', 'grp. (poli)', 'f.', 'spuh', 'hybrid',
-    'intergrade', 'domest.', 'slash');
-
-type
-  TTaxonFilter = (tfAll, tfMain, {tfKingdoms, tfPhyla, tfClasses,} tfOrders, tfFamilies, tfTribes,
-    tfGenera, tfSpecies, tfSubspecies, tfSubspeciesGroups, tfSpuhs, tfSlashes, tfForms, tfDomestics,
-    tfHybrids, tfIntergrades);
-  TTaxonFilters = set of TTaxonFilter;
-
 type
 
   { TRank }
@@ -188,12 +126,6 @@ type
     property IocSortNum: Double read FIocSortNum write FIocSortNum;
     property CbroTaxonomy: Boolean read FCbroTaxonomy write FCbroTaxonomy;
     property OtherPortugueseNames: String read FOtherPortugueseNames write FOtherPortugueseNames;
-  end;
-
-type
-  TChartCounts = record
-    XValue: Integer;
-    YValues: array of Double;
   end;
 
 var

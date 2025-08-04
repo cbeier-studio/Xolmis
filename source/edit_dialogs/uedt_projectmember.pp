@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, DB, ExtCtrls, SysUtils, Forms, Controls, Graphics, EditBtn, atshapelinebgra, Buttons, StdCtrls,
-  Character, Dialogs, Menus, models_entities;
+  Character, Dialogs, Menus, models_projects;
 
 type
 

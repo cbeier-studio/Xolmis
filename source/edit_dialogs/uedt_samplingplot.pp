@@ -95,8 +95,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_geo, utils_validations, data_getvalue,
-  data_consts, utils_editdialogs, utils_gis,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs, utils_gis,
+  data_types, data_getvalue, data_consts, models_record_types,
   udm_main, udm_grid,
   uDarkStyleParams;
 

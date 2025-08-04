@@ -25,55 +25,6 @@ uses
   Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, fgl, DateUtils, models_record_types;
 
 type
-  TQualifier = (qfNone, qfSpuh, qfConfer, qfAffinis, qfQuestion);
-  TAddendum = (adNone, adGenus, adSpecies, adInfraspecies);
-
-  TBotanicRank = (
-    {Realm}
-    brRealm, brSubrealm,
-    {Kingdom}
-    brKingdom, brSubkingdom,
-    {Phylum}
-    brSuperphylum, brPhylum, brSubphylum,
-    {Class}
-    brSuperclass, brClass, brSubclass,
-    {Order}
-    brSuperorder, brOrder, brSuborder, brInfraorder,
-    {Family}
-    brSuperfamily, brEpifamily, brFamily, brSubfamily, brInfrafamily,
-    {Tribe}
-    brTribe, brSubtribe, brInfratribe,
-    {Genus}
-    brSupergenus, brGenus, brSubgenus,
-    {Section}
-    brSection, brSubsection,
-    {Series}
-    brSeries, brSubseries,
-    {Species}
-    brSuperspecies, brSpecies,
-    {Subspecies}
-    brSubspecies,
-    {Variety}
-    brVariety, brSubvariety,
-    {Form}
-    brForm, brSubform,
-    {Special ranks}
-    brCultivarGroup, brCultivar, brGrex, brHybrid);
-
-  TBotanicRankMap = specialize TFPGMap<String, TBotanicRank>;
-
-const
-  QUALIFIERS: array[TQualifier] of String = ('', 'sp.', 'cf.', 'aff.', '?');
-  BOTANICAL_RANKS: array[TBotanicRank] of String = ('R.', 'SR.', 'K.', 'sk.', 'SPh.', 'ph.',
-    'subph.', 'sc.', 'c.', 'subc.', 'superod.', 'ord.', 'subord.', 'infraord.',
-    'superfam.', 'epifam.', 'fam.', 'subfam.', 'infrafam.', 'tr.', 'subtr.', 'infratr.',
-    'superg.', 'g.', 'subg.', 'sect.', 'subsect.', 'ser.', 'subser.',
-    'supersp.', 'sp.', 'subsp.', 'var.', 'subvar.', 'f.', 'subf.',
-    'cultivar group', 'cultivar', 'grex', 'hybrid');
-
-  INFRA_RANKS: set of TBotanicRank = [brSubspecies, brVariety, brSubvariety, brForm, brSubform];
-
-type
   TBotanicName = record
     Name: String;
     Qualifier: TQualifier;

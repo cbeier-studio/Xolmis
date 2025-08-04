@@ -419,7 +419,7 @@ begin
   TablesDict.Add(rsTitleProjectBudgets, tbProjectBudgets);
   TablesDict.Add(rsTitleProjectExpenses, tbProjectExpenses);
   TablesDict.Add(rsTitlePermits, tbPermits);
-  TablesDict.Add(rsTitleBotanicTaxa, tbBotanicTaxa);
+  TablesDict.Add(rsTitleBotanicalTaxa, tbBotanicTaxa);
   TablesDict.Add(rsTitleTaxonRanks, tbTaxonRanks);
   TablesDict.Add(rsTitleZooTaxa, tbZooTaxa);
   TablesDict.Add(rsTitleBands, tbBands);
@@ -469,7 +469,7 @@ begin
   LocaleTablesDict.Add(tbProjectBudgets, rsTitleProjectBudgets);
   LocaleTablesDict.Add(tbProjectExpenses, rsTitleProjectExpenses);
   LocaleTablesDict.Add(tbPermits, rsTitlePermits);
-  LocaleTablesDict.Add(tbBotanicTaxa, rsTitleBotanicTaxa);
+  LocaleTablesDict.Add(tbBotanicTaxa, rsTitleBotanicalTaxa);
   LocaleTablesDict.Add(tbTaxonRanks, rsTitleTaxonRanks);
   LocaleTablesDict.Add(tbZooTaxa, rsTitleZooTaxa);
   LocaleTablesDict.Add(tbBands, rsTitleBands);

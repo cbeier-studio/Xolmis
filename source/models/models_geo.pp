@@ -29,17 +29,6 @@ uses
   DB, SQLDB, models_record_types, data_types;
 
 type
-  TSiteRank = (srNone, srCountry, srState, srRegion, srMunicipality, srDistrict, srLocality);
-  TGazetteerFilter = (gfAll, gfCountries, gfStates, gfRegions, gfCities, gfDistricts, gfLocalities);
-  TGazetteerFilters = set of TGazetteerFilter;
-
-  TCoordinatePrecision = (cpEmpty = -1, cpExact, cpApproximated, cpReference);
-
-const
-  SiteRankStr: array[TSiteRank] of String = ('', 'P', 'E', 'R', 'M', 'D', 'L');
-  CoordinatePrecisionStr: array[TCoordinatePrecision] of String = ('', 'E', 'A', 'R');
-
-type
 
   { TSite }
 
@@ -429,7 +418,7 @@ begin
       SetStrParam(ParamByName('site_acronym'), FAbbreviation);
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetFloatParam(ParamByName('altitude'), FAltitude);
-      ParamByName('site_rank').AsString := SiteRankStr[FRank];
+      ParamByName('site_rank').AsString := SITE_RANKS[FRank];
       SetForeignParam(ParamByName('parent_site_id'), FParentSiteId);
       ParamByName('country_id').AsInteger := FCountryId;
       SetForeignParam(ParamByName('state_id'), FStateId);
@@ -507,7 +496,7 @@ begin
   try
     JSONObject.Add('Name', FName);
     JSONObject.Add('Acronym', FAbbreviation);
-    JSONObject.Add('Rank', SiteRankStr[FRank]);
+    JSONObject.Add('Rank', SITE_RANKS[FRank]);
     JSONObject.Add('ParentSiteId', FParentSiteId);
     JSONObject.Add('MunicipalityId', FMunicipalityId);
     JSONObject.Add('StateId', FStateId);
@@ -570,7 +559,7 @@ begin
       SetStrParam(ParamByName('site_acronym'), FAbbreviation);
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetFloatParam(ParamByName('altitude'), FAltitude);
-      ParamByName('site_rank').AsString := SiteRankStr[FRank];
+      ParamByName('site_rank').AsString := SITE_RANKS[FRank];
       SetForeignParam(ParamByName('parent_site_id'), FParentSiteId);
       ParamByName('country_id').AsInteger := FCountryId;
       SetForeignParam(ParamByName('state_id'), FStateId);

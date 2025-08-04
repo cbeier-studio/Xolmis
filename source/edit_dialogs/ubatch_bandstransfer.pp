@@ -62,8 +62,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, data_types, utils_validations, models_birds, utils_conversions,
-  utils_editdialogs, udm_main, udm_grid, udlg_loading, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, data_types, utils_validations, models_bands, utils_conversions,
+  utils_editdialogs, udm_main, udm_grid, udlg_loading, uDarkStyleParams, models_record_types;
 
 {$R *.lfm}
 

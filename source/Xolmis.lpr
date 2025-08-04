@@ -40,13 +40,13 @@ uses
   models_botany,
   models_breeding,
   utils_conversions,
-  utils_count,
+  data_count,
   data_management,
   data_search,
   data_types,
   utils_dialogs,
   utils_editdialogs,
-  models_entities,
+  models_projects,
   data_export,
   data_filters,
   utils_finddialogs,
@@ -135,7 +135,8 @@ uses
   uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
   uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
   udm_reports, models_xmobile, ufrm_quickentry, udlg_splash, udlg_loading, udlg_selectrecord, data_consts, 
-udlg_onboarding, ubatch_bandstransfer, utils_gis;
+udlg_onboarding, ubatch_bandstransfer, utils_gis, models_bands, models_sightings, models_institutions, 
+models_people, models_permits, models_specimens;
 
 {$R *.res}
 

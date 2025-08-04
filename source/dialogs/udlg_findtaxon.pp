@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, LCLType, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
   DBControlGrid, StdCtrls, Buttons, BCPanel, ColorSpeedButton, HtmlView, RegExpr, StrUtils,
-  utils_system, models_taxonomy, data_types, Grids, HTMLUn2, HtmlGlobals;
+  utils_system, models_taxonomy, data_types, Grids, HTMLUn2, HtmlGlobals, models_record_types;
 
 type
 

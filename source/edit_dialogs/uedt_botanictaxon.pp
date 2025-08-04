@@ -89,7 +89,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, utils_finddialogs, utils_dialogs, models_taxonomy, utils_validations, data_getvalue,
-  data_consts, udm_main, uDarkStyleParams;
+  data_consts, udm_main, uDarkStyleParams, models_record_types;
 
 {$R *.lfm}
 

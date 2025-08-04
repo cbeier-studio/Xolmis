@@ -99,7 +99,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_validations, data_columns, data_consts,
+  utils_locale, utils_global, utils_dialogs, utils_validations, data_columns, data_consts, models_record_types,
   udm_main, uDarkStyleParams;
 
 { TedtWeatherLog }

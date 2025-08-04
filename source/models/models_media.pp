@@ -25,77 +25,6 @@ uses
 
 type
 
-  TImageType = (
-    itEmpty = -1,
-    itBirdInHandFlank,
-    itBirdInHandBelly,
-    itBirdInHandBack,
-    itBirdInHandWing,
-    itBirdInHandTail,
-    itBirdInHandHead,
-    itBirdInHandFeet,
-    itFreeBirdStanding,
-    itFreeBirdFlying,
-    itFreeBirdSwimming,
-    itFreeBirdForraging,
-    itFreeBirdCopulating,
-    itFreeBirdBuildingNest,
-    itFreeBirdDisplaying,
-    itFreeBirdIncubating,
-    itFreeBirdVocalizing,
-    itFreeBirdAgonistic,
-    itDeadBird,
-    itBirdFlock,
-    itBirdNest,
-    itBirdEgg,
-    itBirdNestling,
-    itEctoparasite,
-    itFootprint,
-    itFeather,
-    itFeces,
-    itFood,
-    itEnvironment,
-    itFieldwork,
-    itTeam
-  );
-
-const
-  IMAGE_TYPES: array[TImageType] of String = (
-    '',
-    'flank',
-    'belly',
-    'back',
-    'wing',
-    'tail',
-    'head',
-    'feet',
-    'stand',
-    'fly',
-    'swim',
-    'forr',
-    'copul',
-    'build',
-    'disp',
-    'incub',
-    'vocal',
-    'agon',
-    'dead',
-    'flock',
-    'nest',
-    'egg',
-    'nstln',
-    'paras',
-    'fprnt',
-    'feath',
-    'feces',
-    'food',
-    'envir',
-    'fwork',
-    'team'
-  );
-
-type
-
   { TImageData }
 
   TImageData = class(TXolmisRecord)
@@ -690,7 +619,7 @@ begin
       SetStrParam(ParamByName('subtitle'), FSubtitle);
       SetForeignParam(ParamByName('author_id'), FAuthorId);
       SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
+      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetForeignParam(ParamByName('taxon_id'), FTaxonId);
       SetForeignParam(ParamByName('individual_id'), FIndividualId);
@@ -840,7 +769,7 @@ begin
     JSONObject.Add('Subtitle', FSubtitle);
     JSONObject.Add('Author', FAuthorId);
     JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Coordinate precision', CoordinatePrecisionStr[FCoordinatePrecision]);
+    JSONObject.Add('Coordinate precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('Longitude', FLongitude);
     JSONObject.Add('Latitude', FLatitude);
     JSONObject.Add('Taxon', FTaxonId);
@@ -925,7 +854,7 @@ begin
       SetStrParam(ParamByName('subtitle'), FSubtitle);
       SetForeignParam(ParamByName('author_id'), FAuthorId);
       SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
+      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetForeignParam(ParamByName('taxon_id'), FTaxonId);
       SetForeignParam(ParamByName('individual_id'), FIndividualId);
@@ -1391,7 +1320,7 @@ begin
       SetStrParam(ParamByName('subtitle'), FSubtitle);
       //SetForeignParam(ParamByName('author_id'), FAuthorId);
       SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
+      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetForeignParam(ParamByName('taxon_id'), FTaxonId);
       SetForeignParam(ParamByName('individual_id'), FIndividualId);
@@ -1547,7 +1476,7 @@ begin
     JSONObject.Add('Subtitle', FSubtitle);
     JSONObject.Add('Author', FAuthorId);
     JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Coordinate precision', CoordinatePrecisionStr[FCoordinatePrecision]);
+    JSONObject.Add('Coordinate precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('Longitude', FLongitude);
     JSONObject.Add('Latitude', FLatitude);
     JSONObject.Add('Taxon', FTaxonId);
@@ -1645,7 +1574,7 @@ begin
       SetStrParam(ParamByName('subtitle'), FSubtitle);
       //SetForeignParam(ParamByName('author_id'), FAuthorId);
       SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := CoordinatePrecisionStr[FCoordinatePrecision];
+      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetForeignParam(ParamByName('taxon_id'), FTaxonId);
       SetForeignParam(ParamByName('individual_id'), FIndividualId);

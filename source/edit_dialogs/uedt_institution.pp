@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, Buttons, Menus, atshapelinebgra, models_entities;
+  StdCtrls, ExtCtrls, Buttons, Menus, atshapelinebgra, models_institutions;
 
 type
 
@@ -119,7 +119,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_geo, utils_validations, data_getvalue,
-  data_consts, utils_editdialogs,
+  data_consts, utils_editdialogs, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}

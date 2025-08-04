@@ -26,7 +26,7 @@ uses
   SysUtils, Classes, Forms, Dialogs, StrUtils, ComCtrls, DateUtils, fgl,
   { Data }
   DB, SQLDB, SdfData, fpjson, jsonparser, fpjsondataset,
-  models_sampling;
+  models_sampling, models_record_types;
 
 const
   EBIRD_SCHEMA: String = 'Submission ID,Common Name,Scientific Name,Taxonomic Order,' +
@@ -296,7 +296,7 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_system, utils_fullnames,
   data_types, data_management, data_getvalue, data_consts,
-  models_users, models_taxonomy, models_birds, models_geo, models_breeding,
+  models_users, models_taxonomy, models_birds, models_geo, models_breeding, models_sightings, models_bands,
   udm_main, udlg_progress;
 
 procedure LoadEbirdFile(const aCSVFile: String; CSV: TSdfDataSet);

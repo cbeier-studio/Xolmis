@@ -44,7 +44,7 @@ uses
     rsTitleUsers = 'Users';
     rsTitleHistory = 'History';
     rsTitleTaxonRanks = 'Taxonomic ranks';
-    rsTitleBotanicTaxa = 'Botanic taxa';
+    rsTitleBotanicalTaxa = 'Botanical taxa';
     rsTitleZooTaxa = 'Taxa';
     rsTitleSightings = 'Sightings';
     rsTitleCaptures = 'Captures';

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons,
-  BCPanel, atshapelinebgra, models_birds;
+  BCPanel, atshapelinebgra, models_bands, models_record_types;
 
 type
 

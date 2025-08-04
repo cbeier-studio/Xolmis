@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, EditBtn, StdCtrls, ExtCtrls, SysUtils, Forms, Controls, Spin, Character,
-  Graphics, Dialogs, Buttons, Menus, models_entities;
+  Graphics, Dialogs, Buttons, Menus, models_projects;
 
 type
 

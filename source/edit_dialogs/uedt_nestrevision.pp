@@ -122,7 +122,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, data_getvalue, data_consts,
-  utils_themes, utils_validations, utils_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams;
+  utils_themes, utils_validations, utils_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams, models_record_types;
 
 {$R *.lfm}
 

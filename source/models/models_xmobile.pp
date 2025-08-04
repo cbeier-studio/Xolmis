@@ -22,12 +22,7 @@ interface
 
 uses
   Classes, SysUtils, fgl, fpjson, jsonparser, DateUtils, RegExpr, StrUtils,
-  models_sampling, models_birds, models_geo, models_breeding;
-
-type
-  TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
-  TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invQualitativeInterval, invMackinnonList,
-                          invTransectionCount, invPointCount, invBanding, invCasual);
+  models_record_types, models_sampling, models_birds, models_geo, models_breeding, models_sightings, models_specimens;
 
 type
 

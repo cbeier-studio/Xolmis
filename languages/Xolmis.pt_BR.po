@@ -11366,7 +11366,7 @@ msgstr "&Anilhas"
 
 #: tfrmmain.actopenbotany.caption
 msgctxt "tfrmmain.actopenbotany.caption"
-msgid "&Botanic taxa"
+msgid "&Botanical taxa"
 msgstr "Táxons &botânicos"
 
 #: tfrmmain.actopencaptures.caption
@@ -16258,9 +16258,8 @@ msgctxt "utils_locale.rstitlebandsrunningout"
 msgid "Bands running out"
 msgstr "Anilhas acabando"
 
-#: utils_locale.rstitlebotanictaxa
-msgctxt "utils_locale.rstitlebotanictaxa"
-msgid "Botanic taxa"
+#: utils_locale.rstitlebotanicaltaxa
+msgid "Botanical taxa"
 msgstr "Táxons botânicos"
 
 #: utils_locale.rstitlebudget

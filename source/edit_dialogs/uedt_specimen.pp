@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, SysUtils, Character, LResources, Forms, Controls, Graphics,
   Dialogs, StdCtrls, ExtCtrls, Buttons, Menus, DB, DateUtils,
-  atshapelinebgra, models_sampling;
+  atshapelinebgra, models_specimens;
 
 type
 
@@ -127,7 +127,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, data_types, utils_dialogs, utils_finddialogs, models_geo, models_taxonomy,
-  utils_validations, data_consts, data_getvalue, utils_editdialogs, utils_gis,
+  utils_validations, data_consts, data_getvalue, utils_editdialogs, utils_gis, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 { TedtSpecimen }

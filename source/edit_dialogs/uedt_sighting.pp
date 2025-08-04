@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
   ExtCtrls, Character, StdCtrls, Buttons, Menus, atshapelinebgra,
-  BCPanel, models_birds;
+  BCPanel, models_birds, models_sightings;
 
 type
 
@@ -177,7 +177,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, data_consts, utils_dialogs, utils_finddialogs, models_taxonomy, models_geo,
-  utils_validations, data_getvalue, utils_themes, utils_editdialogs, utils_gis,
+  utils_validations, data_getvalue, utils_themes, utils_editdialogs, utils_gis, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
