@@ -4028,6 +4028,11 @@ msgctxt "tdlggeoassist.lbllongitude.caption"
 msgid "Longitude:"
 msgstr "Longitude:"
 
+#: tdlggeoassist.mvpluginmanagerlegalnoticeplugin1.legalnotice
+msgctxt "tdlggeoassist.mvpluginmanagerlegalnoticeplugin1.legalnotice"
+msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
+msgstr ""
+
 #: tdlggeoassist.sbcancel.caption
 msgctxt "tdlggeoassist.sbcancel.caption"
 msgid "Cancel"
@@ -9796,6 +9801,11 @@ msgstr "Tem anilhas coloridas"
 #: tfrmcustomgrid.lblwithrecapturesfilter.caption
 msgid "Have recaptures"
 msgstr "Tem recapturas"
+
+#: tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice
+msgctxt "tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice"
+msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
+msgstr ""
 
 #: tfrmcustomgrid.pmaaddaudio.caption
 msgid "Add &new audio recording(s)"
@@ -16834,3 +16844,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

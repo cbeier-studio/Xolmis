@@ -4047,6 +4047,11 @@ msgctxt "tdlggeoassist.lbllongitude.caption"
 msgid "Longitude:"
 msgstr ""
 
+#: tdlggeoassist.mvpluginmanagerlegalnoticeplugin1.legalnotice
+msgctxt "tdlggeoassist.mvpluginmanagerlegalnoticeplugin1.legalnotice"
+msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
+msgstr ""
+
 #: tdlggeoassist.sbcancel.caption
 msgctxt "tdlggeoassist.sbcancel.caption"
 msgid "Cancel"
@@ -9809,6 +9814,11 @@ msgstr ""
 
 #: tfrmcustomgrid.lblwithrecapturesfilter.caption
 msgid "Have recaptures"
+msgstr ""
+
+#: tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice
+msgctxt "tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice"
+msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
 msgstr ""
 
 #: tfrmcustomgrid.pmaaddaudio.caption

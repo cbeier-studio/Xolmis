@@ -13,7 +13,6 @@ object dlgGeoAssist: TdlgGeoAssist
   Constraints.MinWidth = 349
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
@@ -85,6 +84,7 @@ object dlgGeoAssist: TdlgGeoAssist
     Font.Color = clBlack
     MapProvider = 'OpenStreetMap Standard'
     ParentFont = False
+    PluginManager = MvPluginManager
     POIImages = DMM.iMaps
     POIImagesWidth = 20
     POITextBgOpacity = 0.550000011920929
@@ -458,17 +458,17 @@ object dlgGeoAssist: TdlgGeoAssist
         Columns = <        
           item
             Title.Caption = 'Name'
-            Width = 112
+            Width = 105
             FieldName = 'coordinate_name'
           end        
           item
             Title.Caption = 'Longitude'
-            Width = 112
+            Width = 105
             FieldName = 'longitude'
           end        
           item
             Title.Caption = 'Latitude'
-            Width = 112
+            Width = 105
             FieldName = 'latitude'
           end>
         Constraints.MinHeight = 230
@@ -491,5 +491,19 @@ object dlgGeoAssist: TdlgGeoAssist
   object MvBGRADraw: TMvBGRADrawingEngine
     Left = 424
     Top = 72
+  end
+  object MvPluginManager: TMvPluginManager
+    Left = 424
+    Top = 144
+    object MvPluginManagerMapScalePlugin1: TMapScalePlugin
+      MapView = mapGeo
+      BackgroundOpacity = 0.550000011920929
+    end
+    object MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin
+      MapView = mapGeo
+      BackgroundColor = clWhite
+      LegalNotice = 'Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]'
+      Position = lnpTopRight
+    end
   end
 end

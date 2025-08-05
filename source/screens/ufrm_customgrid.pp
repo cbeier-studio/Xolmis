@@ -24,10 +24,10 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
-  DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst, DBCtrls,
-  laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra,
-  BCPanel, bctypes, DBControlGrid, data_types, data_filters, Types, ImgList, ToggleSwitch, DragDropFile,
-  mvMapViewer, mvDE_BGRA, mvTypes, mvGpsObj, mvDrawingEngine, LR_Class, DropTarget;
+  DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
+  DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
+  DBControlGrid, data_types, data_filters, Types, ImgList, ToggleSwitch, DragDropFile, mvMapViewer, mvDE_BGRA,
+  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class, DropTarget;
 
 type
   { TStringMemoEditor }
@@ -51,6 +51,9 @@ type
   TfrmCustomGrid = class(TForm)
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    MvPluginManager: TMvPluginManager;
+    MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin;
+    MvPluginManagerMapScalePlugin1: TMapScalePlugin;
     pmpBandsBalance: TMenuItem;
     pmgBandHistory: TMenuItem;
     pmpBandHistory: TMenuItem;

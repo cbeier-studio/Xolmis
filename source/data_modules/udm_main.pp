@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, StrUtils, Forms, Dialogs, ExtDlgs, Controls, fpsexport, UniqueInstance, DB,
   SdfData, SQLDB, SQLDBLib, SQLite3Conn, fpjson, eventlog, models_users, SQLScript,
-  fpcsvexport, fpSimpleXMLExport, fpsimplejsonexport, fpDBExport, memds, ImgList;
+  fpcsvexport, fpSimpleXMLExport, fpsimplejsonexport, fpDBExport, memds, ImgList, mvPluginCommon, mvPlugins;
 
 type
 

@@ -9,5 +9,6 @@
 {"hash":74882996,"name":"tdlggeoassist.tabimported.caption","sourcebytes":[73,109,112,111,114,116,101,100],"value":"Imported"},
 {"hash":346165,"name":"tdlggeoassist.gridbank.columns[0].title.caption","sourcebytes":[78,97,109,101],"value":"Name"},
 {"hash":81848517,"name":"tdlggeoassist.gridbank.columns[1].title.caption","sourcebytes":[76,111,110,103,105,116,117,100,101],"value":"Longitude"},
-{"hash":145800837,"name":"tdlggeoassist.gridbank.columns[2].title.caption","sourcebytes":[76,97,116,105,116,117,100,101],"value":"Latitude"}
+{"hash":145800837,"name":"tdlggeoassist.gridbank.columns[2].title.caption","sourcebytes":[76,97,116,105,116,117,100,101],"value":"Latitude"},
+{"hash":156378045,"name":"tdlggeoassist.mvpluginmanagerlegalnoticeplugin1.legalnotice","sourcebytes":[77,97,112,32,100,97,116,97,32,102,114,111,109,32,91,104,116,116,112,115,58,47,47,119,119,119,46,111,112,101,110,115,116,114,101,101,116,109,97,112,46,111,114,103,47,99,111,112,121,114,105,103,104,116,32,79,112,101,110,83,116,114,101,101,116,77,97,112,32,97,110,100,32,99,111,110,116,114,105,98,117,116,111,114,115,93],"value":"Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"}
 ]}

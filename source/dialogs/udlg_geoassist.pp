@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin, DBGrids,
   ComCtrls, mvMapViewer, mvTypes, mvGpsObj, mvDE_BGRA, atshapelinebgra, BCPanel, SpinEx, Types,
-  utils_system, utils_gis, DB, mvDrawingEngine;
+  utils_system, utils_gis, DB, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins;
 
 type
 
@@ -44,6 +44,9 @@ type
     lblLongitude: TLabel;
     mapGeo: TMapView;
     MvBGRADraw: TMvBGRADrawingEngine;
+    MvPluginManager: TMvPluginManager;
+    MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin;
+    MvPluginManagerMapScalePlugin1: TMapScalePlugin;
     PG: TPageControl;
     lineBottom: TShapeLineBGRA;
     pBottom: TPanel;
