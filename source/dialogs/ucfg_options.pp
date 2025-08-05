@@ -205,82 +205,13 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_dialogs, utils_backup, utils_autoupdate, utils_system,
-  utils_themes, udm_main,
+  utils_locale, utils_global, utils_dialogs, utils_backup, utils_autoupdate, utils_system, utils_themes,
+  models_users, udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
 
 { TcfgOptions }
-
-procedure TcfgOptions.tvMenuSelectionChanged(Sender: TObject);
-begin
-  nbPages.PageIndex := tvMenu.Selected.Index;
-end;
-
-procedure TcfgOptions.tsConfirmCancelChange(Sender: TObject);
-begin
-  xSettings.ConfirmCancel := tsConfirmCancel.Checked;
-end;
-
-procedure TcfgOptions.sbRestoreBackupClick(Sender: TObject);
-begin
-  GravaStat(Name, TComponent(Sender).Name, 'click');
-  if not MsgDlg(rsTitleRestore, rsRestoreBackupPrompt, mtConfirmation) then
-    Exit;
-
-  OpenDlg.InitialDir:= xSettings.BackupFolder;
-  if OpenDlg.Execute then
-    RestoreBackup(OpenDlg.FileName);
-end;
-
-procedure TcfgOptions.sliderRowHeightChangeValue(Sender: TObject);
-begin
-  xSettings.DefaultRowHeight := MIN_ROW_HEIGHT + (sliderRowHeight.Value * 2);
-end;
-
-procedure TcfgOptions.tsAllowUsageDataChange(Sender: TObject);
-begin
-  xSettings.AllowSendUsageData := tsAllowUsageData.Checked;
-end;
-
-procedure TcfgOptions.sbNewBackupClick(Sender: TObject);
-begin
-  GravaStat(Name, TComponent(Sender).Name, 'click');
-
-  VacuumIntoBackup; //NewBackup;
-end;
-
-procedure TcfgOptions.eAttachmentsPathChange(Sender: TObject);
-begin
-  xSettings.DocumentsFolder := eAttachmentsPath.Text;
-end;
-
-procedure TcfgOptions.cbMainTaxonomyChange(Sender: TObject);
-begin
-  xSettings.Taxonomy := cbMainTaxonomy.ItemIndex;
-end;
-
-procedure TcfgOptions.cbSelectedThemeChange(Sender: TObject);
-begin
-  xSettings.SelectedTheme := cbSelectedTheme.ItemIndex;
-  lblSelectedThemeRestart.Visible := True;
-end;
-
-procedure TcfgOptions.cbStartPageChange(Sender: TObject);
-begin
-  xSettings.StartPage := cbStartPage.ItemIndex;
-end;
-
-procedure TcfgOptions.cbStartupBackupSelect(Sender: TObject);
-begin
-  xSettings.AutomaticBackup := cbStartupBackup.ItemIndex;
-end;
-
-procedure TcfgOptions.cbClearDeletedChange(Sender: TObject);
-begin
-  xSettings.ClearDeletedPeriod := cbClearDeleted.ItemIndex;
-end;
 
 procedure TcfgOptions.ApplyDarkMode;
 begin
@@ -381,6 +312,32 @@ begin
   sliderRowHeight.Value := (DEFAULT_ROW_HEIGHT - MIN_ROW_HEIGHT) div 2;
 end;
 
+procedure TcfgOptions.cbMainTaxonomyChange(Sender: TObject);
+begin
+  xSettings.Taxonomy := cbMainTaxonomy.ItemIndex;
+end;
+
+procedure TcfgOptions.cbSelectedThemeChange(Sender: TObject);
+begin
+  xSettings.SelectedTheme := cbSelectedTheme.ItemIndex;
+  lblSelectedThemeRestart.Visible := True;
+end;
+
+procedure TcfgOptions.cbStartPageChange(Sender: TObject);
+begin
+  xSettings.StartPage := cbStartPage.ItemIndex;
+end;
+
+procedure TcfgOptions.cbStartupBackupSelect(Sender: TObject);
+begin
+  xSettings.AutomaticBackup := cbStartupBackup.ItemIndex;
+end;
+
+procedure TcfgOptions.cbClearDeletedChange(Sender: TObject);
+begin
+  xSettings.ClearDeletedPeriod := cbClearDeleted.ItemIndex;
+end;
+
 procedure TcfgOptions.cbCheckUpdatesChange(Sender: TObject);
 begin
   xSettings.AutoUpdates := cbCheckUpdates.ItemIndex;
@@ -391,9 +348,16 @@ begin
   xSettings.VernacularNamesLanguage := cbVernacularNames.ItemIndex;
 end;
 
+procedure TcfgOptions.eAttachmentsPathChange(Sender: TObject);
+begin
+  xSettings.DocumentsFolder := eAttachmentsPath.Text;
+  { #todo : Update documents' file path if the folder changed }
+end;
+
 procedure TcfgOptions.eAudiosPathChange(Sender: TObject);
 begin
   xSettings.AudiosFolder := eAudiosPath.Text;
+  { #todo : Update audio recordings' file path if the folder changed }
 end;
 
 procedure TcfgOptions.eBackupPathChange(Sender: TObject);
@@ -404,6 +368,7 @@ end;
 procedure TcfgOptions.eImagesPathChange(Sender: TObject);
 begin
   xSettings.ImagesFolder := eImagesPath.Text;
+  { #todo : Update images' file path if the folder changed }
 end;
 
 procedure TcfgOptions.FormDestroy(Sender: TObject);
@@ -471,6 +436,45 @@ begin
   OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/PRIVACY.md');
 end;
 
+procedure TcfgOptions.LoadConfig;
+begin
+  { GENERAL PARAMETERS AND INTERFACE }
+  cbStartPage.ItemIndex := xSettings.StartPage;
+  tsConfirmCancel.Checked := xSettings.ConfirmCancel;
+  cbClearDeleted.ItemIndex := xSettings.ClearDeletedPeriod;
+  tsEnterAsTab.Checked := xSettings.UseEnterAsTab;
+
+  { APPEARANCE }
+  cbSelectedTheme.ItemIndex := xSettings.SelectedTheme;
+  sliderRowHeight.Value := (xSettings.DefaultRowHeight - MIN_ROW_HEIGHT) div 2;
+  tsUseConditionalFormatting.Checked := xSettings.UseConditionalFormatting;
+  tsShowOutliers.Checked := xSettings.ShowOutliersOnGrid;
+
+  { COLLECTION }
+  cbVernacularNames.ItemIndex := xSettings.VernacularNamesLanguage;
+  cbMainTaxonomy.ItemIndex := xSettings.Taxonomy;
+  tsShowSynonyms.Checked := xSettings.ShowSynonyms;
+
+  { MEDIA }
+  eImagesPath.Text := xSettings.ImagesFolder;
+  eAudiosPath.Text := xSettings.AudiosFolder;
+  eAttachmentsPath.Text := xSettings.DocumentsFolder;
+
+  { SECURITY }
+  tsRememberUser.Checked := xSettings.RememberUser;
+  tsRememberConnection.Checked := xSettings.RememberConnection;
+  cbCheckUpdates.ItemIndex := xSettings.AutoUpdates;
+
+  { PRIVACY }
+  tsWriteLogs.Checked := xSettings.AllowWriteLogs;
+  tsAllowUsageData.Checked := xSettings.AllowSendUsageData;
+
+  { BACKUP AND RESTORE }
+  eBackupPath.Text := xSettings.BackupFolder;
+  cbStartupBackup.ItemIndex := xSettings.AutomaticBackup;
+
+end;
+
 procedure TcfgOptions.sbCheckUpdatesNowClick(Sender: TObject);
 begin
   LogInfo('Check Xolmis updates');
@@ -493,6 +497,39 @@ begin
   FLog := ConcatPaths([AppDataDir, LOG_FILE]);
   if FileExists(FLog) then
     DeleteFile(FLog);
+end;
+
+procedure TcfgOptions.sbNewBackupClick(Sender: TObject);
+begin
+  GravaStat(Name, TComponent(Sender).Name, 'click');
+
+  VacuumIntoBackup; //NewBackup;
+end;
+
+procedure TcfgOptions.sbRestoreBackupClick(Sender: TObject);
+begin
+  GravaStat(Name, TComponent(Sender).Name, 'click');
+  if not MsgDlg(rsTitleRestore, rsRestoreBackupPrompt, mtConfirmation) then
+    Exit;
+
+  OpenDlg.InitialDir:= xSettings.BackupFolder;
+  if OpenDlg.Execute then
+    RestoreBackup(OpenDlg.FileName);
+end;
+
+procedure TcfgOptions.sliderRowHeightChangeValue(Sender: TObject);
+begin
+  xSettings.DefaultRowHeight := MIN_ROW_HEIGHT + (sliderRowHeight.Value * 2);
+end;
+
+procedure TcfgOptions.tsAllowUsageDataChange(Sender: TObject);
+begin
+  xSettings.AllowSendUsageData := tsAllowUsageData.Checked;
+end;
+
+procedure TcfgOptions.tsConfirmCancelChange(Sender: TObject);
+begin
+  xSettings.ConfirmCancel := tsConfirmCancel.Checked;
 end;
 
 procedure TcfgOptions.tsEnterAsTabChange(Sender: TObject);
@@ -546,43 +583,9 @@ begin
   xSettings.AllowWriteLogs := tsWriteLogs.Checked;
 end;
 
-procedure TcfgOptions.LoadConfig;
+procedure TcfgOptions.tvMenuSelectionChanged(Sender: TObject);
 begin
-  { GENERAL PARAMETERS AND INTERFACE }
-  cbStartPage.ItemIndex := xSettings.StartPage;
-  tsConfirmCancel.Checked := xSettings.ConfirmCancel;
-  cbClearDeleted.ItemIndex := xSettings.ClearDeletedPeriod;
-  tsEnterAsTab.Checked := xSettings.UseEnterAsTab;
-
-  { APPEARANCE }
-  cbSelectedTheme.ItemIndex := xSettings.SelectedTheme;
-  sliderRowHeight.Value := (xSettings.DefaultRowHeight - MIN_ROW_HEIGHT) div 2;
-  tsUseConditionalFormatting.Checked := xSettings.UseConditionalFormatting;
-  tsShowOutliers.Checked := xSettings.ShowOutliersOnGrid;
-
-  { COLLECTION }
-  cbVernacularNames.ItemIndex := xSettings.VernacularNamesLanguage;
-  cbMainTaxonomy.ItemIndex := xSettings.Taxonomy;
-  tsShowSynonyms.Checked := xSettings.ShowSynonyms;
-
-  { MEDIA }
-  eImagesPath.Text := xSettings.ImagesFolder;
-  eAudiosPath.Text := xSettings.AudiosFolder;
-  eAttachmentsPath.Text := xSettings.DocumentsFolder;
-
-  { SECURITY }
-  tsRememberUser.Checked := xSettings.RememberUser;
-  tsRememberConnection.Checked := xSettings.RememberConnection;
-  cbCheckUpdates.ItemIndex := xSettings.AutoUpdates;
-
-  { PRIVACY }
-  tsWriteLogs.Checked := xSettings.AllowWriteLogs;
-  tsAllowUsageData.Checked := xSettings.AllowSendUsageData;
-
-  { BACKUP AND RESTORE }
-  eBackupPath.Text := xSettings.BackupFolder;
-  cbStartupBackup.ItemIndex := xSettings.AutomaticBackup;
-
+  nbPages.PageIndex := tvMenu.Selected.Index;
 end;
 
 end.

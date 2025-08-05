@@ -136,7 +136,7 @@ uses
   uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
   udm_reports, models_xmobile, ufrm_quickentry, udlg_splash, udlg_loading, udlg_selectrecord, data_consts, 
 udlg_onboarding, ubatch_bandstransfer, utils_gis, models_bands, models_sightings, models_institutions, 
-models_people, models_permits, models_specimens;
+models_people, models_permits, models_specimens, utils_taxonomy;
 
 {$R *.res}
 

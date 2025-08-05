@@ -56,7 +56,8 @@ type
 
 implementation
 
-uses udm_main;
+uses
+  utils_taxonomy, udm_main;
 
 function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
 var

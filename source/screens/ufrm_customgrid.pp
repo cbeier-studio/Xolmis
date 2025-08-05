@@ -1395,7 +1395,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
-  utils_finddialogs, utils_print, utils_validations, utils_gis,
+  utils_finddialogs, utils_print, utils_validations, utils_gis, utils_taxonomy,
   data_management, data_getvalue, data_columns, data_blobs, data_setparam, data_consts,
   models_taxonomy, models_users, models_record_types,
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
