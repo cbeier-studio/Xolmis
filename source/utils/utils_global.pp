@@ -729,7 +729,7 @@ begin
   {$IFDEF DEBUG}
   FFileName := ConcatPaths([AppDataDir, DEBUG_SETTINGS_FILE]);
   {$ELSE}
-  FFileName := ConcatPaths([AppDataDir, DefaultSettingsFile]);
+  FFileName := ConcatPaths([AppDataDir, DEFAULT_SETTINGS_FILE]);
   {$ENDIF}
   FConfig := TJSONConfig.Create(nil);
   try

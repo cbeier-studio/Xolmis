@@ -18,14 +18,14 @@ object frmMain: TfrmMain
   OnShow = FormShow
   object pNotifications: TPanel
     Left = 863
-    Height = 827
+    Height = 825
     Top = 45
     Width = 330
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 827
+    ClientHeight = 825
     ClientWidth = 330
-    TabOrder = 5
+    TabOrder = 4
     Visible = False
     object pTitleNotifications: TPanel
       Left = 0
@@ -70,7 +70,7 @@ object frmMain: TfrmMain
     end
     object scrollNotifications: TScrollBox
       Left = 0
-      Height = 777
+      Height = 775
       Top = 50
       Width = 330
       HorzScrollBar.Page = 1
@@ -78,7 +78,7 @@ object frmMain: TfrmMain
       VertScrollBar.Page = 50
       Align = alClient
       BorderStyle = bsNone
-      ClientHeight = 777
+      ClientHeight = 775
       ClientWidth = 330
       TabOrder = 1
       object pNotificationList: TPanel
@@ -101,7 +101,7 @@ object frmMain: TfrmMain
       AnchorSideTop.Side = asrCenter
       Left = 107
       Height = 87
-      Top = 370
+      Top = 369
       Width = 117
       AutoSize = True
       ChildSizing.LeftRightSpacing = 16
@@ -170,17 +170,17 @@ object frmMain: TfrmMain
   end
   object pLeftTabs: TPanel
     Left = 0
-    Height = 827
+    Height = 825
     Top = 45
     Width = 863
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 827
+    ClientHeight = 825
     ClientWidth = 863
     TabOrder = 0
     object PGW: TTDICardPanel
       Left = 0
-      Height = 827
+      Height = 825
       Top = 0
       Width = 863
       Align = alClient
@@ -491,337 +491,6 @@ object frmMain: TfrmMain
       OnClick = sbNotificationsClick
     end
   end
-  object SBar: TBCPanel
-    Left = 0
-    Height = 26
-    Top = 872
-    Width = 1193
-    Align = alBottom
-    AutoSize = True
-    Background.Color = clBtnFace
-    Background.Gradient1.StartColor = clWhite
-    Background.Gradient1.EndColor = clBlack
-    Background.Gradient1.GradientType = gtLinear
-    Background.Gradient1.Point1XPercent = 0
-    Background.Gradient1.Point1YPercent = 0
-    Background.Gradient1.Point2XPercent = 0
-    Background.Gradient1.Point2YPercent = 100
-    Background.Gradient2.StartColor = clWhite
-    Background.Gradient2.EndColor = clBlack
-    Background.Gradient2.GradientType = gtLinear
-    Background.Gradient2.Point1XPercent = 0
-    Background.Gradient2.Point1YPercent = 0
-    Background.Gradient2.Point2XPercent = 0
-    Background.Gradient2.Point2YPercent = 100
-    Background.Gradient1EndPercent = 35
-    Background.Style = bbsColor
-    BevelInner = bvNone
-    BevelOuter = bvRaised
-    BevelWidth = 0
-    Border.Color = 13750737
-    Border.Style = bboNone
-    BorderBCStyle = bpsBorder
-    FontEx.Color = clDefault
-    FontEx.FontQuality = fqSystemClearType
-    FontEx.Shadow = False
-    FontEx.ShadowRadius = 5
-    FontEx.ShadowOffsetX = 5
-    FontEx.ShadowOffsetY = 5
-    FontEx.Style = []
-    ParentBackground = False
-    Rounding.RoundX = 1
-    Rounding.RoundY = 1
-    TabOrder = 2
-    object sbarDatabase: TBCPanel
-      Left = 0
-      Height = 26
-      Top = 0
-      Width = 55
-      Align = alLeft
-      AutoSize = True
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 2
-      ChildSizing.HorizontalSpacing = 4
-      Background.Color = clBtnFace
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = False
-      Rounding.RoundX = 1
-      Rounding.RoundY = 1
-      ShowHint = True
-      TabOrder = 0
-      object icoSbarDatabase: TImage
-        Left = 17
-        Height = 20
-        Top = 3
-        Width = 16
-        Align = alLeft
-        AutoSize = True
-        Center = True
-        ImageWidth = 16
-        Images = bStatusBar
-        Proportional = True
-      end
-      object lblSbarDatabase: TLabel
-        Left = 37
-        Height = 20
-        Top = 3
-        Width = 1
-        Align = alLeft
-        Layout = tlCenter
-        ShowAccelChar = False
-      end
-    end
-    object sbarUser: TBCPanel
-      Left = 55
-      Height = 26
-      Top = 0
-      Width = 55
-      Align = alLeft
-      AutoSize = True
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 2
-      ChildSizing.HorizontalSpacing = 4
-      Background.Color = clBtnFace
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = False
-      Rounding.RoundX = 1
-      Rounding.RoundY = 1
-      TabOrder = 1
-      object lblSbarUser: TLabel
-        Left = 37
-        Height = 20
-        Top = 3
-        Width = 1
-        Align = alLeft
-        Layout = tlCenter
-        ShowAccelChar = False
-      end
-      object icoSbarUser: TImage
-        Left = 17
-        Height = 20
-        Top = 3
-        Width = 16
-        Align = alLeft
-        AutoSize = True
-        Center = True
-        ImageIndex = 1
-        ImageWidth = 16
-        Images = bStatusBar
-        Proportional = True
-      end
-    end
-    object sbarStatus: TBCPanel
-      Left = 110
-      Height = 26
-      Top = 0
-      Width = 658
-      Align = alClient
-      Background.Color = clBtnFace
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.EndEllipsis = True
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      FontEx.TextAlignment = bcaLeftCenter
-      FontEx.PaddingLeft = 4
-      FontEx.PaddingRight = 4
-      FontEx.PaddingTop = 2
-      FontEx.PaddingBottom = 2
-      ParentBackground = False
-      Rounding.RoundX = 1
-      Rounding.RoundY = 1
-      TabOrder = 2
-    end
-    object sbarProgress: TBCPanel
-      Left = 768
-      Height = 26
-      Top = 0
-      Width = 390
-      Align = alRight
-      ChildSizing.LeftRightSpacing = 4
-      ChildSizing.TopBottomSpacing = 2
-      ChildSizing.HorizontalSpacing = 4
-      Background.Color = clBtnFace
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = False
-      Rounding.RoundX = 1
-      Rounding.RoundY = 1
-      TabOrder = 3
-      object progressBar: TProgressBar
-        Left = 5
-        Height = 20
-        Top = 3
-        Width = 380
-        Align = alClient
-        TabOrder = 0
-        Visible = False
-      end
-    end
-    object sbarVersion: TBCPanel
-      Left = 1158
-      Height = 26
-      Top = 0
-      Width = 35
-      Align = alRight
-      AutoSize = True
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 2
-      ChildSizing.HorizontalSpacing = 4
-      Background.Color = clBtnFace
-      Background.Gradient1.StartColor = clWhite
-      Background.Gradient1.EndColor = clBlack
-      Background.Gradient1.GradientType = gtLinear
-      Background.Gradient1.Point1XPercent = 0
-      Background.Gradient1.Point1YPercent = 0
-      Background.Gradient1.Point2XPercent = 0
-      Background.Gradient1.Point2YPercent = 100
-      Background.Gradient2.StartColor = clWhite
-      Background.Gradient2.EndColor = clBlack
-      Background.Gradient2.GradientType = gtLinear
-      Background.Gradient2.Point1XPercent = 0
-      Background.Gradient2.Point1YPercent = 0
-      Background.Gradient2.Point2XPercent = 0
-      Background.Gradient2.Point2YPercent = 100
-      Background.Gradient1EndPercent = 35
-      Background.Style = bbsColor
-      BevelInner = bvNone
-      BevelOuter = bvRaised
-      BevelWidth = 1
-      Border.Color = 13750737
-      Border.Style = bboSolid
-      BorderBCStyle = bpsBorder
-      FontEx.Color = clDefault
-      FontEx.FontQuality = fqSystemClearType
-      FontEx.Shadow = False
-      FontEx.ShadowRadius = 5
-      FontEx.ShadowOffsetX = 5
-      FontEx.ShadowOffsetY = 5
-      FontEx.Style = []
-      ParentBackground = False
-      Rounding.RoundX = 1
-      Rounding.RoundY = 1
-      ShowHint = True
-      TabOrder = 4
-      object lblSbarVersion: TLabel
-        Left = 17
-        Height = 20
-        Top = 3
-        Width = 1
-        Align = alLeft
-        Layout = tlCenter
-        ShowAccelChar = False
-      end
-    end
-  end
   object pEmptyTabs: TBCPanel
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
@@ -873,7 +542,7 @@ object frmMain: TfrmMain
     ParentBackground = False
     Rounding.RoundX = 8
     Rounding.RoundY = 8
-    TabOrder = 4
+    TabOrder = 3
     object sbEmptyOpenSurveys: TSpeedButton
       AnchorSideLeft.Control = pEmptyTabs
       AnchorSideTop.Control = pEmptyTabs
@@ -1059,7 +728,7 @@ object frmMain: TfrmMain
     Color = clBtnFace
     ParentBackground = False
     ParentColor = False
-    TabOrder = 3
+    TabOrder = 2
     Visible = False
     object lblLoading: TLabel
       AnchorSideLeft.Control = imgSplash
@@ -1090,6 +759,34 @@ object frmMain: TfrmMain
       AutoSize = True
       Images = DMM.iLogos
     end
+  end
+  object SBar: TStatusBar
+    Left = 0
+    Height = 28
+    Top = 870
+    Width = 1193
+    AutoHint = True
+    Panels = <    
+      item
+        Style = psOwnerDraw
+        Width = 150
+      end    
+      item
+        Style = psOwnerDraw
+        Width = 150
+      end    
+      item
+        Width = 120
+      end    
+      item
+        Alignment = taCenter
+        Width = 120
+      end>
+    ParentShowHint = False
+    SimplePanel = False
+    ShowHint = True
+    OnDrawPanel = SBarDrawPanel
+    OnResize = SBarResize
   end
   object ActList: TActionList
     Images = iMenu
@@ -1512,6 +1209,7 @@ object frmMain: TfrmMain
   end
   object AppEvents: TApplicationProperties
     OnException = AppEventsException
+    OnShowHint = AppEventsShowHint
     Left = 144
     Top = 184
   end

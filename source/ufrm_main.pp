@@ -108,8 +108,8 @@ type
     sbEmptyOpenIndividuals: TSpeedButton;
     sbEmptyOpenNests: TSpeedButton;
     sbEmptyOpenProjects: TSpeedButton;
+    SBar: TStatusBar;
     titleNotifications: TLabel;
-    lblSbarVersion: TLabel;
     mmiFeathers: TMenuItem;
     mmfNewDB: TMenuItem;
     mmfImportXolmisMobile: TMenuItem;
@@ -168,18 +168,10 @@ type
     pTitleNotifications: TPanel;
     pNotifications: TPanel;
     pEmptyTabs: TBCPanel;
-    sbarVersion: TBCPanel;
     sbClearSearch: TColorSpeedButton;
-    icoSbarDatabase: TImage;
-    icoSbarUser: TImage;
     imgSplash: TImage;
-    lblSbarDatabase: TLabel;
-    lblSbarUser: TLabel;
     lblLoading: TLabel;
-    progressBar: TProgressBar;
     pSplash: TPanel;
-    sbarDatabase: TBCPanel;
-    SBar: TBCPanel;
     eSkip: TEdit;
     eSearch: TEdit;
     iconSearch: TImage;
@@ -201,9 +193,6 @@ type
     pmaNewSurvey: TMenuItem;
     pmAddMenu: TPopupMenu;
     pSearch: TBCPanel;
-    sbarProgress: TBCPanel;
-    sbarUser: TBCPanel;
-    sbarStatus: TBCPanel;
     pMainMenu: TPanel;
     pmtCloseTab: TMenuItem;
     pmtCloseAllTabs: TMenuItem;
@@ -288,6 +277,7 @@ type
     procedure actSettingsExecute(Sender: TObject);
     procedure actViewBandsBalanceExecute(Sender: TObject);
     procedure AppEventsException(Sender: TObject; E: Exception);
+    procedure AppEventsShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: THintInfo);
     procedure eSearchChange(Sender: TObject);
     procedure eSearchEnter(Sender: TObject);
     procedure eSearchExit(Sender: TObject);
@@ -327,6 +317,8 @@ type
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbHomeClick(Sender: TObject);
     procedure sbNotificationsClick(Sender: TObject);
+    procedure SBarDrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel; const Rect: TRect);
+    procedure SBarResize(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
     procedure TimerScreenTimer(Sender: TObject);
   private
@@ -698,6 +690,36 @@ begin
   MsgDlg(rsTitleError, E.Message, mtError);
 end;
 
+procedure TfrmMain.AppEventsShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: THintInfo);
+var
+  r: TRect;
+  idx: Integer;
+begin
+  if (HintInfo.HintControl = SBar) AND (NOT SBar.SimplePanel) then
+  begin
+    r := SBar.ClientRect;
+    r.Right := SBar.Panels[0].Width;
+    // locate over what panel the mouse is
+    for idx := 0 to -1 + SBar.Panels.Count do
+    begin
+      if r.Right > HintInfo.CursorPos.X then
+      begin
+        HintInfo.CursorRect := r;
+        // provide custom hint for the panel under the mouse
+        case idx of
+          0: HintStr := databaseConnection.Database;
+          1: HintStr := EmptyStr;
+          2: HintStr := EmptyStr;
+          3: HintStr := EmptyStr;
+        end;
+
+        Exit;
+      end;
+      OffsetRect(r, SBar.Panels[idx].Width, 0) ;
+    end;
+  end;
+end;
+
 procedure TfrmMain.ApplyDarkMode;
 begin
   pSplash.Color := clSmokeBGDefaultDark;
@@ -733,14 +755,14 @@ begin
   sbNotifications.Images := iMenuDark;
   sbBackNotifications.Images := iMenuDark;
 
-  icoSbarDatabase.Images := bStatusBarDark;
-  icoSbarUser.Images := bStatusBarDark;
-  sbarDatabase.Border.Color := clSolidBGSecondaryDark;
-  sbarUser.Border.Color := clSolidBGSecondaryDark;
-  sbarStatus.Border.Color := clSolidBGSecondaryDark;
-  sbarStatus.FontEx.Color := clTextPrimaryDark;
-  sbarProgress.Border.Color := clSolidBGSecondaryDark;
-  sbarVersion.Border.Color := clSolidBGSecondaryDark;
+  //icoSbarDatabase.Images := bStatusBarDark;
+  //icoSbarUser.Images := bStatusBarDark;
+  //sbarDatabase.Border.Color := clSolidBGSecondaryDark;
+  //sbarUser.Border.Color := clSolidBGSecondaryDark;
+  //sbarStatus.Border.Color := clSolidBGSecondaryDark;
+  //sbarStatus.FontEx.Color := clTextPrimaryDark;
+  //sbarProgress.Border.Color := clSolidBGSecondaryDark;
+  //sbarVersion.Border.Color := clSolidBGSecondaryDark;
 
   pSearch.Background.Color := clCardBGDefaultDark;
   pSearch.Border.Color := clSolidBGSecondaryDark;
@@ -955,7 +977,8 @@ begin
     ApplyDarkMode;
 
   // Load version in status bar
-  lblSbarVersion.Caption := GetBuildInfoAsString;
+  SBar.Panels[3].Text := GetBuildInfoAsString;
+  //lblSbarVersion.Caption := GetBuildInfoAsString;
 
   // Show splash screen
   pSplash.Top := 0;
@@ -1279,7 +1302,8 @@ begin
   pSplash.Width :=  PGW.Width;
   //pSplash.Visible := True;
   Screen.BeginTempCursor(crAppStart);
-  sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
+  SBar.Panels[2].Text := Format(rsLoadingForm, [LowerCase(aCaption)]);
+  //sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
   aForm := TfrmCustomGrid.Create(Application);
   aForm.Caption := aCaption;
   aForm.TableType := aTableType;
@@ -1295,7 +1319,8 @@ begin
   //mMenu.TabIndex := 3;
   UpdateMenu(PGW.ActivePageComponent);
   pEmptyTabs.Visible := navTabs.TabCount = 0;
-  sbarStatus.Caption := EmptyStr;
+  SBar.Panels[2].Text := EmptyStr;
+  //sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
   pSplash.Visible := False;
 
@@ -1333,7 +1358,8 @@ begin
 
   { If form is not open, create it }
   Screen.BeginTempCursor(crAppStart);
-  sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
+  SBar.Panels[2].Text := Format(rsLoadingForm, [LowerCase(aCaption)]);;
+  //sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
   Application.CreateForm(aFormClass, aForm);
   aForm.Caption := aCaption;
   LogEvent(leaOpen, aForm.Caption);
@@ -1349,7 +1375,8 @@ begin
   end;
   pEmptyTabs.Visible := navTabs.TabCount = 0;
   UpdateMenu(PGW.ActivePageComponent);
-  sbarStatus.Caption := EmptyStr;
+  SBar.Panels[2].Text := EmptyStr;
+  //sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
   dlgLoading.Hide;
   isOpening := False;
@@ -1633,6 +1660,33 @@ begin
   pNotifications.Visible := sbNotifications.Down;
 end;
 
+procedure TfrmMain.SBarDrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel; const Rect: TRect);
+var
+  textTop: Integer;
+  iconTop: LongInt;
+begin
+  with StatusBar.Canvas do
+  begin
+    iconTop := (Rect.Height div 2) - Scale96ToForm(7);
+    if IsDarkModeEnabled then
+      bStatusBarDark.DrawForControl(StatusBar.Canvas, Rect.Left + Scale96ToForm(4), iconTop, Panel.Index, 16, StatusBar)
+    else
+      bStatusBar.DrawForControl(StatusBar.Canvas, Rect.Left + Scale96ToForm(4), iconTop, Panel.Index, 16, StatusBar);
+
+    textTop := (Rect.Height div 2) - (TextHeight('Plq') div 2) + Scale96ToForm(1);
+    Brush.Style := bsClear;
+    TextOut(Rect.Left + 28, textTop, Panel.Text);
+  end;
+end;
+
+procedure TfrmMain.SBarResize(Sender: TObject);
+begin
+  with SBar do
+  begin
+    Panels[2].Width := Width - (Panels[0].Width + Panels[1].Width + Panels[3].Width);
+  end;
+end;
+
 procedure TfrmMain.TimerFindTimer(Sender: TObject);
 begin
   TimerFind.Enabled := False;
@@ -1683,12 +1737,8 @@ end;
 
 procedure TfrmMain.UpdateStatusBar;
 begin
-  lblSbarDatabase.Caption := databaseConnection.Name;
-  sbarDatabase.Hint := databaseConnection.Database;
-  lblSbarDatabase.Hint := sbarDatabase.Hint;
-  icoSbarDatabase.Hint := sbarDatabase.Hint;
-  lblSbarUser.Caption := ActiveUser.UserName;
-  //lblSbarTaxonomy.Caption := TAXONOMY_NAMES[ActiveTaxonomy];
+  SBar.Panels[0].Text := databaseConnection.Name;
+  SBar.Panels[1].Text := ActiveUser.UserName;
 end;
 
 end.
