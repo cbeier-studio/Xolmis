@@ -37,7 +37,7 @@ type
     mmVacuumDB: TMenuItem;
     mmOptimizeDB: TMenuItem;
     pmNewDatabase: TMenuItem;
-    pmNewConnection: TMenuItem;
+    pmAddExistingDatabase: TMenuItem;
     pmgNew: TMenuItem;
     pmgEdit: TMenuItem;
     pmgRefresh: TMenuItem;
@@ -69,7 +69,7 @@ type
     procedure mmOptimizeDBClick(Sender: TObject);
     procedure mmTestConnectionClick(Sender: TObject);
     procedure mmVacuumDBClick(Sender: TObject);
-    procedure pmNewConnectionClick(Sender: TObject);
+    procedure pmAddExistingDatabaseClick(Sender: TObject);
     procedure pmNewDatabaseClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
     procedure sbMoreClick(Sender: TObject);
@@ -169,7 +169,7 @@ begin
     DMM.qsConn.Open;
 end;
 
-procedure TcfgDatabase.pmNewConnectionClick(Sender: TObject);
+procedure TcfgDatabase.pmAddExistingDatabaseClick(Sender: TObject);
 begin
   edtDatabase := TedtDatabase.Create(Application);
   with edtDatabase do

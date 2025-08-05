@@ -9,7 +9,6 @@ object cfgDatabase: TcfgDatabase
   ClientWidth = 344
   Font.Height = -12
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pClient: TPanel
@@ -103,6 +102,7 @@ object cfgDatabase: TcfgDatabase
       object sbDelete: TSpeedButton
         Left = 261
         Height = 26
+        Hint = 'Delete connection'
         Top = 9
         Width = 34
         Align = alRight
@@ -113,11 +113,14 @@ object cfgDatabase: TcfgDatabase
         Images = iButtons
         ImageIndex = 4
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbDeleteClick
       end
       object sbEdit: TSpeedButton
         Left = 55
         Height = 26
+        Hint = 'Edit selected connection'
         Top = 9
         Width = 34
         Align = alLeft
@@ -128,11 +131,14 @@ object cfgDatabase: TcfgDatabase
         Images = iButtons
         ImageIndex = 2
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbEditClick
       end
       object sbNew: TSpeedButton
         Left = 17
         Height = 26
+        Hint = 'New connection'
         Top = 9
         Width = 34
         Align = alLeft
@@ -142,6 +148,8 @@ object cfgDatabase: TcfgDatabase
         Images = iButtons
         ImageIndex = 1
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbNewClick
       end
       object Separator7: TShapeLineBGRA
@@ -158,6 +166,7 @@ object cfgDatabase: TcfgDatabase
       object sbMore: TSpeedButton
         Left = 117
         Height = 26
+        Hint = 'More options'
         Top = 9
         Width = 34
         Align = alLeft
@@ -168,6 +177,8 @@ object cfgDatabase: TcfgDatabase
         Images = iButtons
         ImageIndex = 5
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbMoreClick
       end
       object Separator8: TShapeLineBGRA
@@ -1141,9 +1152,9 @@ object cfgDatabase: TcfgDatabase
       Caption = 'New database'
       OnClick = pmNewDatabaseClick
     end
-    object pmNewConnection: TMenuItem
-      Caption = 'Add connection'
-      OnClick = pmNewConnectionClick
+    object pmAddExistingDatabase: TMenuItem
+      Caption = 'Add existing database'
+      OnClick = pmAddExistingDatabaseClick
     end
   end
 end

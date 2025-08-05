@@ -378,7 +378,7 @@ end;
 procedure TcfgOptions.btnDefaultRowHeightClick(Sender: TObject);
 begin
   //xSettings.DefaultRowHeight := DEFAULT_ROW_HEIGHT;
-  sliderRowHeight.Value := 2;
+  sliderRowHeight.Value := (DEFAULT_ROW_HEIGHT - MIN_ROW_HEIGHT) div 2;
 end;
 
 procedure TcfgOptions.cbCheckUpdatesChange(Sender: TObject);

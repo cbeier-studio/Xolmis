@@ -3115,6 +3115,10 @@ msgstr ""
 msgid "Vacuum database"
 msgstr ""
 
+#: tcfgdatabase.pmaddexistingdatabase.caption
+msgid "Add existing database"
+msgstr ""
+
 #: tcfgdatabase.pmgdelete.caption
 msgctxt "tcfgdatabase.pmgdelete.caption"
 msgid "Delete"
@@ -3125,6 +3129,7 @@ msgid "Edit connection"
 msgstr ""
 
 #: tcfgdatabase.pmgnew.caption
+msgctxt "tcfgdatabase.pmgnew.caption"
 msgid "New connection"
 msgstr ""
 
@@ -3138,10 +3143,6 @@ msgctxt "tcfgdatabase.pmgtest.caption"
 msgid "Test connection"
 msgstr ""
 
-#: tcfgdatabase.pmnewconnection.caption
-msgid "Add connection"
-msgstr ""
-
 #: tcfgdatabase.pmnewdatabase.caption
 msgctxt "tcfgdatabase.pmnewdatabase.caption"
 msgid "New database"
@@ -3150,6 +3151,25 @@ msgstr ""
 #: tcfgdatabase.sbclose.caption
 msgctxt "tcfgdatabase.sbclose.caption"
 msgid "Close"
+msgstr ""
+
+#: tcfgdatabase.sbdelete.hint
+msgctxt "tcfgdatabase.sbdelete.hint"
+msgid "Delete connection"
+msgstr ""
+
+#: tcfgdatabase.sbedit.hint
+msgid "Edit selected connection"
+msgstr ""
+
+#: tcfgdatabase.sbmore.hint
+msgctxt "tcfgdatabase.sbmore.hint"
+msgid "More options"
+msgstr ""
+
+#: tcfgdatabase.sbnew.hint
+msgctxt "tcfgdatabase.sbnew.hint"
+msgid "New connection"
 msgstr ""
 
 #: tcfgdatabase.sbrefreshrecords.hint
@@ -3420,6 +3440,19 @@ msgstr ""
 #: tcfgusers.sbclose.caption
 msgctxt "tcfgusers.sbclose.caption"
 msgid "Close"
+msgstr ""
+
+#: tcfgusers.sbdelete.hint
+msgid "Delete user"
+msgstr ""
+
+#: tcfgusers.sbedit.hint
+msgid "Edit the selected user"
+msgstr ""
+
+#: tcfgusers.sbnew.hint
+msgctxt "tcfgusers.sbnew.hint"
+msgid "New user"
 msgstr ""
 
 #: tcfgusers.sbrefreshrecords.hint
@@ -10838,6 +10871,7 @@ msgid "Mark/unmark all records in the query"
 msgstr ""
 
 #: tfrmcustomgrid.sbmoreoptions.hint
+msgctxt "tfrmcustomgrid.sbmoreoptions.hint"
 msgid "More options"
 msgstr ""
 

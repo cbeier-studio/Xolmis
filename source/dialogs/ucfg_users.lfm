@@ -10,7 +10,6 @@ object cfgUsers: TcfgUsers
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -73,7 +72,7 @@ object cfgUsers: TcfgUsers
       Columns = <      
         item
           Title.Caption = 'Username'
-          Width = 156
+          Width = 154
           FieldName = 'user_name'
         end      
         item
@@ -84,7 +83,7 @@ object cfgUsers: TcfgUsers
             'Visitante'
           )
           Title.Caption = 'Access level'
-          Width = 156
+          Width = 154
           FieldName = 'user_rank'
         end>
       DataSource = dsUsers
@@ -143,6 +142,7 @@ object cfgUsers: TcfgUsers
       object sbNew: TSpeedButton
         Left = 17
         Height = 26
+        Hint = 'New user'
         Top = 9
         Width = 34
         Align = alLeft
@@ -152,11 +152,14 @@ object cfgUsers: TcfgUsers
         Images = iButtons
         ImageIndex = 0
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbNewClick
       end
       object sbEdit: TSpeedButton
         Left = 55
         Height = 26
+        Hint = 'Edit the selected user'
         Top = 9
         Width = 34
         Align = alLeft
@@ -167,6 +170,8 @@ object cfgUsers: TcfgUsers
         Images = iButtons
         ImageIndex = 1
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbEditClick
       end
       object sbChangePassword: TSpeedButton
@@ -184,11 +189,14 @@ object cfgUsers: TcfgUsers
         Images = iButtons
         ImageIndex = 3
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbChangePasswordClick
       end
       object sbDelete: TSpeedButton
         Left = 261
         Height = 26
+        Hint = 'Delete user'
         Top = 9
         Width = 34
         Align = alRight
@@ -199,6 +207,8 @@ object cfgUsers: TcfgUsers
         Images = iButtons
         ImageIndex = 4
         ImageWidth = 24
+        ShowHint = True
+        ParentShowHint = False
         OnClick = sbDeleteClick
       end
       object Separator7: TShapeLineBGRA

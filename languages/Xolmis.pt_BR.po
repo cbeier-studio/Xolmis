@@ -3090,7 +3090,11 @@ msgstr "Testar conexão"
 
 #: tcfgdatabase.mmvacuumdb.caption
 msgid "Vacuum database"
-msgstr "Aspirar banco de dados"
+msgstr "Limpeza do banco de dados"
+
+#: tcfgdatabase.pmaddexistingdatabase.caption
+msgid "Add existing database"
+msgstr "Adicionar banco de dados existente"
 
 #: tcfgdatabase.pmgdelete.caption
 msgctxt "tcfgdatabase.pmgdelete.caption"
@@ -3102,6 +3106,7 @@ msgid "Edit connection"
 msgstr "Editar conexão"
 
 #: tcfgdatabase.pmgnew.caption
+msgctxt "tcfgdatabase.pmgnew.caption"
 msgid "New connection"
 msgstr "Nova conexão"
 
@@ -3115,10 +3120,6 @@ msgctxt "tcfgdatabase.pmgtest.caption"
 msgid "Test connection"
 msgstr "Testar conexão"
 
-#: tcfgdatabase.pmnewconnection.caption
-msgid "Add connection"
-msgstr "Adicionar conexão"
-
 #: tcfgdatabase.pmnewdatabase.caption
 msgctxt "tcfgdatabase.pmnewdatabase.caption"
 msgid "New database"
@@ -3128,6 +3129,25 @@ msgstr "Novo banco de dados"
 msgctxt "tcfgdatabase.sbclose.caption"
 msgid "Close"
 msgstr "Fechar"
+
+#: tcfgdatabase.sbdelete.hint
+msgctxt "tcfgdatabase.sbdelete.hint"
+msgid "Delete connection"
+msgstr "Apagar conexão"
+
+#: tcfgdatabase.sbedit.hint
+msgid "Edit selected connection"
+msgstr "Editar conexão selecionada"
+
+#: tcfgdatabase.sbmore.hint
+msgctxt "tcfgdatabase.sbmore.hint"
+msgid "More options"
+msgstr "Mais opções"
+
+#: tcfgdatabase.sbnew.hint
+msgctxt "tcfgdatabase.sbnew.hint"
+msgid "New connection"
+msgstr "Nova conexão"
 
 #: tcfgdatabase.sbrefreshrecords.hint
 msgctxt "tcfgdatabase.sbrefreshrecords.hint"
@@ -3398,6 +3418,18 @@ msgstr "Trocar senha"
 msgctxt "tcfgusers.sbclose.caption"
 msgid "Close"
 msgstr "Fechar"
+
+#: tcfgusers.sbdelete.hint
+msgid "Delete user"
+msgstr "Apagar usuário"
+
+#: tcfgusers.sbedit.hint
+msgid "Edit the selected user"
+msgstr "Editar o usuário selecionado"
+
+#: tcfgusers.sbnew.hint
+msgid "New user"
+msgstr "Novo usuário"
 
 #: tcfgusers.sbrefreshrecords.hint
 msgctxt "tcfgusers.sbrefreshrecords.hint"
@@ -10822,6 +10854,7 @@ msgid "Mark/unmark all records in the query"
 msgstr "Marcar/desmarcar todos registro da consulta"
 
 #: tfrmcustomgrid.sbmoreoptions.hint
+msgctxt "tfrmcustomgrid.sbmoreoptions.hint"
 msgid "More options"
 msgstr "Mais opções"
 
