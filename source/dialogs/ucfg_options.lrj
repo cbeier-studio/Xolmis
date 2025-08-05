@@ -13,6 +13,8 @@
 {"hash":120407843,"name":"tcfgoptions.lblshowoutliers.caption","sourcebytes":[72,105,103,104,108,105,103,104,116,32,111,117,116,108,105,101,114,32,109,101,97,115,117,114,101,109,101,110,116,115,32,105,110,32,99,97,112,116,117,114,101,115],"value":"Highlight outlier measurements in captures"},
 {"hash":5958709,"name":"tcfgoptions.lblselectedtheme.caption","sourcebytes":[84,104,101,109,101],"value":"Theme"},
 {"hash":96157427,"name":"tcfgoptions.lblselectedthemerestart.caption","sourcebytes":[88,111,108,109,105,115,32,110,101,101,100,32,116,111,32,98,101,32,114,101,115,116,97,114,116,101,100,32,116,111,32,97,112,112,108,121,32,99,104,97,110,103,101,115],"value":"Xolmis need to be restarted to apply changes"},
+{"hash":160179684,"name":"tcfgoptions.lblrowheight.caption","sourcebytes":[71,114,105,100,32,114,111,119,32,104,101,105,103,104,116],"value":"Grid row height"},
+{"hash":182799956,"name":"tcfgoptions.btndefaultrowheight.caption","sourcebytes":[83,101,116,32,100,101,102,97,117,108,116],"value":"Set default"},
 {"hash":46008942,"name":"tcfgoptions.lbltitlecollection.caption","sourcebytes":[67,111,108,108,101,99,116,105,111,110],"value":"Collection"},
 {"hash":188478083,"name":"tcfgoptions.lblvernacularnames.caption","sourcebytes":[76,97,110,103,117,97,103,101,32,111,102,32,118,101,114,110,97,99,117,108,97,114,32,110,97,109,101,115],"value":"Language of vernacular names"},
 {"hash":72006185,"name":"tcfgoptions.lblmaintaxonomy.caption","sourcebytes":[80,114,101,102,101,114,101,100,32,116,97,120,111,110,111,109,121],"value":"Prefered taxonomy"},

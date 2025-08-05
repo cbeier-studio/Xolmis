@@ -22,13 +22,15 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls, lclintf,
-  ToggleSwitch, atshapelinebgra, BCPanel;
+  ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider;
 
 type
 
   { TcfgOptions }
 
   TcfgOptions = class(TForm)
+    sliderRowHeight: TBCFluentSlider;
+    btnDefaultRowHeight: TButton;
     cbCheckUpdates: TComboBox;
     cbClearDeleted: TComboBox;
     cbStartPage: TComboBox;
@@ -41,6 +43,7 @@ type
     eBackupPath: TDirectoryEdit;
     eImagesPath: TDirectoryEdit;
     icoSelectedTheme: TImage;
+    icoRowHeight: TImage;
     iIconsDark: TImageList;
     icoConfirmCancel: TImage;
     icoCheckUpdates: TImage;
@@ -65,6 +68,7 @@ type
     icoDocumentsPath: TImage;
     iIcons: TImageList;
     lblAllowUsageData: TLabel;
+    lblRowHeight: TLabel;
     lblStartPage: TLabel;
     lblOpenAfterExport: TLabel;
     lblPrivacyTerms: TLabel;
@@ -95,6 +99,7 @@ type
     lblTitleSecurity: TLabel;
     lblVernacularNames: TLabel;
     nbPages: TNotebook;
+    pRowHeight: TBCPanel;
     pStartPage: TBCPanel;
     pOpenAfterExport: TBCPanel;
     pShowOutliers: TBCPanel;
@@ -156,6 +161,7 @@ type
     tsEnterAsTab: TToggleSwitch;
     tsConfirmCancel: TToggleSwitch;
     tvMenu: TTreeView;
+    procedure btnDefaultRowHeightClick(Sender: TObject);
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
     procedure cbMainTaxonomyChange(Sender: TObject);
@@ -174,6 +180,7 @@ type
     procedure sbClearLogFilesClick(Sender: TObject);
     procedure sbNewBackupClick(Sender: TObject);
     procedure sbRestoreBackupClick(Sender: TObject);
+    procedure sliderRowHeightChangeValue(Sender: TObject);
     procedure tsAllowUsageDataChange(Sender: TObject);
     procedure tsConfirmCancelChange(Sender: TObject);
     procedure tsEnterAsTabChange(Sender: TObject);
@@ -225,6 +232,11 @@ begin
   OpenDlg.InitialDir:= xSettings.BackupFolder;
   if OpenDlg.Execute then
     RestoreBackup(OpenDlg.FileName);
+end;
+
+procedure TcfgOptions.sliderRowHeightChangeValue(Sender: TObject);
+begin
+  xSettings.DefaultRowHeight := MIN_ROW_HEIGHT + (sliderRowHeight.Value * 2);
 end;
 
 procedure TcfgOptions.tsAllowUsageDataChange(Sender: TObject);
@@ -279,6 +291,7 @@ begin
   icoClearDeleted.Images := iIconsDark;
   icoCheckUpdates.Images := iIconsDark;
   icoSelectedTheme.Images := iIconsDark;
+  icoRowHeight.Images := iIconsDark;
   icoUseConditionalFormatting.Images := iIconsDark;
   icoShowOutliers.Images := iIconsDark;
   icoVernacularNames.Images := iIconsDark;
@@ -308,6 +321,8 @@ begin
   pCheckUpdates.Border.Color := clSystemSolidNeutralFGDark;
   pSelectedTheme.Background.Color := clSolidBGSecondaryDark;
   pSelectedTheme.Border.Color := clSystemSolidNeutralFGDark;
+  pRowHeight.Background.Color := clSolidBGSecondaryDark;
+  pRowHeight.Border.Color := clSystemSolidNeutralFGDark;
   pUseConditionalFormatting.Background.Color := clSolidBGSecondaryDark;
   pUseConditionalFormatting.Border.Color := clSystemSolidNeutralFGDark;
   pShowOutliers.Background.Color := clSolidBGSecondaryDark;
@@ -358,6 +373,12 @@ begin
   eAudiosPath.Images := DMM.iEditsDark;
   eAttachmentsPath.Images := DMM.iEditsDark;
   eBackupPath.Images := DMM.iEditsDark;
+end;
+
+procedure TcfgOptions.btnDefaultRowHeightClick(Sender: TObject);
+begin
+  //xSettings.DefaultRowHeight := DEFAULT_ROW_HEIGHT;
+  sliderRowHeight.Value := 2;
 end;
 
 procedure TcfgOptions.cbCheckUpdatesChange(Sender: TObject);
@@ -535,6 +556,7 @@ begin
 
   { APPEARANCE }
   cbSelectedTheme.ItemIndex := xSettings.SelectedTheme;
+  sliderRowHeight.Value := (xSettings.DefaultRowHeight - MIN_ROW_HEIGHT) div 2;
   tsUseConditionalFormatting.Checked := xSettings.UseConditionalFormatting;
   tsShowOutliers.Checked := xSettings.ShowOutliersOnGrid;
 

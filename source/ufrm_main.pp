@@ -989,10 +989,10 @@ begin
   Application.ProcessMessages;
 
   // Adjust to screen resolution
-  OldPPI := Self.PixelsPerInch;
-  if OldPPI <> 96 then
+  oldPPI := Self.PixelsPerInch;
+  if oldPPI <> 96 then
   begin
-    navTabs.OptScalePercents := (OldPPI * 100) div 96;
+    navTabs.OptScalePercents := (oldPPI * 100) div 96;
   end;
 
   { Initialize notification system }
@@ -1703,17 +1703,17 @@ end;
 procedure TfrmMain.TimerScreenTimer(Sender: TObject);
 begin
   Self.AutoScale;
-  if OldPPI = Self.PixelsPerInch then
+  if oldPPI = Self.PixelsPerInch then
     Exit;
 
-  OldPPI := Self.PixelsPerInch;
-  LogDebug('DPI changed: ' + IntToStr(OldPPI) + '; Monitor: ' + IntToStr(Self.Monitor.MonitorNum));
-  //Self.PixelsPerInch := OldPPI;
+  oldPPI := Self.PixelsPerInch;
+  LogDebug('DPI changed: ' + IntToStr(oldPPI) + '; Monitor: ' + IntToStr(Self.Monitor.MonitorNum));
+  //Self.PixelsPerInch := oldPPI;
   //Self.AutoScale;
   if Self.PixelsPerInch <> 96 then
   begin
-    navTabs.OptScalePercents := (OldPPI * 100) div 96;
-    navTabs.OptFontScale := (OldPPI * 100) div 96;
+    navTabs.OptScalePercents := (oldPPI * 100) div 96;
+    navTabs.OptFontScale := (oldPPI * 100) div 96;
   end
   else
   begin

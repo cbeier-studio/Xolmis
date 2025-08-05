@@ -218,6 +218,8 @@ begin
   FFileName := ConcatPaths([AppDataDir, IncludeTrailingPathDelimiter('quickentry'), FModuleName + '.json']);
   {$ENDIF}
 
+  qeGrid.DefaultRowHeight := xSettings.DefaultRowHeight;
+
   LoadColumns;
 
   if (FileExists(FFileName)) then

@@ -3210,6 +3210,10 @@ msgctxt "tcfgdelimiters.sbok.caption"
 msgid "Apply"
 msgstr ""
 
+#: tcfgoptions.btndefaultrowheight.caption
+msgid "Set default"
+msgstr ""
+
 #: tcfgoptions.caption
 msgid "Settings"
 msgstr ""
@@ -3276,6 +3280,10 @@ msgstr ""
 
 #: tcfgoptions.lblrememberuser.caption
 msgid "Remember user from last session"
+msgstr ""
+
+#: tcfgoptions.lblrowheight.caption
+msgid "Grid row height"
 msgstr ""
 
 #: tcfgoptions.lblselectedtheme.caption

@@ -3187,6 +3187,10 @@ msgctxt "tcfgdelimiters.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
 
+#: tcfgoptions.btndefaultrowheight.caption
+msgid "Set default"
+msgstr "Usar padrão"
+
 #: tcfgoptions.caption
 msgid "Settings"
 msgstr "Opções"
@@ -3254,6 +3258,10 @@ msgstr "Lembrar conexão da última sessão"
 #: tcfgoptions.lblrememberuser.caption
 msgid "Remember user from last session"
 msgstr "Lembrar usuário da última sessão"
+
+#: tcfgoptions.lblrowheight.caption
+msgid "Grid row height"
+msgstr "Altura da linha de grade"
 
 #: tcfgoptions.lblselectedtheme.caption
 msgid "Theme"
@@ -4031,7 +4039,7 @@ msgstr "Longitude:"
 #: tdlggeoassist.mvpluginmanagerlegalnoticeplugin1.legalnotice
 msgctxt "tdlggeoassist.mvpluginmanagerlegalnoticeplugin1.legalnotice"
 msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
-msgstr ""
+msgstr "Dados de mapa de [https://www.openstreetmap.org/copyright OpenStreetMap e colaboradores]"
 
 #: tdlggeoassist.sbcancel.caption
 msgctxt "tdlggeoassist.sbcancel.caption"
@@ -9805,7 +9813,7 @@ msgstr "Tem recapturas"
 #: tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice
 msgctxt "tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice"
 msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
-msgstr ""
+msgstr "Dados de mapa de [https://www.openstreetmap.org/copyright OpenStreetMap e colaboradores]"
 
 #: tfrmcustomgrid.pmaaddaudio.caption
 msgid "Add &new audio recording(s)"
@@ -16844,4 +16852,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

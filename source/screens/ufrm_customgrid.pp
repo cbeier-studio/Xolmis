@@ -68,6 +68,7 @@ type
     sbEmptyNewRecord: TSpeedButton;
     sbEmptyImport: TSpeedButton;
     sbEmptyClearAll: TSpeedButton;
+    TimerUpdate: TTimer;
     TimerOpen: TTimer;
     TimerChildUpdate: TTimer;
     txtProjectBalance: TLabel;
@@ -837,7 +838,7 @@ type
     qImages: TSQLQuery;
     qAudios: TSQLQuery;
     qDocs: TSQLQuery;
-    TimerUpdate: TTimer;
+    TimerRecordUpdate: TTimer;
     titleViewRecord: TLabel;
     titleRecycle: TLabel;
     titleColumns: TLabel;
@@ -1087,6 +1088,7 @@ type
     procedure SplitRightMoved(Sender: TObject);
     procedure TimerChildUpdateTimer(Sender: TObject);
     procedure TimerOpenTimer(Sender: TObject);
+    procedure TimerRecordUpdateTimer(Sender: TObject);
     procedure TimerUpdateTimer(Sender: TObject);
     procedure tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure tvDateFilterChecking(Sender: TBaseVirtualTree; Node: PVirtualNode; var NewState: TCheckState;
@@ -1122,9 +1124,9 @@ type
     FTableType, FChildTable: TTableType;
     FSearch: TCustomSearch;
     isFiltered: Boolean;
-    FSidePanel, OldSidePanel: Boolean;
-    FSideIndex, OldSideIndex: Integer;
-    FSearchString, OldSearchString: String;
+    FSidePanel, oldSidePanel: Boolean;
+    FSideIndex, oldSideIndex: Integer;
+    FSearchString, oldSearchString: String;
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
     FPlantKeyFilter, FSamplingPlotKeyFilter, FEggKeyFilter: Integer;
@@ -1140,13 +1142,13 @@ type
     FDragging: Boolean;
     cellMemo: TMemo;
 
-    PanelTabs: specialize TFPGList<TCustomPanelTab>;
+    panelTabs: specialize TFPGList<TCustomPanelTab>;
     procedure CreatePanelTabs;
 
     procedure AddAudio(aDataSet: TDataSet; aFileName: String);
     procedure AddDocument(aDataSet: TDataSet; aFileName: String);
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
-    procedure AddOrEditChild(const aTableType: TTableType; const IsNew: Boolean);
+    procedure AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       isAnAlias: Boolean = False);
     procedure ApplyDarkMode;
@@ -1334,6 +1336,7 @@ type
     procedure UpdateAudioButtons(aDataSet: TDataSet);
     procedure UpdateDocButtons(aDataSet: TDataSet);
     procedure UpdateRecycleButtons(aDataset: TDataSet);
+    procedure UpdateRowHeights;
 
     procedure UpdateFilterPanels;
     procedure UpdateFilterPanelsBands;
@@ -1885,7 +1888,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.AddOrEditChild(const aTableType: TTableType; const IsNew: Boolean);
+procedure TfrmCustomGrid.AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
 begin
   case aTableType of
     //tbNone: ;
@@ -1894,18 +1897,18 @@ begin
     //tbGazetteer: ;
     tbSamplingPlots:
       case nbChilds.PageIndex of
-        0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName(COL_SAMPLING_PLOT_ID).AsInteger, IsNew);
+        0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName(COL_SAMPLING_PLOT_ID).AsInteger, isNew);
       end;
     //tbPermanentNets: ;
     //tbInstitutions: ;
     //tbPeople: ;
     tbProjects:
       case nbChilds.PageIndex of
-        0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, IsNew);
-        1: EditProjectGoal(DMG.qProjectGoals, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, IsNew);
-        2: EditProjectActivity(DMG.qProjectChronogram, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, 0, IsNew);
-        3: EditProjectRubric(DMG.qProjectBudget, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, IsNew);
-        4: EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, 0, IsNew);
+        0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, isNew);
+        1: EditProjectGoal(DMG.qProjectGoals, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, isNew);
+        2: EditProjectActivity(DMG.qProjectChronogram, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, 0, isNew);
+        3: EditProjectRubric(DMG.qProjectBudget, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, isNew);
+        4: EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, 0, isNew);
       end;
     //tbProjectTeams: ;
     //tbPermits: ;
@@ -1916,43 +1919,43 @@ begin
     //tbBandHistory: ;
     tbIndividuals:
       case nbChilds.PageIndex of
-        0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, 0, IsNew);
-        1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, 0, 0, IsNew);
-        2: EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, IsNew);
-        3: EditNest(DMI.qNests, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, IsNew);
-        4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, IsNew);
+        0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, 0, isNew);
+        1: EditFeather(DMI.qFeathers, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, 0, 0, isNew);
+        2: EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
+        3: EditNest(DMI.qNests, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
+        4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
       end;
     //tbCaptures: ;
     //tbMolts: ;
     tbNests:
       case nbChilds.PageIndex of
-        0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, IsNew);
-        1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, IsNew);
-        2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, IsNew);
+        0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, isNew);
+        1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, isNew);
+        2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, isNew);
       end;
     //tbNestRevisions: ;
     //tbEggs: ;
     //tbMethods: ;
     tbExpeditions:
       case nbChilds.PageIndex of
-        0: EditSurvey(DMS.qSurveys, dsLink.DataSet.FieldByName(COL_EXPEDITION_ID).AsInteger, IsNew);
+        0: EditSurvey(DMS.qSurveys, dsLink.DataSet.FieldByName(COL_EXPEDITION_ID).AsInteger, isNew);
       end;
     tbSurveys:
       case nbChilds.PageIndex of
-        0: EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, IsNew);
-        1: EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, IsNew);
-        2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, IsNew);
-        3: EditCapture(DMS.qCaptures, 0, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, IsNew);
-        4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, 0, IsNew);
-        5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, IsNew);
+        0: EditSurveyMember(DMS.qSurveyTeam, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
+        1: EditNetEffort(DMS.qNetsEffort, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
+        2: EditWeatherLog(DMS.qWeatherLogs, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
+        3: EditCapture(DMS.qCaptures, 0, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
+        4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, 0, isNew);
+        5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
       end;
     //tbSurveyTeams: ;
     //tbNetsEffort: ;
     tbSightings: ;
     tbSpecimens:
       case nbChilds.PageIndex of
-        0: EditCollector(DMG.qSampleCollectors, dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger, IsNew);
-        1: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger, IsNew);
+        0: EditCollector(DMG.qSampleCollectors, dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger, isNew);
+        1: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger, isNew);
       end;
     //tbSamplePreps: ;
     //tbImages: ;
@@ -3081,7 +3084,7 @@ begin
 
     XPos := XPos + PanelTab.Width + 10;
 
-    PanelTabs.Add(PanelTab);
+    panelTabs.Add(PanelTab);
   end;
 end;
 
@@ -4215,8 +4218,8 @@ begin
   UpdateChildBar;
   UpdateChildRightPanel;
 
-  TimerUpdate.Enabled := False;
-  TimerUpdate.Enabled := True;
+  TimerRecordUpdate.Enabled := False;
+  TimerRecordUpdate.Enabled := True;
 end;
 
 procedure TfrmCustomGrid.dsLinkStateChange(Sender: TObject);
@@ -4760,6 +4763,8 @@ end;
 procedure TfrmCustomGrid.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
+  TimerChildUpdate.Enabled := False;
+  TimerRecordUpdate.Enabled := False;
   TimerUpdate.Enabled := False;
   //TimerFind.Enabled := False;
 
@@ -4829,8 +4834,8 @@ begin
   FCanToggle := False;
   isFiltered := False;
 
-  OldSidePanel := False;
-  OldSideIndex := -1;
+  oldSidePanel := False;
+  oldSideIndex := -1;
 
   // Initialize the filter trees
   tvTaxaFilter.NodeDataSize := SizeOf(PTaxonNodeData);
@@ -4838,7 +4843,7 @@ begin
   tvDateFilter.NodeDataSize := SizeOf(PDateNodeData);
 
   // Initialize the child tabs
-  PanelTabs := specialize TFPGList<TCustomPanelTab>.Create;
+  panelTabs := specialize TFPGList<TCustomPanelTab>.Create;
 
   //cellMemo.Tag := -1;
 
@@ -4857,9 +4862,9 @@ begin
   //  FreeAndNil(DMB);
 
   // Destroy the child tabs
-  for PanelTab in PanelTabs do
+  for PanelTab in panelTabs do
     PanelTab.Free;
-  PanelTabs.Free;
+  panelTabs.Free;
 
   FreeAndNil(FSearch);
 end;
@@ -4911,13 +4916,15 @@ begin
   FSidePanelFactor := pSide.Width / (ClientWidth - pSideToolbar.Width);
   FChildPanelFactor := 0.4;
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
+  UpdateRowHeights;
   Application.ProcessMessages;
 
   { Load datasources }
   SetGridAndChild;
 
-  // Use a timer to load the rest to speed up isOpening
+  // Use a timer to load the rest to speed up opening
   TimerOpen.Enabled := True;
+  TimerUpdate.Enabled := True;
 end;
 
 procedure TfrmCustomGrid.GetBandFilters;
@@ -9397,17 +9404,32 @@ end;
 
 procedure TfrmCustomGrid.sbRowHeightDecreaseClick(Sender: TObject);
 begin
-  DBG.DefaultRowHeight := DBG.DefaultRowHeight - 2;
+  if xSettings.DefaultRowHeight <= MIN_ROW_HEIGHT then
+    Exit;
+
+  oldRowHeight := xSettings.DefaultRowHeight;
+  xSettings.DefaultRowHeight := xSettings.DefaultRowHeight - 2;
+
+  //UpdateRowHeights;
 end;
 
 procedure TfrmCustomGrid.sbRowHeightDefaultClick(Sender: TObject);
 begin
-  DBG.DefaultRowHeight := 25;
+  oldRowHeight := xSettings.DefaultRowHeight;
+  xSettings.DefaultRowHeight := DEFAULT_ROW_HEIGHT;
+
+  //UpdateRowHeights;
 end;
 
 procedure TfrmCustomGrid.sbRowHeightIncreaseClick(Sender: TObject);
 begin
-  DBG.DefaultRowHeight := DBG.DefaultRowHeight + 2;
+  if xSettings.DefaultRowHeight >= MAX_ROW_HEIGHT then
+    Exit;
+
+  oldRowHeight := xSettings.DefaultRowHeight;
+  xSettings.DefaultRowHeight := xSettings.DefaultRowHeight + 2;
+
+  //UpdateRowHeights;
 end;
 
 procedure TfrmCustomGrid.sbSaveRecordClick(Sender: TObject);
@@ -12498,8 +12520,8 @@ end;
 
 procedure TfrmCustomGrid.SetSidePanel(aValue: Boolean);
 begin
-  if FSidePanel <> OldSidePanel then
-    OldSidePanel := FSidePanel;
+  if FSidePanel <> oldSidePanel then
+    oldSidePanel := FSidePanel;
   FSidePanel := aValue;
   pSide.Visible := FSidePanel;
   //SplitRight.Visible := pSide.Visible;
@@ -12509,8 +12531,8 @@ procedure TfrmCustomGrid.SetSideIndex(aValue: Integer);
 begin
   if ShowSidePanel then
   begin
-    if FSideIndex <> OldSideIndex then
-      OldSideIndex := FSideIndex;
+    if FSideIndex <> oldSideIndex then
+      oldSideIndex := FSideIndex;
     FSideIndex := aValue;
     cpSide.PageIndex := FSideIndex;
   end;
@@ -12521,8 +12543,8 @@ begin
   if not FCanToggle then
     Exit;
 
-  if FSearchString <> OldSearchString then
-    OldSearchString := FSearchString;
+  if FSearchString <> oldSearchString then
+    oldSearchString := FSearchString;
   FSearchString := aValue;
 
   Search(FSearchString);
@@ -12592,7 +12614,7 @@ var
   aId, aTotalProblems: Integer;
   aStatus: TRecordReviewStatus;
 begin
-  TimerUpdate.Enabled := False;
+  TimerRecordUpdate.Enabled := False;
   aTotalProblems := 0;
 
   if (isClosing) then
@@ -12635,13 +12657,13 @@ begin
   //end;
 end;
 
-procedure TfrmCustomGrid.TimerUpdateTimer(Sender: TObject);
+procedure TfrmCustomGrid.TimerRecordUpdateTimer(Sender: TObject);
 var
   aStatus: TRecordReviewStatus;
   aId, aTotalProblems: Integer;
   DS: TDataSet;
 begin
-  TimerUpdate.Enabled := False;
+  TimerRecordUpdate.Enabled := False;
   aTotalProblems := 0;
 
   if (isClosing) then
@@ -12663,6 +12685,15 @@ begin
         sbRecordVerifications.Caption := Format(rsTotalProblems, [aTotalProblems]);
     end;
   end;
+end;
+
+procedure TfrmCustomGrid.TimerUpdateTimer(Sender: TObject);
+begin
+  if (isWorking) or (isOpening) or (isClosing) then
+    Exit;
+
+  if (oldRowHeight <> xSettings.DefaultRowHeight) then
+    UpdateRowHeights;
 end;
 
 procedure TfrmCustomGrid.tvDateFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -13127,7 +13158,7 @@ begin
 
   if not dsLink.DataSet.Active then
   begin
-    for PanelTab in PanelTabs do
+    for PanelTab in panelTabs do
       PanelTab.UpdateCounter(0);
 
     Exit;
@@ -13140,18 +13171,18 @@ begin
     //tbGazetteer: ;
     tbSamplingPlots:
     begin
-      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
     end;
     //tbPermanentNets: ;
     //tbInstitutions: ;
     //tbPeople: ;
     tbProjects:
     begin
-      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-      PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-      PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+      panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
     end;
     //tbProjectTeams: ;
     //tbPermits: ;
@@ -13162,43 +13193,43 @@ begin
     //tbBandHistory: ;
     tbIndividuals:
     begin
-      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-      PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-      PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+      panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
     end;
     //tbCaptures: ;
     //tbMolts: ;
     tbNests:
     begin
-      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
     end;
     //tbNestRevisions: ;
     //tbEggs: ;
     //tbMethods: ;
     tbExpeditions:
     begin
-      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
     end;
     tbSurveys:
     begin
-      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      PanelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-      PanelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-      PanelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-      PanelTabs[5].UpdateCounter(dsLink6.DataSet.RecordCount);
+      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+      panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+      panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+      panelTabs[5].UpdateCounter(dsLink6.DataSet.RecordCount);
     end;
     //tbSurveyTeams: ;
     //tbNetsEffort: ;
     tbSightings: ;
     tbSpecimens:
     begin
-      PanelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      PanelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
     end;
     //tbSamplePreps: ;
     //tbImages: ;
@@ -13451,6 +13482,24 @@ begin
       sbDelPermanently.Enabled := False;
     end;
   end;
+end;
+
+procedure TfrmCustomGrid.UpdateRowHeights;
+begin
+  DBG.DefaultRowHeight := xSettings.DefaultRowHeight;
+
+  gridChild1.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridChild2.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridChild3.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridChild4.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridChild5.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridChild6.DefaultRowHeight := xSettings.DefaultRowHeight;
+
+  gridRecord.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridAudios.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridDocs.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridSummary.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridColumns.DefaultRowHeight := xSettings.DefaultRowHeight;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanels;

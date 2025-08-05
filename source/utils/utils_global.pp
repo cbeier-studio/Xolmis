@@ -39,11 +39,14 @@ const
 const
   DEFAULT_SETTINGS_FILE: String   = 'settings.json';
   DEBUG_SETTINGS_FILE: String     = 'settings_debug.json';
-  LOG_FILE: String               = 'xlmslog.txt';
+  LOG_FILE: String                = 'xlmslog.txt';
   GEO_BANK_FILE: String           = 'geobank.dat';
-  BF_KEY: String                 = 'support lottery birds sample';
+  BF_KEY: String                  = 'support lottery birds sample';
   NULL_DATE_STR: String           = '30/12/1500';
   NULL_TIME_STR: String           = '00:00:00';
+  MIN_ROW_HEIGHT: Integer         = 21;
+  MAX_ROW_HEIGHT: Integer         = 65;
+  DEFAULT_ROW_HEIGHT: Integer     = 25;
 
   { Format masks constants }
 const
@@ -248,7 +251,8 @@ var
   FNotificationsNeedUpdate: Boolean;
   MsgValor: String;
   EditSourceStr: String;
-  OldPPI: Integer;
+  oldPPI: Integer;
+  oldRowHeight: Integer;
 
   { System logging }
   procedure LogEvent(aAction: TLogEventAction; Msg: String);
