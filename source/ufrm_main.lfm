@@ -9,7 +9,6 @@ object frmMain: TfrmMain
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.2.0.0'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
@@ -765,7 +764,6 @@ object frmMain: TfrmMain
     Height = 28
     Top = 870
     Width = 1193
-    AutoHint = True
     Panels = <    
       item
         Style = psOwnerDraw
@@ -786,6 +784,7 @@ object frmMain: TfrmMain
     SimplePanel = False
     ShowHint = True
     OnDrawPanel = SBarDrawPanel
+    OnMouseMove = SBarMouseMove
     OnResize = SBarResize
   end
   object ActList: TActionList
@@ -1209,7 +1208,6 @@ object frmMain: TfrmMain
   end
   object AppEvents: TApplicationProperties
     OnException = AppEventsException
-    OnShowHint = AppEventsShowHint
     Left = 144
     Top = 184
   end

@@ -277,7 +277,6 @@ type
     procedure actSettingsExecute(Sender: TObject);
     procedure actViewBandsBalanceExecute(Sender: TObject);
     procedure AppEventsException(Sender: TObject; E: Exception);
-    procedure AppEventsShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: THintInfo);
     procedure eSearchChange(Sender: TObject);
     procedure eSearchEnter(Sender: TObject);
     procedure eSearchExit(Sender: TObject);
@@ -313,6 +312,7 @@ type
     procedure pmtCloseAllOtherTabsClick(Sender: TObject);
     procedure pmtCloseAllTabsClick(Sender: TObject);
     procedure pmtCloseTabClick(Sender: TObject);
+    procedure SBarMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure sbBackNotificationsClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbHomeClick(Sender: TObject);
@@ -688,36 +688,6 @@ begin
   { Log error message }
   LogError(E.Message);
   MsgDlg(rsTitleError, E.Message, mtError);
-end;
-
-procedure TfrmMain.AppEventsShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: THintInfo);
-var
-  r: TRect;
-  idx: Integer;
-begin
-  if (HintInfo.HintControl = SBar) AND (NOT SBar.SimplePanel) then
-  begin
-    r := SBar.ClientRect;
-    r.Right := SBar.Panels[0].Width;
-    // locate over what panel the mouse is
-    for idx := 0 to -1 + SBar.Panels.Count do
-    begin
-      if r.Right > HintInfo.CursorPos.X then
-      begin
-        HintInfo.CursorRect := r;
-        // provide custom hint for the panel under the mouse
-        case idx of
-          0: HintStr := databaseConnection.Database;
-          1: HintStr := EmptyStr;
-          2: HintStr := EmptyStr;
-          3: HintStr := EmptyStr;
-        end;
-
-        Exit;
-      end;
-      OffsetRect(r, SBar.Panels[idx].Width, 0) ;
-    end;
-  end;
 end;
 
 procedure TfrmMain.ApplyDarkMode;
@@ -1677,6 +1647,16 @@ begin
     Brush.Style := bsClear;
     TextOut(Rect.Left + 28, textTop, Panel.Text);
   end;
+end;
+
+procedure TfrmMain.SBarMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+  if SBar.GetPanelIndexAt(X, Y) = 0 then
+  begin
+    SBar.Hint := databaseConnection.Database;
+  end
+  else
+    SBar.Hint := EmptyStr;
 end;
 
 procedure TfrmMain.SBarResize(Sender: TObject);
