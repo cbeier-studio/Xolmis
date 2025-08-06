@@ -274,7 +274,8 @@ type
     FRecordActive: TRecordActiveStatus;
     FSQLWhere: TStrings;
     FSQLOrderBy: String;
-    function GetCount: Integer;
+    function GetFieldCount: Integer;
+    function GetRecordCount: Integer;
     function GetSQLString: String;
   public
     constructor Create(aTable: TTableType);
@@ -287,9 +288,10 @@ type
     property Fields: TSearchGroups read FFields write FFields;
     property QuickFilters: TSearchGroups read FQuickFilters write FQuickFilters;
     property SortFields: TSortedFields read FSortFields write FSortFields;
-    property Count: Integer read GetCount;
+    property FieldCount: Integer read GetFieldCount;
     property DataSet: TSQLQuery read FDataSet write FDataSet;
     property RecordActive: TRecordActiveStatus read FRecordActive write FRecordActive default rsActive;
+    property RecordCount: Integer read GetRecordCount;
     property SQLString: String read GetSQLString;
     property SQLWhere: TStrings read FSQLWhere;
     property SQLOrderBy: String read FSQLOrderBy;
@@ -730,13 +732,40 @@ begin
   inherited Destroy;
 end;
 
-function TCustomSearch.GetCount: Integer;
+function TCustomSearch.GetFieldCount: Integer;
 begin
   Result := 0;
   if not Assigned(FFields) then
     Exit;
 
   Result := FFields.Count + FQuickFilters.Count;
+end;
+
+function TCustomSearch.GetRecordCount: Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Result := 0;
+
+  if GetFieldCount = 0 then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+
+    Add('SELECT COUNT(*) FROM (');
+    Add(GetSQLString);
+    Add(')');
+
+    Open;
+    if RecordCount > 0 then
+      Result := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 function TCustomSearch.GetSQLString: String;
@@ -1109,9 +1138,9 @@ begin
 
   //FDataSet.RefreshSQL.Text := FDataSet.SQL.Text;
 
-  //{$IFDEF DEBUG}
-  //LogSQL(FDataSet.SQL);
-  //{$ENDIF}
+  {$IFDEF DEBUG}
+  LogSQL(FDataSet.SQL);
+  {$ENDIF}
 end;
 
 procedure TCustomSearch.Reset;

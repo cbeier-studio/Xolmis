@@ -13059,6 +13059,7 @@ begin
   sbClearAllFilters.Enabled := sbClearFilters.Enabled;
   sbEmptyClearAll.Visible := (FSearch.QuickFilters.Count > 0) or (FSearchString <> EmptyStr);
 
+  // Update the record count
   if dsLink.DataSet.RecordCount = 1 then
     lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount, rsRecords])
   else

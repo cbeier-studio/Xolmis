@@ -21,15 +21,9 @@ unit utils_global;
 interface
 
 uses
-  { System }
   Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf, fgl,
-  { VCL }
-  Forms, Controls, Dialogs, Menus, Buttons, Graphics,
-  { Data }
-  DB, SQLDB,
-  { CBS }
+  Forms, Controls, Dialogs, Menus, Buttons, Graphics, DB, SQLDB,
   utils_system, data_types,
-  { Forms }
   udm_main, ucfg_database;
 
 const

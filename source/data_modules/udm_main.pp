@@ -393,12 +393,11 @@ begin
   sqlCon.DatabaseName := databaseConnection.Database;
 end;
 
-procedure TDMM.sqlConLog(Sender: TSQLConnection; EventType: TDBEventType;
-  const Msg: String);
-var
-  EventName: String;
+procedure TDMM.sqlConLog(Sender: TSQLConnection; EventType: TDBEventType; const Msg: String);
+//var
+//  EventName: String;
 begin
-  EventName := EmptyStr;
+  //EventName := EmptyStr;
   case EventType of
     detCustom: ;
     detPrepare: ;
