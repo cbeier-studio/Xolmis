@@ -13261,99 +13261,19 @@ end;
 
 procedure TfrmCustomGrid.UpdateChildStatus;
 var
-  DS: TDataSource;
+  DS: TDataSet;
 begin
   DS := nil;
   if FChildTable = tbNone then
     Exit;
 
-  case FTableType of
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    //tbGazetteer: ;
-    tbSamplingPlots:
-    begin
-      DS := dsLink1;
-    end;
-    //tbPermanentNets: ;
-    //tbInstitutions: ;
-    //tbPeople: ;
-    tbProjects:
-    begin
-      case nbChilds.PageIndex of
-        0: DS := dsLink1;
-        1: DS := dsLink2;
-        2: DS := dsLink3;
-        3: DS := dsLink4;
-        4: DS := dsLink5;
-      end;
-    end;
-    //tbProjectTeams: ;
-    //tbPermits: ;
-    //tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    //tbBotanicTaxa: ;
-    //tbBands: ;
-    //tbBandHistory: ;
-    tbIndividuals:
-    begin
-      case nbChilds.PageIndex of
-        0: DS := dsLink1;
-        1: DS := dsLink2;
-        2: DS := dsLink3;
-        3: DS := dsLink4;
-        4: DS := dsLink5;
-      end;
-    end;
-    //tbCaptures: ;
-    //tbMolts: ;
-    tbNests:
-    begin
-      case nbChilds.PageIndex of
-        0: DS := dsLink1;
-        1: DS := dsLink2;
-        2: DS := dsLink3;
-      end;
-    end;
-    //tbNestRevisions: ;
-    //tbEggs: ;
-    //tbMethods: ;
-    tbExpeditions:
-    begin
-      DS := dsLink1;
-    end;
-    tbSurveys:
-    begin
-      case nbChilds.PageIndex of
-        0: DS := dsLink1;
-        1: DS := dsLink2;
-        2: DS := dsLink3;
-        3: DS := dsLink4;
-        4: DS := dsLink5;
-        5: DS := dsLink6;
-      end;
-    end;
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings: ;
-    tbSpecimens:
-    begin
-      case nbChilds.PageIndex of
-        0: DS := dsLink1;
-        1: DS := dsLink2;
-      end;
-    end;
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
-  end;
+  DS := GetChildDataSet;
 
-  if DS.DataSet.RecordCount = 1 then
-    lblChildStatus.Caption := Format(rsRecordsFound, [DS.DataSet.RecordCount, rsRecords])
+  if DS.RecordCount = 1 then
+    lblChildStatus.Caption := Format(rsRecordsFound, [DS.RecordCount, rsRecords])
   else
-  if DS.DataSet.RecordCount > 1 then
-    lblChildStatus.Caption := Format(rsRecordsFound, [DS.DataSet.RecordCount, rsRecordsPlural])
+  if DS.RecordCount > 1 then
+    lblChildStatus.Caption := Format(rsRecordsFound, [DS.RecordCount, rsRecordsPlural])
   else
     lblChildStatus.Caption := rsNoRecordsFound;
 end;
