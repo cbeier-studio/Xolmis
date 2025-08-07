@@ -1,10 +1,10 @@
 object DMB: TDMB
   OnCreate = DataModuleCreate
   OldCreateOrder = False
-  Height = 410
-  HorizontalOffset = 373
-  VerticalOffset = 34
-  Width = 526
+  Height = 362
+  HorizontalOffset = 361
+  VerticalOffset = 250
+  Width = 421
   object qNestRevisions: TSQLQuery
     PacketRecords = -1
     FieldDefs = <    
@@ -126,10 +126,6 @@ object DMB: TDMB
         DataType = ftBoolean
         Precision = -1
       end>
-    AfterCancel = qNestRevisionsAfterCancel
-    AfterPost = qNestRevisionsAfterPost
-    BeforeEdit = qNestRevisionsBeforeEdit
-    BeforePost = qNestRevisionsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
@@ -217,7 +213,7 @@ object DMB: TDMB
       end>
     Macros = <>
     DataSource = DMG.dsNests
-    Left = 72
+    Left = 56
     Top = 48
     object qNestRevisionsmarked_status: TBooleanField
       Alignment = taCenter
@@ -723,10 +719,6 @@ object DMB: TDMB
         DataType = ftInteger
         Precision = -1
       end>
-    AfterCancel = qEggsAfterCancel
-    AfterPost = qEggsAfterPost
-    BeforeEdit = qEggsBeforeEdit
-    BeforePost = qEggsBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
@@ -835,7 +827,7 @@ object DMB: TDMB
       end>
     Macros = <>
     DataSource = DMG.dsNests
-    Left = 72
+    Left = 56
     Top = 113
     object qEggsmarked_status: TBooleanField
       Alignment = taCenter
@@ -1259,12 +1251,12 @@ object DMB: TDMB
   end
   object dsNestRevisions: TDataSource
     DataSet = qNestRevisions
-    Left = 200
+    Left = 184
     Top = 48
   end
   object dsEggs: TDataSource
     DataSet = qEggs
-    Left = 200
+    Left = 184
     Top = 113
   end
   object qNestOwners: TSQLQuery
@@ -1332,10 +1324,6 @@ object DMB: TDMB
         Precision = -1
         Size = 120
       end>
-    AfterCancel = qNestOwnersAfterCancel
-    AfterPost = qNestOwnersAfterPost
-    BeforeEdit = qNestOwnersBeforeEdit
-    BeforePost = qNestOwnersBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
@@ -1383,7 +1371,7 @@ object DMB: TDMB
       end>
     Macros = <>
     DataSource = DMG.dsNests
-    Left = 72
+    Left = 56
     Top = 179
     object qNestOwnersmarked_status: TBooleanField
       DisplayLabel = 'Marked'
@@ -1526,7 +1514,7 @@ object DMB: TDMB
   end
   object dsNestOwners: TDataSource
     DataSet = qNestOwners
-    Left = 200
+    Left = 184
     Top = 179
   end
 end

@@ -1093,6 +1093,7 @@ uses
     rsCaptionSighting = 'Sighting';
     rsCaptionToponym = 'Toponym';
     rsCaptionSurvey = 'Survey';
+    rsCaptionConnection = 'Connection';
     rsCaptionUser = 'User';
     rsCaptionWeatherLogEntry = 'Weather log entry';
     rsCaptionParentSite = 'Parent toponym';

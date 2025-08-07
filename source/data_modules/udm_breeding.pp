@@ -1,19 +1,3 @@
-{ Xolmis Breeding data module
-
-  Copyright (C) 2023 Christian Beier <hello@christianbeier.studio>
-
-  This source is free software; you can redistribute it and/or modify it under the terms of the GNU General
-  Public License as published by the Free Software Foundation; either version 3 of the License, or (at your
-  option) any later version.
-
-  This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-  details.
-
-  You should have received a copy of the GNU General Public License along with this program.  If not,
-  see <https://www.gnu.org/licenses/>.
-}
-
 unit udm_breeding;
 
 {$mode ObjFPC}{$H+}
@@ -21,7 +5,7 @@ unit udm_breeding;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, models_breeding, data_types;
+  Classes, SysUtils, SQLDB, DB, models_breeding;
 
 type
 
@@ -109,26 +93,14 @@ type
     qNestRevisionsuser_inserted: TLongintField;
     qNestRevisionsuser_updated: TLongintField;
     procedure DataModuleCreate(Sender: TObject);
-    procedure qEggsAfterCancel(DataSet: TDataSet);
-    procedure qEggsAfterPost(DataSet: TDataSet);
-    procedure qEggsBeforeEdit(DataSet: TDataSet);
-    procedure qEggsBeforePost(DataSet: TDataSet);
     procedure qEggseggshell_patternGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qEggseggshell_patternSetText(Sender: TField; const aText: string);
     procedure qEggseggshell_textureGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qEggseggshell_textureSetText(Sender: TField; const aText: string);
     procedure qEggsegg_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qEggsegg_shapeSetText(Sender: TField; const aText: string);
-    procedure qNestOwnersAfterCancel(DataSet: TDataSet);
-    procedure qNestOwnersAfterPost(DataSet: TDataSet);
-    procedure qNestOwnersBeforeEdit(DataSet: TDataSet);
-    procedure qNestOwnersBeforePost(DataSet: TDataSet);
     procedure qNestOwnersroleGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestOwnersroleSetText(Sender: TField; const aText: string);
-    procedure qNestRevisionsAfterCancel(DataSet: TDataSet);
-    procedure qNestRevisionsAfterPost(DataSet: TDataSet);
-    procedure qNestRevisionsBeforeEdit(DataSet: TDataSet);
-    procedure qNestRevisionsBeforePost(DataSet: TDataSet);
     procedure qNestRevisionsnest_stageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestRevisionsnest_stageSetText(Sender: TField; const aText: string);
     procedure qNestRevisionsnest_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -147,7 +119,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_management, data_columns;
+  utils_locale, utils_global, data_management, data_types, data_columns;
+
+{$R *.lfm}
 
 { TDMB }
 
@@ -156,53 +130,6 @@ begin
   TranslateNestRevisions(qNestRevisions);
   TranslateEggs(qEggs);
   TranslateNestOwners(qNestOwners);
-end;
-
-procedure TDMB.qEggsAfterCancel(DataSet: TDataSet);
-begin
-  if Assigned(OldEgg) then
-    FreeAndNil(OldEgg);
-end;
-
-procedure TDMB.qEggsAfterPost(DataSet: TDataSet);
-var
-  NewEgg: TEgg;
-  lstDiff: TStrings;
-  D: String;
-begin
-  { Save changes to the record history }
-  if Assigned(OldEgg) then
-  begin
-    NewEgg := TEgg.Create;
-    NewEgg.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
-    try
-      if NewEgg.Diff(OldEgg, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbEggs, haEdited, OldEgg.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
-    finally
-      FreeAndNil(NewEgg);
-      FreeAndNil(OldEgg);
-      FreeAndNil(lstDiff);
-    end;
-  end
-  else
-    WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByForm);
-end;
-
-procedure TDMB.qEggsBeforeEdit(DataSet: TDataSet);
-begin
-  OldEgg := TEgg.Create(DataSet.FieldByName('egg_id').AsInteger);
-end;
-
-procedure TDMB.qEggsBeforePost(DataSet: TDataSet);
-begin
-  SetRecordDateUser(DataSet);
 end;
 
 procedure TDMB.qEggseggshell_patternGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -344,53 +271,6 @@ begin
     Sender.AsString := 'U';
 end;
 
-procedure TDMB.qNestOwnersAfterCancel(DataSet: TDataSet);
-begin
-  if Assigned(OldNestOwner) then
-    FreeAndNil(OldNestOwner);
-end;
-
-procedure TDMB.qNestOwnersAfterPost(DataSet: TDataSet);
-var
-  NewNestOwner: TNestOwner;
-  lstDiff: TStrings;
-  D: String;
-begin
-  { Save changes to the record history }
-  if Assigned(OldNestOwner) then
-  begin
-    NewNestOwner := TNestOwner.Create;
-    NewNestOwner.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
-    try
-      if NewNestOwner.Diff(OldNestOwner, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbNestOwners, haEdited, OldNestOwner.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
-    finally
-      FreeAndNil(NewNestOwner);
-      FreeAndNil(OldNestOwner);
-      FreeAndNil(lstDiff);
-    end;
-  end
-  else
-    WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByForm);
-end;
-
-procedure TDMB.qNestOwnersBeforeEdit(DataSet: TDataSet);
-begin
-  OldNestOwner := TNestOwner.Create(DataSet.FieldByName('nest_owner_id').AsInteger);
-end;
-
-procedure TDMB.qNestOwnersBeforePost(DataSet: TDataSet);
-begin
-  SetRecordDateUser(DataSet);
-end;
-
 procedure TDMB.qNestOwnersroleGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
   if Sender.AsString = EmptyStr then
@@ -426,53 +306,6 @@ begin
   else
   if aText = rsNestUnknown then
     Sender.AsString := 'U';
-end;
-
-procedure TDMB.qNestRevisionsAfterCancel(DataSet: TDataSet);
-begin
-  if Assigned(OldNestRevision) then
-    FreeAndNil(OldNestRevision);
-end;
-
-procedure TDMB.qNestRevisionsAfterPost(DataSet: TDataSet);
-var
-  NewNestRevision: TNestRevision;
-  lstDiff: TStrings;
-  D: String;
-begin
-  { Save changes to the record history }
-  if Assigned(OldNestRevision) then
-  begin
-    NewNestRevision := TNestRevision.Create;
-    NewNestRevision.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
-    try
-      if NewNestRevision.Diff(OldNestRevision, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbNestRevisions, haEdited, OldNestRevision.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
-    finally
-      FreeAndNil(NewNestRevision);
-      FreeAndNil(OldNestRevision);
-      FreeAndNil(lstDiff);
-    end;
-  end
-  else
-    WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByForm);
-end;
-
-procedure TDMB.qNestRevisionsBeforeEdit(DataSet: TDataSet);
-begin
-  OldNestRevision := TNestRevision.Create(DataSet.FieldByName('nest_revision_id').AsInteger);
-end;
-
-procedure TDMB.qNestRevisionsBeforePost(DataSet: TDataSet);
-begin
-  SetRecordDateUser(DataSet);
 end;
 
 procedure TDMB.qNestRevisionsnest_stageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -520,7 +353,8 @@ begin
     Sender.AsString := 'U';
 end;
 
-procedure TDMB.qNestRevisionsnest_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+procedure TDMB.qNestRevisionsnest_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean
+  );
 begin
   if Sender.AsString = EmptyStr then
     Exit;

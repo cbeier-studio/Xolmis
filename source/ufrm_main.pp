@@ -1651,12 +1651,12 @@ end;
 
 procedure TfrmMain.SBarMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
-  if SBar.GetPanelIndexAt(X, Y) = 0 then
-  begin
-    SBar.Hint := databaseConnection.Database;
-  end
+  case SBar.GetPanelIndexAt(X, Y) of
+    0: SBar.Hint := Format('%s: %s', [rsCaptionConnection, databaseConnection.Database]);
+    1: SBar.Hint := rsCaptionUser;
   else
     SBar.Hint := EmptyStr;
+  end;
 end;
 
 procedure TfrmMain.SBarResize(Sender: TObject);

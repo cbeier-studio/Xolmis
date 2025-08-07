@@ -32,46 +32,68 @@ uses
   virtualdbgrid_package,
   FrameViewer09,
   uDarkStyleParams, uMetaDarkStyle, uDarkStyleSchemes,
-  { CBS }
+  { Utils }
   utils_autoupdate,
   utils_backup,
-  models_birds,
-  data_blobs,
-  models_botany,
-  models_breeding,
   utils_conversions,
-  data_count,
-  data_management,
-  data_search,
-  data_types,
   utils_dialogs,
   utils_editdialogs,
-  models_projects,
-  data_export,
-  data_filters,
   utils_finddialogs,
   utils_fullnames,
-  data_getvalue,
-  models_geo,
   utils_global,
   utils_graphics,
-  data_import,
   utils_locale,
   utils_permissions,
-  models_record_types,
-  models_sampling,
   utils_system,
-  models_taxonomy,
   utils_themes,
   utils_validations,
+  utils_math,
+  utils_print,
+  utils_gis,
+  utils_taxonomy,
   {$IFDEF DEBUG}
   utils_debug,
   {$ENDIF}
+  { Data libraries }
+  data_types,
+  data_consts,
+  data_count,
+  data_management,
+  data_search,
+  data_columns,
+  data_blobs,
+  data_export,
+  data_filters,
+  data_getvalue,
+  data_import,
+  data_setparam,
+  { Models }
+  models_record_types,
+  models_taxonomy,
+  models_birds,
+  models_botany,
+  models_breeding,
+  models_projects,
+  models_geo,
+  models_sampling,
+  models_xmobile,
+  models_users,
+  models_media,
+  models_bands,
+  models_sightings,
+  models_institutions,
+  models_people,
+  models_permits,
+  models_specimens,
   { Main form and Data modules }
   udm_main,
   udm_lookup,
   udm_grid,
+  udm_breeding,
   udm_individuals,
+  udm_sampling,
+  udm_taxa,
+  udm_reports,
   ufrm_main,
   { Dialogs }
   udlg_about,
@@ -91,6 +113,17 @@ uses
   udlg_progress,
   udlg_rechistory,
   udlg_validate,
+  udlg_newdatabase,
+  udlg_export,
+  udlg_recverifications,
+  udlg_import,
+  udlg_importxmobile,
+  udlg_exportpreview,
+  udlg_diagnostic,
+  udlg_splash,
+  udlg_loading,
+  udlg_selectrecord,
+  udlg_onboarding,
   ulst_breedingstatus,
   ulst_cyclecode,
   ulst_detectiontype,
@@ -99,6 +132,8 @@ uses
   { Edit dialogs }
   ubatch_bands,
   ubatch_neteffort,
+  ubatch_feathers,
+  ubatch_bandstransfer,
   uedt_bands,
   uedt_botanictaxon,
   uedt_capture,
@@ -118,25 +153,38 @@ uses
   uedt_site,
   uedt_survey,
   uedt_user,
+  uedt_method,
+  uedt_weatherlog,
+  uedt_project,
+  uedt_permit,
+  uedt_sampleprep,
+  uedt_specimen,
+  uedt_nestowner,
+  uedt_recverification,
+  uedt_audioinfo,
+  uedt_documentinfo,
+  uedt_vegetation,
+  uedt_collector,
+  uedt_surveymember,
+  uedt_projectmember,
+  uedt_projectgoal,
+  uedt_projectactivity,
+  uedt_projectrubric,
+  uedt_projectexpense,
+  uedt_feather,
   { Configuration dialogs }
   ucfg_database,
   ucfg_delimiters,
   ucfg_options,
   ucfg_users,
   { Other forms }
-  ufrm_customgrid, ufrm_geoconverter, ufrm_maintenance,
-  udm_breeding, uedt_method, udm_sampling, uedt_weatherlog, uedt_project,
-  uedt_permit, uedt_sampleprep, uedt_specimen, uedt_nestowner, udlg_newdatabase,
-  udlg_export, data_columns, utils_math, udlg_recverifications,
-  uedt_recverification, ufrm_imageviewer, ufrm_printpreview,
-  utils_print, uedt_audioinfo, uedt_documentinfo, udlg_import, udlg_importxmobile,
-  uedt_vegetation, ufrm_taxa, udlg_exportpreview, models_users, models_media,
-  data_setparam, uedt_collector, uedt_surveymember, uedt_projectmember,
-  uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
-  uedt_projectexpense, uedt_feather, udlg_diagnostic, ubatch_feathers, udm_taxa,
-  udm_reports, models_xmobile, ufrm_quickentry, udlg_splash, udlg_loading, udlg_selectrecord, data_consts, 
-udlg_onboarding, ubatch_bandstransfer, utils_gis, models_bands, models_sightings, models_institutions, 
-models_people, models_permits, models_specimens, utils_taxonomy;
+  ufrm_customgrid,
+  ufrm_geoconverter,
+  ufrm_maintenance,
+  ufrm_imageviewer,
+  ufrm_printpreview,
+  ufrm_taxa,
+  ufrm_quickentry;
 
 {$R *.res}
 
@@ -158,15 +206,17 @@ begin
   dlgSplash := TdlgSplash.Create(nil);
   dlgSplash.Show;
   dlgSplash.UpdateProgress(rsStartingXolmis, 0);
-  dlgSplash.UpdateProgress(rsLoadingConnectionDataModule, 20);
   Application.CreateForm(TDMM, DMM);
-  dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 40);
+  dlgSplash.UpdateProgress(rsLoadingConnectionDataModule, 10);
   Application.CreateForm(TDMG, DMG);
+  dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 40);
+  Application.CreateForm(TDMB, DMB);
+  dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 60);
+  Application.CreateForm(TfrmMain, frmMain);
+  dlgSplash.UpdateProgress(rsLoadingMainWindow, 80);
   {$IFDEF WINDOWS}
   Application.MainFormOnTaskBar := True;
   {$ENDIF}
-  dlgSplash.UpdateProgress(rsLoadingMainWindow, 60);
-  Application.CreateForm(TfrmMain, frmMain);
   dlgSplash.UpdateProgress(rsMainWindowLoaded, 100);
   dlgSplash.Free;
   Application.Run;

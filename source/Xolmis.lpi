@@ -1142,13 +1142,6 @@
         <ResourceBaseClass Value="DataModule"/>
       </Unit>
       <Unit>
-        <Filename Value="data_modules\udm_breeding.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="DMB"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="DataModule"/>
-      </Unit>
-      <Unit>
         <Filename Value="data_modules\udm_individuals.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="DMI"/>
@@ -1412,6 +1405,12 @@
       <Unit>
         <Filename Value="utils\utils_taxonomy.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data_modules\udm_breeding.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DMB"/>
+        <ResourceBaseClass Value="DataModule"/>
       </Unit>
     </Units>
     <Debugger>

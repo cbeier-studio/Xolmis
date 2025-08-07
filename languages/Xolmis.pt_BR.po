@@ -3155,6 +3155,7 @@ msgid "Refresh records"
 msgstr "Atualizar registros"
 
 #: tcfgdatabase.vtconnections.header.columns[0].text
+msgctxt "tcfgdatabase.vtconnections.header.columns[0].text"
 msgid "Connection"
 msgstr "Conexão"
 
@@ -12843,6 +12844,11 @@ msgstr "Fechar"
 msgctxt "utils_locale.rscaptioncollector"
 msgid "Collector"
 msgstr "Coletor"
+
+#: utils_locale.rscaptionconnection
+msgctxt "utils_locale.rscaptionconnection"
+msgid "Connection"
+msgstr "Conexão"
 
 #: utils_locale.rscaptioncountry
 msgctxt "utils_locale.rscaptioncountry"
