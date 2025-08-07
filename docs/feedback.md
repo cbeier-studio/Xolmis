@@ -1,19 +1,19 @@
 # Feedback
 
-If you found a problem or have a suggestion, you can report it using the [GitHub Issues](https://github.com/cbeier-studio/Xolmis/issues) of the Xolmis project. The developers use this issue list regularly and will notice and evaluate your issue.
+We welcome your feedback to help improve Xolmis! Whether you've found a bug or have an idea for a new feature, you can submit your input directly through our GitHub repository using the **Issues** section.
 
-## Report a problem
+## How to Submit Feedback
 
-Open the Xolmis' GitHub Issues and click the **New issue** button.
+1. Go to the [Xolmis GitHub Issues page](https://github.com/cbeier-studio/Xolmis/issues)
+2. Click **New Issue**
+3. Choose one of the available templates:
+    - **Bug Report**
+    - **Feature Request**
+4. Fill out the form with as much detail as possible
+5. Click **Submit new issue**
 
 !!! note
 
-    You need to be logged in to create issues on GitHub. Clicking in the **New issue** button will prompt for your login, if you are not logged in. You can use an existing GitHub account or Google account, or create a new GitHub account. 
+    To create issues on GitHub, you must be logged in. If you're not logged in, clicking the **New issue** button will prompt you to sign in. You can use an existing GitHub account, sign in with your Google account, or create a new GitHub account if needed. 
 
-Click in the **Bug report** option. It will open a template with some instructions. Give it a descriptive title and fill the issue following the instructions.
-
-## Suggest a feature or enhancement
-
-Open the Xolmis' GitHub Issues and click the **New issue** button.
-
-Click in the **Feature request** option. It will open a template with some instructions. Give it a descriptive title and fill the issue following the instructions.
+We appreciate your contributions and look forward to making Xolmis even better with your help!

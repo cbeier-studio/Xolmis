@@ -2,7 +2,9 @@
 
 Welcome to the manual for Xolmis Desktop, the ornithological data management system.
 
-You can download the latest version of Xolmis [here](https://github.com/cbeier-studio/Xolmis/releases/latest).
+!!! warning
+
+    Xolmis is in the early stages of development and is subject to some breaking changes. As soon as possible, a stable version will be made available to anyone who intends to use the app in production.
 
 ## About Xolmis
 

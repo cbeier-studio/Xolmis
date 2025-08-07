@@ -1,5 +1,7 @@
 # Expeditions
 
+Open the Expeditions module in the main menu **Sampling → Expeditions**.
+
 ## Adding or editing
 
 | Field | Required | Description |

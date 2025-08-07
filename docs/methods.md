@@ -1,5 +1,7 @@
 # Methods
 
+Open the Methods module in the main menu **Sampling → Methods**.
+
 ## Adding or editing
 
 Field | Required | Description

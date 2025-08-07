@@ -1,5 +1,7 @@
 # Eggs
 
+Open the Eggs module in the main menu **Breeding → Eggs**. Or view the eggs grouped by nest in the Nests module.
+
 ## Adding or editing
 
 | Field | Required | Description |

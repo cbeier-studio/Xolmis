@@ -1,5 +1,7 @@
 # Individuals
 
+Open the Individuals module in the main menu **Individuals → Individuals**.
+
 ## Adding or editing
 
 | Field | Required | Description |

@@ -1,12 +1,26 @@
 # Users
 
-A user is a person that connects and uses a database file. Each database (connection) has its own users. Opening a Xolmis connection require that a user is informed, and that user will be recorded if any changes are made to the data. It adds some security and track of changes.
+A user is anyone who connects to and interacts with a Xolmis database file. Each database connection has its own set of users. To open a Xolmis connection, you must log in with a username and password. This username is recorded with any changes made to the data, providing both security and change tracking.
+
+## User management dialog
 
 To manage the database users, open it via main menu **File → Manage users**. It opens a dialog with a list of users of the current database file, with a toolbar at the top.
 
+![User management dialog](img/users-dialog.png)
+
+Icon | Button | Function
+--- | --- | ---
+:material-plus-circle: | Add user | Create a new user in the current database
+:material-pencil: | Edit user | Edit the information and permissions of the selected user
+:material-key-variant: | Change password | Change password of the selected user
+:material-refresh: | Refresh records | Reload the user list
+:material-delete: | Delete user | Delete the selected user
+
 ## Adding and editing
 
-To add a new user, click on the plus sign :material-plus-circle:. And to edit the selected user, click on the pencil :material-pencil: button. It will open the edit dialog.
+To add a new user, click on the add button :material-plus-circle:. And to edit the selected user, click on the edit button :material-pencil: or double-click the user to be edited. It will open the edit dialog.
+
+![Edit user dialog](img/edit-user-dialog.png)
 
 Field | Required | Description
 --- | --- | ---
@@ -34,7 +48,9 @@ Visitor | Have some restrictions, as it can only visualize data, not edit it
 
 ## Change user password
 
-Click on the key :material-key-variant: button, it will prompt for authentication using the selected user current password, then open the dialog to change password. Inform a new password and the password confirmation. Click on **Save** button to apply the change.
+Click on the key button :material-key-variant:, it will prompt for authentication using the selected user current password, then open the dialog to change password. Inform a new password and the password confirmation. Click on **Save** button to apply the change.
+
+![Change password dialog](img/change-password-dialog.png)
 
 !!! note
 

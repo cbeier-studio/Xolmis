@@ -1,5 +1,7 @@
 # Feathers
 
+Open the Feathers module in the main menu **Individuals → Feathers**. Or view the feathers grouped by individual in Individuals module.
+
 ## Adding or editing
 
 Field | Required | Description

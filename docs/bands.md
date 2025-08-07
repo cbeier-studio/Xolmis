@@ -6,6 +6,8 @@ The bands (or bird rings) are a method to identify individual birds. Each band i
 
     We have plans to include other banding systems, thus we need contributors familiarized with these systems. Contact us if you are interested in contributing.
 
+Open the Bands module in the main menu **Individuals → Bands**.
+
 ## Adding or editing
 
 | Field | Description |

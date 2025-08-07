@@ -1,8 +1,10 @@
 # Settings
 
-The Xolmis' settings are accessible in the main menu **File > Settings**. It opens a dialog where you can customize the appearance and behavior of Xolmis. It has a list of categories on the left. Each setting is explained below.
+The Xolmis' settings are accessible in the main menu **File → Settings**. It opens a dialog where you can customize the appearance and behavior of Xolmis. It has a list of categories on the left. Each setting is explained below.
 
 ## General
+
+This section have general system settings.
 
 Setting | Description | Default
 --- | --- | ---
@@ -20,13 +22,18 @@ Check for Xolmis updates | Check for updates periodically | Daily
 
 ## Appearance
 
+This section have settings that change Xolmis visually.
+
 Setting | Description | Default
 --- | --- | ---
 Theme | Set light or dark themes. The _Auto_ option sets the theme according to the operating system | Auto
+Grid row height | Set the row height for data grids | 25 pixels
 Use conditional formatting in grids | Highlight some values on grids to indicate some error or grouping | Enabled
 Highlight outlier measurements in captures | If _Use conditional formatting in grids_ is enabled, highlight in yellow the capture measurements that may be outliers | Enabled
 
 ## Collection
+
+This section have settings related to the collected data management.
 
 Setting | Description | Default
 --- | --- | ---
@@ -34,6 +41,8 @@ Language of vernacular names | Set the language of vernacular names displayed in
 Show synonyms in search results | If enabled, it will show synonyms on search results, but Xolmis always use the accepted name | Disabled
 
 ## Media
+
+This section have settings about the media files that can be attached or exported.
 
 Setting | Description | Default
 --- | --- | ---
@@ -44,9 +53,11 @@ Open files after export | If enabled, opens exported file in the default applica
 
 !!! danger
 
-    Changing the media locations when you already added some media to the database is **not recommended**, at the moment. The media is stored in the database using relative paths, and changing the media location could lead to inconsistences. We are working on a solution.
+    Changing the media locations when you already added some media to the database is **not recommended**, at the moment. The media is stored in the database using relative paths, and changing the media location could lead to inconsistences. {==We are working on a solution.==}
 
 ## Security and privacy
+
+This section have security and privacy settings.
 
 Setting | Description | Default
 --- | --- | ---
@@ -59,6 +70,8 @@ Allow Xolmis to log events for technical support | If enabled, it will write a l
     If you are experiencing some errors and crashes while using Xolmis, you can enable _Allow Xolmis to log events for technical support_. It will probably record the errors and you can open the log file and send to the support. This helps finding the problem and fixing it. **No personal or sensitive data is recorded in the log or sent to the support**. If Xolmis is running smoothly, you can keep this setting disabled.
 
 ## Backup and restore
+
+This section have settings about data backup and restore.
 
 Setting | Description | Default
 --- | --- | ---

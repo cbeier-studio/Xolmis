@@ -1,5 +1,7 @@
 # Nests
 
+Open the Nests module in the main menu **Breeding → Nests**.
+
 ## Adding or editing
 
 | Field | Required | Description |
@@ -86,6 +88,8 @@
 - Unknown
 
 ## Nest revisions
+
+Open the Nest revisions in a separate tab in the main menu **Breeding → Nest revisions**.
 
 | Field | Required | Description |
 | --- | --- | --- |

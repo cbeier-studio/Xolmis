@@ -2,6 +2,8 @@
 
 An institution can be an university, an ONG, an enterprise, or other type of entity.
 
+Open the Institutions module in the main menu **Management → Institutions**.
+
 ## Adding or editing
 
 | Field | Required | Description |

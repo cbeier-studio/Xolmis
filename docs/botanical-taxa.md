@@ -1,5 +1,7 @@
 # Botanical taxa
 
+Open the Botanical taxa module in the main menu **Taxonomy → Botanical taxa**.
+
 ## Adding or editing
 
 Field | Required | Description

@@ -4,15 +4,13 @@ There are various methods to import files into Xolmis, which vary based on the f
 
 ## Import wizard
 
-!!! note ""
-
-    Working on it!
+S|Working on it||
 
 ## Xolmis Mobile
 
 Xolmis have a mobile companion, the [Xolmis Mobile](https://github.com/cbeier-studio/xolmis_mobile) app. It enables the collection of data in the field and its exportation in the form of text files, either in CSV or JSON format. Here is how to import these files in JSON format.
 
-Begin by opening the import wizard located in the main menu: **File > Import > Xolmis mobile**. The dialog that opens should appear as shown below.
+Begin by opening the import wizard located in the main menu: **File → Import → Xolmis mobile**. The dialog that opens should appear as shown below.
 
 Choose a file in the source file field. The file will be accessed, and the dialog will display if it is OK or not. Click the **Next** button to proceed.
 
@@ -24,22 +22,20 @@ Upon completion, the dialog will display the result, whether successful or not. 
 
 ## eBird records
 
-To import a file exported from the eBird platform, simply select the menu option **File > Import > eBird records**. This will open a dialog box to locate and select the desired file for import. Once the file is selected, the import process will begin and a message will be displayed upon completion. It is just that simple!
+To import a file exported from the eBird platform, simply select the menu option **File → Import → eBird records**. This will open a dialog box to locate and select the desired file for import. Once the file is selected, the import process will begin and a message will be displayed upon completion. It is just that simple!
 
 ## Banding data
 
-To import banding data in CSV format, select the menu option **File > Import > Banding Data**. This action will open the corresponding dialog.
+To import banding data in CSV format, select the menu option **File → Import → Banding Data**. This action will open the corresponding dialog.
 
 There are three types of banding data available for import. You must select at least one file to initiate the import, but you have the option to select all three. Once the import begins, the dialog will display the progress and results of the process.
 
 ## Nests data
 
-!!! note ""
-
-    Working on it!
+S|Working on it||
 
 ## Geographical coordinates
 
 Files containing geographical coordinates, such as KML and GPX files, can be imported and utilized across various tables in Xolmis via the [Coordinates Editor](adding-and-editing-data.md#geoassist).
 
-Simply click on the menu option **Files > Import > Geographical Coordinates** and choose the file you wish to import. The system will display the progress and notify you upon completion.
+Simply click on the menu option **Files → Import → Geographical Coordinates** and choose the file you wish to import. The system will display the progress and notify you upon completion.

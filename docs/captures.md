@@ -1,5 +1,7 @@
 # Captures
 
+Open the Captures module in the main menu **Individuals → Captures**. The captures can be viewed grouped by individual in the Individuals module.
+
 ## Adding or editing
 
 | Field | Required |Description |

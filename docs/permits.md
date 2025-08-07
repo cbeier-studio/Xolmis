@@ -2,6 +2,8 @@
 
 A recurring bureaucracy in research projects are the permits. A permit represents an authorization for determined research activities.
 
+Open the Permits module in the main menu **Management → Permits**.
+
 ## Adding or editing
 
 Field | Required | Description

@@ -1,6 +1,6 @@
 # Taxa
 
-A taxon is a name within a taxonomic rank (category) and it follows a hierarchy. The ornithological taxa can be viewed, but not edited. The Taxa module offers charts and reports related to each taxon.
+A taxon is a name within a taxonomic rank (category) and it follows a hierarchy. The ornithological taxa can be viewed, but not edited. The Taxa module offers charts and reports related to each taxon. Open the Taxa module in the main menu **Taxonomy → Taxa**.
 
 To display the taxa you need to run a search. The search box is on the top left of the module and have an options button. You can set to _Show only the recorded taxa_ or not.
 

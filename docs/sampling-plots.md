@@ -6,6 +6,8 @@ A sampling plot represents a specific site of sampling which is regularly used, 
 
     Toponyms and sampling plots are similar but not the same. Toponyms are well known named sites, while sampling plots are more specific sites generally "inside" a locality (toponym), and with names invented by the researcher. Also, a locality can have many sampling plots.
 
+Open the Sampling plots module in the main menu **Geo → Sampling plots**.
+
 ## Adding or editing
 
 | Field | Required | Description |

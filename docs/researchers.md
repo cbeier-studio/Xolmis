@@ -2,6 +2,8 @@
 
 A researcher is a person that participated in data collection in some way.
 
+Open the Researchers module in the main menu **Management → Researchers**.
+
 ## Adding or editing
 
 | Field | Required | Description |

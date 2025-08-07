@@ -1,5 +1,7 @@
 # Surveys
 
+Open the Surveys module in the main menu **Sampling → Surveys**.
+
 ## Adding or editing
 
 Field | Required | Description

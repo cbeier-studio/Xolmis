@@ -2,6 +2,8 @@
 
 Researches are not only collection and data analysis. It also have the bureaucratic part that needs to be managed. Generally, researches are formalized in projects, which have chronogram and budgets well defined.
 
+Open the Projects module in the main menu **Management → Projects**.
+
 ## Adding and editing
 
 Field | Required | Description

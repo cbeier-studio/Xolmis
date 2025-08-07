@@ -2,7 +2,7 @@
 
 A specimen represents a collected sample, which could be of many types. Specimen data are important to relate them to other records and also to deposit them in scientific collections in museums and research institutions.
 
-The Specimen module allow to record specimens and preparations made from them. To access the Specimen module, go to menu **Survey > Specimens**.
+The Specimen module allow to record specimens and preparations made from them. To access the Specimen module, go to menu **Sampling → Specimens**.
 
 ## Adding or editing
 

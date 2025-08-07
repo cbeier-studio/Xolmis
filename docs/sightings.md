@@ -1,5 +1,7 @@
 # Sightings
 
+Open the Sightings module in the main menu **Sampling → Sightings**. Or view the sightings grouped by survey in the Surveys module.
+
 ## Adding or editing
 
 | Field | Required | Description |
