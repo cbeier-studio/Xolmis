@@ -19,6 +19,7 @@
         <unit file="../source/utils/utils_fullnames.pp"/>
         <unit file="../source/utils/utils_gis.pp"/>
         <unit file="../source/utils/utils_graphics.pp"/>
+        <unit file="../source/utils/utils_locale.pp"/>
         <unit file="../source/utils/utils_math.pp"/>
         <unit file="../source/utils/utils_permissions.pp"/>
         <unit file="../source/utils/utils_print.pp"/>
@@ -30,12 +31,15 @@
         <unit file="../source/data/data_management.pp"/> 
         <unit file="../source/data/data_blobs.pp"/>
         <unit file="../source/data/data_columns.pp"/> 
+        <unit file="../source/data/data_consts.pp"/>
         <unit file="../source/data/data_export.pp"/>
         <unit file="../source/data/data_filters.pp"/>
         <unit file="../source/data/data_getvalue.pp"/>
         <unit file="../source/data/data_import.pp"/>
         <unit file="../source/data/data_search.pp"/>
         <unit file="../source/data/data_setparam.pp"/>
+        <unit file="../source/models/models_record_types.pp"/>
+        <unit file="../source/models/models_bands.pp"/>
         <unit file="../source/models/models_botany.pp"/>
         <unit file="../source/models/models_sampling.pp"/>
         <unit file="../source/models/models_xmobile.pp"/>
@@ -61,6 +65,7 @@
         <description file="utils_fullnames.xml"/>
         <description file="utils_gis.xml"/>
         <description file="utils_graphics.xml"/>
+        <description file="utils_locale.xml"/>
         <description file="utils_math.xml"/>
         <description file="utils_permissions.xml"/>
         <description file="utils_print.xml"/>
@@ -72,12 +77,15 @@
         <description file="data_management.xml"/>
         <description file="data_blobs.xml"/>
         <description file="data_columns.xml"/>
+        <description file="data_consts.xml"/>
         <description file="data_export.xml"/>
         <description file="data_filters.xml"/>
         <description file="data_getvalue.xml"/>
         <description file="data_import.xml"/>
         <description file="data_search.xml"/>
         <description file="data_setparam.xml"/>
+        <description file="models_record_types.xml"/>
+        <description file="models_bands.xml"/>
         <description file="models_botany.xml"/>
         <description file="models_sampling.xml"/>
         <description file="models_xmobile.xml"/>

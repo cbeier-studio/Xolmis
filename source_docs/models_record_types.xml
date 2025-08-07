@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_record_types"><element name="TXolmisRecord"><short>Ancestral Xolmis record model.</short>
+      </element><element name="TXolmisRecord.Clear"><short>Clear the property values.</short><descr><p>Clear method must be overriden on descendant classes.</p>
+        </descr>
+      </element><element name="TBandColorCode"><short>Enumeration of color codes for bird marks.</short><descr><p><var>ccNone</var> indicates that there is no bird mark.</p><p><var>ccMetal</var> is the standard aluminum band provided by the <b>Brazilian National Banding System</b> (SNA - <i>Sistema Nacional de Anilhamento</i>). It has an inscription of an unique code.</p><p><var>ccAnotherMetal</var> is another metallic band not provided by the <b>SNA</b>. It is not common in Brazil.</p><p>Other options follow the <b>European Color Mark Coding</b> names.</p>
+        </descr>
+      </element><element name="TBodyPart"><short>Enumeration of body parts that may have bird marks.</short>
+      </element><element name="TMarkType"><short>Enumeration of bird mark types.</short>
+      </element><element name="TBandStatus"><short>Enumeration of bird mark statuses.</short>
+      </element><element name="TBandSource"><short>Enumeration of bird mark sources or origins.</short>
+      </element><element name="TBandEvent"><short>Enumeration of event types in bird band history.</short>
+      </element><element name="TXolmisRecord.Id"><short>Stores the record primary key value.</short><descr><p>The field name varies with the descendant type.</p><p><b>Example</b>: <var>method_id</var> for <var>methods</var> table, <var>band_id</var> for <var>bands</var> table, etc.</p>
+        </descr>
+      </element><element name="TXolmisRecord.Guid"><short>Stores the record GUID value, if present.</short>
+      </element><element name="TXolmisRecord.UserInserted"><short>Stores the key of the user that created the record.</short>
+      </element><element name="TXolmisRecord.UserUpdated"><short>Stores the key of the user that last modified the record.</short>
+      </element><element name="TXolmisRecord.InsertDate"><short>Stores the timestamp of when the record was created.</short>
+      </element><element name="TXolmisRecord.UpdateDate"><short>Stores the timestamp of when the record was last modified.</short>
+      </element><element name="TXolmisRecord.Marked"><short>Flag indicating that the record is marked or not.</short><descr>This flag is used to filter records.
+</descr>
+      </element><element name="TXolmisRecord.Exported"><short>Flag indicating that the record was exported or not.</short><descr>Currently, this flag is not used.
+</descr>
+      </element><element name="TXolmisRecord.Active"><short>Flag indicating if the record is active or not.</short><descr><p>A record with <var>Active</var> = <b>False</b> means that the it was deleted and it is now in the "recycle bin".</p>
+        </descr>
+      </element><element name="TCustomTaxon"><short>Ancestral taxon record model.</short><seealso><link id="TXolmisRecord"/>
+        </seealso>
+      </element><element name="TCustomTaxon.FullName"><short>Stores the scientific name of the taxon.</short>
+      </element><element name="TCustomTaxon.FormattedName"><short>Stores the formatted scientific name of the taxon for display purposes.</short>
+      </element><element name="TCustomTaxon.Authorship"><short>Stores the author of the taxon description.</short>
+      </element><element name="TCustomTaxon.ParentTaxonId"><short>Stores the parent taxon key for taxon hierarchy.</short>
+      </element><element name="TCustomTaxon.ValidId"><short>Stores the valid taxon key when the scientific name is a synonym.</short>
+      </element><element name="TCustomTaxon.OrderId"><short>Taxonomic order key for filtering taxa.</short>
+      </element><element name="TCustomTaxon.FamilyId"><short>Taxonomic family key for filtering taxa.</short>
+      </element><element name="TCustomTaxon.GenusId"><short>Taxonomic genus key for filtering taxa.</short>
+      </element><element name="TCustomTaxon.SpeciesId"><short>Taxonomic species key for filtering taxa.</short>
+      </element><short>Library with ancestor data models, including types and constants for descendant models.</short>
+    </module>
+  </package>
+</fpdoc-descriptions>

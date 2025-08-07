@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="utils_global"><short>Global methods and variables</short><descr><p>Constants used through the system:</p><ul><li>Default filenames </li><li>Format masks </li><li>Hashtags </li><li>History action types </li>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_global"><short>Global methods, constants, and variables</short><descr><p>Constants used through the system:</p><ul><li>Default filenames </li><li>Format masks </li><li>Hashtags </li><li>History action types </li>
         </ul><p>Global variables:</p><ul><li>isWorking </li><li>databaseConnection </li><li>stopProcess </li><li>EditSourceStr </li>
         </ul><p>Methods for logging, usage data collection, system paths, database and system settings.</p>
       </descr><element name="stopProcess"><short>Global variable that indicates when the user cancelled a process.</short>

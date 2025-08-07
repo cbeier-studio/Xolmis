@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_bands"><element name="TBand"><short>Band record model.</short>
+      <descr><p>It stores data of one record for/from <var>bands</var> table, with methods to manage it.</p>
+        </descr>
+      </element><element name="TBandHistory"><short>Band history record model.</short>
+      <descr><p>It stores data of one record for/from <var>band_history</var> table, with methods to manage it.</p>
+        </descr>
+      </element>
+    <element name="TBirdMark"><short>Stores data of one bird mark</short><descr><p><var>BodyPart</var> indicates the part of the bird body that the mark was used.</p><p><var>Index</var> is the position of the bird mark on the body part.</p><p><var>Color</var> is the color code of the bird mark.</p><p><var>MarkType</var> is the type of bird mark used.</p><p><var>Inscription</var> is the bird mark inscription.</p><p><var>BandId</var> is the key value of the bird mark in the <var>bands</var> table.</p>
+        </descr>
+      </element><element name="TBirdMarks"><short>List type of bird marks.</short><seealso><link id="TBirdMark"/>
+        </seealso>
+      </element><short>Library of data models for bird bands and related records.</short>
+    </module>
+  </package>
+</fpdoc-descriptions>

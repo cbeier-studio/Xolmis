@@ -72,6 +72,7 @@
       </element><element name="TSearchGroup.Fields"><short>List of fields that compose this search group</short>
       </element><element name="TSearchGroup.AndOr"><short>Type of logical operator used to connect the fields of the group</short>
       </element>
+    <short>Library with data management types and constants.</short>
     </module>
   </package>
 </fpdoc-descriptions>

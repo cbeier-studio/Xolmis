@@ -3,12 +3,24 @@
 </descr>
       </element><element name="TfrmQuickEntry.CellErrorColor"><short>Return the cell error highlight color according to the selected theme</short>
       </element><element name="TfrmQuickEntry.ColIsDate"><short>Check if a column is of date type</short>
+      <descr><p><var>aCol</var> is the <var>Integer</var> index of the evaluated grid column.</p>
+        </descr>
       </element><element name="TfrmQuickEntry.ColIsInteger"><short>Check if a column is of integer type</short>
+      <descr><p><var>aCol</var> is the <var>Integer</var> index of the evaluated grid column.</p>
+        </descr>
       </element><element name="TfrmQuickEntry.ColIsNumeric"><short>Check if a column is of float type</short>
+      <descr><p><var>aCol</var> is the <var>Integer</var> index of the evaluated grid column.</p>
+        </descr>
       </element><element name="TfrmQuickEntry.ColIsSearchable"><short>Check if a column use the find dialog to edit cells</short>
+      <descr><p><var>aCol</var> is the <var>Integer</var> index of the evaluated grid column.</p>
+        </descr>
       </element><element name="TfrmQuickEntry.ColIsTime"><short>Check if a column is of time type</short>
+      <descr><p><var>aCol</var> is the <var>Integer</var> index of the evaluated grid column.</p>
+        </descr>
       </element><element name="TfrmQuickEntry.LoadColumns"><short>Setup the columns according to the table type</short>
       </element><element name="TfrmQuickEntry.RowHasData"><short>Check if a row has any data</short>
+      <descr><p><var>aRow</var> is the <var>Integer</var> index of the evaluated grid row.</p>
+        </descr>
       </element><element name="TfrmQuickEntry.SetDateCols"><short>Setup the list of columns of date type</short>
       </element><element name="TfrmQuickEntry.SetIntegerCols"><short>Setup the list of columns of integer type</short>
       </element><element name="TfrmQuickEntry.SetNumericCols"><short>Setup the list of columns of float type</short>
@@ -62,6 +74,10 @@
       </element><element name="TfrmQuickEntry.FDateCols"><short>List of columns of date type</short>
       </element><element name="TfrmQuickEntry.FTimeCols"><short>List of columns of time type</short>
       </element><element name="TfrmQuickEntry.TableType"><short>Table type of the Quick Entry</short>
+      </element>
+    <element name="TfrmQuickEntry.LoadData"><short>Load saved grid data from JSON file.</short>
+      </element><element name="TfrmQuickEntry.SaveData"><short>Save the grid data to JSON file.</short><descr><p>Persistence of grid data is saved to JSON files with custom schema for each module.</p><p>The file name is defined by the table name.</p>
+        </descr>
       </element>
     </module>
   </package>

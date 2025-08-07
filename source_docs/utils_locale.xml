@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_locale"><short>All user interface resource strings, which can be translated.</short>
+    </module>
+  </package>
+</fpdoc-descriptions>
