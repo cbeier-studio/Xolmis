@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_graphics"><element name="MakeRounded"><short>Give a control rounded corners</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_graphics"><element name="MakeRounded"><short>Give a control rounded corners</short>
       </element><element name="RoundPanels"><short>Give rounded corners to all panels within a parent control</short>
       </element><element name="PaintColorBand"><short>Paint a shape and a label with a bird ring color code</short>
       </element><element name="LoadGlyph"><short>Load a glyph from an image list</short>

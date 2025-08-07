@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_dialogs"><short>Custom dialogs</short><descr><p>Custom dialogs for messages and specific functions.</p><ul><li>MsgDlg </li><li>ValidateDlg </li><li>FindPlantminerDlg </li><li>AddAuthorship </li><li>EditAuthorship </li><li>EditColorBands </li><li>CalendarDlg </li><li>MoltLimitsDialog </li><li>HowAgedDialog </li><li>MoltCycleDialog </li><li>DetectionDialog </li><li>BreedingDialog </li>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_dialogs"><short>Custom dialogs</short><descr><p>Custom dialogs for messages and specific functions.</p><ul><li>MsgDlg </li><li>ValidateDlg </li><li>FindPlantminerDlg </li><li>AddAuthorship </li><li>EditAuthorship </li><li>EditColorBands </li><li>CalendarDlg </li><li>MoltLimitsDialog </li><li>HowAgedDialog </li><li>MoltCycleDialog </li><li>DetectionDialog </li><li>BreedingDialog </li>
         </ul>
       </descr>
     <element name="MsgDlg"><short>Wrapper for TTaskDialog message</short>

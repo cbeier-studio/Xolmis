@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_gis"><element name="UtmBands"><short>Array of UTM band letters.</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_gis"><element name="UtmBands"><short>Array of UTM band letters.</short>
       </element><element name="RemoveSymbolsDMS"><short>Remove the symbols of degrees, minutes and seconds from a DMS coordinate.</short>
       </element><element name="DecimalToDms"><short>Convert a decimal coordinate to DMS coordinate.</short>
       </element><element name="UtmToDms"><short>Convert a UTM coordinate to DMS coordinate.</short>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_finddialogs"><short>Find dialogs library</short><descr><p>Functions to display dialogs to find and select records.</p><ul><li>FindDlg </li><li>FindTaxonDlg </li><li>FindTaxonKey </li><li>FindTaxonName </li><li>FindBotanicDlg </li><li>FindSiteDlg </li>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_finddialogs"><short>Find dialogs library</short><descr><p>Functions to display dialogs to find and select records.</p><ul><li>FindDlg </li><li>FindTaxonDlg </li><li>FindTaxonKey </li><li>FindTaxonName </li><li>FindBotanicDlg </li><li>FindSiteDlg </li>
         </ul>
       </descr>
     <element name="FindDlg"><short>Show the find dialog</short>

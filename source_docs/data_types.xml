@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_datatypes"><element name="TDBManager"><short>Supported RDBMS types</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_types"><element name="TDBManager"><short>Supported RDBMS types</short>
       </element><element name="TDBParams"><short>Database connection parameters</short>
       </element><element name="TCriteriaType"><short>Search criteria types</short>
       </element><element name="CriteriaOperators"><short>Operators for each search criteria type</short>
@@ -50,6 +50,8 @@
     <element name="TDBParams.Vacuum"><short>Vacuum the database</short>
       </element><element name="TDBParams.Clear"><short>Clear the database parameters</short>
       </element><element name="TDBParams.IntegrityCheck"><short>Check integrity of SQLite database</short>
+      <descr><p><var>ShowResults</var> is a <var>Boolean</var> flag, if set to <b>True</b>, it shows a dialog with the errors or if the database integrity is OK.</p>
+        </descr>
       </element><element name="TDBParams.Optimize"><short>Optimize the database</short>
       </element><element name="TDBParams.TestConnection"><short>Test the database connection</short>
       </element><element name="TDBParams.LoadParams"><short>Load params from connections table of the system database</short>

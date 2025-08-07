@@ -33,6 +33,11 @@ published/
 # Application bundle for Mac OS
 *.app/
 
+# Project documentation
+source_docs/html_docs/
+*.xct
+*.tex
+
 # User defined
 #*.sqlite3
 test/

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<docproject>  
+  <options>  
+    <option name="ostarget" value="Windows"/>  
+    <option name="cputarget" value="x86_64"/>  
+    <option name="show-private" value="true"/>  
+    <option name="stop-on-parser-error" value="false"/>  
+  </options>  
+  <packages>  
+    <package name="Xolmis" output="Xolmis" content="Xolmis.xct">  
+      <units>  
+        <unit file="../source/utils/utils_global.pp"/>
+        <unit file="../source/utils/utils_autoupdate.pp"/>
+        <unit file="../source/utils/utils_backup.pp"/>
+        <unit file="../source/utils/utils_conversions.pp"/>
+        <unit file="../source/utils/utils_dialogs.pp"/>
+        <unit file="../source/utils/utils_editdialogs.pp"/>
+        <unit file="../source/utils/utils_finddialogs.pp"/>
+        <unit file="../source/utils/utils_fullnames.pp"/>
+        <unit file="../source/utils/utils_gis.pp"/>
+        <unit file="../source/utils/utils_graphics.pp"/>
+        <unit file="../source/utils/utils_math.pp"/>
+        <unit file="../source/utils/utils_permissions.pp"/>
+        <unit file="../source/utils/utils_print.pp"/>
+        <unit file="../source/utils/utils_system.pp"/>
+        <unit file="../source/utils/utils_taxonomy.pp"/>
+        <unit file="../source/utils/utils_themes.pp"/>
+        <unit file="../source/utils/utils_validations.pp"/>
+        <unit file="../source/data/data_types.pp"/>
+        <unit file="../source/data/data_management.pp"/> 
+        <unit file="../source/data/data_blobs.pp"/>
+        <unit file="../source/data/data_columns.pp"/> 
+        <unit file="../source/data/data_export.pp"/>
+        <unit file="../source/data/data_filters.pp"/>
+        <unit file="../source/data/data_getvalue.pp"/>
+        <unit file="../source/data/data_import.pp"/>
+        <unit file="../source/data/data_search.pp"/>
+        <unit file="../source/data/data_setparam.pp"/>
+        <unit file="../source/models/models_botany.pp"/>
+        <unit file="../source/models/models_sampling.pp"/>
+        <unit file="../source/models/models_xmobile.pp"/>
+        <unit file="../source/ufrm_main.pp"/>
+        <unit file="../source/data_modules/udm_main.pp"/>
+        <unit file="../source/screens/ufrm_customgrid.pp"/>
+        <unit file="../source/screens/ufrm_maintenance.pp"/>
+        <unit file="../source/screens/ufrm_printpreview.pp"/>
+        <unit file="../source/screens/ufrm_quickentry.pp"/>
+        <unit file="../source/dialogs/udlg_import.pp"/>
+        <unit file="../source/dialogs/udlg_importxmobile.pp"/>
+        <unit file="../source/dialogs/udlg_loading.pp"/>
+        <unit file="../source/dialogs/udlg_progress.pp"/>
+      </units>  
+      <descriptions>  
+        <description file="utils_global.xml"/>
+        <description file="utils_autoupdate.xml"/>
+        <description file="utils_backup.xml"/>
+        <description file="utils_conversions.xml"/>
+        <description file="utils_dialogs.xml"/>
+        <description file="utils_editdialogs.xml"/>
+        <description file="utils_finddialogs.xml"/>
+        <description file="utils_fullnames.xml"/>
+        <description file="utils_gis.xml"/>
+        <description file="utils_graphics.xml"/>
+        <description file="utils_math.xml"/>
+        <description file="utils_permissions.xml"/>
+        <description file="utils_print.xml"/>
+        <description file="utils_system.xml"/>
+        <description file="utils_taxonomy.xml"/>
+        <description file="utils_themes.xml"/>
+        <description file="utils_validations.xml"/>
+        <description file="data_types.xml"/>  
+        <description file="data_management.xml"/>
+        <description file="data_blobs.xml"/>
+        <description file="data_columns.xml"/>
+        <description file="data_export.xml"/>
+        <description file="data_filters.xml"/>
+        <description file="data_getvalue.xml"/>
+        <description file="data_import.xml"/>
+        <description file="data_search.xml"/>
+        <description file="data_setparam.xml"/>
+        <description file="models_botany.xml"/>
+        <description file="models_sampling.xml"/>
+        <description file="models_xmobile.xml"/>
+        <description file="ufrm_main.xml"/>
+        <description file="udm_main.xml"/>
+        <description file="ufrm_customgrid.xml"/>
+        <description file="ufrm_maintenance.xml"/>
+        <description file="ufrm_printpreview.xml"/>
+        <description file="ufrm_quickentry.xml"/>
+        <description file="udlg_import.xml"/>
+        <description file="udlg_importxmobile.xml"/>
+        <description file="udlg_loading.xml"/>
+        <description file="udlg_progress.xml"/>
+      </descriptions>  
+    </package>  
+  </packages>  
+</docproject>

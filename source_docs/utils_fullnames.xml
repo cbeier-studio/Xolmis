@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_fullnames"><element name="GetSurveyFullname"><short>Returns a full name for a survey.</short><descr><p><var>aDate</var>, the date of the survey</p><p><var>aSite</var>, the survey locality</p><p><var>aMethod</var>, the method used in the survey</p><p><var>aStation</var>, the sampling plot or mistnet station</p><p><var>aID</var>, used when the sampling plot is not informed</p>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_fullnames"><element name="GetSurveyFullname"><short>Returns a full name for a survey.</short><descr><p><var>aDate</var>, the date of the survey</p><p><var>aSite</var>, the survey locality</p><p><var>aMethod</var>, the method used in the survey</p><p><var>aStation</var>, the sampling plot or mistnet station</p><p><var>aID</var>, used when the sampling plot is not informed</p>
         </descr>
       </element><element name="GetNetEffortFullname"><short>Returns a full name for a  net effort record.</short><descr><p><var>aDate</var>, the date of the sampling</p><p><var>aStation</var>, the mistnet station sampled</p><p><var>aNetNumber</var>, the mistnet number in the station</p>
         </descr>

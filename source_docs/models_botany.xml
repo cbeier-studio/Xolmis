@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_botany"><element name="FormattedPlantName"><short>Format botanic scientific name</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_botany"><element name="FormattedPlantName"><short>Format botanic scientific name</short>
       </element><element name="StringToQualifier"><short>Get qualifier from a name</short>
       </element>
     </module>

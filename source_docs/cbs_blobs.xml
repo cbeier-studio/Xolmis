@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_blobs"><element name="AddImage"><short>Add an image file to the database</short>
-      </element><element name="CreateImageThumbnail"><short>Create a thumbnail for an image</short>
-      </element><element name="RecreateThumbnails"><short>Recreate all thumbnails in the database</short>
-      </element><element name="ViewImage"><short>Open image in the image viewer</short>
-      </element>
-    </module>
-  </package>
-</fpdoc-descriptions>

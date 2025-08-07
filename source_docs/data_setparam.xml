@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_setparam"><element name="SetCoordinateParam"><short>Set longitude and latitude to their respective <var>TParam</var>.</short><descr>If both, longitude and latitude, are equal to zero, clear the <var>TParam</var>.
+<fpdoc-descriptions><package name="Xolmis"><module name="data_setparam"><element name="SetCoordinateParam"><short>Set longitude and latitude to their respective <var>TParam</var>.</short><descr>If both, longitude and latitude, are equal to zero, clear the <var>TParam</var>.
 </descr>
       </element><element name="SetDateParam"><short>Set a date value to a <var>TParam</var>.</short><descr>If date is equal to <var>NullDate</var>, clear the <var>TParam</var>.
 </descr>

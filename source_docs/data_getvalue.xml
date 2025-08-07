@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_getvalue"><element name="GetKey"><short>Get the key value of a table based on another field value</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_getvalue"><element name="GetKey"><short>Get the key value of a table based on another field value</short>
       </element><element name="GetName"><short>Get a name value from a table based on a key value</short>
       </element><element name="GetLatLong"><short>Get the geographical coordinate of a table based on a key value</short>
       </element><element name="GetRankFromSite"><short>Get the rank/type from a location in gazetteer</short>

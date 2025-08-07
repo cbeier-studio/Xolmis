@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_taxonomy"><element name="GetRankType"><short>Get the rank type from the taxon ranks table</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_taxonomy"><element name="GetRankType"><short>Get the rank type from the taxon ranks table</short>
       </element><element name="FormattedBirdName"><short>Format scientific names based on taxon rank using HTML tags</short>
       </element><element name="LoadTaxaRanks"><short>Load taxon ranks to a list</short>
       </element><element name="RewriteTaxonHierarchy"><short>Rewrite the taxon hierarchy in all tables</short>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_conversions"><element name="TrimList"><short>Concatenates a <var>TStrings</var> list into a single, space-separated string or replaces all line endings in a string with a single space.</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_conversions"><element name="TrimList"><short>Concatenates a <var>TStrings</var> list into a single, space-separated string or replaces all line endings in a string with a single space.</short>
       <descr><dl><dt>aList</dt><dd>A <var>TStrings</var> object containing the list of strings or an input string.</dd>
           </dl><p>Returns a single string with all list items joined by spaces or the string with all line endings replaced by spaces</p>
         </descr>
@@ -20,8 +20,7 @@
           </dl><p>Returns a new string with the wildcard character inserted based on syllable delimiters.</p>
         </descr>
       </element>
-    <element name="DartISO8601ToPascal"><short>Convert the ISO8601 date and time format from Dart to Pascal</short>
-      </element><element name="TextToDate"><short>Convert a string to date or return the null date</short>
+    <element name="TextToDate"><short>Convert a string to date or return the null date</short>
       <descr><p>It uses <var>TryStrToDate</var> for safe conversion. If the conversion fails, it returns the <var>NullDate</var>.</p><dl><dt>aValue</dt><dd>The string to convert to a date.</dd>
           </dl><p>Returns the converted <var>TDate</var> or <var>NullDate</var>.</p>
         </descr>

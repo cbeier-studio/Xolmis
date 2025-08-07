@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_xmobile"><element name="TMobileContentType"><short>Types of content of a Xolmis Mobile file</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_xmobile"><element name="TMobileContentType"><short>Types of content of a Xolmis Mobile file</short>
       </element><element name="TMobileInventoryType"><short>Types of inventory from a Xolmis Mobile file</short>
       </element><element name="TMobilePoi"><short>Object of Xolmis Mobile POI record</short>
       </element><element name="TMobilePoiList"><short>List of loaded Xolmis Mobile POI records</short>

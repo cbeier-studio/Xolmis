@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_filters"><element name="LoadTaxaTreeData"><short>Load taxa of a table in a virtual tree</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_filters"><element name="LoadTaxaTreeData"><short>Load taxa of a table in a virtual tree</short>
       </element><element name="LoadSiteTreeData"><short>Load sites of a table in a virtual tree</short>
       </element><element name="LoadDateTreeData"><short>Load dates of a table in a virtual tree</short>
       </element><element name="LoadSpecimenDateTree"><short>Set SQL script to return specimens dates</short>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_themes"><short>Library for app theming constants and functions.</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_themes"><short>Library for app theming constants and functions.</short>
     <element name="IsDarkTheme"><short>Detect if the system is using a dark theme</short>
       </element>
     </module>

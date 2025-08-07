@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_datacolumns"><element name="SummaryBands"><short>Set summary for bands fields</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_columns"><element name="SummaryBands"><short>Set summary for bands fields</short>
       </element><element name="SummaryBotanicTaxa"><short>Set summary for botanic taxa fields</short>
       </element><element name="SummaryCaptures"><short>Set summary for captures fields</short>
       </element><element name="SummaryEggs"><short>Set summary for eggs fields</short>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_datasearch"><element name="GetModifier"><short>Get the search modifier from a search hashtag</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_search"><element name="GetModifier"><short>Get the search modifier from a search hashtag</short>
       </element><element name="SetSelectSQL"><short>Set initial SQL query code for a table</short>
       </element><element name="SetMethodsSQL"><short>Set initial SQL query code for methods</short>
       </element><element name="SetSpecimensSQL"><short>Set initial SQL query code for specimens</short>

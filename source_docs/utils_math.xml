@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_math"><element name="Median"><short>calculates the median of a given dynamic array of <var>Extended</var> floating-point numbers</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_math"><element name="Median"><short>calculates the median of a given dynamic array of <var>Extended</var> floating-point numbers</short>
       <descr><dl><dt>Values</dt><dd>A dynamic array of <var>Extended</var> type numbers.</dd>
           </dl><p>Returns the median value of the array. If the array has an even number of elements, it returns the average of the two middle values.</p>
         </descr>
@@ -20,9 +20,9 @@
           </dl><p>Returns <b>True</b> if the value is an outlier, otherwise <b>False</b>.</p>
         </descr>
       </element><element name="IsOutlierZscore"><short>Determines if a value is an outlier based on its Modified Z-Score.</short>
-      <descr><p>A value is considered an outlier if its absolute Modified Z-Score is greater than a predefined threshold.</p><p><dl><dt>aTaxon</dt><dd>An <var>Integer</var> representing the <var>taxon_id</var> for filtering the data.</dd><dt>aField</dt><dd>A <var>String</var> representing the database field (measurement) to analyze.</dd><dt>aValue</dt><dd>An <var>Extended</var> value to be tested.</dd>
+      <descr><p>A value is considered an outlier if its absolute Modified Z-Score is greater than a predefined threshold.</p><dl><dt>aTaxon</dt><dd>An <var>Integer</var> representing the <var>taxon_id</var> for filtering the data.</dd><dt>aField</dt><dd>A <var>String</var> representing the database field (measurement) to analyze.</dd><dt>aValue</dt><dd>An <var>Extended</var> value to be tested.</dd>
             </dl>
-Returns <b>True</b> if the absolute Modified Z-Score is greater than 3.5 (the common threshold), otherwise <b>False</b>.</p>
+<p>Returns <b>True</b> if the absolute Modified Z-Score is greater than 3.5 (the common threshold), otherwise <b>False</b>.</p>
         </descr>
       </element>
     </module>

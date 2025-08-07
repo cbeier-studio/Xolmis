@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_global"><short>Global methods and variables</short><descr><p>Constants used through the system:</p><ul><li>Default filenames </li><li>Format masks </li><li>Hashtags </li><li>History action types </li>
-        </ul><p>Global variables:</p><ul><li>MemIni </li><li>ConexaoDB </li><li>Parar </li><li>EditSourceStr </li>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_global"><short>Global methods and variables</short><descr><p>Constants used through the system:</p><ul><li>Default filenames </li><li>Format masks </li><li>Hashtags </li><li>History action types </li>
+        </ul><p>Global variables:</p><ul><li>isWorking </li><li>databaseConnection </li><li>stopProcess </li><li>EditSourceStr </li>
         </ul><p>Methods for logging, usage data collection, system paths, database and system settings.</p>
-      </descr><element name="Parar"><short>Global variable that indicates when the user cancelled a process.</short>
-      </element><element name="ConexaoDB"><short>Current database connection settings.</short>
-      </element><element name="Closing"><short>Indicates when the system is closing</short>
-      </element><element name="Finalizado"><short>It is <b>True</b> if the application was terminated correctly</short>
+      </descr><element name="stopProcess"><short>Global variable that indicates when the user cancelled a process.</short>
+      </element><element name="databaseConnection"><short>Current database connection settings.</short>
+      </element><element name="isClosing"><short>Indicates when the system is closing</short>
+      </element><element name="wasSafelyTerminated"><short>It is <b>True</b> if the application was terminated correctly</short>
       </element>
     <element name="TXolmisSettings"><short>Stores and manage Xolmis settings</short>
       </element><element name="TXolmisSettings.LoadFromFile"><short>Load all settings from file to fields</short>
@@ -33,9 +33,9 @@
       </element>
     <element name="CheckLogsFull"><short>Check if the logs size reached the limit.</short>
       </element>
-    <element name="XSettings"><short>Current Xolmis settings</short>
-      </element><element name="Opening"><short>It is <b>True</b> if Xolmis or a window is opening</short>
-      </element><element name="Working"><short>It is <b>True</b> if some process is running</short>
+    <element name="xSettings"><short>Current Xolmis settings</short>
+      </element><element name="isOpening"><short>It is <b>True</b> if Xolmis or a window is opening</short>
+      </element><element name="isWorking"><short>It is <b>True</b> if some process is running</short>
       </element><element name="FirstConfig"><short>Run the first configuration dialog</short>
       </element>
     <element name="NullDate"><short>Get the null date constant</short>

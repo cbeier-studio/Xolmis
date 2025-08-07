@@ -8,8 +8,10 @@
       </element><element name="TfrmCustomGrid.UpdateFilterPanels"><short>Set visible the filter panels for the current table type.</short>
       </element>
     <element name="TfrmCustomGrid.AddGridColumns"><short>Adds the columns of a table into a TDBGrid</short>
+      <descr>It only adds visible columns and set the columns' properties using <link id="TfrmCustomGrid.SetGridColumns"/>.
+</descr>
       </element><element name="TfrmCustomGrid.AddSortedField"><short>Adds a field to the sorting list</short>
-      </element><element name="TfrmCustomGrid.ClearSearch"><short>Use this method to reset the search and filters</short>
+      </element><element name="TfrmCustomGrid.ClearSearch"><short>Use this method to reset the quick filters</short>
       </element><element name="TfrmCustomGrid.GetFilters"><short>Use this method to get the filter parameters of a search</short>
       </element><element name="TfrmCustomGrid.LoadRecordRow"><short>Loads the record data from the selected row to the record view</short>
       </element><element name="TfrmCustomGrid.Search"><short>Use this method to run a search or filter</short>
@@ -21,7 +23,9 @@
       </element><element name="TfrmCustomGrid.ChildTagClick"><short>Behavior of child tags click event</short>
       </element><element name="TfrmCustomGrid.ChildTagMouseEnter"><short>Behavior of child tags when mouse enter event</short>
       </element><element name="TfrmCustomGrid.ChildTagMouseLeave"><short>Behavior of child tags when mouse leave event</short>
-      </element><element name="TfrmCustomGrid.GetChildDataSet"><short>Get the current child dataset</short>
+      </element><element name="TfrmCustomGrid.GetChildDataSet"><short>Get the current detail dataset</short>
+      <descr>It returns the detail <var>TDataSet</var>.
+</descr>
       </element><element name="TfrmCustomGrid.GetColumns"><short>Fill the columns grid on side panel with the dataset fields</short>
       </element><element name="TfrmCustomGrid.LoadColumns"><short>Load the columns' saved settings</short>
       </element><element name="TfrmCustomGrid.RefreshMap"><short>Update the map with the current record coordinates</short>
@@ -32,11 +36,23 @@
       </element><element name="TfrmCustomGrid.SetRecycle"><short>Set the dataset and grid of the recycle bin side panel</short>
       </element><element name="TfrmCustomGrid.Summary"><short>Set the dataset of the summary side panel</short>
       </element><element name="TfrmCustomGrid.UpdateButtons"><short>Update the state of the main buttons</short>
+      <descr>It updates the state of the buttons and menus for the main table.
+</descr>
       </element><element name="TfrmCustomGrid.UpdateChildBar"><short>Update the child bar state</short>
-      </element><element name="TfrmCustomGrid.UpdateChildButtons"><short>Update the child buttons state</short>
-      </element><element name="TfrmCustomGrid.UpdateChildCount"><short>Update the child records counter</short>
+      <descr>It updates the state of the buttons and menus for the current detail tab.
+</descr>
+      </element><element name="TfrmCustomGrid.UpdateChildButtons"><short>Update the detail buttons state</short>
+      <descr>It updates the state of detail buttons and menus.
+</descr>
+      </element><element name="TfrmCustomGrid.UpdateChildCount"><short>Update the detail records counter badges</short>
+      <descr>It updates the counter badges of each detail tab with the number of records.
+</descr>
       </element><element name="TfrmCustomGrid.UpdateChildStatus"><short>Update the child status bar</short>
-      </element><element name="TfrmCustomGrid.UpdateGridTitles"><short>Update the grid columns titles</short>
+      <descr>It updates the record counts for the current detail table.
+</descr>
+      </element><element name="TfrmCustomGrid.UpdateGridTitles"><short>Update the grid columns titles with sorting indication.</short>
+      <descr>It adds an up (descending sorting) or down (ascending sorintg) arrow on the titles of sorted columns.
+</descr>
       </element><element name="TfrmCustomGrid.UpdateImageButtons"><short>Update the images side panel buttons</short>
       </element><element name="TfrmCustomGrid.UpdateAudioButtons"><short>Update the audio recordings side panel buttons</short>
       </element><element name="TfrmCustomGrid.TableType"><short>Table type of the master datasource</short>
@@ -45,7 +61,9 @@
       </element><element name="TfrmCustomGrid.CanToggle"><short>Variable that indicates if the filters can change</short>
       </element>
     <element name="TfrmCustomGrid.SetDocs"><short>Set the dataset and grid of the documents side panel</short>
-      </element><element name="TfrmCustomGrid.UpdateChildRightPanel"><short>Update the child right panel</short>
+      </element><element name="TfrmCustomGrid.UpdateChildRightPanel"><short>Update the detail right panel</short>
+      <descr>It updates the current project budget and rubric balances in the detail right panel.
+</descr>
       </element><element name="TfrmCustomGrid.UpdateDocButtons"><short>Update the documents side panel buttons</short>
       </element><element name="TfrmCustomGrid.UpdateRecycleButtons"><short>Update the recycle bin side panel buttons</short>
       </element><element name="TfrmCustomGrid.ChildTable"><short>Table type of the current child datasource</short>
@@ -60,13 +78,17 @@
       </element><element name="TfrmCustomGrid.CreatePanelTabs"><short>Setup child tabs</short>
       </element><element name="TfrmCustomGrid.PanelTabs"><short>List of child tabs</short>
       </element><element name="TfrmCustomGrid.FSearch"><short>Search parameters</short>
-      <seealso><link id="cbs_datatypes.TCustomSearch"/>
+      <seealso><link id="data_types.TCustomSearch"/>
         </seealso>
+      <descr>Stores the current search parameters, including quick filters and search box values. It also defines the data sorting.
+</descr>
       </element><element name="TfrmCustomGrid.FCanToggle"><short>Determine when a control can be clicked or toggled</short>
+      <descr>If <b>True</b>, it indicates that the controls can be clicked or toggled, otherwise is <b>False</b>.
+</descr>
       </element><element name="TfrmCustomGrid.FIsResizing"><short>Determine when a column is resizing</short>
       </element><element name="TfrmCustomGrid.FIsMoving"><short>Determine when a column is moving</short>
       </element><element name="TfrmCustomGrid.FSidePanelFactor"><short>Calculated size factor for (right) side panel</short>
-      </element><element name="TfrmCustomGrid.FChildPanelFactor"><short>Calculated size factor for child bottom panel</short>
+      </element><element name="TfrmCustomGrid.FChildPanelFactor"><short>Calculated size factor for detail bottom panel</short>
       </element><element name="TCustomPanelTab"><short>Custom type for the child tabs</short>
       </element><element name="TCustomPanelTab.Create"><short>Create and show new child tab</short>
       </element><element name="TCustomPanelTab.UpdateCounter"><short>Update the counter badge in the child tab</short>
@@ -74,12 +96,42 @@
       </element><element name="TCustomPanelTab.IsActive"><short>Determine if the child tab is active</short>
       </element><element name="TStringMemoEditor"><short>Custom type to show a memo when editing a text field in DBGrid</short>
       </element>
-    <element name="TfrmCustomGrid.FTableType"><short>Main table</short><descr>Specifies which table to use in this form.
-</descr><seealso><link id="cbs_datatypes.TTableType"/>
+    <element name="TfrmCustomGrid.FTableType"><short>Main table type</short><descr>Specifies which table to use in this form.
+</descr><seealso><link id="data_types.TTableType"/>
         </seealso>
-      </element><element name="TfrmCustomGrid.FChildTable"><short>Current related detail table</short><descr><p>Specifies which is the current detail table being used.</p><p>If the module does not have related tables, it is set to <var>tbNone</var>.</p>
-        </descr><seealso><link id="cbs_datatypes.TTableType"/>
+      </element><element name="TfrmCustomGrid.FChildTable"><short>Current related detail table type</short><descr><p>Specifies which is the current detail table being used.</p><p>If the module does not have related tables, it is set to <var>tbNone</var>.</p>
+        </descr><seealso><link id="data_types.TTableType"/>
         </seealso>
+      </element>
+    <element name="TfrmCustomGrid.FSearchString"><short>Stores the string input on the search box.</short><descr>The input of search strings is done in the search box of the <link id="ufrm_main"/>. It is stored in this variable to update the search box when alternating between instances of this form.
+</descr>
+      </element><element name="TfrmCustomGrid.oldSearchString"><short>Stores the previous value of FSearchString</short><descr>Used to check if the <link id="TfrmCustomGrid.FSearchString"/> value changed.
+</descr>
+      </element><element name="TfrmCustomGrid.UpdateRowHeights"><short>Update the default row height of all grids in the form.</short>
+      </element><element name="TfrmCustomGrid.ClearBandFilters"><short>Clear the quick filter controls for the bands module.</short>
+      </element><element name="TfrmCustomGrid.ClearBotanicTaxaFilters"><short>Clear the quick filter controls for the botanical taxa module.</short>
+      </element><element name="TfrmCustomGrid.ClearCaptureFilters"><short>Clear the quick filter controls for the captures module.</short>
+      </element><element name="TfrmCustomGrid.ClearEggFilters"><short>Clear the quick filter controls for the eggs module.</short>
+      </element><element name="TfrmCustomGrid.ClearExpeditionFilters"><short>Clear the quick filter controls for the expeditions module.</short>
+      </element><element name="TfrmCustomGrid.ClearFeatherFilters"><short>Clear the quick filter controls for the feathers module.</short>
+      </element><element name="TfrmCustomGrid.ClearGazetteerFilters"><short>Clear the quick filter controls for the gazetteer module.</short>
+      </element><element name="TfrmCustomGrid.ClearIndividualFilters"><short>Clear the quick filter controls for the individuals module.</short>
+      </element><element name="TfrmCustomGrid.ClearInstitutionFilters"><short>Clear the quick filter controls for the institutions module.</short>
+      </element><element name="TfrmCustomGrid.ClearMethodFilters"><short>Clear the quick filter controls for the methods module.</short>
+      </element><element name="TfrmCustomGrid.ClearNestFilters"><short>Clear the quick filter controls for the nests module.</short>
+      </element><element name="TfrmCustomGrid.ClearNestRevisionFilters"><short>Clear the quick filter controls for the nest revisions module.</short>
+      </element><element name="TfrmCustomGrid.ClearSamplingPlotFilters"><short>Clear the quick filter controls for the sampling plots module.</short>
+      </element><element name="TfrmCustomGrid.ClearPeopleFilters"><short>Clear the quick filter controls for the people module.</short>
+      </element><element name="TfrmCustomGrid.ClearPermitFilters"><short>Clear the quick filter controls for the permits module.</short>
+      </element><element name="TfrmCustomGrid.ClearProjectFilters"><short>Clear the quick filter controls for the projects module.</short>
+      </element><element name="TfrmCustomGrid.ClearSightingFilters"><short>Clear the quick filter controls for the sightings module.</short>
+      </element><element name="TfrmCustomGrid.ClearSpecimenFilters"><short>Clear the quick filter controls for the specimens module.</short>
+      </element><element name="TfrmCustomGrid.ClearSurveyFilters"><short>Clear the quick filter controls for the surveys module.</short>
+      </element><element name="TfrmCustomGrid.ClearTaxonRankFilters"><short>Clear the quick filter controls for the taxon ranks module.</short>
+      </element><element name="TfrmCustomGrid.ClearZooTaxaFilters"><short>Clear the quick filter controls for the taxa module.</short>
+      </element><element name="TfrmCustomGrid.AddOrEditChild"><short>Open the edit dialog for add or edit a record of the specified table type.</short><descr><dl><dt>aTableType</dt><dd>The table where to add or edit the record.</dd><dt>isNew</dt><dd>If <b>True</b>, open the edit dialog in insert mode, otherwise in edit mode.</dd>
+          </dl>
+        </descr>
       </element>
     </module>
   </package>

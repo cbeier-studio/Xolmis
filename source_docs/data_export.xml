@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_export"><element name="LibreOfficeExists"><short>Checks if the LibreOffice suite is installed</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_export"><element name="LibreOfficeExists"><short>Checks if the LibreOffice suite is installed</short>
       </element><element name="ConvertFileToCsv"><short>Convert a file to CSV format using LibreOffice</short>
       </element><element name="ConvertFileToXls"><short>Convert a file to XLS/XLSX format using LibreOffice</short>
       </element><element name="ConvertFileToOds"><short>Convert a file to ODS format using LibreOffice</short>

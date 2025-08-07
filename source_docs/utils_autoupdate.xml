@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fpdoc-descriptions>
   <package name="Xolmis">
-    <module name="cbs_autoupdate">
+    <module name="utils_autoupdate">
       <element name="GetBuildInfoAsString">
         <short>Get the version info from the Application as string.</short>
       </element>

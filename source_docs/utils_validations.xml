@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_validations"><element name="CheckEmail"><short>Check if an e-mail address is valid or not.</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_validations"><element name="CheckEmail"><short>Check if an e-mail address is valid or not.</short>
       </element><element name="ValueInRange"><short>Check if a value is within the specified range.</short>
       </element><element name="ValueInSet"><short>Check if a value is within the specified array of values.</short>
       </element><element name="CheckCPF"><short>Check if a CPF number (Brazil) is valid or not.</short>

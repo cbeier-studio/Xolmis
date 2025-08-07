@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_editdialogs"><element name="ChangeUserPassword"><short>Show dialog to change user password</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="utils_editdialogs"><element name="ChangeUserPassword"><short>Show dialog to change user password</short>
       </element><element name="EditUser"><short>Show dialog to edit user</short>
       </element><element name="EditMethod"><short>Show dialog to edit method</short>
       </element><element name="EditSite"><short>Show dialog to edit site</short>

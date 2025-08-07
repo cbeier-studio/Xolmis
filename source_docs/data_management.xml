@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="cbs_data"><element name="GravaNumInterno"><short>Save the next value of Numero Interno used</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_management"><element name="GravaNumInterno"><short>Save the next value of Numero Interno used</short>
       </element><element name="IncNumInterno"><short>Get the next value for Numero Interno</short>
       </element><element name="Incrementa"><short>Get the next autoincrement value from a generator of a Firebird database</short>
       </element><element name="GetNomeCampo"><short>Get from field mapping the DisplayName using a FieldName</short>
