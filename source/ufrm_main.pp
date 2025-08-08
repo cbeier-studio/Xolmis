@@ -613,7 +613,7 @@ end;
 
 procedure TfrmMain.actOpenManualExecute(Sender: TObject);
 begin
-  OpenUrl('https://github.com/cbeier-studio/Xolmis/wiki');
+  OpenHelp(HELP_INDEX);
 end;
 
 procedure TfrmMain.actOpenMethodsExecute(Sender: TObject);

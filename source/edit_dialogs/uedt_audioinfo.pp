@@ -102,6 +102,7 @@ type
     eWindSpeed: TSpinEdit;
     eCloudCover: TSpinEdit;
     eSubjectsTally: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAudioFileButtonClick(Sender: TObject);
@@ -169,6 +170,11 @@ begin
   eTaxon.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtAudioInfo.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_AUDIO_RECORDINGS);
 end;
 
 procedure TedtAudioInfo.btnNewClick(Sender: TObject);

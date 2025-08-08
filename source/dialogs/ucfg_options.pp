@@ -433,7 +433,7 @@ end;
 
 procedure TcfgOptions.lblPrivacyTermsClick(Sender: TObject);
 begin
-  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/PRIVACY.md');
+  OpenHelp(HELP_PRIVACY);
 end;
 
 procedure TcfgOptions.LoadConfig;

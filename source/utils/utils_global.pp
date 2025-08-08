@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf, fgl,
-  Forms, Controls, Dialogs, Menus, Buttons, Graphics, DB, SQLDB,
+  Forms, Controls, Dialogs, Menus, Buttons, Graphics, DB, SQLDB, URIParser,
   utils_system, data_types,
   udm_main, ucfg_database;
 
@@ -80,6 +80,56 @@ const
   HASHTAG_RANK: array of String       = ('#nivel', '#categoria', '#rank');
   HASHTAG_LISTS: array of String      = ('#listas', '#lists');
   HASHTAG_SQL: array of String        = ('#sql', '#sqlfilter');
+
+  { Help files }
+const
+  HELP_INDEX: String          = 'index.html';
+  HELP_LICENSE: String        = 'license.html';
+  HELP_PRIVACY: String        = 'privacy.html';
+  HELP_THIRD_PARTY: String    = 'third-party.html';
+  HELP_FEEDBACK: String       = 'feedback.html';
+  HELP_GLOSSARY: String       = 'glossary.html';
+  HELP_INSTALLING: String     = 'installing.html';
+  HELP_INTERFACE: String      = 'interface.html';
+  HELP_INTRODUCTION: String   = 'introduction.html';
+  HELP_RELEASE_NOTES: String  = 'release-notes.html';
+
+  HELP_AUDIO_RECORDINGS: String = 'audio-recordings.html';
+  HELP_BANDS: String            = 'bands.html';
+  HELP_BOTANICAL_TAXA: String   = 'botanical-taxa.html';
+  HELP_CAPTURES: String         = 'captures.html';
+  HELP_DOCUMENTS: String        = 'documents.html';
+  HELP_EGGS: String             = 'eggs.html';
+  HELP_EXPEDITIONS: String      = 'expeditions.html';
+  HELP_FEATHERS: String         = 'feathers.html';
+  HELP_GAZETTEER: String        = 'gazetteer.html';
+  HELP_IMAGES: String           = 'images.html';
+  HELP_INDIVIDUALS: String      = 'individuals.html';
+  HELP_INSTITUTIONS: String     = 'institutions.html';
+  HELP_METHODS: String          = 'methods.html';
+  HELP_NESTS: String            = 'nests.html';
+  HELP_PERMITS: String          = 'permits.html';
+  HELP_PROJECTS: String         = 'projects.html';
+  HELP_RESEARCHERS: String      = 'researchers.html';
+  HELP_SAMPLING_PLOTS: String   = 'sampling-plots.html';
+  HELP_SIGHTINGS: String        = 'sightings.html';
+  HELP_SPECIMENS: String        = 'specimens.html';
+  HELP_SURVEYS: String          = 'surveys.html';
+  HELP_TAXA: String             = 'taxa.html';
+  HELP_USERS: String            = 'users.html';
+
+  HELP_ADDING_AND_EDITING_DATA: String    = 'adding-and-editing-data.html';
+  HELP_CONNECTIONS: String                = 'connections.html';
+  HELP_COORDINATES_CONVERTER: String      = 'coordinates-converter.html';
+  HELP_EXPORTING_DATA: String             = 'exporting-data.html';
+  HELP_IMPORTING_DATA: String             = 'importing-data.html';
+  HELP_MAP: String                        = 'map.html';
+  HELP_PRINT_DATA: String                 = 'print-data.html';
+  HELP_RECORD_HISTORY: String             = 'record-history.html';
+  HELP_RECORD_VERIFICATIONS: String       = 'record-verifications.html';
+  HELP_SEARCH_AND_FILTERING_DATA: String  = 'search-and-filtering-data.html';
+  HELP_SETTINGS: String                   = 'settings.html';
+  HELP_SUMMARY: String                    = 'summary.html';
 
 type
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);
@@ -284,6 +334,9 @@ var
   procedure NewAlert(const ATitle, AMessage: String; APriority: TNotificationPriority);
   procedure NewSystemNotification(const ATitle, AMessage: String; APriority: TNotificationPriority);
 
+  { Help manipulation }
+  procedure OpenHelp(aHelpFile: String; aTopic: String = '');
+
 
 implementation
 
@@ -480,7 +533,7 @@ end;
 
 function HelpDir: String;
 begin
-  Result := IncludeTrailingPathDelimiter(ConcatPaths([InstallDir, 'help']));
+  Result := IncludeTrailingPathDelimiter(ConcatPaths([InstallDir, 'docs']));
 end;
 
 function NullDate: TDate;
@@ -685,6 +738,24 @@ begin
   xNotifications.Add(ANotification);
 
   FNotificationsNeedUpdate := True;
+end;
+
+{ ---------------------------------------------------------------------------------------- }
+{ Help manipulation }
+{ ---------------------------------------------------------------------------------------- }
+
+procedure OpenHelp(aHelpFile: String; aTopic: String);
+var
+  HelpPath, HelpUrl: String;
+begin
+  HelpPath := ConcatPaths([HelpDir, aHelpFile]);
+
+  //HelpUrl := FilenameToURI(HelpPath);
+  HelpUrl := StringReplace(HelpPath, '\', '/', [rfReplaceAll]);
+  //if aTopic <> EmptyStr then
+  //  HelpUrl := HelpUrl + '#' + aTopic;
+
+  OpenURL(HelpUrl);
 end;
 
 { TXolmisSettings }

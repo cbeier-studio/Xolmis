@@ -112,17 +112,17 @@ end;
 
 procedure TdlgAbout.linkLicenseClick(Sender: TObject);
 begin
-  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/LICENSE.txt');
+  OpenHelp(HELP_LICENSE);
 end;
 
 procedure TdlgAbout.linkPrivacyClick(Sender: TObject);
 begin
-  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/PRIVACY.md');
+  OpenHelp(HELP_PRIVACY);
 end;
 
 procedure TdlgAbout.linkThirdPartyClick(Sender: TObject);
 begin
-  OpenUrl('https://github.com/cbeier-studio/Xolmis/blob/main/THIRD_PARTY.md');
+  OpenHelp(HELP_THIRD_PARTY);
 end;
 
 procedure TdlgAbout.sbCopyClick(Sender: TObject);

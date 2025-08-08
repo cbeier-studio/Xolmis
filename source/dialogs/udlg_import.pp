@@ -128,7 +128,7 @@ end;
 
 procedure TdlgImport.btnHelpClick(Sender: TObject);
 begin
-  OpenURL('https://github.com/cbeier-studio/Xolmis/wiki/Importing-data#import-wizard');
+  OpenHelp(HELP_IMPORTING_DATA, 'import-wizard');
 end;
 
 procedure TdlgImport.btnOptionsClick(Sender: TObject);

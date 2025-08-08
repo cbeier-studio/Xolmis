@@ -286,7 +286,7 @@ end;
 
 procedure TdlgImportXMobile.btnHelpClick(Sender: TObject);
 begin
-  OpenURL('https://github.com/cbeier-studio/Xolmis/wiki/Importing-data#xolmis-mobile');
+  OpenHelp(HELP_IMPORTING_DATA, 'xolmis-mobile');
 end;
 
 function TdlgImportXMobile.CountErrorsOnGrid: Integer;
