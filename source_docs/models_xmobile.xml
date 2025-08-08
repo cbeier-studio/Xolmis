@@ -55,6 +55,7 @@
       </element><element name="TMobileNest.LoadRevisionList"><short>Load the nest revision list linked to the nest record</short>
       </element><element name="TMobileNest.LoadEggList"><short>Load the egg list linked to the nest record</short>
       </element>
+    <short>Library of data models for Xolmis Mobile records.</short>
     </module>
   </package>
 </fpdoc-descriptions>

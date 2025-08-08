@@ -21,12 +21,9 @@ unit models_geo;
 interface
 
 uses
-  { System }
-  Classes, Types, SysUtils, Math, LazUTF8, StrUtils, RegExpr, DateUtils, TypInfo, fgl, fpjson,
-  { VCL }
-  Forms, Controls, ExtCtrls, laz.VirtualTrees, mvMapViewer, EditBtn,
-  { Data }
-  DB, SQLDB, models_record_types, data_types;
+  Classes, Types, SysUtils, LazUTF8, RegExpr, DateUtils, TypInfo, fgl, fpjson,
+  Forms, Controls, ExtCtrls, laz.VirtualTrees,
+  DB, SQLDB, models_record_types;
 
 type
 
@@ -134,8 +131,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_conversions, utils_validations, data_columns, data_setparam,
-  udm_main, udlg_geoassist;
+  utils_locale, utils_global, models_users, utils_validations, data_columns, data_setparam,
+  udm_main;
 
 procedure InitSitePropsDict;
 begin

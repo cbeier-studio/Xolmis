@@ -4,10 +4,13 @@
       </element><element name="TdlgProgress.Min"><short>Minimum value of the progress bar</short>
       </element><element name="TdlgProgress.Max"><short>Maximum value of the progress bar</short>
       </element><element name="TdlgProgress.Position"><short>Position of the progress bar</short>
-      </element><element name="TdlgProgress.AllowCancel"><short>Set to <b>True</b> if the task can be cancelled</short>
+      </element><element name="TdlgProgress.AllowCancel"><short>Define if the task can be cancelled</short>
+      <descr><p>If <b>True</b> it will show the Cancel button.</p>
+        </descr>
       </element><element name="TdlgProgress.Indeterminate"><short>Set the progress bar as indeterminate position</short>
       </element><element name="TdlgProgress.ApplyDarkMode"><short>Apply dark theme to the UI</short>
       </element>
+    <short>Modal dialog to show progress of a process</short>
     </module>
   </package>
 </fpdoc-descriptions>

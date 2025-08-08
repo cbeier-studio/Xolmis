@@ -11,6 +11,11 @@
       </element><element name="TBirdMarks"><short>List type of bird marks.</short><seealso><link id="TBirdMark"/>
         </seealso>
       </element><short>Library of data models for bird bands and related records.</short>
+    <descr><p>Currently includes:</p><ul><li><var>TBand</var>
+          </li><li><var>TBandHistory</var>
+          </li>
+        </ul>
+      </descr>
     </module>
   </package>
 </fpdoc-descriptions>

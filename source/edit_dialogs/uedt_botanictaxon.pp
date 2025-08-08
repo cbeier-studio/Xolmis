@@ -70,9 +70,9 @@ type
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
-    FTaxon: TBotanicTaxon;
+    FTaxon: TBotanicalTaxon;
     FParentTaxonId, FValidId: Integer;
-    procedure SetTaxon(Value: TBotanicTaxon);
+    procedure SetTaxon(Value: TBotanicalTaxon);
     procedure GetRecord;
     procedure SetRecord;
     procedure ApplyDarkMode;
@@ -80,7 +80,7 @@ type
     function ValidateFields: Boolean;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
-    property Taxon: TBotanicTaxon read FTaxon write SetTaxon;
+    property Taxon: TBotanicalTaxon read FTaxon write SetTaxon;
   end;
 
 var
@@ -305,7 +305,7 @@ begin
   FTaxon.ValidId := FValidId;
 end;
 
-procedure TedtBotanicTaxon.SetTaxon(Value: TBotanicTaxon);
+procedure TedtBotanicTaxon.SetTaxon(Value: TBotanicalTaxon);
 begin
   if Assigned(Value) then
     FTaxon := Value;

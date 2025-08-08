@@ -21,8 +21,8 @@ unit models_taxonomy;
 interface
 
 uses
-  Classes, SysUtils, Forms, StrUtils, ComCtrls, DB, SQLDB, RegExpr, laz.VirtualTrees, CheckLst, fpjson,
-  fgl, models_record_types;
+  Classes, SysUtils, Forms, ComCtrls, DB, SQLDB, RegExpr, laz.VirtualTrees, fpjson,
+  models_record_types;
 
 type
 
@@ -131,10 +131,10 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_validations, utils_taxonomy,
-  data_types, data_management, data_columns, data_getvalue,
+  utils_locale, utils_validations, utils_taxonomy,
+  data_columns, data_getvalue,
   models_users,
-  udm_main, udlg_progress;
+  udm_main;
 
 { TTaxon }
 

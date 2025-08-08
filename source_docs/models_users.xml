@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_users"><element name="TUser"><short>User record model.</short>
+      </element><short>Library of data models for users and related records.</short>
+    </module>
+  </package>
+</fpdoc-descriptions>

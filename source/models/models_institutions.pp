@@ -21,7 +21,7 @@ unit models_institutions;
 interface
 
 uses
-  Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, fgl, DB, SQLDB,
+  Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, DB, SQLDB,
   models_record_types;
 
 type
@@ -75,7 +75,7 @@ type
 implementation
 
 uses
-  utils_locale, models_users, utils_global, utils_validations, data_columns, data_setparam, udm_main;
+  utils_locale, models_users, utils_validations, data_columns, data_setparam, udm_main;
 
 { TInstitution }
 

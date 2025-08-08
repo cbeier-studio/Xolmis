@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fpdoc-descriptions><package name="Xolmis"><module name="udlg_loading"><element name="TdlgLoading.UpdateProgress"><short>Update message and progress of task</short>
+      <descr><p><var>aMessage</var> is the message displayed in the dialog.</p><p><var>aPercent</var> is the percentage of progress for the process. Set to -1 to show indeterminate progress.</p>
+        </descr>
       </element><element name="TdlgLoading.Max"><short>Maximum value of progress indicator</short>
       </element><element name="TdlgLoading.Min"><short>Minimum value of progress indicator</short>
       </element><element name="TdlgLoading.Progress"><short>Position of the progress indicator</short>
       </element>
+    <short>Dialog to show feedback for time consuming operations</short>
     </module>
   </package>
 </fpdoc-descriptions>

@@ -1448,7 +1448,7 @@ type
     OldProject: TProject;
     OldProjectMember: TProjectMember;
     OldPermit: TPermit;
-    OldBotany: TBotanicTaxon;
+    OldBotany: TBotanicalTaxon;
     OldTaxon: TTaxon;
     OldMethod: TMethod;
     OldExpedition: TExpedition;
@@ -1844,14 +1844,14 @@ end;
 
 procedure TDMG.qBotanyAfterPost(DataSet: TDataSet);
 var
-  NewBotany: TBotanicTaxon;
+  NewBotany: TBotanicalTaxon;
   lstDiff: TStrings;
   D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldBotany) then
   begin
-    NewBotany := TBotanicTaxon.Create;
+    NewBotany := TBotanicalTaxon.Create;
     NewBotany.LoadFromDataSet(DataSet);
     lstDiff := TStringList.Create;
     try
@@ -1875,7 +1875,7 @@ end;
 
 procedure TDMG.qBotanyBeforeEdit(DataSet: TDataSet);
 begin
-  OldBotany := TBotanicTaxon.Create(DataSet.FieldByName('taxon_id').AsInteger);
+  OldBotany := TBotanicalTaxon.Create(DataSet.FieldByName('taxon_id').AsInteger);
 end;
 
 procedure TDMG.qBotanyBeforeOpen(DataSet: TDataSet);

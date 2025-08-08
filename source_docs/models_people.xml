@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_people"><short>Library of data models for people and related records.</short><descr><p>Currently includes:</p><ul><li><var>TPerson</var>
+          </li>
+        </ul>
+      </descr><element name="TPerson"><short>Person record model.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

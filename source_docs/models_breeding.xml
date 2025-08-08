@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_breeding"><short>Library of data models for nesting data and related records.</short><element name="TNest"><short>Nest record model.</short>
+      </element><element name="TNestOwner"><short>Nest owner record model.</short>
+      </element><element name="TEgg"><short>Egg record model.</short>
+      </element><element name="TNestRevision"><short>Nest revision record model.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

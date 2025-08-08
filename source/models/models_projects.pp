@@ -21,13 +21,9 @@ unit models_projects;
 interface
 
 uses
-  { System }
   Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, fgl,
-  { Data }
   DB, SQLDB,
-  { CBS }
   models_record_types,
-  { Forms }
   udm_main;
 
 type

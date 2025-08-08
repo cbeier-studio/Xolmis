@@ -17,7 +17,6 @@
 unit models_sampling;
 
 {$mode objfpc}{$H+}
-{$modeSwitch advancedRecords}
 
 interface
 
@@ -428,7 +427,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, data_getvalue, utils_fullnames, data_columns,
+  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns,
   data_setparam, udm_main;
 
 function AuthorListToString(aAuthors: TAuthors): String;

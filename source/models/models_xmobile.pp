@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, fgl, fpjson, jsonparser, DateUtils, RegExpr, StrUtils,
-  models_record_types, models_sampling, models_birds, models_geo, models_breeding, models_sightings, models_specimens;
+  models_record_types, models_sampling, models_geo, models_breeding, models_sightings, models_specimens;
 
 type
 

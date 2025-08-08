@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_taxonomy"><element name="TTaxon"><short>Bird taxon record model.</short>
+      </element><element name="TRank"><short>Taxonomic rank record model.</short>
+      </element><short>Library of data models for bird taxonomy.</short><descr><p>Currently includes:</p><ul><li><var>TRank</var>
+          </li><li><var>TTaxon</var>
+          </li>
+        </ul>
+      </descr>
+    </module>
+  </package>
+</fpdoc-descriptions>

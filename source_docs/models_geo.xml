@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_geo"><short>Library of data models for geographical entities and related records.</short><descr><p>Currently includes:</p><ul><li><var>TSite</var>
+          </li><li><var>TPoi</var>
+          </li>
+        </ul>
+      </descr><element name="TSite"><short>Site record model.</short>
+      </element><element name="TPoi"><short>Point of interest (POI) record model.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

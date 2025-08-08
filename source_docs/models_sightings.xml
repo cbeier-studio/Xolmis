@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="models_sightings"><short>Library of data models for sightings and related records.</short><descr><p>Currently includes:</p><ul><li><var>TSighting</var>
+          </li>
+        </ul>
+      </descr><element name="TSighting"><short>Sighting record model.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

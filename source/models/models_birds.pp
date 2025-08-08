@@ -21,7 +21,7 @@ unit models_birds;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fgl, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
 
 type
 

@@ -21,7 +21,7 @@ unit models_people;
 interface
 
 uses
-  Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, fgl, DB, SQLDB,
+  Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, DB, SQLDB,
   models_record_types;
 
 type

@@ -21,7 +21,7 @@ unit models_media;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, models_sampling, models_geo;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
 
 type
 

@@ -21,7 +21,7 @@ unit models_sightings;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fgl, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
 
 type
 
@@ -112,7 +112,7 @@ type
 implementation
 
 uses
-  utils_system, utils_global, models_users, utils_validations, utils_fullnames, data_columns, data_setparam, data_getvalue,
+  utils_system, utils_global, models_users, utils_validations, data_columns, data_setparam, data_getvalue,
   utils_locale, udm_main;
 
 { TSighting }

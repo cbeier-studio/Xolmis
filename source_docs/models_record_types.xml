@@ -34,6 +34,11 @@
       </element><element name="TCustomTaxon.GenusId"><short>Taxonomic genus key for filtering taxa.</short>
       </element><element name="TCustomTaxon.SpeciesId"><short>Taxonomic species key for filtering taxa.</short>
       </element><short>Library with ancestor data models, including types and constants for descendant models.</short>
+    <descr><p>Currently includes:</p><ul><li><var>TXolmisRecord</var>
+          </li><li><var>TCustomTaxon</var>
+          </li>
+        </ul>
+      </descr>
     </module>
   </package>
 </fpdoc-descriptions>

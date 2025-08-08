@@ -2,6 +2,13 @@
 <fpdoc-descriptions><package name="Xolmis"><module name="models_botany"><element name="FormattedPlantName"><short>Format botanic scientific name</short>
       </element><element name="StringToQualifier"><short>Get qualifier from a name</short>
       </element>
+    <short>Library of data models for botanical taxonomy and related records.</short><descr><p>Currently includes:</p><ul><li><var>TBotanicalTaxon</var>
+          </li>
+        </ul>
+      </descr><element name="TBotanicalTaxon"><short>Botanical taxon record model.</short><seealso><link id="models_record_types.TCustomTaxon"/>
+        </seealso>
+      </element><element name="TBotanicalName"><short>Stores data of a botanical name.</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

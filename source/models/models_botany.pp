@@ -17,15 +17,14 @@
 unit models_botany;
 
 {$mode objfpc}{$H+}
-{$modeSwitch advancedRecords}
 
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, fgl, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, DateUtils, models_record_types;
 
 type
-  TBotanicName = record
+  TBotanicalName = record
     Name: String;
     Qualifier: TQualifier;
     Adendum: TAddendum;
@@ -36,9 +35,9 @@ type
 
 type
 
-  { TBotanicTaxon }
+  { TBotanicalTaxon }
 
-  TBotanicTaxon = class(TCustomTaxon)
+  TBotanicalTaxon = class(TCustomTaxon)
   protected
     FVernacularName: String;
     FRankId: TBotanicRank;
@@ -47,12 +46,12 @@ type
     procedure Clear; override;
     procedure GetData(aKey: Integer);
     procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TBotanicTaxon; var aList: TStrings): Boolean;
+    function Diff(aOld: TBotanicalTaxon; var aList: TStrings): Boolean;
     procedure Insert;
     procedure Update;
     procedure Save;
     procedure Delete;
-    procedure Copy(aFrom: TBotanicTaxon);
+    procedure Copy(aFrom: TBotanicalTaxon);
     function ToJSON: String;
     function Find(const FieldName: String; const Value: Variant): Boolean;
   published
@@ -64,7 +63,7 @@ var
   BotanicRankDict: TBotanicRankMap;
 
   function StringToQualifier(const aStr: String): TQualifier;
-  function FormattedPlantName(aSciName: TBotanicName; Formatted: Boolean = False): String;
+  function FormattedPlantName(aSciName: TBotanicalName; Formatted: Boolean = False): String;
   procedure InitBotanicRankDict;
   function StringToBotanicRank(const aRankStr: String): TBotanicRank;
 
@@ -105,7 +104,7 @@ begin
       Result := TQualifier(i);
 end;
 
-function FormattedPlantName(aSciName: TBotanicName; Formatted: Boolean): String;
+function FormattedPlantName(aSciName: TBotanicalName; Formatted: Boolean): String;
 var
   Html, bName, nRank, Epi, Quali: String;
   totalParts: Integer;
@@ -323,9 +322,9 @@ begin
   //  BotanicRankDict.Free;
 end;
 
-{ TBotanicTaxon }
+{ TBotanicalTaxon }
 
-constructor TBotanicTaxon.Create(aValue: Integer);
+constructor TBotanicalTaxon.Create(aValue: Integer);
 begin
   if (aValue > 0) then
     GetData(aValue)
@@ -333,20 +332,20 @@ begin
     Clear;
 end;
 
-procedure TBotanicTaxon.Clear;
+procedure TBotanicalTaxon.Clear;
 begin
   inherited Clear;
   FVernacularName := EmptyStr;
   FRankId := brRealm;
 end;
 
-procedure TBotanicTaxon.Copy(aFrom: TBotanicTaxon);
+procedure TBotanicalTaxon.Copy(aFrom: TBotanicalTaxon);
 begin
   FVernacularName := aFrom.VernacularName;
   FRankId := aFrom.RankId;
 end;
 
-procedure TBotanicTaxon.Delete;
+procedure TBotanicalTaxon.Delete;
 var
   Qry: TSQLQuery;
 begin
@@ -380,7 +379,7 @@ begin
   end;
 end;
 
-procedure TBotanicTaxon.GetData(aKey: Integer);
+procedure TBotanicalTaxon.GetData(aKey: Integer);
 var
   Qry: TSQLQuery;
 begin
@@ -421,7 +420,7 @@ begin
   end;
 end;
 
-procedure TBotanicTaxon.LoadFromDataSet(aDataSet: TDataSet);
+procedure TBotanicalTaxon.LoadFromDataSet(aDataSet: TDataSet);
 var
   FRankAbbrev: String;
   InsertTimeStamp, UpdateTimeStamp: TDateTime;
@@ -465,7 +464,7 @@ begin
   end;
 end;
 
-procedure TBotanicTaxon.Insert;
+procedure TBotanicalTaxon.Insert;
 var
   Qry: TSQLQuery;
 begin
@@ -563,7 +562,7 @@ begin
   end;
 end;
 
-procedure TBotanicTaxon.Save;
+procedure TBotanicalTaxon.Save;
 begin
   if FId = 0 then
     Insert
@@ -571,7 +570,7 @@ begin
     Update;
 end;
 
-function TBotanicTaxon.ToJSON: String;
+function TBotanicalTaxon.ToJSON: String;
 var
   JSONObject: TJSONObject;
 begin
@@ -595,7 +594,7 @@ begin
   end;
 end;
 
-procedure TBotanicTaxon.Update;
+procedure TBotanicalTaxon.Update;
 var
   Qry: TSQLQuery;
 begin
@@ -681,7 +680,7 @@ begin
   end;
 end;
 
-function TBotanicTaxon.Diff(aOld: TBotanicTaxon; var aList: TStrings): Boolean;
+function TBotanicalTaxon.Diff(aOld: TBotanicalTaxon; var aList: TStrings): Boolean;
 var
   R: String;
 begin
@@ -712,7 +711,7 @@ begin
   Result := aList.Count > 0;
 end;
 
-function TBotanicTaxon.Find(const FieldName: String; const Value: Variant): Boolean;
+function TBotanicalTaxon.Find(const FieldName: String; const Value: Variant): Boolean;
 var
   Qry: TSQLQuery;
 begin

@@ -17,7 +17,6 @@
 unit models_breeding;
 
 {$mode objfpc}{$H+}
-{$modeSwitch advancedRecords}
 
 interface
 

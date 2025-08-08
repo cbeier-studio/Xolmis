@@ -1113,7 +1113,7 @@ end;
 
 function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
-  FRecord, FOldRecord: TBotanicTaxon;
+  FRecord, FOldRecord: TBotanicalTaxon;
   lstDiff: TStrings;
   D: String;
 begin
@@ -1126,12 +1126,12 @@ begin
     IsNewRecord := IsNew;
     if IsNew then
     begin
-      FRecord := TBotanicTaxon.Create();
+      FRecord := TBotanicalTaxon.Create();
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TBotanicTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
-      FRecord := TBotanicTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
+      FOldRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
+      FRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
       EditSourceStr := rsEditedByForm;
     end;
     Taxon := FRecord;
