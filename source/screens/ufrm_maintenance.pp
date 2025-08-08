@@ -117,7 +117,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_backup, data_blobs, utils_system,
-  utils_themes, udlg_diagnostic, udm_main, uDarkStyleParams;
+  utils_themes, udlg_diagnostic, udlg_loading, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -222,6 +222,8 @@ end;
 
 procedure TfrmMaintenance.CheckDatabaseIntegrity;
 begin
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(rsCheckingDatabaseIntegrity, -1);
   if databaseConnection.IntegrityCheck(False) then
   begin
     icoDatabaseIntegrity.ImageIndex := 0;
@@ -233,6 +235,7 @@ begin
     icoDatabaseIntegrity.Hint := rsIntegrityCheckReturnedErrors;
   end;
   icoDatabaseIntegrity.ShowHint := True;
+  dlgLoading.Hide;
 end;
 
 procedure TfrmMaintenance.CheckSystemLogs;

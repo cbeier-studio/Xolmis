@@ -301,6 +301,7 @@ uses
     rsLoadingJSONFile = 'Loading JSON file...';
     rsLoadingRecordsToImport = 'Loading records to import...';
     rsCalculatingBandBalance = 'Calculating band balance...';
+    rsCheckingDatabaseIntegrity = 'Checking database integrity...';
 
     { Backup messages }
     rsPromptBackupNow = 'The automatic backup will start now and may take several minutes. ' +

@@ -13235,6 +13235,10 @@ msgctxt "utils_locale.rscaptureunbanded"
 msgid "Unbanded"
 msgstr ""
 
+#: utils_locale.rscheckingdatabaseintegrity
+msgid "Checking database integrity..."
+msgstr ""
+
 #: utils_locale.rscheckuncheckall
 msgctxt "utils_locale.rscheckuncheckall"
 msgid "Mark/unmark all records"
