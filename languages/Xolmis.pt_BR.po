@@ -4044,6 +4044,10 @@ msgstr "Opções"
 msgid "GeoAssist"
 msgstr "GeoAssist"
 
+#: tdlggeoassist.ckdeleteused.caption
+msgid "Delete used coordinates"
+msgstr "Apagar coordenadas usadas"
+
 #: tdlggeoassist.gridbank.columns[0].title.caption
 msgctxt "tdlggeoassist.gridbank.columns[0].title.caption"
 msgid "Name"

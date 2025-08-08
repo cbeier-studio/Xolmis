@@ -33,6 +33,7 @@ type
     btnHelp: TSpeedButton;
     cbLatHem: TComboBox;
     cbLongHem: TComboBox;
+    ckDeleteUsed: TCheckBox;
     dsGeoBank: TDataSource;
     eLatDeg: TSpinEdit;
     eLatMin: TSpinEdit;
@@ -158,13 +159,13 @@ begin
     // Draw the GPS point as a circle
     if APoint.IdOwner = 1 then
     begin
-      ADrawer.BrushColor := clRedFGDark;
-      ADrawer.PenColor := clRedBGLight;
+      ADrawer.BrushColor := clLightRedChart;
+      ADrawer.PenColor := clRedChart;
     end
     else
     begin
-      ADrawer.BrushColor := clYellowFG4Dark;
-      ADrawer.PenColor := clYellowBGLight;
+      ADrawer.BrushColor := clLightYellowChart;
+      ADrawer.PenColor := clYellowChart;
     end;
     ADrawer.BrushStyle := bsSolid;
     ADrawer.PenWidth := 2;
@@ -284,6 +285,9 @@ begin
   begin
     FDecPoint.X := dsGeoBank.DataSet.FieldByName('longitude').AsFloat;
     FDecPoint.Y := dsGeoBank.DataSet.FieldByName('latitude').AsFloat;
+    // Delete used coordinates
+    if ckDeleteUsed.Checked then
+      dsGeoBank.DataSet.Delete;
   end;
   FPointStr := FDecPoint.ToString;
 

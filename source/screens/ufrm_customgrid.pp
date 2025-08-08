@@ -6203,22 +6203,22 @@ var
   ext: TSize;
 begin
   P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
+  ADrawer.BrushStyle := bsSolid;
+  ADrawer.PenWidth := 2;
   if APoint.IdOwner = 0 then
   begin
-    ADrawer.BrushColor := clRedFGDark;
-    ADrawer.PenColor := clRedBGLight;
+    ADrawer.BrushColor := clLightRedChart;
+    ADrawer.PenColor := clRedChart;
     ADrawer.Ellipse(P.X - R, P.Y - R, P.X + R, P.Y + R);
     P.Y := P.Y + R;
   end
   else
   begin
-    ADrawer.BrushColor := clYellowFG4Dark;
-    ADrawer.PenColor := clYellowBGLight;
+    ADrawer.BrushColor := clLightYellowChart;
+    ADrawer.PenColor := clYellowChart;
     ADrawer.Ellipse(P.X - Rs, P.Y - Rs, P.X + Rs, P.Y + Rs);
     P.Y := P.Y + Rs;
   end;
-  ADrawer.BrushStyle := bsSolid;
-  ADrawer.PenWidth := 2;
 
   ext := ADrawer.TextExtent(APoint.Name);
   ADrawer.BrushColor := clWhite;
