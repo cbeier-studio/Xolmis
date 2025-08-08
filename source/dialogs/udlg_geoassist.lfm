@@ -91,6 +91,7 @@ object dlgGeoAssist: TdlgGeoAssist
     Width = 375
     Align = alClient
     CachePath = 'map-cache'
+    DefaultTrackColor = 12482250
     DownloadEngine = mapGeo.BuiltInDLE
     DrawingEngine = MvBGRADraw
     Layers = <>

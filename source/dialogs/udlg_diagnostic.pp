@@ -110,9 +110,22 @@ begin
     vlResult.Values['libpq.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'libpq.dll']))
   else
     vlResult.Values['libpq.dll'] := 'Not found';
+  if IsFontInstalled('Fira Code') then
+    vlResult.Values['Fira Code font'] := 'Installed'
+  else
+    vlResult.Values['Fira Code font'] := 'Not found';
+  if IsFontInstalled('Fira Sans') then
+    vlResult.Values['Fira Sans font'] := 'Installed'
+  else
+    vlResult.Values['Fira Sans font'] := 'Not found';
 
-  // Database info
-  vlResult.Values['DATABASE'] := '';
+  // System Database info
+  vlResult.Values['SYSTEM DATABASE'] := '';
+  vlResult.Values['System database file'] := DMM.sysCon.DatabaseName;
+  vlResult.Values['System database size'] := GetFileSizeReadable(DMM.sysCon.DatabaseName);
+
+  // User Database info
+  vlResult.Values['USER DATABASE'] := '';
   case databaseConnection.Manager of
     dbSqlite:
     begin
@@ -168,7 +181,8 @@ end;
 
 procedure TdlgDiagnostic.vlResultPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
 begin
-  if (vlResult.Cells[aCol, aRow] = 'APPLICATION') or (vlResult.Cells[aCol, aRow] = 'DATABASE') then
+  if (vlResult.Cells[aCol, aRow] = 'APPLICATION') or (vlResult.Cells[aCol, aRow] = 'SYSTEM DATABASE')
+    or (vlResult.Cells[aCol, aRow] = 'USER DATABASE') then
     vlResult.Canvas.Font.Style := [fsBold];
 end;
 

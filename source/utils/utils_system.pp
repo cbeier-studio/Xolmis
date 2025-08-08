@@ -90,6 +90,7 @@ type
   procedure SetRoundedCorners(const TheHandle: HWND; const CornerType: TRoundedWindowCornerType);
   {$ENDIF}
   function IsControlInVisibleArea(Control: TControl): Boolean;
+  function IsFontInstalled(const FontName: string): Boolean;
   function GetFileSizeReadable(const FileName: string): string;
   function GetDirectorySize(const Dir: string): Int64;
 
@@ -315,6 +316,21 @@ begin
   end;
 
   Result := SizeInBytes;
+end;
+
+function IsFontInstalled(const FontName: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  for i := 0 to Screen.Fonts.Count - 1 do
+  begin
+    if Screen.Fonts[i] = FontName then
+    begin
+      Result := True;
+      Break;
+    end;
+  end;
 end;
 
 { TPartialDate }
