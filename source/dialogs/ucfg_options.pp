@@ -29,6 +29,7 @@ type
   { TcfgOptions }
 
   TcfgOptions = class(TForm)
+    btnHelp: TSpeedButton;
     sliderRowHeight: TBCFluentSlider;
     btnDefaultRowHeight: TButton;
     cbCheckUpdates: TComboBox;
@@ -162,6 +163,7 @@ type
     tsConfirmCancel: TToggleSwitch;
     tvMenu: TTreeView;
     procedure btnDefaultRowHeightClick(Sender: TObject);
+    procedure btnHelpClick(Sender: TObject);
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
     procedure cbMainTaxonomyChange(Sender: TObject);
@@ -310,6 +312,11 @@ procedure TcfgOptions.btnDefaultRowHeightClick(Sender: TObject);
 begin
   //xSettings.DefaultRowHeight := DEFAULT_ROW_HEIGHT;
   sliderRowHeight.Value := (DEFAULT_ROW_HEIGHT - MIN_ROW_HEIGHT) div 2;
+end;
+
+procedure TcfgOptions.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SETTINGS);
 end;
 
 procedure TcfgOptions.cbMainTaxonomyChange(Sender: TObject);

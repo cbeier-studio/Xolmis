@@ -61,6 +61,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLocalityButtonClick(Sender: TObject);
@@ -111,6 +112,11 @@ begin
   eLatitude.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSamplingPlot.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SAMPLING_PLOTS);
 end;
 
 procedure TedtSamplingPlot.btnNewClick(Sender: TObject);

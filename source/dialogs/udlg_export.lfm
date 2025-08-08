@@ -9,12 +9,11 @@ object dlgExport: TdlgExport
   ClientWidth = 664
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
-    Height = 41
-    Top = 404
+    Height = 42
+    Top = 403
     Width = 664
     Align = alBottom
     AutoSize = True
@@ -25,7 +24,7 @@ object dlgExport: TdlgExport
     ChildSizing.EnlargeHorizontal = crsScaleChilds
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 664
     Color = 15987699
     ParentBackground = False
@@ -34,7 +33,7 @@ object dlgExport: TdlgExport
     object sbCancel: TButton
       AnchorSideLeft.Side = asrBottom
       Left = 518
-      Height = 25
+      Height = 26
       Top = 8
       Width = 130
       Align = alRight
@@ -45,7 +44,7 @@ object dlgExport: TdlgExport
     object sbRun: TButton
       AnchorSideLeft.Side = asrBottom
       Left = 380
-      Height = 25
+      Height = 26
       Top = 8
       Width = 130
       Align = alRight
@@ -54,11 +53,24 @@ object dlgExport: TdlgExport
       TabOrder = 1
       OnClick = sbRunClick
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 402
+    Top = 401
     Width = 664
     Align = alBottom
     LineColor = 9276813
@@ -73,7 +85,7 @@ object dlgExport: TdlgExport
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = lineBottom
     Left = 168
-    Height = 402
+    Height = 401
     Top = 0
     Width = 496
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -81,14 +93,14 @@ object dlgExport: TdlgExport
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
     ChildSizing.VerticalSpacing = 4
-    ClientHeight = 402
+    ClientHeight = 401
     ClientWidth = 496
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 1
     object cklbColumns: TCheckListBox
       Left = 16
-      Height = 301
+      Height = 300
       Top = 85
       Width = 464
       Align = alClient
@@ -182,7 +194,7 @@ object dlgExport: TdlgExport
     AnchorSideTop.Control = Owner
     AnchorSideBottom.Control = lineBottom
     Left = 16
-    Height = 370
+    Height = 369
     Top = 16
     Width = 152
     Anchors = [akTop, akLeft, akBottom]

@@ -64,6 +64,7 @@ type
     scrollContent: TScrollBox;
     eHerbsProportion: TSpinEdit;
     eHerbsAvgHeight: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
@@ -109,6 +110,11 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtVegetation.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SURVEYS);
 end;
 
 procedure TedtVegetation.dsLinkDataChange(Sender: TObject; Field: TField);

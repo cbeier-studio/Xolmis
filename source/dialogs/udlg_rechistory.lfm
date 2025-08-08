@@ -11,7 +11,6 @@ object dlgRecHistory: TdlgRecHistory
   Constraints.MinWidth = 824
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -113,20 +112,20 @@ object dlgRecHistory: TdlgRecHistory
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
-    Top = 329
+    Height = 42
+    Top = 328
     Width = 824
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 824
     TabOrder = 1
     object sbClose: TBitBtn
       Left = 696
-      Height = 25
+      Height = 26
       Top = 8
       Width = 112
       Align = alRight
@@ -134,10 +133,23 @@ object dlgRecHistory: TdlgRecHistory
       ModalResult = 11
       TabOrder = 0
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
   end
   object dbgHistory: TDBGrid
     Left = 0
-    Height = 294
+    Height = 293
     Top = 35
     Width = 488
     Align = alClient
@@ -147,17 +159,17 @@ object dlgRecHistory: TdlgRecHistory
       item
         Alignment = taCenter
         Title.Caption = 'Date'
-        Width = 163
+        Width = 162
         FieldName = 'event_date'
       end    
       item
         Title.Caption = 'Action'
-        Width = 163
+        Width = 161
         FieldName = 'event_action'
       end    
       item
         Title.Caption = 'Property'
-        Width = 162
+        Width = 161
         FieldName = 'event_field'
       end>
     DataSource = dsHistory
@@ -173,7 +185,7 @@ object dlgRecHistory: TdlgRecHistory
   end
   object SBox: TScrollBox
     Left = 488
-    Height = 294
+    Height = 293
     Top = 35
     Width = 336
     HorzScrollBar.Page = 1
@@ -184,7 +196,7 @@ object dlgRecHistory: TdlgRecHistory
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
     ChildSizing.VerticalSpacing = 4
-    ClientHeight = 294
+    ClientHeight = 293
     ClientWidth = 336
     Constraints.MinWidth = 336
     Color = 15066599

@@ -28,6 +28,7 @@ type
     pVisitor: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure ckVisitorKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -73,6 +74,11 @@ begin
   ePerson.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSurveyMember.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SURVEYS);
 end;
 
 procedure TedtSurveyMember.btnNewClick(Sender: TObject);

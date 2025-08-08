@@ -1410,6 +1410,7 @@
         <Filename Value="data_modules\udm_breeding.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="DMB"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
       </Unit>
     </Units>

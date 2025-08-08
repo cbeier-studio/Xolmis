@@ -17,8 +17,8 @@ object dlgGeoAssist: TdlgGeoAssist
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
-    Height = 41
-    Top = 292
+    Height = 42
+    Top = 291
     Width = 751
     Align = alBottom
     AutoSize = True
@@ -29,14 +29,14 @@ object dlgGeoAssist: TdlgGeoAssist
     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
     ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 751
     Constraints.MinWidth = 722
     ParentBackground = False
     TabOrder = 0
     object sbOK: TButton
       Left = 487
-      Height = 25
+      Height = 26
       Top = 8
       Width = 120
       Align = alRight
@@ -50,7 +50,7 @@ object dlgGeoAssist: TdlgGeoAssist
     end
     object sbCancel: TButton
       Left = 615
-      Height = 25
+      Height = 26
       Top = 8
       Width = 120
       Align = alRight
@@ -60,11 +60,24 @@ object dlgGeoAssist: TdlgGeoAssist
       TabOrder = 1
       OnClick = sbCancelClick
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 290
+    Top = 289
     Width = 751
     Align = alBottom
     LineColor = 9276813
@@ -73,7 +86,7 @@ object dlgGeoAssist: TdlgGeoAssist
   end
   object mapGeo: TMapView
     Left = 376
-    Height = 290
+    Height = 289
     Top = 0
     Width = 375
     Align = alClient
@@ -93,7 +106,7 @@ object dlgGeoAssist: TdlgGeoAssist
   end
   object PG: TPageControl
     Left = 0
-    Height = 290
+    Height = 289
     Top = 0
     Width = 376
     ActivePage = tabConvert
@@ -104,11 +117,11 @@ object dlgGeoAssist: TdlgGeoAssist
     OnChange = PGChange
     object tabConvert: TTabSheet
       Caption = 'Convert'
-      ClientHeight = 262
+      ClientHeight = 261
       ClientWidth = 368
       object pContent: TBCPanel
         Left = 0
-        Height = 262
+        Height = 261
         Top = 0
         Width = 368
         Align = alLeft
@@ -444,7 +457,7 @@ object dlgGeoAssist: TdlgGeoAssist
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.VerticalSpacing = 12
-      ClientHeight = 262
+      ClientHeight = 261
       ClientWidth = 368
       object gridBank: TDBGrid
         Left = 16

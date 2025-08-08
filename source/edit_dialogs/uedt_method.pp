@@ -49,6 +49,7 @@ type
     sbCancel: TButton;
     scrollContent: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -81,6 +82,11 @@ uses utils_locale, utils_global, utils_dialogs, data_consts, udm_main, uDarkStyl
 procedure TedtMethod.ApplyDarkMode;
 begin
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtMethod.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_METHODS);
 end;
 
 procedure TedtMethod.dsLinkDataChange(Sender: TObject; Field: TField);

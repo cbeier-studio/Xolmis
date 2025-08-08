@@ -75,6 +75,7 @@ type
     eEndNumber: TSpinEdit;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbBandSizeChange(Sender: TObject);
     procedure cbBandSizeEditingDone(Sender: TObject);
@@ -314,6 +315,11 @@ begin
   eCarrier.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TbatchBands.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_BANDS);
 end;
 
 procedure TbatchBands.btnNewClick(Sender: TObject);

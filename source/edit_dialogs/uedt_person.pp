@@ -136,6 +136,7 @@ type
     Separator2: TMenuItem;
     sbAddImage: TSpeedButton;
     sbRemoveImage: TSpeedButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBirthDateButtonClick(Sender: TObject);
@@ -202,6 +203,11 @@ begin
   eInstitution.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtPerson.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_RESEARCHERS);
 end;
 
 procedure TedtPerson.btnNewClick(Sender: TObject);

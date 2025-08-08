@@ -109,7 +109,7 @@ var
 implementation
 
 uses
-  utils_locale, udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
+  utils_locale, utils_global, udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 

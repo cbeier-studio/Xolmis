@@ -70,6 +70,7 @@ type
     eCloudCover: TSpinEdit;
     eRainfall: TSpinEdit;
     eWindSpeedBft: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eSampleDateButtonClick(Sender: TObject);
     procedure eSampleTimeKeyPress(Sender: TObject; var Key: char);
@@ -108,6 +109,11 @@ procedure TedtWeatherLog.ApplyDarkMode;
 begin
   eSampleDate.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtWeatherLog.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SURVEYS);
 end;
 
 procedure TedtWeatherLog.dsLinkDataChange(Sender: TObject; Field: TField);

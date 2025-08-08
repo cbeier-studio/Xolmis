@@ -51,6 +51,7 @@ type
     pUsername: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsUserDataChange(Sender: TObject; Field: TField);
     procedure eUsernameKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -80,6 +81,11 @@ uses
 procedure TedtUser.ApplyDarkMode;
 begin
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtUser.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_USERS);
 end;
 
 procedure TedtUser.dsUserDataChange(Sender: TObject; Field: TField);

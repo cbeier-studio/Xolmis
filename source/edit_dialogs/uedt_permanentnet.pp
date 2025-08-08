@@ -48,6 +48,7 @@ type
     pNotes: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
@@ -92,6 +93,11 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtPermanentNet.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SAMPLING_PLOTS);
 end;
 
 procedure TedtPermanentNet.dsLinkDataChange(Sender: TObject; Field: TField);

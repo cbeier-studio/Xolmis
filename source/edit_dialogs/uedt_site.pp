@@ -63,6 +63,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAltitudeKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
@@ -111,6 +112,11 @@ begin
   eLatitude.Images := DMM.iEditsDark;
   eParentSite.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSite.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_GAZETTEER);
 end;
 
 procedure TedtSite.dsLinkDataChange(Sender: TObject; Field: TField);

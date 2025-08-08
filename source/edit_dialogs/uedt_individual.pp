@@ -99,6 +99,7 @@ type
     scrollContent: TScrollBox;
     sbSave: TButton;
     btnHelp: TSpeedButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbSexKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -176,6 +177,11 @@ begin
   eMother.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtIndividual.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_INDIVIDUALS);
 end;
 
 procedure TedtIndividual.btnNewClick(Sender: TObject);

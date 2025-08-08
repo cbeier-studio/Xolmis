@@ -73,6 +73,7 @@ type
     eCloseTime2: TTimeEdit;
     eOpenTime3: TTimeEdit;
     eCloseTime3: TTimeEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure eStartNumberEditingDone(Sender: TObject);
     procedure eStartNumberKeyPress(Sender: TObject; var Key: char);
     procedure eSurveyButtonClick(Sender: TObject);
@@ -198,6 +199,11 @@ begin
   eCloseTime3.Images := DMM.iEditsDark;
   eOpenTime4.Images := DMM.iEditsDark;
   eCloseTime4.Images := DMM.iEditsDark;
+end;
+
+procedure TbatchNetEffort.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SURVEYS);
 end;
 
 procedure TbatchNetEffort.eStartNumberEditingDone(Sender: TObject);

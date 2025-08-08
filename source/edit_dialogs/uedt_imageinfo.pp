@@ -86,6 +86,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorButtonClick(Sender: TObject);
@@ -158,6 +159,11 @@ begin
   eTaxon.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtImageInfo.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_IMAGES);
 end;
 
 procedure TedtImageInfo.btnNewClick(Sender: TObject);

@@ -92,6 +92,7 @@ type
     sbCancel: TButton;
     sBox: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
@@ -183,6 +184,11 @@ begin
       Interval4 := HourSpan(StrToTime(eNetOpen4.Text), StrToTime(eNetClose4.Text));
 
   txtTotalOpenTime.Caption := FloatToStr(Interval1 + Interval2 + Interval3 + Interval4);
+end;
+
+procedure TedtNetEffort.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SURVEYS);
 end;
 
 procedure TedtNetEffort.btnNewClick(Sender: TObject);

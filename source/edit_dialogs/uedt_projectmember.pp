@@ -32,6 +32,7 @@ type
     pInstitution: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure ckManagerKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -81,6 +82,11 @@ begin
   eInstitution.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProjectMember.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_PROJECTS);
 end;
 
 procedure TedtProjectMember.btnNewClick(Sender: TObject);

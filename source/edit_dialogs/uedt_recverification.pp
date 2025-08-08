@@ -47,6 +47,7 @@ type
     pDate: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
     procedure eResearcherButtonClick(Sender: TObject);
@@ -129,6 +130,11 @@ begin
   eResearcher.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtRecVerification.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_RECORD_VERIFICATIONS);
 end;
 
 procedure TedtRecVerification.btnNewClick(Sender: TObject);

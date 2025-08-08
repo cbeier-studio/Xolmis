@@ -29,6 +29,7 @@ type
   { TdlgExport }
 
   TdlgExport = class(TForm)
+    btnHelp: TSpeedButton;
     btnOptions: TBitBtn;
     ckUseDarwinCoreFormat: TCheckBox;
     cklbColumns: TCheckListBox;
@@ -45,6 +46,7 @@ type
     sbCancel: TButton;
     sbRun: TButton;
     tvFiletype: TTreeView;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnOptionsClick(Sender: TObject);
     procedure cklbColumnsClickCheck(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -83,6 +85,11 @@ begin
   tvFiletype.Images := iIconsDark;
   tvFiletype.SelectionColor := $00C75F5B;
   pBottom.Color := clSolidBGBaseDark;
+end;
+
+procedure TdlgExport.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_EXPORTING_DATA);
 end;
 
 procedure TdlgExport.btnOptionsClick(Sender: TObject);

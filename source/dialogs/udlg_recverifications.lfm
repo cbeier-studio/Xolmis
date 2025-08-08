@@ -8,7 +8,6 @@ object dlgRecVerifications: TdlgRecVerifications
   ClientWidth = 771
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -155,15 +154,15 @@ object dlgRecVerifications: TdlgRecVerifications
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
-    Top = 329
+    Height = 42
+    Top = 328
     Width = 771
     Align = alBottom
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 771
     TabOrder = 1
     object sbClose: TBitBtn
@@ -173,7 +172,7 @@ object dlgRecVerifications: TdlgRecVerifications
       AnchorSideRight.Side = asrBottom
       Left = 643
       Height = 25
-      Top = 8
+      Top = 9
       Width = 112
       Anchors = [akTop, akRight]
       Caption = 'Close'
@@ -181,10 +180,23 @@ object dlgRecVerifications: TdlgRecVerifications
       ModalResult = 11
       TabOrder = 0
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
   end
   object dbgHistory: TDBGrid
     Left = 0
-    Height = 283
+    Height = 282
     Top = 46
     Width = 771
     Align = alClient
@@ -199,17 +211,17 @@ object dlgRecVerifications: TdlgRecVerifications
       end    
       item
         Title.Caption = 'Status'
-        Width = 217
+        Width = 216
         FieldName = 'verification_status'
       end    
       item
         Title.Caption = 'Researcher'
-        Width = 217
+        Width = 216
         FieldName = 'person_name'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 217
+        Width = 215
         FieldName = 'notes'
       end>
     DataSource = dsHistory

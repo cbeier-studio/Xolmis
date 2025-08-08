@@ -122,6 +122,7 @@ type
     eRecapturesTally: TSpinEdit;
     eUnbandedTally: TSpinEdit;
     eQuantity: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -202,6 +203,11 @@ begin
   eBreedingStatus.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSighting.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SIGHTINGS);
 end;
 
 procedure TedtSighting.btnNewClick(Sender: TObject);

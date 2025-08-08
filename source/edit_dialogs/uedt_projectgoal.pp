@@ -27,6 +27,7 @@ type
     pStatus: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure cbStatusKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -66,6 +67,11 @@ uses
 procedure TedtProjectGoal.ApplyDarkMode;
 begin
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProjectGoal.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_PROJECTS);
 end;
 
 procedure TedtProjectGoal.cbStatusKeyPress(Sender: TObject; var Key: char);

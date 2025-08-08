@@ -39,6 +39,7 @@ type
     pStatusStartDate: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbStatusKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -91,6 +92,11 @@ begin
   eGoal.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProjectActivity.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_PROJECTS);
 end;
 
 procedure TedtProjectActivity.btnNewClick(Sender: TObject);

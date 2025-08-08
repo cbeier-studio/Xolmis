@@ -35,6 +35,7 @@ type
     pSizeType: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eRequesterButtonClick(Sender: TObject);
     procedure eRequesterKeyPress(Sender: TObject; var Key: char);
@@ -75,6 +76,11 @@ begin
   eRequester.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TbatchBandsTransfer.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_BANDS);
 end;
 
 procedure TbatchBandsTransfer.btnNewClick(Sender: TObject);

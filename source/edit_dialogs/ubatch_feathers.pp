@@ -119,6 +119,7 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     ScrollBox1: TScrollBox;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eCaptureButtonClick(Sender: TObject);
     procedure eCaptureKeyPress(Sender: TObject; var Key: char);
@@ -458,6 +459,11 @@ begin
   eObserver.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TbatchFeathers.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_FEATHERS);
 end;
 
 procedure TbatchFeathers.btnNewClick(Sender: TObject);

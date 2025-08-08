@@ -29,6 +29,7 @@ type
   { TedtDatabase }
 
   TedtDatabase = class(TForm)
+    btnHelp: TSpeedButton;
     ckRemoteDB: TCheckBox;
     cbDBManager: TDBComboBox;
     eDBFile: TDBEditButton;
@@ -55,6 +56,7 @@ type
     pBottom: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure cbDBManagerSelect(Sender: TObject);
     procedure ckRemoteDBChange(Sender: TObject);
     procedure dsConnDataChange(Sender: TObject; Field: TField);
@@ -169,6 +171,11 @@ procedure TedtDatabase.ApplyDarkMode;
 begin
   eDBFile.Images := DMM.iEditsDark;
   eDBPass.Images := iButtonsDark;
+end;
+
+procedure TedtDatabase.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_CONNECTIONS);
 end;
 
 procedure TedtDatabase.cbDBManagerSelect(Sender: TObject);

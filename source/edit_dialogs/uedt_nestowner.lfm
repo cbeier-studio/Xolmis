@@ -11,7 +11,6 @@ object edtNestOwner: TedtNestOwner
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -200,6 +199,7 @@ object edtNestOwner: TedtNestOwner
       AutoSize = True
       Images = DMM.iEdits
       ImageIndex = 9
+      OnClick = btnHelpClick
     end
     object btnNew: TBitBtn
       AnchorSideLeft.Control = btnHelp

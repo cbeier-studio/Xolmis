@@ -29,6 +29,7 @@ type
   { TdlgRecVerifications }
 
   TdlgRecVerifications = class(TForm)
+    btnHelp: TSpeedButton;
     ckAtivo: TDBCheckBox;
     ckExportado: TDBCheckBox;
     ckMarcado: TDBCheckBox;
@@ -56,6 +57,7 @@ type
     qHistoryverification_id: TLongintField;
     qHistoryverification_status: TStringField;
     sbClose: TBitBtn;
+    procedure btnHelpClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -93,6 +95,11 @@ begin
   sbDelRecord.Images := iButtonsDark;
 
   pmGrid.Images := iButtonsDark;
+end;
+
+procedure TdlgRecVerifications.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_RECORD_VERIFICATIONS);
 end;
 
 procedure TdlgRecVerifications.FormClose(Sender: TObject; var CloseAction: TCloseAction);

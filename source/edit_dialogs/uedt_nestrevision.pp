@@ -78,6 +78,7 @@ type
     eHostNestlingsTally: TSpinEdit;
     eNidoparasiteEggsTally: TSpinEdit;
     eNidoparasiteNestlingsTally: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbNestStageSelect(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -140,6 +141,11 @@ begin
   eNidoparasite.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtNestRevision.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_NESTS);
 end;
 
 procedure TedtNestRevision.btnNewClick(Sender: TObject);

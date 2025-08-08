@@ -49,6 +49,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure cbDocumentTypeKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDocumentDateButtonClick(Sender: TObject);
@@ -105,6 +106,11 @@ begin
   eDocumentDate.Images := DMM.iEditsDark;
   eDocumentPath.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtDocumentInfo.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_DOCUMENTS);
 end;
 
 procedure TedtDocumentInfo.cbDocumentTypeKeyPress(Sender: TObject; var Key: char);

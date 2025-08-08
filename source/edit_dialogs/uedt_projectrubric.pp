@@ -33,6 +33,7 @@ type
     pItem: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eFundingSourceEditingDone(Sender: TObject);
     procedure eFundingSourceKeyPress(Sender: TObject; var Key: char);
@@ -71,6 +72,11 @@ uses
 procedure TedtProjectRubric.ApplyDarkMode;
 begin
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProjectRubric.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_PROJECTS);
 end;
 
 procedure TedtProjectRubric.dsLinkDataChange(Sender: TObject; Field: TField);

@@ -93,6 +93,7 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     sBox: TScrollBox;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEggSeqEditingDone(Sender: TObject);
@@ -156,6 +157,11 @@ begin
   eIndividual.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtEgg.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_EGGS);
 end;
 
 procedure TedtEgg.btnNewClick(Sender: TObject);

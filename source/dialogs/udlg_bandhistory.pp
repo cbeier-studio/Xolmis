@@ -21,13 +21,14 @@ unit udlg_bandhistory;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids, StdCtrls, DBCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids, StdCtrls, DBCtrls, Buttons;
 
 type
 
   { TdlgBandHistory }
 
   TdlgBandHistory = class(TForm)
+    btnHelp: TSpeedButton;
     DBG: TDBGrid;
     Label2: TLabel;
     Label3: TLabel;
@@ -43,6 +44,7 @@ type
     pBottom: TPanel;
     sbClose: TButton;
     SBox: TScrollBox;
+    procedure btnHelpClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -58,7 +60,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_themes, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, utils_themes, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -67,6 +69,11 @@ uses
 procedure TdlgBandHistory.ApplyDarkMode;
 begin
   SBox.Color := clCardBGDefaultDark;
+end;
+
+procedure TdlgBandHistory.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_BANDS);
 end;
 
 procedure TdlgBandHistory.FormCreate(Sender: TObject);

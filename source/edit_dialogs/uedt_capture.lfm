@@ -12,7 +12,6 @@ object edtCapture: TedtCapture
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -105,6 +104,7 @@ object edtCapture: TedtCapture
       AutoSize = True
       Images = DMM.iEdits
       ImageIndex = 9
+      OnClick = btnHelpClick
     end
   end
   object sBox: TScrollBox

@@ -21,14 +21,15 @@ unit ucfg_delimiters;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, ToggleSwitch, atshapelinebgra,
-  BCPanel;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, ToggleSwitch,
+  atshapelinebgra, BCPanel;
 
 type
 
   { TcfgDelimiters }
 
   TcfgDelimiters = class(TForm)
+    btnHelp: TSpeedButton;
     pDecimalSeparator: TBCPanel;
     cbDecimalSeparator: TComboBox;
     lblDecimalSeparator: TLabel;
@@ -49,6 +50,7 @@ type
     sbOK: TButton;
     tsQuotedAsText: TToggleSwitch;
     tsHaveHeader: TToggleSwitch;
+    procedure btnHelpClick(Sender: TObject);
     procedure cbDelimiterSelect(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -92,6 +94,11 @@ begin
 
   tsHaveHeader.Color := pHaveHeader.Background.Color;
   tsQuotedAsText.Color := pQuotedAsText.Background.Color;
+end;
+
+procedure TcfgDelimiters.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_EXPORTING_DATA);
 end;
 
 procedure TcfgDelimiters.cbDelimiterSelect(Sender: TObject);

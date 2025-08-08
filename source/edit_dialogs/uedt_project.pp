@@ -74,6 +74,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
     procedure eStartDateButtonClick(Sender: TObject);
@@ -111,6 +112,11 @@ procedure TedtProject.ApplyDarkMode;
 begin
   eStartDate.Images := DMM.iEditsDark;
   eEndDate.Images := DMM.iEditsDark;
+end;
+
+procedure TedtProject.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_PROJECTS);
 end;
 
 procedure TedtProject.dsLinkDataChange(Sender: TObject; Field: TField);

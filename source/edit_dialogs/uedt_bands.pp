@@ -82,6 +82,7 @@ type
     SBox: TScrollBox;
     sbSave: TButton;
     lineBottom: TShapeLineBGRA;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure cbBandSizeEditingDone(Sender: TObject);
@@ -141,6 +142,11 @@ begin
   eProject.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtBands.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_BANDS);
 end;
 
 procedure TedtBands.btnNewClick(Sender: TObject);

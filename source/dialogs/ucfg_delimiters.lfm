@@ -11,7 +11,6 @@ object cfgDelimiters: TcfgDelimiters
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
@@ -27,34 +26,54 @@ object cfgDelimiters: TcfgDelimiters
     ChildSizing.HorizontalSpacing = 8
     ChildSizing.EnlargeHorizontal = crsSameSize
     ChildSizing.ShrinkHorizontal = crsSameSize
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 43
     ClientWidth = 416
     TabOrder = 1
     object sbOK: TButton
-      Left = 16
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
       Height = 27
       Top = 8
-      Width = 188
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Apply'
       Constraints.MinHeight = 27
       Constraints.MinWidth = 120
-      Font.Height = -12
-      Font.Name = 'Segoe UI Semibold'
-      ParentFont = False
       TabOrder = 0
       OnClick = sbOKClick
     end
     object sbCancel: TButton
-      Left = 212
-      Height = 27
-      Top = 8
-      Width = 188
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
+      Height = 25
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
       TabOrder = 1
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
     end
   end
   object lineBottom: TShapeLineBGRA

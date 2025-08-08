@@ -45,6 +45,7 @@ type
     pIndividual: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbRoleChange(Sender: TObject);
     procedure cbRoleKeyPress(Sender: TObject; var Key: char);
@@ -91,6 +92,11 @@ begin
   eIndividual.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtNestOwner.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_NESTS);
 end;
 
 procedure TedtNestOwner.btnNewClick(Sender: TObject);

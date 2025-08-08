@@ -6,12 +6,11 @@ object edtInstitution: TedtInstitution
   AutoSize = True
   Caption = 'New institution'
   ClientHeight = 689
-  ClientWidth = 413
+  ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -89,6 +88,7 @@ object edtInstitution: TedtInstitution
       AutoSize = True
       Images = DMM.iEdits
       ImageIndex = 9
+      OnClick = btnHelpClick
     end
     object btnNew: TBitBtn
       AnchorSideLeft.Control = btnHelp

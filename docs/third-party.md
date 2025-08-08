@@ -490,9 +490,10 @@ Copyright (C) Alexey Torgashin (UVviewsoft.com)
 
 ------------------------------------------------------------------------
 
-## Fira Code fonts
+## Fira Code and Fira Sans fonts
 
-Copyright (c) 2014, The Fira Code Project Authors (https://github.com/tonsky/FiraCode)
+Copyright (c) 2014-2020, The Fira Code Project Authors (https://github.com/tonsky/FiraCode)
+Copyright (c) 2012-2015, The Mozilla Foundation and Telefonica S.A.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
@@ -538,3 +539,9 @@ This license becomes null and void if any of the above conditions are not met.
 **DISCLAIMER**
 
 THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
+
+------------------------------------------------------------------------
+
+## The eBird/Clements checklist of Birds of the World
+
+Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith, and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. Downloaded from https://www.birds.cornell.edu/clementschecklist/download/

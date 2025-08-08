@@ -59,6 +59,7 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     scrollContent: TScrollBox;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAccessionNumberEditingDone(Sender: TObject);
@@ -106,6 +107,11 @@ begin
   ePreparer.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtSamplePrep.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SPECIMENS);
 end;
 
 procedure TedtSamplePrep.btnNewClick(Sender: TObject);

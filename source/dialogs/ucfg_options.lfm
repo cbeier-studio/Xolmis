@@ -9,13 +9,12 @@ object cfgOptions: TcfgOptions
   ClientWidth = 857
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
-    Height = 41
-    Top = 424
+    Height = 42
+    Top = 423
     Width = 857
     Align = alBottom
     AutoSize = True
@@ -26,7 +25,7 @@ object cfgOptions: TcfgOptions
     ChildSizing.EnlargeHorizontal = crsScaleChilds
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.ControlsPerLine = 2
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 857
     TabOrder = 1
     object sbClose: TButton
@@ -37,18 +36,31 @@ object cfgOptions: TcfgOptions
       AnchorSideRight.Side = asrBottom
       Left = 740
       Height = 25
-      Top = 8
+      Top = 9
       Width = 101
       Anchors = [akTop, akRight]
       Caption = 'Close'
       ModalResult = 11
       TabOrder = 0
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 422
+    Top = 421
     Width = 857
     Align = alBottom
     LineColor = 9276813
@@ -57,7 +69,7 @@ object cfgOptions: TcfgOptions
   end
   object nbPages: TNotebook
     Left = 200
-    Height = 422
+    Height = 421
     Top = 0
     Width = 657
     PageIndex = 0
@@ -66,14 +78,14 @@ object cfgOptions: TcfgOptions
     object pgGeneral: TPage
       object scrollGeneral: TScrollBox
         Left = 0
-        Height = 422
+        Height = 421
         Top = 0
         Width = 657
         HorzScrollBar.Page = 368
         VertScrollBar.Page = 337
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 422
+        ClientHeight = 421
         ClientWidth = 657
         ParentBackground = False
         TabOrder = 0
@@ -2628,7 +2640,7 @@ object cfgOptions: TcfgOptions
   end
   object tvMenu: TTreeView
     Left = 8
-    Height = 390
+    Height = 389
     Top = 16
     Width = 192
     Align = alLeft

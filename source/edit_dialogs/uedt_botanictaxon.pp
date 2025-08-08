@@ -55,6 +55,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorshipKeyPress(Sender: TObject; var Key: char);
     procedure eNameButtonClick(Sender: TObject);
@@ -101,6 +102,11 @@ begin
   eParentTaxon.Images := DMM.iEditsDark;
   eValidName.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
+end;
+
+procedure TedtBotanicTaxon.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_BOTANICAL_TAXA);
 end;
 
 procedure TedtBotanicTaxon.dsLinkDataChange(Sender: TObject; Field: TField);

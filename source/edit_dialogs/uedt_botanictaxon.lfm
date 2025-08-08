@@ -10,7 +10,6 @@ object edtBotanicTaxon: TedtBotanicTaxon
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -88,6 +87,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
       AutoSize = True
       Images = DMM.iEdits
       ImageIndex = 9
+      OnClick = btnHelpClick
     end
   end
   object SBox: TScrollBox

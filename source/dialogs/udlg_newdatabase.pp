@@ -31,6 +31,7 @@ type
 
   TdlgNewDatabase = class(TForm)
     BCrypt: TDCP_blowfish;
+    btnHelp: TSpeedButton;
     lblRequired: TLabel;
     SaveDlg: TSaveDialog;
     sbCreateDB: TBitBtn;
@@ -80,6 +81,7 @@ type
     pTitleUser: TPanel;
     pTitleConnection: TPanel;
     sbCancel: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure eConfirmPassButtonClick(Sender: TObject);
     procedure eDBFileButtonClick(Sender: TObject);
     procedure eNameChange(Sender: TObject);
@@ -129,6 +131,11 @@ begin
   eDBFile.Images := iButtonsDark;
   eNewPass.Images := iButtonsDark;
   eConfirmPass.Images := iButtonsDark;
+end;
+
+procedure TdlgNewDatabase.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_CONNECTIONS);
 end;
 
 procedure TdlgNewDatabase.eConfirmPassButtonClick(Sender: TObject);

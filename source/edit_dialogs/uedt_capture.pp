@@ -209,6 +209,7 @@ type
     shpRightBelowBand3: TShape;
     shpRightBelowBand4: TShape;
     ePhilornisLarvae: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbAgeKeyPress(Sender: TObject; var Key: char);
     procedure cbCaptureTypeKeyPress(Sender: TObject; var Key: char);
@@ -322,6 +323,11 @@ begin
   eHowSexed.Images := DMM.iEditsDark;
   ePhotographer1.Images := DMM.iEditsDark;
   ePhotographer2.Images := DMM.iEditsDark;
+end;
+
+procedure TedtCapture.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_CAPTURES);
 end;
 
 procedure TedtCapture.btnNewClick(Sender: TObject);

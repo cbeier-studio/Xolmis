@@ -103,6 +103,7 @@ type
     eDuration: TSpinEdit;
     eObserversTally: TSpinEdit;
     eTotalNets: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
@@ -209,6 +210,11 @@ begin
     end;
   end else
     txtNetEffort.Caption := '0';
+end;
+
+procedure TedtSurvey.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_SURVEYS);
 end;
 
 procedure TedtSurvey.btnNewClick(Sender: TObject);

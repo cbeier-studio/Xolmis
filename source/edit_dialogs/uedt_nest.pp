@@ -140,6 +140,7 @@ type
     sbSave: TButton;
     eNestCover: TSpinEdit;
     eProductivity: TSpinEdit;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbSupportTypeSelect(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -214,6 +215,11 @@ begin
   eSupportPlant2.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+end;
+
+procedure TedtNest.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_NESTS);
 end;
 
 procedure TedtNest.btnNewClick(Sender: TObject);

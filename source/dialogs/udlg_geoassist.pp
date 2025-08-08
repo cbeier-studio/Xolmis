@@ -30,6 +30,7 @@ type
   { TdlgGeoAssist }
 
   TdlgGeoAssist = class(TForm)
+    btnHelp: TSpeedButton;
     cbLatHem: TComboBox;
     cbLongHem: TComboBox;
     dsGeoBank: TDataSource;
@@ -58,6 +59,7 @@ type
     sbOK: TButton;
     tabConvert: TTabSheet;
     tabImported: TTabSheet;
+    procedure btnHelpClick(Sender: TObject);
     procedure eLongDegEditingDone(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -317,6 +319,11 @@ begin
   pLat.Border.Color := clSystemSolidNeutralFGDark;
   pDecimal.Background.Color := clCardBGDefaultDark;
   pDecimal.Border.Color := clSystemSolidNeutralFGDark;
+end;
+
+procedure TdlgGeoAssist.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_ADDING_AND_EDITING_DATA, 'geoassist');
 end;
 
 procedure TdlgGeoAssist.ConvertCoordinate;

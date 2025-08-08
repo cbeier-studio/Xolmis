@@ -29,6 +29,7 @@ type
   { TdlgRecHistory }
 
   TdlgRecHistory = class(TForm)
+    btnHelp: TSpeedButton;
     ckAtivo: TDBCheckBox;
     ckMarcado: TDBCheckBox;
     ckExportado: TDBCheckBox;
@@ -57,6 +58,7 @@ type
     pTop: TPanel;
     qHistory: TSQLQuery;
     SBox: TScrollBox;
+    procedure btnHelpClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -88,6 +90,11 @@ uses
 procedure TdlgRecHistory.ApplyDarkMode;
 begin
   SBox.Color := clCardBGDefaultDark;
+end;
+
+procedure TdlgRecHistory.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_RECORD_HISTORY);
 end;
 
 procedure TdlgRecHistory.FormClose(Sender: TObject; var CloseAction: TCloseAction);
