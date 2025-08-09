@@ -38,9 +38,11 @@ const
   BF_KEY: String                  = 'support lottery birds sample';
   NULL_DATE_STR: String           = '30/12/1500';
   NULL_TIME_STR: String           = '00:00:00';
-  MIN_ROW_HEIGHT: Integer         = 21;
-  MAX_ROW_HEIGHT: Integer         = 65;
-  DEFAULT_ROW_HEIGHT: Integer     = 25;
+
+  MIN_ROW_HEIGHT: Integer         = 21; // in pixels
+  MAX_ROW_HEIGHT: Integer         = 65; // in pixels
+  DEFAULT_ROW_HEIGHT: Integer     = 25; // in pixels
+  MAX_LOG_SIZE: Integer           = 5;  // in MB
 
   { Format masks constants }
 const
@@ -415,13 +417,13 @@ begin
   begin
     Logs := TStringList.Create;
     try
-      { If the log file is bigger than 10 MB }
+      { If the log file is bigger than MAX_LOG_SIZE in MB }
       LogSize := FileSize(currLog);
       LogSizeMB := (LogSize / MB);
-      if (Round(LogSizeMB)) >= 10 then
+      if (Round(LogSizeMB)) >= MAX_LOG_SIZE then
       begin
         Result := True;
-        LogWarning('Log file reached maximum size of 10 MB');
+        LogWarning('Log file reached maximum size');
         Logs.Assign(FindAllFiles(AppDataDir, 'xlmslog-old*.txt'));
         oldLog := ConcatPaths([AppDataDir, Format('xlmslog-old-%d.txt', [Logs.Count + 1])]);
         RenameFile(currLog, oldLog);
