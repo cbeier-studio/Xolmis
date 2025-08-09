@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="udlg_exportpreview"><element name="TdlgExportPreview.ApplyDarkMode"><short>Apply dark theme to the UI</short>
+      </element><short>Dialog for viewing data before exporting.</short>
+    </module>
+  </package>
+</fpdoc-descriptions>

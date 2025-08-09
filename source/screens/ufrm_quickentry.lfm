@@ -133,6 +133,7 @@ object frmQuickEntry: TfrmQuickEntry
     PopupMenu = PMGrid
     RowCount = 2
     TabOrder = 1
+    TitleStyle = tsNative
     OnColRowDeleted = qeGridColRowDeleted
     OnColRowInserted = qeGridColRowInserted
     OnKeyPress = qeGridKeyPress

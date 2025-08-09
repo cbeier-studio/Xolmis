@@ -7,11 +7,11 @@
       </element><element name="isClosing"><short>Indicates when the system is closing</short>
       </element><element name="wasSafelyTerminated"><short>It is <b>True</b> if the application was terminated correctly</short>
       </element>
-    <element name="TXolmisSettings"><short>Stores and manage Xolmis settings</short>
-      </element><element name="TXolmisSettings.LoadFromFile"><short>Load all settings from file to fields</short>
-      </element><element name="TXolmisSettings.SaveToFile"><short>Save all settings from fields to file</short>
+    <element name="TXolmisSettings"><short>Stores and manage Xolmis' settings</short>
+      </element><element name="TXolmisSettings.LoadFromFile"><short>Load all settings from file to the fields.</short>
+      </element><element name="TXolmisSettings.SaveToFile"><short>Save all settings from fields to file.</short>
       </element><element name="TXolmisSettings.Reset"><short>Restore the default settings</short>
-      </element><element name="TXolmisSettings.Delete"><short>Delete a specified Ini key</short>
+      </element><element name="TXolmisSettings.Delete"><short>Delete a specified setting.</short>
       </element>
     <element name="LoadDatabaseParams"><short>Load the database connection parameters.</short>
       </element><element name="ConnectDatabase"><short>Open the database connection dialog.</short>
@@ -21,7 +21,7 @@
       </element><element name="AppDataDir"><short>Get the user app data path.</short>
       </element><element name="TempDir"><short>Get the user temp path.</short>
       </element><element name="HelpDir"><short>Get the help files path.</short>
-      </element><element name="WriteRecHistory"><short>Adds record history entry.</short><descr><p><var>aTable</var> Table type.</p><p><var>aAction</var> Type of action executed.</p><p><var>aCodigo</var> Record key value, zero (default) for new records.</p><p><var>aField</var> Primary key field name.</p><p><var>aOldValue</var> Old value of the edited record.</p><p><var>aNewValue</var> New value of the edited record.</p><p><var>aNote</var> Event comments.</p>
+      </element><element name="WriteRecHistory"><short>Writes a record history entry.</short><descr><p><var>aTable</var> Table type.</p><p><var>aAction</var> Type of action executed.</p><p><var>aCodigo</var> Record key value, zero (default) for new records.</p><p><var>aField</var> Primary key field name.</p><p><var>aOldValue</var> Old value of the edited record.</p><p><var>aNewValue</var> New value of the edited record.</p><p><var>aNote</var> Event comments.</p>
         </descr>
       </element><element name="GravaStat"><short>Write usage data event.</short>
       </element><element name="LogError"><short>Write error to the log file.</short>
@@ -48,6 +48,56 @@
       </element><element name="NewNotification"><short>Add a new notification to the notification list</short>
       </element><element name="NewAlert"><short>Add a new alert to the notification list</short>
       </element><element name="NewSystemNotification"><short>Add a new system notification to the notification list</short>
+      </element>
+    <element name="TXolmisSettings.DefaultRowHeight"><short>Row height used in Xolmis grids.</short>
+      </element><element name="TXolmisSettings.SettingsFile"><short>Path for the settings file.</short>
+      </element><element name="TXolmisSettings.Create"><short>Create a settings instance.</short>
+      </element><element name="TXolmisSettings.Destroy"><short>Destroys the settings instance.</short>
+      </element><element name="TXolmisSettings.StartPage"><short>Module that opens when Xolmis starts.</short>
+      </element><element name="TXolmisSettings.ConfirmCancel"><short>Use confirmation when cancelling an insert/edit of a record.</short>
+      </element><element name="TXolmisSettings.UseEnterAsTab"><short>Use Enter key to jump to the next control.</short>
+      </element><element name="TXolmisSettings.AppTerminatedOk"><short>Flag that indicates if Xolmis was safely terminated.</short>
+      </element><element name="TXolmisSettings.ClearDeletedPeriod"><short>Frequency to permanently delete inactive records.</short>
+      </element><element name="TXolmisSettings.LastClearDeleted"><short>Last time the inactive records were permanently deleted.</short>
+      </element><element name="TXolmisSettings.LastDatabaseOptimization"><short>Last time a database optimization was executed.</short>
+      </element><element name="TXolmisSettings.LastAutoUpdate"><short>Last time that Xolmis updates were checked.</short>
+      </element><element name="TXolmisSettings.LastPathUsed"><short>Last path used when opening or saving a file.</short>
+      </element><element name="TXolmisSettings.SelectedTheme"><short>Selected dark or light theme.</short>
+      </element><element name="TXolmisSettings.ShowGridLines"><short>Shows grid lines through the Xolmis interface.</short>
+      </element><element name="TXolmisSettings.AutoAdjustColumns"><short>Adjust automatically the grid columns width.</short>
+      </element><element name="TXolmisSettings.UseConditionalFormatting"><short>Use grid columns' conditional formatting.</short>
+      </element><element name="TXolmisSettings.ShowOutliersOnGrid"><short>Use grid columns' conditional formatting to show outlier values in captures grid.</short>
+      </element><element name="TXolmisSettings.VernacularNamesLanguage"><short>Language used to show vernacular names.</short>
+      </element><element name="TXolmisSettings.ShowSynonyms"><short>Show synonyms in taxon searches.</short>
+      </element><element name="TXolmisSettings.ImagesFolder"><short>Path where all the images attached to records are stored.</short>
+      </element><element name="TXolmisSettings.AudiosFolder"><short>Path where all the audio recordings attached to records are stored.</short>
+      </element><element name="TXolmisSettings.DocumentsFolder"><short>Path where all the documents attached to records are stored.</short>
+      </element><element name="TXolmisSettings.OpenFileAfterExport"><short>Open file using the default program after export.</short>
+      </element><element name="TXolmisSettings.RememberUser"><short>Remember the last user logged in.</short>
+      </element><element name="TXolmisSettings.LastUser"><short>The last user logged in.</short>
+      </element><element name="TXolmisSettings.RememberConnection"><short>Remember the connection used in the last session.</short>
+      </element><element name="TXolmisSettings.LastConnection"><short>The last connection used.</short>
+      </element><element name="TXolmisSettings.AutoUpdates"><short>Frequency to check for Xolmis updates automatically.</short>
+      </element><element name="TXolmisSettings.AllowWriteLogs"><short>Allow Xolmis to write event logs.</short>
+      </element><element name="TXolmisSettings.AllowSendUsageData"><short>Allow Xolmis to collect and send anonymous usage data.</short>
+      </element><element name="TXolmisSettings.BackupFolder"><short>Path where all backup files are stored.</short>
+      </element><element name="TXolmisSettings.AutomaticBackup"><short>Frequency of automatic backup at Xolmis closing.</short>
+      </element><element name="TXolmisSettings.BackupsToKeep"><short>Number of backup files to keep.</short>
+      </element><element name="TXolmisSettings.HaveHeader"><short>First line of a CSV file represents column names.</short>
+      </element><element name="TXolmisSettings.QuotedAsText"><short>Quoted values in a CSV file are treated as text.</short>
+      </element><element name="TXolmisSettings.DelimiterIndex"><short>Type of delimiter used in the CSV file.</short>
+      </element><element name="TXolmisSettings.Delimiter"><short>Custom delimiter used in the CSV file.</short>
+      </element><element name="TXolmisSettings.DecimalSeparator"><short>Decimal separator used in a CSV file.</short>
+      </element><element name="TNotification"><short>Class to store a notification data.</short>
+      </element><element name="TNotificationList"><short>Type for a list of notifications.</short>
+      </element><element name="FNotificationsNeedUpdate"><short>Indicates if the notifications list needs to be updated.</short>
+      </element><element name="EditSourceStr"><short>How a record was edited, used in the record history.</short>
+      </element><element name="oldRowHeight"><short>Previous row height value.</short>
+      </element><element name="oldPPI"><short>Previous screen resolution value.</short>
+      </element><element name="OpenHelp"><short>Open a specified help file.</short>
+      </element><element name="TNotification.Create"><short>Create the notification instance.</short>
+      </element><element name="TNotification.MarkAsRead"><short>Mark the notification as read.</short>
+      </element><element name="TNotification.Dismiss"><short>Dismiss the notification.</short>
       </element>
     </module>
   </package>

@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Xolmis"><module name="ufrm_customgrid"><element name="TfrmCustomGrid.SetGridAndChild"><short>Set datasource connection of parent and child grids.</short>
-      </element><element name="TfrmCustomGrid.SetGridColumns"><short>Set columns properties of a grid.</short>
+<fpdoc-descriptions><package name="Xolmis"><module name="ufrm_customgrid"><element name="TfrmCustomGrid.SetGridAndChild"><short>Set datasource connection of main and detail grids.</short>
+      <descr><p>Sets the tab caption, main dataset, default data sorting, detail tabs, and contextual menu and button visibility for each module.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetGridColumns"><short>Set columns' properties of a grid.</short>
+      <descr><p><var>aTable</var> is the <var>TTableType</var> of the target table.</p><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.SetSearchBar"><short>Set the search bar visible or not.</short>
       </element><element name="TfrmCustomGrid.SetSidePanel"><short>Set the (right) side panel visible or not.</short>
+      <descr><p><var>aValue</var> is the new value for side panel visibility.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.SetSideIndex"><short>Set the active tab index of the side panel.</short>
-      </element><element name="TfrmCustomGrid.LoadRecordColumns"><short>Loads the column names in the record view.</short>
-      </element><element name="TfrmCustomGrid.UpdateFilterPanels"><short>Set visible the filter panels for the current table type.</short>
+      <descr><p><var>aValue</var> is the new value for the side panel index.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.LoadRecordColumns"><short>Loads the column names in the record view side panel.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanels"><short>Set visibility of filter panels for the current table type.</short>
       </element>
     <element name="TfrmCustomGrid.AddGridColumns"><short>Adds the columns of a table into a TDBGrid</short>
       <descr>It only adds visible columns and set the columns' properties using <link id="TfrmCustomGrid.SetGridColumns"/>.
 </descr>
       </element><element name="TfrmCustomGrid.AddSortedField"><short>Adds a field to the sorting list</short>
+      <descr><p><var>aFieldName</var> is the name of the field to sort.</p><p><var>aDirection</var> is the direction of the sorting: <var>sdAscending</var> or <var>sdDescending</var>.</p><p><var>aCollation</var> indicates the database collation to use.</p><p><var>isAnAlias</var> indicates if the field needs to prefixed by the table name, if <b>False</b>.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.ClearSearch"><short>Use this method to reset the quick filters</short>
+      <descr><p>It clears the quick filters and related controls. While doing it, <var>FCanToggle</var> is <b>False</b> and changed to <b>True</b> at the end of the process.</p>
+        </descr><seealso><link id="TfrmCustomGrid.FCanToggle"/>
+        </seealso>
       </element><element name="TfrmCustomGrid.GetFilters"><short>Use this method to get the filter parameters of a search</short>
-      </element><element name="TfrmCustomGrid.LoadRecordRow"><short>Loads the record data from the selected row to the record view</short>
+      <descr><p>While running it, the <var>FCanToggle</var> is <b>False</b> and changed to <b>True</b> at the end of the process.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.LoadRecordRow"><short>Loads the record data from the selected row to the record view side panel.</short>
       </element><element name="TfrmCustomGrid.Search"><short>Use this method to run a search or filter</short>
+      <descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.SetSearchString"><short>Sets the SearchString property</short>
+      <descr><p><var>aValue</var> is the new value for the <var>SearchString</var>.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.SearchString"><short>String containing a typed search value</short>
       </element>
     <element name="TfrmCustomGrid.ApplyDarkMode"><short>Apply the dark mode to the UI</short>
+      <descr><p>It sets the <var>TBCPanels</var> colors and images to the dark theme.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.CellKeyPress"><short>Capture the key press event within specific column cells</short>
+      <descr><p>It captures the key press in a specific cell and calls a find dialog or clears the cell.</p><p><var>Sender</var> is the object that called the method.</p><p><var>Key</var> is the key that was pressed.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.ChildTagClick"><short>Behavior of child tags click event</short>
       </element><element name="TfrmCustomGrid.ChildTagMouseEnter"><short>Behavior of child tags when mouse enter event</short>
       </element><element name="TfrmCustomGrid.ChildTagMouseLeave"><short>Behavior of child tags when mouse leave event</short>
       </element><element name="TfrmCustomGrid.GetChildDataSet"><short>Get the current detail dataset</short>
-      <descr>It returns the detail <var>TDataSet</var>.
-</descr>
+      <descr><p>It returns the detail <var>TDataSet</var> based on <var>FTableType</var> and the <var>nbPages.PageIndex</var>.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.GetColumns"><short>Fill the columns grid on side panel with the dataset fields</short>
       </element><element name="TfrmCustomGrid.LoadColumns"><short>Load the columns' saved settings</short>
       </element><element name="TfrmCustomGrid.RefreshMap"><short>Update the map with the current record coordinates</short>
@@ -36,8 +59,8 @@
       </element><element name="TfrmCustomGrid.SetRecycle"><short>Set the dataset and grid of the recycle bin side panel</short>
       </element><element name="TfrmCustomGrid.Summary"><short>Set the dataset of the summary side panel</short>
       </element><element name="TfrmCustomGrid.UpdateButtons"><short>Update the state of the main buttons</short>
-      <descr>It updates the state of the buttons and menus for the main table.
-</descr>
+      <descr><p>It updates the state of the buttons and menus for the main table.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.UpdateChildBar"><short>Update the child bar state</short>
       <descr>It updates the state of the buttons and menus for the current detail tab.
 </descr>
@@ -51,8 +74,8 @@
       <descr>It updates the record counts for the current detail table.
 </descr>
       </element><element name="TfrmCustomGrid.UpdateGridTitles"><short>Update the grid columns titles with sorting indication.</short>
-      <descr>It adds an up (descending sorting) or down (ascending sorintg) arrow on the titles of sorted columns.
-</descr>
+      <descr><p>It adds an up (descending sorting) or down (ascending sorintg) arrow on the titles of sorted columns.</p><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p><p><var>aSearch</var> is the <var>TCustomSearch</var> with the sorting parameters.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.UpdateImageButtons"><short>Update the images side panel buttons</short>
       </element><element name="TfrmCustomGrid.UpdateAudioButtons"><short>Update the audio recordings side panel buttons</short>
       </element><element name="TfrmCustomGrid.TableType"><short>Table type of the master datasource</short>
@@ -68,15 +91,21 @@
       </element><element name="TfrmCustomGrid.UpdateRecycleButtons"><short>Update the recycle bin side panel buttons</short>
       </element><element name="TfrmCustomGrid.ChildTable"><short>Table type of the current child datasource</short>
       </element><element name="TfrmCustomGrid.SaveColumnsConfig"><short>Save the settings for grid columns</short>
-      </element><element name="TfrmCustomGrid.QuickAddChild"><short>Setup behavior of quick add field on child toolbar</short>
-      </element><element name="TfrmCustomGrid.OpenAsync"><short>Setup and open datasets after show window</short><descr>To be used with a TTimer
-</descr>
-      </element><element name="TfrmCustomGrid.LoadColumnsConfigGrid"><short>Load data from grid column settings file</short>
-      </element><element name="TfrmCustomGrid.LoadColumnsConfig"><short>Load and setup the grid columns settings</short>
+      </element><element name="TfrmCustomGrid.QuickAddChild"><short>Setup behavior of quick add field on detail toolbar.</short>
+      <descr><p><var>aInitialValue</var> is the key typed to activate the method.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.OpenAsync"><short>Setup and open datasets after show window</short><descr><p>Speed up the window showing to the user.</p><p>To be used with a <var>TTimer</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.LoadColumnsConfigGrid"><short>Load data in the columns grid side panel</short>
+      </element><element name="TfrmCustomGrid.LoadColumnsConfig"><short>Load and setup the grid columns settings from file.</short>
       </element><element name="TfrmCustomGrid.AddDocument"><short>Add new document to the database</short>
+      <descr><p><var>aDataSet</var> is the documents target <var>TDataSet</var>.</p><p><var>aFileName</var> is the file path for the document.</p><p>It extracts the file creation date and time to fill the record.</p>
+        </descr>
       </element><element name="TfrmCustomGrid.AddAudio"><short>Add new audio recording to the database</short>
-      </element><element name="TfrmCustomGrid.CreatePanelTabs"><short>Setup child tabs</short>
-      </element><element name="TfrmCustomGrid.PanelTabs"><short>List of child tabs</short>
+      <descr><p><var>aDataSet</var> is the audio recordings target <var>TDataSet</var>.</p><p><var>aFileName</var> is the file path for the audio recording.</p><p>It extracts the file creation date and time to fill the record.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.CreatePanelTabs"><short>Setup detail tabs</short>
+      </element><element name="TfrmCustomGrid.PanelTabs"><short>List of detail tabs</short>
       </element><element name="TfrmCustomGrid.FSearch"><short>Search parameters</short>
       <seealso><link id="data_types.TCustomSearch"/>
         </seealso>
@@ -89,11 +118,11 @@
       </element><element name="TfrmCustomGrid.FIsMoving"><short>Determine when a column is moving</short>
       </element><element name="TfrmCustomGrid.FSidePanelFactor"><short>Calculated size factor for (right) side panel</short>
       </element><element name="TfrmCustomGrid.FChildPanelFactor"><short>Calculated size factor for detail bottom panel</short>
-      </element><element name="TCustomPanelTab"><short>Custom type for the child tabs</short>
-      </element><element name="TCustomPanelTab.Create"><short>Create and show new child tab</short>
-      </element><element name="TCustomPanelTab.UpdateCounter"><short>Update the counter badge in the child tab</short>
-      </element><element name="TCustomPanelTab.PageIndex"><short>Index of the child tab position</short>
-      </element><element name="TCustomPanelTab.IsActive"><short>Determine if the child tab is active</short>
+      </element><element name="TCustomPanelTab"><short>Custom type for the detail tabs</short>
+      </element><element name="TCustomPanelTab.Create"><short>Create and show a new detail tab</short>
+      </element><element name="TCustomPanelTab.UpdateCounter"><short>Update the counter badge in the detail tab</short>
+      </element><element name="TCustomPanelTab.PageIndex"><short>Index of the detail tab position</short>
+      </element><element name="TCustomPanelTab.IsActive"><short>Determine if the detail tab is active</short>
       </element><element name="TStringMemoEditor"><short>Custom type to show a memo when editing a text field in DBGrid</short>
       </element>
     <element name="TfrmCustomGrid.FTableType"><short>Main table type</short><descr>Specifies which table to use in this form.
@@ -108,6 +137,9 @@
       </element><element name="TfrmCustomGrid.oldSearchString"><short>Stores the previous value of FSearchString</short><descr>Used to check if the <link id="TfrmCustomGrid.FSearchString"/> value changed.
 </descr>
       </element><element name="TfrmCustomGrid.UpdateRowHeights"><short>Update the default row height of all grids in the form.</short>
+      <descr><p>It gets the row height value from <link id="utils_global.xSettings"/>
+          </p>
+        </descr>
       </element><element name="TfrmCustomGrid.ClearBandFilters"><short>Clear the quick filter controls for the bands module.</short>
       </element><element name="TfrmCustomGrid.ClearBotanicTaxaFilters"><short>Clear the quick filter controls for the botanical taxa module.</short>
       </element><element name="TfrmCustomGrid.ClearCaptureFilters"><short>Clear the quick filter controls for the captures module.</short>
@@ -129,11 +161,191 @@
       </element><element name="TfrmCustomGrid.ClearSurveyFilters"><short>Clear the quick filter controls for the surveys module.</short>
       </element><element name="TfrmCustomGrid.ClearTaxonRankFilters"><short>Clear the quick filter controls for the taxon ranks module.</short>
       </element><element name="TfrmCustomGrid.ClearZooTaxaFilters"><short>Clear the quick filter controls for the taxa module.</short>
-      </element><element name="TfrmCustomGrid.AddOrEditChild"><short>Open the edit dialog for add or edit a record of the specified table type.</short><descr><dl><dt>aTableType</dt><dd>The table where to add or edit the record.</dd><dt>isNew</dt><dd>If <b>True</b>, open the edit dialog in insert mode, otherwise in edit mode.</dd>
-          </dl>
+      </element><element name="TfrmCustomGrid.AddOrEditChild"><short>Open the edit dialog for add or edit a record of the specified table type.</short><descr><p><var>aTableType</var> is the table where to add or edit the record.</p><p><var>isNew</var> indicates to open the edit dialog in insert mode if <b>True</b>, otherwise in edit mode.</p>
         </descr>
       </element>
     <short>Unified module form.</short>
+    <element name="TfrmCustomGrid.GetBandFilters"><short>Get the filter parameters for the bands module.</short>
+      </element><element name="TfrmCustomGrid.GetBotanicTaxaFilters"><short>Get the filter parameters for the botanical taxa module.</short>
+      </element><element name="TfrmCustomGrid.GetCaptureFilters"><short>Get the filter parameters for the captures module.</short>
+      </element><element name="TfrmCustomGrid.GetEggFilters"><short>Get the filter parameters for the eggs module.</short>
+      </element><element name="TfrmCustomGrid.GetExpeditionFilters"><short>Get the filter parameters for the expeditions module.</short>
+      </element><element name="TfrmCustomGrid.GetFeatherFilters"><short>Get the filter parameters for the feathers module.</short>
+      </element><element name="TfrmCustomGrid.GetGazetteerFilters"><short>Get the filter parameters for the gazetteer module.</short>
+      </element><element name="TfrmCustomGrid.GetIndividualFilters"><short>Get the filter parameters for the individuals module.</short>
+      </element><element name="TfrmCustomGrid.GetInstitutionFilters"><short>Get the filter parameters for the institutions module.</short>
+      </element><element name="TfrmCustomGrid.GetMethodFilters"><short>Get the filter parameters for the methods module.</short>
+      </element><element name="TfrmCustomGrid.GetNestFilters"><short>Get the filter parameters for the nests module.</short>
+      </element><element name="TfrmCustomGrid.GetNestRevisionFilters"><short>Get the filter parameters for the nest revisions module.</short>
+      </element><element name="TfrmCustomGrid.GetSamplingPlotFilters"><short>Get the filter parameters for the smapling plots module.</short>
+      </element><element name="TfrmCustomGrid.GetPeopleFilters"><short>Get the filter parameters for the researchers module.</short>
+      </element><element name="TfrmCustomGrid.GetPermitFilters"><short>Get the filter parameters for the permits module.</short>
+      </element><element name="TfrmCustomGrid.GetProjectFilters"><short>Get the filter parameters for the projects module.</short>
+      </element><element name="TfrmCustomGrid.GetSightingFilters"><short>Get the filter parameters for the sightings module.</short>
+      </element><element name="TfrmCustomGrid.GetSpecimenFilters"><short>Get the filter parameters for the specimens module.</short>
+      </element><element name="TfrmCustomGrid.GetSurveyFilters"><short>Get the filter parameters for the surveys module.</short>
+      </element><element name="TfrmCustomGrid.GetTaxonRankFilters"><short>Get the filter parameters for the taxonomic ranks module.</short>
+      </element><element name="TfrmCustomGrid.GetZooTaxaFilters"><short>Get the filter parameters for the bird taxa module.</short>
+      </element><element name="TfrmCustomGrid.OpenExpeditionChilds"><short>Setup and open the detail datasets and grids for the expeditions module.</short>
+      </element><element name="TfrmCustomGrid.OpenIndividualChilds"><short>Setup and open the detail datasets and grids for the individuals module.</short>
+      </element><element name="TfrmCustomGrid.OpenNestChilds"><short>Setup and open the detail datasets and grids for the nests module.</short>
+      </element><element name="TfrmCustomGrid.OpenProjectChilds"><short>Setup and open the detail datasets and grids for the proejcts module.</short>
+      </element><element name="TfrmCustomGrid.OpenSamplingPlotChilds"><short>Setup and open the detail datasets and grids for the sampling plots module.</short>
+      </element><element name="TfrmCustomGrid.OpenSpecimenChilds"><short>Setup and open the detail datasets and grids for the specimens module.</short>
+      </element><element name="TfrmCustomGrid.OpenSurveyChilds"><short>Setup and open the detail datasets and grids for the surveys module.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasBands"><short>Setup the columns conditional formatting for the bands grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasCaptures"><short>Setup the columns conditional formatting for the captures grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasEggs"><short>Setup the columns conditional formatting for the eggs grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasExpeditions"><short>Setup the columns conditional formatting for the expeditions grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasFeathers"><short>Setup the columns conditional formatting for the feathers grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasIndividuals"><short>Setup the columns conditional formatting for the individuals grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasInstitutions"><short>Setup the columns conditional formatting for the institutions grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasNestRevisions"><short>Setup the columns conditional formatting for the nest revisions grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasNests"><short>Setup the columns conditional formatting for the nests grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasNetsEffort"><short>Setup the columns conditional formatting for the net effort grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasPeople"><short>Setup the columns conditional formatting for the researchers grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasPermanentNets"><short>Setup the columns conditional formatting for the permanent nets grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasPermits"><short>Setup the columns conditional formatting for the permits grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasProjects"><short>Setup the columns conditional formatting for the projects grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasSamplePreps"><short>Setup the columns conditional formatting for the sample preparations grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasSightings"><short>Setup the columns conditional formatting for the sightings grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasSpecimens"><short>Setup the columns conditional formatting for the specimens grid.</short>
+      </element><element name="TfrmCustomGrid.PrepareCanvasSurveys"><short>Setup the columns conditional formatting for the surveys grid.</short>
+      </element><element name="TfrmCustomGrid.SetColumnsBands"><short>Sets the columns' properties for the bands grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsBotanicTaxa"><short>Sets the columns' properties for the botanical taxa grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsCaptures"><short>Sets the columns' properties for the captures grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsEggs"><short>Sets the columns' properties for the eggs grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsExpeditions"><short>Sets the columns' properties for the expeditions grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsFeathers"><short>Sets the columns' properties for the feathers grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsGazetteer"><short>Sets the columns' properties for the gazetteer grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsIndividuals"><short>Sets the columns' properties for the individuals grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsInstitutions"><short>Sets the columns' properties for the institutions grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsMethods"><short>Sets the columns' properties for the methods grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsNestOwners"><short>Sets the columns' properties for the nest owners grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsNestRevisions"><short>Sets the columns' properties for the nest revisions grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsNests"><short>Sets the columns' properties for the nests grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsSamplingPlots"><short>Sets the columns' properties for the sampling plots grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsPeople"><short>Sets the columns' properties for the researchers grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsPermanentNets"><short>Sets the columns' properties for the permanent nets grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsPermits"><short>Sets the columns' properties for the permits grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsProjects"><short>Sets the columns' properties for the projects grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsSightings"><short>Sets the columns' properties for the sightings grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsSpecimens"><short>Sets the columns' properties for the specimens grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsSurveys"><short>Sets the columns' properties for the surveys grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsTaxonRanks"><short>Sets the columns' properties for the taxonomic ranks grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsVegetation"><short>Sets the columns' properties for the vegetation grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetColumnsWeatherLogs"><short>Sets the columns' properties for the weather logs grid.</short><descr><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetGridBands"><short>Set the datasets and contextual element visibility for the bands module.</short>
+      </element><element name="TfrmCustomGrid.SetGridBotanicTaxa"><short>Set the datasets and contextual element visibility for the botanical taxa module.</short>
+      </element><element name="TfrmCustomGrid.SetGridCaptures"><short>Set the datasets and contextual element visibility for the captures module.</short>
+      </element><element name="TfrmCustomGrid.SetGridEggs"><short>Set the datasets and contextual element visibility for the eggs module.</short>
+      </element><element name="TfrmCustomGrid.SetGridExpeditions"><short>Set the datasets and contextual element visibility for the expeditions module.</short>
+      </element><element name="TfrmCustomGrid.SetGridFeathers"><short>Set the datasets and contextual element visibility for the feathers module.</short>
+      </element><element name="TfrmCustomGrid.SetGridGazetteer"><short>Set the datasets and contextual element visibility for the gazetteer module.</short>
+      </element><element name="TfrmCustomGrid.SetGridIndividuals"><short>Set the datasets and contextual element visibility for the individuals module.</short>
+      </element><element name="TfrmCustomGrid.SetGridInstitutions"><short>Set the datasets and contextual element visibility for the institutions module.</short>
+      </element><element name="TfrmCustomGrid.SetGridMethods"><short>Set the datasets and contextual element visibility for the methods module.</short>
+      </element><element name="TfrmCustomGrid.SetGridNestRevisions"><short>Set the datasets and contextual element visibility for the nest revisions module.</short>
+      </element><element name="TfrmCustomGrid.SetGridNests"><short>Set the datasets and contextual element visibility for the nests module.</short>
+      </element><element name="TfrmCustomGrid.SetGridPeople"><short>Set the datasets and contextual element visibility for the researchers module.</short>
+      </element><element name="TfrmCustomGrid.SetGridPermits"><short>Set the datasets and contextual element visibility for the permits module.</short>
+      </element><element name="TfrmCustomGrid.SetGridProjects"><short>Set the datasets and contextual element visibility for the projects module.</short>
+      </element><element name="TfrmCustomGrid.SetGridSamplingPlots"><short>Set the datasets and contextual element visibility for the sampling plots module.</short>
+      </element><element name="TfrmCustomGrid.SetGridSightings"><short>Set the datasets and contextual element visibility for the sightings module.</short>
+      </element><element name="TfrmCustomGrid.SetGridSpecimens"><short>Set the datasets and contextual element visibility for the specimens module.</short>
+      </element><element name="TfrmCustomGrid.SetGridSurveys"><short>Set the datasets and contextual element visibility for the surveys module.</short>
+      </element><element name="TfrmCustomGrid.SetGridTaxonRanks"><short>Set the datasets and contextual element visibility for the taxonomic ranks module.</short>
+      </element><element name="TfrmCustomGrid.SearchBands"><short>Set search parameters and get filter parameters for the bands module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchBotanicTaxa"><short>Set search parameters and get filter parameters for the botanical taxa module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchCaptures"><short>Set search parameters and get filter parameters for the captures module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchEggs"><short>Set search parameters and get filter parameters for the eggs module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchExpeditions"><short>Set search parameters and get filter parameters for the expeditions module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchFeathers"><short>Set search parameters and get filter parameters for the feathers module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchGazetteer"><short>Set search parameters and get filter parameters for the gazetteer module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchIndividuals"><short>Set search parameters and get filter parameters for the individuals module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchInstitutions"><short>Set search parameters and get filter parameters for the institutions module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchMethods"><short>Set search parameters and get filter parameters for the methods module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchNestRevisions"><short>Set search parameters and get filter parameters for the nest revisions module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchNests"><short>Set search parameters and get filter parameters for the nests module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchSamplingPlots"><short>Set search parameters and get filter parameters for the sampling plots module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchPeople"><short>Set search parameters and get filter parameters for the researchers module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchPermits"><short>Set search parameters and get filter parameters for the permits module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchProjects"><short>Set search parameters and get filter parameters for the projects module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchSightings"><short>Set search parameters and get filter parameters for the sightings module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchSpecimens"><short>Set search parameters and get filter parameters for the specimens module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchSurveys"><short>Set search parameters and get filter parameters for the surveys module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchTaxonRanks"><short>Set search parameters and get filter parameters for the taxonomic ranks module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SearchZooTaxa"><short>Set search parameters and get filter parameters for the bird taxa module.</short><descr><p><var>aValue</var> is the value to be searched.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsBands"><short>Set visibility of filter panels for the bands module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsBotanicTaxa"><short>Set visibility of filter panels for the botanical taxa module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsCaptures"><short>Set visibility of filter panels for the captures module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsEggs"><short>Set visibility of filter panels for the eggs module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsExpeditions"><short>Set visibility of filter panels for the expeditions module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsFeathers"><short>Set visibility of filter panels for the feathers module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsGazetteer"><short>Set visibility of filter panels for the gazetteer module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsIndividuals"><short>Set visibility of filter panels for the individuals module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsInstitutions"><short>Set visibility of filter panels for the institutions module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsNestRevisions"><short>Set visibility of filter panels for the nest revisions module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsNests"><short>Set visibility of filter panels for the nests module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsSamplingPlots"><short>Set visibility of filter panels for the sampling plots module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsPeople"><short>Set visibility of filter panels for the researchers module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsPermits"><short>Set visibility of filter panels for the permits module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsProjects"><short>Set visibility of filter panels for the projects module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsSightings"><short>Set visibility of filter panels for the sightings module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsSpecimens"><short>Set visibility of filter panels for the specimens module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsSurveys"><short>Set visibility of filter panels for the surveys module.</short>
+      </element><element name="TfrmCustomGrid.UpdateFilterPanelsZooTaxa"><short>Set visibility of filter panels for the bird taxa module.</short>
+      </element><element name="TfrmCustomGrid.isFiltered"><short>Indicates if there are quick filters active.</short>
+      </element><element name="TfrmCustomGrid.FSidePanel"><short>Current side panel visibility.</short>
+      </element><element name="TfrmCustomGrid.oldSidePanel"><short>Previous side panel visibility value.</short>
+      </element><element name="TfrmCustomGrid.FSideIndex"><short>Current side panel page index.</short>
+      </element><element name="TfrmCustomGrid.oldSideIndex"><short>Previous side panel page index.</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
