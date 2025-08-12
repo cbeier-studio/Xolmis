@@ -210,6 +210,7 @@ var
   Taxon: TTaxon;
   Toponimo: TSite;
   Survey: TSurvey;
+  BandRepo: TBandRepository;
   Band, RemovedBand: TBand;
   Individuo: TIndividual;
   Captura: TCapture;
@@ -271,6 +272,7 @@ begin
         begin
           strDate := FormatDateTime(MASK_ISO_DATE, Reg.CaptureDate);
           strTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.CaptureTime);
+          BandRepo := TBandRepository.Create(DMM.sqlCon);
 
           try
             Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName));
@@ -310,7 +312,8 @@ begin
             // Get band
             if (Reg.BandNumber > 0) then
             begin
-              if not Band.Find(Reg.BandSize, Reg.BandNumber) then
+              Band := BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber);
+              if (Band = nil) then
               begin
                 // If does not exist, insert the new band
                 Band.Size := Reg.BandSize;
@@ -320,7 +323,7 @@ begin
                 Band.BandType := mkButtEndBand;
                 Band.UserInserted := ActiveUser.Id;
 
-                Band.Insert;
+                BandRepo.Insert(Band);
               end;
             end;
 
@@ -329,8 +332,9 @@ begin
             begin
               if WordCount(Reg.RemovedBand, [' ']) = 2 then
               begin
-                if not RemovedBand.Find(ExtractWord(1, Reg.RemovedBand, [' ']),
-                  StrToInt(ExtractWord(2, Reg.RemovedBand, [' ']))) then
+                RemovedBand := BandRepo.FindByNumber(ExtractWord(1, Reg.RemovedBand, [' ']),
+                  StrToInt(ExtractWord(2, Reg.RemovedBand, [' '])));
+                if (RemovedBand = nil) then
                 begin
                   // If does not exist, insert the removed band
                   RemovedBand.Size := ExtractWord(1, Reg.RemovedBand, [' ']);
@@ -341,7 +345,7 @@ begin
                   RemovedBand.BandType := mkButtEndBand;
                   RemovedBand.UserInserted := ActiveUser.Id;
 
-                  RemovedBand.Insert;
+                  BandRepo.Insert(RemovedBand);
                 end;
               end;
             end;
@@ -499,17 +503,20 @@ begin
             FreeAndNil(RemovedBand);
             FreeAndNil(Individuo);
             FreeAndNil(Captura);
+            BandRepo.Free;
           end;
         end
         else
         // If it is a band record
         begin
+          BandRepo := TBandRepository.Create(DMM.sqlCon);
           Band := TBand.Create;
           try
             // Get band
             if (Reg.BandNumber > 0) then
             begin
-              if not Band.Find(Reg.BandSize, Reg.BandNumber) then
+              Band := BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber);
+              if (Band = nil) then
               begin
                 // If does not exist, insert the new band
                 Band.Size := Reg.BandSize;
@@ -519,7 +526,7 @@ begin
                 Band.BandType := mkButtEndBand;
                 Band.UserInserted := ActiveUser.Id;
 
-                Band.Insert;
+                BandRepo.Insert(Band);
               end;
             end;
 
@@ -531,6 +538,7 @@ begin
               UpdateBand(Band.Id, 0, 'Q', Reg.CaptureDate);
           finally
             FreeAndNil(Band);
+            BandRepo.Free;
           end;
         end;
 

@@ -123,7 +123,9 @@ uses
 
 procedure TbatchBands.AddBandsBatch;
 var
+  FBandRepo: TBandRepository;
   FRecord: TBand;
+  FHistoryRepo: TBandHistoryRepository;
   FHistory: TBandHistory;
   FBandType: TMarkType;
   FBandSource: TBandSource;
@@ -139,6 +141,8 @@ begin
   dlgLoading.Min := eStartNumber.Value;
   dlgLoading.Max := eEndNumber.Value;
 
+  FBandRepo := TBandRepository.Create(DMM.sqlCon);
+  FHistoryRepo := TBandHistoryRepository.Create(DMM.sqlCon);
   FRecord := TBand.Create();
   FHistory := TBandHistory.Create();
   Ini := eStartNumber.Value;
@@ -208,7 +212,7 @@ begin
           else
             FRecord.CarrierId := FRequesterId;
 
-          FRecord.Insert;
+          FBandRepo.Insert(FRecord);
 
           { Write the band history }
           case FEvent of
@@ -221,7 +225,7 @@ begin
               FHistory.SupplierId := FSupplierId;
               FHistory.RequesterId := FRequesterId;
 
-              FHistory.Insert;
+              FHistoryRepo.Insert(FHistory);
 
               // Receive
               if (Trim(eReceiptDate.Text) <> '') then
@@ -235,7 +239,7 @@ begin
                 FHistory.SupplierId := FSupplierId;
                 FHistory.RequesterId := FRequesterId;
 
-                FHistory.Insert;
+                FHistoryRepo.Insert(FHistory);
               end;
             end;
           bevTransfer:
@@ -248,7 +252,7 @@ begin
               FHistory.SenderId := FSenderId;
               FHistory.RequesterId := FRequesterId;
 
-              FHistory.Insert;
+              FHistoryRepo.Insert(FHistory);
             end;
           bevRetrieve:
             begin
@@ -259,7 +263,7 @@ begin
               FHistory.SupplierId := FSupplierId;
               FHistory.RequesterId := FRequesterId;
 
-              FHistory.Insert;
+              FHistoryRepo.Insert(FHistory);
             end;
           end;
         end;
@@ -293,6 +297,8 @@ begin
   finally
     FHistory.Free;
     FRecord.Free;
+    FHistoryRepo.Free;
+    FBandRepo.Free;
     //if Assigned(dlgProgress) then
     //begin
     //  dlgProgress.Close;

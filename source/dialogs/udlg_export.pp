@@ -72,7 +72,7 @@ var
 implementation
 
 uses
-  utils_global, utils_dialogs, utils_locale, data_export, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
+  utils_global, utils_dialogs, utils_locale, io_core, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 

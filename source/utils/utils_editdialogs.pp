@@ -1196,12 +1196,14 @@ end;
 
 function EditBand(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TBandRepository;
   FRecord, FOldRecord: TBand;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Band edit dialog');
   Application.CreateForm(TedtBands, edtBands);
+  FRepo := TBandRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtBands do
   try
@@ -1224,7 +1226,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Band.Save;
+        FRepo.Save(Band);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1267,6 +1269,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtBands);
     LogEvent(leaClose, 'Band edit dialog');
   end;

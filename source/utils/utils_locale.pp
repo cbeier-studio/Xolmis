@@ -421,6 +421,8 @@ uses
     rsBandNotAvailable = 'The band %s is not available.';
     rsBandNotFound = 'The band %s was not found.';
     rsBandsTransferedWithErrors = 'The transfer of bands was finished, but some bands have problems and were not transfered.';
+    rsRepositoryConnectionCannotBeNil = 'Repository Connection cannot be nil.';
+    rsFieldNotAllowedInFindBy = 'Field "%s" not allowed in FindBy.';
 
     { HTML validation messages }
     //rsForeignNotExist = 'Selected <b>%s</b> does not exist. Select a valid record.';

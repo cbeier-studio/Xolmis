@@ -1640,7 +1640,7 @@ begin
   if Assigned(OldBand) then
   begin
     NewBand := TBand.Create;
-    NewBand.LoadFromDataSet(DataSet);
+    //NewBand.LoadFromDataSet(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewBand.Diff(OldBand, lstDiff) then

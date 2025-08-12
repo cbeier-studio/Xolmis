@@ -84,7 +84,6 @@ type
     FFullName: String;
     FFormattedName: String;
     FAuthorship: String;
-    //FRankId: Integer;
     FParentTaxonId: Integer;
     FValidId: Integer;
     FOrderId: Integer;
@@ -99,7 +98,6 @@ type
     property FullName: String read FFullName write FFullName;
     property FormattedName: String read FFormattedName write FFormattedName;
     property Authorship: String read FAuthorship write FAuthorship;
-    //property RankId: Integer read FRankId write FRankId;
     property ParentTaxonId: Integer read FParentTaxonId write FParentTaxonId;
     property ValidId: Integer read FValidId write FValidId;
     property OrderId: Integer read FOrderId write FOrderId;

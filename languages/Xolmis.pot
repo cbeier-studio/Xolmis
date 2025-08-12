@@ -14252,6 +14252,11 @@ msgctxt "utils_locale.rsfeces"
 msgid "Feces"
 msgstr ""
 
+#: utils_locale.rsfieldnotallowedinfindby
+#, object-pascal-format
+msgid "Field \"%s\" not allowed in FindBy."
+msgstr ""
+
 #: utils_locale.rsfieldwork
 msgctxt "utils_locale.rsfieldwork"
 msgid "Fieldwork"
@@ -15688,6 +15693,10 @@ msgstr ""
 #: utils_locale.rsreplacedsynonym
 msgctxt "utils_locale.rsreplacedsynonym"
 msgid "replaced synonym"
+msgstr ""
+
+#: utils_locale.rsrepositoryconnectioncannotbenil
+msgid "Repository Connection cannot be nil."
 msgstr ""
 
 #: utils_locale.rsrequesterandsendermustbedifferent

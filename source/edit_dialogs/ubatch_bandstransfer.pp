@@ -204,6 +204,8 @@ end;
 
 procedure TbatchBandsTransfer.TransferBands;
 var
+  BandRepo: TBandRepository;
+  HistoryRepo: TBandHistoryRepository;
   FRecord, FOldBand: TBand;
   FHistory: TBandHistory;
   Ini, Fim, i: Integer;
@@ -217,6 +219,8 @@ begin
   dlgLoading.Min := eStartNumber.Value;
   dlgLoading.Max := eEndNumber.Value;
 
+  BandRepo := TBandRepository.Create(DMM.sqlCon);
+  HistoryRepo := TBandHistoryRepository.Create(DMM.sqlCon);
   FRecord := TBand.Create();
   FHistory := TBandHistory.Create();
   Ini := eStartNumber.Value;
@@ -235,7 +239,8 @@ begin
         FRecord.Clear;
         FHistory.Clear;
 
-        if FRecord.Find(cbBandSize.Text, i) then
+        FRecord := BandRepo.FindByNumber(cbBandSize.Text, i);
+        if not (FRecord= nil) then
         begin
           // if the band exists
           if (FRecord.Status = bstAvailable) then
@@ -250,7 +255,7 @@ begin
                 FRecord.RequesterId := FRequesterId;
                 FRecord.CarrierId := FRequesterId;
 
-                FRecord.Update;
+                BandRepo.Update(FRecord);
 
                 // write the record history
                 lstDiff := TStringList.Create;
@@ -278,7 +283,7 @@ begin
               FHistory.SenderId := FSenderId;
               FHistory.RequesterId := FRequesterId;
 
-              FHistory.Insert;
+              HistoryRepo.Insert(FHistory);
             end
             else
               Msgs.Add(Format(rsRequesterAndSenderMustBeDifferent, [FRecord.Size+IntToStr(FRecord.Number)]));
@@ -317,6 +322,8 @@ begin
   finally
     FHistory.Free;
     FRecord.Free;
+    HistoryRepo.Free;
+    BandRepo.Free;
     FreeAndNil(Msgs);
 
     LogEvent(leaFinish, 'Transfer batch of bands');

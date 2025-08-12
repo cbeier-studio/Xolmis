@@ -47,7 +47,10 @@ type
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
     function Diff(const Old: TBotanicalTaxon; out Changes: TStrings): Boolean; virtual;
+    function Equals(const Other: TBotanicalTaxon): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
+    function ToString: String; override;
     function Validate(out Msg: string): Boolean; virtual;
   published
     property VernacularName: String read FVernacularName write FVernacularName;
@@ -67,8 +70,8 @@ type
     constructor Create(AConn: TSQLConnection);
 
     function GetById(const Id: Integer): TBotanicalTaxon;
-    function ExistsId(const Id: Integer): Boolean;
-    function FindByField(const FieldName: String; const Value: Variant): TBotanicalTaxon;
+    function Exists(const Id: Integer): Boolean;
+    function FindBy(const FieldName: String; const Value: Variant): TBotanicalTaxon;
     procedure Insert(E: TBotanicalTaxon);
     procedure Update(E: TBotanicalTaxon);
     procedure Save(E: TBotanicalTaxon);
@@ -82,8 +85,6 @@ var
   function FormattedPlantName(aSciName: TBotanicalName; Formatted: Boolean = False): String;
   procedure InitBotanicRankDict;
   function StringToBotanicRank(const aRankStr: String): TBotanicalRank;
-
-
 
 implementation
 
@@ -395,6 +396,17 @@ begin
   end;
 end;
 
+function TBotanicalTaxon.ToString: String;
+begin
+  Result := Format('BotanicalTaxon(Id=%d, FullName=%s, Authorship=%s, FormattedName=%s, VernacularName=%s, ' +
+    'ValidId=%d, RankId=%d, ParentTaxonId=%d, OrderId=%d, FamilyId=%d, GenusId=%d, SpeciesId=%d, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Acitve=%s)',
+    [FId, FFullName, FAuthorship, FFormattedName, FVernacularName, FValidId, Ord(FRankId), FParentTaxonId,
+    FOrderId, FFamilyId, FGenusId, FSpeciesId,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
 function TBotanicalTaxon.Validate(out Msg: string): Boolean;
 begin
   if FFullName = EmptyStr then
@@ -447,13 +459,40 @@ begin
   Result := Changes.Count > 0;
 end;
 
+function TBotanicalTaxon.Equals(const Other: TBotanicalTaxon): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TBotanicalTaxon.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName       := Obj.Get('Name', '');
+    FAuthorship     := Obj.Get('Authorship', '');
+    FFormattedName  := Obj.Get('Formatted name', '');
+    FVernacularName := Obj.Get('Vernacular name', '');
+    FValidId        := Obj.Get('Valid taxon', 0);
+    FRankId         := StringToBotanicRank(Obj.Get('Taxon rank', ''));
+    FParentTaxonId  := Obj.Get('Parent taxon', 0);
+    FOrderId        := Obj.Get('Order', 0);
+    FFamilyId       := Obj.Get('Family', 0);
+    FGenusId        := Obj.Get('Genus', 0);
+    FSpeciesId      := Obj.Get('Species', 0);
+  finally
+    Obj.Free;
+  end;
+end;
+
 { TBotanicalTaxonRepository }
 
 constructor TBotanicalTaxonRepository.Create(AConn: TSQLConnection);
 begin
   inherited Create;
   if AConn = nil then
-    raise Exception.Create('Connection não pode ser nil.');
+    raise Exception.Create(rsRepositoryConnectionCannotBeNil);
   FConn := AConn;
   FTrans := AConn.Transaction;
 end;
@@ -492,14 +531,16 @@ begin
   end;
 end;
 
-function TBotanicalTaxonRepository.ExistsId(const Id: Integer): Boolean;
+function TBotanicalTaxonRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
   Qry := NewQuery;
   with Qry do
   try
-    SQL.Text := 'select 1 as x from ' + TableName + ' where id=:id limit 1';
+    MacroCheck := True;
+    SQL.Text := 'select 1 as x from %tablename where id=:id limit 1';
+    MacroByName('tablename').Value := TableName;
     ParamByName('id').AsInteger := Id;
     Open;
     Result := not EOF;
@@ -508,7 +549,7 @@ begin
   end;
 end;
 
-function TBotanicalTaxonRepository.FindByField(const FieldName: String; const Value: Variant
+function TBotanicalTaxonRepository.FindBy(const FieldName: String; const Value: Variant
   ): TBotanicalTaxon;
 const
   ALLOWED: array[0..2] of string = (COL_TAXON_ID, COL_TAXON_NAME, COL_VERNACULAR_NAME); // whitelist
@@ -518,7 +559,7 @@ var
   Ok: Boolean;
 begin
   Result := nil;
-  // Evita injeção em FieldName: cheque em whitelist
+  // Avoid FieldName injection: check in whitelist
   Ok := False;
   for I := Low(ALLOWED) to High(ALLOWED) do
     if SameText(FieldName, ALLOWED[I]) then
@@ -527,7 +568,7 @@ begin
       Break;
     end;
   if not Ok then
-    raise Exception.CreateFmt('Campo "%s" não permitido em Find.', [FieldName]);
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
 
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
@@ -647,17 +688,8 @@ begin
     E.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        E.InsertDate := InsertTimeStamp
-      else
-        E.InsertDate := FieldByName('insert_date').AsDateTime;
-    E.UserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        E.UpdateDate := UpdateTimeStamp
-      else
-        E.UpdateDate := FieldByName('update_date').AsDateTime;
+    GetTimeStamp(FieldByName('insert_date'), E.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), E.UpdateDate);
     E.Exported := FieldByName('exported_status').AsBoolean;
     E.Marked := FieldByName('marked_status').AsBoolean;
     E.Active := FieldByName('active_status').AsBoolean;
@@ -769,7 +801,7 @@ begin
     Insert(E)
   else
   begin
-    if ExistsId(E.Id) then
+    if Exists(E.Id) then
       Update(E)
     else
       Insert(E);
