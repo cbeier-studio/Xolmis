@@ -440,7 +440,7 @@ begin
     bstRemoved:     cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandRemoved);
     bstBroken:      cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandBroken);
     bstLost:        cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandLost);
-    bstTransfered:  cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandTransfered);
+    bstTransferred:  cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandTransferred);
   end;
   ckReported.Checked := FBand.Reported;
   case FBand.Source of
@@ -529,7 +529,7 @@ begin
     0: FBand.Status := bstAvailable;
     1: FBand.Status := bstUsed;
     2: FBand.Status := bstRemoved;
-    3: FBand.Status := bstTransfered;
+    3: FBand.Status := bstTransferred;
     4: FBand.Status := bstBroken;
     5: FBand.Status := bstLost;
   end;

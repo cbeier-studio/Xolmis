@@ -43,7 +43,7 @@ type
 
   { TXolmisRecord }
 
-  TXolmisRecord = class
+  TXolmisRecord = class(TPersistent)
   protected
     FId: Integer;
     FGuid: String;
@@ -54,8 +54,13 @@ type
     FMarked: Boolean;
     FExported: Boolean;
     FActive: Boolean;
+    procedure AssignTo(Dest: TPersistent); override;
   public
+    constructor Create; virtual;
     procedure Clear; virtual;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; virtual;
+    function IsNew: Boolean; inline;
   published
     property Id: Integer read FId write FId;
     property Guid: String read FGuid write FGuid;
@@ -68,36 +73,40 @@ type
     property Active: Boolean read FActive write FActive;
   end;
 
+  TXolmisRecordClass = class of TXolmisRecord;
+
 type
 
   { TCustomTaxon }
 
   TCustomTaxon = class(TXolmisRecord)
-    protected
-      FFullName: String;
-      FFormattedName: String;
-      FAuthorship: String;
-      //FRankId: Integer;
-      FParentTaxonId: Integer;
-      FValidId: Integer;
-      FOrderId: Integer;
-      FFamilyId: Integer;
-      FGenusId: Integer;
-      FSpeciesId: Integer;
-    public
-      procedure Clear; override;
-    published
-      property FullName: String read FFullName write FFullName;
-      property FormattedName: String read FFormattedName write FFormattedName;
-      property Authorship: String read FAuthorship write FAuthorship;
-      //property RankId: Integer read FRankId write FRankId;
-      property ParentTaxonId: Integer read FParentTaxonId write FParentTaxonId;
-      property ValidId: Integer read FValidId write FValidId;
-      property OrderId: Integer read FOrderId write FOrderId;
-      property FamilyId: Integer read FFamilyId write FFamilyId;
-      property GenusId: Integer read FGenusId write FGenusId;
-      property SpeciesId: Integer read FSpeciesId write FSpeciesId;
-    end;
+  protected
+    FFullName: String;
+    FFormattedName: String;
+    FAuthorship: String;
+    //FRankId: Integer;
+    FParentTaxonId: Integer;
+    FValidId: Integer;
+    FOrderId: Integer;
+    FFamilyId: Integer;
+    FGenusId: Integer;
+    FSpeciesId: Integer;
+  public
+    procedure Clear; override;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce; virtual;
+  published
+    property FullName: String read FFullName write FFullName;
+    property FormattedName: String read FFormattedName write FFormattedName;
+    property Authorship: String read FAuthorship write FAuthorship;
+    //property RankId: Integer read FRankId write FRankId;
+    property ParentTaxonId: Integer read FParentTaxonId write FParentTaxonId;
+    property ValidId: Integer read FValidId write FValidId;
+    property OrderId: Integer read FOrderId write FOrderId;
+    property FamilyId: Integer read FFamilyId write FFamilyId;
+    property GenusId: Integer read FGenusId write FGenusId;
+    property SpeciesId: Integer read FSpeciesId write FSpeciesId;
+  end;
 
 { Enumerations and types used in records }
 
@@ -130,7 +139,7 @@ type
   TBodyPart = (bpRightTibia, bpLeftTibia, bpRightTarsus, bpLeftTarsus, bpRightWing, bpLeftWing, bpNeck);
   TMarkType = (mkButtEndBand, mkFlag, mkCollar, mkWingTag, mkTriangularBand, mkLockOnBand, mkRivetBand,
     mkClosedBand, mkOther);
-  TBandStatus = (bstAvailable, bstUsed, bstRemoved, bstBroken, bstLost, bstTransfered);
+  TBandStatus = (bstAvailable, bstUsed, bstRemoved, bstBroken, bstLost, bstTransferred);
   TBandSource = (bscAcquiredFromSupplier, bscTransferBetweenBanders, bscLivingBirdBandedByOthers,
     bscDeadBirdBandedByOthers, bscFoundLoose);
   TBandEvent = (bevOrder, bevReceive, bevTransfer, bevRetrieve, bevReport, bevUse, bevDischarge);
@@ -138,7 +147,7 @@ type
   // Botanical taxnomy
   TQualifier = (qfNone, qfSpuh, qfConfer, qfAffinis, qfQuestion);
   TAddendum = (adNone, adGenus, adSpecies, adInfraspecies);
-  TBotanicRank = (
+  TBotanicalRank = (brNone,
     {Realm}
     brRealm, brSubrealm,
     {Kingdom}
@@ -169,13 +178,15 @@ type
     brForm, brSubform,
     {Special ranks}
     brCultivarGroup, brCultivar, brGrex, brHybrid);
-  TBotanicRankMap = specialize TFPGMap<String, TBotanicRank>;
+  TBotanicalRankMap = specialize TFPGMap<String, TBotanicalRank>;
 
   // Bird taxonomy
   TBirdTaxonomy = (btClements, btIoc, btCbro);
   TBirdTaxonomies = set of TBirdTaxonomy;
   TTaxonomyAction = (taNew, taSplit, taLump, taMove, taUpdate);
-  TZooRank = ({Domain} trDomain, trSubDomain,
+  TZooRank = (trNone,
+    {Domain}
+    trDomain, trSubDomain,
     {Kingdom}
     trHyperkingdom, trSuperkingdom, trKingdom, trSubkingdom, trInfrakingdom, trParvkingdom,
     {Phylum}
@@ -369,17 +380,17 @@ const
 
   // Botanical taxonomy
   QUALIFIERS: array[TQualifier] of String = ('', 'sp.', 'cf.', 'aff.', '?');
-  BOTANICAL_RANKS: array[TBotanicRank] of String = ('R.', 'SR.', 'K.', 'sk.', 'SPh.', 'ph.',
+  BOTANICAL_RANKS: array[TBotanicalRank] of String = ('', 'R.', 'SR.', 'K.', 'sk.', 'SPh.', 'ph.',
     'subph.', 'sc.', 'c.', 'subc.', 'superod.', 'ord.', 'subord.', 'infraord.',
     'superfam.', 'epifam.', 'fam.', 'subfam.', 'infrafam.', 'tr.', 'subtr.', 'infratr.',
     'superg.', 'g.', 'subg.', 'sect.', 'subsect.', 'ser.', 'subser.',
     'supersp.', 'sp.', 'subsp.', 'var.', 'subvar.', 'f.', 'subf.',
     'cultivar group', 'cultivar', 'grex', 'hybrid');
-  INFRA_RANKS: set of TBotanicRank = [brSubspecies, brVariety, brSubvariety, brForm, brSubform];
+  INFRA_RANKS: set of TBotanicalRank = [brSubspecies, brVariety, brSubvariety, brForm, brSubform];
 
   // Bird taxonomy
   TAXONOMY_NAMES: array [0 .. 2] of String = ('Clements/eBird', 'IOC', 'CBRO');
-  ZOOLOGICAL_RANKS: array[TZooRank] of String = ('D.', 'SD.', 'HK.', 'SK.', 'K.', 'sk.', 'ik.', 'pk.', 'SPh.', 'ph.',
+  ZOOLOGICAL_RANKS: array[TZooRank] of String = ('', 'D.', 'SD.', 'HK.', 'SK.', 'K.', 'sk.', 'ik.', 'pk.', 'SPh.', 'ph.',
     'subph.', 'infraph.', 'microph.', 'sc.', 'c.', 'subc.', 'infrac.', 'stc.', 'parvc.', 'sdiv.',
     'div.', 'subdiv.', 'infradiv.', 'sleg.', 'leg.', 'subleg.', 'infraleg.', 'scoh.', 'coh.',
     'subcoh.', 'infracoh.', 'Gord.', 'Mord.', 'grandord.', 'Hord.', 'superod.', 'seriesord.',
@@ -450,7 +461,27 @@ const
 
 implementation
 
+uses
+  utils_global;
+
 { TCustomTaxon }
+
+procedure TCustomTaxon.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TCustomTaxon then
+  begin
+    FullName       := TCustomTaxon(Source).FullName;
+    FormattedName  := TCustomTaxon(Source).FormattedName;
+    Authorship     := TCustomTaxon(Source).Authorship;
+    ParentTaxonId  := TCustomTaxon(Source).ParentTaxonId;
+    ValidId        := TCustomTaxon(Source).ValidId;
+    OrderId        := TCustomTaxon(Source).OrderId;
+    FamilyId       := TCustomTaxon(Source).FamilyId;
+    GenusId        := TCustomTaxon(Source).GenusId;
+    SpeciesId      := TCustomTaxon(Source).SpeciesId;
+  end;
+end;
 
 procedure TCustomTaxon.Clear;
 begin
@@ -467,7 +498,45 @@ begin
   FSpeciesId := 0;
 end;
 
+function TCustomTaxon.Clone: TXolmisRecord;
+begin
+  Result := TCustomTaxon.Create;
+  Result.Assign(Self);
+end;
+
 { TXolmisRecord }
+
+constructor TXolmisRecord.Create;
+begin
+  inherited Create;
+  Clear;
+end;
+
+procedure TXolmisRecord.Assign(Source: TPersistent);
+begin
+  if Source is TXolmisRecord then
+  begin
+    FId := TXolmisRecord(Source).FId;
+    FGuid := TXolmisRecord(Source).FGuid;
+    FUserInserted := TXolmisRecord(Source).FUserInserted;
+    FUserUpdated := TXolmisRecord(Source).FUserUpdated;
+    FInsertDate := TXolmisRecord(Source).FInsertDate;
+    FUpdateDate := TXolmisRecord(Source).FUpdateDate;
+    FMarked := TXolmisRecord(Source).FMarked;
+    FExported := TXolmisRecord(Source).FExported;
+    FActive := TXolmisRecord(Source).FActive;
+  end
+  else
+    inherited Assign(Source);
+end;
+
+procedure TXolmisRecord.AssignTo(Dest: TPersistent);
+begin
+  if Dest is TXolmisRecord then
+    TXolmisRecord(Dest).Assign(Self)
+  else
+    inherited AssignTo(Dest);
+end;
 
 procedure TXolmisRecord.Clear;
 begin
@@ -475,11 +544,25 @@ begin
   FGuid := EmptyStr;
   FUserInserted := 0;
   FUserUpdated := 0;
-  FInsertDate := StrToDateTime('30/12/1500 00:00:00');
-  FUpdateDate := StrToDateTime('30/12/1500 00:00:00');
+  FInsertDate := NullDateTime;
+  FUpdateDate := NullDateTime;
   FMarked := False;
   FExported := False;
   FActive := False;
+end;
+
+function TXolmisRecord.Clone: TXolmisRecord;
+var
+  C: TClass;
+begin
+  C := ClassType;
+  Result := TXolmisRecordClass(C).Create;
+  Result.Assign(Self);
+end;
+
+function TXolmisRecord.IsNew: Boolean;
+begin
+  Result := FId = 0;
 end;
 
 end.

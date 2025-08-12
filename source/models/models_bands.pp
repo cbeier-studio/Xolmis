@@ -280,7 +280,7 @@ begin
       'R': FStatus := bstRemoved;
       'Q': FStatus := bstBroken;
       'P': FStatus := bstLost;
-      'T': FStatus := bstTransfered;
+      'T': FStatus := bstTransferred;
     end;
     case FieldByName('band_source').AsString of
       'A': FSource := bscAcquiredFromSupplier;

@@ -1113,6 +1113,7 @@ end;
 
 function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TBotanicalTaxonRepository;
   FRecord, FOldRecord: TBotanicalTaxon;
   lstDiff: TStrings;
   D: String;
@@ -1120,6 +1121,7 @@ begin
   LogEvent(leaOpen, 'Botanical taxon edit dialog');
   Application.CreateForm(TedtBotanicTaxon, edtBotanicTaxon);
   FOldRecord := nil;
+  FRepo := TBotanicalTaxonRepository.Create(DMM.sqlCon);
   with edtBotanicTaxon do
   try
     dsLink.DataSet := aDataSet;
@@ -1132,6 +1134,8 @@ begin
     begin
       FOldRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
       FRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
+      FOldRecord := FRepo.GetById(FOldRecord.Id);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Taxon := FRecord;
@@ -1141,7 +1145,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Taxon.Save;
+        FRepo.Save(Taxon);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1184,6 +1188,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtBotanicTaxon);
     LogEvent(leaClose, 'Botanical taxon edit dialog');
   end;

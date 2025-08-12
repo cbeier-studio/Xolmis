@@ -28,7 +28,7 @@ type
     Name: String;
     Qualifier: TQualifier;
     Adendum: TAddendum;
-    TaxonRank: TBotanicRank;
+    TaxonRank: TBotanicalRank;
     EpithetInfra: String;
     Authorship: String;
   end;
@@ -40,38 +40,56 @@ type
   TBotanicalTaxon = class(TCustomTaxon)
   protected
     FVernacularName: String;
-    FRankId: TBotanicRank;
+    FRankId: TBotanicalRank;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TBotanicalTaxon; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TBotanicalTaxon);
-    function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const Old: TBotanicalTaxon; out Changes: TStrings): Boolean; virtual;
+    function ToJSON: String; virtual;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property VernacularName: String read FVernacularName write FVernacularName;
-    property RankId: TBotanicRank read FRankId write FRankId;
+    property RankId: TBotanicalRank read FRankId write FRankId;
+  end;
+
+  { TBotanicalTaxonRepository }
+
+  TBotanicalTaxonRepository = class
+  private
+    FConn: TSQLConnection;
+    FTrans: TSQLTransaction;
+    function NewQuery: TSQLQuery;
+    function TableName: string; inline;
+    procedure Hydrate(aDataSet: TDataSet; E: TBotanicalTaxon);
+  public
+    constructor Create(AConn: TSQLConnection);
+
+    function GetById(const Id: Integer): TBotanicalTaxon;
+    function ExistsId(const Id: Integer): Boolean;
+    function FindByField(const FieldName: String; const Value: Variant): TBotanicalTaxon;
+    procedure Insert(E: TBotanicalTaxon);
+    procedure Update(E: TBotanicalTaxon);
+    procedure Save(E: TBotanicalTaxon);
+    procedure Delete(E: TBotanicalTaxon);
   end;
 
 var
-  BotanicRankDict: TBotanicRankMap;
+  BotanicRankDict: TBotanicalRankMap;
 
   function StringToQualifier(const aStr: String): TQualifier;
   function FormattedPlantName(aSciName: TBotanicalName; Formatted: Boolean = False): String;
   procedure InitBotanicRankDict;
-  function StringToBotanicRank(const aRankStr: String): TBotanicRank;
+  function StringToBotanicRank(const aRankStr: String): TBotanicalRank;
 
 
 
 implementation
 
-uses utils_locale, models_users, data_getvalue, utils_validations, data_columns, data_setparam, udm_main;
+uses
+  utils_locale, models_users, data_consts, data_getvalue, utils_validations, data_columns, data_setparam,
+  udm_main;
 
 function IsInfraspecific(aTaxonRank: Integer): Boolean;
 var
@@ -110,7 +128,7 @@ var
   totalParts: Integer;
   Parts: TStringList;
 const
-  Italicos: set of TBotanicRank = [brGenus, brSubgenus, brSection, brSubsection, brSeries, brSubseries, brSpecies,
+  Italicos: set of TBotanicalRank = [brGenus, brSubgenus, brSection, brSubsection, brSeries, brSubseries, brSpecies,
     brSubspecies, brVariety, brSubvariety, brForm, brSubform];
 begin
   if Trim(aSciName.Name) = EmptyStr then
@@ -223,7 +241,7 @@ begin
   if Assigned(BotanicRankDict) then
     Exit;
 
-  BotanicRankDict := TBotanicRankMap.Create;
+  BotanicRankDict := TBotanicalRankMap.Create;
   BotanicRankDict.Add('R.', brRealm);
   BotanicRankDict.Add('SR.', brSubrealm);
   BotanicRankDict.Add('K.', brKingdom);
@@ -266,7 +284,7 @@ begin
   BotanicRankDict.Add('hybrid', brHybrid);
 end;
 
-function StringToBotanicRank(const aRankStr: String): TBotanicRank;
+function StringToBotanicRank(const aRankStr: String): TBotanicalRank;
 begin
   //InitBotanicRankDict;
 
@@ -326,10 +344,19 @@ end;
 
 constructor TBotanicalTaxon.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TBotanicalTaxon.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TBotanicalTaxon then
+  begin
+    FVernacularName := TBotanicalTaxon(Source).FVernacularName;
+    FRankId := TBotanicalTaxon(Source).FRankId;
+  end;
 end;
 
 procedure TBotanicalTaxon.Clear;
@@ -339,235 +366,9 @@ begin
   FRankId := brRealm;
 end;
 
-procedure TBotanicalTaxon.Copy(aFrom: TBotanicalTaxon);
+function TBotanicalTaxon.Clone: TXolmisRecord;
 begin
-  FVernacularName := aFrom.VernacularName;
-  FRankId := aFrom.RankId;
-end;
-
-procedure TBotanicalTaxon.Delete;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TBotanicTaxon.Delete: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
-      Clear;
-      Add('DELETE FROM botanic_taxa');
-      Add('WHERE (taxon_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TBotanicalTaxon.GetData(aKey: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Clear;
-    Add('SELECT ' +
-      'taxon_id, ' +
-      'taxon_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'vernacular_name, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'order_id, ' +
-      'family_id, ' +
-      'genus_id, ' +
-      'species_id, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM botanic_taxa');
-    Add('WHERE taxon_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
-    Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TBotanicalTaxon.LoadFromDataSet(aDataSet: TDataSet);
-var
-  FRankAbbrev: String;
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
-begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('taxon_id').AsInteger;
-    FFullName := FieldByName('taxon_name').AsString;
-    FAuthorship := FieldByName('authorship').AsString;
-    FFormattedName := FieldByName('formatted_name').AsString;
-    FVernacularName := FieldByName('vernacular_name').AsString;
-    FValidId := FieldByName('valid_id').AsInteger;
-    FRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('rank_id').AsInteger);
-    FRankId := StringToBotanicRank(FRankAbbrev);
-    FParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
-    FSpeciesId := FieldByName('species_id').AsInteger;
-    FGenusId := FieldByName('genus_id').AsInteger;
-    FFamilyId := FieldByName('family_id').AsInteger;
-    FOrderId := FieldByName('order_id').AsInteger;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
-end;
-
-procedure TBotanicalTaxon.Insert;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO botanic_taxa (' +
-        'taxon_name, ' +
-        'authorship, ' +
-        'formatted_name, ' +
-        'vernacular_name, ' +
-        'rank_id, ' +
-        'parent_taxon_id, ' +
-        'valid_id, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':taxon_name, ' +
-        ':authorship, ' +
-        ':formatted_name, ' +
-        ':vernacular_name, ' +
-        ':rank_id, ' +
-        ':parent_taxon_id, ' +
-        ':valid_id, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
-
-      ParamByName('taxon_name').AsString := FFullName;
-      SetStrParam(ParamByName('authorship'), FAuthorship);
-      SetStrParam(ParamByName('formatted_name'), FFormattedName);
-      SetStrParam(ParamByName('vernacular_name'), FVernacularName);
-      ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BOTANICAL_RANKS[FRankId]);
-      SetForeignParam(ParamByName('parent_taxon_id'), FParentTaxonId);
-      SetForeignParam(ParamByName('valid_id'), FValidId);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-      // Get the taxon hierarchy
-      if (FParentTaxonId > 0) then
-      begin
-        Clear;
-        Add('SELECT order_id, family_id, genus_id, species_id FROM botanic_taxa');
-        Add('WHERE taxon_id = :ataxon');
-        ParamByName('ataxon').AsInteger := FParentTaxonId;
-        Open;
-        FOrderId := FieldByName('order_id').AsInteger;
-        FFamilyId := FieldByName('family_id').AsInteger;
-        FGenusId := FieldByName('genus_id').AsInteger;
-        FSpeciesId := FieldByName('species_id').AsInteger;
-        Close;
-      end;
-      case FRankId of
-        brOrder:    FOrderId := FId;
-        brFamily:   FFamilyId := FId;
-        brGenus:    FGenusId := FId;
-        brSpecies:  FSpeciesId := FId;
-      end;
-      // Save the taxon hierarchy
-      Clear;
-      Add('UPDATE botanic_taxa SET');
-      Add('  order_id = :order_id,');
-      Add('  family_id = :family_id,');
-      Add('  genus_id = :genus_id,');
-      Add('  species_id = :species_id');
-      Add('WHERE taxon_id = :aid');
-      SetForeignParam(ParamByName('order_id'), FOrderId);
-      SetForeignParam(ParamByName('family_id'), FFamilyId);
-      SetForeignParam(ParamByName('genus_id'), FGenusId);
-      SetForeignParam(ParamByName('species_id'), FSpeciesId);
-      ParamByName('aid').AsInteger := FId;
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TBotanicalTaxon.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBotanicalTaxon(inherited Clone);
 end;
 
 function TBotanicalTaxon.ToJSON: String;
@@ -594,128 +395,139 @@ begin
   end;
 end;
 
-procedure TBotanicalTaxon.Update;
-var
-  Qry: TSQLQuery;
+function TBotanicalTaxon.Validate(out Msg: string): Boolean;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TBotanicTaxon.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE botanic_taxa SET ' +
-        'taxon_name = :taxon_name, ' +
-        'authorship = :authorship, ' +
-        'formatted_name = :formatted_name, ' +
-        'vernacular_name = :vernacular_name, ' +
-        'rank_id = :rank_id, ' +
-        'parent_taxon_id = :parent_taxon_id, ' +
-        'valid_id = :valid_id, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (taxon_id = :taxon_id)');
-
-      ParamByName('taxon_name').AsString := FFullName;
-      SetStrParam(ParamByName('authorship'), FAuthorship);
-      SetStrParam(ParamByName('formatted_name'), FFormattedName);
-      SetStrParam(ParamByName('vernacular_name'), FVernacularName);
-      ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BOTANICAL_RANKS[FRankId]);
-      SetForeignParam(ParamByName('parent_taxon_id'), FParentTaxonId);
-      SetForeignParam(ParamByName('valid_id'), FValidId);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('taxon_id').AsInteger := FId;
-
-      ExecSQL;
-
-      // Get the taxon hierarchy
-      if (FParentTaxonId > 0) then
-      begin
-        Clear;
-        Add('SELECT order_id, family_id, genus_id, species_id FROM botanic_taxa');
-        Add('WHERE taxon_id = :ataxon');
-        ParamByName('ataxon').AsInteger := FParentTaxonId;
-        Open;
-        FOrderId := FieldByName('order_id').AsInteger;
-        FFamilyId := FieldByName('family_id').AsInteger;
-        FGenusId := FieldByName('genus_id').AsInteger;
-        FSpeciesId := FieldByName('species_id').AsInteger;
-        Close;
-      end;
-      case FRankId of
-        brOrder:    FOrderId := FId;
-        brFamily:   FFamilyId := FId;
-        brGenus:    FGenusId := FId;
-        brSpecies:  FSpeciesId := FId;
-      end;
-      // Save the taxon hierarchy
-      Clear;
-      Add('UPDATE botanic_taxa SET');
-      Add('  order_id = :order_id,');
-      Add('  family_id = :family_id,');
-      Add('  genus_id = :genus_id,');
-      Add('  species_id = :species_id');
-      Add('WHERE taxon_id = :aid');
-      SetForeignParam(ParamByName('order_id'), FOrderId);
-      SetForeignParam(ParamByName('family_id'), FFamilyId);
-      SetForeignParam(ParamByName('genus_id'), FGenusId);
-      SetForeignParam(ParamByName('species_id'), FSpeciesId);
-      ParamByName('aid').AsInteger := FId;
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'FullName required.';
+    Exit(False);
   end;
+  if FRankId = brNone then
+  begin
+    Msg := 'RankId required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
 end;
 
-function TBotanicalTaxon.Diff(aOld: TBotanicalTaxon; var aList: TStrings): Boolean;
+function TBotanicalTaxon.Diff(const Old: TBotanicalTaxon; out Changes: TStrings): Boolean;
 var
   R: String;
 begin
   Result := False;
   R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if Old = nil then
+    Exit(False);
 
-  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscParentTaxonID, aOld.ParentTaxonId, FParentTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonomicRankID, aOld.RankId, FRankId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAuthorship, aOld.Authorship, FAuthorship, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscVernacularNameS, aOld.VernacularName, FVernacularName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscValidNameID, aOld.ValidId, FValidId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOrderID, aOld.OrderId, FOrderId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFamilyID, aOld.FamilyId, FFamilyId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscGenusID, aOld.GenusId, FGenusId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSpeciesID, aOld.SpeciesId, FSpeciesId, R) then
-    aList.Add(R);
+  if FieldValuesDiff(rscScientificName, Old.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscParentTaxonID, Old.ParentTaxonId, FParentTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonomicRankID, Old.RankId, FRankId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAuthorship, Old.Authorship, FAuthorship, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscVernacularNameS, Old.VernacularName, FVernacularName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscValidNameID, Old.ValidId, FValidId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOrderID, Old.OrderId, FOrderId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFamilyID, Old.FamilyId, FFamilyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscGenusID, Old.GenusId, FGenusId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSpeciesID, Old.SpeciesId, FSpeciesId, R) then
+    Changes.Add(R);
 
-  Result := aList.Count > 0;
+  Result := Changes.Count > 0;
 end;
 
-function TBotanicalTaxon.Find(const FieldName: String; const Value: Variant): Boolean;
+{ TBotanicalTaxonRepository }
+
+constructor TBotanicalTaxonRepository.Create(AConn: TSQLConnection);
+begin
+  inherited Create;
+  if AConn = nil then
+    raise Exception.Create('Connection não pode ser nil.');
+  FConn := AConn;
+  FTrans := AConn.Transaction;
+end;
+
+procedure TBotanicalTaxonRepository.Delete(E: TBotanicalTaxon);
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  if E.Id = 0 then
+    raise Exception.CreateFmt('TBotanicTaxon.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM botanic_taxa');
+      Add('WHERE (taxon_id = :aid)');
+
+      ParamByName('aid').AsInteger := E.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TBotanicalTaxonRepository.ExistsId(const Id: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry do
+  try
+    SQL.Text := 'select 1 as x from ' + TableName + ' where id=:id limit 1';
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TBotanicalTaxonRepository.FindByField(const FieldName: String; const Value: Variant
+  ): TBotanicalTaxon;
+const
+  ALLOWED: array[0..2] of string = (COL_TAXON_ID, COL_TAXON_NAME, COL_VERNACULAR_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  Result := nil;
+  // Evita injeção em FieldName: cheque em whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt('Campo "%s" não permitido em Find.', [FieldName]);
 
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
@@ -752,14 +564,298 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Result := TBotanicalTaxon.Create;
+      Hydrate(Qry, Result);
     end;
 
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+function TBotanicalTaxonRepository.GetById(const Id: Integer): TBotanicalTaxon;
+var
+  Qry: TSQLQuery;
+begin
+  Result := nil;
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    //DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT ' +
+      'taxon_id, ' +
+      'taxon_name, ' +
+      'authorship, ' +
+      'formatted_name, ' +
+      'vernacular_name, ' +
+      'rank_id, ' +
+      'parent_taxon_id, ' +
+      'valid_id, ' +
+      'order_id, ' +
+      'family_id, ' +
+      'genus_id, ' +
+      'species_id, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM botanic_taxa');
+    Add('WHERE taxon_id = :cod');
+    ParamByName('COD').AsInteger := Id;
+    Open;
+    if not EOF then
+    begin
+      Result := TBotanicalTaxon.Create;
+      Hydrate(Qry, Result);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TBotanicalTaxonRepository.Hydrate(aDataSet: TDataSet; E: TBotanicalTaxon);
+var
+  FRankAbbrev: String;
+  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+
+  with aDataSet do
+  begin
+    E.Id := FieldByName('taxon_id').AsInteger;
+    E.FullName := FieldByName('taxon_name').AsString;
+    E.Authorship := FieldByName('authorship').AsString;
+    E.FormattedName := FieldByName('formatted_name').AsString;
+    E.VernacularName := FieldByName('vernacular_name').AsString;
+    E.ValidId := FieldByName('valid_id').AsInteger;
+    FRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('rank_id').AsInteger);
+    E.RankId := StringToBotanicRank(FRankAbbrev);
+    E.ParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
+    E.SpeciesId := FieldByName('species_id').AsInteger;
+    E.GenusId := FieldByName('genus_id').AsInteger;
+    E.FamilyId := FieldByName('family_id').AsInteger;
+    E.OrderId := FieldByName('order_id').AsInteger;
+    E.UserInserted := FieldByName('user_inserted').AsInteger;
+    E.UserUpdated := FieldByName('user_updated').AsInteger;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    if not (FieldByName('insert_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
+        E.InsertDate := InsertTimeStamp
+      else
+        E.InsertDate := FieldByName('insert_date').AsDateTime;
+    E.UserInserted := FieldByName('user_inserted').AsInteger;
+    if not (FieldByName('update_date').IsNull) then
+      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
+        E.UpdateDate := UpdateTimeStamp
+      else
+        E.UpdateDate := FieldByName('update_date').AsDateTime;
+    E.Exported := FieldByName('exported_status').AsBoolean;
+    E.Marked := FieldByName('marked_status').AsBoolean;
+    E.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TBotanicalTaxonRepository.Insert(E: TBotanicalTaxon);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
+
+    Clear;
+    Add('INSERT INTO botanic_taxa (' +
+      'taxon_name, ' +
+      'authorship, ' +
+      'formatted_name, ' +
+      'vernacular_name, ' +
+      'rank_id, ' +
+      'parent_taxon_id, ' +
+      'valid_id, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':taxon_name, ' +
+      ':authorship, ' +
+      ':formatted_name, ' +
+      ':vernacular_name, ' +
+      ':rank_id, ' +
+      ':parent_taxon_id, ' +
+      ':valid_id, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
+
+    ParamByName('taxon_name').AsString := E.FullName;
+    SetStrParam(ParamByName('authorship'), E.Authorship);
+    SetStrParam(ParamByName('formatted_name'), E.FormattedName);
+    SetStrParam(ParamByName('vernacular_name'), E.VernacularName);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BOTANICAL_RANKS[E.RankId]);
+    SetForeignParam(ParamByName('parent_taxon_id'), E.ParentTaxonId);
+    SetForeignParam(ParamByName('valid_id'), E.ValidId);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    E.Id := Fields[0].AsInteger;
+    Close;
+
+    // Get the taxon hierarchy
+    if (E.ParentTaxonId > 0) then
+    begin
+      Clear;
+      Add('SELECT order_id, family_id, genus_id, species_id FROM botanic_taxa');
+      Add('WHERE taxon_id = :ataxon');
+      ParamByName('ataxon').AsInteger := E.ParentTaxonId;
+      Open;
+      E.OrderId := FieldByName('order_id').AsInteger;
+      E.FamilyId := FieldByName('family_id').AsInteger;
+      E.GenusId := FieldByName('genus_id').AsInteger;
+      E.SpeciesId := FieldByName('species_id').AsInteger;
+      Close;
+    end;
+    case E.RankId of
+      brOrder:    E.OrderId := E.Id;
+      brFamily:   E.FamilyId := E.Id;
+      brGenus:    E.GenusId := E.Id;
+      brSpecies:  E.SpeciesId := E.Id;
+    end;
+    // Save the taxon hierarchy
+    Clear;
+    Add('UPDATE botanic_taxa SET');
+    Add('  order_id = :order_id,');
+    Add('  family_id = :family_id,');
+    Add('  genus_id = :genus_id,');
+    Add('  species_id = :species_id');
+    Add('WHERE taxon_id = :aid');
+    SetForeignParam(ParamByName('order_id'), E.OrderId);
+    SetForeignParam(ParamByName('family_id'), E.FamilyId);
+    SetForeignParam(ParamByName('genus_id'), E.GenusId);
+    SetForeignParam(ParamByName('species_id'), E.SpeciesId);
+    ParamByName('aid').AsInteger := E.Id;
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TBotanicalTaxonRepository.NewQuery: TSQLQuery;
+begin
+  Result := TSQLQuery.Create(nil);
+  Result.DataBase := FConn;
+  Result.Transaction := FTrans;
+end;
+
+procedure TBotanicalTaxonRepository.Save(E: TBotanicalTaxon);
+begin
+  if E = nil then
+    Exit;
+
+  if E.IsNew then
+    Insert(E)
+  else
+  begin
+    if ExistsId(E.Id) then
+      Update(E)
+    else
+      Insert(E);
+  end;
+end;
+
+function TBotanicalTaxonRepository.TableName: string;
+begin
+  Result := TBL_BOTANIC_TAXA;
+end;
+
+procedure TBotanicalTaxonRepository.Update(E: TBotanicalTaxon);
+var
+  Qry: TSQLQuery;
+begin
+  if E.Id = 0 then
+    raise Exception.CreateFmt('TBotanicTaxon.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  //Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
+
+    Clear;
+    Add('UPDATE botanic_taxa SET ' +
+      'taxon_name = :taxon_name, ' +
+      'authorship = :authorship, ' +
+      'formatted_name = :formatted_name, ' +
+      'vernacular_name = :vernacular_name, ' +
+      'rank_id = :rank_id, ' +
+      'parent_taxon_id = :parent_taxon_id, ' +
+      'valid_id = :valid_id, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (taxon_id = :taxon_id)');
+
+    ParamByName('taxon_name').AsString := E.FullName;
+    SetStrParam(ParamByName('authorship'), E.Authorship);
+    SetStrParam(ParamByName('formatted_name'), E.FormattedName);
+    SetStrParam(ParamByName('vernacular_name'), E.VernacularName);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BOTANICAL_RANKS[E.RankId]);
+    SetForeignParam(ParamByName('parent_taxon_id'), E.ParentTaxonId);
+    SetForeignParam(ParamByName('valid_id'), E.ValidId);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('taxon_id').AsInteger := E.Id;
+
+    ExecSQL;
+
+    // Get the taxon hierarchy
+    if (E.ParentTaxonId > 0) then
+    begin
+      Clear;
+      Add('SELECT order_id, family_id, genus_id, species_id FROM botanic_taxa');
+      Add('WHERE taxon_id = :ataxon');
+      ParamByName('ataxon').AsInteger := E.ParentTaxonId;
+      Open;
+      E.OrderId := FieldByName('order_id').AsInteger;
+      E.FamilyId := FieldByName('family_id').AsInteger;
+      E.GenusId := FieldByName('genus_id').AsInteger;
+      E.SpeciesId := FieldByName('species_id').AsInteger;
+      Close;
+    end;
+    case E.RankId of
+      brOrder:    E.OrderId := E.Id;
+      brFamily:   E.FamilyId := E.Id;
+      brGenus:    E.GenusId := E.Id;
+      brSpecies:  E.SpeciesId := E.Id;
+    end;
+    // Save the taxon hierarchy
+    Clear;
+    Add('UPDATE botanic_taxa SET');
+    Add('  order_id = :order_id,');
+    Add('  family_id = :family_id,');
+    Add('  genus_id = :genus_id,');
+    Add('  species_id = :species_id');
+    Add('WHERE taxon_id = :aid');
+    SetForeignParam(ParamByName('order_id'), E.OrderId);
+    SetForeignParam(ParamByName('family_id'), E.FamilyId);
+    SetForeignParam(ParamByName('genus_id'), E.GenusId);
+    SetForeignParam(ParamByName('species_id'), E.SpeciesId);
+    ParamByName('aid').AsInteger := E.Id;
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

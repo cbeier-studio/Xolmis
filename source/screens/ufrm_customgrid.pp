@@ -7228,7 +7228,7 @@ begin
           TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
         end;
       end;
-      'T': // Transfered
+      'T': // Transferred
       begin
         if IsDarkModeEnabled then
         begin

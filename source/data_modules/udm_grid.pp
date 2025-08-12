@@ -1737,7 +1737,7 @@ begin
     'R': aText := rsBandRemoved;
     'Q': aText := rsBandBroken;
     'P': aText := rsBandLost;
-    'T': aText := rsBandTransfered;
+    'T': aText := rsBandTransferred;
   end;
 
   DisplayText := True;
@@ -1763,7 +1763,7 @@ begin
   if aText = rsBandLost then
     Sender.AsString := 'P'
   else
-  if aText = rsBandTransfered then
+  if aText = rsBandTransferred then
     Sender.AsString := 'T';
 end;
 
@@ -1852,7 +1852,7 @@ begin
   if Assigned(OldBotany) then
   begin
     NewBotany := TBotanicalTaxon.Create;
-    NewBotany.LoadFromDataSet(DataSet);
+    //NewBotany.LoadFromDataSet(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewBotany.Diff(OldBotany, lstDiff) then

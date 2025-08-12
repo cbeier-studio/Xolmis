@@ -246,7 +246,7 @@ begin
               try
                 FSenderId := FRecord.RequesterId;
 
-                FRecord.Status := bstTransfered;
+                FRecord.Status := bstTransferred;
                 FRecord.RequesterId := FRequesterId;
                 FRecord.CarrierId := FRequesterId;
 

@@ -617,7 +617,7 @@ begin
     'R': aText := rsBandRemoved;
     'Q': aText := rsBandBroken;
     'P': aText := rsBandLost;
-    'T': aText := rsBandTransfered;
+    'T': aText := rsBandTransferred;
   end;
 
   DisplayText := True;
