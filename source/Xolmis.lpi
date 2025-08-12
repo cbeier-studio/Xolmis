@@ -203,7 +203,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);C:\lazarus_RC\fpc\3.2.2\source\packages\rtl-generics\src\"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -257,7 +257,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -299,7 +299,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <OtherUnitFiles Value="types;dialogs;edit_dialogs;io"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -347,7 +347,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <OtherUnitFiles Value="types;dialogs;edit_dialogs;io"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -395,7 +395,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="types;dialogs;edit_dialogs"/>
+            <OtherUnitFiles Value="types;dialogs;edit_dialogs;io"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -1044,11 +1044,7 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="data\data_export.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="data\data_import.pp"/>
+        <Filename Value="io\io_core.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -1413,6 +1409,42 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
       </Unit>
+      <Unit>
+        <Filename Value="io\io_ebird_csv.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_banding_csv.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_nesting_csv.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_csv.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_json.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_xml.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_dbf.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_xlsx.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="io\io_ods.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
     <Debugger>
       <StoreDebuggerClassConfInSession Value="True"/>
@@ -1427,7 +1459,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="utils;data;models;dialogs;edit_dialogs;data_modules;screens"/>
+      <OtherUnitFiles Value="utils;data;models;dialogs;edit_dialogs;data_modules;screens;io"/>
       <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

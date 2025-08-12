@@ -366,9 +366,11 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_system, data_import, utils_autoupdate, utils_permissions, utils_backup,
-  data_management, models_users, models_geo, models_taxonomy, models_record_types,
-  utils_editdialogs, utils_themes, utils_gis, uDarkStyleParams,
+  utils_locale, utils_global, utils_dialogs, utils_system, utils_autoupdate, utils_permissions, utils_backup,
+  utils_editdialogs, utils_themes, utils_gis,
+  models_users, models_geo, models_taxonomy, models_record_types,
+  data_management, io_core, io_ebird_csv,
+  uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,

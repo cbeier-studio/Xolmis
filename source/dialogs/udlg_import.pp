@@ -8,7 +8,7 @@ uses
   BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf, fgl,
   dbf, csvdataset, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset, fpsTypes,
-  atshapelinebgra, data_import, data_types;
+  atshapelinebgra, io_core, data_types;
 
 type
 

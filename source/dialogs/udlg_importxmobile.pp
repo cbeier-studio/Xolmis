@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
   StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, Grids, StrUtils,
   Character,
-  data_import, models_sampling, models_breeding, models_xmobile, models_record_types;
+  io_core, models_sampling, models_breeding, models_xmobile, models_record_types;
 
 type
 

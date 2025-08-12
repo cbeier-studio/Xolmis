@@ -12684,9 +12684,8 @@ msgctxt "utils_locale.rsbandtransferbetweenbanders"
 msgid "Transfer between banders"
 msgstr "Transferência entre anilhadores"
 
-#: utils_locale.rsbandtransfered
-msgctxt "utils_locale.rsbandtransfered"
-msgid "Transfered"
+#: utils_locale.rsbandtransferred
+msgid "Transferred"
 msgstr "Transferida"
 
 #: utils_locale.rsbandtriangular
@@ -14243,6 +14242,50 @@ msgstr "Fezes"
 msgctxt "utils_locale.rsfieldwork"
 msgid "Fieldwork"
 msgstr "Trabalho de campo"
+
+#: utils_locale.rsfileextcsv
+msgid "Comma-Separated Values (CSV)"
+msgstr "Valores separados por vírgula (CSV)"
+
+#: utils_locale.rsfileextdbf
+msgid "dBase Format (DBF)"
+msgstr "Formato dBase (DBF)"
+
+#: utils_locale.rsfileextgeojson
+msgid "GeoJSON"
+msgstr "GeoJSON"
+
+#: utils_locale.rsfileextgpx
+msgid "GPS Exchange Format (GPX)"
+msgstr "Formato de permuta de GPS (GPX)"
+
+#: utils_locale.rsfileextjson
+msgid "JavaScript Object Notation (JSON)"
+msgstr "Notação de objeto JavaScript (JSON)"
+
+#: utils_locale.rsfileextkml
+msgid "Keyhole Markup Language (KML)"
+msgstr "Linguagem de marcação Keyhole (KML)"
+
+#: utils_locale.rsfileextods
+msgid "Open Document Spreadsheet"
+msgstr "Planilha Open Document"
+
+#: utils_locale.rsfileextpdf
+msgid "Portable Document Format (PDF)"
+msgstr "Formato de Documento Portátil (PDF)"
+
+#: utils_locale.rsfileexttsv
+msgid "Tab-Separated Values (TSV)"
+msgstr "Valores separados por tabulações (TSV)"
+
+#: utils_locale.rsfileextxlsx
+msgid "Microsoft Excel"
+msgstr "Microsoft Excel"
+
+#: utils_locale.rsfileextxml
+msgid "Extensible Markup Language (XML)"
+msgstr "Linguagem de marcação extensível (XML)"
 
 #: utils_locale.rsfilterand
 msgctxt "utils_locale.rsfilterand"

@@ -62,10 +62,9 @@ uses
   data_search,
   data_columns,
   data_blobs,
-  data_export,
+  io_core,
   data_filters,
   data_getvalue,
-  data_import,
   data_setparam,
   { Models }
   models_record_types,
@@ -184,7 +183,8 @@ uses
   ufrm_imageviewer,
   ufrm_printpreview,
   ufrm_taxa,
-  ufrm_quickentry;
+  ufrm_quickentry, io_ebird_csv, io_banding_csv, io_nesting_csv, io_csv, io_json, io_xml, io_dbf, 
+io_xlsx, io_ods;
 
 {$R *.res}
 

@@ -97,7 +97,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_import, utils_themes, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, io_core, io_nesting_csv, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

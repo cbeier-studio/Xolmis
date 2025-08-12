@@ -521,6 +521,19 @@ uses
     rsTotalProblemsPlural = '%d problems';
     rsPageOfPages = '%d of %d';
 
+    { Files }
+    rsFileExtCSV = 'Comma-Separated Values (CSV)';
+    rsFileExtTSV = 'Tab-Separated Values (TSV)';
+    rsFileExtJSON = 'JavaScript Object Notation (JSON)';
+    rsFileExtODS = 'Open Document Spreadsheet';
+    rsFileExtXLSX = 'Microsoft Excel';
+    rsFileExtXML = 'Extensible Markup Language (XML)';
+    rsFileExtKML = 'Keyhole Markup Language (KML)';
+    rsFileExtGPX = 'GPS Exchange Format (GPX)';
+    rsFileExtDBF = 'dBase Format (DBF)';
+    rsFileExtGeoJSON = 'GeoJSON';
+    rsFileExtPDF = 'Portable Document Format (PDF)';
+
     { Settings }
     rsSettingsGeneral = 'General';
     rsSettingsAppearance = 'Appearance';
@@ -691,7 +704,7 @@ uses
     rsBandRemoved = 'Removed';
     rsBandBroken = 'Broken';
     rsBandLost = 'Lost';
-    rsBandTransfered = 'Transfered';
+    rsBandTransferred = 'Transferred';
     rsBandStatusList = 'Available,Used,Removed,Transfered,Broken,Lost';
     rsBandOpen = 'Butt-end';
     rsBandClosed = 'Closed';
