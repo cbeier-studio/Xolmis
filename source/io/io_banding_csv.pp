@@ -208,6 +208,7 @@ var
   CSV: TSdfDataSet;
   Reg: TBandingData;
   Taxon: TTaxon;
+  SiteRepo: TSiteRepository;
   Toponimo: TSite;
   Survey: TSurvey;
   BandRepo: TBandRepository;
@@ -273,6 +274,7 @@ begin
           strDate := FormatDateTime(MASK_ISO_DATE, Reg.CaptureDate);
           strTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.CaptureTime);
           BandRepo := TBandRepository.Create(DMM.sqlCon);
+          SiteRepo := TSiteRepository.Create(DMM.sqlCon);
 
           try
             Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName));
@@ -293,7 +295,7 @@ begin
             // Get net station and locality
             if NetStation.Find(Reg.NetStation) then
             begin
-              Toponimo.GetData(NetStation.LocalityId);
+              Toponimo := SiteRepo.GetById(NetStation.LocalityId);
             end;
 
             // Get survey
@@ -504,6 +506,7 @@ begin
             FreeAndNil(Individuo);
             FreeAndNil(Captura);
             BandRepo.Free;
+            SiteRepo.Free;
           end;
         end
         else
@@ -585,6 +588,7 @@ procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   Reg: TBandingJournal;
+  SiteRepo: TSiteRepository;
   Toponimo: TSite;
   NetStation: TSamplingPlot;
   Survey: TSurvey;
@@ -608,6 +612,7 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -680,7 +685,7 @@ begin
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
           begin
-            Toponimo.GetData(NetStation.LocalityId);
+            Toponimo := SiteRepo.GetById(NetStation.LocalityId);
           end;
 
           // Check if the survey exists
@@ -840,6 +845,7 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
+    SiteRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
@@ -853,6 +859,7 @@ procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   Reg: TBandingEffort;
+  SiteRepo: TSiteRepository;
   Toponimo: TSite;
   NetStation: TSamplingPlot;
   Survey: TSurvey;
@@ -875,6 +882,7 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -921,7 +929,7 @@ begin
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
           begin
-            Toponimo.GetData(NetStation.LocalityId);
+            Toponimo := SiteRepo.GetById(NetStation.LocalityId);
           end;
 
           // Check if the survey exists
@@ -991,6 +999,7 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
+    SiteRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;

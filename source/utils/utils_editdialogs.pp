@@ -159,6 +159,7 @@ end;
 
 function EditSite(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TSiteRepository;
   FRecord, FOldRecord: TSite;
   lstDiff: TStrings;
   D: String;
@@ -166,6 +167,7 @@ begin
   LogEvent(leaOpen, 'Gazetteer edit dialog');
   Application.CreateForm(TedtSite, edtSite);
   FOldRecord := nil;
+  FRepo := TSiteRepository.Create(DMM.sqlCon);
   with edtSite do
   try
     dsLink.DataSet := aDataSet;
@@ -187,7 +189,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Site.Save;
+        FRepo.Save(Site);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -231,6 +233,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtSite);
     LogEvent(leaClose, 'Gazetteer edit dialog');
   end;

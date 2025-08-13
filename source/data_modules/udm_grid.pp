@@ -2791,7 +2791,7 @@ begin
   if Assigned(OldSite) then
   begin
     NewSite := TSite.Create;
-    NewSite.LoadFromDataSet(DataSet);
+    //NewSite.LoadFromDataSet(DataSet);
     lstDiff := TStringList.Create;
     try
       if NewSite.Diff(OldSite, lstDiff) then

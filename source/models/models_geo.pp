@@ -47,18 +47,16 @@ type
     FDescription: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TSite; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TSite);
-    function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TSite; out Changes: TStrings): Boolean;
+    function Equals(const Other: TSite): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
+    function ToJSON: String; virtual;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property Name: String read FName write FName;
     property Abbreviation: String read FAbbreviation write FAbbreviation;
@@ -77,6 +75,27 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TSiteRepository }
+
+  TSiteRepository = class
+  private
+    FConn: TSQLConnection;
+    FTrans: TSQLTransaction;
+    function NewQuery: TSQLQuery;
+    function TableName: string; inline;
+    procedure Hydrate(aDataSet: TDataSet; E: TSite);
+  public
+    constructor Create(AConn: TSQLConnection);
+
+    function GetById(const Id: Integer): TSite;
+    function Exists(const Id: Integer): Boolean;
+    function FindBy(const FieldName: String; const Value: Variant): TSite;
+    procedure Insert(E: TSite);
+    procedure Update(E: TSite);
+    procedure Save(E: TSite);
+    procedure Delete(E: TSite);
+  end;
+
   { TPoi }
 
   TPoi = class(TXolmisRecord)
@@ -93,18 +112,16 @@ type
     FSightingId: Integer;
     FSurveyId: Integer;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TPoi; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TPoi);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TPoi; out Changes: TStrings): Boolean;
+    function Equals(const Other: TPoi): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property SampleDate: TDate read FSampleDate write FSampleDate;
     property SampleTime: TTime read FSampleTime write FSampleTime;
@@ -117,7 +134,27 @@ type
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property SightingId: Integer read FSightingId write FSightingId;
     property SurveyId: Integer read FSurveyId write FSurveyId;
+  end;
 
+  { TPoiRepository }
+
+  TPoiRepository = class
+  private
+    FConn: TSQLConnection;
+    FTrans: TSQLTransaction;
+    function NewQuery: TSQLQuery;
+    function TableName: string; inline;
+    procedure Hydrate(aDataSet: TDataSet; E: TPoi);
+  public
+    constructor Create(AConn: TSQLConnection);
+
+    function GetById(const Id: Integer): TPoi;
+    function Exists(const Id: Integer): Boolean;
+    function FindBy(const FieldName: String; const Value: Variant): TPoi;
+    procedure Insert(E: TPoi);
+    procedure Update(E: TPoi);
+    procedure Save(E: TPoi);
+    procedure Delete(E: TPoi);
   end;
 
 var
@@ -131,7 +168,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, data_columns, data_setparam,
+  utils_locale, utils_global, models_users, utils_validations, data_consts, data_columns, data_setparam,
+  data_getvalue,
   udm_main;
 
 procedure InitSitePropsDict;
@@ -180,15 +218,37 @@ end;
 
 constructor TSite.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TSite.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TSite then
+  begin
+    FName := TSite(Source).Name;
+    FAbbreviation := TSite(Source).Abbreviation;
+    FRank := TSite(Source).Rank;
+    FParentSiteId := TSite(Source).ParentSiteId;
+    FMunicipalityId := TSite(Source).MunicipalityId;
+    FStateId := TSite(Source).StateId;
+    FCountryId := TSite(Source).CountryId;
+    FFullName := TSite(Source).FullName;
+    FEbirdName := TSite(Source).EbirdName;
+    FLatitude := TSite(Source).Latitude;
+    FLongitude := TSite(Source).Longitude;
+    FAltitude := TSite(Source).Altitude;
+    FLanguage := TSite(Source).Language;
+    FDescription := TSite(Source).Description;
+    FNotes := TSite(Source).Notes;
+  end;
 end;
 
 procedure TSite.Clear;
 begin
-  inherited;
+  inherited Clear;
   FName := EmptyStr;
   FAbbreviation := EmptyStr;
   FRank := srNone;
@@ -206,283 +266,9 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TSite.Copy(aFrom: TSite);
+function TSite.Clone: TXolmisRecord;
 begin
-  FName := aFrom.Name;
-  FAbbreviation := aFrom.Abbreviation;
-  FRank := aFrom.Rank;
-  FParentSiteId := aFrom.ParentSiteId;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
-  FFullName := aFrom.FullName;
-  FEbirdName := aFrom.EbirdName;
-  FLatitude := aFrom.Latitude;
-  FLongitude := aFrom.Longitude;
-  FAltitude := aFrom.Altitude;
-  FLanguage := aFrom.Language;
-  FDescription := aFrom.Description;
-  FNotes := aFrom.Notes;
-end;
-
-procedure TSite.Delete;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSite.Delete: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
-      Clear;
-      Add('DELETE FROM gazetteer');
-      Add('WHERE (site_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSite.GetData(aKey: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Clear;
-    Add('SELECT ' +
-        'site_id, ' +
-        'site_name, ' +
-        'site_acronym, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'altitude, ' +
-        'site_rank, ' +
-        'parent_site_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
-        'full_name, ' +
-        'ebird_name, ' +
-        'language, ' +
-        'description, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM gazetteer');
-    Add('WHERE site_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
-    Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry)
-    else
-      Self.Clear;
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSite.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
-begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('site_id').AsInteger;
-    FName := FieldByName('site_name').AsString;
-    FAbbreviation := FieldByName('site_acronym').AsString;
-    case FieldByName('site_rank').AsString of
-      'P': FRank := srCountry;
-      'E': FRank := srState;
-      'R': FRank := srRegion;
-      'M': FRank := srMunicipality;
-      'D': FRank := srDistrict;
-      'L': FRank := srLocality;
-    else
-      FRank := srNone;
-    end;
-    FParentSiteId := FieldByName('parent_site_id').AsInteger;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
-    FLanguage := FieldByName('language').AsString;
-    FFullName := FieldByName('full_name').AsString;
-    FEbirdName := FieldByName('ebird_name').AsString;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FAltitude := FieldByName('altitude').AsFloat;
-    FDescription := FieldByName('description').AsString;
-    FNotes := FieldByName('notes').AsString;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
-end;
-
-procedure TSite.Insert;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO gazetteer (' +
-        'site_name, ' +
-        'site_acronym, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'altitude, ' +
-        'site_rank, ' +
-        'parent_site_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
-        'full_name, ' +
-        'ebird_name, ' +
-        'language, ' +
-        'description, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':site_name, ' +
-        ':site_acronym, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':altitude, ' +
-        ':site_rank, ' +
-        ':parent_site_id, ' +
-        ':country_id, ' +
-        ':state_id, ' +
-        ':municipality_id, ' +
-        ':full_name, ' +
-        ':ebird_name, ' +
-        ':language, ' +
-        ':description, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
-
-      ParamByName('site_name').AsString := FName;
-      SetStrParam(ParamByName('site_acronym'), FAbbreviation);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetFloatParam(ParamByName('altitude'), FAltitude);
-      ParamByName('site_rank').AsString := SITE_RANKS[FRank];
-      SetForeignParam(ParamByName('parent_site_id'), FParentSiteId);
-      ParamByName('country_id').AsInteger := FCountryId;
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      SetStrParam(ParamByName('ebird_name'), FEbirdName);
-      SetStrParam(ParamByName('full_name'), FFullName);
-      SetStrParam(ParamByName('language'), FLanguage);
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-      // Get the site hierarchy
-      if (FParentSiteId > 0) then
-      begin
-        Clear;
-        Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-        Add('WHERE site_id = :asite');
-        ParamByName('ASITE').AsInteger := FParentSiteId;
-        Open;
-        FCountryId := FieldByName('country_id').AsInteger;
-        FStateId := FieldByName('state_id').AsInteger;
-        FMunicipalityId := FieldByName('municipality_id').AsInteger;
-        Close;
-      end;
-      case FRank of
-        srCountry:      FCountryId := FId;
-        srState:        FStateId := FId;
-        srMunicipality: FMunicipalityId := FId;
-      end;
-      // Save the site hierarchy
-      Clear;
-      Add('UPDATE gazetteer SET');
-      Add('  country_id = :country_id,');
-      Add('  state_id = :state_id,');
-      Add('  municipality_id = :municipality_id');
-      Add('WHERE site_id = :aid');
-      ParamByName('country_id').AsInteger := FCountryId;
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      ParamByName('aid').AsInteger := FId;
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSite.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TSite(inherited Clone);
 end;
 
 function TSite.ToJSON: String;
@@ -492,7 +278,7 @@ begin
   JSONObject := TJSONObject.Create;
   try
     JSONObject.Add('Name', FName);
-    JSONObject.Add('Acronym', FAbbreviation);
+    JSONObject.Add('Abbreviation', FAbbreviation);
     JSONObject.Add('Rank', SITE_RANKS[FRank]);
     JSONObject.Add('ParentSiteId', FParentSiteId);
     JSONObject.Add('MunicipalityId', FMunicipalityId);
@@ -513,108 +299,34 @@ begin
   end;
 end;
 
-procedure TSite.Update;
-var
-  Qry: TSQLQuery;
+function TSite.ToString: String;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSite.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE gazetteer SET ' +
-        'site_name = :site_name, ' +
-        'site_acronym = :site_acronym, ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'altitude = :altitude, ' +
-        'site_rank = :site_rank, ' +
-        'parent_site_id = :parent_site_id, ' +
-        'country_id = :country_id, ' +
-        'state_id = :state_id, ' +
-        'municipality_id = :municipality_id, ' +
-        'full_name = :full_name, ' +
-        'ebird_name = :ebird_name, ' +
-        'language = :language, ' +
-        'description = :description, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (site_id = :site_id)');
-
-      ParamByName('site_name').AsString := FName;
-      SetStrParam(ParamByName('site_acronym'), FAbbreviation);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetFloatParam(ParamByName('altitude'), FAltitude);
-      ParamByName('site_rank').AsString := SITE_RANKS[FRank];
-      SetForeignParam(ParamByName('parent_site_id'), FParentSiteId);
-      ParamByName('country_id').AsInteger := FCountryId;
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      SetStrParam(ParamByName('ebird_name'), FEbirdName);
-      SetStrParam(ParamByName('full_name'), FFullName);
-      SetStrParam(ParamByName('language'), FLanguage);
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('site_id').AsInteger := FId;
-
-      ExecSQL;
-
-      // Get the site hierarchy
-      if (FParentSiteId > 0) then
-      begin
-        Clear;
-        Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-        Add('WHERE site_id = :asite');
-        ParamByName('ASITE').AsInteger := FParentSiteId;
-        Open;
-        FCountryId := FieldByName('country_id').AsInteger;
-        FStateId := FieldByName('state_id').AsInteger;
-        FMunicipalityId := FieldByName('municipality_id').AsInteger;
-        Close;
-      end;
-      case FRank of
-        srCountry:      FCountryId :=      FId;
-        srState:        FStateId :=        FId;
-        srMunicipality: FMunicipalityId := FId;
-      end;
-      // Save the site hierarchy
-      Clear;
-      Add('UPDATE gazetteer SET');
-      Add('  country_id = :country_id,');
-      Add('  state_id = :state_id,');
-      Add('  municipality_id = :municipality_id');
-      Add('WHERE site_id = :aid');
-      ParamByName('country_id').AsInteger := FCountryId;
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      ParamByName('aid').AsInteger := FId;
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
+  Result := inherited ToString;
 end;
 
-function TSite.Diff(aOld: TSite; var aList: TStrings): Boolean;
+function TSite.Validate(out Msg: string): Boolean;
+begin
+  if FName = EmptyStr then
+  begin
+    Msg := 'Name required.';
+    Exit(False);
+  end;
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'FullName required.';
+    Exit(False);
+  end;
+  if FRank = srNone then
+  begin
+    Msg := 'Rank required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+function TSite.Diff(const aOld: TSite; out Changes: TStrings): Boolean;
 //var
 //  PropList: PPropList;
 //  PropCount, I: Integer;
@@ -650,52 +362,177 @@ var
 begin
   Result := False;
   R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
 
   if FieldValuesDiff(rscSiteName, aOld.Name, FName, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscType, aOld.Rank, FRank, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscParentSiteId, aOld.ParentSiteId, FParentSiteId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscEBirdName, aOld.EbirdName, FEbirdName, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscLanguage, aOld.Language, FLanguage, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
+    Changes.Add(R);
 
-  Result := aList.Count > 0;
+  Result := Changes.Count > 0;
 end;
 
-function TSite.Find(const FieldName: String; const Value: Variant): Boolean;
+function TSite.Equals(const Other: TSite): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TSite.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FName           := Obj.Get('Name', '');
+    FAbbreviation   := Obj.Get('Abbreviation', '');
+    case Obj.Get('Rank', '') of
+      'P': FRank := srCountry;
+      'E': FRank := srState;
+      'R': FRank := srRegion;
+      'M': FRank := srMunicipality;
+      'D': FRank := srDistrict;
+      'L': FRank := srLocality;
+    else
+      FRank := srNone;
+    end;
+    FParentSiteId   := Obj.Get('ParentSiteId', 0);
+    FMunicipalityId := Obj.Get('MunicipalityId', 0);
+    FStateId        := Obj.Get('StateId', 0);
+    FCountryId      := Obj.Get('CountryId', 0);
+    FFullName       := Obj.Get('FullName', '');
+    FEbirdName      := Obj.Get('EbirdName', '');
+    FLongitude      := Obj.Get('Longitude', 0);
+    FLatitude       := Obj.Get('Latitude', 0);
+    FAltitude       := Obj.Get('Altitude', 0);
+    FLanguage       := Obj.Get('Language', '');
+    FDescription    := Obj.Get('Description', '');
+    FNotes          := Obj.Get('Notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+{ TSiteRepository }
+
+constructor TSiteRepository.Create(AConn: TSQLConnection);
+begin
+  inherited Create;
+  if AConn = nil then
+    raise Exception.Create(rsRepositoryConnectionCannotBeNil);
+  FConn := AConn;
+  FTrans := AConn.Transaction;
+end;
+
+procedure TSiteRepository.Delete(E: TSite);
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  if E.Id = 0 then
+    raise Exception.CreateFmt('TSite.Delete: %s.', [rsErrorEmptyId]);
 
-  Qry := TSQLQuery.Create(nil);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_SITE_ID;
+      ParamByName('aid').AsInteger := E.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSiteRepository.Exists(const Id: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_SITE_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSiteRepository.FindBy(const FieldName: String; const Value: Variant): TSite;
+const
+  ALLOWED: array[0..4] of string = (COL_SITE_ID, COL_SITE_NAME, COL_SITE_ABBREVIATION, COL_FULL_NAME, COL_EBIRD_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  Result := nil;
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    //SQLConnection := DMM.sqlCon;
+    //SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -730,9 +567,8 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Result := TSite.Create;
+      Hydrate(Qry, Result);
     end;
 
     Close;
@@ -741,14 +577,355 @@ begin
   end;
 end;
 
+function TSiteRepository.GetById(const Id: Integer): TSite;
+var
+  Qry: TSQLQuery;
+begin
+  Result := nil;
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    //DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT ' +
+        'site_id, ' +
+        'site_name, ' +
+        'site_acronym, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'altitude, ' +
+        'site_rank, ' +
+        'parent_site_id, ' +
+        'country_id, ' +
+        'state_id, ' +
+        'municipality_id, ' +
+        'full_name, ' +
+        'ebird_name, ' +
+        'language, ' +
+        'description, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM gazetteer');
+    Add('WHERE site_id = :cod');
+    ParamByName('COD').AsInteger := Id;
+    Open;
+    if not EOF then
+    begin
+      Result := TSite.Create;
+      Hydrate(Qry, Result);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSiteRepository.Hydrate(aDataSet: TDataSet; E: TSite);
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+
+  with aDataSet do
+  begin
+    E.Id := FieldByName('site_id').AsInteger;
+    E.Name := FieldByName('site_name').AsString;
+    E.Abbreviation := FieldByName('site_acronym').AsString;
+    case FieldByName('site_rank').AsString of
+      'P': E.Rank := srCountry;
+      'E': E.Rank := srState;
+      'R': E.Rank := srRegion;
+      'M': E.Rank := srMunicipality;
+      'D': E.Rank := srDistrict;
+      'L': E.Rank := srLocality;
+    else
+      E.Rank := srNone;
+    end;
+    E.ParentSiteId := FieldByName('parent_site_id').AsInteger;
+    E.MunicipalityId := FieldByName('municipality_id').AsInteger;
+    E.StateId := FieldByName('state_id').AsInteger;
+    E.CountryId := FieldByName('country_id').AsInteger;
+    E.Language := FieldByName('language').AsString;
+    E.FullName := FieldByName('full_name').AsString;
+    E.EbirdName := FieldByName('ebird_name').AsString;
+    E.Latitude := FieldByName('latitude').AsFloat;
+    E.Longitude := FieldByName('longitude').AsFloat;
+    E.Altitude := FieldByName('altitude').AsFloat;
+    E.Description := FieldByName('description').AsString;
+    E.Notes := FieldByName('notes').AsString;
+    E.UserInserted := FieldByName('user_inserted').AsInteger;
+    E.UserUpdated := FieldByName('user_updated').AsInteger;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), E.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), E.UpdateDate);
+    E.Exported := FieldByName('exported_status').AsBoolean;
+    E.Marked := FieldByName('marked_status').AsBoolean;
+    E.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TSiteRepository.Insert(E: TSite);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
+
+    Clear;
+    Add('INSERT INTO gazetteer (' +
+      'site_name, ' +
+      'site_acronym, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'altitude, ' +
+      'site_rank, ' +
+      'parent_site_id, ' +
+      'country_id, ' +
+      'state_id, ' +
+      'municipality_id, ' +
+      'full_name, ' +
+      'ebird_name, ' +
+      'language, ' +
+      'description, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':site_name, ' +
+      ':site_acronym, ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':altitude, ' +
+      ':site_rank, ' +
+      ':parent_site_id, ' +
+      ':country_id, ' +
+      ':state_id, ' +
+      ':municipality_id, ' +
+      ':full_name, ' +
+      ':ebird_name, ' +
+      ':language, ' +
+      ':description, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
+
+    ParamByName('site_name').AsString := E.Name;
+    SetStrParam(ParamByName('site_acronym'), E.Abbreviation);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), E.Longitude, E.Latitude);
+    SetFloatParam(ParamByName('altitude'), E.Altitude);
+    ParamByName('site_rank').AsString := SITE_RANKS[E.Rank];
+    SetForeignParam(ParamByName('parent_site_id'), E.ParentSiteId);
+    ParamByName('country_id').AsInteger := E.CountryId;
+    SetForeignParam(ParamByName('state_id'), E.StateId);
+    SetForeignParam(ParamByName('municipality_id'), E.MunicipalityId);
+    SetStrParam(ParamByName('ebird_name'), E.EbirdName);
+    SetStrParam(ParamByName('full_name'), E.FullName);
+    SetStrParam(ParamByName('language'), E.Language);
+    SetStrParam(ParamByName('description'), E.Description);
+    SetStrParam(ParamByName('notes'), E.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    E.Id := Fields[0].AsInteger;
+    Close;
+
+    // Get the site hierarchy
+    if (E.ParentSiteId > 0) then
+    begin
+      Clear;
+      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      Add('WHERE site_id = :asite');
+      ParamByName('ASITE').AsInteger := E.ParentSiteId;
+      Open;
+      E.CountryId := FieldByName('country_id').AsInteger;
+      E.StateId := FieldByName('state_id').AsInteger;
+      E.MunicipalityId := FieldByName('municipality_id').AsInteger;
+      Close;
+    end;
+    case E.Rank of
+      srCountry:      E.CountryId := E.Id;
+      srState:        E.StateId := E.Id;
+      srMunicipality: E.MunicipalityId := E.Id;
+    end;
+    // Save the site hierarchy
+    Clear;
+    Add('UPDATE gazetteer SET');
+    Add('  country_id = :country_id,');
+    Add('  state_id = :state_id,');
+    Add('  municipality_id = :municipality_id');
+    Add('WHERE site_id = :aid');
+    ParamByName('country_id').AsInteger := E.CountryId;
+    SetForeignParam(ParamByName('state_id'), E.StateId);
+    SetForeignParam(ParamByName('municipality_id'), E.MunicipalityId);
+    ParamByName('aid').AsInteger := E.Id;
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSiteRepository.NewQuery: TSQLQuery;
+begin
+  Result := TSQLQuery.Create(nil);
+  Result.DataBase := FConn;
+  Result.Transaction := FTrans;
+end;
+
+procedure TSiteRepository.Save(E: TSite);
+begin
+  if E = nil then
+    Exit;
+
+  if E.IsNew then
+    Insert(E)
+  else
+  begin
+    if Exists(E.Id) then
+      Update(E)
+    else
+      Insert(E);
+  end;
+end;
+
+function TSiteRepository.TableName: string;
+begin
+  Result := TBL_GAZETTEER;
+end;
+
+procedure TSiteRepository.Update(E: TSite);
+var
+  Qry: TSQLQuery;
+begin
+  if E.Id = 0 then
+    raise Exception.CreateFmt('TBotanicTaxon.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  //Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
+
+    Clear;
+    Add('UPDATE gazetteer SET ' +
+      'site_name = :site_name, ' +
+      'site_acronym = :site_acronym, ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'altitude = :altitude, ' +
+      'site_rank = :site_rank, ' +
+      'parent_site_id = :parent_site_id, ' +
+      'country_id = :country_id, ' +
+      'state_id = :state_id, ' +
+      'municipality_id = :municipality_id, ' +
+      'full_name = :full_name, ' +
+      'ebird_name = :ebird_name, ' +
+      'language = :language, ' +
+      'description = :description, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (site_id = :site_id)');
+
+    ParamByName('site_name').AsString := E.Name;
+    SetStrParam(ParamByName('site_acronym'), E.Abbreviation);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), E.Longitude, E.Latitude);
+    SetFloatParam(ParamByName('altitude'), E.Altitude);
+    ParamByName('site_rank').AsString := SITE_RANKS[E.Rank];
+    SetForeignParam(ParamByName('parent_site_id'), E.ParentSiteId);
+    ParamByName('country_id').AsInteger := E.CountryId;
+    SetForeignParam(ParamByName('state_id'), E.StateId);
+    SetForeignParam(ParamByName('municipality_id'), E.MunicipalityId);
+    SetStrParam(ParamByName('ebird_name'), E.EbirdName);
+    SetStrParam(ParamByName('full_name'), E.FullName);
+    SetStrParam(ParamByName('language'), E.Language);
+    SetStrParam(ParamByName('description'), E.Description);
+    SetStrParam(ParamByName('notes'), E.Notes);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('marked_status').AsBoolean := E.Marked;
+    ParamByName('active_status').AsBoolean := E.Active;
+    ParamByName('site_id').AsInteger := E.Id;
+
+    ExecSQL;
+
+    // Get the site hierarchy
+    if (E.ParentSiteId > 0) then
+    begin
+      Clear;
+      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
+      Add('WHERE site_id = :asite');
+      ParamByName('ASITE').AsInteger := E.ParentSiteId;
+      Open;
+      E.CountryId := FieldByName('country_id').AsInteger;
+      E.StateId := FieldByName('state_id').AsInteger;
+      E.MunicipalityId := FieldByName('municipality_id').AsInteger;
+      Close;
+    end;
+    case E.Rank of
+      srCountry:      E.CountryId :=      E.Id;
+      srState:        E.StateId :=        E.Id;
+      srMunicipality: E.MunicipalityId := E.Id;
+    end;
+    // Save the site hierarchy
+    Clear;
+    Add('UPDATE gazetteer SET');
+    Add('  country_id = :country_id,');
+    Add('  state_id = :state_id,');
+    Add('  municipality_id = :municipality_id');
+    Add('WHERE site_id = :aid');
+    ParamByName('country_id').AsInteger := E.CountryId;
+    SetForeignParam(ParamByName('state_id'), E.StateId);
+    SetForeignParam(ParamByName('municipality_id'), E.MunicipalityId);
+    ParamByName('aid').AsInteger := E.Id;
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 { TPoi }
 
 constructor TPoi.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TPoi.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TPoi then
+  begin
+    FSampleDate := TPoi(Source).SampleDate;
+    FSampleTime := TPoi(Source).SampleTime;
+    FPoiName := TPoi(Source).PoiName;
+    FLongitude := TPoi(Source).Longitude;
+    FLatitude := TPoi(Source).Latitude;
+    FAltitude := TPoi(Source).Altitude;
+    FObserverId := TPoi(Source).ObserverId;
+    FTaxonId := TPoi(Source).TaxonId;
+    FIndividualId := TPoi(Source).IndividualId;
+    FSightingId := TPoi(Source).SightingId;
+    FSurveyId := TPoi(Source).SurveyId;
+  end;
 end;
 
 procedure TPoi.Clear;
@@ -767,48 +944,163 @@ begin
   FSurveyId := 0;
 end;
 
-procedure TPoi.Copy(aFrom: TPoi);
+function TPoi.Clone: TXolmisRecord;
 begin
-  FSampleDate := aFrom.SampleDate;
-  FSampleTime := aFrom.SampleTime;
-  FPoiName := aFrom.PoiName;
-  FLongitude := aFrom.Longitude;
-  FLatitude := aFrom.Latitude;
-  FAltitude := aFrom.Altitude;
-  FObserverId := aFrom.ObserverId;
-  FTaxonId := aFrom.TaxonId;
-  FIndividualId := aFrom.IndividualId;
-  FSightingId := aFrom.SightingId;
-  FSurveyId := aFrom.SurveyId;
+  Result := TPoi(inherited Clone);
 end;
 
-procedure TPoi.Delete;
+function TPoi.Diff(const aOld: TPoi; out Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscName, aOld.PoiName, FPoiName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TPoi.Equals(const Other: TPoi): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TPoi.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FSampleDate   := StrToDate(Obj.Get('sample_date', NULL_DATE_STR));
+    FSampleTime   := StrToTime(Obj.Get('sample_time', NULL_TIME_STR));
+    FPoiName      := Obj.Get('poi_name', '');
+    FLongitude    := Obj.Get('longitude', 0.0);
+    FLatitude     := Obj.Get('latitude', 0.0);
+    FAltitude     := Obj.Get('altitude', 0.0);
+    FObserverId   := Obj.Get('observer_id', 0);
+    FTaxonId      := Obj.Get('taxon_id', 0);
+    FIndividualId := Obj.Get('individual_id', 0);
+    FSightingId   := Obj.Get('sighting_id', 0);
+    FSurveyId     := Obj.Get('survey_id', 0);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TPoi.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('sample_date', DateToStr(FSampleDate));
+    JSONObject.Add('sample_time', TimeToStr(FSampleTime));
+    JSONObject.Add('poi_name', FPoiName);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('altitude', FAltitude);
+    JSONObject.Add('observer_id', FObserverId);
+    JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('sighting_id', FSightingId);
+    JSONObject.Add('survey_id', FSurveyId);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TPoi.ToString: String;
+begin
+  Result := Format('Poi(Id=%d, SampleDate=%s, SampleTime=%s, PoiName=%s, Longitude=%f, ' +
+    'Latitude=%f, Altitude=%f, ObserverId=%d, TaxonId=%d, IndividualId=%d, SightingId=%d, SurveyId=%d, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Acitve=%s)',
+    [FId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FPoiName, FLongitude, FLatitude, FAltitude, FObserverId,
+    FTaxonId, FIndividualId, FSightingId, FSurveyId,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TPoi.Validate(out Msg: string): Boolean;
+begin
+  if (FLongitude = 0.0) and (FLatitude = 0.0) then
+  begin
+    Msg := 'Longitude and Latitude required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TPoiRepository }
+
+constructor TPoiRepository.Create(AConn: TSQLConnection);
+begin
+  inherited Create;
+  if AConn = nil then
+    raise Exception.Create(rsRepositoryConnectionCannotBeNil);
+  FConn := AConn;
+  FTrans := AConn.Transaction;
+end;
+
+procedure TPoiRepository.Delete(E: TPoi);
 var
   Qry: TSQLQuery;
 begin
-  if FId = 0 then
+  if E.Id = 0 then
     raise Exception.CreateFmt('TPoi.Delete: %s.', [rsErrorEmptyId]);
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM poi_library');
-      Add('WHERE (poi_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_POI_ID;
+      ParamByName('aid').AsInteger := E.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -816,50 +1108,50 @@ begin
   end;
 end;
 
-function TPoi.Diff(aOld: TPoi; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscName, aOld.PoiName, FPoiName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TPoi.Find(const FieldName: String; const Value: Variant): Boolean;
+function TPoiRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_POI_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+function TPoiRepository.FindBy(const FieldName: String; const Value: Variant): TPoi;
+const
+  ALLOWED: array[0..1] of string = (COL_POI_ID, COL_POI_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  Result := nil;
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
+    //SQLConnection := DMM.sqlCon;
+    //SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -890,9 +1182,8 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Result := TPoi.Create;
+      Hydrate(Qry, Result);
     end;
 
     Close;
@@ -901,14 +1192,16 @@ begin
   end;
 end;
 
-procedure TPoi.GetData(aKey: Integer);
+function TPoiRepository.GetById(const Id: Integer): TPoi;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Result := nil;
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    //DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
         'poi_id, ' +
@@ -932,220 +1225,192 @@ begin
         'active_status ' +
       'FROM poi_library');
     Add('WHERE poi_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Result := TPoi.Create;
+      Hydrate(Qry, Result);
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TPoi.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+procedure TPoiRepository.Hydrate(aDataSet: TDataSet; E: TPoi);
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
 
   with aDataSet do
   begin
-    FId := FieldByName('poi_id').AsInteger;
-    FSampleDate := FieldByName('sample_date').AsDateTime;
-    FSampleTime := FieldByName('sample_time').AsDateTime;
-    FPoiName := FieldByName('poi_name').AsString;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FAltitude := FieldByName('altitude').AsFloat;
-    FObserverId := FieldByName('observer_id').AsInteger;
-    FTaxonId := FieldByName('taxon_id').AsInteger;
-    FIndividualId := FieldByName('individual_id').AsInteger;
-    FSightingId := FieldByName('sighting_id').AsInteger;
-    FSurveyId := FieldByName('survey_id').AsInteger;
+    E.Id := FieldByName('poi_id').AsInteger;
+    E.SampleDate := FieldByName('sample_date').AsDateTime;
+    E.SampleTime := FieldByName('sample_time').AsDateTime;
+    E.PoiName := FieldByName('poi_name').AsString;
+    E.Latitude := FieldByName('latitude').AsFloat;
+    E.Longitude := FieldByName('longitude').AsFloat;
+    E.Altitude := FieldByName('altitude').AsFloat;
+    E.ObserverId := FieldByName('observer_id').AsInteger;
+    E.TaxonId := FieldByName('taxon_id').AsInteger;
+    E.IndividualId := FieldByName('individual_id').AsInteger;
+    E.SightingId := FieldByName('sighting_id').AsInteger;
+    E.SurveyId := FieldByName('survey_id').AsInteger;
+    E.UserInserted := FieldByName('user_inserted').AsInteger;
+    E.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), E.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), E.UpdateDate);
+    E.Exported := FieldByName('exported_status').AsBoolean;
+    E.Marked := FieldByName('marked_status').AsBoolean;
+    E.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TPoi.Insert;
+procedure TPoiRepository.Insert(E: TPoi);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO poi_library (' +
-        'sample_date, ' +
-        'sample_time, ' +
-        'poi_name, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'altitude, ' +
-        'observer_id, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'sighting_id, ' +
-        'survey_id, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        'date(:sample_date), ' +
-        'time(:sample_time), ' +
-        ':poi_name, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':altitude, ' +
-        ':observer_id, ' +
-        ':taxon_id, ' +
-        ':individual_id, ' +
-        ':sighting_id, ' +
-        ':survey_id, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    Clear;
+    Add('INSERT INTO poi_library (' +
+      'sample_date, ' +
+      'sample_time, ' +
+      'poi_name, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'altitude, ' +
+      'observer_id, ' +
+      'taxon_id, ' +
+      'individual_id, ' +
+      'sighting_id, ' +
+      'survey_id, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      'date(:sample_date), ' +
+      'time(:sample_time), ' +
+      ':poi_name, ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':altitude, ' +
+      ':observer_id, ' +
+      ':taxon_id, ' +
+      ':individual_id, ' +
+      ':sighting_id, ' +
+      ':survey_id, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      SetTimeParam(ParamByName('sample_time'), FSampleTime);
-      ParamByName('poi_name').AsString := FPoiName;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetFloatParam(ParamByName('altitude'), FAltitude);
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    SetDateParam(ParamByName('sample_date'), E.SampleDate);
+    SetTimeParam(ParamByName('sample_time'), E.SampleTime);
+    ParamByName('poi_name').AsString := E.PoiName;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), E.Longitude, E.Latitude);
+    SetFloatParam(ParamByName('altitude'), E.Altitude);
+    SetForeignParam(ParamByName('observer_id'), E.ObserverId);
+    SetForeignParam(ParamByName('taxon_id'), E.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), E.IndividualId);
+    SetForeignParam(ParamByName('sighting_id'), E.SightingId);
+    SetForeignParam(ParamByName('survey_id'), E.SurveyId);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ExecSQL;
+    ExecSQL;
 
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    E.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TPoi.Save;
+function TPoiRepository.NewQuery: TSQLQuery;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TSQLQuery.Create(nil);
+  Result.DataBase := FConn;
+  Result.Transaction := FTrans;
 end;
 
-function TPoi.ToJSON: String;
-var
-  JSONObject: TJSONObject;
+procedure TPoiRepository.Save(E: TPoi);
 begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Date', FSampleDate);
-    JSONObject.Add('Time', FSampleTime);
-    JSONObject.Add('Name', FPoiName);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Altitude', FAltitude);
-    JSONObject.Add('Observer', FObserverId);
-    JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Individual', FIndividualId);
-    JSONObject.Add('Sighting', FSightingId);
-    JSONObject.Add('Survey', FSurveyId);
+  if E = nil then
+    Exit;
 
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
+  if E.IsNew then
+    Insert(E)
+  else
+  begin
+    if Exists(E.Id) then
+      Update(E)
+    else
+      Insert(E);
   end;
 end;
 
-procedure TPoi.Update;
+function TPoiRepository.TableName: string;
+begin
+  Result := TBL_POI_LIBRARY;
+end;
+
+procedure TPoiRepository.Update(E: TPoi);
 var
   Qry: TSQLQuery;
 begin
-  if FId = 0 then
+  if E.Id = 0 then
     raise Exception.CreateFmt('TPoi.Update: %s.', [rsErrorEmptyId]);
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  //Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    //DataBase := DMM.sqlCon;
+    //Transaction := DMM.sqlTrans;
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE poi_library SET ' +
-        'sample_date = date(:sample_date), ' +
-        'sample_time = time(:sample_time), ' +
-        'poi_name = :poi_name, ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'altitude = :altitude, ' +
-        'observer_id = :observer_id, ' +
-        'taxon_id = :taxon_id, ' +
-        'individual_id = :individual_id, ' +
-        'sighting_id = :sighting_id, ' +
-        'survey_id = :survey_id, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (poi_id = :poi_id)');
+    Clear;
+    Add('UPDATE poi_library SET ' +
+      'sample_date = date(:sample_date), ' +
+      'sample_time = time(:sample_time), ' +
+      'poi_name = :poi_name, ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'altitude = :altitude, ' +
+      'observer_id = :observer_id, ' +
+      'taxon_id = :taxon_id, ' +
+      'individual_id = :individual_id, ' +
+      'sighting_id = :sighting_id, ' +
+      'survey_id = :survey_id, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (poi_id = :poi_id)');
 
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      SetTimeParam(ParamByName('sample_time'), FSampleTime);
-      ParamByName('poi_name').AsString := FPoiName;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetFloatParam(ParamByName('altitude'), FAltitude);
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('site_id').AsInteger := FId;
+    SetDateParam(ParamByName('sample_date'), E.SampleDate);
+    SetTimeParam(ParamByName('sample_time'), E.SampleTime);
+    ParamByName('poi_name').AsString := E.PoiName;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), E.Longitude, E.Latitude);
+    SetFloatParam(ParamByName('altitude'), E.Altitude);
+    SetForeignParam(ParamByName('observer_id'), E.ObserverId);
+    SetForeignParam(ParamByName('taxon_id'), E.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), E.IndividualId);
+    SetForeignParam(ParamByName('sighting_id'), E.SightingId);
+    SetForeignParam(ParamByName('survey_id'), E.SurveyId);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('marked_status').AsBoolean := E.Marked;
+    ParamByName('active_status').AsBoolean := E.Active;
+    ParamByName('site_id').AsInteger := E.Id;
 
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

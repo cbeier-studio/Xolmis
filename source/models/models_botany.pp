@@ -509,14 +509,17 @@ begin
   try
     //DataBase := DMM.sqlCon;
     //Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
     if not FTrans.Active then
       FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM botanic_taxa');
-      Add('WHERE (taxon_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_TAXON_ID;
       ParamByName('aid').AsInteger := E.Id;
 
       ExecSQL;
@@ -539,8 +542,9 @@ begin
   with Qry do
   try
     MacroCheck := True;
-    SQL.Text := 'select 1 as x from %tablename where id=:id limit 1';
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
     MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_TAXON_ID;
     ParamByName('id').AsInteger := Id;
     Open;
     Result := not EOF;
@@ -570,11 +574,11 @@ begin
   if not Ok then
     raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
 
-  Qry := TSQLQuery.Create(nil);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
+    //SQLConnection := DMM.sqlCon;
+    //SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -664,7 +668,6 @@ end;
 procedure TBotanicalTaxonRepository.Hydrate(aDataSet: TDataSet; E: TBotanicalTaxon);
 var
   FRankAbbrev: String;
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
 begin
   if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;

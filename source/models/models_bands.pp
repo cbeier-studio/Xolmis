@@ -415,14 +415,17 @@ begin
   try
     //DataBase := DMM.sqlCon;
     //Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
     if not FTrans.Active then
       FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM bands');
-      Add('WHERE (band_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_BAND_ID;
       ParamByName('aid').AsInteger := E.Id;
 
       ExecSQL;
@@ -445,8 +448,9 @@ begin
   with Qry do
   try
     MacroCheck := True;
-    SQL.Text := 'select 1 as x from %tablename where id=:id limit 1';
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
     MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_BAND_ID;
     ParamByName('id').AsInteger := Id;
     Open;
     Result := not EOF;
@@ -1000,14 +1004,17 @@ begin
   try
     //DataBase := DMM.sqlCon;
     //Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
     if not FTrans.Active then
       FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM band_history');
-      Add('WHERE (event_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_EVENT_ID;
       ParamByName('aid').AsInteger := E.Id;
 
       ExecSQL;
@@ -1030,8 +1037,9 @@ begin
   with Qry do
   try
     MacroCheck := True;
-    SQL.Text := 'select 1 as x from %tablename where id=:id limit 1';
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
     MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_EVENT_ID;
     ParamByName('id').AsInteger := Id;
     Open;
     Result := not EOF;

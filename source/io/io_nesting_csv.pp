@@ -120,6 +120,7 @@ procedure ImportNestDataV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   //Reg: TNestRecord;
+  SiteRepo: TSiteRepository;
   Toponimo: TSite;
   Taxon: TTaxon;
   Nest: TNest;
@@ -139,6 +140,7 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -175,7 +177,7 @@ begin
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
-            Toponimo.GetData(GetKey('gazetteer', COL_SITE_ID, COL_SITE_NAME, CSV.FieldByName('locality').AsString));
+            Toponimo := SiteRepo.GetById(GetSiteKey(CSV.FieldByName('locality').AsString));
 
 
           // Check if the nest exists
@@ -269,6 +271,7 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
+    SiteRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
