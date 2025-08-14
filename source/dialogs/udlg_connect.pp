@@ -223,6 +223,8 @@ begin
 end;
 
 procedure TdlgConnect.sbOKClick(Sender: TObject);
+var
+  Repo: TUserRepository;
 begin
   //GravaStat(Name, 'sbOK', 'click');
 
@@ -234,7 +236,12 @@ begin
   sbOK.Enabled := False;
 
   SelectedConnection := cbConnection.Text;
-  ActiveUser.GetData(sUser);
+  Repo := TUserRepository.Create(DMM.sqlCon);
+  try
+    Repo.GetById(sUser, ActiveUser);
+  finally
+    Repo.Free;
+  end;
 
   if xSettings.RememberConnection then
     xSettings.LastConnection := SelectedConnection;

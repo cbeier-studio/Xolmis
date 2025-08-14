@@ -1137,7 +1137,7 @@ begin
     begin
       FOldRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
       FRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
-      FOldRecord := FRepo.GetById(FOldRecord.Id);
+      FRepo.GetById(FOldRecord.Id, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;

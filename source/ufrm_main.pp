@@ -919,8 +919,8 @@ begin
   if Assigned(DMR) then
     FreeAndNil(DMR);
 
-  if Assigned(ActiveUser) then
-    FreeAndNil(ActiveUser);
+  //if Assigned(ActiveUser) then
+  //  FreeAndNil(ActiveUser);
 
   if Assigned(TablesDict) then
     TablesDict.Free;

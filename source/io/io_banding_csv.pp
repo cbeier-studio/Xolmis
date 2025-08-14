@@ -295,7 +295,7 @@ begin
             // Get net station and locality
             if NetStation.Find(Reg.NetStation) then
             begin
-              Toponimo := SiteRepo.GetById(NetStation.LocalityId);
+              SiteRepo.GetById(NetStation.LocalityId, Toponimo);
             end;
 
             // Get survey
@@ -314,7 +314,7 @@ begin
             // Get band
             if (Reg.BandNumber > 0) then
             begin
-              Band := BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber);
+              BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber, Band);
               if (Band = nil) then
               begin
                 // If does not exist, insert the new band
@@ -334,8 +334,8 @@ begin
             begin
               if WordCount(Reg.RemovedBand, [' ']) = 2 then
               begin
-                RemovedBand := BandRepo.FindByNumber(ExtractWord(1, Reg.RemovedBand, [' ']),
-                  StrToInt(ExtractWord(2, Reg.RemovedBand, [' '])));
+                BandRepo.FindByNumber(ExtractWord(1, Reg.RemovedBand, [' ']),
+                  StrToInt(ExtractWord(2, Reg.RemovedBand, [' '])), RemovedBand);
                 if (RemovedBand = nil) then
                 begin
                   // If does not exist, insert the removed band
@@ -518,7 +518,7 @@ begin
             // Get band
             if (Reg.BandNumber > 0) then
             begin
-              Band := BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber);
+              BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber, Band);
               if (Band = nil) then
               begin
                 // If does not exist, insert the new band
@@ -685,7 +685,7 @@ begin
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
           begin
-            Toponimo := SiteRepo.GetById(NetStation.LocalityId);
+            SiteRepo.GetById(NetStation.LocalityId, Toponimo);
           end;
 
           // Check if the survey exists
@@ -929,7 +929,7 @@ begin
           // Get net station and locality
           if NetStation.Find(Reg.NetStation) then
           begin
-            Toponimo := SiteRepo.GetById(NetStation.LocalityId);
+            SiteRepo.GetById(NetStation.LocalityId, Toponimo);
           end;
 
           // Check if the survey exists

@@ -62,7 +62,6 @@ uses
   data_search,
   data_columns,
   data_blobs,
-  io_core,
   data_filters,
   data_getvalue,
   data_setparam,
@@ -84,6 +83,17 @@ uses
   models_people,
   models_permits,
   models_specimens,
+  { IO }
+  io_core,
+  io_csv,
+  io_json,
+  io_xml,
+  io_dbf,
+  io_xlsx,
+  io_ods,
+  io_ebird_csv,
+  io_banding_csv,
+  io_nesting_csv,
   { Main form and Data modules }
   udm_main,
   udm_lookup,
@@ -183,8 +193,7 @@ uses
   ufrm_imageviewer,
   ufrm_printpreview,
   ufrm_taxa,
-  ufrm_quickentry, io_ebird_csv, io_banding_csv, io_nesting_csv, io_csv, io_json, io_xml, io_dbf, 
-io_xlsx, io_ods;
+  ufrm_quickentry;
 
 {$R *.res}
 

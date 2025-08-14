@@ -174,7 +174,7 @@ begin
   sqlCon.DatabaseName := EmptyStr;
 
   { >> Create active user and settings objects }
-  ActiveUser := TUser.Create;
+  ActiveUser := TUser.Create();
   //xSettings := TXolmisSettings.Create;
   //xSettings.LoadFromFile;
 
@@ -225,6 +225,9 @@ begin
 
   LogEvent(leaEnd, '-----------------------------------------');
   evLog.Active := False;
+
+  //if Assigned(ActiveUser) then
+    FreeAndNil(ActiveUser);
 end;
 
 procedure TDMM.iCheckboxGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
@@ -309,14 +312,16 @@ end;
 procedure TDMM.qUsersAfterPost(DataSet: TDataSet);
 var
   lstDiff: TStrings;
+  Repo: TUserRepository;
   NewUser: TUser;
   i: Integer;
 begin
   { Save changes to the record history }
   if Assigned(OldUser) then
   begin
+    Repo := TUserRepository.Create(DMM.sqlCon);
     NewUser := TUser.Create;
-    NewUser.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewUser);
     lstDiff := TStringList.Create;
     try
       if NewUser.Diff(OldUser, lstDiff) then
@@ -333,6 +338,7 @@ begin
       FreeAndNil(NewUser);
       FreeAndNil(OldUser);
       FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else

@@ -21,7 +21,7 @@ unit models_record_types;
 interface
 
 uses
-  Classes, SysUtils, fgl;
+  Classes, SysUtils, fgl, DB, SQLDB;
 
 type
   TTaxonHierarchy = record
@@ -104,6 +104,30 @@ type
     property FamilyId: Integer read FFamilyId write FFamilyId;
     property GenusId: Integer read FGenusId write FGenusId;
     property SpeciesId: Integer read FSpeciesId write FSpeciesId;
+  end;
+
+type
+
+  { TXolmisRepository }
+
+  TXolmisRepository = class
+  protected
+    FConn: TSQLConnection;
+    FTrans: TSQLTransaction;
+
+    function TableName: string; virtual; abstract;
+    function NewQuery: TSQLQuery;
+  public
+    constructor Create(AConn: TSQLConnection);
+
+    function Exists(const Id: Integer): Boolean; virtual; abstract;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); virtual; abstract;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); virtual; abstract;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); virtual; abstract;
+    procedure Insert(E: TXolmisRecord); virtual; abstract;
+    procedure Update(E: TXolmisRecord); virtual; abstract;
+    procedure Save(E: TXolmisRecord);
+    procedure Delete(E: TXolmisRecord); virtual; abstract;
   end;
 
 { Enumerations and types used in records }
@@ -460,7 +484,7 @@ const
 implementation
 
 uses
-  utils_global;
+  utils_locale, utils_global;
 
 { TCustomTaxon }
 
@@ -500,6 +524,39 @@ function TCustomTaxon.Clone: TXolmisRecord;
 begin
   Result := TCustomTaxon.Create;
   Result.Assign(Self);
+end;
+
+{ TXolmisRepository }
+
+constructor TXolmisRepository.Create(AConn: TSQLConnection);
+begin
+  if AConn = nil then
+    raise Exception.Create(rsRepositoryConnectionCannotBeNil);
+  FConn := AConn;
+  FTrans := AConn.Transaction;
+end;
+
+function TXolmisRepository.NewQuery: TSQLQuery;
+begin
+  Result := TSQLQuery.Create(nil);
+  Result.DataBase := FConn;
+  Result.Transaction := FTrans;
+end;
+
+procedure TXolmisRepository.Save(E: TXolmisRecord);
+begin
+  if E = nil then
+    Exit;
+
+  if E.IsNew then
+    Insert(E)
+  else
+  begin
+    if Exists(E.Id) then
+      Update(E)
+    else
+      Insert(E);
+  end;
 end;
 
 { TXolmisRecord }

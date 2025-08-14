@@ -177,7 +177,7 @@ begin
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
-            Toponimo := SiteRepo.GetById(GetSiteKey(CSV.FieldByName('locality').AsString));
+            SiteRepo.GetById(GetSiteKey(CSV.FieldByName('locality').AsString), Toponimo);
 
 
           // Check if the nest exists

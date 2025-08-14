@@ -239,7 +239,7 @@ begin
         FRecord.Clear;
         FHistory.Clear;
 
-        FRecord := BandRepo.FindByNumber(cbBandSize.Text, i);
+        BandRepo.FindByNumber(cbBandSize.Text, i, FRecord);
         if not (FRecord= nil) then
         begin
           // if the band exists

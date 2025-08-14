@@ -38,15 +38,18 @@ uses utils_global, udm_main, udlg_login;
 { ---------------------------------------------------------------------------------- }
 
 function UserLogin(const aCodLogin: Integer): Boolean;
+var
+  Repo: TUserRepository;
 begin
   Application.CreateForm(TdlgLogin, dlgLogin);
+  Repo := TUserRepository.Create(DMM.sqlCon);
   try
     dlgLogin.ForceUser := aCodLogin;
     dlgLogin.NeedAdmin := False;
     //GravaStat('dlgLogin', '', 'open');
     if dlgLogin.ShowModal = mrOk then
     begin
-      ActiveUser.GetData(dlgLogin.UserCodigo);
+      Repo.GetById(dlgLogin.UserCodigo, ActiveUser);
       LogInfo('Login Ok');
       Result := True;
     end
@@ -56,6 +59,7 @@ begin
       Result := False;
     end;
   finally
+    Repo.Free;
     FreeAndNil(dlgLogin);
   end;
 end;

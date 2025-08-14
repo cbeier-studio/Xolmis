@@ -58,12 +58,12 @@ type
     FReported: Boolean;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TBand; out Changes: TStrings): Boolean;
-    function Equals(const Other: TBand): Boolean;
+    function Diff(const aOld: TBand; out Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TBand): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
     function ToString: String; override;
@@ -89,24 +89,18 @@ type
 
   { TBandRepository }
 
-  TBandRepository = class
+  TBandRepository = class(TXolmisRepository)
   private
-    FConn: TSQLConnection;
-    FTrans: TSQLTransaction;
-    function NewQuery: TSQLQuery;
-    function TableName: string; inline;
-    procedure Hydrate(aDataSet: TDataSet; E: TBand);
+    function TableName: string; override;
   public
-    constructor Create(AConn: TSQLConnection);
-
-    function GetById(const Id: Integer): TBand;
-    function Exists(const Id: Integer): Boolean;
-    function FindBy(const FieldName: String; const Value: Variant): TBand;
-    function FindByNumber(const aSize: String; const aNumber: Integer): TBand;
-    procedure Insert(E: TBand);
-    procedure Update(E: TBand);
-    procedure Save(E: TBand);
-    procedure Delete(E: TBand);
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByNumber(const aSize: String; const aNumber: Integer; E: TBand);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -124,12 +118,12 @@ type
     FRequesterId: Integer;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TBandHistory; out Changes: TStrings): Boolean;
-    function Equals(const Other: TBandHistory): Boolean;
+    function Diff(const aOld: TBandHistory; out Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TBandHistory): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
     function ToString: String; override;
@@ -147,23 +141,17 @@ type
 
   { TBandHistoryRepository }
 
-  TBandHistoryRepository = class
+  TBandHistoryRepository = class(TXolmisRepository)
   private
-    FConn: TSQLConnection;
-    FTrans: TSQLTransaction;
-    function NewQuery: TSQLQuery;
-    function TableName: string; inline;
-    procedure Hydrate(aDataSet: TDataSet; E: TBandHistory);
+    function TableName: string; override;
   public
-    constructor Create(AConn: TSQLConnection);
-
-    function GetById(const Id: Integer): TBandHistory;
-    function Exists(const Id: Integer): Boolean;
-    function FindBy(const FieldName: String; const Value: Variant): TBandHistory;
-    procedure Insert(E: TBandHistory);
-    procedure Update(E: TBandHistory);
-    procedure Save(E: TBandHistory);
-    procedure Delete(E: TBandHistory);
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 implementation
@@ -266,7 +254,7 @@ begin
   Result := Format('Band(Id=%d, FullName=%s, Size=%s, Number=%d, Status=%d, Source=%d, Prefix=%s, Suffix=%s, ' +
     'BandColor=%s, BandType=%d, SupplierId=%d, RequesterId=%d, CarrierId=%d, IndividualId=%d, ProjectId=%d, ' +
     'Reported=%s, Notes=%s, ' +
-    'InsertDate=%s, UpdateDate=%s, Marked=%s, Acitve=%s)',
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FSize, FNumber, FStatus, FSource, FPrefix, FSuffix, FBandColor, Ord(FBandType), FSupplierId,
     FRequesterId, FCarrierId, FIndividualId, FProjectId, BoolToStr(FReported, 'True', 'False'), FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -337,7 +325,7 @@ begin
   Result := Changes.Count > 0;
 end;
 
-function TBand.Equals(const Other: TBand): Boolean;
+function TBand.EqualsTo(const Other: TBand): Boolean;
 begin
   Result := Assigned(Other) and (FId = Other.Id);
 end;
@@ -394,27 +382,21 @@ end;
 
 { TBandRepository }
 
-constructor TBandRepository.Create(AConn: TSQLConnection);
-begin
-  inherited Create;
-  if AConn = nil then
-    raise Exception.Create(rsRepositoryConnectionCannotBeNil);
-  FConn := AConn;
-  FTrans := AConn.Transaction;
-end;
-
-procedure TBandRepository.Delete(E: TBand);
+procedure TBandRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TBand;
 begin
-  if E.Id = 0 then
+  if not (E is TBand) then
+    raise Exception.Create('Delete: Expected TBand');
+
+  R := TBand(E);
+  if R.Id = 0 then
     raise Exception.CreateFmt('TBand.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
     MacroCheck := True;
 
     if not FTrans.Active then
@@ -426,7 +408,7 @@ begin
 
       MacroByName('tablename').Value := TableName;
       MacroByName('idname').Value := COL_BAND_ID;
-      ParamByName('aid').AsInteger := E.Id;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
@@ -459,7 +441,7 @@ begin
   end;
 end;
 
-function TBandRepository.FindBy(const FieldName: String; const Value: Variant): TBand;
+procedure TBandRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
   ALLOWED: array[0..1] of string = (COL_BAND_ID, COL_FULL_NAME); // whitelist
 var
@@ -467,7 +449,9 @@ var
   I: Integer;
   Ok: Boolean;
 begin
-  Result := nil;
+  if not (E is TBand) then
+    raise Exception.Create('FindBy: Expected TBand');
+
   // Avoid FieldName injection: check in whitelist
   Ok := False;
   for I := Low(ALLOWED) to High(ALLOWED) do
@@ -482,8 +466,6 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //SQLConnection := DMM.sqlCon;
-    //SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -519,8 +501,7 @@ begin
 
     if not EOF then
     begin
-      Result := TBand.Create;
-      Hydrate(Qry, Result);
+      Hydrate(Qry, TBand(E));
     end;
 
     Close;
@@ -529,17 +510,13 @@ begin
   end;
 end;
 
-function TBandRepository.FindByNumber(const aSize: String; const aNumber: Integer): TBand;
+procedure TBandRepository.FindByNumber(const aSize: String; const aNumber: Integer; E: TBand);
 var
   Qry: TSQLQuery;
 begin
-  Result := nil;
-
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //Database := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
     Clear;
     Add('SELECT band_id FROM bands');
     Add('WHERE (band_size = :asize)');
@@ -549,8 +526,7 @@ begin
     Open;
     if not EOF then
     begin
-      Result := TBand.Create;
-      Hydrate(Qry, Result);
+      Hydrate(Qry, E);
     end;
     Close;
   finally
@@ -558,16 +534,16 @@ begin
   end;
 end;
 
-function TBandRepository.GetById(const Id: Integer): TBand;
+procedure TBandRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Result := nil;
+  if not (E is TBand) then
+    raise Exception.Create('GetById: Expected TBand');
 
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'band_id, ' +
@@ -600,8 +576,7 @@ begin
     Open;
     if not EOF then
     begin
-      Result := TBand.Create;
-      Hydrate(Qry, Result);
+      Hydrate(Qry, TBand(E));
     end;
     Close;
   finally
@@ -609,127 +584,134 @@ begin
   end;
 end;
 
-procedure TBandRepository.Hydrate(aDataSet: TDataSet; E: TBand);
+procedure TBandRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TBand;
 begin
   if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TBand) then
+    raise Exception.Create('Hydrate: Expected TBand');
 
+  R := TBand(E);
   with aDataSet do
   begin
-    E.Id := FieldByName('band_id').AsInteger;
-    E.FullName := FieldByName('full_name').AsString;
-    E.Size := FieldByName('band_size').AsString;
-    E.Number := FieldByName('band_number').AsInteger;
+    R.Id := FieldByName('band_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.Size := FieldByName('band_size').AsString;
+    R.Number := FieldByName('band_number').AsInteger;
     case FieldByName('band_status').AsString of
-      'D': E.Status := bstAvailable;
-      'U': E.Status := bstUsed;
-      'R': E.Status := bstRemoved;
-      'Q': E.Status := bstBroken;
-      'P': E.Status := bstLost;
-      'T': E.Status := bstTransferred;
+      'D': R.Status := bstAvailable;
+      'U': R.Status := bstUsed;
+      'R': R.Status := bstRemoved;
+      'Q': R.Status := bstBroken;
+      'P': R.Status := bstLost;
+      'T': R.Status := bstTransferred;
     end;
     case FieldByName('band_source').AsString of
-      'A': E.Source := bscAcquiredFromSupplier;
-      'T': E.Source := bscTransferBetweenBanders;
-      'L': E.Source := bscLivingBirdBandedByOthers;
-      'D': E.Source := bscDeadBirdBandedByOthers;
-      'F': E.Source := bscFoundLoose;
+      'A': R.Source := bscAcquiredFromSupplier;
+      'T': R.Source := bscTransferBetweenBanders;
+      'L': R.Source := bscLivingBirdBandedByOthers;
+      'D': R.Source := bscDeadBirdBandedByOthers;
+      'F': R.Source := bscFoundLoose;
     end;
-    E.Prefix := FieldByName('band_prefix').AsString;
-    E.Suffix := FieldByName('band_suffix').AsString;
-    E.SupplierId := FieldByName('supplier_id').AsInteger;
-    E.BandColor := FieldByName('band_color').AsString;
+    R.Prefix := FieldByName('band_prefix').AsString;
+    R.Suffix := FieldByName('band_suffix').AsString;
+    R.SupplierId := FieldByName('supplier_id').AsInteger;
+    R.BandColor := FieldByName('band_color').AsString;
     case FieldByName('band_type').AsString of
-      'A': E.BandType := mkButtEndBand;
-      'F': E.BandType := mkFlag;
-      'N': E.BandType := mkCollar;
-      'W': E.BandType := mkWingTag;
-      'T': E.BandType := mkTriangularBand;
-      'L': E.BandType := mkLockOnBand;
-      'R': E.BandType := mkRivetBand;
-      'C': E.BandType := mkClosedBand;
-      'O': E.BandType := mkOther;
+      'A': R.BandType := mkButtEndBand;
+      'F': R.BandType := mkFlag;
+      'N': R.BandType := mkCollar;
+      'W': R.BandType := mkWingTag;
+      'T': R.BandType := mkTriangularBand;
+      'L': R.BandType := mkLockOnBand;
+      'R': R.BandType := mkRivetBand;
+      'C': R.BandType := mkClosedBand;
+      'O': R.BandType := mkOther;
     end;
-    E.RequesterId := FieldByName('requester_id').AsInteger;
-    E.CarrierId := FieldByName('carrier_id').AsInteger;
-    E.IndividualId := FieldByName('individual_id').AsInteger;
-    E.ProjectId := FieldByName('project_id').AsInteger;
-    E.Reported := FieldByName('band_reported').AsBoolean;
-    E.Notes := FieldByName('notes').AsString;
-    E.UserInserted := FieldByName('user_inserted').AsInteger;
-    E.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.RequesterId := FieldByName('requester_id').AsInteger;
+    R.CarrierId := FieldByName('carrier_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.Reported := FieldByName('band_reported').AsBoolean;
+    R.Notes := FieldByName('notes').AsString;
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    GetTimeStamp(FieldByName('insert_date'), E.InsertDate);
-    GetTimeStamp(FieldByName('update_date'), E.UpdateDate);
-    E.Exported := FieldByName('exported_status').AsBoolean;
-    E.Marked := FieldByName('marked_status').AsBoolean;
-    E.Active := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TBandRepository.Insert(E: TBand);
+procedure TBandRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TBand;
 begin
+  if not (E is TBand) then
+    raise Exception.Create('Insert: Expected TBand');
+
+  R := TBand(E);
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
-
     Clear;
     Add('INSERT INTO bands (' +
-        'band_size, ' +
-        'band_number, ' +
-        'band_status, ' +
-        'band_type, ' +
-        'band_prefix, ' +
-        'band_suffix, ' +
-        'band_color, ' +
-        'band_source, ' +
-        'supplier_id, ' +
-        'requester_id, ' +
-        'carrier_id, ' +
-        'project_id, ' +
-        'notes, ' +
-        'full_name, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':band_size, ' +
-        ':band_number, ' +
-        ':band_status, ' +
-        ':band_type, ' +
-        ':band_prefix, ' +
-        ':band_suffix, ' +
-        ':band_color, ' +
-        ':band_source, ' +
-        ':supplier_id, ' +
-        ':requester_id, ' +
-        ':carrier_id, ' +
-        ':project_id, ' +
-        ':notes, ' +
-        ':full_name, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''));');
+      'band_size, ' +
+      'band_number, ' +
+      'band_status, ' +
+      'band_type, ' +
+      'band_prefix, ' +
+      'band_suffix, ' +
+      'band_color, ' +
+      'band_source, ' +
+      'supplier_id, ' +
+      'requester_id, ' +
+      'carrier_id, ' +
+      'project_id, ' +
+      'notes, ' +
+      'full_name, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':band_size, ' +
+      ':band_number, ' +
+      ':band_status, ' +
+      ':band_type, ' +
+      ':band_prefix, ' +
+      ':band_suffix, ' +
+      ':band_color, ' +
+      ':band_source, ' +
+      ':supplier_id, ' +
+      ':requester_id, ' +
+      ':carrier_id, ' +
+      ':project_id, ' +
+      ':notes, ' +
+      ':full_name, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''));');
 
-      SetStrParam(ParamByName('band_size'), E.Size);
-      SetIntParam(ParamByName('band_number'), E.Number);
-      SetStrParam(ParamByName('band_status'), BAND_STATUSES[E.Status]);
-      SetStrParam(ParamByName('band_type'), MARK_TYPES[E.BandType]);
-      SetStrParam(ParamByName('band_prefix'), E.Prefix);
-      SetStrParam(ParamByName('band_suffix'), E.Suffix);
-      SetStrParam(ParamByName('band_color'), E.BandColor);
-      SetStrParam(ParamByName('band_source'), BAND_SOURCES[E.Source]);
-      SetForeignParam(ParamByName('supplier_id'), E.SupplierId);
-      SetForeignParam(ParamByName('requester_id'), E.RequesterId);
-      SetForeignParam(ParamByName('carrier_id'), E.CarrierId);
-      SetForeignParam(ParamByName('project_id'), E.ProjectId);
-      E.FullName := GetBandFullname(E.Size, E.Number, E.SupplierId);
-      SetStrParam(ParamByName('full_name'), E.FullName);
-      SetStrParam(ParamByName('notes'), E.Notes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    SetStrParam(ParamByName('band_size'), R.Size);
+    SetIntParam(ParamByName('band_number'), R.Number);
+    SetStrParam(ParamByName('band_status'), BAND_STATUSES[R.Status]);
+    SetStrParam(ParamByName('band_type'), MARK_TYPES[R.BandType]);
+    SetStrParam(ParamByName('band_prefix'), R.Prefix);
+    SetStrParam(ParamByName('band_suffix'), R.Suffix);
+    SetStrParam(ParamByName('band_color'), R.BandColor);
+    SetStrParam(ParamByName('band_source'), BAND_SOURCES[R.Source]);
+    SetForeignParam(ParamByName('supplier_id'), R.SupplierId);
+    SetForeignParam(ParamByName('requester_id'), R.RequesterId);
+    SetForeignParam(ParamByName('carrier_id'), R.CarrierId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    R.FullName := GetBandFullname(R.Size, R.Number, R.SupplierId);
+    SetStrParam(ParamByName('full_name'), R.FullName);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
 
@@ -737,33 +719,10 @@ begin
     Clear;
     Add('SELECT last_insert_rowid()');
     Open;
-    E.Id := Fields[0].AsInteger;
+    R.Id := Fields[0].AsInteger;
     Close;
   finally
     FreeAndNil(Qry);
-  end;
-end;
-
-function TBandRepository.NewQuery: TSQLQuery;
-begin
-  Result := TSQLQuery.Create(nil);
-  Result.DataBase := FConn;
-  Result.Transaction := FTrans;
-end;
-
-procedure TBandRepository.Save(E: TBand);
-begin
-  if E = nil then
-    Exit;
-
-  if E.IsNew then
-    Insert(E)
-  else
-  begin
-    if Exists(E.Id) then
-      Update(E)
-    else
-      Insert(E);
   end;
 end;
 
@@ -772,20 +731,21 @@ begin
   Result := TBL_BANDS;
 end;
 
-procedure TBandRepository.Update(E: TBand);
+procedure TBandRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TBand;
 begin
-  if E.Id = 0 then
+  if not (E is TBand) then
+    raise Exception.Create('Update: Expected TBand');
+
+  R := TBand(E);
+  if R.Id = 0 then
     raise Exception.CreateFmt('TBand.Update: %s.', [rsErrorEmptyId]);
 
   Qry := NewQuery;
-  //Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
-
     Clear;
     Add('UPDATE bands SET ' +
       'band_size = :band_size, ' +
@@ -808,25 +768,25 @@ begin
       'update_date = datetime(''now'',''subsec'') ');
     Add('WHERE (band_id = :band_id)');
 
-    SetStrParam(ParamByName('band_size'), E.Size);
-    SetIntParam(ParamByName('band_number'), E.Number);
-    SetStrParam(ParamByName('band_status'), BAND_STATUSES[E.Status]);
-    SetStrParam(ParamByName('band_type'), MARK_TYPES[E.BandType]);
-    SetStrParam(ParamByName('band_prefix'), E.Prefix);
-    SetStrParam(ParamByName('band_suffix'), E.Suffix);
-    SetStrParam(ParamByName('band_color'), E.BandColor);
-    SetStrParam(ParamByName('band_source'), BAND_SOURCES[E.Source]);
-    SetForeignParam(ParamByName('supplier_id'), E.SupplierId);
-    SetForeignParam(ParamByName('requester_id'), E.RequesterId);
-    SetForeignParam(ParamByName('carrier_id'), E.CarrierId);
-    SetForeignParam(ParamByName('project_id'), E.ProjectId);
-    E.FullName := GetBandFullname(E.Size, E.Number, E.SupplierId);
-    SetStrParam(ParamByName('full_name'), E.FullName);
-    SetStrParam(ParamByName('notes'), E.Notes);
-    ParamByName('marked_status').AsBoolean := E.Marked;
-    ParamByName('active_status').AsBoolean := E.Active;
+    SetStrParam(ParamByName('band_size'), R.Size);
+    SetIntParam(ParamByName('band_number'), R.Number);
+    SetStrParam(ParamByName('band_status'), BAND_STATUSES[R.Status]);
+    SetStrParam(ParamByName('band_type'), MARK_TYPES[R.BandType]);
+    SetStrParam(ParamByName('band_prefix'), R.Prefix);
+    SetStrParam(ParamByName('band_suffix'), R.Suffix);
+    SetStrParam(ParamByName('band_color'), R.BandColor);
+    SetStrParam(ParamByName('band_source'), BAND_SOURCES[R.Source]);
+    SetForeignParam(ParamByName('supplier_id'), R.SupplierId);
+    SetForeignParam(ParamByName('requester_id'), R.RequesterId);
+    SetForeignParam(ParamByName('carrier_id'), R.CarrierId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    R.FullName := GetBandFullname(R.Size, R.Number, R.SupplierId);
+    SetStrParam(ParamByName('full_name'), R.FullName);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('band_id').AsInteger := E.Id;
+    ParamByName('band_id').AsInteger := R.Id;
 
     ExecSQL;
   finally
@@ -906,7 +866,7 @@ begin
   Result := Changes.Count > 0;
 end;
 
-function TBandHistory.Equals(const Other: TBandHistory): Boolean;
+function TBandHistory.EqualsTo(const Other: TBandHistory): Boolean;
 begin
   Result := Assigned(Other) and (FId = Other.Id);
 end;
@@ -963,7 +923,7 @@ function TBandHistory.ToString: String;
 begin
   Result := Format('BandHistory(Id=%d, EventDate=%s, EventType=%s, SupplierId=%d, OrderNumber=%d, ' +
     'RequesterId=%d, SenderId=%d, Notes=%s, ' +
-    'InsertDate=%s, UpdateDate=%s, Marked=%s, Acitve=%s)',
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, DateToStr(FEventDate), BAND_EVENTS[FEventType], FSupplierId, FOrderNumber, FRequesterId, FSenderId,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -983,27 +943,21 @@ end;
 
 { TBandHistoryRepository }
 
-constructor TBandHistoryRepository.Create(AConn: TSQLConnection);
-begin
-  inherited Create;
-  if AConn = nil then
-    raise Exception.Create(rsRepositoryConnectionCannotBeNil);
-  FConn := AConn;
-  FTrans := AConn.Transaction;
-end;
-
-procedure TBandHistoryRepository.Delete(E: TBandHistory);
+procedure TBandHistoryRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TBandHistory;
 begin
-  if E.Id = 0 then
+  if not (E is TBandHistory) then
+    raise Exception.Create('Delete: Expected TBandHistory');
+
+  R := TBandHistory(E);
+  if R.Id = 0 then
     raise Exception.CreateFmt('TBandHistory.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
     MacroCheck := True;
 
     if not FTrans.Active then
@@ -1015,7 +969,7 @@ begin
 
       MacroByName('tablename').Value := TableName;
       MacroByName('idname').Value := COL_EVENT_ID;
-      ParamByName('aid').AsInteger := E.Id;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
@@ -1048,7 +1002,7 @@ begin
   end;
 end;
 
-function TBandHistoryRepository.FindBy(const FieldName: String; const Value: Variant): TBandHistory;
+procedure TBandHistoryRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
   ALLOWED: array[0..2] of string = (COL_EVENT_ID, COL_EVENT_DATE, COL_ORDER_NUMBER); // whitelist
 var
@@ -1056,7 +1010,9 @@ var
   I: Integer;
   Ok: Boolean;
 begin
-  Result := nil;
+  if not (E is TBandHistory) then
+    raise Exception.Create('FindBy: Expected TBandHistory');
+
   // Avoid FieldName injection: check in whitelist
   Ok := False;
   for I := Low(ALLOWED) to High(ALLOWED) do
@@ -1071,8 +1027,6 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //SQLConnection := DMM.sqlCon;
-    //SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -1100,8 +1054,7 @@ begin
 
     if not EOF then
     begin
-      Result := TBandHistory.Create;
-      Hydrate(Qry, Result);
+      Hydrate(Qry, TBandHistory(E));
     end;
 
     Close;
@@ -1110,16 +1063,16 @@ begin
   end;
 end;
 
-function TBandHistoryRepository.GetById(const Id: Integer): TBandHistory;
+procedure TBandHistoryRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Result := nil;
+  if not (E is TBandHistory) then
+    raise Exception.Create('GetById: Expected TBandHistory');
 
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'event_id, ' +
@@ -1144,8 +1097,7 @@ begin
     Open;
     if not EOF then
     begin
-      Result := TBandHistory.Create;
-      Hydrate(Qry, Result);
+      Hydrate(Qry, TBandHistory(E));
     end;
     Close;
   finally
@@ -1153,52 +1105,59 @@ begin
   end;
 end;
 
-procedure TBandHistoryRepository.Hydrate(aDataSet: TDataSet; E: TBandHistory);
+procedure TBandHistoryRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TBandHistory;
 begin
   if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TBandHistory) then
+    raise Exception.Create('Hydrate: Expected TBandHistory');
 
+  R := TBandHistory(E);
   with aDataSet do
   begin
-    E.Id := FieldByName('event_id').AsInteger;
-    E.BandId := FieldByName('band_id').AsInteger;
-    E.EventDate := FieldByName('event_date').AsDateTime;
-    E.OrderNumber := FieldByName('order_number').AsInteger;
+    R.Id := FieldByName('event_id').AsInteger;
+    R.BandId := FieldByName('band_id').AsInteger;
+    R.EventDate := FieldByName('event_date').AsDateTime;
+    R.OrderNumber := FieldByName('order_number').AsInteger;
     case FieldByName('event_type').AsString of
-      'O': E.EventType := bevOrder;
-      'C': E.EventType := bevReceive;
-      'T': E.EventType := bevTransfer;
-      'R': E.EventType := bevRetrieve;
-      'P': E.EventType := bevReport;
-      'U': E.EventType := bevUse;
-      'D': E.EventType := bevDischarge;
+      'O': R.EventType := bevOrder;
+      'C': R.EventType := bevReceive;
+      'T': R.EventType := bevTransfer;
+      'R': R.EventType := bevRetrieve;
+      'P': R.EventType := bevReport;
+      'U': R.EventType := bevUse;
+      'D': R.EventType := bevDischarge;
     end;
-    E.SupplierId := FieldByName('supplier_id').AsInteger;
-    E.RequesterId := FieldByName('requester_id').AsInteger;
-    E.SenderId := FieldByName('sender_id').AsInteger;
-    E.Notes := FieldByName('notes').AsString;
-    E.UserInserted := FieldByName('user_inserted').AsInteger;
-    E.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.SupplierId := FieldByName('supplier_id').AsInteger;
+    R.RequesterId := FieldByName('requester_id').AsInteger;
+    R.SenderId := FieldByName('sender_id').AsInteger;
+    R.Notes := FieldByName('notes').AsString;
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    GetTimeStamp(FieldByName('insert_date'), E.InsertDate);
-    GetTimeStamp(FieldByName('update_date'), E.UpdateDate);
-    E.Exported := FieldByName('exported_status').AsBoolean;
-    E.Marked := FieldByName('marked_status').AsBoolean;
-    E.Active := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TBandHistoryRepository.Insert(E: TBandHistory);
+procedure TBandHistoryRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TBandHistory;
 begin
+  if not (E is TBandHistory) then
+    raise Exception.Create('Insert: Expected TBandHistory');
+
+  R := TBandHistory(E);
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
-
     Clear;
     Add('INSERT INTO band_history (' +
       'band_id, ' +
@@ -1222,14 +1181,14 @@ begin
       ':sender_id, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
-    ParamByName('band_id').AsInteger := E.BandId;
-    SetDateParam(ParamByName('event_date'), E.EventDate);
-    SetStrParam(ParamByName('notes'), E.Notes);
-    SetStrParam(ParamByName('event_type'), BAND_EVENTS[E.EventType]);
-    SetForeignParam(ParamByName('supplier_id'), E.SupplierId);
-    SetIntParam(ParamByName('order_number'), E.OrderNumber);
-    SetForeignParam(ParamByName('requester_id'), E.RequesterId);
-    SetForeignParam(ParamByName('sender_id'), E.SenderId);
+    ParamByName('band_id').AsInteger := R.BandId;
+    SetDateParam(ParamByName('event_date'), R.EventDate);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('event_type'), BAND_EVENTS[R.EventType]);
+    SetForeignParam(ParamByName('supplier_id'), R.SupplierId);
+    SetIntParam(ParamByName('order_number'), R.OrderNumber);
+    SetForeignParam(ParamByName('requester_id'), R.RequesterId);
+    SetForeignParam(ParamByName('sender_id'), R.SenderId);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -1238,33 +1197,10 @@ begin
     Clear;
     Add('SELECT last_insert_rowid()');
     Open;
-    E.Id := Fields[0].AsInteger;
+    R.Id := Fields[0].AsInteger;
     Close;
   finally
     FreeAndNil(Qry);
-  end;
-end;
-
-function TBandHistoryRepository.NewQuery: TSQLQuery;
-begin
-  Result := TSQLQuery.Create(nil);
-  Result.DataBase := FConn;
-  Result.Transaction := FTrans;
-end;
-
-procedure TBandHistoryRepository.Save(E: TBandHistory);
-begin
-  if E = nil then
-    Exit;
-
-  if E.IsNew then
-    Insert(E)
-  else
-  begin
-    if Exists(E.Id) then
-      Update(E)
-    else
-      Insert(E);
   end;
 end;
 
@@ -1273,20 +1209,21 @@ begin
   Result := TBL_BAND_HISTORY;
 end;
 
-procedure TBandHistoryRepository.Update(E: TBandHistory);
+procedure TBandHistoryRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TBandHistory;
 begin
-  if E.Id = 0 then
+  if not (E is TBandHistory) then
+    raise Exception.Create('Update: Expected TBandHistory');
+
+  R := TBandHistory(E);
+  if R.Id = 0 then
     raise Exception.CreateFmt('TBandHistory.Update: %s.', [rsErrorEmptyId]);
 
   Qry := NewQuery;
-  //Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
-
     Clear;
     Add('UPDATE band_history SET ' +
       'band_id = :band_id, ' +
@@ -1300,18 +1237,18 @@ begin
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'',''subsec'') ');
     Add('WHERE (event_id = :event_id)');
-    ParamByName('band_id').AsInteger := E.BandId;
-    SetDateParam(ParamByName('event_date'), E.EventDate);
-    SetStrParam(ParamByName('notes'), E.Notes);
-    SetStrParam(ParamByName('event_type'), BAND_EVENTS[E.EventType]);
-    SetForeignParam(ParamByName('supplier_id'), E.SupplierId);
-    SetIntParam(ParamByName('order_number'), E.OrderNumber);
-    SetForeignParam(ParamByName('requester_id'), E.RequesterId);
-    SetForeignParam(ParamByName('sender_id'), E.SenderId);
+    ParamByName('band_id').AsInteger := R.BandId;
+    SetDateParam(ParamByName('event_date'), R.EventDate);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('event_type'), BAND_EVENTS[R.EventType]);
+    SetForeignParam(ParamByName('supplier_id'), R.SupplierId);
+    SetIntParam(ParamByName('order_number'), R.OrderNumber);
+    SetForeignParam(ParamByName('requester_id'), R.RequesterId);
+    SetForeignParam(ParamByName('sender_id'), R.SenderId);
     //ParamByName('marked_status').AsBoolean := FMarked;
     //ParamByName('active_status').AsBoolean := FActive;
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-    ParamByName('event_id').AsInteger := E.Id;
+    ParamByName('event_id').AsInteger := R.Id;
 
     ExecSQL;
   finally

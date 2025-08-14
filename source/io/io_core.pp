@@ -123,6 +123,7 @@ type
     class var FAll: specialize TFPGList<TImporterClass>;
   public
     class constructor Create;
+    class destructor Destroy;
     class procedure RegisterImporter(const Ext: string; AClass: TImporterClass);
     class function ResolveByExt(const Ext: string): TImporterClass;
     class function BestProbe(const FileName: string; Stream: TStream): TImporterClass;
@@ -136,6 +137,7 @@ type
     class var FAll: specialize TFPGList<TExporterClass>;
   public
     class constructor Create;
+    class destructor Destroy;
     class procedure RegisterExporter(const Ext: string; AClass: TExporterClass);
     class function Resolve(const Ext: string): TExporterClass;
   end;
@@ -199,6 +201,12 @@ end;
 
 { TImporterRegistry }
 
+class destructor TImporterRegistry.Destroy;
+begin
+  FreeAndNil(FByExt);
+  FreeAndNil(FAll);
+end;
+
 class constructor TImporterRegistry.Create;
 begin
   FByExt := specialize TFPGMap<string, TImporterClass>.Create;
@@ -246,6 +254,12 @@ begin
 end;
 
 { TExporterRegistry }
+
+class destructor TExporterRegistry.Destroy;
+begin
+  FreeAndNil(FByExt);
+  FreeAndNil(FAll);
+end;
 
 class constructor TExporterRegistry.Create;
 begin
