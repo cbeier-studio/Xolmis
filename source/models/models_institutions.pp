@@ -31,12 +31,12 @@ type
   TInstitution = class(TXolmisRecord)
   protected
     FFullName: String;
-    FAcronym: String;
+    FAbbreviation: String;
     FManagerName: String;
     FAddress1: String;
     FAddress2: String;
     FNeighborhood: String;
-    FZipCode: String;
+    FPostalCode: String;
     FMunicipalityId: Integer;
     FStateId: Integer;
     FCountryId: Integer;
@@ -44,26 +44,24 @@ type
     FEmail: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TInstitution; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TInstitution);
-    function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TInstitution; out Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TInstitution): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
+    function ToJSON: String; virtual;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property FullName: String read FFullName write FFullName;
-    property Acronym: String read FAcronym write FAcronym;
+    property Abbreviation: String read FAbbreviation write FAbbreviation;
     property ManagerName: String read FManagerName write FManagerName;
     property Address1: String read FAddress1 write FAddress1;
     property Address2: String read FAddress2 write FAddress2;
     property Neighborhood: String read FNeighborhood write FNeighborhood;
-    property ZipCode: String read FZipCode write FZipCode;
+    property PostalCode: String read FPostalCode write FPostalCode;
     property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
     property StateId: Integer read FStateId write FStateId;
     property CountryId: Integer read FCountryId write FCountryId;
@@ -72,61 +70,286 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TInstitutionRepository }
+
+  TInstitutionRepository = class(TXolmisRepository)
+  private
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
 uses
-  utils_locale, models_users, utils_validations, data_columns, data_setparam, udm_main;
+  utils_locale, models_users, utils_validations, data_consts, data_columns, data_setparam, data_getvalue, udm_main;
 
 { TInstitution }
 
-function TInstitution.Diff(aOld: TInstitution; var aList: TStrings): Boolean;
+constructor TInstitution.Create(aValue: Integer);
+begin
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TInstitution.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TInstitution then
+  begin
+    FFullName := TInstitution(Source).FullName;
+    FAbbreviation := TInstitution(Source).Abbreviation;
+    FManagerName := TInstitution(Source).ManagerName;
+    FAddress1 := TInstitution(Source).Address1;
+    FAddress2 := TInstitution(Source).Address2;
+    FNeighborhood := TInstitution(Source).Neighborhood;
+    FPostalCode := TInstitution(Source).PostalCode;
+    FMunicipalityId := TInstitution(Source).MunicipalityId;
+    FStateId := TInstitution(Source).StateId;
+    FCountryId := TInstitution(Source).CountryId;
+    FEmail := TInstitution(Source).Email;
+    FPhone := TInstitution(Source).Phone;
+    FNotes := TInstitution(Source).Notes;
+  end;
+end;
+
+procedure TInstitution.Clear;
+begin
+  inherited Clear;
+  FFullName := EmptyStr;
+  FAbbreviation := EmptyStr;
+  FManagerName := EmptyStr;
+  FAddress1 := EmptyStr;
+  FAddress2 := EmptyStr;
+  FNeighborhood := EmptyStr;
+  FPostalCode := EmptyStr;
+  FMunicipalityId := 0;
+  FStateId := 0;
+  FCountryId := 0;
+  FEmail := EmptyStr;
+  FPhone := EmptyStr;
+  FNotes := EmptyStr;
+end;
+
+function TInstitution.Clone: TXolmisRecord;
+begin
+  Result := TInstitution(inherited Clone);
+end;
+
+function TInstitution.Diff(const aOld: TInstitution; out Changes: TStrings): Boolean;
 var
   R: String;
 begin
   Result := False;
   R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
 
   if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
-    aList.Add(R);
+    Changes.Add(R);
+  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscManager, aOld.ManagerName, FManagerName, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscAddress1, aOld.Address1, FAddress1, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscAddress2, aOld.Address2, FAddress2, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscNeighborhood, aOld.Neighborhood, FNeighborhood, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscZipCode, aOld.ZipCode, FZipCode, R) then
-    aList.Add(R);
+    Changes.Add(R);
+  if FieldValuesDiff(rscZipCode, aOld.PostalCode, FPostalCode, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscPhone, aOld.Phone, FPhone, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscEmail, aOld.Email, FEmail, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
+    Changes.Add(R);
 
-  Result := aList.Count > 0;
+  Result := Changes.Count > 0;
 end;
 
-function TInstitution.Find(const FieldName: String; const Value: Variant): Boolean;
+function TInstitution.EqualsTo(const Other: TInstitution): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TInstitution.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName       := Obj.Get('full_name', '');
+    FAbbreviation        := Obj.Get('abbreviation', '');
+    FManagerName    := Obj.Get('manager_name', '');
+    FAddress1       := Obj.Get('address_1', '');
+    FAddress2       := Obj.Get('address_2', '');
+    FNeighborhood   := Obj.Get('neighborhood', '');
+    FPostalCode        := Obj.Get('postal_code', '');
+    FMunicipalityId := Obj.Get('municipality_id', 0);
+    FStateId        := Obj.Get('state_id', 0);
+    FCountryId      := Obj.Get('country_id', 0);
+    FEmail          := Obj.Get('email', '');
+    FPhone          := Obj.Get('phone', '');
+    FNotes          := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TInstitution.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('abbreviation', FAbbreviation);
+    JSONObject.Add('manager_name', FManagerName);
+    JSONObject.Add('address_1', FAddress1);
+    JSONObject.Add('address_2', FAddress2);
+    JSONObject.Add('neighborhood', FNeighborhood);
+    JSONObject.Add('postal_code', FPostalCode);
+    JSONObject.Add('municipality_id', FMunicipalityId);
+    JSONObject.Add('state_id', FStateId);
+    JSONObject.Add('country_id', FCountryId);
+    JSONObject.Add('email', FEmail);
+    JSONObject.Add('phone', FPhone);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TInstitution.ToString: String;
+begin
+  Result := Format('Institution(Id=%d, FullName=%s, Abbreviation=%s, ManagerName=%s, Address1=%s, Address2=%s, ' +
+    'Neighborhood=%s, PostalCode=%s, MunicipalityId=%d, StateId=%d, CountryId=%d, ' +
+    'Email=%s, Phone=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FAbbreviation, FManagerName, FAddress1, FAddress2, FNeighborhood, FPostalCode, FMunicipalityId,
+    FStateId, FCountryId, FEmail, FPhone, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TInstitution.Validate(out Msg: string): Boolean;
+begin
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'FullName required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TInstitutionRepository }
+
+procedure TInstitutionRepository.Delete(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TInstitution;
+begin
+  if not (E is TInstitution) then
+    raise Exception.Create('Delete: Expected TInstitution');
+
+  R := TInstitution(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TInstitution.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_INSTITUTION_ID;
+      ParamByName('aid').AsInteger := R.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TInstitutionRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_INSTITUTION_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TInstitutionRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..6] of string = (COL_INSTITUTION_ID, COL_FULL_NAME, COL_ABBREVIATION, COL_MANAGER_NAME,
+    COL_EMAIL_ADDRESS, COL_PHONE_NUMBER, COL_ADDRESS_1); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TInstitution) then
+    raise Exception.Create('FindBy: Expected TInstitution');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -159,9 +382,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TInstitution(E));
     end;
 
     Close;
@@ -170,91 +391,16 @@ begin
   end;
 end;
 
-constructor TInstitution.Create(aValue: Integer);
-begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
-end;
-
-procedure TInstitution.Clear;
-begin
-  inherited Clear;
-  FFullName := EmptyStr;
-  FAcronym := EmptyStr;
-  FManagerName := EmptyStr;
-  FAddress1 := EmptyStr;
-  FAddress2 := EmptyStr;
-  FNeighborhood := EmptyStr;
-  FZipCode := EmptyStr;
-  FMunicipalityId := 0;
-  FStateId := 0;
-  FCountryId := 0;
-  FEmail := EmptyStr;
-  FPhone := EmptyStr;
-  FNotes := EmptyStr;
-end;
-
-procedure TInstitution.Copy(aFrom: TInstitution);
-begin
-  FFullName := aFrom.FullName;
-  FAcronym := aFrom.Acronym;
-  FManagerName := aFrom.ManagerName;
-  FAddress1 := aFrom.Address1;
-  FAddress2 := aFrom.Address2;
-  FNeighborhood := aFrom.Neighborhood;
-  FZipCode := aFrom.ZipCode;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
-  FEmail := aFrom.Email;
-  FPhone := aFrom.Phone;
-  FNotes := aFrom.Notes;
-end;
-
-procedure TInstitution.Delete;
+procedure TInstitutionRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TInstitution.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TInstitution) then
+    raise Exception.Create('GetById: Expected TInstitution');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
-      Clear;
-      Add('DELETE FROM institutions');
-      Add('WHERE (institution_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TInstitution.GetData(aKey: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'institution_id, ' +
@@ -280,232 +426,186 @@ begin
       'active_status ' +
       'FROM institutions');
     Add('WHERE institution_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TInstitution(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TInstitution.LoadFromDataSet(aDataSet: TDataSet);
+procedure TInstitutionRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TInstitution;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TInstitution) then
+    raise Exception.Create('Hydrate: Expected TInstitution');
 
+  R := TInstitution(E);
   with aDataSet do
   begin
-    FId := FieldByName('institution_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FAcronym := FieldByName('acronym').AsString;
-    FManagerName := FieldByName('manager_name').AsString;
-    FAddress1 := FieldByName('address_1').AsString;
-    FAddress2 := FieldByName('address_2').AsString;
-    FNeighborhood := FieldByName('neighborhood').AsString;
-    FZipCode := FieldByName('zip_code').AsString;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
-    FEmail := FieldByName('email_addr').AsString;
-    FPhone := FieldByName('phone_num').AsString;
-    FNotes := FieldByName('notes').AsString;
+    R.Id := FieldByName('institution_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.Abbreviation := FieldByName('acronym').AsString;
+    R.ManagerName := FieldByName('manager_name').AsString;
+    R.Address1 := FieldByName('address_1').AsString;
+    R.Address2 := FieldByName('address_2').AsString;
+    R.Neighborhood := FieldByName('neighborhood').AsString;
+    R.PostalCode := FieldByName('zip_code').AsString;
+    R.MunicipalityId := FieldByName('municipality_id').AsInteger;
+    R.StateId := FieldByName('state_id').AsInteger;
+    R.CountryId := FieldByName('country_id').AsInteger;
+    R.Email := FieldByName('email_addr').AsString;
+    R.Phone := FieldByName('phone_num').AsString;
+    R.Notes := FieldByName('notes').AsString;
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TInstitution.Insert;
+procedure TInstitutionRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TInstitution;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TInstitution) then
+    raise Exception.Create('Insert: Expected TInstitution');
+
+  R := TInstitution(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO institutions (' +
+      'full_name, ' +
+      'acronym, ' +
+      'address_1, ' +
+      'address_2, ' +
+      'neighborhood, ' +
+      'zip_code, ' +
+      'municipality_id, ' +
+      'state_id, ' +
+      'country_id, ' +
+      'manager_name, ' +
+      'email_addr, ' +
+      'phone_num, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':full_name, ' +
+      ':acronym, ' +
+      ':address_1, ' +
+      ':address_2, ' +
+      ':neighborhood, ' +
+      ':zip_code, ' +
+      ':municipality_id, ' +
+      ':state_id, ' +
+      ':country_id, ' +
+      ':manager_name, ' +
+      ':email_addr, ' +
+      ':phone_num, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO institutions (' +
-        'full_name, ' +
-        'acronym, ' +
-        'address_1, ' +
-        'address_2, ' +
-        'neighborhood, ' +
-        'zip_code, ' +
-        'municipality_id, ' +
-        'state_id, ' +
-        'country_id, ' +
-        'manager_name, ' +
-        'email_addr, ' +
-        'phone_num, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':full_name, ' +
-        ':acronym, ' +
-        ':address_1, ' +
-        ':address_2, ' +
-        ':neighborhood, ' +
-        ':zip_code, ' +
-        ':municipality_id, ' +
-        ':state_id, ' +
-        ':country_id, ' +
-        ':manager_name, ' +
-        ':email_addr, ' +
-        ':phone_num, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('acronym').AsString := R.Abbreviation;
+    SetStrParam(ParamByName('address_1'), R.Address1);
+    SetStrParam(ParamByName('address_2'), R.Address2);
+    SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
+    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetForeignParam(ParamByName('country_id'), R.CountryId);
+    SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetStrParam(ParamByName('manager_name'), R.ManagerName);
+    SetStrParam(ParamByName('email_addr'), R.Email);
+    SetStrParam(ParamByName('phone_num'), R.Phone);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('acronym').AsString := FAcronym;
-      SetStrParam(ParamByName('address_1'), FAddress1);
-      SetStrParam(ParamByName('address_2'), FAddress2);
-      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
-      SetStrParam(ParamByName('zip_code'), FZipCode);
-      SetForeignParam(ParamByName('country_id'), FCountryId);
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      SetStrParam(ParamByName('manager_name'), FManagerName);
-      SetStrParam(ParamByName('email_addr'), FEmail);
-      SetStrParam(ParamByName('phone_num'), FPhone);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TInstitution.Save;
+function TInstitutionRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_INSTITUTIONS;
 end;
 
-function TInstitution.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Abbreviation', FAcronym);
-    JSONObject.Add('Manager name', FManagerName);
-    JSONObject.Add('Address 1', FAddress1);
-    JSONObject.Add('Address 2', FAddress2);
-    JSONObject.Add('Neighborhood', FNeighborhood);
-    JSONObject.Add('Zip code', FZipCode);
-    JSONObject.Add('Municipality', FMunicipalityId);
-    JSONObject.Add('State', FStateId);
-    JSONObject.Add('Country', FCountryId);
-    JSONObject.Add('E-mail', FEmail);
-    JSONObject.Add('Phone number', FPhone);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TInstitution.Update;
+procedure TInstitutionRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TInstitution;
 begin
-  if FId = 0 then
+  if not (E is TInstitution) then
+    raise Exception.Create('Update: Expected TInstitution');
+
+  R := TInstitution(E);
+  if R.Id = 0 then
     raise Exception.CreateFmt('TInstitution.Update: %s.', [rsErrorEmptyId]);
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE institutions SET ' +
+      'full_name = :full_name, ' +
+      'acronym = :acronym, ' +
+      'address_1 = :address_1, ' +
+      'address_2 = :address_2, ' +
+      'neighborhood = :neighborhood, ' +
+      'zip_code = :zip_code, ' +
+      'municipality_id = :municipality_id, ' +
+      'state_id = :state_id, ' +
+      'country_id = :country_id, ' +
+      'manager_name = :manager_name, ' +
+      'email_addr = :email_addr, ' +
+      'phone_num = :phone_num, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (institution_id = :institution_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE institutions SET ' +
-        'full_name = :full_name, ' +
-        'acronym = :acronym, ' +
-        'address_1 = :address_1, ' +
-        'address_2 = :address_2, ' +
-        'neighborhood = :neighborhood, ' +
-        'zip_code = :zip_code, ' +
-        'municipality_id = :municipality_id, ' +
-        'state_id = :state_id, ' +
-        'country_id = :country_id, ' +
-        'manager_name = :manager_name, ' +
-        'email_addr = :email_addr, ' +
-        'phone_num = :phone_num, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (institution_id = :institution_id)');
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('acronym').AsString := R.Abbreviation;
+    SetStrParam(ParamByName('address_1'), R.Address1);
+    SetStrParam(ParamByName('address_2'), R.Address2);
+    SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
+    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetForeignParam(ParamByName('country_id'), R.CountryId);
+    SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetStrParam(ParamByName('manager_name'), R.ManagerName);
+    SetStrParam(ParamByName('email_addr'), R.Email);
+    SetStrParam(ParamByName('phone_num'), R.Phone);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('institution_id').AsInteger := R.Id;
 
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('acronym').AsString := FAcronym;
-      SetStrParam(ParamByName('address_1'), FAddress1);
-      SetStrParam(ParamByName('address_2'), FAddress2);
-      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
-      SetStrParam(ParamByName('zip_code'), FZipCode);
-      SetForeignParam(ParamByName('country_id'), FCountryId);
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      SetStrParam(ParamByName('manager_name'), FManagerName);
-      SetStrParam(ParamByName('email_addr'), FEmail);
-      SetStrParam(ParamByName('phone_num'), FPhone);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('institution_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

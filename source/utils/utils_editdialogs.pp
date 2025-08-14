@@ -399,6 +399,7 @@ end;
 
 function EditInstitution(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TInstitutionRepository;
   FRecord, FOldRecord: TInstitution;
   lstDiff: TStrings;
   D: String;
@@ -406,6 +407,7 @@ begin
   LogEvent(leaOpen, 'Institution edit dialog');
   Application.CreateForm(TedtInstitution, edtInstitution);
   FOldRecord := nil;
+  FRepo := TInstitutionRepository.Create(DMM.sqlCon);
   with edtInstitution do
   try
     dsLink.DataSet := aDataSet;
@@ -427,7 +429,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Institution.Save;
+        FRepo.Save(Institution);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -470,6 +472,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtInstitution);
     LogEvent(leaClose, 'Institution edit dialog');
   end;

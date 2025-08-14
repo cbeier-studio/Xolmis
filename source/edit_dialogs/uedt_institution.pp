@@ -317,8 +317,8 @@ end;
 procedure TedtInstitution.GetRecord;
 begin
   eFullname.Text := FInstitution.FullName;
-  eAcronym.Text := FInstitution.Acronym;
-  ePostalCode.Text := FInstitution.ZipCode;
+  eAcronym.Text := FInstitution.Abbreviation;
+  ePostalCode.Text := FInstitution.PostalCode;
   eAddress.Text := FInstitution.Address1;
   eComplement.Text := FInstitution.Address2;
   eNeighborhood.Text := FInstitution.Neighborhood;
@@ -368,8 +368,8 @@ end;
 procedure TedtInstitution.SetRecord;
 begin
   FInstitution.FullName       := eFullname.Text;
-  FInstitution.Acronym        := eAcronym.Text;
-  FInstitution.ZipCode        := ePostalCode.Text;
+  FInstitution.Abbreviation        := eAcronym.Text;
+  FInstitution.PostalCode        := ePostalCode.Text;
   FInstitution.Address1       := eAddress.Text;
   FInstitution.Address2       := eComplement.Text;
   FInstitution.Neighborhood   := eNeighborhood.Text;

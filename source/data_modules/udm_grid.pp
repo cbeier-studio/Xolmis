@@ -3256,6 +3256,7 @@ end;
 
 procedure TDMG.qInstitutionsAfterPost(DataSet: TDataSet);
 var
+  Repo: TInstitutionRepository;
   NewInstitution: TInstitution;
   lstDiff: TStrings;
   D: String;
@@ -3263,8 +3264,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldInstitution) then
   begin
+    Repo := TInstitutionRepository.Create(DMM.sqlCon);
     NewInstitution := TInstitution.Create;
-    NewInstitution.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewInstitution);
     lstDiff := TStringList.Create;
     try
       if NewInstitution.Diff(OldInstitution, lstDiff) then
@@ -3279,6 +3281,7 @@ begin
       FreeAndNil(NewInstitution);
       FreeAndNil(OldInstitution);
       FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else

@@ -259,68 +259,6 @@ begin
   Result := TSite(inherited Clone);
 end;
 
-function TSite.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Name', FName);
-    JSONObject.Add('Abbreviation', FAbbreviation);
-    JSONObject.Add('Rank', SITE_RANKS[FRank]);
-    JSONObject.Add('ParentSiteId', FParentSiteId);
-    JSONObject.Add('MunicipalityId', FMunicipalityId);
-    JSONObject.Add('StateId', FStateId);
-    JSONObject.Add('CountryId', FCountryId);
-    JSONObject.Add('FullName', FFullName);
-    JSONObject.Add('EbirdName', FEbirdName);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Altitude', FAltitude);
-    JSONObject.Add('Language', FLanguage);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-function TSite.ToString: String;
-begin
-  Result := Format('Site(Id=%d, Name=%s, Abbreviation=%s, Rank=%s, ParentSiteId=%d, MunicipalityId=%d, StateId=%d, ' +
-    'CountryId=%d, FullName=%s, EbirdName=%s, Longitude=%f, Latitude=%f, Altitude=%f, Language=%s, ' +
-    'Description=%s, Notes=%s, ' +
-    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FName, FAbbreviation, SITE_RANKS[FRank], FParentSiteId, FMunicipalityId, FStateId, FCountryId,
-    FFullName, FEbirdName, FLongitude, FLatitude, FAltitude, FLanguage, FDescription, FNotes,
-    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
-    BoolToStr(FActive, 'True', 'False')]);
-end;
-
-function TSite.Validate(out Msg: string): Boolean;
-begin
-  if FName = EmptyStr then
-  begin
-    Msg := 'Name required.';
-    Exit(False);
-  end;
-  if FFullName = EmptyStr then
-  begin
-    Msg := 'FullName required.';
-    Exit(False);
-  end;
-  if FRank = srNone then
-  begin
-    Msg := 'Rank required.';
-    Exit(False);
-  end;
-
-  Msg := '';
-  Result := True;
-end;
-
 function TSite.Diff(const aOld: TSite; out Changes: TStrings): Boolean;
 //var
 //  PropList: PPropList;
@@ -434,6 +372,68 @@ begin
   finally
     Obj.Free;
   end;
+end;
+
+function TSite.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('Name', FName);
+    JSONObject.Add('Abbreviation', FAbbreviation);
+    JSONObject.Add('Rank', SITE_RANKS[FRank]);
+    JSONObject.Add('ParentSiteId', FParentSiteId);
+    JSONObject.Add('MunicipalityId', FMunicipalityId);
+    JSONObject.Add('StateId', FStateId);
+    JSONObject.Add('CountryId', FCountryId);
+    JSONObject.Add('FullName', FFullName);
+    JSONObject.Add('EbirdName', FEbirdName);
+    JSONObject.Add('Longitude', FLongitude);
+    JSONObject.Add('Latitude', FLatitude);
+    JSONObject.Add('Altitude', FAltitude);
+    JSONObject.Add('Language', FLanguage);
+    JSONObject.Add('Description', FDescription);
+    JSONObject.Add('Notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TSite.ToString: String;
+begin
+  Result := Format('Site(Id=%d, Name=%s, Abbreviation=%s, Rank=%s, ParentSiteId=%d, MunicipalityId=%d, StateId=%d, ' +
+    'CountryId=%d, FullName=%s, EbirdName=%s, Longitude=%f, Latitude=%f, Altitude=%f, Language=%s, ' +
+    'Description=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FName, FAbbreviation, SITE_RANKS[FRank], FParentSiteId, FMunicipalityId, FStateId, FCountryId,
+    FFullName, FEbirdName, FLongitude, FLatitude, FAltitude, FLanguage, FDescription, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TSite.Validate(out Msg: string): Boolean;
+begin
+  if FName = EmptyStr then
+  begin
+    Msg := 'Name required.';
+    Exit(False);
+  end;
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'FullName required.';
+    Exit(False);
+  end;
+  if FRank = srNone then
+  begin
+    Msg := 'Rank required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
 end;
 
 { TSiteRepository }
