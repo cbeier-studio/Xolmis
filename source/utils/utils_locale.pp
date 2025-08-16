@@ -522,6 +522,12 @@ uses
     rsTotalProblems = '%d problem';
     rsTotalProblemsPlural = '%d problems';
     rsPageOfPages = '%d of %d';
+    rsLogging = 'Logging';
+    rsLogsOff = 'Logs OFF';
+    rsBackupScheduled = 'Backup scheduled';
+    rsBackupOff = 'Backup OFF';
+    rsBackupInDays = 'Backup in %d day';
+    rsBackupInDaysPlural = 'Backup in %d days';
 
     { Files }
     rsFileExtCSV = 'Comma-Separated Values (CSV)';

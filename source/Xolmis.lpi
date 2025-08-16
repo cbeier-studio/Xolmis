@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="158">
+      <ExcludedIdentifiers Count="161">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -182,6 +182,9 @@
         <Item156 Value="tdlgSelectRecord.lblSelectInfo.Caption"/>
         <Item157 Value="tbatchBandsTransfer.txtSender.Caption"/>
         <Item158 Value="tdlgAbout.linkClements.Hint"/>
+        <Item159 Value="tfrmMain.SBar.Panels[3].Text"/>
+        <Item160 Value="tfrmMain.SBar.Panels[4].Text"/>
+        <Item161 Value="tfrmMain.SBar.Panels[5].Text"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>

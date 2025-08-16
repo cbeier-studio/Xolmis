@@ -11581,6 +11581,14 @@ msgctxt "tfrmmain.actviewbandsbalance.caption"
 msgid "Ba&lance"
 msgstr "Sa&ldo"
 
+#: tfrmmain.actwebsite.caption
+msgid "Xolmis' website"
+msgstr "Website do Xolmis"
+
+#: tfrmmain.actwhatsnew.caption
+msgid "What's new"
+msgstr "Novidades"
+
 #: tfrmmain.esearch.texthint
 msgctxt "tfrmmain.esearch.texthint"
 msgid "Search"
@@ -12551,6 +12559,25 @@ msgstr "Autoria"
 msgctxt "utils_locale.rsauto"
 msgid "Auto"
 msgstr "Auto"
+
+#: utils_locale.rsbackupindays
+#, object-pascal-format
+msgid "Backup in %d day"
+msgstr "Backup em %d dia"
+
+#: utils_locale.rsbackupindaysplural
+#, object-pascal-format
+msgid "Backup in %d days"
+msgstr "Backup em %d dias"
+
+#: utils_locale.rsbackupoff
+msgid "Backup OFF"
+msgstr "SEM backup"
+
+#: utils_locale.rsbackupscheduled
+msgctxt "utils_locale.rsbackupscheduled"
+msgid "Backup scheduled"
+msgstr "Backup agendado"
 
 #: utils_locale.rsbandacquiredfromsupplier
 msgctxt "utils_locale.rsbandacquiredfromsupplier"
@@ -14869,10 +14896,19 @@ msgctxt "utils_locale.rsloadingrecordstoimport"
 msgid "Loading records to import..."
 msgstr "Carregando registros para importar..."
 
+#: utils_locale.rslogging
+msgctxt "utils_locale.rslogging"
+msgid "Logging"
+msgstr "Logando"
+
 #: utils_locale.rsloginbutton
 msgctxt "utils_locale.rsloginbutton"
 msgid "Sign in"
 msgstr "Entrar"
+
+#: utils_locale.rslogsoff
+msgid "Logs OFF"
+msgstr "SEM logs"
 
 #: utils_locale.rslongitude
 msgctxt "utils_locale.rslongitude"

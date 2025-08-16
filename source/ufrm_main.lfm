@@ -779,7 +779,22 @@ object frmMain: TfrmMain
       end    
       item
         Alignment = taCenter
+        Text = 'Backup scheduled'
         Width = 120
+      end    
+      item
+        Alignment = taCenter
+        Text = 'Enter/Tab'
+        Width = 80
+      end    
+      item
+        Alignment = taCenter
+        Text = 'Logging'
+        Width = 80
+      end    
+      item
+        Alignment = taCenter
+        Width = 100
       end>
     ParentShowHint = False
     SimplePanel = False
@@ -1096,6 +1111,14 @@ object frmMain: TfrmMain
       Caption = '&Feathers'
       ImageIndex = 13
       OnExecute = actOpenFeathersExecute
+    end
+    object actWhatsNew: TAction
+      Category = 'Help'
+      Caption = 'What''s new'
+    end
+    object actWebsite: TAction
+      Category = 'Help'
+      Caption = 'Xolmis'' website'
     end
   end
   object bStatusBar: TImageList
@@ -9115,6 +9138,12 @@ object frmMain: TfrmMain
     end
     object mmSampling: TMenuItem
       Caption = '&Sampling'
+      object mmsMethods: TMenuItem
+        Action = actOpenMethods
+      end
+      object Separator9: TMenuItem
+        Caption = '-'
+      end
       object mmsExpeditions: TMenuItem
         Action = actOpenExpeditions
       end
@@ -9126,12 +9155,6 @@ object frmMain: TfrmMain
       end
       object mmsSightings: TMenuItem
         Action = actOpenSightings
-      end
-      object Separator9: TMenuItem
-        Caption = '-'
-      end
-      object mmsMethods: TMenuItem
-        Action = actOpenMethods
       end
       object Separator16: TMenuItem
         Caption = '-'
@@ -9235,6 +9258,12 @@ object frmMain: TfrmMain
       Caption = '&Help'
       object mmhHelp: TMenuItem
         Action = actOpenManual
+      end
+      object MenuItem1: TMenuItem
+        Action = actWhatsNew
+      end
+      object MenuItem2: TMenuItem
+        Action = actWebsite
       end
       object Separator22: TMenuItem
         Caption = '-'

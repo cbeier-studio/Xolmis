@@ -49,6 +49,8 @@ type
     actImportCoordinates: TAction;
     actImportXolmisMobile: TAction;
     actDBNew: TAction;
+    actWebsite: TAction;
+    actWhatsNew: TAction;
     actOpenFeathers: TAction;
     actMaintenance: TAction;
     actOpenBandHistory: TAction;
@@ -94,6 +96,8 @@ type
     iPopup: TImageList;
     iSearchDark: TImageList;
     lblEmptyNotifications: TLabel;
+    MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
     pmaNewFeathersBatch: TMenuItem;
     pmaNewBandsBatch: TMenuItem;
     pEmptyNotifications: TBCPanel;
@@ -949,7 +953,7 @@ begin
     ApplyDarkMode;
 
   // Load version in status bar
-  SBar.Panels[3].Text := GetBuildInfoAsString;
+  SBar.Panels[6].Text := GetBuildInfoAsString;
   //lblSbarVersion.Caption := GetBuildInfoAsString;
 
   // Show splash screen
@@ -1665,7 +1669,8 @@ procedure TfrmMain.SBarResize(Sender: TObject);
 begin
   with SBar do
   begin
-    Panels[2].Width := Width - (Panels[0].Width + Panels[1].Width + Panels[3].Width);
+    Panels[2].Width := Width - (Panels[0].Width + Panels[1].Width + Panels[3].Width + Panels[4].Width +
+      Panels[5].Width + Panels[6].Width);
   end;
 end;
 
@@ -1718,9 +1723,69 @@ begin
 end;
 
 procedure TfrmMain.UpdateStatusBar;
+var
+  DaysToBackup: Integer;
 begin
   SBar.Panels[0].Text := databaseConnection.Name;
   SBar.Panels[1].Text := ActiveUser.UserName;
+
+  // Backup scheduled
+  case xSettings.AutomaticBackup of
+    0: SBar.Panels[3].Text := rsBackupOff;
+    1:
+    begin
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 1 then
+        SBar.Panels[3].Text := rsBackupScheduled
+      else
+      begin
+        DaysToBackup := DaysBetween(IncDay(databaseConnection.LastBackup, 1), Today);
+        if DaysToBackup > 1 then
+          SBar.Panels[3].Text := Format(rsBackupInDaysPlural, [DaysToBackup])
+        else
+          SBar.Panels[3].Text := Format(rsBackupInDays, [DaysToBackup]);
+      end;
+    end;
+    2:
+    begin
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 7 then
+        SBar.Panels[3].Text := rsBackupScheduled
+      else
+      begin
+        DaysToBackup := DaysBetween(IncDay(databaseConnection.LastBackup, 7), Today);
+        if DaysToBackup > 1 then
+          SBar.Panels[3].Text := Format(rsBackupInDaysPlural, [DaysToBackup])
+        else
+          SBar.Panels[3].Text := Format(rsBackupInDays, [DaysToBackup]);
+      end;
+    end;
+    3:
+    begin
+      if DaysBetween(Now, databaseConnection.LastBackup) >= 30 then
+        SBar.Panels[3].Text := rsBackupScheduled
+      else
+      begin
+        DaysToBackup := DaysBetween(IncDay(databaseConnection.LastBackup, 30), Today);
+        if DaysToBackup > 1 then
+          SBar.Panels[3].Text := Format(rsBackupInDaysPlural, [DaysToBackup])
+        else
+          SBar.Panels[3].Text := Format(rsBackupInDays, [DaysToBackup]);
+      end;
+    end;
+  else
+    SBar.Panels[3].Text := EmptyStr;
+  end;
+
+  // Enter as Tab
+  if xSettings.UseEnterAsTab then
+    SBar.Panels[4].Text := 'Enter/Tab'
+  else
+    SBar.Panels[4].Text := 'Tab';
+
+  // Logging
+  if xSettings.AllowWriteLogs then
+    SBar.Panels[5].Text := rsLogging
+  else
+    SBar.Panels[5].Text := rsLogsOff;
 end;
 
 end.
