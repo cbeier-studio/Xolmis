@@ -20,7 +20,7 @@ OutputBaseFilename=xolmis-{#MyAppVersion}-win64
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
-VersionInfoVersion=0.1.0.447
+VersionInfoVersion=0.1.0.472
 VersionInfoCopyright=Christian Beier
 VersionInfoProductName=Xolmis
 MinVersion=0,10.0
@@ -44,6 +44,7 @@ Source: "{#MyAppSource}\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "languages\Xolmis.pt_BR.mo"; DestDir: "{app}\languages"
 Source: "resources\zoo_taxa_init.csv"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "reports\*.lrf"; DestDir: "{app}\reports"
+Source: "site\*"; DestDir: "{app}\docs"; Flags: recursesubdirs 
 Source: "resources\FiraCode-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "resources\FiraCode-Bold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "resources\FiraCode-SemiBold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code SemiBold"; Flags: onlyifdoesntexist uninsneveruninstall
@@ -62,6 +63,7 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 [Dirs]
 Name: "{app}\languages"; Flags: uninsalwaysuninstall
 Name: "{app}\reports"; Flags: uninsalwaysuninstall
+Name: "{app}\docs"; Flags: uninsalwaysuninstall
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{localappdata}\{#MyAppName}"
