@@ -449,7 +449,7 @@ begin
   //CheckSystemLogs;
   //CheckTemporaryFiles;
   //CheckThumbnails;
-  CheckDatabaseIntegrity;
+  //CheckDatabaseIntegrity;
 end;
 
 procedure TfrmMaintenance.btnBackupDatabaseClick(Sender: TObject);

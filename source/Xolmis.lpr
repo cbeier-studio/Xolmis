@@ -193,7 +193,7 @@ uses
   ufrm_imageviewer,
   ufrm_printpreview,
   ufrm_taxa,
-  ufrm_quickentry;
+  ufrm_quickentry, models_sampling_plots;
 
 {$R *.res}
 

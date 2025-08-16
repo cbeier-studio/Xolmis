@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_sampling;
+  ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_sampling_plots;
 
 type
 

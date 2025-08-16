@@ -67,10 +67,13 @@ uses
 implementation
 
 uses
-  utils_locale, utils_global, utils_permissions, utils_dialogs, data_getvalue, models_record_types,
-  models_geo, models_sampling, models_botany, models_breeding, models_birds, models_projects, models_media,
-  models_bands, models_sightings, models_institutions, models_people, models_permits, models_specimens,
-  udm_main, udm_grid, udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
+  utils_locale, utils_global, utils_permissions, utils_dialogs,
+  data_getvalue,
+  models_record_types, models_geo, models_sampling, models_botany, models_breeding, models_birds, models_projects,
+  models_media, models_bands, models_sightings, models_institutions, models_people, models_permits,
+  models_specimens, models_sampling_plots,
+  udm_main, udm_grid,
+  udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,

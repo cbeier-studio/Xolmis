@@ -22,8 +22,8 @@ unit io_banding_csv;
 interface
 
 uses
-  Classes, SysUtils, Forms, Dialogs, StrUtils, ComCtrls, DateUtils, fgl,
-  DB, SQLDB, SdfData, fpjson, jsonparser, fpjsondataset,
+  Classes, SysUtils, Forms, Dialogs, StrUtils, ComCtrls, DateUtils,
+  DB, SQLDB, SdfData, fpjson, jsonparser,
   models_sampling, models_record_types;
 
 const
@@ -185,9 +185,10 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_system, utils_fullnames,
+  utils_locale, utils_global, utils_dialogs, utils_system,
   data_types, data_management, data_getvalue, data_consts,
-  models_users, models_taxonomy, models_birds, models_geo, models_breeding, models_sightings, models_bands,
+  models_users, models_taxonomy, models_birds, models_geo, models_bands,
+  models_sampling_plots,
   udm_main, udlg_progress;
 
 procedure LoadBandingFile(const aCSVFile: String; CSV: TSdfDataSet);
