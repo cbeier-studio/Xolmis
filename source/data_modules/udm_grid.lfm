@@ -16508,18 +16508,13 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'internal_id'
-        DataType = ftLargeint
-        Precision = -1
-      end    
-      item
         Name = 'method_name'
         DataType = ftString
         Precision = -1
         Size = 100
       end    
       item
-        Name = 'method_acronym'
+        Name = 'abbreviation'
         DataType = ftString
         Precision = -1
         Size = 20
@@ -16531,8 +16526,29 @@ object DMG: TDMG
         Size = 60
       end    
       item
+        Name = 'category'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
         Name = 'description'
         DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'recommended_uses'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'can_delete'
+        DataType = ftBoolean
         Precision = -1
       end    
       item
@@ -16600,7 +16616,7 @@ object DMG: TDMG
     end
     object qMethodsmethod_name: TStringField
       DisplayLabel = 'Name'
-      DisplayWidth = 40
+      DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'method_name'
       Index = 1
@@ -16610,22 +16626,35 @@ object DMG: TDMG
       Required = True
       Size = 100
     end
-    object qMethodsmethod_acronym: TStringField
-      DisplayLabel = 'Acronym'
+    object qMethodsabbreviation: TStringField
+      DisplayLabel = 'Abbreviation'
+      DisplayWidth = 15
       FieldKind = fkData
-      FieldName = 'method_acronym'
+      FieldName = 'abbreviation'
       Index = 2
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = True
+      Required = False
+    end
+    object qMethodscategory: TStringField
+      DisplayLabel = 'Category'
+      DisplayWidth = 15
+      FieldKind = fkData
+      FieldName = 'category'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 30
     end
     object qMethodsebird_name: TStringField
       DisplayLabel = 'eBird name'
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'ebird_name'
-      Index = 3
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16637,7 +16666,33 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'description'
-      Index = 4
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qMethodsrecommended_uses: TMemoField
+      DisplayLabel = 'Recommended uses'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'recommended_uses'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qMethodsnotes: TMemoField
+      DisplayLabel = 'Notes'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16649,17 +16704,29 @@ object DMG: TDMG
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'method_id'
-      Index = 5
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
       Required = False
     end
+    object qMethodscan_delete: TBooleanField
+      DisplayLabel = 'Can delete'
+      FieldKind = fkData
+      FieldName = 'can_delete'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
     object qMethodsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 6
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16670,7 +16737,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 7
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16682,7 +16749,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 8
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16694,7 +16761,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 9
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16706,7 +16773,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 10
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16719,7 +16786,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 11
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

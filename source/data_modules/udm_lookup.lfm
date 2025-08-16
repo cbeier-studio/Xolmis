@@ -75,7 +75,7 @@ object DML: TDML
         Size = 100
       end    
       item
-        Name = 'method_acronym'
+        Name = 'abbreviation'
         DataType = ftString
         Precision = -1
         Size = 20
@@ -84,7 +84,7 @@ object DML: TDML
     Transaction = DMM.sqlTrans
     ReadOnly = True
     SQL.Strings = (
-      'SELECT method_id, method_name, method_acronym'
+      'SELECT method_id, method_name, abbreviation'
       'FROM methods'
       'WHERE (active_status = 1)'
       ''
@@ -112,9 +112,9 @@ object DML: TDML
       Required = True
       Size = 100
     end
-    object lkMethodsmethod_acronym: TStringField
+    object lkMethodsabbreviation: TStringField
       FieldKind = fkData
-      FieldName = 'method_acronym'
+      FieldName = 'abbreviation'
       Index = 2
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]

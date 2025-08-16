@@ -1160,9 +1160,13 @@ begin
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS methods (' +
     'method_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
     'method_name     VARCHAR (100) UNIQUE NOT NULL,' +
-    'method_acronym  VARCHAR (20),' +
+    'abbreviation    VARCHAR (20),' +
     'ebird_name      VARCHAR (60),' +
+    'category        VARCHAR (30),' +
     'description     TEXT,' +
+    'recommended_uses TEXT,' +
+    'notes           TEXT,' +
+    'can_delete      BOOLEAN       DEFAULT (1),' +
     'user_inserted   INTEGER,' +
     'user_updated    INTEGER,' +
     'insert_date     DATETIME,' +

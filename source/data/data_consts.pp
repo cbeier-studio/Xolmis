@@ -163,7 +163,10 @@ const
 const
   COL_METHOD_ID = 'method_id';
   COL_METHOD_NAME = 'method_name';
-  COL_METHOD_ABBREVIATION = 'method_acronym';
+  COL_METHOD_ABBREVIATION = 'abbreviation';
+  COL_CATEGORY = 'category';
+  COL_RECOMMENDED_USES = 'recommended_uses';
+  COL_CAN_DELETE = 'can_delete';
 
   // Taxon ranks columns
 const

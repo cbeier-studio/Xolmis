@@ -1,12 +1,12 @@
 object edtMethod: TedtMethod
   Left = 373
-  Height = 342
+  Height = 575
   Top = 34
   Width = 404
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New method'
-  ClientHeight = 342
+  ClientHeight = 575
   ClientWidth = 404
   Font.Height = -12
   PopupMode = pmAuto
@@ -17,7 +17,7 @@ object edtMethod: TedtMethod
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 299
+    Top = 509
     Width = 404
     Align = alTop
     LineColor = 9276813
@@ -27,7 +27,7 @@ object edtMethod: TedtMethod
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 301
+    Top = 511
     Width = 404
     Align = alTop
     AutoSize = True
@@ -93,28 +93,28 @@ object edtMethod: TedtMethod
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 299
+    Height = 509
     Top = 0
     Width = 404
     HorzScrollBar.Page = 404
-    VertScrollBar.Page = 299
+    VertScrollBar.Page = 509
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 299
+    ClientHeight = 509
     ClientWidth = 404
     Constraints.MinWidth = 220
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 299
+      Height = 509
       Top = 0
       Width = 404
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 299
+      ClientHeight = 509
       ClientWidth = 404
       TabOrder = 0
       object pName: TPanel
@@ -152,6 +152,7 @@ object edtMethod: TedtMethod
           Constraints.MinWidth = 372
           MaxLength = 100
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -191,6 +192,7 @@ object edtMethod: TedtMethod
           Constraints.MinWidth = 372
           MaxLength = 60
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -206,8 +208,10 @@ object edtMethod: TedtMethod
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
+        ChildSizing.ControlsPerLine = 2
         ClientHeight = 46
         ClientWidth = 404
         ParentBackground = False
@@ -216,9 +220,19 @@ object edtMethod: TedtMethod
           Left = 16
           Height = 15
           Top = 4
-          Width = 220
+          Width = 178
           BorderSpacing.Top = 4
           Caption = 'Abbreviation: *'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblCategory: TLabel
+          Left = 210
+          Height = 15
+          Top = 4
+          Width = 178
+          BorderSpacing.Top = 4
+          Caption = 'Category:'
           ParentColor = False
           ParentFont = False
         end
@@ -226,10 +240,22 @@ object edtMethod: TedtMethod
           Left = 16
           Height = 23
           Top = 23
-          Width = 220
-          Constraints.MinWidth = 220
+          Width = 178
           MaxLength = 20
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eNameKeyPress
+        end
+        object cbCategory: TComboBox
+          Left = 210
+          Height = 23
+          Top = 23
+          Width = 178
+          ItemHeight = 15
+          MaxLength = 30
+          TabOrder = 1
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -237,11 +263,10 @@ object edtMethod: TedtMethod
       object pDescription: TPanel
         Left = 0
         Height = 113
-        Top = 170
+        Top = 154
         Width = 404
         Align = alTop
         AutoSize = True
-        BorderSpacing.Top = 16
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.HorizontalSpacing = 16
@@ -270,6 +295,87 @@ object edtMethod: TedtMethod
           Align = alTop
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEditingDone = eNameEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+        end
+      end
+      object pRecommendedUses: TPanel
+        Left = 0
+        Height = 113
+        Top = 267
+        Width = 404
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 113
+        ClientWidth = 404
+        ParentBackground = False
+        TabOrder = 4
+        object lblRecommendedUses: TLabel
+          Left = 16
+          Height = 15
+          Top = 4
+          Width = 372
+          Align = alTop
+          BorderSpacing.Top = 4
+          Caption = 'Recommended uses:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object mRecommendedUses: TMemo
+          Left = 16
+          Height = 90
+          Top = 23
+          Width = 372
+          Align = alTop
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+          OnEditingDone = eNameEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+        end
+      end
+      object pNotes: TPanel
+        Left = 0
+        Height = 113
+        Top = 380
+        Width = 404
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 113
+        ClientWidth = 404
+        ParentBackground = False
+        TabOrder = 5
+        object lblNotes: TLabel
+          Left = 16
+          Height = 15
+          Top = 4
+          Width = 372
+          Align = alTop
+          BorderSpacing.Top = 4
+          Caption = 'Notes:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object mNotes: TMemo
+          Left = 16
+          Height = 90
+          Top = 23
+          Width = 372
+          Align = alTop
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end

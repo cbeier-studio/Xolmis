@@ -10199,7 +10199,7 @@ begin
       g := FSearch.Fields.Add(TSearchGroup.Create);
       FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, 'Name', sdtText, Crit,
         False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, 'Acronym', sdtText, Crit,
+      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, 'Abbreviation', sdtText, Crit,
         False, aValue));
       FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EBIRD_NAME, 'eBird name', sdtText, Crit,
         False, aValue));

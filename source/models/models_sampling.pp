@@ -31,8 +31,12 @@ type
   protected
     FName: String;
     FAbbreviation: String;
+    FCategory: String;
     FEbirdName: String;
     FDescription: String;
+    FRecommendedUses: String;
+    FNotes: String;
+    FCanDelete: Boolean;
   public
     constructor Create(aValue: Integer = 0);
     procedure Clear; override;
@@ -49,8 +53,12 @@ type
   published
     property Name: String read FName write FName;
     property Abbreviation: String read FAbbreviation write FAbbreviation;
+    property Category: String read FCategory write FCategory;
     property EbirdName: String read FEbirdName write FEbirdName;
     property Description: String read FDescription write FDescription;
+    property RecommendedUses: String read FRecommendedUses write FRecommendedUses;
+    property Notes: String read FNotes write FNotes;
+    property CanDelete: Boolean read FCanDelete write FCanDelete;
   end;
 
 type
@@ -3720,16 +3728,24 @@ begin
   inherited Clear;
   FName := EmptyStr;
   FAbbreviation := EmptyStr;
+  FCategory := EmptyStr;
   FEbirdName := EmptyStr;
   FDescription := EmptyStr;
+  FRecommendedUses := EmptyStr;
+  FNotes := EmptyStr;
+  FCanDelete := True;
 end;
 
 procedure TMethod.Copy(aFrom: TMethod);
 begin
   FName := aFrom.Name;
   FAbbreviation := aFrom.Abbreviation;
+  FCategory := aFrom.Category;
   FEbirdName := aFrom.EbirdName;
   FDescription := aFrom.Description;
+  FRecommendedUses := aFrom.RecommendedUses;
+  FNotes := aFrom.Notes;
+  FCanDelete := aFrom.CanDelete;
 end;
 
 procedure TMethod.Delete;
@@ -3778,9 +3794,13 @@ begin
     Add('SELECT ' +
         'method_id, ' +
         'method_name, ' +
-        'method_acronym, ' +
+        'abbreviation, ' +
         'ebird_name, ' +
+        'category, ' +
         'description, ' +
+        'recommended_uses, ' +
+        'notes, ' +
+        'can_delete, ' +
         'user_inserted, ' +
         'user_updated, ' +
         'datetime(insert_date, ''localtime'') AS insert_date, ' +
@@ -3811,9 +3831,13 @@ begin
   begin
     FId := FieldByName('method_id').AsInteger;
     FName := FieldByName('method_name').AsString;
-    FAbbreviation := FieldByName('method_acronym').AsString;
+    FAbbreviation := FieldByName('abbreviation').AsString;
+    FCategory := FieldByName('category').AsString;
     FEbirdName := FieldByName('ebird_name').AsString;
     FDescription := FieldByName('description').AsString;
+    FRecommendedUses := FieldByName('recommended_uses').AsString;
+    FNotes := FieldByName('notes').AsString;
+    FCanDelete := FieldByName('can_delete').AsBoolean;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -3850,23 +3874,32 @@ begin
       Clear;
       Add('INSERT INTO methods (' +
         'method_name, ' +
-        'method_acronym, ' +
+        'abbreviation, ' +
+        'category, ' +
         'ebird_name, ' +
         'description, ' +
+        'recommended_uses, ' +
+        'notes, ' +
         'user_inserted, ' +
         'insert_date) ');
       Add('VALUES (' +
         ':method_name, ' +
-        ':method_acronym, ' +
+        ':abbreviation, ' +
+        ':category, ' +
         ':ebird_name, ' +
         ':description, ' +
+        ':recommended_uses, ' +
+        ':notes, ' +
         ':user_inserted, ' +
         'datetime(''now'', ''subsec''))');
 
       ParamByName('method_name').AsString := FName;
-      ParamByName('method_acronym').AsString := FAbbreviation;
+      ParamByName('abbreviation').AsString := FAbbreviation;
+      SetStrParam(ParamByName('category'), FCategory);
       SetStrParam(ParamByName('ebird_name'), FEbirdName);
       SetStrParam(ParamByName('description'), FDescription);
+      SetStrParam(ParamByName('recommended_uses'), FRecommendedUses);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
       ExecSQL;
@@ -3902,10 +3935,13 @@ var
 begin
   JSONObject := TJSONObject.Create;
   try
-    JSONObject.Add('Name', FName);
-    JSONObject.Add('Abbreviation', FAbbreviation);
-    JSONObject.Add('EbirdName', FEbirdName);
-    JSONObject.Add('Description', FDescription);
+    JSONObject.Add('method_name', FName);
+    JSONObject.Add('abbreviation', FAbbreviation);
+    JSONObject.Add('category', FCategory);
+    JSONObject.Add('ebird_name', FEbirdName);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('recommended_uses', FRecommendedUses);
+    JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
   finally
@@ -3932,9 +3968,12 @@ begin
       Clear;
       Add('UPDATE methods SET ' +
         'method_name = :method_name, ' +
-        'method_acronym = :method_acronym, ' +
+        'abbreviation = :abbreviation, ' +
+        'category = :category, ' +
         'ebird_name = :ebird_name, ' +
         'description = :description, ' +
+        'recommended_uses = :recommended_uses, ' +
+        'notes = :notes, ' +
         'user_updated = :user_updated, ' +
         'update_date = datetime(''now'', ''subsec''), ' +
         'marked_status = :marked_status, ' +
@@ -3942,9 +3981,12 @@ begin
       Add('WHERE (method_id = :method_id)');
 
       ParamByName('method_name').AsString := FName;
-      ParamByName('method_acronym').AsString := FAbbreviation;
+      ParamByName('abbreviation').AsString := FAbbreviation;
+      SetStrParam(ParamByName('category'), FCategory);
       SetStrParam(ParamByName('ebird_name'), FEbirdName);
       SetStrParam(ParamByName('description'), FDescription);
+      SetStrParam(ParamByName('recommended_uses'), FRecommendedUses);
+      SetStrParam(ParamByName('notes'), FNotes);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
@@ -3971,11 +4013,17 @@ begin
 
   if FieldValuesDiff(rscName, aOld.Name, FName, R) then
     aList.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+  if FieldValuesDiff(rscAbbreviation, aOld.Abbreviation, FAbbreviation, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscCategory, aOld.Category, FCategory, R) then
     aList.Add(R);
   if FieldValuesDiff(rscEBirdName, aOld.EbirdName, FEbirdName, R) then
     aList.Add(R);
   if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscRecommendedUses, aOld.RecommendedUses, FRecommendedUses, R) then
+    aList.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     aList.Add(R);
 
   Result := aList.Count > 0;

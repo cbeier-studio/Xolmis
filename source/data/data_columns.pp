@@ -508,6 +508,9 @@ resourcestring
   rscBarbDensity = 'Barb density';
   rscPermitNumber = 'Permit number';
   rscMistnet = 'Mistnet';
+  rscCategory = 'Category';
+  rscRecommendedUses = 'Recommended uses';
+  rscCanDelete = 'Can delete';
 
   rscValue = 'Value';
   rscTally = 'Count';
@@ -525,6 +528,7 @@ resourcestring
   procedure SummaryGazetteer(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryIndividuals(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryInstitutions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryMethods(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryNests(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryNestRevisions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryPeople(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -737,10 +741,14 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'method_name':            Fields[i].DisplayLabel := rscName;
-        'method_acronym':         Fields[i].DisplayLabel := rscAcronym;
+        'abbreviation':           Fields[i].DisplayLabel := rscAbbreviation;
+        'category':               Fields[i].DisplayLabel := rscCategory;
         'ebird_name':             Fields[i].DisplayLabel := rscEBirdName;
         'description':            Fields[i].DisplayLabel := rscDescription;
+        'recommended_uses':       Fields[i].DisplayLabel := rscRecommendedUses;
+        'notes':                  Fields[i].DisplayLabel := rscNotes;
         'method_id':              Fields[i].DisplayLabel := rscId;
+        'can_delete':             Fields[i].DisplayLabel := rscCanDelete;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
         'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
@@ -4440,6 +4448,76 @@ begin
         Add('ORDER BY tally DESC');
       end;
 
+      'notes':
+      begin
+        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('WHERE ((notes != '''') OR (notes NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+    end;
+
+    if SQL.Count > 0 then
+    begin
+
+      Open;
+    end;
+  end;
+end;
+
+procedure SummaryMethods(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+
+    Clear;
+
+    case aFieldName of
+      'method_name', 'method_id', 'abbreviation', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated':
+      begin
+        Clear;
+      end;
+
+      'category':
+      begin
+        Add('SELECT %afield AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+        MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'marked_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'exported_status':
+      begin
+        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+
+      'description':
+      begin
+        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('WHERE ((description != '''') OR (description NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
+      'recommended_uses':
+      begin
+        Add('SELECT ' + QuotedStr(rscRecommendedUses) + ' AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('WHERE ((recommended_uses != '''') OR (recommended_uses NOTNULL))');
+        Add('ORDER BY tally DESC');
+      end;
       'notes':
       begin
         Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');

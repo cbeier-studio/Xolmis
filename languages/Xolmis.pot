@@ -270,6 +270,10 @@ msgctxt "data_columns.rsccamera"
 msgid "Camera"
 msgstr ""
 
+#: data_columns.rsccandelete
+msgid "Can delete"
+msgstr ""
+
 #: data_columns.rsccaptured
 msgctxt "data_columns.rsccaptured"
 msgid "Captured"
@@ -293,6 +297,10 @@ msgstr ""
 #: data_columns.rsccarrierid
 msgctxt "data_columns.rsccarrierid"
 msgid "Carrier ID"
+msgstr ""
+
+#: data_columns.rsccategory
+msgid "Category"
 msgstr ""
 
 #: data_columns.rsccbro
@@ -1868,6 +1876,10 @@ msgstr ""
 #: data_columns.rscrecognizablemarkings
 msgctxt "data_columns.rscrecognizablemarkings"
 msgid "Recognizable markings"
+msgstr ""
+
+#: data_columns.rscrecommendeduses
+msgid "Recommended uses"
 msgstr ""
 
 #: data_columns.rscrecorded
@@ -6817,6 +6829,10 @@ msgctxt "tedtmethod.lblacronym.caption"
 msgid "Abbreviation: *"
 msgstr ""
 
+#: tedtmethod.lblcategory.caption
+msgid "Category:"
+msgstr ""
+
 #: tedtmethod.lbldescription.caption
 msgctxt "tedtmethod.lbldescription.caption"
 msgid "Description:"
@@ -6829,6 +6845,15 @@ msgstr ""
 #: tedtmethod.lblname.caption
 msgctxt "tedtmethod.lblname.caption"
 msgid "Name: *"
+msgstr ""
+
+#: tedtmethod.lblnotes.caption
+msgctxt "tedtmethod.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtmethod.lblrecommendeduses.caption
+msgid "Recommended uses:"
 msgstr ""
 
 #: tedtmethod.sbcancel.caption

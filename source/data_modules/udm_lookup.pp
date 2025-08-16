@@ -44,7 +44,7 @@ type
     lkInstitutionsacronym: TStringField;
     lkInstitutionsfull_name: TStringField;
     lkInstitutionsinstitution_id: TLongintField;
-    lkMethodsmethod_acronym: TStringField;
+    lkMethodsabbreviation: TStringField;
     lkMethodsmethod_id: TLongintField;
     lkMethodsmethod_name: TStringField;
     lkNestsfull_name: TStringField;

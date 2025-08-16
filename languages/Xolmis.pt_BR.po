@@ -272,6 +272,10 @@ msgctxt "data_columns.rsccamera"
 msgid "Camera"
 msgstr "Câmera"
 
+#: data_columns.rsccandelete
+msgid "Can delete"
+msgstr "Apagável"
+
 #: data_columns.rsccaptured
 msgctxt "data_columns.rsccaptured"
 msgid "Captured"
@@ -296,6 +300,10 @@ msgstr "Portador"
 msgctxt "data_columns.rsccarrierid"
 msgid "Carrier ID"
 msgstr "Portador ID"
+
+#: data_columns.rsccategory
+msgid "Category"
+msgstr "Categoria"
 
 #: data_columns.rsccbro
 msgctxt "data_columns.rsccbro"
@@ -1871,6 +1879,10 @@ msgstr "# recapturas"
 msgctxt "data_columns.rscrecognizablemarkings"
 msgid "Recognizable markings"
 msgstr "Marcas reconhecíveis"
+
+#: data_columns.rscrecommendeduses
+msgid "Recommended uses"
+msgstr "Usos recomendados"
 
 #: data_columns.rscrecorded
 msgctxt "data_columns.rscrecorded"
@@ -6803,6 +6815,10 @@ msgctxt "tedtmethod.lblacronym.caption"
 msgid "Abbreviation: *"
 msgstr "Abreviatura: *"
 
+#: tedtmethod.lblcategory.caption
+msgid "Category:"
+msgstr "Categoria:"
+
 #: tedtmethod.lbldescription.caption
 msgctxt "tedtmethod.lbldescription.caption"
 msgid "Description:"
@@ -6816,6 +6832,15 @@ msgstr "Nome do método no eBird:"
 msgctxt "tedtmethod.lblname.caption"
 msgid "Name: *"
 msgstr "Nome: *"
+
+#: tedtmethod.lblnotes.caption
+msgctxt "tedtmethod.lblnotes.caption"
+msgid "Notes:"
+msgstr "Anotações:"
+
+#: tedtmethod.lblrecommendeduses.caption
+msgid "Recommended uses:"
+msgstr "Usos recomendados:"
 
 #: tedtmethod.sbcancel.caption
 msgctxt "tedtmethod.sbcancel.caption"
