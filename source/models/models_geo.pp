@@ -345,9 +345,9 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FName           := Obj.Get('Name', '');
-    FAbbreviation   := Obj.Get('Abbreviation', '');
-    case Obj.Get('Rank', '') of
+    FName           := Obj.Get('site_name', '');
+    FAbbreviation   := Obj.Get('abbreviation', '');
+    case Obj.Get('rank', '') of
       'P': FRank := srCountry;
       'E': FRank := srState;
       'R': FRank := srRegion;
@@ -357,18 +357,18 @@ begin
     else
       FRank := srNone;
     end;
-    FParentSiteId   := Obj.Get('ParentSiteId', 0);
-    FMunicipalityId := Obj.Get('MunicipalityId', 0);
-    FStateId        := Obj.Get('StateId', 0);
-    FCountryId      := Obj.Get('CountryId', 0);
-    FFullName       := Obj.Get('FullName', '');
-    FEbirdName      := Obj.Get('EbirdName', '');
-    FLongitude      := Obj.Get('Longitude', 0);
-    FLatitude       := Obj.Get('Latitude', 0);
-    FAltitude       := Obj.Get('Altitude', 0);
-    FLanguage       := Obj.Get('Language', '');
-    FDescription    := Obj.Get('Description', '');
-    FNotes          := Obj.Get('Notes', '');
+    FParentSiteId   := Obj.Get('parent_site_id', 0);
+    FMunicipalityId := Obj.Get('municipality_id', 0);
+    FStateId        := Obj.Get('state_id', 0);
+    FCountryId      := Obj.Get('country_id', 0);
+    FFullName       := Obj.Get('full_name', '');
+    FEbirdName      := Obj.Get('ebird_name', '');
+    FLongitude      := Obj.Get('longitude', 0);
+    FLatitude       := Obj.Get('latitude', 0);
+    FAltitude       := Obj.Get('altitude', 0);
+    FLanguage       := Obj.Get('language', '');
+    FDescription    := Obj.Get('description', '');
+    FNotes          := Obj.Get('notes', '');
   finally
     Obj.Free;
   end;
@@ -380,21 +380,21 @@ var
 begin
   JSONObject := TJSONObject.Create;
   try
-    JSONObject.Add('Name', FName);
-    JSONObject.Add('Abbreviation', FAbbreviation);
-    JSONObject.Add('Rank', SITE_RANKS[FRank]);
-    JSONObject.Add('ParentSiteId', FParentSiteId);
-    JSONObject.Add('MunicipalityId', FMunicipalityId);
-    JSONObject.Add('StateId', FStateId);
-    JSONObject.Add('CountryId', FCountryId);
-    JSONObject.Add('FullName', FFullName);
-    JSONObject.Add('EbirdName', FEbirdName);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Altitude', FAltitude);
-    JSONObject.Add('Language', FLanguage);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Notes', FNotes);
+    JSONObject.Add('site_name', FName);
+    JSONObject.Add('abbreviation', FAbbreviation);
+    JSONObject.Add('rank', SITE_RANKS[FRank]);
+    JSONObject.Add('parent_site_id', FParentSiteId);
+    JSONObject.Add('municipality_id', FMunicipalityId);
+    JSONObject.Add('state_id', FStateId);
+    JSONObject.Add('country_id', FCountryId);
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('ebird_name', FEbirdName);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('altitude', FAltitude);
+    JSONObject.Add('language', FLanguage);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
   finally

@@ -6,10 +6,10 @@ object frmMain: TfrmMain
   Caption = 'Xolmis'
   ClientHeight = 898
   ClientWidth = 1193
+  Constraints.MinHeight = 600
   Constraints.MinWidth = 1100
   DefaultMonitor = dmDesktop
   Menu = mMenu
-  LCLVersion = '4.2.0.0'
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate

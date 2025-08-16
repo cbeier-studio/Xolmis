@@ -4404,6 +4404,7 @@ end;
 
 procedure TDMG.qSightingsAfterPost(DataSet: TDataSet);
 var
+  Repo: TSightingRepository;
   NewSighting: TSighting;
   lstDiff: TStrings;
   D: String;
@@ -4411,8 +4412,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
   begin
+    Repo := TSightingRepository.Create(DMM.sqlCon);
     NewSighting := TSighting.Create;
-    NewSighting.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewSighting);
     lstDiff := TStringList.Create;
     try
       if NewSighting.Diff(OldSighting, lstDiff) then
@@ -4426,6 +4428,7 @@ begin
     finally
       FreeAndNil(NewSighting);
       FreeAndNil(OldSighting);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

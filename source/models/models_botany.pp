@@ -366,58 +366,6 @@ begin
   Result := TBotanicalTaxon(inherited Clone);
 end;
 
-function TBotanicalTaxon.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Authorship', FAuthorship);
-    JSONObject.Add('Formatted name', FFormattedName);
-    JSONObject.Add('Vernacular name', FVernacularName);
-    JSONObject.Add('Valid taxon', FValidId);
-    JSONObject.Add('Taxon rank', BOTANICAL_RANKS[FRankId]);
-    JSONObject.Add('Parent taxon', FParentTaxonId);
-    JSONObject.Add('Order', FOrderId);
-    JSONObject.Add('Family', FFamilyId);
-    JSONObject.Add('Genus', FGenusId);
-    JSONObject.Add('Species', FSpeciesId);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-function TBotanicalTaxon.ToString: String;
-begin
-  Result := Format('BotanicalTaxon(Id=%d, FullName=%s, Authorship=%s, FormattedName=%s, VernacularName=%s, ' +
-    'ValidId=%d, RankId=%d, ParentTaxonId=%d, OrderId=%d, FamilyId=%d, GenusId=%d, SpeciesId=%d, ' +
-    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FAuthorship, FFormattedName, FVernacularName, FValidId, Ord(FRankId), FParentTaxonId,
-    FOrderId, FFamilyId, FGenusId, FSpeciesId,
-    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
-    BoolToStr(FActive, 'True', 'False')]);
-end;
-
-function TBotanicalTaxon.Validate(out Msg: string): Boolean;
-begin
-  if FFullName = EmptyStr then
-  begin
-    Msg := 'FullName required.';
-    Exit(False);
-  end;
-  if FRankId = brNone then
-  begin
-    Msg := 'RankId required.';
-    Exit(False);
-  end;
-
-  Msg := '';
-  Result := True;
-end;
-
 function TBotanicalTaxon.Diff(const Old: TBotanicalTaxon; out Changes: TStrings): Boolean;
 var
   R: String;
@@ -464,20 +412,72 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName       := Obj.Get('Name', '');
-    FAuthorship     := Obj.Get('Authorship', '');
-    FFormattedName  := Obj.Get('Formatted name', '');
-    FVernacularName := Obj.Get('Vernacular name', '');
-    FValidId        := Obj.Get('Valid taxon', 0);
-    FRankId         := StringToBotanicRank(Obj.Get('Taxon rank', ''));
-    FParentTaxonId  := Obj.Get('Parent taxon', 0);
-    FOrderId        := Obj.Get('Order', 0);
-    FFamilyId       := Obj.Get('Family', 0);
-    FGenusId        := Obj.Get('Genus', 0);
-    FSpeciesId      := Obj.Get('Species', 0);
+    FFullName       := Obj.Get('full_name', '');
+    FAuthorship     := Obj.Get('authorship', '');
+    FFormattedName  := Obj.Get('formatted_name', '');
+    FVernacularName := Obj.Get('vernacular_name', '');
+    FValidId        := Obj.Get('valid_id', 0);
+    FRankId         := StringToBotanicRank(Obj.Get('taxon_rank', ''));
+    FParentTaxonId  := Obj.Get('parent_taxon_id', 0);
+    FOrderId        := Obj.Get('order_id', 0);
+    FFamilyId       := Obj.Get('family_id', 0);
+    FGenusId        := Obj.Get('genus_id', 0);
+    FSpeciesId      := Obj.Get('species_id', 0);
   finally
     Obj.Free;
   end;
+end;
+
+function TBotanicalTaxon.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('authorship', FAuthorship);
+    JSONObject.Add('formatted_name', FFormattedName);
+    JSONObject.Add('vernacular_name', FVernacularName);
+    JSONObject.Add('valid_id', FValidId);
+    JSONObject.Add('taxon_rank', BOTANICAL_RANKS[FRankId]);
+    JSONObject.Add('parent_taxon_id', FParentTaxonId);
+    JSONObject.Add('order_id', FOrderId);
+    JSONObject.Add('family_id', FFamilyId);
+    JSONObject.Add('genus_id', FGenusId);
+    JSONObject.Add('species_id', FSpeciesId);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TBotanicalTaxon.ToString: String;
+begin
+  Result := Format('BotanicalTaxon(Id=%d, FullName=%s, Authorship=%s, FormattedName=%s, VernacularName=%s, ' +
+    'ValidId=%d, RankId=%d, ParentTaxonId=%d, OrderId=%d, FamilyId=%d, GenusId=%d, SpeciesId=%d, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FAuthorship, FFormattedName, FVernacularName, FValidId, Ord(FRankId), FParentTaxonId,
+    FOrderId, FFamilyId, FGenusId, FSpeciesId,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TBotanicalTaxon.Validate(out Msg: string): Boolean;
+begin
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'FullName required.';
+    Exit(False);
+  end;
+  if FRankId = brNone then
+  begin
+    Msg := 'RankId required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
 end;
 
 { TBotanicalTaxonRepository }

@@ -62,18 +62,16 @@ type
     FIsOnEbird: Boolean;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    procedure Update;
-    function Diff(aOld: TSighting; var aList: TStrings): Boolean;
-    function Find(aSurvey, aTaxon, aObserver: Integer): Boolean;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TSighting);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TSighting; out Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TSighting): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property SightingDate: TDate read FSightingDate write FSightingDate;
@@ -109,20 +107,76 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TSightingRepository }
+
+  TSightingRepository = class(TXolmisRepository)
+  private
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByCombo(const aSurvey, aTaxon, aObserver: Integer; E: TSighting);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
 uses
-  utils_system, utils_global, models_users, utils_validations, data_columns, data_setparam, data_getvalue,
-  utils_locale, udm_main;
+  utils_locale, utils_system, utils_global, utils_validations, models_users,
+  data_consts, data_columns, data_setparam, data_getvalue,
+  udm_main;
 
 { TSighting }
 
 constructor TSighting.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TSighting.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TSighting then
+  begin
+    FSurveyId := TSighting(Source).SurveyId;
+    FSightingDate := TSighting(Source).SightingDate;
+    FSightingTime := TSighting(Source).SightingTime;
+    FLocalityId := TSighting(Source).LocalityId;
+    FLatitude := TSighting(Source).Latitude;
+    FLongitude := TSighting(Source).Longitude;
+    FObserverId := TSighting(Source).ObserverId;
+    FTaxonId := TSighting(Source).TaxonId;
+    FIndividualId := TSighting(Source).IndividualId;
+    FSubjectTally := TSighting(Source).SubjectTally;
+    FSubjectDistance := TSighting(Source).SubjectDistance;
+    FMethodId := TSighting(Source).MethodId;
+    FMackinnonListNumber := TSighting(Source).MackinnonListNumber;
+    FSubjectCaptured := TSighting(Source).SubjectCaptured;
+    FSubjectSeen := TSighting(Source).SubjectSeen;
+    FSubjectHeard := TSighting(Source).SubjectHeard;
+    FSubjectPhotographed := TSighting(Source).SubjectPhotographed;
+    FSubjectRecorded := TSighting(Source).SubjectRecorded;
+    FMalesTally := TSighting(Source).MalesTally;
+    FFemalesTally := TSighting(Source).FemalesTally;
+    FNotSexedTally := TSighting(Source).NotSexedTally;
+    FAdultsTally := TSighting(Source).AdultsTally;
+    FImmatureTally := TSighting(Source).ImmatureTally;
+    FNotAgedTally := TSighting(Source).NotAgedTally;
+    FRecapturesTally := TSighting(Source).RecapturesTally;
+    FNewCapturesTally := TSighting(Source).NewCapturesTally;
+    FUnbandedTally := TSighting(Source).UnbandedTally;
+    FDetectionType := TSighting(Source).DetectionType;
+    FBreedingStatus := TSighting(Source).BreedingStatus;
+    FNotSurveying := TSighting(Source).NotSurveying;
+    FIsOnEbird := TSighting(Source).IsOnEbird;
+    FNotes := TSighting(Source).Notes;
+  end;
 end;
 
 procedure TSighting.Clear;
@@ -162,69 +216,240 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TSighting.Copy(aFrom: TSighting);
+function TSighting.Clone: TXolmisRecord;
 begin
-  FSurveyId := aFrom.SurveyId;
-  FSightingDate := aFrom.SightingDate;
-  FSightingTime := aFrom.SightingTime;
-  FLocalityId := aFrom.LocalityId;
-  FLatitude := aFrom.Latitude;
-  FLongitude := aFrom.Longitude;
-  FObserverId := aFrom.ObserverId;
-  FTaxonId := aFrom.TaxonId;
-  FIndividualId := aFrom.IndividualId;
-  FSubjectTally := aFrom.SubjectTally;
-  FSubjectDistance := aFrom.SubjectDistance;
-  FMethodId := aFrom.MethodId;
-  FMackinnonListNumber := aFrom.MackinnonListNumber;
-  FSubjectCaptured := aFrom.SubjectCaptured;
-  FSubjectSeen := aFrom.SubjectSeen;
-  FSubjectHeard := aFrom.SubjectHeard;
-  FSubjectPhotographed := aFrom.SubjectPhotographed;
-  FSubjectRecorded := aFrom.SubjectRecorded;
-  FMalesTally := aFrom.MalesTally;
-  FFemalesTally := aFrom.FemalesTally;
-  FNotSexedTally := aFrom.NotSexedTally;
-  FAdultsTally := aFrom.AdultsTally;
-  FImmatureTally := aFrom.ImmatureTally;
-  FNotAgedTally := aFrom.NotAgedTally;
-  FRecapturesTally := aFrom.RecapturesTally;
-  FNewCapturesTally := aFrom.NewCapturesTally;
-  FUnbandedTally := aFrom.UnbandedTally;
-  FDetectionType := aFrom.DetectionType;
-  FBreedingStatus := aFrom.BreedingStatus;
-  FNotSurveying := aFrom.NotSurveying;
-  FIsOnEbird := aFrom.IsOnEbird;
-  FNotes := aFrom.Notes;
+  Result := TSighting(inherited Clone);
 end;
 
-procedure TSighting.Delete;
+function TSighting.Diff(const aOld: TSighting; out Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDate, aOld.SightingDate, FSightingDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.SightingTime, FSightingTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividuals, aOld.SubjectTally, FSubjectTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDistanceM, aOld.SubjectDistance, FSubjectDistance, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMackinnonList, aOld.MackinnonListNumber, FMackinnonListNumber, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCaptured, aOld.SubjectCaptured, FSubjectCaptured, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSeen, aOld.SubjectSeen, FSubjectSeen, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHeard, aOld.SubjectHeard, FSubjectHeard, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPhotographed, aOld.SubjectPhotographed, FSubjectPhotographed, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAudioRecorded, aOld.SubjectRecorded, FSubjectRecorded, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMales, aOld.MalesTally, FMalesTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFemales, aOld.FemalesTally, FFemalesTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAdults, aOld.AdultsTally, FAdultsTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscImmatures, aOld.ImmatureTally, FImmatureTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRecaptures, aOld.RecapturesTally, FRecapturesTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNewCaptures, aOld.NewCapturesTally, FNewCapturesTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscUnbanded, aOld.UnbandedTally, FUnbandedTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDetectionType, aOld.DetectionType, FDetectionType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscBreedingCode, aOld.BreedingStatus, FBreedingStatus, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOutOfSample, aOld.NotSurveying, FNotSurveying, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIsInEBird, aOld.IsOnEbird, FIsOnEbird, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TSighting.EqualsTo(const Other: TSighting): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TSighting.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FSurveyId             := Obj.Get('survey_id', 0);
+    FSightingDate         := StrToDate(Obj.Get('sighting_date', NULL_DATE_STR));
+    FSightingTime         := StrToTime(Obj.Get('sighting_time', NULL_TIME_STR));
+    FLocalityId           := Obj.Get('locality_id', 0);
+    FLongitude            := Obj.Get('longitude', 0.0);
+    FLatitude             := Obj.Get('latitude', 0.0);
+    FObserverId           := Obj.Get('observer_id', 0);
+    FTaxonId              := Obj.Get('taxon_id', 0);
+    FIndividualId         := Obj.Get('individual_id', 0);
+    FSubjectTally         := Obj.Get('subject_tally', 0);
+    FSubjectDistance      := Obj.Get('subject_distance', 0.0);
+    FMethodId             := Obj.Get('method_id', 0);
+    FMackinnonListNumber  := Obj.Get('mackinnon_list_number', 0);
+    FSubjectCaptured      := Obj.Get('captured', False);
+    FSubjectSeen          := Obj.Get('seen', False);
+    FSubjectHeard         := Obj.Get('heard', False);
+    FSubjectPhotographed  := Obj.Get('photographed', False);
+    FSubjectRecorded      := Obj.Get('recorded', False);
+    FMalesTally           := Obj.Get('males_tally', '');
+    FFemalesTally         := Obj.Get('females_tally', '');
+    FNotSexedTally        := Obj.Get('not_sexed_tally', '');
+    FAdultsTally          := Obj.Get('adults_tally', '');
+    FImmatureTally        := Obj.Get('immatures_tally', '');
+    FNotAgedTally         := Obj.Get('not_aged_tally', '');
+    FNewCapturesTally     := Obj.Get('new_captures_tally', 0);
+    FRecapturesTally      := Obj.Get('recaptures_tally', 0);
+    FUnbandedTally        := Obj.Get('unbanded_tally', 0);
+    FDetectionType        := Obj.Get('detection_type', '');
+    FBreedingStatus       := Obj.Get('breeding_status', '');
+    FNotSurveying         := Obj.Get('not_surveying', False);
+    FIsOnEbird            := Obj.Get('is_on_ebird', False);
+    FNotes                := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TSighting.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('sighting_date', DateToStr(FSightingDate));
+    JSONObject.Add('sighting_time', TimeToStr(FSightingTime));
+    JSONObject.Add('locality_id', FLocalityId);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('observer_id', FObserverId);
+    JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('subject_tally', FSubjectTally);
+    JSONObject.Add('subject_distance', FSubjectDistance);
+    JSONObject.Add('method_id', FMethodId);
+    JSONObject.Add('mackinnon_list_number', FMackinnonListNumber);
+    JSONObject.Add('captured', FSubjectCaptured);
+    JSONObject.Add('seen', FSubjectSeen);
+    JSONObject.Add('heard', FSubjectHeard);
+    JSONObject.Add('photographed', FSubjectPhotographed);
+    JSONObject.Add('recorded', FSubjectRecorded);
+    JSONObject.Add('males_tally', FMalesTally);
+    JSONObject.Add('females_tally', FFemalesTally);
+    JSONObject.Add('not_sexed_tally', FNotSexedTally);
+    JSONObject.Add('adults_tally', FAdultsTally);
+    JSONObject.Add('immatures_tally', FImmatureTally);
+    JSONObject.Add('not_aged_tally', FNotAgedTally);
+    JSONObject.Add('new_captures_tally', FNewCapturesTally);
+    JSONObject.Add('recaptures_tally', FRecapturesTally);
+    JSONObject.Add('unbanded_tally', FUnbandedTally);
+    JSONObject.Add('detection_type', FDetectionType);
+    JSONObject.Add('breeding_status', FBreedingStatus);
+    JSONObject.Add('not_surveying', FNotSurveying);
+    JSONObject.Add('is_on_ebird', FIsOnEbird);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TSighting.ToString: String;
+begin
+  Result := Format('Sighting(Id=%d, SurveyId=%d, SightingDate=%s, SightingTime=%s, LocalityId=%d, ' +
+    'Longitude=%f, Latitude=%f, ObserverId=%d, TaxonId=%d, IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, ' +
+    'MethodId=%d, MackinnonListNumber=%d, Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
+    'MalesTally=%s, FemalesTally=%s, NotSexedTally=%s, AdultsTally=%s, ImmaturesTally=%s, NotAgedTally=%s, ' +
+    'NewCapturesTally=%d, RecapturesTally=%d, UnbandedTally=%d, DetectionType=%s, BreedingStatus=%s, ' +
+    'NotSurveying=%s, IsOnEbird=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude,
+    FObserverId, FTaxonId, FIndividualId, FSubjectTally, FSubjectDistance, FMethodId, FMackinnonListNumber,
+    BoolToStr(FSubjectCaptured, 'True', 'False'), BoolToStr(FSubjectSeen, 'True', 'False'),
+    BoolToStr(FSubjectHeard, 'True', 'False'), BoolToStr(FSubjectPhotographed, 'True', 'False'),
+    BoolToStr(FSubjectRecorded, 'True', 'False'), FMalesTally, FFemalesTally, FNotSexedTally, FAdultsTally,
+    FImmatureTally, FNotAgedTally, FNewCapturesTally, FRecapturesTally, FUnbandedTally, FDetectionType,
+    FBreedingStatus, BoolToStr(FNotSurveying, 'True', 'False'), BoolToStr(FIsOnEbird, 'True', 'False'), FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TSighting.Validate(out Msg: string): Boolean;
+begin
+  if FTaxonId <= 0 then
+  begin
+    Msg := 'TaxonId required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TSightingRepository }
+
+procedure TSightingRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TSighting;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSighting.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TSighting) then
+    raise Exception.Create('Delete: Expected TSighting');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TSighting(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSightingRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM sightings');
-      Add('WHERE (sighting_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_SIGHTING_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -232,15 +457,149 @@ begin
   end;
 end;
 
-procedure TSighting.GetData(aKey: Integer);
+function TSightingRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_SIGHTING_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_SIGHTING_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TSighting) then
+    raise Exception.Create('FindBy: Expected TSighting');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'sighting_id, ' +
+      'survey_id, ' +
+      'individual_id, ' +
+      'sighting_date, ' +
+      'sighting_time, ' +
+      'locality_id, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'method_id, ' +
+      'mackinnon_list_num, ' +
+      'observer_id, ' +
+      'taxon_id, ' +
+      'subjects_tally, ' +
+      'subject_distance, ' +
+      'subject_seen, ' +
+      'subject_heard, ' +
+      'subject_photographed, ' +
+      'subject_recorded, ' +
+      'subject_captured, ' +
+      'males_tally, ' +
+      'females_tally, ' +
+      'not_sexed_tally, ' +
+      'adults_tally, ' +
+      'immatures_tally, ' +
+      'not_aged_tally, ' +
+      'new_captures_tally, ' +
+      'recaptures_tally, ' +
+      'unbanded_tally, ' +
+      'detection_type, ' +
+      'breeding_status, ' +
+      'not_surveying, ' +
+      'ebird_available, ' +
+      'full_name, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM sightings');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TSighting(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TSightingRepository.FindByCombo(const aSurvey, aTaxon, aObserver: Integer; E: TSighting);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT sighting_id FROM sightings');
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (taxon_id = :ataxon)');
+    if aObserver > 0 then
+      Add('AND (observer_id = :aobserver)');
+    ParamByName('ASURVEY').AsInteger := aSurvey;
+    ParamByName('ATAXON').AsInteger := aTaxon;
+    if aObserver > 0 then
+      ParamByName('AOBSERVER').AsInteger := aObserver;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSighting) then
+    raise Exception.Create('GetById: Expected TSighting');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
       'sighting_id, ' +
@@ -286,460 +645,307 @@ begin
       'active_status ' +
       'FROM sightings');
     Add('WHERE sighting_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSighting.LoadFromDataSet(aDataSet: TDataSet);
-begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('sighting_id').AsInteger;
-    FSurveyId := FieldByName('survey_id').AsInteger;
-    FSightingDate := FieldByName('sighting_date').AsDateTime;
-    FSightingTime := FieldByName('sighting_time').AsDateTime;
-    FLocalityId := FieldByName('locality_id').AsInteger;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FObserverId := FieldByName('observer_id').AsInteger;
-    FTaxonId := FieldByName('taxon_id').AsInteger;
-    FIndividualId := FieldByName('individual_id').AsInteger;
-    FSubjectTally := FieldByName('subjects_tally').AsInteger;
-    FSubjectDistance := FieldByName('subject_distance').AsFloat;
-    FMethodId := FieldByName('method_id').AsInteger;
-    FMackinnonListNumber := FieldByName('mackinnon_list_num').AsInteger;
-    FSubjectCaptured := FieldByName('subject_captured').AsBoolean;
-    FSubjectSeen := FieldByName('subject_seen').AsBoolean;
-    FSubjectHeard := FieldByName('subject_heard').AsBoolean;
-    FSubjectPhotographed := FieldByName('subject_photographed').AsBoolean;
-    FSubjectRecorded := FieldByName('subject_recorded').AsBoolean;
-    FMalesTally := FieldByName('males_tally').AsString;
-    FFemalesTally := FieldByName('females_tally').AsString;
-    FNotSexedTally := FieldByName('not_sexed_tally').AsString;
-    FAdultsTally := FieldByName('adults_tally').AsString;
-    FImmatureTally := FieldByName('immatures_tally').AsString;
-    FNotAgedTally := FieldByName('not_aged_tally').AsString;
-    FRecapturesTally := FieldByName('recaptures_tally').AsInteger;
-    FNewCapturesTally := FieldByName('new_captures_tally').AsInteger;
-    FUnbandedTally := FieldByName('unbanded_tally').AsInteger;
-    FDetectionType := FieldByName('detection_type').AsString;
-    FBreedingStatus := FieldByName('breeding_status').AsString;
-    FNotSurveying := FieldByName('not_surveying').AsBoolean;
-    FIsOnEbird := FieldByName('ebird_available').AsBoolean;
-    FNotes := FieldByName('notes').AsString;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    GetTimeStamp(FieldByName('insert_date'), FInsertDate);
-    GetTimeStamp(FieldByName('update_date'), FUpdateDate);
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
-end;
-
-procedure TSighting.Insert;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO sightings (' +
-        'survey_id, ' +
-        'individual_id, ' +
-        'sighting_date, ' +
-        'sighting_time, ' +
-        'locality_id, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'method_id, ' +
-        'mackinnon_list_num, ' +
-        'observer_id, ' +
-        'taxon_id, ' +
-        'subjects_tally, ' +
-        'subject_distance, ' +
-        'subject_seen, ' +
-        'subject_heard, ' +
-        'subject_photographed, ' +
-        'subject_recorded, ' +
-        'subject_captured, ' +
-        'males_tally, ' +
-        'females_tally, ' +
-        'not_sexed_tally, ' +
-        'adults_tally, ' +
-        'immatures_tally, ' +
-        'not_aged_tally, ' +
-        'new_captures_tally, ' +
-        'recaptures_tally, ' +
-        'unbanded_tally, ' +
-        'detection_type, ' +
-        'breeding_status, ' +
-        'not_surveying, ' +
-        'ebird_available, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':survey_id, ' +
-        ':individual_id, ' +
-        'date(:sighting_date), ' +
-        //'(CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
-        'time(:sighting_time), ' +
-        ':locality_id, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':method_id, ' +
-        ':mackinnon_list_num, ' +
-        ':observer_id, ' +
-        ':taxon_id, ' +
-        ':subjects_tally, ' +
-        ':subject_distance, ' +
-        ':subject_seen, ' +
-        ':subject_heard, ' +
-        ':subject_photographed, ' +
-        ':subject_recorded, ' +
-        ':subject_captured, ' +
-        ':males_tally, ' +
-        ':females_tally, ' +
-        ':not_sexed_tally, ' +
-        ':adults_tally, ' +
-        ':immatures_tally, ' +
-        ':not_aged_tally, ' +
-        ':new_captures_tally, ' +
-        ':recaptures_tally, ' +
-        ':unbanded_tally, ' +
-        ':detection_type, ' +
-        ':breeding_status, ' +
-        ':not_surveying, ' +
-        ':ebird_available, ' +
-        ':full_name, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetDateParam(ParamByName('sighting_date'), FSightingDate);
-      SetTimeParam(ParamByName('sighting_time'), FSightingTime);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('method_id'), FMethodId);
-      SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
-      SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
-      ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
-      ParamByName('subject_seen').AsBoolean := FSubjectSeen;
-      ParamByName('subject_heard').AsBoolean := FSubjectHeard;
-      ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
-      ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
-      SetStrParam(ParamByName('males_tally'), FMalesTally);
-      SetStrParam(ParamByName('females_tally'), FFemalesTally);
-      SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
-      SetStrParam(ParamByName('adults_tally'), FAdultsTally);
-      SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
-      SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
-      SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
-      SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
-      SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
-      SetStrParam(ParamByName('detection_type'), FDetectionType);
-      SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
-      ParamByName('not_surveying').AsBoolean := FNotSurveying;
-      ParamByName('ebird_available').AsBoolean := FIsOnEbird;
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSighting.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TSighting.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Date', FSightingDate);
-    JSONObject.Add('Time', FSightingTime);
-    JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Observer', FObserverId);
-    JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Individual', FIndividualId);
-    JSONObject.Add('Subjects tally', FSubjectTally);
-    JSONObject.Add('Subject distance', FSubjectDistance);
-    JSONObject.Add('Method', FMethodId);
-    JSONObject.Add('Mackinnon list number', FMackinnonListNumber);
-    JSONObject.Add('Captured', FSubjectCaptured);
-    JSONObject.Add('Seen', FSubjectSeen);
-    JSONObject.Add('Heard', FSubjectHeard);
-    JSONObject.Add('Photographed', FSubjectPhotographed);
-    JSONObject.Add('Recorded', FSubjectRecorded);
-    JSONObject.Add('Males', FMalesTally);
-    JSONObject.Add('Females', FFemalesTally);
-    JSONObject.Add('Not sexed', FNotSexedTally);
-    JSONObject.Add('Adults', FAdultsTally);
-    JSONObject.Add('Immatures', FImmatureTally);
-    JSONObject.Add('Not aged', FNotAgedTally);
-    JSONObject.Add('New captures', FNewCapturesTally);
-    JSONObject.Add('Recaptures', FRecapturesTally);
-    JSONObject.Add('Unbanded', FUnbandedTally);
-    JSONObject.Add('Detection type', FDetectionType);
-    JSONObject.Add('Breeding status', FBreedingStatus);
-    JSONObject.Add('Not surveying', FNotSurveying);
-    JSONObject.Add('Is on eBird', FIsOnEbird);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TSighting.Update;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSighting.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE sightings SET ' +
-        'survey_id = :survey_id, ' +
-        'individual_id = :individual_id, ' +
-        'sighting_date = date(:sighting_date), ' +
-        //'sighting_time = (CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
-        'sighting_time = time(:sighting_time), ' +
-        'locality_id = :locality_id, ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'method_id = :method_id, ' +
-        'mackinnon_list_num = :mackinnon_list_num, ' +
-        'observer_id = :observer_id, ' +
-        'taxon_id = :taxon_id, ' +
-        'subjects_tally = :subjects_tally, ' +
-        'subject_distance = :subject_distance, ' +
-        'subject_seen = :subject_seen, ' +
-        'subject_heard = :subject_heard, ' +
-        'subject_photographed = :subject_photographed, ' +
-        'subject_recorded = :subject_recorded, ' +
-        'subject_captured = :subject_captured, ' +
-        'males_tally = :males_tally, ' +
-        'females_tally = :females_tally, ' +
-        'not_sexed_tally = :not_sexed_tally, ' +
-        'adults_tally = :adults_tally, ' +
-        'immatures_tally = :immatures_tally, ' +
-        'not_aged_tally = :not_aged_tally, ' +
-        'new_captures_tally = :new_captures_tally, ' +
-        'recaptures_tally = :recaptures_tally, ' +
-        'unbanded_tally = :unbanded_tally, ' +
-        'detection_type = :detection_type, ' +
-        'breeding_status = :breeding_status, ' +
-        'not_surveying = :not_surveying, ' +
-        'ebird_available = :ebird_available, ' +
-        'full_name = :full_name, ' +
-        'notes = :notes, ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (sighting_id = :sighting_id)');
-
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetDateParam(ParamByName('sighting_date'), FSightingDate);
-      SetTimeParam(ParamByName('sighting_time'), FSightingTime);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('method_id'), FMethodId);
-      SetIntParam(ParamByName('mackinnon_list_num'), FMackinnonListNumber);
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetIntParam(ParamByName('subjects_tally'), FSubjectTally);
-      SetFloatParam(ParamByName('subject_distance'), FSubjectDistance);
-      ParamByName('subject_captured').AsBoolean := FSubjectCaptured;
-      ParamByName('subject_seen').AsBoolean := FSubjectSeen;
-      ParamByName('subject_heard').AsBoolean := FSubjectHeard;
-      ParamByName('subject_photographed').AsBoolean := FSubjectPhotographed;
-      ParamByName('subject_recorded').AsBoolean := FSubjectRecorded;
-      SetStrParam(ParamByName('males_tally'), FMalesTally);
-      SetStrParam(ParamByName('females_tally'), FFemalesTally);
-      SetStrParam(ParamByName('not_sexed_tally'), FNotSexedTally);
-      SetStrParam(ParamByName('adults_tally'), FAdultsTally);
-      SetStrParam(ParamByName('immatures_tally'), FImmatureTally);
-      SetStrParam(ParamByName('not_aged_tally'), FNotAgedTally);
-      SetIntParam(ParamByName('new_captures_tally'), FNewCapturesTally);
-      SetIntParam(ParamByName('recaptures_tally'), FRecapturesTally);
-      SetIntParam(ParamByName('unbanded_tally'), FUnbandedTally);
-      SetStrParam(ParamByName('detection_type'), FDetectionType);
-      SetStrParam(ParamByName('breeding_status'), FBreedingStatus);
-      ParamByName('not_surveying').AsBoolean := FNotSurveying;
-      ParamByName('ebird_available').AsBoolean := FIsOnEbird;
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('sighting_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TSighting.Diff(aOld: TSighting; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDate, aOld.SightingDate, FSightingDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.SightingTime, FSightingTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividuals, aOld.SubjectTally, FSubjectTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDistanceM, aOld.SubjectDistance, FSubjectDistance, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMackinnonList, aOld.MackinnonListNumber, FMackinnonListNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCaptured, aOld.SubjectCaptured, FSubjectCaptured, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSeen, aOld.SubjectSeen, FSubjectSeen, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHeard, aOld.SubjectHeard, FSubjectHeard, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPhotographed, aOld.SubjectPhotographed, FSubjectPhotographed, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAudioRecorded, aOld.SubjectRecorded, FSubjectRecorded, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMales, aOld.MalesTally, FMalesTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFemales, aOld.FemalesTally, FFemalesTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAdults, aOld.AdultsTally, FAdultsTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscImmatures, aOld.ImmatureTally, FImmatureTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscRecaptures, aOld.RecapturesTally, FRecapturesTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNewCaptures, aOld.NewCapturesTally, FNewCapturesTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscUnbanded, aOld.UnbandedTally, FUnbandedTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDetectionType, aOld.DetectionType, FDetectionType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscBreedingCode, aOld.BreedingStatus, FBreedingStatus, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOutOfSample, aOld.NotSurveying, FNotSurveying, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIsInEBird, aOld.IsOnEbird, FIsOnEbird, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TSighting.Find(aSurvey, aTaxon, aObserver: Integer): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Clear;
-    Add('SELECT sighting_id FROM sightings');
-    Add('WHERE (survey_id = :asurvey)');
-    Add('AND (taxon_id = :ataxon)');
-    if aObserver > 0 then
-      Add('AND (observer_id = :aobserver)');
-    ParamByName('ASURVEY').AsInteger := aSurvey;
-    ParamByName('ATAXON').AsInteger := aTaxon;
-    if aObserver > 0 then
-      ParamByName('AOBSERVER').AsInteger := aObserver;
-    //  Add('and (time(AMO_HORA_INICIAL,''localtime'') =
-    //    time('+QuotedStr(TimeToStr(Reg.RecordTime))+',''localtime''))');
-//    GravaLogSQL(SQL);
-    Open;
-    Result := RecordCount > 0;
-    if Result then
+    if not EOF then
     begin
-      GetData(FieldByName('sighting_id').AsInteger);
+      Hydrate(Qry, TSighting(E));
     end;
     Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TSighting;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TSighting) then
+    raise Exception.Create('Hydrate: Expected TSighting');
+
+  R := TSighting(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('sighting_id').AsInteger;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.SightingDate := FieldByName('sighting_date').AsDateTime;
+    R.SightingTime := FieldByName('sighting_time').AsDateTime;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.ObserverId := FieldByName('observer_id').AsInteger;
+    R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.SubjectTally := FieldByName('subjects_tally').AsInteger;
+    R.SubjectDistance := FieldByName('subject_distance').AsFloat;
+    R.MethodId := FieldByName('method_id').AsInteger;
+    R.MackinnonListNumber := FieldByName('mackinnon_list_num').AsInteger;
+    R.SubjectCaptured := FieldByName('subject_captured').AsBoolean;
+    R.SubjectSeen := FieldByName('subject_seen').AsBoolean;
+    R.SubjectHeard := FieldByName('subject_heard').AsBoolean;
+    R.SubjectPhotographed := FieldByName('subject_photographed').AsBoolean;
+    R.SubjectRecorded := FieldByName('subject_recorded').AsBoolean;
+    R.MalesTally := FieldByName('males_tally').AsString;
+    R.FemalesTally := FieldByName('females_tally').AsString;
+    R.NotSexedTally := FieldByName('not_sexed_tally').AsString;
+    R.AdultsTally := FieldByName('adults_tally').AsString;
+    R.ImmatureTally := FieldByName('immatures_tally').AsString;
+    R.NotAgedTally := FieldByName('not_aged_tally').AsString;
+    R.RecapturesTally := FieldByName('recaptures_tally').AsInteger;
+    R.NewCapturesTally := FieldByName('new_captures_tally').AsInteger;
+    R.UnbandedTally := FieldByName('unbanded_tally').AsInteger;
+    R.DetectionType := FieldByName('detection_type').AsString;
+    R.BreedingStatus := FieldByName('breeding_status').AsString;
+    R.NotSurveying := FieldByName('not_surveying').AsBoolean;
+    R.IsOnEbird := FieldByName('ebird_available').AsBoolean;
+    R.Notes := FieldByName('notes').AsString;
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TSightingRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSighting;
+begin
+  if not (E is TSighting) then
+    raise Exception.Create('Insert: Expected TSighting');
+
+  R := TSighting(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('INSERT INTO sightings (' +
+      'survey_id, ' +
+      'individual_id, ' +
+      'sighting_date, ' +
+      'sighting_time, ' +
+      'locality_id, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'method_id, ' +
+      'mackinnon_list_num, ' +
+      'observer_id, ' +
+      'taxon_id, ' +
+      'subjects_tally, ' +
+      'subject_distance, ' +
+      'subject_seen, ' +
+      'subject_heard, ' +
+      'subject_photographed, ' +
+      'subject_recorded, ' +
+      'subject_captured, ' +
+      'males_tally, ' +
+      'females_tally, ' +
+      'not_sexed_tally, ' +
+      'adults_tally, ' +
+      'immatures_tally, ' +
+      'not_aged_tally, ' +
+      'new_captures_tally, ' +
+      'recaptures_tally, ' +
+      'unbanded_tally, ' +
+      'detection_type, ' +
+      'breeding_status, ' +
+      'not_surveying, ' +
+      'ebird_available, ' +
+      'full_name, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':survey_id, ' +
+      ':individual_id, ' +
+      'date(:sighting_date), ' +
+      //'(CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
+      'time(:sighting_time), ' +
+      ':locality_id, ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':method_id, ' +
+      ':mackinnon_list_num, ' +
+      ':observer_id, ' +
+      ':taxon_id, ' +
+      ':subjects_tally, ' +
+      ':subject_distance, ' +
+      ':subject_seen, ' +
+      ':subject_heard, ' +
+      ':subject_photographed, ' +
+      ':subject_recorded, ' +
+      ':subject_captured, ' +
+      ':males_tally, ' +
+      ':females_tally, ' +
+      ':not_sexed_tally, ' +
+      ':adults_tally, ' +
+      ':immatures_tally, ' +
+      ':not_aged_tally, ' +
+      ':new_captures_tally, ' +
+      ':recaptures_tally, ' +
+      ':unbanded_tally, ' +
+      ':detection_type, ' +
+      ':breeding_status, ' +
+      ':not_surveying, ' +
+      ':ebird_available, ' +
+      ':full_name, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
+
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetDateParam(ParamByName('sighting_date'), R.SightingDate);
+    SetTimeParam(ParamByName('sighting_time'), R.SightingTime);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('method_id'), R.MethodId);
+    SetIntParam(ParamByName('mackinnon_list_num'), R.MackinnonListNumber);
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetIntParam(ParamByName('subjects_tally'), R.SubjectTally);
+    SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
+    ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
+    ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
+    ParamByName('subject_heard').AsBoolean := R.SubjectHeard;
+    ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
+    ParamByName('subject_recorded').AsBoolean := R.SubjectRecorded;
+    SetStrParam(ParamByName('males_tally'), R.MalesTally);
+    SetStrParam(ParamByName('females_tally'), R.FemalesTally);
+    SetStrParam(ParamByName('not_sexed_tally'), R.NotSexedTally);
+    SetStrParam(ParamByName('adults_tally'), R.AdultsTally);
+    SetStrParam(ParamByName('immatures_tally'), R.ImmatureTally);
+    SetStrParam(ParamByName('not_aged_tally'), R.NotAgedTally);
+    SetIntParam(ParamByName('new_captures_tally'), R.NewCapturesTally);
+    SetIntParam(ParamByName('recaptures_tally'), R.RecapturesTally);
+    SetIntParam(ParamByName('unbanded_tally'), R.UnbandedTally);
+    SetStrParam(ParamByName('detection_type'), R.DetectionType);
+    SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
+    ParamByName('not_surveying').AsBoolean := R.NotSurveying;
+    ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSightingRepository.TableName: string;
+begin
+  Result := TBL_SIGHTINGS;
+end;
+
+procedure TSightingRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSighting;
+begin
+  if not (E is TSighting) then
+    raise Exception.Create('Update: Expected TSighting');
+
+  R := TSighting(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSightingRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE sightings SET ' +
+      'survey_id = :survey_id, ' +
+      'individual_id = :individual_id, ' +
+      'sighting_date = date(:sighting_date), ' +
+      //'sighting_time = (CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
+      'sighting_time = time(:sighting_time), ' +
+      'locality_id = :locality_id, ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'method_id = :method_id, ' +
+      'mackinnon_list_num = :mackinnon_list_num, ' +
+      'observer_id = :observer_id, ' +
+      'taxon_id = :taxon_id, ' +
+      'subjects_tally = :subjects_tally, ' +
+      'subject_distance = :subject_distance, ' +
+      'subject_seen = :subject_seen, ' +
+      'subject_heard = :subject_heard, ' +
+      'subject_photographed = :subject_photographed, ' +
+      'subject_recorded = :subject_recorded, ' +
+      'subject_captured = :subject_captured, ' +
+      'males_tally = :males_tally, ' +
+      'females_tally = :females_tally, ' +
+      'not_sexed_tally = :not_sexed_tally, ' +
+      'adults_tally = :adults_tally, ' +
+      'immatures_tally = :immatures_tally, ' +
+      'not_aged_tally = :not_aged_tally, ' +
+      'new_captures_tally = :new_captures_tally, ' +
+      'recaptures_tally = :recaptures_tally, ' +
+      'unbanded_tally = :unbanded_tally, ' +
+      'detection_type = :detection_type, ' +
+      'breeding_status = :breeding_status, ' +
+      'not_surveying = :not_surveying, ' +
+      'ebird_available = :ebird_available, ' +
+      'full_name = :full_name, ' +
+      'notes = :notes, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (sighting_id = :sighting_id)');
+
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetDateParam(ParamByName('sighting_date'), R.SightingDate);
+    SetTimeParam(ParamByName('sighting_time'), R.SightingTime);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('method_id'), R.MethodId);
+    SetIntParam(ParamByName('mackinnon_list_num'), R.MackinnonListNumber);
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetIntParam(ParamByName('subjects_tally'), R.SubjectTally);
+    SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
+    ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
+    ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
+    ParamByName('subject_heard').AsBoolean := R.SubjectHeard;
+    ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
+    ParamByName('subject_recorded').AsBoolean := R.SubjectRecorded;
+    SetStrParam(ParamByName('males_tally'), R.MalesTally);
+    SetStrParam(ParamByName('females_tally'), R.FemalesTally);
+    SetStrParam(ParamByName('not_sexed_tally'), R.NotSexedTally);
+    SetStrParam(ParamByName('adults_tally'), R.AdultsTally);
+    SetStrParam(ParamByName('immatures_tally'), R.ImmatureTally);
+    SetStrParam(ParamByName('not_aged_tally'), R.NotAgedTally);
+    SetIntParam(ParamByName('new_captures_tally'), R.NewCapturesTally);
+    SetIntParam(ParamByName('recaptures_tally'), R.RecapturesTally);
+    SetIntParam(ParamByName('unbanded_tally'), R.UnbandedTally);
+    SetStrParam(ParamByName('detection_type'), R.DetectionType);
+    SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
+    ParamByName('not_surveying').AsBoolean := R.NotSurveying;
+    ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('sighting_id').AsInteger := R.Id;
+
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

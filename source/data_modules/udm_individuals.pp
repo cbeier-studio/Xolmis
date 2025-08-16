@@ -574,7 +574,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_management, data_columns, data_getvalue;
+  utils_locale, utils_global, data_types, data_management, data_columns, data_getvalue, udm_main;
 
 {$R *.lfm}
 
@@ -1461,6 +1461,7 @@ end;
 
 procedure TDMI.qSightingsAfterPost(DataSet: TDataSet);
 var
+  Repo: TSightingRepository;
   NewSighting: TSighting;
   lstDiff: TStrings;
   D: String;
@@ -1468,8 +1469,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
   begin
+    Repo := TSightingRepository.Create(DMM.sqlCon);
     NewSighting := TSighting.Create;
-    NewSighting.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewSighting);
     lstDiff := TStringList.Create;
     try
       if NewSighting.Diff(OldSighting, lstDiff) then
@@ -1483,6 +1485,7 @@ begin
     finally
       FreeAndNil(NewSighting);
       FreeAndNil(OldSighting);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

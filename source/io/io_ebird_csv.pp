@@ -98,6 +98,7 @@ var
   Toponimo: TSite;
   Survey: TSurvey;
   Sight: TSighting;
+  SightRepo: TSightingRepository;
   Quant, aMethod: Integer;
   RDate: String;
 begin
@@ -114,6 +115,7 @@ begin
   dlgProgress.Title := rsTitleImportFile;
   dlgProgress.Text := rsLoadingCSVFile;
 
+  SightRepo := TSightingRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Load CSV file using TSdfDataSet }
@@ -163,7 +165,8 @@ begin
           end;
 
           { Check if the record already exists }
-          if Sight.Find(Survey.Id, Taxon.Id, 0) = False then
+          SightRepo.FindByCombo(Survey.Id, Taxon.Id, 0, Sight);
+          if Sight.Id > 0 then
           begin
             { Insert record if it does not exist }
             Sight.SurveyId := Survey.Id;
@@ -175,7 +178,7 @@ begin
             Sight.SubjectTally := Quant;
             Sight.UserInserted := ActiveUser.Id;
 
-            Sight.Insert;
+            SightRepo.Insert(Sight);
           end
           else
           begin
@@ -185,7 +188,7 @@ begin
             Sight.SubjectTally := Quant;
             Sight.UserUpdated := ActiveUser.Id;
 
-            Sight.Update;
+            SightRepo.Update(Sight);
           end;
         finally
           FreeAndNil(Taxon);
@@ -219,6 +222,7 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
+    SightRepo.Free;
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
     LogEvent(leaFinish, 'Import eBird file');

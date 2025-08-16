@@ -220,64 +220,6 @@ begin
   Result := TBand(inherited Clone);
 end;
 
-function TBand.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Size', FSize);
-    JSONObject.Add('Number', FNumber);
-    JSONObject.Add('Status', BAND_STATUSES[FStatus]);
-    JSONObject.Add('Source', BAND_SOURCES[FSource]);
-    JSONObject.Add('Prefix', FPrefix);
-    JSONObject.Add('Suffix', FSuffix);
-    JSONObject.Add('Color', FBandColor);
-    JSONObject.Add('Type', MARK_TYPES[FBandType]);
-    JSONObject.Add('Supplier', FSupplierId);
-    JSONObject.Add('Requester', FRequesterId);
-    JSONObject.Add('Carrier', FCarrierId);
-    JSONObject.Add('Individual', FIndividualId);
-    JSONObject.Add('Project', FProjectId);
-    JSONObject.Add('Reported', FReported);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-function TBand.ToString: String;
-begin
-  Result := Format('Band(Id=%d, FullName=%s, Size=%s, Number=%d, Status=%d, Source=%d, Prefix=%s, Suffix=%s, ' +
-    'BandColor=%s, BandType=%d, SupplierId=%d, RequesterId=%d, CarrierId=%d, IndividualId=%d, ProjectId=%d, ' +
-    'Reported=%s, Notes=%s, ' +
-    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FSize, FNumber, FStatus, FSource, FPrefix, FSuffix, FBandColor, Ord(FBandType), FSupplierId,
-    FRequesterId, FCarrierId, FIndividualId, FProjectId, BoolToStr(FReported, 'True', 'False'), FNotes,
-    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
-    BoolToStr(FActive, 'True', 'False')]);
-end;
-
-function TBand.Validate(out Msg: string): Boolean;
-begin
-  if FSize = EmptyStr then
-  begin
-    Msg := 'Size required.';
-    Exit(False);
-  end;
-  if FNumber = 0 then
-  begin
-    Msg := 'Number required.';
-    Exit(False);
-  end;
-
-  Msg := '';
-  Result := True;
-end;
-
 function TBand.Diff(const aOld: TBand; out Changes: TStrings): Boolean;
 var
   R: String;
@@ -336,10 +278,10 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName     := Obj.Get('Name', '');
-    FSize         := Obj.Get('Size', '');
-    FNumber       := Obj.Get('Number', 0);
-    case Obj.Get('Status', '') of
+    FFullName     := Obj.Get('full_name', '');
+    FSize         := Obj.Get('band_size', '');
+    FNumber       := Obj.Get('band_number', 0);
+    case Obj.Get('band_status', '') of
       'D': FStatus := bstAvailable;
       'U': FStatus := bstUsed;
       'R': FStatus := bstRemoved;
@@ -347,17 +289,17 @@ begin
       'P': FStatus := bstLost;
       'T': FStatus := bstTransferred;
     end;
-    case Obj.Get('Source', '') of
+    case Obj.Get('band_source', '') of
       'A': FSource := bscAcquiredFromSupplier;
       'T': FSource := bscTransferBetweenBanders;
       'L': FSource := bscLivingBirdBandedByOthers;
       'D': FSource := bscDeadBirdBandedByOthers;
       'F': FSource := bscFoundLoose;
     end;
-    FPrefix       := Obj.Get('Prefix', '');
-    FSuffix       := Obj.Get('Suffix', '');
-    FBandColor    := Obj.Get('Color', '');
-    case Obj.Get('Type', '') of
+    FPrefix       := Obj.Get('prefix', '');
+    FSuffix       := Obj.Get('suffix', '');
+    FBandColor    := Obj.Get('band_color', '');
+    case Obj.Get('band_type', '') of
       'A': FBandType := mkButtEndBand;
       'F': FBandType := mkFlag;
       'N': FBandType := mkCollar;
@@ -368,16 +310,74 @@ begin
       'C': FBandType := mkClosedBand;
       'O': FBandType := mkOther;
     end;
-    FSupplierId   := Obj.Get('Supplier', 0);
-    FRequesterId  := Obj.Get('Requester', 0);
-    FCarrierId    := Obj.Get('Carrier', 0);
-    FIndividualId := Obj.Get('Individual', 0);
-    FProjectId    := Obj.Get('Project', 0);
-    FReported     := Obj.Get('Reported', False);
-    FNotes        := Obj.Get('Notes', '');
+    FSupplierId   := Obj.Get('supplier_id', 0);
+    FRequesterId  := Obj.Get('requester_id', 0);
+    FCarrierId    := Obj.Get('carrier_id', 0);
+    FIndividualId := Obj.Get('individual_id', 0);
+    FProjectId    := Obj.Get('project_id', 0);
+    FReported     := Obj.Get('reported', False);
+    FNotes        := Obj.Get('notes', '');
   finally
     Obj.Free;
   end;
+end;
+
+function TBand.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('band_size', FSize);
+    JSONObject.Add('band_number', FNumber);
+    JSONObject.Add('band_status', BAND_STATUSES[FStatus]);
+    JSONObject.Add('band_source', BAND_SOURCES[FSource]);
+    JSONObject.Add('prefix', FPrefix);
+    JSONObject.Add('suffix', FSuffix);
+    JSONObject.Add('band_color', FBandColor);
+    JSONObject.Add('band_type', MARK_TYPES[FBandType]);
+    JSONObject.Add('supplier_id', FSupplierId);
+    JSONObject.Add('requester_id', FRequesterId);
+    JSONObject.Add('carrier_id', FCarrierId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('reported', FReported);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TBand.ToString: String;
+begin
+  Result := Format('Band(Id=%d, FullName=%s, Size=%s, Number=%d, Status=%d, Source=%d, Prefix=%s, Suffix=%s, ' +
+    'BandColor=%s, BandType=%d, SupplierId=%d, RequesterId=%d, CarrierId=%d, IndividualId=%d, ProjectId=%d, ' +
+    'Reported=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FSize, FNumber, FStatus, FSource, FPrefix, FSuffix, FBandColor, Ord(FBandType), FSupplierId,
+    FRequesterId, FCarrierId, FIndividualId, FProjectId, BoolToStr(FReported, 'True', 'False'), FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TBand.Validate(out Msg: string): Boolean;
+begin
+  if FSize = EmptyStr then
+  begin
+    Msg := 'Size required.';
+    Exit(False);
+  end;
+  if FNumber = 0 then
+  begin
+    Msg := 'Number required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
 end;
 
 { TBandRepository }
@@ -392,7 +392,7 @@ begin
 
   R := TBand(E);
   if R.Id = 0 then
-    raise Exception.CreateFmt('TBand.Delete: %s.', [rsErrorEmptyId]);
+    raise Exception.CreateFmt('TBandRepository.Delete: %s.', [rsErrorEmptyId]);
 
   Qry := NewQuery;
   with Qry, SQL do
@@ -741,7 +741,7 @@ begin
 
   R := TBand(E);
   if R.Id = 0 then
-    raise Exception.CreateFmt('TBand.Update: %s.', [rsErrorEmptyId]);
+    raise Exception.CreateFmt('TBandRepository.Update: %s.', [rsErrorEmptyId]);
 
   Qry := NewQuery;
   with Qry, SQL do
@@ -877,9 +877,9 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FBandId       := Obj.Get('Band', 0);
-    FEventDate    := Obj.Get('Date', NullDate);
-    case Obj.Get('Type', '') of
+    FBandId       := Obj.Get('band_id', 0);
+    FEventDate    := Obj.Get('event_date', NullDate);
+    case Obj.Get('event_type', '') of
       'O': FEventType := bevOrder;
       'C': FEventType := bevReceive;
       'T': FEventType := bevTransfer;
@@ -888,11 +888,11 @@ begin
       'U': FEventType := bevUse;
       'D': FEventType := bevDischarge;
     end;
-    FSupplierId   := Obj.Get('Supplier', 0);
-    FOrderNumber  := Obj.Get('Order number', 0);
-    FRequesterId  := Obj.Get('Requester', 0);
-    FSenderId     := Obj.Get('Sender', 0);
-    FNotes        := Obj.Get('Notes', '');
+    FSupplierId   := Obj.Get('supplier_id', 0);
+    FOrderNumber  := Obj.Get('order_number', 0);
+    FRequesterId  := Obj.Get('requester_id', 0);
+    FSenderId     := Obj.Get('sender_id', 0);
+    FNotes        := Obj.Get('notes', '');
   finally
     Obj.Free;
   end;
@@ -904,14 +904,14 @@ var
 begin
   JSONObject := TJSONObject.Create;
   try
-    JSONObject.Add('Band', FBandId);
-    JSONObject.Add('Date', FEventDate);
-    JSONObject.Add('Type', BAND_EVENTS[FEventType]);
-    JSONObject.Add('Supplier', FSupplierId);
-    JSONObject.Add('Order number', FOrderNumber);
-    JSONObject.Add('Requester', FRequesterId);
-    JSONObject.Add('Sender', FSenderId);
-    JSONObject.Add('Notes', FNotes);
+    JSONObject.Add('band_id', FBandId);
+    JSONObject.Add('event_date', FEventDate);
+    JSONObject.Add('event_type', BAND_EVENTS[FEventType]);
+    JSONObject.Add('supplier_id', FSupplierId);
+    JSONObject.Add('order_number', FOrderNumber);
+    JSONObject.Add('requester_id', FRequesterId);
+    JSONObject.Add('sender_id', FSenderId);
+    JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
   finally

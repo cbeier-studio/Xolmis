@@ -1102,6 +1102,7 @@ end;
 procedure TdlgImportXMobile.ImportSpecies(Inventory: TMobileInventory);
 var
   Species: TMobileSpecies;
+  aRepo: TSightingRepository;
   aSighting, aOldSighting: TSighting;
   aTaxonId, aObserverId: Integer;
   lstDiff: TStrings;
@@ -1109,6 +1110,7 @@ var
 begin
   if Inventory.FSpeciesList.Count > 0 then
   begin
+    aRepo := TSightingRepository.Create(DMM.sqlCon);
     aSighting := TSighting.Create();
     try
       // iterate through species list
@@ -1118,7 +1120,8 @@ begin
         aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Species.FSpeciesName);
         aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
-        if aSighting.Find(Inventory.FSurveyKey, aTaxonId, aObserverId) then
+        aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, aObserverId, aSighting);
+        if aSighting.Id > 0 then
         begin
           // if sighting exists, update it
           aOldSighting := TSighting.Create(aSighting.Id);
@@ -1127,7 +1130,7 @@ begin
             aSighting.ObserverId := aObserverId;
             if aSighting.SightingDate = NullDate then
               aSighting.SightingDate := Inventory.FStartTime;
-            aSighting.Update;
+            aRepo.Update(aSighting);
             // write record history
             lstDiff := TStringList.Create;
             try
@@ -1154,13 +1157,14 @@ begin
           aSighting.ObserverId := aObserverId;
           if aSighting.SightingDate = NullDate then
             aSighting.SightingDate := Inventory.FStartTime;
-          aSighting.Insert;
+          aRepo.Insert(aSighting);
           // write record history
           WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
       aSighting.Free;
+      aRepo.Free;
     end;
   end;
 end;

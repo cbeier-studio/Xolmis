@@ -2197,6 +2197,7 @@ end;
 
 function EditSighting(aDataSet: TDataSet; aSurvey: Integer; aIndividual: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TSightingRepository;
   FRecord, FOldRecord: TSighting;
   lstDiff: TStrings;
   D: String;
@@ -2204,6 +2205,7 @@ begin
   LogEvent(leaOpen, 'Sighting edit dialog');
   Application.CreateForm(TedtSighting, edtSighting);
   FOldRecord := nil;
+  FRepo := TSightingRepository.Create(DMM.sqlCon);
   with edtSighting do
   try
     dsLink.DataSet := aDataSet;
@@ -2239,7 +2241,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Sighting.Save;
+        FRepo.Save(Sighting);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2282,6 +2284,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtSighting);
     LogEvent(leaClose, 'Sighting edit dialog');
   end;
