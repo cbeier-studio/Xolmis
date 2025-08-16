@@ -12085,6 +12085,7 @@ begin
 
   // Set visible buttons
   sbShowDocs.Visible := True;
+  sbShowSummary.Visible := True;
 
   // Set the print menu
   pmPrintMethods.Visible := True;
@@ -12589,7 +12590,7 @@ begin
       //tbNestOwners: ;
       tbNestRevisions:      SummaryNestRevisions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbEggs:               SummaryEggs(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
-      //tbMethods: ;
+      tbMethods:            SummaryMethods(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbExpeditions:        SummaryExpeditions(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       tbSurveys:            SummarySurveys(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       //tbSurveyTeams: ;

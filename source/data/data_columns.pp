@@ -4480,7 +4480,7 @@ begin
         Clear;
       end;
 
-      'category':
+      'category', 'ebird_name':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
