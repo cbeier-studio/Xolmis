@@ -71,7 +71,7 @@ uses
   data_getvalue,
   models_record_types, models_geo, models_sampling, models_botany, models_breeding, models_birds, models_projects,
   models_media, models_bands, models_sightings, models_institutions, models_people, models_permits,
-  models_specimens, models_sampling_plots,
+  models_specimens, models_sampling_plots, models_methods,
   udm_main, udm_grid,
   udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
@@ -83,6 +83,7 @@ uses
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TMethodRepository;
   FRecord, FOldRecord: TMethod;
   lstDiff: TStrings;
   D: String;
@@ -90,6 +91,7 @@ begin
   LogEvent(leaOpen, 'Method edit dialog');
   Application.CreateForm(TedtMethod, edtMethod);
   FOldRecord := nil;
+  FRepo := TMethodRepository.Create(DMM.sqlCon);
   with edtMethod do
   try
     dsLink.DataSet := aDataSet;
@@ -111,7 +113,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Method.Save;
+        FRepo.Save(Method);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -155,6 +157,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtMethod);
     LogEvent(leaClose, 'Method edit dialog');
   end;

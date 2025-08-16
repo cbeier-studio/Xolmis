@@ -25,7 +25,7 @@ uses
   { CBS }
   models_geo, models_projects, models_botany, models_taxonomy, models_birds, models_sampling, models_breeding,
   models_sightings, models_bands, models_institutions, models_people, models_permits, models_specimens,
-  models_sampling_plots;
+  models_sampling_plots, models_methods;
 
 type
 
@@ -3311,6 +3311,7 @@ end;
 
 procedure TDMG.qMethodsAfterPost(DataSet: TDataSet);
 var
+  Repo: TMethodRepository;
   NewMethod: TMethod;
   lstDiff: TStrings;
   D: String;
@@ -3318,8 +3319,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldMethod) then
   begin
+    Repo := TMethodRepository.Create(DMM.sqlCon);
     NewMethod := TMethod.Create;
-    NewMethod.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewMethod);
     lstDiff := TStringList.Create;
     try
       if NewMethod.Diff(OldMethod, lstDiff) then
@@ -3333,6 +3335,7 @@ begin
     finally
       FreeAndNil(NewMethod);
       FreeAndNil(OldMethod);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

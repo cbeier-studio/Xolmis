@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons,
-  atshapelinebgra, models_sampling;
+  atshapelinebgra, models_methods;
 
 type
 
