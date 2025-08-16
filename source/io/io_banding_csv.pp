@@ -217,6 +217,7 @@ var
   Individuo: TIndividual;
   Captura: TCapture;
   NetStation: TSamplingPlot;
+  SPlotRepo: TSamplingPlotRepository;
   NetSite: TNetEffort;
   strDate, strTime: String;
   CodAnilha, aMethod: Integer;
@@ -276,6 +277,7 @@ begin
           strTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.CaptureTime);
           BandRepo := TBandRepository.Create(DMM.sqlCon);
           SiteRepo := TSiteRepository.Create(DMM.sqlCon);
+          SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
 
           try
             Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName));
@@ -294,7 +296,8 @@ begin
               Taxon.GetData(Taxon.ValidId);
 
             // Get net station and locality
-            if NetStation.Find(Reg.NetStation) then
+            SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
+            if NetStation.Id > 0 then
             begin
               SiteRepo.GetById(NetStation.LocalityId, Toponimo);
             end;
@@ -508,6 +511,7 @@ begin
             FreeAndNil(Captura);
             BandRepo.Free;
             SiteRepo.Free;
+            SPlotRepo.Free;
           end;
         end
         else
@@ -592,6 +596,7 @@ var
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
   NetStation: TSamplingPlot;
+  SPlotRepo: TSamplingPlotRepository;
   Survey: TSurvey;
   Weather1, Weather2, Weather3, Weather4: TWeatherLog;
   Member: TSurveyMember;
@@ -614,6 +619,7 @@ begin
     dlgProgress.Text := rsLoadingCSVFile;
   end;
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
+  SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -684,7 +690,8 @@ begin
           aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
           // Get net station and locality
-          if NetStation.Find(Reg.NetStation) then
+          SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
+          if NetStation.Id > 0 then
           begin
             SiteRepo.GetById(NetStation.LocalityId, Toponimo);
           end;
@@ -847,6 +854,7 @@ begin
     CSV.Close;
     FreeAndNil(CSV);
     SiteRepo.Free;
+    SPlotRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
@@ -863,6 +871,7 @@ var
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
   NetStation: TSamplingPlot;
+  SPlotRepo: TSamplingPlotRepository;
   Survey: TSurvey;
   NetSite: TNetEffort;
   strDate: String;
@@ -884,6 +893,7 @@ begin
     dlgProgress.Text := rsLoadingCSVFile;
   end;
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
+  SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -928,7 +938,8 @@ begin
           aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
           // Get net station and locality
-          if NetStation.Find(Reg.NetStation) then
+          SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
+          if NetStation.Id > 0 then
           begin
             SiteRepo.GetById(NetStation.LocalityId, Toponimo);
           end;
@@ -1001,6 +1012,7 @@ begin
     CSV.Close;
     FreeAndNil(CSV);
     SiteRepo.Free;
+    SPlotRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;

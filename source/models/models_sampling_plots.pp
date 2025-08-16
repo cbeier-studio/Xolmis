@@ -30,7 +30,7 @@ type
   TSamplingPlot = class(TXolmisRecord)
   protected
     FFullName: String;
-    FAcronym: String;
+    FAbbreviation: String;
     FLongitude: Extended;
     FLatitude: Extended;
     FAreaShape: String;
@@ -38,27 +38,40 @@ type
     FDescription: String;
     FNotes: String;
   public
-    constructor Create (aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Find(aAcronym: String): Boolean;
-    function Diff(aOld: TSamplingPlot; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TSamplingPlot);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TSamplingPlot; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TSamplingPlot): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property FullName: String read FFullName write FFullName;
-    property Acronym: String read FAcronym write FAcronym;
+    property Abbreviation: String read FAbbreviation write FAbbreviation;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
     property AreaShape: String read FAreaShape write FAreaShape;
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property Description: String read FDescription write FDescription;
     property Notes: String read FNotes write FNotes;
+  end;
+
+  { TSamplingPlotRepository }
+
+  TSamplingPlotRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -74,18 +87,16 @@ type
     FLatitude: Extended;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TPermanentNet; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TPermanentNet);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TPermanentNet; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TPermanentNet): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property FullName: String read FFullName write FFullName;
     property SamplingPlotId: Integer read FSamplingPlotId write FSamplingPlotId;
@@ -95,27 +106,57 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TPermanentNetRepository }
+
+  TPermanentNetRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns,
-  data_setparam, udm_main;
+  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns, data_consts,
+  data_setparam, data_getvalue, udm_main;
 
 { TSamplingPlot }
 
 constructor TSamplingPlot.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TSamplingPlot.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TSamplingPlot then
+  begin
+    FFullName := TSamplingPlot(Source).FullName;
+    FAbbreviation := TSamplingPlot(Source).Abbreviation;
+    FLongitude := TSamplingPlot(Source).Longitude;
+    FLatitude := TSamplingPlot(Source).Latitude;
+    FAreaShape := TSamplingPlot(Source).AreaShape;
+    FLocalityId := TSamplingPlot(Source).LocalityId;
+    FDescription := TSamplingPlot(Source).Description;
+    FNotes := TSamplingPlot(Source).Notes;
+  end;
 end;
 
 procedure TSamplingPlot.Clear;
 begin
   inherited Clear;
   FFullName := EmptyStr;
-  FAcronym := EmptyStr;
+  FAbbreviation := EmptyStr;
   FLongitude := 0.0;
   FLatitude := 0.0;
   FAreaShape := EmptyStr;
@@ -124,45 +165,154 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TSamplingPlot.Copy(aFrom: TSamplingPlot);
+function TSamplingPlot.Clone: TXolmisRecord;
 begin
-  FFullName := aFrom.FullName;
-  FAcronym := aFrom.Acronym;
-  FLongitude := aFrom.Longitude;
-  FLatitude := aFrom.Latitude;
-  FAreaShape := aFrom.AreaShape;
-  FLocalityId := aFrom.LocalityId;
-  FDescription := aFrom.Description;
-  FNotes := aFrom.Notes;
+  Result := TSamplingPlot(inherited Clone);
 end;
 
-procedure TSamplingPlot.Delete;
+function TSamplingPlot.Diff(const aOld: TSamplingPlot; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAreaShape, aOld.AreaShape, FAreaShape, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TSamplingPlot.EqualsTo(const Other: TSamplingPlot): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TSamplingPlot.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName     := Obj.Get('full_name', '');
+    FAbbreviation      := Obj.Get('abbreviation', '');
+    FAreaShape    := Obj.Get('area_shape', '');
+    FLongitude    := Obj.Get('longitude', 0.0);
+    FLatitude     := Obj.Get('latitude', 0.0);
+    FLocalityId   := Obj.Get('locality_id', 0);
+    FDescription  := Obj.Get('description', '');
+    FNotes        := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TSamplingPlot.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('abbreviation', FAbbreviation);
+    JSONObject.Add('area_shape', FAreaShape);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('locality_id', FLocalityId);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TSamplingPlot.ToString: String;
+begin
+  Result := Format('SamplingPlot(Id=%d, FullName=%s, Abbreviation=%s, AreaShape=%s, Longitude=%f, Latitude=%f, ' +
+    'LocalityId=%d, Description=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FAbbreviation, FAreaShape, FLongitude, FLatitude, FLocalityId, FDescription, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TSamplingPlot.Validate(out Msg: string): Boolean;
+begin
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'FullName required.';
+    Exit(False);
+  end;
+  if FAbbreviation = EmptyStr then
+  begin
+    Msg := 'Abbreviation required.';
+    Exit(False);
+  end;
+  if FLocalityId = 0 then
+  begin
+    Msg := 'LocalityId required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TSamplingPlotRepository }
+
+procedure TSamplingPlotRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TSamplingPlot;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSamplingPlot.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TSamplingPlot) then
+    raise Exception.Create('Delete: Expected TSamplingPlot');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TSamplingPlot(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSamplingPlotRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM sampling_plots');
-      Add('WHERE (sampling_plot_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_SAMPLING_PLOT_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -170,14 +320,96 @@ begin
   end;
 end;
 
-procedure TSamplingPlot.GetData(aKey: Integer);
+function TSamplingPlotRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_SAMPLING_PLOT_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSamplingPlotRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_SAMPLING_PLOT_ID, COL_FULL_NAME, COL_ABBREVIATION); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TSamplingPlot) then
+    raise Exception.Create('FindBy: Expected TSamplingPlot');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'sampling_plot_id, ' +
+      'full_name, ' +
+      'acronym, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'area_shape, ' +
+      'locality_id, ' +
+      'description, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'insert_date, ' +
+      'update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM sampling_plots');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TSamplingPlot(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TSamplingPlotRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSamplingPlot) then
+    raise Exception.Create('GetById: Expected TSamplingPlot');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
       'sampling_plot_id, ' +
@@ -198,77 +430,70 @@ begin
       'active_status ' +
       'FROM sampling_plots');
     Add('WHERE sampling_plot_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TSamplingPlot(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TSamplingPlot.LoadFromDataSet(aDataSet: TDataSet);
+procedure TSamplingPlotRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TSamplingPlot;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TSamplingPlot) then
+    raise Exception.Create('Hydrate: Expected TSamplingPlot');
 
+  R := TSamplingPlot(E);
   with aDataSet do
   begin
-    FId := FieldByName('sampling_plot_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FAcronym := FieldByName('acronym').AsString;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FAreaShape := FieldByName('area_shape').AsString;
-    FLocalityId := FieldByName('locality_id').AsInteger;
-    FDescription := FieldByName('description').AsString;
-    FNotes := FieldByName('notes').AsString;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.Id := FieldByName('sampling_plot_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.Abbreviation := FieldByName('acronym').AsString;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.AreaShape := FieldByName('area_shape').AsString;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
+    R.Description := FieldByName('description').AsString;
+    R.Notes := FieldByName('notes').AsString;
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TSamplingPlot.Insert;
+procedure TSamplingPlotRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TSamplingPlot;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TSamplingPlot) then
+    raise Exception.Create('Insert: Expected TSamplingPlot');
+
+  R := TSamplingPlot(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO sampling_plots (' +
+    Clear;
+    Add('INSERT INTO sampling_plots (' +
         'full_name, ' +
         'acronym, ' +
         'longitude, ' +
         'latitude, ' +
         'area_shape, ' +
-        //'country_id, ' +
-        //'state_id, ' +
-        //'municipality_id, ' +
         'locality_id, ' +
         'description, ' +
         'notes, ' +
@@ -280,100 +505,60 @@ begin
         ':longitude, ' +
         ':latitude, ' +
         ':area_shape, ' +
-        //':country_id, ' +
-        //':state_id, ' +
-        //':municipality_id, ' +
         ':locality_id, ' +
         ':description, ' +
         ':notes, ' +
         ':user_inserted, ' +
         'datetime(''now'',''subsec''))');
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('acronym').AsString := FAcronym;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetStrParam(ParamByName('area_shape'), FAreaShape);
-      //ParamByName('country_id').AsInteger := FCountryId;
-      //ParamByName('state_id').AsInteger := FStateId;
-      //ParamByName('municipality_id').AsString := FMunicipalityId;
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+      ParamByName('full_name').AsString := R.FullName;
+      ParamByName('acronym').AsString := R.Abbreviation;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+      SetStrParam(ParamByName('area_shape'), R.AreaShape);
+      SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+      SetStrParam(ParamByName('description'), R.Description);
+      SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ExecSQL;
+    ExecSQL;
 
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TSamplingPlot.Save;
+function TSamplingPlotRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_SAMPLING_PLOTS;
 end;
 
-function TSamplingPlot.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Abbreviation', FAcronym);
-    JSONObject.Add('Area shape', FAreaShape);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TSamplingPlot.Update;
+procedure TSamplingPlotRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TSamplingPlot;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSamplingPlot.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TSamplingPlot) then
+    raise Exception.Create('Update: Expected TSamplingPlot');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TSamplingPlot(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSamplingPlotRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE sampling_plots SET ' +
+    Clear;
+    Add('UPDATE sampling_plots SET ' +
         'full_name = :full_name, ' +
         'acronym = :acronym, ' +
         'longitude = :longitude, ' +
         'latitude = :latitude, ' +
         'area_shape = :area_shape, ' +
-        //'country_id, ' +
-        //'state_id, ' +
-        //'municipality_id, ' +
         'locality_id = :locality_id, ' +
         'description = :description, ' +
         'notes = :notes, ' +
@@ -382,101 +567,45 @@ begin
         'marked_status = :marked_status, ' +
         'active_status = :active_status');
       Add('WHERE (sampling_plot_id = :sampling_plot_id)');
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('acronym').AsString := FAcronym;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetStrParam(ParamByName('area_shape'), FAreaShape);
-      //ParamByName('country_id').AsInteger := FCountryId;
-      //ParamByName('state_id').AsInteger := FStateId;
-      //ParamByName('municipality_id').AsString := FMunicipalityId;
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
+      ParamByName('full_name').AsString := R.FullName;
+      ParamByName('acronym').AsString := R.Abbreviation;
+      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+      SetStrParam(ParamByName('area_shape'), R.AreaShape);
+      SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+      SetStrParam(ParamByName('description'), R.Description);
+      SetStrParam(ParamByName('notes'), R.Notes);
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('sampling_plot_id').AsInteger := FId;
+      ParamByName('marked_status').AsBoolean := R.Marked;
+      ParamByName('active_status').AsBoolean := R.Active;
+      ParamByName('sampling_plot_id').AsInteger := R.Id;
 
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
-end;
-
-function TSamplingPlot.Find(aAcronym: String): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-    Clear;
-    Add('SELECT sampling_plot_id FROM sampling_plots');
-    Add('WHERE (acronym = :aacronym)');
-    ParamByName('AACRONYM').AsString := aAcronym;
-    Open;
-    Result := RecordCount > 0;
-    if Result = True then
-    begin
-      GetData(FieldByName('sampling_plot_id').AsInteger);
-    end;
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TSamplingPlot.Diff(aOld: TSamplingPlot; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAreaShape, aOld.AreaShape, FAreaShape, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
-    aList.Add(R);
-  //if FieldValuesDiff(rsCaptionMunicipality, aOld.MunicipalityId, FMunicipalityId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionState, aOld.StateId, FStateId, R) then
-  //  aList.Add(R);
-  //if FieldValuesDiff(rsCaptionCountry, aOld.CountryId, FCountryId, R) then
-  //  aList.Add(R);
-  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
 end;
 
 { TPermanentNet }
 
 constructor TPermanentNet.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TPermanentNet.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TPermanentNet then
+  begin
+    FFullName := TPermanentNet(Source).FullName;
+    FSamplingPlotId := TPermanentNet(Source).SamplingPlotId;
+    FNetNumber := TPermanentNet(Source).NetNumber;
+    FLatitude := TPermanentNet(Source).Latitude;
+    FLongitude := TPermanentNet(Source).Longitude;
+    FNotes := TPermanentNet(Source).Notes;
+  end;
 end;
 
 procedure TPermanentNet.Clear;
@@ -490,43 +619,137 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TPermanentNet.Copy(aFrom: TPermanentNet);
+function TPermanentNet.Clone: TXolmisRecord;
 begin
-  FFullName := aFrom.FullName;
-  FSamplingPlotId := aFrom.SamplingPlotId;
-  FNetNumber := aFrom.NetNumber;
-  FLatitude := aFrom.Latitude;
-  FLongitude := aFrom.Longitude;
-  FNotes := aFrom.Notes;
+  Result := TPermanentNet(inherited Clone);
 end;
 
-procedure TPermanentNet.Delete;
+function TPermanentNet.Diff(const aOld: TPermanentNet; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscMistnetNr, aOld.NetNumber, FNetNumber, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TPermanentNet.EqualsTo(const Other: TPermanentNet): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TPermanentNet.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName       := Obj.Get('full_name', '');
+    FSamplingPlotId := Obj.Get('sampling_plot_id', 0);
+    FNetNumber      := Obj.Get('net_number', 0);
+    FLongitude      := Obj.Get('longitude', 0.0);
+    FLatitude       := Obj.Get('latitude', 0.0);
+    FNotes          := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TPermanentNet.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('sampling_plot_id', FSamplingPlotId);
+    JSONObject.Add('net_number', FNetNumber);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TPermanentNet.ToString: String;
+begin
+  Result := Format('PermanentNet(Id=%d, FullName=%s, SamplingPlotId=%d, NetNumber=%d, Longitude=%f, ' +
+    'Latitude=%f, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FSamplingPlotId, FNetNumber, FLongitude, FLatitude, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TPermanentNet.Validate(out Msg: string): Boolean;
+begin
+  if FSamplingPlotId = 0 then
+  begin
+    Msg := 'SamplingPlotId required.';
+    Exit(False);
+  end;
+  if FNetNumber = 0 then
+  begin
+    Msg := 'NetNumber required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TPermanentNetRepository }
+
+procedure TPermanentNetRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TPermanentNet;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TPermanentNet.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TPermanentNet) then
+    raise Exception.Create('Delete: Expected TPermanentNet');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TPermanentNet(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TPermanentNetRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM permanent_nets');
-      Add('WHERE (permanent_net_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_PERMANENT_NET_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -534,14 +757,94 @@ begin
   end;
 end;
 
-procedure TPermanentNet.GetData(aKey: Integer);
+function TPermanentNetRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_PERMANENT_NET_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TPermanentNetRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_PERMANENT_NET_ID, COL_FULL_NAME, COL_NET_NUMBER); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TPermanentNet) then
+    raise Exception.Create('FindBy: Expected TPermanentNet');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'permanent_net_id, ' +
+      'sampling_plot_id, ' +
+      'net_number, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'notes, ' +
+      'full_name, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'insert_date, ' +
+      'update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM permanent_nets');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TPermanentNet(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TPermanentNetRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TPermanentNet) then
+    raise Exception.Create('GetById: Expected TPermanentNet');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
       'permanent_net_id, ' +
@@ -560,237 +863,146 @@ begin
       'active_status ' +
       'FROM permanent_nets');
     Add('WHERE permanent_net_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TPermanentNet.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
-begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('permanent_net_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FSamplingPlotId := FieldByName('sampling_plot_id').AsInteger;
-    FNetNumber := FieldByName('net_number').AsInteger;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FNotes := FieldByName('notes').AsString;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
-end;
-
-procedure TPermanentNet.Insert;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO permanent_nets (' +
-        'sampling_plot_id, ' +
-        'net_number, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'notes, ' +
-        'full_name, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':sampling_plot_id, ' +
-        ':net_number, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':notes, ' +
-        ':full_name, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-      ParamByName('sampling_plot_id').AsInteger := FSamplingPlotId;
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('net_number').AsInteger := FNetNumber;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TPermanentNet.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TPermanentNet.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Net station', FSamplingPlotId);
-    JSONObject.Add('Net number', FNetNumber);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TPermanentNet.Update;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TPermanentNet.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE permanent_nets SET ' +
-        'sampling_plot_id = :sampling_plot_id, ' +
-        'net_number = :net_number, ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'notes = :notes, ' +
-        'full_name = :full_name, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (permanent_net_id = :permanent_net_id)');
-      ParamByName('sampling_plot_id').AsInteger := FSamplingPlotId;
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('net_number').AsInteger := FNetNumber;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('permanent_net_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TPermanentNet.Diff(aOld: TPermanentNet; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscMistnetNr, aOld.NetNumber, FNetNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TPermanentNet.Find(const FieldName: String; const Value: Variant): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(nil);
-  with Qry, SQL do
-  try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
-    MacroCheck := True;
-
-    Add('SELECT * FROM permanent_nets');
-    Add('WHERE %afield = :avalue');
-    MacroByName('afield').Value := FieldName;
-    ParamByName('avalue').Value := Value;
-    Open;
-
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TPermanentNet(E));
     end;
-
     Close;
   finally
-    Qry.Free;
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TPermanentNetRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TPermanentNet;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TPermanentNet) then
+    raise Exception.Create('Hydrate: Expected TPermanentNet');
+
+  R := TPermanentNet(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('permanent_net_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.SamplingPlotId := FieldByName('sampling_plot_id').AsInteger;
+    R.NetNumber := FieldByName('net_number').AsInteger;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.Notes := FieldByName('notes').AsString;
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TPermanentNetRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TPermanentNet;
+begin
+  if not (E is TPermanentNet) then
+    raise Exception.Create('Insert: Expected TPermanentNet');
+
+  R := TPermanentNet(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('INSERT INTO permanent_nets (' +
+      'sampling_plot_id, ' +
+      'net_number, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'notes, ' +
+      'full_name, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':sampling_plot_id, ' +
+      ':net_number, ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':notes, ' +
+      ':full_name, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
+    ParamByName('sampling_plot_id').AsInteger := R.SamplingPlotId;
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('net_number').AsInteger := R.NetNumber;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TPermanentNetRepository.TableName: string;
+begin
+  Result := TBL_PERMANENT_NETS;
+end;
+
+procedure TPermanentNetRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TPermanentNet;
+begin
+  if not (E is TPermanentNet) then
+    raise Exception.Create('Update: Expected TPermanentNet');
+
+  R := TPermanentNet(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TPermanentNetRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE permanent_nets SET ' +
+      'sampling_plot_id = :sampling_plot_id, ' +
+      'net_number = :net_number, ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'notes = :notes, ' +
+      'full_name = :full_name, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (permanent_net_id = :permanent_net_id)');
+    ParamByName('sampling_plot_id').AsInteger := R.SamplingPlotId;
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('net_number').AsInteger := R.NetNumber;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('permanent_net_id').AsInteger := R.Id;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

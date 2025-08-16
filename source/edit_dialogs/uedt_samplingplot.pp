@@ -324,7 +324,7 @@ end;
 procedure TedtSamplingPlot.GetRecord;
 begin
   eName.Text := FSamplingPlot.FullName;
-  eAbbreviation.Text := FSamplingPlot.Acronym;
+  eAbbreviation.Text := FSamplingPlot.Abbreviation;
   FLocalityId := FSamplingPlot.LocalityId;
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   if (FSamplingPlot.Longitude <> 0.0) or (FSamplingPlot.Latitude <> 0.0) then
@@ -368,7 +368,7 @@ end;
 procedure TedtSamplingPlot.SetRecord;
 begin
   FSamplingPlot.FullName := eName.Text;
-  FSamplingPlot.Acronym := eAbbreviation.Text;
+  FSamplingPlot.Abbreviation := eAbbreviation.Text;
   FSamplingPlot.LocalityId := FLocalityId;
   if (Length(eLongitude.Text) > 0) then
     FSamplingPlot.Longitude := StrToFloat(eLongitude.Text)

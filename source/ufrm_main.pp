@@ -340,7 +340,7 @@ type
     procedure ApplyFormSettings;
     procedure RefreshNotifications;
     procedure UpdateStatusBar;
-    procedure UpdateMenu(aTab: TPage);
+    procedure UpdateMenu(aTab: TPage = nil);
   end;
 
 var
@@ -1231,12 +1231,14 @@ begin
   end;
 
   if (PGW.PageCount > 0) and not (isClosing) then
-    UpdateMenu(PGW.ActivePageComponent);
+    UpdateMenu(PGW.ActivePageComponent)
 end;
 
 procedure TfrmMain.navTabsTabEmpty(Sender: TObject);
 begin
   pEmptyTabs.Visible := navTabs.TabCount = 0;
+
+  UpdateMenu;
 end;
 
 procedure TfrmMain.OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
@@ -1711,6 +1713,12 @@ end;
 
 procedure TfrmMain.UpdateMenu(aTab: TPage);
 begin
+  if PGW.PageCount = 0 then
+  begin
+    pSearch.Visible := False;
+    Exit;
+  end;
+
   if (TTDIPage(aTab).FormInPage is TfrmCustomGrid) then
   begin
     pSearch.Visible := True;

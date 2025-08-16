@@ -51,7 +51,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSite; out Changes: TStrings): Boolean; virtual;
+    function Diff(const aOld: TSite; var Changes: TStrings): Boolean; virtual;
     function EqualsTo(const Other: TSite): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
@@ -78,7 +78,7 @@ type
   { TSiteRepository }
 
   TSiteRepository = class(TXolmisRepository)
-  private
+  protected
     function TableName: string; override;
   public
     function Exists(const Id: Integer): Boolean; override;
@@ -110,7 +110,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TPoi; out Changes: TStrings): Boolean; virtual;
+    function Diff(const aOld: TPoi; var Changes: TStrings): Boolean; virtual;
     function EqualsTo(const Other: TPoi): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -133,7 +133,7 @@ type
   { TPoiRepository }
 
   TPoiRepository = class(TXolmisRepository)
-  private
+  protected
     function TableName: string; override;
   public
     function Exists(const Id: Integer): Boolean; override;
@@ -259,7 +259,7 @@ begin
   Result := TSite(inherited Clone);
 end;
 
-function TSite.Diff(const aOld: TSite; out Changes: TStrings): Boolean;
+function TSite.Diff(const aOld: TSite; var Changes: TStrings): Boolean;
 //var
 //  PropList: PPropList;
 //  PropCount, I: Integer;
@@ -921,7 +921,7 @@ begin
   Result := TPoi(inherited Clone);
 end;
 
-function TPoi.Diff(const aOld: TPoi; out Changes: TStrings): Boolean;
+function TPoi.Diff(const aOld: TPoi; var Changes: TStrings): Boolean;
 var
   R: String;
 begin

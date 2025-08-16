@@ -104,6 +104,8 @@ begin
     begin
       FOldRecord := TMethod.Create(aDataSet.FieldByName('method_id').AsInteger);
       FRecord := TMethod.Create(aDataSet.FieldByName('method_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Method := FRecord;
@@ -186,6 +188,8 @@ begin
     begin
       FOldRecord := TSite.Create(aDataSet.FieldByName('site_id').AsInteger);
       FRecord := TSite.Create(aDataSet.FieldByName('site_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Site := FRecord;
@@ -247,12 +251,14 @@ end;
 
 function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TSamplingPlotRepository;
   FRecord, FOldRecord: TSamplingPlot;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Sampling plot edit dialog');
   Application.CreateForm(TedtSamplingPlot, edtSamplingPlot);
+  FRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtSamplingPlot do
   try
@@ -266,6 +272,8 @@ begin
     begin
       FOldRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
       FRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     SamplingPlot := FRecord;
@@ -275,7 +283,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        SamplingPlot.Save;
+        FRepo.Save(SamplingPlot);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -319,6 +327,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtSamplingPlot);
     LogEvent(leaClose, 'Sampling plot edit dialog');
   end;
@@ -326,12 +335,14 @@ end;
 
 function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TPermanentNetRepository;
   FRecord, FOldRecord: TPermanentNet;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Permanent net edit dialog');
   Application.CreateForm(TedtPermanentNet, edtPermanentNet);
+  FRepo := TPermanentNetRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtPermanentNet do
   try
@@ -345,6 +356,8 @@ begin
     begin
       FOldRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
       FRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     PermanentNet := FRecord;
@@ -355,7 +368,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        PermanentNet.Save;
+        FRepo.Save(PermanentNet);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -398,6 +411,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtPermanentNet);
     LogEvent(leaClose, 'Permanent net edit dialog');
   end;
@@ -426,6 +440,8 @@ begin
     begin
       FOldRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
       FRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Institution := FRecord;
@@ -507,6 +523,8 @@ begin
     begin
       FOldRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
       FRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Person := FRecord;
@@ -1070,6 +1088,8 @@ begin
     begin
       FOldRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
       FRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Permit := FRecord;
@@ -1152,7 +1172,7 @@ begin
     begin
       FOldRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
       FRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
-      FRepo.GetById(FOldRecord.Id, FOldRecord);
+      FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
@@ -1235,6 +1255,8 @@ begin
     begin
       FOldRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
       FRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Band := FRecord;
@@ -2236,6 +2258,8 @@ begin
     begin
       FOldRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
       FRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Sighting := FRecord;

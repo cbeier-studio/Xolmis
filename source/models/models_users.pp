@@ -42,7 +42,7 @@ type
     function Clone: TXolmisRecord; reintroduce;
     function IsAdmin: Boolean;
     function IsVisitor: Boolean;
-    function Diff(const aOld: TUser; out Changes: TStrings): Boolean; virtual;
+    function Diff(const aOld: TUser; var Changes: TStrings): Boolean; virtual;
     function EqualsTo(const Other: TUser): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
@@ -61,7 +61,7 @@ type
   { TUserRepository }
 
   TUserRepository = class(TXolmisRepository)
-  private
+  protected
     function TableName: string; override;
   public
     function Exists(const Id: Integer): Boolean; override;
@@ -121,7 +121,7 @@ begin
   Result := TUser(inherited Clone);
 end;
 
-function TUser.Diff(const aOld: TUser; out Changes: TStrings): Boolean;
+function TUser.Diff(const aOld: TUser; var Changes: TStrings): Boolean;
 var
   R: String;
 begin

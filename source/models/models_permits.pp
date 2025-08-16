@@ -44,7 +44,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TPermit; out Changes: TStrings): Boolean; virtual;
+    function Diff(const aOld: TPermit; var Changes: TStrings): Boolean; virtual;
     function EqualsTo(const Other: TPermit): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
@@ -65,7 +65,7 @@ type
   { TPermitRepository }
 
   TPermitRepository = class(TXolmisRepository)
-  private
+  protected
     function TableName: string; override;
   public
     function Exists(const Id: Integer): Boolean; override;
@@ -128,7 +128,7 @@ begin
   Result := TPermit(inherited Clone);
 end;
 
-function TPermit.Diff(const aOld: TPermit; out Changes: TStrings): Boolean;
+function TPermit.Diff(const aOld: TPermit; var Changes: TStrings): Boolean;
 var
   R: String;
 begin

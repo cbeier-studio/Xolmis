@@ -62,7 +62,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TBand; out Changes: TStrings): Boolean; virtual;
+    function Diff(const aOld: TBand; var Changes: TStrings): Boolean; virtual;
     function EqualsTo(const Other: TBand): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -90,7 +90,7 @@ type
   { TBandRepository }
 
   TBandRepository = class(TXolmisRepository)
-  private
+  protected
     function TableName: string; override;
   public
     function Exists(const Id: Integer): Boolean; override;
@@ -122,7 +122,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TBandHistory; out Changes: TStrings): Boolean; virtual;
+    function Diff(const aOld: TBandHistory; var Changes: TStrings): Boolean; virtual;
     function EqualsTo(const Other: TBandHistory): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -142,7 +142,7 @@ type
   { TBandHistoryRepository }
 
   TBandHistoryRepository = class(TXolmisRepository)
-  private
+  protected
     function TableName: string; override;
   public
     function Exists(const Id: Integer): Boolean; override;
@@ -220,7 +220,7 @@ begin
   Result := TBand(inherited Clone);
 end;
 
-function TBand.Diff(const aOld: TBand; out Changes: TStrings): Boolean;
+function TBand.Diff(const aOld: TBand; var Changes: TStrings): Boolean;
 var
   R: String;
 begin
@@ -837,7 +837,7 @@ begin
   Result := TBandHistory(inherited Clone);
 end;
 
-function TBandHistory.Diff(const aOld: TBandHistory; out Changes: TStrings): Boolean;
+function TBandHistory.Diff(const aOld: TBandHistory; var Changes: TStrings): Boolean;
 var
   R: String;
 begin

@@ -3701,6 +3701,7 @@ end;
 
 procedure TDMG.qSamplingPlotsAfterPost(DataSet: TDataSet);
 var
+  Repo: TSamplingPlotRepository;
   NewNetStation: TSamplingPlot;
   lstDiff: TStrings;
   D: String;
@@ -3708,8 +3709,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSamplingPlot) then
   begin
+    Repo := TSamplingPlotRepository.Create(DMM.sqlCon);
     NewNetStation := TSamplingPlot.Create;
-    NewNetStation.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewNetStation);
     lstDiff := TStringList.Create;
     try
       if NewNetStation.Diff(OldSamplingPlot, lstDiff) then
@@ -3723,6 +3725,7 @@ begin
     finally
       FreeAndNil(NewNetStation);
       FreeAndNil(OldSamplingPlot);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -3819,6 +3822,7 @@ end;
 
 procedure TDMG.qPermanentNetsAfterPost(DataSet: TDataSet);
 var
+  Repo: TPermanentNetRepository;
   NewPermanentNet: TPermanentNet;
   lstDiff: TStrings;
   D: String;
@@ -3826,8 +3830,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldPermanentNet) then
   begin
+    Repo := TPermanentNetRepository.Create(DMM.sqlCon);
     NewPermanentNet := TPermanentNet.Create;
-    NewPermanentNet.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewPermanentNet);
     lstDiff := TStringList.Create;
     try
       if NewPermanentNet.Diff(OldPermanentNet, lstDiff) then
@@ -3841,6 +3846,7 @@ begin
     finally
       FreeAndNil(NewPermanentNet);
       FreeAndNil(OldPermanentNet);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

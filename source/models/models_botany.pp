@@ -46,7 +46,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const Old: TBotanicalTaxon; out Changes: TStrings): Boolean; virtual;
+    function Diff(const Old: TBotanicalTaxon; var Changes: TStrings): Boolean; virtual;
     function EqualsTo(const Other: TBotanicalTaxon): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
@@ -60,7 +60,7 @@ type
   { TBotanicalTaxonRepository }
 
   TBotanicalTaxonRepository = class(TXolmisRepository)
-  private
+  protected
     function TableName: string; override;
   public
     function Exists(const Id: Integer): Boolean; override;
@@ -366,7 +366,7 @@ begin
   Result := TBotanicalTaxon(inherited Clone);
 end;
 
-function TBotanicalTaxon.Diff(const Old: TBotanicalTaxon; out Changes: TStrings): Boolean;
+function TBotanicalTaxon.Diff(const Old: TBotanicalTaxon; var Changes: TStrings): Boolean;
 var
   R: String;
 begin
