@@ -31,7 +31,7 @@ type
   TPerson = class(TXolmisRecord)
   protected
     FFullName: String;
-    FAcronym: String;
+    FAbbreviation: String;
     FCitation: String;
     FTitleTreatment: String;
     FGender: String;
@@ -45,7 +45,7 @@ type
     FAddress1: String;
     FAddress2: String;
     FNeighborhood: String;
-    FZipCode: String;
+    FPostalCode: String;
     FMunicipalityId: Integer;
     FStateId: Integer;
     FCountryId: Integer;
@@ -55,27 +55,25 @@ type
     FJobRole: String;
     FLattesUri: String;
     FOrcidUri: String;
-    FTwitterUri: String;
+    FXTwitterUri: String;
     FInstagramUri: String;
     FWebsiteUri: String;
     FProfileColor: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TPerson; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TPerson);
-    function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TPerson; out Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TPerson): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
+    function ToJSON: String; virtual;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property FullName: String read FFullName write FFullName;
-    property Acronym: String read FAcronym write FAcronym;
+    property Abbreviation: String read FAbbreviation write FAbbreviation;
     property Citation: String read FCitation write FCitation;
     property TitleTreatment: String read FTitleTreatment write FTitleTreatment;
     property Gender: String read FGender write FGender;
@@ -89,7 +87,7 @@ type
     property Address1: String read FAddress1 write FAddress1;
     property Address2: String read FAddress2 write FAddress2;
     property Neighborhood: String read FNeighborhood write FNeighborhood;
-    property ZipCode: String read FZipCode write FZipCode;
+    property PostalCode: String read FPostalCode write FPostalCode;
     property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
     property StateId: Integer read FStateId write FStateId;
     property CountryId: Integer read FCountryId write FCountryId;
@@ -99,100 +97,403 @@ type
     property JobRole: String read FJobRole write FJobRole;
     property LattesUri: String read FLattesUri write FLattesUri;
     property OrcidUri: String read FOrcidUri write FOrcidUri;
-    property TwitterUri: String read FTwitterUri write FTwitterUri;
+    property XTwitterUri: String read FXTwitterUri write FXTwitterUri;
     property InstagramUri: String read FInstagramUri write FInstagramUri;
     property WebsiteUri: String read FWebsiteUri write FWebsiteUri;
     property ProfileColor: String read FProfileColor write FProfileColor;
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TPersonRepository }
+
+  TPersonRepository = class(TXolmisRepository)
+  private
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
 uses
-  utils_locale, models_users, utils_global, utils_validations, data_columns, data_setparam, udm_main;
+  utils_locale, models_users, utils_global, utils_validations, data_consts, data_columns, data_setparam,
+  data_getvalue, udm_main;
 
 { TPerson }
 
-function TPerson.Diff(aOld: TPerson; var aList: TStrings): Boolean;
+constructor TPerson.Create(aValue: Integer);
+begin
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TPerson.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TPerson then
+  begin
+    FFullName := TPerson(Source).FullName;
+    FAbbreviation := TPerson(Source).Abbreviation;
+    FCitation := TPerson(Source).Citation;
+    FTitleTreatment := TPerson(Source).TitleTreatment;
+    FGender := TPerson(Source).Gender;
+    FBirthDate := TPerson(Source).BirthDate;
+    FDeathDate := TPerson(Source).DeathDate;
+    FIdDocument1 := TPerson(Source).IdDocument1;
+    FIdDocument2 := TPerson(Source).IdDocument2;
+    FEmail := TPerson(Source).Email;
+    FPhone1 := TPerson(Source).Phone1;
+    FPhone2 := TPerson(Source).Phone2;
+    FAddress1 := TPerson(Source).Address1;
+    FAddress2 := TPerson(Source).Address2;
+    FNeighborhood := TPerson(Source).Neighborhood;
+    FPostalCode := TPerson(Source).PostalCode;
+    FMunicipalityId := TPerson(Source).MunicipalityId;
+    FStateId := TPerson(Source).StateId;
+    FCountryId := TPerson(Source).CountryId;
+    FInstitutionId := TPerson(Source).InstitutionId;
+    FInstitutionName := TPerson(Source).InstitutionName;
+    FDepartment := TPerson(Source).Department;
+    FJobRole := TPerson(Source).JobRole;
+    FLattesUri := TPerson(Source).LattesUri;
+    FOrcidUri := TPerson(Source).OrcidUri;
+    FXTwitterUri := TPerson(Source).XTwitterUri;
+    FInstagramUri := TPerson(Source).InstagramUri;
+    FWebsiteUri := TPerson(Source).WebsiteUri;
+    FProfileColor := TPerson(Source).ProfileColor;
+    FNotes := TPerson(Source).Notes;
+  end;
+end;
+
+procedure TPerson.Clear;
+begin
+  inherited Clear;
+  FFullName := EmptyStr;
+  FAbbreviation := EmptyStr;
+  FCitation := EmptyStr;
+  FTitleTreatment := EmptyStr;
+  FGender := EmptyStr;
+  FBirthDate := NullDate;
+  FDeathDate := NullDate;
+  FIdDocument1 := EmptyStr;
+  FIdDocument2 := EmptyStr;
+  FEmail := EmptyStr;
+  FPhone1 := EmptyStr;
+  FPhone2 := EmptyStr;
+  FAddress1 := EmptyStr;
+  FAddress2 := EmptyStr;
+  FNeighborhood := EmptyStr;
+  FPostalCode := EmptyStr;
+  FMunicipalityId := 0;
+  FStateId := 0;
+  FCountryId := 0;
+  FInstitutionId := 0;
+  FInstitutionName := EmptyStr;
+  FDepartment := EmptyStr;
+  FJobRole := EmptyStr;
+  FLattesUri := EmptyStr;
+  FOrcidUri := EmptyStr;
+  FXTwitterUri := EmptyStr;
+  FInstagramUri := EmptyStr;
+  FWebsiteUri := EmptyStr;
+  FProfileColor := EmptyStr;
+  FNotes := EmptyStr;
+end;
+
+function TPerson.Clone: TXolmisRecord;
+begin
+  Result := TPerson(inherited Clone);
+end;
+
+function TPerson.Diff(const aOld: TPerson; out Changes: TStrings): Boolean;
 var
   R: String;
 begin
   Result := False;
   R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
 
   if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Acronym, FAcronym, R) then
-    aList.Add(R);
+    Changes.Add(R);
+  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscCitation, aOld.Citation, FCitation, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscTreatment, aOld.TitleTreatment, FTitleTreatment, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscGender, aOld.Gender, FGender, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscBirthDate, aOld.BirthDate, FBirthDate, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscDeathDate, aOld.DeathDate, FDeathDate, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscRG, aOld.IdDocument1, FIdDocument1, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscCPF, aOld.IdDocument2, FIdDocument2, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscEmail, aOld.Email, FEmail, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscPhone, aOld.Phone1, FPhone1, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscMobilePhone, aOld.Phone2, FPhone2, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscAddress1, aOld.Address1, FAddress1, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscAddress2, aOld.Address2, FAddress2, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscNeighborhood, aOld.Neighborhood, FNeighborhood, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscZipCode, aOld.ZipCode, FZipCode, R) then
-    aList.Add(R);
+    Changes.Add(R);
+  if FieldValuesDiff(rscZipCode, aOld.PostalCode, FPostalCode, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscCountryID, aOld.CountryId, FCountryId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscInstitutionID, aOld.InstitutionId, FInstitutionId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscDepartment, aOld.Department, FDepartment, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscRole, aOld.JobRole, FJobRole, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscLattes, aOld.LattesUri, FLattesUri, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscOrcid, aOld.OrcidUri, FOrcidUri, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscXTwitter, aOld.TwitterUri, FTwitterUri, R) then
-    aList.Add(R);
+    Changes.Add(R);
+  if FieldValuesDiff(rscXTwitter, aOld.XTwitterUri, FXTwitterUri, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscInstagram, aOld.InstagramUri, FInstagramUri, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscWebsite, aOld.WebsiteUri, FWebsiteUri, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscProfileColor, aOld.ProfileColor, FProfileColor, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
+    Changes.Add(R);
 
-  Result := aList.Count > 0;
+  Result := Changes.Count > 0;
 end;
 
-function TPerson.Find(const FieldName: String; const Value: Variant): Boolean;
+function TPerson.EqualsTo(const Other: TPerson): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TPerson.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName         := Obj.Get('full_name', '');
+    FAbbreviation     := Obj.Get('abbreviation', '');
+    FCitation         := Obj.Get('citation', '');
+    FTitleTreatment   := Obj.Get('title_treatment', '');
+    FGender           := Obj.Get('gender', '');
+    FBirthDate        := StrToDate(Obj.Get('birth_date', NULL_DATE_STR));
+    FDeathDate        := StrToDate(Obj.Get('death_date', NULL_DATE_STR));
+    FIdDocument1      := Obj.Get('document_number_1', '');
+    FIdDocument2      := Obj.Get('document_number_2', '');
+    FEmail            := Obj.Get('email', '');
+    FPhone1           := Obj.Get('phone_1', '');
+    FPhone2           := Obj.Get('phone_2', '');
+    FAddress1         := Obj.Get('address_1', '');
+    FAddress2         := Obj.Get('address_2', '');
+    FNeighborhood     := Obj.Get('neighborhood', '');
+    FPostalCode       := Obj.Get('postal_code', '');
+    FMunicipalityId   := Obj.Get('municipality_id', 0);
+    FStateId          := Obj.Get('state_id', 0);
+    FCountryId        := Obj.Get('country_id', 0);
+    FInstitutionId    := Obj.Get('institution_id', 0);
+    FInstitutionName  := Obj.Get('institution_name', '');
+    FDepartment       := Obj.Get('department', '');
+    FJobRole          := Obj.Get('job_role', '');
+    FLattesUri        := Obj.Get('lattes', '');
+    FOrcidUri         := Obj.Get('orcid', '');
+    FXTwitterUri      := Obj.Get('x_twitter', '');
+    FInstagramUri     := Obj.Get('instagram', '');
+    FWebsiteUri       := Obj.Get('website', '');
+    FProfileColor     := Obj.Get('profile_color', '');
+    FNotes            := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TPerson.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('abbreviation', FAbbreviation);
+    JSONObject.Add('citation', FCitation);
+    JSONObject.Add('title_treatment', FTitleTreatment);
+    JSONObject.Add('gender', FGender);
+    JSONObject.Add('birth_date', FBirthDate);
+    JSONObject.Add('death_date', FDeathDate);
+    JSONObject.Add('document_number_1', FIdDocument1);
+    JSONObject.Add('document_number_2', FIdDocument2);
+    JSONObject.Add('email', FEmail);
+    JSONObject.Add('phone_1', FPhone1);
+    JSONObject.Add('phone_2', FPhone2);
+    JSONObject.Add('address_1', FAddress1);
+    JSONObject.Add('address_2', FAddress2);
+    JSONObject.Add('neighborhood', FNeighborhood);
+    JSONObject.Add('postal_code', FPostalCode);
+    JSONObject.Add('municipality_id', FMunicipalityId);
+    JSONObject.Add('state_id', FStateId);
+    JSONObject.Add('country_id', FCountryId);
+    JSONObject.Add('institution_id', FInstitutionId);
+    JSONObject.Add('institution_name', FInstitutionName);
+    JSONObject.Add('department', FDepartment);
+    JSONObject.Add('job_role', FJobRole);
+    JSONObject.Add('lattes', FLattesUri);
+    JSONObject.Add('orcid', FOrcidUri);
+    JSONObject.Add('x_twitter', FXTwitterUri);
+    JSONObject.Add('instagram', FInstagramUri);
+    JSONObject.Add('website', FWebsiteUri);
+    JSONObject.Add('profile_color', FProfileColor);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TPerson.ToString: String;
+begin
+  Result := Format('Person(Id=%d, FullName=%s, Abbreviation=%s, Citation=%s, TitleTreatment=%s, Gender=%s, ' +
+    'BirthDate=%s, DeathDate=%s, IdDocument1=%s, IdDocument2=%s, Email=%s, Phone1=%s, Phone2=%s, Address1=%s, ' +
+    'Address2=%s, Neighborhood=%s, PostalCode=%s, MunicipalityId=%d, StateId=%d, CountryId=%d, InstitutionId=%d, ' +
+    'InstitutionName=%s, Department=%s, JobRole=%s, LattesUri=%s, OrcidUri=%s, XTwitterUri=%s, InstagramUri=%s, ' +
+    'WebsiteUri=%s, ProfileColor=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FAbbreviation, FCitation, FTitleTreatment, FGender, DateToStr(FBirthDate), DateToStr(FDeathDate),
+    FIdDocument1, FIdDocument2, FEmail, FPhone1, FPhone2, FAddress1, FAddress2, FNeighborhood, FPostalCode,
+    FMunicipalityId, FStateId, FCountryId, FInstitutionId, FInstitutionName, FDepartment, FJobRole, FLattesUri,
+    FOrcidUri, FXTwitterUri, FInstagramUri, FWebsiteUri, FProfileColor, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TPerson.Validate(out Msg: string): Boolean;
+begin
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'FullName required.';
+    Exit(False);
+  end;
+  if FAbbreviation = EmptyStr then
+  begin
+    Msg := 'Abbreviation required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TPersonRepository }
+
+procedure TPersonRepository.Delete(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TPerson;
+begin
+  if not (E is TPerson) then
+    raise Exception.Create('Delete: Expected TPerson');
+
+  R := TPerson(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TPerson.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_PERSON_ID;
+      ParamByName('aid').AsInteger := R.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TPersonRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_PERSON_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TPersonRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..8] of string = (COL_PERSON_ID, COL_FULL_NAME, COL_ABBREVIATION, COL_CITATION,
+    COL_DOCUMENT_NUMBER_1, COL_DOCUMENT_NUMBER_2, COL_EMAIL_ADDRESS, COL_PHONE_1, COL_PHONE_2); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TPerson) then
+    raise Exception.Create('FindBy: Expected TPerson');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -237,16 +538,14 @@ begin
       'p.active_status ' +
       'FROM people AS p');
     Add('LEFT JOIN institutions AS i ON p.institution_id = i.institution_id');
-    Add('WHERE p.%afield = :avalue');
+    Add('WHERE %afield = :avalue');
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TPerson(E));
     end;
 
     Close;
@@ -255,443 +554,277 @@ begin
   end;
 end;
 
-constructor TPerson.Create(aValue: Integer);
-begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
-end;
-
-procedure TPerson.Clear;
-begin
-  inherited Clear;
-  FFullName := EmptyStr;
-  FAcronym := EmptyStr;
-  FCitation := EmptyStr;
-  FTitleTreatment := EmptyStr;
-  FGender := EmptyStr;
-  FBirthDate := NullDate;
-  FDeathDate := NullDate;
-  FIdDocument1 := EmptyStr;
-  FIdDocument2 := EmptyStr;
-  FEmail := EmptyStr;
-  FPhone1 := EmptyStr;
-  FPhone2 := EmptyStr;
-  FAddress1 := EmptyStr;
-  FAddress2 := EmptyStr;
-  FNeighborhood := EmptyStr;
-  FZipCode := EmptyStr;
-  FMunicipalityId := 0;
-  FStateId := 0;
-  FCountryId := 0;
-  FInstitutionId := 0;
-  FInstitutionName := EmptyStr;
-  FDepartment := EmptyStr;
-  FJobRole := EmptyStr;
-  FLattesUri := EmptyStr;
-  FOrcidUri := EmptyStr;
-  FTwitterUri := EmptyStr;
-  FInstagramUri := EmptyStr;
-  FWebsiteUri := EmptyStr;
-  FProfileColor := EmptyStr;
-  FNotes := EmptyStr;
-end;
-
-procedure TPerson.Copy(aFrom: TPerson);
-begin
-  FFullName := aFrom.FullName;
-  FAcronym := aFrom.Acronym;
-  FCitation := aFrom.Citation;
-  FTitleTreatment := aFrom.TitleTreatment;
-  FGender := aFrom.Gender;
-  FBirthDate := aFrom.BirthDate;
-  FDeathDate := aFrom.DeathDate;
-  FIdDocument1 := aFrom.IdDocument1;
-  FIdDocument2 := aFrom.IdDocument2;
-  FEmail := aFrom.Email;
-  FPhone1 := aFrom.Phone1;
-  FPhone2 := aFrom.Phone2;
-  FAddress1 := aFrom.Address1;
-  FAddress2 := aFrom.Address2;
-  FNeighborhood := aFrom.Neighborhood;
-  FZipCode := aFrom.ZipCode;
-  FMunicipalityId := aFrom.MunicipalityId;
-  FStateId := aFrom.StateId;
-  FCountryId := aFrom.CountryId;
-  FInstitutionId := aFrom.InstitutionId;
-  FInstitutionName := aFrom.InstitutionName;
-  FDepartment := aFrom.Department;
-  FJobRole := aFrom.JobRole;
-  FLattesUri := aFrom.LattesUri;
-  FOrcidUri := aFrom.OrcidUri;
-  FTwitterUri := aFrom.TwitterUri;
-  FInstagramUri := aFrom.InstagramUri;
-  FWebsiteUri := aFrom.WebsiteUri;
-  FProfileColor := aFrom.ProfileColor;
-  FNotes := aFrom.Notes;
-end;
-
-procedure TPerson.Delete;
+procedure TPersonRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TPerson.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TPerson) then
+    raise Exception.Create('GetById: Expected TPerson');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
-      Clear;
-      Add('DELETE FROM people');
-      Add('WHERE (person_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TPerson.GetData(aKey: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
-        'p.person_id, ' +
-        'p.full_name, ' +
-        'p.acronym, ' +
-        'p.citation, ' +
-        'p.title_treatment, ' +
-        'p.national_id_card, ' +
-        'p.social_security_number, ' +
-        'p.gender, ' +
-        'p.birth_date, ' +
-        'p.death_date, ' +
-        'p.email_addr, ' +
-        'p.phone_1, ' +
-        'p.phone_2, ' +
-        'p.address_1, ' +
-        'p.address_2, ' +
-        'p.neighborhood, ' +
-        'p.zip_code, ' +
-        'p.country_id, ' +
-        'p.state_id, ' +
-        'p.municipality_id, ' +
-        'p.institution_id, ' +
-        'i.full_name AS institution_name, ' +
-        'p.department, ' +
-        'p.job_role, ' +
-        'p.lattes_uri, ' +
-        'p.orcid_uri, ' +
-        'p.twitter_uri, ' +
-        'p.instagram_uri, ' +
-        'p.website_uri, ' +
-        'p.profile_color, ' +
-        'p.notes, ' +
-        'p.profile_image, ' +
-        'p.user_inserted, ' +
-        'p.user_updated, ' +
-        'datetime(p.insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(p.update_date, ''localtime'') AS update_date, ' +
-        'p.exported_status, ' +
-        'p.marked_status, ' +
-        'p.active_status ' +
+      'p.person_id, ' +
+      'p.full_name, ' +
+      'p.acronym, ' +
+      'p.citation, ' +
+      'p.title_treatment, ' +
+      'p.national_id_card, ' +
+      'p.social_security_number, ' +
+      'p.gender, ' +
+      'p.birth_date, ' +
+      'p.death_date, ' +
+      'p.email_addr, ' +
+      'p.phone_1, ' +
+      'p.phone_2, ' +
+      'p.address_1, ' +
+      'p.address_2, ' +
+      'p.neighborhood, ' +
+      'p.zip_code, ' +
+      'p.country_id, ' +
+      'p.state_id, ' +
+      'p.municipality_id, ' +
+      'p.institution_id, ' +
+      'i.full_name AS institution_name' +
+      'p.department, ' +
+      'p.job_role, ' +
+      'p.lattes_uri, ' +
+      'p.orcid_uri, ' +
+      'p.twitter_uri, ' +
+      'p.instagram_uri, ' +
+      'p.website_uri, ' +
+      'p.profile_color, ' +
+      'p.notes, ' +
+      'p.profile_image, ' +
+      'p.user_inserted, ' +
+      'p.user_updated, ' +
+      'datetime(p.insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(p.update_date, ''localtime'') AS update_date, ' +
+      'p.exported_status, ' +
+      'p.marked_status, ' +
+      'p.active_status ' +
       'FROM people AS p');
     Add('LEFT JOIN institutions AS i ON p.institution_id = i.institution_id');
     Add('WHERE p.person_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TPerson(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TPerson.LoadFromDataSet(aDataSet: TDataSet);
+procedure TPersonRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TPerson;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TPerson) then
+    raise Exception.Create('Hydrate: Expected TPerson');
 
+  R := TPerson(E);
   with aDataSet do
   begin
-    FId := FieldByName('person_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FAcronym := FieldByName('acronym').AsString;
-    FCitation := FieldByName('citation').AsString;
-    FTitleTreatment := FieldByName('title_treatment').AsString;
-    FGender := FieldByName('gender').AsString;
+    R.Id := FieldByName('person_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.Abbreviation := FieldByName('acronym').AsString;
+    R.Citation := FieldByName('citation').AsString;
+    R.TitleTreatment := FieldByName('title_treatment').AsString;
+    R.Gender := FieldByName('gender').AsString;
     if (FieldByName('birth_date').IsNull) then
-      FBirthDate := NullDate
+      R.BirthDate := NullDate
     else
-      FBirthDate := FieldByName('birth_date').AsDateTime;
+      R.BirthDate := FieldByName('birth_date').AsDateTime;
     if (FieldByName('death_date').IsNull) then
-      FDeathDate := NullDate
+      R.DeathDate := NullDate
     else
-      FDeathDate := FieldByName('death_date').AsDateTime;
-    FIdDocument1 := FieldByName('national_id_card').AsString;
-    FIdDocument2 := FieldByName('social_security_number').AsString;
-    FEmail := FieldByName('email_addr').AsString;
-    FPhone1 := FieldByName('phone_1').AsString;
-    FPhone2 := FieldByName('phone_2').AsString;
-    FAddress1 := FieldByName('address_1').AsString;
-    FAddress2 := FieldByName('address_2').AsString;
-    FNeighborhood := FieldByName('neighborhood').AsString;
-    FZipCode := FieldByName('zip_code').AsString;
-    FMunicipalityId := FieldByName('municipality_id').AsInteger;
-    FStateId := FieldByName('state_id').AsInteger;
-    FCountryId := FieldByName('country_id').AsInteger;
-    FInstitutionId := FieldByName('institution_id').AsInteger;
-    FInstitutionName := FieldByName('institution_name').AsString;
-    FDepartment := FieldByName('department').AsString;
-    FJobRole := FieldByName('job_role').AsString;
-    FLattesUri := FieldByName('lattes_uri').AsString;
-    FOrcidUri := FieldByName('orcid_uri').AsString;
-    FTwitterUri := FieldByName('twitter_uri').AsString;
-    FInstagramUri := FieldByName('instagram_uri').AsString;
-    FWebsiteUri := FieldByName('website_uri').AsString;
-    FProfileColor := FieldByName('profile_color').AsString;
-    FNotes := FieldByName('notes').AsString;
+      R.DeathDate := FieldByName('death_date').AsDateTime;
+    R.IdDocument1 := FieldByName('national_id_card').AsString;
+    R.IdDocument2 := FieldByName('social_security_number').AsString;
+    R.Email := FieldByName('email_addr').AsString;
+    R.Phone1 := FieldByName('phone_1').AsString;
+    R.Phone2 := FieldByName('phone_2').AsString;
+    R.Address1 := FieldByName('address_1').AsString;
+    R.Address2 := FieldByName('address_2').AsString;
+    R.Neighborhood := FieldByName('neighborhood').AsString;
+    R.PostalCode := FieldByName('zip_code').AsString;
+    R.MunicipalityId := FieldByName('municipality_id').AsInteger;
+    R.StateId := FieldByName('state_id').AsInteger;
+    R.CountryId := FieldByName('country_id').AsInteger;
+    R.InstitutionId := FieldByName('institution_id').AsInteger;
+    R.InstitutionName := FieldByName('institution_name').AsString;
+    R.Department := FieldByName('department').AsString;
+    R.JobRole := FieldByName('job_role').AsString;
+    R.LattesUri := FieldByName('lattes_uri').AsString;
+    R.OrcidUri := FieldByName('orcid_uri').AsString;
+    R.XTwitterUri := FieldByName('twitter_uri').AsString;
+    R.InstagramUri := FieldByName('instagram_uri').AsString;
+    R.WebsiteUri := FieldByName('website_uri').AsString;
+    R.ProfileColor := FieldByName('profile_color').AsString;
+    R.Notes := FieldByName('notes').AsString;
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TPerson.Insert;
+procedure TPersonRepository.Insert(E: TXolmisRecord);
 var
+  R: TPerson;
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TPerson) then
+    raise Exception.Create('Insert: Expected TPerson');
+
+  R := TPerson(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO people (' +
+      'full_name, ' +
+      'acronym, ' +
+      'citation, ' +
+      'title_treatment, ' +
+      'national_id_card, ' +
+      'social_security_number, ' +
+      'gender, ' +
+      'birth_date, ' +
+      'death_date, ' +
+      'email_addr, ' +
+      'phone_1, ' +
+      'phone_2, ' +
+      'address_1, ' +
+      'address_2, ' +
+      'neighborhood, ' +
+      'zip_code, ' +
+      'country_id, ' +
+      'state_id, ' +
+      'municipality_id, ' +
+      'institution_id, ' +
+      'department, ' +
+      'job_role, ' +
+      'lattes_uri, ' +
+      'orcid_uri, ' +
+      'twitter_uri, ' +
+      'instagram_uri, ' +
+      'website_uri, ' +
+      'profile_color, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':full_name, ' +
+      ':acronym, ' +
+      ':citation, ' +
+      ':title_treatment, ' +
+      ':national_id_card, ' +
+      ':social_security_number, ' +
+      ':gender, ' +
+      'date(:birth_date), ' +
+      'date(:death_date), ' +
+      ':email_addr, ' +
+      ':phone_1, ' +
+      ':phone_2, ' +
+      ':address_1, ' +
+      ':address_2, ' +
+      ':neighborhood, ' +
+      ':zip_code, ' +
+      ':country_id, ' +
+      ':state_id, ' +
+      ':municipality_id, ' +
+      ':institution_id, ' +
+      ':department, ' +
+      ':job_role, ' +
+      ':lattes_uri, ' +
+      ':orcid_uri, ' +
+      ':twitter_uri, ' +
+      ':instagram_uri, ' +
+      ':website_uri, ' +
+      ':profile_color, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO people (' +
-        'full_name, ' +
-        'acronym, ' +
-        'citation, ' +
-        'title_treatment, ' +
-        'national_id_card, ' +
-        'social_security_number, ' +
-        'gender, ' +
-        'birth_date, ' +
-        'death_date, ' +
-        'email_addr, ' +
-        'phone_1, ' +
-        'phone_2, ' +
-        'address_1, ' +
-        'address_2, ' +
-        'neighborhood, ' +
-        'zip_code, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
-        'institution_id, ' +
-        'department, ' +
-        'job_role, ' +
-        'lattes_uri, ' +
-        'orcid_uri, ' +
-        'twitter_uri, ' +
-        'instagram_uri, ' +
-        'website_uri, ' +
-        'profile_color, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':full_name, ' +
-        ':acronym, ' +
-        ':citation, ' +
-        ':title_treatment, ' +
-        ':national_id_card, ' +
-        ':social_security_number, ' +
-        ':gender, ' +
-        'date(:birth_date), ' +
-        'date(:death_date), ' +
-        ':email_addr, ' +
-        ':phone_1, ' +
-        ':phone_2, ' +
-        ':address_1, ' +
-        ':address_2, ' +
-        ':neighborhood, ' +
-        ':zip_code, ' +
-        ':country_id, ' +
-        ':state_id, ' +
-        ':municipality_id, ' +
-        ':institution_id, ' +
-        ':department, ' +
-        ':job_role, ' +
-        ':lattes_uri, ' +
-        ':orcid_uri, ' +
-        ':twitter_uri, ' +
-        ':instagram_uri, ' +
-        ':website_uri, ' +
-        ':profile_color, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('citation').AsString := R.Citation;
+    SetStrParam(ParamByName('title_treatment'), R.TitleTreatment);
+    SetStrParam(ParamByName('national_id_card'), R.IdDocument1);
+    SetStrParam(ParamByName('social_security_number'), R.IdDocument2);
+    SetStrParam(ParamByName('gender'), R.Gender);
+    SetDateParam(ParamByName('birth_date'), R.BirthDate);
+    SetDateParam(ParamByName('death_date'), R.DeathDate);
+    SetStrParam(ParamByName('email_addr'), R.Email);
+    SetStrParam(ParamByName('phone_1'), R.Phone1);
+    SetStrParam(ParamByName('phone_2'), R.Phone2);
+    SetStrParam(ParamByName('address_1'), R.Address1);
+    SetStrParam(ParamByName('address_2'), R.Address2);
+    SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
+    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetForeignParam(ParamByName('country_id'), R.CountryId);
+    SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
+    SetStrParam(ParamByName('department'), R.Department);
+    SetStrParam(ParamByName('job_role'), R.JobRole);
+    SetStrParam(ParamByName('lattes_uri'), R.LattesUri);
+    SetStrParam(ParamByName('orcid_uri'), R.OrcidUri);
+    SetStrParam(ParamByName('twitter_uri'), R.XTwitterUri);
+    SetStrParam(ParamByName('instagram_uri'), R.InstagramUri);
+    SetStrParam(ParamByName('website_uri'), R.WebsiteUri);
+    SetStrParam(ParamByName('profile_color'), R.ProfileColor);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('acronym').AsString := FAcronym;
-      ParamByName('citation').AsString := FCitation;
-      SetStrParam(ParamByName('title_treatment'), FTitleTreatment);
-      SetStrParam(ParamByName('national_id_card'), FIdDocument1);
-      SetStrParam(ParamByName('social_security_number'), FIdDocument2);
-      SetStrParam(ParamByName('gender'), FGender);
-      SetDateParam(ParamByName('birth_date'), FBirthDate);
-      SetDateParam(ParamByName('death_date'), FDeathDate);
-      SetStrParam(ParamByName('email_addr'), FEmail);
-      SetStrParam(ParamByName('phone_1'), FPhone1);
-      SetStrParam(ParamByName('phone_2'), FPhone2);
-      SetStrParam(ParamByName('address_1'), FAddress1);
-      SetStrParam(ParamByName('address_2'), FAddress2);
-      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
-      SetStrParam(ParamByName('zip_code'), FZipCode);
-      SetForeignParam(ParamByName('country_id'), FCountryId);
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
-      SetStrParam(ParamByName('department'), FDepartment);
-      SetStrParam(ParamByName('job_role'), FJobRole);
-      SetStrParam(ParamByName('lattes_uri'), FLattesUri);
-      SetStrParam(ParamByName('orcid_uri'), FOrcidUri);
-      SetStrParam(ParamByName('twitter_uri'), FTwitterUri);
-      SetStrParam(ParamByName('instagram_uri'), FInstagramUri);
-      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
-      SetStrParam(ParamByName('profile_color'), FProfileColor);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TPerson.Save;
+function TPersonRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_PEOPLE;
 end;
 
-function TPerson.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Full name', FFullName);
-    JSONObject.Add('Abbreviation', FAcronym);
-    JSONObject.Add('Citation', FCitation);
-    JSONObject.Add('Title', FTitleTreatment);
-    JSONObject.Add('Gender', FGender);
-    JSONObject.Add('Birth date', FBirthDate);
-    JSONObject.Add('Death date', FDeathDate);
-    JSONObject.Add('ID document 1', FIdDocument1);
-    JSONObject.Add('ID document 2', FIdDocument2);
-    JSONObject.Add('E-mail', FEmail);
-    JSONObject.Add('Phone number 1', FPhone1);
-    JSONObject.Add('Phone number 2', FPhone2);
-    JSONObject.Add('Address 1', FAddress1);
-    JSONObject.Add('Address 2', FAddress2);
-    JSONObject.Add('Neighborhood', FNeighborhood);
-    JSONObject.Add('Zip code', FZipCode);
-    JSONObject.Add('Municipality', FMunicipalityId);
-    JSONObject.Add('State', FStateId);
-    JSONObject.Add('Country', FCountryId);
-    JSONObject.Add('Institution ID', FInstitutionId);
-    JSONObject.Add('Institution', FInstitutionName);
-    JSONObject.Add('Department', FDepartment);
-    JSONObject.Add('Job role', FJobRole);
-    JSONObject.Add('Lattes', FLattesUri);
-    JSONObject.Add('Orcid', FOrcidUri);
-    JSONObject.Add('X/Twitter', FTwitterUri);
-    JSONObject.Add('Instagram', FInstagramUri);
-    JSONObject.Add('Website', FWebsiteUri);
-    JSONObject.Add('Profile color', FProfileColor);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TPerson.Update;
+procedure TPersonRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TPerson;
 begin
-  if FId = 0 then
+  if not (E is TPerson) then
+    raise Exception.Create('Update: Expected TPerson');
+
+  R := TPerson(E);
+  if R.Id = 0 then
     raise Exception.CreateFmt('TPerson.Update: %s.', [rsErrorEmptyId]);
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE people SET ' +
+    Clear;
+    Add('UPDATE people SET ' +
         'full_name = :full_name, ' +
         'acronym = :acronym, ' +
         'citation = :citation, ' +
@@ -725,45 +858,39 @@ begin
         'update_date = datetime(''now'',''subsec'') ');
       Add('WHERE (person_id = :person_id)');
 
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('acronym').AsString := FAcronym;
-      ParamByName('citation').AsString := FCitation;
-      SetStrParam(ParamByName('title_treatment'), FTitleTreatment);
-      SetStrParam(ParamByName('national_id_card'), FIdDocument1);
-      SetStrParam(ParamByName('social_security_number'), FIdDocument2);
-      SetStrParam(ParamByName('gender'), FGender);
-      SetDateParam(ParamByName('birth_date'), FBirthDate);
-      SetDateParam(ParamByName('death_date'), FDeathDate);
-      SetStrParam(ParamByName('email_addr'), FEmail);
-      SetStrParam(ParamByName('phone_1'), FPhone1);
-      SetStrParam(ParamByName('phone_2'), FPhone2);
-      SetStrParam(ParamByName('address_1'), FAddress1);
-      SetStrParam(ParamByName('address_2'), FAddress2);
-      SetStrParam(ParamByName('neighborhood'), FNeighborhood);
-      SetStrParam(ParamByName('zip_code'), FZipCode);
-      SetForeignParam(ParamByName('country_id'), FCountryId);
-      SetForeignParam(ParamByName('state_id'), FStateId);
-      SetForeignParam(ParamByName('municipality_id'), FMunicipalityId);
-      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
-      SetStrParam(ParamByName('department'), FDepartment);
-      SetStrParam(ParamByName('job_role'), FJobRole);
-      SetStrParam(ParamByName('lattes_uri'), FLattesUri);
-      SetStrParam(ParamByName('orcid_uri'), FOrcidUri);
-      SetStrParam(ParamByName('twitter_uri'), FTwitterUri);
-      SetStrParam(ParamByName('instagram_uri'), FInstagramUri);
-      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
-      SetStrParam(ParamByName('profile_color'), FProfileColor);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('person_id').AsInteger := FId;
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('citation').AsString := R.Citation;
+    SetStrParam(ParamByName('title_treatment'), R.TitleTreatment);
+    SetStrParam(ParamByName('national_id_card'), R.IdDocument1);
+    SetStrParam(ParamByName('social_security_number'), R.IdDocument2);
+    SetStrParam(ParamByName('gender'), R.Gender);
+    SetDateParam(ParamByName('birth_date'), R.BirthDate);
+    SetDateParam(ParamByName('death_date'), R.DeathDate);
+    SetStrParam(ParamByName('email_addr'), R.Email);
+    SetStrParam(ParamByName('phone_1'), R.Phone1);
+    SetStrParam(ParamByName('phone_2'), R.Phone2);
+    SetStrParam(ParamByName('address_1'), R.Address1);
+    SetStrParam(ParamByName('address_2'), R.Address2);
+    SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
+    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetForeignParam(ParamByName('country_id'), R.CountryId);
+    SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
+    SetStrParam(ParamByName('department'), R.Department);
+    SetStrParam(ParamByName('job_role'), R.JobRole);
+    SetStrParam(ParamByName('lattes_uri'), R.LattesUri);
+    SetStrParam(ParamByName('orcid_uri'), R.OrcidUri);
+    SetStrParam(ParamByName('twitter_uri'), R.XTwitterUri);
+    SetStrParam(ParamByName('instagram_uri'), R.InstagramUri);
+    SetStrParam(ParamByName('website_uri'), R.WebsiteUri);
+    SetStrParam(ParamByName('profile_color'), R.ProfileColor);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('person_id').AsInteger := R.Id;
 
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

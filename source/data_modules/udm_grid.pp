@@ -3749,6 +3749,7 @@ end;
 
 procedure TDMG.qPeopleAfterPost(DataSet: TDataSet);
 var
+  Repo: TPersonRepository;
   NewPerson: TPerson;
   lstDiff: TStrings;
   D: String;
@@ -3756,8 +3757,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldPerson) then
   begin
+    Repo := TPersonRepository.Create(DMM.sqlCon);
     NewPerson := TPerson.Create;
-    NewPerson.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewPerson);
     lstDiff := TStringList.Create;
     try
       if NewPerson.Diff(OldPerson, lstDiff) then
@@ -3771,6 +3773,7 @@ begin
     finally
       FreeAndNil(NewPerson);
       FreeAndNil(OldPerson);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -3855,6 +3858,7 @@ end;
 
 procedure TDMG.qPermitsAfterPost(DataSet: TDataSet);
 var
+  Repo: TPermitRepository;
   NewPermit: TPermit;
   lstDiff: TStrings;
   D: String;
@@ -3862,8 +3866,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldPermit) then
   begin
+    Repo := TPermitRepository.Create(DMM.sqlCon);
     NewPermit := TPermit.Create;
-    NewPermit.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewPermit);
     lstDiff := TStringList.Create;
     try
       if NewPermit.Diff(OldPermit, lstDiff) then
@@ -3877,6 +3882,7 @@ begin
     finally
       FreeAndNil(NewPermit);
       FreeAndNil(OldPermit);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

@@ -480,6 +480,7 @@ end;
 
 function EditPerson(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TPersonRepository;
   FRecord, FOldRecord: TPerson;
   lstDiff: TStrings;
   D: String;
@@ -487,6 +488,7 @@ begin
   LogEvent(leaOpen, 'Person edit dialog');
   Application.CreateForm(TedtPerson, edtPerson);
   FOldRecord := nil;
+  FRepo := TPersonRepository.Create(DMM.sqlCon);
   with edtPerson do
   try
     dsLink.DataSet := aDataSet;
@@ -508,7 +510,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Person.Save;
+        FRepo.Save(Person);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -551,6 +553,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtPerson);
     LogEvent(leaClose, 'Person edit dialog');
   end;
@@ -1040,6 +1043,7 @@ end;
 
 function EditPermit(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TPermitRepository;
   FRecord, FOldRecord: TPermit;
   lstDiff: TStrings;
   D: String;
@@ -1047,6 +1051,7 @@ begin
   LogEvent(leaOpen, 'Permit edit dialog');
   Application.CreateForm(TedtPermit, edtPermit);
   FOldRecord := nil;
+  FRepo := TPermitRepository.Create(DMM.sqlCon);
   with edtPermit do
   try
     dsLink.DataSet := aDataSet;
@@ -1069,7 +1074,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Permit.Save;
+        FRepo.Save(Permit);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1112,6 +1117,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtPermit);
     LogEvent(leaClose, 'Permit edit dialog');
   end;

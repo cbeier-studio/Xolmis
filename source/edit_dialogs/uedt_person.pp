@@ -441,7 +441,7 @@ procedure TedtPerson.GetRecord;
 begin
   eFullname.Text := FPerson.FullName;
   eCitation.Text := FPerson.Citation;
-  eAbbreviation.Text := FPerson.Acronym;
+  eAbbreviation.Text := FPerson.Abbreviation;
   cbTreatment.ItemIndex := cbTreatment.Items.IndexOf(FPerson.TitleTreatment);
   cbGender.ItemIndex := cbGender.Items.IndexOf(FPerson.Gender);
   if not DateIsNull(FPerson.BirthDate) then
@@ -453,7 +453,7 @@ begin
   eEmail.Text := FPerson.Email;
   ePhone1.Text := FPerson.Phone1;
   ePhone2.Text := FPerson.Phone2;
-  eZipCode.Text := FPerson.ZipCode;
+  eZipCode.Text := FPerson.PostalCode;
   eAddress1.Text := FPerson.Address1;
   eAddress2.Text := FPerson.Address2;
   eNeighborhood.Text := FPerson.Neighborhood;
@@ -469,7 +469,7 @@ begin
   eJobRole.Text := FPerson.JobRole;
   eLattes.Text := FPerson.LattesUri;
   eOrcid.Text := FPerson.OrcidUri;
-  eTwitter.Text := FPerson.TwitterUri;
+  eTwitter.Text := FPerson.XTwitterUri;
   eInstagram.Text := FPerson.InstagramUri;
   eWebsite.Text := FPerson.WebsiteUri;
   mNotes.Text := FPerson.Notes;
@@ -544,7 +544,7 @@ procedure TedtPerson.SetRecord;
 begin
   FPerson.FullName       := eFullname.Text;
   FPerson.Citation       := eCitation.Text;
-  FPerson.Acronym        := eAbbreviation.Text;
+  FPerson.Abbreviation        := eAbbreviation.Text;
   FPerson.TitleTreatment := cbTreatment.Text;
   FPerson.Gender         := cbGender.Text;
   if eBirthDate.Text = EmptyStr then
@@ -560,7 +560,7 @@ begin
   FPerson.Email          := eEmail.Text;
   FPerson.Phone1         := ePhone1.Text;
   FPerson.Phone2         := ePhone2.Text;
-  FPerson.ZipCode        := eZipCode.Text;
+  FPerson.PostalCode        := eZipCode.Text;
   FPerson.Address1       := eAddress1.Text;
   FPerson.Address2       := eAddress2.Text;
   FPerson.Neighborhood   := eNeighborhood.Text;
@@ -572,7 +572,7 @@ begin
   FPerson.JobRole        := eJobRole.Text;
   FPerson.LattesUri      := eLattes.Text;
   FPerson.OrcidUri       := eOrcid.Text;
-  FPerson.TwitterUri     := eTwitter.Text;
+  FPerson.XTwitterUri     := eTwitter.Text;
   FPerson.InstagramUri   := eInstagram.Text;
   FPerson.WebsiteUri     := eWebsite.Text;
   FPerson.Notes          := mNotes.Text;
