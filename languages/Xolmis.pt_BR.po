@@ -1740,6 +1740,10 @@ msgctxt "data_columns.rscportuguesename"
 msgid "Portuguese name"
 msgstr "Nome português"
 
+#: data_columns.rscpostalcode
+msgid "Postal code"
+msgstr "Código postal"
+
 #: data_columns.rscprecipitation
 msgctxt "data_columns.rscprecipitation"
 msgid "Precipitation"
@@ -2448,11 +2452,6 @@ msgstr "Vento (km/h)"
 msgctxt "data_columns.rscxtwitter"
 msgid "X (Twitter)"
 msgstr "X (Twitter)"
-
-#: data_columns.rsczipcode
-msgctxt "data_columns.rsczipcode"
-msgid "Zip code"
-msgstr "CEP"
 
 #: data_columns.rsczoologicalcode
 msgctxt "data_columns.rsczoologicalcode"
@@ -13570,6 +13569,11 @@ msgctxt "utils_locale.rsdatesurvey"
 msgid "Survey date"
 msgstr "Data da amostragem"
 
+#: utils_locale.rsdatetimenotinrange
+#, object-pascal-format
+msgid "The value of %s must be between %s and %s."
+msgstr "O valor de %s deve estar entre %s e %s."
+
 #: utils_locale.rsdatetoday
 msgctxt "utils_locale.rsdatetoday"
 msgid "today"
@@ -14223,6 +14227,11 @@ msgstr "Ocorreu um erro gravando a senha do usuário Admin: %s"
 msgctxt "utils_locale.rsexactcoordinate"
 msgid "Exact"
 msgstr "Exato"
+
+#: utils_locale.rsexceededmaxlength
+#, object-pascal-format
+msgid "%s exceeded the maximum length (%d of %d)."
+msgstr "%s excedeu o comprimento máximo (%d de %d)."
 
 #: utils_locale.rsexportcanceled
 msgctxt "utils_locale.rsexportcanceled"
@@ -15175,6 +15184,36 @@ msgstr "%d selecionados"
 msgctxt "utils_locale.rsmoreselectedfemale"
 msgid "%d selected"
 msgstr "%d selecionados"
+
+#: utils_locale.rsmustbeavalidboolean
+#, object-pascal-format
+msgid "%s must have a valid boolean."
+msgstr "%s deve ter um booleano válido."
+
+#: utils_locale.rsmustbeavaliddate
+#, object-pascal-format
+msgid "%s must have a valid date."
+msgstr "%s deve ter uma data válida."
+
+#: utils_locale.rsmustbeavaliddatetime
+#, object-pascal-format
+msgid "%s must have a valid date and time."
+msgstr "%s deve ter uma data e hora válidas."
+
+#: utils_locale.rsmustbeavalidinteger
+#, object-pascal-format
+msgid "%s must be a valid integer."
+msgstr "%s deve ter um número inteiro válido."
+
+#: utils_locale.rsmustbeavalidnumber
+#, object-pascal-format
+msgid "%s must be a valid number."
+msgstr "%s deve ter um número decimal válido."
+
+#: utils_locale.rsmustbeavalidtime
+#, object-pascal-format
+msgid "%s must have a valid time."
+msgstr "%s deve ter uma hora válida."
 
 #: utils_locale.rsnamenotfound
 msgctxt "utils_locale.rsnamenotfound"

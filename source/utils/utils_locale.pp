@@ -390,6 +390,7 @@ uses
     rsInvalidLatitude = 'The Latitude entered is not a valid decimal number.';
     rsInvalidEmail = 'The address %s is not a valid e-mail.';
     rsValueNotInRange = 'The value of %s must be between %f and %f.';
+    rsDateTimeNotInRange = 'The value of %s must be between %s and %s.';
     rsValueNotInSet = 'The value of %s must be one of the following: %s.';
     rsInvalidCPF = 'The CPF number entered is invalid.';
     rsInvalidDate = 'The %s is not a valid date.';
@@ -423,6 +424,13 @@ uses
     rsBandsTransferedWithErrors = 'The transfer of bands was finished, but some bands have problems and were not transfered.';
     rsRepositoryConnectionCannotBeNil = 'Repository Connection cannot be nil.';
     rsFieldNotAllowedInFindBy = 'Field "%s" not allowed in FindBy.';
+    rsMustBeAValidInteger = '%s must be a valid integer.';
+    rsMustBeAValidNumber = '%s must be a valid number.';
+    rsMustBeAValidDate = '%s must have a valid date.';
+    rsMustBeAValidTime = '%s must have a valid time.';
+    rsMustBeAValidDateTime = '%s must have a valid date and time.';
+    rsMustBeAValidBoolean = '%s must have a valid boolean.';
+    rsExceededMaxLength = '%s exceeded the maximum length (%d of %d).';
 
     { HTML validation messages }
     //rsForeignNotExist = 'Selected <b>%s</b> does not exist. Select a valid record.';

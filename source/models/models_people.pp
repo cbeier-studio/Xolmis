@@ -253,7 +253,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscNeighborhood, aOld.Neighborhood, FNeighborhood, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscZipCode, aOld.PostalCode, FPostalCode, R) then
+  if FieldValuesDiff(rscPostalCode, aOld.PostalCode, FPostalCode, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
     Changes.Add(R);

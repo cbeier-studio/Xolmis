@@ -72,7 +72,7 @@ resourcestring
   rscNeighborhood = 'Neighborhood';
   rscAddress2 = 'Address 2';
   rscAddress1 = 'Address 1';
-  rscZipCode = 'Zip code';
+  rscPostalCode = 'Postal code';
   rscCitation = 'Citation';
   rscTreatment = 'Treatment';
   rscGender = 'Gender';
@@ -937,7 +937,7 @@ begin
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'acronym':                Fields[i].DisplayLabel := rscAcronym;
-        'zip_code':               Fields[i].DisplayLabel := rscZipCode;
+        'zip_code':               Fields[i].DisplayLabel := rscPostalCode;
         'address_1':              Fields[i].DisplayLabel := rscAddress1;
         'address_2':              Fields[i].DisplayLabel := rscAddress2;
         'neighborhood':           Fields[i].DisplayLabel := rscNeighborhood;
@@ -982,7 +982,7 @@ begin
         'social_security_number': Fields[i].DisplayLabel := rscCPF;
         'birth_date':             Fields[i].DisplayLabel := rscBirthDate;
         'death_date':             Fields[i].DisplayLabel := rscDeathDate;
-        'zip_code':               Fields[i].DisplayLabel := rscZipCode;
+        'zip_code':               Fields[i].DisplayLabel := rscPostalCode;
         'address_1':              Fields[i].DisplayLabel := rscAddress1;
         'address_2':              Fields[i].DisplayLabel := rscAddress2;
         'neighborhood':           Fields[i].DisplayLabel := rscNeighborhood;

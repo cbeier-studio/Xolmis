@@ -10290,22 +10290,12 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
-    object qEggsegg_id: TAutoIncField
-      DisplayLabel = 'ID'
-      FieldKind = fkData
-      FieldName = 'egg_id'
-      Index = 23
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = False
-    end
     object qEggsnotes: TMemoField
       DisplayLabel = 'Notes'
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 24
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -10318,13 +10308,23 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 25
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Visible = False
       Size = 100
+    end
+    object qEggsegg_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'egg_id'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
     end
     object qEggsorder_id: TLongintField
       DisplayLabel = 'Order ID'

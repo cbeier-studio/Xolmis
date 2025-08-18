@@ -1738,6 +1738,10 @@ msgctxt "data_columns.rscportuguesename"
 msgid "Portuguese name"
 msgstr ""
 
+#: data_columns.rscpostalcode
+msgid "Postal code"
+msgstr ""
+
 #: data_columns.rscprecipitation
 msgctxt "data_columns.rscprecipitation"
 msgid "Precipitation"
@@ -2445,11 +2449,6 @@ msgstr ""
 #: data_columns.rscxtwitter
 msgctxt "data_columns.rscxtwitter"
 msgid "X (Twitter)"
-msgstr ""
-
-#: data_columns.rsczipcode
-msgctxt "data_columns.rsczipcode"
-msgid "Zip code"
 msgstr ""
 
 #: data_columns.rsczoologicalcode
@@ -13586,6 +13585,11 @@ msgctxt "utils_locale.rsdatesurvey"
 msgid "Survey date"
 msgstr ""
 
+#: utils_locale.rsdatetimenotinrange
+#, object-pascal-format
+msgid "The value of %s must be between %s and %s."
+msgstr ""
+
 #: utils_locale.rsdatetoday
 msgctxt "utils_locale.rsdatetoday"
 msgid "today"
@@ -14236,6 +14240,11 @@ msgstr ""
 #: utils_locale.rsexactcoordinate
 msgctxt "utils_locale.rsexactcoordinate"
 msgid "Exact"
+msgstr ""
+
+#: utils_locale.rsexceededmaxlength
+#, object-pascal-format
+msgid "%s exceeded the maximum length (%d of %d)."
 msgstr ""
 
 #: utils_locale.rsexportcanceled
@@ -15188,6 +15197,36 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsmoreselectedfemale"
 msgid "%d selected"
+msgstr ""
+
+#: utils_locale.rsmustbeavalidboolean
+#, object-pascal-format
+msgid "%s must have a valid boolean."
+msgstr ""
+
+#: utils_locale.rsmustbeavaliddate
+#, object-pascal-format
+msgid "%s must have a valid date."
+msgstr ""
+
+#: utils_locale.rsmustbeavaliddatetime
+#, object-pascal-format
+msgid "%s must have a valid date and time."
+msgstr ""
+
+#: utils_locale.rsmustbeavalidinteger
+#, object-pascal-format
+msgid "%s must be a valid integer."
+msgstr ""
+
+#: utils_locale.rsmustbeavalidnumber
+#, object-pascal-format
+msgid "%s must be a valid number."
+msgstr ""
+
+#: utils_locale.rsmustbeavalidtime
+#, object-pascal-format
+msgid "%s must have a valid time."
 msgstr ""
 
 #: utils_locale.rsnamenotfound

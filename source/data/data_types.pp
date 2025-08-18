@@ -299,26 +299,78 @@ type
 
 type
 
+  TRelationalField = record
+    TableType: TTableType;
+    KeyFieldName: String;
+    ResultFieldName: String;
+    DisplayFieldName: String;
+  end;
+
+  TValidationRules = record
+    RequiredField: Boolean;
+    UniqueField: Boolean;
+    MaxLength: Integer;
+    MinValue: Extended;
+    MaxValue: Extended;
+    MinDateTime: TDateTime;
+    MaxDateTime: TDateTime;
+    FormatMask: String;
+    ValueList: String;
+  end;
+
+  { TValidationRulesHelper }
+
+  TValidationRulesHelper = record helper for TValidationRules
+    procedure Clear;
+  end;
+
   { TTableField }
 
   TTableField = class
-    FieldName: String;
-    DisplayName: String;
-    IntegerKey: Boolean;
-    TextualKey: Boolean;
-    DarwinCoreName: String;
-    DataType: TTableFieldType;
-    FilterType: TSearchDataType;
-    LookupTable: String;
-    LookupKey: String;
-    LookupResult: String;
-    LookupName: String;
-    MinValue: Extended;
-    MaxValue: Extended;
-    ValueList: String;
-    Visible: Boolean;
-    Sorted: Boolean;
-    procedure GetData(aTable: TTableType; aFieldName: String = '');
+  private
+    FTable: TTableType;
+    FFieldName: String;
+    FDisplayName: String;
+    FDarwinCoreName: String;
+    FExportName: String;
+    FPrimaryKey: Boolean;
+    FDataType: TTableFieldType;
+    FFilterType: TSearchDataType;
+    FSortType: TSortType;
+    FLookupInfo: TRelationalField;
+    FRules: TValidationRules;
+    FDefaultValue: Variant;
+    FVisible: Boolean;
+    FSorted: Boolean;
+    FEditable: Boolean;
+    FWidth: Integer;
+    FDescription: String;
+  public
+    constructor Create(aTable: TTableType; aFieldName: String; aExportName: String = '');
+    function GetExportName: String;
+    procedure GetFieldInfo(DataSet: TDataSet);
+    function GetHint: String;
+    function IsEditable: Boolean;
+    function IsValidValue(const aValue: String; out ErrorMessage: String): Boolean;
+
+    property LookupInfo: TRelationalField read FLookupInfo write FLookupInfo;
+    property Rules: TValidationRules read FRules write FRules;
+  published
+    property Table: TTableType read FTable write FTable;
+    property FieldName: String read FFieldName write FFieldName;
+    property DisplayName: String read FDisplayName write FDisplayName;
+    property DarwinCoreName: String read FDarwinCoreName write FDarwinCoreName;
+    property ExportName: String read FExportName write FExportName;
+    property PrimaryKey: Boolean read FPrimaryKey write FPrimaryKey default False;
+    property DataType: TTableFieldType read FDataType write FDataType default ctString;
+    property FilterType: TSearchDataType read FFilterType write FFilterType default sdtText;
+    property SortType: TSortType read FSortType write FSortType default stAlphanumeric;
+    property DefaultValue: Variant read FDefaultValue write FDefaultValue;
+    property Visible: Boolean read FVisible write FVisible default True;
+    property Sorted: Boolean read FSorted write FSorted default False;
+    property Editable: Boolean read FEditable write FEditable;
+    property Width: Integer read FWidth write FWidth;
+    property Description: String read FDescription write FDescription;
   end;
 
   TTableFields = specialize TFPGObjectList<TTableField>;
@@ -336,12 +388,8 @@ type
     FShowImport: Boolean;
     FShowFilter: Boolean;
     FFields: TTableFields;
-    procedure GetData(aTableType: TTableType); overload;
-    procedure GetData(aDisplayName: String); overload;
-    procedure GetFields(AlphaSort: Boolean);
   public
-    constructor Create; overload;
-    constructor Create(aTableType: TTableType); overload;
+    constructor Create;
     destructor Destroy; override;
   published
     property TableName: String read FTableName write FTableName;
@@ -501,13 +549,6 @@ end;
 
 { TTableInfo }
 
-constructor TTableInfo.Create(aTableType: TTableType);
-begin
-  GetData(aTableType);
-  FFields := TTableFields.Create;
-  GetFields(False);
-end;
-
 constructor TTableInfo.Create;
 begin
   FFields := TTableFields.Create;
@@ -517,164 +558,6 @@ destructor TTableInfo.Destroy;
 begin
   FFields.Free;
   inherited Destroy;
-end;
-
-procedure TTableInfo.GetData(aDisplayName: String);
-begin
-  with TSQLQuery.Create(DMM.sqlCon), SQL do
-  try
-    Database := DMM.sqlCon;
-    Clear;
-    Add('SELECT * FROM tables_mapping');
-    Add('WHERE display_name = :tabname');
-    ParamByName('TABNAME').AsString := aDisplayName;
-    Open;
-    if RecordCount > 0 then
-    begin
-      FTableName := FieldByName('table_name').AsString;
-      FDisplayName := FieldByName('display_name').AsString;
-      FVisible := FieldByName('visible_status').AsBoolean;
-      FShowExport := FieldByName('export_show').AsBoolean;
-      FShowImport := FieldByName('import_show').AsBoolean;
-      FShowFilter := FieldByName('filter_show').AsBoolean;
-    end;
-    Close;
-  finally
-    Free;
-  end;
-end;
-
-procedure TTableInfo.GetData(aTableType: TTableType);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Clear;
-    Add('SELECT * FROM tables_mapping');
-    Add('WHERE table_name = :tabname');
-    ParamByName('TABNAME').AsString := TABLE_NAMES[aTableType];
-    Open;
-    if RecordCount > 0 then
-    begin
-      FTableName := FieldByName('table_name').AsString;
-      FDisplayName := FieldByName('display_name').AsString;
-      FVisible := FieldByName('visible_status').AsBoolean;
-      FShowExport := FieldByName('export_show').AsBoolean;
-      FShowImport := FieldByName('import_show').AsBoolean;
-      FShowFilter := FieldByName('filter_show').AsBoolean;
-    end;
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TTableInfo.GetFields(AlphaSort: Boolean);
-var
-  i: Integer;
-  Lst: TStringList;
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Clear;
-    Add('SELECT * FROM fields_mapping');
-    Add('WHERE table_name = :tabname');
-    if AlphaSort then
-      Add('ORDER BY field_name ASC')
-    else
-      Add('ORDER BY sort_num ASC');
-    ParamByName('TABNAME').AsString := TableName;
-    Open;
-    if RecordCount > 0 then
-    begin
-      First;
-      FFields.Clear;
-      for i := 0 to RecordCount - 1 do
-      begin
-        FFields.Add(TTableField.Create);
-        FFields.Items[i].FieldName := FieldByName('field_name').AsString;
-        FFields.Items[i].DisplayName := FieldByName('display_name').AsString;
-        FFields.Items[i].IntegerKey := FieldByName('integer_key').AsBoolean;
-        FFields.Items[i].TextualKey := FieldByName('text_key').AsBoolean;
-        FFields.Items[i].DarwinCoreName := FieldByName('darwin_core_name').AsString;
-        FFields.Items[i].DataType := CampoByName(FieldByName('field_type').AsString);
-        FFields.Items[i].FilterType := SearchTypeByName(FieldByName('filter_type').AsString);
-        FFields.Items[i].LookupTable := FieldByName('lookup_table').AsString;
-        FFields.Items[i].LookupKey := FieldByName('lookup_key').AsString;
-        FFields.Items[i].LookupResult := FieldByName('lookup_result').AsString;
-        FFields.Items[i].LookupName := FieldByName('lookup_name').AsString;
-        FFields.Items[i].MinValue := FieldByName('minimum_value').AsFloat;
-        FFields.Items[i].MaxValue := FieldByName('maximum_value').AsFloat;
-        if Trim(FieldByName('value_list').AsString) <> EmptyStr then
-        try
-          Lst := TStringList.Create;
-          Lst.Text := FieldByName('value_list').AsString;
-          FFields.Items[i].ValueList := Lst.CommaText;
-        finally
-          FreeAndNil(Lst);
-        end;
-        FFields.Items[i].Visible := FieldByName('visible_status').AsBoolean;
-        FFields.Items[i].Sorted := FieldByName('sorted_status').AsBoolean;
-        Next;
-      end;
-    end;
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-{ TTableField }
-
-procedure TTableField.GetData(aTable: TTableType; aFieldName: String);
-var
-  Qry: TSQLQuery;
-begin
-  if (aFieldName = EmptyStr) and (FieldName = EmptyStr) then
-  begin
-    raise EArgumentException.Create(rsErrorEmptyFieldName);
-    Exit;
-  end;
-  FieldName := aFieldName;
-
-  Qry := TSQLQuery.Create(DMM.sysCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sysCon;
-    Clear;
-    Add('SELECT * FROM fields_mapping');
-    Add('WHERE (table_name = :atable) AND (field_name = :afield)');
-    ParamByName('ATABLE').AsString := TABLE_NAMES[aTable];
-    ParamByName('AFIELD').AsString := FieldName;
-    Open;
-    if RecordCount > 0 then
-    begin
-      DisplayName := FieldByName('display_name').AsString;
-      IntegerKey := FieldByName('integer_key').AsBoolean;
-      TextualKey := FieldByName('text_key').AsBoolean;
-      DarwinCoreName := FieldByName('darwin_core_name').AsString;
-      DataType := CampoByName(FieldByName('field_type').AsString);
-      FilterType := SearchTypeByName(FieldByName('filter_type').AsString);;
-      LookupTable := FieldByName('lookup_table').AsString;
-      LookupKey := FieldByName('lookup_key').AsString;
-      LookupResult := FieldByName('lookup_result').AsString;
-      LookupName := FieldByName('lookup_name').AsString;
-      MinValue := FieldByName('minimum_value').AsFloat;
-      MaxValue := FieldByName('maximum_value').AsFloat;
-      ValueList := FieldByName('value_list').AsString;
-      Visible := FieldByName('visible_status').AsBoolean;
-      Sorted := FieldByName('sorted_status').AsBoolean;
-    end;
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
 end;
 
 { TSearchField }
@@ -1162,6 +1045,226 @@ begin
 
   FDataSet.Open;
   Result := FDataSet.RecordCount;
+end;
+
+{ TValidationRulesHelper }
+
+procedure TValidationRulesHelper.Clear;
+begin
+  RequiredField := False;
+  UniqueField := False;
+  MaxLength := 0;
+  MinValue := 0;
+  MaxValue := 0;
+  MinDateTime := NullDateTime;
+  MaxDateTime := NullDateTime;
+  FormatMask := EmptyStr;
+  ValueList := EmptyStr;
+end;
+
+{ TTableField }
+
+constructor TTableField.Create(aTable: TTableType; aFieldName: String; aExportName: String);
+begin
+  FTable := aTable;
+  FFieldName := aFieldName;
+  FExportName := aExportName;
+end;
+
+function TTableField.GetExportName: String;
+begin
+  if FDarwinCoreName <> EmptyStr then
+    Result := FDarwinCoreName
+  else
+  if FExportName <> EmptyStr then
+    Result := FExportName
+  else
+    Result := FFieldName;
+end;
+
+procedure TTableField.GetFieldInfo(DataSet: TDataSet);
+begin
+  if not DataSet.Active then
+    raise Exception.Create('GetFieldInfo: DataSet is inactive.');
+
+  FDisplayName := DataSet.FieldByName(FFieldName).DisplayName;
+  FPrimaryKey := pfInKey in DataSet.FieldByName(FFieldName).ProviderFlags;
+  case DataSet.FieldByName(FFieldName).DataType of
+    ftUnknown:
+      FDataType := ctString;
+    ftString, ftMemo, ftFixedChar, ftWideString, ftFixedWideChar, ftWideMemo:
+      FDataType := ctString;
+    ftSmallint, ftInteger, ftWord, ftAutoInc, ftLargeint:
+      FDataType := ctInteger;
+    ftBoolean:
+      FDataType := ctBoolean;
+    ftFloat, ftCurrency, ftBCD, ftFMTBcd:
+      FDataType := ctFloat;
+    ftDate:
+      FDataType := ctDate;
+    ftTime:
+      FDataType := ctTime;
+    ftDateTime, ftTimeStamp:
+      FDataType := ctDateTime;
+    ftBlob, ftGraphic, ftFmtMemo, ftTypedBinary: ;
+    ftVariant: ;
+    ftGuid: ;
+  end;
+  FRules.FormatMask := DataSet.FieldByName(FFieldName).EditMask;
+  if DataSet.FieldByName(FFieldName) is TIntegerField then
+  begin
+    FRules.MinValue := TIntegerField(DataSet.FieldByName(FFieldName)).MinValue;
+    FRules.MaxValue := TIntegerField(DataSet.FieldByName(FFieldName)).MaxValue;
+  end;
+  FRules.RequiredField := DataSet.FieldByName(FFieldName).Required;
+  FVisible := DataSet.FieldByName(FFieldName).Visible;
+  FEditable := not DataSet.FieldByName(FFieldName).ReadOnly;
+  FRules.MaxLength := DataSet.FieldByName(FFieldName).Size;
+  FWidth := DataSet.FieldByName(FFieldName).DisplayWidth;
+end;
+
+function TTableField.GetHint: String;
+begin
+  if FDescription <> EmptyStr then
+    Result := FDescription
+  else
+    Result := DisplayName;
+end;
+
+function TTableField.IsEditable: Boolean;
+begin
+  Result := FEditable and not FPrimaryKey;
+end;
+
+function TTableField.IsValidValue(const aValue: String; out ErrorMessage: String): Boolean;
+var
+  dummyI: Integer;
+  dummyF: Extended;
+  dummyDT: TDateTime;
+  dummyB: Boolean;
+  vList: TStrings;
+begin
+  Result := True;
+
+  // Check required field
+  if FRules.RequiredField and (Trim(AValue) = '') then
+  begin
+    ErrorMessage := Format(rsRequiredField, [FDisplayName]);
+    Exit(False);
+  end;
+
+  // Check max length
+  if (FRules.MaxLength > 0) and (Length(AValue) > FRules.MaxLength) then
+  begin
+    ErrorMessage := Format(rsExceededMaxLength, [FDisplayName, Length(aValue), FRules.MaxLength]);
+    Exit(False);
+  end;
+
+  // Check data type
+  case FDataType of
+    ctString: ;
+    ctInteger:
+    begin
+      ErrorMessage := Format(rsMustBeAValidInteger, [FDisplayName]);
+      Result := TryStrToInt(AValue, dummyI);
+      if Result then
+        if (FRules.MinValue <> 0) and (FRules.MaxValue <> 0) then
+        begin
+          if (dummyI < FRules.MinValue) or (dummyI > FRules.MaxValue) then
+          begin
+            ErrorMessage := Format(rsValueNotInRange, [FDisplayName, FRules.MinValue, FRules.MaxValue]);
+            Exit(False);
+          end;
+        end;
+      Exit;
+    end;
+    ctFloat:
+    begin
+      ErrorMessage := Format(rsMustBeAValidNumber, [FDisplayName]);
+      Result := TryStrToFloat(AValue, dummyF);
+      if Result then
+        if (FRules.MinValue <> 0) and (FRules.MaxValue <> 0) then
+        begin
+          if (dummyF < FRules.MinValue) or (dummyF > FRules.MaxValue) then
+          begin
+            ErrorMessage := Format(rsValueNotInRange, [FDisplayName, FRules.MinValue, FRules.MaxValue]);
+            Exit(False);
+          end;
+        end;
+      Exit;
+    end;
+    ctDate:
+    begin
+      ErrorMessage := Format(rsMustBeAValidDate, [FDisplayName]);
+      Result := TryStrToDate(AValue, dummyDT);
+      if Result then
+        if (FRules.MinDateTime <> NullDate) and (FRules.MaxDateTime <> NullDate) then
+        begin
+          if (dummyDT < FRules.MinDateTime) or (dummyDT > FRules.MaxDateTime) then
+          begin
+            ErrorMessage := Format(rsDateTimeNotInRange, [FDisplayName, DateToStr(FRules.MinDateTime),
+              DateToStr(FRules.MaxDateTime)]);
+            Exit(False);
+          end;
+        end;
+      Exit;
+    end;
+    ctTime:
+    begin
+      ErrorMessage := Format(rsMustBeAValidTime, [FDisplayName]);
+      Result := TryStrToTime(AValue, dummyDT);
+      if Result then
+        if (FRules.MinDateTime <> NullTime) and (FRules.MaxDateTime <> NullTime) then
+        begin
+          if (dummyDT < FRules.MinDateTime) or (dummyDT > FRules.MaxDateTime) then
+          begin
+            ErrorMessage := Format(rsDateTimeNotInRange, [FDisplayName, TimeToStr(FRules.MinDateTime),
+              TimeToStr(FRules.MaxDateTime)]);
+            Exit(False);
+          end;
+        end;
+      Exit;
+    end;
+    ctDateTime:
+    begin
+      ErrorMessage := Format(rsMustBeAValidDateTime, [FDisplayName]);
+      Result := TryStrToDateTime(AValue, dummyDT);
+      if Result then
+        if (FRules.MinDateTime <> NullDateTime) and (FRules.MaxDateTime <> NullDateTime) then
+        begin
+          if (dummyDT < FRules.MinDateTime) or (dummyDT > FRules.MaxDateTime) then
+          begin
+            ErrorMessage := Format(rsDateTimeNotInRange, [FDisplayName, DateTimeToStr(FRules.MinDateTime),
+              DateTimeToStr(FRules.MaxDateTime)]);
+            Exit(False);
+          end;
+        end;
+      Exit;
+    end;
+    ctBoolean:
+    begin
+      ErrorMessage := Format(rsMustBeAValidBoolean, [FDisplayName]);
+      Result := TryStrToBool(aValue, dummyB);
+      Exit;
+    end;
+  end;
+
+  // Check allowed values
+  if FRules.ValueList <> EmptyStr then
+  begin
+    vList := TStringList.Create;
+    try
+      vList.AddCommaText(FRules.ValueList);
+      Result := vList.IndexOf(aValue) >= 0;
+      if not Result then
+      begin
+        ErrorMessage := Format(rsValueNotInSet, [FDisplayName, FRules.ValueList]);
+        Exit;
+      end;
+    finally
+      FreeAndNil(vList);
+    end;
+  end;
 end;
 
 { TRecordStatus }

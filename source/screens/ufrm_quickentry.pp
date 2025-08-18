@@ -44,6 +44,7 @@ type
     procedure sbDelRowsClick(Sender: TObject);
   private
     FColFieldNames: TStringList;
+    FColRules: array of TValidationRules;
     FFileName: String;
     FModuleName: String;
     FSchemaVersion: Integer;
@@ -241,10 +242,17 @@ end;
 procedure TfrmQuickEntry.LoadColsBands;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 10);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Size *
   CurrCol := qeGrid.Columns.Add;
@@ -253,12 +261,17 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z';
   FColFieldNames.Add('band_size');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNumber;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('band_number');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MinValue := 1;
+  FColRules[CurrCol.Index].MaxValue := 999999;
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -266,6 +279,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsBandTypeList;
   FColFieldNames.Add('band_type');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Status *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -273,6 +288,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsBandStatusList;
   FColFieldNames.Add('band_status');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Reported
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscReported;
@@ -280,6 +297,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('band_reported');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Source *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
@@ -291,6 +309,8 @@ begin
     rsBandDeadBirdBandedByOthers + '","' +
     rsBandFoundLoose + '"';
   FColFieldNames.Add('band_source');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Supplier *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupplier;
@@ -298,6 +318,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('supplier');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Carrier
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCarrier;
@@ -305,6 +326,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('carrier');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
@@ -312,21 +334,30 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('project');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsBotanicTaxa;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 6);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Scientific name *
   CurrCol := qeGrid.Columns.Add;
@@ -334,12 +365,17 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('taxon_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Authorship
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAuthorship;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('authorship');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Taxonomic rank *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxonomicRank;
@@ -347,12 +383,16 @@ begin
   CurrCol.SizePriority := 0;
   FillStrings(CurrCol.PickList, 'taxon_ranks', 'rank_name', 'rank_seq', 'icbn');
   FColFieldNames.Add('rank');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Vernacular name
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscVernacularNameS;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('vernacular_name');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Parent taxon
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscParentTaxon;
@@ -360,6 +400,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('parent_taxon');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Valid name
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscValidName;
@@ -367,16 +408,24 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('valid_name');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsCaptures;
 var
   CurrCol: TGridColumn;
   Qry: TSQLQuery;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 64);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Individual *
   CurrCol := qeGrid.Columns.Add;
@@ -385,6 +434,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('individual');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Survey
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSurvey;
@@ -392,6 +442,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('survey');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
@@ -399,18 +450,21 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('locality');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('capture_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('capture_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Bander *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBander;
@@ -418,6 +472,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('bander');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Annotator *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAnnotator;
@@ -425,6 +480,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('annotator');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -432,6 +488,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsCaptureTypeList;
   FColFieldNames.Add('capture_type');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Mistnet
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnet;
@@ -439,6 +497,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('net');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -446,6 +505,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -453,6 +515,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Taxon
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
@@ -460,6 +525,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('taxon');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBand;
@@ -467,6 +533,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('band');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Removed band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRemovedBand;
@@ -474,16 +541,21 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('removed_band');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Right tarsus
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRightTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('right_tarsus');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Left tarsus
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLeftTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('left_tarsus');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Age
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAge;
@@ -493,6 +565,8 @@ begin
     rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
     rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
   FColFieldNames.Add('age');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Escaped
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEscaped;
@@ -500,6 +574,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('escaped');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Status
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -508,6 +583,8 @@ begin
   CurrCol.PickList.CommaText := '"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
     rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
   FColFieldNames.Add('subject_status');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Cloacal protuberance
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloacalProtuberance;
@@ -515,6 +592,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'U,N,S,M,L';
   FColFieldNames.Add('cloacal_protuberance');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Brood patch
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBroodPatch;
@@ -522,6 +601,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'F,N,V,W,O';
   FColFieldNames.Add('brood_patch');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Fat
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFat;
@@ -529,6 +610,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,T,L,H,S,B,G,V';
   FColFieldNames.Add('fat');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Body molt
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
@@ -536,6 +619,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,T,S,H,G,A,F';
   FColFieldNames.Add('body_molt');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Flight feathers molt
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
@@ -543,6 +628,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,S,A';
   FColFieldNames.Add('flight_feathers_molt');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Flight feathers wear
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFlightFeathersWear;
@@ -550,101 +637,120 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,S,L,M,H,X';
   FColFieldNames.Add('flight_feathers_wear');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Right wing chord
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRightWingChord;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('right_wing_chord');
+  FColRules[CurrCol.Index].RequiredField := False;
   //First secondary chord
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rsc1stSecondaryChord;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('first_secondary_chord');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Tail length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTailLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('tail_length');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Tarsus length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTarsusLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('tarsus_length');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Tarsus diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTarsusDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('tarsus_diameter');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Weight
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('weight');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Skull length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSkullLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('skull_length');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Exposed culmen
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscExposedCulmen;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('exposed_culmen');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nostril to bill tip distance
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNostrilToBillTip;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('nostril_to_bill_tip');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Bill width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBillWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('bill_width');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Bill height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBillHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('bill_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Total length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTotalLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('total_length');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Total culmen length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTotalCulmen;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('total_culmen');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Quantity of Philornis larvae
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscQuantPhilornisLarvae;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('philornis_larvae_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Kipp distance
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscKippSDistance;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('kipps_distance');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Molt limits
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMoltLimits;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('molt_limits');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Skull ossification
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSkullOssification;
@@ -652,16 +758,22 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := 'N,T,L,H,G,A,F';
   FColFieldNames.Add('skull_ossification');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Molt cycle
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMoltCycle;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('molt_cycle_code');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //How was aged
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHowWasAged;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('how_was_aged');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Sex
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSex;
@@ -669,17 +781,22 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
   FColFieldNames.Add('sex');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //How was sexed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHowWasSexed;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('how_was_sexed');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Blood sample
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBlood;
@@ -687,6 +804,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('blood_sample');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Feathers
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeathers;
@@ -694,6 +812,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('feather_sample');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Feces
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeces;
@@ -701,6 +820,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('feces_sample');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Parasites
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscParasites;
@@ -708,6 +828,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('parasites_sample');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Recorded
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRecorded;
@@ -715,6 +836,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('subject_recorded');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Photographed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographed;
@@ -722,6 +844,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('subject_photographed');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Claw
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscClaw;
@@ -729,6 +852,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('claw_sample');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Collected (whole)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectedWhole;
@@ -736,6 +860,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('subject_collected');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Photographer 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographer1;
@@ -743,6 +868,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('photographer_1');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Photographer 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographer2;
@@ -750,6 +876,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('photographer_2');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Camera
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCamera;
@@ -785,48 +912,66 @@ begin
     FreeAndNil(Qry);
   end;
   FColFieldNames.Add('camera_name');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 50;
   //Initial photo nr.
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInitialPhotoNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('initial_photo_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Final photo nr.
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFinalPhotoNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('final_photo_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Field number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('field_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Hemoglobin (g/dL)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHemoglobin;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('hemoglobin');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Hematocrit (mm3)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHematocrit;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('hematocrit');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Glucose (mg/dL)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscGlucose;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('glucose');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsEggs;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 17);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Nest
   CurrCol := qeGrid.Columns.Add;
@@ -835,23 +980,28 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('nest');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Field number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('field_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Egg number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggNumber;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('egg_number');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Measure date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('measure_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
@@ -859,6 +1009,15 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('taxon');
+  FColRules[CurrCol.Index].RequiredField := True;
+  //Host egg
+  CurrCol := qeGrid.Columns.Add;
+  CurrCol.Title.Caption := rscHostEgg;
+  CurrCol.ButtonStyle := cbsCheckboxColumn;
+  CurrCol.Alignment := taCenter;
+  qeGrid.AutoSizeColumn(CurrCol.Index);
+  FColFieldNames.Add('host_egg');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Observer *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
@@ -866,6 +1025,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('observer');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Egg shape
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggShape;
@@ -885,16 +1045,21 @@ begin
     Add(rsEggUnknown);
   end;
   FColFieldNames.Add('egg_shape');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Egg phase
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStage;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('egg_stage');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Eggshell color
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggshellColor;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('eggshell_color');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 40;
   //Eggshell pattern
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggshellPattern;
@@ -913,6 +1078,8 @@ begin
     Add(rsEggUnknown);
   end;
   FColFieldNames.Add('eggshell_pattern');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Eggshell texture
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggshellTexture;
@@ -928,24 +1095,29 @@ begin
     Add(rsEggUnknown);
   end;
   FColFieldNames.Add('eggshell_texture');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('egg_width');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('egg_length');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Mass
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMass;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('egg_mass');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Hatched
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHatched;
@@ -953,6 +1125,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('egg_hatched');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Individual
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
@@ -960,21 +1133,30 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('individual');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsExpeditions;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 5);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Name *
   CurrCol := qeGrid.Columns.Add;
@@ -982,16 +1164,21 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('expedition_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 150;
   //Start date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('start_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //End date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('end_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
@@ -999,21 +1186,30 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('project');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('description');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsFeathers;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 19);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Date *
   CurrCol := qeGrid.Columns.Add;
@@ -1021,12 +1217,14 @@ begin
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sample_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sample_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
@@ -1034,6 +1232,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('taxon');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
@@ -1041,6 +1240,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('locality');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Observer
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
@@ -1048,6 +1248,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('observer');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Source
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSource;
@@ -1062,6 +1263,8 @@ begin
     Add(rsFeatherPhoto);
   end;
   FColFieldNames.Add('source_type');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Symmetry
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSymmetry;
@@ -1075,6 +1278,8 @@ begin
     Add(rsAsymmetrical);
   end;
   FColFieldNames.Add('symmetrical');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Feather trait
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeatherTrait;
@@ -1095,12 +1300,15 @@ begin
     Add(rsTraitAlula);
   end;
   FColFieldNames.Add('feather_trait');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Feather number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFeatherNumber;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('feather_number');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Body side
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBodySide;
@@ -1114,48 +1322,59 @@ begin
     Add(rsSideLeft);
   end;
   FColFieldNames.Add('body_side');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Percent grown
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPercentGrown;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('percent_grown');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 100;
   //Length
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLength;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('feather_length');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Area
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscArea;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('feather_area');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Mass
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMass;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('feather_mass');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Rachis width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRachisWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('rachis_width');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Growth bar width
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscGrowthBarWidth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('growth_bar_width');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Barb density
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBarbDensity;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('barb_density');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Age
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAge;
@@ -1175,21 +1394,31 @@ begin
     Add(rsAgeFifthYear);
   end;
   FColFieldNames.Add('feather_age');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsGazetteer;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 9);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Name *
   CurrCol := qeGrid.Columns.Add;
@@ -1197,11 +1426,16 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('site_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Abbreviation
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('site_abbreviation');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -1218,6 +1452,8 @@ begin
     Add(rsCaptionLocality);
   end;
   FColFieldNames.Add('site_rank');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -1225,6 +1461,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -1232,12 +1471,16 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Altitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAltitude;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('altitude');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Parent toponym
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscParentSite;
@@ -1245,27 +1488,39 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('parent_site');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Full name *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFullName;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('full_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MaxLength := 180;
   //eBird site name
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEBirdName;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('ebird_name');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 150;
 end;
 
 procedure TfrmQuickEntry.LoadColsIndividuals;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 21);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
@@ -1274,6 +1529,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('taxon');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBand;
@@ -1281,12 +1537,15 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('band');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].UniqueField := True;
   //Banding date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBandingDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('banding_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Double band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDoubleBand;
@@ -1294,6 +1553,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('double_band');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Removed band
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRemovedBand;
@@ -1301,22 +1561,28 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('removed_band');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Band change date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBandChangeDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('band_change_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Right tarsus (below)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRightTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('right_tarsus');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Left tarsus (below)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLeftTarsus;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('left_tarsus');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Sex
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSex;
@@ -1324,6 +1590,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
   FColFieldNames.Add('sex');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Age
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAge;
@@ -1333,36 +1601,44 @@ begin
     rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
     rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
   FColFieldNames.Add('age');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Birth year
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthYear;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('birth_year');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Birth month
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthMonth;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('birth_month');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Birth day
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthDay;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('birth_day');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Death year
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathYear;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('death_year');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Death month
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathMonth;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('death_month');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Death day
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathDay;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('death_day');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nest
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNest;
@@ -1370,6 +1646,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('nest');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Father
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFather;
@@ -1377,6 +1654,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('father');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Mother
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMother;
@@ -1384,27 +1662,37 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('mother');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Recognizable markings
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRecognizableMarkings;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('recognizable_markings');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsInstitutions;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 13);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Name *
   CurrCol := qeGrid.Columns.Add;
@@ -1412,53 +1700,73 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('full_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('abbreviation');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 15;
   //Contact person
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscContactPerson;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('contact_person');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //E-mail
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEMail;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('email');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Phone
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhone;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('phone');
-  //Zip code
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
+  //Postal code
   CurrCol := qeGrid.Columns.Add;
-  CurrCol.Title.Caption := rscZipCode;
+  CurrCol.Title.Caption := rscPostalCode;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('postal_code');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 15;
   //Address 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress1;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('address_1');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Address 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress2;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('address_2');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 40;
   //Neighborhood
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNeighborhood;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('neighborhood');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Municipality
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMunicipality;
@@ -1466,6 +1774,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('municipality');
+  FColRules[CurrCol.Index].RequiredField := False;
   //State
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscState;
@@ -1473,6 +1782,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('state');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Country
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCountry;
@@ -1480,21 +1790,31 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('country');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsMethods;
 var
   CurrCol: TGridColumn;
+  i: Integer;
+  Qry: TSQLQuery;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 7);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Name *
   CurrCol := qeGrid.Columns.Add;
@@ -1502,32 +1822,99 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('method_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('abbreviation');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 20;
+  //Category
+  CurrCol := qeGrid.Columns.Add;
+  CurrCol.Title.Caption := rscCategory;
+  CurrCol.Width := 170;
+  CurrCol.SizePriority := 0;
+  // >> Get categories
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    Database := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('SELECT category');
+    Add('FROM methods');
+    Add('WHERE (active_status = 1) AND (category NOTNULL) AND (category <> '''')');
+    Add('GROUP BY category');
+    Add('ORDER BY category ASC');
+    //GravaLogSQL(SQL);
+    Open;
+    First;
+    try
+      CurrCol.PickList.BeginUpdate;
+      CurrCol.PickList.Clear;
+      repeat
+        CurrCol.PickList.Add(Fields[0].AsString);
+        Next;
+      until Eof;
+    finally
+      CurrCol.PickList.EndUpdate;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+  FColFieldNames.Add('category');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //Method name on eBird
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEBirdName;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('ebird_name');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('description');
+  FColRules[CurrCol.Index].RequiredField := False;
+  //Recommended uses
+  CurrCol := qeGrid.Columns.Add;
+  CurrCol.Title.Caption := rscRecommendedUses;
+  CurrCol.Width := 300;
+  CurrCol.SizePriority := 0;
+  FColFieldNames.Add('recommended_uses');
+  FColRules[CurrCol.Index].RequiredField := False;
+  //Notes
+  CurrCol := qeGrid.Columns.Add;
+  CurrCol.Title.Caption := rscNotes;
+  CurrCol.Width := 300;
+  CurrCol.SizePriority := 0;
+  FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsNestOwners;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 2);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Role *
   CurrCol := qeGrid.Columns.Add;
@@ -1536,6 +1923,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsNestOwnersRoleList;
   FColFieldNames.Add('role');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Individual *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
@@ -1543,15 +1932,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('individual');
+  FColRules[CurrCol.Index].RequiredField := True;
 end;
 
 procedure TfrmQuickEntry.LoadColsNestRevisions;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 13);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Date *
   CurrCol := qeGrid.Columns.Add;
@@ -1559,12 +1956,14 @@ begin
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('revision_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('revision_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Observer 1 *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver1;
@@ -1572,6 +1971,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('observer_1');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Observer 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver2;
@@ -1579,6 +1979,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('observer_2');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nest stage
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestStage;
@@ -1587,6 +1988,8 @@ begin
   CurrCol.PickList.CommaText := '"' + rsNestBuilding + '","' + rsNestLaying + '","' + rsNestIncubating +
     '","' + rsNestHatching + '","' + rsNestNestling + '","' + rsNestInactive + '","' + rsNestUnknown+ '"';
   FColFieldNames.Add('nest_stage');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nest status
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -1594,37 +1997,44 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := '"' + rsNestActive + '","' + rsNestInactive + '","' + rsNestUnknown + '"';
   FColFieldNames.Add('nest_status');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Host eggs
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggsHost;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('host_eggs_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Host nestlings
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestlingsHost;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('host_nestlings_tally');
-  //Nidoparasite taxon *
+  FColRules[CurrCol.Index].RequiredField := False;
+  //Nidoparasite taxon
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNidoparasite;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('nidoparasite_taxon');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nidoparasite eggs
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEggsNidoparasite;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('nidoparasite_eggs_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nidoparasite nestlings
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestlingsNidoparasite;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('nidoparasite_nestlings_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Parasitized by Philornis larvae
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHasPhilornisLarvae;
@@ -1632,21 +2042,30 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('have_philornis_larvae');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsNests;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 36);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
@@ -1655,11 +2074,15 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('taxon');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Field number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('field_number');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Fate
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestFate;
@@ -1667,16 +2090,20 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := '"' + rsNestLost + '","' + rsNestSuccess + '","' + rsNestUnknown + '"';
   FColFieldNames.Add('nest_fate');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nest encounter date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFoundDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('found_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Last date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLastDateActive;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('last_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
@@ -1684,12 +2111,14 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('project');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Observer *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('observer');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
@@ -1697,6 +2126,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('locality');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -1704,6 +2134,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -1711,18 +2144,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Nest description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('description');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Productivity
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestProductivity;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('nest_productivity');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nest shape
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscShape;
@@ -1732,6 +2170,8 @@ begin
     rsNestShapePlate + '","' + rsNestShapeSphere + '","' + rsNestShapePendent + '","' +
     rsNestShapePlatform + '","' + rsNestShapeMound + '","' + rsNestShapeBurrow + '","' + rsNestShapeCavity + '"';
   FColFieldNames.Add('nest_shape');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Support
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupportType;
@@ -1742,12 +2182,15 @@ begin
     rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
     rsSupportAnthropic + '","' + rsSupportOther + '"';
   FColFieldNames.Add('support_type');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Height at ground level
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHeightAboveGround;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('height_at_ground_level');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Support plant 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupportPlant1;
@@ -1755,6 +2198,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('support_plant_1');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Support plant 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSupportPlant2;
@@ -1762,128 +2206,158 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('support_plant_2');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Other support
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOtherSupport;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('other_support');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Plant height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('plant_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Stem thickness (DBH)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantDBH;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('plant_dbh');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Greater plant diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMaxPlantDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('greater_plant_diameter');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Lesser plant diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMinPlantDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('lesser_plant_diameter');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Days building
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBuildingDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('building_days');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Days incubating
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIncubationDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('incubation_days');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nestling-days
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNestlingDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('nestling_days');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Total active-days
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscActiveDays;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('total_active_days');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Lesser internal diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMinInternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('lesser_internal_diameter');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Greater internal diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMaxInternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('greater_internal_diameter');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Lesser external diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMinExternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('lesser_external_diameter');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Greater external diameter
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMaxExternalDiameter;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('greater_external_diameter');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Internal height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInternalHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('internal_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //External height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscExternalHeight;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('external_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Distance from plant edge
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantEdgeDistance;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('distance_plant_edge');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Distance from plant center
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPlantCenterDistance;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('distance_plant_center');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Cover (%)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCover;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('nest_cover');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 100;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsNetEfforts;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 17);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Permanent net
   CurrCol := qeGrid.Columns.Add;
@@ -1892,11 +2366,13 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('permanent_net');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Net number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('net_number');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -1904,6 +2380,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -1911,18 +2390,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MinValue := 90;
   //Net length (m)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetLengthM;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('net_length');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Net height (m)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetHeightM;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('net_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Net mesh
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetMesh;
@@ -1942,81 +2426,100 @@ begin
     Add('70x70');
   end;
   FColFieldNames.Add('net_mesh');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sample_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Open time 1 *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime1;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('open_time_1');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Close time 1 *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime1;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('close_time_1');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Open time 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime2;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('open_time_2');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Close time 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime2;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('close_time_2');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Open time 3
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime3;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('open_time_3');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Close time 3
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime3;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('close_time_3');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Open time 4
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOpenTime4;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('open_time_4');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Close time 4
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloseTime4;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('close_time_4');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsPermanentNets;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 4);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Net number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('net_number');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -2024,6 +2527,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -2031,21 +2537,32 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsPermits;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 7);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Name *
   CurrCol := qeGrid.Columns.Add;
@@ -2053,11 +2570,17 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('permit_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 150;
   //Permit number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPermitNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('permit_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -2074,37 +2597,51 @@ begin
     Add(rsPermitOther);
   end;
   FColFieldNames.Add('permit_type');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Dispatcher *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDispatcher;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('dispatcher_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Dispatch date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDispatchDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('dispatch_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Expire date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscExpireDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('expire_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectBudgets;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 4);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Funding source *
   CurrCol := qeGrid.Columns.Add;
@@ -2112,18 +2649,24 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('funding_source');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Rubric *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRubric;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('rubric');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Item
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscItem;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('item_name');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Amount
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAmount;
@@ -2131,15 +2674,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('amount');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectChronograms;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 6);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Description *
   CurrCol := qeGrid.Columns.Add;
@@ -2147,6 +2698,7 @@ begin
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('description');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Status *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -2164,21 +2716,26 @@ begin
     Add(rsActivityBlocked);
   end;
   FColFieldNames.Add('progress_status');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Start date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('start_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Target date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTargetDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('target_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //End date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('end_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Goal
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
@@ -2186,15 +2743,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('goal');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectExpenses;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 4);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Rubric *
   CurrCol := qeGrid.Columns.Add;
@@ -2203,18 +2768,22 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('rubric');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Item description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscItem;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('item_description');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('expense_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Amount
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAmount;
@@ -2222,15 +2791,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('amount');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectGoals;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 2);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Description *
   CurrCol := qeGrid.Columns.Add;
@@ -2238,6 +2815,7 @@ begin
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('goal_description');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Status *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStatus;
@@ -2251,15 +2829,24 @@ begin
     Add(rsGoalCanceled);
   end;
   FColFieldNames.Add('goal_status');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
 end;
 
 procedure TfrmQuickEntry.LoadColsProjects;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 12);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Title *
   CurrCol := qeGrid.Columns.Add;
@@ -2267,78 +2854,105 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('project_title');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 150;
   //Short title *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscShortTitle;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('short_title');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Protocol number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProtocolNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('protocol_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //Start date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('start_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //End date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('end_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Website
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWebsite;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('website');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 200;
   //E-mail
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEMail;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('email');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Contact person
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscContactPerson;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('contact_person');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Main goal
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMainGoal;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('main_goal');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Risks
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRisks;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('risks');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Abstract
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbstract;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('project_abstract');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsProjectTeam;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 3);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Researcher *
   CurrCol := qeGrid.Columns.Add;
@@ -2347,6 +2961,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('person');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Project manager
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscManager;
@@ -2354,6 +2969,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('project_manager');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Institution
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInstitution;
@@ -2361,15 +2977,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('institution');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsResearchers;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 28);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Name *
   CurrCol := qeGrid.Columns.Add;
@@ -2377,17 +3001,24 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('full_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Citation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCitation;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('citation');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('abbreviation');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Treatment
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTreatment;
@@ -2395,6 +3026,8 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsTreatmentList;
   FColFieldNames.Add('treatment');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Gender
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscGender;
@@ -2402,48 +3035,62 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsGenderList;
   FColFieldNames.Add('gender');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Birth date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBirthDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('birth_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Death date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDeathDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('death_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //RG
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRG;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('rg_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 15;
   //CPF
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCPF;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('cpf_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 15;
   //E-mail
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEMail;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('email');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Phone
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhone;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('phone');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Mobile phone
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMobilePhone;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('mobile_phone');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Institution
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInstitution;
@@ -2451,42 +3098,55 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('institution');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Department
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDepartment;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('department');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Role
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRole;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('role');
-  //Zip code
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
+  //Postal code
   CurrCol := qeGrid.Columns.Add;
-  CurrCol.Title.Caption := rscZipCode;
+  CurrCol.Title.Caption := rscPostalCode;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('postal_code');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 15;
   //Address 1
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress1;
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('address_1');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Address 2
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAddress2;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('address_2');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Neighborhood
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNeighborhood;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('neighborhood');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 60;
   //Municipality
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMunicipality;
@@ -2494,6 +3154,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('municipality');
+  FColRules[CurrCol.Index].RequiredField := False;
   //State
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscState;
@@ -2501,6 +3162,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('state');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Country
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCountry;
@@ -2508,62 +3170,84 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('country');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Lattes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLattes;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('lattes');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //Orcid
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOrcid;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('orcid');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //X (Twitter)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscXTwitter;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('x_twitter');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 50;
   //Instagram
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscInstagram;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('instagram');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 50;
   //Website
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWebsite;
   CurrCol.Width := 170;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('website');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsSamplePreps;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 6);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Accession number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAccessionNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('accession_number');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Duplicate number
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDuplicateNr;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('duplicate_number');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -2596,11 +3280,14 @@ begin
     Add(rsSampleStomach);
   end;
   FColFieldNames.Add('accession_type');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Preparation date
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPreparationDate;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('preparation_date');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Preparer *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPreparer;
@@ -2608,21 +3295,30 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('preparer');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsSamplingPlots;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 7);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Name *
   CurrCol := qeGrid.Columns.Add;
@@ -2630,11 +3326,17 @@ begin
   CurrCol.Width := 230;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('full_name');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 100;
   //Abbreviation *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAbbreviation;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('abbreviation');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
@@ -2642,6 +3344,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('locality');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -2649,6 +3352,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -2656,27 +3362,39 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Description
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDescription;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('description');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsSightings;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 32);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Survey
   CurrCol := qeGrid.Columns.Add;
@@ -2685,6 +3403,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('survey');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Observer
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObserver;
@@ -2692,6 +3411,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('observer');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Method *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMethod;
@@ -2699,6 +3419,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('method');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
@@ -2706,6 +3427,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('locality');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -2713,6 +3435,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -2720,18 +3445,23 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sighting_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sighting_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
@@ -2739,6 +3469,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('taxon');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Individual
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
@@ -2746,33 +3477,41 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('individual');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Quantity
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividuals;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('total_quantity');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Distance (m)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDistanceM;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('distance');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Detection type
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDetectionType;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('detection_type');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //Breeding/behavior code
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscBreedingCode;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('breeding_code');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //Mackinnon list
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMackinnonList;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('mackinnon_list_number');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Captured
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCaptured;
@@ -2780,6 +3519,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('captured');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Seen
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSeen;
@@ -2787,6 +3527,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('seen');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Heard
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHeard;
@@ -2794,6 +3535,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('heard');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Photographed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPhotographed;
@@ -2801,6 +3543,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('photographed');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Audio recorded
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAudioRecorded;
@@ -2808,60 +3551,76 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('audio_recorded');
+  FColRules[CurrCol.Index].RequiredField := False;
   //New captures
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNewCaptures;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('new_captures_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Recaptures
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRecaptures;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('recaptures_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Unbanded
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscUnbanded;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('unbanded_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Males
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMales;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('males_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Females
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFemales;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('females_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Not sexed
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotSexed;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('not_sexed_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Adults
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAdults;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('adults_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Immatures
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscImmatures;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('juveniles_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Not aged
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotAged;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('not_aged_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 10;
   //Record in eBird
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIsInEBird;
@@ -2869,6 +3628,7 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('available_on_ebird');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Out of sample
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscOutOfSample;
@@ -2876,21 +3636,30 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('out_of_sample');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsSpecimenCollectors;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 1);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Collector *
   CurrCol := qeGrid.Columns.Add;
@@ -2899,21 +3668,32 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('collector');
+  FColRules[CurrCol.Index].RequiredField := True;
 end;
 
 procedure TfrmQuickEntry.LoadColsSpecimens;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 13);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Field number *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscFieldNumber;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('field_number');
+  FColRules[CurrCol.Index].RequiredField := True;
+  FColRules[CurrCol.Index].UniqueField := True;
+  FColRules[CurrCol.Index].MaxLength := 20;
   //Type *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscType;
@@ -2937,24 +3717,29 @@ begin
     Add(rsSpecimenRegurgite);
   end;
   FColFieldNames.Add('sample_type');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Collection year *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectionYear;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('collection_year');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Collection month
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectionMonth;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('collection_month');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Collection day
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCollectionDay;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('collection_day');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
@@ -2962,6 +3747,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('locality');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -2969,6 +3755,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -2976,6 +3765,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Taxon *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTaxon;
@@ -2983,6 +3775,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('taxon');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Individual
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscIndividual;
@@ -2990,6 +3783,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('individual');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Nest
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNest;
@@ -2997,6 +3791,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('nest');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Egg
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEgg;
@@ -3004,21 +3799,30 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('egg');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsSurveys;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 21);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Expedition
   CurrCol := qeGrid.Columns.Add;
@@ -3027,30 +3831,35 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('expedition');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Date *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDate;
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('survey_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Duration (min)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDurationMin;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('duration_minutes');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Start time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscStartTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('start_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //End time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('end_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Method *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMethod;
@@ -3058,6 +3867,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('method');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Locality *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLocality;
@@ -3065,6 +3875,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('locality');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Net station
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSamplingPlot;
@@ -3072,6 +3883,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('sampling_plot');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Project
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProject;
@@ -3079,6 +3891,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('project');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Longitude (start)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -3086,6 +3899,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('start_longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude (start)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -3093,6 +3909,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('start_latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //End longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndLongitude;
@@ -3100,6 +3919,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('end_longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //End latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscEndLatitude;
@@ -3107,62 +3929,81 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('end_latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Number of observers
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscObservers;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('observers_tally');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Sample ID
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscSampleID;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('sample_id');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MaxLength := 30;
   //Area (ha)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAreaHa;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('area');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Distance (km)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscDistanceKm;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('distance');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Number of mistnets
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnets;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('total_nets');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Habitat
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHabitat;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('habitat');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Mistnet rounds
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetRounds;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('net_rounds');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsSurveyTeam;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 2);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Researcher *
   CurrCol := qeGrid.Columns.Add;
@@ -3171,6 +4012,7 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.ButtonStyle := cbsEllipsis;
   FColFieldNames.Add('researcher');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Visitor
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscVisitor;
@@ -3178,15 +4020,23 @@ begin
   CurrCol.Alignment := taCenter;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('visitor');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsVegetation;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 14);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Date *
   CurrCol := qeGrid.Columns.Add;
@@ -3194,12 +4044,14 @@ begin
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sample_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sample_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Longitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLongitude;
@@ -3207,6 +4059,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('longitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -180;
+  FColRules[CurrCol.Index].MaxValue := 180;
   //Latitude
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscLatitude;
@@ -3214,6 +4069,9 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.Alignment := taRightJustify;
   FColFieldNames.Add('latitude');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := -90;
+  FColRules[CurrCol.Index].MaxValue := 90;
   //Herbs - Distribution *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscHerbsDistribution;
@@ -3239,18 +4097,24 @@ begin
     Add(rsDistributionContinuousDenseEdge);
   end;
   FColFieldNames.Add('herbs_distribution');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Herbs - Proportion
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProportionOfHerbs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('herbs_proportion');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 100;
   //Herbs - Average height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAvgHeightOfHerbs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('herbs_avg_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Shrubs - Distribution *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscShrubsDistribution;
@@ -3276,18 +4140,24 @@ begin
     Add(rsDistributionContinuousDenseEdge);
   end;
   FColFieldNames.Add('shrubs_distribution');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Shrubs - Proportion
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProportionOfShrubs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('shrubs_proportion');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 100;
   //Shrubs - Average height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAvgHeightOfShrubs;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('shrubs_avg_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Trees - Distribution *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTreesDistribution;
@@ -3313,33 +4183,47 @@ begin
     Add(rsDistributionContinuousDenseEdge);
   end;
   FColFieldNames.Add('trees_distribution');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Trees - Proportion
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscProportionOfTrees;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('trees_proportion');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 100;
   //Trees - Average height
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAvgHeightOfTrees;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('trees_avg_height');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColsWeatherLogs;
 var
   CurrCol: TGridColumn;
+  i: Integer;
 begin
   // Increase FSchemaVersion by 1 when adding or removing columns to this schema
   // Add a comment on changes in the schema (e.g. v2)
   FSchemaVersion := 1;
+
+  // Set the array of validation rules
+  // Do not forget to update the length when the schema changes
+  SetLength(FColRules, 12);
+  for i := Low(FColRules) to High(FColRules) do
+    FColRules[i].Clear;
 
   //Date *
   CurrCol := qeGrid.Columns.Add;
@@ -3347,12 +4231,14 @@ begin
   CurrCol.Width := 120;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sample_date');
+  FColRules[CurrCol.Index].RequiredField := True;
   //Time
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTime;
   CurrCol.Width := 80;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('sample_time');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Moment *
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMoment;
@@ -3360,18 +4246,24 @@ begin
   CurrCol.SizePriority := 0;
   CurrCol.PickList.CommaText := rsMomentStart + ',' + rsMomentMiddle + ',' + rsMomentEnd;
   FColFieldNames.Add('sample_moment');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := True;
   //Cloud cover (%)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscCloudCover;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('cloud_cover');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 100;
   //Temperature
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscTemperatureC;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('temperature');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Precipitation
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscPrecipitation;
@@ -3383,42 +4275,54 @@ begin
                                      rsPrecipitationDrizzle + ',' +
                                      rsPrecipitationRain;
   FColFieldNames.Add('precipitation');
+  FColRules[CurrCol.Index].ValueList := CurrCol.PickList.CommaText;
+  FColRules[CurrCol.Index].RequiredField := False;
   //Rainfall (mm)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRainfallMm;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('rainfall');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Wind speed (bft)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWindBft;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('wind_speed_bft');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 14;
   //Wind speed (km/h)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscWindKmH;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('wind_speed_kmh');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Relative humidity (%)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscRelativeHumidity;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('relative_humidity');
+  FColRules[CurrCol.Index].RequiredField := False;
+  FColRules[CurrCol.Index].MinValue := 0;
+  FColRules[CurrCol.Index].MaxValue := 100;
   //Atmospheric pressure (mPa)
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscAtmosphericPressureH;
   CurrCol.Alignment := taRightJustify;
   qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('atmospheric_pressure');
+  FColRules[CurrCol.Index].RequiredField := False;
   //Notes
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscNotes;
   CurrCol.Width := 300;
   CurrCol.SizePriority := 0;
   FColFieldNames.Add('notes');
+  FColRules[CurrCol.Index].RequiredField := False;
 end;
 
 procedure TfrmQuickEntry.LoadColumns;
@@ -3627,7 +4531,7 @@ begin
   if (ColIsInteger(aCol)) then
     if not TryStrToInt(NewValue, iValue) then
     begin
-      ShowMessageFmt('%s must be a valid integer.', [qeGrid.Columns[aCol].Title.Caption]);
+      ShowMessageFmt(rsMustBeAValidInteger, [qeGrid.Columns[aCol].Title.Caption]);
       NewValue := EmptyStr;
       Exit;
     end;
@@ -3635,7 +4539,7 @@ begin
   if (ColIsNumeric(aCol)) then
     if not TryStrToFloat(NewValue, fValue) then
     begin
-      ShowMessageFmt('%s must be a valid number.', [qeGrid.Columns[aCol].Title.Caption]);
+      ShowMessageFmt(rsMustBeAValidNumber, [qeGrid.Columns[aCol].Title.Caption]);
       NewValue := EmptyStr;
       Exit;
     end;
@@ -3643,7 +4547,7 @@ begin
   if (ColIsDate(aCol)) then
     if not TryStrToDate(NewValue, dValue) then
     begin
-      ShowMessageFmt('%s must have a valid date.', [qeGrid.Columns[aCol].Title.Caption]);
+      ShowMessageFmt(rsMustBeAValidDate, [qeGrid.Columns[aCol].Title.Caption]);
       NewValue := EmptyStr;
       Exit;
     end;
@@ -3651,7 +4555,7 @@ begin
   if (ColIsTime(aCol)) then
     if not TryStrToTime(NewValue, dValue) then
     begin
-      ShowMessageFmt('%s must have a valid time.', [qeGrid.Columns[aCol].Title.Caption]);
+      ShowMessageFmt(rsMustBeAValidTime, [qeGrid.Columns[aCol].Title.Caption]);
       NewValue := EmptyStr;
       Exit;
     end;
