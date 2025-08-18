@@ -332,7 +332,7 @@ object edtNetEffort: TedtNetEffort
           Top = 3
           Width = 184
           BorderSpacing.Top = 3
-          Caption = 'Mesh size:'
+          Caption = 'Mesh size (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -346,23 +346,12 @@ object edtNetEffort: TedtNetEffort
           ParentColor = False
           ParentFont = False
         end
-        object cbNetMesh: TComboBox
+        object eNetMesh: TSpinEdit
           Left = 16
           Height = 23
           Top = 22
           Width = 184
-          ItemHeight = 15
-          Items.Strings = (
-            '14x14'
-            '16x16'
-            '19x19'
-            '20x20'
-            '22x22'
-            '30x30'
-            '45x45'
-            '60x60'
-            '70x70'
-          )
+          MaxValue = 100
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetNumberKeyPress

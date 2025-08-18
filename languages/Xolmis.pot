@@ -1255,7 +1255,7 @@ msgstr ""
 
 #: data_columns.rscmistnetmesh
 msgctxt "data_columns.rscmistnetmesh"
-msgid "Mistnet mesh"
+msgid "Mistnet mesh (mm)"
 msgstr ""
 
 #: data_columns.rscmistnetnr
@@ -7422,7 +7422,7 @@ msgstr ""
 
 #: tedtneteffort.lblnetmesh.caption
 msgctxt "tedtneteffort.lblnetmesh.caption"
-msgid "Mesh size:"
+msgid "Mesh size (mm):"
 msgstr ""
 
 #: tedtneteffort.lblnetnumber.caption

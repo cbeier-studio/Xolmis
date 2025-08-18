@@ -3552,9 +3552,8 @@ object DMS: TDMS
       end    
       item
         Name = 'net_mesh'
-        DataType = ftString
+        DataType = ftInteger
         Precision = -1
-        Size = 15
       end    
       item
         Name = 'full_name'
@@ -3986,9 +3985,8 @@ object DMS: TDMS
       DisplayFormat = '#,##0.00'
       Precision = -1
     end
-    object qNetsEffortnet_mesh: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Mistnet mesh'
+    object qNetsEffortnet_mesh: TLongintField
+      DisplayLabel = 'Mistnet mesh (mm)'
       FieldKind = fkData
       FieldName = 'net_mesh'
       Index = 22
@@ -3996,7 +3994,6 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Size = 15
     end
     object qNetsEffortnotes: TMemoField
       DisplayLabel = 'Notes'

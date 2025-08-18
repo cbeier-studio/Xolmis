@@ -200,7 +200,7 @@ type
     qNetsEffortnet_height: TFloatField;
     qNetsEffortnet_id: TLargeintField;
     qNetsEffortnet_length: TFloatField;
-    qNetsEffortnet_mesh: TStringField;
+    qNetsEffortnet_mesh: TLongintField;
     qNetsEffortnet_number: TLongintField;
     qNetsEffortnet_open_1: TTimeField;
     qNetsEffortnet_open_2: TTimeField;

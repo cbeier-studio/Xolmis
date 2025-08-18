@@ -224,7 +224,7 @@ type
     FNetLength: Double;
     FNetHeight: Double;
     FNetArea: Double;
-    FNetMesh: String;
+    FNetMesh: Integer;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0);
@@ -260,7 +260,7 @@ type
     property NetLength: Double read FNetLength write FNetLength;
     property NetHeight: Double read FNetHeight write FNetHeight;
     property NetArea: Double read FNetArea;
-    property NetMesh: String read FNetMesh write FNetMesh;
+    property NetMesh: Integer read FNetMesh write FNetMesh;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -750,7 +750,7 @@ begin
   FNetLength := 0.0;
   FNetHeight := 0.0;
   FNetArea := 0.0;
-  FNetMesh := EmptyStr;
+  FNetMesh := 0;
   FNotes := EmptyStr;
 end;
 
@@ -972,7 +972,7 @@ begin
     FNetLength := FieldByName('net_length').AsFloat;
     FNetHeight := FieldByName('net_height').AsFloat;
     FNetArea := FieldByName('net_area').AsFloat;
-    FNetMesh := FieldByName('net_mesh').AsString;
+    FNetMesh := FieldByName('net_mesh').AsInteger;
     FNotes := FieldByName('notes').AsString;
     FUserInserted := FieldByName('user_inserted').AsInteger;
     FUserUpdated := FieldByName('user_updated').AsInteger;
@@ -1063,7 +1063,7 @@ begin
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetFloatParam(ParamByName('net_length'), FNetLength);
       SetFloatParam(ParamByName('net_height'), FNetHeight);
-      SetStrParam(ParamByName('net_mesh'), FNetMesh);
+      SetIntParam(ParamByName('net_mesh'), FNetMesh);
       ParamByName('notes').AsString := FNotes;
 
       SetTimeParam(ParamByName('net_open_1'), FNetOpen1);
@@ -1191,7 +1191,7 @@ begin
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
       SetFloatParam(ParamByName('net_length'), FNetLength);
       SetFloatParam(ParamByName('net_height'), FNetHeight);
-      SetStrParam(ParamByName('net_mesh'), FNetMesh);
+      SetIntParam(ParamByName('net_mesh'), FNetMesh);
       ParamByName('notes').AsString := FNotes;
 
       SetTimeParam(ParamByName('net_open_1'), FNetOpen1);

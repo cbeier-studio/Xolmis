@@ -32,7 +32,6 @@ type
   TedtNetEffort = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
-    cbNetMesh: TComboBox;
     eNetClose2: TEdit;
     eNetClose3: TEdit;
     eNetClose4: TEdit;
@@ -51,6 +50,7 @@ type
     eNetHeight: TFloatSpinEdit;
     pmnNewSurvey: TMenuItem;
     pmNew: TPopupMenu;
+    eNetMesh: TSpinEdit;
     txtTotalOpenTime: TLabel;
     txtNetArea: TLabel;
     lblNetClose4: TLabel;
@@ -470,7 +470,7 @@ begin
   end;
   eNetLength.Value := FNetEffort.NetLength;
   eNetHeight.Value := FNetEffort.NetHeight;
-  cbNetMesh.ItemIndex := cbNetMesh.Items.IndexOf(FNetEffort.NetMesh);
+  eNetMesh.Value := FNetEffort.NetMesh;
   txtNetArea.Caption := FloatToStr(FNetEffort.NetArea);
   if not DateIsNull(FNetEffort.SampleDate) then
     eDate.Text := DateToStr(FNetEffort.SampleDate);
@@ -549,7 +549,7 @@ begin
     FNetEffort.Latitude    := 0;
   FNetEffort.NetLength      := eNetLength.Value;
   FNetEffort.NetHeight      := eNetHeight.Value;
-  FNetEffort.NetMesh        := cbNetMesh.Text;
+  FNetEffort.NetMesh        := eNetMesh.Value;
   FNetEffort.SampleDate     := StrToDate(eDate.Text);
   FNetEffort.NetOpen1       := StrToTime(eNetOpen1.Text);
   FNetEffort.NetClose1      := StrToTime(eNetClose1.Text);

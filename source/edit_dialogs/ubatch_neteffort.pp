@@ -38,7 +38,6 @@ type
     lblSurveyInfo: TLabel;
     pOpenCloseTime4: TPanel;
     pSurvey: TBCPanel;
-    cbNetMesh: TComboBox;
     eEndNumber: TSpinEdit;
     eStartNumber: TSpinEdit;
     eNetLength: TFloatSpinEdit;
@@ -73,6 +72,7 @@ type
     eCloseTime2: TTimeEdit;
     eOpenTime3: TTimeEdit;
     eCloseTime3: TTimeEdit;
+    eNetMesh: TSpinEdit;
     procedure btnHelpClick(Sender: TObject);
     procedure eStartNumberEditingDone(Sender: TObject);
     procedure eStartNumberKeyPress(Sender: TObject; var Key: char);
@@ -162,8 +162,8 @@ begin
           FRecord.NetLength := eNetLength.Value;
         if eNetHeight.Value > 0.0 then
           FRecord.NetHeight := eNetHeight.Value;
-        if cbNetMesh.ItemIndex > 0 then
-          FRecord.NetMesh := cbNetMesh.Text;
+        if eNetMesh.Value > 0 then
+          FRecord.NetMesh := eNetMesh.Value;
 
         FRecord.Insert;
       end;

@@ -449,7 +449,7 @@ resourcestring
   rscMistnetLengthM = 'Mistnet length (m)';
   rscMistnetHeightM = 'Mistnet height (m)';
   rscMistnetAreaM = 'Mistnet area (m²)';
-  rscMistnetMesh = 'Mistnet mesh';
+  rscMistnetMesh = 'Mistnet mesh (mm)';
   rscAction = 'Action';
   rscProperty = 'Property';
   rscOldValue = 'Old value';

@@ -270,25 +270,12 @@ object batchNetEffort: TbatchNetEffort
         BorderSpacing.Top = 3
         ParentColor = False
       end
-      object cbNetMesh: TComboBox
+      object eNetMesh: TSpinEdit
         Left = 16
         Height = 23
         Top = 22
         Width = 176
-        Constraints.MinWidth = 176
-        ItemHeight = 15
-        Items.Strings = (
-          '14x14'
-          '16x16'
-          '19x19'
-          '20x20'
-          '22x22'
-          '30x30'
-          '45x45'
-          '60x60'
-          '70x70'
-        )
-        Style = csDropDownList
+        MaxValue = 100
         TabOrder = 0
         OnKeyDown = FormKeyDown
         OnKeyPress = eStartNumberKeyPress

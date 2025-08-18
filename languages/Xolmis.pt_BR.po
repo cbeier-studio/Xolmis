@@ -1257,8 +1257,8 @@ msgstr "Comprimento da rede (m)"
 
 #: data_columns.rscmistnetmesh
 msgctxt "data_columns.rscmistnetmesh"
-msgid "Mistnet mesh"
-msgstr "Malha da rede"
+msgid "Mistnet mesh (mm)"
+msgstr "Malha da rede (mm)"
 
 #: data_columns.rscmistnetnr
 msgctxt "data_columns.rscmistnetnr"
@@ -7408,8 +7408,8 @@ msgstr "Comprimento da rede (m):"
 
 #: tedtneteffort.lblnetmesh.caption
 msgctxt "tedtneteffort.lblnetmesh.caption"
-msgid "Mesh size:"
-msgstr "Tamanho da malha:"
+msgid "Mesh size (mm):"
+msgstr "Tamanho da malha (mm):"
 
 #: tedtneteffort.lblnetnumber.caption
 msgctxt "tedtneteffort.lblnetnumber.caption"

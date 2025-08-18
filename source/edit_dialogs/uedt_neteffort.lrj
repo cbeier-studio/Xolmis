@@ -10,7 +10,7 @@
 {"hash":110507173,"name":"tedtneteffort.elatitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
 {"hash":148570042,"name":"tedtneteffort.lblnetlength.caption","sourcebytes":[77,105,115,116,110,101,116,32,108,101,110,103,116,104,32,40,109,41,58],"value":"Mistnet length (m):"},
 {"hash":218555530,"name":"tedtneteffort.lblnetheight.caption","sourcebytes":[77,105,115,116,110,101,116,32,104,101,105,103,104,116,32,40,109,41,58],"value":"Mistnet height (m):"},
-{"hash":175983642,"name":"tedtneteffort.lblnetmesh.caption","sourcebytes":[77,101,115,104,32,115,105,122,101,58],"value":"Mesh size:"},
+{"hash":243985162,"name":"tedtneteffort.lblnetmesh.caption","sourcebytes":[77,101,115,104,32,115,105,122,101,32,40,109,109,41,58],"value":"Mesh size (mm):"},
 {"hash":10218346,"name":"tedtneteffort.lblnetarea.caption","sourcebytes":[77,105,115,116,110,101,116,32,97,114,101,97,32,40,109,194,178,41,58],"value":"Mistnet area (m\u00B2):"},
 {"hash":80688929,"name":"tedtneteffort.txtnetarea.caption","sourcebytes":[116,120,116,78,101,116,65,114,101,97],"value":"txtNetArea"},
 {"hash":102122218,"name":"tedtneteffort.lbldate.caption","sourcebytes":[83,117,114,118,101,121,32,100,97,116,101,58,32,42],"value":"Survey date: *"},
