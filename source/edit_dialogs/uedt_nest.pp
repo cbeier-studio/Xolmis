@@ -193,8 +193,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_consts, utils_dialogs, utils_finddialogs, utils_validations,
-  data_getvalue, models_taxonomy, models_geo, utils_editdialogs, utils_gis, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs, utils_gis,
+  data_types, data_consts, data_getvalue, data_columns, models_taxonomy, models_geo, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -846,21 +846,21 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbNests, 'field_number', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbNests, 'locality_id', Msgs);
-
-  // Duplicated record
-  RecordDuplicated(tbNests, COL_NEST_ID, COL_FIELD_NUMBER, eFieldNumber.Text, FNest.Id);
-
-  // Foreign keys
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
-  //  rsCaptionLocality, Msgs);
-  //ForeignValueExists(tbZooTaxa, 'taxon_id', dsLink.DataSet.FieldByName('taxon_id').AsInteger,
-  //  rsCaptionTaxon, Msgs);
-  //ForeignValueExists(tbPeople, 'person_id', dsLink.DataSet.FieldByName('observer_id').AsInteger,
-  //  rsCaptionObserver, Msgs);
-  //ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
-  //  rsCaptionProject, Msgs);
+  if (eFieldNumber.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscFieldNumber]));
+  if (FTaxonId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxon]));
+  if (FObserverId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscObserver]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+  if (cbSupportType.ItemIndex = cbSupportType.Items.Count - 1) then
+    Msgs.Add(Format(rsRequiredField, [rscOtherSupport]));
 
   // Dates
   if eFoundDate.Text <> EmptyStr then
@@ -873,6 +873,10 @@ begin
     ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
   if eLatitude.Text <> EmptyStr then
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+
+  // Unique fields
+  if (eFieldNumber.Text <> EmptyStr) then
+    RecordDuplicated(tbNests, COL_NEST_ID, COL_FIELD_NUMBER, eFieldNumber.Text, FNest.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

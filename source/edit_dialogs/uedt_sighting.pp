@@ -21,7 +21,7 @@ unit uedt_sighting;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
+  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
   ExtCtrls, Character, StdCtrls, Buttons, Menus, atshapelinebgra,
   BCPanel, models_birds, models_sightings;
 
@@ -130,6 +130,7 @@ type
     procedure eDateButtonClick(Sender: TObject);
     procedure eDetectionTypeButtonClick(Sender: TObject);
     procedure eIndividualButtonClick(Sender: TObject);
+    procedure eIndividualEditingDone(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -139,6 +140,7 @@ type
     procedure eMethodButtonClick(Sender: TObject);
     procedure eMethodEditingDone(Sender: TObject);
     procedure eMethodKeyPress(Sender: TObject; var Key: char);
+    procedure eNewCapturesTallyEditingDone(Sender: TObject);
     procedure eObserverButtonClick(Sender: TObject);
     procedure eObserverKeyPress(Sender: TObject; var Key: char);
     procedure eSurveyButtonClick(Sender: TObject);
@@ -177,8 +179,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_consts, utils_dialogs, utils_finddialogs, models_taxonomy, models_geo,
-  utils_validations, data_getvalue, utils_themes, utils_editdialogs, utils_gis, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs, utils_gis,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -259,6 +261,12 @@ end;
 procedure TedtSighting.eIndividualButtonClick(Sender: TObject);
 begin
   FindDlg(tbIndividuals, eIndividual, FIndividualId);
+end;
+
+procedure TedtSighting.eIndividualEditingDone(Sender: TObject);
+begin
+  if (FIndividualId > 0) then
+    eQuantity.Value := 1;
 end;
 
 procedure TedtSighting.eIndividualKeyPress(Sender: TObject; var Key: char);
@@ -504,6 +512,12 @@ begin
   end;
 end;
 
+procedure TedtSighting.eNewCapturesTallyEditingDone(Sender: TObject);
+begin
+  if (eNewCapturesTally.Value > 0) or (eRecapturesTally.Value > 0) or (eUnbandedTally.Value > 0) then
+    ckCaptured.Checked := True;
+end;
+
 procedure TedtSighting.eObserverButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eObserver, FObserverId);
@@ -640,7 +654,9 @@ begin
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)]);
     if not DateIsNull(FSighting.SightingDate) then
-      eDate.Text := DateToStr(FSighting.SightingDate);
+      eDate.Text := DateToStr(FSighting.SightingDate)
+    else
+      eDate.Text := DateToStr(Today);
     if FSighting.MethodId > 0 then
     begin
       FMethodId := FSighting.MethodId;
@@ -812,18 +828,34 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'taxon_id', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'method_id', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'locality_id', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSightings, 'sighting_date', Msgs);
+  if (FTaxonId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxon]));
+  if (FMethodId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscMethod]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  if (eDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+  { #todo : Required Mackinnon list number if Method is Mackinnon list }
 
   // Dates
   if eDate.Text <> EmptyStr then
-    ValidDate(eDate.Text, rsCaptionDate, Msgs);
+    ValidDate(eDate.Text, rscDate, Msgs);
+
+  // Time
+  if eTime.Text <> EmptyStr then
+    ValidTime(eTime.Text, rscTime, Msgs);
 
   // Geographical coordinates
-  ValueInRange(StrToFloatDef(eLongitude.Text, 0.0), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  ValueInRange(StrToFloatDef(eLatitude.Text, 0.0), -90.0, 90.0, rsLatitude, Msgs, Msg);
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rscLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rscLatitude, Msgs, Msg);
 
   if Msgs.Count > 0 then
   begin

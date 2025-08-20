@@ -81,7 +81,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_gis, utils_validations, utils_fullnames, data_consts,
+  utils_locale, utils_global, utils_dialogs, utils_gis, utils_validations, utils_fullnames,
+  data_types, data_consts, data_columns,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -334,15 +335,18 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbPermanentNets, 'net_number', Msgs);
+  if (eNetNumber.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscMistnetNr]));
+  if (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+  if (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
 
   // Geographical coordinates
   if (eLongitude.Text <> EmptyStr) then
     ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
   if (eLatitude.Text <> EmptyStr) then
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
-  //CoordenadaIsOk(DSP.DataSet, 'longitude', maLongitude, Msgs);
-  //CoordenadaIsOk(DSP.DataSet, 'latitude', maLatitude, Msgs);
 
   if Msgs.Count > 0 then
   begin

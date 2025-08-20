@@ -118,8 +118,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_validations, models_geo, data_consts,
-  models_taxonomy, utils_conversions, data_getvalue, utils_editdialogs, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_conversions, utils_editdialogs,
+  data_types, data_consts, data_getvalue, data_columns,
+  models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -555,32 +556,22 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'survey_date', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'locality_id', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'method_id', Msgs);
-
-  // Duplicated record
-  // RegistroDuplicado(WorkingTable.TableName,'PES_NOME',cdsConsultaPES_NOME.AsWideString,cdsConsultaPES_CODIGO.AsInteger);
-
-  // Foreign keys
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
-  //  rsCaptionLocality, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('municipality_id').AsInteger,
-  //  rsCaptionMunicipality, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('state_id').AsInteger,
-  //  rsCaptionState, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('country_id').AsInteger,
-  //  rsCaptionCountry, Msgs);
-  //ForeignValueExists(tbMethods, 'method_id', dsLink.DataSet.FieldByName('method_id').AsInteger,
-  //  rsCaptionMethod, Msgs);
-  //ForeignValueExists(tbSamplingPlots, 'net_station_id', dsLink.DataSet.FieldByName('net_station_id').AsInteger,
-  //  rsCaptionSamplingPlot, Msgs);
-  //ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
-  //  rsCaptionProject, Msgs);
+  if (eDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  if (FTaxonId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxon]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  // Conditional required fields
+  { #todo : Required Feather number when Feather trait is Primary, Secondary or Retrix }
 
   // Dates
-  if eDate.Text <> EmptyStr then
-    ValidDate(eDate.Text, rsCaptionDate, Msgs);
+  if (eDate.Text <> EmptyStr) then
+    ValidDate(eDate.Text, rscDate, Msgs);
+
+  // Time
+  if eTime.Text <> EmptyStr then
+    ValidTime(eTime.Text, rscTime, Msgs);
 
   if Msgs.Count > 0 then
   begin

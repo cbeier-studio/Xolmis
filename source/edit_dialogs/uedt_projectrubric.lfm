@@ -210,7 +210,7 @@ object edtProjectRubric: TedtProjectRubric
         Top = 3
         Width = 174
         BorderSpacing.Top = 3
-        Caption = 'Amount:'
+        Caption = 'Amount: *'
         ParentColor = False
         ParentFont = False
       end

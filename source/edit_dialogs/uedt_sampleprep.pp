@@ -95,8 +95,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_validations, data_getvalue,
-  data_consts, utils_editdialogs, udm_main, udm_grid,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns,
+  udm_main, udm_grid,
   uDarkStyleParams;
 
 { TedtSamplePrep }
@@ -377,27 +378,27 @@ end;
 function TedtSamplePrep.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbSamplePreps, 'accession_num', Msgs);
-  //RequiredIsEmpty(D, tbSamplePreps, 'accession_type', Msgs);
-
-  // Duplicated record
-  //RecordDuplicated(tbSamplePreps, 'sample_prep_id', 'full_name',
-  //  FSamplePrep.FullName, FSamplePrep.Id);
+  if (eAccessionNumber.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscAccessionNr]));
+  if (cbSampleType.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscType]));
 
   // Dates
-  if ePreparationDate.Text <> EmptyStr then
-    ValidDate(ePreparationDate.Text, rsDatePreparation, Msgs);
-
   if (ePreparationDate.Text <> EmptyStr) then
-    IsFutureDate(StrToDate(ePreparationDate.Text), Today,
-      AnsiLowerCase(rsDatePreparation), AnsiLowerCase(rsDateToday), Msgs);
+    if ValidDate(ePreparationDate.Text, rsDatePreparation, Msgs) then
+      IsFutureDate(StrToDate(ePreparationDate.Text), Today, rsDatePreparation, rsDateToday, Msgs);
+
+  // Unique fields
+  if (eAccessionNumber.Text <> EmptyStr) and (eAccessionSeq.Text <> EmptyStr) then
+    RecordDuplicated(tbSamplePreps,
+      [COL_ACCESSION_NUMBER, COL_ACCESSION_DUPLICATE],
+      [eAccessionNumber.Text, StrToInt(eAccessionSeq.Text)],
+      COL_SAMPLE_PREP_ID, FSamplePrep.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

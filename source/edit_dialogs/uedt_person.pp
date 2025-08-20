@@ -21,7 +21,7 @@ unit uedt_person;
 interface
 
 uses
-  Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs,
+  Classes, EditBtn, SysUtils, Character, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
   StdCtrls, ExtCtrls, DBCtrls, Menus, Buttons, atshapelinebgra,
   BCPanel, models_people;
 
@@ -181,8 +181,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_geo, utils_validations, data_getvalue,
-  utils_themes, data_consts, utils_editdialogs, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -581,36 +581,43 @@ end;
 function TedtPerson.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
+  vbd1, vdd1: Boolean;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
-  // Campos obrigatórios
-  //RequiredIsEmpty(D, tbPeople, 'full_name', Msgs);
-  //RequiredIsEmpty(D, tbPeople, 'acronym', Msgs);
-  //RequiredIsEmpty(D, tbPeople, 'citation', Msgs);
-  //RequiredIsEmpty(D, tbPeople, 'country_id', Msgs);
+  // Required fields
+  if (eFullName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (eCitation.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCitation]));
+  if (eAbbreviation.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscAbbreviation]));
 
-  // Registro duplicado
-  RecordDuplicated(tbPeople, COL_PERSON_ID, COL_ABBREVIATION, eAbbreviation.Text, FPerson.Id, Msgs);
+  // Dates
+  if (eBirthDate.Text <> EmptyStr) then
+    vbd1 := ValidDate(eBirthDate.Text, rsDateBirth, Msgs);
+  if (vbd1) then
+    IsFutureDate(StrToDate(eBirthDate.Text), Today, rsDateBirth, rsDateToday, Msgs);
+  if (eDeathDate.Text <> EmptyStr) then
+    vdd1 := ValidDate(eDeathDate.Text, rsDateDeath, Msgs);
+  if (vdd1) then
+    IsFutureDate(StrToDate(eDeathDate.Text), Today, rsDateDeath, rsDateToday, Msgs);
+  if (vbd1) and (vdd1) then
+    if (StrToDate(eDeathDate.Text) < StrToDate(eBirthDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscDeathDate, rscBirthDate]));
 
-  // Chaves estrangeiras
-  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,
-  //  rsCaptionMunicipality, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('state_id').AsInteger, rsCaptionState, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('country_id').AsInteger, rsCaptionCountry, Msgs);
-  //ForeignValueExists(tbInstitutions, 'institution_id', D.FieldByName('institution_id').AsInteger,
-  //  rsCaptionInstitution, Msgs);
-
-  // Email
+  // E-mail
   if (eEmail.Text <> EmptyStr) then
     CheckEmail(eEmail.Text, Msgs);
 
-  // Email
+  // CPF
   if (eCPF.Text <> EmptyStr) and (eCPF.Text <> '   .   .   -  ') then
     CheckCPF(eCPF.Text, Msgs);
+
+  // Unique fields
+  if (eAbbreviation.Text <> EmptyStr) then
+    RecordDuplicated(tbPeople, COL_PERSON_ID, COL_ABBREVIATION, eAbbreviation.Text, FPerson.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

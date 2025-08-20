@@ -126,8 +126,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs,
-  data_types, data_consts, data_getvalue, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs, utils_validations,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -551,62 +551,32 @@ end;
 function TedtBands.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  //D := dsLink.DataSet;
 
-  // Campos obrigatórios
-  //RequiredIsEmpty(D, tbBands, 'band_size', Msgs);
-  //RequiredIsEmpty(D, tbBands, 'band_number', Msgs);
-  //RequiredIsEmpty(D, tbBands, 'band_type', Msgs);
-  //RequiredIsEmpty(D, tbBands, 'band_status', Msgs);
+  // Required fields
+  if (cbBandSize.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscSize]));
+  if (eBandNumber.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscNumber]));
+  if (cbBandType.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscType]));
+  if (cbBandStatus.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscStatus]));
+  if (cbBandSource.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscSource]));
+  if (FSupplierId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscSupplier]));
+  if (FRequesterId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscRequester]));
 
-  // Registro duplicado
-  //RecordDuplicated(tbBands, 'band_id', 'full_name',
-  //  D.FieldByName('full_name').AsString, D.FieldByName('band_id').AsInteger);
-
-  // Chaves estrangeiras
-  //ForeignValueExists(tbInstitutions, 'institution_id', D.FieldByName('supplier_id').AsInteger,
-  //  rsCaptionSupplier, Msgs);
-  //ForeignValueExists(tbProjects, 'project_id', D.FieldByName('project_id').AsInteger,
-  //  rsCaptionProject, Msgs);
-  //ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('individual_id').AsInteger,
-  //  rsCaptionIndividual, Msgs);
-
-  // Datas
-  //if D.FieldByName('receipt_date').AsString <> '' then
-  //  ValidDate(D.FieldByName('receipt_date').AsString, rsDateReceipt, Msgs);
-  //if D.FieldByName('use_date').AsString <> '' then
-  //  ValidDate(D.FieldByName('use_date').AsString, rsDateBanding, Msgs);
-  //if D.FieldByName('discharge_date').AsString <> '' then
-  //  ValidDate(D.FieldByName('discharge_date').AsString, rsDateDischarge, Msgs);
-  //if D.FieldByName('report_date').AsString <> '' then
-  //  ValidDate(D.FieldByName('report_date').AsString, rsDateReport, Msgs);
-  //
-  //if (D.FieldByName('receipt_date').AsString <> '') and
-  //  (D.FieldByName('use_date').AsString <> '') then
-  //  IsFutureDate(D.FieldByName('receipt_date').AsDateTime, D.FieldByName('use_date').AsDateTime,
-  //    AnsiLowerCase(rsDateReceipt), AnsiLowerCase(rsDateBanding), Msgs);
-  //if (D.FieldByName('receipt_date').AsString <> '') and
-  //  (D.FieldByName('discharge_date').AsString <> '') then
-  //  IsFutureDate(D.FieldByName('receipt_date').AsDateTime, D.FieldByName('discharge_date').AsDateTime,
-  //    AnsiLowerCase(rsDateReceipt), AnsiLowerCase(rsDateDischarge), Msgs);
-  //if (D.FieldByName('receipt_date').AsString <> '') and
-  //  (D.FieldByName('report_date').AsString <> '') then
-  //  IsFutureDate(D.FieldByName('receipt_date').AsDateTime, D.FieldByName('report_date').AsDateTime,
-  //    AnsiLowerCase(rsDateReceipt), AnsiLowerCase(rsDateReport), Msgs);
-  //
-  //if (D.FieldByName('use_date').AsString <> '') and
-  //  (D.FieldByName('report_date').AsString <> '') then
-  //  IsFutureDate(D.FieldByName('use_date').AsDateTime, D.FieldByName('report_date').AsDateTime,
-  //    AnsiLowerCase(rsDateBanding), AnsiLowerCase(rsDateReport), Msgs);
-  //
-  //if (D.FieldByName('discharge_date').AsString <> '') and
-  //  (D.FieldByName('report_date').AsString <> '') then
-  //  IsFutureDate(D.FieldByName('discharge_date').AsDateTime, D.FieldByName('report_date').AsDateTime,
-  //    AnsiLowerCase(rsDateDischarge), AnsiLowerCase(rsDateReport), Msgs);
+  // Unique fields
+  if (cbBandSize.ItemIndex >= 0) and (eBandNumber.Text <> EmptyStr) then
+    RecordDuplicated(tbBands,
+      [COL_BAND_SIZE, COL_BAND_NUMBER],
+      [cbBandSize.Text, StrToInt(eBandNumber.Text)],
+      COL_BAND_ID, FBand.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

@@ -127,8 +127,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_system, data_types, utils_dialogs, utils_finddialogs, models_geo, models_taxonomy,
-  utils_validations, data_consts, data_getvalue, utils_editdialogs, utils_gis, models_record_types,
+  utils_locale, utils_global, utils_system, utils_dialogs, utils_finddialogs, utils_validations,
+  utils_editdialogs, utils_gis,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_geo, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 { TedtSpecimen }
@@ -659,27 +660,32 @@ end;
 function TedtSpecimen.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
   DateColl, Hoje: TPartialDate;
+  Msg: String;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbSpecimens, 'field_number', Msgs);
-  //RequiredIsEmpty(D, tbSpecimens, 'sample_type', Msgs);
-  //RequiredIsEmpty(D, tbSpecimens, 'collection_year', Msgs);
-  //RequiredIsEmpty(D, tbSpecimens, 'taxon_id', Msgs);
-  //RequiredIsEmpty(D, tbSpecimens, 'locality_id', Msgs);
-
-  // Duplicated record
-  //RecordDuplicated(tbSpecimens, 'specimen_id', 'full_name',
-  //  D.FieldByName('full_name').AsString, D.FieldByName('specimen_id').AsInteger);
+  if (eFieldNumber.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscFieldNumber]));
+  if (cbSampleType.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscType]));
+  if (eCollectionYear.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCollectionYear]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  if (FTaxonId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxon]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
 
   // Dates
   Hoje.Today;
-  if eCollectionYear.Text <> EmptyStr then
+  if (eCollectionYear.Text <> EmptyStr) then
   begin
     DateColl.Year := StrToInt(eCollectionYear.Text);
     if eCollectionMonth.Text <> EmptyStr then
@@ -689,6 +695,16 @@ begin
     if ValidPartialDate(DateColl, rsDateCollection, Msgs) then
       IsFuturePartialDate(DateColl, Hoje, rsDateCollection, LowerCase(rsDateToday), Msgs);
   end;
+
+  // Geographical coordinates
+  if (eLongitude.Text <> EmptyStr) then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if (eLatitude.Text <> EmptyStr) then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+
+  // Unique fields
+  if (eFieldNumber.Text <> EmptyStr) then
+    RecordDuplicated(tbSpecimens, COL_SPECIMEN_ID, COL_FIELD_NUMBER, eFieldNumber.Text, FSpecimen.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

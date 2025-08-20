@@ -88,85 +88,6 @@ uses utils_locale, utils_global, utils_graphics, data_types, udm_main, uDarkStyl
 
 { TedtDatabase }
 
-procedure TedtDatabase.sbCancelClick(Sender: TObject);
-begin
-  GravaStat(Name, TComponent(Sender).Name, 'click');
-  ModalResult := mrCancel;
-end;
-
-procedure TedtDatabase.FormShow(Sender: TObject);
-begin
-  if IsDarkModeEnabled then
-    ApplyDarkMode;
-
-  OpenDlg.InitialDir := InstallDir;
-  OpenDlg.Title := rsTitleSelectDatabaseFile;
-  cbDBManagerSelect(nil);
-  ckRemoteDBChange(nil);
-
-  cbDBManager.ItemIndex := cbDBManager.Items.IndexOf(dsConn.DataSet.FieldByName(cbDBManager.DataField).DisplayText);
-  //eDBFile.Text := dsConn.DataSet.FieldByName('database_name').AsString;
-  eDBPass.Text := dsConn.DataSet.FieldByName('user_password').AsString;
-
-  eName.SetFocus;
-end;
-
-procedure TedtDatabase.FormKeyPress(Sender: TObject; var Key: char);
-begin
-  { <ESC> key }
-  if (Key = #27) then
-  begin
-    Key := #0;
-
-    ModalResult := mrCancel; { Cancel insert/edit }
-  end;
-end;
-
-procedure TedtDatabase.eDBFileButtonClick(Sender: TObject);
-begin
-  GravaStat(Name, TComponent(Sender).Name, 'buttonclick');
-  if OpenDlg.Execute then
-  begin
-    eDBFile.Field.AsString := OpenDlg.FileName;
-  end;
-end;
-
-procedure TedtDatabase.eDBPassButtonClick(Sender: TObject);
-begin
-  GravaStat(Name, TComponent(Sender).Name, 'buttonclick');
-  TogglePassView(eDBPass);
-end;
-
-procedure TedtDatabase.eNameKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { <ENTER/RETURN> key }
-  if (Key = #13) and (xSettings.UseEnterAsTab) then
-  begin
-    SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
-procedure TedtDatabase.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
-end;
-
-procedure TedtDatabase.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  { SAVE = Ctrl + S }
-  if (ssCtrl in Shift) and (Key = Ord('S')) then
-  begin
-    Key := 0;
-    if not (dsConn.State in [dsInsert, dsEdit]) then
-      Exit;
-
-    sbSaveClick(nil);
-  end;
-end;
-
 procedure TedtDatabase.ApplyDarkMode;
 begin
   eDBFile.Images := DMM.iEditsDark;
@@ -291,11 +212,78 @@ begin
   dsConn.DataSet.FieldByName('user_password').AsString := eDBPass.Text;
 end;
 
-procedure TedtDatabase.sbSaveClick(Sender: TObject);
+procedure TedtDatabase.eDBFileButtonClick(Sender: TObject);
 begin
-  { #todo : Test database connection }
+  GravaStat(Name, TComponent(Sender).Name, 'buttonclick');
+  if OpenDlg.Execute then
+  begin
+    eDBFile.Field.AsString := OpenDlg.FileName;
+  end;
+end;
 
-  edtDatabase.ModalResult := mrOk;
+procedure TedtDatabase.eDBPassButtonClick(Sender: TObject);
+begin
+  GravaStat(Name, TComponent(Sender).Name, 'buttonclick');
+  TogglePassView(eDBPass);
+end;
+
+procedure TedtDatabase.eNameKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { <ENTER/RETURN> key }
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
+  begin
+    SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
+
+procedure TedtDatabase.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  // CloseAction := caFree;
+end;
+
+procedure TedtDatabase.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  { SAVE = Ctrl + S }
+  if (ssCtrl in Shift) and (Key = Ord('S')) then
+  begin
+    Key := 0;
+    if not (dsConn.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    sbSaveClick(nil);
+  end;
+end;
+
+procedure TedtDatabase.FormKeyPress(Sender: TObject; var Key: char);
+begin
+  { <ESC> key }
+  if (Key = #27) then
+  begin
+    Key := #0;
+
+    ModalResult := mrCancel; { Cancel insert/edit }
+  end;
+end;
+
+procedure TedtDatabase.FormShow(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
+  OpenDlg.InitialDir := InstallDir;
+  OpenDlg.Title := rsTitleSelectDatabaseFile;
+
+  cbDBManager.ItemIndex := cbDBManager.Items.IndexOf(dsConn.DataSet.FieldByName(cbDBManager.DataField).DisplayText);
+  //eDBFile.Text := dsConn.DataSet.FieldByName('database_name').AsString;
+  eDBPass.Text := dsConn.DataSet.FieldByName('user_password').AsString;
+
+  cbDBManagerSelect(nil);
+  ckRemoteDBChange(nil);
+
+  eName.SetFocus;
 end;
 
 function TedtDatabase.IsRequiredFilled: Boolean;
@@ -317,6 +305,19 @@ begin
       (dsConn.DataSet.FieldByName('database_name').AsString <> EmptyStr) then
       Result := True;
   end;
+end;
+
+procedure TedtDatabase.sbCancelClick(Sender: TObject);
+begin
+  GravaStat(Name, TComponent(Sender).Name, 'click');
+  ModalResult := mrCancel;
+end;
+
+procedure TedtDatabase.sbSaveClick(Sender: TObject);
+begin
+  { #todo : Test database connection }
+
+  edtDatabase.ModalResult := mrOk;
 end;
 
 end.

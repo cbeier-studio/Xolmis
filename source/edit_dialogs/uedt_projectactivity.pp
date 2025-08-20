@@ -5,7 +5,7 @@ unit uedt_projectactivity;
 interface
 
 uses
-  atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, StdCtrls, SysUtils, Forms, Character,
+  atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, StdCtrls, SysUtils, Forms, Character, DateUtils,
   Controls, Graphics, Dialogs, Buttons, Menus, models_projects;
 
 type
@@ -77,8 +77,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_validations, data_getvalue, utils_conversions,
-  utils_finddialogs, data_consts, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_dialogs, utils_validations, utils_conversions, utils_editdialogs, utils_finddialogs,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types,
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -316,15 +317,33 @@ end;
 function TedtProjectActivity.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
+  vsd1, vtd1, ved1: Boolean;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbProjects, 'project_title', Msgs);
-  //RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
+  if (mDescription.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDescription]));
+  if (cbStatus.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscStatus]));
+
+  // Dates
+  if (eStartDate.Text <> EmptyStr) then
+    vsd1 := ValidDate(eStartDate.Text, rscStartDate, Msgs);
+  if (eTargetDate.Text <> EmptyStr) then
+    vtd1 := ValidDate(eTargetDate.Text, rscTargetDate, Msgs);
+  if (eEndDate.Text <> EmptyStr) then
+    ved1 := ValidDate(eEndDate.Text, rscEndDate, Msgs);
+  if (vsd1) and (ved1) then
+    if (StrToDate(eEndDate.Text) < StrToDate(eStartDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscEndDate, rscStartDate]));
+  if (vsd1) and (vtd1) then
+    if (StrToDate(eTargetDate.Text) < StrToDate(eStartDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscTargetDate, rscStartDate]));
+  if (vtd1) and (ved1) then
+    if (StrToDate(eEndDate.Text) < StrToDate(eTargetDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscEndDate, rscTargetDate]));
 
   if Msgs.Count > 0 then
   begin

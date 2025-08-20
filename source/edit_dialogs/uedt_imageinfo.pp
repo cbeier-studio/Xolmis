@@ -21,7 +21,7 @@ unit uedt_imageinfo;
 interface
 
 uses
-  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils,
   ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
 
 type
@@ -140,8 +140,9 @@ var
 implementation
 
 uses
-  utils_global, utils_locale, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, models_geo, data_consts,
-  data_getvalue, utils_conversions, utils_editdialogs, utils_gis, models_record_types,
+  utils_global, utils_locale, utils_dialogs, utils_finddialogs, utils_conversions, utils_editdialogs, utils_gis,
+  utils_validations,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -636,13 +637,39 @@ end;
 function TedtImageInfo.ValidateFields: Boolean;
 var
   Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbImages, 'image_date', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbImages, 'image_filename', Msgs);
+  if (eImageDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  if (eImageFilename.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscFileName]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+
+  // Dates
+  if (eImageDate.Text <> EmptyStr) then
+    if ValidDate(eImageDate.Text, rscDate, Msgs) then
+      IsFutureDate(StrToDate(eImageDate.Text), Today, rscDate, rsDateToday, Msgs);
+
+  // Time
+  if eImageTime.Text <> EmptyStr then
+    ValidTime(eImageTime.Text, rscTime, Msgs);
+
+  // Geographical coordinates
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+
+  // Files
+  { #todo : Check the Image file path }
 
   if Msgs.Count > 0 then
   begin

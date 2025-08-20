@@ -70,8 +70,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_validations, data_getvalue,
-  utils_conversions, data_consts, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_conversions, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns,
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -261,15 +262,19 @@ end;
 function TedtProjectExpense.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbProjects, 'project_title', Msgs);
-  //RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
+  if (FRubricId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscRubric]));
+  if (eAmount.Value = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscAmount]));
+
+  // Dates
+  if (eDate.Text <> EmptyStr) then
+    ValidDate(eDate.Text, rscDate, Msgs);
 
   if Msgs.Count > 0 then
   begin

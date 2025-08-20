@@ -11,6 +11,7 @@ object edtNetEffort: TedtNetEffort
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -488,7 +489,7 @@ object edtNetEffort: TedtNetEffort
           Width = 184
           TabOrder = 0
           TextHint = 'HH:MM'
-          OnEditingDone = eNetNumberEditingDone
+          OnEditingDone = eNetLengthEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetNumberKeyPress
         end
@@ -499,7 +500,7 @@ object edtNetEffort: TedtNetEffort
           Width = 184
           TabOrder = 1
           TextHint = 'HH:MM'
-          OnEditingDone = eNetNumberEditingDone
+          OnEditingDone = eNetLengthEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetNumberKeyPress
         end

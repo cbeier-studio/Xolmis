@@ -1158,26 +1158,26 @@ procedure CreateMethodsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating methods table');
   Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS methods (' +
-    'method_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-    'method_name     VARCHAR (100) UNIQUE NOT NULL,' +
-    'abbreviation    VARCHAR (20),' +
-    'ebird_name      VARCHAR (60),' +
-    'category        VARCHAR (30),' +
-    'description     TEXT,' +
+    'method_id        INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
+    'method_name      VARCHAR (100) UNIQUE NOT NULL,' +
+    'abbreviation     VARCHAR (20),' +
+    'ebird_name       VARCHAR (60),' +
+    'category         VARCHAR (30),' +
+    'description      TEXT,' +
     'recommended_uses TEXT,' +
-    'notes           TEXT,' +
-    'can_delete      BOOLEAN       DEFAULT (1),' +
-    'user_inserted   INTEGER,' +
-    'user_updated    INTEGER,' +
-    'insert_date     DATETIME,' +
-    'update_date     DATETIME,' +
-    'exported_status BOOLEAN       DEFAULT (0),' +
-    'marked_status   BOOLEAN       DEFAULT (0),' +
-    'active_status   BOOLEAN       DEFAULT (1)' +
+    'notes            TEXT,' +
+    'can_delete       BOOLEAN       DEFAULT (1),' +
+    'user_inserted    INTEGER,' +
+    'user_updated     INTEGER,' +
+    'insert_date      DATETIME,' +
+    'update_date      DATETIME,' +
+    'exported_status  BOOLEAN       DEFAULT (0),' +
+    'marked_status    BOOLEAN       DEFAULT (0),' +
+    'active_status    BOOLEAN       DEFAULT (1)' +
   ');');
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_acronym ON methods (' +
-    'method_acronym COLLATE BINARY' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_abbreviation ON methods (' +
+    'abbreviation COLLATE BINARY' +
   ');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_ebird_name ON methods (' +
@@ -1347,9 +1347,6 @@ begin
     'longitude        REAL,' +
     'latitude         REAL,' +
     'area_shape       VARCHAR (5),' +
-    //'country_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'state_id         INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'municipality_id  INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'locality_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'description      TEXT,' +
     'notes            TEXT,' +
@@ -1398,7 +1395,6 @@ begin
     'expire_date     DATE,' +
     'notes           TEXT,' +
     'permit_filename VARCHAR (200),' +
-    'permit_file     BLOB,' +
     'user_inserted   INTEGER,' +
     'user_updated    INTEGER,' +
     'insert_date     DATETIME,' +
@@ -1549,10 +1545,6 @@ begin
     'end_date        DATE,' +
     'duration        INTEGER       AS ( (strftime(''%j'', end_date) - strftime(''%j'', start_date) ) + 1) VIRTUAL,' +
     'project_id      INTEGER       REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-    'locality_id     INTEGER,' +
-    //'country_id      INTEGER,' +
-    //'state_id        INTEGER,' +
-    //'municipality_id INTEGER,' +
     'description     TEXT,' +
     'user_inserted   INTEGER,' +
     'user_updated    INTEGER,' +
@@ -1582,9 +1574,6 @@ begin
     'expedition_id            INTEGER       REFERENCES expeditions (expedition_id) ON UPDATE CASCADE,' +
     'project_id               INTEGER       REFERENCES projects (project_id) ON UPDATE CASCADE,' +
     'locality_id              INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'country_id               INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'state_id                 INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'municipality_id          INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'sample_id                VARCHAR (30),' +
     'start_latitude           REAL,' +
     'start_longitude          REAL,' +
@@ -1658,7 +1647,7 @@ begin
     'net_length       REAL,' +
     'net_height       REAL,' +
     'net_area         REAL         AS (ifnull(net_length, 0) * ifnull(net_height, 0) ) STORED,' +
-    'net_mesh         VARCHAR (15),' +
+    'net_mesh         INTEGER,' +
     'full_name        VARCHAR (40),' +
     'notes            TEXT,' +
     'user_inserted    INTEGER,' +
@@ -1750,6 +1739,7 @@ begin
     'band_color      VARCHAR (10),' +
     'band_source     VARCHAR (5),' +
     'supplier_id     INTEGER      REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
+    'requester_id    INTEGER      REFERENCES people (person_id) ON UPDATE CASCADE,' +
     'carrier_id      INTEGER      REFERENCES people (person_id) ON UPDATE CASCADE,' +
     'individual_id   INTEGER      REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
     'project_id      INTEGER,' +
@@ -1818,11 +1808,6 @@ begin
     'formatted_name        VARCHAR (150),' +
     'full_name             VARCHAR (120),' +
     'taxon_id              INTEGER       NOT NULL REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'order_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'family_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'subfamily_id          INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'genus_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'species_id            INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
     'individual_sex        CHAR (1),' +
     'individual_age        CHAR (1),' +
     'nest_id               INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
@@ -1902,13 +1887,6 @@ begin
     'breeding_status      VARCHAR (30),' +
     'not_surveying        BOOLEAN       DEFAULT (0),' +
     'ebird_available      BOOLEAN       DEFAULT (0),' +
-    //'order_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'family_id            INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'genus_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'species_id           INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'country_id           INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'state_id             INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'municipality_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'full_name            VARCHAR (100),' +
     'notes                TEXT,' +
     'user_inserted        INTEGER,' +
@@ -2018,13 +1996,6 @@ begin
     'camera_name            VARCHAR (50),' +
     'escaped                BOOLEAN       DEFAULT (0),' +
     'needs_review           BOOLEAN       DEFAULT (0),' +
-    //'order_id               INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'family_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'genus_id               INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'species_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'country_id             INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'state_id               INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'municipality_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'notes                  TEXT,' +
     'user_inserted          INTEGER,' +
     'user_updated           INTEGER,' +
@@ -2160,10 +2131,6 @@ begin
     'mc_molt         REAL,' +
     'growth_bar_size REAL,' +
     'notes           TEXT,' +
-    //'order_id        INTEGER,' +
-    //'family_id       INTEGER,' +
-    //'genus_id        INTEGER,' +
-    //'species_id      INTEGER,' +
     'user_inserted   INTEGER,' +
     'user_updated    INTEGER,' +
     'insert_date     DATETIME,' +
@@ -2213,14 +2180,6 @@ begin
     'nest_productivity     INTEGER,' +
     'found_date            DATE,' +
     'last_date             DATE,' +
-    //'order_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'family_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'subfamily_id          INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'genus_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'species_id            INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'country_id            INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'state_id              INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'municipality_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'full_name             VARCHAR (100),' +
     'description           TEXT,' +
     'notes                 TEXT,' +
@@ -2312,10 +2271,6 @@ begin
     'description      TEXT,' +
     'full_name        VARCHAR (100),' +
     'notes            TEXT,' +
-    //'order_id         INTEGER,' +
-    //'family_id        INTEGER,' +
-    //'genus_id         INTEGER,' +
-    //'species_id       INTEGER,' +
     'user_inserted    INTEGER,' +
     'user_updated     INTEGER,' +
     'insert_date      DATETIME,' +
@@ -2345,14 +2300,6 @@ begin
     'locality_id      INTEGER,' +
     'longitude        REAL,' +
     'latitude         REAL,' +
-    //'order_id         INTEGER,' +
-    //'family_id        INTEGER,' +
-    //'subfamily_id     INTEGER,' +
-    //'genus_id         INTEGER,' +
-    //'species_id       INTEGER,' +
-    //'country_id       INTEGER,' +
-    //'state_id         INTEGER,' +
-    //'municipality_id  INTEGER,' +
     'notes            TEXT,' +
     'user_inserted    INTEGER,' +
     'user_updated     INTEGER,' +
@@ -2410,14 +2357,6 @@ begin
     'egg_id           INTEGER,' +
     'preparation_date DATE,' +
     'preparer_id      INTEGER,' +
-    //'order_id         INTEGER,' +
-    //'family_id        INTEGER,' +
-    //'subfamily_id     INTEGER,' +
-    //'genus_id         INTEGER,' +
-    //'species_id       INTEGER,' +
-    //'country_id       INTEGER,' +
-    //'state_id         INTEGER,' +
-    //'municipality_id  INTEGER,' +
     'notes            TEXT,' +
     'user_inserted    INTEGER,' +
     'user_updated     INTEGER,' +
@@ -2482,13 +2421,6 @@ begin
     'coordinate_precision CHAR (1),' +
     'longitude            REAL,' +
     'latitude             REAL,' +
-    //'order_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'family_id            INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'genus_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'species_id           INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-    //'country_id           INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'state_id             INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-    //'municipality_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'license_type         VARCHAR (20),' +
     'license_year         INTEGER,' +
     'license_uri          VARCHAR (200),' +
@@ -2581,13 +2513,6 @@ begin
     'audio_file        VARCHAR (250),' +
     'subtitle          TEXT,' +
     'notes             TEXT,' +
-    //'order_id          INTEGER,' +
-    //'family_id         INTEGER,' +
-    //'genus_id          INTEGER,' +
-    //'species_id        INTEGER,' +
-    //'country_id        INTEGER,' +
-    //'state_id          INTEGER,' +
-    //'municipality_id   INTEGER,' +
     'user_inserted     INTEGER,' +
     'user_updated      INTEGER,' +
     'insert_date       DATETIME,' +

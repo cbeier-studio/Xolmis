@@ -5,7 +5,7 @@ unit uedt_vegetation;
 interface
 
 uses
-  atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, Spin, SysUtils, Forms,
+  atshapelinebgra, Classes, DB, EditBtn, ExtCtrls, Spin, SysUtils, Forms, DateUtils,
   Controls, Graphics, StdCtrls, Dialogs, Buttons, models_sampling;
 
 type
@@ -97,8 +97,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, models_geo, utils_validations, data_columns, data_consts, utils_gis,
-  udm_main, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_dialogs, utils_validations, utils_gis,
+  data_columns, data_consts, models_record_types, models_geo,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -394,8 +395,19 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_name', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_rank', Msgs);
+  if (eSampleDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  if (cbHerbsDistribution.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscHerbsDistribution]));
+  if (cbShrubsDistribution.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscShrubsDistribution]));
+  if (cbTreesDistribution.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTreesDistribution]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
   if cbHerbsDistribution.ItemIndex > 0 then
   begin
     if eHerbsProportion.Value = 0 then
@@ -418,9 +430,13 @@ begin
       Msgs.Add(Format(rsRequiredField, [rscAvgHeightOfTrees]));
   end;
 
-  // Date and time
-  ValidDate(eSampleDate.Text, rscDate, Msgs);
-  if eSampleTime.Text <> EmptyStr then
+  // Dates
+  if (eSampleDate.Text <> EmptyStr) then
+    if ValidDate(eSampleDate.Text, rscDate, Msgs) then
+      IsFutureDate(StrToDate(eSampleDate.Text), Today, rscDate, rsDateToday, Msgs);
+
+  // Time
+  if (eSampleTime.Text <> EmptyStr) then
     ValidTime(eSampleTime.Text, rscTime, Msgs);
 
   // Geographical coordinates
@@ -428,8 +444,6 @@ begin
     ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
   if eLatitude.Text <> EmptyStr then
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
-  //CoordenadaIsOk(dsLink.DataSet, 'longitude', maLongitude, Msgs);
-  //CoordenadaIsOk(dsLink.DataSet, 'latitude', maLatitude, Msgs);
 
   if Msgs.Count > 0 then
   begin

@@ -5552,7 +5552,7 @@ msgid "Find taxon"
 msgstr ""
 
 #: tedtcapture.label44.caption
-msgid "Skull length:"
+msgid "Skull length (mm):"
 msgstr ""
 
 #: tedtcapture.lblage.caption
@@ -5575,11 +5575,11 @@ msgid "Bander: *"
 msgstr ""
 
 #: tedtcapture.lblbillheight.caption
-msgid "Bill height:"
+msgid "Bill height (mm):"
 msgstr ""
 
 #: tedtcapture.lblbillwidth.caption
-msgid "Bill width:"
+msgid "Bill width (mm):"
 msgstr ""
 
 #: tedtcapture.lblbodymolt.caption
@@ -5620,7 +5620,7 @@ msgid "Last photo number:"
 msgstr ""
 
 #: tedtcapture.lblexposedculmen.caption
-msgid "Exposed culmen:"
+msgid "Exposed culmen (mm):"
 msgstr ""
 
 #: tedtcapture.lblfat.caption
@@ -5633,7 +5633,7 @@ msgid "Field number:"
 msgstr ""
 
 #: tedtcapture.lblfirstsecondarychord.caption
-msgid "First secondary chord:"
+msgid "First secondary chord (mm):"
 msgstr ""
 
 #: tedtcapture.lblflightfeathermolt.caption
@@ -5670,7 +5670,7 @@ msgid "Individual: *"
 msgstr ""
 
 #: tedtcapture.lblkippsindex.caption
-msgid "Kipp's Index:"
+msgid "Kipp's Distance (mm):"
 msgstr ""
 
 #: tedtcapture.lbllatitude.caption
@@ -5702,7 +5702,7 @@ msgid "Mistnet:"
 msgstr ""
 
 #: tedtcapture.lblnostrilbilltip.caption
-msgid "Nostril to bill tip:"
+msgid "Nostril to bill tip (mm):"
 msgstr ""
 
 #: tedtcapture.lblnotes.caption
@@ -5733,7 +5733,7 @@ msgid "Right tarsus:"
 msgstr ""
 
 #: tedtcapture.lblrightwingchord.caption
-msgid "Right wing chord:"
+msgid "Right wing chord (mm):"
 msgstr ""
 
 #: tedtcapture.lblsex.caption
@@ -5760,15 +5760,15 @@ msgid "Survey:"
 msgstr ""
 
 #: tedtcapture.lbltaillength.caption
-msgid "Tail length:"
+msgid "Tail length (mm):"
 msgstr ""
 
 #: tedtcapture.lbltarsusdiameter.caption
-msgid "Tarsus diameter:"
+msgid "Tarsus diameter (mm):"
 msgstr ""
 
 #: tedtcapture.lbltarsuslength.caption
-msgid "Tarsus length:"
+msgid "Tarsus length (mm):"
 msgstr ""
 
 #: tedtcapture.lbltaxon.caption
@@ -5789,15 +5789,15 @@ msgid "Measurements"
 msgstr ""
 
 #: tedtcapture.lbltotalculmen.caption
-msgid "Total culmen:"
+msgid "Total culmen (mm):"
 msgstr ""
 
 #: tedtcapture.lbltotallength.caption
-msgid "Total length:"
+msgid "Total length (mm):"
 msgstr ""
 
 #: tedtcapture.lblweight.caption
-msgid "Weight:"
+msgid "Weight (g):"
 msgstr ""
 
 #: tedtcapture.pmnnewband.caption
@@ -6743,9 +6743,9 @@ msgctxt "tedtinstitution.estate.buttonhint"
 msgid "Find state"
 msgstr ""
 
-#: tedtinstitution.lblacronym.caption
-msgctxt "tedtinstitution.lblacronym.caption"
-msgid "Acronym: *"
+#: tedtinstitution.lblabbreviation.caption
+msgctxt "tedtinstitution.lblabbreviation.caption"
+msgid "Abbreviation: *"
 msgstr ""
 
 #: tedtinstitution.lbladdress.caption
@@ -8003,7 +8003,7 @@ msgstr ""
 
 #: tedtprojectexpense.lblamount.caption
 msgctxt "tedtprojectexpense.lblamount.caption"
-msgid "Amount:"
+msgid "Amount: *"
 msgstr ""
 
 #: tedtprojectexpense.lbldate.caption
@@ -8107,7 +8107,7 @@ msgstr ""
 
 #: tedtprojectrubric.lblamount.caption
 msgctxt "tedtprojectrubric.lblamount.caption"
-msgid "Amount:"
+msgid "Amount: *"
 msgstr ""
 
 #: tedtprojectrubric.lblfundingsource.caption
@@ -13487,7 +13487,7 @@ msgstr ""
 
 #: utils_locale.rsdatecapture
 msgctxt "utils_locale.rsdatecapture"
-msgid "capture date"
+msgid "Capture date"
 msgstr ""
 
 #: utils_locale.rsdatecollection
@@ -15725,6 +15725,10 @@ msgctxt "utils_locale.rsrecnoempty"
 msgid "record 0 of 0"
 msgstr ""
 
+#: utils_locale.rsrecordduplicated
+msgid "A record with the same values already exists."
+msgstr ""
+
 #: utils_locale.rsrecordnumber
 #, object-pascal-format
 msgctxt "utils_locale.rsrecordnumber"
@@ -16434,6 +16438,10 @@ msgstr ""
 #: utils_locale.rsteam
 msgctxt "utils_locale.rsteam"
 msgid "Team"
+msgstr ""
+
+#: utils_locale.rstimecapture
+msgid "Capture time"
 msgstr ""
 
 #: utils_locale.rstitleadminpassword

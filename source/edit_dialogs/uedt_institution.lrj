@@ -6,7 +6,7 @@
 {"hash":46657946,"name":"tedtinstitution.lblmunicipality.caption","sourcebytes":[77,117,110,105,99,105,112,97,108,105,116,121,58],"value":"Municipality:"},
 {"hash":123829433,"name":"tedtinstitution.emunicipality.buttonhint","sourcebytes":[70,105,110,100,32,109,117,110,105,99,105,112,97,108,105,116,121],"value":"Find municipality"},
 {"hash":75730042,"name":"tedtinstitution.lblfullname.caption","sourcebytes":[78,97,109,101,58,32,42],"value":"Name: *"},
-{"hash":106723002,"name":"tedtinstitution.lblacronym.caption","sourcebytes":[65,99,114,111,110,121,109,58,32,42],"value":"Acronym: *"},
+{"hash":59413546,"name":"tedtinstitution.lblabbreviation.caption","sourcebytes":[65,98,98,114,101,118,105,97,116,105,111,110,58,32,42],"value":"Abbreviation: *"},
 {"hash":21404986,"name":"tedtinstitution.lblcomplement.caption","sourcebytes":[65,100,100,114,101,115,115,32,100,101,116,97,105,108,58],"value":"Address detail:"},
 {"hash":179883546,"name":"tedtinstitution.lbladdress.caption","sourcebytes":[65,100,100,114,101,115,115,58],"value":"Address:"},
 {"hash":208472234,"name":"tedtinstitution.lblphone.caption","sourcebytes":[84,101,108,101,112,104,111,110,101,58],"value":"Telephone:"},

@@ -197,6 +197,7 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           ItemHeight = 15
+          Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbAgeKeyPress
@@ -217,6 +218,7 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 173
           ItemHeight = 15
+          Style = csDropDownList
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = cbStatusKeyPress
@@ -864,6 +866,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 2
           OnButtonClick = eRemovedBandButtonClick
+          OnEditingDone = eRemovedBandEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eRemovedBandKeyPress
         end
@@ -982,6 +985,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 0
           OnButtonClick = ePhotographer1ButtonClick
+          OnEditingDone = ePhotographer1EditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer1KeyPress
         end
@@ -1002,6 +1006,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 1
           OnButtonClick = ePhotographer2ButtonClick
+          OnEditingDone = ePhotographer1EditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer2KeyPress
         end
@@ -1010,8 +1015,12 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 173
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           TabOrder = 2
+          OnEditingDone = ePhotographer1EditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1176,6 +1185,7 @@ object edtCapture: TedtCapture
           OnEditingDone = eIndividualEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbCaptureTypeKeyPress
+          OnSelect = cbCaptureTypeSelect
         end
         object eNet: TEditButton
           Left = 206
@@ -1305,6 +1315,9 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 174
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           Items.Strings = (
             'U'
@@ -1322,6 +1335,9 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 174
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           Items.Strings = (
             'F'
@@ -1339,6 +1355,9 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 173
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -1359,6 +1378,9 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 174
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -1419,7 +1441,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 173
           BorderSpacing.Top = 4
-          Caption = 'Right wing chord:'
+          Caption = 'Right wing chord (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1429,7 +1451,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'First secondary chord:'
+          Caption = 'First secondary chord (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1438,6 +1460,9 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 174
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -1453,6 +1478,9 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 174
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -1474,6 +1502,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 2
+          OnEditingDone = eRightWingChordEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1485,6 +1514,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 3
+          OnEditingDone = eRightWingChordEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1514,7 +1544,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Tail length:'
+          Caption = 'Tail length (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1524,7 +1554,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Tarsus length:'
+          Caption = 'Tarsus length (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1534,7 +1564,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 173
           BorderSpacing.Top = 4
-          Caption = 'Tarsus diameter:'
+          Caption = 'Tarsus diameter (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1544,7 +1574,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Weight:'
+          Caption = 'Weight (g):'
           ParentColor = False
           ParentFont = False
         end
@@ -1617,7 +1647,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Bill height:'
+          Caption = 'Bill height (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1627,7 +1657,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Total length:'
+          Caption = 'Total length (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1637,7 +1667,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 173
           BorderSpacing.Top = 4
-          Caption = 'Total culmen:'
+          Caption = 'Total culmen (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1720,7 +1750,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Skull length:'
+          Caption = 'Skull length (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1730,7 +1760,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Exposed culmen:'
+          Caption = 'Exposed culmen (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1740,7 +1770,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 173
           BorderSpacing.Top = 4
-          Caption = 'Nostril to bill tip:'
+          Caption = 'Nostril to bill tip (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1750,7 +1780,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Bill width:'
+          Caption = 'Bill width (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1824,7 +1854,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
-          Caption = 'Kipp''s Index:'
+          Caption = 'Kipp''s Distance (mm):'
           ParentColor = False
           ParentFont = False
         end
@@ -1894,6 +1924,9 @@ object edtCapture: TedtCapture
           Height = 23
           Top = 23
           Width = 173
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          AutoDropDown = True
           ItemHeight = 15
           Items.Strings = (
             'N'
@@ -2014,6 +2047,7 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 173
           ItemHeight = 15
+          Style = csDropDownList
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
@@ -2104,6 +2138,7 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           TabOrder = 0
+          OnEditingDone = ePhotographer1EditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2113,6 +2148,7 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 173
           TabOrder = 1
+          OnEditingDone = ePhotographer1EditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end

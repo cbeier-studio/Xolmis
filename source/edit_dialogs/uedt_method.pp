@@ -85,7 +85,10 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs, data_consts, udm_main, uDarkStyleParams;
+uses
+  utils_locale, utils_global, utils_dialogs,
+  data_consts, data_columns,
+  udm_main, uDarkStyleParams;
 
 { TedtMethod }
 
@@ -258,8 +261,10 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_name', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_rank', Msgs);
+  if (eName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (eAbbreviation.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscAbbreviation]));
 
   if Msgs.Count > 0 then
   begin

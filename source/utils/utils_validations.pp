@@ -756,7 +756,7 @@ function RecordDuplicated(aTable: TTableType; FieldsSet: array of String; Values
     aKeyField: String; aKeyValue: Integer; aMessageList: TStrings = nil): Boolean;
 var
   Qry: TSQLQuery;
-  SQLText: String;
+  SQLText, M: String;
   i: Integer;
 begin
   Result := False;
@@ -828,6 +828,18 @@ begin
   finally
     Qry.Close;
     Qry.Free;
+  end;
+
+  if Result then
+  begin
+    M := rsRecordDuplicated;
+    if (Assigned(aMessageList)) then
+    begin
+      LogError(M);
+      aMessageList.Add(M);
+    end;
+    //else
+    //  MsgDlg('', M, mtInformation);
   end;
 end;
 

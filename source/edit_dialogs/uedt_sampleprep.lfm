@@ -419,8 +419,8 @@ object edtSamplePrep: TedtSamplePrep
   object dsLink: TDataSource
     DataSet = DMG.qSamplePreps
     OnDataChange = dsLinkDataChange
-    Left = 314
-    Top = 51
+    Left = 336
+    Top = 48
   end
   object pmNew: TPopupMenu
     Left = 128

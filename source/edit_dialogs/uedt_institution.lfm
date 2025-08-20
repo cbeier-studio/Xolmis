@@ -6,12 +6,11 @@ object edtInstitution: TedtInstitution
   AutoSize = True
   Caption = 'New institution'
   ClientHeight = 689
-  ClientWidth = 413
+  ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -225,7 +224,7 @@ object edtInstitution: TedtInstitution
           OnKeyPress = eFullnameKeyPress
         end
       end
-      object pAcronym: TPanel
+      object pAbbreviation: TPanel
         Left = 0
         Height = 46
         Top = 62
@@ -244,17 +243,17 @@ object edtInstitution: TedtInstitution
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 1
-        object lblAcronym: TLabel
+        object lblAbbreviation: TLabel
           Left = 16
           Height = 15
           Top = 4
           Width = 176
           BorderSpacing.Top = 4
-          Caption = 'Acronym: *'
+          Caption = 'Abbreviation: *'
           ParentColor = False
           ParentFont = False
         end
-        object lblAcronym1: TLabel
+        object lblAbbreviation1: TLabel
           Left = 208
           Height = 15
           Top = 4
@@ -264,7 +263,7 @@ object edtInstitution: TedtInstitution
           ParentColor = False
           ParentFont = False
         end
-        object eAcronym: TEdit
+        object eAbbreviation: TEdit
           Left = 16
           Height = 23
           Top = 23

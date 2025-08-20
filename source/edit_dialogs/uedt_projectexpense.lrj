@@ -3,7 +3,7 @@
 {"hash":160380314,"name":"tedtprojectexpense.lblrubric.caption","sourcebytes":[82,117,98,114,105,99,58,32,42],"value":"Rubric: *"},
 {"hash":131505299,"name":"tedtprojectexpense.erubric.buttonhint","sourcebytes":[70,105,110,100,32,114,117,98,114,105,99],"value":"Find rubric"},
 {"hash":4885130,"name":"tedtprojectexpense.lbldate.caption","sourcebytes":[68,97,116,101,58],"value":"Date:"},
-{"hash":138855738,"name":"tedtprojectexpense.lblamount.caption","sourcebytes":[65,109,111,117,110,116,58],"value":"Amount:"},
+{"hash":113587306,"name":"tedtprojectexpense.lblamount.caption","sourcebytes":[65,109,111,117,110,116,58,32,42],"value":"Amount: *"},
 {"hash":38292546,"name":"tedtprojectexpense.edate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
 {"hash":33581481,"name":"tedtprojectexpense.edate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":109499802,"name":"tedtprojectexpense.lblitem.caption","sourcebytes":[73,116,101,109,32,100,101,115,99,114,105,112,116,105,111,110,58],"value":"Item description:"},

@@ -104,7 +104,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_validations, data_consts, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_validations,
+  data_types, data_consts, data_columns,
+  udm_main, uDarkStyleParams;
 
 { TedtProject }
 
@@ -267,31 +269,35 @@ end;
 function TedtProject.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
+  vsd1, ved1: Boolean;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbProjects, 'project_title', Msgs);
-  //RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
-
-  // Duplicated record
-  RecordDuplicated(tbProjects, COL_PROJECT_ID, COL_PROJECT_TITLE, eTitle.Text, FProject.Id);
+  if (eTitle.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscTitle]));
+  if (eShortTitle.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscShortTitle]));
 
   // Dates
-  if Trim(eStartDate.Text) <> EmptyStr then
-    ValidDate(eStartDate.Text, rsDateStart, Msgs);
-  if Trim(eEndDate.Text) <> EmptyStr then
-    ValidDate(eEndDate.Text, rsDateEnd, Msgs);
+  if (eStartDate.Text <> EmptyStr) then
+    vsd1 := ValidDate(eStartDate.Text, rscStartDate, Msgs);
+  if (eEndDate.Text <> EmptyStr) then
+    ved1 := ValidDate(eEndDate.Text, rscEndDate, Msgs);
+  if (vsd1) and (ved1) then
+    if (StrToDate(eEndDate.Text) < StrToDate(eStartDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscEndDate, rscStartDate]));
 
-  //if (D.FieldByName('start_date').AsString <> '') then
-  //  IsFutureDate(D.FieldByName('start_date').AsDateTime, Today,
-  //    AnsiLowerCase(rsDateStart), AnsiLowerCase(rsDateToday), Msgs);
-  //if (D.FieldByName('end_date').AsString <> '') then
-  //  IsFutureDate(D.FieldByName('end_date').AsDateTime, Today,
-  //    AnsiLowerCase(rsDateEnd), AnsiLowerCase(rsDateToday), Msgs);
+  // E-mail
+  if (eEmail.Text <> EmptyStr) then
+    CheckEmail(eEmail.Text, Msgs);
+
+  // Unique fields
+  if (eTitle.Text <> EmptyStr) then
+    RecordDuplicated(tbProjects, COL_PROJECT_ID, COL_PROJECT_TITLE, eTitle.Text, FProject.Id, Msgs);
+  if (eShortTitle.Text <> EmptyStr) then
+    RecordDuplicated(tbProjects, COL_PROJECT_ID, COL_SHORT_TITLE, eShortTitle.Text, FProject.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

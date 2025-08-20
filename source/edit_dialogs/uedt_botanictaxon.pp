@@ -89,8 +89,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_finddialogs, utils_dialogs, models_taxonomy, utils_validations, data_getvalue,
-  data_consts, udm_main, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_finddialogs, utils_dialogs, utils_validations,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types, models_taxonomy,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -320,12 +321,17 @@ begin
   Msgs := TStringList.Create;
   D := dsLink.DataSet;
 
-  // Campos obrigatórios
-  //RequiredIsEmpty(D, tbBotanicTaxa, 'taxon_name', Msgs);
-  //RequiredIsEmpty(D, tbBotanicTaxa, 'rank_id', Msgs);
+  // Required fields
+  if (eName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (cbRank.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxonomicRank]));
+  // Conditional required fields
+  { #todo : Required Parent taxon when Rank is lower than Order }
 
-  // Registro duplicado
-  RecordDuplicated(tbBotanicTaxa, COL_TAXON_ID, COL_TAXON_NAME, eName.Text, FTaxon.Id, Msgs);
+  // Unique fields
+  if (eName.Text <> EmptyStr) then
+    RecordDuplicated(tbBotanicTaxa, COL_TAXON_ID, COL_TAXON_NAME, eName.Text, FTaxon.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

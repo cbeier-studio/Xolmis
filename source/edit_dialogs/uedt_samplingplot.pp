@@ -97,7 +97,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs, utils_gis,
-  data_types, data_getvalue, data_consts, models_record_types,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types,
   udm_main, udm_grid,
   uDarkStyleParams;
 
@@ -398,25 +398,27 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'full_name', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'acronym', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSamplingPlots, 'locality_id', Msgs);
-
-  // Duplicated record
-  RecordDuplicated(tbSamplingPlots, COL_SAMPLING_PLOT_ID, COL_ABBREVIATION,
-    eAbbreviation.Text, FSamplingPlot.Id, Msgs);
-
-  // Foreign keys
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
-  //  rsCaptionLocality, Msgs);
+  if (eName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (eAbbreviation.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscAbbreviation]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
 
   // Geographical coordinates
-  if eLongitude.Text <> EmptyStr then
+  if (eLongitude.Text <> EmptyStr) then
     ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
-  if eLatitude.Text <> EmptyStr then
+  if (eLatitude.Text <> EmptyStr) then
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
-  //CoordenadaIsOk(cdsConsulta, 'longitude', maLongitude, Msgs);
-  //CoordenadaIsOk(cdsConsulta, 'latitude', maLatitude, Msgs);
+
+  // Unique fields
+  if (eAbbreviation.Text <> EmptyStr) then
+    RecordDuplicated(tbSamplingPlots, COL_SAMPLING_PLOT_ID, COL_ABBREVIATION, eAbbreviation.Text, FSamplingPlot.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

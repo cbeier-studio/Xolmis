@@ -21,7 +21,7 @@ unit uedt_survey;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, Character, DB, SQLDB, Forms, Controls, Graphics,
+  Classes, EditBtn, Spin, SysUtils, Character, DB, SQLDB, Forms, Controls, Graphics, DateUtils,
   Dialogs, ExtCtrls, StdCtrls, Buttons, Menus, atshapelinebgra, BCPanel, models_sampling;
 
 type
@@ -122,6 +122,7 @@ type
     procedure eNetStationKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
     procedure eProjectKeyPress(Sender: TObject; var Key: char);
+    procedure eStartTimeEditingDone(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -157,7 +158,8 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, utils_themes,
-  utils_fullnames, utils_editdialogs, data_types, data_getvalue, data_consts, models_record_types,
+  utils_fullnames, utils_editdialogs, data_types, data_getvalue, data_consts, data_columns,
+  models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -523,6 +525,26 @@ begin
   end;
 end;
 
+procedure TedtSurvey.eStartTimeEditingDone(Sender: TObject);
+var
+  st1, et1: TDateTime;
+begin
+  // Recalculate duration
+  if (eStartTime.Text <> EmptyStr) and (eEndTime.Text <> EmptyStr) and (Sender <> eDuration) then
+    if (TryStrToTime(eStartTime.Text, st1)) and (TryStrToTime(eEndTime.Text, et1)) then
+      eDuration.Value := MinutesBetween(st1, et1);
+
+  // Recalculate end time
+  if (eDuration.Value > 0) and (eStartTime.Text <> EmptyStr) and (Sender <> eEndTime) then
+    if (TryStrToTime(eStartTime.Text, st1)) then
+      eEndTime.Text := FormatDateTime('hh:nn', IncMinute(st1, eDuration.Value));
+
+  // Recalculate start time
+  if (eDuration.Value > 0) and (eEndTime.Text <> EmptyStr) and (Sender <> eStartTime) then
+    if (TryStrToTime(eEndTime.Text, et1)) then
+      eStartTime.Text := FormatDateTime('hh:nn', IncMinute(et1, (eDuration.Value * -1)));
+end;
+
 procedure TedtSurvey.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   { SAVE = Ctrl + S }
@@ -559,6 +581,7 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
+    eDate.Text := DateToStr(Today);
     AutoCalcFields;
   end
   else
@@ -709,38 +732,42 @@ function TedtSurvey.ValidateFields: Boolean;
 var
   Msgs: TStrings;
   Msg: String;
+  st1, et1: Boolean;
 begin
   Result := True;
   Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'survey_date', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'locality_id', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'method_id', Msgs);
-
-  // Duplicated record
-  // RegistroDuplicado(WorkingTable.TableName,'PES_NOME',cdsConsultaPES_NOME.AsWideString,cdsConsultaPES_CODIGO.AsInteger);
-
-  // Foreign keys
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('locality_id').AsInteger,
-  //  rsCaptionLocality, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('municipality_id').AsInteger,
-  //  rsCaptionMunicipality, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('state_id').AsInteger,
-  //  rsCaptionState, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', dsLink.DataSet.FieldByName('country_id').AsInteger,
-  //  rsCaptionCountry, Msgs);
-  //ForeignValueExists(tbMethods, 'method_id', dsLink.DataSet.FieldByName('method_id').AsInteger,
-  //  rsCaptionMethod, Msgs);
-  //ForeignValueExists(tbSamplingPlots, 'net_station_id', dsLink.DataSet.FieldByName('net_station_id').AsInteger,
-  //  rsCaptionSamplingPlot, Msgs);
-  //ForeignValueExists(tbProjects, 'project_id', dsLink.DataSet.FieldByName('project_id').AsInteger,
-  //  rsCaptionProject, Msgs);
+  if (eDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rsDateSurvey]));
+  if (FMethodId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscMethod]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+  if (eEndLongitude.Text <> EmptyStr) and (eEndLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscEndLatitude]));
+  if (eEndLatitude.Text <> EmptyStr) and (eEndLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscEndLongitude]));
+  { #todo : Required Number of mistnets if the Method is Banding }
 
   // Dates
   if eDate.Text <> EmptyStr then
-    ValidDate(eDate.Text, rsCaptionDate, Msgs);
+    ValidDate(eDate.Text, rsDateSurvey, Msgs);
+
+  // Time
+  if eStartTime.Text <> EmptyStr then
+    st1 := ValidTime(eStartTime.Text, rscStartTime, Msgs);
+  if eEndTime.Text <> EmptyStr then
+    et1 := ValidTime(eEndTime.Text, rscEndTime, Msgs);
+  if (st1) and (et1) then
+    if (StrToTime(eStartTime.Text) < StrToTime(eEndTime.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscStartTime, rscEndTime]));
 
   // Geographical coordinates
   if eLongitude.Text <> EmptyStr then

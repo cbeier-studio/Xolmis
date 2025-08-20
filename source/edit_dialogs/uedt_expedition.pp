@@ -90,8 +90,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, data_getvalue,
-  data_consts, utils_editdialogs, udm_main, udm_grid,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns,
+  udm_main, udm_grid,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -294,29 +295,31 @@ end;
 function TedtExpedition.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
+  vsd1, ved1: Boolean;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbExpeditions, 'expedition_name', Msgs);
-  //RequiredIsEmpty(D, tbExpeditions, 'start_date', Msgs);
-  //RequiredIsEmpty(D, tbExpeditions, 'end_date', Msgs);
-
-  // Duplicated record
-  RecordDuplicated(tbExpeditions, COL_EXPEDITION_ID, COL_EXPEDITION_NAME, eName.Text, FExpedition.Id);
+  if (eName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (eStartDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscStartDate]));
+  if (eEndDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscEndDate]));
 
   // Dates
-  if eStartDate.Text <> EmptyStr then
-  begin
-    if ValidDate(eStartDate.Text, rsDateStart, Msgs) then
-      IsFutureDate(StrToDate(eStartDate.Text), Today, AnsiLowerCase(rsDateStart), AnsiLowerCase(rsDateToday), Msgs);
-  end;
-  if eEndDate.Text <> EmptyStr then
-    if ValidDate(eEndDate.Text, rsDateEnd, Msgs) then
-      IsFutureDate(StrToDate(eEndDate.Text), Today, AnsiLowerCase(rsDateEnd), AnsiLowerCase(rsDateToday), Msgs);
+  if (eStartDate.Text <> EmptyStr) then
+    vsd1 := ValidDate(eStartDate.Text, rsDateStart, Msgs);
+  if (eEndDate.Text <> EmptyStr) then
+    ved1 := ValidDate(eEndDate.Text, rsDateEnd, Msgs);
+  if (vsd1) and (ved1) then
+    if (StrToDate(eEndDate.Text) < StrToDate(eStartDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscEndDate, rscStartDate]));
+
+  // Unique fields
+  if (eName.Text <> EmptyStr) then
+    RecordDuplicated(tbExpeditions, COL_EXPEDITION_ID, COL_EXPEDITION_NAME, eName.Text, FExpedition.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

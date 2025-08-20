@@ -153,8 +153,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_system, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, data_getvalue,
-  data_consts, utils_validations, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_system, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns, models_taxonomy, models_record_types,
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -708,37 +709,15 @@ function TedtIndividual.ValidateFields: Boolean;
 var
   Msgs: TStrings;
   DataNasc, DataOb, Hoje: TPartialDate;
-  //D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  //D := dsLink.DataSet;
 
-  { Required fields }
-  //RequiredIsEmpty(D, tbIndividuals, 'taxon_id', Msgs);
-  // RequiredIsEmpty(D, tbIndividuals, 'band_id', Msgs);
+  // Required fields
+  if (FTaxonId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxon]));
 
-  { Duplicated record }
-  //if (FBandId > 0) then
-  //  RecordDuplicated(tbIndividuals, 'individual_id', 'band_id', FBandId, FIndividual.Id, Msgs);
-
-  { Foreign keys }
-  //ForeignValueExists(tbZooTaxa, 'taxon_id', D.FieldByName('taxon_id').AsInteger,
-  //  rsCaptionTaxon, Msgs);
-  //ForeignValueExists(tbBands, 'band_id', D.FieldByName('band_id').AsInteger,
-  //  rsCaptionBand, Msgs);
-  //ForeignValueExists(tbBands, 'band_id', D.FieldByName('double_band_id').AsInteger,
-  //  rsCaptionDoubleBand, Msgs);
-  //ForeignValueExists(tbBands, 'band_id', D.FieldByName('removed_band_id').AsInteger,
-  //  rsCaptionRemovedBand, Msgs);
-  //ForeignValueExists(tbNests, 'nest_id', D.FieldByName('nest_id').AsInteger,
-  //  rsCaptionNest, Msgs);
-  //ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('father_id').AsInteger,
-  //  rsCaptionFather, Msgs);
-  //ForeignValueExists(tbIndividuals, 'individual_id', D.FieldByName('mother_id').AsInteger,
-  //  rsCaptionMother, Msgs);
-
-  { Dates }
+  // Dates
   Hoje.Today;
 
   if eBirthYear.Text <> EmptyStr then
@@ -781,11 +760,14 @@ begin
       IsFuturePartialDate(DataOb, Hoje, rsDateDeath, LowerCase(rsDateToday), Msgs);
   end;
 
-  // Check if banding and band change dates are valid
   if eBandingDate.Text <> EmptyStr then
     ValidDate(eBandingDate.Text, rsDateBanding, Msgs);
   if eBandChangeDate.Text <> EmptyStr then
     ValidDate(eBandChangeDate.Text, rsDateBandChange, Msgs);
+
+  // Unique fields
+  if (FBandId > 0) then
+    RecordDuplicated(tbIndividuals, [COL_BAND_ID], [FBandId], COL_INDIVIDUAL_ID, FIndividual.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

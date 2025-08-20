@@ -138,8 +138,10 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, utils_validations, data_getvalue,
-  data_consts, utils_themes, utils_editdialogs, udm_main, udm_grid, udm_breeding, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns,
+  models_taxonomy, models_record_types,
+  udm_main, udm_grid, udm_breeding, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -418,11 +420,14 @@ begin
       FTaxonId := FEgg.TaxonId;
       eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     end;
+    eMeasureDate.Text := DateToStr(Today);
+    GetVolume;
   end
   else
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionEgg)]);
     GetRecord;
+    GetVolume;
     sbSave.Enabled := IsRequiredFilled;
   end;
 end;
@@ -496,9 +501,6 @@ function TedtEgg.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  //if (dsLink.DataSet.FieldByName('egg_seq').AsInteger <> 0) and
-  //  (dsLink.DataSet.FieldByName('taxon_id').AsInteger <> 0) and
-  //  (dsLink.DataSet.FieldByName('researcher_id').AsInteger <> 0) then
   if (eEggSeq.Value > 0) and
     (FTaxonId > 0) and
     (FObserverId > 0) then
@@ -592,19 +594,25 @@ begin
   D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbEggs, 'egg_seq', Msgs);
-  //RequiredIsEmpty(D, tbEggs, 'taxon_id', Msgs);
-  //RequiredIsEmpty(D, tbEggs, 'researcher_id', Msgs);
-
-  // Duplicated record
-  //RecordDuplicated(tbEggs, 'egg_id', 'full_name', FEgg.FullName, FEgg.Id);
+  if (eEggSeq.Value = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscEggNumber]));
+  if (FTaxonId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxon]));
+  if (FObserverId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscObserver]));
+  // Conditional required fields
+  if (eWidth.Value > 0) and (eLength.Value = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLength]));
+  if (eLength.Value > 0) and (eWidth.Value = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscWidth]));
 
   // Dates
   if (eMeasureDate.Text <> EmptyStr) then
-  begin
-    ValidDate(eMeasureDate.Text, rsDateMeasured, Msgs);
-    IsFutureDate(StrToDate(eMeasureDate.Text), Today, AnsiLowerCase(rsDateMeasured), AnsiLowerCase(rsDateToday), Msgs);
-  end;
+    if ValidDate(eMeasureDate.Text, rsDateMeasured, Msgs) then
+      IsFutureDate(StrToDate(eMeasureDate.Text), Today, rsDateMeasured, rsDateToday, Msgs);
+
+  // Unique fields
+  //RecordDuplicated(tbEggs, 'egg_id', 'full_name', FEgg.FullName, FEgg.Id);
 
   if Msgs.Count > 0 then
   begin

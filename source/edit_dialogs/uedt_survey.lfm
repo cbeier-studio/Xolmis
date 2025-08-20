@@ -231,6 +231,7 @@ object edtSurvey: TedtSurvey
           Width = 176
           TabOrder = 0
           TextHint = 'HH:MM'
+          OnEditingDone = eStartTimeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end
@@ -241,6 +242,7 @@ object edtSurvey: TedtSurvey
           Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
+          OnEditingDone = eStartTimeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end
@@ -506,6 +508,7 @@ object edtSurvey: TedtSurvey
           Width = 175
           MaxValue = 999999999
           TabOrder = 1
+          OnEditingDone = eStartTimeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end

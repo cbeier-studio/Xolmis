@@ -99,7 +99,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_gis,
-  data_types, data_getvalue, data_consts, models_record_types,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -444,23 +444,28 @@ begin
   Msg := EmptyStr;
   Msgs := TStringList.Create;
 
-  // Unique values
-
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_name', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_rank', Msgs);
-
-  // Foreign keys
-  //ForeignValueExists(tbGazetteer, 'parent_site_id',
-  //  dsLink.DataSet.FieldByName('parent_site_id').AsInteger, rsCaptionParentSite, Msgs);
+  if (eName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (cbRank.ItemIndex >= 0) then
+    Msgs.Add(Format(rsRequiredField, [rscType]));
+  if (eFullname.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscFullName]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
 
   // Geographical coordinates
   if eLongitude.Text <> EmptyStr then
-    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rscLongitude, Msgs, Msg);
   if eLatitude.Text <> EmptyStr then
-    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
-  //CoordenadaIsOk(dsLink.DataSet, 'longitude', maLongitude, Msgs);
-  //CoordenadaIsOk(dsLink.DataSet, 'latitude', maLatitude, Msgs);
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rscLatitude, Msgs, Msg);
+
+  // Unique fields
+  if (eAbbreviation.Text <> EmptyStr) then
+    RecordDuplicated(tbGazetteer, COL_SITE_ID, COL_SITE_ABBREVIATION, eAbbreviation.Text, FSite.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

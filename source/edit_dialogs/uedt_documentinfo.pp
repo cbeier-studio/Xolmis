@@ -5,7 +5,7 @@ unit uedt_documentinfo;
 interface
 
 uses
-  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils,
   ExtCtrls, Buttons, Character, atshapelinebgra, models_media;
 
 type
@@ -94,8 +94,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, models_geo, data_consts,
-  data_getvalue, utils_conversions, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_conversions, utils_validations,
+  data_types, data_consts, data_getvalue, data_columns, models_taxonomy, models_geo,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -263,8 +264,22 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbDocuments, 'document_date', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbDocuments, 'document_path', Msgs);
+  if (eDocumentDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  if (eDocumentPath.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscFileName]));
+
+  // Dates
+  if (eDocumentDate.Text <> EmptyStr) then
+    if ValidDate(eDocumentDate.Text, rscDate, Msgs) then
+      IsFutureDate(StrToDate(eDocumentDate.Text), Today, rscDate, rsDateToday, Msgs);
+
+  // Time
+  if eDocumentTime.Text <> EmptyStr then
+    ValidTime(eDocumentTime.Text, rscTime, Msgs);
+
+  // Files
+  { #todo : Check the Document file path or URL }
 
   if Msgs.Count > 0 then
   begin

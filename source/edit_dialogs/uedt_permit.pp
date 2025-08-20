@@ -100,8 +100,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_validations, data_getvalue, utils_themes,
-  data_consts, utils_editdialogs, udm_main, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns,
+  udm_main, udm_grid, uDarkStyleParams;
 
 { TedtPermit }
 
@@ -337,30 +338,35 @@ end;
 function TedtPermit.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
+  vdd1, ved1: Boolean;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbPermits, 'permit_name', Msgs);
-  //RequiredIsEmpty(D, tbPermits, 'permit_type', Msgs);
-  //RequiredIsEmpty(D, tbPermits, 'dispatcher_name', Msgs);
-  //RequiredIsEmpty(D, tbPermits, 'dispatch_date', Msgs);
-
-  // Duplicated record
-  RecordDuplicated(tbPermits, COL_PERMIT_ID, COL_PERMIT_NAME, eName.Text, FPermit.Id);
+  if (eName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (cbPermitType.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscType]));
+  if (eDispatcher.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDispatcher]));
+  if (eDispatchDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDispatchDate]));
 
   // Dates
-  if eDispatchDate.Text <> EmptyStr then
-    if ValidDate(eDispatchDate.Text, rsDateDispatch, Msgs) then
-      IsFutureDate(StrToDate(eDispatchDate.Text), Today,
-        AnsiLowerCase(rsDateDispatch), AnsiLowerCase(rsDateToday), Msgs);
-  if eExpireDate.Text <> EmptyStr then
-    if ValidDate(eExpireDate.Text, rsDateExpire, Msgs) then
-      IsFutureDate(StrToDate(eExpireDate.Text), Today,
-        AnsiLowerCase(rsDateExpire), AnsiLowerCase(rsDateToday), Msgs);
+  if (eDispatchDate.Text <> EmptyStr) then
+    vdd1 := ValidDate(eDispatchDate.Text, rsDateDispatch, Msgs);
+  if (vdd1) then
+    IsFutureDate(StrToDate(eDispatchDate.Text), Today, rsDateDispatch, rsDateToday, Msgs);
+  if (eExpireDate.Text <> EmptyStr) then
+    ved1 := ValidDate(eExpireDate.Text, rsDateExpire, Msgs);
+  if (vdd1) and (ved1) then
+    if (StrToDate(eExpireDate.Text) < StrToDate(eDispatchDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscExpireDate, rscDispatchDate]));
+
+  // Unique fields
+  if (eName.Text <> EmptyStr) then
+    RecordDuplicated(tbPermits, COL_PERMIT_ID, COL_PERMIT_NAME, eName.Text, FPermit.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

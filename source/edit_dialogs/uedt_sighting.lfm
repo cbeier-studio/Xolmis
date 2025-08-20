@@ -12,6 +12,7 @@ object edtSighting: TedtSighting
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -577,6 +578,7 @@ object edtSighting: TedtSighting
           Width = 124
           MaxValue = 999999999
           TabOrder = 0
+          OnEditingDone = eNewCapturesTallyEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -587,6 +589,7 @@ object edtSighting: TedtSighting
           Width = 124
           MaxValue = 999999999
           TabOrder = 1
+          OnEditingDone = eNewCapturesTallyEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -597,6 +600,7 @@ object edtSighting: TedtSighting
           Width = 124
           MaxValue = 999999999
           TabOrder = 2
+          OnEditingDone = eNewCapturesTallyEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -848,6 +852,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eIndividualButtonClick
+          OnEditingDone = eIndividualEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eIndividualKeyPress
         end

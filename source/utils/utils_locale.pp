@@ -382,6 +382,7 @@ uses
     rsMinPasswordLength = 'The password must have 8 characters or more.';
     rsConfirmPasswordError = 'Incorrect password confirmation. Try to retype it.';
     rsForeignNotExist = 'Selected %s does not exist. Select a valid record.';
+    rsRecordDuplicated = 'A record with the same values already exists.';
     rsActiveRecordDuplicated = 'A record with the same %s value already exists (%s).';
     rsInactiveRecordDuplicated = 'An inactive record with the same %s value already exists (%s).';
     rsQualifierOnlyInGenus = 'The sp. qualifier can only be used with genera rank.';
@@ -609,7 +610,7 @@ uses
 
     { Dates }
     rsDateToday = 'today';
-    rsDateCapture = 'capture date';
+    rsDateCapture = 'Capture date';
     rsDateIssue = 'Issue date';
     rsDateDispatch = 'Dispatch date';
     rsDateExpiration = 'Expiration date';
@@ -632,6 +633,9 @@ uses
     rsDateFound = 'Date found';
     rsDateLast = 'Last date active';
     rsDateImage = 'Image date';
+
+    { Times }
+    rsTimeCapture = 'Capture time';
 
     { Plantminer }
     rsInfraRank = 'Infraspecific rank';

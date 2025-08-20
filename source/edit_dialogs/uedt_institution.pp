@@ -38,15 +38,15 @@ type
     eManagerName: TEdit;
     ePhone: TEdit;
     eFullname: TEdit;
-    eAcronym: TEdit;
+    eAbbreviation: TEdit;
     ePostalCode: TEdit;
     eAddress: TEdit;
     eComplement: TEdit;
     eNeighborhood: TEdit;
     dsLink: TDataSource;
-    lblAcronym1: TLabel;
+    lblAbbreviation1: TLabel;
     lblPhone: TLabel;
-    lblAcronym: TLabel;
+    lblAbbreviation: TLabel;
     lblPhone1: TLabel;
     lblPostalCode: TLabel;
     lblNotes: TLabel;
@@ -74,7 +74,7 @@ type
     pFullname: TPanel;
     pmNew: TPopupMenu;
     pPhone: TPanel;
-    pAcronym: TPanel;
+    pAbbreviation: TPanel;
     pPostalCode: TPanel;
     pMunicipality: TPanel;
     pState: TPanel;
@@ -119,8 +119,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_geo, utils_validations, data_getvalue,
-  data_consts, utils_editdialogs, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -317,7 +317,7 @@ end;
 procedure TedtInstitution.GetRecord;
 begin
   eFullname.Text := FInstitution.FullName;
-  eAcronym.Text := FInstitution.Abbreviation;
+  eAbbreviation.Text := FInstitution.Abbreviation;
   ePostalCode.Text := FInstitution.PostalCode;
   eAddress.Text := FInstitution.Address1;
   eComplement.Text := FInstitution.Address2;
@@ -339,7 +339,7 @@ begin
   Result := False;
 
   if (eFullname.Text <> EmptyStr) and
-    (eAcronym.Text <> EmptyStr) then
+    (eAbbreviation.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -368,7 +368,7 @@ end;
 procedure TedtInstitution.SetRecord;
 begin
   FInstitution.FullName       := eFullname.Text;
-  FInstitution.Abbreviation        := eAcronym.Text;
+  FInstitution.Abbreviation        := eAbbreviation.Text;
   FInstitution.PostalCode        := ePostalCode.Text;
   FInstitution.Address1       := eAddress.Text;
   FInstitution.Address2       := eComplement.Text;
@@ -385,28 +385,23 @@ end;
 function TedtInstitution.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
-  // Campos obrigatórios
-  //RequiredIsEmpty(D, tbInstitutions, 'full_name', Msgs);
-  //RequiredIsEmpty(D, tbInstitutions, 'acronym', Msgs);
+  // Required fields
+  if (eFullName.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscName]));
+  if (eAbbreviation.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscAbbreviation]));
 
-  // Registro duplicado
-  RecordDuplicated(tbInstitutions, COL_INSTITUTION_ID, COL_FULL_NAME, eFullname.Text, FInstitution.Id, Msgs);
-
-  // Chaves estrangeiras
-  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('municipality_id').AsInteger,
-  //  rsCaptionMunicipality, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('state_id').AsInteger, rsCaptionState, Msgs);
-  //ForeignValueExists(tbGazetteer, 'site_id', D.FieldByName('country_id').AsInteger, rsCaptionCountry, Msgs);
-
-  // Email
+  // E-mail
   if (eEmail.Text <> EmptyStr) then
     CheckEmail(eEmail.Text, Msgs);
+
+  // Unique fields
+  if (eFullname.Text <> EmptyStr) then
+    RecordDuplicated(tbInstitutions, COL_INSTITUTION_ID, COL_FULL_NAME, eFullname.Text, FInstitution.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

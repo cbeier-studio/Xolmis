@@ -63,7 +63,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, data_consts, data_getvalue, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs,
+  data_types, data_consts, data_getvalue, data_columns,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -196,15 +198,17 @@ end;
 function TedtProjectRubric.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbProjects, 'project_title', Msgs);
-  //RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
+  if (eFundingSource.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscFundingSource]));
+  if (eRubric.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscRubric]));
+  if (eAmount.Value = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscAmount]));
 
   if Msgs.Count > 0 then
   begin

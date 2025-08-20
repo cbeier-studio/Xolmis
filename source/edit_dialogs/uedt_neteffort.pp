@@ -439,7 +439,9 @@ begin
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionMistnet)]);
     if not DateIsNull(FNetEffort.SampleDate) then
-      eDate.Text := DateToStr(FNetEffort.SampleDate);
+      eDate.Text := DateToStr(FNetEffort.SampleDate)
+    else
+      eDate.Text := DateToStr(Today);
     AutoCalcFields;
   end
   else
@@ -586,41 +588,81 @@ function TedtNetEffort.ValidateFields: Boolean;
 var
   Msgs: TStrings;
   Msg: String;
+  vot1, vct1, vot2, vct2, vot3, vct3, vot4, vct4: Boolean;
 begin
   Result := True;
   Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.Dataset, tbPermanentNets, 'revision_date', Msgs);
-  //RequiredIsEmpty(dsLink.Dataset, tbPermanentNets, 'net_number', Msgs);
-  //RequiredIsEmpty(dsLink.Dataset, tbPermanentNets, 'net_open_1', Msgs);
-  //RequiredIsEmpty(dsLink.Dataset, tbPermanentNets, 'net_close_1', Msgs);
+  if (eDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rsDateSurvey]));
+  if (eNetNumber.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscMistnetNr]));
+  if (eNetOpen1.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscOpenTime1]));
+  if (eNetClose1.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCloseTime1]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rsLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rsLongitude]));
+  if (eNetOpen2.Text <> EmptyStr) and (eNetClose2.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCloseTime2]));
+  if (eNetClose2.Text <> EmptyStr) and (eNetOpen2.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscOpenTime2]));
+  if (eNetOpen3.Text <> EmptyStr) and (eNetClose3.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCloseTime3]));
+  if (eNetClose3.Text <> EmptyStr) and (eNetOpen3.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscOpenTime3]));
+  if (eNetOpen4.Text <> EmptyStr) and (eNetClose4.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCloseTime4]));
+  if (eNetClose4.Text <> EmptyStr) and (eNetOpen4.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscOpenTime4]));
 
   // Geographical coordinates
   if eLongitude.Text <> EmptyStr then
     ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
   if eLatitude.Text <> EmptyStr then
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
-  //CoordenadaIsOk(DSIO.Dataset, 'longitude', maLongitude, Msgs);
-  //CoordenadaIsOk(DSIO.Dataset, 'latitude', maLatitude, Msgs);
 
-  // Date and time
-  ValidDate(eDate.Text, rscDate, Msgs);
-  ValidTime(eNetOpen1.Text, rscOpenTime1, Msgs);
-  ValidTime(eNetClose1.Text, rscCloseTime1, Msgs);
+  // Date
+  if ValidDate(eDate.Text, rscDate, Msgs) then
+    IsFutureDate(StrToDate(eDate.Text), Today, rsCaptionDate, rsDateToday, Msgs);
+
+  // Time
+  if eNetOpen1.Text <> EmptyStr then
+    vot1 := ValidTime(eNetOpen1.Text, rscOpenTime1, Msgs);
+  if eNetClose1.Text <> EmptyStr then
+    vct1 := ValidTime(eNetClose1.Text, rscCloseTime1, Msgs);
+  if (vot1) and (vct1) then
+    if (StrToTime(eNetClose1.Text) < StrToTime(eNetOpen1.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime1, rscOpenTime1]));
+
   if eNetOpen2.Text <> EmptyStr then
-    ValidTime(eNetOpen2.Text, rscOpenTime2, Msgs);
+    vot2 := ValidTime(eNetOpen2.Text, rscOpenTime2, Msgs);
   if eNetClose2.Text <> EmptyStr then
-    ValidTime(eNetClose2.Text, rscCloseTime2, Msgs);
+    vct2 := ValidTime(eNetClose2.Text, rscCloseTime2, Msgs);
+  if (vot2) and (vct2) then
+    if (StrToTime(eNetClose2.Text) < StrToTime(eNetOpen2.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime2, rscOpenTime2]));
+
   if eNetOpen3.Text <> EmptyStr then
-    ValidTime(eNetOpen3.Text, rscOpenTime3, Msgs);
+    vot3 := ValidTime(eNetOpen3.Text, rscOpenTime3, Msgs);
   if eNetClose3.Text <> EmptyStr then
-    ValidTime(eNetClose3.Text, rscCloseTime3, Msgs);
+    vct3 := ValidTime(eNetClose3.Text, rscCloseTime3, Msgs);
+  if (vot3) and (vct3) then
+    if (StrToTime(eNetClose3.Text) < StrToTime(eNetOpen3.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime3, rscOpenTime3]));
+
   if eNetOpen4.Text <> EmptyStr then
-    ValidTime(eNetOpen4.Text, rscOpenTime4, Msgs);
+    vot4 := ValidTime(eNetOpen4.Text, rscOpenTime4, Msgs);
   if eNetClose4.Text <> EmptyStr then
-    ValidTime(eNetClose4.Text, rscCloseTime4, Msgs);
+    vct4 := ValidTime(eNetClose4.Text, rscCloseTime4, Msgs);
+  if (vot4) and (vct4) then
+    if (StrToTime(eNetClose4.Text) < StrToTime(eNetOpen4.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime4, rscOpenTime4]));
 
   if Msgs.Count > 0 then
   begin

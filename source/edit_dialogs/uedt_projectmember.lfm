@@ -12,7 +12,6 @@ object edtProjectMember: TedtProjectMember
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow

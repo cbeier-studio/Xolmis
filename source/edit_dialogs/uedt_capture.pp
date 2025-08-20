@@ -213,6 +213,7 @@ type
     procedure btnNewClick(Sender: TObject);
     procedure cbAgeKeyPress(Sender: TObject; var Key: char);
     procedure cbCaptureTypeKeyPress(Sender: TObject; var Key: char);
+    procedure cbCaptureTypeSelect(Sender: TObject);
     procedure cbSexKeyPress(Sender: TObject; var Key: char);
     procedure cbStatusKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -241,13 +242,16 @@ type
     procedure eNetExit(Sender: TObject);
     procedure eNetKeyPress(Sender: TObject; var Key: char);
     procedure ePhotographer1ButtonClick(Sender: TObject);
+    procedure ePhotographer1EditingDone(Sender: TObject);
     procedure ePhotographer1KeyPress(Sender: TObject; var Key: char);
     procedure ePhotographer2ButtonClick(Sender: TObject);
     procedure ePhotographer2KeyPress(Sender: TObject; var Key: char);
     procedure eRemovedBandButtonClick(Sender: TObject);
+    procedure eRemovedBandEditingDone(Sender: TObject);
     procedure eRemovedBandKeyPress(Sender: TObject; var Key: char);
     procedure eRightTarsusButtonClick(Sender: TObject);
     procedure eRightTarsusExit(Sender: TObject);
+    procedure eRightWingChordEditingDone(Sender: TObject);
     procedure eSurveyButtonClick(Sender: TObject);
     procedure eSurveyExit(Sender: TObject);
     procedure eSurveyKeyPress(Sender: TObject; var Key: char);
@@ -292,7 +296,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations,
-  utils_editdialogs, data_types, data_consts, data_getvalue, models_taxonomy,
+  utils_editdialogs, data_types, data_consts, data_getvalue, data_columns, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -370,6 +374,19 @@ begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
+end;
+
+procedure TedtCapture.cbCaptureTypeSelect(Sender: TObject);
+begin
+  if cbCaptureType.Text = rsCaptureChangeBand then
+    lblRemovedBand.Caption := rsCaptionRemovedBand + ': *'
+  else
+    lblRemovedBand.Caption := rsCaptionRemovedBand + ':';
+
+  if cbCaptureType.Text = rsCaptureUnbanded then
+    lblBand.Caption := rsCaptionBand + ':'
+  else
+    lblBand.Caption := rsCaptionBand + ': *';
 end;
 
 procedure TedtCapture.cbSexKeyPress(Sender: TObject; var Key: char);
@@ -824,6 +841,13 @@ begin
   FindDlg(tbPeople, ePhotographer1, FPhotographer1Id, '', COL_ABBREVIATION);
 end;
 
+procedure TedtCapture.ePhotographer1EditingDone(Sender: TObject);
+begin
+  if (FPhotographer1Id > 0) or (FPhotographer2Id > 0) or (cbCamera.Text <> EmptyStr) or
+    (eStartPhoto.Text <> EmptyStr) or (eEndPhoto.Text <> EmptyStr) then
+    ckPhotos.Checked := True;
+end;
+
 procedure TedtCapture.ePhotographer1KeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -890,6 +914,12 @@ begin
   FindDlg(tbBands, eRemovedBand, FRemovedBandId);
 end;
 
+procedure TedtCapture.eRemovedBandEditingDone(Sender: TObject);
+begin
+  if (FRemovedBandId > 0) then
+    cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureChangeBand);
+end;
+
 procedure TedtCapture.eRemovedBandKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -933,6 +963,12 @@ begin
   else
   if Sender = eLeftTarsus then
     PaintColorBands(bpLeftTarsus);
+end;
+
+procedure TedtCapture.eRightWingChordEditingDone(Sender: TObject);
+begin
+  if (eRightWingChord.Value > 0) and (eFirstSecondaryChord.Value > 0) then
+    eKippsIndex.Value := eRightWingChord.Value - eFirstSecondaryChord.Value;
 end;
 
 procedure TedtCapture.eSurveyButtonClick(Sender: TObject);
@@ -1074,7 +1110,10 @@ begin
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionCapture)]);
     if not DateIsNull(FCapture.CaptureDate) then
-      eCaptureDate.Text := DateToStr(FCapture.CaptureDate);
+      eCaptureDate.Text := DateToStr(FCapture.CaptureDate)
+    else
+      eCaptureDate.Text := DateToStr(Today);
+    cbCaptureType.ItemIndex := 0;
     if FCapture.LocalityId > 0 then
     begin
       FLocalityId := FCapture.LocalityId;
@@ -1125,8 +1164,9 @@ begin
     Clear;
     Add('SELECT camera_name');
     Add('FROM captures');
-    Add('WHERE (active_status = 1)');
+    Add('WHERE (active_status = 1) AND (camera_name NOT NULL) AND (camera_name <> '''')');
     Add('GROUP BY camera_name');
+    Add('ORDER BY camera_name ASC');
     //GravaLogSQL(SQL);
     Open;
     First;
@@ -1613,29 +1653,53 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
-  //D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbCaptures, 'locality_id', Msgs);
-  //RequiredIsEmpty(D, tbCaptures, 'capture_date', Msgs);
-  //RequiredIsEmpty(D, tbCaptures, 'bander_id', Msgs);
-  //RequiredIsEmpty(D, tbCaptures, 'annotator_id', Msgs);
-  //RequiredIsEmpty(D, tbCaptures, 'capture_type', Msgs);
-  //if (D.FieldByName('capture_type').AsString <> 'U') then
-  //  RequiredIsEmpty(D, tbCaptures, 'band_id', Msgs);
+  if (FIndividualId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscIndividual]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  if (eCaptureDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rsDateCapture]));
+  if (FBanderId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscBander]));
+  if (FAnnotatorId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscAnnotator]));
+  if (cbCaptureType.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscType]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+  if (cbCaptureType.Caption <> rsCaptureUnbanded) and (FBandId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscBand]));
+  if (cbCaptureType.Caption = rsCaptureChangeBand) and (FRemovedBandId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscRemovedBand]));
+  if (cbAge.ItemIndex >= 0) and (eHowAged.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscHowWasAged]));
+  if (cbSex.ItemIndex >= 0) and (eHowSexed.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscHowWasSexed]));
 
   // Dates
-  ValidDate(eCaptureDate.Text, rsDateCapture, Msgs);
-  IsFutureDate(StrToDate(eCaptureDate.Text), Today, rsDateCapture, rsDateToday);
+  if ValidDate(eCaptureDate.Text, rsDateCapture, Msgs) then
+    IsFutureDate(StrToDate(eCaptureDate.Text), Today, rsDateCapture, rsDateToday);
+
+  // Time
+  if (eCaptureTime.Text <> EmptyStr) then
+    ValidTime(eCaptureTime.Text, rsTimeCapture, Msgs);
 
   // Set of values
-  ValueInSet(cbCloacalProtuberance.Text, rsCloacalProtuberance, CLOACAL_PROTUBERANCE_VALUES, Msgs);
-  ValueInSet(cbBroodPatch.Text, rsBroodPatch, BROOD_PATCH_VALUES, Msgs);
+  ValueInSet(cbCloacalProtuberance.Text, rscCloacalProtuberance, CLOACAL_PROTUBERANCE_VALUES, Msgs);
+  ValueInSet(cbBroodPatch.Text, rscBroodPatch, BROOD_PATCH_VALUES, Msgs);
   ValueInSet(cbFat.Text, rsSubcutaneousFat, FAT_VALUES, Msgs);
-  ValueInSet(cbBodyMolt.Text, rsBodyMolt, BODY_MOLT_VALUES, Msgs);
+  ValueInSet(cbBodyMolt.Text, rscBodyMolt, BODY_MOLT_VALUES, Msgs);
   ValueInSet(cbFlightFeatherMolt.Text, rsFlightMolt, FLIGHT_MOLT_VALUES, Msgs);
   ValueInSet(cbFlightFeatherWear.Text, rsFlightWear, FEATHER_WEAR_VALUES, Msgs);
-  ValueInSet(cbSkullOssification.Text, rsSkullOssification, SKULL_OSSIFICATION_VALUES, Msgs);
+  ValueInSet(cbSkullOssification.Text, rscSkullOssification, SKULL_OSSIFICATION_VALUES, Msgs);
+
+  // Outliers
+  { #todo : Validate capture measurements for outliers }
 
   if Msgs.Count > 0 then
   begin

@@ -125,7 +125,7 @@ object edtProjectExpense: TedtProjectExpense
         Top = 3
         Width = 184
         BorderSpacing.Top = 3
-        Caption = 'Amount:'
+        Caption = 'Amount: *'
         ParentColor = False
         ParentFont = False
       end

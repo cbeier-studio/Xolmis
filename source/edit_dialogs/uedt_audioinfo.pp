@@ -5,7 +5,7 @@ unit uedt_audioinfo;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs,
+  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
   StdCtrls, ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
 
 type
@@ -151,8 +151,10 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, models_geo, data_consts,
-  models_sampling, data_getvalue, utils_conversions, utils_editdialogs, utils_gis, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_conversions, utils_editdialogs, utils_gis,
+  utils_validations,
+  data_types, data_consts, data_getvalue, data_columns,
+  models_record_types, models_sampling, models_taxonomy, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -590,13 +592,39 @@ end;
 function TedtAudioInfo.ValidateFields: Boolean;
 var
   Msgs: TStrings;
+  Msg: String;
 begin
   Result := True;
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbAudioLibrary, 'recording_date', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbAudioLibrary, 'audio_file', Msgs);
+  if (eRecordingDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  if (eAudioFile.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscFileName]));
+  // Conditional required fields
+  if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLatitude]));
+  if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+
+  // Dates
+  if (eRecordingDate.Text <> EmptyStr) then
+    if ValidDate(eRecordingDate.Text, rscDate, Msgs) then
+      IsFutureDate(StrToDate(eRecordingDate.Text), Today, rscDate, rsDateToday, Msgs);
+
+  // Time
+  if eRecordingTime.Text <> EmptyStr then
+    ValidTime(eRecordingTime.Text, rscTime, Msgs);
+
+  // Geographical coordinates
+  if eLongitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLongitude.Text), -180.0, 180.0, rsLongitude, Msgs, Msg);
+  if eLatitude.Text <> EmptyStr then
+    ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
+
+  // Files
+  { #todo : Check the Audio file path }
 
   if Msgs.Count > 0 then
   begin

@@ -5538,8 +5538,8 @@ msgid "Find taxon"
 msgstr "Buscar táxon"
 
 #: tedtcapture.label44.caption
-msgid "Skull length:"
-msgstr "Comprimento do crânio:"
+msgid "Skull length (mm):"
+msgstr "Comprimento do crânio (mm):"
 
 #: tedtcapture.lblage.caption
 msgctxt "tedtcapture.lblage.caption"
@@ -5561,12 +5561,12 @@ msgid "Bander: *"
 msgstr "Anilhador: *"
 
 #: tedtcapture.lblbillheight.caption
-msgid "Bill height:"
-msgstr "Altura do bico:"
+msgid "Bill height (mm):"
+msgstr "Altura do bico (mm):"
 
 #: tedtcapture.lblbillwidth.caption
-msgid "Bill width:"
-msgstr "Largura do bico:"
+msgid "Bill width (mm):"
+msgstr "Largura do bico (mm):"
 
 #: tedtcapture.lblbodymolt.caption
 msgid "Body molt:"
@@ -5606,8 +5606,8 @@ msgid "Last photo number:"
 msgstr "Número da última foto:"
 
 #: tedtcapture.lblexposedculmen.caption
-msgid "Exposed culmen:"
-msgstr "Cúlmen exposto:"
+msgid "Exposed culmen (mm):"
+msgstr "Cúlmen exposto (mm):"
 
 #: tedtcapture.lblfat.caption
 msgid "Subcutaneous fat:"
@@ -5619,8 +5619,8 @@ msgid "Field number:"
 msgstr "Número de campo:"
 
 #: tedtcapture.lblfirstsecondarychord.caption
-msgid "First secondary chord:"
-msgstr "Corda da primeira secundária:"
+msgid "First secondary chord (mm):"
+msgstr "Corda da 1ª secundária (mm):"
 
 #: tedtcapture.lblflightfeathermolt.caption
 msgid "Flight feathers molt:"
@@ -5656,8 +5656,8 @@ msgid "Individual: *"
 msgstr "Indivíduo: *"
 
 #: tedtcapture.lblkippsindex.caption
-msgid "Kipp's Index:"
-msgstr "Índice de Kipp:"
+msgid "Kipp's Distance (mm):"
+msgstr "Distância de Kipp (mm):"
 
 #: tedtcapture.lbllatitude.caption
 msgctxt "tedtcapture.lbllatitude.caption"
@@ -5688,8 +5688,8 @@ msgid "Mistnet:"
 msgstr "Rede:"
 
 #: tedtcapture.lblnostrilbilltip.caption
-msgid "Nostril to bill tip:"
-msgstr "Narina-ponta do bico:"
+msgid "Nostril to bill tip (mm):"
+msgstr "Narina-ponta do bico (mm):"
 
 #: tedtcapture.lblnotes.caption
 msgctxt "tedtcapture.lblnotes.caption"
@@ -5719,8 +5719,8 @@ msgid "Right tarsus:"
 msgstr "Tarso direito:"
 
 #: tedtcapture.lblrightwingchord.caption
-msgid "Right wing chord:"
-msgstr "Corda da asa direita:"
+msgid "Right wing chord (mm):"
+msgstr "Corda da asa direita (mm):"
 
 #: tedtcapture.lblsex.caption
 msgctxt "tedtcapture.lblsex.caption"
@@ -5746,16 +5746,16 @@ msgid "Survey:"
 msgstr "Amostragem:"
 
 #: tedtcapture.lbltaillength.caption
-msgid "Tail length:"
-msgstr "Comprimento da cauda:"
+msgid "Tail length (mm):"
+msgstr "Comprimento da cauda (mm):"
 
 #: tedtcapture.lbltarsusdiameter.caption
-msgid "Tarsus diameter:"
-msgstr "Diâmetro do tarso:"
+msgid "Tarsus diameter (mm):"
+msgstr "Diâmetro do tarso (mm):"
 
 #: tedtcapture.lbltarsuslength.caption
-msgid "Tarsus length:"
-msgstr "Comprimento do tarso:"
+msgid "Tarsus length (mm):"
+msgstr "Comprimento do tarso (mm):"
 
 #: tedtcapture.lbltaxon.caption
 msgctxt "tedtcapture.lbltaxon.caption"
@@ -5775,16 +5775,16 @@ msgid "Measurements"
 msgstr "Medidas"
 
 #: tedtcapture.lbltotalculmen.caption
-msgid "Total culmen:"
-msgstr "Cúlmen total:"
+msgid "Total culmen (mm):"
+msgstr "Cúlmen total (mm):"
 
 #: tedtcapture.lbltotallength.caption
-msgid "Total length:"
-msgstr "Comprimento total:"
+msgid "Total length (mm):"
+msgstr "Comprimento total (mm):"
 
 #: tedtcapture.lblweight.caption
-msgid "Weight:"
-msgstr "Peso:"
+msgid "Weight (g):"
+msgstr "Peso (g):"
 
 #: tedtcapture.pmnnewband.caption
 msgctxt "tedtcapture.pmnnewband.caption"
@@ -6729,9 +6729,9 @@ msgctxt "tedtinstitution.estate.buttonhint"
 msgid "Find state"
 msgstr "Procurar estado"
 
-#: tedtinstitution.lblacronym.caption
-msgctxt "tedtinstitution.lblacronym.caption"
-msgid "Acronym: *"
+#: tedtinstitution.lblabbreviation.caption
+msgctxt "tedtinstitution.lblabbreviation.caption"
+msgid "Abbreviation: *"
 msgstr "Abreviatura: *"
 
 #: tedtinstitution.lbladdress.caption
@@ -7989,8 +7989,8 @@ msgstr "Buscar rubrica"
 
 #: tedtprojectexpense.lblamount.caption
 msgctxt "tedtprojectexpense.lblamount.caption"
-msgid "Amount:"
-msgstr "Montante:"
+msgid "Amount: *"
+msgstr "Montante: *"
 
 #: tedtprojectexpense.lbldate.caption
 msgctxt "tedtprojectexpense.lbldate.caption"
@@ -8092,8 +8092,8 @@ msgstr "Salvar"
 
 #: tedtprojectrubric.lblamount.caption
 msgctxt "tedtprojectrubric.lblamount.caption"
-msgid "Amount:"
-msgstr "Montante:"
+msgid "Amount: *"
+msgstr "Montante: *"
 
 #: tedtprojectrubric.lblfundingsource.caption
 msgctxt "tedtprojectrubric.lblfundingsource.caption"
@@ -13471,8 +13471,8 @@ msgstr "Data de nascimento"
 
 #: utils_locale.rsdatecapture
 msgctxt "utils_locale.rsdatecapture"
-msgid "capture date"
-msgstr "data da captura"
+msgid "Capture date"
+msgstr "Data da captura"
 
 #: utils_locale.rsdatecollection
 msgctxt "utils_locale.rsdatecollection"
@@ -15713,6 +15713,10 @@ msgctxt "utils_locale.rsrecnoempty"
 msgid "record 0 of 0"
 msgstr "registro 0 de 0"
 
+#: utils_locale.rsrecordduplicated
+msgid "A record with the same values already exists."
+msgstr "Um registro com os mesmos valores já existe."
+
 #: utils_locale.rsrecordnumber
 #, object-pascal-format
 msgctxt "utils_locale.rsrecordnumber"
@@ -16429,6 +16433,10 @@ msgstr "Taxonomia"
 msgctxt "utils_locale.rsteam"
 msgid "Team"
 msgstr "Equipe"
+
+#: utils_locale.rstimecapture
+msgid "Capture time"
+msgstr "Hora da captura"
 
 #: utils_locale.rstitleadminpassword
 msgctxt "utils_locale.rstitleadminpassword"

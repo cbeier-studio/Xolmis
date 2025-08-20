@@ -21,7 +21,7 @@ unit uedt_weatherlog;
 interface
 
 uses
-  Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls,
+  Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls, DateUtils,
   Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, atshapelinebgra,
   models_sampling;
 
@@ -100,7 +100,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_validations, data_columns, data_consts, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_validations,
+  data_columns, data_consts, models_record_types,
   udm_main, uDarkStyleParams;
 
 { TedtWeatherLog }
@@ -293,20 +294,25 @@ end;
 function TedtWeatherLog.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  Msg: String;
 begin
   Result := True;
-  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_name', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbGazetteer, 'site_rank', Msgs);
+  if (eSampleDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  if (cbSampleMoment.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscMoment]));
+  { #todo : Required at least one measurement of weather log }
 
-  // Date and time
-  ValidDate(eSampleDate.Text, rscDate, Msgs);
-  ValidTime(eSampleTime.Text, rscTime, Msgs);
+  // Dates
+  if (eSampleDate.Text <> EmptyStr) then
+    if ValidDate(eSampleDate.Text, rscDate, Msgs) then
+      IsFutureDate(StrToDate(eSampleDate.Text), Today, rscDate, rsDateToday, Msgs);
 
+  // Time
+  if (eSampleTime.Text <> EmptyStr) then
+    ValidTime(eSampleTime.Text, rscTime, Msgs);
 
   if Msgs.Count > 0 then
   begin

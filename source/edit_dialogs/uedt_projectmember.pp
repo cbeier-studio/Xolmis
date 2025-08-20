@@ -69,8 +69,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_getvalue, utils_finddialogs, data_consts, utils_dialogs,
-  utils_editdialogs, udm_grid, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_finddialogs, utils_dialogs, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns,
+  udm_grid, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -292,8 +293,8 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'role', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'individual_id', Msgs);
+  if (FMemberId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscResearcher]));
 
   if Msgs.Count > 0 then
   begin

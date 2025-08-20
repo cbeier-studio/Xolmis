@@ -57,7 +57,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, data_consts, data_getvalue, models_record_types,
+  utils_locale, utils_global, utils_dialogs,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -199,15 +200,15 @@ end;
 function TedtProjectGoal.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
-  //RequiredIsEmpty(D, tbProjects, 'project_title', Msgs);
-  //RequiredIsEmpty(D, tbProjects, 'short_title', Msgs);
+  if (mDescription.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDescription]));
+  if (cbStatus.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscStatus]));
 
   if Msgs.Count > 0 then
   begin

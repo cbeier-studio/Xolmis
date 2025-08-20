@@ -99,7 +99,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_themes, udm_main,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations,
+  data_types, data_columns,
+  udm_main,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -315,12 +317,13 @@ end;
 function TbatchNetEffort.ValidateData: Boolean;
 var
   Msgs: TStrings;
+  vot1, vct1, vot2, vct2, vot3, vct3, vot4, vct4: Boolean;
   // Msg: String;
 begin
   Result := True;
   Msgs := TStringList.Create;
 
-  // Campos obrigatórios
+  // Required fields
   if eStartNumber.Text = EmptyStr then
     Msgs.Add(rsRequiredFromNetNumber);
   if eEndNumber.Text = EmptyStr then
@@ -329,6 +332,52 @@ begin
     Msgs.Add(rsRequiredOpenTime1);
   if (Trim(eCloseTime1.Text) = EmptyStr) then
     Msgs.Add(rsRequiredCloseTime1);
+  // Conditional required fields
+  if (eOpenTime2.Text <> EmptyStr) and (eCloseTime2.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCloseTime2]));
+  if (eCloseTime2.Text <> EmptyStr) and (eOpenTime2.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscOpenTime2]));
+  if (eOpenTime3.Text <> EmptyStr) and (eCloseTime3.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCloseTime3]));
+  if (eCloseTime3.Text <> EmptyStr) and (eOpenTime3.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscOpenTime3]));
+  if (eOpenTime4.Text <> EmptyStr) and (eCloseTime4.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscCloseTime4]));
+  if (eCloseTime4.Text <> EmptyStr) and (eOpenTime4.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscOpenTime4]));
+
+  // Time
+  if eOpenTime1.Text <> EmptyStr then
+    vot1 := ValidTime(eOpenTime1.Text, rscOpenTime1, Msgs);
+  if eCloseTime1.Text <> EmptyStr then
+    vct1 := ValidTime(eCloseTime1.Text, rscCloseTime1, Msgs);
+  if (vot1) and (vct1) then
+    if (StrToTime(eCloseTime1.Text) < StrToTime(eOpenTime1.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime1, rscOpenTime1]));
+
+  if eOpenTime2.Text <> EmptyStr then
+    vot2 := ValidTime(eOpenTime2.Text, rscOpenTime2, Msgs);
+  if eCloseTime2.Text <> EmptyStr then
+    vct2 := ValidTime(eCloseTime2.Text, rscCloseTime2, Msgs);
+  if (vot2) and (vct2) then
+    if (StrToTime(eCloseTime2.Text) < StrToTime(eOpenTime2.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime2, rscOpenTime2]));
+
+  if eOpenTime3.Text <> EmptyStr then
+    vot3 := ValidTime(eOpenTime3.Text, rscOpenTime3, Msgs);
+  if eCloseTime3.Text <> EmptyStr then
+    vct3 := ValidTime(eCloseTime3.Text, rscCloseTime3, Msgs);
+  if (vot3) and (vct3) then
+    if (StrToTime(eCloseTime3.Text) < StrToTime(eOpenTime3.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime3, rscOpenTime3]));
+
+  if eOpenTime4.Text <> EmptyStr then
+    vot4 := ValidTime(eOpenTime4.Text, rscOpenTime4, Msgs);
+  if eCloseTime4.Text <> EmptyStr then
+    vct4 := ValidTime(eCloseTime4.Text, rscCloseTime4, Msgs);
+  if (vot4) and (vct4) then
+    if (StrToTime(eCloseTime4.Text) < StrToTime(eOpenTime4.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscCloseTime4, rscOpenTime4]));
 
   if Msgs.Count > 0 then
   begin

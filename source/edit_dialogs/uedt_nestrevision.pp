@@ -122,8 +122,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, data_getvalue, data_consts,
-  utils_themes, utils_validations, utils_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types, models_taxonomy,
+  udm_breeding, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -498,18 +499,23 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'revision_date', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'observer_1_id', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'nest_status', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbNestRevisions, 'nest_stage', Msgs);
+  if (eRevisionDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rsDateNestRevision]));
+  if (FObserver1Id = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscObserver1]));
+  if (cbNestStatus.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscStatus]));
+  if (cbNestStage.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscNestStage]));
 
-  // Datas
+  // Dates
   if (eRevisionDate.Text <> EmptyStr) then
-  begin
-    ValidDate(eRevisionDate.Text, rsDateNestRevision, Msgs);
-    IsFutureDate(StrToDate(eRevisionDate.Text), Today,
-      AnsiLowerCase(rsDateNestRevision), AnsiLowerCase(rsDateToday), Msgs);
-  end;
+    if ValidDate(eRevisionDate.Text, rsDateNestRevision, Msgs) then
+      IsFutureDate(StrToDate(eRevisionDate.Text), Today, rsDateNestRevision, rsDateToday, Msgs);
+
+  // Time
+  if eRevisionTime.Text <> EmptyStr then
+    ValidTime(eRevisionTime.Text, rscTime, Msgs);
 
   if Msgs.Count > 0 then
   begin

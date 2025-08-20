@@ -80,8 +80,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, models_taxonomy, data_getvalue,
-  data_consts, utils_editdialogs, udm_breeding, udm_main, udm_grid, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types, models_taxonomy,
+  udm_breeding, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -286,8 +287,10 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'role', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbNestOwners, 'individual_id', Msgs);
+  if (cbRole.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscRole]));
+  if (FIndividualId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscIndividual]));
 
   if Msgs.Count > 0 then
   begin
