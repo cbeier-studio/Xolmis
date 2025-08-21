@@ -63,8 +63,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, data_types, utils_validations, models_bands, utils_conversions,
-  utils_editdialogs, udm_main, udm_grid, udlg_loading, uDarkStyleParams, models_record_types;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_conversions, utils_editdialogs,
+  data_types, data_columns, models_record_types, models_bands,
+  udm_main, udm_grid, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -338,8 +339,12 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
+  if (eTransferDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rsDateTransfer]));
   if (cbBandSize.ItemIndex < 0) or (cbBandSize.Text = '') then
     Msgs.Add(rsRequiredBandSize);
+  if (FRequesterId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscRequester]));
 
   if aInitial <= 0 then
     Msgs.Add(rsFromNumberLessThanZero);
@@ -349,8 +354,9 @@ begin
     Msgs.Add(rsToNumberLessThanFromNumber);
 
   // Dates
-  if ValidDate(eTransferDate.Text, 'Transfer date', Msgs) then
-    IsFutureDate(StrToDate(eTransferDate.Text), Today, 'Transfer date', rsDateToday, Msgs);
+  if (eTransferDate.Text <> EmptyStr) then
+    if ValidDate(eTransferDate.Text, rsDateTransfer, Msgs) then
+      IsFutureDate(StrToDate(eTransferDate.Text), Today, rsDateTransfer, rsDateToday, Msgs);
 
   if Msgs.Count > 0 then
   begin

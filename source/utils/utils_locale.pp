@@ -422,6 +422,7 @@ uses
     rsRequesterAndSenderMustBeDifferent = 'The requester and the sender of band %s must be different.';
     rsBandNotAvailable = 'The band %s is not available.';
     rsBandNotFound = 'The band %s was not found.';
+    rsBandAlreadyExists = 'The band %s already exists.';
     rsBandsTransferedWithErrors = 'The transfer of bands was finished, but some bands have problems and were not transfered.';
     rsRepositoryConnectionCannotBeNil = 'Repository Connection cannot be nil.';
     rsFieldNotAllowedInFindBy = 'Field "%s" not allowed in FindBy.';
@@ -619,7 +620,9 @@ uses
     rsDateEnd = 'End date';
     rsDateBirth = 'Birth date';
     rsDateDeath = 'Death date';
+    rsDateOrder = 'Order date';
     rsDateReceipt = 'Receipt date';
+    rsDateTransfer = 'Transfer date';
     rsDateBanding = 'Banding date';
     rsDateBandChange = 'Band change date';
     rsDateReport = 'Report date';

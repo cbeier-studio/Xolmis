@@ -113,8 +113,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, data_getvalue, utils_editdialogs,
-  models_bands, utils_conversions, utils_fullnames, utils_validations, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs,
+  utils_conversions, utils_fullnames, utils_validations,
+  data_types, data_getvalue, data_columns, models_record_types, models_bands,
   udm_main, udm_grid, udlg_progress, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
@@ -133,6 +134,7 @@ var
   Ini, Fim: Integer;
   i: Integer;
   FFullName: String;
+  Msgs: TStrings;
 begin
   LogEvent(leaStart, 'Add batch of bands');
 
@@ -183,6 +185,7 @@ begin
   //dlgProgress.Max := Fim;
   //Application.ProcessMessages;
 
+  Msgs := TStringList.Create;
   try
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
@@ -266,6 +269,11 @@ begin
               FHistoryRepo.Insert(FHistory);
             end;
           end;
+        end
+        else
+        begin
+          // Add a warning message if band already exists
+          Msgs.Add(Format(rsBandAlreadyExists, [FFullName]));
         end;
 
         dlgLoading.UpdateProgress(rsProgressNewBandsBatch, i);
@@ -294,11 +302,17 @@ begin
       raise;
     end;
 
+    // Show warning messages
+    if Msgs.Count > 0 then
+    begin
+      ValidateDlg(Msgs);
+    end;
   finally
     FHistory.Free;
     FRecord.Free;
     FHistoryRepo.Free;
     FBandRepo.Free;
+    FreeAndNil(Msgs);
     //if Assigned(dlgProgress) then
     //begin
     //  dlgProgress.Close;
@@ -583,13 +597,12 @@ end;
 function TbatchBands.ValidateData(aInitial, aFinal: Integer): Boolean;
 var
   Msgs: TStrings;
-  // nome: String;
-  // i: Integer;
+  vod1, vrd1: Boolean;
 begin
   Result := True;
   Msgs := TStringList.Create;
 
-  // Campos obrigatórios
+  // Required fields
   if (cbBandSize.ItemIndex < 0) or (cbBandSize.Text = '') then
     Msgs.Add(rsRequiredBandSize);
   if (cbBandType.ItemIndex < 0) or (cbBandType.Text = '') then
@@ -601,19 +614,14 @@ begin
   if aFinal < aInitial then
     Msgs.Add(rsToNumberLessThanFromNumber);
 
-  // Registro já existe
-  // for i := aInitial to aFinal do
-  // begin
-  // nome:= Trim(Format('%s %d %s',[cbTamanho.Text,i,aSupplier]));
-  // if RecordExists('XOL_ANILHAS','ANI_NOME_COMPLETO',nome) then
-  // Msgs.Add('A anilha '+QuotedStr(nome)+' já existe.');
-  // end;
-
-  // Datas
-  // if F_Projeto.TabLLIC_DATA_EXPEDICAO.AsWideString <> '' then
-  // ValidDate(F_Projeto.TabLLIC_DATA_EXPEDICAO.AsWideString,'Data de emissão',Msgs);
-  // if (F_Projeto.TabLLIC_DATA_EXPEDICAO.AsWideString <> '') and (F_Projeto.TabLLIC_DATA_VALIDADE.AsWideString <> '') then
-  // IsFutureDate(F_Projeto.TabLLIC_DATA_EXPEDICAO.AsDateTime,F_Projeto.TabLLIC_DATA_VALIDADE.AsDateTime,'data de emissão','data de validade',Msgs);
+  // Dates
+  if (eOrderDate.Text <> EmptyStr) then
+    vod1 := ValidDate(eOrderDate.Text, rsDateOrder, Msgs);
+  if (eReceiptDate.Text <> EmptyStr) then
+    vrd1 := ValidDate(eReceiptDate.Text, rsDateReceipt, Msgs);
+  if (vod1) and (vrd1) then
+    if (StrToDate(eReceiptDate.Text) < StrToDate(eOrderDate.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rsDateReceipt, rsDateOrder]));
 
   if Msgs.Count > 0 then
   begin

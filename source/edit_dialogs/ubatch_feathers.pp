@@ -6,7 +6,7 @@ interface
 
 uses
   atshapelinebgra, Classes, DB, ExtCtrls, Spin, SysUtils, Forms, Controls, StdCtrls, EditBtn, Character,
-  Graphics, Dialogs, Buttons, Menus;
+  Graphics, Dialogs, Buttons, Menus, DateUtils;
 
 type
 
@@ -164,8 +164,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, models_birds, utils_finddialogs, utils_dialogs, models_geo, models_taxonomy,
-  utils_validations, data_getvalue, utils_editdialogs, models_record_types,
+  utils_locale, utils_global, utils_finddialogs, utils_dialogs, utils_editdialogs, utils_validations,
+  data_types, data_getvalue, data_columns, models_record_types, models_birds, models_geo, models_taxonomy,
   udlg_loading, udlg_progress, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -861,20 +861,27 @@ end;
 function TbatchFeathers.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  Msg: String;
 begin
   Result := True;
-  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'survey_date', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'locality_id', Msgs);
-  //RequiredIsEmpty(dsLink.DataSet, tbSurveys, 'method_id', Msgs);
+  if (eDate.Text = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscDate]));
+  if (FTaxonId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscTaxon]));
+  if (FLocalityId = 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLocality]));
+  { #todo : Require at least on feather measurement }
 
   // Dates
   if eDate.Text <> EmptyStr then
-    ValidDate(eDate.Text, rsCaptionDate, Msgs);
+    if ValidDate(eDate.Text, rsCaptionDate, Msgs) then
+      IsFutureDate(StrToDate(eDate.Text), Today, rscDate, rsDateToday, Msgs);
+
+  // Time
+  if (eTime.Text <> EmptyStr) then
+    ValidTime(eTime.Text, rscTime, Msgs);
 
   if Msgs.Count > 0 then
   begin

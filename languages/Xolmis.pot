@@ -12601,6 +12601,11 @@ msgctxt "utils_locale.rsbandacquiredfromsupplier"
 msgid "Acquired from supplier"
 msgstr ""
 
+#: utils_locale.rsbandalreadyexists
+#, object-pascal-format
+msgid "The band %s already exists."
+msgstr ""
+
 #: utils_locale.rsbandavailable
 msgctxt "utils_locale.rsbandavailable"
 msgid "Available"
@@ -13555,6 +13560,10 @@ msgctxt "utils_locale.rsdatenestrevision"
 msgid "Nest revision date"
 msgstr ""
 
+#: utils_locale.rsdateorder
+msgid "Order date"
+msgstr ""
+
 #: utils_locale.rsdatepreparation
 msgctxt "utils_locale.rsdatepreparation"
 msgid "Preparation date"
@@ -13593,6 +13602,10 @@ msgstr ""
 #: utils_locale.rsdatetoday
 msgctxt "utils_locale.rsdatetoday"
 msgid "today"
+msgstr ""
+
+#: utils_locale.rsdatetransfer
+msgid "Transfer date"
 msgstr ""
 
 #: utils_locale.rsdeadbird

@@ -10,7 +10,6 @@ object batchBandsTransfer: TbatchBandsTransfer
   ClientWidth = 416
   Constraints.MinWidth = 416
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
