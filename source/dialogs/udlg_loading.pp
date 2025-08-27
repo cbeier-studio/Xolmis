@@ -98,7 +98,7 @@ begin
     ringProgress.Indeterminate := False;
     ringProgress.Value := aPercent;
   end;
-  //Application.ProcessMessages;
+  Application.ProcessMessages;
 end;
 
 procedure TdlgLoading.ZipperProgress(Sender: TObject; const Pct: Double);

@@ -55,6 +55,7 @@ type
   TMapPoint = record
     X, Y: Extended;
     Name: String;
+    Notes: String;
     function FromString(aCoord: String; aSeparator: TSeparator = spSemicolon): Boolean;
     function ToString(aSeparator: TSeparator = spSemicolon): String;
   end;
@@ -101,7 +102,7 @@ type
   private
     FData: TMapPoint;
   public
-    constructor Create(aX, aY: Extended; aName: String = '');
+    constructor Create(aX, aY: Extended; aName: String = ''; aNote: String = '');
     property Data: TMapPoint read FData write FData;
   end;
 
@@ -510,7 +511,7 @@ end;
 
 procedure AddKMLPoint(Doc: TXMLDocument; RootNode: TDOMNode; aMapPoint: TMapPoint);
 var
-  PlacemarkNode, nameNode, PointNode, CoordNode: TDOMNode;
+  PlacemarkNode, nameNode, descriptionNode, PointNode, CoordNode: TDOMNode;
 begin
   // Create node <Placemark>
   PlacemarkNode := Doc.CreateElement('Placemark');
@@ -519,6 +520,13 @@ begin
   nameNode := Doc.CreateElement('name');
   nameNode.TextContent := aMapPoint.Name;
   PlacemarkNode.AppendChild(nameNode);
+  // Create node <description> within <Placemark>
+  if aMapPoint.Notes <> EmptyStr then
+  begin
+    descriptionNode := Doc.CreateElement('description');
+    descriptionNode.TextContent := aMapPoint.Notes;
+    PlacemarkNode.AppendChild(descriptionNode);
+  end;
 
   // Create node <Point> within <Placemark>
   PointNode := Doc.CreateElement('Point');
@@ -584,7 +592,7 @@ end;
 procedure SavePointsToGPX(MapPoints: TMapPointList; aFileName: String);
 var
   Doc: TXMLDocument;
-  RootNode, NameNode, WptNode: TDOMNode;
+  RootNode, NameNode, DescNode, WptNode: TDOMNode;
   i: Integer;
 begin
   Doc := TXMLDocument.Create;
@@ -603,6 +611,12 @@ begin
       NameNode := Doc.CreateElement('name');
       NameNode.TextContent := MapPoints[i].Data.Name;
       WptNode.AppendChild(NameNode);
+      if MapPoints[i].Data.Notes <> EmptyStr then
+      begin
+        DescNode := Doc.CreateElement('desc');
+        DescNode.TextContent := MapPoints[i].Data.Notes;
+        WptNode.AppendChild(DescNode);
+      end;
 
       RootNode.AppendChild(WptNode);
     end;
@@ -624,11 +638,13 @@ begin
     CSV.AddRow('Name'); // Header
     CSV.AddCell(0, 'Longitude');
     CSV.AddCell(0, 'Latitude');
+    CSV.AddCell(0, 'Notes');
     for i := 0 to (MapPoints.Count - 1) do
     begin
       CSV.AddRow(MapPoints[i].Data.Name);
       CSV.AddCell(i + 1, FloatToStr(MapPoints[i].Data.X));
       CSV.AddCell(i + 1, FloatToStr(MapPoints[i].Data.Y));
+      CSV.AddCell(i + 1, MapPoints[i].Data.Notes);
     end;
     CSV.SaveToFile(aFileName);
   finally
@@ -704,7 +720,7 @@ end;
 procedure LoadKMLPoints(const aFileName: String);
 var
   Doc: TXMLDocument;
-  PlacemarkNode, nameNode, PointNode, CoordNode: TDOMNode;
+  PlacemarkNode, nameNode, descriptionNode, PointNode, CoordNode: TDOMNode;
   PlacemarkList, nameList, PointList: TDOMNodeList;
   Unzip: TUnZipper;
   aKMLFile: String;
@@ -742,6 +758,8 @@ begin
       PlacemarkNode := PlacemarkList[i];
       // Find the node <name> within <Placemark>
       nameNode := PlacemarkNode.FindNode('name');
+      // Find the node <description> within <Placemark>
+      descriptionNode := PlacemarkNode.FindNode('description');
       // Find the node <Point> within <Placemark>
       PointNode := PlacemarkNode.FindNode('Point');
       if Assigned(PointNode) then
@@ -755,6 +773,8 @@ begin
           DMM.tabGeoBank.Append;
           if Assigned(nameNode) then
             DMM.tabGeoBank.FieldByName('coordinate_name').AsString := nameNode.TextContent;
+          if Assigned(descriptionNode) then
+            DMM.tabGeoBank.FieldByName('notes').AsString := descriptionNode.TextContent;
           CoordList := TStringList.Create;
           try
             CoordList.CommaText := CoordNode.TextContent;
@@ -798,6 +818,8 @@ begin
         DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lat').NodeValue, '.', FormatSettings.DecimalSeparator, []));
         DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(StringReplace(Node.Attributes.GetNamedItem('lon').NodeValue, '.', FormatSettings.DecimalSeparator, []));
         DMM.tabGeoBank.FieldByName('coordinate_name').AsString := Node.FindNode('name').TextContent;
+        if Node.FindNode('desc') <> nil then
+          DMM.tabGeoBank.FieldByName('notes').AsString := Node.FindNode('desc').TextContent;
         DMM.tabGeoBank.Post;
       end;
       Node := Node.NextSibling;
@@ -823,6 +845,7 @@ begin
       DMM.tabGeoBank.FieldByName('coordinate_name').AsString := CSV.Cells[0, i];
       DMM.tabGeoBank.FieldByName('longitude').AsFloat := StrToFloat(CSV.Cells[1, i]);
       DMM.tabGeoBank.FieldByName('latitude').AsFloat := StrToFloat(CSV.Cells[2, i]);
+      DMM.tabGeoBank.FieldByName('notes').AsString := CSV.Cells[3, i];
       DMM.tabGeoBank.Post;
     end;
   finally
@@ -1136,12 +1159,13 @@ end;
 
 { TMapPointObject }
 
-constructor TMapPointObject.Create(aX, aY: Extended; aName: String);
+constructor TMapPointObject.Create(aX, aY: Extended; aName: String; aNote: String);
 begin
   inherited Create;
   FData.X := aX;
   FData.Y := aY;
   FData.Name := aName;
+  FData.Notes := aNote;
 end;
 
 { TDMSPoint }

@@ -434,33 +434,33 @@ begin
   try
     Clear;
     Add('INSERT INTO methods (' +
-        'method_name, ' +
-        'abbreviation, ' +
-        'category, ' +
-        'ebird_name, ' +
-        'description, ' +
-        'recommended_uses, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':method_name, ' +
-        ':abbreviation, ' +
-        ':category, ' +
-        ':ebird_name, ' +
-        ':description, ' +
-        ':recommended_uses, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+      'method_name, ' +
+      'abbreviation, ' +
+      'category, ' +
+      'ebird_name, ' +
+      'description, ' +
+      'recommended_uses, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':method_name, ' +
+      ':abbreviation, ' +
+      ':category, ' +
+      ':ebird_name, ' +
+      ':description, ' +
+      ':recommended_uses, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-      ParamByName('method_name').AsString := R.Name;
-      ParamByName('abbreviation').AsString := R.Abbreviation;
-      SetStrParam(ParamByName('category'), R.Category);
-      SetStrParam(ParamByName('ebird_name'), R.EbirdName);
-      SetStrParam(ParamByName('description'), R.Description);
-      SetStrParam(ParamByName('recommended_uses'), R.RecommendedUses);
-      SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('method_name').AsString := R.Name;
+    ParamByName('abbreviation').AsString := R.Abbreviation;
+    SetStrParam(ParamByName('category'), R.Category);
+    SetStrParam(ParamByName('ebird_name'), R.EbirdName);
+    SetStrParam(ParamByName('description'), R.Description);
+    SetStrParam(ParamByName('recommended_uses'), R.RecommendedUses);
+    SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;

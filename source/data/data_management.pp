@@ -742,6 +742,9 @@ begin
 
   OldVersion := StrToIntDef(ReadDatabaseMetadata(DMM.sqlCon, 'version'), SCHEMA_VERSION);
 
+  if OldVersion = SCHEMA_VERSION then
+    Exit;
+
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
 
@@ -894,7 +897,7 @@ begin
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_user_fullname ON users (' +
     'full_name COLLATE NOCASE' +
-  ');')
+  ');');
 end;
 
 procedure CreateRecordHistoryTable(Connection: TSQLConnector);
@@ -2388,6 +2391,7 @@ begin
     'individual_id   INTEGER      REFERENCES individuals (individual_id) ON DELETE CASCADE,' +
     'sighting_id     INTEGER,' +
     'survey_id       INTEGER      REFERENCES surveys (survey_id),' +
+    'notes           TEXT,' +
     'user_inserted   INTEGER,' +
     'user_updated    INTEGER,' +
     'insert_date     DATETIME,' +

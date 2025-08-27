@@ -11701,6 +11701,10 @@ object DMM: TDMM
       item
         Name = 'altitude'
         DataType = ftFloat
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
       end>
     Left = 120
     Top = 186

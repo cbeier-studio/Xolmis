@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 
 #: data_columns.rsc1stsecondarychord
 msgctxt "data_columns.rsc1stsecondarychord"
@@ -12586,7 +12586,7 @@ msgstr "Adquirida do fornecedor"
 #: utils_locale.rsbandalreadyexists
 #, object-pascal-format
 msgid "The band %s already exists."
-msgstr ""
+msgstr "A anilha %s já existe."
 
 #: utils_locale.rsbandavailable
 msgctxt "utils_locale.rsbandavailable"
@@ -13546,7 +13546,7 @@ msgstr "Data da revisão do ninho"
 
 #: utils_locale.rsdateorder
 msgid "Order date"
-msgstr ""
+msgstr "Data do pedido"
 
 #: utils_locale.rsdatepreparation
 msgctxt "utils_locale.rsdatepreparation"
@@ -13590,7 +13590,7 @@ msgstr "hoje"
 
 #: utils_locale.rsdatetransfer
 msgid "Transfer date"
-msgstr ""
+msgstr "Data da transferência"
 
 #: utils_locale.rsdeadbird
 msgctxt "utils_locale.rsdeadbird"
@@ -17072,4 +17072,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-
