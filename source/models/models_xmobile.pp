@@ -35,6 +35,7 @@ type
     FSampleTime: TDateTime;
     FLongitude: Extended;
     FLatitude: Extended;
+    FNotes: String;
   public
     procedure Clear;
     procedure FromJSON(JSON: TJSONData);
@@ -54,6 +55,7 @@ type
     FCount: Integer;
     FNotes: String;
     FSampleTime: TDateTime;
+    FSightingKey: Integer;
     FPoiList: TMobilePoiList;
   public
     constructor Create;
@@ -271,6 +273,7 @@ begin
   FSampleTime := NullDateTime;
   FLongitude := 0.0;
   FLatitude := 0.0;
+  FNotes := EmptyStr;
 end;
 
 procedure TMobilePoi.FromJSON(JSON: TJSONData);
@@ -285,16 +288,18 @@ begin
     FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FLongitude := JSONObj.Get('longitude', 0.0);
     FLatitude := JSONObj.Get('latitude', 0.0);
+    FNotes := JSONObj.Get('notes', EmptyStr);
   end;
 end;
 
 procedure TMobilePoi.ToPoi(aPoi: TPoi);
 begin
-  aPoi.TaxonId := FSpeciesId;
+  //aPoi.TaxonId := FSpeciesId;
   aPoi.SampleDate := FSampleTime;
   aPoi.SampleTime := FSampleTime;
   aPoi.Longitude := FLongitude;
   aPoi.Latitude := FLatitude;
+  aPoi.Notes := FNotes;
 end;
 
 { TMobileSpecies }
@@ -313,6 +318,7 @@ begin
   FCount := 0;
   FNotes := EmptyStr;
   FSampleTime := NullDateTime;
+  FSightingKey := 0;
 
   FPoiList.Clear;
 end;

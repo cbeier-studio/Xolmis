@@ -99,7 +99,8 @@ type
     tbProjectGoals,
     tbProjectChronograms,
     tbProjectBudgets,
-    tbProjectExpenses);
+    tbProjectExpenses,
+    tbPoiLibrary);
 
   TTablesDictionary = specialize TFPGMap<String, TTableType>;
   TLocaleTablesDictionary = specialize TFPGMap<TTableType, String>;
@@ -108,7 +109,7 @@ const
   TABLE_ALIASES: array [TTableType] of String = ('',
     'u','rh','rv','g','pl','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','ft',
     'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg',
-    'pg','pc','pb','px');
+    'pg','pc','pb','px','poi');
   TABLE_NAMES: array [TTableType] of String = ('',
     'users',
     'record_history',
@@ -150,7 +151,8 @@ const
     'project_goals',
     'project_chronograms',
     'project_budgets',
-    'project_expenses');
+    'project_expenses',
+    'poi_library');
 
 type
   TCriteriaType = (crNone,

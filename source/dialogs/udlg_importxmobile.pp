@@ -122,6 +122,7 @@ type
     function LoadSpecimensFromJSON(aJSON: TJSONData): Boolean;
     procedure ImportInventories;
     procedure ImportSpecies(Inventory: TMobileInventory);
+    procedure ImportPois(Inventory: TMobileInventory; Species: TMobileSpecies);
     procedure ImportVegetation(Inventory: TMobileInventory);
     procedure ImportWeather(Inventory: TMobileInventory);
     procedure ImportSurveyMember(aSurvey, aObserver: Integer);
@@ -1035,6 +1036,89 @@ begin
   nbPages.PageIndex := 3;
 end;
 
+procedure TdlgImportXMobile.ImportPois(Inventory: TMobileInventory; Species: TMobileSpecies);
+var
+  aRepo: TPoiRepository;
+  aPoi, aOldPoi: TPoi;
+  aTaxonId, aObserverId: Integer;
+  Poi: TMobilePoi;
+  lstDiff: TStrings;
+  D: String;
+begin
+  if Species.FPoiList.Count > 0 then
+  begin
+    aRepo := TPoiRepository.Create(DMM.sqlCon);
+    aPoi := TPoi.Create();
+    try
+      // iterate through POI list
+      for Poi in Species.FPoiList do
+      begin
+        aPoi.Clear;
+        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Species.FSpeciesName);
+        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+
+        aRepo.FindBy(COL_POI_NAME, Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]), aPoi);
+        if aPoi.Id > 0 then
+        begin
+          // if POI exists, update it
+          aOldPoi := TPoi.Create();
+          aRepo.GetById(aPoi.Id, aOldPoi);
+          try
+            Poi.ToPoi(aPoi);
+            aPoi.PoiName := Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]);
+            aPoi.ObserverId := aObserverId;
+            aPoi.TaxonId := aTaxonId;
+            //aPoi.IndividualId := ;
+            aPoi.SightingId := Species.FSightingKey;
+            aPoi.SurveyId := Inventory.FSurveyKey;
+            if aPoi.SampleDate = NullDate then
+              aPoi.SampleDate := Inventory.FStartTime;
+            if aPoi.SampleTime = NullTime then
+              aPoi.SampleTime := Inventory.FStartTime;
+            aRepo.Update(aPoi);
+            // write record history
+            lstDiff := TStringList.Create;
+            try
+              if aPoi.Diff(aOldPoi, lstDiff) then
+              begin
+                for D in lstDiff do
+                  WriteRecHistory(tbPoiLibrary, haEdited, aOldPoi.Id,
+                    ExtractDelimited(1, D, [';']),
+                    ExtractDelimited(2, D, [';']),
+                    ExtractDelimited(3, D, [';']), rsEditedByImport);
+              end;
+            finally
+              FreeAndNil(lstDiff);
+            end;
+          finally
+            FreeAndNil(aOldPoi);
+          end;
+        end
+        else
+        begin
+          // if sighting does not exist, insert it
+          Poi.ToPoi(aPoi);
+          aPoi.PoiName := Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]);
+          aPoi.SurveyId := Inventory.FSurveyKey;
+          aPoi.SightingId := Species.FSightingKey;
+          aPoi.ObserverId := aObserverId;
+          aPoi.TaxonId := aTaxonId;
+          if aPoi.SampleDate = NullDate then
+            aPoi.SampleDate := Inventory.FStartTime;
+          if aPoi.SampleTime = NullTime then
+            aPoi.SampleTime := Inventory.FStartTime;
+          aRepo.Insert(aPoi);
+          // write record history
+          WriteRecHistory(tbPoiLibrary, haCreated, 0, '', '', '', rsInsertedByImport);
+        end;
+      end;
+    finally
+      aPoi.Free;
+      aRepo.Free;
+    end;
+  end;
+end;
+
 procedure TdlgImportXMobile.ImportRevisions(Nest: TMobileNest);
 var
   aRevision, aOldRevision: TNestRevision;
@@ -1124,7 +1208,9 @@ begin
         if aSighting.Id > 0 then
         begin
           // if sighting exists, update it
+          Species.FSightingKey := aSighting.Id;
           aOldSighting := TSighting.Create(aSighting.Id);
+          aRepo.GetById(aSighting.Id, aOldSighting);
           try
             Species.ToSighting(aSighting);
             aSighting.ObserverId := aObserverId;
@@ -1158,9 +1244,13 @@ begin
           if aSighting.SightingDate = NullDate then
             aSighting.SightingDate := Inventory.FStartTime;
           aRepo.Insert(aSighting);
+          Species.FSightingKey := aSighting.Id;
           // write record history
           WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
+
+        // Import POIs
+        ImportPois(Inventory, Species);
       end;
     finally
       aSighting.Free;

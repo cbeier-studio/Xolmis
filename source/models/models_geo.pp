@@ -105,6 +105,7 @@ type
     FIndividualId: Integer;
     FSightingId: Integer;
     FSurveyId: Integer;
+    FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
@@ -128,6 +129,7 @@ type
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property SightingId: Integer read FSightingId write FSightingId;
     property SurveyId: Integer read FSurveyId write FSurveyId;
+    property Notes: String read FNotes write FNotes;
   end;
 
   { TPoiRepository }
@@ -897,6 +899,7 @@ begin
     FIndividualId := TPoi(Source).IndividualId;
     FSightingId := TPoi(Source).SightingId;
     FSurveyId := TPoi(Source).SurveyId;
+    FNotes := TPoi(Source).Notes;
   end;
 end;
 
@@ -914,6 +917,7 @@ begin
   FIndividualId := 0;
   FSightingId := 0;
   FSurveyId := 0;
+  FNotes := EmptyStr;
 end;
 
 function TPoi.Clone: TXolmisRecord;
@@ -954,6 +958,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
 
   Result := Changes.Count > 0;
 end;
@@ -980,6 +986,7 @@ begin
     FIndividualId := Obj.Get('individual_id', 0);
     FSightingId   := Obj.Get('sighting_id', 0);
     FSurveyId     := Obj.Get('survey_id', 0);
+    FNotes        := Obj.Get('notes', '');
   finally
     Obj.Free;
   end;
@@ -1002,6 +1009,7 @@ begin
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('sighting_id', FSightingId);
     JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
   finally
@@ -1011,11 +1019,11 @@ end;
 
 function TPoi.ToString: String;
 begin
-  Result := Format('Poi(Id=%d, SampleDate=%s, SampleTime=%s, PoiName=%s, Longitude=%f, ' +
-    'Latitude=%f, Altitude=%f, ObserverId=%d, TaxonId=%d, IndividualId=%d, SightingId=%d, SurveyId=%d, ' +
+  Result := Format('Poi(Id=%d, SampleDate=%s, SampleTime=%s, PoiName=%s, Longitude=%f, Latitude=%f, ' +
+    'Altitude=%f, ObserverId=%d, TaxonId=%d, IndividualId=%d, SightingId=%d, SurveyId=%d, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Acitve=%s)',
     [FId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FPoiName, FLongitude, FLatitude, FAltitude, FObserverId,
-    FTaxonId, FIndividualId, FSightingId, FSurveyId,
+    FTaxonId, FIndividualId, FSightingId, FSurveyId, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -1040,7 +1048,7 @@ var
   R: TPoi;
 begin
   if not (E is TPoi) then
-    raise Exception.Create('Delte: Expected TPoi');
+    raise Exception.Create('Delete: Expected TPoi');
 
   R := TPoi(E);
   if R.Id = 0 then
@@ -1095,7 +1103,7 @@ end;
 
 procedure TPoiRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
-  ALLOWED: array[0..1] of string = (COL_POI_ID, COL_POI_NAME); // whitelist
+  ALLOWED: array[0..2] of string = (COL_POI_ID, COL_POI_NAME, COL_NOTES); // whitelist
 var
   Qry: TSQLQuery;
   I: Integer;
@@ -1133,6 +1141,7 @@ begin
         'individual_id, ' +
         'sighting_id, ' +
         'survey_id, ' +
+        'notes, ' +
         'user_inserted, ' +
         'user_updated, ' +
         'datetime(insert_date, ''localtime'') AS insert_date, ' +
@@ -1181,6 +1190,7 @@ begin
         'individual_id, ' +
         'sighting_id, ' +
         'survey_id, ' +
+        'notes, ' +
         'user_inserted, ' +
         'user_updated, ' +
         'datetime(insert_date, ''localtime'') AS insert_date, ' +
@@ -1226,6 +1236,7 @@ begin
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.SightingId := FieldByName('sighting_id').AsInteger;
     R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.Notes := FieldByName('notes').AsString;
     R.UserInserted := FieldByName('user_inserted').AsInteger;
     R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -1263,6 +1274,7 @@ begin
       'individual_id, ' +
       'sighting_id, ' +
       'survey_id, ' +
+      'notes, ' +
       'user_inserted, ' +
       'insert_date) ');
     Add('VALUES (' +
@@ -1277,6 +1289,7 @@ begin
       ':individual_id, ' +
       ':sighting_id, ' +
       ':survey_id, ' +
+      ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'', ''subsec''))');
 
@@ -1290,6 +1303,7 @@ begin
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('sighting_id'), R.SightingId);
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -1338,6 +1352,7 @@ begin
       'individual_id = :individual_id, ' +
       'sighting_id = :sighting_id, ' +
       'survey_id = :survey_id, ' +
+      'notes = :notes, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec''), ' +
       'marked_status = :marked_status, ' +
@@ -1354,6 +1369,7 @@ begin
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('sighting_id'), R.SightingId);
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;
