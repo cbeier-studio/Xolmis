@@ -6,11 +6,12 @@ object edtSurvey: TedtSurvey
   AutoSize = True
   Caption = 'New survey'
   ClientHeight = 691
-  ClientWidth = 416
+  ClientWidth = 413
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow

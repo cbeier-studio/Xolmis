@@ -4459,6 +4459,11 @@ msgstr "A&juda"
 msgid "Import from Xolmis Mobile"
 msgstr "Importar do Xolmis Mobile"
 
+#: tdlgimportxmobile.eexpedition.buttonhint
+msgctxt "tdlgimportxmobile.eexpedition.buttonhint"
+msgid "Find expedition"
+msgstr "Buscar expedição"
+
 #: tdlgimportxmobile.esourcefile.buttonhint
 msgctxt "tdlgimportxmobile.esourcefile.buttonhint"
 msgid "Select file"
@@ -4497,6 +4502,11 @@ msgstr "Localidade *"
 msgctxt "tdlgimportxmobile.gridmap.columns[5].title.caption"
 msgid "Record"
 msgstr "Registro"
+
+#: tdlgimportxmobile.lblexpedition.caption
+msgctxt "tdlgimportxmobile.lblexpedition.caption"
+msgid "Expedition:"
+msgstr "Expedição:"
 
 #: tdlgimportxmobile.lblmapinstruction.caption
 msgid "Confirm the relations between the data to be imported and the database. "
@@ -8783,6 +8793,7 @@ msgid "HH:MM"
 msgstr "HH:MM"
 
 #: tedtsurvey.eexpedition.buttonhint
+msgctxt "tedtsurvey.eexpedition.buttonhint"
 msgid "Find expedition"
 msgstr "Buscar expedição"
 

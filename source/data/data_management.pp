@@ -2382,7 +2382,7 @@ begin
     'poi_id          INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
     'sample_date     DATE         NOT NULL,' +
     'sample_time     TIME,' +
-    'poi_name        VARCHAR (40),' +
+    'poi_name        VARCHAR (60),' +
     'longitude       REAL,' +
     'latitude        REAL,' +
     'altitude        REAL,' +

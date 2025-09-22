@@ -766,8 +766,8 @@ begin
   if eEndTime.Text <> EmptyStr then
     et1 := ValidTime(eEndTime.Text, rscEndTime, Msgs);
   if (st1) and (et1) then
-    if (StrToTime(eStartTime.Text) < StrToTime(eEndTime.Text)) then
-      Msgs.Add(Format(rsInvalidDateRange, [rscStartTime, rscEndTime]));
+    if (StrToTime(eStartTime.Text) > StrToTime(eEndTime.Text)) then
+      Msgs.Add(Format(rsInvalidDateRange, [rscEndTime, rscStartTime]));
 
   // Geographical coordinates
   if eLongitude.Text <> EmptyStr then

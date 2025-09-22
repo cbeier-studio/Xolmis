@@ -461,14 +461,14 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT method_id, method_name, method_acronym FROM methods ');
+    Add('SELECT method_id, method_name, abbreviation FROM methods ');
     case aFilter of
       fvNone:
         ; // do nothing
       fvReset:
         begin
           Add('WHERE ((method_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (method_acronym ' + Operador + ' :VALPARAM)) ');
+          Add('OR (abbreviation ' + Operador + ' :VALPARAM)) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:

@@ -1904,6 +1904,7 @@ begin
       ParamByName('user_updated').AsInteger := ActiveUser.Id;
       ParamByName('marked_status').AsBoolean := FMarked;
       ParamByName('active_status').AsBoolean := FActive;
+      ParamByName('survey_member_id').AsInteger := FId;
 
       ExecSQL;
 
@@ -1956,7 +1957,7 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status' +
+      'active_status ' +
       'FROM survey_team');
     Add('WHERE (survey_id = :asurvey) AND (person_id = :aperson)');
     ParamByName('asurvey').AsInteger := aSurveyKey;

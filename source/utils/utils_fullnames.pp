@@ -57,7 +57,7 @@ begin
   if SiteName = '' then
     SiteName := GetName('gazetteer', 'site_name', 'site_id', aSite);
   if aMethod > 0 then
-    MethodName := GetName('methods', 'method_acronym', 'method_id', aMethod)
+    MethodName := GetName('methods', 'abbreviation', 'method_id', aMethod)
   else
     MethodName := '';
   if aStation > 0 then

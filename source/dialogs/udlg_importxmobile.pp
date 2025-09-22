@@ -33,6 +33,7 @@ type
   TdlgImportXMobile = class(TForm)
     btnHelp: TBitBtn;
     eSourceFile: TEditButton;
+    eExpedition: TEditButton;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoImportFinished: TImage;
@@ -40,6 +41,7 @@ type
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
     lblMapInstruction: TLabel;
+    lblExpedition: TLabel;
     msgSourceFile: TLabel;
     lblTitleMap: TLabel;
     mProgress: TMemo;
@@ -75,6 +77,8 @@ type
     sbNext: TButton;
     sbRetry: TBitBtn;
     procedure btnHelpClick(Sender: TObject);
+    procedure eExpeditionButtonClick(Sender: TObject);
+    procedure eExpeditionKeyPress(Sender: TObject; var Key: char);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -92,6 +96,7 @@ type
   private
     FSourceFile: String;
     FObserverKey, FSurveyKey, FNestKey: Integer;
+    FExpeditionId: Integer;
     FContentType: TMobileContentType;
     FInventoryType: TMobileInventoryType;
     FInventoryList: TMobileInventoryList;
@@ -311,6 +316,40 @@ begin
   end;
 end;
 
+procedure TdlgImportXMobile.eExpeditionButtonClick(Sender: TObject);
+begin
+  FindDlg(tbExpeditions, eExpedition, FExpeditionId);
+end;
+
+procedure TdlgImportXMobile.eExpeditionKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  // Alphabetic search in numeric fields
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbExpeditions, eExpedition, FExpeditionId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    FExpeditionId := 0;
+    eExpedition.Text := EmptyStr;
+    Key := #0;
+  end;
+
+  // <ENTER> Key
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
+
 procedure TdlgImportXMobile.eSourceFileButtonClick(Sender: TObject);
 begin
   if OpenDlg.Execute then
@@ -362,6 +401,8 @@ begin
       msgSourceFile.Font.Color := clSystemCriticalFGLight;
   end;
 
+  lblExpedition.Visible := (FContentType in [mctInventory, mctInventories]);
+  eExpedition.Visible := lblExpedition.Visible;
   sbNext.Enabled := IsRequiredFilledSource;
 end;
 
@@ -810,6 +851,7 @@ begin
             try
               aSurvey.GetData(aSurveyKey);
               Inventory.ToSurvey(aSurvey);
+              aSurvey.ExpeditionId := FExpeditionId;
               aSurvey.Update;
               // write record history
               lstDiff := TStringList.Create;
@@ -845,6 +887,7 @@ begin
           begin
             // create new survey, if not exists
             Inventory.ToSurvey(aSurvey);
+            aSurvey.ExpeditionId := FExpeditionId;
             aSurvey.Insert;
             aSurveyKey := aSurvey.Id;
             Inventory.FSurveyKey := aSurveyKey;
@@ -891,6 +934,7 @@ begin
   if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
+    DMM.sqlTrans.RollbackRetaining;
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
@@ -898,6 +942,7 @@ begin
   else
   begin
     mProgress.Append(rsSuccessfulImport);
+    DMM.sqlTrans.CommitRetaining;
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
@@ -1020,6 +1065,7 @@ begin
   if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
+    DMM.sqlTrans.RollbackRetaining;
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
@@ -1027,6 +1073,7 @@ begin
   else
   begin
     mProgress.Append(rsSuccessfulImport);
+    DMM.sqlTrans.CommitRetaining;
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
@@ -1361,6 +1408,7 @@ begin
   if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
+    DMM.sqlTrans.RollbackRetaining;
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
@@ -1368,6 +1416,7 @@ begin
   else
   begin
     mProgress.Append(rsSuccessfulImport);
+    DMM.sqlTrans.CommitRetaining;
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;

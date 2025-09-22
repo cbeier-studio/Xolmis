@@ -10,7 +10,6 @@ object dlgImportXMobile: TdlgImportXMobile
   ClientWidth = 813
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -209,14 +208,48 @@ object dlgImportXMobile: TdlgImportXMobile
         end
         object icoFileStatus: TImage
           Left = 16
-          Height = 262
-          Top = 152
+          Height = 216
+          Top = 198
           Width = 781
           Align = alClient
           BorderSpacing.Bottom = 8
           Center = True
           ImageIndex = -1
           Images = imgFinished
+        end
+        object lblExpedition: TLabel
+          Left = 16
+          Height = 15
+          Top = 152
+          Width = 781
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Expedition:'
+          Layout = tlCenter
+          ParentColor = False
+          Visible = False
+        end
+        object eExpedition: TEditButton
+          Left = 16
+          Height = 23
+          Top = 171
+          Width = 781
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          ButtonHint = 'Find expedition'
+          ButtonWidth = 24
+          Images = iButtons
+          ImageIndex = 10
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 2
+          Visible = False
+          OnButtonClick = eExpeditionButtonClick
+          OnKeyPress = eExpeditionKeyPress
         end
       end
     end

@@ -4479,6 +4479,11 @@ msgstr ""
 msgid "Import from Xolmis Mobile"
 msgstr ""
 
+#: tdlgimportxmobile.eexpedition.buttonhint
+msgctxt "tdlgimportxmobile.eexpedition.buttonhint"
+msgid "Find expedition"
+msgstr ""
+
 #: tdlgimportxmobile.esourcefile.buttonhint
 msgctxt "tdlgimportxmobile.esourcefile.buttonhint"
 msgid "Select file"
@@ -4516,6 +4521,11 @@ msgstr ""
 #: tdlgimportxmobile.gridmap.columns[5].title.caption
 msgctxt "tdlgimportxmobile.gridmap.columns[5].title.caption"
 msgid "Record"
+msgstr ""
+
+#: tdlgimportxmobile.lblexpedition.caption
+msgctxt "tdlgimportxmobile.lblexpedition.caption"
+msgid "Expedition:"
 msgstr ""
 
 #: tdlgimportxmobile.lblmapinstruction.caption
@@ -8798,6 +8808,7 @@ msgid "HH:MM"
 msgstr ""
 
 #: tedtsurvey.eexpedition.buttonhint
+msgctxt "tedtsurvey.eexpedition.buttonhint"
 msgid "Find expedition"
 msgstr ""
 

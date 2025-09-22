@@ -258,6 +258,15 @@ type
 
   TMobileSpecimenList = specialize TFPGObjectList<TMobileSpecimen>;
 
+const
+  MOBILE_QUALITATIVE_FREE: String = 'Free';
+  MOBILE_QUALITATIVE_TIMED: String = 'Fixed-Time';
+  MOBILE_QUALITATIVE_INTERVAL: String = 'Interval';
+  MOBILE_MACKINNON_LIST: String = 'Mackinnon';
+  MOBILE_TRANSECTION_COUNT: String = 'Line';
+  MOBILE_POINT_COUNT: String = 'Point';
+  MOBILE_BANDING: String = 'Banding';
+  MOBILE_CASUAL: String = 'Casual';
 
 implementation
 
@@ -546,10 +555,11 @@ begin
     FIntervalsWithoutNewSpecies := JSONObj.Get('intervalWithoutNewSpecies', 0);
     FCurrentIntervalSpeciesCount := JSONObj.Get('currentIntervalSpeciesCount', 0);
 
-    if ExecRegExpr('^[A-Za-z]{2,}-[A-Za-z]{2,}-[0-9]{8}-[A-Z]{0,1}[0-9]{2,}$', FId) then
+    if ExecRegExpr('^.{2,}-[A-Za-z]{2,}-[0-9]{8}-[A-Z]{0,1}[0-9]{2,}$', FId) then
     begin
       // Get locality abbreviation
-      FLocalityName := ExtractDelimited(1, FId, ['-']);
+      if FLocalityName = EmptyStr then
+        FLocalityName := ExtractDelimited(1, FId, ['-']);
       // Get observer abbreviation
       FObserver := ExtractDelimited(2, FId, ['-']);
       // Get Mackinnon list number
@@ -620,26 +630,27 @@ begin
   aSurvey.SampleId := FId;
   case FType of
     invQualitativeFree:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeFree);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_FREE);
     invQualitativeTimed:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeTimed);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_TIMED);
     invQualitativeInterval:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeInterval);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_INTERVAL);
     invMackinnonList:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileMackinnonList);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_MACKINNON_LIST);
     invTransectionCount:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectionCount);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_TRANSECTION_COUNT);
     invPointCount:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointCount);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_POINT_COUNT);
     invBanding:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_BANDING);
     invCasual:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileCasual);
+      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_CASUAL);
   end;
   //aSurvey.Duration := FDuration;
   aSurvey.SurveyDate := FStartTime;
   aSurvey.StartTime := FStartTime;
   aSurvey.EndTime := FEndTime;
+  aSurvey.Duration := MinutesBetween(FStartTime, FEndTime);
   aSurvey.StartLongitude := FStartLongitude;
   aSurvey.StartLatitude := FStartLatitude;
   aSurvey.EndLongitude := FEndLongitude;

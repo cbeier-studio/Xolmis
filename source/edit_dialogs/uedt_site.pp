@@ -447,7 +447,7 @@ begin
   // Required fields
   if (eName.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscName]));
-  if (cbRank.ItemIndex >= 0) then
+  if (cbRank.ItemIndex < 0) then
     Msgs.Add(Format(rsRequiredField, [rscType]));
   if (eFullname.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscFullName]));
