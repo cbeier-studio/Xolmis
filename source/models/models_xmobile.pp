@@ -127,6 +127,7 @@ type
     FEndLongitude: Extended;
     FEndLatitude: Extended;
     FLocalityName: String;
+    FNotes: String;
     FCurrentInterval: Integer;
     FIntervalsWithoutNewSpecies: Integer;
     FCurrentIntervalSpeciesCount: Integer;
@@ -539,7 +540,7 @@ begin
   if JSON is TJSONObject then
   begin
     JSONObj := TJSONObject(JSON);
-    FImport := True;
+    FImport := not JSONObj.Get('isDiscarded', False);
     FId := JSONObj.Get('id', '');
     FType := TMobileInventoryType(JSONObj.Get('type', Integer(invQualitativeFree)));
     FDuration := JSONObj.Get('duration', 0);
@@ -551,6 +552,7 @@ begin
     FEndLongitude := JSONObj.Get('endLongitude', 0.0);
     FEndLatitude := JSONObj.Get('endLatitude', 0.0);
     FLocalityName := JSONObj.Get('localityName', '');
+    FNotes := JSONObj.Get('notes', '');
     FCurrentInterval := JSONObj.Get('currentInterval', 0);
     FIntervalsWithoutNewSpecies := JSONObj.Get('intervalWithoutNewSpecies', 0);
     FCurrentIntervalSpeciesCount := JSONObj.Get('currentIntervalSpeciesCount', 0);
@@ -656,6 +658,7 @@ begin
   aSurvey.EndLongitude := FEndLongitude;
   aSurvey.EndLatitude := FEndLatitude;
   aSurvey.LocalityId := GetSiteKey(FLocalityName);
+  aSurvey.Notes := FNotes;
 end;
 
 { TMobileEgg }
