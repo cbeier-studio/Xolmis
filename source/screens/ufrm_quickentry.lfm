@@ -8,7 +8,6 @@ object frmQuickEntry: TfrmQuickEntry
   ClientHeight = 467
   ClientWidth = 893
   Position = poDefaultPosOnly
-  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -118,6 +117,7 @@ object frmQuickEntry: TfrmQuickEntry
       ImageIndex = 4
       ImageWidth = 20
       TabOrder = 0
+      OnClick = sbImportClick
     end
   end
   object qeGrid: TStringGrid
@@ -130,14 +130,18 @@ object frmQuickEntry: TfrmQuickEntry
     DefaultColWidth = 64
     FixedCols = 0
     MouseWheelOption = mwGrid
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goAutoAddRows, goTabs, goThumbTracking, goColSpanning, goSmoothScroll, goCellEllipsis, goRowHighlight]
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goAutoAddRows, goTabs, goThumbTracking, goColSpanning, goSmoothScroll, goCellHints, goCellEllipsis, goRowHighlight]
+    ParentShowHint = False
     PopupMenu = PMGrid
     RowCount = 2
+    ShowHint = True
     TabOrder = 1
     TitleStyle = tsNative
     OnColRowDeleted = qeGridColRowDeleted
     OnColRowInserted = qeGridColRowInserted
+    OnGetCellHint = qeGridGetCellHint
     OnKeyPress = qeGridKeyPress
+    OnPrepareCanvas = qeGridPrepareCanvas
     OnSelectEditor = qeGridSelectEditor
     OnSelectCell = qeGridSelectCell
     OnSetEditText = qeGridSetEditText

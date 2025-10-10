@@ -4116,8 +4116,8 @@ msgstr "A&juda"
 
 #: tdlgimport.btnoptions.caption
 msgctxt "tdlgimport.btnoptions.caption"
-msgid "Options"
-msgstr "Opções"
+msgid "File options"
+msgstr "Opções do arquivo"
 
 #: tdlgimport.caption
 msgid "Import wizard"
@@ -14160,6 +14160,10 @@ msgstr "Data inválida. Verifique se foi digitada corretamente."
 msgctxt "utils_locale.rserrorloadingdatafromjsonfile"
 msgid "Error loading data from the JSON file: %s"
 msgstr "Erro carregando dados do arquivo JSON: %s"
+
+#: utils_locale.rserrormoduleisdifferent
+msgid "The file module is different from the Quick Entry module."
+msgstr "O módulo do arquivo é diferente do módulo do Quick Entry."
 
 #: utils_locale.rserrormontadata
 #, object-pascal-format

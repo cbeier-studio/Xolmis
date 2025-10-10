@@ -102,6 +102,8 @@ type
     FPrecipitation: TPrecipitation;
     FTemperature: Double;
     FWindSpeed: Integer;
+    FAtmosphericPressure: Double;
+    FRelativeHumidity: Double;
   public
     procedure Clear;
     procedure FromJSON(JSON: TJSONData);
@@ -133,6 +135,7 @@ type
     FCurrentIntervalSpeciesCount: Integer;
     FSurveyKey: Integer;
     FObserver: String;
+    FTotalObservers: Integer;
     FListNumber: Integer;
     FImport: Boolean;
     FSpeciesList: TMobileSpeciesList;
@@ -459,6 +462,8 @@ begin
   FPrecipitation := wpEmpty;
   FTemperature := 0;
   FWindSpeed := 0;
+  FAtmosphericPressure := 0;
+  FRelativeHumidity := 0;
 end;
 
 procedure TMobileWeather.FromJSON(JSON: TJSONData);
@@ -475,6 +480,8 @@ begin
     FPrecipitation := TPrecipitation(JSONObj.Get('precipitation', Integer(wpNone)));
     FTemperature := JSONObj.Get('temperature', 0);
     FWindSpeed := JSONObj.Get('windSpeed', 0);
+    FAtmosphericPressure := JSONObj.Get('atmosphericPressure', 0);
+    FRelativeHumidity := JSONObj.Get('relativeHumidity', 0);
   end;
 end;
 
@@ -486,6 +493,8 @@ begin
   aWeatherLog.Precipitation := FPrecipitation;
   aWeatherLog.Temperature := FTemperature;
   aWeatherLog.WindSpeedBft := FWindSpeed;
+  aWeatherLog.AtmosphericPressure := FAtmosphericPressure;
+  aWeatherLog.RelativeHumidity := FRelativeHumidity;
 end;
 
 { TMobileInventory }
@@ -515,6 +524,7 @@ begin
   FCurrentIntervalSpeciesCount := 0;
   FSurveyKey := 0;
   FObserver := EmptyStr;
+  FTotalObservers := 0;
   FListNumber := 0;
   FImport := False;
 
@@ -556,6 +566,7 @@ begin
     FCurrentInterval := JSONObj.Get('currentInterval', 0);
     FIntervalsWithoutNewSpecies := JSONObj.Get('intervalWithoutNewSpecies', 0);
     FCurrentIntervalSpeciesCount := JSONObj.Get('currentIntervalSpeciesCount', 0);
+    FTotalObservers := JSONObj.Get('totalObservers', 1);
 
     if ExecRegExpr('^.{2,}-[A-Za-z]{2,}-[0-9]{8}-[A-Z]{0,1}[0-9]{2,}$', FId) then
     begin
@@ -658,6 +669,7 @@ begin
   aSurvey.EndLongitude := FEndLongitude;
   aSurvey.EndLatitude := FEndLatitude;
   aSurvey.LocalityId := GetSiteKey(FLocalityName);
+  aSurvey.ObserversTally := FTotalObservers;
   aSurvey.Notes := FNotes;
 end;
 

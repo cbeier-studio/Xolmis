@@ -11,7 +11,6 @@ object dlgImport: TdlgImport
   ClientWidth = 920
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -114,6 +113,8 @@ object dlgImport: TdlgImport
     Width = 920
     PageIndex = 0
     Align = alTop
+    Constraints.MinHeight = 430
+    Constraints.MinWidth = 560
     TabOrder = 1
     object pgSource: TPage
       object pContentSource: TPanel
@@ -127,15 +128,18 @@ object dlgImport: TdlgImport
         ChildSizing.TopBottomSpacing = 16
         ClientHeight = 430
         ClientWidth = 920
-        Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleSource: TPanel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = pContentSource
+          AnchorSideRight.Control = pContentSource
+          AnchorSideRight.Side = asrBottom
           Left = 16
           Height = 28
           Top = 16
           Width = 888
-          Align = alTop
           Alignment = taLeftJustify
+          Anchors = [akTop, akLeft, akRight]
           AutoSize = True
           BorderSpacing.Top = 16
           BorderSpacing.Bottom = 8
@@ -157,33 +161,42 @@ object dlgImport: TdlgImport
           end
         end
         object lblTarget: TLabel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = pSourceOptions
+          AnchorSideTop.Side = asrBottom
           Left = 16
           Height = 15
-          Top = 133
-          Width = 888
-          Align = alTop
+          Top = 167
+          Width = 73
           BorderSpacing.Bottom = 4
           Caption = 'Target table: *'
           Layout = tlCenter
           ParentColor = False
         end
         object lblSourceFile: TLabel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = lblSourceInstruction
+          AnchorSideTop.Side = asrBottom
           Left = 16
           Height = 15
           Top = 83
-          Width = 888
-          Align = alTop
+          Width = 66
           BorderSpacing.Bottom = 4
           Caption = 'Source file: *'
           Layout = tlCenter
           ParentColor = False
         end
         object eSourceFile: TEditButton
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = lblSourceFile
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentSource
+          AnchorSideRight.Side = asrBottom
           Left = 16
           Height = 23
           Top = 102
           Width = 888
-          Align = alTop
+          Anchors = [akTop, akLeft, akRight]
           BorderSpacing.Bottom = 8
           ButtonHint = 'Select file'
           ButtonWidth = 24
@@ -201,20 +214,27 @@ object dlgImport: TdlgImport
           OnChange = eSourceFileChange
         end
         object lblSourceInstruction: TLabel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = pTitleSource
+          AnchorSideTop.Side = asrBottom
           Left = 16
           Height = 15
           Top = 52
-          Width = 888
-          Align = alTop
+          Width = 248
           BorderSpacing.Bottom = 16
           Caption = 'Select a target table and a source file to import.'
         end
         object cbTarget: TComboBox
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = lblTarget
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentSource
+          AnchorSideRight.Side = asrBottom
           Left = 16
           Height = 23
-          Top = 152
+          Top = 186
           Width = 888
-          Align = alTop
+          Anchors = [akTop, akLeft, akRight]
           BorderSpacing.Bottom = 8
           ItemHeight = 15
           Style = csDropDownList
@@ -224,26 +244,29 @@ object dlgImport: TdlgImport
           OnSelect = cbTargetSelect
         end
         object pSourceOptions: TPanel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = eSourceFile
+          AnchorSideTop.Side = asrBottom
           Left = 16
-          Height = 41
-          Top = 183
-          Width = 888
-          Align = alTop
+          Height = 26
+          Top = 133
+          Width = 107
+          AutoSize = True
+          BorderSpacing.Bottom = 8
           BevelOuter = bvNone
-          ChildSizing.TopBottomSpacing = 8
           ChildSizing.HorizontalSpacing = 8
-          ClientHeight = 41
-          ClientWidth = 888
+          ClientHeight = 26
+          ClientWidth = 107
           ParentBackground = False
           TabOrder = 3
           object btnOptions: TBitBtn
             Left = 0
-            Height = 25
-            Top = 8
-            Width = 88
+            Height = 26
+            Top = 0
+            Width = 107
             Align = alLeft
             AutoSize = True
-            Caption = 'Options'
+            Caption = 'File options'
             DisabledImageIndex = 4
             Images = iButtons
             ImageIndex = 3
@@ -269,12 +292,16 @@ object dlgImport: TdlgImport
         Constraints.MinWidth = 900
         TabOrder = 0
         object pTitleFields: TPanel
+          AnchorSideLeft.Control = pContentFields
+          AnchorSideTop.Control = pContentFields
+          AnchorSideRight.Control = pContentFields
+          AnchorSideRight.Side = asrBottom
           Left = 16
           Height = 28
           Top = 16
           Width = 888
-          Align = alTop
           Alignment = taLeftJustify
+          Anchors = [akTop, akLeft, akRight]
           AutoSize = True
           BorderSpacing.Top = 16
           BorderSpacing.Bottom = 8
@@ -296,21 +323,30 @@ object dlgImport: TdlgImport
           end
         end
         object lblFieldsInstruction: TLabel
+          AnchorSideLeft.Control = pContentFields
+          AnchorSideTop.Control = pTitleFields
+          AnchorSideTop.Side = asrBottom
           Left = 16
           Height = 15
           Top = 52
-          Width = 888
-          Align = alTop
+          Width = 361
           BorderSpacing.Bottom = 16
           Caption = 'Configure the field mappings from the source file to the target table.'
           WordWrap = True
         end
         object gridFields: TStringGrid
+          AnchorSideLeft.Control = pContentFields
+          AnchorSideTop.Control = lblFieldsInstruction
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentFields
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pContentFields
+          AnchorSideBottom.Side = asrBottom
           Left = 16
           Height = 331
           Top = 83
           Width = 888
-          Align = alClient
+          Anchors = [akTop, akLeft, akRight, akBottom]
           AutoFillColumns = True
           ColCount = 6
           Columns = <          
@@ -324,12 +360,12 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 245
+              Width = 243
             end          
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Search table'
-              Width = 245
+              Width = 243
             end          
             item
               SizePriority = 0
@@ -345,8 +381,8 @@ object dlgImport: TdlgImport
             64
             154
             60
-            245
-            245
+            243
+            243
             120
           )
           Cells = (
@@ -374,12 +410,16 @@ object dlgImport: TdlgImport
         Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleConfirm: TPanel
+          AnchorSideLeft.Control = pContentConfirm
+          AnchorSideTop.Control = pContentConfirm
+          AnchorSideRight.Control = pContentConfirm
+          AnchorSideRight.Side = asrBottom
           Left = 16
           Height = 28
           Top = 16
           Width = 888
-          Align = alTop
           Alignment = taLeftJustify
+          Anchors = [akTop, akLeft, akRight]
           AutoSize = True
           BorderSpacing.Top = 16
           BorderSpacing.Bottom = 8
@@ -401,21 +441,30 @@ object dlgImport: TdlgImport
           end
         end
         object lblConfirmInstruction: TLabel
+          AnchorSideLeft.Control = pContentConfirm
+          AnchorSideTop.Control = pTitleConfirm
+          AnchorSideTop.Side = asrBottom
           Left = 16
           Height = 15
           Top = 52
-          Width = 888
-          Align = alTop
+          Width = 191
           BorderSpacing.Bottom = 16
           Caption = 'Check if the data sampled is correct.'
           WordWrap = True
         end
         object gridConfirm: TStringGrid
+          AnchorSideLeft.Control = pContentConfirm
+          AnchorSideTop.Control = lblConfirmInstruction
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentConfirm
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pContentConfirm
+          AnchorSideBottom.Side = asrBottom
           Left = 16
           Height = 331
           Top = 83
           Width = 888
-          Align = alClient
+          Anchors = [akTop, akLeft, akRight, akBottom]
           ColCount = 2
           RowCount = 2
           TabOrder = 1
@@ -438,12 +487,16 @@ object dlgImport: TdlgImport
         Constraints.MinWidth = 560
         TabOrder = 0
         object pTitleProgress: TPanel
+          AnchorSideLeft.Control = pContentProgress
+          AnchorSideTop.Control = pContentProgress
+          AnchorSideRight.Control = pContentProgress
+          AnchorSideRight.Side = asrBottom
           Left = 16
           Height = 28
           Top = 16
           Width = 888
-          Align = alTop
           Alignment = taLeftJustify
+          Anchors = [akTop, akLeft, akRight]
           AutoSize = True
           BorderSpacing.Top = 16
           BorderSpacing.Bottom = 8
@@ -465,21 +518,30 @@ object dlgImport: TdlgImport
           end
         end
         object lblProgressInstruction: TLabel
+          AnchorSideLeft.Control = pContentProgress
+          AnchorSideTop.Control = pTitleProgress
+          AnchorSideTop.Side = asrBottom
           Left = 16
           Height = 15
           Top = 52
-          Width = 888
-          Align = alTop
+          Width = 197
           BorderSpacing.Bottom = 16
           Caption = 'Please wait, while importing the data.'
           WordWrap = True
         end
         object mProgress: TMemo
+          AnchorSideLeft.Control = pContentProgress
+          AnchorSideTop.Control = PBar
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentProgress
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pContentProgress
+          AnchorSideBottom.Side = asrBottom
           Left = 16
           Height = 310
           Top = 104
           Width = 888
-          Align = alClient
+          Anchors = [akTop, akLeft, akRight, akBottom]
           Font.Name = 'Fira Code'
           Lines.Strings = (
             'mProgress'
@@ -490,11 +552,16 @@ object dlgImport: TdlgImport
           TabOrder = 1
         end
         object PBar: TProgressBar
+          AnchorSideLeft.Control = pContentProgress
+          AnchorSideTop.Control = lblProgressInstruction
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentProgress
+          AnchorSideRight.Side = asrBottom
           Left = 16
           Height = 13
           Top = 83
           Width = 888
-          Align = alTop
+          Anchors = [akTop, akLeft, akRight]
           BorderSpacing.Bottom = 8
           TabOrder = 2
         end
@@ -544,11 +611,13 @@ object dlgImport: TdlgImport
         Rounding.RoundY = 1
         TabOrder = 0
         object lblTitleImportFinished: TLabel
-          Left = 17
+          AnchorSideLeft.Control = pContentFinished
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = pContentFinished
+          Left = 331
           Height = 41
           Top = 17
-          Width = 886
-          Align = alTop
+          Width = 258
           Alignment = taCenter
           BorderSpacing.Top = 16
           BorderSpacing.Bottom = 8
@@ -559,11 +628,14 @@ object dlgImport: TdlgImport
           ParentFont = False
         end
         object lblSubtitleImportFinished: TLabel
-          Left = 17
+          AnchorSideLeft.Control = pContentFinished
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = lblTitleImportFinished
+          AnchorSideTop.Side = asrBottom
+          Left = 340
           Height = 15
           Top = 66
-          Width = 886
-          Align = alTop
+          Width = 241
           Alignment = taCenter
           BorderSpacing.Bottom = 16
           Caption = 'The selected file(s) were sucessfully imported.'
@@ -571,21 +643,32 @@ object dlgImport: TdlgImport
           ParentColor = False
         end
         object icoImportFinished: TImage
+          AnchorSideLeft.Control = pContentFinished
+          AnchorSideTop.Control = lblSubtitleImportFinished
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentFinished
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pRetry
           Left = 17
           Height = 280
           Top = 97
           Width = 886
-          Align = alClient
+          Anchors = [akTop, akLeft, akRight, akBottom]
           BorderSpacing.Bottom = 8
           Center = True
           Images = imgFinished
         end
         object pRetry: TBCPanel
+          AnchorSideLeft.Control = pContentFinished
+          AnchorSideRight.Control = pContentFinished
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pContentFinished
+          AnchorSideBottom.Side = asrBottom
           Left = 17
           Height = 28
           Top = 385
           Width = 886
-          Align = alBottom
+          Anchors = [akLeft, akRight, akBottom]
           AutoSize = True
           ChildSizing.HorizontalSpacing = 8
           ChildSizing.Layout = cclLeftToRightThenTopToBottom

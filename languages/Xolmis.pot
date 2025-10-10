@@ -4136,7 +4136,7 @@ msgstr ""
 
 #: tdlgimport.btnoptions.caption
 msgctxt "tdlgimport.btnoptions.caption"
-msgid "Options"
+msgid "File options"
 msgstr ""
 
 #: tdlgimport.caption
@@ -14173,6 +14173,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrorloadingdatafromjsonfile"
 msgid "Error loading data from the JSON file: %s"
+msgstr ""
+
+#: utils_locale.rserrormoduleisdifferent
+msgid "The file module is different from the Quick Entry module."
 msgstr ""
 
 #: utils_locale.rserrormontadata

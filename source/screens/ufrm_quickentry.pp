@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids, Buttons, ComCtrls, StdCtrls, Menus,
-  Character, data_types, DB, SQLDB;
+  Character, data_types, DB, SQLDB, fpjson, jsonparser;
 
 type
 
@@ -33,7 +33,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure qeGridColRowDeleted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
     procedure qeGridColRowInserted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
+    procedure qeGridGetCellHint(Sender: TObject; ACol, ARow: Integer; var HintText: String);
     procedure qeGridKeyPress(Sender: TObject; var Key: char);
+    procedure qeGridPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
     procedure qeGridSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
     procedure qeGridSelectEditor(Sender: TObject; aCol, aRow: Integer; var Editor: TWinControl);
     procedure qeGridSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
@@ -42,6 +44,7 @@ type
     procedure sbAddRowsClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
     procedure sbDelRowsClick(Sender: TObject);
+    procedure sbImportClick(Sender: TObject);
   private
     FColFieldNames: TStringList;
     FColRules: array of TValidationRules;
@@ -57,6 +60,7 @@ type
     function ColIsNumeric(aCol: Integer): Boolean;
     function ColIsSearchable(aCol: Integer): Boolean;
     function ColIsTime(aCol: Integer): Boolean;
+    function GetValidateCellHint(aCol, aRow: Integer): String;
     function GridHasData: Boolean;
 
     procedure LoadColsBands;
@@ -94,8 +98,10 @@ type
     procedure LoadColumns;
 
     procedure LoadData;
+    procedure LoadJsonToGrid(const aFileName: String);
     function RowHasData(aRow: Integer): Boolean;
     procedure SaveData;
+    procedure SaveGridToJson(const aFileName: String);
 
     procedure SetDateCols;
     procedure SetIntegerCols;
@@ -105,6 +111,10 @@ type
 
     procedure UpdateButtons;
     procedure UpdateRowCounter;
+
+    function ValidateAll: Boolean;
+    function ValidateCell(aCol, aRow: Integer): Boolean;
+    function ValidateRow(aRow: Integer): Boolean;
   public
     property TableType: TTableType read FTableType write FTableType;
   end;
@@ -115,8 +125,9 @@ var
 implementation
 
 uses
-  utils_locale, data_columns, utils_global, utils_dialogs, utils_finddialogs, data_getvalue, models_geo, models_taxonomy,
-  utils_themes, uDarkStyleParams, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations,
+  data_columns, data_getvalue, models_record_types, models_geo, models_taxonomy,
+  uDarkStyleParams,
   udm_main;
 
 {$R *.lfm}
@@ -203,6 +214,8 @@ begin
 end;
 
 procedure TfrmQuickEntry.FormShow(Sender: TObject);
+var
+  filePath: String;
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
@@ -212,6 +225,15 @@ begin
   SBar.Panels[2].Text := LocaleTablesDict.KeyData[FTableType];
 
   FModuleName := TABLE_NAMES[FTableType];
+
+  // Create the subfolder in AppData dir
+  {$IFDEF DEBUG}
+  filePath := ConcatPaths([AppDataDir, 'debug_quickentry']);
+  {$ELSE}
+  filePath := ConcatPaths([AppDataDir, 'quickentry']);
+  {$ENDIF}
+  if not DirectoryExists(filePath) then
+    CreateDir(filePath);
 
   {$IFDEF DEBUG}
   FFileName := ConcatPaths([AppDataDir, IncludeTrailingPathDelimiter('debug_quickentry'), FModuleName + '.json']);
@@ -225,6 +247,111 @@ begin
 
   if (FileExists(FFileName)) then
     LoadData;
+end;
+
+function TfrmQuickEntry.GetValidateCellHint(aCol, aRow: Integer): String;
+var
+  cellValue: String;
+  dummyF: Double;
+  dummyI: Longint;
+  dummyDT: TDateTime;
+  lst: TStringList;
+begin
+  Result := EmptyStr;
+
+  cellValue := Trim(qeGrid.Cells[aCol, aRow]);
+
+  // Required field
+  if FColRules[aCol].RequiredField then
+  begin
+    if cellValue = EmptyStr then
+    begin
+      Result := Format(rsRequiredField, [qeGrid.Columns[aCol].Title.Caption]);
+      Exit;
+    end;
+  end;
+
+  // Maximum length
+  if FColRules[aCol].MaxLength > 0 then
+  begin
+    if Length(cellValue) > FColRules[aCol].MaxLength then
+    begin
+      Result := Format(rsExceededMaxLength, [qeGrid.Columns[aCol].Title.Caption,
+          Length(cellValue), FColRules[aCol].MaxLength]);
+      Exit;
+    end;
+  end;
+
+  // Unique value
+  if FColRules[aCol].UniqueField then
+  begin
+    if RecordExists(FTableType, FColFieldNames[aCol], cellValue) then
+    begin
+      Result := Format(rsActiveRecordDuplicated, [qeGrid.Columns[aCol].Title.Caption, cellValue]);
+      Exit;
+    end;
+  end;
+
+  // Value range
+  if FColRules[aCol].MaxValue > 0 then
+  begin
+    if ColIsNumeric(aCol) then
+    begin
+      if TryStrToFloat(cellValue, dummyF) then
+      begin
+        if (dummyF < FColRules[aCol].MinValue) or (dummyF > FColRules[aCol].MaxValue) then
+        begin
+          Result := Format(rsValueNotInRange, [qeGrid.Columns[aCol].Title.Caption,
+              FColRules[aCol].MinValue, FColRules[aCol].MaxValue]);
+          Exit;
+        end;
+      end;
+    end
+    else
+    if ColIsInteger(aCol) then
+    begin
+      if TryStrToInt(cellValue, dummyI) then
+      begin
+        if (dummyI < FColRules[aCol].MinValue) or (dummyI > FColRules[aCol].MaxValue) then
+        begin
+          Result := Format(rsValueNotInRange, [qeGrid.Columns[aCol].Title.Caption,
+              FColRules[aCol].MinValue, FColRules[aCol].MaxValue]);
+          Exit;
+        end;
+      end;
+    end;
+  end;
+
+  // Date and time
+  if FColRules[aCol].MaxDateTime <> NullDateTime then
+  begin
+    if TryStrToDateTime(cellValue, dummyDT) then
+    begin
+      if (dummyDT < FColRules[aCol].MinDateTime) or (dummyDT > FColRules[aCol].MaxDateTime) then
+      begin
+        Result := Format(rsDateTimeNotInRange, [qeGrid.Columns[aCol].Title.Caption,
+            DateTimeToStr(FColRules[aCol].MinDateTime), DateTimeToStr(FColRules[aCol].MaxDateTime)]);
+        Exit;
+      end;
+    end;
+  end;
+
+  // Value list
+  if FColRules[aCol].ValueList <> EmptyStr then
+  begin
+    lst := TStringList.Create;
+    try
+      lst.Delimiter := ',';
+      lst.DelimitedText := FColRules[aCol].ValueList;
+      if (lst.IndexOf(cellValue) < 0) then
+      begin
+        Result := Format(rsValueNotInSet, [qeGrid.Columns[aCol].Title.Caption, FColRules[aCol].ValueList]);
+        Exit;
+      end;
+    finally
+      FreeAndNil(lst);
+    end;
+  end;
 end;
 
 function TfrmQuickEntry.GridHasData: Boolean;
@@ -4376,9 +4503,56 @@ end;
 procedure TfrmQuickEntry.LoadData;
 begin
   // Load data from file
+  LoadJsonToGrid(FFileName);
 
   // Validate data
+  //ValidateAll;
+end;
 
+procedure TfrmQuickEntry.LoadJsonToGrid(const aFileName: String);
+var
+  Obj, RowObj: TJSONObject;
+  Rows: TJSONArray;
+  Parser: TJSONParser;
+  JSONText: TStringList;
+  i, j, FileSchema: Integer;
+  FileModule: String;
+begin
+  JSONText := TStringList.Create;
+  try
+    JSONText.LoadFromFile(aFileName);
+    Parser := TJSONParser.Create(JSONText.Text, []);
+    try
+      Obj := Parser.Parse as TJSONObject;
+      try
+        // Header
+        FileModule := Obj.Get('module_name', '');
+        FileSchema := Obj.Get('schema_version', 1);
+
+        // File and grid module differ
+        if FileModule <> FModuleName then
+        begin
+          MsgDlg(rsTitleError, rsErrorModuleIsDifferent, mtError);
+          Exit;
+        end;
+
+        // Rows
+        Rows := Obj.Arrays['rows'];
+        for i := 0 to Rows.Count - 1 do
+        begin
+          RowObj := Rows.Objects[i];
+          for j := 0 to qeGrid.ColCount - 1 do
+            qeGrid.Cells[j, i + 1] := RowObj.Get(FColFieldNames[j], '');
+        end;
+      finally
+        Obj.Free;
+      end;
+    finally
+      Parser.Free;
+    end;
+  finally
+    JSONText.Free;
+  end;
 end;
 
 procedure TfrmQuickEntry.qeGridColRowDeleted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
@@ -4389,6 +4563,14 @@ end;
 procedure TfrmQuickEntry.qeGridColRowInserted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
 begin
   UpdateRowCounter;
+end;
+
+procedure TfrmQuickEntry.qeGridGetCellHint(Sender: TObject; ACol, ARow: Integer; var HintText: String);
+begin
+  if GridHasData then
+    HintText := GetValidateCellHint(ACol, ARow)
+  else
+    HintText := EmptyStr;
 end;
 
 procedure TfrmQuickEntry.qeGridKeyPress(Sender: TObject; var Key: char);
@@ -4497,6 +4679,16 @@ begin
   end;
 end;
 
+procedure TfrmQuickEntry.qeGridPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
+begin
+  if GridHasData then
+    if not ValidateCell(aCol, aRow) then
+      if IsDarkModeEnabled then
+        qeGrid.Canvas.Brush.Color := clSystemCriticalBGDark
+      else
+        qeGrid.Canvas.Brush.Color := clSystemCriticalBGLight;
+end;
+
 procedure TfrmQuickEntry.qeGridSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
 begin
   SBar.Panels[0].Text := Format('%d:%d', [aCol+1, aRow]);
@@ -4574,19 +4766,51 @@ end;
 
 procedure TfrmQuickEntry.SaveData;
 begin
-  // Create the subfolder in AppData dir
-  {$IFDEF DEBUG}
-  if not DirectoryExists(ConcatPaths([AppDataDir, 'debug_quickentry'])) then
-    CreateDir(ConcatPaths([AppDataDir, 'debug_quickentry']));
-  {$ELSE}
-  if not DirectoryExists(ConcatPaths([AppDataDir, 'quickentry'])) then
-    CreateDir(ConcatPaths([AppDataDir, 'quickentry']));
-  {$ENDIF}
-
   // Check for invalid data
+  //if not ValidateAll then
+  //  Exit;
 
   // Save to data file
+  SaveGridToJson(FFileName);
+end;
 
+procedure TfrmQuickEntry.SaveGridToJson(const aFileName: String);
+var
+  Obj, RowObj: TJSONObject;
+  Rows: TJSONArray;
+  i, j: Integer;
+begin
+  Obj := TJSONObject.Create;
+  try
+    // Header
+    Obj.Add('module_name', FModuleName);
+    Obj.Add('schema_version', FSchemaVersion);
+
+    // Rows array
+    Rows := TJSONArray.Create;
+    for i := 1 to qeGrid.RowCount - 1 do
+    begin
+      RowObj := TJSONObject.Create;
+      for j := 0 to qeGrid.ColCount - 1 do
+      begin
+        RowObj.Add(FColFieldNames[j], qeGrid.Cells[j, i]);
+      end;
+      Rows.Add(RowObj);
+    end;
+
+    Obj.Add('rows', Rows);
+
+    // Save to file
+    with TStringList.Create do
+    try
+      Text := Obj.FormatJSON([], 2);
+      SaveToFile(aFileName);
+    finally
+      Free;
+    end;
+  finally
+    FreeAndNil(Obj);
+  end;
 end;
 
 procedure TfrmQuickEntry.sbAddRowsClick(Sender: TObject);
@@ -4609,6 +4833,15 @@ begin
     qeGrid.DeleteRow(qeGrid.Row)
   else
     qeGrid.Clean([gzNormal]);
+end;
+
+procedure TfrmQuickEntry.sbImportClick(Sender: TObject);
+begin
+  if not ValidateAll then
+    Exit;
+
+  // Import data
+
 end;
 
 procedure TfrmQuickEntry.SetDateCols;
@@ -4782,6 +5015,243 @@ begin
     SBar.Panels[1].Text := Format(rsRows, [qeGrid.RowCount - 1])
   else
     SBar.Panels[1].Text := Format(rsRow, [qeGrid.RowCount - 1]);
+end;
+
+function TfrmQuickEntry.ValidateAll: Boolean;
+var
+  r: Integer;
+begin
+  Result := True;
+
+  for r := 1 to qeGrid.RowCount - 1 do
+  begin
+    Result := ValidateRow(r);
+    if not Result then
+      Break;
+  end;
+end;
+
+function TfrmQuickEntry.ValidateCell(aCol, aRow: Integer): Boolean;
+var
+  cellValue: String;
+  dummyF: Double;
+  dummyI: Longint;
+  dummyDT: TDateTime;
+  lst: TStringList;
+begin
+  Result := True;
+
+  cellValue := Trim(qeGrid.Cells[aCol, aRow]);
+
+  // Required field
+  if FColRules[aCol].RequiredField then
+  begin
+    if cellValue = EmptyStr then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  // Maximum length
+  if FColRules[aCol].MaxLength > 0 then
+  begin
+    if Length(cellValue) > FColRules[aCol].MaxLength then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  // Unique value
+  if FColRules[aCol].UniqueField then
+  begin
+    if RecordExists(FTableType, FColFieldNames[aCol], cellValue) then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  // Value range
+  if FColRules[aCol].MaxValue > 0 then
+  begin
+    if ColIsNumeric(aCol) then
+    begin
+      if TryStrToFloat(cellValue, dummyF) then
+      begin
+        if (dummyF < FColRules[aCol].MinValue) or (dummyF > FColRules[aCol].MaxValue) then
+        begin
+          Result := False;
+          Exit;
+        end;
+      end;
+    end
+    else
+    if ColIsInteger(aCol) then
+    begin
+      if TryStrToInt(cellValue, dummyI) then
+      begin
+        if (dummyI < FColRules[aCol].MinValue) or (dummyI > FColRules[aCol].MaxValue) then
+        begin
+          Result := False;
+          Exit;
+        end;
+      end;
+    end;
+  end;
+
+  // Date and time
+  if FColRules[aCol].MaxDateTime <> NullDateTime then
+  begin
+    if TryStrToDateTime(cellValue, dummyDT) then
+    begin
+      if (dummyDT < FColRules[aCol].MinDateTime) or (dummyDT > FColRules[aCol].MaxDateTime) then
+      begin
+        Result := False;
+        Exit;
+      end;
+    end;
+  end;
+
+  // Value list
+  if FColRules[aCol].ValueList <> EmptyStr then
+  begin
+    lst := TStringList.Create;
+    try
+      lst.Delimiter := ',';
+      lst.DelimitedText := FColRules[aCol].ValueList;
+      if (lst.IndexOf(cellValue) < 0) then
+      begin
+        Result := False;
+        Exit;
+      end;
+    finally
+      FreeAndNil(lst);
+    end;
+  end;
+end;
+
+function TfrmQuickEntry.ValidateRow(aRow: Integer): Boolean;
+var
+  aCol, dummyI: Integer;
+  dummyF: Extended;
+  dummyDT: TDateTime;
+  lst: TStringList;
+  cellValue, Msg: String;
+begin
+  Result := True;
+  Msg := EmptyStr;
+
+  for aCol := 0 to qeGrid.ColCount - 1 do
+  begin
+    cellValue := Trim(qeGrid.Cells[aCol, aRow]);
+
+    // Required field
+    if FColRules[aCol].RequiredField then
+    begin
+      if cellValue = EmptyStr then
+      begin
+        Result := False;
+        Msg := Format(rsRequiredField, [qeGrid.Columns[aCol].Title.Caption]);
+        Break;
+      end;
+    end;
+
+    // Maximum length
+    if FColRules[aCol].MaxLength > 0 then
+    begin
+      if Length(cellValue) > FColRules[aCol].MaxLength then
+      begin
+        Result := False;
+        Msg := Format(rsExceededMaxLength, [qeGrid.Columns[aCol].Title.Caption,
+          Length(cellValue), FColRules[aCol].MaxLength]);
+        Break;
+      end;
+    end;
+
+    // Unique value
+    if FColRules[aCol].UniqueField then
+    begin
+      if RecordExists(FTableType, FColFieldNames[aCol], cellValue) then
+      begin
+        Result := False;
+        Msg := Format(rsActiveRecordDuplicated, [qeGrid.Columns[aCol].Title.Caption, cellValue]);
+        Break;
+      end;
+    end;
+
+    // Value range
+    if FColRules[aCol].MaxValue > 0 then
+    begin
+      if ColIsNumeric(aCol) then
+      begin
+        if TryStrToFloat(cellValue, dummyF) then
+        begin
+          if (dummyF < FColRules[aCol].MinValue) or (dummyF > FColRules[aCol].MaxValue) then
+          begin
+            Result := False;
+            Msg := Format(rsValueNotInRange, [qeGrid.Columns[aCol].Title.Caption,
+              FColRules[aCol].MinValue, FColRules[aCol].MaxValue]);
+            Break;
+          end;
+        end;
+      end
+      else
+      if ColIsInteger(aCol) then
+      begin
+        if TryStrToInt(cellValue, dummyI) then
+        begin
+          if (dummyI < FColRules[aCol].MinValue) or (dummyI > FColRules[aCol].MaxValue) then
+          begin
+            Result := False;
+            Msg := Format(rsValueNotInRange, [qeGrid.Columns[aCol].Title.Caption,
+              FColRules[aCol].MinValue, FColRules[aCol].MaxValue]);
+            Break;
+          end;
+        end;
+      end;
+    end;
+
+    // Date and time
+    if FColRules[aCol].MaxDateTime <> NullDateTime then
+    begin
+      if TryStrToDateTime(cellValue, dummyDT) then
+      begin
+        if (dummyDT < FColRules[aCol].MinDateTime) or (dummyDT > FColRules[aCol].MaxDateTime) then
+        begin
+          Result := False;
+          Msg := Format(rsDateTimeNotInRange, [qeGrid.Columns[aCol].Title.Caption,
+            DateTimeToStr(FColRules[aCol].MinDateTime), DateTimeToStr(FColRules[aCol].MaxDateTime)]);
+          Break;
+        end;
+      end;
+    end;
+
+    // Value list
+    if FColRules[aCol].ValueList <> EmptyStr then
+    begin
+      lst := TStringList.Create;
+      try
+        lst.Delimiter := ',';
+        lst.DelimitedText := FColRules[aCol].ValueList;
+        if (lst.IndexOf(cellValue) < 0) then
+        begin
+          Result := False;
+          Msg := Format(rsValueNotInSet, [qeGrid.Columns[aCol].Title.Caption, FColRules[aCol].ValueList]);
+          Break;
+        end;
+      finally
+        FreeAndNil(lst);
+      end;
+    end;
+  end;
+
+  // Show result messsage
+  if Result = False then
+  begin
+    MsgDlg(rsTitleError, Msg + ' ' + Format('(Col %d; Lin %d)', [aCol, aRow]), mtError);
+  end;
 end;
 
 end.

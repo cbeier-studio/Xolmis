@@ -185,6 +185,7 @@ uses
     rsErrorValidatingPassword = 'Error validating password: %s';
     rsErrorFieldsAndValuesDiffer = 'The length of field and value lists do not match.';
     rsErrorLoadingDataFromJSONFile = 'Error loading data from the JSON file: %s';
+    rsErrorModuleIsDifferent = 'The file module is different from the Quick Entry module.';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';

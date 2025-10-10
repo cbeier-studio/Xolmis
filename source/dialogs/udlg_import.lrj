@@ -11,7 +11,7 @@
 {"hash":123838542,"name":"tdlgimport.esourcefile.texthint","sourcebytes":[83,101,108,101,99,116,32,97,32,102,105,108,101,46,46,46],"value":"Select a file..."},
 {"hash":64035582,"name":"tdlgimport.lblsourceinstruction.caption","sourcebytes":[83,101,108,101,99,116,32,97,32,116,97,114,103,101,116,32,116,97,98,108,101,32,97,110,100,32,97,32,115,111,117,114,99,101,32,102,105,108,101,32,116,111,32,105,109,112,111,114,116,46],"value":"Select a target table and a source file to import."},
 {"hash":231577118,"name":"tdlgimport.cbtarget.texthint","sourcebytes":[83,101,108,101,99,116,32,97,32,116,97,98,108,101,46,46,46],"value":"Select a table..."},
-{"hash":108725763,"name":"tdlgimport.btnoptions.caption","sourcebytes":[79,112,116,105,111,110,115],"value":"Options"},
+{"hash":44753699,"name":"tdlgimport.btnoptions.caption","sourcebytes":[70,105,108,101,32,111,112,116,105,111,110,115],"value":"File options"},
 {"hash":80724659,"name":"tdlgimport.lbltitlefields.caption","sourcebytes":[70,105,101,108,100,115],"value":"Fields"},
 {"hash":148639950,"name":"tdlgimport.lblfieldsinstruction.caption","sourcebytes":[67,111,110,102,105,103,117,114,101,32,116,104,101,32,102,105,101,108,100,32,109,97,112,112,105,110,103,115,32,102,114,111,109,32,116,104,101,32,115,111,117,114,99,101,32,102,105,108,101,32,116,111,32,116,104,101,32,116,97,114,103,101,116,32,116,97,98,108,101,46],"value":"Configure the field mappings from the source file to the target table."},
 {"hash":84178580,"name":"tdlgimport.gridfields.columns[0].title.caption","sourcebytes":[73,109,112,111,114,116],"value":"Import"},

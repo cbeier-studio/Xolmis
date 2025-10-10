@@ -464,12 +464,12 @@ begin
     R.Email := FieldByName('email_addr').AsString;
     R.Phone := FieldByName('phone_num').AsString;
     R.Notes := FieldByName('notes').AsString;
-    R.UserInserted := FieldByName('user_inserted').AsInteger;
-    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
     GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
     GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     R.Exported := FieldByName('exported_status').AsBoolean;
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
