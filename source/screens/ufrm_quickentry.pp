@@ -63,6 +63,40 @@ type
     function GetValidateCellHint(aCol, aRow: Integer): String;
     function GridHasData: Boolean;
 
+    procedure ImportData;
+    procedure ImportDataBands;
+    procedure ImportDataBotanicTaxa;
+    procedure ImportDataCaptures;
+    procedure ImportDataEggs;
+    procedure ImportDataExpeditions;
+    procedure ImportDataFeathers;
+    procedure ImportDataGazetteer;
+    procedure ImportDataIndividuals;
+    procedure ImportDataInstitutions;
+    procedure ImportDataMethods;
+    procedure ImportDataNestOwners;
+    procedure ImportDataNestRevisions;
+    procedure ImportDataNests;
+    procedure ImportDataNetEfforts;
+    procedure ImportDataPermanentNets;
+    procedure ImportDataPermits;
+    procedure ImportDataProjectBudgets;
+    procedure ImportDataProjectChronograms;
+    procedure ImportDataProjectExpenses;
+    procedure ImportDataProjectGoals;
+    procedure ImportDataProjects;
+    procedure ImportDataProjectTeam;
+    procedure ImportDataResearchers;
+    procedure ImportDataSamplePreps;
+    procedure ImportDataSamplingPlots;
+    procedure ImportDataSightings;
+    procedure ImportDataSpecimenCollectors;
+    procedure ImportDataSpecimens;
+    procedure ImportDataSurveys;
+    procedure ImportDataSurveyTeam;
+    procedure ImportDataVegetation;
+    procedure ImportDataWeatherLogs;
+
     procedure LoadColsBands;
     procedure LoadColsBotanicTaxa;
     procedure LoadColsCaptures;
@@ -126,7 +160,8 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations,
-  data_columns, data_getvalue, models_record_types, models_geo, models_taxonomy,
+  data_consts, data_columns, data_getvalue,
+  models_record_types, models_taxonomy, models_bands,
   uDarkStyleParams,
   udm_main;
 
@@ -256,6 +291,7 @@ var
   dummyI: Longint;
   dummyDT: TDateTime;
   lst: TStringList;
+  cellKey: Integer;
 begin
   Result := EmptyStr;
 
@@ -285,6 +321,16 @@ begin
   // Unique value
   if FColRules[aCol].UniqueField then
   begin
+    if (FTableType = tbIndividuals) and (FColFieldNames[aCol] = 'band') then
+    begin
+      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, cellValue + ' CEMAVE');
+      if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
+      begin
+        Result := Format(rsActiveRecordDuplicated, [qeGrid.Columns[aCol].Title.Caption, cellValue]);
+        Exit;
+      end;
+    end
+    else
     if RecordExists(FTableType, FColFieldNames[aCol], cellValue) then
     begin
       Result := Format(rsActiveRecordDuplicated, [qeGrid.Columns[aCol].Title.Caption, cellValue]);
@@ -364,6 +410,307 @@ begin
     for c := qeGrid.FixedCols to qeGrid.ColCount - 1 do
       if Trim(qeGrid.Cells[c, r]) <> EmptyStr then
         Exit(True); // Found some cell with data
+end;
+
+procedure TfrmQuickEntry.ImportData;
+begin
+  case FTableType of
+    tbNone: ;
+    tbUsers: ;
+    tbRecordHistory: ;
+    tbRecordVerifications: ;
+    tbGazetteer:            ImportDataGazetteer;
+    tbSamplingPlots:        ImportDataSamplingPlots;
+    tbPermanentNets:        ImportDataPermanentNets;
+    tbInstitutions:         ImportDataInstitutions;
+    tbPeople:               ImportDataResearchers;
+    tbProjects:             ImportDataProjects;
+    tbProjectTeams:         ImportDataProjectTeam;
+    tbPermits:              ImportDataPermits;
+    tbTaxonRanks: ;
+    tbZooTaxa: ;
+    tbBotanicTaxa:          ImportDataBotanicTaxa;
+    tbBands:                ImportDataBands;
+    tbBandHistory: ;
+    tbIndividuals:          ImportDataIndividuals;
+    tbCaptures:             ImportDataCaptures;
+    tbFeathers:             ImportDataFeathers;
+    tbNests:                ImportDataNests;
+    tbNestOwners:           ImportDataNestOwners;
+    tbNestRevisions:        ImportDataNestRevisions;
+    tbEggs:                 ImportDataEggs;
+    tbMethods:              ImportDataMethods;
+    tbExpeditions:          ImportDataExpeditions;
+    tbSurveys:              ImportDataSurveys;
+    tbSurveyTeams:          ImportDataSurveyTeam;
+    tbNetsEffort:           ImportDataNetEfforts;
+    tbWeatherLogs:          ImportDataWeatherLogs;
+    tbSightings:            ImportDataSightings;
+    tbSpecimens:            ImportDataSpecimens;
+    tbSamplePreps:          ImportDataSamplePreps;
+    tbSpecimenCollectors:   ImportDataSpecimenCollectors;
+    tbImages: ;
+    tbAudioLibrary: ;
+    tbDocuments: ;
+    tbVegetation:           ImportDataVegetation;
+    tbProjectGoals:         ImportDataProjectGoals;
+    tbProjectChronograms:   ImportDataProjectChronograms;
+    tbProjectBudgets:       ImportDataProjectBudgets;
+    tbProjectExpenses:      ImportDataProjectExpenses;
+    tbPoiLibrary: ;
+  end;
+end;
+
+procedure TfrmQuickEntry.ImportDataBands;
+var
+  Obj: TBand;
+  Repo: TBandRepository;
+  r: Integer;
+begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TBand.Create();
+    Repo := TBandRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Size := qeGrid.Cells[0, r];
+        Obj.Number := StrToInt(qeGrid.Cells[1, r]);
+        // Type
+        if (qeGrid.Cells[2, r] = rsBandOpen) then
+          Obj.BandType := mkButtEndBand
+        else
+        if (qeGrid.Cells[2, r] = rsBandFlag) then
+          Obj.BandType := mkFlag
+        else
+        if (qeGrid.Cells[2, r] = rsBandNeck) then
+          Obj.BandType := mkCollar
+        else
+        if (qeGrid.Cells[2, r] = rsBandWingTag) then
+          Obj.BandType := mkWingTag
+        else
+        if (qeGrid.Cells[2, r] = rsBandTriangular) then
+          Obj.BandType := mkTriangularBand
+        else
+        if (qeGrid.Cells[2, r] = rsBandLockOn) then
+          Obj.BandType := mkLockOnBand
+        else
+        if (qeGrid.Cells[2, r] = rsBandRivet) then
+          Obj.BandType := mkRivetBand
+        else
+        if (qeGrid.Cells[2, r] = rsBandClosed) then
+          Obj.BandType := mkClosedBand
+        else
+          Obj.BandType := mkOther;
+        // Status
+        if (qeGrid.Cells[3, r] = rsBandAvailable) then
+          Obj.Status := bstAvailable
+        else
+        if (qeGrid.Cells[3, r] = rsBandUsed) then
+          Obj.Status := bstUsed
+        else
+        if (qeGrid.Cells[3, r] = rsBandRemoved) then
+          Obj.Status := bstRemoved
+        else
+        if (qeGrid.Cells[3, r] = rsBandBroken) then
+          Obj.Status := bstBroken
+        else
+        if (qeGrid.Cells[3, r] = rsBandLost) then
+          Obj.Status := bstLost
+        else
+        if (qeGrid.Cells[3, r] = rsBandTransferred) then
+          Obj.Status := bstTransferred;
+        // Reported
+        Obj.Reported := qeGrid.Cells[4, r] = '1';
+        // Source
+        if (qeGrid.Cells[5, r] = rsBandAcquiredFromSupplier) then
+          Obj.Source := bscAcquiredFromSupplier
+        else
+        if (qeGrid.Cells[5, r] = rsBandTransferBetweenBanders) then
+          Obj.Source := bscTransferBetweenBanders
+        else
+        if (qeGrid.Cells[5, r] = rsBandLivingBirdBandedByOthers) then
+          Obj.Source := bscLivingBirdBandedByOthers
+        else
+        if (qeGrid.Cells[5, r] = rsBandDeadBirdBandedByOthers) then
+          Obj.Source := bscDeadBirdBandedByOthers
+        else
+        if (qeGrid.Cells[5, r] = rsBandFoundLoose) then
+          Obj.Source := bscFoundLoose;
+        Obj.SupplierId := GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, qeGrid.Cells[6, r]);
+        Obj.CarrierId := GetKey('people', COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[7, r]);
+        Obj.ProjectId := GetKey('projects', COL_PROJECT_ID, COL_SHORT_TITLE, qeGrid.Cells[8, r]);
+        Obj.Notes := qeGrid.Cells[9, r];
+
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
+end;
+
+procedure TfrmQuickEntry.ImportDataBotanicTaxa;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataCaptures;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataEggs;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataExpeditions;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataFeathers;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataGazetteer;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataIndividuals;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataInstitutions;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataMethods;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataNestOwners;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataNestRevisions;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataNests;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataNetEfforts;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataPermanentNets;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataPermits;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataProjectBudgets;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataProjectChronograms;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataProjectExpenses;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataProjectGoals;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataProjects;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataProjectTeam;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataResearchers;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataSamplePreps;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataSamplingPlots;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataSightings;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataSpecimenCollectors;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataSpecimens;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataSurveys;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataSurveyTeam;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataVegetation;
+begin
+
+end;
+
+procedure TfrmQuickEntry.ImportDataWeatherLogs;
+begin
+
 end;
 
 procedure TfrmQuickEntry.LoadColsBands;
@@ -4474,6 +4821,7 @@ begin
     tbBandHistory: ;
     tbIndividuals:          LoadColsIndividuals;
     tbCaptures:             LoadColsCaptures;
+    tbFeathers:             LoadColsFeathers;
     tbNests:                LoadColsNests;
     tbNestOwners:           LoadColsNestOwners;
     tbNestRevisions:        LoadColsNestRevisions;
@@ -4496,7 +4844,7 @@ begin
     tbProjectChronograms:   LoadColsProjectChronograms;
     tbProjectBudgets:       LoadColsProjectBudgets;
     tbProjectExpenses:      LoadColsProjectExpenses;
-    tbFeathers:             LoadColsFeathers;
+    tbPoiLibrary: ;
   end;
 end;
 
@@ -4841,7 +5189,7 @@ begin
     Exit;
 
   // Import data
-
+  ImportData;
 end;
 
 procedure TfrmQuickEntry.SetDateCols;
@@ -5038,10 +5386,12 @@ var
   dummyI: Longint;
   dummyDT: TDateTime;
   lst: TStringList;
+  cellKey: Integer;
 begin
   Result := True;
 
   cellValue := Trim(qeGrid.Cells[aCol, aRow]);
+  cellKey := 0;
 
   // Required field
   if FColRules[aCol].RequiredField then
@@ -5066,6 +5416,16 @@ begin
   // Unique value
   if FColRules[aCol].UniqueField then
   begin
+    if (FTableType = tbIndividuals) and (FColFieldNames[aCol] = 'band') then
+    begin
+      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, cellValue + ' CEMAVE');
+      if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
+      begin
+        Result := False;
+        Exit;
+      end;
+    end
+    else
     if RecordExists(FTableType, FColFieldNames[aCol], cellValue) then
     begin
       Result := False;
@@ -5134,7 +5494,7 @@ end;
 
 function TfrmQuickEntry.ValidateRow(aRow: Integer): Boolean;
 var
-  aCol, dummyI: Integer;
+  aCol, dummyI, cellKey: Integer;
   dummyF: Extended;
   dummyDT: TDateTime;
   lst: TStringList;
@@ -5173,6 +5533,16 @@ begin
     // Unique value
     if FColRules[aCol].UniqueField then
     begin
+      if (FTableType = tbIndividuals) and (FColFieldNames[aCol] = 'band') then
+      begin
+        cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, cellValue + ' CEMAVE');
+        if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
+        begin
+          Result := False;
+          Exit;
+        end;
+      end
+      else
       if RecordExists(FTableType, FColFieldNames[aCol], cellValue) then
       begin
         Result := False;
