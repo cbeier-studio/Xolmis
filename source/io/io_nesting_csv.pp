@@ -123,6 +123,7 @@ var
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
   Taxon: TTaxon;
+  NestRepo: TNestRepository;
   Nest: TNest;
 begin
   if not FileExists(aCSVFile) then
@@ -140,6 +141,7 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  NestRepo := TNestRepository.Create(DMM.sqlCon);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
@@ -181,8 +183,9 @@ begin
 
 
           // Check if the nest exists
-          if not Nest.Find(CSV.FieldByName('field_number').AsString, Taxon.Id, Toponimo.Id,
-                    StrToDate(CSV.FieldByName('found_day').AsString)) then
+          NestRepo.FindByFieldNumber(CSV.FieldByName('field_number').AsString, Taxon.Id, Toponimo.Id,
+                    StrToDate(CSV.FieldByName('found_day').AsString), Nest);
+          if (Nest.Id = 0) then
           begin
             // if not, create a new nest
             Nest.FieldNumber := CSV.FieldByName('field_number').AsString;
@@ -227,7 +230,7 @@ begin
             Nest.FullName := GetNestFullName(Nest.FoundDate, Nest.TaxonId, Nest.LocalityId, Nest.FieldNumber);
             Nest.UserInserted := ActiveUser.Id;
 
-            Nest.Insert;
+            NestRepo.Insert(Nest);
 
             // Insert record history
             WriteRecHistory(tbNests, haCreated, Nest.Id, '', '', '', rsInsertedByImport);
@@ -272,6 +275,7 @@ begin
     CSV.Close;
     FreeAndNil(CSV);
     SiteRepo.Free;
+    NestRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
@@ -283,7 +287,9 @@ end;
 
 procedure ImportNestRevisionsV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
+  RevisionRepo: TNestRevisionRepository;
   Revision: TNestRevision;
+  NestRepo: TNestRepository;
   Nest: TNest;
   Taxon: TTaxon;
   CSV: TSdfDataSet;
@@ -305,6 +311,8 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  NestRepo := TNestRepository.Create(DMM.sqlCon);
+  RevisionRepo := TNestRevisionRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -350,10 +358,11 @@ begin
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
-            Nest.GetData(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString));
+            NestRepo.GetById(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString), Nest);
 
           // Check if the nest revision exists
-          if not Revision.Find(Nest.Id, aDate, aTime, aObserver) then
+          RevisionRepo.FindByDate(Nest.Id, aDate, aTime, aObserver, Revision);
+          if (Revision.Id = 0) then
           begin
             Revision.NestId := Nest.Id;
             Revision.RevisionDate := CSV.FieldByName('revision_date').AsDateTime;
@@ -386,7 +395,7 @@ begin
             Revision.FullName := GetNestRevisionFullName(Revision.RevisionDate, Revision.NestId, NEST_STAGES[Revision.NestStage], NEST_STATUSES[Revision.NestStatus]);
             Revision.UserInserted := ActiveUser.Id;
 
-            Revision.Insert;
+            RevisionRepo.Insert(Revision);
 
             // Insert record history
             WriteRecHistory(tbNestRevisions, haCreated, Revision.Id, '', '', '', rsInsertedByImport);
@@ -430,6 +439,8 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
+    RevisionRepo.Free;
+    NestRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
@@ -443,7 +454,9 @@ procedure ImportEggDataV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   aObserver: Integer;
   Taxon: TTaxon;
+  NestRepo: TNestRepository;
   Nest: TNest;
+  EggRepo: TEggRepository;
   Egg: TEgg;
   CSV: TSdfDataSet;
   aDate: String;
@@ -463,6 +476,8 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  NestRepo := TNestRepository.Create(DMM.sqlCon);
+  EggRepo := TEggRepository. Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -507,10 +522,11 @@ begin
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
-            Nest.GetData(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString));
+            NestRepo.GetById(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString), Nest);
 
           // Check if the egg exists
-          if not Egg.Find(Nest.Id, CSV.FieldByName('field_number').AsString, aDate, aObserver) then
+          EggRepo.FindByFieldNumber(Nest.Id, CSV.FieldByName('field_number').AsString, aDate, aObserver, Egg);
+          if (Egg.Id = 0) then
           begin
             Egg.FieldNumber := CSV.FieldByName('field_number').AsString;
             Egg.EggSeq := CSV.FieldByName('egg_seq').AsInteger;
@@ -563,7 +579,7 @@ begin
             Egg.FullName := CSV.FieldByName('full_name').AsString;
             Egg.UserInserted := ActiveUser.Id;
 
-            Egg.Insert;
+            EggRepo.Insert(Egg);
 
             // Insert record history
             WriteRecHistory(tbEggs, haCreated, Egg.Id, '', '', '', rsInsertedByImport);
@@ -607,6 +623,8 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
+    EggRepo.Free;
+    NestRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;

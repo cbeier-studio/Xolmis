@@ -1249,14 +1249,16 @@ end;
 procedure TDMI.qNestsAfterPost(DataSet: TDataSet);
 var
   NewNest: TNest;
+  FRepo: TNestRepository;
   lstDiff: TStrings;
   D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldNest) then
   begin
+    FRepo := TNestRepository.Create(DMM.sqlCon);
     NewNest := TNest.Create;
-    NewNest.LoadFromDataSet(DataSet);
+    FRepo.Hydrate(DataSet, NewNest);
     lstDiff := TStringList.Create;
     try
       if NewNest.Diff(OldNest, lstDiff) then
@@ -1270,6 +1272,7 @@ begin
     finally
       FreeAndNil(NewNest);
       FreeAndNil(OldNest);
+      FRepo.Free;
       FreeAndNil(lstDiff);
     end;
   end

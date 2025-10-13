@@ -1499,12 +1499,16 @@ end;
 function EditNest(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TNest;
+  FRepo: TNestRepository;
   FOwner: TNestOwner;
+  FRepoOwner: TNestOwnerRepository;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Nest edit dialog');
   Application.CreateForm(TedtNest, edtNest);
+  FRepo := TNestRepository.Create(DMM.sqlCon);
+  FRepoOwner := TNestOwnerRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtNest do
   try
@@ -1522,6 +1526,8 @@ begin
     begin
       FOldRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
       FRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Nest := FRecord;
@@ -1531,7 +1537,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Nest.Save;
+        FRepo.Save(Nest);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1560,7 +1566,7 @@ begin
           FOwner.IndividualId := aIndividual;
           FOwner.NestId := Nest.Id;
           FOwner.Role := nrlUnknown;
-          FOwner.Insert;
+          FRepoOwner.Insert(FOwner);
         finally
           FreeAndNil(FOwner);
         end;
@@ -1586,6 +1592,8 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepoOwner.Free;
+    FRepo.Free;
     FreeAndNil(edtNest);
     LogEvent(leaClose, 'Nest edit dialog');
   end;
@@ -1594,11 +1602,13 @@ end;
 function EditNestOwner(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TNestOwner;
+  FRepo: TNestOwnerRepository;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Nest owner edit dialog');
   Application.CreateForm(TedtNestOwner, edtNestOwner);
+  FRepo := TNestOwnerRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtNestOwner do
   try
@@ -1612,6 +1622,8 @@ begin
     begin
       FOldRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
       FRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     NestOwner := FRecord;
@@ -1622,7 +1634,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        NestOwner.Save;
+        FRepo.Save(NestOwner);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1665,6 +1677,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtNestOwner);
     LogEvent(leaClose, 'Nest owner edit dialog');
   end;
@@ -1673,11 +1686,13 @@ end;
 function EditNestRevision(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TNestRevision;
+  FRepo: TNestRevisionRepository;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Nest revision edit dialog');
   Application.CreateForm(TedtNestRevision, edtNestRevision);
+  FRepo := TNestRevisionRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtNestRevision do
   try
@@ -1691,6 +1706,8 @@ begin
     begin
       FOldRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
       FRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     NestRevision := FRecord;
@@ -1701,7 +1718,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        NestRevision.Save;
+        FRepo.Save(NestRevision);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1744,6 +1761,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtNestRevision);
     LogEvent(leaClose, 'Nest revision edit dialog');
   end;
@@ -1752,11 +1770,13 @@ end;
 function EditEgg(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TEgg;
+  FRepo: TEggRepository;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Egg edit dialog');
   Application.CreateForm(TedtEgg, edtEgg);
+  FRepo := TEggRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtEgg do
   try
@@ -1774,6 +1794,8 @@ begin
     begin
       FOldRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
       FRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Egg := FRecord;
@@ -1784,7 +1806,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Egg.Save;
+        FRepo.Save(Egg);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1827,6 +1849,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtEgg);
     LogEvent(leaClose, 'Egg edit dialog');
   end;

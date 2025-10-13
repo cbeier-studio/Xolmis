@@ -67,18 +67,16 @@ type
     FDescription: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Find(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate): Boolean;
-    function Diff(aOld: TNest; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TNest);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TNest; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TNest): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
     property FullName: String read FFullName write FFullName;
@@ -119,6 +117,22 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TNestRepository }
+
+  TNestRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate; E: TNest);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 type
 
   { TNestOwner }
@@ -129,22 +143,35 @@ type
     FNestId: Integer;
     FRole: TNestRole;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TNestOwner; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TNestOwner);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TNestOwner; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TNestOwner): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property NestId: Integer read FNestId write FNestId;
     property Role: TNestRole read FRole write FRole;
     property IndividualId: Integer read FIndividualId write FIndividualId;
+  end;
+
+  { TNestOwnerRepository }
+
+  TNestOwnerRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -175,18 +202,16 @@ type
     FDescription: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TEgg; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    function Find(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer): Boolean;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TEgg);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TEgg; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TEgg): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property FieldNumber: String read FFieldNumber write FFieldNumber;
     property EggSeq: Integer read FEggSeq write FEggSeq;
@@ -211,6 +236,22 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TEggRepository }
+
+  TEggRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByFieldNumber(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer; E: TEgg);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 type
 
   { TNestRevision }
@@ -233,18 +274,16 @@ type
     FNestStage: TNestStage;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TNestRevision; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    function Find(aNest: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TNestRevision);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TNestRevision; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TNestRevision): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property NestId: Integer read FNestId write FNestId;
     property FullName: String read FFullName write FFullName;
@@ -263,20 +302,59 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TNestRevisionRepository }
+
+  TNestRevisionRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByDate(aNest: Integer; aDate, aTime: String; aObserver: Integer; E: TNestRevision);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
 uses
   utils_locale, utils_global, models_users, data_columns, utils_validations, data_setparam, utils_fullnames,
+  data_consts, data_getvalue,
   udm_main;
 
 { TNestRevision }
 
 constructor TNestRevision.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TNestRevision.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TNestRevision then
+  begin
+    FFullName := TNestRevision(Source).FullName;
+    FNestId := TNestRevision(Source).NestId;
+    FRevisionDate := TNestRevision(Source).RevisionDate;
+    FRevisionTime := TNestRevision(Source).RevisionTime;
+    FObserver1Id := TNestRevision(Source).Observer1Id;
+    FObserver2Id := TNestRevision(Source).Observer2Id;
+    FNestStatus := TNestRevision(Source).NestStatus;
+    FHostEggsTally := TNestRevision(Source).HostEggsTally;
+    FHostNestlingsTally := TNestRevision(Source).HostNestlingsTally;
+    FNidoparasiteEggsTally := TNestRevision(Source).NidoparasiteEggsTally;
+    FNidoparasiteNestlingsTally := TNestRevision(Source).NidoparasiteNestlingsTally;
+    FNidoparasiteId := TNestRevision(Source).NidoparasiteId;
+    FHavePhilornisLarvae := TNestRevision(Source).HavePhilornisLarvae;
+    FNestStage := TNestRevision(Source).NestStage;
+    FNotes := TNestRevision(Source).Notes;
+  end;
 end;
 
 procedure TNestRevision.Clear;
@@ -299,52 +377,190 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TNestRevision.Copy(aFrom: TNestRevision);
+function TNestRevision.Clone: TXolmisRecord;
 begin
-  FFullName := aFrom.FullName;
-  FNestId := aFrom.NestId;
-  FRevisionDate := aFrom.RevisionDate;
-  FRevisionTime := aFrom.RevisionTime;
-  FObserver1Id := aFrom.Observer1Id;
-  FObserver2Id := aFrom.Observer2Id;
-  FNestStatus := aFrom.NestStatus;
-  FHostEggsTally := aFrom.HostEggsTally;
-  FHostNestlingsTally := aFrom.HostNestlingsTally;
-  FNidoparasiteEggsTally := aFrom.NidoparasiteEggsTally;
-  FNidoparasiteNestlingsTally := aFrom.NidoparasiteNestlingsTally;
-  FNidoparasiteId := aFrom.NidoparasiteId;
-  FHavePhilornisLarvae := aFrom.HavePhilornisLarvae;
-  FNestStage := aFrom.NestStage;
-  FNotes := aFrom.Notes;
+  Result := TNestRevision(inherited Clone);
 end;
 
-procedure TNestRevision.Delete;
+function TNestRevision.Diff(const aOld: TNestRevision; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscNest, aOld.NestId, FNestId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDate, aOld.RevisionDate, FRevisionDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.RevisionTime, FRevisionTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObserver1ID, aOld.Observer1Id, FObserver1Id, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObserver2ID, aOld.Observer2Id, FObserver2Id, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStatus, aOld.NestStatus, FNestStatus, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggsHost, aOld.HostEggsTally, FHostEggsTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestlingsHost, aOld.HostNestlingsTally, FHostNestlingsTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggsNidoparasite, aOld.NidoparasiteEggsTally, FNidoparasiteEggsTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestlingsNidoparasite, aOld.NidoparasiteNestlingsTally, FNidoparasiteNestlingsTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNidoparasiteID, aOld.NidoparasiteId, FNidoparasiteId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHasPhilornisLarvae, aOld.HavePhilornisLarvae, FHavePhilornisLarvae, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestStage, aOld.NestStage, FNestStage, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TNestRevision.EqualsTo(const Other: TNestRevision): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TNestRevision.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName     := Obj.Get('full_name', '');
+    FNestId       := Obj.Get('nest_id', 0);
+    FRevisionDate := Obj.Get('revision_date', NullDate);
+    FRevisionTime := Obj.Get('revision_time', NullTime);
+    FObserver1Id  := Obj.Get('observer_1_id', 0);
+    FObserver2Id  := Obj.Get('observer_2_id', 0);
+    case Obj.Get('nest_status', '') of
+      'I': FNestStatus := nstInactive;
+      'A': FNestStatus := nstActive;
+    else
+      FNestStatus := nstUnknown;
+    end;
+    case Obj.Get('nest_stage', '') of
+      'X': FNestStage := nsgInactive;
+      'C': FNestStage := nsgConstruction;
+      'L': FNestStage := nsgLaying;
+      'I': FNestStage := nsgIncubation;
+      'H': FNestStage := nsgHatching;
+      'N': FNestStage := nsgNestling;
+    else
+      FNestStage := nsgUnknown;
+    end;
+    FHostEggsTally              := Obj.Get('host_eggs', 0);
+    FHostNestlingsTally         := Obj.Get('host_nestlings', 0);
+    FNidoparasiteEggsTally      := Obj.Get('nidoparasite_eggs', 0);
+    FNidoparasiteNestlingsTally := Obj.Get('nidoparasite_nestlings', 0);
+    FNidoparasiteId             := Obj.Get('nidoparasite_id', 0);
+    FHavePhilornisLarvae        := Obj.Get('have_philornis_larvae', False);
+    FNotes                      := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TNestRevision.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('nest_id', FNestId);
+    JSONObject.Add('revision_date', FRevisionDate);
+    JSONObject.Add('revision_time', FRevisionTime);
+    JSONObject.Add('observer_1_id', FObserver1Id);
+    JSONObject.Add('observer_2_id', FObserver2Id);
+    JSONObject.Add('nest_status', NEST_STATUSES[FNestStatus]);
+    JSONObject.Add('host_eggs', FHostEggsTally);
+    JSONObject.Add('host_nestlings', FHostNestlingsTally);
+    JSONObject.Add('nidoparasite_eggs', FNidoparasiteEggsTally);
+    JSONObject.Add('nidoparasite_nestlings', FNidoparasiteNestlingsTally);
+    JSONObject.Add('nidoparasite_id', FNidoparasiteId);
+    JSONObject.Add('have_philornis_larvae', FHavePhilornisLarvae);
+    JSONObject.Add('nest_stage', NEST_STAGES[FNestStage]);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TNestRevision.ToString: String;
+begin
+  Result := Format('NestRevision(Id=%d, FullName=%s, NestId=%d, RevisionDate=%s, RevisionTime=%s, Observer1Id=%d, ' +
+    'Observer2Id=%d, NestStatus=%s, HostEggsTally=%d, HostNestlingsTally=%d, NidoparasiteEggsTally=%d, ' +
+    'NidoparasiteNestlingsTally=%d, NidoparasiteId=%d, HavePhilornisLarvae=%s, NestStage=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FNestId, DateToStr(FRevisionDate), TimeToStr(FRevisionTime), FObserver1Id, FObserver2Id,
+    NEST_STATUSES[FNestStatus], FHostEggsTally, FHostNestlingsTally, FNidoparasiteEggsTally,
+    FNidoparasiteNestlingsTally, FNidoparasiteId, BoolToStr(FHavePhilornisLarvae, 'True', 'False'),
+    NEST_STAGES[FNestStage], FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TNestRevision.Validate(out Msg: string): Boolean;
+begin
+  if FNestId = 0 then
+  begin
+    Msg := 'Nest required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TNestRevisionRepository }
+
+procedure TNestRevisionRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNestRevision;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNestRevision.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TNestRevision) then
+    raise Exception.Create('Delete: Expected TNestRevision');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TNestRevision(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNestRevisionRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM nest_revisions');
-      Add('WHERE (nest_revision_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_NEST_REVISION_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -352,14 +568,132 @@ begin
   end;
 end;
 
-procedure TNestRevision.GetData(aKey: Integer);
+function TNestRevisionRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_NEST_REVISION_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNestRevisionRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_NEST_REVISION_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TNestRevision) then
+    raise Exception.Create('FindBy: Expected TNestRevision');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'nest_revision_id, ' +
+      'nest_id, ' +
+      'full_name, ' +
+      'revision_date, ' +
+      'revision_time, ' +
+      'observer_1_id, ' +
+      'observer_2_id, ' +
+      'nest_status, ' +
+      'host_eggs_tally, ' +
+      'host_nestlings_tally, ' +
+      'nidoparasite_eggs_tally, ' +
+      'nidoparasite_nestlings_tally, ' +
+      'nidoparasite_id, ' +
+      'have_philornis_larvae, ' +
+      'nest_stage, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM nest_revisions');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TNestRevision(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TNestRevisionRepository.FindByDate(aNest: Integer; aDate, aTime: String; aObserver: Integer;
+  E: TNestRevision);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM nest_revisions');
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+    Add('AND (observer_1_id = :aobserver)');
+    ParamByName('ANEST').AsInteger := aNest;
+    ParamByName('AOBSERVER').AsInteger := aObserver;
+    ParamByName('ADATE').AsString := aDate;
+    ParamByName('ATIME').AsString := aTime;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNestRevisionRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TNestRevision) then
+    raise Exception.Create('GetById: Expected TNestRevision');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
       'nest_revision_id, ' +
@@ -387,335 +721,213 @@ begin
       'active_status ' +
       'FROM nest_revisions');
     Add('WHERE nest_revision_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TNestRevision(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TNestRevision.LoadFromDataSet(aDataSet: TDataSet);
+procedure TNestRevisionRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TNestRevision;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TNestRevision) then
+    raise Exception.Create('Hydrate: Expected TNestRevision');
 
+  R := TNestRevision(E);
   with aDataSet do
   begin
-    FId := FieldByName('nest_revision_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FNestId := FieldByName('nest_id').AsInteger;
-    FRevisionDate := FieldByName('revision_date').AsDateTime;
-    FRevisionTime := FieldByName('revision_time').AsDateTime;
-    FObserver1Id := FieldByName('observer_1_id').AsInteger;
-    FObserver2Id := FieldByName('observer_2_id').AsInteger;
+    R.Id := FieldByName('nest_revision_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.NestId := FieldByName('nest_id').AsInteger;
+    R.RevisionDate := FieldByName('revision_date').AsDateTime;
+    R.RevisionTime := FieldByName('revision_time').AsDateTime;
+    R.Observer1Id := FieldByName('observer_1_id').AsInteger;
+    R.Observer2Id := FieldByName('observer_2_id').AsInteger;
     case FieldByName('nest_status').AsString of
-      'I': FNestStatus := nstInactive;
-      'A': FNestStatus := nstActive;
+      'I': R.NestStatus := nstInactive;
+      'A': R.NestStatus := nstActive;
     else
-      FNestStatus := nstUnknown;
+      R.NestStatus := nstUnknown;
     end;
-    FHostEggsTally := FieldByName('host_eggs_tally').AsInteger;
-    FHostNestlingsTally := FieldByName('host_nestlings_tally').AsInteger;
-    FNidoparasiteEggsTally := FieldByName('nidoparasite_eggs_tally').AsInteger;
-    FNidoparasiteNestlingsTally := FieldByName('nidoparasite_nestlings_tally').AsInteger;
-    FNidoparasiteId := FieldByName('nidoparasite_id').AsInteger;
-    FHavePhilornisLarvae := FieldByName('have_philornis_larvae').AsBoolean;
+    R.HostEggsTally := FieldByName('host_eggs_tally').AsInteger;
+    R.HostNestlingsTally := FieldByName('host_nestlings_tally').AsInteger;
+    R.NidoparasiteEggsTally := FieldByName('nidoparasite_eggs_tally').AsInteger;
+    R.NidoparasiteNestlingsTally := FieldByName('nidoparasite_nestlings_tally').AsInteger;
+    R.NidoparasiteId := FieldByName('nidoparasite_id').AsInteger;
+    R.HavePhilornisLarvae := FieldByName('have_philornis_larvae').AsBoolean;
     case FieldByName('nest_stage').AsString of
-      'X': FNestStage := nsgInactive;
-      'C': FNestStage := nsgConstruction;
-      'L': FNestStage := nsgLaying;
-      'I': FNestStage := nsgIncubation;
-      'H': FNestStage := nsgHatching;
-      'N': FNestStage := nsgNestling;
+      'X': R.NestStage := nsgInactive;
+      'C': R.NestStage := nsgConstruction;
+      'L': R.NestStage := nsgLaying;
+      'I': R.NestStage := nsgIncubation;
+      'H': R.NestStage := nsgHatching;
+      'N': R.NestStage := nsgNestling;
     else
-      FNestStage := nsgUnknown;
+      R.NestStage := nsgUnknown;
     end;
-    FNotes := FieldByName('notes').AsString;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TNestRevision.Insert;
+procedure TNestRevisionRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNestRevision;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TNestRevision) then
+    raise Exception.Create('Insert: Expected TNestRevision');
+
+  R := TNestRevision(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO nest_revisions (' +
-        'nest_id, ' +
-        'full_name, ' +
-        'revision_date, ' +
-        'revision_time, ' +
-        'observer_1_id, ' +
-        'observer_2_id, ' +
-        'nest_status, ' +
-        'host_eggs_tally, ' +
-        'host_nestlings_tally, ' +
-        'nidoparasite_eggs_tally, ' +
-        'nidoparasite_nestlings_tally, ' +
-        'nidoparasite_id, ' +
-        'have_philornis_larvae, ' +
-        'nest_stage, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':nest_id, ' +
-        ':full_name, ' +
-        'date(:revision_date), ' +
-        'time(:revision_time), ' +
-        ':observer_1_id, ' +
-        ':observer_2_id, ' +
-        ':nest_status, ' +
-        ':host_eggs_tally, ' +
-        ':host_nestlings_tally, ' +
-        ':nidoparasite_eggs_tally, ' +
-        ':nidoparasite_nestlings_tally, ' +
-        ':nidoparasite_id, ' +
-        ':have_philornis_larvae, ' +
-        ':nest_stage, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-      ParamByName('nest_id').AsInteger := FNestId;
-      FFullName := GetNestRevisionFullName(FRevisionDate, FNestId, NEST_STAGES[FNestStage], NEST_STATUSES[FNestStatus]);
-      SetStrParam(ParamByName('full_name'), FFullname);
-      SetDateParam(ParamByName('revision_date'), FRevisionDate);
-      SetTimeParam(ParamByName('revision_time'), FRevisionTime);
-      SetForeignParam(ParamByName('observer_1_id'), FObserver1Id);
-      SetForeignParam(ParamByName('observer_2_id'), FObserver2Id);
-      ParamByName('nest_status').AsString := NEST_STATUSES[FNestStatus];
-      ParamByName('host_eggs_tally').AsInteger := FHostEggsTally;
-      ParamByName('host_nestlings_tally').AsInteger := FHostNestlingsTally;
-      ParamByName('nidoparasite_eggs_tally').AsInteger := FNidoparasiteEggsTally;
-      ParamByName('nidoparasite_nestlings_tally').AsInteger := FNidoparasiteNestlingsTally;
-      SetForeignParam(ParamByName('nidoparasite_id'), FNidoparasiteId);
-      ParamByName('have_philornis_larvae').AsBoolean := FHavePhilornisLarvae;
-      ParamByName('nest_stage').AsString := NEST_STAGES[FNestStage];
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TNestRevision.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TNestRevision.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Full name', FFullName);
-    JSONObject.Add('Nest', FNestId);
-    JSONObject.Add('Date', FRevisionDate);
-    JSONObject.Add('Time', FRevisionTime);
-    JSONObject.Add('Observer 1', FObserver1Id);
-    JSONObject.Add('Observer 2', FObserver2Id);
-    JSONObject.Add('Nest status', NEST_STATUSES[FNestStatus]);
-    JSONObject.Add('Host eggs', FHostEggsTally);
-    JSONObject.Add('Host nestlings', FHostNestlingsTally);
-    JSONObject.Add('Nidoparasite eggs', FNidoparasiteEggsTally);
-    JSONObject.Add('Nidoparasite nestlings', FNidoparasiteNestlingsTally);
-    JSONObject.Add('Nidoparasite', FNidoparasiteId);
-    JSONObject.Add('Have Philornis larvae', FHavePhilornisLarvae);
-    JSONObject.Add('Nest stage', NEST_STAGES[FNestStage]);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TNestRevision.Update;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNestRevision.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE nest_revisions SET');
-      Add('  nest_id = :nest_id,');
-      Add('  full_name = :full_name,');
-      Add('  revision_date = date(:revision_date),');
-      Add('  revision_time = time(:revision_time),');
-      Add('  observer_1_id = :observer_1_id,');
-      Add('  observer_2_id = :observer_2_id,');
-      Add('  nest_status = :nest_status,');
-      Add('  host_eggs_tally = :host_eggs_tally,');
-      Add('  host_nestlings_tally = :host_nestlings_tally,');
-      Add('  nidoparasite_eggs_tally = :nidoparasite_eggs_tally,');
-      Add('  nidoparasite_nestlings_tally = :nidoparasite_nestlings_tally,');
-      Add('  nidoparasite_id = :nidoparasite_id,');
-      Add('  have_philornis_larvae = :have_philornis_larvae,');
-      Add('  nest_stage = :nest_stage,');
-      Add('  notes = :notes,');
-      Add('  user_updated = :user_updated,');
-      Add('  update_date = datetime(''now'',''subsec'')');
-      Add('WHERE (nest_revision_id = :nest_revision_id);');
-      ParamByName('nest_revision_id').AsInteger := FId;
-      ParamByName('nest_id').AsInteger := FNestId;
-      FFullName := GetNestRevisionFullName(FRevisionDate, FNestId, NEST_STAGES[FNestStage], NEST_STATUSES[FNestStatus]);
-      SetStrParam(ParamByName('full_name'), FFullname);
-      SetDateParam(ParamByName('revision_date'), FRevisionDate);
-      SetTimeParam(ParamByName('revision_time'), FRevisionTime);
-      SetForeignParam(ParamByName('observer_1_id'), FObserver1Id);
-      SetForeignParam(ParamByName('observer_2_id'), FObserver2Id);
-      ParamByName('nest_status').AsString := NEST_STATUSES[FNestStatus];
-      ParamByName('host_eggs_tally').AsInteger := FHostEggsTally;
-      ParamByName('host_nestlings_tally').AsInteger := FHostNestlingsTally;
-      ParamByName('nidoparasite_eggs_tally').AsInteger := FNidoparasiteEggsTally;
-      ParamByName('nidoparasite_nestlings_tally').AsInteger := FNidoparasiteNestlingsTally;
-      SetForeignParam(ParamByName('nidoparasite_id'), FNidoparasiteId);
-      ParamByName('have_philornis_larvae').AsBoolean := FHavePhilornisLarvae;
-      ParamByName('nest_stage').AsString := NEST_STAGES[FNestStage];
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TNestRevision.Diff(aOld: TNestRevision; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscNest, aOld.NestId, FNestId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDate, aOld.RevisionDate, FRevisionDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.RevisionTime, FRevisionTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObserver1ID, aOld.Observer1Id, FObserver1Id, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObserver2ID, aOld.Observer2Id, FObserver2Id, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscStatus, aOld.NestStatus, FNestStatus, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggsHost, aOld.HostEggsTally, FHostEggsTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestlingsHost, aOld.HostNestlingsTally, FHostNestlingsTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggsNidoparasite, aOld.NidoparasiteEggsTally, FNidoparasiteEggsTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestlingsNidoparasite, aOld.NidoparasiteNestlingsTally, FNidoparasiteNestlingsTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNidoparasiteID, aOld.NidoparasiteId, FNidoparasiteId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHasPhilornisLarvae, aOld.HavePhilornisLarvae, FHavePhilornisLarvae, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestStage, aOld.NestStage, FNestStage, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TNestRevision.Find(aNest: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
     Clear;
-    Add('SELECT nest_revision_id FROM nest_revisions');
-    Add('WHERE (nest_id = :anest)');
-    Add('AND (date(sample_date) = date(:adate))');
-    Add('AND (time(sample_time) = time(:atime))');
-    Add('AND (observer_1_id = :aobserver)');
-    ParamByName('ANEST').AsInteger := aNest;
-    ParamByName('AOBSERVER').AsInteger := aObserver;
-    ParamByName('ADATE').AsString := aDate;
-    ParamByName('ATIME').AsString := aTime;
+    Add('INSERT INTO nest_revisions (' +
+      'nest_id, ' +
+      'full_name, ' +
+      'revision_date, ' +
+      'revision_time, ' +
+      'observer_1_id, ' +
+      'observer_2_id, ' +
+      'nest_status, ' +
+      'host_eggs_tally, ' +
+      'host_nestlings_tally, ' +
+      'nidoparasite_eggs_tally, ' +
+      'nidoparasite_nestlings_tally, ' +
+      'nidoparasite_id, ' +
+      'have_philornis_larvae, ' +
+      'nest_stage, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':nest_id, ' +
+      ':full_name, ' +
+      'date(:revision_date), ' +
+      'time(:revision_time), ' +
+      ':observer_1_id, ' +
+      ':observer_2_id, ' +
+      ':nest_status, ' +
+      ':host_eggs_tally, ' +
+      ':host_nestlings_tally, ' +
+      ':nidoparasite_eggs_tally, ' +
+      ':nidoparasite_nestlings_tally, ' +
+      ':nidoparasite_id, ' +
+      ':have_philornis_larvae, ' +
+      ':nest_stage, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
+    ParamByName('nest_id').AsInteger := R.NestId;
+    R.FullName := GetNestRevisionFullName(R.RevisionDate, R.NestId, NEST_STAGES[R.NestStage], NEST_STATUSES[R.NestStatus]);
+    SetStrParam(ParamByName('full_name'), R.Fullname);
+    SetDateParam(ParamByName('revision_date'), R.RevisionDate);
+    SetTimeParam(ParamByName('revision_time'), R.RevisionTime);
+    SetForeignParam(ParamByName('observer_1_id'), R.Observer1Id);
+    SetForeignParam(ParamByName('observer_2_id'), R.Observer2Id);
+    ParamByName('nest_status').AsString := NEST_STATUSES[R.NestStatus];
+    ParamByName('host_eggs_tally').AsInteger := R.HostEggsTally;
+    ParamByName('host_nestlings_tally').AsInteger := R.HostNestlingsTally;
+    ParamByName('nidoparasite_eggs_tally').AsInteger := R.NidoparasiteEggsTally;
+    ParamByName('nidoparasite_nestlings_tally').AsInteger := R.NidoparasiteNestlingsTally;
+    SetForeignParam(ParamByName('nidoparasite_id'), R.NidoparasiteId);
+    ParamByName('have_philornis_larvae').AsBoolean := R.HavePhilornisLarvae;
+    ParamByName('nest_stage').AsString := NEST_STAGES[R.NestStage];
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
     Open;
-    Result := RecordCount > 0;
-    if Result = True then
-    begin
-      GetData(FieldByName('nest_revision_id').AsInteger);
-    end;
+    R.Id := Fields[0].AsInteger;
     Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TNestRevisionRepository.TableName: string;
+begin
+  Result := TBL_NEST_REVISIONS;
+end;
+
+procedure TNestRevisionRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TNestRevision;
+begin
+  if not (E is TNestRevision) then
+    raise Exception.Create('Update: Expected TNestRevision');
+
+  R := TNestRevision(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNestRevisionRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE nest_revisions SET');
+    Add('  nest_id = :nest_id,');
+    Add('  full_name = :full_name,');
+    Add('  revision_date = date(:revision_date),');
+    Add('  revision_time = time(:revision_time),');
+    Add('  observer_1_id = :observer_1_id,');
+    Add('  observer_2_id = :observer_2_id,');
+    Add('  nest_status = :nest_status,');
+    Add('  host_eggs_tally = :host_eggs_tally,');
+    Add('  host_nestlings_tally = :host_nestlings_tally,');
+    Add('  nidoparasite_eggs_tally = :nidoparasite_eggs_tally,');
+    Add('  nidoparasite_nestlings_tally = :nidoparasite_nestlings_tally,');
+    Add('  nidoparasite_id = :nidoparasite_id,');
+    Add('  have_philornis_larvae = :have_philornis_larvae,');
+    Add('  nest_stage = :nest_stage,');
+    Add('  notes = :notes,');
+    Add('  user_updated = :user_updated,');
+    Add('  update_date = datetime(''now'',''subsec'')');
+    Add('WHERE (nest_revision_id = :nest_revision_id);');
+
+    ParamByName('nest_id').AsInteger := R.NestId;
+    R.FullName := GetNestRevisionFullName(R.RevisionDate, R.NestId, NEST_STAGES[R.NestStage], NEST_STATUSES[R.NestStatus]);
+    SetStrParam(ParamByName('full_name'), R.Fullname);
+    SetDateParam(ParamByName('revision_date'), R.RevisionDate);
+    SetTimeParam(ParamByName('revision_time'), R.RevisionTime);
+    SetForeignParam(ParamByName('observer_1_id'), R.Observer1Id);
+    SetForeignParam(ParamByName('observer_2_id'), R.Observer2Id);
+    ParamByName('nest_status').AsString := NEST_STATUSES[R.NestStatus];
+    ParamByName('host_eggs_tally').AsInteger := R.HostEggsTally;
+    ParamByName('host_nestlings_tally').AsInteger := R.HostNestlingsTally;
+    ParamByName('nidoparasite_eggs_tally').AsInteger := R.NidoparasiteEggsTally;
+    ParamByName('nidoparasite_nestlings_tally').AsInteger := R.NidoparasiteNestlingsTally;
+    SetForeignParam(ParamByName('nidoparasite_id'), R.NidoparasiteId);
+    ParamByName('have_philornis_larvae').AsBoolean := R.HavePhilornisLarvae;
+    ParamByName('nest_stage').AsString := NEST_STAGES[R.NestStage];
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('nest_revision_id').AsInteger := R.Id;
+
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -725,10 +937,38 @@ end;
 
 constructor TEgg.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TEgg.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TEgg then
+  begin
+    FFullName := TEgg(Source).FullName;
+    FEggSeq := TEgg(Source).EggSeq;
+    FFieldNumber := TEgg(Source).FieldNumber;
+    FNestId := TEgg(Source).NestId;
+    FEggShape := TEgg(Source).EggShape;
+    FWidth := TEgg(Source).Width;
+    FLength := TEgg(Source).Length;
+    FMass := TEgg(Source).Mass;
+    FVolume := TEgg(Source).Volume;
+    FEggStage := TEgg(Source).EggStage;
+    FEggshellColor := TEgg(Source).EggshellColor;
+    FEggshellPattern := TEgg(Source).EggshellPattern;
+    FEggshellTexture := TEgg(Source).EggshellTexture;
+    FEggHatched := TEgg(Source).EggHatched;
+    FIndividualId := TEgg(Source).IndividualId;
+    FResearcherId := TEgg(Source).ResearcherId;
+    FMeasureDate := TEgg(Source).MeasureDate;
+    FTaxonId := TEgg(Source).TaxonId;
+    FHostEgg := TEgg(Source).HostEgg;
+    FDescription := TEgg(Source).Description;
+    FNotes := TEgg(Source).Notes;
+  end;
 end;
 
 procedure TEgg.Clear;
@@ -757,58 +997,228 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TEgg.Copy(aFrom: TEgg);
+function TEgg.Clone: TXolmisRecord;
 begin
-  FFullName := aFrom.FullName;
-  FEggSeq := aFrom.EggSeq;
-  FFieldNumber := aFrom.FieldNumber;
-  FNestId := aFrom.NestId;
-  FEggShape := aFrom.EggShape;
-  FWidth := aFrom.Width;
-  FLength := aFrom.Length;
-  FMass := aFrom.Mass;
-  FVolume := aFrom.Volume;
-  FEggStage := aFrom.EggStage;
-  FEggshellColor := aFrom.EggshellColor;
-  FEggshellPattern := aFrom.EggshellPattern;
-  FEggshellTexture := aFrom.EggshellTexture;
-  FEggHatched := aFrom.EggHatched;
-  FIndividualId := aFrom.IndividualId;
-  FResearcherId := aFrom.ResearcherId;
-  FMeasureDate := aFrom.MeasureDate;
-  FTaxonId := aFrom.TaxonId;
-  FHostEgg := aFrom.HostEgg;
-  FDescription := aFrom.Description;
-  FNotes := aFrom.Notes;
+  Result := TEgg(inherited Clone);
 end;
 
-procedure TEgg.Delete;
+function TEgg.Diff(const aOld: TEgg; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggNumber, aOld.EggSeq, FEggSeq, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggShape, aOld.EggShape, FEggShape, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscWidth, aOld.Width, FWidth, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLength, aOld.Length, FLength, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMass, aOld.Mass, FMass, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscVolume, aOld.Volume, FVolume, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStage, aOld.EggStage, FEggStage, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggshellColor, aOld.EggshellColor, FEggshellColor, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggshellPattern, aOld.EggshellPattern, FEggshellPattern, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggshellTexture, aOld.EggshellTexture, FEggshellTexture, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHatched, aOld.EggHatched, FEggHatched, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscResearcherID, aOld.ResearcherId, FResearcherId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDate, aOld.MeasureDate, FMeasureDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHostEgg, aOld.HostEgg, FHostEgg, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TEgg.EqualsTo(const Other: TEgg): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TEgg.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFieldNumber  := Obj.Get('field_number', '');
+    FFullName     := Obj.Get('full_name', '');
+    FEggSeq       := Obj.Get('egg_number', 0);
+    FNestId       := Obj.Get('nest_id', 0);
+    case Obj.Get('egg_shape', '') of
+      'S': FEggShape := esSpherical;
+      'E': FEggShape := esElliptical;
+      'O': FEggShape := esOval;
+      'P': FEggShape := esPiriform;
+      'C': FEggShape := esConical;
+      'B': FEggShape := esBiconical;
+      'Y': FEggShape := esCylindrical;
+      'L': FEggShape := esLongitudinal;
+    else
+      FEggShape := esUnknown;
+    end;
+    FWidth          := Obj.Get('width', 0.0);
+    FLength         := Obj.Get('length', 0.0);
+    FMass           := Obj.Get('mass', 0.0);
+    FVolume         := Obj.Get('volume', 0.0);
+    FEggStage       := Obj.Get('stage', '');
+    FTaxonId        := Obj.Get('taxon_id', 0);
+    FEggshellColor  := Obj.Get('color', '');
+    case Obj.Get('pattern', '') of
+      'P':  FEggshellPattern := espSpots;
+      'B':  FEggshellPattern := espBlotches;
+      'S':  FEggshellPattern := espSquiggles;
+      'T':  FEggshellPattern := espStreaks;
+      'W':  FEggshellPattern := espScrawls;
+      'PS': FEggshellPattern := espSpotsSquiggles;
+      'BS': FEggshellPattern := espBlotchesSquiggles;
+    else
+      FEggshellPattern := espUnknown;
+    end;
+    case Obj.Get('texture', '') of
+      'C': FEggshellTexture := estChalky;
+      'S': FEggshellTexture := estShiny;
+      'G': FEggshellTexture := estGlossy;
+      'P': FEggshellTexture := estPitted;
+    else
+      FEggshellTexture := estUnknown;
+    end;
+    FEggHatched   := Obj.Get('hatched', False);
+    FIndividualId := Obj.Get('individual_id', 0);
+    FResearcherId := Obj.Get('researcher_id', 0);
+    FMeasureDate  := Obj.Get('measure_date', NullDate);
+    FHostEgg      := Obj.Get('host_egg', True);
+    FDescription  := Obj.Get('description', '');
+    FNotes        := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TEgg.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('field_number', FFieldNumber);
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('egg_number', FEggSeq);
+    JSONObject.Add('nest_id', FNestId);
+    JSONObject.Add('egg_shape', EGG_SHAPES[FEggShape]);
+    JSONObject.Add('width', FWidth);
+    JSONObject.Add('length', FLength);
+    JSONObject.Add('mass', FMass);
+    JSONObject.Add('volume', FVolume);
+    JSONObject.Add('stage', FEggStage);
+    JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('color', FEggshellColor);
+    JSONObject.Add('pattern', EGGSHELL_PATTERNS[FEggshellPattern]);
+    JSONObject.Add('texture', EGGSHELL_TEXTURES[FEggshellTexture]);
+    JSONObject.Add('hatched', FEggHatched);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('researcher_id', FResearcherId);
+    JSONObject.Add('measure_date', FMeasureDate);
+    JSONObject.Add('host_egg', FHostEgg);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TEgg.ToString: String;
+begin
+  Result := Format('Egg(Id=%d, FullName=%s, FieldNumber=%s, EggSeq=%d, NestId=%d, EggShape=%s, Width=%f, Length=%f, ' +
+    'Mass=%f, Volume=%f, EggStage=%s, TaxonId=%d, EggshellColor=%s, EggshellPattern=%s, EggshellTexture=%s, ' +
+    'EggHatched=%s, IndividualId=%d, ResearcherId=%d, MeasureDate=%s, HostEgg=%s, Description=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FFieldNumber, FEggSeq, FNestId, EGG_SHAPES[FEggShape], FWidth, FLength, FMass, FVolume,
+    FEggStage, FTaxonId, FEggshellColor, EGGSHELL_PATTERNS[FEggshellPattern], EGGSHELL_TEXTURES[FEggshellTexture],
+    BoolToStr(FEggHatched, 'True', 'False'), FIndividualId, FResearcherId, DateToStr(FMeasureDate),
+    BoolToStr(FHostEgg, 'True', 'False'), FDescription, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TEgg.Validate(out Msg: string): Boolean;
+begin
+  if FTaxonId = 0 then
+  begin
+    Msg := 'Taxon required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TEggRepository }
+
+procedure TEggRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TEgg;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TEgg.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TEgg) then
+    raise Exception.Create('Delete: Expected TEgg');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TEgg(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TEggRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM eggs');
-      Add('WHERE (egg_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_EGG_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -816,14 +1226,138 @@ begin
   end;
 end;
 
-procedure TEgg.GetData(aKey: Integer);
+function TEggRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_EGG_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TEggRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_EGG_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TEgg) then
+    raise Exception.Create('FindBy: Expected TEgg');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'egg_id, ' +
+      'nest_id, ' +
+      'egg_seq, ' +
+      'field_number, ' +
+      'taxon_id, ' +
+      'eggshell_color, ' +
+      'eggshell_pattern, ' +
+      'eggshell_texture, ' +
+      'egg_shape, ' +
+      'egg_width, ' +
+      'egg_length, ' +
+      'egg_mass, ' +
+      'egg_volume, ' +
+      'egg_stage, ' +
+      'egg_hatched, ' +
+      'measure_date, ' +
+      'researcher_id, ' +
+      'individual_id, ' +
+      'host_egg, ' +
+      'description, ' +
+      'full_name, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM eggs');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TEgg(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TEggRepository.FindByFieldNumber(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer;
+  E: TEgg);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM eggs');
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (date(measure_date) = date(:adate))');
+    Add('AND (field_number = :afieldnumber)');
+    Add('AND (researcher_id = :aobserver)');
+    ParamByName('ANEST').AsInteger := aNest;
+    ParamByName('AOBSERVER').AsInteger := aObserver;
+    ParamByName('ADATE').AsString := aDate;
+    ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TEggRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TEgg) then
+    raise Exception.Create('GetById: Expected TEgg');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
       'egg_id, ' +
@@ -857,401 +1391,262 @@ begin
       'active_status ' +
       'FROM eggs');
     Add('WHERE egg_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TEgg(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TEgg.LoadFromDataSet(aDataSet: TDataSet);
+procedure TEggRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TEgg;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TEgg) then
+    raise Exception.Create('Hydrate: Expected TEgg');
 
+  R := TEgg(E);
   with aDataSet do
   begin
-    FId := FieldByName('egg_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FFieldNumber := FieldByName('field_number').AsString;
-    FEggSeq := FieldByName('egg_seq').AsInteger;
-    FNestId := FieldByName('nest_id').AsInteger;
+    R.Id := FieldByName('egg_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.FieldNumber := FieldByName('field_number').AsString;
+    R.EggSeq := FieldByName('egg_seq').AsInteger;
+    R.NestId := FieldByName('nest_id').AsInteger;
     case FieldByName('egg_shape').AsString of
-      'S': FEggShape := esSpherical;
-      'E': FEggShape := esElliptical;
-      'O': FEggShape := esOval;
-      'P': FEggShape := esPiriform;
-      'C': FEggShape := esConical;
-      'B': FEggShape := esBiconical;
-      'Y': FEggShape := esCylindrical;
-      'L': FEggShape := esLongitudinal;
+      'S': R.EggShape := esSpherical;
+      'E': R.EggShape := esElliptical;
+      'O': R.EggShape := esOval;
+      'P': R.EggShape := esPiriform;
+      'C': R.EggShape := esConical;
+      'B': R.EggShape := esBiconical;
+      'Y': R.EggShape := esCylindrical;
+      'L': R.EggShape := esLongitudinal;
     else
-      FEggShape := esUnknown;
+      R.EggShape := esUnknown;
     end;
-    FWidth := FieldByName('egg_width').AsFloat;
-    FLength := FieldByName('egg_length').AsFloat;
-    FMass := FieldByName('egg_mass').AsFloat;
-    FVolume := FieldByName('egg_volume').AsFloat;
-    FEggStage := FieldByName('egg_stage').AsString;
-    FEggshellColor := FieldByName('eggshell_color').AsString;
+    R.Width := FieldByName('egg_width').AsFloat;
+    R.Length := FieldByName('egg_length').AsFloat;
+    R.Mass := FieldByName('egg_mass').AsFloat;
+    R.Volume := FieldByName('egg_volume').AsFloat;
+    R.EggStage := FieldByName('egg_stage').AsString;
+    R.EggshellColor := FieldByName('eggshell_color').AsString;
     case FieldByName('eggshell_pattern').AsString of
-      'P':  FEggshellPattern := espSpots;
-      'B':  FEggshellPattern := espBlotches;
-      'S':  FEggshellPattern := espSquiggles;
-      'T':  FEggshellPattern := espStreaks;
-      'W':  FEggshellPattern := espScrawls;
-      'PS': FEggshellPattern := espSpotsSquiggles;
-      'BS': FEggshellPattern := espBlotchesSquiggles;
+      'P':  R.EggshellPattern := espSpots;
+      'B':  R.EggshellPattern := espBlotches;
+      'S':  R.EggshellPattern := espSquiggles;
+      'T':  R.EggshellPattern := espStreaks;
+      'W':  R.EggshellPattern := espScrawls;
+      'PS': R.EggshellPattern := espSpotsSquiggles;
+      'BS': R.EggshellPattern := espBlotchesSquiggles;
     else
-      FEggshellPattern := espUnknown;
+      R.EggshellPattern := espUnknown;
     end;
     case FieldByName('eggshell_texture').AsString of
-      'C': FEggshellTexture := estChalky;
-      'S': FEggshellTexture := estShiny;
-      'G': FEggshellTexture := estGlossy;
-      'P': FEggshellTexture := estPitted;
+      'C': R.EggshellTexture := estChalky;
+      'S': R.EggshellTexture := estShiny;
+      'G': R.EggshellTexture := estGlossy;
+      'P': R.EggshellTexture := estPitted;
     else
-      FEggshellTexture := estUnknown;
+      R.EggshellTexture := estUnknown;
     end;
-    FEggHatched := FieldByName('egg_hatched').AsBoolean;
-    FIndividualId := FieldByName('individual_id').AsInteger;
-    FResearcherId := FieldByName('researcher_id').AsInteger;
-    FMeasureDate := FieldByName('measure_date').AsDateTime;
-    FTaxonId := FieldByName('taxon_id').AsInteger;
-    FHostEgg := FieldByName('host_egg').AsBoolean;
-    FDescription := FieldByName('description').AsString;
-    FNotes := FieldByName('notes').AsString;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.EggHatched := FieldByName('egg_hatched').AsBoolean;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.ResearcherId := FieldByName('researcher_id').AsInteger;
+    R.MeasureDate := FieldByName('measure_date').AsDateTime;
+    R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.HostEgg := FieldByName('host_egg').AsBoolean;
+    R.Description := FieldByName('description').AsString;
+    R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TEgg.Insert;
+procedure TEggRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TEgg;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TEgg) then
+    raise Exception.Create('Insert: Expected TEgg');
+
+  R := TEgg(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO eggs (' +
-        'field_number, ' +
-        'nest_id, ' +
-        'egg_seq, ' +
-        'egg_shape, ' +
-        'egg_width, ' +
-        'egg_length, ' +
-        'egg_mass, ' +
-        'egg_volume, ' +
-        'egg_stage, ' +
-        'eggshell_color, ' +
-        'eggshell_pattern, ' +
-        'eggshell_texture, ' +
-        'egg_hatched, ' +
-        'researcher_id, ' +
-        'individual_id, ' +
-        'measure_date, ' +
-        'taxon_id, ' +
-        'host_egg, ' +
-        'description, ' +
-        'notes, ' +
-        'full_name, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':field_number, ' +
-        ':nest_id, ' +
-        ':egg_seq, ' +
-        ':egg_shape, ' +
-        ':egg_width, ' +
-        ':egg_length, ' +
-        ':egg_mass, ' +
-        ':egg_volume, ' +
-        ':egg_stage, ' +
-        ':eggshell_color, ' +
-        ':eggshell_pattern, ' +
-        ':eggshell_texture, ' +
-        ':egg_hatched, ' +
-        ':researcher_id, ' +
-        ':individual_id, ' +
-        'date(:measure_date), ' +
-        ':taxon_id, ' +
-        ':host_egg, ' +
-        ':description, ' +
-        ':notes, ' +
-        ':full_name, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''));');
-      ParamByName('field_number').AsString := FFieldNumber;
-      ParamByName('egg_seq').AsInteger := FEggSeq;
-      SetForeignParam(ParamByName('nest_id'), FNestId);
-      ParamByName('egg_shape').AsString := EGG_SHAPES[FEggShape];
-      SetFloatParam(ParamByName('egg_width'), FWidth);
-      SetFloatParam(ParamByName('egg_length'), FLength);
-      SetFloatParam(ParamByName('egg_mass'), FMass);
-      SetFloatParam(ParamByName('egg_volume'), FVolume);
-      SetStrParam(ParamByName('egg_stage'), FEggStage);
-      SetStrParam(ParamByName('eggshell_color'), FEggshellColor);
-      ParamByName('eggshell_pattern').AsString := EGGSHELL_PATTERNS[FEggshellPattern];
-      ParamByName('eggshell_texture').AsString := EGGSHELL_TEXTURES[FEggshellTexture];
-      ParamByName('egg_hatched').AsBoolean := FEggHatched;
-      SetForeignParam(ParamByName('researcher_id'), FResearcherId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetDateParam(ParamByName('measure_date'), FMeasureDate);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      ParamByName('host_egg').AsBoolean := FHostEgg;
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
-      SetStrParam(ParamByName('full_name'), FFullname);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TEgg.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TEgg.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Field number', FFieldNumber);
-    JSONObject.Add('Full name', FFullName);
-    JSONObject.Add('Egg number', FEggSeq);
-    JSONObject.Add('Nest', FNestId);
-    JSONObject.Add('Egg shape', EGG_SHAPES[FEggShape]);
-    JSONObject.Add('Width', FWidth);
-    JSONObject.Add('Length', FLength);
-    JSONObject.Add('Mass', FMass);
-    JSONObject.Add('Volume', FVolume);
-    JSONObject.Add('Stage', FEggStage);
-    JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Color', FEggshellColor);
-    JSONObject.Add('Pattern', EGGSHELL_PATTERNS[FEggshellPattern]);
-    JSONObject.Add('Texture', EGGSHELL_TEXTURES[FEggshellTexture]);
-    JSONObject.Add('Hatched', FEggHatched);
-    JSONObject.Add('Individual', FIndividualId);
-    JSONObject.Add('Researcher', FResearcherId);
-    JSONObject.Add('Measure date', FMeasureDate);
-    JSONObject.Add('Host egg', FHostEgg);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TEgg.Update;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TEgg.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE eggs SET');
-      Add('  field_number = :field_number,');
-      Add('  egg_seq = :egg_seq,');
-      Add('  nest_id = :nest_id,');
-      Add('  egg_shape = :egg_shape,');
-      Add('  egg_width = :egg_width,');
-      Add('  egg_length = :egg_length,');
-      Add('  egg_mass = :egg_mass,');
-      Add('  egg_volume = :egg_volume,');
-      Add('  egg_stage = :egg_stage,');
-      Add('  eggshell_color = :eggshell_color,');
-      Add('  eggshell_pattern = :eggshell_pattern,');
-      Add('  eggshell_texture = :eggshell_texture,');
-      Add('  egg_hatched = :egg_hatched,');
-      Add('  researcher_id = :researcher_id,');
-      Add('  individual_id = :individual_id,');
-      Add('  measure_date = date(:measure_date),');
-      Add('  taxon_id = :taxon_id,');
-      Add('  host_egg = :host_egg,');
-      Add('  description = :description,');
-      Add('  notes = :notes,');
-      Add('  full_name = :full_name,');
-      Add('  user_updated = :user_updated,');
-      Add('  update_date = datetime(''now'',''subsec'')');
-      Add('WHERE (egg_id = :egg_id);');
-      ParamByName('egg_id').AsInteger := FId;
-      ParamByName('field_number').AsString := FFieldNumber;
-      ParamByName('egg_seq').AsInteger := FEggSeq;
-      SetForeignParam(ParamByName('nest_id'), FNestId);
-      ParamByName('egg_shape').AsString := EGG_SHAPES[FEggShape];
-      SetFloatParam(ParamByName('egg_width'), FWidth);
-      SetFloatParam(ParamByName('egg_length'), FLength);
-      SetFloatParam(ParamByName('egg_mass'), FMass);
-      SetFloatParam(ParamByName('egg_volume'), FVolume);
-      SetStrParam(ParamByName('egg_stage'), FEggStage);
-      SetStrParam(ParamByName('eggshell_color'), FEggshellColor);
-      ParamByName('eggshell_pattern').AsString := EGGSHELL_PATTERNS[FEggshellPattern];
-      ParamByName('eggshell_texture').AsString := EGGSHELL_TEXTURES[FEggshellTexture];
-      ParamByName('egg_hatched').AsBoolean := FEggHatched;
-      SetForeignParam(ParamByName('researcher_id'), FResearcherId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetDateParam(ParamByName('measure_date'), FMeasureDate);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      ParamByName('host_egg').AsBoolean := FHostEgg;
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
-      SetStrParam(ParamByName('full_name'), FFullname);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TEgg.Diff(aOld: TEgg; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggNumber, aOld.EggSeq, FEggSeq, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggShape, aOld.EggShape, FEggShape, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscWidth, aOld.Width, FWidth, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLength, aOld.Length, FLength, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMass, aOld.Mass, FMass, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscVolume, aOld.Volume, FVolume, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscStage, aOld.EggStage, FEggStage, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggshellColor, aOld.EggshellColor, FEggshellColor, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggshellPattern, aOld.EggshellPattern, FEggshellPattern, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggshellTexture, aOld.EggshellTexture, FEggshellTexture, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHatched, aOld.EggHatched, FEggHatched, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscResearcherID, aOld.ResearcherId, FResearcherId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDate, aOld.MeasureDate, FMeasureDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHostEgg, aOld.HostEgg, FHostEgg, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TEgg.Find(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
     Clear;
-    Add('SELECT egg_id FROM eggs');
-    Add('WHERE (nest_id = :anest)');
-    Add('AND (date(measure_date) = date(:adate))');
-    Add('AND (field_number = :afieldnumber)');
-    Add('AND (researcher_id = :aobserver)');
-    ParamByName('ANEST').AsInteger := aNest;
-    ParamByName('AOBSERVER').AsInteger := aObserver;
-    ParamByName('ADATE').AsString := aDate;
-    ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
+    Add('INSERT INTO eggs (' +
+      'field_number, ' +
+      'nest_id, ' +
+      'egg_seq, ' +
+      'egg_shape, ' +
+      'egg_width, ' +
+      'egg_length, ' +
+      'egg_mass, ' +
+      'egg_volume, ' +
+      'egg_stage, ' +
+      'eggshell_color, ' +
+      'eggshell_pattern, ' +
+      'eggshell_texture, ' +
+      'egg_hatched, ' +
+      'researcher_id, ' +
+      'individual_id, ' +
+      'measure_date, ' +
+      'taxon_id, ' +
+      'host_egg, ' +
+      'description, ' +
+      'notes, ' +
+      'full_name, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':field_number, ' +
+      ':nest_id, ' +
+      ':egg_seq, ' +
+      ':egg_shape, ' +
+      ':egg_width, ' +
+      ':egg_length, ' +
+      ':egg_mass, ' +
+      ':egg_volume, ' +
+      ':egg_stage, ' +
+      ':eggshell_color, ' +
+      ':eggshell_pattern, ' +
+      ':eggshell_texture, ' +
+      ':egg_hatched, ' +
+      ':researcher_id, ' +
+      ':individual_id, ' +
+      'date(:measure_date), ' +
+      ':taxon_id, ' +
+      ':host_egg, ' +
+      ':description, ' +
+      ':notes, ' +
+      ':full_name, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''));');
 
+    ParamByName('field_number').AsString := R.FieldNumber;
+    ParamByName('egg_seq').AsInteger := R.EggSeq;
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    ParamByName('egg_shape').AsString := EGG_SHAPES[R.EggShape];
+    SetFloatParam(ParamByName('egg_width'), R.Width);
+    SetFloatParam(ParamByName('egg_length'), R.Length);
+    SetFloatParam(ParamByName('egg_mass'), R.Mass);
+    SetFloatParam(ParamByName('egg_volume'), R.Volume);
+    SetStrParam(ParamByName('egg_stage'), R.EggStage);
+    SetStrParam(ParamByName('eggshell_color'), R.EggshellColor);
+    ParamByName('eggshell_pattern').AsString := EGGSHELL_PATTERNS[R.EggshellPattern];
+    ParamByName('eggshell_texture').AsString := EGGSHELL_TEXTURES[R.EggshellTexture];
+    ParamByName('egg_hatched').AsBoolean := R.EggHatched;
+    SetForeignParam(ParamByName('researcher_id'), R.ResearcherId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetDateParam(ParamByName('measure_date'), R.MeasureDate);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    ParamByName('host_egg').AsBoolean := R.HostEgg;
+    SetStrParam(ParamByName('description'), R.Description);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('full_name'), R.Fullname);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
     Open;
-    Result := RecordCount > 0;
-    if Result = True then
-    begin
-      GetData(FieldByName('egg_id').AsInteger);
-    end;
+    R.Id := Fields[0].AsInteger;
     Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TEggRepository.TableName: string;
+begin
+  Result := TBL_EGGS;
+end;
+
+procedure TEggRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TEgg;
+begin
+  if not (E is TEgg) then
+    raise Exception.Create('Update: Expected TEgg');
+
+  R := TEgg(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TEggRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE eggs SET');
+    Add('  field_number = :field_number,');
+    Add('  egg_seq = :egg_seq,');
+    Add('  nest_id = :nest_id,');
+    Add('  egg_shape = :egg_shape,');
+    Add('  egg_width = :egg_width,');
+    Add('  egg_length = :egg_length,');
+    Add('  egg_mass = :egg_mass,');
+    Add('  egg_volume = :egg_volume,');
+    Add('  egg_stage = :egg_stage,');
+    Add('  eggshell_color = :eggshell_color,');
+    Add('  eggshell_pattern = :eggshell_pattern,');
+    Add('  eggshell_texture = :eggshell_texture,');
+    Add('  egg_hatched = :egg_hatched,');
+    Add('  researcher_id = :researcher_id,');
+    Add('  individual_id = :individual_id,');
+    Add('  measure_date = date(:measure_date),');
+    Add('  taxon_id = :taxon_id,');
+    Add('  host_egg = :host_egg,');
+    Add('  description = :description,');
+    Add('  notes = :notes,');
+    Add('  full_name = :full_name,');
+    Add('  user_updated = :user_updated,');
+    Add('  update_date = datetime(''now'',''subsec'')');
+    Add('WHERE (egg_id = :egg_id);');
+
+    ParamByName('field_number').AsString := R.FieldNumber;
+    ParamByName('egg_seq').AsInteger := R.EggSeq;
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    ParamByName('egg_shape').AsString := EGG_SHAPES[R.EggShape];
+    SetFloatParam(ParamByName('egg_width'), R.Width);
+    SetFloatParam(ParamByName('egg_length'), R.Length);
+    SetFloatParam(ParamByName('egg_mass'), R.Mass);
+    SetFloatParam(ParamByName('egg_volume'), R.Volume);
+    SetStrParam(ParamByName('egg_stage'), R.EggStage);
+    SetStrParam(ParamByName('eggshell_color'), R.EggshellColor);
+    ParamByName('eggshell_pattern').AsString := EGGSHELL_PATTERNS[R.EggshellPattern];
+    ParamByName('eggshell_texture').AsString := EGGSHELL_TEXTURES[R.EggshellTexture];
+    ParamByName('egg_hatched').AsBoolean := R.EggHatched;
+    SetForeignParam(ParamByName('researcher_id'), R.ResearcherId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetDateParam(ParamByName('measure_date'), R.MeasureDate);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    ParamByName('host_egg').AsBoolean := R.HostEgg;
+    SetStrParam(ParamByName('description'), R.Description);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('full_name'), R.Fullname);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('egg_id').AsInteger := R.Id;
+
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1261,10 +1656,54 @@ end;
 
 constructor TNest.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TNest.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TNest then
+  begin
+    FFieldNumber := TNest(Source).FieldNumber;
+    FFullName := TNest(Source).FullName;
+    FObserverId := TNest(Source).ObserverId;
+    FLocalityId := TNest(Source).LocalityId;
+    FLatitude := TNest(Source).Latitude;
+    FLongitude := TNest(Source).Longitude;
+    FTaxonId := TNest(Source).TaxonId;
+    FNestShape := TNest(Source).NestShape;
+    FSupportType := TNest(Source).SupportType;
+    FSupportPlant1Id := TNest(Source).SupportPlant1Id;
+    FSupportPlant2Id := TNest(Source).SupportPlant2Id;
+    FOtherSupport := TNest(Source).OtherSupport;
+    FHeightAboveGround := TNest(Source).HeightAboveGround;
+    FProjectId := TNest(Source).ProjectId;
+    FInternalMaxDiameter := TNest(Source).InternalMaxDiameter;
+    FInternalMinDiameter := TNest(Source).InternalMinDiameter;
+    FExternalMaxDiameter := TNest(Source).ExternalMaxDiameter;
+    FExternalMinDiameter := TNest(Source).ExternalMinDiameter;
+    FInternalHeight := TNest(Source).InternalHeight;
+    FExternalHeight := TNest(Source).ExternalHeight;
+    FEdgeDistance := TNest(Source).EdgeDistance;
+    FCenterDistance := TNest(Source).CenterDistance;
+    FNestCover := TNest(Source).NestCover;
+    FPlantMaxDiameter := TNest(Source).PlantMaxDiameter;
+    FPlantMinDiameter := TNest(Source).PlantMinDiameter;
+    FPlantHeight := TNest(Source).PlantHeight;
+    FPlantDbh := TNest(Source).PlantDbh;
+    FConstructionDays := TNest(Source).ConstructionDays;
+    FIncubationDays := TNest(Source).IncubationDays;
+    FNestlingDays := TNest(Source).NestlingDays;
+    FActiveDays := TNest(Source).ActiveDays;
+    FNestFate := TNest(Source).NestFate;
+    FNestProductivity := TNest(Source).NestProductivity;
+    FFoundDate := TNest(Source).FoundDate;
+    FLastDate := TNest(Source).LastDate;
+    FDescription := TNest(Source).Description;
+    FNotes := TNest(Source).Notes;
+  end;
 end;
 
 procedure TNest.Clear;
@@ -1309,74 +1748,275 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TNest.Copy(aFrom: TNest);
+function TNest.Clone: TXolmisRecord;
 begin
-  FFieldNumber := aFrom.FieldNumber;
-  FFullName := aFrom.FullName;
-  FObserverId := aFrom.ObserverId;
-  FLocalityId := aFrom.LocalityId;
-  FLatitude := aFrom.Latitude;
-  FLongitude := aFrom.Longitude;
-  FTaxonId := aFrom.TaxonId;
-  FNestShape := aFrom.NestShape;
-  FSupportType := aFrom.SupportType;
-  FSupportPlant1Id := aFrom.SupportPlant1Id;
-  FSupportPlant2Id := aFrom.SupportPlant2Id;
-  FOtherSupport := aFrom.OtherSupport;
-  FHeightAboveGround := aFrom.HeightAboveGround;
-  FProjectId := aFrom.ProjectId;
-  FInternalMaxDiameter := aFrom.InternalMaxDiameter;
-  FInternalMinDiameter := aFrom.InternalMinDiameter;
-  FExternalMaxDiameter := aFrom.ExternalMaxDiameter;
-  FExternalMinDiameter := aFrom.ExternalMinDiameter;
-  FInternalHeight := aFrom.InternalHeight;
-  FExternalHeight := aFrom.ExternalHeight;
-  FEdgeDistance := aFrom.EdgeDistance;
-  FCenterDistance := aFrom.CenterDistance;
-  FNestCover := aFrom.NestCover;
-  FPlantMaxDiameter := aFrom.PlantMaxDiameter;
-  FPlantMinDiameter := aFrom.PlantMinDiameter;
-  FPlantHeight := aFrom.PlantHeight;
-  FPlantDbh := aFrom.PlantDbh;
-  FConstructionDays := aFrom.ConstructionDays;
-  FIncubationDays := aFrom.IncubationDays;
-  FNestlingDays := aFrom.NestlingDays;
-  FActiveDays := aFrom.ActiveDays;
-  FNestFate := aFrom.NestFate;
-  FNestProductivity := aFrom.NestProductivity;
-  FFoundDate := aFrom.FoundDate;
-  FLastDate := aFrom.LastDate;
-  FDescription := aFrom.Description;
-  FNotes := aFrom.Notes;
+  Result := TNest(inherited Clone);
 end;
 
-procedure TNest.Delete;
+function TNest.Diff(const aOld: TNest; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscShape, aOld.NestShape, FNestShape, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSupportType, aOld.SupportType, FSupportType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSupportPlant1ID, aOld.SupportPlant1Id, FSupportPlant1Id, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSupportPlant2ID, aOld.SupportPlant2Id, FSupportPlant2Id, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOtherSupport, aOld.OtherSupport, FOtherSupport, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHeightAboveGround, aOld.HeightAboveGround, FHeightAboveGround, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMaxInternalDiameter, aOld.InternalMaxDiameter, FInternalMaxDiameter, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMinInternalDiameter, aOld.InternalMinDiameter, FInternalMinDiameter, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMaxExternalDiameter, aOld.ExternalMaxDiameter, FExternalMaxDiameter, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMinExternalDiameter, aOld.ExternalMinDiameter, FExternalMinDiameter, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscInternalHeight, aOld.InternalHeight, FInternalHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscExternalHeight, aOld.ExternalHeight, FExternalHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPlantEdgeDistance, aOld.EdgeDistance, FEdgeDistance, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPlantCenterDistance, aOld.CenterDistance, FCenterDistance, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMaxPlantDiameter, aOld.PlantMaxDiameter, FPlantMaxDiameter, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMinPlantDiameter, aOld.PlantMinDiameter, FPlantMinDiameter, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPlantHeight, aOld.PlantHeight, FPlantHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPlantDBH, aOld.PlantDbh, FPlantDbh, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCover, aOld.NestCover, FNestCover, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscBuildingDays, aOld.ConstructionDays, FConstructionDays, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIncubationDays, aOld.IncubationDays, FIncubationDays, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestlingDays, aOld.NestlingDays, FNestlingDays, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscActiveDays, aOld.ActiveDays, FActiveDays, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestFate, aOld.NestFate, FNestFate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestProductivity, aOld.NestProductivity, FNestProductivity, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFoundDate, aOld.FoundDate, FFoundDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLastDateActive, aOld.LastDate, FLastDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TNest.EqualsTo(const Other: TNest): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TNest.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName             := Obj.Get('full_name', '');
+    FFieldNumber          := Obj.Get('field_number', '');
+    FObserverId           := Obj.Get('observer_id', 0);
+    FProjectId            := Obj.Get('project_id', 0);
+    FLocalityId           := Obj.Get('locality_id', 0);
+    FLongitude            := Obj.Get('longitude', 0.0);
+    FLatitude             := Obj.Get('latitude', 0.0);
+    FTaxonId              := Obj.Get('taxon_id', 0);
+    FNestShape            := Obj.Get('nest_shape', '');
+    FSupportType          := Obj.Get('support_type', '');
+    FSupportPlant1Id      := Obj.Get('support_plant_1_id', 0);
+    FSupportPlant2Id      := Obj.Get('support_plant_2_id', 0);
+    FOtherSupport         := Obj.Get('other_support', '');
+    FHeightAboveGround    := Obj.Get('height_above_ground', 0.0);
+    FInternalMaxDiameter  := Obj.Get('max_internal_diameter', 0.0);
+    FInternalMinDiameter  := Obj.Get('min_internal_diameter', 0.0);
+    FExternalMaxDiameter  := Obj.Get('max_external_diameter', 0.0);
+    FExternalMinDiameter  := Obj.Get('min_external_diameter', 0.0);
+    FInternalHeight       := Obj.Get('internal_height', 0.0);
+    FExternalHeight       := Obj.Get('external_height', 0.0);
+    FEdgeDistance         := Obj.Get('edge_distance', 0.0);
+    FCenterDistance       := Obj.Get('center_distance', 0.0);
+    FNestCover            := Obj.Get('nest_cover', 0);
+    FPlantMaxDiameter     := Obj.Get('max_plant_diameter', 0.0);
+    FPlantMinDiameter     := Obj.Get('min_plant_diameter', 0.0);
+    FPlantHeight          := Obj.Get('plant_height', 0.0);
+    FPlantDbh             := Obj.Get('plant_dbh', 0.0);
+    FConstructionDays     := Obj.Get('construction_days', 0.0);
+    FIncubationDays       := Obj.Get('incubation_days', 0.0);
+    FNestlingDays         := Obj.Get('nestling_days', 0.0);
+    FActiveDays           := Obj.Get('active_days', 0.0);
+    case Obj.Get('nest_fate', '') of
+      'L': FNestFate := nfLoss;
+      'S': FNestFate := nfSuccess;
+    else
+      FNestFate := nfUnknown;
+    end;
+    FNestProductivity := Obj.Get('nest_productivity', 0);
+    FFoundDate        := Obj.Get('found_date', NullDate);
+    FLastDate         := Obj.Get('last_date_active', NullDate);
+    FDescription      := Obj.Get('description', '');
+    FNotes            := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TNest.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('field_number', FFieldNumber);
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('observer_id', FObserverId);
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('locality_id', FLocalityId);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('nest_shape', FNestShape);
+    JSONObject.Add('support_type', FSupportType);
+    JSONObject.Add('support_plant_1_id', FSupportPlant1Id);
+    JSONObject.Add('support_plant_2_id', FSupportPlant2Id);
+    JSONObject.Add('other_support', FOtherSupport);
+    JSONObject.Add('height_above_ground', FHeightAboveGround);
+    JSONObject.Add('max_internal_diameter', FInternalMaxDiameter);
+    JSONObject.Add('min_internal_diameter', FInternalMinDiameter);
+    JSONObject.Add('max_external_diameter', FExternalMaxDiameter);
+    JSONObject.Add('min_external_diameter', FExternalMinDiameter);
+    JSONObject.Add('internal_height', FInternalHeight);
+    JSONObject.Add('external_height', FExternalHeight);
+    JSONObject.Add('edge_distance', FEdgeDistance);
+    JSONObject.Add('center_distance', FCenterDistance);
+    JSONObject.Add('nest_cover', FNestCover);
+    JSONObject.Add('max_plant_diameter', FPlantMaxDiameter);
+    JSONObject.Add('min_plant_diameter', FPlantMinDiameter);
+    JSONObject.Add('plant_height', FPlantHeight);
+    JSONObject.Add('plant_dbh', FPlantDbh);
+    JSONObject.Add('construction_days', FConstructionDays);
+    JSONObject.Add('incubation_days', FIncubationDays);
+    JSONObject.Add('nestling_days', FNestlingDays);
+    JSONObject.Add('active_days', FActiveDays);
+    JSONObject.Add('nest_fate', NEST_FATES[FNestFate]);
+    JSONObject.Add('nest_productivity', FNestProductivity);
+    JSONObject.Add('found_date', FFoundDate);
+    JSONObject.Add('last_date_active', FLastDate);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TNest.ToString: String;
+begin
+  Result := Format('Nest(Id=%d, FullName=%s, FieldNumber=%s, ObserverId=%d, ProjectId=%d, LocalityId=%d, ' +
+    'Longitude=%f, Latitude=%f, TaxonId=%d, NestShape=%s, SupportType=%s, SupportPlant1Id=%d, SupportPlant2Id=%d, ' +
+    'OtherSupport=%s, HeightAboveGround=%f, InternalMaxDiameter=%f, InternalMinDiameter=%f, ExternalMaxDiameter=%f, ' +
+    'ExternalMinDiameter=%f, InternalHeight=%f, ExternalHeight=%f, EdgeDistance=%f, CenterDistance=%f, ' +
+    'NestCover=%d, PlantMaxDiameter=%f, PlantMinDiameter=%f, PlantHeight=%f, PlantDbh=%f, ConstructionDays=%f, ' +
+    'IncubationDays=%f, NestlingDays=%f, ActiveDays=%f, NestFate=%s, NestProductivity=%d, FoundDate=%s, ' +
+    'LastDate=%s, Description=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FFieldNumber, FObserverId, FProjectId, FLocalityId, FLongitude, FLatitude, FTaxonId,
+    FNestShape, FSupportType, FSupportPlant1Id, FSupportPlant2Id, FOtherSupport, FHeightAboveGround,
+    FInternalMaxDiameter, FInternalMinDiameter, FExternalMaxDiameter, FExternalMinDiameter,
+    FInternalHeight, FExternalHeight, FEdgeDistance, FCenterDistance, FNestCover, FPlantMaxDiameter,
+    FPlantMinDiameter, FPlantHeight, FPlantDbh, FConstructionDays, FIncubationDays, FNestlingDays, FActiveDays,
+    NEST_FATES[FNestFate], FNestProductivity, DateToStr(FFoundDate), DateToStr(FLastDate), FDescription, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TNest.Validate(out Msg: string): Boolean;
+begin
+  if FFieldNumber = EmptyStr then
+  begin
+    Msg := 'Field number required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TNestRepository }
+
+procedure TNestRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNest;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNest.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TNest) then
+    raise Exception.Create('Delete: Expected TNest');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TNest(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNestRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM nests');
-      Add('WHERE (nest_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_NEST_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -1384,14 +2024,153 @@ begin
   end;
 end;
 
-procedure TNest.GetData(aKey: Integer);
+function TNestRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_NEST_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNestRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_NEST_ID, COL_FIELD_NUMBER, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TNest) then
+    raise Exception.Create('FindBy: Expected TNest');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'nest_id, ' +
+      'field_number, ' +
+      'observer_id, ' +
+      'project_id, ' +
+      'locality_id, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'taxon_id, ' +
+      'nest_shape, ' +
+      'support_type, ' +
+      'support_plant_1_id, ' +
+      'support_plant_2_id, ' +
+      'other_support, ' +
+      'height_above_ground, ' +
+      'internal_max_diameter, ' +
+      'internal_min_diameter, ' +
+      'external_max_diameter, ' +
+      'external_min_diameter, ' +
+      'internal_height, ' +
+      'external_height, ' +
+      'edge_distance, ' +
+      'center_distance, ' +
+      'nest_cover, ' +
+      'plant_max_diameter, ' +
+      'plant_min_diameter, ' +
+      'plant_height, ' +
+      'plant_dbh, ' +
+      'construction_days, ' +
+      'incubation_days, ' +
+      'nestling_days, ' +
+      'active_days, ' +
+      'nest_fate, ' +
+      'nest_productivity, ' +
+      'found_date, ' +
+      'last_date, ' +
+      'full_name, ' +
+      'description, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM nests');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TNest(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TNestRepository.FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate; E: TNest);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM nests');
+    Add('WHERE (field_number = :afieldnumber)');
+    Add('AND (taxon_id = :ataxon)');
+    Add('AND (locality_id = :asite)');
+    Add('AND (found_date = :adate)');
+    ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
+    ParamByName('ATAXON').AsInteger := aTaxon;
+    ParamByName('ASITE').AsInteger := aSite;
+    ParamByName('ADATE').AsDateTime := aDate;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNestRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TNest) then
+    raise Exception.Create('GetById: Expected TNest');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
       'nest_id, ' +
@@ -1441,522 +2220,335 @@ begin
       'active_status ' +
       'FROM nests');
     Add('WHERE nest_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TNest(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TNest.LoadFromDataSet(aDataSet: TDataSet);
+procedure TNestRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TNest;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TNest) then
+    raise Exception.Create('Hydrate: Expected TNest');
 
+  R := TNest(E);
   with aDataSet do
   begin
-    FId := FieldByName('nest_id').AsInteger;
-    FFieldNumber := FieldByName('field_number').AsString;
-    FFullName := FieldByName('full_name').AsString;
-    FObserverId := FieldByName('observer_id').AsInteger;
-    FLocalityId := FieldByName('locality_id').AsInteger;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FTaxonId := FieldByName('taxon_id').AsInteger;
-    FNestShape := FieldByName('nest_shape').AsString;
-    FSupportType := FieldByName('support_type').AsString;
-    FSupportPlant1Id := FieldByName('support_plant_1_id').AsInteger;
-    FSupportPlant2Id := FieldByName('support_plant_2_id').AsInteger;
-    FOtherSupport := FieldByName('other_support').AsString;
-    FHeightAboveGround := FieldByName('height_above_ground').AsFloat;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FInternalMaxDiameter := FieldByName('internal_max_diameter').AsFloat;
-    FInternalMinDiameter := FieldByName('internal_min_diameter').AsFloat;
-    FExternalMaxDiameter := FieldByName('external_max_diameter').AsFloat;
-    FExternalMinDiameter := FieldByName('external_min_diameter').AsFloat;
-    FInternalHeight := FieldByName('internal_height').AsFloat;
-    FExternalHeight := FieldByName('external_height').AsFloat;
-    FEdgeDistance := FieldByName('edge_distance').AsFloat;
-    FCenterDistance := FieldByName('center_distance').AsFloat;
-    FNestCover := FieldByName('nest_cover').AsInteger;
-    FPlantMaxDiameter := FieldByName('plant_max_diameter').AsFloat;
-    FPlantMinDiameter := FieldByName('plant_min_diameter').AsFloat;
-    FPlantHeight := FieldByName('plant_height').AsFloat;
-    FPlantDbh := FieldByName('plant_dbh').AsFloat;
-    FConstructionDays := FieldByName('construction_days').AsFloat;
-    FIncubationDays := FieldByName('incubation_days').AsFloat;
-    FNestlingDays := FieldByName('nestling_days').AsFloat;
-    FActiveDays := FieldByName('active_days').AsFloat;
+    R.Id := FieldByName('nest_id').AsInteger;
+    R.FieldNumber := FieldByName('field_number').AsString;
+    R.FullName := FieldByName('full_name').AsString;
+    R.ObserverId := FieldByName('observer_id').AsInteger;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.NestShape := FieldByName('nest_shape').AsString;
+    R.SupportType := FieldByName('support_type').AsString;
+    R.SupportPlant1Id := FieldByName('support_plant_1_id').AsInteger;
+    R.SupportPlant2Id := FieldByName('support_plant_2_id').AsInteger;
+    R.OtherSupport := FieldByName('other_support').AsString;
+    R.HeightAboveGround := FieldByName('height_above_ground').AsFloat;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.InternalMaxDiameter := FieldByName('internal_max_diameter').AsFloat;
+    R.InternalMinDiameter := FieldByName('internal_min_diameter').AsFloat;
+    R.ExternalMaxDiameter := FieldByName('external_max_diameter').AsFloat;
+    R.ExternalMinDiameter := FieldByName('external_min_diameter').AsFloat;
+    R.InternalHeight := FieldByName('internal_height').AsFloat;
+    R.ExternalHeight := FieldByName('external_height').AsFloat;
+    R.EdgeDistance := FieldByName('edge_distance').AsFloat;
+    R.CenterDistance := FieldByName('center_distance').AsFloat;
+    R.NestCover := FieldByName('nest_cover').AsInteger;
+    R.PlantMaxDiameter := FieldByName('plant_max_diameter').AsFloat;
+    R.PlantMinDiameter := FieldByName('plant_min_diameter').AsFloat;
+    R.PlantHeight := FieldByName('plant_height').AsFloat;
+    R.PlantDbh := FieldByName('plant_dbh').AsFloat;
+    R.ConstructionDays := FieldByName('construction_days').AsFloat;
+    R.IncubationDays := FieldByName('incubation_days').AsFloat;
+    R.NestlingDays := FieldByName('nestling_days').AsFloat;
+    R.ActiveDays := FieldByName('active_days').AsFloat;
     case FieldByName('nest_fate').AsString of
-      'L': FNestFate := nfLoss;
-      'S': FNestFate := nfSuccess;
+      'L': R.NestFate := nfLoss;
+      'S': R.NestFate := nfSuccess;
     else
-      FNestFate := nfUnknown;
+      R.NestFate := nfUnknown;
     end;
-    FNestProductivity := FieldByName('nest_productivity').AsInteger;
-    FFoundDate := FieldByName('found_date').AsDateTime;
-    FLastDate := FieldByName('last_date').AsDateTime;
-    FDescription := FieldByName('description').AsString;
-    FNotes := FieldByName('notes').AsString;
+    R.NestProductivity := FieldByName('nest_productivity').AsInteger;
+    R.FoundDate := FieldByName('found_date').AsDateTime;
+    R.LastDate := FieldByName('last_date').AsDateTime;
+    R.Description := FieldByName('description').AsString;
+    R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TNest.Insert;
+procedure TNestRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNest;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TNest) then
+    raise Exception.Create('Insert: Expected TNest');
+
+  R := TNest(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO nests (' +
-        'field_number, ' +
-        'observer_id, ' +
-        'project_id, ' +
-        'locality_id, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'taxon_id, ' +
-        'nest_shape, ' +
-        'support_type, ' +
-        'support_plant_1_id, ' +
-        'support_plant_2_id, ' +
-        'other_support, ' +
-        'height_above_ground, ' +
-        'internal_max_diameter, ' +
-        'internal_min_diameter, ' +
-        'external_max_diameter, ' +
-        'external_min_diameter, ' +
-        'internal_height, ' +
-        'external_height, ' +
-        'edge_distance, ' +
-        'center_distance, ' +
-        'nest_cover, ' +
-        'plant_max_diameter, ' +
-        'plant_min_diameter, ' +
-        'plant_height, ' +
-        'plant_dbh, ' +
-        'nest_fate,' +
-        'nest_productivity, ' +
-        'found_date, ' +
-        'last_date, ' +
-        'full_name, ' +
-        'description, ' +
-        'notes, ' +
-        'construction_days, ' +
-        'incubation_days, ' +
-        'nestling_days, ' +
-        'active_days, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':field_number, ' +
-        ':observer_id, ' +
-        ':project_id, ' +
-        ':locality_id, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':taxon_id, ' +
-        ':nest_shape, ' +
-        ':support_type, ' +
-        ':support_plant_1_id, ' +
-        ':support_plant_2_id, ' +
-        ':other_support, ' +
-        ':height_above_ground, ' +
-        ':internal_max_diameter, ' +
-        ':internal_min_diameter, ' +
-        ':external_max_diameter, ' +
-        ':external_min_diameter, ' +
-        ':internal_height, ' +
-        ':external_height, ' +
-        ':edge_distance, ' +
-        ':center_distance, ' +
-        ':nest_cover, ' +
-        ':plant_max_diameter, ' +
-        ':plant_min_diameter, ' +
-        ':plant_height, ' +
-        ':plant_dbh, ' +
-        ':nest_fate,' +
-        ':nest_productivity, ' +
-        'date(:found_date), ' +
-        'date(:last_date), ' +
-        ':full_name, ' +
-        ':description, ' +
-        ':notes, ' +
-        ':construction_days, ' +
-        ':incubation_days, ' +
-        ':nestling_days, ' +
-        ':active_days, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''));');
-      ParamByName('field_number').AsString := FFieldNumber;
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetStrParam(ParamByName('nest_shape'), FNestShape);
-      SetStrParam(ParamByName('support_type'), FSupportType);
-      SetForeignParam(ParamByName('support_plant_1_id'), FSupportPlant1Id);
-      SetForeignParam(ParamByName('support_plant_2_id'), FSupportPlant2Id);
-      SetStrParam(ParamByName('other_support'), FOtherSupport);
-      ParamByName('height_above_ground').AsFloat := FHeightAboveGround;
-      SetFloatParam(ParamByName('internal_max_diameter'), FInternalMaxDiameter);
-      SetFloatParam(ParamByName('internal_min_diameter'), FInternalMinDiameter);
-      SetFloatParam(ParamByName('external_max_diameter'), FExternalMaxDiameter);
-      SetFloatParam(ParamByName('external_min_diameter'), FExternalMinDiameter);
-      SetFloatParam(ParamByName('internal_height'), FInternalHeight);
-      SetFloatParam(ParamByName('external_height'), FExternalHeight);
-      SetFloatParam(ParamByName('edge_distance'), FEdgeDistance);
-      SetFloatParam(ParamByName('center_distance'), FCenterDistance);
-      ParamByName('nest_cover').AsFloat := FNestCover;
-      SetFloatParam(ParamByName('plant_max_diameter'), FPlantMaxDiameter);
-      SetFloatParam(ParamByName('plant_min_diameter'), FPlantMinDiameter);
-      SetFloatParam(ParamByName('plant_height'), FPlantHeight);
-      SetFloatParam(ParamByName('plant_dbh'), FPlantDbh);
-      ParamByName('nest_fate').AsString := NEST_FATES[FNestFate];
-      ParamByName('nest_productivity').AsInteger := FNestProductivity;
-      SetDateParam(ParamByName('found_date'), FFoundDate);
-      SetDateParam(ParamByName('last_date'), FLastDate);
-      FFullName := GetNestFullName(FFoundDate, FTaxonId, FLocalityId, FFieldNumber);
-      SetStrParam(ParamByName('full_name'), FFullName);
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
-      SetFloatParam(ParamByName('construction_days'), FConstructionDays);
-      SetFloatParam(ParamByName('incubation_days'), FIncubationDays);
-      SetFloatParam(ParamByName('nestling_days'), FNestlingDays);
-      SetFloatParam(ParamByName('active_days'), FActiveDays);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TNest.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TNest.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Field number', FFieldNumber);
-    JSONObject.Add('Full name', FFullName);
-    JSONObject.Add('Observer', FObserverId);
-    JSONObject.Add('Project', FProjectId);
-    JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Nest shape', FNestShape);
-    JSONObject.Add('Support type', FSupportType);
-    JSONObject.Add('Support plant 1', FSupportPlant1Id);
-    JSONObject.Add('Support plant 2', FSupportPlant2Id);
-    JSONObject.Add('Other support', FOtherSupport);
-    JSONObject.Add('Height above ground', FHeightAboveGround);
-    JSONObject.Add('Max internal diameter', FInternalMaxDiameter);
-    JSONObject.Add('Min internal diameter', FInternalMinDiameter);
-    JSONObject.Add('Max external diameter', FExternalMaxDiameter);
-    JSONObject.Add('Min external diameter', FExternalMinDiameter);
-    JSONObject.Add('Internal height', FInternalHeight);
-    JSONObject.Add('External height', FExternalHeight);
-    JSONObject.Add('Edge distance', FEdgeDistance);
-    JSONObject.Add('Center distance', FCenterDistance);
-    JSONObject.Add('Nest cover', FNestCover);
-    JSONObject.Add('Max plant diameter', FPlantMaxDiameter);
-    JSONObject.Add('Min plant diameter', FPlantMinDiameter);
-    JSONObject.Add('Plant height', FPlantHeight);
-    JSONObject.Add('Plant DBH', FPlantDbh);
-    JSONObject.Add('Construction days', FConstructionDays);
-    JSONObject.Add('Incubation days', FIncubationDays);
-    JSONObject.Add('Nestling days', FNestlingDays);
-    JSONObject.Add('Active days', FActiveDays);
-    JSONObject.Add('Nest fate', NEST_FATES[FNestFate]);
-    JSONObject.Add('Nest productivity', FNestProductivity);
-    JSONObject.Add('Found date', FFoundDate);
-    JSONObject.Add('Last date active', FLastDate);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TNest.Update;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNest.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE nests SET');
-      Add('  field_number = :field_number,');
-      Add('  observer_id = :observer_id,');
-      Add('  project_id = :project_id,');
-      Add('  locality_id = :locality_id,');
-      Add('  longitude = :longitude,');
-      Add('  latitude = :latitude,');
-      Add('  taxon_id = :taxon_id,');
-      Add('  nest_shape = :nest_shape,');
-      Add('  support_type = :support_type,');
-      Add('  support_plant_1_id = :support_plant_1_id,');
-      Add('  support_plant_2_id = :support_plant_2_id,');
-      Add('  other_support = :other_support,');
-      Add('  height_above_ground = :height_above_ground,');
-      Add('  internal_max_diameter = :internal_max_diameter,');
-      Add('  internal_min_diameter = :internal_min_diameter,');
-      Add('  external_max_diameter = :external_max_diameter,');
-      Add('  external_min_diameter = :external_min_diameter,');
-      Add('  internal_height = :internal_height,');
-      Add('  external_height = :external_height,');
-      Add('  edge_distance = :edge_distance,');
-      Add('  center_distance = :center_distance,');
-      Add('  nest_cover = :nest_cover,');
-      Add('  plant_max_diameter = :plant_max_diameter,');
-      Add('  plant_min_diameter = :plant_min_diameter,');
-      Add('  plant_height = :plant_height,');
-      Add('  plant_dbh = :plant_dbh,');
-      Add('  nest_fate = :nest_fate,');
-      Add('  nest_productivity = :nest_productivity,');
-      Add('  found_date = date(:found_date),');
-      Add('  last_date = date(:last_date),');
-      Add('  full_name = :full_name,');
-      Add('  description = :description,');
-      Add('  notes = :notes,');
-      Add('  construction_days = :construction_days,');
-      Add('  incubation_days = :incubation_days,');
-      Add('  nestling_days = :nestling_days,');
-      Add('  active_days = :active_days,');
-      Add('  user_updated = :user_updated,');
-      Add('  update_date = datetime(''now'',''subsec'')');
-      Add('WHERE (nest_id = :nest_id);');
-
-      ParamByName('nest_id').AsInteger := FId;
-      ParamByName('field_number').AsString := FFieldNumber;
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetStrParam(ParamByName('nest_shape'), FNestShape);
-      SetStrParam(ParamByName('support_type'), FSupportType);
-      SetForeignParam(ParamByName('support_plant_1_id'), FSupportPlant1Id);
-      SetForeignParam(ParamByName('support_plant_2_id'), FSupportPlant2Id);
-      SetStrParam(ParamByName('other_support'), FOtherSupport);
-      ParamByName('height_above_ground').AsFloat := FHeightAboveGround;
-      SetFloatParam(ParamByName('internal_max_diameter'), FInternalMaxDiameter);
-      SetFloatParam(ParamByName('internal_min_diameter'), FInternalMinDiameter);
-      SetFloatParam(ParamByName('external_max_diameter'), FExternalMaxDiameter);
-      SetFloatParam(ParamByName('external_min_diameter'), FExternalMinDiameter);
-      SetFloatParam(ParamByName('internal_height'), FInternalHeight);
-      SetFloatParam(ParamByName('external_height'), FExternalHeight);
-      SetFloatParam(ParamByName('edge_distance'), FEdgeDistance);
-      SetFloatParam(ParamByName('center_distance'), FCenterDistance);
-      ParamByName('nest_cover').AsFloat := FNestCover;
-      SetFloatParam(ParamByName('plant_max_diameter'), FPlantMaxDiameter);
-      SetFloatParam(ParamByName('plant_min_diameter'), FPlantMinDiameter);
-      SetFloatParam(ParamByName('plant_height'), FPlantHeight);
-      SetFloatParam(ParamByName('plant_dbh'), FPlantDbh);
-      ParamByName('nest_fate').AsString := NEST_FATES[FNestFate];
-      ParamByName('nest_productivity').AsInteger := FNestProductivity;
-      SetDateParam(ParamByName('found_date'), FFoundDate);
-      SetDateParam(ParamByName('last_date'), FLastDate);
-      FFullName := GetNestFullName(FFoundDate, FTaxonId, FLocalityId, FFieldNumber);
-      SetStrParam(ParamByName('full_name'), FFullName);
-      SetStrParam(ParamByName('description'), FDescription);
-      SetStrParam(ParamByName('notes'), FNotes);
-      SetFloatParam(ParamByName('construction_days'), FConstructionDays);
-      SetFloatParam(ParamByName('incubation_days'), FIncubationDays);
-      SetFloatParam(ParamByName('nestling_days'), FNestlingDays);
-      SetFloatParam(ParamByName('active_days'), FActiveDays);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TNest.Diff(aOld: TNest; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscFieldNumber, aOld.FieldNumber, FFieldNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscShape, aOld.NestShape, FNestShape, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSupportType, aOld.SupportType, FSupportType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSupportPlant1ID, aOld.SupportPlant1Id, FSupportPlant1Id, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSupportPlant2ID, aOld.SupportPlant2Id, FSupportPlant2Id, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOtherSupport, aOld.OtherSupport, FOtherSupport, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHeightAboveGround, aOld.HeightAboveGround, FHeightAboveGround, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMaxInternalDiameter, aOld.InternalMaxDiameter, FInternalMaxDiameter, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMinInternalDiameter, aOld.InternalMinDiameter, FInternalMinDiameter, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMaxExternalDiameter, aOld.ExternalMaxDiameter, FExternalMaxDiameter, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMinExternalDiameter, aOld.ExternalMinDiameter, FExternalMinDiameter, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscInternalHeight, aOld.InternalHeight, FInternalHeight, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscExternalHeight, aOld.ExternalHeight, FExternalHeight, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPlantEdgeDistance, aOld.EdgeDistance, FEdgeDistance, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPlantCenterDistance, aOld.CenterDistance, FCenterDistance, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMaxPlantDiameter, aOld.PlantMaxDiameter, FPlantMaxDiameter, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMinPlantDiameter, aOld.PlantMinDiameter, FPlantMinDiameter, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPlantHeight, aOld.PlantHeight, FPlantHeight, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPlantDBH, aOld.PlantDbh, FPlantDbh, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCover, aOld.NestCover, FNestCover, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscBuildingDays, aOld.ConstructionDays, FConstructionDays, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIncubationDays, aOld.IncubationDays, FIncubationDays, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestlingDays, aOld.NestlingDays, FNestlingDays, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscActiveDays, aOld.ActiveDays, FActiveDays, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestFate, aOld.NestFate, FNestFate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestProductivity, aOld.NestProductivity, FNestProductivity, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFoundDate, aOld.FoundDate, FFoundDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLastDateActive, aOld.LastDate, FLastDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TNest.Find(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(nil);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
     Clear;
-    Add('SELECT nest_id FROM nests');
-    Add('WHERE (field_number = :afieldnumber)');
-    Add('AND (taxon_id = :ataxon)');
-    Add('AND (locality_id = :asite)');
-    Add('AND (found_date = :adate)');
-    ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
-    ParamByName('ATAXON').AsInteger := aTaxon;
-    ParamByName('ASITE').AsInteger := aSite;
-    ParamByName('ADATE').AsDateTime := aDate;
+    Add('INSERT INTO nests (' +
+      'field_number, ' +
+      'observer_id, ' +
+      'project_id, ' +
+      'locality_id, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'taxon_id, ' +
+      'nest_shape, ' +
+      'support_type, ' +
+      'support_plant_1_id, ' +
+      'support_plant_2_id, ' +
+      'other_support, ' +
+      'height_above_ground, ' +
+      'internal_max_diameter, ' +
+      'internal_min_diameter, ' +
+      'external_max_diameter, ' +
+      'external_min_diameter, ' +
+      'internal_height, ' +
+      'external_height, ' +
+      'edge_distance, ' +
+      'center_distance, ' +
+      'nest_cover, ' +
+      'plant_max_diameter, ' +
+      'plant_min_diameter, ' +
+      'plant_height, ' +
+      'plant_dbh, ' +
+      'nest_fate,' +
+      'nest_productivity, ' +
+      'found_date, ' +
+      'last_date, ' +
+      'full_name, ' +
+      'description, ' +
+      'notes, ' +
+      'construction_days, ' +
+      'incubation_days, ' +
+      'nestling_days, ' +
+      'active_days, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':field_number, ' +
+      ':observer_id, ' +
+      ':project_id, ' +
+      ':locality_id, ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':taxon_id, ' +
+      ':nest_shape, ' +
+      ':support_type, ' +
+      ':support_plant_1_id, ' +
+      ':support_plant_2_id, ' +
+      ':other_support, ' +
+      ':height_above_ground, ' +
+      ':internal_max_diameter, ' +
+      ':internal_min_diameter, ' +
+      ':external_max_diameter, ' +
+      ':external_min_diameter, ' +
+      ':internal_height, ' +
+      ':external_height, ' +
+      ':edge_distance, ' +
+      ':center_distance, ' +
+      ':nest_cover, ' +
+      ':plant_max_diameter, ' +
+      ':plant_min_diameter, ' +
+      ':plant_height, ' +
+      ':plant_dbh, ' +
+      ':nest_fate,' +
+      ':nest_productivity, ' +
+      'date(:found_date), ' +
+      'date(:last_date), ' +
+      ':full_name, ' +
+      ':description, ' +
+      ':notes, ' +
+      ':construction_days, ' +
+      ':incubation_days, ' +
+      ':nestling_days, ' +
+      ':active_days, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''));');
+
+    ParamByName('field_number').AsString := R.FieldNumber;
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('nest_shape'), R.NestShape);
+    SetStrParam(ParamByName('support_type'), R.SupportType);
+    SetForeignParam(ParamByName('support_plant_1_id'), R.SupportPlant1Id);
+    SetForeignParam(ParamByName('support_plant_2_id'), R.SupportPlant2Id);
+    SetStrParam(ParamByName('other_support'), R.OtherSupport);
+    ParamByName('height_above_ground').AsFloat := R.HeightAboveGround;
+    SetFloatParam(ParamByName('internal_max_diameter'), R.InternalMaxDiameter);
+    SetFloatParam(ParamByName('internal_min_diameter'), R.InternalMinDiameter);
+    SetFloatParam(ParamByName('external_max_diameter'), R.ExternalMaxDiameter);
+    SetFloatParam(ParamByName('external_min_diameter'), R.ExternalMinDiameter);
+    SetFloatParam(ParamByName('internal_height'), R.InternalHeight);
+    SetFloatParam(ParamByName('external_height'), R.ExternalHeight);
+    SetFloatParam(ParamByName('edge_distance'), R.EdgeDistance);
+    SetFloatParam(ParamByName('center_distance'), R.CenterDistance);
+    ParamByName('nest_cover').AsFloat := R.NestCover;
+    SetFloatParam(ParamByName('plant_max_diameter'), R.PlantMaxDiameter);
+    SetFloatParam(ParamByName('plant_min_diameter'), R.PlantMinDiameter);
+    SetFloatParam(ParamByName('plant_height'), R.PlantHeight);
+    SetFloatParam(ParamByName('plant_dbh'), R.PlantDbh);
+    ParamByName('nest_fate').AsString := NEST_FATES[R.NestFate];
+    ParamByName('nest_productivity').AsInteger := R.NestProductivity;
+    SetDateParam(ParamByName('found_date'), R.FoundDate);
+    SetDateParam(ParamByName('last_date'), R.LastDate);
+    R.FullName := GetNestFullName(R.FoundDate, R.TaxonId, R.LocalityId, R.FieldNumber);
+    SetStrParam(ParamByName('full_name'), R.FullName);
+    SetStrParam(ParamByName('description'), R.Description);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetFloatParam(ParamByName('construction_days'), R.ConstructionDays);
+    SetFloatParam(ParamByName('incubation_days'), R.IncubationDays);
+    SetFloatParam(ParamByName('nestling_days'), R.NestlingDays);
+    SetFloatParam(ParamByName('active_days'), R.ActiveDays);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
     Open;
-    Result := RecordCount > 0;
-    if Result = True then
-    begin
-      GetData(FieldByName('nest_id').AsInteger);
-    end;
+    R.Id := Fields[0].AsInteger;
     Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TNestRepository.TableName: string;
+begin
+  Result := TBL_NESTS;
+end;
+
+procedure TNestRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TNest;
+begin
+  if not (E is TNest) then
+    raise Exception.Create('Update: Expected TNest');
+
+  R := TNest(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNestRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE nests SET');
+    Add('  field_number = :field_number,');
+    Add('  observer_id = :observer_id,');
+    Add('  project_id = :project_id,');
+    Add('  locality_id = :locality_id,');
+    Add('  longitude = :longitude,');
+    Add('  latitude = :latitude,');
+    Add('  taxon_id = :taxon_id,');
+    Add('  nest_shape = :nest_shape,');
+    Add('  support_type = :support_type,');
+    Add('  support_plant_1_id = :support_plant_1_id,');
+    Add('  support_plant_2_id = :support_plant_2_id,');
+    Add('  other_support = :other_support,');
+    Add('  height_above_ground = :height_above_ground,');
+    Add('  internal_max_diameter = :internal_max_diameter,');
+    Add('  internal_min_diameter = :internal_min_diameter,');
+    Add('  external_max_diameter = :external_max_diameter,');
+    Add('  external_min_diameter = :external_min_diameter,');
+    Add('  internal_height = :internal_height,');
+    Add('  external_height = :external_height,');
+    Add('  edge_distance = :edge_distance,');
+    Add('  center_distance = :center_distance,');
+    Add('  nest_cover = :nest_cover,');
+    Add('  plant_max_diameter = :plant_max_diameter,');
+    Add('  plant_min_diameter = :plant_min_diameter,');
+    Add('  plant_height = :plant_height,');
+    Add('  plant_dbh = :plant_dbh,');
+    Add('  nest_fate = :nest_fate,');
+    Add('  nest_productivity = :nest_productivity,');
+    Add('  found_date = date(:found_date),');
+    Add('  last_date = date(:last_date),');
+    Add('  full_name = :full_name,');
+    Add('  description = :description,');
+    Add('  notes = :notes,');
+    Add('  construction_days = :construction_days,');
+    Add('  incubation_days = :incubation_days,');
+    Add('  nestling_days = :nestling_days,');
+    Add('  active_days = :active_days,');
+    Add('  user_updated = :user_updated,');
+    Add('  update_date = datetime(''now'',''subsec'')');
+    Add('WHERE (nest_id = :nest_id);');
+
+    ParamByName('field_number').AsString := R.FieldNumber;
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('nest_shape'), R.NestShape);
+    SetStrParam(ParamByName('support_type'), R.SupportType);
+    SetForeignParam(ParamByName('support_plant_1_id'), R.SupportPlant1Id);
+    SetForeignParam(ParamByName('support_plant_2_id'), R.SupportPlant2Id);
+    SetStrParam(ParamByName('other_support'), R.OtherSupport);
+    ParamByName('height_above_ground').AsFloat := R.HeightAboveGround;
+    SetFloatParam(ParamByName('internal_max_diameter'), R.InternalMaxDiameter);
+    SetFloatParam(ParamByName('internal_min_diameter'), R.InternalMinDiameter);
+    SetFloatParam(ParamByName('external_max_diameter'), R.ExternalMaxDiameter);
+    SetFloatParam(ParamByName('external_min_diameter'), R.ExternalMinDiameter);
+    SetFloatParam(ParamByName('internal_height'), R.InternalHeight);
+    SetFloatParam(ParamByName('external_height'), R.ExternalHeight);
+    SetFloatParam(ParamByName('edge_distance'), R.EdgeDistance);
+    SetFloatParam(ParamByName('center_distance'), R.CenterDistance);
+    ParamByName('nest_cover').AsFloat := R.NestCover;
+    SetFloatParam(ParamByName('plant_max_diameter'), R.PlantMaxDiameter);
+    SetFloatParam(ParamByName('plant_min_diameter'), R.PlantMinDiameter);
+    SetFloatParam(ParamByName('plant_height'), R.PlantHeight);
+    SetFloatParam(ParamByName('plant_dbh'), R.PlantDbh);
+    ParamByName('nest_fate').AsString := NEST_FATES[R.NestFate];
+    ParamByName('nest_productivity').AsInteger := R.NestProductivity;
+    SetDateParam(ParamByName('found_date'), R.FoundDate);
+    SetDateParam(ParamByName('last_date'), R.LastDate);
+    R.FullName := GetNestFullName(R.FoundDate, R.TaxonId, R.LocalityId, R.FieldNumber);
+    SetStrParam(ParamByName('full_name'), R.FullName);
+    SetStrParam(ParamByName('description'), R.Description);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetFloatParam(ParamByName('construction_days'), R.ConstructionDays);
+    SetFloatParam(ParamByName('incubation_days'), R.IncubationDays);
+    SetFloatParam(ParamByName('nestling_days'), R.NestlingDays);
+    SetFloatParam(ParamByName('active_days'), R.ActiveDays);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('nest_id').AsInteger := R.Id;
+
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1966,10 +2558,20 @@ end;
 
 constructor TNestOwner.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TNestOwner.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TNestOwner then
+  begin
+    FNestId := TNestOwner(Source).NestId;
+    FRole := TNestOwner(Source).Role;
+    FIndividualId := TNestOwner(Source).IndividualId;
+  end;
 end;
 
 procedure TNestOwner.Clear;
@@ -1980,40 +2582,133 @@ begin
   FIndividualId := 0;
 end;
 
-procedure TNestOwner.Copy(aFrom: TNestOwner);
+function TNestOwner.Clone: TXolmisRecord;
 begin
-  FNestId := aFrom.NestId;
-  FRole := aFrom.Role;
-  FIndividualId := aFrom.IndividualId;
+  Result := TNestOwner(inherited Clone);
 end;
 
-procedure TNestOwner.Delete;
+function TNestOwner.Diff(const aOld: TNestOwner; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscRole, aOld.Role, FRole, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TNestOwner.EqualsTo(const Other: TNestOwner): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TNestOwner.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FNestId     := Obj.Get('nest_id', 0);
+    case Obj.Get('role', '') of
+      'M': FRole := nrlMale;
+      'F': FRole := nrlFemale;
+      'H': FRole := nrlHelper;
+      'O': FRole := nrlOffspring;
+    else
+      FRole := nrlUnknown;
+    end;
+    FIndividualId := Obj.Get('individual_id', 0);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TNestOwner.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('nest_id', FNestId);
+    JSONObject.Add('role', NEST_ROLES[FRole]);
+    JSONObject.Add('individual_id', FIndividualId);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TNestOwner.ToString: String;
+begin
+  Result := Format('NestOwner(Id=%d, NestId=%d, Role=%s, IndividualId=%d, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FNestId, NEST_ROLES[FRole], FIndividualId,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TNestOwner.Validate(out Msg: string): Boolean;
+begin
+  if FNestId = 0 then
+  begin
+    Msg := 'Nest required.';
+    Exit(False);
+  end;
+  if FIndividualId = 0 then
+  begin
+    Msg := 'Individual required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TNestOwnerRepository }
+
+procedure TNestOwnerRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNestOwner;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNestOwner.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TNestOwner) then
+    raise Exception.Create('Delete: Expected TNestOwner');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TNestOwner(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNestOwnerRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM nest_owners');
-      Add('WHERE (nest_owner_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_NEST_OWNER_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -2021,32 +2716,50 @@ begin
   end;
 end;
 
-function TNestOwner.Diff(aOld: TNestOwner; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscRole, aOld.Role, FRole, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TNestOwner.Find(const FieldName: String; const Value: Variant): Boolean;
+function TNestOwnerRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_NEST_OWNER_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TNestOwnerRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_NEST_OWNER_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TNestOwner) then
+    raise Exception.Create('FindBy: Expected TNestOwner');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -2069,9 +2782,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TNestOwner(E));
     end;
 
     Close;
@@ -2080,14 +2791,16 @@ begin
   end;
 end;
 
-procedure TNestOwner.GetData(aKey: Integer);
+procedure TNestOwnerRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TNestOwner) then
+    raise Exception.Create('GetById: Expected TNestOwner');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'nest_owner_id, ' +
@@ -2102,170 +2815,134 @@ begin
       'marked_status, ' +
       'active_status ' +
       'FROM nest_owners');
-    Add('WHERE nest_owner_id = :anid');
-    ParamByName('ANID').AsInteger := aKey;
+    Add('WHERE nest_owner_id = :cod');
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TNestOwner(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TNestOwner.LoadFromDataSet(aDataSet: TDataSet);
+procedure TNestOwnerRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TNestOwner;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TNestOwner) then
+    raise Exception.Create('Hydrate: Expected TNestOwner');
 
+  R := TNestOwner(E);
   with aDataSet do
   begin
-    FId := FieldByName('nest_owner_id').AsInteger;
-    FNestId := FieldByName('nest_id').AsInteger;
+    R.Id := FieldByName('nest_owner_id').AsInteger;
+    R.NestId := FieldByName('nest_id').AsInteger;
     case FieldByName('role').AsString of
-      'M': FRole := nrlMale;
-      'F': FRole := nrlFemale;
-      'H': FRole := nrlHelper;
-      'O': FRole := nrlOffspring;
+      'M': R.Role := nrlMale;
+      'F': R.Role := nrlFemale;
+      'H': R.Role := nrlHelper;
+      'O': R.Role := nrlOffspring;
     else
-      FRole := nrlUnknown;
+      R.Role := nrlUnknown;
     end;
-    FIndividualId := FieldByName('individual_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TNestOwner.Insert;
+procedure TNestOwnerRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNestOwner;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TNestOwner) then
+    raise Exception.Create('Insert: Expected TNestOwner');
+
+  R := TNestOwner(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO nest_owners (' +
+      'nest_id, ' +
+      'role, ' +
+      'individual_id, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':nest_id, ' +
+      ':role, ' +
+      ':individual_id, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO nest_owners (' +
-        'nest_id, ' +
-        'role, ' +
-        'individual_id, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':nest_id, ' +
-        ':role, ' +
-        ':individual_id, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('nest_id').AsInteger := R.NestId;
+    ParamByName('role').AsString := NEST_ROLES[R.Role];
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('nest_id').AsInteger := FNestId;
-      ParamByName('role').AsString := NEST_ROLES[FRole];
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TNestOwner.Save;
+function TNestOwnerRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_NEST_OWNERS;
 end;
 
-function TNestOwner.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Nest', FNestId);
-    JSONObject.Add('Role', NEST_ROLES[FRole]);
-    JSONObject.Add('Individual', FIndividualId);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TNestOwner.Update;
+procedure TNestOwnerRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNestOwner;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNestOwner.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TNestOwner) then
+    raise Exception.Create('Update: Expected TNestOwner');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TNestOwner(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNestOwnerRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE nest_owners SET ' +
+      'nest_id = :nest_id, ' +
+      'role = :role, ' +
+      'individual_id = :individual_id, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (nest_owner_id = :nest_owner_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE nest_owners SET ' +
-        'nest_id = :nest_id, ' +
-        'role = :role, ' +
-        'individual_id = :individual_id, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (nest_owner_id = :nest_owner_id)');
+    ParamByName('nest_id').AsInteger := R.NestId;
+    ParamByName('role').AsString := NEST_ROLES[R.Role];
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('nest_owner_id').AsInteger := R.Id;
 
-      ParamByName('nest_id').AsInteger := FNestId;
-      ParamByName('role').AsString := NEST_ROLES[FRole];
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-      ParamByName('nest_owner_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

@@ -2278,14 +2278,16 @@ end;
 procedure TDMG.qEggsAfterPost(DataSet: TDataSet);
 var
   NewEgg: TEgg;
+  FRepo: TEggRepository;
   lstDiff: TStrings;
   D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldEgg) then
   begin
+    FRepo := TEggRepository.Create(DMM.sqlCon);
     NewEgg := TEgg.Create;
-    NewEgg.LoadFromDataSet(DataSet);
+    FRepo.Hydrate(DataSet, NewEgg);
     lstDiff := TStringList.Create;
     try
       if NewEgg.Diff(OldEgg, lstDiff) then
@@ -2299,6 +2301,7 @@ begin
     finally
       FreeAndNil(NewEgg);
       FreeAndNil(OldEgg);
+      FRepo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -3371,14 +3374,16 @@ end;
 procedure TDMG.qNestRevisionsAfterPost(DataSet: TDataSet);
 var
   NewNestRevision: TNestRevision;
+  FRepo: TNestRevisionRepository;
   lstDiff: TStrings;
   D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldNestRevision) then
   begin
+    FRepo := TNestRevisionRepository.Create(DMM.sqlCon);
     NewNestRevision := TNestRevision.Create;
-    NewNestRevision.LoadFromDataSet(DataSet);
+    FRepo.Hydrate(DataSet, NewNestRevision);
     lstDiff := TStringList.Create;
     try
       if NewNestRevision.Diff(OldNestRevision, lstDiff) then
@@ -3392,6 +3397,7 @@ begin
     finally
       FreeAndNil(NewNestRevision);
       FreeAndNil(OldNestRevision);
+      FRepo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -3500,14 +3506,16 @@ end;
 procedure TDMG.qNestsAfterPost(DataSet: TDataSet);
 var
   NewNest: TNest;
+  FRepo: TNestRepository;
   lstDiff: TStrings;
   D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldNest) then
   begin
+    FRepo := TNestRepository.Create(DMM.sqlCon);
     NewNest := TNest.Create;
-    NewNest.LoadFromDataSet(DataSet);
+    FRepo.Hydrate(DataSet, NewNest);
     lstDiff := TStringList.Create;
     try
       if NewNest.Diff(OldNest, lstDiff) then
@@ -3521,6 +3529,7 @@ begin
     finally
       FreeAndNil(NewNest);
       FreeAndNil(OldNest);
+      FRepo.Free;
       FreeAndNil(lstDiff);
     end;
   end

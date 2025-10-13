@@ -521,19 +521,23 @@ end;
 function TdlgImportXMobile.GetNestFromMobile(aNest: TMobileNest): Integer;
 var
   Nest: TNest;
+  Repo: TNestRepository;
   aLocality, aTaxon: Integer;
 begin
   Result := 0;
 
+  Repo := TNestRepository.Create(DMM.sqlCon);
   Nest := TNest.Create();
   try
     aLocality := GetSiteKey(aNest.FLocalityName);
     aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, aNest.FSpeciesName);
 
-    if Nest.Find(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime) then
+    Repo.FindByFieldNumber(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime, Nest);
+    if (Nest.Id > 0) then
       Result := Nest.Id;
   finally
     Nest.Free;
+    Repo.Free;
   end;
 end;
 
@@ -749,6 +753,7 @@ end;
 procedure TdlgImportXMobile.ImportEggs(Nest: TMobileNest);
 var
   aEgg, aOldEgg: TEgg;
+  Repo: TEggRepository;
   Egg: TMobileEgg;
   aDate: TDate;
   aObserverId: Integer;
@@ -757,6 +762,7 @@ var
 begin
   if Nest.FEggList.Count > 0 then
   begin
+    Repo := TEggRepository.Create(DMM.sqlCon);
     aEgg := TEgg.Create();
     try
       // iterate through egg list
@@ -766,13 +772,14 @@ begin
         aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Nest.FObserver);
         aDate := Egg.FSampleTime;
 
-        if aEgg.Find(Nest.FNestKey, Egg.FFieldNumber, DateToStr(aDate), aObserverId) then
+        Repo.FindByFieldNumber(Nest.FNestKey, Egg.FFieldNumber, DateToStr(aDate), aObserverId, aEgg);
+        if (aEgg.Id > 0) then
         begin
           // if egg exists, update it
           aOldEgg := TEgg.Create(aEgg.Id);
           try
             Egg.ToEgg(aEgg);
-            aEgg.Update;
+            Repo.Update(aEgg);
             // write record history
             lstDiff := TStringList.Create;
             try
@@ -798,13 +805,14 @@ begin
           aEgg.NestId := Nest.FNestKey;
           aEgg.ResearcherId := aObserverId;
           aEgg.EggSeq := StrToInt(ExtractDelimited(2, Egg.FFieldNumber, ['-']));
-          aEgg.Insert;
+          Repo.Insert(aEgg);
           // write record history
           WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
       aEgg.Free;
+      Repo.Free;
     end;
   end;
 end;
@@ -956,6 +964,7 @@ procedure TdlgImportXMobile.ImportNests;
 var
   p, j, aNestKey: Integer;
   aNest, aOldNest: TNest;
+  Repo: TNestRepository;
   Nest: TMobileNest;
   lstDiff: TStrings;
   D: String;
@@ -974,6 +983,7 @@ begin
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   try
+    Repo := TNestRepository.Create(DMM.sqlCon);
     aNest := TNest.Create();
     try
       // iterate through nests list
@@ -991,9 +1001,9 @@ begin
             aNestKey := Nest.FNestKey;
             aOldNest := TNest.Create(aNestKey);
             try
-              aNest.GetData(aNestKey);
+              Repo.GetById(aNestKey, aNest);
               Nest.ToNest(aNest);
-              aNest.Update;
+              Repo.Update(aNest);
               // write record history
               lstDiff := TStringList.Create;
               try
@@ -1023,7 +1033,7 @@ begin
           begin
             // create new nest, if not exists
             Nest.ToNest(aNest);
-            aNest.Insert;
+            Repo.Insert(aNest);
             aNestKey := aNest.Id;
             Nest.FNestKey := aNestKey;
             // write record history
@@ -1048,6 +1058,7 @@ begin
 
     finally
       FreeAndNil(aNest);
+      Repo.Free;
     end;
 
   except
@@ -1169,6 +1180,7 @@ end;
 procedure TdlgImportXMobile.ImportRevisions(Nest: TMobileNest);
 var
   aRevision, aOldRevision: TNestRevision;
+  Repo: TNestRevisionRepository;
   Revision: TMobileNestRevision;
   aObserverId: Integer;
   aDate: TDate;
@@ -1178,6 +1190,7 @@ var
 begin
   if Nest.FRevisionList.Count > 0 then
   begin
+    Repo := TNestRevisionRepository.Create(DMM.sqlCon);
     aRevision := TNestRevision.Create();
     try
       // iterate through nest revision list
@@ -1188,13 +1201,14 @@ begin
         aDate := Revision.FSampleTime;
         aTime := Revision.FSampleTime;
 
-        if aRevision.Find(Nest.FNestKey, DateToStr(aDate), TimeToStr(aTime), aObserverId) then
+        Repo.FindByDate(Nest.FNestKey, DateToStr(aDate), TimeToStr(aTime), aObserverId, aRevision);
+        if (aRevision.Id > 0) then
         begin
           // if nest revision exists, update it
           aOldRevision := TNestRevision.Create(aRevision.Id);
           try
             Revision.ToNestRevision(aRevision);
-            aRevision.Update;
+            Repo.Update(aRevision);
             // write record history
             lstDiff := TStringList.Create;
             try
@@ -1219,13 +1233,14 @@ begin
           Revision.ToNestRevision(aRevision);
           aRevision.NestId := Nest.FNestKey;
           aRevision.Observer1Id := aObserverId;
-          aRevision.Insert;
+          Repo.Insert(aRevision);
           // write record history
           WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
       aRevision.Free;
+      Repo.Free;
     end;
   end;
 end;
