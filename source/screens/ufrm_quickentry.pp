@@ -161,7 +161,7 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations,
   data_consts, data_columns, data_getvalue,
-  models_record_types, models_taxonomy, models_bands,
+  models_record_types, models_taxonomy, models_bands, models_botany,
   uDarkStyleParams,
   udm_main;
 
@@ -539,9 +539,9 @@ begin
         else
         if (qeGrid.Cells[5, r] = rsBandFoundLoose) then
           Obj.Source := bscFoundLoose;
-        Obj.SupplierId := GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, qeGrid.Cells[6, r]);
-        Obj.CarrierId := GetKey('people', COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[7, r]);
-        Obj.ProjectId := GetKey('projects', COL_PROJECT_ID, COL_SHORT_TITLE, qeGrid.Cells[8, r]);
+        Obj.SupplierId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_ABBREVIATION, qeGrid.Cells[6, r]);
+        Obj.CarrierId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[7, r]);
+        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_SHORT_TITLE, qeGrid.Cells[8, r]);
         Obj.Notes := qeGrid.Cells[9, r];
 
         Repo.Insert(Obj);
@@ -559,8 +559,41 @@ begin
 end;
 
 procedure TfrmQuickEntry.ImportDataBotanicTaxa;
+var
+  Obj: TBotanicalTaxon;
+  Repo: TBotanicalTaxonRepository;
+  rankKey: Integer;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TBotanicalTaxon.Create();
+    Repo := TBotanicalTaxonRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.FullName := qeGrid.Cells[0, r];
+        Obj.Authorship := qeGrid.Cells[1, r];
+        rankKey := GetKey(TBL_TAXON_RANKS, COL_RANK_ID, COL_RANK_NAME, qeGrid.Cells[2, r]);
+        Obj.RankId := StringToBotanicRank(GetName(TBL_TAXON_RANKS, COL_RANK_ABBREVIATION, COL_RANK_ID, rankKey));
+        Obj.VernacularName := qeGrid.Cells[3, r];
+        Obj.ParentTaxonId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, qeGrid.Cells[4, r]);
+        Obj.ValidId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, qeGrid.Cells[5, r]);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataCaptures;
