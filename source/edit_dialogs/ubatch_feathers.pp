@@ -174,6 +174,7 @@ uses
 
 procedure TbatchFeathers.AddFeathersBatch;
 var
+  FRepo: TFeatherRepository;
   FFeather: TFeather;
 begin
   //dlgProgress := TdlgProgress.Create(nil);
@@ -185,6 +186,7 @@ begin
   dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, 0);
   dlgLoading.Max := 25;
 
+  FRepo := TFeatherRepository.Create(DMM.sqlCon);
   FFeather := TFeather.Create();
   try
     FFeather.SampleDate := StrToDate(eDate.Text);
@@ -215,7 +217,7 @@ begin
     begin
       FFeather.FeatherNumber := 1;
       FFeather.PercentGrown := eP1.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -224,7 +226,7 @@ begin
     begin
       FFeather.FeatherNumber := 2;
       FFeather.PercentGrown := eP2.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -233,7 +235,7 @@ begin
     begin
       FFeather.FeatherNumber := 3;
       FFeather.PercentGrown := eP3.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -242,7 +244,7 @@ begin
     begin
       FFeather.FeatherNumber := 4;
       FFeather.PercentGrown := eP4.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -251,7 +253,7 @@ begin
     begin
       FFeather.FeatherNumber := 5;
       FFeather.PercentGrown := eP5.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -260,7 +262,7 @@ begin
     begin
       FFeather.FeatherNumber := 6;
       FFeather.PercentGrown := eP6.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -269,7 +271,7 @@ begin
     begin
       FFeather.FeatherNumber := 7;
       FFeather.PercentGrown := eP7.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -278,7 +280,7 @@ begin
     begin
       FFeather.FeatherNumber := 8;
       FFeather.PercentGrown := eP8.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -287,7 +289,7 @@ begin
     begin
       FFeather.FeatherNumber := 9;
       FFeather.PercentGrown := eP9.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -296,7 +298,7 @@ begin
     begin
       FFeather.FeatherNumber := 10;
       FFeather.PercentGrown := eP10.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -307,7 +309,7 @@ begin
     begin
       FFeather.FeatherNumber := 1;
       FFeather.PercentGrown := eS1.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -316,7 +318,7 @@ begin
     begin
       FFeather.FeatherNumber := 2;
       FFeather.PercentGrown := eS2.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -325,7 +327,7 @@ begin
     begin
       FFeather.FeatherNumber := 3;
       FFeather.PercentGrown := eS3.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -334,7 +336,7 @@ begin
     begin
       FFeather.FeatherNumber := 4;
       FFeather.PercentGrown := eS4.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -343,7 +345,7 @@ begin
     begin
       FFeather.FeatherNumber := 5;
       FFeather.PercentGrown := eS5.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -352,7 +354,7 @@ begin
     begin
       FFeather.FeatherNumber := 6;
       FFeather.PercentGrown := eS6.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -361,7 +363,7 @@ begin
     begin
       FFeather.FeatherNumber := 7;
       FFeather.PercentGrown := eS7.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -370,7 +372,7 @@ begin
     begin
       FFeather.FeatherNumber := 8;
       FFeather.PercentGrown := eS8.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -379,7 +381,7 @@ begin
     begin
       FFeather.FeatherNumber := 9;
       FFeather.PercentGrown := eS9.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -390,7 +392,7 @@ begin
     begin
       FFeather.FeatherNumber := 1;
       FFeather.PercentGrown := eR1.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -399,7 +401,7 @@ begin
     begin
       FFeather.FeatherNumber := 2;
       FFeather.PercentGrown := eR2.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -408,7 +410,7 @@ begin
     begin
       FFeather.FeatherNumber := 3;
       FFeather.PercentGrown := eR3.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -417,7 +419,7 @@ begin
     begin
       FFeather.FeatherNumber := 4;
       FFeather.PercentGrown := eR4.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -426,7 +428,7 @@ begin
     begin
       FFeather.FeatherNumber := 5;
       FFeather.PercentGrown := eR5.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -435,7 +437,7 @@ begin
     begin
       FFeather.FeatherNumber := 6;
       FFeather.PercentGrown := eR6.Value;
-      FFeather.Insert;
+      FRepo.Insert(FFeather);
       FFeather.PercentGrown := 0;
     end;
     dlgLoading.UpdateProgress(rsProgressNewFeathersBatch, dlgLoading.Progress + 1);
@@ -443,6 +445,7 @@ begin
     //dlgProgress.Close;
   finally
     FFeather.Free;
+    FRepo.Free;
     dlgLoading.Hide;
     dlgLoading.Max := 100;
     //FreeAndNil(dlgProgress);

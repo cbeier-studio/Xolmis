@@ -1920,6 +1920,7 @@ end;
 
 procedure TDMG.qCapturesAfterPost(DataSet: TDataSet);
 var
+  Repo: TCaptureRepository;
   NewCapture: TCapture;
   lstDiff: TStrings;
   D: String;
@@ -1927,8 +1928,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
   begin
+    Repo := TCaptureRepository.Create(DMM.sqlCon);
     NewCapture := TCapture.Create;
-    NewCapture.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewCapture);
     lstDiff := TStringList.Create;
     try
       if NewCapture.Diff(OldCapture, lstDiff) then
@@ -1942,6 +1944,7 @@ begin
     finally
       FreeAndNil(NewCapture);
       FreeAndNil(OldCapture);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -2526,6 +2529,7 @@ end;
 
 procedure TDMG.qFeathersAfterPost(DataSet: TDataSet);
 var
+  Repo: TFeatherRepository;
   NewFeather: TFeather;
   lstDiff: TStrings;
   D: String;
@@ -2533,8 +2537,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldFeather) then
   begin
+    Repo := TFeatherRepository.Create(DMM.sqlCon);
     NewFeather := TFeather.Create;
-    NewFeather.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewFeather);
     lstDiff := TStringList.Create;
     try
       if NewFeather.Diff(OldFeather, lstDiff) then
@@ -2548,6 +2553,7 @@ begin
     finally
       FreeAndNil(NewFeather);
       FreeAndNil(OldFeather);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -3068,6 +3074,7 @@ end;
 
 procedure TDMG.qIndividualsAfterPost(DataSet: TDataSet);
 var
+  Repo: TIndividualRepository;
   NewIndividual: TIndividual;
   lstDiff: TStrings;
   D: String;
@@ -3075,8 +3082,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldIndividual) then
   begin
+    Repo := TIndividualRepository.Create(DMM.sqlCon);
     NewIndividual := TIndividual.Create;
-    NewIndividual.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewIndividual);
     lstDiff := TStringList.Create;
     try
       if NewIndividual.Diff(OldIndividual, lstDiff) then
@@ -3090,6 +3098,7 @@ begin
     finally
       FreeAndNil(NewIndividual);
       FreeAndNil(OldIndividual);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

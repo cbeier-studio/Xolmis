@@ -214,7 +214,9 @@ var
   Survey: TSurvey;
   BandRepo: TBandRepository;
   Band, RemovedBand: TBand;
+  IndividualRepo: TIndividualRepository;
   Individuo: TIndividual;
+  CaptureRepo: TCaptureRepository;
   Captura: TCapture;
   NetStation: TSamplingPlot;
   SPlotRepo: TSamplingPlotRepository;
@@ -275,6 +277,8 @@ begin
         begin
           strDate := FormatDateTime(MASK_ISO_DATE, Reg.CaptureDate);
           strTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.CaptureTime);
+          IndividualRepo := TIndividualRepository.Create(DMM.sqlCon);
+          CaptureRepo := TCaptureRepository.Create(DMM.sqlCon);
           BandRepo := TBandRepository.Create(DMM.sqlCon);
           SiteRepo := TSiteRepository.Create(DMM.sqlCon);
           SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
@@ -362,7 +366,8 @@ begin
             else
               CodAnilha := Band.Id;
 
-            if not Individuo.Find(Taxon.Id, CodAnilha, Reg.RightLeg, Reg.LeftLeg) then
+            IndividualRepo.FindByBand(Taxon.Id, CodAnilha, Reg.RightLeg, Reg.LeftLeg, Individuo);
+            if (Individuo.Id = 0) then
             begin
               // If does not exist, insert the individual
               Individuo.TaxonId := Taxon.Id;
@@ -375,11 +380,12 @@ begin
               Individuo.LeftLegBelow := Reg.LeftLeg;
               Individuo.UserInserted := ActiveUser.Id;
 
-              Individuo.Insert;
+              IndividualRepo.Insert(Individuo);
             end;
 
             // Check if the capture record exists
-            if not Captura.Find(Taxon.Id, CodAnilha, Reg.CaptureType, strDate, strTime) then
+            CaptureRepo.FindByBand(Taxon.Id, CodAnilha, Reg.CaptureType, strDate, strTime, Captura);
+            if (Captura.Id = 0) then
             begin
               // If does not exist, insert the record
               Captura.SurveyId := Survey.Id;
@@ -468,7 +474,7 @@ begin
               Captura.Notes := Reg.Notes;
               Captura.UserInserted := ActiveUser.Id;
 
-              Captura.Insert;
+              CaptureRepo.Insert(Captura);
             end
             else
             begin
@@ -483,7 +489,7 @@ begin
               Captura.Notes := Reg.Notes;
               Captura.UserUpdated := ActiveUser.Id;
 
-              Captura.Update;
+              CaptureRepo.Update(Captura);
             end;
 
             // Update band status
@@ -512,6 +518,8 @@ begin
             BandRepo.Free;
             SiteRepo.Free;
             SPlotRepo.Free;
+            CaptureRepo.Free;
+            IndividualRepo.Free;
           end;
         end
         else

@@ -641,6 +641,7 @@ end;
 
 procedure TDMI.qCapturesAfterPost(DataSet: TDataSet);
 var
+  Repo: TCaptureRepository;
   NewCapture: TCapture;
   lstDiff: TStrings;
   D: String;
@@ -648,8 +649,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
   begin
+    Repo := TCaptureRepository.Create(DMM.sqlCon);
     NewCapture := TCapture.Create;
-    NewCapture.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewCapture);
     lstDiff := TStringList.Create;
     try
       if NewCapture.Diff(OldCapture, lstDiff) then
@@ -663,6 +665,7 @@ begin
     finally
       FreeAndNil(NewCapture);
       FreeAndNil(OldCapture);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

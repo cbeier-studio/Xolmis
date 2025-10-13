@@ -1318,12 +1318,14 @@ end;
 function EditIndividual(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TIndividual;
+  FRepo: TIndividualRepository;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Individual edit dialog');
   Application.CreateForm(TedtIndividual, edtIndividual);
   FOldRecord := nil;
+  FRepo := TIndividualRepository.Create(DMM.sqlCon);
   with edtIndividual do
   try
     dsLink.DataSet := aDataSet;
@@ -1336,6 +1338,8 @@ begin
     begin
       FOldRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
       FRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Individual := FRecord;
@@ -1345,7 +1349,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Individual.Save;
+        FRepo.Save(Individual);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1388,6 +1392,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtIndividual);
     LogEvent(leaClose, 'Individual edit dialog');
   end;
@@ -1396,11 +1401,13 @@ end;
 function EditCapture(aDataSet: TDataSet; aIndividual: Integer; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TCapture;
+  FRepo: TCaptureRepository;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Capture edit dialog');
   edtCapture := TedtCapture.Create(nil);
+  FRepo := TCaptureRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtCapture do
   try
@@ -1426,6 +1433,8 @@ begin
     begin
       FOldRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
       FRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Capture := FRecord;
@@ -1438,7 +1447,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Capture.Save;
+        FRepo.Save(Capture);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1481,6 +1490,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtCapture);
     LogEvent(leaClose, 'Capture edit dialog');
   end;
@@ -3139,12 +3149,14 @@ function EditFeather(aDataSet: TDataSet; aIndividual: Integer; aCapture: Integer
   IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TFeather;
+  FRepo: TFeatherRepository;
   lstDiff: TStrings;
   D: String;
   aTime: Variant;
 begin
   LogEvent(leaOpen, 'Feather edit dialog');
   Application.CreateForm(TedtFeather, edtFeather);
+  FRepo := TFeatherRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtFeather do
   try
@@ -3180,6 +3192,8 @@ begin
     begin
       FOldRecord := TFeather.Create(aDataSet.FieldByName('feather_id').AsInteger);
       FRecord := TFeather.Create(aDataSet.FieldByName('feather_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Feather := FRecord;
@@ -3192,7 +3206,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Feather.Save;
+        FRepo.Save(Feather);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -3235,6 +3249,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtFeather);
     LogEvent(leaClose, 'Feather edit dialog');
   end;

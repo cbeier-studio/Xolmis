@@ -70,7 +70,6 @@ object dlgImport: TdlgImport
       Caption = '&Next'
       Enabled = False
       TabOrder = 1
-      Visible = False
       OnClick = sbNextClick
     end
     object sbPrior: TButton
@@ -240,7 +239,7 @@ object dlgImport: TdlgImport
           Style = csDropDownList
           TabOrder = 2
           TextHint = 'Select a table...'
-          OnChange = eSourceFileChange
+          OnChange = cbTargetChange
           OnSelect = cbTargetSelect
         end
         object pSourceOptions: TPanel
@@ -360,12 +359,12 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 243
+              Width = 245
             end          
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Search table'
-              Width = 243
+              Width = 245
             end          
             item
               SizePriority = 0
@@ -381,8 +380,8 @@ object dlgImport: TdlgImport
             64
             154
             60
-            243
-            243
+            245
+            245
             120
           )
           Cells = (

@@ -75,6 +75,7 @@ type
     sbSaveLog: TBitBtn;
     procedure btnHelpClick(Sender: TObject);
     procedure btnOptionsClick(Sender: TObject);
+    procedure cbTargetChange(Sender: TObject);
     procedure cbTargetSelect(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
@@ -153,6 +154,12 @@ begin
   finally
     FreeAndNil(cfgDelimiters);
   end;
+end;
+
+procedure TdlgImport.cbTargetChange(Sender: TObject);
+begin
+  sbPrior.Enabled := False;
+  sbNext.Enabled := IsRequiredFilledSource;
 end;
 
 procedure TdlgImport.cbTargetSelect(Sender: TObject);
