@@ -4183,6 +4183,7 @@ end;
 
 procedure TDMG.qSampleCollectorsAfterPost(DataSet: TDataSet);
 var
+  Repo: TSpecimenCollectorRepository;
   NewCollector: TSpecimenCollector;
   lstDiff: TStrings;
   D: String;
@@ -4190,8 +4191,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldCollector) then
   begin
+    Repo := TSpecimenCollectorRepository.Create(DMM.sqlCon);
     NewCollector := TSpecimenCollector.Create;
-    NewCollector.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewCollector);
     lstDiff := TStringList.Create;
     try
       if NewCollector.Diff(OldCollector, lstDiff) then
@@ -4205,6 +4207,7 @@ begin
     finally
       FreeAndNil(NewCollector);
       FreeAndNil(OldCollector);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -4377,6 +4380,7 @@ end;
 
 procedure TDMG.qSamplePrepsAfterPost(DataSet: TDataSet);
 var
+  Repo: TSamplingPlotRepository;
   NewSamplePrep: TSamplePrep;
   lstDiff: TStrings;
   D: String;
@@ -4384,8 +4388,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSamplePrep) then
   begin
+    Repo := TSamplingPlotRepository.Create(DMM.sqlCon);
     NewSamplePrep := TSamplePrep.Create;
-    NewSamplePrep.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewSamplePrep);
     lstDiff := TStringList.Create;
     try
       if NewSamplePrep.Diff(OldSamplePrep, lstDiff) then
@@ -4399,6 +4404,7 @@ begin
     finally
       FreeAndNil(NewSamplePrep);
       FreeAndNil(OldSamplePrep);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -4505,6 +4511,7 @@ end;
 
 procedure TDMG.qSpecimensAfterPost(DataSet: TDataSet);
 var
+  Repo: TSpecimenRepository;
   NewSpecimen: TSpecimen;
   lstDiff: TStrings;
   D: String;
@@ -4512,8 +4519,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSpecimen) then
   begin
+    Repo := TSpecimenRepository.Create(DMM.sqlCon);
     NewSpecimen := TSpecimen.Create;
-    NewSpecimen.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewSpecimen);
     lstDiff := TStringList.Create;
     try
       if NewSpecimen.Diff(OldSpecimen, lstDiff) then
@@ -4527,6 +4535,7 @@ begin
     finally
       FreeAndNil(NewSpecimen);
       FreeAndNil(OldSpecimen);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

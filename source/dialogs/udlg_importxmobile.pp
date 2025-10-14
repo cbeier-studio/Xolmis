@@ -543,22 +543,26 @@ end;
 
 function TdlgImportXMobile.GetSpecimenFromMobile(aSpecimen: TMobileSpecimen): Integer;
 var
+  Repo: TSpecimenRepository;
   Specimen: TSpecimen;
   aLocality, aTaxon: Integer;
   y, m, d: Word;
 begin
   Result := 0;
 
+  Repo := TSpecimenRepository.Create(DMM.sqlCon);
   Specimen := TSpecimen.Create();
   try
     aLocality := GetSiteKey(aSpecimen.FLocality);
     aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, aSpecimen.FSpeciesName);
     DecodeDate(aSpecimen.FSampleTime, y, m, d);
 
-    if Specimen.Find(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality) then
+    Repo.FindByFieldNumber(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality, Specimen);
+    if (Specimen.Id > 0) then
       Result := Specimen.Id;
   finally
     Specimen.Free;
+    Repo.Free;
   end;
 end;
 
@@ -1324,6 +1328,7 @@ end;
 procedure TdlgImportXMobile.ImportSpecimens;
 var
   p, aSpecimenKey: Integer;
+  Repo: TSpecimenRepository;
   aSpecimen, aOldSpecimen: TSpecimen;
   Specimen: TMobileSpecimen;
   lstDiff: TStrings;
@@ -1343,6 +1348,7 @@ begin
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   try
+    Repo := TSpecimenRepository.Create(DMM.sqlCon);
     aSpecimen := TSpecimen.Create();
     try
       // iterate through specimens list
@@ -1359,9 +1365,9 @@ begin
             // update specimen, if already exists
             aSpecimenKey := Specimen.FSpecimenKey;
             aOldSpecimen := TSpecimen.Create(aSpecimenKey);
-            aSpecimen.GetData(aSpecimenKey);
+            Repo.GetById(aSpecimenKey, aSpecimen);
             try
-              aSpecimen.Update;
+              Repo.Update(aSpecimen);
               // write record history
               lstDiff := TStringList.Create;
               try
@@ -1387,7 +1393,7 @@ begin
           begin
             // create new specimen, if not exists
             Specimen.ToSpecimen(aSpecimen);
-            aSpecimen.Insert;
+            Repo.Insert(aSpecimen);
             aSpecimenKey := aSpecimen.Id;
             // write record history
             WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByImport);
@@ -1406,6 +1412,7 @@ begin
 
     finally
       FreeAndNil(aSpecimen);
+      Repo.Free;
     end;
 
   except

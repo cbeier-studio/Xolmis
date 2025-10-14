@@ -1536,6 +1536,7 @@ end;
 
 procedure TDMI.qSpecimensAfterPost(DataSet: TDataSet);
 var
+  Repo: TSpecimenRepository;
   NewSpecimen: TSpecimen;
   lstDiff: TStrings;
   D: String;
@@ -1543,8 +1544,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSpecimen) then
   begin
+    Repo := TSpecimenRepository.Create(DMM.sqlCon);
     NewSpecimen := TSpecimen.Create;
-    NewSpecimen.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewSpecimen);
     lstDiff := TStringList.Create;
     try
       if NewSpecimen.Diff(OldSpecimen, lstDiff) then
@@ -1558,6 +1560,7 @@ begin
     finally
       FreeAndNil(NewSpecimen);
       FreeAndNil(OldSpecimen);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

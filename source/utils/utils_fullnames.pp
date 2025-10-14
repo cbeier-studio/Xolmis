@@ -24,7 +24,8 @@ uses
   { System }
   Classes, SysUtils, DateUtils, StrUtils,
   { Data }
-  DB, SQLDB;
+  DB, SQLDB,
+  models_record_types;
 
   function GetSurveyFullname(aDate: TDate; aSite, aMethod, aStation: Integer; aID: String): String;
   function GetNetEffortFullname(aDate: TDate; aStation: Integer; aNetNumber: Integer): String;
@@ -36,10 +37,11 @@ uses
   function GetPermanentNetFullName(aNetStation, aNetNumber: Integer): String;
   function GetNestFullName(aDate: TDate; aTaxon: Integer; aSite: Integer; aFieldNumber: String = ''): String;
   function GetNestRevisionFullName(aDate: TDate; aNest: Integer; aStage: String; aStatus: String): String;
+  function GetSpecimenFullName(aFieldNumber: String; aSampleType: TSpecimenType; aTaxonId, aSiteId: Integer): String;
 
 implementation
 
-uses utils_locale, data_getvalue, udm_main;
+uses utils_locale, data_getvalue, data_consts, udm_main;
 
 // ---------------------------------------------------------
 // String and list treatment
@@ -251,6 +253,18 @@ begin
   DecodeDate(aDate, aYear, aMonth, aDay);
 
   Result := Trim(Format('%s %4.4d-%2.2d-%2.2d %s %s', [NestName, aYear, aMonth, aDay, aStage, aStatus]));
+end;
+
+function GetSpecimenFullName(aFieldNumber: String; aSampleType: TSpecimenType; aTaxonId, aSiteId: Integer): String;
+var
+  TaxonName, SiteName: String;
+begin
+  Result := EmptyStr;
+
+  TaxonName := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, aTaxonId);
+  SiteName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aSiteId);
+
+  Result := Trim(Format('%s-%s, %s, %s', [aFieldNumber, SPECIMEN_TYPES[Ord(aSampleType)], TaxonName, SiteName]));
 end;
 
 end.

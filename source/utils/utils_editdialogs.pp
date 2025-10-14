@@ -2385,12 +2385,14 @@ end;
 
 function EditSpecimen(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TSpecimenRepository;
   FRecord, FOldRecord: TSpecimen;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Specimen edit dialog');
   Application.CreateForm(TedtSpecimen, edtSpecimen);
+  FRepo := TSpecimenRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtSpecimen do
   try
@@ -2409,6 +2411,8 @@ begin
     begin
       FOldRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
       FRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Specimen := FRecord;
@@ -2419,7 +2423,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Specimen.Save;
+        FRepo.Save(Specimen);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2462,6 +2466,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtSpecimen);
     LogEvent(leaClose, 'Specimen edit dialog');
   end;
@@ -2469,12 +2474,14 @@ end;
 
 function EditCollector(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TSpecimenCollectorRepository;
   FRecord, FOldRecord: TSpecimenCollector;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Specimen collector edit dialog');
   Application.CreateForm(TedtCollector, edtCollector);
+  FRepo := TSpecimenCollectorRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtCollector do
   try
@@ -2488,6 +2495,8 @@ begin
     begin
       FOldRecord := TSpecimenCollector.Create(aDataSet.FieldByName('collector_id').AsInteger);
       FRecord := TSpecimenCollector.Create(aDataSet.FieldByName('collector_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     SpecimenCollector := FRecord;
@@ -2498,7 +2507,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        SpecimenCollector.Save;
+        FRepo.Save(SpecimenCollector);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2542,6 +2551,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtCollector);
     LogEvent(leaClose, 'Specimen collector edit dialog');
   end;
@@ -2549,12 +2559,14 @@ end;
 
 function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TSamplePrepRepository;
   FRecord, FOldRecord: TSamplePrep;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Sample prep edit dialog');
   Application.CreateForm(TedtSamplePrep, edtSamplePrep);
+  FRepo := TSamplePrepRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtSamplePrep do
   try
@@ -2568,6 +2580,8 @@ begin
     begin
       FOldRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
       FRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     SamplePrep := FRecord;
@@ -2578,7 +2592,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        SamplePrep.Save;
+        FRepo.Save(SamplePrep);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2621,6 +2635,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtSamplePrep);
     LogEvent(leaClose, 'Sample prep edit dialog');
   end;
