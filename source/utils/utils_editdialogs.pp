@@ -1887,6 +1887,7 @@ end;
 
 function EditExpedition(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TExpeditionRepository;
   FRecord, FOldRecord: TExpedition;
   lstDiff: TStrings;
   D: String;
@@ -1895,6 +1896,7 @@ begin
 
   LogEvent(leaOpen, 'Expedition edit dialog');
   Application.CreateForm(TedtExpedition, edtExpedition);
+  FRepo := TExpeditionRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtExpedition do
   try
@@ -1908,6 +1910,8 @@ begin
     begin
       FOldRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
       FRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Expedition := FRecord;
@@ -1917,7 +1921,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Expedition.Save;
+        FRepo.Save(Expedition);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1960,6 +1964,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtExpedition);
     LogEvent(leaClose, 'Expedition edit dialog');
   end;
@@ -1967,12 +1972,14 @@ end;
 
 function EditSurvey(aDataSet: TDataSet; aExpedition: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TSurveyRepository;
   FRecord, FOldRecord: TSurvey;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Survey edit dialog');
   Application.CreateForm(TedtSurvey, edtSurvey);
+  FRepo := TSurveyRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtSurvey do
   try
@@ -1986,6 +1993,8 @@ begin
     begin
       FOldRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
       FRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Survey := FRecord;
@@ -1996,7 +2005,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Survey.Save;
+        FRepo.Save(Survey);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2039,6 +2048,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtSurvey);
     LogEvent(leaClose, 'Survey edit dialog');
   end;
@@ -2046,12 +2056,14 @@ end;
 
 function EditSurveyMember(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TSurveyMemberRepository;
   FRecord, FOldRecord: TSurveyMember;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Survey member edit dialog');
   Application.CreateForm(TedtSurveyMember, edtSurveyMember);
+  FRepo := TSurveyMemberRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtSurveyMember do
   try
@@ -2065,6 +2077,8 @@ begin
     begin
       FOldRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
       FRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     SurveyMember := FRecord;
@@ -2075,7 +2089,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        SurveyMember.Save;
+        FRepo.Save(SurveyMember);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2119,6 +2133,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtSurveyMember);
     LogEvent(leaClose, 'Survey member edit dialog');
   end;
@@ -2126,12 +2141,14 @@ end;
 
 function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TNetEffortRepository;
   FRecord, FOldRecord: TNetEffort;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Net effort edit dialog');
   Application.CreateForm(TedtNetEffort, edtNetEffort);
+  FRepo := TNetEffortRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtNetEffort do
   try
@@ -2147,6 +2164,8 @@ begin
     begin
       FOldRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
       FRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     NetEffort := FRecord;
@@ -2157,7 +2176,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        NetEffort.Save;
+        FRepo.Save(NetEffort);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2200,6 +2219,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtNetEffort);
     LogEvent(leaClose, 'Net effort edit dialog');
   end;
@@ -2207,12 +2227,14 @@ end;
 
 function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TWeatherLogRepository;
   FRecord, FOldRecord: TWeatherLog;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Weather log edit dialog');
   Application.CreateForm(TedtWeatherLog, edtWeatherLog);
+  FRepo := TWeatherLogRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtWeatherLog do
   try
@@ -2228,6 +2250,8 @@ begin
     begin
       FOldRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
       FRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     WeatherLog := FRecord;
@@ -2238,7 +2262,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        WeatherLog.Save;
+        FRepo.Save(WeatherLog);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2281,6 +2305,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtWeatherLog);
     LogEvent(leaClose, 'Weather log edit dialog');
   end;
@@ -3094,12 +3119,14 @@ end;
 
 function EditVegetation(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TVegetationRepository;
   FRecord, FOldRecord: TVegetation;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Vegetation edit dialog');
   Application.CreateForm(TedtVegetation, edtVegetation);
+  FRepo := TVegetationRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtVegetation do
   try
@@ -3115,6 +3142,8 @@ begin
     begin
       FOldRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
       FRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Vegetation := FRecord;
@@ -3125,7 +3154,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Vegetation.Save;
+        FRepo.Save(Vegetation);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -3168,6 +3197,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtVegetation);
     LogEvent(leaClose, 'Vegetation edit dialog');
   end;

@@ -110,16 +110,21 @@ uses
 
 procedure TbatchNetEffort.AddNetsBatch;
 var
+  SurveyRepo: TSurveyRepository;
+  Repo: TNetEffortRepository;
   FRecord: TNetEffort;
   FNetCopy: TNetEffort;
   i: Integer;
   Ini, Fim: Integer;
 begin
   LogEvent(leaStart, 'Add batch of nets');
+  Repo := TNetEffortRepository.Create(DMM.sqlCon);
   FRecord := TNetEffort.Create();
   Ini := eStartNumber.Value;
   Fim := eEndNumber.Value;
+  SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
   aSurvey := TSurvey.Create(SurveyId);
+  SurveyRepo.GetById(SurveyId, aSurvey);
   FNetCopy := TNetEffort.Create();
   try
     if not DMM.sqlTrans.Active then
@@ -134,7 +139,8 @@ begin
         FRecord.NetStationId := aSurvey.NetStationId;
         if fromSurveyId > 0 then
         begin
-          if FNetCopy.Find(fromSurveyId, IntToStr(i)) then
+          Repo.FindBySurvey(fromSurveyId, IntToStr(i), FNetCopy);
+          if (FNetCopy.Id > 0) then
           begin
             FRecord.PermanentNetId := FNetCopy.PermanentNetId;
             FRecord.Longitude := FNetCopy.Longitude;
@@ -167,7 +173,7 @@ begin
         if eNetMesh.Value > 0 then
           FRecord.NetMesh := eNetMesh.Value;
 
-        FRecord.Insert;
+        Repo.Insert(FRecord);
       end;
 
       DMM.sqlTrans.CommitRetaining;
@@ -180,6 +186,8 @@ begin
     FRecord.Free;
     aSurvey.Free;
     FNetCopy.Free;
+    Repo.Free;
+    SurveyRepo.Free;
     LogEvent(leaFinish, 'Add batch of nets');
   end;
 end;

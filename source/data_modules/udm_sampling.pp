@@ -953,6 +953,7 @@ end;
 
 procedure TDMS.qNetsEffortAfterPost(DataSet: TDataSet);
 var
+  Repo: TNetEffortRepository;
   NewNetEffort: TNetEffort;
   lstDiff: TStrings;
   D: String;
@@ -960,8 +961,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldNetEffort) then
   begin
+    Repo := TNetEffortRepository.Create(DMM.sqlCon);
     NewNetEffort := TNetEffort.Create;
-    NewNetEffort.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewNetEffort);
     lstDiff := TStringList.Create;
     try
       if NewNetEffort.Diff(OldNetEffort, lstDiff) then
@@ -975,6 +977,7 @@ begin
     finally
       FreeAndNil(NewNetEffort);
       FreeAndNil(OldNetEffort);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -1103,6 +1106,7 @@ end;
 
 procedure TDMS.qSurveyTeamAfterPost(DataSet: TDataSet);
 var
+  Repo: TSurveyMemberRepository;
   NewSurveyMember: TSurveyMember;
   lstDiff: TStrings;
   D: String;
@@ -1110,8 +1114,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSurveyMember) then
   begin
+    Repo := TSurveyMemberRepository.Create(DMM.sqlCon);
     NewSurveyMember := TSurveyMember.Create;
-    NewSurveyMember.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewSurveyMember);
     lstDiff := TStringList.Create;
     try
       if NewSurveyMember.Diff(OldSurveyMember, lstDiff) then
@@ -1125,6 +1130,7 @@ begin
     finally
       FreeAndNil(NewSurveyMember);
       FreeAndNil(OldSurveyMember);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -1150,6 +1156,7 @@ end;
 
 procedure TDMS.qVegetationAfterPost(DataSet: TDataSet);
 var
+  Repo: TVegetationRepository;
   NewVegetation: TVegetation;
   lstDiff: TStrings;
   D: String;
@@ -1157,8 +1164,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldVegetation) then
   begin
+    Repo := TVegetationRepository.Create(DMM.sqlCon);
     NewVegetation := TVegetation.Create;
-    NewVegetation.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewVegetation);
     lstDiff := TStringList.Create;
     try
       if NewVegetation.Diff(OldVegetation, lstDiff) then
@@ -1172,6 +1180,7 @@ begin
     finally
       FreeAndNil(NewVegetation);
       FreeAndNil(OldVegetation);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -1276,6 +1285,7 @@ end;
 
 procedure TDMS.qWeatherLogsAfterPost(DataSet: TDataSet);
 var
+  Repo: TWeatherLogRepository;
   NewWeatherLog: TWeatherLog;
   lstDiff: TStrings;
   D: String;
@@ -1283,8 +1293,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldWeatherLog) then
   begin
+    Repo := TWeatherLogRepository.Create(DMM.sqlCon);
     NewWeatherLog := TWeatherLog.Create;
-    NewWeatherLog.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewWeatherLog);
     lstDiff := TStringList.Create;
     try
       if NewWeatherLog.Diff(OldWeatherLog, lstDiff) then
@@ -1298,6 +1309,7 @@ begin
     finally
       FreeAndNil(NewWeatherLog);
       FreeAndNil(OldWeatherLog);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

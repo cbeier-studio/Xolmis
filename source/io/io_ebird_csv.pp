@@ -97,6 +97,7 @@ var
   Taxon: TTaxon;
   Toponimo: TSite;
   Survey: TSurvey;
+  SurveyRepo: TSurveyRepository;
   Sight: TSighting;
   SightRepo: TSightingRepository;
   Quant, aMethod: Integer;
@@ -115,6 +116,7 @@ begin
   dlgProgress.Title := rsTitleImportFile;
   dlgProgress.Text := rsLoadingCSVFile;
 
+  SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
   SightRepo := TSightingRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
@@ -148,7 +150,8 @@ begin
         aMethod := GetKey('methods', COL_METHOD_ID, COL_EBIRD_NAME, Reg.Protocol);
         try
           { Find survey (Amostragem) }
-          if Survey.Find(Toponimo.Id, aMethod, Reg.RecordDate) = False then
+          SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.RecordDate, '', 0, Survey);
+          if (Survey.Id = 0) then
           begin
             { Create a survey if it does not exist }
             Survey.SurveyDate := Reg.RecordDate;
@@ -161,7 +164,7 @@ begin
             Survey.TotalDistance := Reg.DistanceTraveled;
             Survey.UserInserted := ActiveUser.Id;
 
-            Survey.Insert;
+            SurveyRepo.Insert(Survey);
           end;
 
           { Check if the record already exists }
@@ -223,6 +226,7 @@ begin
     CSV.Close;
     FreeAndNil(CSV);
     SightRepo.Free;
+    SurveyRepo.Free;
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
     LogEvent(leaFinish, 'Import eBird file');

@@ -2472,6 +2472,7 @@ end;
 
 procedure TDMG.qExpeditionsAfterPost(DataSet: TDataSet);
 var
+  Repo: TExpeditionRepository;
   NewExpedition: TExpedition;
   lstDiff: TStrings;
   D: String;
@@ -2479,8 +2480,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldExpedition) then
   begin
+    Repo := TExpeditionRepository.Create(DMM.sqlCon);
     NewExpedition := TExpedition.Create;
-    NewExpedition.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewExpedition);
     lstDiff := TStringList.Create;
     try
       if NewExpedition.Diff(OldExpedition, lstDiff) then
@@ -2494,6 +2496,7 @@ begin
     finally
       FreeAndNil(NewExpedition);
       FreeAndNil(OldExpedition);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -4673,6 +4676,7 @@ end;
 
 procedure TDMG.qSurveysAfterPost(DataSet: TDataSet);
 var
+  Repo: TSurveyRepository;
   NewSurvey: TSurvey;
   lstDiff: TStrings;
   D: String;
@@ -4680,8 +4684,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldSurvey) then
   begin
+    Repo := TSurveyRepository.Create(DMM.sqlCon);
     NewSurvey := TSurvey.Create;
-    NewSurvey.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewSurvey);
     lstDiff := TStringList.Create;
     try
       if NewSurvey.Diff(OldSurvey, lstDiff) then
@@ -4695,6 +4700,7 @@ begin
     finally
       FreeAndNil(NewSurvey);
       FreeAndNil(OldSurvey);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end

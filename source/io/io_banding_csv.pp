@@ -212,6 +212,7 @@ var
   Taxon: TTaxon;
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
+  SurveyRepo: TSurveyRepository;
   Survey: TSurvey;
   BandRepo: TBandRepository;
   Band, RemovedBand: TBand;
@@ -221,6 +222,7 @@ var
   Captura: TCapture;
   NetStation: TSamplingPlot;
   SPlotRepo: TSamplingPlotRepository;
+  NetRepo: TNetEffortRepository;
   NetSite: TNetEffort;
   strDate, strTime: String;
   CodAnilha, aMethod: Integer;
@@ -284,6 +286,8 @@ begin
           BandRepo := TBandRepository.Create(DMM.sqlCon);
           SiteRepo := TSiteRepository.Create(DMM.sqlCon);
           SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
+          SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
+          NetRepo := TNetEffortRepository.Create(DMM.sqlCon);
 
           try
             Taxon := TTaxon.Create();
@@ -310,12 +314,13 @@ begin
             end;
 
             // Get survey
-            Survey.Find(Toponimo.Id, aMethod, Reg.CaptureDate, '', NetStation.Id);
+            SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.CaptureDate, '', NetStation.Id, Survey);
 
             // Get net and coordinates
             if (Reg.NetSiteName <> EmptyStr) then
             begin
-              if NetSite.Find(Survey.Id, Reg.NetSiteName) then
+              NetRepo.FindBySurvey(Survey.Id, Reg.NetSiteName, NetSite);
+              if (NetSite.Id > 0) then
               begin
                 NetLat := NetSite.Latitude;
                 NetLong := NetSite.Longitude;
@@ -524,6 +529,8 @@ begin
             CaptureRepo.Free;
             IndividualRepo.Free;
             TaxonRepo.Free;
+            NetRepo.Free;
+            SurveyRepo.Free;
           end;
         end
         else
@@ -610,8 +617,11 @@ var
   NetStation: TSamplingPlot;
   SPlotRepo: TSamplingPlotRepository;
   Survey: TSurvey;
+  SurveyRepo: TSurveyRepository;
   Weather1, Weather2, Weather3, Weather4: TWeatherLog;
+  WeatherRepo: TWeatherLogRepository;
   Member: TSurveyMember;
+  MemberRepo: TSurveyMemberRepository;
   strDate: String;
   pp, aMethod: Integer;
 begin
@@ -630,6 +640,9 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
+  MemberRepo := TSurveyMemberRepository.Create(DMM.sqlCon);
+  WeatherRepo := TWeatherLogRepository.Create(DMM.sqlCon);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
@@ -709,7 +722,8 @@ begin
           end;
 
           // Check if the survey exists
-          if not Survey.Find(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id) then
+          SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id, Survey);
+          if (Survey.Id = 0) then
           begin
             Survey.SurveyDate := Reg.SamplingDate;
             Survey.StartTime := Reg.StartTime;
@@ -726,7 +740,7 @@ begin
             //Survey.TotalNets := ;
             Survey.Notes := Reg.Notes;
 
-            Survey.Insert;
+            SurveyRepo.Insert(Survey);
 
             if Survey.Id > 0 then
             begin
@@ -743,7 +757,7 @@ begin
                   Member.SurveyId := Survey.Id;
                   Member.PersonId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, ExtractWord(pp, Reg.Team, [',', ';']));
 
-                  Member.Insert;
+                  MemberRepo.Insert(Member);
                   WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
                 end;
 
@@ -765,7 +779,7 @@ begin
                 Weather1.WindSpeedBft := Reg.Weather1.WindSpeed;
                 Weather1.RelativeHumidity := Reg.Weather1.Humidity;
 
-                Weather1.Insert;
+                WeatherRepo.Insert(Weather1);
                 WriteRecHistory(tbWeatherLogs, haCreated, Weather1.Id, '', '', '', rsInsertedByImport);
               finally
                 FreeAndNil(Weather1);
@@ -784,7 +798,7 @@ begin
                 Weather2.WindSpeedBft := Reg.Weather2.WindSpeed;
                 Weather2.RelativeHumidity := Reg.Weather2.Humidity;
 
-                Weather2.Insert;
+                WeatherRepo.Insert(Weather2);
                 WriteRecHistory(tbWeatherLogs, haCreated, Weather2.Id, '', '', '', rsInsertedByImport);
               finally
                 FreeAndNil(Weather2);
@@ -803,7 +817,7 @@ begin
                 Weather3.WindSpeedBft := Reg.Weather3.WindSpeed;
                 Weather3.RelativeHumidity := Reg.Weather3.Humidity;
 
-                Weather3.Insert;
+                WeatherRepo.Insert(Weather3);
                 WriteRecHistory(tbWeatherLogs, haCreated, Weather3.Id, '', '', '', rsInsertedByImport);
               finally
                 FreeAndNil(Weather3);
@@ -822,7 +836,7 @@ begin
                 Weather4.WindSpeedBft := Reg.Weather4.WindSpeed;
                 Weather4.RelativeHumidity := Reg.Weather4.Humidity;
 
-                Weather4.Insert;
+                WeatherRepo.Insert(Weather4);
                 WriteRecHistory(tbWeatherLogs, haCreated, Weather4.Id, '', '', '', rsInsertedByImport);
               finally
                 FreeAndNil(Weather4);
@@ -867,6 +881,9 @@ begin
     FreeAndNil(CSV);
     SiteRepo.Free;
     SPlotRepo.Free;
+    WeatherRepo.Free;
+    MemberRepo.Free;
+    SurveyRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
@@ -885,7 +902,9 @@ var
   NetStation: TSamplingPlot;
   SPlotRepo: TSamplingPlotRepository;
   Survey: TSurvey;
+  SurveyRepo: TSurveyRepository;
   NetSite: TNetEffort;
+  NetRepo: TNetEffortRepository;
   strDate: String;
   aMethod: Integer;
 begin
@@ -904,6 +923,8 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
+  NetRepo := TNetEffortRepository.Create(DMM.sqlCon);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
@@ -957,10 +978,12 @@ begin
           end;
 
           // Check if the survey exists
-          if Survey.Find(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id) then
+          SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id, Survey);
+          if (Survey.Id > 0) then
           begin
             // Check if the net site exists
-            if not NetSite.Find(Survey.Id, IntToStr(Reg.NetNumber)) then
+            NetRepo.FindBySurvey(Survey.Id, IntToStr(Reg.NetNumber), NetSite);
+            if (NetSite.Id = 0) then
             begin
               // Insert the net effort
               NetSite.SurveyId := Survey.Id;
@@ -979,7 +1002,7 @@ begin
               NetSite.NetOpen4 := Reg.NetBout4.OpenTime;
               NetSite.NetClose4 := Reg.NetBout4.CloseTime;
 
-              NetSite.Insert;
+              NetRepo.Insert(NetSite);
 
               // Insert record history
               WriteRecHistory(tbNetsEffort, haCreated, NetSite.Id, '', '', '', rsInsertedByImport);
@@ -1025,6 +1048,8 @@ begin
     FreeAndNil(CSV);
     SiteRepo.Free;
     SPlotRepo.Free;
+    NetRepo.Free;
+    SurveyRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;

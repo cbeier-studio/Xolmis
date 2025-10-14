@@ -35,24 +35,37 @@ type
     FProjectId: Integer;
     FDescription: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TExpedition; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TExpedition);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TExpedition; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TExpedition): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property Name: String read FName write FName;
     property StartDate: TDate read FStartDate write FStartDate;
     property EndDate: TDate read FEndDate write FEndDate;
     property ProjectId: Integer read FProjectId write FProjectId;
     property Description: String read FDescription write FDescription;
+  end;
+
+  { TExpeditionRepository }
+
+  TExpeditionRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -84,17 +97,16 @@ type
     FFullName: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    function Diff(aOld: TSurvey; var aList: TStrings): Boolean;
-    function Find(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String = ''; aNetStation: Integer = 0): Boolean;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TSurvey);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TSurvey; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TSurvey): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
+    function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property SurveyDate: TDate read FSurveyDate write FSurveyDate;
     property StartTime: TTime read FStartTime write FStartTime;
@@ -120,6 +132,22 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TSurveyRepository }
+
+  TSurveyRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySiteAndDate(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String; aNetStation: Integer; E: TSurvey);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 type
 
   { TWeatherLog }
@@ -141,18 +169,16 @@ type
     FWindSpeedBft: Integer;
     FWindSpeedKmH: Double;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    function Find(aSurvey: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
-    function Diff(aOld: TWeatherLog; var aList: TStrings): Boolean;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TWeatherLog);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TWeatherLog; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TWeatherLog): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property SampleDate: TDate read FSampleDate write FSampleDate;
@@ -170,6 +196,22 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TWeatherLogRepository }
+
+  TWeatherLogRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySurvey(aSurvey: Integer; aDate, aTime: String; aObserver: Integer; E: TWeatherLog);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 type
 
   { TSurveyMember }
@@ -180,22 +222,36 @@ type
     FPersonId: Integer;
     FVisitor: Boolean;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    function Diff(aOld: TSurveyMember; var aList: TStrings): Boolean;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TSurveyMember);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TSurveyMember; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TSurveyMember): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const aSurveyKey, aPersonKey: Integer): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property PersonId: Integer read FPersonId write FPersonId;
     property Visitor: Boolean read FVisitor write FVisitor;
+  end;
+
+  { TSurveyMemberRepository }
+
+  TSurveyMemberRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySurvey(const aSurveyKey, aPersonKey: Integer; E: TSurveyMember);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -227,18 +283,16 @@ type
     FNetMesh: Integer;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure Copy(aFrom: TNetEffort);
-    procedure Delete;
-    function Diff(aOld: TNetEffort; var aList: TStrings): Boolean;
-    function Find(aSurvey: Integer; aNetNumber: String): Boolean;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    procedure Save;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TNetEffort; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TNetEffort): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    procedure Update;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property FullName: String read FFullName write FFullName;
@@ -256,12 +310,28 @@ type
     property NetClose3: TTime read FNetClose3 write FNetClose3;
     property NetOpen4: TTime read FNetOpen4 write FNetOpen4;
     property NetClose4: TTime read FNetClose4 write FNetClose4;
-    property TotalOpenTime: Double read FTotalOpenTime;
+    property TotalOpenTime: Double read FTotalOpenTime write FTotalOpenTime;
     property NetLength: Double read FNetLength write FNetLength;
     property NetHeight: Double read FNetHeight write FNetHeight;
-    property NetArea: Double read FNetArea;
+    property NetArea: Double read FNetArea write FNetArea;
     property NetMesh: Integer read FNetMesh write FNetMesh;
     property Notes: String read FNotes write FNotes;
+  end;
+
+  { TNetEffortRepository }
+
+  TNetEffortRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySurvey(aSurvey: Integer; aNetNumber: String; E: TNetEffort);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -287,18 +357,16 @@ type
     FTreesDistribution: TStratumDistribution;
     FTreesAvgHeight: Integer;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    function Find(aSurvey: Integer; aDate, aTime: String; aLongitude, aLatitude: Extended; aObserver: Integer): Boolean;
-    function Diff(aOld: TVegetation; var aList: TStrings): Boolean;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TVegetation);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TVegetation; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TVegetation): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property SampleDate: TDate read FSampleDate write FSampleDate;
@@ -318,14 +386,30 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TVegetationRepository }
+
+  TVegetationRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySurvey(aSurvey: Integer; aDate, aTime: String; aLongitude, aLatitude: Extended; aObserver: Integer; E: TVegetation);
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
   function AuthorListToString(aAuthors: TAuthors): String;
   procedure StringToAuthorList(const aCitation: String; var aAuthors: TAuthors);
 
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns,
-  data_setparam, udm_main;
+  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns, data_consts,
+  data_setparam, data_getvalue, udm_main;
 
 function AuthorListToString(aAuthors: TAuthors): String;
 var
@@ -381,10 +465,22 @@ end;
 
 constructor TExpedition.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TExpedition.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TExpedition then
+  begin
+    FName := TExpedition(Source).Name;
+    FStartDate := TExpedition(Source).StartDate;
+    FEndDate := TExpedition(Source).EndDate;
+    FProjectId := TExpedition(Source).ProjectId;
+    FDescription := TExpedition(Source).Description;
+  end;
 end;
 
 procedure TExpedition.Clear;
@@ -397,188 +493,55 @@ begin
   FDescription := EmptyStr;
 end;
 
-procedure TExpedition.Copy(aFrom: TExpedition);
+function TExpedition.Clone: TXolmisRecord;
 begin
-  FName := aFrom.Name;
-  FStartDate := aFrom.StartDate;
-  FEndDate := aFrom.EndDate;
-  FProjectId := aFrom.ProjectId;
-  FDescription := aFrom.Description;
+  Result := TExpedition(inherited Clone);
 end;
 
-procedure TExpedition.Delete;
+function TExpedition.Diff(const aOld: TExpedition; var Changes: TStrings): Boolean;
 var
-  Qry: TSQLQuery;
+  R: string;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TExpedition.Delete: %s.', [rsErrorEmptyId]);
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
+  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStartDate, aOld.StartDate, FStartDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TExpedition.EqualsTo(const Other: TExpedition): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TExpedition.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
-      Clear;
-      Add('DELETE FROM expeditions');
-      Add('WHERE (expedition_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
+    FName         := Obj.Get('name', '');
+    FStartDate    := Obj.Get('start_date', NullDate);
+    FEndDate      := Obj.Get('end_date', NullDate);
+    FProjectId    := Obj.Get('project_id', 0);
+    FDescription  := Obj.Get('description', '');
   finally
-    FreeAndNil(Qry);
+    Obj.Free;
   end;
-end;
-
-procedure TExpedition.GetData(aKey: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Clear;
-    Add('SELECT ' +
-        'expedition_id, ' +
-        'expedition_name, ' +
-        'start_date, ' +
-        'end_date, ' +
-        'duration, ' +
-        'project_id, ' +
-        'description, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM expeditions');
-    Add('WHERE expedition_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
-    Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TExpedition.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
-begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('expedition_id').AsInteger;
-    FName := FieldByName('expedition_name').AsString;
-    if not (FieldByName('start_date').IsNull) then
-      FStartDate := FieldByName('start_date').AsDateTime
-    else
-      FStartDate := NullDate;
-    if not (FieldByName('end_date').IsNull) then
-      FEndDate := FieldByName('end_date').AsDateTime
-    else
-      FEndDate := NullDate;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FDescription := FieldByName('description').AsString;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
-end;
-
-procedure TExpedition.Insert;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO expeditions (' +
-        'expedition_name, ' +
-        'start_date, ' +
-        'end_date, ' +
-        'project_id, ' +
-        'description, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':expedition_name, ' +
-        'date(:start_date), ' +
-        'date(:end_date), ' +
-        ':project_id, ' +
-        ':description, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-      ParamByName('expedition_name').AsString := FName;
-      SetDateParam(ParamByName('start_date'), FStartDate);
-      SetDateParam(ParamByName('end_date'), FEndDate);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetStrParam(ParamByName('description'), FDescription);
-      ParamByName('user_inserted').AsInteger := FUserInserted;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TExpedition.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
 end;
 
 function TExpedition.ToJSON: String;
@@ -587,11 +550,11 @@ var
 begin
   JSONObject := TJSONObject.Create;
   try
-    JSONObject.Add('Name', FName);
-    JSONObject.Add('Start date', FStartDate);
-    JSONObject.Add('End date', FEndDate);
-    JSONObject.Add('Project', FProjectId);
-    JSONObject.Add('Description', FDescription);
+    JSONObject.Add('name', FName);
+    JSONObject.Add('start_date', FStartDate);
+    JSONObject.Add('end_date', FEndDate);
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('description', FDescription);
 
     Result := JSONObject.AsJSON;
   finally
@@ -599,88 +562,113 @@ begin
   end;
 end;
 
-procedure TExpedition.Update;
+function TExpedition.ToString: String;
+begin
+  Result := Format('Expedition(Id=%d, Name=%s, StartDate=%s, EndDate=%s, ProjectId=%d, Description=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FName, DateToStr(FStartDate), DateToStr(FEndDate), FProjectId, FDescription,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TExpedition.Validate(out Msg: string): Boolean;
+begin
+  if FName = EmptyStr then
+  begin
+    Msg := 'Name required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TExpeditionRepository }
+
+procedure TExpeditionRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TExpedition;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TExpedition.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TExpedition) then
+    raise Exception.Create('Delete: Expected TExpedition');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TExpedition(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TExpeditionRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
       Clear;
-      Add('UPDATE expeditions SET ' +
-        'expedition_name = :expedition_name, ' +
-        'start_date = date(:start_date), ' +
-        'end_date = date(:end_date), ' +
-        'project_id = :project_id, ' +
-        'description = :description, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (expedition_id = :expedition_id)');
-      ParamByName('expedition_name').AsString := FName;
-      SetDateParam(ParamByName('start_date'), FStartDate);
-      SetDateParam(ParamByName('end_date'), FEndDate);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetStrParam(ParamByName('description'), FDescription);
-      ParamByName('user_updated').AsInteger := FUserInserted;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('expedition_id').AsInteger := FId;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_EXPEDITION_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-function TExpedition.Diff(aOld: TExpedition; var aList: TStrings): Boolean;
-var
-  R: string;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscStartDate, aOld.StartDate, FStartDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TExpedition.Find(const FieldName: String; const Value: Variant): Boolean;
+function TExpeditionRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_EXPEDITION_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TExpeditionRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_EXPEDITION_ID, COL_EXPEDITION_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TExpedition) then
+    raise Exception.Create('FindBy: Expected TExpedition');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -706,9 +694,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TExpedition(E));
     end;
 
     Close;
@@ -717,14 +703,218 @@ begin
   end;
 end;
 
+procedure TExpeditionRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TExpedition) then
+    raise Exception.Create('GetById: Expected TExpedition');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT ' +
+        'expedition_id, ' +
+        'expedition_name, ' +
+        'start_date, ' +
+        'end_date, ' +
+        'duration, ' +
+        'project_id, ' +
+        'description, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM expeditions');
+    Add('WHERE expedition_id = :cod');
+    ParamByName('COD').AsInteger := Id;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, TExpedition(E));
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TExpeditionRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TExpedition;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TExpedition) then
+    raise Exception.Create('Hydrate: Expected TExpedition');
+
+  R := TExpedition(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('expedition_id').AsInteger;
+    R.Name := FieldByName('expedition_name').AsString;
+    if not (FieldByName('start_date').IsNull) then
+      R.StartDate := FieldByName('start_date').AsDateTime
+    else
+      R.StartDate := NullDate;
+    if not (FieldByName('end_date').IsNull) then
+      R.EndDate := FieldByName('end_date').AsDateTime
+    else
+      R.EndDate := NullDate;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.Description := FieldByName('description').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TExpeditionRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TExpedition;
+begin
+  if not (E is TExpedition) then
+    raise Exception.Create('Insert: Expected TExpedition');
+
+  R := TExpedition(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('INSERT INTO expeditions (' +
+      'expedition_name, ' +
+      'start_date, ' +
+      'end_date, ' +
+      'project_id, ' +
+      'description, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':expedition_name, ' +
+      'date(:start_date), ' +
+      'date(:end_date), ' +
+      ':project_id, ' +
+      ':description, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
+
+    ParamByName('expedition_name').AsString := R.Name;
+    SetDateParam(ParamByName('start_date'), R.StartDate);
+    SetDateParam(ParamByName('end_date'), R.EndDate);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetStrParam(ParamByName('description'), R.Description);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TExpeditionRepository.TableName: string;
+begin
+  Result := TBL_EXPEDITIONS;
+end;
+
+procedure TExpeditionRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TExpedition;
+begin
+  if not (E is TExpedition) then
+    raise Exception.Create('Update: Expected TExpedition');
+
+  R := TExpedition(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TExpeditionRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE expeditions SET ' +
+        'expedition_name = :expedition_name, ' +
+        'start_date = date(:start_date), ' +
+        'end_date = date(:end_date), ' +
+        'project_id = :project_id, ' +
+        'description = :description, ' +
+        'user_updated = :user_updated, ' +
+        'update_date = datetime(''now'', ''subsec''), ' +
+        'marked_status = :marked_status, ' +
+        'active_status = :active_status');
+      Add('WHERE (expedition_id = :expedition_id)');
+
+    ParamByName('expedition_name').AsString := R.Name;
+    SetDateParam(ParamByName('start_date'), R.StartDate);
+    SetDateParam(ParamByName('end_date'), R.EndDate);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetStrParam(ParamByName('description'), R.Description);
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('expedition_id').AsInteger := R.Id;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 { TNetEffort }
 
 constructor TNetEffort.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TNetEffort.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TNetEffort then
+  begin
+    FFullName := TNetEffort(Source).FullName;
+    FSurveyId := TNetEffort(Source).SurveyId;
+    FNetStationId := TNetEffort(Source).NetStationId;
+    FPermanentNetId := TNetEffort(Source).PermanentNetId;
+    FNetNumber := TNetEffort(Source).NetNumber;
+    FLatitude := TNetEffort(Source).Latitude;
+    FLongitude := TNetEffort(Source).Longitude;
+    FSampleDate := TNetEffort(Source).SampleDate;
+    FNetOpen1 := TNetEffort(Source).NetOpen1;
+    FNetClose1 := TNetEffort(Source).NetClose1;
+    FNetOpen2 := TNetEffort(Source).NetOpen2;
+    FNetClose2 := TNetEffort(Source).NetClose2;
+    FNetOpen3 := TNetEffort(Source).NetOpen3;
+    FNetClose3 := TNetEffort(Source).NetClose3;
+    FNetOpen4 := TNetEffort(Source).NetOpen4;
+    FNetClose4 := TNetEffort(Source).NetClose4;
+    FTotalOpenTime := TNetEffort(Source).TotalOpenTime;
+    FNetLength := TNetEffort(Source).NetLength;
+    FNetHeight := TNetEffort(Source).FNetHeight;
+    FNetArea := TNetEffort(Source).NetArea;
+    FNetMesh := TNetEffort(Source).NetMesh;
+    FNotes := TNetEffort(Source).Notes;
+  end;
 end;
 
 procedure TNetEffort.Clear;
@@ -754,59 +944,204 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TNetEffort.Copy(aFrom: TNetEffort);
+function TNetEffort.Clone: TXolmisRecord;
 begin
-  FFullName := aFrom.FullName;
-  FSurveyId := aFrom.SurveyId;
-  FNetStationId := aFrom.NetStationId;
-  FPermanentNetId := aFrom.PermanentNetId;
-  FNetNumber := aFrom.NetNumber;
-  FLatitude := aFrom.Latitude;
-  FLongitude := aFrom.Longitude;
-  FSampleDate := aFrom.SampleDate;
-  FNetOpen1 := aFrom.NetOpen1;
-  FNetClose1 := aFrom.NetClose1;
-  FNetOpen2 := aFrom.NetOpen2;
-  FNetClose2 := aFrom.NetClose2;
-  FNetOpen3 := aFrom.NetOpen3;
-  FNetClose3 := aFrom.NetClose3;
-  FNetOpen4 := aFrom.NetOpen4;
-  FNetClose4 := aFrom.NetClose4;
-  FTotalOpenTime := aFrom.TotalOpenTime;
-  FNetLength := aFrom.NetLength;
-  FNetHeight := aFrom.FNetHeight;
-  FNetArea := aFrom.NetArea;
-  FNetMesh := aFrom.NetMesh;
-  FNotes := aFrom.Notes;
+  Result := TNetEffort(inherited Clone);
 end;
 
-procedure TNetEffort.Delete;
+function TNetEffort.Diff(const aOld: TNetEffort; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPermanentNetID, aOld.PermanentNetId, FPermanentNetId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMistnetNr, aOld.NetNumber, FNetNumber, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOpenTime1, aOld.NetOpen1, FNetOpen1, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCloseTime1, aOld.NetClose1, FNetClose1, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOpenTime2, aOld.NetOpen2, FNetOpen2, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCloseTime2, aOld.NetClose2, FNetClose2, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOpenTime3, aOld.NetOpen3, FNetOpen3, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCloseTime3, aOld.NetClose3, FNetClose3, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOpenTime4, aOld.NetOpen4, FNetOpen4, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCloseTime4, aOld.NetClose4, FNetClose4, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMistnetLengthM, aOld.NetLength, FNetLength, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMistnetHeightM, aOld.NetHeight, FNetHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMistnetMesh, aOld.NetMesh, FNetMesh, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TNetEffort.EqualsTo(const Other: TNetEffort): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TNetEffort.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName       := Obj.Get('full_name', '');
+    FSurveyId       := Obj.Get('survey_id', 0);
+    FNetStationId   := Obj.Get('net_station_id', 0);
+    FPermanentNetId := Obj.Get('permanent_net_id', 0);
+    FNetNumber      := Obj.Get('net_number', 0);
+    FLongitude      := Obj.Get('longitude', 0.0);
+    FLatitude       := Obj.Get('latitude', 0.0);
+    FSampleDate     := Obj.Get('sample_date', NullDate);
+    FNetOpen1       := Obj.Get('open_time_1', NullTime);
+    FNetClose1      := Obj.Get('close_time_1', NullTime);
+    FNetOpen2       := Obj.Get('open_time_2', NullTime);
+    FNetClose2      := Obj.Get('close_time_2', NullTime);
+    FNetOpen3       := Obj.Get('open_time_3', NullTime);
+    FNetClose3      := Obj.Get('close_time_3', NullTime);
+    FNetOpen4       := Obj.Get('open_time_4', NullTime);
+    FNetClose4      := Obj.Get('close_time_4', NullTime);
+    FTotalOpenTime  := Obj.Get('total_open_time', 0.0);
+    FNetLength      := Obj.Get('net_length', 0.0);
+    FNetHeight      := Obj.Get('net_height', 0.0);
+    FNetArea        := Obj.Get('net_area', 0.0);
+    FNetMesh        := Obj.Get('net_mesh', 0);
+    FNotes          := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TNetEffort.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('net_station_id', FNetStationId);
+    JSONObject.Add('permanent_net_id', FPermanentNetId);
+    JSONObject.Add('net_number', FNetNumber);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('sample_date', FSampleDate);
+    JSONObject.Add('open_time_1', FNetOpen1);
+    JSONObject.Add('close_time_1', FNetClose1);
+    JSONObject.Add('open_time_2', FNetOpen2);
+    JSONObject.Add('close_time_2', FNetClose2);
+    JSONObject.Add('open_time_3', FNetOpen3);
+    JSONObject.Add('close_time_3', FNetClose3);
+    JSONObject.Add('open_time_4', FNetOpen4);
+    JSONObject.Add('close_time_4', FNetClose4);
+    JSONObject.Add('total_open_time', FTotalOpenTime);
+    JSONObject.Add('net_length', FNetLength);
+    JSONObject.Add('net_height', FNetHeight);
+    JSONObject.Add('net_area', FNetArea);
+    JSONObject.Add('net_mesh', FNetMesh);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TNetEffort.ToString: String;
+begin
+  Result := Format('NetEffort(Id=%d, FullName=%s, SurveyId=%d, NetStationId=%d, PermanentNetId=%d, NetNumber=%d, ' +
+    'Longitude=%f, Latitude=%f, SampleDate=%s, NetOpen1=%s, NetClose1=%s, NetOpen2=%s, NetClose2=%s, ' +
+    'NetOpen3=%s, NetClose3=%s, NetOpen4=%s, NetClose4=%s, TotalOpenTime=%f, NetLength=%f, NetHeight=%f, ' +
+    'NetArea=%f, NetMesh=%d, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FSurveyId, FNetStationId, FPermanentNetId, FNetNumber, FLongitude, FLatitude,
+    DateToStr(FSampleDate), TimeToStr(FNetOpen1), TimeToStr(FNetClose1), TimeToStr(FNetOpen2), TimeToStr(FNetClose2),
+    TimeToStr(FNetOpen3), TimeToStr(FNetClose3), TimeToStr(FNetOpen4), TimeToStr(FNetClose4),
+    FTotalOpenTime, FNetLength, FNetHeight, FNetArea, FNetMesh, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TNetEffort.Validate(out Msg: string): Boolean;
+begin
+  if FSurveyId = 0 then
+  begin
+    Msg := 'Survey required.';
+    Exit(False);
+  end;
+  if FNetNumber = 0 then
+  begin
+    Msg := 'Net number required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TNetEffortRepository }
+
+procedure TNetEffortRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNetEffort;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNetEffort.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TNetEffort) then
+    raise Exception.Create('Delete: Expected TNetEffort');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TNetEffort(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNetEffortRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM nets_effort');
-      Add('WHERE (net_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_NET_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -814,75 +1149,117 @@ begin
   end;
 end;
 
-function TNetEffort.Diff(aOld: TNetEffort; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPermanentNetID, aOld.PermanentNetId, FPermanentNetId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMistnetNr, aOld.NetNumber, FNetNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOpenTime1, aOld.NetOpen1, FNetOpen1, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCloseTime1, aOld.NetClose1, FNetClose1, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOpenTime2, aOld.NetOpen2, FNetOpen2, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCloseTime2, aOld.NetClose2, FNetClose2, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOpenTime3, aOld.NetOpen3, FNetOpen3, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCloseTime3, aOld.NetClose3, FNetClose3, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOpenTime4, aOld.NetOpen4, FNetOpen4, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCloseTime4, aOld.NetClose4, FNetClose4, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMistnetLengthM, aOld.NetLength, FNetLength, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMistnetHeightM, aOld.NetHeight, FNetHeight, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMistnetMesh, aOld.NetMesh, FNetMesh, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TNetEffort.Find(aSurvey: Integer; aNetNumber: String): Boolean;
+function TNetEffortRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_NET_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNetEffortRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_NET_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TNetEffort) then
+    raise Exception.Create('FindBy: Expected TNetEffort');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+        'net_id, ' +
+        'survey_id, ' +
+        'net_station_id, ' +
+        'permanent_net_id, ' +
+        'net_number, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'sample_date, ' +
+        'net_open_1, ' +
+        'net_close_1, ' +
+        'net_open_2, ' +
+        'net_close_2, ' +
+        'net_open_3, ' +
+        'net_close_3, ' +
+        'net_open_4, ' +
+        'net_close_4, ' +
+        'open_time_total, ' +
+        'net_length, ' +
+        'net_height, ' +
+        'net_area, ' +
+        'net_mesh, ' +
+        'full_name, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM nets_effort');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TNetEffort(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TNetEffortRepository.FindBySurvey(aSurvey: Integer; aNetNumber: String; E: TNetEffort);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
-    Add('SELECT net_id FROM nets_effort');
+    Add('SELECT * FROM nets_effort');
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (net_number = :anet)');
     ParamByName('ASURVEY').AsInteger := aSurvey;
     ParamByName('ANET').AsInteger := StrToInt(aNetNumber);
     Open;
-    Result := RecordCount > 0;
-    if Result = True then
+    if not EOF then
     begin
-      GetData(FieldByName('net_id').AsInteger);
+      Hydrate(Qry, E);
     end;
     Close;
   finally
@@ -890,14 +1267,16 @@ begin
   end;
 end;
 
-procedure TNetEffort.GetData(aKey: Integer);
+procedure TNetEffortRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TNetEffort) then
+    raise Exception.Create('GetById: Expected TNetEffort');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
         'net_id, ' +
@@ -932,289 +1311,236 @@ begin
         'active_status ' +
       'FROM nets_effort');
     Add('WHERE net_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TNetEffort(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TNetEffort.LoadFromDataSet(aDataSet: TDataSet);
+procedure TNetEffortRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TNetEffort;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TNetEffort) then
+    raise Exception.Create('Hydrate: Expected TNetEffort');
 
+  R := TNetEffort(E);
   with aDataSet do
   begin
-    FId := FieldByName('net_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FSurveyId := FieldByName('survey_id').AsInteger;
-    FNetStationId := FieldByName('net_station_id').AsInteger;
-    FPermanentNetId := FieldByName('permanent_net_id').AsInteger;
-    FNetNumber := FieldByName('net_number').AsInteger;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FSampleDate := FieldByName('sample_date').AsDateTime;
-    FNetOpen1 := FieldByName('net_open_1').AsDateTime;
-    FNetClose1 := FieldByName('net_close_1').AsDateTime;
-    FNetOpen2 := FieldByName('net_open_2').AsDateTime;
-    FNetClose2 := FieldByName('net_close_2').AsDateTime;
-    FNetOpen3 := FieldByName('net_open_3').AsDateTime;
-    FNetClose3 := FieldByName('net_close_3').AsDateTime;
-    FNetOpen4 := FieldByName('net_open_4').AsDateTime;
-    FNetClose4 := FieldByName('net_close_4').AsDateTime;
-    FTotalOpenTime := FieldByName('open_time_total').AsFloat;
-    FNetLength := FieldByName('net_length').AsFloat;
-    FNetHeight := FieldByName('net_height').AsFloat;
-    FNetArea := FieldByName('net_area').AsFloat;
-    FNetMesh := FieldByName('net_mesh').AsInteger;
-    FNotes := FieldByName('notes').AsString;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.Id := FieldByName('net_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.NetStationId := FieldByName('net_station_id').AsInteger;
+    R.PermanentNetId := FieldByName('permanent_net_id').AsInteger;
+    R.NetNumber := FieldByName('net_number').AsInteger;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.SampleDate := FieldByName('sample_date').AsDateTime;
+    R.NetOpen1 := FieldByName('net_open_1').AsDateTime;
+    R.NetClose1 := FieldByName('net_close_1').AsDateTime;
+    R.NetOpen2 := FieldByName('net_open_2').AsDateTime;
+    R.NetClose2 := FieldByName('net_close_2').AsDateTime;
+    R.NetOpen3 := FieldByName('net_open_3').AsDateTime;
+    R.NetClose3 := FieldByName('net_close_3').AsDateTime;
+    R.NetOpen4 := FieldByName('net_open_4').AsDateTime;
+    R.NetClose4 := FieldByName('net_close_4').AsDateTime;
+    R.TotalOpenTime := FieldByName('open_time_total').AsFloat;
+    R.NetLength := FieldByName('net_length').AsFloat;
+    R.NetHeight := FieldByName('net_height').AsFloat;
+    R.NetArea := FieldByName('net_area').AsFloat;
+    R.NetMesh := FieldByName('net_mesh').AsInteger;
+    R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TNetEffort.Insert;
+procedure TNetEffortRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNetEffort;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TNetEffort) then
+    raise Exception.Create('Insert: Expected TNetEffort');
+
+  R := TNetEffort(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO nets_effort (' +
+      'survey_id, ' +
+      'net_station_id, ' +
+      'permanent_net_id, ' +
+      'net_number, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'sample_date, ' +
+      'net_open_1, ' +
+      'net_close_1, ' +
+      'net_open_2, ' +
+      'net_close_2, ' +
+      'net_open_3, ' +
+      'net_close_3, ' +
+      'net_open_4, ' +
+      'net_close_4, ' +
+      'net_length, ' +
+      'net_height, ' +
+      'net_mesh, ' +
+      'full_name, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':survey_id, ' +
+      ':net_station_id, ' +
+      ':permanent_net_id, ' +
+      ':net_number, ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      'date(:sample_date), ' +
+      'time(:net_open_1), ' +
+      'time(:net_close_1), ' +
+      'time(:net_open_2), ' +
+      'time(:net_close_2), ' +
+      'time(:net_open_3), ' +
+      'time(:net_close_3), ' +
+      'time(:net_open_4), ' +
+      'time(:net_close_4), ' +
+      ':net_length, ' +
+      ':net_height, ' +
+      ':net_mesh, ' +
+      ':full_name, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''));');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO nets_effort (' +
-        'survey_id, ' +
-        'net_station_id, ' +
-        'permanent_net_id, ' +
-        'net_number, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'sample_date, ' +
-        'net_open_1, ' +
-        'net_close_1, ' +
-        'net_open_2, ' +
-        'net_close_2, ' +
-        'net_open_3, ' +
-        'net_close_3, ' +
-        'net_open_4, ' +
-        'net_close_4, ' +
-        'net_length, ' +
-        'net_height, ' +
-        'net_mesh, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':survey_id, ' +
-        ':net_station_id, ' +
-        ':permanent_net_id, ' +
-        ':net_number, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        'date(:sample_date), ' +
-        'time(:net_open_1), ' +
-        'time(:net_close_1), ' +
-        'time(:net_open_2), ' +
-        'time(:net_close_2), ' +
-        'time(:net_open_3), ' +
-        'time(:net_close_3), ' +
-        'time(:net_open_4), ' +
-        'time(:net_close_4), ' +
-        ':net_length, ' +
-        ':net_height, ' +
-        ':net_mesh, ' +
-        ':full_name, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''));');
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      ParamByName('net_number').AsInteger := FNetNumber;
-      ParamByName('survey_id').AsInteger := FSurveyId;
-      ParamByName('net_station_id').AsInteger := FNetStationId;
-      SetForeignParam(ParamByName('permanent_net_id'), FPermanentNetId);
-      ParamByName('full_name').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetFloatParam(ParamByName('net_length'), FNetLength);
-      SetFloatParam(ParamByName('net_height'), FNetHeight);
-      SetIntParam(ParamByName('net_mesh'), FNetMesh);
-      ParamByName('notes').AsString := FNotes;
+    SetDateParam(ParamByName('sample_date'), R.SampleDate);
+    ParamByName('net_number').AsInteger := R.NetNumber;
+    ParamByName('survey_id').AsInteger := R.SurveyId;
+    ParamByName('net_station_id').AsInteger := R.NetStationId;
+    SetForeignParam(ParamByName('permanent_net_id'), R.PermanentNetId);
+    ParamByName('full_name').AsString := GetNetEffortFullname(R.SampleDate, R.NetStationId, R.NetNumber);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetFloatParam(ParamByName('net_length'), R.NetLength);
+    SetFloatParam(ParamByName('net_height'), R.NetHeight);
+    SetIntParam(ParamByName('net_mesh'), R.NetMesh);
+    ParamByName('notes').AsString := R.Notes;
 
-      SetTimeParam(ParamByName('net_open_1'), FNetOpen1);
-      SetTimeParam(ParamByName('net_close_1'), FNetClose1);
-      SetTimeParam(ParamByName('net_open_2'), FNetOpen2);
-      SetTimeParam(ParamByName('net_close_2'), FNetClose2);
-      SetTimeParam(ParamByName('net_open_3'), FNetOpen3);
-      SetTimeParam(ParamByName('net_close_3'), FNetClose3);
-      SetTimeParam(ParamByName('net_open_4'), FNetOpen4);
-      SetTimeParam(ParamByName('net_close_4'), FNetClose4);
+    SetTimeParam(ParamByName('net_open_1'), R.NetOpen1);
+    SetTimeParam(ParamByName('net_close_1'), R.NetClose1);
+    SetTimeParam(ParamByName('net_open_2'), R.NetOpen2);
+    SetTimeParam(ParamByName('net_close_2'), R.NetClose2);
+    SetTimeParam(ParamByName('net_open_3'), R.NetOpen3);
+    SetTimeParam(ParamByName('net_close_3'), R.NetClose3);
+    SetTimeParam(ParamByName('net_open_4'), R.NetOpen4);
+    SetTimeParam(ParamByName('net_close_4'), R.NetClose4);
 
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ExecSQL;
+    ExecSQL;
 
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TNetEffort.Save;
+function TNetEffortRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_NETS_EFFORT;
 end;
 
-function TNetEffort.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Net Station', FNetStationId);
-    JSONObject.Add('Permanent Net', FPermanentNetId);
-    JSONObject.Add('Net number', FNetNumber);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Date', FSampleDate);
-    JSONObject.Add('Open 1', FNetOpen1);
-    JSONObject.Add('Close 1', FNetClose1);
-    JSONObject.Add('Open 2', FNetOpen2);
-    JSONObject.Add('Close 2', FNetClose2);
-    JSONObject.Add('Open 3', FNetOpen3);
-    JSONObject.Add('Close 3', FNetClose3);
-    JSONObject.Add('Open 4', FNetOpen4);
-    JSONObject.Add('Close 4', FNetClose4);
-    JSONObject.Add('Total open time', FTotalOpenTime);
-    JSONObject.Add('Net length', FNetLength);
-    JSONObject.Add('Net height', FNetHeight);
-    JSONObject.Add('Net area', FNetArea);
-    JSONObject.Add('Net mesh', FNetMesh);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TNetEffort.Update;
+procedure TNetEffortRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TNetEffort;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TNetEffort.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TNetEffort) then
+    raise Exception.Create('Update: Expected TNetEffort');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TNetEffort(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TNetEffortRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE nets_effort SET ' +
+      'survey_id = :survey_id, ' +
+      'net_station_id = :net_station_id, ' +
+      'permanent_net_id = :permanent_net_id, ' +
+      'net_number = :net_number, ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'sample_date = :sample_date, ' +
+      'net_open_1 = :net_open_1, ' +
+      'net_close_1 = :net_close_1, ' +
+      'net_open_2 = :net_open_2, ' +
+      'net_close_2 = :net_close_2, ' +
+      'net_open_3 = :net_open_3, ' +
+      'net_close_3 = :net_close_3, ' +
+      'net_open_4 = :net_open_4, ' +
+      'net_close_4 = :net_close_4, ' +
+      'net_length = :net_length, ' +
+      'net_height = :net_height, ' +
+      'net_mesh = :net_mesh, ' +
+      'full_name = :full_name, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (net_id = :net_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE nets_effort SET ' +
-        'survey_id = :survey_id, ' +
-        'net_station_id = :net_station_id, ' +
-        'permanent_net_id = :permanent_net_id, ' +
-        'net_number = :net_number, ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'sample_date = :sample_date, ' +
-        'net_open_1 = :net_open_1, ' +
-        'net_close_1 = :net_close_1, ' +
-        'net_open_2 = :net_open_2, ' +
-        'net_close_2 = :net_close_2, ' +
-        'net_open_3 = :net_open_3, ' +
-        'net_close_3 = :net_close_3, ' +
-        'net_open_4 = :net_open_4, ' +
-        'net_close_4 = :net_close_4, ' +
-        'net_length = :net_length, ' +
-        'net_height = :net_height, ' +
-        'net_mesh = :net_mesh, ' +
-        'full_name = :full_name, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (net_id = :net_id)');
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      ParamByName('net_number').AsInteger := FNetNumber;
-      ParamByName('survey_id').AsInteger := FSurveyId;
-      ParamByName('net_station_id').AsInteger := FNetStationId;
-      SetForeignParam(ParamByName('permanent_net_id'), FPermanentNetId);
-      ParamByName('full_name').AsString := GetNetEffortFullname(FSampleDate, FNetStationId, FNetNumber);
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetFloatParam(ParamByName('net_length'), FNetLength);
-      SetFloatParam(ParamByName('net_height'), FNetHeight);
-      SetIntParam(ParamByName('net_mesh'), FNetMesh);
-      ParamByName('notes').AsString := FNotes;
+    SetDateParam(ParamByName('sample_date'), R.SampleDate);
+    ParamByName('net_number').AsInteger := R.NetNumber;
+    ParamByName('survey_id').AsInteger := R.SurveyId;
+    ParamByName('net_station_id').AsInteger := R.NetStationId;
+    SetForeignParam(ParamByName('permanent_net_id'), R.PermanentNetId);
+    ParamByName('full_name').AsString := GetNetEffortFullname(R.SampleDate, R.NetStationId, R.NetNumber);
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetFloatParam(ParamByName('net_length'), R.NetLength);
+    SetFloatParam(ParamByName('net_height'), R.NetHeight);
+    SetIntParam(ParamByName('net_mesh'), R.NetMesh);
+    ParamByName('notes').AsString := R.Notes;
 
-      SetTimeParam(ParamByName('net_open_1'), FNetOpen1);
-      SetTimeParam(ParamByName('net_close_1'), FNetClose1);
-      SetTimeParam(ParamByName('net_open_2'), FNetOpen2);
-      SetTimeParam(ParamByName('net_close_2'), FNetClose2);
-      SetTimeParam(ParamByName('net_open_3'), FNetOpen3);
-      SetTimeParam(ParamByName('net_close_3'), FNetClose3);
-      SetTimeParam(ParamByName('net_open_4'), FNetOpen4);
-      SetTimeParam(ParamByName('net_close_4'), FNetClose4);
+    SetTimeParam(ParamByName('net_open_1'), R.NetOpen1);
+    SetTimeParam(ParamByName('net_close_1'), R.NetClose1);
+    SetTimeParam(ParamByName('net_open_2'), R.NetOpen2);
+    SetTimeParam(ParamByName('net_close_2'), R.NetClose2);
+    SetTimeParam(ParamByName('net_open_3'), R.NetOpen3);
+    SetTimeParam(ParamByName('net_close_3'), R.NetClose3);
+    SetTimeParam(ParamByName('net_open_4'), R.NetOpen4);
+    SetTimeParam(ParamByName('net_close_4'), R.NetClose4);
 
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('net_id').AsInteger := FId;
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('net_id').AsInteger := R.Id;
 
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1224,10 +1550,33 @@ end;
 
 constructor TVegetation.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TVegetation.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TVegetation then
+  begin
+    FSurveyId := TVegetation(Source).SurveyId;
+    FSampleDate := TVegetation(Source).SampleDate;
+    FSampleTime := TVegetation(Source).SampleTime;
+    FNotes := TVegetation(Source).Notes;
+    FLongitude := TVegetation(Source).Longitude;
+    FLatitude := TVegetation(Source).Latitude;
+    FObserverId := TVegetation(Source).ObserverId;
+    FHerbsProportion := TVegetation(Source).HerbsProportion;
+    FHerbsDistribution := TVegetation(Source).HerbsDistribution;
+    FHerbsAvgHeight := TVegetation(Source).HerbsAvgHeight;
+    FShrubsProportion := TVegetation(Source).ShrubsProportion;
+    FShrubsDistribution := TVegetation(Source).ShrubsDistribution;
+    FShrubsAvgHeight := TVegetation(Source).ShrubsAvgHeight;
+    FTreesProportion := TVegetation(Source).TreesProportion;
+    FTreesDistribution := TVegetation(Source).TreesDistribution;
+    FTreesAvgHeight := TVegetation(Source).TreesAvgHeight;
+  end;
 end;
 
 procedure TVegetation.Clear;
@@ -1251,53 +1600,183 @@ begin
   FTreesAvgHeight := 0;
 end;
 
-procedure TVegetation.Copy(aFrom: TVegetation);
+function TVegetation.Clone: TXolmisRecord;
 begin
-  FSurveyId := aFrom.SurveyId;
-  FSampleDate := aFrom.SampleDate;
-  FSampleTime := aFrom.SampleTime;
-  FNotes := aFrom.Notes;
-  FLongitude := aFrom.Longitude;
-  FLatitude := aFrom.Latitude;
-  FObserverId := aFrom.ObserverId;
-  FHerbsProportion := aFrom.HerbsProportion;
-  FHerbsDistribution := aFrom.HerbsDistribution;
-  FHerbsAvgHeight := aFrom.HerbsAvgHeight;
-  FShrubsProportion := aFrom.ShrubsProportion;
-  FShrubsDistribution := aFrom.ShrubsDistribution;
-  FShrubsAvgHeight := aFrom.ShrubsAvgHeight;
-  FTreesProportion := aFrom.TreesProportion;
-  FTreesDistribution := aFrom.TreesDistribution;
-  FTreesAvgHeight := aFrom.TreesAvgHeight;
+  Result := TVegetation(inherited Clone);
 end;
 
-procedure TVegetation.Delete;
+function TVegetation.Diff(const aOld: TVegetation; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProportionOfHerbs, aOld.HerbsProportion, FHerbsProportion, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHerbsDistribution, aOld.HerbsDistribution, FHerbsDistribution, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAvgHeightOfHerbs, aOld.HerbsAvgHeight, FHerbsAvgHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProportionOfShrubs, aOld.ShrubsProportion, FShrubsProportion, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscShrubsDistribution, aOld.ShrubsDistribution, FShrubsDistribution, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAvgHeightOfShrubs, aOld.ShrubsAvgHeight, FShrubsAvgHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProportionOfTrees, aOld.TreesProportion, FTreesProportion, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTreesDistribution, aOld.TreesDistribution, FTreesDistribution, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAvgHeightOfTrees, aOld.TreesAvgHeight, FTreesAvgHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TVegetation.EqualsTo(const Other: TVegetation): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TVegetation.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FSurveyId           := Obj.Get('survey_id', 0);
+    FSampleDate         := Obj.Get('sample_date', NullDate);
+    FSampleTime         := Obj.Get('sample_time', NullTime);
+    FLongitude          := Obj.Get('longitude', 0.0);
+    FLatitude           := Obj.Get('latitude', 0.0);
+    FObserverId         := Obj.Get('observer_id', 0);
+    FHerbsProportion    := Obj.Get('herbs_proportion', 0);
+    FHerbsDistribution  := TStratumDistribution(Obj.Get('herbs_distribution', 0));
+    FHerbsAvgHeight     := Obj.Get('herbs_avg_height', 0);
+    FShrubsProportion   := Obj.Get('shrubs_proportion', 0);
+    FShrubsDistribution := TStratumDistribution(Obj.Get('shrubs_distribution', 0));
+    FShrubsAvgHeight    := Obj.Get('shrubs_avg_height', 0);
+    FTreesProportion    := Obj.Get('trees_proportion', 0);
+    FTreesDistribution  := TStratumDistribution(Obj.Get('trees_distribution', 0));
+    FTreesAvgHeight     := Obj.Get('trees_avg_height', 0);
+    FNotes              := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TVegetation.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('sample_date', FSampleDate);
+    JSONObject.Add('sample_time', FSampleTime);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('observer_id', FObserverId);
+    JSONObject.Add('herbs_distribution', Ord(FHerbsDistribution));
+    JSONObject.Add('herbs_proportion', FHerbsProportion);
+    JSONObject.Add('herbs_avg_height', FHerbsAvgHeight);
+    JSONObject.Add('shrubs_distribution', Ord(FShrubsDistribution));
+    JSONObject.Add('shrubs_proportion', FShrubsProportion);
+    JSONObject.Add('shrubs_avg_height', FShrubsAvgHeight);
+    JSONObject.Add('trees_distribution', Ord(FTreesDistribution));
+    JSONObject.Add('trees_proportion', FTreesProportion);
+    JSONObject.Add('trees_avg_height', FTreesAvgHeight);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TVegetation.ToString: String;
+begin
+  Result := Format('Vegetation(Id=%d, SurveyId=%d, SampleDate=%s, SampleTime=%s, Longitude=%f, Latitude=%f, ' +
+    'ObserverId=%d, HerbsProportion=%d, HerbsDistribution=%d, HerbsAvgHeight=%d, ShrubsProportion=%d, ' +
+    'ShrubsDistribution=%d, ShrubsAvgHeight=%d, TreesProportion=%d, TreesDistribution=%d, TreesAvgHeight=%d, ' +
+    'Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FSurveyId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FLongitude, FLatitude, FObserverId,
+    FHerbsProportion, Ord(FHerbsDistribution), FHerbsAvgHeight, FShrubsProportion, Ord(FShrubsDistribution),
+    FShrubsAvgHeight, FTreesProportion, Ord(FTreesDistribution), FTreesAvgHeight, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TVegetation.Validate(out Msg: string): Boolean;
+begin
+  if FSurveyId = 0 then
+  begin
+    Msg := 'Survey required.';
+    Exit(False);
+  end;
+  if FSampleDate = NullDate then
+  begin
+    Msg := 'Sample date required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TVegetationRepository }
+
+procedure TVegetationRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TVegetation;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TVegetation.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TVegetation) then
+    raise Exception.Create('Delete: Expected TVegetation');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TVegetation(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TVegetationRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM vegetation');
-      Add('WHERE (vegetation_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_VEGETATION_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -1305,60 +1784,104 @@ begin
   end;
 end;
 
-function TVegetation.Diff(aOld: TVegetation; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProportionOfHerbs, aOld.HerbsProportion, FHerbsProportion, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHerbsDistribution, aOld.HerbsDistribution, FHerbsDistribution, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAvgHeightOfHerbs, aOld.HerbsAvgHeight, FHerbsAvgHeight, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProportionOfShrubs, aOld.ShrubsProportion, FShrubsProportion, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscShrubsDistribution, aOld.ShrubsDistribution, FShrubsDistribution, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAvgHeightOfShrubs, aOld.ShrubsAvgHeight, FShrubsAvgHeight, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProportionOfTrees, aOld.TreesProportion, FTreesProportion, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTreesDistribution, aOld.TreesDistribution, FTreesDistribution, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAvgHeightOfTrees, aOld.TreesAvgHeight, FTreesAvgHeight, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TVegetation.Find(aSurvey: Integer; aDate, aTime: String; aLongitude, aLatitude: Extended; aObserver: Integer): Boolean;
+function TVegetationRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_VEGETATION_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+procedure TVegetationRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_VEGETATION_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TVegetation) then
+    raise Exception.Create('FindBy: Expected TVegetation');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'vegetation_id, ' +
+      'survey_id, ' +
+      'sample_date, ' +
+      'sample_time, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'observer_id, ' +
+      'herbs_proportion, ' +
+      'herbs_distribution, ' +
+      'herbs_avg_height, ' +
+      'shrubs_proportion, ' +
+      'shrubs_distribution, ' +
+      'shrubs_avg_height, ' +
+      'trees_proportion, ' +
+      'trees_distribution, ' +
+      'trees_avg_height, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM vegetation');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TVegetation(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TVegetationRepository.FindBySurvey(aSurvey: Integer; aDate, aTime: String; aLongitude,
+  aLatitude: Extended; aObserver: Integer; E: TVegetation);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
-    Add('SELECT vegetation_id FROM vegetation');
+    Add('SELECT * FROM vegetation');
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (date(sample_date) = date(:adate))');
     Add('AND (time(sample_time) = time(:atime))');
@@ -1371,12 +1894,10 @@ begin
     ParamByName('ATIME').AsString := aTime;
     ParamByName('ALONGITUDE').AsFloat := aLongitude;
     ParamByName('ALATITUDE').AsFloat := aLatitude;
-
     Open;
-    Result := RecordCount > 0;
-    if Result = True then
+    if not EOF then
     begin
-      GetData(FieldByName('vegetation_id').AsInteger);
+      Hydrate(Qry, E);
     end;
     Close;
   finally
@@ -1384,14 +1905,16 @@ begin
   end;
 end;
 
-procedure TVegetation.GetData(aKey: Integer);
+procedure TVegetationRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TVegetation) then
+    raise Exception.Create('GetById: Expected TVegetation');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'vegetation_id, ' +
@@ -1420,257 +1943,210 @@ begin
       'active_status ' +
       'FROM vegetation');
     Add('WHERE vegetation_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TVegetation(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TVegetation.LoadFromDataSet(aDataSet: TDataSet);
+procedure TVegetationRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TVegetation;
 begin
-  if not aDataset.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TVegetation) then
+    raise Exception.Create('Hydrate: Expected TVegetation');
 
+  R := TVegetation(E);
   with aDataSet do
   begin
-    FId := FieldByName('vegetation_id').AsInteger;
-    FSurveyId := FieldByName('survey_id').AsInteger;
-    FSampleDate := FieldByName('sample_date').AsDateTime;
-    FSampleTime := FieldByName('sample_time').AsDateTime;
-    FNotes := FieldByName('notes').AsString;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FObserverId := FieldByName('observer_id').AsInteger;
-    FHerbsProportion := FieldByName('herbs_proportion').AsInteger;
-    FHerbsDistribution := TStratumDistribution(FieldByName('herbs_distribution').AsInteger);
-    FHerbsAvgHeight := FieldByName('herbs_avg_height').AsInteger;
-    FShrubsProportion := FieldByName('shrubs_proportion').AsInteger;
-    FShrubsDistribution := TStratumDistribution(FieldByName('shrubs_distribution').AsInteger);
-    FShrubsAvgHeight := FieldByName('shrubs_avg_height').AsInteger;
-    FTreesProportion := FieldByName('trees_proportion').AsInteger;
-    FTreesDistribution := TStratumDistribution(FieldByName('trees_distribution').AsInteger);
-    FTreesAvgHeight := FieldByName('trees_avg_height').AsInteger;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.Id := FieldByName('vegetation_id').AsInteger;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.SampleDate := FieldByName('sample_date').AsDateTime;
+    R.SampleTime := FieldByName('sample_time').AsDateTime;
+    R.Notes := FieldByName('notes').AsString;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.ObserverId := FieldByName('observer_id').AsInteger;
+    R.HerbsProportion := FieldByName('herbs_proportion').AsInteger;
+    R.HerbsDistribution := TStratumDistribution(FieldByName('herbs_distribution').AsInteger);
+    R.HerbsAvgHeight := FieldByName('herbs_avg_height').AsInteger;
+    R.ShrubsProportion := FieldByName('shrubs_proportion').AsInteger;
+    R.ShrubsDistribution := TStratumDistribution(FieldByName('shrubs_distribution').AsInteger);
+    R.ShrubsAvgHeight := FieldByName('shrubs_avg_height').AsInteger;
+    R.TreesProportion := FieldByName('trees_proportion').AsInteger;
+    R.TreesDistribution := TStratumDistribution(FieldByName('trees_distribution').AsInteger);
+    R.TreesAvgHeight := FieldByName('trees_avg_height').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TVegetation.Insert;
+procedure TVegetationRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TVegetation;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TVegetation) then
+    raise Exception.Create('Insert: Expected TVegetation');
+
+  R := TVegetation(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO vegetation (' +
+      'survey_id, ' +
+      'sample_date, ' +
+      'sample_time, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'observer_id, ' +
+      'herbs_proportion, ' +
+      'herbs_distribution, ' +
+      'herbs_avg_height, ' +
+      'shrubs_proportion, ' +
+      'shrubs_distribution, ' +
+      'shrubs_avg_height, ' +
+      'trees_proportion, ' +
+      'trees_distribution, ' +
+      'trees_avg_height, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':survey_id, ' +
+      'date(:sample_date), ' +
+      'time(:sample_time), ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':observer_id, ' +
+      ':herbs_proportion, ' +
+      ':herbs_distribution, ' +
+      ':herbs_avg_height, ' +
+      ':shrubs_proportion, ' +
+      ':shrubs_distribution, ' +
+      ':shrubs_avg_height, ' +
+      ':trees_proportion, ' +
+      ':trees_distribution, ' +
+      ':trees_avg_height, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO vegetation (' +
-        'survey_id, ' +
-        'sample_date, ' +
-        'sample_time, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'observer_id, ' +
-        'herbs_proportion, ' +
-        'herbs_distribution, ' +
-        'herbs_avg_height, ' +
-        'shrubs_proportion, ' +
-        'shrubs_distribution, ' +
-        'shrubs_avg_height, ' +
-        'trees_proportion, ' +
-        'trees_distribution, ' +
-        'trees_avg_height, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':survey_id, ' +
-        'date(:sample_date), ' +
-        'time(:sample_time), ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':observer_id, ' +
-        ':herbs_proportion, ' +
-        ':herbs_distribution, ' +
-        ':herbs_avg_height, ' +
-        ':shrubs_proportion, ' +
-        ':shrubs_distribution, ' +
-        ':shrubs_avg_height, ' +
-        ':trees_proportion, ' +
-        ':trees_distribution, ' +
-        ':trees_avg_height, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      SetTimeParam(ParamByName('sample_time'), FSampleTime);
-      ParamByName('survey_id').AsInteger := FSurveyId;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetStrParam(ParamByName('notes'), FNotes);
+    SetDateParam(ParamByName('sample_date'), R.SampleDate);
+    SetTimeParam(ParamByName('sample_time'), R.SampleTime);
+    ParamByName('survey_id').AsInteger := R.SurveyId;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetStrParam(ParamByName('notes'), R.Notes);
 
-      ParamByName('herbs_proportion').AsInteger := FHerbsProportion;
-      ParamByName('herbs_distribution').AsInteger := Ord(FHerbsDistribution);
-      ParamByName('herbs_avg_height').AsInteger := FHerbsAvgHeight;
-      ParamByName('shrubs_proportion').AsInteger := FShrubsProportion;
-      ParamByName('shrubs_distribution').AsInteger := Ord(FShrubsDistribution);
-      ParamByName('shrubs_avg_height').AsInteger := FShrubsAvgHeight;
-      ParamByName('trees_proportion').AsInteger := FTreesProportion;
-      ParamByName('trees_distribution').AsInteger := Ord(FTreesDistribution);
-      ParamByName('trees_avg_height').AsInteger := FTreesAvgHeight;
+    ParamByName('herbs_proportion').AsInteger := R.HerbsProportion;
+    ParamByName('herbs_distribution').AsInteger := Ord(R.HerbsDistribution);
+    ParamByName('herbs_avg_height').AsInteger := R.HerbsAvgHeight;
+    ParamByName('shrubs_proportion').AsInteger := R.ShrubsProportion;
+    ParamByName('shrubs_distribution').AsInteger := Ord(R.ShrubsDistribution);
+    ParamByName('shrubs_avg_height').AsInteger := R.ShrubsAvgHeight;
+    ParamByName('trees_proportion').AsInteger := R.TreesProportion;
+    ParamByName('trees_distribution').AsInteger := Ord(R.TreesDistribution);
+    ParamByName('trees_avg_height').AsInteger := R.TreesAvgHeight;
 
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ExecSQL;
+    ExecSQL;
 
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TVegetation.Save;
+function TVegetationRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_VEGETATION;
 end;
 
-function TVegetation.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Date', FSampleDate);
-    JSONObject.Add('Time', FSampleTime);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Observer', FObserverId);
-    JSONObject.Add('Herbs Proportion', FHerbsProportion);
-    JSONObject.Add('Herbs Distribution', Ord(FHerbsDistribution));
-    JSONObject.Add('Herbs Average Height', FHerbsAvgHeight);
-    JSONObject.Add('Shrubs Proportion', FShrubsProportion);
-    JSONObject.Add('Shrubs Distribution', Ord(FShrubsDistribution));
-    JSONObject.Add('Shrubs Average Height', FShrubsAvgHeight);
-    JSONObject.Add('Trees Proportion', FTreesProportion);
-    JSONObject.Add('Trees Distribution', Ord(FTreesDistribution));
-    JSONObject.Add('Trees Average Height', FTreesAvgHeight);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TVegetation.Update;
+procedure TVegetationRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TVegetation;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TVegetation.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TVegetation) then
+    raise Exception.Create('Update: Expected TVegetation');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TVegetation(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TVegetationRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE vegetation SET ' +
+      'survey_id = :survey_id, ' +
+      'sample_date = date(:sample_date), ' +
+      'sample_time = time(:sample_time), ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'observer_id = :observer_id, ' +
+      'herbs_proportion = :herbs_proportion, ' +
+      'herbs_distribution = :herbs_distribution, ' +
+      'herbs_avg_height = :herbs_avg_height, ' +
+      'shrubs_proportion = :shrubs_proportion, ' +
+      'shrubs_distribution = :shrubs_distribution, ' +
+      'shrubs_avg_height = :shrubs_avg_height, ' +
+      'trees_proportion = :trees_proportion, ' +
+      'trees_distribution = :trees_distribution, ' +
+      'trees_avg_height = :trees_avg_height, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (vegetation_id = :vegetation_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE vegetation SET ' +
-        'survey_id = :survey_id, ' +
-        'sample_date = date(:sample_date), ' +
-        'sample_time = time(:sample_time), ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'observer_id = :observer_id, ' +
-        'herbs_proportion = :herbs_proportion, ' +
-        'herbs_distribution = :herbs_distribution, ' +
-        'herbs_avg_height = :herbs_avg_height, ' +
-        'shrubs_proportion = :shrubs_proportion, ' +
-        'shrubs_distribution = :shrubs_distribution, ' +
-        'shrubs_avg_height = :shrubs_avg_height, ' +
-        'trees_proportion = :trees_proportion, ' +
-        'trees_distribution = :trees_distribution, ' +
-        'trees_avg_height = :trees_avg_height, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (vegetation_id = :vegetation_id)');
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      SetTimeParam(ParamByName('sample_time'), FSampleTime);
-      ParamByName('survey_id').AsInteger := FSurveyId;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetStrParam(ParamByName('notes'), FNotes);
+    SetDateParam(ParamByName('sample_date'), R.SampleDate);
+    SetTimeParam(ParamByName('sample_time'), R.SampleTime);
+    ParamByName('survey_id').AsInteger := R.SurveyId;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetStrParam(ParamByName('notes'), R.Notes);
 
-      ParamByName('herbs_proportion').AsInteger := FHerbsProportion;
-      ParamByName('herbs_distribution').AsInteger := Ord(FHerbsDistribution);
-      ParamByName('herbs_avg_height').AsInteger := FHerbsAvgHeight;
-      ParamByName('shrubs_proportion').AsInteger := FShrubsProportion;
-      ParamByName('shrubs_distribution').AsInteger := Ord(FShrubsDistribution);
-      ParamByName('shrubs_avg_height').AsInteger := FShrubsAvgHeight;
-      ParamByName('trees_proportion').AsInteger := FTreesProportion;
-      ParamByName('trees_distribution').AsInteger := Ord(FTreesDistribution);
-      ParamByName('trees_avg_height').AsInteger := FTreesAvgHeight;
+    ParamByName('herbs_proportion').AsInteger := R.HerbsProportion;
+    ParamByName('herbs_distribution').AsInteger := Ord(R.HerbsDistribution);
+    ParamByName('herbs_avg_height').AsInteger := R.HerbsAvgHeight;
+    ParamByName('shrubs_proportion').AsInteger := R.ShrubsProportion;
+    ParamByName('shrubs_distribution').AsInteger := Ord(R.ShrubsDistribution);
+    ParamByName('shrubs_avg_height').AsInteger := R.ShrubsAvgHeight;
+    ParamByName('trees_proportion').AsInteger := R.TreesProportion;
+    ParamByName('trees_distribution').AsInteger := Ord(R.TreesDistribution);
+    ParamByName('trees_avg_height').AsInteger := R.TreesAvgHeight;
 
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('vegetation_id').AsInteger := FId;
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('vegetation_id').AsInteger := R.Id;
 
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1680,10 +2156,20 @@ end;
 
 constructor TSurveyMember.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TSurveyMember.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TSurveyMember then
+  begin
+    FSurveyId := TSurveyMember(Source).SurveyId;
+    FPersonId := TSurveyMember(Source).PersonId;
+    FVisitor := TSurveyMember(Source).Visitor;
+  end;
 end;
 
 procedure TSurveyMember.Clear;
@@ -1694,40 +2180,126 @@ begin
   FVisitor := False;
 end;
 
-procedure TSurveyMember.Copy(aFrom: TSurveyMember);
+function TSurveyMember.Clone: TXolmisRecord;
 begin
-  FSurveyId := aFrom.SurveyId;
-  FPersonId := aFrom.PersonId;
-  FVisitor := aFrom.Visitor;
+  Result := TSurveyMember(inherited Clone);
 end;
 
-procedure TSurveyMember.Delete;
+function TSurveyMember.Diff(const aOld: TSurveyMember; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscVisitor, aOld.Visitor, FVisitor, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TSurveyMember.EqualsTo(const Other: TSurveyMember): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TSurveyMember.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FSurveyId := Obj.Get('survey_id', 0);
+    FPersonId := Obj.Get('person_id', 0);
+    FVisitor  := Obj.Get('visitor', False);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TSurveyMember.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('person_id', FPersonId);
+    JSONObject.Add('visitor', FVisitor);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TSurveyMember.ToString: String;
+begin
+  Result := Format('SurveyMember(Id=%d, SurveyId=%d, PersonId=%d, Visitor=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FSurveyId, FPersonId, BoolToStr(FVisitor, 'True', 'False'),
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TSurveyMember.Validate(out Msg: string): Boolean;
+begin
+  if FSurveyId = 0 then
+  begin
+    Msg := 'Survey required.';
+    Exit(False);
+  end;
+  if FPersonId = 0 then
+  begin
+    Msg := 'Person required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TSurveyMemberRepository }
+
+procedure TSurveyMemberRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TSurveyMember;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSurveyMember.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TSurveyMember) then
+    raise Exception.Create('Delete: Expected TSurveyMember');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TSurveyMember(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSurveyMemberRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM survey_team');
-      Add('WHERE (survey_member_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_SURVEY_MEMBER_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -1735,14 +2307,115 @@ begin
   end;
 end;
 
-procedure TSurveyMember.GetData(aKey: Integer);
+function TSurveyMemberRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_SURVEY_MEMBER_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSurveyMemberRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_SURVEY_MEMBER_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TSurveyMember) then
+    raise Exception.Create('FindBy: Expected TSurveyMember');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+        'survey_member_id, ' +
+        'survey_id, ' +
+        'person_id, ' +
+        'visitor, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM survey_team');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TSurveyMember(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TSurveyMemberRepository.FindBySurvey(const aSurveyKey, aPersonKey: Integer; E: TSurveyMember);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM survey_team');
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (person_id = :aperson)');
+    ParamByName('asurvey').AsInteger := aSurveyKey;
+    ParamByName('aperson').AsInteger := aPersonKey;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSurveyMemberRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSurveyMember) then
+    raise Exception.Create('GetById: Expected TSurveyMember');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
         'survey_member_id, ' +
@@ -1758,222 +2431,132 @@ begin
         'active_status ' +
       'FROM survey_team');
     Add('WHERE survey_member_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TSurveyMember(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TSurveyMember.LoadFromDataSet(aDataSet: TDataSet);
+procedure TSurveyMemberRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TSurveyMember;
 begin
-  if not aDataset.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TSurveyMember) then
+    raise Exception.Create('Hydrate: Expected TSurveyMember');
 
+  R := TSurveyMember(E);
   with aDataSet do
   begin
-    FId := FieldByName('survey_member_id').AsInteger;
-    FSurveyId := FieldByName('survey_id').AsInteger;
-    FPersonId := FieldByName('person_id').AsInteger;
-    FVisitor := FieldByName('visitor').AsBoolean;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.Id := FieldByName('survey_member_id').AsInteger;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.PersonId := FieldByName('person_id').AsInteger;
+    R.Visitor := FieldByName('visitor').AsBoolean;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TSurveyMember.Insert;
+procedure TSurveyMemberRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TSurveyMember;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TSurveyMember) then
+    raise Exception.Create('Insert: Expected TSurveyMember');
+
+  R := TSurveyMember(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO survey_team (' +
-        'survey_id, ' +
-        'person_id, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':survey_id, ' +
-        ':person_id, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-      ParamByName('survey_id').AsInteger := FSurveyId;
-      ParamByName('person_id').AsInteger := FPersonId;
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSurveyMember.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TSurveyMember.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Person', FPersonId);
-    JSONObject.Add('Visitor', FVisitor);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TSurveyMember.Update;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSurveyMember.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE survey_team SET ' +
-        'survey_id = :survey_id, ' +
-        'person_id = :person_id, ' +
-        'visitor = :visitor, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec''),' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (survey_member_id = :survey_member_id)');
-      ParamByName('survey_id').AsInteger := FSurveyId;
-      ParamByName('person_id').AsInteger := FPersonId;
-      ParamByName('visitor').AsBoolean := FVisitor;
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('survey_member_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TSurveyMember.Diff(aOld: TSurveyMember; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscVisitor, aOld.Visitor, FVisitor, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TSurveyMember.Find(const aSurveyKey, aPersonKey: Integer): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(nil);
-  with Qry, SQL do
-  try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
-    MacroCheck := True;
-
-    Add('SELECT ' +
-      'survey_member_id, ' +
+    Clear;
+    Add('INSERT INTO survey_team (' +
       'survey_id, ' +
       'person_id, ' +
       'visitor, ' +
       'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM survey_team');
-    Add('WHERE (survey_id = :asurvey) AND (person_id = :aperson)');
-    ParamByName('asurvey').AsInteger := aSurveyKey;
-    ParamByName('aperson').AsInteger := aPersonKey;
+      'insert_date) ');
+    Add('VALUES (' +
+      ':survey_id, ' +
+      ':person_id, ' +
+      ':visitor, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
+
+    ParamByName('survey_id').AsInteger := R.SurveyId;
+    ParamByName('person_id').AsInteger := R.PersonId;
+    ParamByName('visitor').AsBoolean := R.Visitor;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
     Open;
-
-    if not EOF then
-    begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
-    end;
-
+    R.Id := Fields[0].AsInteger;
     Close;
   finally
-    Qry.Free;
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSurveyMemberRepository.TableName: string;
+begin
+  Result := TBL_SURVEY_TEAM;
+end;
+
+procedure TSurveyMemberRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSurveyMember;
+begin
+  if not (E is TSurveyMember) then
+    raise Exception.Create('Update: Expected TSurveyMember');
+
+  R := TSurveyMember(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSurveyMemberRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE survey_team SET ' +
+      'survey_id = :survey_id, ' +
+      'person_id = :person_id, ' +
+      'visitor = :visitor, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec''),' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (survey_member_id = :survey_member_id)');
+
+    ParamByName('survey_id').AsInteger := R.SurveyId;
+    ParamByName('person_id').AsInteger := R.PersonId;
+    ParamByName('visitor').AsBoolean := R.Visitor;
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('survey_member_id').AsInteger := R.Id;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1981,10 +2564,39 @@ end;
 
 constructor TSurvey.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TSurvey.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TSurvey then
+  begin
+    FSurveyDate := TSurvey(Source).SurveyDate;
+    FStartTime := TSurvey(Source).StartTime;
+    FEndTime := TSurvey(Source).EndTime;
+    FDuration := TSurvey(Source).Duration;
+    FMethodId := TSurvey(Source).MethodId;
+    FNetStationId := TSurvey(Source).NetStationId;
+    FExpeditionId := TSurvey(Source).ExpeditionId;
+    FLocalityId := TSurvey(Source).LocalityId;
+    FProjectId := TSurvey(Source).ProjectId;
+    FSampleId := TSurvey(Source).SampleId;
+    FStartLatitude := TSurvey(Source).StartLatitude;
+    FStartLongitude := TSurvey(Source).StartLongitude;
+    FEndLatitude := TSurvey(Source).EndLatitude;
+    FEndLongitude := TSurvey(Source).EndLongitude;
+    FObserversTally := TSurvey(Source).ObserversTally;
+    FTotalArea := TSurvey(Source).TotalArea;
+    FTotalDistance := TSurvey(Source).TotalDistance;
+    FTotalNets := TSurvey(Source).TotalNets;
+    FHabitat := TSurvey(Source).Habitat;
+    FNetRounds := TSurvey(Source).NetRounds;
+    FFullName := TSurvey(Source).FullName;
+    FNotes := TSurvey(Source).Notes;
+  end;
 end;
 
 procedure TSurvey.Clear;
@@ -2014,59 +2626,209 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TSurvey.Copy(aFrom: TSurvey);
+function TSurvey.Clone: TXolmisRecord;
 begin
-  FSurveyDate := aFrom.SurveyDate;
-  FStartTime := aFrom.StartTime;
-  FEndTime := aFrom.EndTime;
-  FDuration := aFrom.Duration;
-  FMethodId := aFrom.MethodId;
-  FNetStationId := aFrom.NetStationId;
-  FExpeditionId := aFrom.ExpeditionId;
-  FLocalityId := aFrom.LocalityId;
-  FProjectId := aFrom.ProjectId;
-  FSampleId := aFrom.SampleId;
-  FStartLatitude := aFrom.StartLatitude;
-  FStartLongitude := aFrom.StartLongitude;
-  FEndLatitude := aFrom.EndLatitude;
-  FEndLongitude := aFrom.EndLongitude;
-  FObserversTally := aFrom.ObserversTally;
-  FTotalArea := aFrom.TotalArea;
-  FTotalDistance := aFrom.TotalDistance;
-  FTotalNets := aFrom.TotalNets;
-  FHabitat := aFrom.Habitat;
-  FNetRounds := aFrom.NetRounds;
-  FFullName := aFrom.FullName;
-  FNotes := aFrom.Notes;
+  Result := TSurvey(inherited Clone);
 end;
 
-procedure TSurvey.Delete;
+function TSurvey.Diff(const aOld: TSurvey; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDate, aOld.SurveyDate, FSurveyDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStartTime, aOld.StartTime, FStartTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEndTime, aOld.EndTime, FEndTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDurationMin, aOld.Duration, FDuration, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscExpeditionID, aOld.ExpeditionId, FExpeditionId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSampleID, aOld.SampleId, FSampleId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.StartLatitude, FStartLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.StartLongitude, FStartLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEndLatitude, aOld.EndLatitude, FEndLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEndLongitude, aOld.EndLongitude, FEndLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObservers, aOld.ObserversTally, FObserversTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAreaHa, aOld.TotalArea, FTotalArea, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDistanceKm, aOld.TotalDistance, FTotalDistance, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMistnets, aOld.TotalNets, FTotalNets, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHabitat, aOld.Habitat, FHabitat, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMistnetRounds, aOld.NetRounds, FNetRounds, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TSurvey.EqualsTo(const Other: TSurvey): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TSurvey.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FSurveyDate     := Obj.Get('survey_date', NullDate);
+    FStartTime      := Obj.Get('start_time', NullTime);
+    FEndTime        := Obj.Get('end_time', NullTime);
+    FDuration       := Obj.Get('duration', 0);
+    FMethodId       := Obj.Get('method_id', 0);
+    FNetStationId   := Obj.Get('net_station_id', 0);
+    FExpeditionId   := Obj.Get('expedition_id', 0);
+    FLocalityId     := Obj.Get('locality_id', 0);
+    FProjectId      := Obj.Get('project_id', 0);
+    FSampleId       := Obj.Get('sample_id', '');
+    FStartLongitude := Obj.Get('start_longitude', 0.0);
+    FStartLatitude  := Obj.Get('start_latitude', 0.0);
+    FEndLongitude   := Obj.Get('end_longitude', 0.0);
+    FEndLatitude    := Obj.Get('end_latitude', 0.0);
+    FObserversTally := Obj.Get('observers_tally', 0);
+    FTotalArea      := Obj.Get('total_area', 0.0);
+    FTotalDistance  := Obj.Get('total_distance', 0.0);
+    FTotalNets      := Obj.Get('total_nets', 0);
+    FHabitat        := Obj.Get('habitat', '');
+    FNetRounds      := Obj.Get('net_rounds', '');
+    FFullName       := Obj.Get('full_name', '');
+    FNotes          := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TSurvey.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('survey_date', FSurveyDate);
+    JSONObject.Add('start_time', FStartTime);
+    JSONObject.Add('end_time', FEndTime);
+    JSONObject.Add('duration', FDuration);
+    JSONObject.Add('method_id', FMethodId);
+    JSONObject.Add('net_station_id', FNetStationId);
+    JSONObject.Add('expedition_id', FExpeditionId);
+    JSONObject.Add('locality_id', FLocalityId);
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('sample_id', FSampleId);
+    JSONObject.Add('start_longitude', FStartLongitude);
+    JSONObject.Add('start_latitude', FStartLatitude);
+    JSONObject.Add('end_longitude', FEndLongitude);
+    JSONObject.Add('end_latitude', FEndLatitude);
+    JSONObject.Add('observers_tally', FObserversTally);
+    JSONObject.Add('total_area', FTotalArea);
+    JSONObject.Add('total_distance', FTotalDistance);
+    JSONObject.Add('total_nets', FTotalNets);
+    JSONObject.Add('habitat', FHabitat);
+    JSONObject.Add('net_rounds', FNetRounds);
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TSurvey.ToString: String;
+begin
+  Result := Format('Survey(Id=%d, SurveyDate=%s, StartTime=%s, EndTime=%s, Duration=%d, MethodId=%d, NetStationId=%d, ' +
+    'ExpeditionId=%d, LocalityId=%d, ProjectId=%d, SampleId=%s, StartLongitude=%f, StartLatitude=%f, ' +
+    'EndLongitude=%f, EndLatitude=%f, ObserversTally=%d, TotalArea=%f, TotalDistance=%f, TotalNets=%d, Habitat=%s, ' +
+    'NetRounds=%s, FullName=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, DateToStr(FSurveyDate), TimeToStr(FStartTime), TimeToStr(FEndTime), FDuration, FMethodId, FNetStationId,
+    FExpeditionId, FLocalityId, FProjectId, FSampleId, FStartLongitude, FStartLatitude, FEndLongitude,
+    FEndLatitude, FObserversTally, FTotalArea, FTotalDistance, FTotalNets, FHabitat, FNetRounds, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TSurvey.Validate(out Msg: string): Boolean;
+begin
+  if FSurveyDate = NullDate then
+  begin
+    Msg := 'Survey date required.';
+    Exit(False);
+  end;
+  if FLocalityId = 0 then
+  begin
+    Msg := 'Locality required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TSurveyRepository }
+
+procedure TSurveyRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TSurvey;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSurvey.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TSurvey) then
+    raise Exception.Create('Delete: Expected TSurvey');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TSurvey(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSurveyRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM surveys');
-      Add('WHERE (survey_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_SURVEY_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -2074,14 +2836,145 @@ begin
   end;
 end;
 
-procedure TSurvey.GetData(aKey: Integer);
+function TSurveyRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_SURVEY_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSurveyRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_SURVEY_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TSurvey) then
+    raise Exception.Create('FindBy: Expected TSurvey');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+        'survey_id, ' +
+        'survey_date, ' +
+        'start_time, ' +
+        'end_time, ' +
+        'duration, ' +
+        'method_id, ' +
+        'net_station_id, ' +
+        'expedition_id, ' +
+        'project_id, ' +
+        'locality_id, ' +
+        'sample_id, ' +
+        'start_latitude, ' +
+        'start_longitude, ' +
+        'end_latitude, ' +
+        'end_longitude, ' +
+        'observers_tally, ' +
+        'area_total, ' +
+        'distance_total, ' +
+        'nets_total, ' +
+        'habitat, ' +
+        'net_rounds, ' +
+        'full_name, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM surveys');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TSurvey(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TSurveyRepository.FindBySiteAndDate(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String;
+  aNetStation: Integer; E: TSurvey);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM surveys');
+    Add('WHERE (locality_id = :alocal)');
+    Add('AND (method_id = :amethod)');
+    if aSampleId <> EmptyStr then
+      Add('AND (sample_id = :asampleid)');
+    if aNetStation > 0 then
+      Add('AND (net_station_id = :astation)');
+    Add('AND (date(survey_date) = date(:adate))');
+    SetIntParam(ParamByName('ALOCAL'), aLocal);
+    SetIntParam(ParamByName('AMETHOD'), aMethod);
+    if aSampleId <> EmptyStr then
+      SetStrParam(ParamByName('ASAMPLEID'), aSampleId);
+    if aNetStation > 0 then
+      SetIntParam(ParamByName('ASTATION'), aNetStation);
+    SetDateParam(ParamByName('ADATE'), aDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSurveyRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSurvey) then
+    raise Exception.Create('GetById: Expected TSurvey');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
         'survey_id, ' +
@@ -2116,355 +3009,241 @@ begin
         'active_status ' +
       'FROM surveys');
     Add('WHERE survey_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSurvey.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
-begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('survey_id').AsInteger;
-    FSurveyDate := FieldByName('survey_date').AsDateTime;
-    FStartTime := FieldByName('start_time').AsDateTime;
-    FEndTime := FieldByName('end_time').AsDateTime;
-    FDuration := FieldByName('duration').AsInteger;
-    FMethodId := FieldByName('method_id').AsInteger;
-    FNetStationId := FieldByName('net_station_id').AsInteger;
-    FExpeditionId := FieldByName('expedition_id').AsInteger;
-    FLocalityId := FieldByName('locality_id').AsInteger;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FSampleId := FieldByName('sample_id').AsString;
-    FStartLatitude := FieldByName('start_latitude').AsFloat;
-    FStartLongitude := FieldByName('start_longitude').AsFloat;
-    FEndLatitude := FieldByName('end_latitude').AsFloat;
-    FEndLongitude := FieldByName('end_longitude').AsFloat;
-    FObserversTally := FieldByName('observers_tally').AsInteger;
-    FTotalArea := FieldByName('area_total').AsFloat;
-    FTotalDistance := FieldByName('distance_total').AsFloat;
-    FTotalNets := FieldByName('nets_total').AsInteger;
-    FHabitat := FieldByName('habitat').AsString;
-    FNetRounds := FieldByName('net_rounds').AsString;
-    FFullName := FieldByName('full_name').AsString;
-    FNotes := FieldByName('notes').AsString;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
-end;
-
-procedure TSurvey.Insert;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO surveys (' +
-          'survey_date, ' +
-          'start_time, ' +
-          'end_time, ' +
-          'duration, ' +
-          'method_id, ' +
-          'net_station_id, ' +
-          'expedition_id, ' +
-          'project_id, ' +
-          'locality_id, ' +
-          'sample_id, ' +
-          'start_latitude, ' +
-          'start_longitude, ' +
-          'end_latitude, ' +
-          'end_longitude, ' +
-          'observers_tally, ' +
-          'area_total, ' +
-          'distance_total, ' +
-          'nets_total, ' +
-          'habitat, ' +
-          'net_rounds, ' +
-          'full_name, ' +
-          'notes, ' +
-          'user_inserted, ' +
-          'insert_date) ');
-      Add('VALUES (' +
-          'date(:survey_date), ' +
-          'time(:start_time), ' +
-          'time(:end_time), ' +
-          ':duration, ' +
-          ':method_id, ' +
-          ':net_station_id, ' +
-          ':expedition_id, ' +
-          ':project_id, ' +
-          ':locality_id, ' +
-          ':sample_id, ' +
-          ':start_latitude, ' +
-          ':start_longitude, ' +
-          ':end_latitude, ' +
-          ':end_longitude, ' +
-          ':observers_tally, ' +
-          ':area_total, ' +
-          ':distance_total, ' +
-          ':nets_total, ' +
-          ':habitat, ' +
-          ':net_rounds, ' +
-          ':full_name, ' +
-          ':notes, ' +
-          ':user_inserted, ' +
-          'datetime(''now'',''subsec''));');
-      SetDateParam(ParamByName('survey_date'), FSurveyDate);
-      SetTimeParam(ParamByName('start_time'), FStartTime);
-      SetTimeParam(ParamByName('end_time'), FEndTime);
-      SetIntParam(ParamByName('duration'), FDuration);
-      ParamByName('method_id').AsInteger := FMethodId;
-      SetForeignParam(ParamByName('net_station_id'), FNetStationId);
-      SetForeignParam(ParamByName('expedition_id'), FExpeditionId);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetCoordinateParam(ParamByName('start_longitude'), ParamByName('start_latitude'), FStartLongitude, FStartLatitude);
-      SetCoordinateParam(ParamByName('end_longitude'), ParamByName('end_latitude'), FEndLongitude, FEndLatitude);
-      SetStrParam(ParamByName('sample_id'), FSampleId);
-      SetIntParam(ParamByName('observers_tally'), FObserversTally);
-      SetIntParam(ParamByName('nets_total'), FTotalNets);
-      SetFloatParam(ParamByName('area_total'), FTotalArea);
-      SetFloatParam(ParamByName('distance_total'), FTotalDistance);
-      SetStrParam(ParamByName('habitat'), FHabitat);
-      SetStrParam(ParamByName('net_rounds'), FNetRounds);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, FNetStationId, FSampleId);
-      ParamByName('user_inserted').AsInteger := FUserInserted;
-
-      ExecSQL;
-
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TSurvey.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-procedure TSurvey.Update;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TSurvey.Update: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE surveys SET ' +
-        'survey_date = date(:survey_date), ' +
-        'start_time = time(:start_time), ' +
-        'end_time = time(:end_time), ' +
-        'duration = :duration, ' +
-        'method_id = :method_id, ' +
-        'net_station_id = :net_station_id, ' +
-        'expedition_id = :expedition_id, ' +
-        'project_id = :project_id, ' +
-        'locality_id = :locality_id, ' +
-        'sample_id = :sample_id, ' +
-        'start_latitude = :start_latitude, ' +
-        'start_longitude = :start_longitude, ' +
-        'end_latitude = :end_latitude, ' +
-        'end_longitude = :end_longitude, ' +
-        'observers_tally = :observers_tally, ' +
-        'area_total = :area_total, ' +
-        'distance_total = :distance_total, ' +
-        'nets_total = :nets_total, ' +
-        'habitat = :habitat, ' +
-        'net_rounds = :net_rounds, ' +
-        'full_name = :full_name, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'exported_status = :exported_status, ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (survey_id = :survey_id)');
-
-      SetDateParam(ParamByName('survey_date'), FSurveyDate);
-      SetTimeParam(ParamByName('start_time'), FStartTime);
-      SetTimeParam(ParamByName('end_time'), FEndTime);
-      SetIntParam(ParamByName('duration'), FDuration);
-      ParamByName('method_id').AsInteger := FMethodId;
-      SetForeignParam(ParamByName('net_station_id'), FNetStationId);
-      SetForeignParam(ParamByName('expedition_id'), FExpeditionId);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      SetCoordinateParam(ParamByName('start_longitude'), ParamByName('start_latitude'), FStartLongitude, FStartLatitude);
-      SetCoordinateParam(ParamByName('end_longitude'), ParamByName('end_latitude'), FEndLongitude, FEndLatitude);
-      SetStrParam(ParamByName('sample_id'), FSampleId);
-      SetIntParam(ParamByName('observers_tally'), FObserversTally);
-      SetIntParam(ParamByName('nets_total'), FTotalNets);
-      SetFloatParam(ParamByName('area_total'), FTotalArea);
-      SetFloatParam(ParamByName('distance_total'), FTotalDistance);
-      SetStrParam(ParamByName('habitat'), FHabitat);
-      SetStrParam(ParamByName('net_rounds'), FNetRounds);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('full_name').AsString := GetSurveyFullname(FSurveyDate, FLocalityId, FMethodId, FNetStationId, FSampleId);
-      ParamByName('user_updated').AsInteger := FUserInserted;
-      ParamByName('exported_status').AsBoolean := FExported;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('survey_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TSurvey.Diff(aOld: TSurvey; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscDate, aOld.SurveyDate, FSurveyDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscStartTime, aOld.StartTime, FStartTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEndTime, aOld.EndTime, FEndTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDurationMin, aOld.Duration, FDuration, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscExpeditionID, aOld.ExpeditionId, FExpeditionId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSampleID, aOld.SampleId, FSampleId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.StartLatitude, FStartLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.StartLongitude, FStartLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEndLatitude, aOld.EndLatitude, FEndLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEndLongitude, aOld.EndLongitude, FEndLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObservers, aOld.ObserversTally, FObserversTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAreaHa, aOld.TotalArea, FTotalArea, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDistanceKm, aOld.TotalDistance, FTotalDistance, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMistnets, aOld.TotalNets, FTotalNets, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHabitat, aOld.Habitat, FHabitat, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMistnetRounds, aOld.NetRounds, FNetRounds, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TSurvey.Find(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String; aNetStation: Integer): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-    Clear;
-    Add('SELECT survey_id FROM surveys');
-    Add('WHERE (locality_id = :alocal)');
-    Add('AND (method_id = :amethod)');
-    if aSampleId <> EmptyStr then
-      Add('AND (sample_id = :asampleid)');
-    if aNetStation > 0 then
-      Add('AND (net_station_id = :astation)');
-    Add('AND (date(survey_date) = date(:adate))');
-    SetIntParam(ParamByName('ALOCAL'), aLocal);
-    SetIntParam(ParamByName('AMETHOD'), aMethod);
-    if aSampleId <> EmptyStr then
-      SetStrParam(ParamByName('ASAMPLEID'), aSampleId);
-    if aNetStation > 0 then
-      SetIntParam(ParamByName('ASTATION'), aNetStation);
-    SetDateParam(ParamByName('ADATE'), aDate);
-    Open;
-    Result := RecordCount > 0;
-    if Result = True then
+    if not EOF then
     begin
-      GetData(FieldByName('survey_id').AsInteger);
+      Hydrate(Qry, TSurvey(E));
     end;
     Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSurveyRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TSurvey;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TSurvey) then
+    raise Exception.Create('Hydrate: Expected TSurvey');
+
+  R := TSurvey(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('survey_id').AsInteger;
+    R.SurveyDate := FieldByName('survey_date').AsDateTime;
+    R.StartTime := FieldByName('start_time').AsDateTime;
+    R.EndTime := FieldByName('end_time').AsDateTime;
+    R.Duration := FieldByName('duration').AsInteger;
+    R.MethodId := FieldByName('method_id').AsInteger;
+    R.NetStationId := FieldByName('net_station_id').AsInteger;
+    R.ExpeditionId := FieldByName('expedition_id').AsInteger;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.SampleId := FieldByName('sample_id').AsString;
+    R.StartLatitude := FieldByName('start_latitude').AsFloat;
+    R.StartLongitude := FieldByName('start_longitude').AsFloat;
+    R.EndLatitude := FieldByName('end_latitude').AsFloat;
+    R.EndLongitude := FieldByName('end_longitude').AsFloat;
+    R.ObserversTally := FieldByName('observers_tally').AsInteger;
+    R.TotalArea := FieldByName('area_total').AsFloat;
+    R.TotalDistance := FieldByName('distance_total').AsFloat;
+    R.TotalNets := FieldByName('nets_total').AsInteger;
+    R.Habitat := FieldByName('habitat').AsString;
+    R.NetRounds := FieldByName('net_rounds').AsString;
+    R.FullName := FieldByName('full_name').AsString;
+    R.Notes := FieldByName('notes').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TSurveyRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSurvey;
+begin
+  if not (E is TSurvey) then
+    raise Exception.Create('Insert: Expected TSurvey');
+
+  R := TSurvey(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('INSERT INTO surveys (' +
+        'survey_date, ' +
+        'start_time, ' +
+        'end_time, ' +
+        'duration, ' +
+        'method_id, ' +
+        'net_station_id, ' +
+        'expedition_id, ' +
+        'project_id, ' +
+        'locality_id, ' +
+        'sample_id, ' +
+        'start_latitude, ' +
+        'start_longitude, ' +
+        'end_latitude, ' +
+        'end_longitude, ' +
+        'observers_tally, ' +
+        'area_total, ' +
+        'distance_total, ' +
+        'nets_total, ' +
+        'habitat, ' +
+        'net_rounds, ' +
+        'full_name, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'insert_date) ');
+    Add('VALUES (' +
+        'date(:survey_date), ' +
+        'time(:start_time), ' +
+        'time(:end_time), ' +
+        ':duration, ' +
+        ':method_id, ' +
+        ':net_station_id, ' +
+        ':expedition_id, ' +
+        ':project_id, ' +
+        ':locality_id, ' +
+        ':sample_id, ' +
+        ':start_latitude, ' +
+        ':start_longitude, ' +
+        ':end_latitude, ' +
+        ':end_longitude, ' +
+        ':observers_tally, ' +
+        ':area_total, ' +
+        ':distance_total, ' +
+        ':nets_total, ' +
+        ':habitat, ' +
+        ':net_rounds, ' +
+        ':full_name, ' +
+        ':notes, ' +
+        ':user_inserted, ' +
+        'datetime(''now'',''subsec''));');
+
+    SetDateParam(ParamByName('survey_date'), R.SurveyDate);
+    SetTimeParam(ParamByName('start_time'), R.StartTime);
+    SetTimeParam(ParamByName('end_time'), R.EndTime);
+    SetIntParam(ParamByName('duration'), R.Duration);
+    ParamByName('method_id').AsInteger := R.MethodId;
+    SetForeignParam(ParamByName('net_station_id'), R.NetStationId);
+    SetForeignParam(ParamByName('expedition_id'), R.ExpeditionId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetCoordinateParam(ParamByName('start_longitude'), ParamByName('start_latitude'), R.StartLongitude, R.StartLatitude);
+    SetCoordinateParam(ParamByName('end_longitude'), ParamByName('end_latitude'), R.EndLongitude, R.EndLatitude);
+    SetStrParam(ParamByName('sample_id'), R.SampleId);
+    SetIntParam(ParamByName('observers_tally'), R.ObserversTally);
+    SetIntParam(ParamByName('nets_total'), R.TotalNets);
+    SetFloatParam(ParamByName('area_total'), R.TotalArea);
+    SetFloatParam(ParamByName('distance_total'), R.TotalDistance);
+    SetStrParam(ParamByName('habitat'), R.Habitat);
+    SetStrParam(ParamByName('net_rounds'), R.NetRounds);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('full_name').AsString := GetSurveyFullname(R.SurveyDate, R.LocalityId, R.MethodId, R.NetStationId, R.SampleId);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSurveyRepository.TableName: string;
+begin
+  Result := TBL_SURVEYS;
+end;
+
+procedure TSurveyRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSurvey;
+begin
+  if not (E is TSurvey) then
+    raise Exception.Create('Update: Expected TSurvey');
+
+  R := TSurvey(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSurveyRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE surveys SET ' +
+      'survey_date = date(:survey_date), ' +
+      'start_time = time(:start_time), ' +
+      'end_time = time(:end_time), ' +
+      'duration = :duration, ' +
+      'method_id = :method_id, ' +
+      'net_station_id = :net_station_id, ' +
+      'expedition_id = :expedition_id, ' +
+      'project_id = :project_id, ' +
+      'locality_id = :locality_id, ' +
+      'sample_id = :sample_id, ' +
+      'start_latitude = :start_latitude, ' +
+      'start_longitude = :start_longitude, ' +
+      'end_latitude = :end_latitude, ' +
+      'end_longitude = :end_longitude, ' +
+      'observers_tally = :observers_tally, ' +
+      'area_total = :area_total, ' +
+      'distance_total = :distance_total, ' +
+      'nets_total = :nets_total, ' +
+      'habitat = :habitat, ' +
+      'net_rounds = :net_rounds, ' +
+      'full_name = :full_name, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'exported_status = :exported_status, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (survey_id = :survey_id)');
+
+    SetDateParam(ParamByName('survey_date'), R.SurveyDate);
+    SetTimeParam(ParamByName('start_time'), R.StartTime);
+    SetTimeParam(ParamByName('end_time'), R.EndTime);
+    SetIntParam(ParamByName('duration'), R.Duration);
+    ParamByName('method_id').AsInteger := R.MethodId;
+    SetForeignParam(ParamByName('net_station_id'), R.NetStationId);
+    SetForeignParam(ParamByName('expedition_id'), R.ExpeditionId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetCoordinateParam(ParamByName('start_longitude'), ParamByName('start_latitude'), R.StartLongitude, R.StartLatitude);
+    SetCoordinateParam(ParamByName('end_longitude'), ParamByName('end_latitude'), R.EndLongitude, R.EndLatitude);
+    SetStrParam(ParamByName('sample_id'), R.SampleId);
+    SetIntParam(ParamByName('observers_tally'), R.ObserversTally);
+    SetIntParam(ParamByName('nets_total'), R.TotalNets);
+    SetFloatParam(ParamByName('area_total'), R.TotalArea);
+    SetFloatParam(ParamByName('distance_total'), R.TotalDistance);
+    SetStrParam(ParamByName('habitat'), R.Habitat);
+    SetStrParam(ParamByName('net_rounds'), R.NetRounds);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('full_name').AsString := GetSurveyFullname(R.SurveyDate, R.LocalityId, R.MethodId, R.NetStationId, R.SampleId);
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('survey_id').AsInteger := R.Id;
+
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -2474,10 +3253,31 @@ end;
 
 constructor TWeatherLog.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TWeatherLog.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TWeatherLog then
+  begin
+    FSurveyId := TWeatherLog(Source).SurveyId;
+    FAtmosphericPressure := TWeatherLog(Source).AtmosphericPressure;
+    FCloudCover := TWeatherLog(Source).CloudCover;
+    FNotes := TWeatherLog(Source).Notes;
+    FPrecipitation := TWeatherLog(Source).Precipitation;
+    FRainfall := TWeatherLog(Source).Rainfall;
+    FRelativeHumidity := TWeatherLog(Source).RelativeHumidity;
+    FSampleDate := TWeatherLog(Source).SampleDate;
+    FSampleMoment := TWeatherLog(Source).SampleMoment;
+    FSampleTime := TWeatherLog(Source).SampleTime;
+    FObserverId := TWeatherLog(Source).ObserverId;
+    FTemperature := TWeatherLog(Source).Temperature;
+    FWindSpeedBft := TWeatherLog(Source).WindSpeedBft;
+    FWindSpeedKmH := TWeatherLog(Source).WindSpeedKmH;
+  end;
 end;
 
 procedure TWeatherLog.Clear;
@@ -2499,51 +3299,188 @@ begin
   FWindSpeedKmH := 0;
 end;
 
-procedure TWeatherLog.Copy(aFrom: TWeatherLog);
+function TWeatherLog.Clone: TXolmisRecord;
 begin
-  FSurveyId := aFrom.SurveyId;
-  FAtmosphericPressure := aFrom.AtmosphericPressure;
-  FCloudCover := aFrom.CloudCover;
-  FNotes := aFrom.Notes;
-  FPrecipitation := aFrom.Precipitation;
-  FRainfall := aFrom.Rainfall;
-  FRelativeHumidity := aFrom.RelativeHumidity;
-  FSampleDate := aFrom.SampleDate;
-  FSampleMoment := aFrom.SampleMoment;
-  FSampleTime := aFrom.SampleTime;
-  FObserverId := aFrom.ObserverId;
-  FTemperature := aFrom.Temperature;
-  FWindSpeedBft := aFrom.WindSpeedBft;
-  FWindSpeedKmH := aFrom.WindSpeedKmH;
+  Result := TWeatherLog(inherited Clone);
 end;
 
-procedure TWeatherLog.Delete;
+function TWeatherLog.Diff(const aOld: TWeatherLog; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscAtmosphericPressureH, aOld.AtmosphericPressure, FAtmosphericPressure, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCloudCover, aOld.CloudCover, FCloudCover, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPrecipitation, aOld.Precipitation, FPrecipitation, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRainfallMm, aOld.Rainfall, FRainfall, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRelativeHumidity, aOld.RelativeHumidity, FRelativeHumidity, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMoment, aOld.SampleMoment, FSampleMoment, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTemperatureC, aOld.Temperature, FTemperature, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscWindBft, aOld.WindSpeedBft, FWindSpeedBft, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscWindKmH, aOld.WindSpeedKmH, FWindSpeedKmH, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TWeatherLog.EqualsTo(const Other: TWeatherLog): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TWeatherLog.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FSampleDate := Obj.Get('sample_date', NullDate);
+    FSampleTime := Obj.Get('sample_time', NullTime);
+    case Obj.Get('sample_moment', '') of
+      'S': FSampleMoment := wmStart;
+      'M': FSampleMoment := wmMiddle;
+      'E': FSampleMoment := wmEnd;
+    else
+      FSampleMoment := wmNone;
+    end;
+    FSurveyId             := Obj.Get('survey_id', 0);
+    FObserverId           := Obj.Get('observer_id', 0);
+    FAtmosphericPressure  := Obj.Get('atmospheric_pressure', 0.0);
+    case Obj.Get('precipitation', '') of
+      'N': FPrecipitation := wpNone;
+      'F': FPrecipitation := wpFog;
+      'M': FPrecipitation := wpMist;
+      'D': FPrecipitation := wpDrizzle;
+      'R': FPrecipitation := wpRain;
+    else
+      FPrecipitation := wpEmpty;
+    end;
+    FCloudCover       := Obj.Get('cloud_cover', 0);
+    FRainfall         := Obj.Get('rainfall', 0);
+    FRelativeHumidity := Obj.Get('relative_humidity', 0.0);
+    FTemperature      := Obj.Get('temperature', 0.0);
+    FWindSpeedBft     := Obj.Get('wind_speed_bft', 0);
+    FWindSpeedKmH     := Obj.Get('wind_speed_kmh', 0.0);
+    FNotes            := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TWeatherLog.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('sample_date', FSampleDate);
+    JSONObject.Add('sample_moment', SAMPLE_MOMENTS[FSampleMoment]);
+    JSONObject.Add('sample_time', FSampleTime);
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('observer_id', FObserverId);
+    JSONObject.Add('atmospheric_pressure', FAtmosphericPressure);
+    JSONObject.Add('cloud_cover', FCloudCover);
+    JSONObject.Add('precipitation', PRECIPITATION_VALUES[FPrecipitation]);
+    JSONObject.Add('rainfall', FRainfall);
+    JSONObject.Add('relative_humidity', FRelativeHumidity);
+    JSONObject.Add('temperature', FTemperature);
+    JSONObject.Add('wind_speed_bft', FWindSpeedBft);
+    JSONObject.Add('wind_speed_kmh', FWindSpeedKmH);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TWeatherLog.ToString: String;
+begin
+  Result := Format('WeatherLog(Id=%d, SampleDate=%s, SampleTime=%s, SampleMoment=%s, SurveyId=%d, ObserverId=%d, ' +
+    'AtmosphericPressure=%f, CloudCover=%d, Precipitation=%s, Rainfall=%d, RelativeHumidity=%f, Temperature=%f, ' +
+    'WindSpeedBft=%d, WindSpeedKmH=%f, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, DateToStr(FSampleDate), TimeToStr(FSampleTime), SAMPLE_MOMENTS[FSampleMoment], FSurveyId, FObserverId,
+    FAtmosphericPressure, FCloudCover, PRECIPITATION_VALUES[FPrecipitation], FRainfall, FRelativeHumidity,
+    FTemperature, FWindSpeedBft, FWindSpeedKmH, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TWeatherLog.Validate(out Msg: string): Boolean;
+begin
+  if FSampleDate = NullDate then
+  begin
+    Msg := 'Date required.';
+    Exit(False);
+  end;
+  if FSurveyId = 0 then
+  begin
+    Msg := 'Survey required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TWeatherLogRepository }
+
+procedure TWeatherLogRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TWeatherLog;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TWeatherLog.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TWeatherLog) then
+    raise Exception.Create('Delete: Expected TWeatherLog');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TWeatherLog(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TWeatherLogRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM weather_logs');
-      Add('WHERE (weather_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_WEATHER_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -2551,56 +3488,102 @@ begin
   end;
 end;
 
-function TWeatherLog.Diff(aOld: TWeatherLog; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscAtmosphericPressureH, aOld.AtmosphericPressure, FAtmosphericPressure, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCloudCover, aOld.CloudCover, FCloudCover, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPrecipitation, aOld.Precipitation, FPrecipitation, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscRainfallMm, aOld.Rainfall, FRainfall, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscRelativeHumidity, aOld.RelativeHumidity, FRelativeHumidity, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.SampleTime, FSampleTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMoment, aOld.SampleMoment, FSampleMoment, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTemperatureC, aOld.Temperature, FTemperature, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscWindBft, aOld.WindSpeedBft, FWindSpeedBft, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscWindKmH, aOld.WindSpeedKmH, FWindSpeedKmH, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TWeatherLog.Find(aSurvey: Integer; aDate, aTime: String; aObserver: Integer): Boolean;
+function TWeatherLogRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_WEATHER_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+procedure TWeatherLogRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_WEATHER_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TWeatherLog) then
+    raise Exception.Create('FindBy: Expected TWeatherLog');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'weather_id, ' +
+      'survey_id, ' +
+      'sample_date, ' +
+      'sample_time, ' +
+      'sample_moment, ' +
+      'observer_id, ' +
+      'cloud_cover, ' +
+      'precipitation, ' +
+      'rainfall, ' +
+      'temperature, ' +
+      'wind_speed_bft, ' +
+      'wind_speed_kmh, ' +
+      'relative_humidity, ' +
+      'atmospheric_pressure, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'insert_date, ' +
+      'update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM weather_logs');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TWeatherLog(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TWeatherLogRepository.FindBySurvey(aSurvey: Integer; aDate, aTime: String; aObserver: Integer;
+  E: TWeatherLog);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
-    Add('SELECT weather_id FROM weather_logs');
+    Add('SELECT * FROM weather_logs');
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (date(sample_date) = date(:adate))');
     Add('AND (time(sample_time) = time(:atime))');
@@ -2609,12 +3592,10 @@ begin
     ParamByName('AOBSERVER').AsInteger := aObserver;
     ParamByName('ADATE').AsString := aDate;
     ParamByName('ATIME').AsString := aTime;
-
     Open;
-    Result := RecordCount > 0;
-    if Result = True then
+    if not EOF then
     begin
-      GetData(FieldByName('vegetation_id').AsInteger);
+      Hydrate(Qry, E);
     end;
     Close;
   finally
@@ -2622,14 +3603,16 @@ begin
   end;
 end;
 
-procedure TWeatherLog.GetData(aKey: Integer);
+procedure TWeatherLogRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TWeatherLog) then
+    raise Exception.Create('GetById: Expected TWeatherLog');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'weather_id, ' +
@@ -2655,256 +3638,211 @@ begin
       'marked_status, ' +
       'active_status ' +
       'FROM weather_logs');
-    Add('WHERE weather_id = :anid');
-    ParamByName('ANID').AsInteger := aKey;
+    Add('WHERE weather_id = :cod');
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TWeatherLog(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TWeatherLog.LoadFromDataSet(aDataSet: TDataSet);
+procedure TWeatherLogRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TWeatherLog;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TWeatherLog) then
+    raise Exception.Create('Hydrate: Expected TWeatherLog');
 
+  R := TWeatherLog(E);
   with aDataSet do
   begin
-    FId := FieldByName('weather_id').AsInteger;
-    FSurveyId := FieldByName('survey_id').AsInteger;
-    FAtmosphericPressure := FieldByName('atmospheric_pressure').AsFloat;
-    FCloudCover := FieldByName('cloud_cover').AsInteger;
-    FNotes := FieldByName('notes').AsString;
+    R.Id := FieldByName('weather_id').AsInteger;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.AtmosphericPressure := FieldByName('atmospheric_pressure').AsFloat;
+    R.CloudCover := FieldByName('cloud_cover').AsInteger;
+    R.Notes := FieldByName('notes').AsString;
     case FieldByName('precipitation').AsString of
-      'N': FPrecipitation := wpNone;
-      'F': FPrecipitation := wpFog;
-      'M': FPrecipitation := wpMist;
-      'D': FPrecipitation := wpDrizzle;
-      'R': FPrecipitation := wpRain;
+      'N': R.Precipitation := wpNone;
+      'F': R.Precipitation := wpFog;
+      'M': R.Precipitation := wpMist;
+      'D': R.Precipitation := wpDrizzle;
+      'R': R.Precipitation := wpRain;
     else
-      FPrecipitation := wpEmpty;
+      R.Precipitation := wpEmpty;
     end;
-    FRainfall := FieldByName('rainfall').AsInteger;
-    FRelativeHumidity := FieldByName('relative_humidity').AsFloat;
-    FSampleDate := FieldByName('sample_date').AsDateTime;
+    R.Rainfall := FieldByName('rainfall').AsInteger;
+    R.RelativeHumidity := FieldByName('relative_humidity').AsFloat;
+    R.SampleDate := FieldByName('sample_date').AsDateTime;
     case FieldByName('sample_moment').AsString of
-      'S': FSampleMoment := wmStart;
-      'M': FSampleMoment := wmMiddle;
-      'E': FSampleMoment := wmEnd;
+      'S': R.SampleMoment := wmStart;
+      'M': R.SampleMoment := wmMiddle;
+      'E': R.SampleMoment := wmEnd;
     else
-      FSampleMoment := wmNone;
+      R.SampleMoment := wmNone;
     end;
-    FSampleTime := FieldByName('sample_time').AsDateTime;
-    FTemperature := FieldByName('temperature').AsFloat;
-    FObserverId := FieldByName('observer_id').AsInteger;
-    FWindSpeedBft := FieldByName('wind_speed_bft').AsInteger;
-    FWindSpeedKmH := FieldByName('wind_speed_kmh').AsFloat;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.SampleTime := FieldByName('sample_time').AsDateTime;
+    R.Temperature := FieldByName('temperature').AsFloat;
+    R.ObserverId := FieldByName('observer_id').AsInteger;
+    R.WindSpeedBft := FieldByName('wind_speed_bft').AsInteger;
+    R.WindSpeedKmH := FieldByName('wind_speed_kmh').AsFloat;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TWeatherLog.Insert;
+procedure TWeatherLogRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TWeatherLog;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TWeatherLog) then
+    raise Exception.Create('Insert: Expected TWeatherLog');
+
+  R := TWeatherLog(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO weather_logs (' +
+      'survey_id, ' +
+      'sample_date, ' +
+      'sample_time, ' +
+      'sample_moment, ' +
+      'observer_id, ' +
+      'cloud_cover, ' +
+      'precipitation, ' +
+      'rainfall, ' +
+      'temperature, ' +
+      'wind_speed_bft, ' +
+      'wind_speed_kmh, ' +
+      'relative_humidity, ' +
+      'atmospheric_pressure, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':survey_id, ' +
+      'date(:sample_date), ' +
+      'time(:sample_time), ' +
+      ':sample_moment, ' +
+      ':observer_id, ' +
+      ':cloud_cover, ' +
+      ':precipitation, ' +
+      ':rainfall, ' +
+      ':temperature, ' +
+      ':wind_speed_bft, ' +
+      ':wind_speed_kmh, ' +
+      ':relative_humidity, ' +
+      ':atmospheric_pressure, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO weather_logs (' +
-        'survey_id, ' +
-        'sample_date, ' +
-        'sample_time, ' +
-        'sample_moment, ' +
-        'observer_id, ' +
-        'cloud_cover, ' +
-        'precipitation, ' +
-        'rainfall, ' +
-        'temperature, ' +
-        'wind_speed_bft, ' +
-        'wind_speed_kmh, ' +
-        'relative_humidity, ' +
-        'atmospheric_pressure, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':survey_id, ' +
-        'date(:sample_date), ' +
-        'time(:sample_time), ' +
-        ':sample_moment, ' +
-        ':observer_id, ' +
-        ':cloud_cover, ' +
-        ':precipitation, ' +
-        ':rainfall, ' +
-        ':temperature, ' +
-        ':wind_speed_bft, ' +
-        ':wind_speed_kmh, ' +
-        ':relative_humidity, ' +
-        ':atmospheric_pressure, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      SetTimeParam(ParamByName('sample_time'), FSampleTime);
-      ParamByName('sample_moment').AsString := SAMPLE_MOMENTS[FSampleMoment];
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      ParamByName('cloud_cover').AsInteger := FCloudCover;
-      ParamByName('precipitation').AsString := PRECIPITATION_VALUES[FPrecipitation];
-      ParamByName('rainfall').AsInteger := FRainfall;
-      ParamByName('temperature').AsFloat := FTemperature;
-      ParamByName('wind_speed_bft').AsInteger := FWindSpeedBft;
-      ParamByName('wind_speed_kmh').AsFloat := FWindSpeedKmH;
-      ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
-      SetFloatParam(ParamByName('atmospheric_pressure'), FAtmosphericPressure);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    SetDateParam(ParamByName('sample_date'), R.SampleDate);
+    SetTimeParam(ParamByName('sample_time'), R.SampleTime);
+    ParamByName('sample_moment').AsString := SAMPLE_MOMENTS[R.SampleMoment];
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    ParamByName('cloud_cover').AsInteger := R.CloudCover;
+    ParamByName('precipitation').AsString := PRECIPITATION_VALUES[R.Precipitation];
+    ParamByName('rainfall').AsInteger := R.Rainfall;
+    ParamByName('temperature').AsFloat := R.Temperature;
+    ParamByName('wind_speed_bft').AsInteger := R.WindSpeedBft;
+    ParamByName('wind_speed_kmh').AsFloat := R.WindSpeedKmH;
+    ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
+    SetFloatParam(ParamByName('atmospheric_pressure'), R.AtmosphericPressure);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ExecSQL;
+    ExecSQL;
 
-      // Get the autoincrement key inserted
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TWeatherLog.Save;
+function TWeatherLogRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_WEATHER_LOGS;
 end;
 
-function TWeatherLog.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Date', FSampleDate);
-    JSONObject.Add('Moment', SAMPLE_MOMENTS[FSampleMoment]);
-    JSONObject.Add('Time', FSampleTime);
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Observer', FObserverId);
-    JSONObject.Add('Atmospheric Pressure', FAtmosphericPressure);
-    JSONObject.Add('Cloud Cover', FCloudCover);
-    JSONObject.Add('Precipitation', PRECIPITATION_VALUES[FPrecipitation]);
-    JSONObject.Add('Rainfall', FRainfall);
-    JSONObject.Add('Relative Humidity', FRelativeHumidity);
-    JSONObject.Add('Temperature', FTemperature);
-    JSONObject.Add('Wind Speed (bft)', FWindSpeedBft);
-    JSONObject.Add('Wind Speed (km/h)', FWindSpeedKmH);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TWeatherLog.Update;
+procedure TWeatherLogRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TWeatherLog;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TWeatherLog.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TWeatherLog) then
+    raise Exception.Create('Update: Expected TWeatherLog');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TWeatherLog(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TWeatherLogRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    Database := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE weather_logs SET ' +
+      'survey_id = :survey_id, ' +
+      'sample_date = date(:sample_date), ' +
+      'sample_time = time(:sample_time), ' +
+      'sample_moment = :sample_moment, ' +
+      'observer_id = :observer_id, ' +
+      'cloud_cover = :cloud_cover, ' +
+      'precipitation = :precipitation, ' +
+      'rainfall = :rainfall, ' +
+      'temperature = :temperature, ' +
+      'wind_speed_bft = :wind_speed_bft, ' +
+      'wind_speed_kmh = :wind_speed_kmh, ' +
+      'relative_humidity = :relative_humidity, ' +
+      'atmospheric_pressure = :atmospheric_pressure, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status');
+    Add('WHERE (weather_id = :weather_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE weather_logs SET ' +
-        'survey_id = :survey_id, ' +
-        'sample_date = date(:sample_date), ' +
-        'sample_time = time(:sample_time), ' +
-        'sample_moment = :sample_moment, ' +
-        'observer_id = :observer_id, ' +
-        'cloud_cover = :cloud_cover, ' +
-        'precipitation = :precipitation, ' +
-        'rainfall = :rainfall, ' +
-        'temperature = :temperature, ' +
-        'wind_speed_bft = :wind_speed_bft, ' +
-        'wind_speed_kmh = :wind_speed_kmh, ' +
-        'relative_humidity = :relative_humidity, ' +
-        'atmospheric_pressure = :atmospheric_pressure, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (weather_id = :weather_id)');
-      SetDateParam(ParamByName('sample_date'), FSampleDate);
-      SetTimeParam(ParamByName('sample_time'), FSampleTime);
-      ParamByName('sample_moment').AsString := SAMPLE_MOMENTS[FSampleMoment];
-      SetForeignParam(ParamByName('observer_id'), FObserverId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      ParamByName('cloud_cover').AsInteger := FCloudCover;
-      ParamByName('precipitation').AsString := PRECIPITATION_VALUES[FPrecipitation];
-      ParamByName('rainfall').AsInteger := FRainfall;
-      ParamByName('temperature').AsFloat := FTemperature;
-      ParamByName('wind_speed_bft').AsInteger := FWindSpeedBft;
-      ParamByName('wind_speed_kmh').AsFloat := FWindSpeedKmH;
-      ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
-      SetFloatParam(ParamByName('atmospheric_pressure'), FAtmosphericPressure);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('weather_id').AsInteger := FId;
+    SetDateParam(ParamByName('sample_date'), R.SampleDate);
+    SetTimeParam(ParamByName('sample_time'), R.SampleTime);
+    ParamByName('sample_moment').AsString := SAMPLE_MOMENTS[R.SampleMoment];
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    ParamByName('cloud_cover').AsInteger := R.CloudCover;
+    ParamByName('precipitation').AsString := PRECIPITATION_VALUES[R.Precipitation];
+    ParamByName('rainfall').AsInteger := R.Rainfall;
+    ParamByName('temperature').AsFloat := R.Temperature;
+    ParamByName('wind_speed_bft').AsInteger := R.WindSpeedBft;
+    ParamByName('wind_speed_kmh').AsFloat := R.WindSpeedKmH;
+    ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
+    SetFloatParam(ParamByName('atmospheric_pressure'), R.AtmosphericPressure);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('weather_id').AsInteger := R.Id;
 
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

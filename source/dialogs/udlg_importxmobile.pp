@@ -568,19 +568,23 @@ end;
 
 function TdlgImportXMobile.GetSurveyFromInventory(aInventory: TMobileInventory): Integer;
 var
+  Repo: TSurveyRepository;
   aSurvey: TSurvey;
   aLocality, aMethod: Integer;
 begin
   Result := 0;
 
+  Repo := TSurveyRepository.Create(DMM.sqlCon);
   aSurvey := TSurvey.Create();
   try
     aLocality := GetSiteKey(aInventory.FLocalityName);
     aMethod := GetMethodFromInventory(aInventory);
-    if aSurvey.Find(aLocality, aMethod, aInventory.FStartTime, aInventory.FId) then
+    Repo.FindBySiteAndDate(aLocality, aMethod, aInventory.FStartTime, aInventory.FId, 0, aSurvey);
+    if (aSurvey.Id > 0) then
       Result := aSurvey.Id;
   finally
     aSurvey.Free;
+    Repo.Free;
   end;
 end;
 
@@ -823,6 +827,7 @@ end;
 
 procedure TdlgImportXMobile.ImportInventories;
 var
+  SurveyRepo: TSurveyRepository;
   aSurvey, aOldSurvey: TSurvey;
   aSighting: TSighting;
   p, j, aSurveyKey, aObserverKey: Integer;
@@ -844,6 +849,7 @@ begin
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   try
+    SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
     aSurvey := TSurvey.Create();
     try
       // iterate through inventories list
@@ -861,10 +867,10 @@ begin
             aSurveyKey := Inventory.FSurveyKey;
             aOldSurvey := TSurvey.Create(aSurveyKey);
             try
-              aSurvey.GetData(aSurveyKey);
+              SurveyRepo.GetById(aSurveyKey, aSurvey);
               Inventory.ToSurvey(aSurvey);
               aSurvey.ExpeditionId := FExpeditionId;
-              aSurvey.Update;
+              SurveyRepo.Update(aSurvey);
               // write record history
               lstDiff := TStringList.Create;
               try
@@ -900,7 +906,7 @@ begin
             // create new survey, if not exists
             Inventory.ToSurvey(aSurvey);
             aSurvey.ExpeditionId := FExpeditionId;
-            aSurvey.Insert;
+            SurveyRepo.Insert(aSurvey);
             aSurveyKey := aSurvey.Id;
             Inventory.FSurveyKey := aSurveyKey;
             // write record history
@@ -929,6 +935,7 @@ begin
 
     finally
       FreeAndNil(aSurvey);
+      SurveyRepo.Free;
     end;
 
   except
@@ -1450,27 +1457,32 @@ end;
 
 procedure TdlgImportXMobile.ImportSurveyMember(aSurvey, aObserver: Integer);
 var
+  Repo: TSurveyMemberRepository;
   aSurveyMember: TSurveyMember;
 begin
+  Repo := TSurveyMemberRepository.Create(DMM.sqlCon);
   aSurveyMember := TSurveyMember.Create();
   try
-    if not aSurveyMember.Find(aSurvey, aObserver) then
+    Repo.FindBySurvey(aSurvey, aObserver, aSurveyMember);
+    if (aSurveyMember.Id = 0) then
     begin
       // if survey member does not exist, insert it
       aSurveyMember.SurveyId := aSurvey;
       aSurveyMember.PersonId := aObserver;
       aSurveyMember.Visitor := False;
-      aSurveyMember.Insert;
+      Repo.Insert(aSurveyMember);
       // write record history
       WriteRecHistory(tbSurveyTeams, haCreated, 0, '', '', '', rsInsertedByImport);
     end;
   finally
     aSurveyMember.Free;
+    Repo.Free;
   end;
 end;
 
 procedure TdlgImportXMobile.ImportVegetation(Inventory: TMobileInventory);
 var
+  Repo: TVegetationRepository;
   aVegetation, aOldVegetation: TVegetation;
   Vegetation: TMobileVegetation;
   aDate: TDate;
@@ -1481,6 +1493,7 @@ var
 begin
   if Inventory.FVegetationList.Count > 0 then
   begin
+    Repo := TVegetationRepository.Create(DMM.sqlCon);
     aVegetation := TVegetation.Create();
     try
       // iterate through vegetation list
@@ -1491,13 +1504,14 @@ begin
         aTime := Vegetation.FSampleTime;
         aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
-        if aVegetation.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), Vegetation.FLongitude, Vegetation.FLatitude, aObserverId) then
+        Repo.FindBySurvey(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), Vegetation.FLongitude, Vegetation.FLatitude, aObserverId, aVegetation);
+        if (aVegetation.Id > 0) then
         begin
           // if vegetation exists, update it
           aOldVegetation := TVegetation.Create(aVegetation.Id);
           try
             Vegetation.ToVegetation(aVegetation);
-            aVegetation.Update;
+            Repo.Update(aVegetation);
             // write record history
             lstDiff := TStringList.Create;
             try
@@ -1522,19 +1536,21 @@ begin
           Vegetation.ToVegetation(aVegetation);
           aVegetation.SurveyId := Inventory.FSurveyKey;
           aVegetation.ObserverId := aObserverId;
-          aVegetation.Insert;
+          Repo.Insert(aVegetation);
           // write record history
           WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
       aVegetation.Free;
+      Repo.Free;
     end;
   end;
 end;
 
 procedure TdlgImportXMobile.ImportWeather(Inventory: TMobileInventory);
 var
+  Repo: TWeatherLogRepository;
   aWeather, aOldWeather: TWeatherLog;
   Weather: TMobileWeather;
   aDate: TDate;
@@ -1545,6 +1561,7 @@ var
 begin
   if Inventory.FWeatherList.Count > 0 then
   begin
+    Repo := TWeatherLogRepository.Create(DMM.sqlCon);
     aWeather := TWeatherLog.Create();
     try
       // iterate through weather list
@@ -1555,13 +1572,14 @@ begin
         aTime := Weather.FSampleTime;
         aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
-        if aWeather.Find(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), aObserverId) then
+        Repo.FindBySurvey(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), aObserverId, aWeather);
+        if (aWeather.Id > 0) then
         begin
           // if weather log exists, update it
           aOldWeather := TWeatherLog.Create(aWeather.Id);
           try
             Weather.ToWeatherLog(aWeather);
-            aWeather.Update;
+            Repo.Update(aWeather);
             // write record history
             lstDiff := TStringList.Create;
             try
@@ -1586,13 +1604,14 @@ begin
           Weather.ToWeatherLog(aWeather);
           aWeather.SurveyId := Inventory.FSurveyKey;
           aWeather.ObserverId := aObserverId;
-          aWeather.Insert;
+          Repo.Insert(aWeather);
           // write record history
           WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
       end;
     finally
       aWeather.Free;
+      Repo.Free;
     end;
   end;
 end;
