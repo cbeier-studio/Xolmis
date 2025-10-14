@@ -45,18 +45,16 @@ type
     FAbstract: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TProject; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TProject);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TProject; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TProject): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property Title: String read FTitle write FTitle;
     property ShortTitle: String read FShortTitle write FShortTitle;
@@ -72,6 +70,21 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TProjectRepository }
+
+  TProjectRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 type
 
   { TProjectMember }
@@ -83,23 +96,36 @@ type
     FProjectManager: Boolean;
     FInstitutionId: Integer;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TProjectMember; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TProjectMember);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TProjectMember; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TProjectMember): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property ProjectId: Integer read FProjectId write FProjectId;
     property PersonId: Integer read FPersonId write FPersonId;
     property IsProjectManager: Boolean read FProjectManager write FProjectManager;
     property InstitutionId: Integer read FInstitutionId write FInstitutionId;
+  end;
+
+  { TProjectMemberRepository }
+
+  TProjectMemberRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -112,22 +138,35 @@ type
     FDescription: String;
     FStatus: TGoalStatus;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TProjectGoal; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TProjectGoal);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TProjectGoal; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TProjectGoal): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property ProjectId: Integer read FProjectId write FProjectId;
     property Description: String read FDescription write FDescription;
     property Status: TGoalStatus read FStatus write FStatus;
+  end;
+
+  { TProjectGoalRepository }
+
+  TProjectGoalRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -144,18 +183,16 @@ type
     FGoalId: Integer;
     FStatus: TActivityStatus;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TProjectActivity; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TProjectActivity);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TProjectActivity; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TProjectActivity): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property ProjectId: Integer read FProjectId write FProjectId;
     property Description: String read FDescription write FDescription;
@@ -164,6 +201,21 @@ type
     property EndDate: TDate read FEndDate write FEndDate;
     property GoalId: Integer read FGoalId write FGoalId;
     property Status: TActivityStatus read FStatus write FStatus;
+  end;
+
+  { TProjectActivityRepository }
+
+  TProjectActivityRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
   { TProjectRubric }
@@ -176,24 +228,37 @@ type
     FItemName: String;
     FAmount: Double;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TProjectRubric; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TProjectRubric);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TProjectRubric; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TProjectRubric): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property ProjectId: Integer read FProjectId write FProjectId;
     property FundingSource: String read FFundingSource write FFundingSource;
     property Rubric: String read FRubric write FRubric;
     property ItemName: String read FItemName write FItemName;
     property Amount: Double read FAmount write FAmount;
+  end;
+
+  { TProjectRubricRepository }
+
+  TProjectRubricRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
   { TProjectExpense }
@@ -206,24 +271,37 @@ type
     FExpenseDate: TDate;
     FAmount: Double;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    function Diff(aOld: TProjectExpense; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TProjectExpense);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TProjectExpense; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TProjectExpense): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property ProjectId: Integer read FProjectId write FProjectId;
     property BudgetId: Integer read FBudgetId write FBudgetId;
     property Description: String read FDescription write FDescription;
     property ExpenseDate: TDate read FExpenseDate write FExpenseDate;
     property Amount: Double read FAmount write FAmount;
+  end;
+
+  { TProjectExpenseRepository }
+
+  TProjectExpenseRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 var
@@ -236,7 +314,8 @@ var
 implementation
 
 uses
-  utils_locale, models_users, utils_global, utils_validations, data_columns, data_setparam;
+  utils_locale, models_users, utils_global, utils_validations,
+  data_columns, data_setparam, data_consts, data_getvalue;
 
 procedure InitProjectActivityPropsDict;
 begin
@@ -257,99 +336,31 @@ end;
 
 { TProject }
 
-function TProject.Diff(aOld: TProject; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscTitle, aOld.Title, FTitle, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscShortTitle, aOld.ShortTitle, FShortTitle, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscStartDate, aOld.StartDate, FStartDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscWebsite, aOld.WebsiteUri, FWebsiteUri, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEmail, aOld.EmailAddress, FEmailAddress, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscContactPerson, aOld.ContactName, FContactName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProtocolNr, aOld.ProtocolNumber, FProtocolNumber, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMainGoal, aOld.MainGoal, FMainGoal, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscRisks, aOld.Risks, FRisks, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAbstract, aOld.ProjectAbstract, FAbstract, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TProject.Find(const FieldName: String; const Value: Variant): Boolean;
-var
-  Qry: TSQLQuery;
-begin
-  Result := False;
-
-  Qry := TSQLQuery.Create(nil);
-  with Qry, SQL do
-  try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
-    MacroCheck := True;
-
-    Add('SELECT ' +
-      'project_id, ' +
-      'project_title, ' +
-      'short_title, ' +
-      'start_date, ' +
-      'end_date, ' +
-      'website_uri, ' +
-      'email_addr, ' +
-      'contact_name, ' +
-      'project_file, ' +
-      'contract_file, ' +
-      'project_abstract, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM projects');
-    Add('WHERE %afield = :avalue');
-    MacroByName('afield').Value := FieldName;
-    ParamByName('avalue').Value := Value;
-    Open;
-
-    if not EOF then
-    begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
-    end;
-
-    Close;
-  finally
-    Qry.Free;
-  end;
-end;
-
 constructor TProject.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TProject.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TProject then
+  begin
+    FTitle := TProject(Source).Title;
+    FShortTitle := TProject(Source).ShortTitle;
+    FStartDate := TProject(Source).StartDate;
+    FEndDate := TProject(Source).EndDate;
+    FWebsiteUri := TProject(Source).WebsiteUri;
+    FEmailAddress := TProject(Source).EmailAddress;
+    FContactName := TProject(Source).ContactName;
+    FProtocolNumber := TProject(Source).ProtocolNumber;
+    FMainGoal := TProject(Source).MainGoal;
+    FRisks := TProject(Source).Risks;
+    FAbstract := TProject(Source).ProjectAbstract;
+    FNotes := TProject(Source).Notes;
+  end;
 end;
 
 procedure TProject.Clear;
@@ -369,49 +380,161 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TProject.Copy(aFrom: TProject);
+function TProject.Clone: TXolmisRecord;
 begin
-  FTitle := aFrom.Title;
-  FShortTitle := aFrom.ShortTitle;
-  FStartDate := aFrom.StartDate;
-  FEndDate := aFrom.EndDate;
-  FWebsiteUri := aFrom.WebsiteUri;
-  FEmailAddress := aFrom.EmailAddress;
-  FContactName := aFrom.ContactName;
-  FProtocolNumber := aFrom.ProtocolNumber;
-  FMainGoal := aFrom.MainGoal;
-  FRisks := aFrom.Risks;
-  FAbstract := aFrom.ProjectAbstract;
-  FNotes := aFrom.Notes;
+  Result := TProject(inherited Clone);
 end;
 
-procedure TProject.Delete;
+function TProject.Diff(const aOld: TProject; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscTitle, aOld.Title, FTitle, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscShortTitle, aOld.ShortTitle, FShortTitle, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStartDate, aOld.StartDate, FStartDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscWebsite, aOld.WebsiteUri, FWebsiteUri, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEmail, aOld.EmailAddress, FEmailAddress, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscContactPerson, aOld.ContactName, FContactName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProtocolNr, aOld.ProtocolNumber, FProtocolNumber, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMainGoal, aOld.MainGoal, FMainGoal, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRisks, aOld.Risks, FRisks, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAbstract, aOld.ProjectAbstract, FAbstract, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TProject.EqualsTo(const Other: TProject): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TProject.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FTitle          := Obj.Get('title', '');
+    FShortTitle     := Obj.Get('short_title', '');
+    FStartDate      := Obj.Get('start_date', NullDate);
+    FEndDate        := Obj.Get('end_date', NullDate);
+    FWebsiteUri     := Obj.Get('website', '');
+    FEmailAddress   := Obj.Get('email', '');
+    FContactName    := Obj.Get('contact', '');
+    FProtocolNumber := Obj.Get('protocol_number', '');
+    FMainGoal       := Obj.Get('main_goal', '');
+    FRisks          := Obj.Get('risks', '');
+    FAbstract       := Obj.Get('abstract', '');
+    FNotes          := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TProject.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('title', FTitle);
+    JSONObject.Add('short_title', FShortTitle);
+    JSONObject.Add('start_date', FStartDate);
+    JSONObject.Add('end_date', FEndDate);
+    JSONObject.Add('website', FWebsiteUri);
+    JSONObject.Add('email', FEmailAddress);
+    JSONObject.Add('contact', FContactName);
+    JSONObject.Add('protocol_number', FProtocolNumber);
+    JSONObject.Add('main_goal', FMainGoal);
+    JSONObject.Add('risks', FRisks);
+    JSONObject.Add('abstract', FAbstract);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TProject.ToString: String;
+begin
+  Result := Format('Project(Id=%d, Title=%s, ShortTitle=%s, StartDate=%s, EndDate=%s, WebsiteUri=%s, ' +
+    'EmailAddress=%s, ContactName=%s, ProtocolNumber=%s, MainGoal=%s, Risks=%s, Abstract=%s, Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FTitle, FShortTitle, DateToStr(FStartDate), DateToStr(FEndDate), FWebsiteUri, FEmailAddress,
+    FContactName, FProtocolNumber, FMainGoal, FRisks, FAbstract, FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TProject.Validate(out Msg: string): Boolean;
+begin
+  if FTitle = EmptyStr then
+  begin
+    Msg := 'Title required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TProjectRepository }
+
+procedure TProjectRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProject;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProject.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TProject) then
+    raise Exception.Create('Delete: Expected TProject');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProject(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM projects');
-      Add('WHERE (project_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_PROJECT_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -419,14 +542,100 @@ begin
   end;
 end;
 
-procedure TProject.GetData(aKey: Integer);
+function TProjectRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_PROJECT_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TProjectRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_PROJECT_ID, COL_PROJECT_TITLE, COL_SHORT_TITLE); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TProject) then
+    raise Exception.Create('FindBy: Expected TProject');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT ' +
+      'project_id, ' +
+      'project_title, ' +
+      'short_title, ' +
+      'start_date, ' +
+      'end_date, ' +
+      'website_uri, ' +
+      'email_addr, ' +
+      'contact_name, ' +
+      'protocol_number, ' +
+      'main_goal, ' +
+      'risks, ' +
+      'project_abstract, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM projects');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TProject(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TProjectRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TProject) then
+    raise Exception.Create('GetById: Expected TProject');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT ' +
       'project_id, ' +
@@ -451,231 +660,186 @@ begin
       'active_status ' +
       'FROM projects');
     Add('WHERE project_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TProject(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProject.LoadFromDataSet(aDataSet: TDataSet);
+procedure TProjectRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TProject;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TProject) then
+    raise Exception.Create('Hydrate: Expected TProject');
 
+  R := TProject(E);
   with aDataSet do
   begin
-    FId := FieldByName('project_id').AsInteger;
-    FTitle := FieldByName('project_title').AsString;
+    R.Id := FieldByName('project_id').AsInteger;
+    R.Title := FieldByName('project_title').AsString;
     if (FieldByName('start_date').IsNull) then
-      FStartDate := NullDate
+      R.StartDate := NullDate
     else
-      FStartDate := FieldByName('start_date').AsDateTime;
+      R.StartDate := FieldByName('start_date').AsDateTime;
     if (FieldByName('end_date').IsNull) then
-      FEndDate := NullDate
+      R.EndDate := NullDate
     else
-      FEndDate := FieldByName('end_date').AsDateTime;
-    FShortTitle := FieldByName('short_title').AsString;
-    FWebsiteUri := FieldByName('website_uri').AsString;
-    FEmailAddress := FieldByName('email_addr').AsString;
-    FContactName := FieldByName('contact_name').AsString;
-    FProtocolNumber := FieldByName('protocol_number').AsString;
-    FMainGoal := FieldByName('main_goal').AsString;
-    FRisks := FieldByName('risks').AsString;
-    FNotes := FieldByName('notes').AsString;
-    FAbstract := FieldByName('project_abstract').AsString;
+      R.EndDate := FieldByName('end_date').AsDateTime;
+    R.ShortTitle := FieldByName('short_title').AsString;
+    R.WebsiteUri := FieldByName('website_uri').AsString;
+    R.EmailAddress := FieldByName('email_addr').AsString;
+    R.ContactName := FieldByName('contact_name').AsString;
+    R.ProtocolNumber := FieldByName('protocol_number').AsString;
+    R.MainGoal := FieldByName('main_goal').AsString;
+    R.Risks := FieldByName('risks').AsString;
+    R.Notes := FieldByName('notes').AsString;
+    R.ProjectAbstract := FieldByName('project_abstract').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TProject.Insert;
+procedure TProjectRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProject;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProject) then
+    raise Exception.Create('Insert: Expected TProject');
+
+  R := TProject(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO projects (' +
+      'project_title, ' +
+      'short_title, ' +
+      'start_date, ' +
+      'end_date, ' +
+      'website_uri, ' +
+      'email_addr, ' +
+      'contact_name, ' +
+      'protocol_number, ' +
+      'main_goal, ' +
+      'risks, ' +
+      'project_abstract, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':project_title, ' +
+      ':short_title, ' +
+      'date(:start_date), ' +
+      'date(:end_date), ' +
+      ':website_uri, ' +
+      ':email_addr, ' +
+      ':contact_name, ' +
+      ':protocol_number, ' +
+      ':main_goal, ' +
+      ':risks, ' +
+      ':project_abstract, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO projects (' +
-        'project_title, ' +
-        'short_title, ' +
-        'start_date, ' +
-        'end_date, ' +
-        'website_uri, ' +
-        'email_addr, ' +
-        'contact_name, ' +
-        'protocol_number, ' +
-        'main_goal, ' +
-        'risks, ' +
-        'project_abstract, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':project_title, ' +
-        ':short_title, ' +
-        'date(:start_date), ' +
-        'date(:end_date), ' +
-        ':website_uri, ' +
-        ':email_addr, ' +
-        ':contact_name, ' +
-        ':protocol_number, ' +
-        ':main_goal, ' +
-        ':risks, ' +
-        ':project_abstract, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('project_title').AsString := R.Title;
+    ParamByName('short_title').AsString := R.ShortTitle;
+    SetDateParam(ParamByName('start_date'), R.StartDate);
+    SetDateParam(ParamByName('end_date'), R.EndDate);
+    SetStrParam(ParamByName('website_uri'), R.WebsiteUri);
+    SetStrParam(ParamByName('email_addr'), R.EmailAddress);
+    SetStrParam(ParamByName('contact_name'), R.ContactName);
+    SetStrParam(ParamByName('protocol_number'), R.ProtocolNumber);
+    SetStrParam(ParamByName('main_goal'), R.MainGoal);
+    SetStrParam(ParamByName('risks'), R.Risks);
+    SetStrParam(ParamByName('project_abstract'), R.ProjectAbstract);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('project_title').AsString := FTitle;
-      ParamByName('short_title').AsString := FShortTitle;
-      SetDateParam(ParamByName('start_date'), FStartDate);
-      SetDateParam(ParamByName('end_date'), FEndDate);
-      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
-      SetStrParam(ParamByName('email_addr'), FEmailAddress);
-      SetStrParam(ParamByName('contact_name'), FContactName);
-      SetStrParam(ParamByName('protocol_number'), FProtocolNumber);
-      SetStrParam(ParamByName('main_goal'), FMainGoal);
-      SetStrParam(ParamByName('risks'), FRisks);
-      SetStrParam(ParamByName('project_abstract'), FAbstract);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProject.Save;
+function TProjectRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_PROJECTS;
 end;
 
-function TProject.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Title', FTitle);
-    JSONObject.Add('Short title', FShortTitle);
-    JSONObject.Add('Start date', FStartDate);
-    JSONObject.Add('End date', FEndDate);
-    JSONObject.Add('Website', FWebsiteUri);
-    JSONObject.Add('E-mail', FEmailAddress);
-    JSONObject.Add('Contact', FContactName);
-    JSONObject.Add('Protocol number', FProtocolNumber);
-    JSONObject.Add('Main goal', FMainGoal);
-    JSONObject.Add('Risks', FRisks);
-    JSONObject.Add('Abstract', FAbstract);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TProject.Update;
+procedure TProjectRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProject;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProject.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TProject) then
+    raise Exception.Create('Update: Expected TProject');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProject(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE projects SET ' +
+      'project_title = :project_title, ' +
+      'short_title = :short_title, ' +
+      'start_date = date(:start_date), ' +
+      'end_date = date(:end_date), ' +
+      'website_uri = :website_uri, ' +
+      'email_addr = :email_addr, ' +
+      'contact_name = :contact_name, ' +
+      'protocol_number = :protocol_number, ' +
+      'main_goal = :main_goal, ' +
+      'risks = :risks, ' +
+      'project_abstract = :project_abstract, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (project_id = :project_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE projects SET ' +
-        'project_title = :project_title, ' +
-        'short_title = :short_title, ' +
-        'start_date = date(:start_date), ' +
-        'end_date = date(:end_date), ' +
-        'website_uri = :website_uri, ' +
-        'email_addr = :email_addr, ' +
-        'contact_name = :contact_name, ' +
-        'protocol_number = :protocol_number, ' +
-        'main_goal = :main_goal, ' +
-        'risks = :risks, ' +
-        'project_abstract = :project_abstract, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (project_id = :project_id)');
+    ParamByName('project_title').AsString := R.Title;
+    ParamByName('short_title').AsString := R.ShortTitle;
+    SetDateParam(ParamByName('start_date'), R.StartDate);
+    SetDateParam(ParamByName('end_date'), R.EndDate);
+    SetStrParam(ParamByName('website_uri'), R.WebsiteUri);
+    SetStrParam(ParamByName('email_addr'), R.EmailAddress);
+    SetStrParam(ParamByName('contact_name'), R.ContactName);
+    SetStrParam(ParamByName('protocol_number'), R.ProtocolNumber);
+    SetStrParam(ParamByName('main_goal'), R.MainGoal);
+    SetStrParam(ParamByName('risks'), R.Risks);
+    SetStrParam(ParamByName('project_abstract'), R.ProjectAbstract);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('project_id').AsInteger := R.Id;
 
-      ParamByName('project_title').AsString := FTitle;
-      ParamByName('short_title').AsString := FShortTitle;
-      SetDateParam(ParamByName('start_date'), FStartDate);
-      SetDateParam(ParamByName('end_date'), FEndDate);
-      SetStrParam(ParamByName('website_uri'), FWebsiteUri);
-      SetStrParam(ParamByName('email_addr'), FEmailAddress);
-      SetStrParam(ParamByName('contact_name'), FContactName);
-      SetStrParam(ParamByName('protocol_number'), FProtocolNumber);
-      SetStrParam(ParamByName('main_goal'), FMainGoal);
-      SetStrParam(ParamByName('risks'), FRisks);
-      SetStrParam(ParamByName('project_abstract'), FAbstract);
-      SetStrParam(ParamByName('notes'), FNotes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('project_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -683,32 +847,202 @@ end;
 
 { TProjectMember }
 
-function TProjectMember.Diff(aOld: TProjectMember; var aList: TStrings): Boolean;
+constructor TProjectMember.Create(aValue: Integer);
+begin
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TProjectMember.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TProjectMember then
+  begin
+    FProjectId := TProjectMember(Source).ProjectId;
+    FPersonId := TProjectMember(Source).PersonId;
+    FProjectManager := TProjectMember(Source).IsProjectManager;
+    FInstitutionId := TProjectMember(Source).InstitutionId;
+  end;
+end;
+
+procedure TProjectMember.Clear;
+begin
+  inherited Clear;
+  FProjectId := 0;
+  FPersonId := 0;
+  FProjectManager := False;
+  FInstitutionId := 0;
+end;
+
+function TProjectMember.Clone: TXolmisRecord;
+begin
+  Result := TProjectMember(inherited Clone);
+end;
+
+function TProjectMember.Diff(const aOld: TProjectMember; var Changes: TStrings): Boolean;
 var
   R: String;
 begin
   Result := False;
   R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
 
   if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
-    aList.Add(R);
+    Changes.Add(R);
   if FieldValuesDiff(rscManager, aOld.IsProjectManager, FProjectManager, R) then
-    aList.Add(R);
+    Changes.Add(R);
 
-  Result := aList.Count > 0;
+  Result := Changes.Count > 0;
 end;
 
-function TProjectMember.Find(const FieldName: String; const Value: Variant): Boolean;
+function TProjectMember.EqualsTo(const Other: TProjectMember): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TProjectMember.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FProjectId      := Obj.Get('project_id', 0);
+    FPersonId       := Obj.Get('person_id', 0);
+    FProjectManager := Obj.Get('project_manager', False);
+    FInstitutionId  := Obj.Get('institution_id', 0);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TProjectMember.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('person_id', FPersonId);
+    JSONObject.Add('project_manager', FProjectManager);
+    JSONObject.Add('institution_id', FInstitutionId);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TProjectMember.ToString: String;
+begin
+  Result := Format('ProjectMember(Id=%d, ProjectId=%d, PersonId=%d, ProjectManager=%s, InstitutionId=%d, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FProjectId, FPersonId, BoolToStr(FProjectManager, 'True', 'False'), FInstitutionId,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TProjectMember.Validate(out Msg: string): Boolean;
+begin
+  if FProjectId = 0 then
+  begin
+    Msg := 'Project required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TProjectMemberRepository }
+
+procedure TProjectMemberRepository.Delete(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TProjectMember;
+begin
+  if not (E is TProjectMember) then
+    raise Exception.Create('Delete: Expected TProjectMember');
+
+  R := TProjectMember(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectMemberRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_PROJECT_MEMBER_ID;
+      ParamByName('aid').AsInteger := R.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TProjectMemberRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_PROJECT_MEMBER_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TProjectMemberRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_PROJECT_MEMBER_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TProjectMember) then
+    raise Exception.Create('FindBy: Expected TProjectMember');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -716,6 +1050,7 @@ begin
       'project_id, ' +
       'person_id, ' +
       'project_manager, ' +
+      'institution_id, ' +
       'user_inserted, ' +
       'user_updated, ' +
       'datetime(insert_date, ''localtime'') AS insert_date, ' +
@@ -731,9 +1066,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TProjectMember(E));
     end;
 
     Close;
@@ -742,73 +1075,16 @@ begin
   end;
 end;
 
-constructor TProjectMember.Create(aValue: Integer);
-begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
-end;
-
-procedure TProjectMember.Clear;
-begin
-  inherited Clear;
-  FProjectId := 0;
-  FPersonId := 0;
-  FProjectManager := False;
-  FInstitutionId := 0;
-end;
-
-procedure TProjectMember.Copy(aFrom: TProjectMember);
-begin
-  FProjectId := aFrom.ProjectId;
-  FPersonId := aFrom.PersonId;
-  FProjectManager := aFrom.IsProjectManager;
-  FInstitutionId := aFrom.InstitutionId;
-end;
-
-procedure TProjectMember.Delete;
+procedure TProjectMemberRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectMember.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectMember) then
+    raise Exception.Create('GetById: Expected TProjectMember');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
-      Clear;
-      Add('DELETE FROM project_team');
-      Add('WHERE (project_member_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TProjectMember.GetData(aKey: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'project_member_id, ' +
@@ -825,169 +1101,132 @@ begin
       'active_status ' +
       'FROM project_team');
     Add('WHERE project_member_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TProjectMember(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectMember.LoadFromDataSet(aDataSet: TDataSet);
+procedure TProjectMemberRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
 var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+  R: TProjectMember;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TProjectMember) then
+    raise Exception.Create('Hydrate: Expected TProjectMember');
 
+  R := TProjectMember(E);
   with aDataSet do
   begin
-    FId := FieldByName('project_member_id').AsInteger;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FPersonId := FieldByName('person_id').AsInteger;
-    FProjectManager := FieldByName('project_manager').AsBoolean;
-    FInstitutionId := FieldByName('institution_id').AsInteger;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
+    R.Id := FieldByName('project_member_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.PersonId := FieldByName('person_id').AsInteger;
+    R.IsProjectManager := FieldByName('project_manager').AsBoolean;
+    R.InstitutionId := FieldByName('institution_id').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
 end;
 
-procedure TProjectMember.Insert;
+procedure TProjectMemberRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectMember;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectMember) then
+    raise Exception.Create('Insert: Expected TProjectMember');
+
+  R := TProjectMember(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO project_team (' +
+      'project_id, ' +
+      'person_id, ' +
+      'project_manager, ' +
+      'institution_id, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':project_id, ' +
+      ':person_id, ' +
+      ':project_manager, ' +
+      ':institution_id, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO project_team (' +
-        'project_id, ' +
-        'person_id, ' +
-        'project_manager, ' +
-        'institution_id, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':project_id, ' +
-        ':person_id, ' +
-        ':project_manager, ' +
-        ':institution_id, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    ParamByName('person_id').AsInteger := R.PersonId;
+    ParamByName('project_manager').AsBoolean := R.IsProjectManager;
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('person_id').AsInteger := FPersonId;
-      ParamByName('project_manager').AsBoolean := FProjectManager;
-      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectMember.Save;
+function TProjectMemberRepository.TableName: string;
 begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
+  Result := TBL_PROJECT_TEAM;
 end;
 
-function TProjectMember.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Project', FProjectId);
-    JSONObject.Add('Person', FPersonId);
-    JSONObject.Add('Is project manager', FProjectManager);
-    JSONObject.Add('Institution', FInstitutionId);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TProjectMember.Update;
+procedure TProjectMemberRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectMember;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectMember.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectMember) then
+    raise Exception.Create('Update: Expected TProjectMember');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectMember(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectMemberRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE project_team SET ' +
+      'project_id = :project_id, ' +
+      'person_id = :person_id, ' +
+      'project_manager = :project_manager, ' +
+      'institution_id = :institution_id, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (project_member_id = :project_member_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE project_team SET ' +
-        'project_id = :project_id, ' +
-        'person_id = :person_id, ' +
-        'project_manager = :project_manager, ' +
-        'institution_id = :institution_id, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (project_member_id = :project_member_id)');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    ParamByName('person_id').AsInteger := R.PersonId;
+    ParamByName('project_manager').AsBoolean := R.IsProjectManager;
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('project_member_id').AsInteger := R.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('person_id').AsInteger := FPersonId;
-      ParamByName('project_manager').AsBoolean := FProjectManager;
-      SetForeignParam(ParamByName('institution_id'), FInstitutionId);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('project_member_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -997,10 +1236,20 @@ end;
 
 constructor TProjectGoal.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TProjectGoal.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TProjectGoal then
+  begin
+    FProjectId := TProjectGoal(Source).ProjectId;
+    FDescription := TProjectGoal(Source).Description;
+    FStatus := TProjectGoal(Source).Status;
+  end;
 end;
 
 procedure TProjectGoal.Clear;
@@ -1011,40 +1260,125 @@ begin
   FStatus := gstPending;
 end;
 
-procedure TProjectGoal.Copy(aFrom: TProjectGoal);
+function TProjectGoal.Clone: TXolmisRecord;
 begin
-  FProjectId := aFrom.ProjectId;
-  FDescription := aFrom.Description;
-  FStatus := aFrom.Status;
+  Result := TProjectGoal(inherited Clone);
 end;
 
-procedure TProjectGoal.Delete;
+function TProjectGoal.Diff(const aOld: TProjectGoal; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStatus, aOld.Status, FStatus, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TProjectGoal.EqualsTo(const Other: TProjectGoal): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TProjectGoal.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FProjectId    := Obj.Get('project_id', 0);
+    FDescription  := Obj.Get('description', '');
+    case Obj.Get('status', '') of
+      'P': FStatus := gstPending;
+      'R': FStatus := gstReached;
+      'C': FStatus := gstCanceled;
+    end;
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TProjectGoal.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('status', GOAL_STATUSES[FStatus]);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TProjectGoal.ToString: String;
+begin
+  Result := Format('ProjectGoal(Id=%d, ProjectId=%d, Description=%s, Status=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FProjectId, FDescription, GOAL_STATUSES[FStatus],
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TProjectGoal.Validate(out Msg: string): Boolean;
+begin
+  if FProjectId = 0 then
+  begin
+    Msg := 'Project required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TProjectGoalRepository }
+
+procedure TProjectGoalRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectGoal;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectGoal.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectGoal) then
+    raise Exception.Create('Delete: Expected TProjectGoal');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectGoal(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectGoalRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM project_goals');
-      Add('WHERE (goal_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_GOAL_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -1052,32 +1386,50 @@ begin
   end;
 end;
 
-function TProjectGoal.Diff(aOld: TProjectGoal; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscStatus, aOld.Status, FStatus, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TProjectGoal.Find(const FieldName: String; const Value: Variant): Boolean;
+function TProjectGoalRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_GOAL_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TProjectGoalRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_GOAL_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TProjectGoal) then
+    raise Exception.Create('FindBy: Expected TProjectGoal');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -1100,9 +1452,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TProjectGoal(E));
     end;
 
     Close;
@@ -1111,14 +1461,16 @@ begin
   end;
 end;
 
-procedure TProjectGoal.GetData(aKey: Integer);
+procedure TProjectGoalRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectGoal) then
+    raise Exception.Create('GetById: Expected TProjectGoal');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'goal_id, ' +
@@ -1134,174 +1486,138 @@ begin
       'active_status ' +
       'FROM project_goals');
     Add('WHERE goal_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TProjectGoal(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectGoal.Insert;
+procedure TProjectGoalRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TProjectGoal;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TProjectGoal) then
+    raise Exception.Create('Hydrate: Expected TProjectGoal');
+
+  R := TProjectGoal(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('goal_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.Description := FieldByName('goal_description').AsString;
+    case FieldByName('goal_status').AsString of
+      'P': R.Status := gstPending;
+      'R': R.Status := gstReached;
+      'C': R.Status := gstCanceled;
+    end;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TProjectGoalRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectGoal;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectGoal) then
+    raise Exception.Create('Insert: Expected TProjectGoal');
+
+  R := TProjectGoal(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO project_goals (' +
+      'project_id, ' +
+      'goal_description, ' +
+      'goal_status, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':project_id, ' +
+      ':goal_description, ' +
+      ':goal_status, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO project_goals (' +
-        'project_id, ' +
-        'goal_description, ' +
-        'goal_status, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':project_id, ' +
-        ':goal_description, ' +
-        ':goal_status, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    ParamByName('goal_description').AsString := R.Description;
+    case R.Status of
+      gstPending:   ParamByName('goal_status').AsString := 'P';
+      gstReached:   ParamByName('goal_status').AsString := 'R';
+      gstCanceled:  ParamByName('goal_status').AsString := 'C';
+    end;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('goal_description').AsString := FDescription;
-      case FStatus of
-        gstPending:   ParamByName('goal_status').AsString := 'P';
-        gstReached:   ParamByName('goal_status').AsString := 'R';
-        gstCanceled:  ParamByName('goal_status').AsString := 'C';
-      end;
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectGoal.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+function TProjectGoalRepository.TableName: string;
 begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('goal_id').AsInteger;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FDescription := FieldByName('goal_description').AsString;
-    case FieldByName('goal_status').AsString of
-      'P': FStatus := gstPending;
-      'R': FStatus := gstReached;
-      'C': FStatus := gstCanceled;
-    end;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
+  Result := TBL_PROJECT_GOALS;
 end;
 
-procedure TProjectGoal.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TProjectGoal.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Project', FProjectId);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Status', GOAL_STATUSES[FStatus]);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TProjectGoal.Update;
+procedure TProjectGoalRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectGoal;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectGoal.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectGoal) then
+    raise Exception.Create('Update: Expected TProjectGoal');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectGoal(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectGoalRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE project_goals SET ' +
+      'project_id = :project_id, ' +
+      'goal_description = :goal_description, ' +
+      'goal_status = :goal_status, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (goal_id = :goal_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE project_goals SET ' +
-        'project_id = :project_id, ' +
-        'goal_description = :goal_description, ' +
-        'goal_status = :goal_status, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (goal_id = :goal_id)');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    ParamByName('goal_description').AsString := R.Description;
+    case R.Status of
+      gstPending:   ParamByName('goal_status').AsString := 'P';
+      gstReached:   ParamByName('goal_status').AsString := 'R';
+      gstCanceled:  ParamByName('goal_status').AsString := 'C';
+    end;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('goal_id').AsInteger := R.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      ParamByName('goal_description').AsString := FDescription;
-      case FStatus of
-        gstPending:   ParamByName('goal_status').AsString := 'P';
-        gstReached:   ParamByName('goal_status').AsString := 'R';
-        gstCanceled:  ParamByName('goal_status').AsString := 'C';
-      end;
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('goal_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1311,10 +1627,24 @@ end;
 
 constructor TProjectActivity.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TProjectActivity.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TProjectActivity then
+  begin
+    FProjectId := TProjectActivity(Source).ProjectId;
+    FDescription := TProjectActivity(Source).Description;
+    FStartDate := TProjectActivity(Source).StartDate;
+    FTargetDate := TProjectActivity(Source).TargetDate;
+    FEndDate := TProjectActivity(Source).EndDate;
+    FGoalId := TProjectActivity(Source).GoalId;
+    FStatus := TProjectActivity(Source).Status;
+  end;
 end;
 
 procedure TProjectActivity.Clear;
@@ -1329,52 +1659,12 @@ begin
   FStatus := astToDo;
 end;
 
-procedure TProjectActivity.Copy(aFrom: TProjectActivity);
+function TProjectActivity.Clone: TXolmisRecord;
 begin
-  FProjectId := aFrom.ProjectId;
-  FDescription := aFrom.Description;
-  FStartDate := aFrom.StartDate;
-  FTargetDate := aFrom.TargetDate;
-  FEndDate := aFrom.EndDate;
-  FGoalId := aFrom.GoalId;
-  FStatus := aFrom.Status;
+  Result := TProjectActivity(inherited Clone);
 end;
 
-procedure TProjectActivity.Delete;
-var
-  Qry: TSQLQuery;
-begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectActivity.Delete: %s.', [rsErrorEmptyId]);
-
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
-    try
-      Clear;
-      Add('DELETE FROM project_chronograms');
-      Add('WHERE (chronogram_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-      DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-function TProjectActivity.Diff(aOld: TProjectActivity; var aList: TStrings): Boolean;
+function TProjectActivity.Diff(const aOld: TProjectActivity; var Changes: TStrings): Boolean;
 var
   PropList: PPropList;
   PropCount, I: Integer;
@@ -1382,6 +1672,10 @@ var
   OldValue, NewValue, FriendlyName: string;
 begin
   Result := False;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
 
   InitProjectActivityPropsDict;
 
@@ -1396,7 +1690,7 @@ begin
       begin
         if not ProjectActivityPropsDict.TryGetData(PropInfo^.Name, FriendlyName) then
           FriendlyName := PropInfo^.Name;
-        aList.Add(Format('%s;%s;%s', [FriendlyName, OldValue, NewValue]));
+        Changes.Add(Format('%s;%s;%s', [FriendlyName, OldValue, NewValue]));
         Result := True;
       end;
     end;
@@ -1407,17 +1701,166 @@ begin
   end;
 end;
 
-function TProjectActivity.Find(const FieldName: String; const Value: Variant): Boolean;
+function TProjectActivity.EqualsTo(const Other: TProjectActivity): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TProjectActivity.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FProjectId    := Obj.Get('project_id', 0);
+    FDescription  := Obj.Get('description', '');
+    FStartDate    := Obj.Get('start_date', NullDate);
+    FTargetDate   := Obj.Get('target_date', NullDate);
+    FEndDate      := Obj.Get('end_date', NullDate);
+    FGoalId       := Obj.Get('goal_id', 0);
+    case Obj.Get('status', '') of
+      'T': FStatus := astToDo;
+      'P': FStatus := astInProgress;
+      'F': FStatus := astDone;
+      'C': FStatus := astCanceled;
+      'D': FStatus := astDelayed;
+      'R': FStatus := astNeedsReview;
+      'B': FStatus := astBlocked;
+    end;
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TProjectActivity.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('start_date', FStartDate);
+    JSONObject.Add('target_date', FTargetDate);
+    JSONObject.Add('end_date', FEndDate);
+    JSONObject.Add('goal_id', FGoalId);
+    JSONObject.Add('status', ACTIVITY_STATUSES[FStatus]);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TProjectActivity.ToString: String;
+begin
+  Result := Format('ProjectActivity(Id=%d, ProjectId=%d, Description=%s, StartDate=%s, TargetDate=%s, EndDate=%s, ' +
+    'GoalId=%d, Status=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FProjectId, FDescription, DateToStr(FStartDate), DateToStr(FTargetDate), DateToStr(FEndDate),
+    FGoalId, ACTIVITY_STATUSES[FStatus],
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TProjectActivity.Validate(out Msg: string): Boolean;
+begin
+  if FProjectId = 0 then
+  begin
+    Msg := 'Project required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TProjectActivityRepository }
+
+procedure TProjectActivityRepository.Delete(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TProjectActivity;
+begin
+  if not (E is TProjectActivity) then
+    raise Exception.Create('Delete: Expected TProjectActivity');
+
+  R := TProjectActivity(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectActivityRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_CHRONOGRAM_ID;
+      ParamByName('aid').AsInteger := R.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TProjectActivityRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_CHRONOGRAM_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TProjectActivityRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_CHRONOGRAM_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TProjectActivity) then
+    raise Exception.Create('FindBy: Expected TProjectActivity');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -1444,9 +1887,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TProjectActivity(E));
     end;
 
     Close;
@@ -1455,14 +1896,16 @@ begin
   end;
 end;
 
-procedure TProjectActivity.GetData(aKey: Integer);
+procedure TProjectActivityRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectActivity) then
+    raise Exception.Create('GetById: Expected TProjectActivity');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'chronogram_id, ' +
@@ -1482,181 +1925,147 @@ begin
       'active_status ' +
       'FROM project_chronograms');
     Add('WHERE chronogram_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TProjectActivity(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectActivity.Insert;
+procedure TProjectActivityRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TProjectActivity;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TProjectActivity) then
+    raise Exception.Create('Hydrate: Expected TProjectActivity');
+
+  R := TProjectActivity(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('chronogram_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.Description := FieldByName('description').AsString;
+    if not FieldByName('start_date').IsNull then
+      R.StartDate := FieldByName('start_date').AsDateTime;
+    if not FieldByName('target_date').IsNull then
+      R.TargetDate := FieldByName('target_date').AsDateTime;
+    if not FieldByName('end_date').IsNull then
+      R.EndDate := FieldByName('end_date').AsDateTime;
+    R.GoalId := FieldByName('goal_id').AsInteger;
+    case FieldByName('progress_status').AsString of
+      'T': R.Status := astToDo;
+      'P': R.Status := astInProgress;
+      'F': R.Status := astDone;
+      'C': R.Status := astCanceled;
+      'D': R.Status := astDelayed;
+      'R': R.Status := astNeedsReview;
+      'B': R.Status := astBlocked;
+    end;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TProjectActivityRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectActivity;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectActivity) then
+    raise Exception.Create('Insert: Expected TProjectActivity');
+
+  R := TProjectActivity(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO project_chronograms (' +
+      'project_id, ' +
+      'description, ' +
+      'start_date, ' +
+      'target_date, ' +
+      'end_date, ' +
+      'goal_id, ' +
+      'progress_status, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':project_id, ' +
+      ':description, ' +
+      'date(:start_date), ' +
+      'date(:target_date), ' +
+      'date(:end_date), ' +
+      ':goal_id, ' +
+      ':progress_status, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO project_chronograms (' +
-        'project_id, ' +
-        'description, ' +
-        'start_date, ' +
-        'target_date, ' +
-        'end_date, ' +
-        'goal_id, ' +
-        'progress_status, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':project_id, ' +
-        ':description, ' +
-        'date(:start_date), ' +
-        'date(:target_date), ' +
-        'date(:end_date), ' +
-        ':goal_id, ' +
-        ':progress_status, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    ParamByName('description').AsString := R.Description;
+    SetDateParam(ParamByName('start_date'), R.StartDate);
+    SetDateParam(ParamByName('target_date'), R.TargetDate);
+    SetDateParam(ParamByName('end_date'), R.EndDate);
+    SetForeignParam(ParamByName('goal_id'), R.GoalId);
+    case R.Status of
+      astToDo:        ParamByName('progress_status').AsString := 'T';
+      astInProgress:  ParamByName('progress_status').AsString := 'P';
+      astDone:        ParamByName('progress_status').AsString := 'F';
+      astCanceled:    ParamByName('progress_status').AsString := 'C';
+      astDelayed:     ParamByName('progress_status').AsString := 'D';
+      astNeedsReview: ParamByName('progress_status').AsString := 'R';
+      astBlocked:     ParamByName('progress_status').AsString := 'B';
+    end;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      ParamByName('description').AsString := FDescription;
-      SetDateParam(ParamByName('start_date'), FStartDate);
-      SetDateParam(ParamByName('target_date'), FTargetDate);
-      SetDateParam(ParamByName('end_date'), FEndDate);
-      SetForeignParam(ParamByName('goal_id'), FGoalId);
-      case FStatus of
-        astToDo:        ParamByName('progress_status').AsString := 'T';
-        astInProgress:  ParamByName('progress_status').AsString := 'P';
-        astDone:        ParamByName('progress_status').AsString := 'F';
-        astCanceled:    ParamByName('progress_status').AsString := 'C';
-        astDelayed:     ParamByName('progress_status').AsString := 'D';
-        astNeedsReview: ParamByName('progress_status').AsString := 'R';
-        astBlocked:     ParamByName('progress_status').AsString := 'B';
-      end;
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectActivity.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+function TProjectActivityRepository.TableName: string;
 begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('chronogram_id').AsInteger;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FDescription := FieldByName('description').AsString;
-    if not FieldByName('start_date').IsNull then
-      FStartDate := FieldByName('start_date').AsDateTime;
-    if not FieldByName('target_date').IsNull then
-      FTargetDate := FieldByName('target_date').AsDateTime;
-    if not FieldByName('end_date').IsNull then
-      FEndDate := FieldByName('end_date').AsDateTime;
-    FGoalId := FieldByName('goal_id').AsInteger;
-    case FieldByName('progress_status').AsString of
-      'T': FStatus := astToDo;
-      'P': FStatus := astInProgress;
-      'F': FStatus := astDone;
-      'C': FStatus := astCanceled;
-      'D': FStatus := astDelayed;
-      'R': FStatus := astNeedsReview;
-      'B': FStatus := astBlocked;
-    end;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
+  Result := TBL_PROJECT_CHRONOGRAM;
 end;
 
-procedure TProjectActivity.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TProjectActivity.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Project', FProjectId);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Start Date', FStartDate);
-    JSONObject.Add('Target Date', FTargetDate);
-    JSONObject.Add('End Date', FEndDate);
-    JSONObject.Add('Goal ID', FGoalId);
-    JSONObject.Add('Status', ACTIVITY_STATUSES[FStatus]);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TProjectActivity.Update;
+procedure TProjectActivityRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectActivity;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectActivity.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectActivity) then
+    raise Exception.Create('Update: Expected TProjectActivity');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectActivity(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectActivityRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE project_chronograms SET ' +
+    Clear;
+    Add('UPDATE project_chronograms SET ' +
         'project_id = :project_id, ' +
         'description = :description, ' +
         'start_date = date(:start_date), ' +
@@ -1668,31 +2077,25 @@ begin
         'update_date = datetime(''now'',''subsec'') ');
       Add('WHERE (chronogram_id = :chronogram_id)');
 
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      ParamByName('description').AsString := FDescription;
-      SetDateParam(ParamByName('start_date'), FStartDate);
-      SetDateParam(ParamByName('target_date'), FTargetDate);
-      SetDateParam(ParamByName('end_date'), FEndDate);
-      SetForeignParam(ParamByName('goal_id'), FGoalId);
-      case FStatus of
-        astToDo:        ParamByName('progress_status').AsString := 'T';
-        astInProgress:  ParamByName('progress_status').AsString := 'P';
-        astDone:        ParamByName('progress_status').AsString := 'F';
-        astCanceled:    ParamByName('progress_status').AsString := 'C';
-        astDelayed:     ParamByName('progress_status').AsString := 'D';
-        astNeedsReview: ParamByName('progress_status').AsString := 'R';
-        astBlocked:     ParamByName('progress_status').AsString := 'B';
-      end;
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('chronogram_id').AsInteger := FId;
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    ParamByName('description').AsString := R.Description;
+    SetDateParam(ParamByName('start_date'), R.StartDate);
+    SetDateParam(ParamByName('target_date'), R.TargetDate);
+    SetDateParam(ParamByName('end_date'), R.EndDate);
+    SetForeignParam(ParamByName('goal_id'), R.GoalId);
+    case R.Status of
+      astToDo:        ParamByName('progress_status').AsString := 'T';
+      astInProgress:  ParamByName('progress_status').AsString := 'P';
+      astDone:        ParamByName('progress_status').AsString := 'F';
+      astCanceled:    ParamByName('progress_status').AsString := 'C';
+      astDelayed:     ParamByName('progress_status').AsString := 'D';
+      astNeedsReview: ParamByName('progress_status').AsString := 'R';
+      astBlocked:     ParamByName('progress_status').AsString := 'B';
+    end;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('chronogram_id').AsInteger := R.Id;
 
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1702,10 +2105,22 @@ end;
 
 constructor TProjectRubric.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TProjectRubric.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TProjectRubric then
+  begin
+    FProjectId := TProjectRubric(Source).ProjectId;
+    FFundingSource := TProjectRubric(Source).FundingSource;
+    FRubric := TProjectRubric(Source).Rubric;
+    FItemName := TProjectRubric(Source).ItemName;
+    FAmount := TProjectRubric(Source).Amount;
+  end;
 end;
 
 procedure TProjectRubric.Clear;
@@ -1718,42 +2133,129 @@ begin
   FAmount := 0.0;
 end;
 
-procedure TProjectRubric.Copy(aFrom: TProjectRubric);
+function TProjectRubric.Clone: TXolmisRecord;
 begin
-  FProjectId := aFrom.ProjectId;
-  FFundingSource := aFrom.FundingSource;
-  FRubric := aFrom.Rubric;
-  FItemName := aFrom.ItemName;
-  FAmount := aFrom.Amount;
+  Result := TProjectRubric(inherited Clone);
 end;
 
-procedure TProjectRubric.Delete;
+function TProjectRubric.Diff(const aOld: TProjectRubric; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscFundingSource, aOld.FundingSource, FFundingSource, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRubric, aOld.Rubric, FRubric, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscItem, aOld.ItemName, FItemName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAmount, aOld.Amount, FAmount, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TProjectRubric.EqualsTo(const Other: TProjectRubric): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TProjectRubric.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FProjectId      := Obj.Get('project_id', 0);
+    FFundingSource  := Obj.Get('funding_source', '');
+    FRubric         := Obj.Get('rubric', '');
+    FItemName       := Obj.Get('item', '');
+    FAmount         := Obj.Get('amount', 0.0);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TProjectRubric.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('funding_source', FFundingSource);
+    JSONObject.Add('rubric', FRubric);
+    JSONObject.Add('item', FItemName);
+    JSONObject.Add('amount', FAmount);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TProjectRubric.ToString: String;
+begin
+  Result := Format('ProjectRubric(Id=%d, ProjectId=%d, FundingSource=%s, Rubric=%s, ItemName=%s, Amount=%f, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FProjectId, FFundingSource, FRubric, FItemName, FAmount,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TProjectRubric.Validate(out Msg: string): Boolean;
+begin
+  if FProjectId = 0 then
+  begin
+    Msg := 'Project required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TProjectRubricRepository }
+
+procedure TProjectRubricRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectRubric;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectRubric.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectRubric) then
+    raise Exception.Create('Delete: Expected TProjectRubric');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectRubric(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectRubricRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM project_budgets');
-      Add('WHERE (budget_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_BUDGET_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -1761,36 +2263,50 @@ begin
   end;
 end;
 
-function TProjectRubric.Diff(aOld: TProjectRubric; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscFundingSource, aOld.FundingSource, FFundingSource, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscRubric, aOld.Rubric, FRubric, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscItem, aOld.ItemName, FItemName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAmount, aOld.Amount, FAmount, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TProjectRubric.Find(const FieldName: String; const Value: Variant): Boolean;
+function TProjectRubricRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_BUDGET_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TProjectRubricRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_BUDGET_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TProjectRubric) then
+    raise Exception.Create('FindBy: Expected TProjectRubric');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -1815,9 +2331,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TProjectRubric(E));
     end;
 
     Close;
@@ -1826,14 +2340,16 @@ begin
   end;
 end;
 
-procedure TProjectRubric.GetData(aKey: Integer);
+procedure TProjectRubricRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectRubric) then
+    raise Exception.Create('GetById: Expected TProjectRubric');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'budget_id, ' +
@@ -1851,176 +2367,138 @@ begin
       'active_status ' +
       'FROM project_budgets');
     Add('WHERE budget_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TProjectRubric(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectRubric.Insert;
+procedure TProjectRubricRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TProjectRubric;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TProjectRubric) then
+    raise Exception.Create('Hydrate: Expected TProjectRubric');
+
+  R := TProjectRubric(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('budget_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.FundingSource := FieldByName('funding_source').AsString;
+    R.Rubric := FieldByName('rubric').AsString;
+    R.ItemName := FieldByName('item_name').AsString;
+    R.Amount := FieldByName('amount').AsFloat;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TProjectRubricRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectRubric;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectRubric) then
+    raise Exception.Create('Insert: Expected TProjectRubric');
+
+  R := TProjectRubric(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO project_budgets (' +
+      'project_id, ' +
+      'funding_source, ' +
+      'rubric, ' +
+      'item_name, ' +
+      'amount, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':project_id, ' +
+      ':funding_source, ' +
+      ':rubric, ' +
+      ':item_name, ' +
+      ':amount, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO project_budgets (' +
-        'project_id, ' +
-        'funding_source, ' +
-        'rubric, ' +
-        'item_name, ' +
-        'amount, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':project_id, ' +
-        ':funding_source, ' +
-        ':rubric, ' +
-        ':item_name, ' +
-        ':amount, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    SetStrParam(ParamByName('funding_source'), R.FundingSource);
+    SetStrParam(ParamByName('rubric'), R.Rubric);
+    SetStrParam(ParamByName('item_name'), R.ItemName);
+    SetFloatParam(ParamByName('amount'), R.Amount);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      SetStrParam(ParamByName('funding_source'), FFundingSource);
-      SetStrParam(ParamByName('rubric'), FRubric);
-      SetStrParam(ParamByName('item_name'), FItemName);
-      SetFloatParam(ParamByName('amount'), FAmount);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectRubric.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+function TProjectRubricRepository.TableName: string;
 begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('budget_id').AsInteger;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FFundingSource := FieldByName('funding_source').AsString;
-    FRubric := FieldByName('rubric').AsString;
-    FItemName := FieldByName('item_name').AsString;
-    FAmount := FieldByName('amount').AsFloat;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
+  Result := TBL_PROJECT_BUDGET;
 end;
 
-procedure TProjectRubric.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TProjectRubric.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Project ID', FProjectId);
-    JSONObject.Add('Funding Source', FFundingSource);
-    JSONObject.Add('Rubric', FRubric);
-    JSONObject.Add('Item', FItemName);
-    JSONObject.Add('Amount', FAmount);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TProjectRubric.Update;
+procedure TProjectRubricRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectRubric;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectRubric.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectRubric) then
+    raise Exception.Create('Update: Expected TProjectRubric');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectRubric(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectRubricRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE project_budgets SET ' +
+      'project_id = :project_id, ' +
+      'funding_source = :funding_source, ' +
+      'rubric = :rubric, ' +
+      'item_name = :item_name, ' +
+      'amount = :amount, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (budget_id = :budget_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE project_budgets SET ' +
-        'project_id = :project_id, ' +
-        'funding_source = :funding_source, ' +
-        'rubric = :rubric, ' +
-        'item_name = :item_name, ' +
-        'amount = :amount, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (budget_id = :budget_id)');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    SetStrParam(ParamByName('funding_source'), R.FundingSource);
+    SetStrParam(ParamByName('rubric'), R.Rubric);
+    SetStrParam(ParamByName('item_name'), R.ItemName);
+    SetFloatParam(ParamByName('amount'), R.Amount);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('budget_id').AsInteger := R.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      SetStrParam(ParamByName('funding_source'), FFundingSource);
-      SetStrParam(ParamByName('rubric'), FRubric);
-      SetStrParam(ParamByName('item_name'), FItemName);
-      SetFloatParam(ParamByName('amount'), FAmount);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('budget_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -2030,10 +2508,22 @@ end;
 
 constructor TProjectExpense.Create(aValue: Integer);
 begin
-  if (aValue > 0) then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TProjectExpense.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TProjectExpense then
+  begin
+    FProjectId := TProjectExpense(Source).ProjectId;
+    FBudgetId := TProjectExpense(Source).BudgetId;
+    FDescription := TProjectExpense(Source).Description;
+    FExpenseDate := TProjectExpense(Source).ExpenseDate;
+    FAmount := TProjectExpense(Source).Amount;
+  end;
 end;
 
 procedure TProjectExpense.Clear;
@@ -2046,42 +2536,134 @@ begin
   FAmount := 0.0;
 end;
 
-procedure TProjectExpense.Copy(aFrom: TProjectExpense);
+function TProjectExpense.Clone: TXolmisRecord;
 begin
-  FProjectId := aFrom.ProjectId;
-  FBudgetId := aFrom.BudgetId;
-  FDescription := aFrom.Description;
-  FExpenseDate := aFrom.ExpenseDate;
-  FAmount := aFrom.Amount;
+  Result := TProjectExpense(inherited Clone);
 end;
 
-procedure TProjectExpense.Delete;
+function TProjectExpense.Diff(const aOld: TProjectExpense; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscBudgetID, aOld.BudgetId, FBudgetId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDate, aOld.ExpenseDate, FExpenseDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAmount, aOld.Amount, FAmount, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TProjectExpense.EqualsTo(const Other: TProjectExpense): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TProjectExpense.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FProjectId    := Obj.Get('project_id', 0);
+    FBudgetId     := Obj.Get('budget_id', 0);
+    FDescription  := Obj.Get('description', '');
+    FExpenseDate  := Obj.Get('date', NullDate);
+    FAmount       := Obj.Get('amount', 0.0);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TProjectExpense.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('budget_id', FBudgetId);
+    JSONObject.Add('description', FDescription);
+    JSONObject.Add('date', FExpenseDate);
+    JSONObject.Add('amount', FAmount);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TProjectExpense.ToString: String;
+begin
+  Result := Format('ProjectExpense(Id=%d, ProjectId=%d, BudgetId=%d, Description=%s, ExpenseDate=%s, Amount=%f, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FProjectId, FBudgetId, FDescription, DateToStr(FExpenseDate), FAmount,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TProjectExpense.Validate(out Msg: string): Boolean;
+begin
+  if FProjectId = 0 then
+  begin
+    Msg := 'Project required.';
+    Exit(False);
+  end;
+  if FBudgetId = 0 then
+  begin
+    Msg := 'Budget required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TProjectExpenseRepository }
+
+procedure TProjectExpenseRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectExpense;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectExpense.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectExpense) then
+    raise Exception.Create('Delete: Expected TProjectExpense');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectExpense(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectExpenseRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM project_expenses');
-      Add('WHERE (expense_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_EXPENSE_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -2089,36 +2671,50 @@ begin
   end;
 end;
 
-function TProjectExpense.Diff(aOld: TProjectExpense; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscBudgetID, aOld.BudgetId, FBudgetId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDate, aOld.ExpenseDate, FExpenseDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAmount, aOld.Amount, FAmount, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TProjectExpense.Find(const FieldName: String; const Value: Variant): Boolean;
+function TProjectExpenseRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_EXPENSE_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TProjectExpenseRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_EXPENSE_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TProjectExpense) then
+    raise Exception.Create('FindBy: Expected TProjectExpense');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -2143,9 +2739,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TProjectExpense(E));
     end;
 
     Close;
@@ -2154,14 +2748,16 @@ begin
   end;
 end;
 
-procedure TProjectExpense.GetData(aKey: Integer);
+procedure TProjectExpenseRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectExpense) then
+    raise Exception.Create('GetById: Expected TProjectExpense');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
       'expense_id, ' +
@@ -2179,177 +2775,139 @@ begin
       'active_status ' +
       'FROM project_expenses');
     Add('WHERE expense_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TProjectExpense(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectExpense.Insert;
+procedure TProjectExpenseRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TProjectExpense;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TProjectExpense) then
+    raise Exception.Create('Hydrate: Expected TProjectExpense');
+
+  R := TProjectExpense(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('expense_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.BudgetId := FieldByName('budget_id').AsInteger;
+    R.Description := FieldByName('item_description').AsString;
+    if not FieldByName('expense_date').IsNull then
+      R.ExpenseDate := FieldByName('expense_date').AsDateTime;
+    R.Amount := FieldByName('amount').AsFloat;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TProjectExpenseRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectExpense;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TProjectExpense) then
+    raise Exception.Create('Insert: Expected TProjectExpense');
+
+  R := TProjectExpense(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO project_expenses (' +
+      'project_id, ' +
+      'budget_id, ' +
+      'item_description, ' +
+      'expense_date, ' +
+      'amount, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':project_id, ' +
+      ':budget_id, ' +
+      ':item_description, ' +
+      'date(:expense_date), ' +
+      ':amount, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO project_expenses (' +
-        'project_id, ' +
-        'budget_id, ' +
-        'item_description, ' +
-        'expense_date, ' +
-        'amount, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':project_id, ' +
-        ':budget_id, ' +
-        ':item_description, ' +
-        'date(:expense_date), ' +
-        ':amount, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    SetForeignParam(ParamByName('budget_id'), R.BudgetId);
+    SetStrParam(ParamByName('item_description'), R.Description);
+    SetDateParam(ParamByName('expense_date'), R.ExpenseDate);
+    SetFloatParam(ParamByName('amount'), R.Amount);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      SetForeignParam(ParamByName('budget_id'), FBudgetId);
-      SetStrParam(ParamByName('item_description'), FDescription);
-      SetDateParam(ParamByName('expense_date'), FExpenseDate);
-      SetFloatParam(ParamByName('amount'), FAmount);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TProjectExpense.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+function TProjectExpenseRepository.TableName: string;
 begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('expense_id').AsInteger;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FBudgetId := FieldByName('budget_id').AsInteger;
-    FDescription := FieldByName('item_description').AsString;
-    if not FieldByName('expense_date').IsNull then
-      FExpenseDate := FieldByName('expense_date').AsDateTime;
-    FAmount := FieldByName('amount').AsFloat;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    // SQLite may store date and time data as ISO8601 string or Julian date real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
+  Result := TBL_PROJECT_EXPENSES;
 end;
 
-procedure TProjectExpense.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TProjectExpense.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Project ID', FProjectId);
-    JSONObject.Add('Budget ID', FBudgetId);
-    JSONObject.Add('Description', FDescription);
-    JSONObject.Add('Date', FExpenseDate);
-    JSONObject.Add('Amount', FAmount);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TProjectExpense.Update;
+procedure TProjectExpenseRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TProjectExpense;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TProjectExpense.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TProjectExpense) then
+    raise Exception.Create('Update: Expected TProjectExpense');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TProjectExpense(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TProjectExpenseRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE project_expenses SET ' +
+      'project_id = :project_id, ' +
+      'budget_id = :budget_id, ' +
+      'item_description = :item_description, ' +
+      'expense_date = date(:expense_date), ' +
+      'amount = :amount, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (expense_id = :expense_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE project_expenses SET ' +
-        'project_id = :project_id, ' +
-        'budget_id = :budget_id, ' +
-        'item_description = :item_description, ' +
-        'expense_date = date(:expense_date), ' +
-        'amount = :amount, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (expense_id = :expense_id)');
+    ParamByName('project_id').AsInteger := R.ProjectId;
+    SetForeignParam(ParamByName('budget_id'), R.BudgetId);
+    SetStrParam(ParamByName('item_description'), R.Description);
+    SetDateParam(ParamByName('expense_date'), R.ExpenseDate);
+    SetFloatParam(ParamByName('amount'), R.Amount);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('expense_id').AsInteger := R.Id;
 
-      ParamByName('project_id').AsInteger := FProjectId;
-      SetForeignParam(ParamByName('budget_id'), FBudgetId);
-      SetStrParam(ParamByName('item_description'), FDescription);
-      SetDateParam(ParamByName('expense_date'), FExpenseDate);
-      SetFloatParam(ParamByName('amount'), FAmount);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('expense_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

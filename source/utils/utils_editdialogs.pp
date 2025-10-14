@@ -585,12 +585,14 @@ end;
 
 function EditProject(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
+  FRepo: TProjectRepository;
   FRecord, FOldRecord: TProject;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Project edit dialog');
   Application.CreateForm(TedtProject, edtProject);
+  FRepo := TProjectRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtProject do
   try
@@ -604,6 +606,8 @@ begin
     begin
       FOldRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
       FRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Project := FRecord;
@@ -613,7 +617,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Project.Save;
+        FRepo.Save(Project);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -656,6 +660,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtProject);
     LogEvent(leaClose, 'Project edit dialog');
   end;
@@ -663,12 +668,14 @@ end;
 
 function EditProjectMember(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Boolean;
 var
+  FRepo: TProjectMemberRepository;
   FRecord, FOldRecord: TProjectMember;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Project member edit dialog');
   Application.CreateForm(TedtProjectMember, edtProjectMember);
+  FRepo := TProjectMemberRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtProjectMember do
   try
@@ -682,6 +689,8 @@ begin
     begin
       FOldRecord := TProjectMember.Create(aDataSet.FieldByName('project_member_id').AsInteger);
       FRecord := TProjectMember.Create(aDataSet.FieldByName('project_member_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     ProjectMember := FRecord;
@@ -692,7 +701,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        ProjectMember.Save;
+        FRepo.Save(ProjectMember);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -736,6 +745,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtProjectMember);
     LogEvent(leaClose, 'Project member edit dialog');
   end;
@@ -743,12 +753,14 @@ end;
 
 function EditProjectGoal(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
 var
+  FRepo: TProjectGoalRepository;
   FRecord, FOldRecord: TProjectGoal;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Project goal edit dialog');
   Application.CreateForm(TedtProjectGoal, edtProjectGoal);
+  FRepo := TProjectGoalRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtProjectGoal do
   try
@@ -762,6 +774,8 @@ begin
     begin
       FOldRecord := TProjectGoal.Create(aDataSet.FieldByName('goal_id').AsInteger);
       FRecord := TProjectGoal.Create(aDataSet.FieldByName('goal_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     ProjectGoal := FRecord;
@@ -772,7 +786,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        ProjectGoal.Save;
+        FRepo.Save(ProjectGoal);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -816,6 +830,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtProjectGoal);
     LogEvent(leaClose, 'Project goal edit dialog');
   end;
@@ -823,12 +838,14 @@ end;
 
 function EditProjectActivity(aDataSet: TDataSet; aProject: Integer = 0; aGoal: Integer = 0; IsNew: Boolean = False): Boolean;
 var
+  FRepo: TProjectActivityRepository;
   FRecord, FOldRecord: TProjectActivity;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Project activity edit dialog');
   Application.CreateForm(TedtProjectActivity, edtProjectActivity);
+  FRepo := TProjectActivityRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtProjectActivity do
   try
@@ -842,6 +859,8 @@ begin
     begin
       FOldRecord := TProjectActivity.Create(aDataSet.FieldByName('chronogram_id').AsInteger);
       FRecord := TProjectActivity.Create(aDataSet.FieldByName('chronogram_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     ProjectActivity := FRecord;
@@ -854,7 +873,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        ProjectActivity.Save;
+        FRepo.Save(ProjectActivity);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -898,6 +917,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtProjectActivity);
     LogEvent(leaClose, 'Project activity edit dialog');
   end;
@@ -905,12 +925,14 @@ end;
 
 function EditProjectRubric(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
 var
+  FRepo: TProjectRubricRepository;
   FRecord, FOldRecord: TProjectRubric;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Project rubric edit dialog');
   Application.CreateForm(TedtProjectRubric, edtProjectRubric);
+  FRepo := TProjectRubricRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtProjectRubric do
   try
@@ -924,6 +946,8 @@ begin
     begin
       FOldRecord := TProjectRubric.Create(aDataSet.FieldByName('budget_id').AsInteger);
       FRecord := TProjectRubric.Create(aDataSet.FieldByName('budget_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     ProjectRubric := FRecord;
@@ -934,7 +958,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        ProjectRubric.Save;
+        FRepo.Save(ProjectRubric);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -978,6 +1002,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtProjectRubric);
     LogEvent(leaClose, 'Project rubric edit dialog');
   end;
@@ -985,12 +1010,14 @@ end;
 
 function EditProjectExpense(aDataSet: TDataSet; aProject: Integer = 0; aRubric: Integer = 0; IsNew: Boolean = False): Boolean;
 var
+  FRepo: TProjectExpenseRepository;
   FRecord, FOldRecord: TProjectExpense;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Project expense edit dialog');
   Application.CreateForm(TedtProjectExpense, edtProjectExpense);
+  FRepo := TProjectExpenseRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtProjectExpense do
   try
@@ -1004,6 +1031,8 @@ begin
     begin
       FOldRecord := TProjectExpense.Create(aDataSet.FieldByName('expense_id').AsInteger);
       FRecord := TProjectExpense.Create(aDataSet.FieldByName('expense_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     ProjectExpense := FRecord;
@@ -1016,7 +1045,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        ProjectExpense.Save;
+        FRepo.Save(ProjectExpense);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -1060,6 +1089,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtProjectExpense);
     LogEvent(leaClose, 'Project expense edit dialog');
   end;

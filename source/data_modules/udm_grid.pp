@@ -4074,6 +4074,7 @@ end;
 
 procedure TDMG.qProjectsAfterPost(DataSet: TDataSet);
 var
+  Repo: TProjectRepository;
   NewProject: TProject;
   lstDiff: TStrings;
   D: String;
@@ -4081,8 +4082,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldProject) then
   begin
+    Repo := TProjectRepository.Create(DMM.sqlCon);
     NewProject := TProject.Create;
-    NewProject.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewProject);
     lstDiff := TStringList.Create;
     try
       if NewProject.Diff(OldProject, lstDiff) then
@@ -4096,6 +4098,7 @@ begin
     finally
       FreeAndNil(NewProject);
       FreeAndNil(OldProject);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
@@ -4130,6 +4133,7 @@ end;
 
 procedure TDMG.qProjectTeamAfterPost(DataSet: TDataSet);
 var
+  Repo: TProjectMemberRepository;
   NewProjectMember: TProjectMember;
   lstDiff: TStrings;
   D: String;
@@ -4137,8 +4141,9 @@ begin
   { Save changes to the record history }
   if Assigned(OldProjectMember) then
   begin
+    Repo := TProjectMemberRepository.Create(DMM.sqlCon);
     NewProjectMember := TProjectMember.Create;
-    NewProjectMember.LoadFromDataSet(DataSet);
+    Repo.Hydrate(DataSet, NewProjectMember);
     lstDiff := TStringList.Create;
     try
       if NewProjectMember.Diff(OldProjectMember, lstDiff) then
@@ -4152,6 +4157,7 @@ begin
     finally
       FreeAndNil(NewProjectMember);
       FreeAndNil(OldProjectMember);
+      Repo.Free;
       FreeAndNil(lstDiff);
     end;
   end
