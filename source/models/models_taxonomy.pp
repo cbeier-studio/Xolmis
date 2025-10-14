@@ -31,7 +31,7 @@ type
   TRank = class(TXolmisRecord)
   protected
     FName: String;
-    FAcronym: String;
+    FAbbreviation: String;
     FRankIndex: Integer;
     FMainRank: Boolean;
     FSubrank: Boolean;
@@ -40,13 +40,19 @@ type
     FZoologicalCode: Boolean;
     FBotanicalCode: Boolean;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TRank; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TRank): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
+    function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property Name: String read FName write FName;
-    property Acronym: String read FAcronym write FAcronym;
+    property Abbreviation: String read FAbbreviation write FAbbreviation;
     property RankIndex: Integer read FRankIndex write FRankIndex;
     property MainRank: Boolean read FMainRank write FMainRank;
     property Subrank: Boolean read FSubrank write FSubrank;
@@ -54,6 +60,21 @@ type
     property Infraspecific: Boolean read FInfraspecific write FInfraspecific;
     property ZoologicalCode: Boolean read FZoologicalCode write FZoologicalCode;
     property BotanicalCode: Boolean read FBotanicalCode write FBotanicalCode;
+  end;
+
+  { TRankRepository }
+
+  TRankRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    //procedure Insert(E: TXolmisRecord); override;
+    //procedure Update(E: TXolmisRecord); override;
+    //procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -65,7 +86,7 @@ type
     FEnglishName: String;
     FPortugueseName: String;
     FSpanishName: String;
-    FRankId: TZooRank;
+    FRank: TZooRank;
     FSortNum: Double;
     FQuickCode: String;
     FIucnStatus: String;
@@ -81,30 +102,28 @@ type
     FIocTaxonomy: Boolean;
     FIocEnglishName: String;
     FIocParentTaxonId: Integer;
-    FIocRankId: TZooRank;
+    FIocRank: TZooRank;
     FIocValidId: Integer;
     FIocDistribution: String;
     FIocSortNum: Double;
     FCbroTaxonomy: Boolean;
     FOtherPortugueseNames: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure GetData(aDataSet: TDataSet);
-    function Diff(aOld: TTaxon; var aList: TStrings): Boolean;
-    procedure Insert;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TTaxon);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TTaxon; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TTaxon): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property EnglishName: String read FEnglishName write FEnglishName;
     property PortugueseName: String read FPortugueseName write FPortugueseName;
     property SpanishName: String read FSpanishName write FSpanishName;
-    property RankId: TZooRank read FRankId write FRankId;
+    property Rank: TZooRank read FRank write FRank;
     property SortNum: Double read FSortNum write FSortNum;
     property QuickCode: String read FQuickCode write FQuickCode;
     property IucnStatus: String read FIucnStatus write FIucnStatus;
@@ -120,7 +139,7 @@ type
     property IocTaxonomy: Boolean read FIocTaxonomy write FIocTaxonomy;
     property IocEnglishName: String read FIocEnglishName write FIocEnglishName;
     property IocParentTaxonId: Integer read FIocParentTaxonId write FIocParentTaxonId;
-    property IocRankId: TZooRank read FIocRankId write FIocRankId;
+    property IocRank: TZooRank read FIocRank write FIocRank;
     property IocValidId: Integer read FIocValidId write FIocValidId;
     property IocDistribution: String read FIocDistribution write FIocDistribution;
     property IocSortNum: Double read FIocSortNum write FIocSortNum;
@@ -128,11 +147,26 @@ type
     property OtherPortugueseNames: String read FOtherPortugueseNames write FOtherPortugueseNames;
   end;
 
+  { TTaxonRepository }
+
+  TTaxonRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
 uses
   utils_locale, utils_validations, utils_taxonomy,
-  data_columns, data_getvalue,
+  data_consts, data_columns, data_getvalue, data_setparam,
   models_users,
   udm_main;
 
@@ -140,10 +174,51 @@ uses
 
 constructor TTaxon.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TTaxon.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TTaxon then
+  begin
+    FFullName := TTaxon(Source).FullName;
+    FFormattedName := TTaxon(Source).FormattedName;
+    FAuthorship := TTaxon(Source).Authorship;
+    FParentTaxonId := TTaxon(Source).ParentTaxonId;
+    FValidId := TTaxon(Source).ValidId;
+    FOrderId := TTaxon(Source).OrderId;
+    FFamilyId := TTaxon(Source).FamilyId;
+    FGenusId := TTaxon(Source).GenusId;
+    FSpeciesId := TTaxon(Source).SpeciesId;
+    FEnglishName := TTaxon(Source).EnglishName;
+    FPortugueseName := TTaxon(Source).PortugueseName;
+    FSpanishName := TTaxon(Source).SpanishName;
+    FRank := TTaxon(Source).Rank;
+    FSortNum := TTaxon(Source).SortNum;
+    FQuickCode := TTaxon(Source).QuickCode;
+    FIucnStatus := TTaxon(Source).IucnStatus;
+    FExtinct := TTaxon(Source).Extinct;
+    FExtinctionYear := TTaxon(Source).ExtinctionYear;
+    FDistribution := TTaxon(Source).Distribution;
+    FEbirdCode := TTaxon(Source).EbirdCode;
+    FClementsTaxonomy := TTaxon(Source).ClementsTaxonomy;
+    FSubfamilyId := TTaxon(Source).SubfamilyId;
+    FSubspeciesGroupId := TTaxon(Source).SubspeciesGroupId;
+    FSubspeciesGroupEpithet := TTaxon(Source).SubspeciesGroupEpithet;
+    FIncertaeSedis := TTaxon(Source).IncertaeSedis;
+    FIocTaxonomy := TTaxon(Source).IocTaxonomy;
+    FIocEnglishName := TTaxon(Source).IocEnglishName;
+    FIocParentTaxonId := TTaxon(Source).IocParentTaxonId;
+    FIocRank := TTaxon(Source).IocRank;
+    FIocValidId := TTaxon(Source).IocValidId;
+    FIocDistribution := TTaxon(Source).IocDistribution;
+    FIocSortNum := TTaxon(Source).IocSortNum;
+    FCbroTaxonomy := TTaxon(Source).CbroTaxonomy;
+    FOtherPortugueseNames := TTaxon(Source).OtherPortugueseNames;
+  end;
 end;
 
 procedure TTaxon.Clear;
@@ -152,7 +227,7 @@ begin
   FEnglishName := EmptyStr;
   FPortugueseName := EmptyStr;
   FSpanishName := EmptyStr;
-  FRankId := trDomain;
+  FRank := trDomain;
   FSortNum := 0.0;
   FQuickCode := EmptyStr;
   FIucnStatus := EmptyStr;
@@ -168,7 +243,7 @@ begin
   FIocTaxonomy := False;
   FIocEnglishName := EmptyStr;
   FIocParentTaxonId := 0;
-  FIocRankId := trDomain;
+  FIocRank := trDomain;
   FIocValidId := 0;
   FIocDistribution := EmptyStr;
   FIocSortNum := 0.0;
@@ -176,410 +251,142 @@ begin
   FOtherPortugueseNames := EmptyStr;
 end;
 
-procedure TTaxon.Copy(aFrom: TTaxon);
+function TTaxon.Clone: TXolmisRecord;
 begin
-  FFullName := aFrom.FullName;
-  FFormattedName := aFrom.FormattedName;
-  FAuthorship := aFrom.Authorship;
-  FParentTaxonId := aFrom.ParentTaxonId;
-  FValidId := aFrom.ValidId;
-  FOrderId := aFrom.OrderId;
-  FFamilyId := aFrom.FamilyId;
-  FGenusId := aFrom.GenusId;
-  FSpeciesId := aFrom.SpeciesId;
-  FEnglishName := aFrom.EnglishName;
-  FPortugueseName := aFrom.PortugueseName;
-  FSpanishName := aFrom.SpanishName;
-  FRankId := aFrom.RankId;
-  FSortNum := aFrom.SortNum;
-  FQuickCode := aFrom.QuickCode;
-  FIucnStatus := aFrom.IucnStatus;
-  FExtinct := aFrom.Extinct;
-  FExtinctionYear := aFrom.ExtinctionYear;
-  FDistribution := aFrom.Distribution;
-  FEbirdCode := aFrom.EbirdCode;
-  FClementsTaxonomy := aFrom.ClementsTaxonomy;
-  FSubfamilyId := aFrom.SubfamilyId;
-  FSubspeciesGroupId := aFrom.SubspeciesGroupId;
-  FSubspeciesGroupEpithet := aFrom.SubspeciesGroupEpithet;
-  FIncertaeSedis := aFrom.IncertaeSedis;
-  FIocTaxonomy := aFrom.IocTaxonomy;
-  FIocEnglishName := aFrom.IocEnglishName;
-  FIocParentTaxonId := aFrom.IocParentTaxonId;
-  FIocRankId := aFrom.IocRankId;
-  FIocValidId := aFrom.IocValidId;
-  FIocDistribution := aFrom.IocDistribution;
-  FIocSortNum := aFrom.IocSortNum;
-  FCbroTaxonomy := aFrom.CbroTaxonomy;
-  FOtherPortugueseNames := aFrom.OtherPortugueseNames;
+  Result := TTaxon(inherited Clone);
 end;
 
-procedure TTaxon.Delete;
+function TTaxon.Diff(const aOld: TTaxon; var Changes: TStrings): Boolean;
 var
-  Qry: TSQLQuery;
+  R: String;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TTaxon.Delete: %s.', [rsErrorEmptyId]);
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
+  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscScientificName + ' (HTML)', aOld.FormattedName, FFormattedName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscParentTaxonID, aOld.ParentTaxonId, FParentTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonomicRankID, aOld.Rank, FRank, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAuthorship, aOld.Authorship, FAuthorship, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonomicSequence, aOld.SortNum, FSortNum, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscQuickCode, aOld.QuickCode, FQuickCode, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEnglishName, aOld.EnglishName, FEnglishName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPortugueseName, aOld.PortugueseName, FPortugueseName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSpanishName, aOld.SpanishName, FSpanishName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscValidNameID, aOld.ValidId, FValidId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscConservationStatus, aOld.IucnStatus, FIucnStatus, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscExtinct, aOld.Extinct, FExtinct, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscExtinctionYear, aOld.ExtinctionYear, FExtinctionYear, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDistribution, aOld.Distribution, FDistribution, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEbirdCode, aOld.EbirdCode, FEbirdCode, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscClements, aOld.ClementsTaxonomy, FClementsTaxonomy, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOrderID, aOld.OrderId, FOrderId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFamilyID, aOld.FamilyId, FFamilyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSubfamilyID, aOld.SubfamilyId, FSubfamilyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscGenusID, aOld.GenusId, FGenusId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSpeciesID, aOld.SpeciesId, FSpeciesId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSubspeciesGroupID, aOld.SubspeciesGroupId, FSubspeciesGroupId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSubspeciesGroup, aOld.SubspeciesGroupEpithet, FSubspeciesGroupEpithet, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIncertaeSedis, aOld.IncertaeSedis, FIncertaeSedis, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIOC, aOld.IocTaxonomy, FIocTaxonomy, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEnglishName + ' (IOC)', aOld.IocEnglishName, FIocEnglishName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscParentTaxonID + ' (IOC)', aOld.IocParentTaxonId, FIocParentTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonomicRankID + ' (IOC)', aOld.IocRank, FIocRank, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscValidNameID + ' (IOC)', aOld.IocValidId, FIocValidId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDistribution + ' (IOC)', aOld.IocDistribution, FIocDistribution, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonomicSequence + ' (IOC)', aOld.IocSortNum, FIocSortNum, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCBRO, aOld.CbroTaxonomy, FCbroTaxonomy, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOtherPortugueseNames, aOld.OtherPortugueseNames, FOtherPortugueseNames, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TTaxon.EqualsTo(const Other: TTaxon): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TTaxon.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('DELETE FROM zoo_taxa');
-      Add('WHERE (taxon_id = :aid)');
-
-      ParamByName('aid').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    FFullName               := Obj.Get('full_name', '');
+    FAuthorship             := Obj.Get('authorship', '');
+    FFormattedName          := Obj.Get('formatted_name', '');
+    FEnglishName            := Obj.Get('english_name', '');
+    FPortugueseName         := Obj.Get('portuguese_name', '');
+    FSpanishName            := Obj.Get('spanish_name', '');
+    FValidId                := Obj.Get('valid_id', 0);
+    FRank                   := StringToZooRank(Obj.Get('taxon_rank', ''));
+    FParentTaxonId          := Obj.Get('parent_taxon_id', 0);
+    FOrderId                := Obj.Get('order_id', 0);
+    FFamilyId               := Obj.Get('family_id', 0);
+    FSubfamilyId            := Obj.Get('subfamily_id', 0);
+    FGenusId                := Obj.Get('genus_id', 0);
+    FSpeciesId              := Obj.Get('species_id', 0);
+    FSubspeciesGroupId      := Obj.Get('subspecies_group_id', 0);
+    FSubspeciesGroupEpithet := Obj.Get('subspecies_group_name', '');
+    FIncertaeSedis          := Obj.Get('incertae_sedis', 0);
+    FSortNum                := Obj.Get('sort_number', 0.0);
+    FQuickCode              := Obj.Get('quick_code', '');
+    FIucnStatus             := Obj.Get('iucn_status', '');
+    FExtinct                := Obj.Get('extinct', False);
+    FExtinctionYear         := Obj.Get('extinction_year', '');
+    FDistribution           := Obj.Get('distribution', '');
+    FEbirdCode              := Obj.Get('ebird_code', '');
+    FClementsTaxonomy       := Obj.Get('clements_taxonomy', True);
+    FIocTaxonomy            := Obj.Get('ioc_taxonomy', False);
+    FIocEnglishName         := Obj.Get('ioc_english_name', '');
+    FIocParentTaxonId       := Obj.Get('ioc_parent_taxon_id', 0);
+    FIocRank                := StringToZooRank(Obj.Get('ioc_taxon_rank', ''));
+    FIocValidId             := Obj.Get('ioc_valid_id', 0);
+    FIocDistribution        := Obj.Get('ioc_distribution', '');
+    FIocSortNum             := Obj.Get('ioc_sort_number', 0.0);
+    FCbroTaxonomy           := Obj.Get('cbro_taxonomy', False);
+    FOtherPortugueseNames   := Obj.Get('other_portuguese_names', '');
   finally
-    FreeAndNil(Qry);
+    Obj.Free;
   end;
-end;
-
-procedure TTaxon.GetData(aKey: Integer);
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Clear;
-    Add('SELECT ' +
-      'taxon_id, ' +
-      'full_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'english_name, ' +
-      'portuguese_name, ' +
-      'spanish_name, ' +
-      'quick_code, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'iucn_status, ' +
-      'extinct, ' +
-      'extinction_year, ' +
-      'sort_num, ' +
-      'group_name, ' +
-      'order_id, ' +
-      'family_id, ' +
-      'subfamily_id, ' +
-      'genus_id, ' +
-      'species_id, ' +
-      'subspecies_group_id, ' +
-      'incertae_sedis, ' +
-      'ebird_code, ' +
-      'clements_taxonomy, ' +
-      'ioc_taxonomy, ' +
-      'ioc_rank_id, ' +
-      'ioc_parent_taxon_id, ' +
-      'ioc_valid_id, ' +
-      'ioc_sort_num, ' +
-      'ioc_english_name, ' +
-      'cbro_taxonomy, ' +
-      'other_portuguese_names, ' +
-      'distribution, ' +
-      'ioc_distribution, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM zoo_taxa');
-    Add('WHERE taxon_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
-    Open;
-    if RecordCount > 0 then
-      GetData(Qry);
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TTaxon.GetData(aDataSet: TDataSet);
-var
-  FRankAbbrev: String;
-begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('taxon_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FFormattedName := FieldByName('formatted_name').AsString;
-    FParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
-    if FieldByName('rank_id').AsInteger > 0 then
-    begin
-      FRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('rank_id').AsInteger);
-      FRankId := StringToZooRank(FRankAbbrev);
-    end;
-    FAuthorship := FieldByName('authorship').AsString;
-    FSortNum := FieldByName('sort_num').AsFloat;
-    FQuickCode := FieldByName('quick_code').AsString;
-    FEnglishName := FieldByName('english_name').AsString;
-    FPortugueseName := FieldByName('portuguese_name').AsString;
-    FSpanishName := FieldByName('spanish_name').AsString;
-    FValidId := FieldByName('valid_id').AsInteger;
-    FIucnStatus := FieldByName('iucn_status').AsString;
-    FExtinct := FieldByName('extinct').AsBoolean;
-    FExtinctionYear := FieldByName('extinction_year').AsString;
-    FDistribution := FieldByName('distribution').AsString;
-    FEbirdCode := FieldByName('ebird_code').AsString;
-    FClementsTaxonomy := FieldByName('clements_taxonomy').AsBoolean;
-    FOrderId := FieldByName('order_id').AsInteger;
-    FFamilyId := FieldByName('family_id').AsInteger;
-    FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-    FGenusId := FieldByName('genus_id').AsInteger;
-    FSpeciesId := FieldByName('species_id').AsInteger;
-    FSubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
-    FSubspeciesGroupEpithet := FieldByName('group_name').AsString;
-    FIncertaeSedis := FieldByName('incertae_sedis').AsInteger;
-    FIocTaxonomy := FieldByName('ioc_taxonomy').AsBoolean;
-    FIocEnglishName := FieldByName('ioc_english_name').AsString;
-    FIocParentTaxonId := FieldByName('ioc_parent_taxon_id').AsInteger;
-    if FieldByName('ioc_rank_id').AsInteger > 0 then
-    begin
-      FRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('ioc_rank_id').AsInteger);
-      FIocRankId := StringToZooRank(FRankAbbrev);
-    end;
-    FIocValidId := FieldByName('ioc_valid_id').AsInteger;
-    FIocDistribution := FieldByName('ioc_distribution').AsString;
-    FIocSortNum := FieldByName('ioc_sort_num').AsFloat;
-    FCbroTaxonomy := FieldByName('cbro_taxonomy').AsBoolean;
-    FOtherPortugueseNames := FieldByName('other_portuguese_names').AsString;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
-end;
-
-procedure TTaxon.Insert;
-var
-  Qry: TSQLQuery;
-begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
-
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO zoo_taxa (' +
-        'full_name, ' +
-        'authorship, ' +
-        'formatted_name, ' +
-        'english_name, ' +
-        'portuguese_name, ' +
-        'spanish_name, ' +
-        'quick_code, ' +
-        'rank_id, ' +
-        'parent_taxon_id, ' +
-        'valid_id, ' +
-        'iucn_status, ' +
-        'extinct, ' +
-        'extinction_year, ' +
-        'sort_num, ' +
-        'group_name, ' +
-        'incertae_sedis, ' +
-        'ebird_code, ' +
-        'clements_taxonomy, ' +
-        'ioc_taxonomy, ' +
-        'ioc_rank_id, ' +
-        'ioc_parent_taxon_id, ' +
-        'ioc_valid_id, ' +
-        'ioc_sort_num, ' +
-        'ioc_english_name, ' +
-        'cbro_taxonomy, ' +
-        'other_portuguese_names, ' +
-        'distribution, ' +
-        'ioc_distribution, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':full_name, ' +
-        ':authorship, ' +
-        ':formatted_name, ' +
-        ':english_name, ' +
-        ':portuguese_name, ' +
-        ':spanish_name, ' +
-        ':quick_code, ' +
-        ':rank_id, ' +
-        ':parent_taxon_id, ' +
-        ':valid_id, ' +
-        ':iucn_status, ' +
-        ':extinct, ' +
-        ':extinction_year, ' +
-        ':sort_num, ' +
-        ':group_name, ' +
-        ':incertae_sedis, ' +
-        ':ebird_code, ' +
-        ':clements_taxonomy, ' +
-        ':ioc_taxonomy, ' +
-        ':ioc_rank_id, ' +
-        ':ioc_parent_taxon_id, ' +
-        ':ioc_valid_id, ' +
-        ':ioc_sort_num, ' +
-        ':ioc_english_name, ' +
-        ':cbro_taxonomy, ' +
-        ':other_portuguese_names, ' +
-        ':distribution, ' +
-        ':ioc_distribution, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
-
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('authorship').AsString := FAuthorship;
-      ParamByName('formatted_name').AsString := FFormattedName;
-      ParamByName('english_name').AsString := FEnglishName;
-      ParamByName('portuguese_name').AsString := FPortugueseName;
-      ParamByName('spanish_name').AsString := FSpanishName;
-      ParamByName('quick_code').AsString := FQuickCode;
-      ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[FRankId]);
-      if (FParentTaxonId > 0) then
-        ParamByName('parent_taxon_id').AsInteger := FParentTaxonId
-      else
-        ParamByName('parent_taxon_id').Clear;
-      if (FValidId > 0) then
-        ParamByName('valid_id').AsInteger := FValidId
-      else
-        ParamByName('valid_id').Clear;
-      ParamByName('iucn_status').AsString := FIucnStatus;
-      ParamByName('extinct').AsBoolean := FExtinct;
-      ParamByName('extinction_year').AsString := FExtinctionYear;
-      ParamByName('sort_num').AsFloat := FSortNum;
-      ParamByName('group_name').AsString := FSubspeciesGroupEpithet;
-      ParamByName('incertae_sedis').AsInteger := FIncertaeSedis;
-      ParamByName('ebird_code').AsString := FEbirdCode;
-      ParamByName('clements_taxonomy').AsBoolean := FClementsTaxonomy;
-      ParamByName('ioc_taxonomy').AsBoolean := FIocTaxonomy;
-      ParamByName('ioc_rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[FIocRankId]);
-      if (FIocParentTaxonId > 0) then
-        ParamByName('ioc_parent_taxon_id').AsInteger := FIocParentTaxonId
-      else
-        ParamByName('ioc_parent_taxon_id').Clear;
-      if (FIocValidId > 0) then
-        ParamByName('ioc_valid_id').AsInteger := FIocValidId
-      else
-        ParamByName('ioc_valid_id').Clear;
-      ParamByName('ioc_sort_num').AsFloat := FIocSortNum;
-      ParamByName('ioc_english_name').AsString := FIocEnglishName;
-      ParamByName('cbro_taxonomy').AsBoolean := FCbroTaxonomy;
-      ParamByName('other_portuguese_names').AsString := FOtherPortugueseNames;
-      ParamByName('distribution').AsString := FDistribution;
-      ParamByName('ioc_distribution').AsString := FIocDistribution;
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-      // Get the taxon hierarchy
-      if (FParentTaxonId > 0) then
-      begin
-        Clear;
-        Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id, subspecies_group_id FROM zoo_taxa');
-        Add('WHERE taxon_id = :ataxon');
-        ParamByName('ataxon').AsInteger := FParentTaxonId;
-        Open;
-        FOrderId := FieldByName('order_id').AsInteger;
-        FFamilyId := FieldByName('family_id').AsInteger;
-        FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-        FGenusId := FieldByName('genus_id').AsInteger;
-        FSpeciesId := FieldByName('species_id').AsInteger;
-        FSubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
-        Close;
-      end;
-      case FRankId of
-        trOrder:          FOrderId := FId;
-        trFamily:         FFamilyId := FId;
-        trSubfamily:      FSubfamilyId := FId;
-        trGenus:          FGenusId := FId;
-        trSpecies:        FSpeciesId := FId;
-        trMonotypicGroup,
-        trPolitypicGroup: FSubspeciesGroupId := FId;
-      end;
-      // Save the taxon hierarchy
-      Clear;
-      Add('UPDATE zoo_taxa SET');
-      Add('  order_id = :order_id,');
-      Add('  family_id = :family_id,');
-      Add('  subfamily_id = :subfamily_id,');
-      Add('  genus_id = :genus_id,');
-      Add('  species_id = :species_id,');
-      Add('  subspecies_group_id = :subspecies_group_id');
-      Add('WHERE taxon_id = :aid');
-      if (FOrderId > 0) then
-        ParamByName('order_id').AsInteger := FOrderId
-      else
-        ParamByName('order_id').Clear;
-      if (FFamilyId > 0) then
-        ParamByName('family_id').AsInteger := FFamilyId
-      else
-        ParamByName('family_id').Clear;
-      if (FSubfamilyId > 0) then
-        ParamByName('subfamily_id').AsInteger := FSubfamilyId
-      else
-        ParamByName('subfamily_id').Clear;
-      if (FGenusId > 0) then
-        ParamByName('genus_id').AsInteger := FGenusId
-      else
-        ParamByName('genus_id').Clear;
-      if (FSpeciesId > 0) then
-        ParamByName('species_id').AsInteger := FSpeciesId
-      else
-        ParamByName('species_id').Clear;
-      if (FSubspeciesGroupId > 0) then
-        ParamByName('subspecies_group_id').AsInteger := FSubspeciesGroupId
-      else
-        ParamByName('subspecies_group_id').Clear;
-      ParamByName('aid').AsInteger := FId;
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
-  finally
-    FreeAndNil(Qry);
-  end;
-end;
-
-procedure TTaxon.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
 end;
 
 function TTaxon.ToJSON: String;
@@ -588,40 +395,40 @@ var
 begin
   JSONObject := TJSONObject.Create;
   try
-    JSONObject.Add('Name', FFullName);
-    JSONObject.Add('Authorship', FAuthorship);
-    JSONObject.Add('Formatted name', FFormattedName);
-    JSONObject.Add('English name', FEnglishName);
-    JSONObject.Add('Portuguese name', FPortugueseName);
-    JSONObject.Add('Spanish name', FSpanishName);
-    JSONObject.Add('Valid taxon', FValidId);
-    JSONObject.Add('Taxon rank', ZOOLOGICAL_RANKS[FRankId]);
-    JSONObject.Add('Parent taxon', FParentTaxonId);
-    JSONObject.Add('Order', FOrderId);
-    JSONObject.Add('Family', FFamilyId);
-    JSONObject.Add('Subfamily', FSubfamilyId);
-    JSONObject.Add('Genus', FGenusId);
-    JSONObject.Add('Species', FSpeciesId);
-    JSONObject.Add('Subspecies group', FSubspeciesGroupId);
-    JSONObject.Add('Subspecies group name', FSubspeciesGroupEpithet);
-    JSONObject.Add('Incertae sedis', FIncertaeSedis);
-    JSONObject.Add('Sort number', FSortNum);
-    JSONObject.Add('Quick code', FQuickCode);
-    JSONObject.Add('IUCN status', FIucnStatus);
-    JSONObject.Add('Extinct', FExtinct);
-    JSONObject.Add('Extinction year', FExtinctionYear);
-    JSONObject.Add('Distribution', FDistribution);
-    JSONObject.Add('eBird code', FEbirdCode);
-    JSONObject.Add('Clements', FClementsTaxonomy);
-    JSONObject.Add('IOC', FIocTaxonomy);
-    JSONObject.Add('English name (IOC)', FIocEnglishName);
-    JSONObject.Add('Parent taxon (IOC)', FIocParentTaxonId);
-    JSONObject.Add('Taxon rank (IOC)', ZOOLOGICAL_RANKS[FIocRankId]);
-    JSONObject.Add('Valid taxon (IOC)', FIocValidId);
-    JSONObject.Add('Distribution (IOC)', FIocDistribution);
-    JSONObject.Add('Sort number (IOC)', FIocSortNum);
-    JSONObject.Add('CBRO', FCbroTaxonomy);
-    JSONObject.Add('Other portuguese names', FOtherPortugueseNames);
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('authorship', FAuthorship);
+    JSONObject.Add('formatted_name', FFormattedName);
+    JSONObject.Add('english_name', FEnglishName);
+    JSONObject.Add('portuguese_name', FPortugueseName);
+    JSONObject.Add('spanish_name', FSpanishName);
+    JSONObject.Add('valid_id', FValidId);
+    JSONObject.Add('taxon_rank', ZOOLOGICAL_RANKS[FRank]);
+    JSONObject.Add('parent_taxon_id', FParentTaxonId);
+    JSONObject.Add('order_id', FOrderId);
+    JSONObject.Add('family_id', FFamilyId);
+    JSONObject.Add('subfamily_id', FSubfamilyId);
+    JSONObject.Add('genus_id', FGenusId);
+    JSONObject.Add('species_id', FSpeciesId);
+    JSONObject.Add('subspecies_group_id', FSubspeciesGroupId);
+    JSONObject.Add('subspecies_group_name', FSubspeciesGroupEpithet);
+    JSONObject.Add('incertae_sedis', FIncertaeSedis);
+    JSONObject.Add('sort_number', FSortNum);
+    JSONObject.Add('quick_code', FQuickCode);
+    JSONObject.Add('iucn_status', FIucnStatus);
+    JSONObject.Add('extinct', FExtinct);
+    JSONObject.Add('extinction_year', FExtinctionYear);
+    JSONObject.Add('distribution', FDistribution);
+    JSONObject.Add('ebird_code', FEbirdCode);
+    JSONObject.Add('clements_taxonomy', FClementsTaxonomy);
+    JSONObject.Add('ioc_taxonomy', FIocTaxonomy);
+    JSONObject.Add('ioc_english_name', FIocEnglishName);
+    JSONObject.Add('ioc_parent_taxon_id', FIocParentTaxonId);
+    JSONObject.Add('ioc_taxon_rank', ZOOLOGICAL_RANKS[FIocRank]);
+    JSONObject.Add('ioc_valid_id', FIocValidId);
+    JSONObject.Add('ioc_distribution', FIocDistribution);
+    JSONObject.Add('ioc_sort_number', FIocSortNum);
+    JSONObject.Add('cbro_taxonomy', FCbroTaxonomy);
+    JSONObject.Add('other_portuguese_names', FOtherPortugueseNames);
 
     Result := JSONObject.AsJSON;
   finally
@@ -629,267 +436,125 @@ begin
   end;
 end;
 
-procedure TTaxon.Update;
+function TTaxon.ToString: String;
+begin
+  Result := Format('Band(Id=%d, FullName=%s, Authorship=%s, FormattedName=%s, EnglishName=%s, PortugueseName=%s, ' +
+    'SpanishName=%s, ValidId=%d, Rank=%s, ParentTaxonId=%d, OrderId=%d, FamilyId=%d, SubfamilyId=%d, GenusId=%d, ' +
+    'SpeciesId=%d, SubspeciesGroupId=%d, SubspeciesGroupName=%s, IncertaeSedis=%d, SortNum=%f, QuickCode=%s, ' +
+    'IucnStatus=%s, Extinct=%s, ExtinctionYear=%s, Distribution=%s, EbirdCode=%s, ClementsTaxonomy=%s, ' +
+    'IocTaxonomy=%s, IocEnglishName=%s, IocParentTaxonId=%d, IocRank=%s, IocValidId=%d, IocDistribution=%s, ' +
+    'IocSortNum=%f, CbroTaxonomy=%s, OtherPortugueseNames=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, FAuthorship, FFormattedName, FEnglishName, FPortugueseName, FSpanishName, FValidId,
+    ZOOLOGICAL_RANKS[FRank], FParentTaxonId, FOrderId, FFamilyId, FSubfamilyId, FGenusId, FSpeciesId,
+    FSubspeciesGroupId, FSubspeciesGroupEpithet, FIncertaeSedis, FSortNum, FQuickCode, FIucnStatus,
+    BoolToStr(FExtinct, 'True', 'False'), FExtinctionYear, FDistribution, FEbirdCode,
+    BoolToStr(FClementsTaxonomy, 'True', 'False'), BoolToStr(FIocTaxonomy, 'True', 'False'), FIocEnglishName,
+    FIocParentTaxonId, ZOOLOGICAL_RANKS[FIocRank], FIocValidId, FIocDistribution, FIocSortNum,
+    BoolToStr(FCbroTaxonomy, 'True', 'False'), FOtherPortugueseNames,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TTaxon.Validate(out Msg: string): Boolean;
+begin
+  if FFullName = EmptyStr then
+  begin
+    Msg := 'Fullname required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TTaxonRepository }
+
+procedure TTaxonRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TTaxon;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TTaxon.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TTaxon) then
+    raise Exception.Create('Delete: Expected TTaxon');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TTaxon(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TTaxonRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
       Clear;
-      Add('UPDATE zoo_taxa SET ' +
-        'full_name = :full_name, ' +
-        'authorship = :authorship, ' +
-        'formatted_name = :formatted_name, ' +
-        'english_name = :english_name, ' +
-        'portuguese_name = :portuguese_name, ' +
-        'spanish_name = :spanish_name, ' +
-        'quick_code = :quick_code, ' +
-        'rank_id = :rank_id, ' +
-        'parent_taxon_id = :parent_taxon_id, ' +
-        'valid_id = :valid_id, ' +
-        'iucn_status = :iucn_status, ' +
-        'extinct = :extinct, ' +
-        'extinction_year = :extinction_year, ' +
-        'sort_num = :sort_num, ' +
-        'group_name = :group_name, ' +
-        'incertae_sedis = :incertae_sedis, ' +
-        'ebird_code = :ebird_code, ' +
-        'clements_taxonomy = :clements_taxonomy, ' +
-        'ioc_taxonomy = :ioc_taxonomy, ' +
-        'ioc_rank_id = :ioc_rank_id, ' +
-        'ioc_parent_taxon_id = :ioc_parent_taxon_id, ' +
-        'ioc_valid_id = :ioc_valid_id, ' +
-        'ioc_sort_num = :ioc_sort_num, ' +
-        'ioc_english_name = :ioc_english_name, ' +
-        'cbro_taxonomy = :cbro_taxonomy, ' +
-        'other_portuguese_names = :other_portuguese_names, ' +
-        'distribution = :distribution, ' +
-        'ioc_distribution = :ioc_distribution, ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (taxon_id = :taxon_id)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('full_name').AsString := FFullName;
-      ParamByName('authorship').AsString := FAuthorship;
-      ParamByName('formatted_name').AsString := FFormattedName;
-      ParamByName('english_name').AsString := FEnglishName;
-      ParamByName('portuguese_name').AsString := FPortugueseName;
-      ParamByName('spanish_name').AsString := FSpanishName;
-      ParamByName('quick_code').AsString := FQuickCode;
-      ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[FRankId]);
-      if (FParentTaxonId > 0) then
-        ParamByName('parent_taxon_id').AsInteger := FParentTaxonId
-      else
-        ParamByName('parent_taxon_id').Clear;
-      if (FValidId > 0) then
-        ParamByName('valid_id').AsInteger := FValidId
-      else
-        ParamByName('valid_id').Clear;
-      ParamByName('iucn_status').AsString := FIucnStatus;
-      ParamByName('extinct').AsBoolean := FExtinct;
-      ParamByName('extinction_year').AsString := FExtinctionYear;
-      ParamByName('sort_num').AsFloat := FSortNum;
-      ParamByName('group_name').AsString := FSubspeciesGroupEpithet;
-      ParamByName('incertae_sedis').AsInteger := FIncertaeSedis;
-      ParamByName('ebird_code').AsString := FEbirdCode;
-      ParamByName('clements_taxonomy').AsBoolean := FClementsTaxonomy;
-      ParamByName('ioc_taxonomy').AsBoolean := FIocTaxonomy;
-      ParamByName('ioc_rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[FIocRankId]);
-      if (FIocParentTaxonId > 0) then
-        ParamByName('ioc_parent_taxon_id').AsInteger := FIocParentTaxonId
-      else
-        ParamByName('ioc_parent_taxon_id').Clear;
-      if (FIocValidId > 0) then
-        ParamByName('ioc_valid_id').AsInteger := FIocValidId
-      else
-        ParamByName('ioc_valid_id').Clear;
-      ParamByName('ioc_sort_num').AsFloat := FIocSortNum;
-      ParamByName('ioc_english_name').AsString := FIocEnglishName;
-      ParamByName('cbro_taxonomy').AsBoolean := FCbroTaxonomy;
-      ParamByName('other_portuguese_names').AsString := FOtherPortugueseNames;
-      ParamByName('distribution').AsString := FDistribution;
-      ParamByName('ioc_distribution').AsString := FIocDistribution;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('taxon_id').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_TAXON_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      // Get the taxon hierarchy
-      if (FParentTaxonId > 0) then
-      begin
-        Clear;
-        Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id, subspecies_group_id FROM zoo_taxa');
-        Add('WHERE taxon_id = :ataxon');
-        ParamByName('ataxon').AsInteger := FParentTaxonId;
-        Open;
-        FOrderId := FieldByName('order_id').AsInteger;
-        FFamilyId := FieldByName('family_id').AsInteger;
-        FSubfamilyId := FieldByName('subfamily_id').AsInteger;
-        FGenusId := FieldByName('genus_id').AsInteger;
-        FSpeciesId := FieldByName('species_id').AsInteger;
-        FSubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
-        Close;
-      end;
-      case FRankId of
-        trOrder:          FOrderId := FId;
-        trFamily:         FFamilyId := FId;
-        trSubfamily:      FSubfamilyId := FId;
-        trGenus:          FGenusId := FId;
-        trSpecies:        FSpeciesId := FId;
-        trMonotypicGroup,
-        trPolitypicGroup: FSubspeciesGroupId := FId;
-      end;
-      // Save the taxon hierarchy
-      Clear;
-      Add('UPDATE zoo_taxa SET');
-      Add('  order_id = :order_id,');
-      Add('  family_id = :family_id,');
-      Add('  subfamily_id = :subfamily_id,');
-      Add('  genus_id = :genus_id,');
-      Add('  species_id = :species_id,');
-      Add('  subspecies_group_id = :subspecies_group_id');
-      Add('WHERE taxon_id = :aid');
-      if (FOrderId > 0) then
-        ParamByName('order_id').AsInteger := FOrderId
-      else
-        ParamByName('order_id').Clear;
-      if (FFamilyId > 0) then
-        ParamByName('family_id').AsInteger := FFamilyId
-      else
-        ParamByName('family_id').Clear;
-      if (FSubfamilyId > 0) then
-        ParamByName('subfamily_id').AsInteger := FSubfamilyId
-      else
-        ParamByName('subfamily_id').Clear;
-      if (FGenusId > 0) then
-        ParamByName('genus_id').AsInteger := FGenusId
-      else
-        ParamByName('genus_id').Clear;
-      if (FSpeciesId > 0) then
-        ParamByName('species_id').AsInteger := FSpeciesId
-      else
-        ParamByName('species_id').Clear;
-      if (FSubspeciesGroupId > 0) then
-        ParamByName('subspecies_group_id').AsInteger := FSubspeciesGroupId
-      else
-        ParamByName('subspecies_group_id').Clear;
-      ParamByName('aid').AsInteger := FId;
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-function TTaxon.Diff(aOld: TTaxon; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscScientificName + ' (HTML)', aOld.FormattedName, FFormattedName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscParentTaxonID, aOld.ParentTaxonId, FParentTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonomicRankID, aOld.RankId, FRankId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAuthorship, aOld.Authorship, FAuthorship, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonomicSequence, aOld.SortNum, FSortNum, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscQuickCode, aOld.QuickCode, FQuickCode, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEnglishName, aOld.EnglishName, FEnglishName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPortugueseName, aOld.PortugueseName, FPortugueseName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSpanishName, aOld.SpanishName, FSpanishName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscValidNameID, aOld.ValidId, FValidId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscConservationStatus, aOld.IucnStatus, FIucnStatus, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscExtinct, aOld.Extinct, FExtinct, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscExtinctionYear, aOld.ExtinctionYear, FExtinctionYear, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDistribution, aOld.Distribution, FDistribution, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEbirdCode, aOld.EbirdCode, FEbirdCode, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscClements, aOld.ClementsTaxonomy, FClementsTaxonomy, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOrderID, aOld.OrderId, FOrderId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFamilyID, aOld.FamilyId, FFamilyId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSubfamilyID, aOld.SubfamilyId, FSubfamilyId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscGenusID, aOld.GenusId, FGenusId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSpeciesID, aOld.SpeciesId, FSpeciesId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSubspeciesGroupID, aOld.SubspeciesGroupId, FSubspeciesGroupId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSubspeciesGroup, aOld.SubspeciesGroupEpithet, FSubspeciesGroupEpithet, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIncertaeSedis, aOld.IncertaeSedis, FIncertaeSedis, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIOC, aOld.IocTaxonomy, FIocTaxonomy, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEnglishName + ' (IOC)', aOld.IocEnglishName, FIocEnglishName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscParentTaxonID + ' (IOC)', aOld.IocParentTaxonId, FIocParentTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonomicRankID + ' (IOC)', aOld.IocRankId, FIocRankId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscValidNameID + ' (IOC)', aOld.IocValidId, FIocValidId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDistribution + ' (IOC)', aOld.IocDistribution, FIocDistribution, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonomicSequence + ' (IOC)', aOld.IocSortNum, FIocSortNum, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCBRO, aOld.CbroTaxonomy, FCbroTaxonomy, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscOtherPortugueseNames, aOld.OtherPortugueseNames, FOtherPortugueseNames, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TTaxon.Find(const FieldName: String; const Value: Variant): Boolean;
+function TTaxonRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_TAXON_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TTaxonRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..6] of string = (COL_TAXON_ID, COL_FULL_NAME, COL_ENGLISH_NAME, COL_PORTUGUESE_NAME,
+    COL_SPANISH_NAME, COL_QUICK_CODE, COL_EBIRD_CODE); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TTaxon) then
+    raise Exception.Create('FindBy: Expected TTaxon');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -943,9 +608,7 @@ begin
 
     if not EOF then
     begin
-      GetData(Qry);
-
-      Result := True;
+      Hydrate(Qry, TTaxon(E));
     end;
 
     Close;
@@ -954,21 +617,475 @@ begin
   end;
 end;
 
+procedure TTaxonRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TTaxon) then
+    raise Exception.Create('GetById: Expected TTaxon');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT ' +
+      'taxon_id, ' +
+      'full_name, ' +
+      'authorship, ' +
+      'formatted_name, ' +
+      'english_name, ' +
+      'portuguese_name, ' +
+      'spanish_name, ' +
+      'quick_code, ' +
+      'rank_id, ' +
+      'parent_taxon_id, ' +
+      'valid_id, ' +
+      'iucn_status, ' +
+      'extinct, ' +
+      'extinction_year, ' +
+      'sort_num, ' +
+      'group_name, ' +
+      'order_id, ' +
+      'family_id, ' +
+      'subfamily_id, ' +
+      'genus_id, ' +
+      'species_id, ' +
+      'subspecies_group_id, ' +
+      'incertae_sedis, ' +
+      'ebird_code, ' +
+      'clements_taxonomy, ' +
+      'ioc_taxonomy, ' +
+      'ioc_rank_id, ' +
+      'ioc_parent_taxon_id, ' +
+      'ioc_valid_id, ' +
+      'ioc_sort_num, ' +
+      'ioc_english_name, ' +
+      'cbro_taxonomy, ' +
+      'other_portuguese_names, ' +
+      'distribution, ' +
+      'ioc_distribution, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status ' +
+      'FROM zoo_taxa');
+    Add('WHERE taxon_id = :cod');
+    ParamByName('COD').AsInteger := Id;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, TTaxon(E));
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TTaxonRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TTaxon;
+  RankAbbrev, IocRankAbbrev: String;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TTaxon) then
+    raise Exception.Create('Hydrate: Expected TTaxon');
+
+  R := TTaxon(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('taxon_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.FormattedName := FieldByName('formatted_name').AsString;
+    R.ParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
+    if FieldByName('rank_id').AsInteger > 0 then
+    begin
+      RankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('rank_id').AsInteger);
+      R.Rank := StringToZooRank(RankAbbrev);
+    end;
+    R.Authorship := FieldByName('authorship').AsString;
+    R.SortNum := FieldByName('sort_num').AsFloat;
+    R.QuickCode := FieldByName('quick_code').AsString;
+    R.EnglishName := FieldByName('english_name').AsString;
+    R.PortugueseName := FieldByName('portuguese_name').AsString;
+    R.SpanishName := FieldByName('spanish_name').AsString;
+    R.ValidId := FieldByName('valid_id').AsInteger;
+    R.IucnStatus := FieldByName('iucn_status').AsString;
+    R.Extinct := FieldByName('extinct').AsBoolean;
+    R.ExtinctionYear := FieldByName('extinction_year').AsString;
+    R.Distribution := FieldByName('distribution').AsString;
+    R.EbirdCode := FieldByName('ebird_code').AsString;
+    R.ClementsTaxonomy := FieldByName('clements_taxonomy').AsBoolean;
+    R.OrderId := FieldByName('order_id').AsInteger;
+    R.FamilyId := FieldByName('family_id').AsInteger;
+    R.SubfamilyId := FieldByName('subfamily_id').AsInteger;
+    R.GenusId := FieldByName('genus_id').AsInteger;
+    R.SpeciesId := FieldByName('species_id').AsInteger;
+    R.SubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
+    R.SubspeciesGroupEpithet := FieldByName('group_name').AsString;
+    R.IncertaeSedis := FieldByName('incertae_sedis').AsInteger;
+    R.IocTaxonomy := FieldByName('ioc_taxonomy').AsBoolean;
+    R.IocEnglishName := FieldByName('ioc_english_name').AsString;
+    R.IocParentTaxonId := FieldByName('ioc_parent_taxon_id').AsInteger;
+    if FieldByName('ioc_rank_id').AsInteger > 0 then
+    begin
+      IocRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('ioc_rank_id').AsInteger);
+      R.IocRank := StringToZooRank(IocRankAbbrev);
+    end;
+    R.IocValidId := FieldByName('ioc_valid_id').AsInteger;
+    R.IocDistribution := FieldByName('ioc_distribution').AsString;
+    R.IocSortNum := FieldByName('ioc_sort_num').AsFloat;
+    R.CbroTaxonomy := FieldByName('cbro_taxonomy').AsBoolean;
+    R.OtherPortugueseNames := FieldByName('other_portuguese_names').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TTaxonRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TTaxon;
+begin
+  if not (E is TTaxon) then
+    raise Exception.Create('Insert: Expected TTaxon');
+
+  R := TTaxon(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('INSERT INTO zoo_taxa (' +
+      'full_name, ' +
+      'authorship, ' +
+      'formatted_name, ' +
+      'english_name, ' +
+      'portuguese_name, ' +
+      'spanish_name, ' +
+      'quick_code, ' +
+      'rank_id, ' +
+      'parent_taxon_id, ' +
+      'valid_id, ' +
+      'iucn_status, ' +
+      'extinct, ' +
+      'extinction_year, ' +
+      'sort_num, ' +
+      'group_name, ' +
+      'incertae_sedis, ' +
+      'ebird_code, ' +
+      'clements_taxonomy, ' +
+      'ioc_taxonomy, ' +
+      'ioc_rank_id, ' +
+      'ioc_parent_taxon_id, ' +
+      'ioc_valid_id, ' +
+      'ioc_sort_num, ' +
+      'ioc_english_name, ' +
+      'cbro_taxonomy, ' +
+      'other_portuguese_names, ' +
+      'distribution, ' +
+      'ioc_distribution, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':full_name, ' +
+      ':authorship, ' +
+      ':formatted_name, ' +
+      ':english_name, ' +
+      ':portuguese_name, ' +
+      ':spanish_name, ' +
+      ':quick_code, ' +
+      ':rank_id, ' +
+      ':parent_taxon_id, ' +
+      ':valid_id, ' +
+      ':iucn_status, ' +
+      ':extinct, ' +
+      ':extinction_year, ' +
+      ':sort_num, ' +
+      ':group_name, ' +
+      ':incertae_sedis, ' +
+      ':ebird_code, ' +
+      ':clements_taxonomy, ' +
+      ':ioc_taxonomy, ' +
+      ':ioc_rank_id, ' +
+      ':ioc_parent_taxon_id, ' +
+      ':ioc_valid_id, ' +
+      ':ioc_sort_num, ' +
+      ':ioc_english_name, ' +
+      ':cbro_taxonomy, ' +
+      ':other_portuguese_names, ' +
+      ':distribution, ' +
+      ':ioc_distribution, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
+
+    ParamByName('full_name').AsString := R.FullName;
+    SetStrParam(ParamByName('authorship'), R.Authorship);
+    SetStrParam(ParamByName('formatted_name'), R.FormattedName);
+    SetStrParam(ParamByName('english_name'), R.EnglishName);
+    SetStrParam(ParamByName('portuguese_name'), R.PortugueseName);
+    SetStrParam(ParamByName('spanish_name'), R.SpanishName);
+    SetStrParam(ParamByName('quick_code'), R.QuickCode);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.Rank]);
+    SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
+    SetForeignParam(ParamByName('valid_id'), R.ValidId);
+    SetStrParam(ParamByName('iucn_status'), R.IucnStatus);
+    ParamByName('extinct').AsBoolean := R.Extinct;
+    SetStrParam(ParamByName('extinction_year'), R.ExtinctionYear);
+    SetFloatParam(ParamByName('sort_num'), R.SortNum);
+    SetStrParam(ParamByName('group_name'), R.SubspeciesGroupEpithet);
+    SetForeignParam(ParamByName('incertae_sedis'), R.IncertaeSedis);
+    SetStrParam(ParamByName('ebird_code'), R.EbirdCode);
+    ParamByName('clements_taxonomy').AsBoolean := R.ClementsTaxonomy;
+    ParamByName('ioc_taxonomy').AsBoolean := R.IocTaxonomy;
+    SetForeignParam(ParamByName('ioc_rank_id'), GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.IocRank]));
+    SetForeignParam(ParamByName('ioc_parent_taxon_id'), R.IocParentTaxonId);
+    SetForeignParam(ParamByName('ioc_valid_id'), R.IocValidId);
+    SetFloatParam(ParamByName('ioc_sort_num'), R.IocSortNum);
+    SetStrParam(ParamByName('ioc_english_name'), R.IocEnglishName);
+    ParamByName('cbro_taxonomy').AsBoolean := R.CbroTaxonomy;
+    SetStrParam(ParamByName('other_portuguese_names'), R.OtherPortugueseNames);
+    SetStrParam(ParamByName('distribution'), R.Distribution);
+    SetStrParam(ParamByName('ioc_distribution'), R.IocDistribution);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+
+    // Get the taxon hierarchy
+    if (R.ParentTaxonId > 0) then
+    begin
+      Clear;
+      Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id, subspecies_group_id FROM zoo_taxa');
+      Add('WHERE taxon_id = :ataxon');
+      ParamByName('ataxon').AsInteger := R.ParentTaxonId;
+      Open;
+      R.OrderId := FieldByName('order_id').AsInteger;
+      R.FamilyId := FieldByName('family_id').AsInteger;
+      R.SubfamilyId := FieldByName('subfamily_id').AsInteger;
+      R.GenusId := FieldByName('genus_id').AsInteger;
+      R.SpeciesId := FieldByName('species_id').AsInteger;
+      R.SubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
+      Close;
+    end;
+    case R.Rank of
+      trOrder:          R.OrderId := R.Id;
+      trFamily:         R.FamilyId := R.Id;
+      trSubfamily:      R.SubfamilyId := R.Id;
+      trGenus:          R.GenusId := R.Id;
+      trSpecies:        R.SpeciesId := R.Id;
+      trMonotypicGroup,
+      trPolitypicGroup: R.SubspeciesGroupId := R.Id;
+    end;
+    // Save the taxon hierarchy
+    Clear;
+    Add('UPDATE zoo_taxa SET');
+    Add('  order_id = :order_id,');
+    Add('  family_id = :family_id,');
+    Add('  subfamily_id = :subfamily_id,');
+    Add('  genus_id = :genus_id,');
+    Add('  species_id = :species_id,');
+    Add('  subspecies_group_id = :subspecies_group_id');
+    Add('WHERE taxon_id = :aid');
+    SetForeignParam(ParamByName('order_id'), R.OrderId);
+    SetForeignParam(ParamByName('family_id'), R.FamilyId);
+    SetForeignParam(ParamByName('subfamily_id'), R.SubfamilyId);
+    SetForeignParam(ParamByName('genus_id'), R.GenusId);
+    SetForeignParam(ParamByName('species_id'), R.SpeciesId);
+    SetForeignParam(ParamByName('subspecies_group_id'), R.SubspeciesGroupId);
+    ParamByName('aid').AsInteger := R.Id;
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TTaxonRepository.TableName: string;
+begin
+  Result := TBL_ZOO_TAXA;
+end;
+
+procedure TTaxonRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TTaxon;
+begin
+  if not (E is TTaxon) then
+    raise Exception.Create('Update: Expected TTaxon');
+
+  R := TTaxon(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TTaxonRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE zoo_taxa SET ' +
+      'full_name = :full_name, ' +
+      'authorship = :authorship, ' +
+      'formatted_name = :formatted_name, ' +
+      'english_name = :english_name, ' +
+      'portuguese_name = :portuguese_name, ' +
+      'spanish_name = :spanish_name, ' +
+      'quick_code = :quick_code, ' +
+      'rank_id = :rank_id, ' +
+      'parent_taxon_id = :parent_taxon_id, ' +
+      'valid_id = :valid_id, ' +
+      'iucn_status = :iucn_status, ' +
+      'extinct = :extinct, ' +
+      'extinction_year = :extinction_year, ' +
+      'sort_num = :sort_num, ' +
+      'group_name = :group_name, ' +
+      'incertae_sedis = :incertae_sedis, ' +
+      'ebird_code = :ebird_code, ' +
+      'clements_taxonomy = :clements_taxonomy, ' +
+      'ioc_taxonomy = :ioc_taxonomy, ' +
+      'ioc_rank_id = :ioc_rank_id, ' +
+      'ioc_parent_taxon_id = :ioc_parent_taxon_id, ' +
+      'ioc_valid_id = :ioc_valid_id, ' +
+      'ioc_sort_num = :ioc_sort_num, ' +
+      'ioc_english_name = :ioc_english_name, ' +
+      'cbro_taxonomy = :cbro_taxonomy, ' +
+      'other_portuguese_names = :other_portuguese_names, ' +
+      'distribution = :distribution, ' +
+      'ioc_distribution = :ioc_distribution, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ');
+    Add('WHERE (taxon_id = :taxon_id)');
+
+    ParamByName('full_name').AsString := R.FullName;
+    SetStrParam(ParamByName('authorship'), R.Authorship);
+    SetStrParam(ParamByName('formatted_name'), R.FormattedName);
+    SetStrParam(ParamByName('english_name'), R.EnglishName);
+    SetStrParam(ParamByName('portuguese_name'), R.PortugueseName);
+    SetStrParam(ParamByName('spanish_name'), R.SpanishName);
+    SetStrParam(ParamByName('quick_code'), R.QuickCode);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.Rank]);
+    SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
+    SetForeignParam(ParamByName('valid_id'), R.ValidId);
+    SetStrParam(ParamByName('iucn_status'), R.IucnStatus);
+    ParamByName('extinct').AsBoolean := R.Extinct;
+    SetStrParam(ParamByName('extinction_year'), R.ExtinctionYear);
+    SetFloatParam(ParamByName('sort_num'), R.SortNum);
+    SetStrParam(ParamByName('group_name'), R.SubspeciesGroupEpithet);
+    SetForeignParam(ParamByName('incertae_sedis'), R.IncertaeSedis);
+    SetStrParam(ParamByName('ebird_code'), R.EbirdCode);
+    ParamByName('clements_taxonomy').AsBoolean := R.ClementsTaxonomy;
+    ParamByName('ioc_taxonomy').AsBoolean := R.IocTaxonomy;
+    SetForeignParam(ParamByName('ioc_rank_id'), GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.IocRank]));
+    SetForeignParam(ParamByName('ioc_parent_taxon_id'), R.IocParentTaxonId);
+    SetForeignParam(ParamByName('ioc_valid_id'), R.IocValidId);
+    SetFloatParam(ParamByName('ioc_sort_num'), R.IocSortNum);
+    SetStrParam(ParamByName('ioc_english_name'), R.IocEnglishName);
+    ParamByName('cbro_taxonomy').AsBoolean := R.CbroTaxonomy;
+    SetStrParam(ParamByName('other_portuguese_names'), R.OtherPortugueseNames);
+    SetStrParam(ParamByName('distribution'), R.Distribution);
+    SetStrParam(ParamByName('ioc_distribution'), R.IocDistribution);
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('band_id').AsInteger := R.Id;
+
+    ExecSQL;
+
+    // Get the taxon hierarchy
+    if (R.ParentTaxonId > 0) then
+    begin
+      Clear;
+      Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id, subspecies_group_id FROM zoo_taxa');
+      Add('WHERE taxon_id = :ataxon');
+      ParamByName('ataxon').AsInteger := R.ParentTaxonId;
+      Open;
+      R.OrderId := FieldByName('order_id').AsInteger;
+      R.FamilyId := FieldByName('family_id').AsInteger;
+      R.SubfamilyId := FieldByName('subfamily_id').AsInteger;
+      R.GenusId := FieldByName('genus_id').AsInteger;
+      R.SpeciesId := FieldByName('species_id').AsInteger;
+      R.SubspeciesGroupId := FieldByName('subspecies_group_id').AsInteger;
+      Close;
+    end;
+    case R.Rank of
+      trOrder:          R.OrderId := R.Id;
+      trFamily:         R.FamilyId := R.Id;
+      trSubfamily:      R.SubfamilyId := R.Id;
+      trGenus:          R.GenusId := R.Id;
+      trSpecies:        R.SpeciesId := R.Id;
+      trMonotypicGroup,
+      trPolitypicGroup: R.SubspeciesGroupId := R.Id;
+    end;
+    // Save the taxon hierarchy
+    Clear;
+    Add('UPDATE zoo_taxa SET');
+    Add('  order_id = :order_id,');
+    Add('  family_id = :family_id,');
+    Add('  subfamily_id = :subfamily_id,');
+    Add('  genus_id = :genus_id,');
+    Add('  species_id = :species_id,');
+    Add('  subspecies_group_id = :subspecies_group_id');
+    Add('WHERE taxon_id = :aid');
+    SetForeignParam(ParamByName('order_id'), R.OrderId);
+    SetForeignParam(ParamByName('family_id'), R.FamilyId);
+    SetForeignParam(ParamByName('subfamily_id'), R.SubfamilyId);
+    SetForeignParam(ParamByName('genus_id'), R.GenusId);
+    SetForeignParam(ParamByName('species_id'), R.SpeciesId);
+    SetForeignParam(ParamByName('subspecies_group_id'), R.SubspeciesGroupId);
+    ParamByName('aid').AsInteger := R.Id;
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 { TRank }
 
 constructor TRank.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TRank.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TRank then
+  begin
+    FName := TRank(Source).Name;
+    FAbbreviation := TRank(Source).Abbreviation;
+    FRankIndex := TRank(Source).RankIndex;
+    FMainRank := TRank(Source).MainRank;
+    FSubrank := TRank(Source).Subrank;
+    FInfrarank := TRank(Source).Infrarank;
+    FInfraspecific := TRank(Source).Infraspecific;
+    FZoologicalCode := TRank(Source).ZoologicalCode;
+    FBotanicalCode := TRank(Source).BotanicalCode;
+  end;
 end;
 
 procedure TRank.Clear;
 begin
   inherited Clear;
   FName := EmptyStr;
-  FAcronym := EmptyStr;
+  FAbbreviation := EmptyStr;
   FRankIndex := 0;
   FMainRank := False;
   FSubrank := False;
@@ -978,52 +1095,247 @@ begin
   FBotanicalCode := False;
 end;
 
-procedure TRank.GetData(aKey: Integer);
+function TRank.Clone: TXolmisRecord;
+begin
+  Result := TRank(inherited Clone);
+end;
+
+function TRank.Diff(const aOld: TRank; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAbbreviation, aOld.Abbreviation, FAbbreviation, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSequence, aOld.RankIndex, FRankIndex, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMainRank, aOld.MainRank, FMainRank, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSubRank, aOld.Subrank, FSubrank, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscInfraRank, aOld.Infrarank, FInfrarank, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscInfraspecific, aOld.Infraspecific, FInfraspecific, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscZoologicalCode, aOld.ZoologicalCode, FZoologicalCode, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscBotanicalCode, aOld.BotanicalCode, FBotanicalCode, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TRank.EqualsTo(const Other: TRank): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TRank.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FName           := Obj.Get('rank_name', '');
+    FAbbreviation        := Obj.Get('abbreviation', '');
+    FRankIndex      := Obj.Get('rank_index', 0);
+    FMainRank       := Obj.Get('main_rank', False);
+    FSubrank        := Obj.Get('subrank', False);
+    FInfrarank      := Obj.Get('infrarank', False);
+    FInfraspecific  := Obj.Get('infraspecific', False);
+    FZoologicalCode := Obj.Get('zoological_code', True);
+    FBotanicalCode  := Obj.Get('botanical_code', False);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TRank.ToJSON: String;
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject.Create;
+  try
+    Obj.Add('rank_name', FName);
+    Obj.Add('abbreviation', FAbbreviation);
+    Obj.Add('rank_index', FRankIndex);
+    Obj.Add('main_rank', FMainRank);
+    Obj.Add('subrank', FSubrank);
+    Obj.Add('infrarank', FInfrarank);
+    Obj.Add('infraspecific', FInfraspecific);
+    Obj.Add('zoological_code', FZoologicalCode);
+    Obj.Add('botanical_code', FBotanicalCode);
+
+    Result := Obj.AsJSON;
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TRank.ToString: String;
+begin
+  Result := Format('Rank(Id=%d, Name=%s, Abbreviation=%s, RankIndex=%d, MainRank=%s, Subrank=%s, Infrarank=%s, ' +
+    'Infraspecific=%s, ZoologicalCode=%s, BotanicalCode=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FName, FAbbreviation, FRankIndex, BoolToStr(FMainRank, 'True', 'False'), BoolToStr(FSubrank, 'True', 'False'),
+    BoolToStr(FInfrarank, 'True', 'False'), BoolToStr(FInfraspecific, 'True', 'False'),
+    BoolToStr(FZoologicalCode, 'True', 'False'), BoolToStr(FBotanicalCode, 'True', 'False'),
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TRank.Validate(out Msg: string): Boolean;
+begin
+  if FName = EmptyStr then
+  begin
+    Msg := 'Name required.';
+    Exit(False);
+  end;
+  if FAbbreviation = EmptyStr then
+  begin
+    Msg := 'Abbreviation required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TRankRepository }
+
+function TRankRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_RANK_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TRankRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_RANK_ID, COL_RANK_NAME, COL_RANK_ABBREVIATION); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TRank) then
+    raise Exception.Create('FindBy: Expected TRank');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
+    MacroCheck := True;
+
+    Add('SELECT * FROM taxon_ranks');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TRank(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TRankRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TRank) then
+    raise Exception.Create('GetById: Expected TRank');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
     Clear;
     Add('SELECT * FROM taxon_ranks');
-    Add('WHERE rank_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    Add('WHERE band_id = :cod');
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TRank(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TRank.LoadFromDataSet(aDataSet: TDataSet);
+procedure TRankRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TRank;
 begin
-  if not aDataSet.Active then
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
     Exit;
+  if not (E is TRank) then
+    raise Exception.Create('Hydrate: Expected TRank');
 
+  R := TRank(E);
   with aDataSet do
   begin
-    FId := FieldByName('rank_id').AsInteger;
-    FName := FieldByName('rank_name').AsString;
-    FAcronym := FieldByName('rank_acronym').AsString;
-    FRankIndex := FieldByName('rank_seq').AsInteger;
-    FMainRank := FieldByName('main_rank').AsBoolean;
-    FSubrank := FieldByName('subrank').AsBoolean;
-    FInfrarank := FieldByName('infrarank').AsBoolean;
-    FInfraspecific := FieldByName('infraspecific').AsBoolean;
-    FZoologicalCode := FieldByName('iczn').AsBoolean;
-    FBotanicalCode := FieldByName('icbn').AsBoolean;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUpdateDate := FieldByName('update_date').AsDateTime;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
+    R.Id := FieldByName('rank_id').AsInteger;
+    R.Name := FieldByName('rank_name').AsString;
+    R.Abbreviation := FieldByName('rank_acronym').AsString;
+    R.RankIndex := FieldByName('rank_seq').AsInteger;
+    R.MainRank := FieldByName('main_rank').AsBoolean;
+    R.Subrank := FieldByName('subrank').AsBoolean;
+    R.Infrarank := FieldByName('infrarank').AsBoolean;
+    R.Infraspecific := FieldByName('infraspecific').AsBoolean;
+    R.ZoologicalCode := FieldByName('iczn').AsBoolean;
+    R.BotanicalCode := FieldByName('icbn').AsBoolean;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+function TRankRepository.TableName: string;
+begin
+  Result := TBL_TAXON_RANKS;
 end;
 
 initialization

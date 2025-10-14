@@ -208,6 +208,7 @@ procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   Reg: TBandingData;
+  TaxonRepo: TTaxonRepository;
   Taxon: TTaxon;
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
@@ -277,6 +278,7 @@ begin
         begin
           strDate := FormatDateTime(MASK_ISO_DATE, Reg.CaptureDate);
           strTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.CaptureTime);
+          TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
           IndividualRepo := TIndividualRepository.Create(DMM.sqlCon);
           CaptureRepo := TCaptureRepository.Create(DMM.sqlCon);
           BandRepo := TBandRepository.Create(DMM.sqlCon);
@@ -284,7 +286,8 @@ begin
           SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
 
           try
-            Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName));
+            Taxon := TTaxon.Create();
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName), Taxon);
             NetStation := TSamplingPlot.Create;
             Toponimo := TSite.Create;
             NetSite := TNetEffort.Create;
@@ -297,7 +300,7 @@ begin
 
             // Get valid taxon
             if Taxon.ValidId > 0 then
-              Taxon.GetData(Taxon.ValidId);
+              TaxonRepo.GetById(Taxon.ValidId, Taxon);
 
             // Get net station and locality
             SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
@@ -520,6 +523,7 @@ begin
             SPlotRepo.Free;
             CaptureRepo.Free;
             IndividualRepo.Free;
+            TaxonRepo.Free;
           end;
         end
         else

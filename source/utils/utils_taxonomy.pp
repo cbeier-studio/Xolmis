@@ -83,9 +83,9 @@ begin
   Result := trDomain;
   aRank := TRank.Create(aKey);
   try
-    Result := StringToZooRank(aRank.Acronym);
+    Result := StringToZooRank(aRank.Abbreviation);
     //for i := Low(ZOOLOGICAL_RANKS) to High(ZOOLOGICAL_RANKS) do
-    //  if aRank.Acronym = ZOOLOGICAL_RANKS[i] then
+    //  if aRank.Abbreviation = ZOOLOGICAL_RANKS[i] then
     //    Result := TZooRank(i);
   finally
     FreeAndNil(aRank);
@@ -1206,7 +1206,7 @@ begin
     NewName := MoveToName + ' ' + ExtractWord(3, OldName, [' ']);
   ParentSp := ToSpecies;
   Ssp := TTaxon.Create(aSubspecies);
-  aRankId := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[Ssp.RankId]);
+  aRankId := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[Ssp.Rank]);
   MoveToSp := TTaxon.Create(ToSpecies);
   //GravaLog('MOVE TO SPECIES', OldName + ' -> ' + MoveToName + ' = ' + NewName);
 

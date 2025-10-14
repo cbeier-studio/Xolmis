@@ -122,6 +122,7 @@ var
   //Reg: TNestRecord;
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
+  TaxonRepo: TTaxonRepository;
   Taxon: TTaxon;
   NestRepo: TNestRepository;
   Nest: TNest;
@@ -141,6 +142,7 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
   NestRepo := TNestRepository.Create(DMM.sqlCon);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
@@ -175,7 +177,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
-            Taxon.GetData(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('taxon').AsString));
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('taxon').AsString), Taxon);
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
@@ -276,6 +278,7 @@ begin
     FreeAndNil(CSV);
     SiteRepo.Free;
     NestRepo.Free;
+    TaxonRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
@@ -291,6 +294,7 @@ var
   Revision: TNestRevision;
   NestRepo: TNestRepository;
   Nest: TNest;
+  TaxonRepo: TTaxonRepository;
   Taxon: TTaxon;
   CSV: TSdfDataSet;
   aDate, aTime: String;
@@ -311,6 +315,7 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
   NestRepo := TNestRepository.Create(DMM.sqlCon);
   RevisionRepo := TNestRevisionRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
@@ -354,7 +359,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            Taxon.GetData(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString));
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
@@ -441,6 +446,7 @@ begin
     FreeAndNil(CSV);
     RevisionRepo.Free;
     NestRepo.Free;
+    TaxonRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
@@ -453,6 +459,7 @@ end;
 procedure ImportEggDataV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   aObserver: Integer;
+  TaxonRepo: TTaxonRepository;
   Taxon: TTaxon;
   NestRepo: TNestRepository;
   Nest: TNest;
@@ -476,6 +483,7 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+  TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
   NestRepo := TNestRepository.Create(DMM.sqlCon);
   EggRepo := TEggRepository. Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
@@ -518,7 +526,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            Taxon.GetData(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString));
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
@@ -625,6 +633,7 @@ begin
     FreeAndNil(CSV);
     EggRepo.Free;
     NestRepo.Free;
+    TaxonRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
