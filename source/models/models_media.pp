@@ -55,18 +55,16 @@ type
     FLicenseUri: String;
     //FThumbnail: TBitmap;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
-    function Diff(aOld: TImageData; var aList: TStrings): Boolean;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TImageData);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TImageData; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TImageData): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property ImageDate: TDate read FImageDate write FImageDate;
     property ImageTime: TTime read FImageTime write FImageTime;
@@ -92,6 +90,21 @@ type
     property LicenseOwner: String read FLicenseOwner write FLicenseOwner;
     property LicenseNotes: String read FLicenseNotes write FLicenseNotes;
     property LicenseUri: String read FLicenseUri write FLicenseUri;
+  end;
+
+  { TImageRepository }
+
+  TImageRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
   { TAudioData }
@@ -134,18 +147,16 @@ type
     FFullName: String;
     FNotes: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
-    function Diff(aOld: TAudioData; var aList: TStrings): Boolean;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TAudioData);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TAudioData; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TAudioData): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property RecordingDate: TDate read FRecordingDate write FRecordingDate;
     property RecordingTime: TTime read FRecordingTime write FRecordingTime;
@@ -184,6 +195,21 @@ type
     property Notes: String read FNotes write FNotes;
   end;
 
+  { TAudioRepository }
+
+  TAudioRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
   { TDocumentData }
 
   TDocumentData = class(TXolmisRecord)
@@ -212,18 +238,16 @@ type
     FLicenseNotes: String;
     FLicenseUri: String;
   public
-    constructor Create(aValue: Integer = 0);
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
-    procedure GetData(aKey: Integer);
-    procedure LoadFromDataSet(aDataSet: TDataSet);
-    procedure Insert;
-    function Find(const FieldName: String; const Value: Variant): Boolean;
-    function Diff(aOld: TDocumentData; var aList: TStrings): Boolean;
-    procedure Update;
-    procedure Save;
-    procedure Delete;
-    procedure Copy(aFrom: TDocumentData);
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TDocumentData; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TDocumentData): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
   published
     property Name: String read FName write FName;
     property DocumentDate: TDate read FDocumentDate write FDocumentDate;
@@ -250,18 +274,66 @@ type
     property LicenseUri: String read FLicenseUri write FLicenseUri;
   end;
 
+  { TDocumentRepository }
+
+  TDocumentRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
-uses utils_global, utils_locale, utils_validations, data_columns, data_setparam, models_users, udm_main;
+uses
+  utils_global, utils_locale, utils_validations, data_columns, data_setparam, models_users, data_consts,
+  data_getvalue, udm_main;
 
 { TImageData }
 
 constructor TImageData.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TImageData.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TImageData then
+  begin
+    FImageDate := TImageData(Source).ImageDate;
+    FImageTime := TImageData(Source).ImageTime;
+    FImageType := TImageData(Source).ImageType;
+    FFilename := TImageData(Source).Filename;
+    FSubtitle := TImageData(Source).Subtitle;
+    FAuthorId := TImageData(Source).AuthorId;
+    FCoordinatePrecision := TImageData(Source).CoordinatePrecision;
+    FLongitude := TImageData(Source).Longitude;
+    FLatitude := TImageData(Source).Latitude;
+    FLocalityId := TImageData(Source).LocalityId;
+    FTaxonId := TImageData(Source).TaxonId;
+    FCaptureId := TImageData(Source).CaptureId;
+    FIndividualId := TImageData(Source).IndividualId;
+    FSurveyId := TImageData(Source).SurveyId;
+    FSightingId := TImageData(Source).SightingId;
+    FNestId := TImageData(Source).NestId;
+    FNestRevisionId := TImageData(Source).NestRevisionId;
+    FEggId := TImageData(Source).EggId;
+    FSpecimenId := TImageData(Source).SpecimenId;
+    FLicenseType := TImageData(Source).LicenseType;
+    FLicenseYear := TImageData(Source).LicenseYear;
+    FLicenseOwner := TImageData(Source).LicenseOwner;
+    FLicenseNotes := TImageData(Source).LicenseNotes;
+    FLicenseUri := TImageData(Source).LicenseUri;
+  end;
 end;
 
 procedure TImageData.Clear;
@@ -293,61 +365,252 @@ begin
   FLicenseUri := EmptyStr;
 end;
 
-procedure TImageData.Copy(aFrom: TImageData);
+function TImageData.Clone: TXolmisRecord;
 begin
-  FImageDate := aFrom.ImageDate;
-  FImageTime := aFrom.ImageTime;
-  FImageType := aFrom.ImageType;
-  FFilename := aFrom.Filename;
-  FSubtitle := aFrom.Subtitle;
-  FAuthorId := aFrom.AuthorId;
-  FCoordinatePrecision := aFrom.CoordinatePrecision;
-  FLongitude := aFrom.Longitude;
-  FLatitude := aFrom.Latitude;
-  FLocalityId := aFrom.LocalityId;
-  FTaxonId := aFrom.TaxonId;
-  FCaptureId := aFrom.CaptureId;
-  FIndividualId := aFrom.IndividualId;
-  FSurveyId := aFrom.SurveyId;
-  FSightingId := aFrom.SightingId;
-  FNestId := aFrom.NestId;
-  FNestRevisionId := aFrom.NestRevisionId;
-  FEggId := aFrom.EggId;
-  FSpecimenId := aFrom.SpecimenId;
-  FLicenseType := aFrom.LicenseType;
-  FLicenseYear := aFrom.LicenseYear;
-  FLicenseOwner := aFrom.LicenseOwner;
-  FLicenseNotes := aFrom.LicenseNotes;
-  FLicenseUri := aFrom.LicenseUri;
+  Result := TImageData(inherited Clone);
 end;
 
-procedure TImageData.Delete;
+function TImageData.Diff(const aOld: TImageData; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDate, aOld.ImageDate, FImageDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.ImageTime, FImageTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscType, aOld.ImageType, FImageType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSpecimenID, aOld.SpecimenId, FSpecimenId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestRevisionID, aOld.NestRevisionId, FNestRevisionId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEggID, aOld.EggId, FEggId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseType, aOld.LicenseType, FLicenseType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseYear, aOld.LicenseYear, FLicenseYear, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseOwner, aOld.LicenseOwner, FLicenseOwner, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseNotes, aOld.LicenseNotes, FLicenseNotes, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseUri, aOld.LicenseUri, FLicenseUri, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TImageData.EqualsTo(const Other: TImageData): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TImageData.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FImageDate := Obj.Get('image_date', NullDate);
+    FImageTime := Obj.Get('image_time', NullTime);
+    case Obj.Get('image_type', '') of
+      'flank': FImageType := itBirdInHandFlank;
+      'belly': FImageType := itBirdInHandBelly;
+      'back':  FImageType := itBirdInHandBack;
+      'wing':  FImageType := itBirdInHandWing;
+      'tail':  FImageType := itBirdInHandTail;
+      'head':  FImageType := itBirdInHandHead;
+      'feet':  FImageType := itBirdInHandFeet;
+      'stand': FImageType := itFreeBirdStanding;
+      'fly':   FImageType := itFreeBirdFlying;
+      'swim':  FImageType := itFreeBirdSwimming;
+      'forr':  FImageType := itFreeBirdForraging;
+      'copul': FImageType := itFreeBirdCopulating;
+      'build': FImageType := itFreeBirdBuildingNest;
+      'disp':  FImageType := itFreeBirdDisplaying;
+      'incub': FImageType := itFreeBirdIncubating;
+      'vocal': FImageType := itFreeBirdVocalizing;
+      'agon':  FImageType := itFreeBirdAgonistic;
+      'dead':  FImageType := itDeadBird;
+      'flock': FImageType := itBirdFlock;
+      'nest':  FImageType := itBirdNest;
+      'egg':   FImageType := itBirdEgg;
+      'nstln': FImageType := itBirdNestling;
+      'paras': FImageType := itEctoparasite;
+      'fprnt': FImageType := itFootprint;
+      'feath': FImageType := itFeather;
+      'feces': FImageType := itFeces;
+      'food':  FImageType := itFood;
+      'envir': FImageType := itEnvironment;
+      'fwork': FImageType := itFieldwork;
+      'team':  FImageType := itTeam;
+    else
+      FImageType := itEmpty;
+    end;
+    FFilename   := Obj.Get('filename', '');
+    FSubtitle   := Obj.Get('subtitle', '');
+    FAuthorId   := Obj.Get('author_id', 0);
+    FLocalityId := Obj.Get('locality_id', 0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
+    FLongitude      := Obj.Get('longitude', 0.0);
+    FLatitude       := Obj.Get('latitude', 0.0);
+    FTaxonId        := Obj.Get('taxon_id', 0);
+    FIndividualId   := Obj.Get('individual_id', 0);
+    FCaptureId      := Obj.Get('capture_id', 0);
+    FSightingId     := Obj.Get('sighting_id', 0);
+    FSpecimenId     := Obj.Get('specimen_id', 0);
+    FSurveyId       := Obj.Get('survey_id', 0);
+    FNestId         := Obj.Get('nest_id', 0);
+    FNestRevisionId := Obj.Get('nest_revision_id', 0);
+    FEggId          := Obj.Get('egg_id', 0);
+    FLicenseType    := Obj.Get('license_type', '');
+    FLicenseYear    := Obj.Get('license_year', 0);
+    FLicenseOwner   := Obj.Get('license_owner', '');
+    FLicenseNotes   := Obj.Get('license_notes', '');
+    FLicenseUri     := Obj.Get('license_url', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TImageData.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('image_date', FImageDate);
+    JSONObject.Add('image_time', FImageTime);
+    JSONObject.Add('image_type', IMAGE_TYPES[FImageType]);
+    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('subtitle', FSubtitle);
+    JSONObject.Add('author_id', FAuthorId);
+    JSONObject.Add('locality_id', FLocalityId);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('capture_id', FCaptureId);
+    JSONObject.Add('sighting_id', FSightingId);
+    JSONObject.Add('specimen_id', FSpecimenId);
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('nest_id', FNestId);
+    JSONObject.Add('nest_revision_id', FNestRevisionId);
+    JSONObject.Add('egg_id', FEggId);
+    JSONObject.Add('license_type', FLicenseType);
+    JSONObject.Add('license_year', FLicenseYear);
+    JSONObject.Add('license_owner', FLicenseOwner);
+    JSONObject.Add('license_notes', FLicenseNotes);
+    JSONObject.Add('license_url', FLicenseUri);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TImageData.ToString: String;
+begin
+  Result := Format('ImageData(Id=%d, ImageDate=%s, ImageTime=%s, ImageType=%s, Filename=%s, Subtitle=%s, AuthorId=%d, ' +
+    'LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
+    'SightingId=%d, SpecimenId=%d, SurveyId=%d, NestId=%d, NestRevisionId=%d, EggId=%d, LicenseType=%s, ' +
+    'LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, DateToStr(FImageDate), TimeToStr(FImageTime), IMAGE_TYPES[FImageType], FFilename, FSubtitle, FAuthorId,
+    FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
+    FCaptureId, FSightingId, FSpecimenId, FSurveyId, FNestId, FNestRevisionId, FEggId, FLicenseType,
+    FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TImageData.Validate(out Msg: string): Boolean;
+begin
+  if FFilename = EmptyStr then
+  begin
+    Msg := 'Filename required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TImageRepository }
+
+procedure TImageRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TImageData;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TImageData.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TImageData) then
+    raise Exception.Create('Delete: Expected TImageData');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TImageData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TImageRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM images');
-      Add('WHERE (image_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_IMAGE_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -355,76 +618,50 @@ begin
   end;
 end;
 
-function TImageData.Diff(aOld: TImageData; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscDate, aOld.ImageDate, FImageDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.ImageTime, FImageTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscType, aOld.ImageType, FImageType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSpecimenID, aOld.SpecimenId, FSpecimenId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestRevisionID, aOld.NestRevisionId, FNestRevisionId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscEggID, aOld.EggId, FEggId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseType, aOld.LicenseType, FLicenseType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseYear, aOld.LicenseYear, FLicenseYear, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseOwner, aOld.LicenseOwner, FLicenseOwner, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseNotes, aOld.LicenseNotes, FLicenseNotes, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseUri, aOld.LicenseUri, FLicenseUri, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TImageData.Find(const FieldName: String; const Value: Variant): Boolean;
+function TImageRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_IMAGE_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TImageRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_IMAGE_ID, COL_SUBTITLE, COL_IMAGE_FILENAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TImageData) then
+    raise Exception.Create('FindBy: Expected TImageData');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -469,9 +706,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TImageData(E));
     end;
 
     Close;
@@ -480,14 +715,16 @@ begin
   end;
 end;
 
-procedure TImageData.GetData(aKey: Integer);
+procedure TImageRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TImageData) then
+    raise Exception.Create('GetById: Expected TImageData');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
         'image_id, ' +
@@ -525,360 +762,303 @@ begin
         'active_status ' +
       'FROM images');
     Add('WHERE image_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TImageData(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TImageData.Insert;
+procedure TImageRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TImageData;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TImageData) then
+    raise Exception.Create('Hydrate: Expected TImageData');
+
+  R := TImageData(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('image_id').AsInteger;
+    R.ImageDate := FieldByName('image_date').AsDateTime;
+    R.ImageTime := FieldByName('image_time').AsDateTime;
+    case FieldByName('image_type').AsString of
+      'flank': R.ImageType := itBirdInHandFlank;
+      'belly': R.ImageType := itBirdInHandBelly;
+      'back':  R.ImageType := itBirdInHandBack;
+      'wing':  R.ImageType := itBirdInHandWing;
+      'tail':  R.ImageType := itBirdInHandTail;
+      'head':  R.ImageType := itBirdInHandHead;
+      'feet':  R.ImageType := itBirdInHandFeet;
+      'stand': R.ImageType := itFreeBirdStanding;
+      'fly':   R.ImageType := itFreeBirdFlying;
+      'swim':  R.ImageType := itFreeBirdSwimming;
+      'forr':  R.ImageType := itFreeBirdForraging;
+      'copul': R.ImageType := itFreeBirdCopulating;
+      'build': R.ImageType := itFreeBirdBuildingNest;
+      'disp':  R.ImageType := itFreeBirdDisplaying;
+      'incub': R.ImageType := itFreeBirdIncubating;
+      'vocal': R.ImageType := itFreeBirdVocalizing;
+      'agon':  R.ImageType := itFreeBirdAgonistic;
+      'dead':  R.ImageType := itDeadBird;
+      'flock': R.ImageType := itBirdFlock;
+      'nest':  R.ImageType := itBirdNest;
+      'egg':   R.ImageType := itBirdEgg;
+      'nstln': R.ImageType := itBirdNestling;
+      'paras': R.ImageType := itEctoparasite;
+      'fprnt': R.ImageType := itFootprint;
+      'feath': R.ImageType := itFeather;
+      'feces': R.ImageType := itFeces;
+      'food':  R.ImageType := itFood;
+      'envir': R.ImageType := itEnvironment;
+      'fwork': R.ImageType := itFieldwork;
+      'team':  R.ImageType := itTeam;
+    else
+      R.ImageType := itEmpty;
+    end;
+    R.Filename := FieldByName('image_filename').AsString;
+    R.AuthorId := FieldByName('author_id').AsInteger;
+    R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.CaptureId := FieldByName('capture_id').AsInteger;
+    R.SightingId := FieldByName('sighting_id').AsInteger;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.NestId := FieldByName('nest_id').AsInteger;
+    R.NestRevisionId := FieldByName('nest_revision_id').AsInteger;
+    R.EggId := FieldByName('egg_id').AsInteger;
+    R.SpecimenId := FieldByName('specimen_id').AsInteger;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.LicenseType := FieldByName('license_type').AsString;
+    R.LicenseYear := FieldByName('license_year').AsInteger;
+    R.LicenseOwner := FieldByName('license_owner').AsString;
+    R.LicenseNotes := FieldByName('license_notes').AsString;
+    R.LicenseUri := FieldByName('license_uri').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TImageRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TImageData;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TImageData) then
+    raise Exception.Create('Insert: Expected TImageData');
+
+  R := TImageData(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO images (' +
+      'image_date, ' +
+      'image_time, ' +
+      'image_type, ' +
+      'taxon_id, ' +
+      'individual_id, ' +
+      'capture_id, ' +
+      'locality_id, ' +
+      'author_id, ' +
+      'survey_id, ' +
+      'sighting_id, ' +
+      'nest_id, ' +
+      'nest_revision_id, ' +
+      'egg_id, ' +
+      'specimen_id, ' +
+      'image_filename, ' +
+      'coordinate_precision, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'license_type, ' +
+      'license_year, ' +
+      'license_uri, ' +
+      'license_notes, ' +
+      'license_owner, ' +
+      'subtitle, ' +
+      'image_thumbnail, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      'date(:image_date), ' +
+      'time(:image_time), ' +
+      ':image_type, ' +
+      ':taxon_id, ' +
+      ':individual_id, ' +
+      ':capture_id, ' +
+      ':locality_id, ' +
+      ':author_id, ' +
+      ':survey_id, ' +
+      ':sighting_id, ' +
+      ':nest_id, ' +
+      ':nest_revision_id, ' +
+      ':egg_id, ' +
+      ':specimen_id, ' +
+      ':image_filename, ' +
+      ':coordinate_precision, ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':license_type, ' +
+      ':license_year, ' +
+      ':license_uri, ' +
+      ':license_notes, ' +
+      ':license_owner, ' +
+      ':subtitle, ' +
+      ':image_thumbnail, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO images (' +
-        'image_date, ' +
-        'image_time, ' +
-        'image_type, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'locality_id, ' +
-        'author_id, ' +
-        'survey_id, ' +
-        'sighting_id, ' +
-        'nest_id, ' +
-        'nest_revision_id, ' +
-        'egg_id, ' +
-        'specimen_id, ' +
-        'image_filename, ' +
-        'coordinate_precision, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'subtitle, ' +
-        'image_thumbnail, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        'date(:image_date), ' +
-        'time(:image_time), ' +
-        ':image_type, ' +
-        ':taxon_id, ' +
-        ':individual_id, ' +
-        ':capture_id, ' +
-        ':locality_id, ' +
-        ':author_id, ' +
-        ':survey_id, ' +
-        ':sighting_id, ' +
-        ':nest_id, ' +
-        ':nest_revision_id, ' +
-        ':egg_id, ' +
-        ':specimen_id, ' +
-        ':image_filename, ' +
-        ':coordinate_precision, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':license_type, ' +
-        ':license_year, ' +
-        ':license_uri, ' +
-        ':license_notes, ' +
-        ':license_owner, ' +
-        ':subtitle, ' +
-        ':image_thumbnail, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    SetDateParam(ParamByName('image_date'), R.ImageDate);
+    SetTimeParam(ParamByName('image_time'), R.ImageTime);
+    ParamByName('image_type').AsString := IMAGE_TYPES[R.ImageType];
+    ParamByName('image_filename').AsString := R.Filename;
+    if R.Filename <> EmptyStr then
+    begin
+      { #todo : Insert image thumbnail using Params }
+    end
+    else
+      ParamByName('image_thumbnail').Clear;
+    SetStrParam(ParamByName('subtitle'), R.Subtitle);
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    SetForeignParam(ParamByName('nest_revision_id'), R.NestRevisionId);
+    SetForeignParam(ParamByName('egg_id'), R.EggId);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      SetDateParam(ParamByName('image_date'), FImageDate);
-      SetTimeParam(ParamByName('image_time'), FImageTime);
-      ParamByName('image_type').AsString := IMAGE_TYPES[FImageType];
-      ParamByName('image_filename').AsString := FFilename;
-      if FFilename <> EmptyStr then
-      begin
-        { #todo : Insert image thumbnail using Params }
-      end
-      else
-        ParamByName('image_thumbnail').Clear;
-      SetStrParam(ParamByName('subtitle'), FSubtitle);
-      SetForeignParam(ParamByName('author_id'), FAuthorId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('capture_id'), FCaptureId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      SetForeignParam(ParamByName('nest_id'), FNestId);
-      SetForeignParam(ParamByName('nest_revision_id'), FNestRevisionId);
-      SetForeignParam(ParamByName('egg_id'), FEggId);
-      SetStrParam(ParamByName('license_type'), FLicenseType);
-      SetIntParam(ParamByName('license_year'), FLicenseYear);
-      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
-      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
-      SetStrParam(ParamByName('license_uri'), FLicenseUri);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TImageData.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+function TImageRepository.TableName: string;
 begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('image_id').AsInteger;
-    FImageDate := FieldByName('image_date').AsDateTime;
-    FImageTime := FieldByName('image_time').AsDateTime;
-    case FieldByName('image_type').AsString of
-      'flank': FImageType := itBirdInHandFlank;
-      'belly': FImageType := itBirdInHandBelly;
-      'back':  FImageType := itBirdInHandBack;
-      'wing':  FImageType := itBirdInHandWing;
-      'tail':  FImageType := itBirdInHandTail;
-      'head':  FImageType := itBirdInHandHead;
-      'feet':  FImageType := itBirdInHandFeet;
-      'stand': FImageType := itFreeBirdStanding;
-      'fly':   FImageType := itFreeBirdFlying;
-      'swim':  FImageType := itFreeBirdSwimming;
-      'forr':  FImageType := itFreeBirdForraging;
-      'copul': FImageType := itFreeBirdCopulating;
-      'build': FImageType := itFreeBirdBuildingNest;
-      'disp':  FImageType := itFreeBirdDisplaying;
-      'incub': FImageType := itFreeBirdIncubating;
-      'vocal': FImageType := itFreeBirdVocalizing;
-      'agon':  FImageType := itFreeBirdAgonistic;
-      'dead':  FImageType := itDeadBird;
-      'flock': FImageType := itBirdFlock;
-      'nest':  FImageType := itBirdNest;
-      'egg':   FImageType := itBirdEgg;
-      'nstln': FImageType := itBirdNestling;
-      'paras': FImageType := itEctoparasite;
-      'fprnt': FImageType := itFootprint;
-      'feath': FImageType := itFeather;
-      'feces': FImageType := itFeces;
-      'food':  FImageType := itFood;
-      'envir': FImageType := itEnvironment;
-      'fwork': FImageType := itFieldwork;
-      'team':  FImageType := itTeam;
-    else
-      FImageType := itEmpty;
-    end;
-    FFilename := FieldByName('image_filename').AsString;
-    FAuthorId := FieldByName('author_id').AsInteger;
-    FTaxonId := FieldByName('taxon_id').AsInteger;
-    FIndividualId := FieldByName('individual_id').AsInteger;
-    FCaptureId := FieldByName('capture_id').AsInteger;
-    FSightingId := FieldByName('sighting_id').AsInteger;
-    FSurveyId := FieldByName('survey_id').AsInteger;
-    FNestId := FieldByName('nest_id').AsInteger;
-    FNestRevisionId := FieldByName('nest_revision_id').AsInteger;
-    FEggId := FieldByName('egg_id').AsInteger;
-    FSpecimenId := FieldByName('specimen_id').AsInteger;
-    FLocalityId := FieldByName('locality_id').AsInteger;
-    case FieldByName('coordinate_precision').AsString of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FLicenseType := FieldByName('license_type').AsString;
-    FLicenseYear := FieldByName('license_year').AsInteger;
-    FLicenseOwner := FieldByName('license_owner').AsString;
-    FLicenseNotes := FieldByName('license_notes').AsString;
-    FLicenseUri := FieldByName('license_uri').AsString;
-    // SQLite may store ImageDate and ImageTime data as ISO8601 string or Julian ImageDate real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
+  Result := TBL_IMAGES;
 end;
 
-procedure TImageData.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TImageData.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Date', FImageDate);
-    JSONObject.Add('Time', FImageTime);
-    JSONObject.Add('Type', IMAGE_TYPES[FImageType]);
-    JSONObject.Add('Filename', FFilename);
-    JSONObject.Add('Subtitle', FSubtitle);
-    JSONObject.Add('Author', FAuthorId);
-    JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Coordinate precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Individual', FIndividualId);
-    JSONObject.Add('Capture', FCaptureId);
-    JSONObject.Add('Sighting', FSightingId);
-    JSONObject.Add('Specimen', FSpecimenId);
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Nest', FNestId);
-    JSONObject.Add('Nest revision', FNestRevisionId);
-    JSONObject.Add('Egg', FEggId);
-    JSONObject.Add('License type', FLicenseType);
-    JSONObject.Add('License year', FLicenseYear);
-    JSONObject.Add('License owner', FLicenseOwner);
-    JSONObject.Add('License notes', FLicenseNotes);
-    JSONObject.Add('License URL', FLicenseUri);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TImageData.Update;
+procedure TImageRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TImageData;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TImageData.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TImageData) then
+    raise Exception.Create('Update: Expected TImageData');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TImageData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TImageRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE images SET ' +
+      'image_date = date(:image_date), ' +
+      'image_time = time(:image_time), ' +
+      'image_type = :image_type, ' +
+      'taxon_id = :taxon_id, ' +
+      'individual_id = :individual_id, ' +
+      'capture_id = :capture_id, ' +
+      'locality_id = :locality_id, ' +
+      'author_id = :author_id, ' +
+      'survey_id = :survey_id, ' +
+      'sighting_id = :sighting_id, ' +
+      'nest_id = :nest_id, ' +
+      'nest_revision_id = :nest_revision_id, ' +
+      'egg_id = :egg_id, ' +
+      'specimen_id = :specimen_id, ' +
+      'image_filename = :image_filename, ' +
+      'coordinate_precision = :coordinate_precision, ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'license_type = :license_type, ' +
+      'license_year = :license_year, ' +
+      'license_uri = :license_uri, ' +
+      'license_notes = :license_notes, ' +
+      'license_owner = :license_owner, ' +
+      'subtitle = :subtitle, ' +
+      'image_thumbnail = :image_thumbnail, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec'') ');
+    Add('WHERE (image_id = :image_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE images SET ' +
-        'image_date = date(:image_date), ' +
-        'image_time = time(:image_time), ' +
-        'image_type = :image_type, ' +
-        'taxon_id = :taxon_id, ' +
-        'individual_id = :individual_id, ' +
-        'capture_id = :capture_id, ' +
-        'locality_id = :locality_id, ' +
-        'author_id = :author_id, ' +
-        'survey_id = :survey_id, ' +
-        'sighting_id = :sighting_id, ' +
-        'nest_id = :nest_id, ' +
-        'nest_revision_id = :nest_revision_id, ' +
-        'egg_id = :egg_id, ' +
-        'specimen_id = :specimen_id, ' +
-        'image_filename = :image_filename, ' +
-        'coordinate_precision = :coordinate_precision, ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'license_type = :license_type, ' +
-        'license_year = :license_year, ' +
-        'license_uri = :license_uri, ' +
-        'license_notes = :license_notes, ' +
-        'license_owner = :license_owner, ' +
-        'subtitle = :subtitle, ' +
-        'image_thumbnail = :image_thumbnail, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec'') ');
-      Add('WHERE (image_id = :image_id)');
+    SetDateParam(ParamByName('image_date'), R.ImageDate);
+    SetTimeParam(ParamByName('image_time'), R.ImageTime);
+    ParamByName('image_type').AsString := IMAGE_TYPES[R.ImageType];
+    ParamByName('image_filename').AsString := R.Filename;
+    if R.Filename <> EmptyStr then
+    begin
+      { #todo : Insert image thumbnail using Params }
+    end
+    else
+      ParamByName('image_thumbnail').Clear;
+    SetStrParam(ParamByName('subtitle'), R.Subtitle);
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    SetForeignParam(ParamByName('nest_revision_id'), R.NestRevisionId);
+    SetForeignParam(ParamByName('egg_id'), R.EggId);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('image_id').AsInteger := R.Id;
 
-      ParamByName('image_id').AsInteger := FId;
-      SetDateParam(ParamByName('image_date'), FImageDate);
-      SetTimeParam(ParamByName('image_time'), FImageTime);
-      ParamByName('image_type').AsString := IMAGE_TYPES[FImageType];
-      ParamByName('image_filename').AsString := FFilename;
-      if FFilename <> EmptyStr then
-      begin
-        { #todo : Insert image thumbnail using Params }
-      end
-      else
-        ParamByName('image_thumbnail').Clear;
-      SetStrParam(ParamByName('subtitle'), FSubtitle);
-      SetForeignParam(ParamByName('author_id'), FAuthorId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('capture_id'), FCaptureId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      SetForeignParam(ParamByName('nest_id'), FNestId);
-      SetForeignParam(ParamByName('nest_revision_id'), FNestRevisionId);
-      SetForeignParam(ParamByName('egg_id'), FEggId);
-      SetStrParam(ParamByName('license_type'), FLicenseType);
-      SetIntParam(ParamByName('license_year'), FLicenseYear);
-      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
-      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
-      SetStrParam(ParamByName('license_uri'), FLicenseUri);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -888,10 +1068,52 @@ end;
 
 constructor TAudioData.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TAudioData.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TAudioData then
+  begin
+    FRecordingDate := TAudioData(Source).RecordingDate;
+    FRecordingTime := TAudioData(Source).RecordingTime;
+    FAudioType := TAudioData(Source).AudioType;
+    FFilename := TAudioData(Source).Filename;
+    FSubtitle := TAudioData(Source).Subtitle;
+    FAuthorId := TAudioData(Source).AuthorId;
+    FCoordinatePrecision := TAudioData(Source).CoordinatePrecision;
+    FLongitude := TAudioData(Source).Longitude;
+    FLatitude := TAudioData(Source).Latitude;
+    FLocalityId := TAudioData(Source).LocalityId;
+    FTaxonId := TAudioData(Source).TaxonId;
+    FIndividualId := TAudioData(Source).IndividualId;
+    FSurveyId := TAudioData(Source).SurveyId;
+    FSightingId := TAudioData(Source).SightingId;
+    FSpecimenId := TAudioData(Source).SpecimenId;
+    FTemperature := TAudioData(Source).Temperature;
+    FCloudCover := TAudioData(Source).CloudCover;
+    FPrecipitation := TAudioData(Source).Precipitation;
+    FRelativeHumidity := TAudioData(Source).RelativeHumidity;
+    FWindSpeedBft := TAudioData(Source).WindSpeedBft;
+    FSubjectsTally := TAudioData(Source).SubjectsTally;
+    FDistance := TAudioData(Source).Distance;
+    FPlaybackUsed := TAudioData(Source).PlaybackUsed;
+    FContext := TAudioData(Source).Context;
+    FHabitat := TAudioData(Source).Habitat;
+    FRecorderModel := TAudioData(Source).RecorderModel;
+    FMicModel := TAudioData(Source).MicModel;
+    FFilterModel := TAudioData(Source).FilterModel;
+    FLicenseType := TAudioData(Source).LicenseType;
+    FLicenseYear := TAudioData(Source).LicenseYear;
+    FLicenseOwner := TAudioData(Source).LicenseOwner;
+    FLicenseNotes := TAudioData(Source).LicenseNotes;
+    FLicenseUri := TAudioData(Source).LicenseUri;
+    FFullName := TAudioData(Source).FullName;
+    FNotes := TAudioData(Source).Notes;
+  end;
 end;
 
 procedure TAudioData.Clear;
@@ -934,72 +1156,275 @@ begin
   FNotes := EmptyStr;
 end;
 
-procedure TAudioData.Copy(aFrom: TAudioData);
+function TAudioData.Clone: TXolmisRecord;
 begin
-  FRecordingDate := aFrom.RecordingDate;
-  FRecordingTime := aFrom.RecordingTime;
-  FAudioType := aFrom.AudioType;
-  FFilename := aFrom.Filename;
-  FSubtitle := aFrom.Subtitle;
-  FAuthorId := aFrom.AuthorId;
-  FCoordinatePrecision := aFrom.CoordinatePrecision;
-  FLongitude := aFrom.Longitude;
-  FLatitude := aFrom.Latitude;
-  FLocalityId := aFrom.LocalityId;
-  FTaxonId := aFrom.TaxonId;
-  FIndividualId := aFrom.IndividualId;
-  FSurveyId := aFrom.SurveyId;
-  FSightingId := aFrom.SightingId;
-  FSpecimenId := aFrom.SpecimenId;
-  FTemperature := aFrom.Temperature;
-  FCloudCover := aFrom.CloudCover;
-  FPrecipitation := aFrom.Precipitation;
-  FRelativeHumidity := aFrom.RelativeHumidity;
-  FWindSpeedBft := aFrom.WindSpeedBft;
-  FSubjectsTally := aFrom.SubjectsTally;
-  FDistance := aFrom.Distance;
-  FPlaybackUsed := aFrom.PlaybackUsed;
-  FContext := aFrom.Context;
-  FHabitat := aFrom.Habitat;
-  FRecorderModel := aFrom.RecorderModel;
-  FMicModel := aFrom.MicModel;
-  FFilterModel := aFrom.FilterModel;
-  FLicenseType := aFrom.LicenseType;
-  FLicenseYear := aFrom.LicenseYear;
-  FLicenseOwner := aFrom.LicenseOwner;
-  FLicenseNotes := aFrom.LicenseNotes;
-  FLicenseUri := aFrom.LicenseUri;
-  FFullName := aFrom.FullName;
-  FNotes := aFrom.Notes;
+  Result := TAudioData(inherited Clone);
 end;
 
-procedure TAudioData.Delete;
+function TAudioData.Diff(const aOld: TAudioData; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDate, aOld.RecordingDate, FRecordingDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.RecordingTime, FRecordingTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscType, aOld.AudioType, FAudioType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSpecimenID, aOld.SpecimenId, FSpecimenId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTemperatureC, aOld.Temperature, FTemperature, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCloudCover, aOld.CloudCover, FCloudCover, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPrecipitation, aOld.Precipitation, FPrecipitation, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRelativeHumidity, aOld.RelativeHumidity, FRelativeHumidity, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscWindBft, aOld.WindSpeedBft, FWindSpeedBft, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividuals, aOld.SubjectsTally, FSubjectsTally, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDistanceM, aOld.Distance, FDistance, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPlaybackUsed, aOld.PlaybackUsed, FPlaybackUsed, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscContext, aOld.Context, FContext, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHabitat, aOld.Habitat, FHabitat, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRecorderModel, aOld.RecorderModel, FRecorderModel, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMicModel, aOld.MicModel, FMicModel, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFilterModel, aOld.FilterModel, FFilterModel, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseType, aOld.LicenseType, FLicenseType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseYear, aOld.LicenseYear, FLicenseYear, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseOwner, aOld.LicenseOwner, FLicenseOwner, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseNotes, aOld.LicenseNotes, FLicenseNotes, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseUri, aOld.LicenseUri, FLicenseUri, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TAudioData.EqualsTo(const Other: TAudioData): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TAudioData.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName       := Obj.Get('full_name', '');
+    FRecordingDate  := Obj.Get('recording_date', NullDate);
+    FRecordingTime  := Obj.Get('recording_time', NullTime);
+    FAudioType      := Obj.Get('audio_type', '');
+    FFilename       := Obj.Get('filename', '');
+    FSubtitle       := Obj.Get('subtitle', '');
+    FAuthorId       := Obj.Get('author_id', 0);
+    FLocalityId     := Obj.Get('locality_id', 0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
+    FLongitude    := Obj.Get('longitude', 0.0);
+    FLatitude     := Obj.Get('latitude', 0.0);
+    FTaxonId      := Obj.Get('taxon_id', 0);
+    FIndividualId := Obj.Get('individual_id', 0);
+    FSightingId   := Obj.Get('sighting_id', 0);
+    FSpecimenId   := Obj.Get('specimen_id', 0);
+    FSurveyId     := Obj.Get('survey_id', 0);
+    FTemperature  := Obj.Get('temperature', 0.0);
+    FCloudCover   := Obj.Get('cloud_cover', 0);
+    case Obj.Get('precipitation', '') of
+      'N': FPrecipitation := wpNone;
+      'F': FPrecipitation := wpFog;
+      'M': FPrecipitation := wpMist;
+      'D': FPrecipitation := wpDrizzle;
+      'R': FPrecipitation := wpRain;
+    else
+      FPrecipitation := wpEmpty;
+    end;
+    FRelativeHumidity := Obj.Get('relative_humidity', 0.0);
+    FWindSpeedBft     := Obj.Get('wind_speed', 0);
+    FSubjectsTally    := Obj.Get('individuals_tally', 0);
+    FDistance         := Obj.Get('distance', 0.0);
+    FContext          := Obj.Get('context', '');
+    FHabitat          := Obj.Get('habitat', '');
+    FPlaybackUsed     := Obj.Get('playback_used', False);
+    FRecorderModel    := Obj.Get('recorder_model', '');
+    FMicModel         := Obj.Get('microphone_model', '');
+    FFilterModel      := Obj.Get('filter_model', '');
+    FLicenseType      := Obj.Get('license_type', '');
+    FLicenseYear      := Obj.Get('license_year', 0);
+    FLicenseOwner     := Obj.Get('license_owner', '');
+    FLicenseNotes     := Obj.Get('license_notes', '');
+    FLicenseUri       := Obj.Get('license_url', '');
+    FNotes            := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TAudioData.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('recording_date', FRecordingDate);
+    JSONObject.Add('recording_time', FRecordingTime);
+    JSONObject.Add('audio_type', FAudioType);
+    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('subtitle', FSubtitle);
+    JSONObject.Add('author_id', FAuthorId);
+    JSONObject.Add('locality_id', FLocalityId);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('sighting_id', FSightingId);
+    JSONObject.Add('specimen_id', FSpecimenId);
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('temperature', FTemperature);
+    JSONObject.Add('cloud_cover', FCloudCover);
+    JSONObject.Add('precipitation', PRECIPITATION_VALUES[FPrecipitation]);
+    JSONObject.Add('relative_humidity', FRelativeHumidity);
+    JSONObject.Add('wind_speed', FWindSpeedBft);
+    JSONObject.Add('individuals_tally', FSubjectsTally);
+    JSONObject.Add('distance', FDistance);
+    JSONObject.Add('context', FContext);
+    JSONObject.Add('habitat', FHabitat);
+    JSONObject.Add('playback_used', FPlaybackUsed);
+    JSONObject.Add('recorder_model', FRecorderModel);
+    JSONObject.Add('microphone_model', FMicModel);
+    JSONObject.Add('filter_model', FFilterModel);
+    JSONObject.Add('license_type', FLicenseType);
+    JSONObject.Add('license_year', FLicenseYear);
+    JSONObject.Add('license_owner', FLicenseOwner);
+    JSONObject.Add('license_notes', FLicenseNotes);
+    JSONObject.Add('license_url', FLicenseUri);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TAudioData.ToString: String;
+begin
+  Result := Format('AudioDate(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, AudioType=%s, Filename=%s, Subtitle=%s, ' +
+    'AuthorId=%d, LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, ' +
+    'SightingId=%d, SpecimenId=%d, SurveyId=%d, Temperature=%f, CloudCover=%d, Precipitation=%s, RelativeHumidity=%f, ' +
+    'WindSpeedBft=%d, SubjectsTally=%d, Distance=%f, Context=%s, Habitat=%s, PlaybackUsed=%s, RecorderModel=%s, ' +
+    'MicModel=%s, FilterModel=%s, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
+    'Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), FAudioType, FFilename, FSubtitle,
+    FAuthorId, FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
+    FSightingId, FSpecimenId, FSurveyId, FTemperature, FCloudCover, PRECIPITATION_VALUES[FPrecipitation],
+    FRelativeHumidity, FWindSpeedBft, FSubjectsTally, FDistance, FContext, FHabitat, BoolToStr(FPlaybackUsed, 'True', 'False'),
+    FRecorderModel, FMicModel, FFilterModel, FLicenseType, FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
+    FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TAudioData.Validate(out Msg: string): Boolean;
+begin
+  if FFilename = EmptyStr then
+  begin
+    Msg := 'Filename required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TAudioRepository }
+
+procedure TAudioRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TAudioData;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TAudioData.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TAudioData) then
+    raise Exception.Create('Delete: Expected TAudioData');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TAudioData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TAudioRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM audio_library');
-      Add('WHERE (audio_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_AUDIO_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -1007,98 +1432,50 @@ begin
   end;
 end;
 
-function TAudioData.Diff(aOld: TAudioData; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscDate, aOld.RecordingDate, FRecordingDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.RecordingTime, FRecordingTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscType, aOld.AudioType, FAudioType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSpecimenID, aOld.SpecimenId, FSpecimenId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTemperatureC, aOld.Temperature, FTemperature, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCloudCover, aOld.CloudCover, FCloudCover, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPrecipitation, aOld.Precipitation, FPrecipitation, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscRelativeHumidity, aOld.RelativeHumidity, FRelativeHumidity, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscWindBft, aOld.WindSpeedBft, FWindSpeedBft, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividuals, aOld.SubjectsTally, FSubjectsTally, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscDistanceM, aOld.Distance, FDistance, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPlaybackUsed, aOld.PlaybackUsed, FPlaybackUsed, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscContext, aOld.Context, FContext, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscHabitat, aOld.Habitat, FHabitat, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscRecorderModel, aOld.RecorderModel, FRecorderModel, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMicModel, aOld.MicModel, FMicModel, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFilterModel, aOld.FilterModel, FFilterModel, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseType, aOld.LicenseType, FLicenseType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseYear, aOld.LicenseYear, FLicenseYear, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseOwner, aOld.LicenseOwner, FLicenseOwner, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseNotes, aOld.LicenseNotes, FLicenseNotes, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseUri, aOld.LicenseUri, FLicenseUri, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TAudioData.Find(const FieldName: String; const Value: Variant): Boolean;
+function TAudioRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_AUDIO_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TAudioRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_AUDIO_ID, COL_FULL_NAME, COL_AUDIO_FILE); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TAudioData) then
+    raise Exception.Create('FindBy: Expected TAudioData');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -1151,9 +1528,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TAudioData(E));
     end;
 
     Close;
@@ -1162,14 +1537,16 @@ begin
   end;
 end;
 
-procedure TAudioData.GetData(aKey: Integer);
+procedure TAudioRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TAudioData) then
+    raise Exception.Create('GetById: Expected TAudioData');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
         'audio_id, ' +
@@ -1215,408 +1592,340 @@ begin
         'active_status ' +
       'FROM audio_library');
     Add('WHERE audio_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TAudioData(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TAudioData.Insert;
+procedure TAudioRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TAudioData;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TAudioData) then
+    raise Exception.Create('Hydrate: Expected TAudioData');
+
+  R := TAudioData(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('audio_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.RecordingDate := FieldByName('recording_date').AsDateTime;
+    R.RecordingTime := FieldByName('recording_time').AsDateTime;
+    R.AudioType := FieldByName('audio_type').AsString;
+    R.Subtitle := FieldByName('subtitle').AsString;
+    R.Filename := FieldByName('audio_file').AsString;
+    R.AuthorId := FieldByName('recorder_id').AsInteger;
+    R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.SurveyId := 0;
+    R.SightingId := FieldByName('sighting_id').AsInteger;
+    R.SpecimenId := FieldByName('specimen_id').AsInteger;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
+    //case FieldByName('coordinate_precision').AsString of
+    //  'E': R.CoordinatePrecision := cpExact;
+    //  'A': R.CoordinatePrecision := cpApproximated;
+    //  'R': R.CoordinatePrecision := cpReference;
+    //else
+    //  R.CoordinatePrecision := cpEmpty;
+    //end;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.Temperature := FieldByName('temperature').AsFloat;
+    R.CloudCover := FieldByName('cloud_cover').AsInteger;
+    case FieldByName('precipitation').AsString of
+      'N': R.Precipitation := wpNone;
+      'F': R.Precipitation := wpFog;
+      'M': R.Precipitation := wpMist;
+      'D': R.Precipitation := wpDrizzle;
+      'R': R.Precipitation := wpRain;
+    else
+      R.Precipitation := wpEmpty;
+    end;
+    R.RelativeHumidity := FieldByName('relative_humidity').AsInteger;
+    R.WindSpeedBft := FieldByName('wind_speed').AsInteger;
+    R.SubjectsTally := FieldByName('subjects_tally').AsInteger;
+    R.Distance := FieldByName('distance').AsFloat;
+    R.PlaybackUsed := FieldByName('playback_used').AsBoolean;
+    R.Context := FieldByName('recording_context').AsString;
+    R.Habitat := FieldByName('habitat').AsString;
+    R.RecorderModel := FieldByName('recorder_model').AsString;
+    R.MicModel := FieldByName('mic_model').AsString;
+    R.FilterModel := FieldByName('filter_model').AsString;
+    R.LicenseType := FieldByName('license_type').AsString;
+    R.LicenseYear := FieldByName('license_year').AsInteger;
+    R.LicenseOwner := FieldByName('license_owner').AsString;
+    R.LicenseNotes := FieldByName('license_notes').AsString;
+    R.LicenseUri := FieldByName('license_uri').AsString;
+    R.Notes := FieldByName('notes').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TAudioRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TAudioData;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TAudioData) then
+    raise Exception.Create('Insert: Expected TAudioData');
+
+  R := TAudioData(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO audio_library (' +
+      'full_name, ' +
+      'taxon_id, ' +
+      'individual_id, ' +
+      'specimen_id, ' +
+      'sighting_id, ' +
+      'audio_type, ' +
+      'locality_id, ' +
+      'recording_date, ' +
+      'recorder_id, ' +
+      'recording_time, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'temperature, ' +
+      'cloud_cover, ' +
+      'precipitation, ' +
+      'relative_humidity, ' +
+      'wind_speed, ' +
+      'recording_context, ' +
+      'playback_used, ' +
+      'subjects_tally, ' +
+      'habitat, ' +
+      'recorder_model, ' +
+      'mic_model, ' +
+      'filter_model, ' +
+      'distance, ' +
+      'license_type, ' +
+      'license_year, ' +
+      'license_uri, ' +
+      'license_notes, ' +
+      'license_owner, ' +
+      'audio_file, ' +
+      'subtitle, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':full_name, ' +
+      ':taxon_id, ' +
+      ':individual_id, ' +
+      ':specimen_id, ' +
+      ':sighting_id, ' +
+      ':audio_type, ' +
+      ':locality_id, ' +
+      'date(:recording_date), ' +
+      ':recorder_id, ' +
+      'time(:recording_time), ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':temperature, ' +
+      ':cloud_cover, ' +
+      ':precipitation, ' +
+      ':relative_humidity, ' +
+      ':wind_speed, ' +
+      ':recording_context, ' +
+      ':playback_used, ' +
+      ':subjects_tally, ' +
+      ':habitat, ' +
+      ':recorder_model, ' +
+      ':mic_model, ' +
+      ':filter_model, ' +
+      ':distance, ' +
+      ':license_type, ' +
+      ':license_year, ' +
+      ':license_uri, ' +
+      ':license_notes, ' +
+      ':license_owner, ' +
+      ':audio_file, ' +
+      ':subtitle, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO audio_library (' +
-        'full_name, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'specimen_id, ' +
-        'sighting_id, ' +
-        'audio_type, ' +
-        'locality_id, ' +
-        'recording_date, ' +
-        'recorder_id, ' +
-        'recording_time, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'temperature, ' +
-        'cloud_cover, ' +
-        'precipitation, ' +
-        'relative_humidity, ' +
-        'wind_speed, ' +
-        'recording_context, ' +
-        'playback_used, ' +
-        'subjects_tally, ' +
-        'habitat, ' +
-        'recorder_model, ' +
-        'mic_model, ' +
-        'filter_model, ' +
-        'distance, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'audio_file, ' +
-        'subtitle, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':full_name, ' +
-        ':taxon_id, ' +
-        ':individual_id, ' +
-        ':specimen_id, ' +
-        ':sighting_id, ' +
-        ':audio_type, ' +
-        ':locality_id, ' +
-        'date(:recording_date), ' +
-        ':recorder_id, ' +
-        'time(:recording_time), ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':temperature, ' +
-        ':cloud_cover, ' +
-        ':precipitation, ' +
-        ':relative_humidity, ' +
-        ':wind_speed, ' +
-        ':recording_context, ' +
-        ':playback_used, ' +
-        ':subjects_tally, ' +
-        ':habitat, ' +
-        ':recorder_model, ' +
-        ':mic_model, ' +
-        ':filter_model, ' +
-        ':distance, ' +
-        ':license_type, ' +
-        ':license_year, ' +
-        ':license_uri, ' +
-        ':license_notes, ' +
-        ':license_owner, ' +
-        ':audio_file, ' +
-        ':subtitle, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    SetDateParam(ParamByName('recording_date'), R.RecordingDate);
+    SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
+    ParamByName('audio_type').AsString := R.AudioType;
 
-      SetDateParam(ParamByName('recording_date'), FRecordingDate);
-      SetTimeParam(ParamByName('recording_time'), FRecordingTime);
-      ParamByName('audio_type').AsString := FAudioType;
+    ParamByName('audio_file').AsString := R.Filename;
+    SetStrParam(ParamByName('subtitle'), R.Subtitle);
+    //SetForeignParam(ParamByName('author_id'), R.AuthorId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    ParamByName('temperature').AsFloat := R.Temperature;
+    ParamByName('cloud_cover').AsInteger := R.CloudCover;
+    case R.Precipitation of
+      wpNone:     ParamByName('precipitation').AsString := 'N';
+      wpFog:      ParamByName('precipitation').AsString := 'F';
+      wpMist:     ParamByName('precipitation').AsString := 'M';
+      wpDrizzle:  ParamByName('precipitation').AsString := 'D';
+      wpRain:     ParamByName('precipitation').AsString := 'R';
+    else
+      ParamByName('precipitation').Clear;
+    end;
+    ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
+    ParamByName('wind_speed').AsInteger := R.WindSpeedBft;
+    SetIntParam(ParamByName('subjects_tally'), R.SubjectsTally);
+    ParamByName('distance').AsFloat := R.Distance;
+    SetStrParam(ParamByName('recording_context'), R.Context);
+    SetStrParam(ParamByName('habitat'), R.Habitat);
+    ParamByName('playback_used').AsBoolean := R.PlaybackUsed;
+    SetStrParam(ParamByName('recorder_model'), R.RecorderModel);
+    SetStrParam(ParamByName('mic_model'), R.MicModel);
+    SetStrParam(ParamByName('filter_model'), R.FilterModel);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      ParamByName('audio_file').AsString := FFilename;
-      SetStrParam(ParamByName('subtitle'), FSubtitle);
-      //SetForeignParam(ParamByName('author_id'), FAuthorId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      ParamByName('temperature').AsFloat := FTemperature;
-      ParamByName('cloud_cover').AsInteger := FCloudCover;
-      case FPrecipitation of
-        wpNone:     ParamByName('precipitation').AsString := 'N';
-        wpFog:      ParamByName('precipitation').AsString := 'F';
-        wpMist:     ParamByName('precipitation').AsString := 'M';
-        wpDrizzle:  ParamByName('precipitation').AsString := 'D';
-        wpRain:     ParamByName('precipitation').AsString := 'R';
-      else
-        ParamByName('precipitation').Clear;
-      end;
-      ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
-      ParamByName('wind_speed').AsInteger := FWindSpeedBft;
-      SetIntParam(ParamByName('subjects_tally'), FSubjectsTally);
-      ParamByName('distance').AsFloat := FDistance;
-      SetStrParam(ParamByName('recording_context'), FContext);
-      SetStrParam(ParamByName('habitat'), FHabitat);
-      ParamByName('playback_used').AsBoolean := FPlaybackUsed;
-      SetStrParam(ParamByName('recorder_model'), FRecorderModel);
-      SetStrParam(ParamByName('mic_model'), FMicModel);
-      SetStrParam(ParamByName('filter_model'), FFilterModel);
-      SetStrParam(ParamByName('notes'), FNotes);
-      SetStrParam(ParamByName('license_type'), FLicenseType);
-      SetIntParam(ParamByName('license_year'), FLicenseYear);
-      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
-      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
-      SetStrParam(ParamByName('license_uri'), FLicenseUri);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TAudioData.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+function TAudioRepository.TableName: string;
 begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('audio_id').AsInteger;
-    FFullName := FieldByName('full_name').AsString;
-    FRecordingDate := FieldByName('recording_date').AsDateTime;
-    FRecordingTime := FieldByName('recording_time').AsDateTime;
-    FAudioType := FieldByName('audio_type').AsString;
-    FSubtitle := FieldByName('subtitle').AsString;
-    FFilename := FieldByName('audio_file').AsString;
-    FAuthorId := FieldByName('recorder_id').AsInteger;
-    FTaxonId := FieldByName('taxon_id').AsInteger;
-    FIndividualId := FieldByName('individual_id').AsInteger;
-    FSurveyId := 0;
-    FSightingId := FieldByName('sighting_id').AsInteger;
-    FSpecimenId := FieldByName('specimen_id').AsInteger;
-    FLocalityId := FieldByName('locality_id').AsInteger;
-    //case FieldByName('coordinate_precision').AsString of
-    //  'E': FCoordinatePrecision := cpExact;
-    //  'A': FCoordinatePrecision := cpApproximated;
-    //  'R': FCoordinatePrecision := cpReference;
-    //else
-    //  FCoordinatePrecision := cpEmpty;
-    //end;
-    FLongitude := FieldByName('longitude').AsFloat;
-    FLatitude := FieldByName('latitude').AsFloat;
-    FTemperature := FieldByName('temperature').AsFloat;
-    FCloudCover := FieldByName('cloud_cover').AsInteger;
-    case FieldByName('precipitation').AsString of
-      'N': FPrecipitation := wpNone;
-      'F': FPrecipitation := wpFog;
-      'M': FPrecipitation := wpMist;
-      'D': FPrecipitation := wpDrizzle;
-      'R': FPrecipitation := wpRain;
-    else
-      FPrecipitation := wpEmpty;
-    end;
-    FRelativeHumidity := FieldByName('relative_humidity').AsInteger;
-    FWindSpeedBft := FieldByName('wind_speed').AsInteger;
-    FSubjectsTally := FieldByName('subjects_tally').AsInteger;
-    FDistance := FieldByName('distance').AsFloat;
-    FPlaybackUsed := FieldByName('playback_used').AsBoolean;
-    FContext := FieldByName('recording_context').AsString;
-    FHabitat := FieldByName('habitat').AsString;
-    FRecorderModel := FieldByName('recorder_model').AsString;
-    FMicModel := FieldByName('mic_model').AsString;
-    FFilterModel := FieldByName('filter_model').AsString;
-    FLicenseType := FieldByName('license_type').AsString;
-    FLicenseYear := FieldByName('license_year').AsInteger;
-    FLicenseOwner := FieldByName('license_owner').AsString;
-    FLicenseNotes := FieldByName('license_notes').AsString;
-    FLicenseUri := FieldByName('license_uri').AsString;
-    FNotes := FieldByName('notes').AsString;
-    // SQLite may store RecordingDate and RecordingTime data as ISO8601 string or Julian RecordingDate real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
+  Result := TBL_AUDIO_LIBRARY;
 end;
 
-procedure TAudioData.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TAudioData.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Fullname', FFullName);
-    JSONObject.Add('Date', FRecordingDate);
-    JSONObject.Add('Time', FRecordingTime);
-    JSONObject.Add('Type', FAudioType);
-    JSONObject.Add('Filename', FFilename);
-    JSONObject.Add('Subtitle', FSubtitle);
-    JSONObject.Add('Author', FAuthorId);
-    JSONObject.Add('Locality', FLocalityId);
-    JSONObject.Add('Coordinate precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
-    JSONObject.Add('Longitude', FLongitude);
-    JSONObject.Add('Latitude', FLatitude);
-    JSONObject.Add('Taxon', FTaxonId);
-    JSONObject.Add('Individual', FIndividualId);
-    JSONObject.Add('Sighting', FSightingId);
-    JSONObject.Add('Specimen', FSpecimenId);
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Temperature', FTemperature);
-    JSONObject.Add('Cloud cover', FCloudCover);
-    JSONObject.Add('Precipitation', PRECIPITATION_VALUES[FPrecipitation]);
-    JSONObject.Add('Relative humidity', FRelativeHumidity);
-    JSONObject.Add('Wind speed', FWindSpeedBft);
-    JSONObject.Add('Individuals tally', FSubjectsTally);
-    JSONObject.Add('Distance', FDistance);
-    JSONObject.Add('Context', FContext);
-    JSONObject.Add('Habitat', FHabitat);
-    JSONObject.Add('Playback used', FPlaybackUsed);
-    JSONObject.Add('Recorder model', FRecorderModel);
-    JSONObject.Add('Microphone model', FMicModel);
-    JSONObject.Add('Filter model', FFilterModel);
-    JSONObject.Add('License type', FLicenseType);
-    JSONObject.Add('License year', FLicenseYear);
-    JSONObject.Add('License owner', FLicenseOwner);
-    JSONObject.Add('License notes', FLicenseNotes);
-    JSONObject.Add('License URL', FLicenseUri);
-    JSONObject.Add('Notes', FNotes);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TAudioData.Update;
+procedure TAudioRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TAudioData;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TAudioData.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TAudioData) then
+    raise Exception.Create('Update: Expected TAudioData');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TAudioData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TAudioRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE audio_library SET ' +
+      'full_name = :full_name, ' +
+      'taxon_id = :taxon_id, ' +
+      'individual_id = :individual_id, ' +
+      'specimen_id = :specimen_id, ' +
+      'sighting_id = :sighting_id, ' +
+      'audio_type = :audio_type, ' +
+      'locality_id = :locality_id, ' +
+      'recording_date = date(:recording_date), ' +
+      'recorder_id = :recorder_id, ' +
+      'recording_time = time(:recording_time), ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'temperature = :temperature, ' +
+      'cloud_cover = :cloud_cover, ' +
+      'precipitation = :precipitation, ' +
+      'relative_humidity = :relative_humidity, ' +
+      'wind_speed = :wind_speed, ' +
+      'recording_context = :recording_context, ' +
+      'playback_used = :playback_used, ' +
+      'subjects_tally = :subjects_tally, ' +
+      'habitat = :habitat, ' +
+      'recorder_model = :recorder_model, ' +
+      'mic_model = :mic_model, ' +
+      'filter_model = :filter_model, ' +
+      'distance = :distance, ' +
+      'license_type = :license_type, ' +
+      'license_year = :license_year, ' +
+      'license_uri = :license_uri, ' +
+      'license_notes = :license_notes, ' +
+      'license_owner = :license_owner, ' +
+      'audio_file = :audio_file, ' +
+      'subtitle = :subtitle, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec'') ');
+    Add('WHERE (audio_id = :audio_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE audio_library SET ' +
-        'full_name = :full_name, ' +
-        'taxon_id = :taxon_id, ' +
-        'individual_id = :individual_id, ' +
-        'specimen_id = :specimen_id, ' +
-        'sighting_id = :sighting_id, ' +
-        'audio_type = :audio_type, ' +
-        'locality_id = :locality_id, ' +
-        'recording_date = date(:recording_date), ' +
-        'recorder_id = :recorder_id, ' +
-        'recording_time = time(:recording_time), ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'temperature = :temperature, ' +
-        'cloud_cover = :cloud_cover, ' +
-        'precipitation = :precipitation, ' +
-        'relative_humidity = :relative_humidity, ' +
-        'wind_speed = :wind_speed, ' +
-        'recording_context = :recording_context, ' +
-        'playback_used = :playback_used, ' +
-        'subjects_tally = :subjects_tally, ' +
-        'habitat = :habitat, ' +
-        'recorder_model = :recorder_model, ' +
-        'mic_model = :mic_model, ' +
-        'filter_model = :filter_model, ' +
-        'distance = :distance, ' +
-        'license_type = :license_type, ' +
-        'license_year = :license_year, ' +
-        'license_uri = :license_uri, ' +
-        'license_notes = :license_notes, ' +
-        'license_owner = :license_owner, ' +
-        'audio_file = :audio_file, ' +
-        'subtitle = :subtitle, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec'') ');
-      Add('WHERE (audio_id = :audio_id)');
+    SetDateParam(ParamByName('recording_date'), R.RecordingDate);
+    SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
+    ParamByName('audio_type').AsString := R.AudioType;
 
-      ParamByName('audio_id').AsInteger := FId;
-      SetDateParam(ParamByName('recording_date'), FRecordingDate);
-      SetTimeParam(ParamByName('recording_time'), FRecordingTime);
-      ParamByName('audio_type').AsString := FAudioType;
+    ParamByName('audio_file').AsString := R.Filename;
+    SetStrParam(ParamByName('subtitle'), R.Subtitle);
+    //SetForeignParam(ParamByName('author_id'), R.AuthorId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    ParamByName('temperature').AsFloat := R.Temperature;
+    ParamByName('cloud_cover').AsInteger := R.CloudCover;
+    case R.Precipitation of
+      wpNone:     ParamByName('precipitation').AsString := 'N';
+      wpFog:      ParamByName('precipitation').AsString := 'F';
+      wpMist:     ParamByName('precipitation').AsString := 'M';
+      wpDrizzle:  ParamByName('precipitation').AsString := 'D';
+      wpRain:     ParamByName('precipitation').AsString := 'R';
+    else
+      ParamByName('precipitation').Clear;
+    end;
+    ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
+    ParamByName('wind_speed').AsInteger := R.WindSpeedBft;
+    SetIntParam(ParamByName('subjects_tally'), R.SubjectsTally);
+    ParamByName('distance').AsFloat := R.Distance;
+    SetStrParam(ParamByName('recording_context'), R.Context);
+    SetStrParam(ParamByName('habitat'), R.Habitat);
+    ParamByName('playback_used').AsBoolean := R.PlaybackUsed;
+    SetStrParam(ParamByName('recorder_model'), R.RecorderModel);
+    SetStrParam(ParamByName('mic_model'), R.MicModel);
+    SetStrParam(ParamByName('filter_model'), R.FilterModel);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('audio_id').AsInteger := R.Id;
 
-      ParamByName('audio_file').AsString := FFilename;
-      SetStrParam(ParamByName('subtitle'), FSubtitle);
-      //SetForeignParam(ParamByName('author_id'), FAuthorId);
-      SetForeignParam(ParamByName('locality_id'), FLocalityId);
-      ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[FCoordinatePrecision];
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), FLongitude, FLatitude);
-      SetForeignParam(ParamByName('taxon_id'), FTaxonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      ParamByName('temperature').AsFloat := FTemperature;
-      ParamByName('cloud_cover').AsInteger := FCloudCover;
-      case FPrecipitation of
-        wpNone:     ParamByName('precipitation').AsString := 'N';
-        wpFog:      ParamByName('precipitation').AsString := 'F';
-        wpMist:     ParamByName('precipitation').AsString := 'M';
-        wpDrizzle:  ParamByName('precipitation').AsString := 'D';
-        wpRain:     ParamByName('precipitation').AsString := 'R';
-      else
-        ParamByName('precipitation').Clear;
-      end;
-      ParamByName('relative_humidity').AsFloat := FRelativeHumidity;
-      ParamByName('wind_speed').AsInteger := FWindSpeedBft;
-      SetIntParam(ParamByName('subjects_tally'), FSubjectsTally);
-      ParamByName('distance').AsFloat := FDistance;
-      SetStrParam(ParamByName('recording_context'), FContext);
-      SetStrParam(ParamByName('habitat'), FHabitat);
-      ParamByName('playback_used').AsBoolean := FPlaybackUsed;
-      SetStrParam(ParamByName('recorder_model'), FRecorderModel);
-      SetStrParam(ParamByName('mic_model'), FMicModel);
-      SetStrParam(ParamByName('filter_model'), FFilterModel);
-      SetStrParam(ParamByName('notes'), FNotes);
-      SetStrParam(ParamByName('license_type'), FLicenseType);
-      SetIntParam(ParamByName('license_year'), FLicenseYear);
-      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
-      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
-      SetStrParam(ParamByName('license_uri'), FLicenseUri);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;
@@ -1626,10 +1935,40 @@ end;
 
 constructor TDocumentData.Create(aValue: Integer);
 begin
-  if aValue > 0 then
-    GetData(aValue)
-  else
-    Clear;
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TDocumentData.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TDocumentData then
+  begin
+    FName := TDocumentData(Source).Name;
+    FDocumentDate := TDocumentData(Source).DocumentDate;
+    FDocumentTime := TDocumentData(Source).DocumentTime;
+    FDocumentType := TDocumentData(Source).DocumentType;
+    FFilename := TDocumentData(Source).FileName;
+    FAuthorId := TDocumentData(Source).AuthorId;
+    FPermitId := TDocumentData(Source).PermitId;
+    FProjectId := TDocumentData(Source).ProjectId;
+    FPersonId := TDocumentData(Source).PersonId;
+    FIndividualId := TDocumentData(Source).IndividualId;
+    FCaptureId := TDocumentData(Source).CaptureId;
+    FSightingId := TDocumentData(Source).SightingId;
+    FExpeditionId := TDocumentData(Source).ExpeditionId;
+    FSurveyId := TDocumentData(Source).SurveyId;
+    FNestId := TDocumentData(Source).NestId;
+    FSpecimenId := TDocumentData(Source).SpecimenId;
+    FSamplingPlotId := TDocumentData(Source).SamplingPlotId;
+    FMethodId := TDocumentData(Source).MethodId;
+    FLicenseType := TDocumentData(Source).LicenseType;
+    FLicenseYear := TDocumentData(Source).LicenseYear;
+    FLicenseOwner := TDocumentData(Source).LicenseOwner;
+    FLicenseNotes := TDocumentData(Source).LicenseNotes;
+    FLicenseUri := TDocumentData(Source).LicenseUri;
+  end;
 end;
 
 procedure TDocumentData.Clear;
@@ -1660,60 +1999,206 @@ begin
   FLicenseUri := EmptyStr;
 end;
 
-procedure TDocumentData.Copy(aFrom: TDocumentData);
+function TDocumentData.Clone: TXolmisRecord;
 begin
-  FName := aFrom.Name;
-  FDocumentDate := aFrom.DocumentDate;
-  FDocumentTime := aFrom.DocumentTime;
-  FDocumentType := aFrom.DocumentType;
-  FFilename := aFrom.FileName;
-  FAuthorId := aFrom.AuthorId;
-  FPermitId := aFrom.PermitId;
-  FProjectId := aFrom.ProjectId;
-  FPersonId := aFrom.PersonId;
-  FIndividualId := aFrom.IndividualId;
-  FCaptureId := aFrom.CaptureId;
-  FSightingId := aFrom.SightingId;
-  FExpeditionId := aFrom.ExpeditionId;
-  FSurveyId := aFrom.SurveyId;
-  FNestId := aFrom.NestId;
-  FSpecimenId := aFrom.SpecimenId;
-  FSamplingPlotId := aFrom.SamplingPlotId;
-  FMethodId := aFrom.MethodId;
-  FLicenseType := aFrom.LicenseType;
-  FLicenseYear := aFrom.LicenseYear;
-  FLicenseOwner := aFrom.LicenseOwner;
-  FLicenseNotes := aFrom.LicenseNotes;
-  FLicenseUri := aFrom.LicenseUri;
+  Result := TDocumentData(inherited Clone);
 end;
 
-procedure TDocumentData.Delete;
+function TDocumentData.Diff(const aOld: TDocumentData; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDate, aOld.DocumentDate, FDocumentDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.DocumentTime, FDocumentTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscType, aOld.DocumentType, FDocumentType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPermitID, aOld.PermitId, FPermitId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscExpeditionID, aOld.ExpeditionId, FExpeditionId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSpecimenID, aOld.SpecimenId, FSpecimenId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSamplingPlotID, aOld.SamplingPlotId, FSamplingPlotId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseType, aOld.LicenseType, FLicenseType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseYear, aOld.LicenseYear, FLicenseYear, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseOwner, aOld.LicenseOwner, FLicenseOwner, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseNotes, aOld.LicenseNotes, FLicenseNotes, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseUri, aOld.LicenseUri, FLicenseUri, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TDocumentData.EqualsTo(const Other: TDocumentData): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TDocumentData.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FDocumentDate   := Obj.Get('document_date', NullDate);
+    FDocumentTime   := Obj.Get('document_time', NullTime);
+    FName           := Obj.Get('name', '');
+    FDocumentType   := Obj.Get('document_type', '');
+    FFilename       := Obj.Get('filename', '');
+    FPermitId       := Obj.Get('permit_id', 0);
+    FProjectId      := Obj.Get('project_id', 0);
+    FPersonId       := Obj.Get('person_id', 0);
+    FIndividualId   := Obj.Get('individual_id', 0);
+    FCaptureId      := Obj.Get('capture_id', 0);
+    FSightingId     := Obj.Get('sighting_id', 0);
+    FSpecimenId     := Obj.Get('specimen_id', 0);
+    FExpeditionId   := Obj.Get('expedition_id', 0);
+    FSurveyId       := Obj.Get('survey_id', 0);
+    FNestId         := Obj.Get('nest_id', 0);
+    FSamplingPlotId := Obj.Get('sampling_plot_id', 0);
+    FMethodId       := Obj.Get('method_id', 0);
+    FLicenseType    := Obj.Get('license_type', '');
+    FLicenseYear    := Obj.Get('license_year', 0);
+    FLicenseOwner   := Obj.Get('license_owner', '');
+    FLicenseNotes   := Obj.Get('license_notes', '');
+    FLicenseUri     := Obj.Get('license_url', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TDocumentData.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('document_date', FDocumentDate);
+    JSONObject.Add('document_time', FDocumentTime);
+    JSONObject.Add('name', FName);
+    JSONObject.Add('document_type', FDocumentType);
+    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('permit_id', FPermitId);
+    JSONObject.Add('project_id', FProjectId);
+    JSONObject.Add('person_id', FPersonId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('capture_id', FCaptureId);
+    JSONObject.Add('sighting_id', FSightingId);
+    JSONObject.Add('specimen_id', FSpecimenId);
+    JSONObject.Add('expedition_id', FExpeditionId);
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('nest_id', FNestId);
+    JSONObject.Add('sampling_plot_id', FSamplingPlotId);
+    JSONObject.Add('method_id', FMethodId);
+    JSONObject.Add('license_type', FLicenseType);
+    JSONObject.Add('license_year', FLicenseYear);
+    JSONObject.Add('license_owner', FLicenseOwner);
+    JSONObject.Add('license_notes', FLicenseNotes);
+    JSONObject.Add('license_url', FLicenseUri);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TDocumentData.ToString: String;
+begin
+  Result := Format('Band(Id=%d, DocumentDate=%s, DocumentTime=%s, Name=%s, DocumentType=%s, Filename=%s, PermitId=%d, ' +
+    'ProjectId=%d, PersonId=%d, IndividualId=%d, CaptureId=%d, SightingId=%d, SpecimenId=%d, ExpeditionId=%d, ' +
+    'SurveyId=%d, NestId=%d, SamplingPlotId=%d, MethodId=%d, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, ' +
+    'LicenseNotes=%s, LicenseUri=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, DateToStr(FDocumentDate), TimeToStr(FDocumentTime), FName, FDocumentType, FFilename, FPermitId, FProjectId,
+    FPersonId, FIndividualId, FCaptureId, FSightingId, FSpecimenId, FExpeditionId, FSurveyId, FNestId,
+    FSamplingPlotId, FMethodId, FLicenseType, FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TDocumentData.Validate(out Msg: string): Boolean;
+begin
+  if FFilename = EmptyStr then
+  begin
+    Msg := 'Filename required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TDocumentRepository }
+
+procedure TDocumentRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TDocumentData;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TDocumentData.Delete: %s.', [rsErrorEmptyId]);
+  if not (E is TDocumentData) then
+    raise Exception.Create('Delete: Expected TDocumentData');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TDocumentData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TDocumentRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
 
-    if not DMM.sqlTrans.Active then
-      DMM.sqlTrans.StartTransaction;
+    if not FTrans.Active then
+      FTrans.StartTransaction;
     try
       Clear;
-      Add('DELETE FROM documents');
-      Add('WHERE (document_id = :aid)');
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
 
-      ParamByName('aid').AsInteger := FId;
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_DOCUMENT_ID;
+      ParamByName('aid').AsInteger := R.Id;
 
       ExecSQL;
 
-      DMM.sqlTrans.CommitRetaining;
+      FTrans.CommitRetaining;
     except
-      DMM.sqlTrans.RollbackRetaining;
+      FTrans.RollbackRetaining;
       raise;
     end;
   finally
@@ -1721,74 +2206,50 @@ begin
   end;
 end;
 
-function TDocumentData.Diff(aOld: TDocumentData; var aList: TStrings): Boolean;
-var
-  R: String;
-begin
-  Result := False;
-  R := EmptyStr;
-
-  if FieldValuesDiff(rscDate, aOld.DocumentDate, FDocumentDate, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscTime, aOld.DocumentTime, FDocumentTime, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscName, aOld.Name, FName, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscType, aOld.DocumentType, FDocumentType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPermitID, aOld.PermitId, FPermitId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscExpeditionID, aOld.ExpeditionId, FExpeditionId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSpecimenID, aOld.SpecimenId, FSpecimenId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscSamplingPlotID, aOld.SamplingPlotId, FSamplingPlotId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseType, aOld.LicenseType, FLicenseType, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseYear, aOld.LicenseYear, FLicenseYear, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseOwner, aOld.LicenseOwner, FLicenseOwner, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseNotes, aOld.LicenseNotes, FLicenseNotes, R) then
-    aList.Add(R);
-  if FieldValuesDiff(rscLicenseUri, aOld.LicenseUri, FLicenseUri, R) then
-    aList.Add(R);
-
-  Result := aList.Count > 0;
-end;
-
-function TDocumentData.Find(const FieldName: String; const Value: Variant): Boolean;
+function TDocumentRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Result := False;
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_DOCUMENT_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
-  Qry := TSQLQuery.Create(nil);
+procedure TDocumentRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_DOCUMENT_ID, COL_DOCUMENT_NAME, COL_DOCUMENT_PATH); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TDocumentData) then
+    raise Exception.Create('FindBy: Expected TDocumentData');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
     Add('SELECT ' +
@@ -1830,9 +2291,7 @@ begin
 
     if not EOF then
     begin
-      LoadFromDataSet(Qry);
-
-      Result := True;
+      Hydrate(Qry, TDocumentData(E));
     end;
 
     Close;
@@ -1841,14 +2300,16 @@ begin
   end;
 end;
 
-procedure TDocumentData.GetData(aKey: Integer);
+procedure TDocumentRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TDocumentData) then
+    raise Exception.Create('GetById: Expected TDocumentData');
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT ' +
         'document_id, ' +
@@ -1883,300 +2344,241 @@ begin
         'active_status ' +
       'FROM documents');
     Add('WHERE document_id = :cod');
-    ParamByName('COD').AsInteger := aKey;
+    ParamByName('COD').AsInteger := Id;
     Open;
-    if RecordCount > 0 then
-      LoadFromDataSet(Qry);
+    if not EOF then
+    begin
+      Hydrate(Qry, TDocumentData(E));
+    end;
     Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TDocumentData.Insert;
+procedure TDocumentRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TDocumentData;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TDocumentData) then
+    raise Exception.Create('Hydrate: Expected TDocumentData');
+
+  R := TDocumentData(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('document_id').AsInteger;
+    R.Name := FieldByName('document_name').AsString;
+    R.DocumentDate := FieldByName('document_date').AsDateTime;
+    R.DocumentTime := FieldByName('document_time').AsDateTime;
+    R.DocumentType := FieldByName('document_type').AsString;
+    R.Filename := FieldByName('document_path').AsString;
+    //R.AuthorId := FieldByName('author_id').AsInteger;
+    R.PermitId := FieldByName('permit_id').AsInteger;
+    R.ProjectId := FieldByName('project_id').AsInteger;
+    R.PersonId := FieldByName('person_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.CaptureId := FieldByName('capture_id').AsInteger;
+    R.SightingId := FieldByName('sighting_id').AsInteger;
+    R.ExpeditionId := FieldByName('expedition_id').AsInteger;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.NestId := FieldByName('nest_id').AsInteger;
+    R.SpecimenId := FieldByName('specimen_id').AsInteger;
+    R.SamplingPlotId := FieldByName('net_station_id').AsInteger;
+    R.MethodId := FieldByName('method_id').AsInteger;
+    R.LicenseType := FieldByName('license_type').AsString;
+    R.LicenseYear := FieldByName('license_year').AsInteger;
+    R.LicenseOwner := FieldByName('license_owner').AsString;
+    R.LicenseNotes := FieldByName('license_notes').AsString;
+    R.LicenseUri := FieldByName('license_uri').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TDocumentRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TDocumentData;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  if not (E is TDocumentData) then
+    raise Exception.Create('Insert: Expected TDocumentData');
+
+  R := TDocumentData(E);
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('INSERT INTO documents (' +
+      'permit_id, ' +
+      'project_id, ' +
+      'person_id, ' +
+      'individual_id, ' +
+      'capture_id, ' +
+      'sighting_id, ' +
+      'specimen_id, ' +
+      'expedition_id, ' +
+      'survey_id, ' +
+      'nest_id, ' +
+      'net_station_id, ' +
+      'method_id, ' +
+      'document_type, ' +
+      'document_name, ' +
+      'document_path, ' +
+      'document_date, ' +
+      'document_time, ' +
+      'license_type, ' +
+      'license_year, ' +
+      'license_uri, ' +
+      'license_notes, ' +
+      'license_owner, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':permit_id, ' +
+      ':project_id, ' +
+      ':person_id, ' +
+      ':individual_id, ' +
+      ':capture_id, ' +
+      ':sighting_id, ' +
+      ':specimen_id, ' +
+      ':expedition_id, ' +
+      ':survey_id, ' +
+      ':nest_id, ' +
+      ':net_station_id, ' +
+      ':method_id, ' +
+      ':document_type, ' +
+      ':document_name, ' +
+      ':document_path, ' +
+      'date(:document_date), ' +
+      'time(:document_time), ' +
+      ':license_type, ' +
+      ':license_year, ' +
+      ':license_uri, ' +
+      ':license_notes, ' +
+      ':license_owner, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('INSERT INTO documents (' +
-        'permit_id, ' +
-        'project_id, ' +
-        'person_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'sighting_id, ' +
-        'specimen_id, ' +
-        'expedition_id, ' +
-        'survey_id, ' +
-        'nest_id, ' +
-        'net_station_id, ' +
-        'method_id, ' +
-        'document_type, ' +
-        'document_name, ' +
-        'document_path, ' +
-        'document_date, ' +
-        'document_time, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':permit_id, ' +
-        ':project_id, ' +
-        ':person_id, ' +
-        ':individual_id, ' +
-        ':capture_id, ' +
-        ':sighting_id, ' +
-        ':specimen_id, ' +
-        ':expedition_id, ' +
-        ':survey_id, ' +
-        ':nest_id, ' +
-        ':net_station_id, ' +
-        ':method_id, ' +
-        ':document_type, ' +
-        ':document_name, ' +
-        ':document_path, ' +
-        'date(:document_date), ' +
-        'time(:document_time), ' +
-        ':license_type, ' +
-        ':license_year, ' +
-        ':license_uri, ' +
-        ':license_notes, ' +
-        ':license_owner, ' +
-        ':user_inserted, ' +
-        'datetime(''now'', ''subsec''))');
+    SetDateParam(ParamByName('document_date'), R.DocumentDate);
+    SetTimeParam(ParamByName('document_time'), R.DocumentTime);
+    ParamByName('document_name').AsString := R.Name;
+    ParamByName('document_type').AsString := R.DocumentType;
+    ParamByName('document_path').AsString := R.Filename;
+    SetForeignParam(ParamByName('permit_id'), R.PermitId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetForeignParam(ParamByName('person_id'), R.PersonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
+    SetForeignParam(ParamByName('expedition_id'), R.ExpeditionId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    SetForeignParam(ParamByName('net_station_id'), R.SamplingPlotId);
+    SetForeignParam(ParamByName('method_id'), R.MethodId);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
-      SetDateParam(ParamByName('document_date'), FDocumentDate);
-      SetTimeParam(ParamByName('document_time'), FDocumentTime);
-      ParamByName('document_name').AsString := FName;
-      ParamByName('document_type').AsString := FDocumentType;
-      ParamByName('document_path').AsString := FFilename;
-      SetForeignParam(ParamByName('permit_id'), FPermitId);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('person_id'), FPersonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('capture_id'), FCaptureId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
-      SetForeignParam(ParamByName('expedition_id'), FExpeditionId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      SetForeignParam(ParamByName('nest_id'), FNestId);
-      SetForeignParam(ParamByName('net_station_id'), FSamplingPlotId);
-      SetForeignParam(ParamByName('method_id'), FMethodId);
-      SetStrParam(ParamByName('license_type'), FLicenseType);
-      SetIntParam(ParamByName('license_year'), FLicenseYear);
-      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
-      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
-      SetStrParam(ParamByName('license_uri'), FLicenseUri);
-      ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ExecSQL;
 
-      ExecSQL;
-
-      // Get the record ID
-      Clear;
-      Add('SELECT last_insert_rowid()');
-      Open;
-      FId := Fields[0].AsInteger;
-      Close;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
   finally
     FreeAndNil(Qry);
   end;
 end;
 
-procedure TDocumentData.LoadFromDataSet(aDataSet: TDataSet);
-var
-  InsertTimeStamp, UpdateTimeStamp: TDateTime;
+function TDocumentRepository.TableName: string;
 begin
-  if not aDataSet.Active then
-    Exit;
-
-  with aDataSet do
-  begin
-    FId := FieldByName('document_id').AsInteger;
-    FName := FieldByName('document_name').AsString;
-    FDocumentDate := FieldByName('document_date').AsDateTime;
-    FDocumentTime := FieldByName('document_time').AsDateTime;
-    FDocumentType := FieldByName('document_type').AsString;
-    FFilename := FieldByName('document_path').AsString;
-    //FAuthorId := FieldByName('author_id').AsInteger;
-    FPermitId := FieldByName('permit_id').AsInteger;
-    FProjectId := FieldByName('project_id').AsInteger;
-    FPersonId := FieldByName('person_id').AsInteger;
-    FIndividualId := FieldByName('individual_id').AsInteger;
-    FCaptureId := FieldByName('capture_id').AsInteger;
-    FSightingId := FieldByName('sighting_id').AsInteger;
-    FExpeditionId := FieldByName('expedition_id').AsInteger;
-    FSurveyId := FieldByName('survey_id').AsInteger;
-    FNestId := FieldByName('nest_id').AsInteger;
-    FSpecimenId := FieldByName('specimen_id').AsInteger;
-    FSamplingPlotId := FieldByName('net_station_id').AsInteger;
-    FMethodId := FieldByName('method_id').AsInteger;
-    FLicenseType := FieldByName('license_type').AsString;
-    FLicenseYear := FieldByName('license_year').AsInteger;
-    FLicenseOwner := FieldByName('license_owner').AsString;
-    FLicenseNotes := FieldByName('license_notes').AsString;
-    FLicenseUri := FieldByName('license_uri').AsString;
-    // SQLite may store DocumentDate and DocumentTime data as ISO8601 string or Julian DocumentDate real formats
-    // so it checks in which format it is stored before load the value
-    if not (FieldByName('insert_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('insert_date').AsString, InsertTimeStamp) then
-        FInsertDate := InsertTimeStamp
-      else
-        FInsertDate := FieldByName('insert_date').AsDateTime;
-    FUserInserted := FieldByName('user_inserted').AsInteger;
-    if not (FieldByName('update_date').IsNull) then
-      if TryISOStrToDateTime(FieldByName('update_date').AsString, UpdateTimeStamp) then
-        FUpdateDate := UpdateTimeStamp
-      else
-        FUpdateDate := FieldByName('update_date').AsDateTime;
-    FUserUpdated := FieldByName('user_updated').AsInteger;
-    FExported := FieldByName('exported_status').AsBoolean;
-    FMarked := FieldByName('marked_status').AsBoolean;
-    FActive := FieldByName('active_status').AsBoolean;
-  end;
+  Result := TBL_DOCUMENTS;
 end;
 
-procedure TDocumentData.Save;
-begin
-  if FId = 0 then
-    Insert
-  else
-    Update;
-end;
-
-function TDocumentData.ToJSON: String;
-var
-  JSONObject: TJSONObject;
-begin
-  JSONObject := TJSONObject.Create;
-  try
-    JSONObject.Add('Date', FDocumentDate);
-    JSONObject.Add('Time', FDocumentTime);
-    JSONObject.Add('Name', FName);
-    JSONObject.Add('Type', FDocumentType);
-    JSONObject.Add('Filename', FFilename);
-    JSONObject.Add('Permit', FPermitId);
-    JSONObject.Add('Project', FProjectId);
-    JSONObject.Add('Person', FPersonId);
-    JSONObject.Add('Individual', FIndividualId);
-    JSONObject.Add('Capture', FCaptureId);
-    JSONObject.Add('Sighting', FSightingId);
-    JSONObject.Add('Specimen', FSpecimenId);
-    JSONObject.Add('Expedition', FExpeditionId);
-    JSONObject.Add('Survey', FSurveyId);
-    JSONObject.Add('Nest', FNestId);
-    JSONObject.Add('Sampling Plot', FSamplingPlotId);
-    JSONObject.Add('Method', FMethodId);
-    JSONObject.Add('License type', FLicenseType);
-    JSONObject.Add('License year', FLicenseYear);
-    JSONObject.Add('License owner', FLicenseOwner);
-    JSONObject.Add('License notes', FLicenseNotes);
-    JSONObject.Add('License URL', FLicenseUri);
-
-    Result := JSONObject.AsJSON;
-  finally
-    JSONObject.Free;
-  end;
-end;
-
-procedure TDocumentData.Update;
+procedure TDocumentRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
+  R: TDocumentData;
 begin
-  if FId = 0 then
-    raise Exception.CreateFmt('TDocumentData.Update: %s.', [rsErrorEmptyId]);
+  if not (E is TDocumentData) then
+    raise Exception.Create('Update: Expected TDocumentData');
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  R := TDocumentData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TDocumentRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
   with Qry, SQL do
   try
-    DataBase := DMM.sqlCon;
-    Transaction := DMM.sqlTrans;
+    Clear;
+    Add('UPDATE documents SET ' +
+      'permit_id = :permit_id, ' +
+      'project_id = :project_id, ' +
+      'person_id = :person_id, ' +
+      'individual_id = :individual_id, ' +
+      'capture_id = :capture_id, ' +
+      'sighting_id = :sighting_id, ' +
+      'specimen_id = :specimen_id, ' +
+      'expedition_id = :expedition_id, ' +
+      'survey_id = :survey_id, ' +
+      'nest_id = :nest_id, ' +
+      'net_station_id = :net_station_id, ' +
+      'method_id = :method_id, ' +
+      'document_type = :document_type, ' +
+      'document_name = :document_name, ' +
+      'document_path = :document_path, ' +
+      'document_date = date(:document_date), ' +
+      'document_time = time(:document_time), ' +
+      'license_type = :license_type, ' +
+      'license_year = :license_year, ' +
+      'license_uri = :license_uri, ' +
+      'license_notes = :license_notes, ' +
+      'license_owner = :license_owner, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec'')');
+    Add('WHERE (document_id = :document_id)');
 
-    //if not DMM.sqlTrans.Active then
-    //  DMM.sqlTrans.StartTransaction;
-    //try
-      Clear;
-      Add('UPDATE documents SET ' +
-        'permit_id = :permit_id, ' +
-        'project_id = :project_id, ' +
-        'person_id = :person_id, ' +
-        'individual_id = :individual_id, ' +
-        'capture_id = :capture_id, ' +
-        'sighting_id = :sighting_id, ' +
-        'specimen_id = :specimen_id, ' +
-        'expedition_id = :expedition_id, ' +
-        'survey_id = :survey_id, ' +
-        'nest_id = :nest_id, ' +
-        'net_station_id = :net_station_id, ' +
-        'method_id = :method_id, ' +
-        'document_type = :document_type, ' +
-        'document_name = :document_name, ' +
-        'document_path = :document_path, ' +
-        'document_date = date(:document_date), ' +
-        'document_time = time(:document_time), ' +
-        'license_type = :license_type, ' +
-        'license_year = :license_year, ' +
-        'license_uri = :license_uri, ' +
-        'license_notes = :license_notes, ' +
-        'license_owner = :license_owner, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (document_id = :document_id)');
+    SetDateParam(ParamByName('document_date'), R.DocumentDate);
+    SetTimeParam(ParamByName('document_time'), R.DocumentTime);
+    ParamByName('document_name').AsString := R.Name;
+    ParamByName('document_type').AsString := R.DocumentType;
+    ParamByName('document_path').AsString := R.Filename;
+    SetForeignParam(ParamByName('permit_id'), R.PermitId);
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetForeignParam(ParamByName('person_id'), R.PersonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
+    SetForeignParam(ParamByName('expedition_id'), R.ExpeditionId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    SetForeignParam(ParamByName('net_station_id'), R.SamplingPlotId);
+    SetForeignParam(ParamByName('method_id'), R.MethodId);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('document_id').AsInteger := R.Id;
 
-      SetDateParam(ParamByName('document_date'), FDocumentDate);
-      SetTimeParam(ParamByName('document_time'), FDocumentTime);
-      ParamByName('document_name').AsString := FName;
-      ParamByName('document_type').AsString := FDocumentType;
-      ParamByName('document_path').AsString := FFilename;
-      SetForeignParam(ParamByName('permit_id'), FPermitId);
-      SetForeignParam(ParamByName('project_id'), FProjectId);
-      SetForeignParam(ParamByName('person_id'), FPersonId);
-      SetForeignParam(ParamByName('individual_id'), FIndividualId);
-      SetForeignParam(ParamByName('capture_id'), FCaptureId);
-      SetForeignParam(ParamByName('sighting_id'), FSightingId);
-      SetForeignParam(ParamByName('specimen_id'), FSpecimenId);
-      SetForeignParam(ParamByName('expedition_id'), FExpeditionId);
-      SetForeignParam(ParamByName('survey_id'), FSurveyId);
-      SetForeignParam(ParamByName('nest_id'), FNestId);
-      SetForeignParam(ParamByName('net_station_id'), FSamplingPlotId);
-      SetForeignParam(ParamByName('method_id'), FMethodId);
-      SetStrParam(ParamByName('license_type'), FLicenseType);
-      SetIntParam(ParamByName('license_year'), FLicenseYear);
-      SetStrParam(ParamByName('license_owner'), FLicenseOwner);
-      SetStrParam(ParamByName('license_notes'), FLicenseNotes);
-      SetStrParam(ParamByName('license_uri'), FLicenseUri);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := FMarked;
-      ParamByName('active_status').AsBoolean := FActive;
-      ParamByName('document_id').AsInteger := FId;
-
-      ExecSQL;
-
-    //  DMM.sqlTrans.CommitRetaining;
-    //except
-    //  DMM.sqlTrans.RollbackRetaining;
-    //  raise;
-    //end;
+    ExecSQL;
   finally
     FreeAndNil(Qry);
   end;

@@ -2737,12 +2737,14 @@ end;
 
 function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
+  FRepo: TImageRepository;
   FRecord, FOldRecord: TImageData;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Image edit dialog');
   Application.CreateForm(TedtImageInfo, edtImageInfo);
+  FRepo := TImageRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtImageInfo do
   try
@@ -2756,6 +2758,8 @@ begin
     begin
       FOldRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
       FRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Image := FRecord;
@@ -2823,7 +2827,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Image.Save;
+        FRepo.Save(Image);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2866,6 +2870,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtImageInfo);
     LogEvent(leaClose, 'Image edit dialog');
   end;
@@ -2873,12 +2878,14 @@ end;
 
 function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
+  FRepo: TAudioRepository;
   FRecord, FOldRecord: TAudioData;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Audio edit dialog');
   Application.CreateForm(TedtAudioInfo, edtAudioInfo);
+  FRepo := TAudioRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtAudioInfo do
   try
@@ -2892,6 +2899,8 @@ begin
     begin
       FOldRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
       FRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     AudioRecording := FRecord;
@@ -2933,7 +2942,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        AudioRecording.Save;
+        FRepo.Save(AudioRecording);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -2976,6 +2985,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtAudioInfo);
     LogEvent(leaClose, 'Audio edit dialog');
   end;
@@ -2983,12 +2993,14 @@ end;
 
 function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean): Boolean;
 var
+  FRepo: TDocumentRepository;
   FRecord, FOldRecord: TDocumentData;
   lstDiff: TStrings;
   D: String;
 begin
   LogEvent(leaOpen, 'Document edit dialog');
   Application.CreateForm(TedtDocumentInfo, edtDocumentInfo);
+  FRepo := TDocumentRepository.Create(DMM.sqlCon);
   FOldRecord := nil;
   with edtDocumentInfo do
   try
@@ -3002,6 +3014,8 @@ begin
     begin
       FOldRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
       FRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
     end;
     Document := FRecord;
@@ -3069,7 +3083,7 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
-        Document.Save;
+        FRepo.Save(Document);
 
         { Save changes to the record history }
         if Assigned(FOldRecord) then
@@ -3112,6 +3126,7 @@ begin
     if Assigned(FOldRecord) then
       FreeAndNil(FOldRecord);
     FRecord.Free;
+    FRepo.Free;
     FreeAndNil(edtDocumentInfo);
     LogEvent(leaClose, 'Document edit dialog');
   end;
