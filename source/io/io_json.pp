@@ -32,8 +32,20 @@ type
     class function Probe(const FileName: string; Stream: TStream): Integer; override;
     function CanHandleExtension(const Ext: string): Boolean; override;
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
+    function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
+    procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
   end;
 
+  { TNDJSONImporter }
+
+  TNDJSONImporter = class(TImporter)
+  public
+    class function Probe(const FileName: string; Stream: TStream): Integer; override;
+    function CanHandleExtension(const Ext: string): Boolean; override;
+    procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
+    function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
+    procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
+  end;
 
 implementation
 
@@ -152,6 +164,38 @@ begin
   Result := (LowerCase(Ext) = 'json') or (LowerCase(Ext) = 'ndjson');
 end;
 
+function TJSONImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
+var
+  Parser: TJSONParser;
+  Data: TJSONData;
+  Arr: TJSONArray;
+  Obj: TJSONObject;
+  i: Integer;
+begin
+  Result := TStringList.Create;
+  Stream.Position := 0;
+  Parser := TJSONParser.Create(Stream);
+  try
+    Data := Parser.Parse;
+    try
+      if (Data.JSONType = jtArray) and (TJSONArray(Data).Count > 0) then
+      begin
+        Arr := TJSONArray(Data);
+        if Arr.Items[0].JSONType = jtObject then
+        begin
+          Obj := TJSONObject(Arr.Items[0]);
+          for i := 0 to Obj.Count - 1 do
+            Result.Add(Obj.Names[i]);
+        end;
+      end;
+    finally
+      Data.Free;
+    end;
+  finally
+    Parser.Free;
+  end;
+end;
+
 procedure TJSONImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
 var
   parser: TJSONParser;
@@ -222,6 +266,48 @@ begin
   end;
 end;
 
+procedure TJSONImporter.PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer;
+  RowOut: TXRowConsumer);
+var
+  Parser: TJSONParser;
+  Data: TJSONData;
+  Arr: TJSONArray;
+  Obj: TJSONObject;
+  Row: TXRow;
+  i, j, Count: Integer;
+begin
+  Stream.Position := 0;
+  Parser := TJSONParser.Create(Stream);
+  try
+    Data := Parser.Parse;
+    try
+      if Data.JSONType = jtArray then
+      begin
+        Arr := TJSONArray(Data);
+        Count := 0;
+        for i := 0 to Arr.Count - 1 do
+        begin
+          if (Arr.Items[i].JSONType = jtObject) and (Count < MaxRows) then
+          begin
+            Obj := TJSONObject(Arr.Items[i]);
+            Row := TXRow.Create;
+            for j := 0 to Obj.Count - 1 do
+              Row.Values[Obj.Names[j]] := Obj.Items[j].AsString;
+            RowOut(Row);
+            Row.Free;
+
+            Inc(Count);
+          end;
+        end;
+      end;
+    finally
+      Data.Free;
+    end;
+  finally
+    Parser.Free;
+  end;
+end;
+
 class function TJSONImporter.Probe(const FileName: string; Stream: TStream): Integer;
 var
   Ext: String;
@@ -244,9 +330,157 @@ begin
     Result := 10;
 end;
 
+{ TNDJSONImporter }
+
+function TNDJSONImporter.CanHandleExtension(const Ext: string): Boolean;
+begin
+  Result := SameText(Ext, 'ndjson');
+end;
+
+function TNDJSONImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
+var
+  Reader: TStreamReader;
+  Line: string;
+  Parser: TJSONParser;
+  Data: TJSONData;
+  Obj: TJSONObject;
+  i: Integer;
+begin
+  Result := TStringList.Create;
+  Stream.Position := 0;
+  Reader := TStreamReader.Create(Stream);
+  try
+    while not Reader.Eof do
+    begin
+      Line := Trim(Reader.ReadLine);
+      if Line = '' then
+        Continue;
+
+      Parser := TJSONParser.Create(Line);
+      try
+        Data := Parser.Parse;
+        try
+          if Data.JSONType = jtObject then
+          begin
+            Obj := TJSONObject(Data);
+            for i := 0 to Obj.Count - 1 do
+              Result.Add(Obj.Names[i]);
+            Exit; // só precisamos da primeira linha
+          end;
+        finally
+          Data.Free;
+        end;
+      finally
+        Parser.Free;
+      end;
+    end;
+  finally
+    Reader.Free;
+  end;
+end;
+
+procedure TNDJSONImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
+var
+  Reader: TStreamReader;
+  Line: string;
+  Parser: TJSONParser;
+  Data: TJSONData;
+  Obj: TJSONObject;
+  Row: TXRow;
+  i: Integer;
+begin
+  Reader := TStreamReader.Create(Stream);
+  try
+    while not Reader.Eof do
+    begin
+      Line := Trim(Reader.ReadLine);
+      if Line = '' then
+        Continue;
+
+      Parser := TJSONParser.Create(Line);
+      try
+        Data := Parser.Parse;
+        try
+          if Data.JSONType = jtObject then
+          begin
+            Obj := TJSONObject(Data);
+            Row := TXRow.Create;
+            for i := 0 to Obj.Count - 1 do
+              Row.Values[Obj.Names[i]] := Obj.Items[i].AsString;
+            RowOut(Row);
+            Row.Free;
+          end;
+        finally
+          Data.Free;
+        end;
+      finally
+        Parser.Free;
+      end;
+    end;
+  finally
+    Reader.Free;
+  end;
+end;
+
+procedure TNDJSONImporter.PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer;
+  RowOut: TXRowConsumer);
+var
+  Reader: TStreamReader;
+  Line: string;
+  Parser: TJSONParser;
+  Data: TJSONData;
+  Obj: TJSONObject;
+  Row: TXRow;
+  i, Count: Integer;
+begin
+  Stream.Position := 0;
+  Reader := TStreamReader.Create(Stream);
+  try
+    Count := 0;
+    while (not Reader.Eof) and (Count < MaxRows) do
+    begin
+      Line := Trim(Reader.ReadLine);
+      if Line = '' then
+        Continue;
+
+      Parser := TJSONParser.Create(Line);
+      try
+        Data := Parser.Parse;
+        try
+          if Data.JSONType = jtObject then
+          begin
+            Obj := TJSONObject(Data);
+            Row := TXRow.Create;
+            for i := 0 to Obj.Count - 1 do
+              Row.Values[Obj.Names[i]] := Obj.Items[i].AsString;
+            RowOut(Row);
+            Row.Free;
+
+            Inc(Count);
+          end;
+        finally
+          Data.Free;
+        end;
+      finally
+        Parser.Free;
+      end;
+    end;
+  finally
+    Reader.Free;
+  end;
+end;
+
+class function TNDJSONImporter.Probe(const FileName: string; Stream: TStream): Integer;
+begin
+  if SameText(ExtractFileExt(FileName), '.ndjson') then
+    Exit(95)
+  else
+    Exit(0);
+end;
+
 initialization
   TImporterRegistry.RegisterImporter('json', TJSONImporter);
-  TImporterRegistry.RegisterImporter('ndjson', TJSONImporter);
+  TImporterRegistry.RegisterImporter('ndjson', TNDJSONImporter);
 
 end.
 

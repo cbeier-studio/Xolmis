@@ -32,6 +32,8 @@ type
     class function Probe(const FileName: string; Stream: TStream): Integer; override;
     function CanHandleExtension(const Ext: string): Boolean; override;
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
+    function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
+    procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
   end;
 
 implementation
@@ -68,6 +70,33 @@ end;
 function TXMLImporter.CanHandleExtension(const Ext: string): Boolean;
 begin
   Result := (LowerCase(Ext) = 'xml');
+end;
+
+function TXMLImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
+var
+  Doc: TXMLDocument;
+  NodeList: TDOMNodeList;
+  Node, Child: TDOMNode;
+  j: Integer;
+begin
+  Result := TStringList.Create;
+  Stream.Position := 0;
+  ReadXMLFile(Doc, Stream);
+  try
+    NodeList := Doc.GetElementsByTagName(Options.RecordNodeName);
+    if NodeList.Count > 0 then
+    begin
+      Node := NodeList[0];
+      for j := 0 to Node.ChildNodes.Count - 1 do
+      begin
+        Child := Node.ChildNodes[j];
+        if (Child.NodeType = ELEMENT_NODE) then
+          Result.Add(Child.NodeName);
+      end;
+    end;
+  finally
+    Doc.Free;
+  end;
 end;
 
 procedure TXMLImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
@@ -115,6 +144,40 @@ begin
           Row.Free;
         end;
       end;
+    end;
+  finally
+    Doc.Free;
+  end;
+end;
+
+procedure TXMLImporter.PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer;
+  RowOut: TXRowConsumer);
+var
+  Doc: TXMLDocument;
+  NodeList: TDOMNodeList;
+  Node, Child: TDOMNode;
+  Row: TXRow;
+  i, j, Count: Integer;
+begin
+  Stream.Position := 0;
+  ReadXMLFile(Doc, Stream);
+  try
+    NodeList := Doc.GetElementsByTagName(Options.RecordNodeName);
+    Count := 0;
+    for i := 0 to NodeList.Count - 1 do
+    begin
+      if Count >= MaxRows then Break;
+      Node := NodeList[i];
+      Row := TXRow.Create;
+      for j := 0 to Node.ChildNodes.Count - 1 do
+      begin
+        Child := Node.ChildNodes[j];
+        if (Child.NodeType = ELEMENT_NODE) then
+          Row.Values[Child.NodeName] := Child.TextContent;
+      end;
+      RowOut(Row);
+      Row.Free;
+      Inc(Count);
     end;
   finally
     Doc.Free;

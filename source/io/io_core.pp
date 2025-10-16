@@ -94,6 +94,22 @@ type
   // Row consumer callback
   TXRowConsumer = procedure(const XRow: TXRow) of object;
 
+  { TFieldMapper }
+
+  TFieldMapper = class
+  private
+    FMap: TFieldsMap;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure AddMapping(const SourceField, DestField: string);
+    function Apply(const Row: TXRow): TXRow;
+    function ValidateRequired(const RequiredFields: array of string): Boolean;
+
+    property Map: TFieldsMap read FMap;
+  end;
+
   { TImporter }
 
   TImporter = class abstract
@@ -102,6 +118,8 @@ type
     class function Probe(const FileName: string; Stream: TStream): Integer; virtual; abstract;
     function CanHandleExtension(const Ext: string): Boolean; virtual; abstract;
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); virtual; abstract;
+    function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; virtual; abstract;
+    procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); virtual; abstract;
   end;
 
   TExporter = class abstract
@@ -197,6 +215,52 @@ begin
   inherited Create;
   NameValueSeparator := '=';
   StrictDelimiter := True;
+end;
+
+{ TFieldMapper }
+
+constructor TFieldMapper.Create;
+begin
+  inherited Create;
+  FMap := TFieldsMap.Create;
+end;
+
+procedure TFieldMapper.AddMapping(const SourceField, DestField: string);
+begin
+  FMap[SourceField] := DestField;
+end;
+
+function TFieldMapper.Apply(const Row: TXRow): TXRow;
+var
+  i: Integer;
+  NewRow: TXRow;
+  Src, Dst: string;
+begin
+  NewRow := TXRow.Create;
+  for i := 0 to FMap.Count - 1 do
+  begin
+    Src := FMap.Keys[i];
+    Dst := FMap.Data[i];
+    if Row.IndexOfName(Src) >= 0 then
+      NewRow.Values[Dst] := Row.Values[Src];
+  end;
+  Result := NewRow;
+end;
+
+destructor TFieldMapper.Destroy;
+begin
+  FMap.Free;
+  inherited Destroy;
+end;
+
+function TFieldMapper.ValidateRequired(const RequiredFields: array of string): Boolean;
+var
+  f: string;
+begin
+  Result := True;
+  for f in RequiredFields do
+    if FMap.IndexOfData(f) < 0 then
+      Exit(False);
 end;
 
 { TImporterRegistry }

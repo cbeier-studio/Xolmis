@@ -21,7 +21,7 @@ unit io_ods;
 interface
 
 uses
-  Classes, SysUtils, Math, fpSpreadsheet, fpsopendocument, io_core;
+  Classes, SysUtils, Math, fpsTypes, fpSpreadsheet, fpsopendocument, io_core;
 
 type
 
@@ -32,6 +32,8 @@ type
     class function Probe(const FileName: string; Stream: TStream): Integer; override;
     function CanHandleExtension(const Ext: string): Boolean; override;
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
+    function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
+    procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
   end;
 
 implementation
@@ -41,6 +43,45 @@ implementation
 function TODSImporter.CanHandleExtension(const Ext: string): Boolean;
 begin
   Result := (LowerCase(Ext) = 'ods');
+end;
+
+function TODSImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
+var
+  Workbook: TsWorkbook;
+  Worksheet: TsWorksheet;
+  ColCount, c: Integer;
+  Cell: PCell;
+begin
+  Result := TStringList.Create;
+  Stream.Position := 0;
+
+  Workbook := TsWorkbook.Create;
+  try
+    Workbook.ReadFromStream(Stream, sfidOpenDocument);
+    if Options.SheetIndex >= 0 then
+      Worksheet := Workbook.GetWorksheetByIndex(Options.SheetIndex)
+    else
+      Worksheet := Workbook.GetFirstWorksheet;
+
+    if Worksheet = nil then Exit;
+
+    ColCount := Worksheet.GetLastColIndex;
+    for c := 0 to ColCount do
+    begin
+      if Options.HasHeader then
+      begin
+        Cell := Worksheet.FindCell(0, c);
+        if Assigned(Cell) then
+          Result.Add(Worksheet.ReadAsText(Cell))
+        else
+          Result.Add('Col' + IntToStr(c+1));
+      end
+      else
+        Result.Add('Col' + IntToStr(c+1));
+    end;
+  finally
+    Workbook.Free;
+  end;
 end;
 
 procedure TODSImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
@@ -102,6 +143,61 @@ begin
   finally
     wb.Free;
     DeleteFile(fname);
+  end;
+end;
+
+procedure TODSImporter.PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer;
+  RowOut: TXRowConsumer);
+var
+  Workbook: TsWorkbook;
+  Worksheet: TsWorksheet;
+  Row, Col, LastRow, LastCol, Count: Integer;
+  Cell: PCell;
+  XRow: TXRow;
+  FieldNames: TStringList;
+begin
+  Stream.Position := 0;
+  Workbook := TsWorkbook.Create;
+  try
+    Workbook.ReadFromStream(Stream, sfidOpenDocument);
+    if Options.SheetIndex >= 0 then
+      Worksheet := Workbook.GetWorksheetByIndex(Options.SheetIndex)
+    else
+      Worksheet := Workbook.GetFirstWorksheet;
+
+    if Worksheet = nil then Exit;
+
+    LastRow := Worksheet.GetLastRowIndex;
+    LastCol := Worksheet.GetLastColIndex;
+
+    // Obter nomes de campos (reutiliza GetFieldNames)
+    Stream.Position := 0;
+    FieldNames := GetFieldNames(Stream, Options);
+    try
+      Count := 0;
+      for Row := Ord(Options.HasHeader) to LastRow do
+      begin
+        if Count >= MaxRows then Break;
+
+        XRow := TXRow.Create;
+        for Col := 0 to LastCol do
+        begin
+          Cell := Worksheet.FindCell(Row, Col);
+          if Assigned(Cell) then
+            XRow.Values[FieldNames[Col]] := Worksheet.ReadAsText(Cell)
+          else
+            XRow.Values[FieldNames[Col]] := '';
+        end;
+        RowOut(XRow);
+        XRow.Free;
+
+        Inc(Count);
+      end;
+    finally
+      FieldNames.Free;
+    end;
+  finally
+    Workbook.Free;
   end;
 end;
 

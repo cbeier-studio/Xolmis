@@ -32,6 +32,8 @@ type
     class function Probe(const FileName: string; Stream: TStream): Integer; override;
     function CanHandleExtension(const Ext: string): Boolean; override;
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
+    function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
+    procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
   end;
 
 implementation
@@ -44,6 +46,27 @@ uses
 function TCSVImporter.CanHandleExtension(const Ext: string): Boolean;
 begin
   Result := (LowerCase(Ext) = 'csv') or (LowerCase(Ext) = 'tsv');
+end;
+
+function TCSVImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
+var
+  DS: TSdfDataSet;
+  i: Integer;
+begin
+  Result := TStringList.Create;
+  DS := TSdfDataSet.Create(nil);
+  try
+    DS.Delimiter := Options.Delimiter;
+    //DS.QuoteChar := Options.QuoteChar;
+    DS.FirstLineAsSchema := Options.HasHeader;
+    DS.LoadFromStream(Stream);
+    DS.Open;
+
+    for i := 0 to DS.Fields.Count - 1 do
+      Result.Add(DS.Fields[i].FieldName);
+  finally
+    DS.Free;
+  end;
 end;
 
 procedure TCSVImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
@@ -99,6 +122,38 @@ begin
     end;
   finally
     ds.Free;
+  end;
+end;
+
+procedure TCSVImporter.PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer;
+  RowOut: TXRowConsumer);
+var
+  DS: TSdfDataSet;
+  Row: TXRow;
+  i, Count: Integer;
+begin
+  DS := TSdfDataSet.Create(nil);
+  try
+    DS.Delimiter := Options.Delimiter;
+    //DS.QuoteChar := Options.QuoteChar;
+    DS.FirstLineAsSchema := Options.HasHeader;
+    DS.LoadFromStream(Stream);
+    DS.Open;
+
+    Count := 0;
+    while (not DS.EOF) and (Count < MaxRows) do
+    begin
+      Row := TXRow.Create;
+      for i := 0 to DS.Fields.Count - 1 do
+        Row.Values[DS.Fields[i].FieldName] := DS.Fields[i].AsString;
+      RowOut(Row);
+      Row.Free;
+
+      Inc(Count);
+      DS.Next;
+    end;
+  finally
+    DS.Free;
   end;
 end;
 
