@@ -8,7 +8,7 @@ uses
   BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf, fgl,
   dbf, csvdataset, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset, fpsTypes,
-  atshapelinebgra, io_core, data_types;
+  atshapelinebgra, io_core, io_csv, io_dbf, io_json, io_ods, io_xlsx, io_xml, data_types;
 
 type
 
@@ -89,6 +89,14 @@ type
     procedure sbPriorClick(Sender: TObject);
     procedure sbSaveLogClick(Sender: TObject);
   private
+    FFileFormat: TImportFileType;
+    FImporter: TImporter;
+    FCSVImporter: TCSVImporter;
+    FDBFImporter: TDBFImporter;
+    FJSONImporter: TJSONImporter;
+    FODSImporter: TODSImporter;
+    FXLSImporter: TXLSXImporter;
+    FXMLImporter: TXMLImporter;
     FDataSet: TDataSet;
     dsJSON: TExtJSJSONObjectDataSet;
     FFieldMap: TFieldsMap;
@@ -110,7 +118,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
+  utils_locale, utils_global,
+  udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -190,9 +199,15 @@ begin
     case ExtractFileExt(eSourceFile.Text) of
       '.csv', '.tsv':
       begin
+        case ExtractFileExt(eSourceFile.Text) of
+          '.csv': FFileFormat := iftCSV;
+          '.tsv': FFileFormat := iftTSV;
+        end;
         FDataSet := dsSdf;
         if ExtractFileExt(eSourceFile.Text) = '.tsv' then
+        begin
           dsSdf.Delimiter := #9; // Tab character
+        end;
         cfgDelimiters := TcfgDelimiters.Create(nil);
         with cfgDelimiters do
         try
@@ -213,26 +228,52 @@ begin
         FDataSet := dsWorksheet;
         dsWorksheet.FileName := eSourceFile.Text;
         case ExtractFileExt(eSourceFile.Text) of
-          '.xlsx': dsWorksheet.FileFormat := sfOOXML;
-          '.xls': dsWorksheet.FileFormat := sfExcel8;
-          '.ods': dsWorksheet.FileFormat := sfOpenDocument;
+          '.xlsx':
+          begin
+            dsWorksheet.FileFormat := sfOOXML;
+            FFileFormat := iftExcelOOXML;
+          end;
+          '.xls':
+          begin
+            dsWorksheet.FileFormat := sfExcel8;
+            FFileFormat := iftExcel;
+          end;
+          '.ods':
+          begin
+            dsWorksheet.FileFormat := sfOpenDocument;
+            FFileFormat := iftOpenDocument;
+          end;
         end;
       end;
-      '.json':
+      '.json', '.ndjson':
       begin
+        case ExtractFileExt(eSourceFile.Text) of
+          '.json':   FFileFormat := iftJSON;
+          '.ndjson': FFileFormat := iftNDJSON;
+        end;
         dsJSON := TExtJSJSONObjectDataSet.Create(nil);
         FDataSet := dsJSON;
         dsJSON.LoadFromFile(eSourceFile.Text);
       end;
       '.dbf':
       begin
+        FFileFormat := iftDBF;
         FDataSet := dsDbf;
         dsDbf.FilePathFull := ExtractFilePath(eSourceFile.Text);
         dsDbf.TableName := ExtractFileName(eSourceFile.Text);
       end;
-      '.kml', '.kmz': ;
-      '.gpx': ;
-      '.geojson': ;
+      '.kml', '.kmz':
+      begin
+        FFileFormat := iftKML;
+      end;
+      '.gpx':
+      begin
+        FFileFormat := iftGPX;
+      end;
+      '.geojson':
+      begin
+        FFileFormat := iftGeoJSON;
+      end;
     else
       FDataSet := dsMem;
     end;

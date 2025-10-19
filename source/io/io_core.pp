@@ -114,7 +114,6 @@ type
 
   TImporter = class abstract
   public
-  // 0..100: quão confiante este importador está para este arquivo/stream
     class function Probe(const FileName: string; Stream: TStream): Integer; virtual; abstract;
     function CanHandleExtension(const Ext: string): Boolean; virtual; abstract;
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); virtual; abstract;
@@ -195,7 +194,7 @@ begin
       cls := TImporterRegistry.BestProbe(FileName, fs);
 
     if cls = nil then
-      raise Exception.CreateFmt('Nenhum importador registrado para %s', [FileName]);
+      raise Exception.CreateFmt(rsErrorNoImporterRegisteredForExtension, [FileName]);
 
     with cls.Create do
     try

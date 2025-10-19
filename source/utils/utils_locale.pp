@@ -186,6 +186,7 @@ uses
     rsErrorFieldsAndValuesDiffer = 'The length of field and value lists do not match.';
     rsErrorLoadingDataFromJSONFile = 'Error loading data from the JSON file: %s';
     rsErrorModuleIsDifferent = 'The file module is different from the Quick Entry module.';
+    rsErrorNoImporterRegisteredForExtension = 'No importer registered for %s';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
