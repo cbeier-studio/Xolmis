@@ -161,7 +161,7 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations,
   data_consts, data_columns, data_getvalue,
-  models_record_types, models_taxonomy, models_bands, models_botany,
+  models_record_types, models_taxonomy, models_bands, models_botany, models_birds,
   uDarkStyleParams,
   udm_main;
 
@@ -597,8 +597,160 @@ begin
 end;
 
 procedure TfrmQuickEntry.ImportDataCaptures;
+var
+  Obj: TCapture;
+  Repo: TCaptureRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TCapture.Create();
+    Repo := TCaptureRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.SurveyId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, qeGrid.Cells[1, r]);
+        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[2, r]);
+        Obj.CaptureDate := StrToDateDef(qeGrid.Cells[3, r], NullDate);
+        Obj.CaptureTime := StrToTimeDef(qeGrid.Cells[4, r], NullTime);
+        Obj.BanderId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[5, r]);
+        Obj.AnnotatorId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[6, r]);
+        // Type
+        if (qeGrid.Cells[7, r] = rsCaptureNew) then
+          Obj.CaptureType := cptNew
+        else
+        if (qeGrid.Cells[7, r] = rsCaptureRecapture) then
+          Obj.CaptureType := cptRecapture
+        else
+        if (qeGrid.Cells[7, r] = rsCaptureSameDay) then
+          Obj.CaptureType := cptSameDay
+        else
+        if (qeGrid.Cells[7, r] = rsCaptureChangeBand) then
+          Obj.CaptureType := cptChangeBand
+        else
+          Obj.CaptureType := cptUnbanded;
+        Obj.NetId := GetKey(TBL_NETS_EFFORT, COL_NET_ID, COL_FULL_NAME, qeGrid.Cells[8, r]);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[9, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[10, r], 0.0);
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[11, r]);
+        Obj.BandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, qeGrid.Cells[12, r]);
+        Obj.RemovedBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, qeGrid.Cells[13, r]);
+        Obj.RightLegBelow := qeGrid.Cells[14, r];
+        Obj.LeftLegBelow := qeGrid.Cells[15, r];
+        // Age
+        if (qeGrid.Cells[16, r] = rsAgeNestling) then
+          Obj.SubjectAge := ageNestling
+        else
+        if (qeGrid.Cells[16, r] = rsAgeFledgling) then
+          Obj.SubjectAge := ageFledgling
+        else
+        if (qeGrid.Cells[16, r] = rsAgeJuvenile) then
+          Obj.SubjectAge := ageJuvenile
+        else
+        if (qeGrid.Cells[16, r] = rsAgeAdult) then
+          Obj.SubjectAge := ageAdult
+        else
+        if (qeGrid.Cells[16, r] = rsAgeFirstYear) then
+          Obj.SubjectAge := ageFirstYear
+        else
+        if (qeGrid.Cells[16, r] = rsAgeSecondYear) then
+          Obj.SubjectAge := ageSecondYear
+        else
+        if (qeGrid.Cells[16, r] = rsAgeThirdYear) then
+          Obj.SubjectAge := ageThirdYear
+        else
+        if (qeGrid.Cells[16, r] = rsAgeFourthYear) then
+          Obj.SubjectAge := ageFourthYear
+        else
+        if (qeGrid.Cells[16, r] = rsAgeFifthYear) then
+          Obj.SubjectAge := ageFifthYear
+        else
+          Obj.SubjectAge := ageUnknown;
+        // Escaped
+        Obj.Escaped := qeGrid.Cells[17, r] = '1';
+        // Status
+        if (qeGrid.Cells[18, r] = rsStatusNormal) then
+          Obj.SubjectStatus := sstNormal
+        else
+        if (qeGrid.Cells[18, r] = rsStatusStressed) then
+          Obj.SubjectStatus := sstStressed
+        else
+        if (qeGrid.Cells[18, r] = rsStatusInjured) then
+          Obj.SubjectStatus := sstInjured
+        else
+        if (qeGrid.Cells[18, r] = rsStatusWingSprain) then
+          Obj.SubjectStatus := sstWingSprain
+        else
+        if (qeGrid.Cells[18, r] = rsStatusDead) then
+          Obj.SubjectStatus := sstDead;
+        Obj.CloacalProtuberance := qeGrid.Cells[19, r];
+        Obj.BroodPatch := qeGrid.Cells[20, r];
+        Obj.Fat := qeGrid.Cells[21, r];
+        Obj.BodyMolt := qeGrid.Cells[22, r];
+        Obj.FlightFeathersMolt := qeGrid.Cells[23, r];
+        Obj.FlightFeathersWear := qeGrid.Cells[24, r];
+        Obj.RightWingChord := StrToFloatDef(qeGrid.Cells[25, r], 0.0);
+        Obj.FirstSecondaryChord := StrToFloatDef(qeGrid.Cells[26, r], 0.0);
+        Obj.TailLength := StrToFloatDef(qeGrid.Cells[27, r], 0.0);
+        Obj.TarsusLength := StrToFloatDef(qeGrid.Cells[28, r], 0.0);
+        Obj.TarsusDiameter := StrToFloatDef(qeGrid.Cells[29, r], 0.0);
+        Obj.Weight := StrToFloatDef(qeGrid.Cells[30, r], 0.0);
+        Obj.SkullLength := StrToFloatDef(qeGrid.Cells[31, r], 0.0);
+        Obj.ExposedCulmen := StrToFloatDef(qeGrid.Cells[32, r], 0.0);
+        Obj.NostrilBillTip := StrToFloatDef(qeGrid.Cells[33, r], 0.0);
+        Obj.BillWidth := StrToFloatDef(qeGrid.Cells[34, r], 0.0);
+        Obj.BillHeight := StrToFloatDef(qeGrid.Cells[35, r], 0.0);
+        Obj.TotalLength := StrToFloatDef(qeGrid.Cells[36, r], 0.0);
+        Obj.CulmenLength := StrToFloatDef(qeGrid.Cells[37, r], 0.0);
+        Obj.PhilornisLarvaeTally := StrToIntDef(qeGrid.Cells[38, r], 0);
+        Obj.KippsIndex := StrToFloatDef(qeGrid.Cells[39, r], 0.0);
+        Obj.MoltLimits := qeGrid.Cells[40, r];
+        Obj.SkullOssification := qeGrid.Cells[41, r];
+        Obj.CycleCode := qeGrid.Cells[42, r];
+        Obj.HowAged := qeGrid.Cells[43, r];
+        // Sex
+        if (qeGrid.Cells[44, r] = rsSexMale) then
+          Obj.SubjectSex := sexMale
+        else
+        if (qeGrid.Cells[44, r] = rsSexFemale) then
+          Obj.SubjectSex := sexFemale
+        else
+          Obj.SubjectSex := sexUnknown;
+        Obj.HowSexed := qeGrid.Cells[45, r];
+        Obj.Notes := qeGrid.Cells[46, r];
+        Obj.BloodSample := qeGrid.Cells[47, r] = '1';
+        Obj.FeatherSample := qeGrid.Cells[48, r] = '1';
+        Obj.FecesSample := qeGrid.Cells[49, r] = '1';
+        Obj.ParasiteSample := qeGrid.Cells[50, r] = '1';
+        Obj.SubjectRecorded := qeGrid.Cells[51, r] = '1';
+        Obj.SubjectPhotographed := qeGrid.Cells[52, r] = '1';
+        Obj.ClawSample := qeGrid.Cells[53, r] = '1';
+        Obj.SubjectCollected := qeGrid.Cells[54, r] = '1';
+        Obj.Photographer1Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[55, r]);
+        Obj.Photographer2Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[56, r]);
+        Obj.CameraName := qeGrid.Cells[57, r];
+        Obj.StartPhotoNumber := qeGrid.Cells[58, r];
+        Obj.EndPhotoNumber := qeGrid.Cells[59, r];
+        Obj.FieldNumber := qeGrid.Cells[60, r];
+        Obj.Hemoglobin := StrToFloatDef(qeGrid.Cells[61, r], 0.0);
+        Obj.Hematocrit := StrToFloatDef(qeGrid.Cells[62, r], 0.0);
+        Obj.Glucose := StrToFloatDef(qeGrid.Cells[63, r], 0.0);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataEggs;
