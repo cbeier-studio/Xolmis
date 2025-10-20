@@ -898,8 +898,133 @@ begin
 end;
 
 procedure TfrmQuickEntry.ImportDataFeathers;
+var
+  Obj: TFeather;
+  Repo: TFeatherRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TFeather.Create();
+    Repo := TFeatherRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.SampleDate := StrToDateDef(qeGrid.Cells[0, r], NullDate);
+        Obj.SampleTime := StrToTimeDef(qeGrid.Cells[1, r], NullTime);
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[2, r]);
+        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[3, r]);
+        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[4, r]);
+        // Source
+        if (qeGrid.Cells[5, r] = rsFeatherCapture) then
+          Obj.SourceType := fdsCapture
+        else
+        if (qeGrid.Cells[5, r] = rsFeatherSighting) then
+          Obj.SourceType := fdsSighting
+        else
+        if (qeGrid.Cells[5, r] = rsFeatherPhoto) then
+          Obj.SourceType := fdsPhoto
+        else
+          Obj.SourceType := fdsUnknown;
+        // Symmetry
+        if (qeGrid.Cells[6, r] = rsSymmetrical) then
+          Obj.Symmetrical := symSymmetrical
+        else
+        if (qeGrid.Cells[6, r] = rsAsymmetrical) then
+          Obj.Symmetrical := symAsymmetrical
+        else
+          Obj.Symmetrical := symUnknown;
+        // Feather trait
+        if (qeGrid.Cells[7, r] = rsTraitBody) then
+          Obj.FeatherTrait := ftrBody
+        else
+        if (qeGrid.Cells[7, r] = rsTraitPrimary) then
+          Obj.FeatherTrait := ftrPrimary
+        else
+        if (qeGrid.Cells[7, r] = rsTraitSecondary) then
+          Obj.FeatherTrait := ftrSecondary
+        else
+        if (qeGrid.Cells[7, r] = rsTraitRectrix) then
+          Obj.FeatherTrait := ftrRectrix
+        else
+        if (qeGrid.Cells[7, r] = rsTraitPrimaryCovert) then
+          Obj.FeatherTrait := ftrPrimaryCovert
+        else
+        if (qeGrid.Cells[7, r] = rsTraitGreatCovert) then
+          Obj.FeatherTrait := ftrGreatCovert
+        else
+        if (qeGrid.Cells[7, r] = rsTraitMedianCovert) then
+          Obj.FeatherTrait := ftrMedianCovert
+        else
+        if (qeGrid.Cells[7, r] = rsTraitLesserCovert) then
+          Obj.FeatherTrait := ftrLesserCovert
+        else
+        if (qeGrid.Cells[7, r] = rsTraitCarpalCovert) then
+          Obj.FeatherTrait := ftrCarpalCovert
+        else
+        if (qeGrid.Cells[7, r] = rsTraitAlula) then
+          Obj.FeatherTrait := ftrAlula;
+        Obj.FeatherNumber := StrToIntDef(qeGrid.Cells[8, r], 0);
+        // Body side
+        if (qeGrid.Cells[9, r] = rsSideRight) then
+          Obj.BodySide := bsdRight
+        else
+        if (qeGrid.Cells[9, r] = rsSideLeft) then
+          Obj.BodySide := bsdLeft
+        else
+          Obj.BodySide := bsdNotApplicable;
+        Obj.PercentGrown := StrToFloatDef(qeGrid.Cells[10, r], 0.0);
+        Obj.FeatherLength := StrToFloatDef(qeGrid.Cells[11, r], 0.0);
+        Obj.FeatherArea := StrToFloatDef(qeGrid.Cells[12, r], 0.0);
+        Obj.FeatherMass := StrToFloatDef(qeGrid.Cells[13, r], 0.0);
+        Obj.RachisWidth := StrToFloatDef(qeGrid.Cells[14, r], 0.0);
+        Obj.GrowthBarWidth := StrToFloatDef(qeGrid.Cells[15, r], 0.0);
+        Obj.BarbDensity := StrToFloatDef(qeGrid.Cells[16, r], 0.0);
+        // Age
+        if (qeGrid.Cells[17, r] = rsAgeNestling) then
+          Obj.FeatherAge := fageNestling
+        else
+        if (qeGrid.Cells[17, r] = rsAgeFledgling) then
+          Obj.FeatherAge := fageFledgling
+        else
+        if (qeGrid.Cells[17, r] = rsAgeJuvenile) then
+          Obj.FeatherAge := fageJuvenile
+        else
+        if (qeGrid.Cells[17, r] = rsAgeAdult) then
+          Obj.FeatherAge := fageAdult
+        else
+        if (qeGrid.Cells[17, r] = rsAgeFirstYear) then
+          Obj.FeatherAge := fageFirstYear
+        else
+        if (qeGrid.Cells[17, r] = rsAgeSecondYear) then
+          Obj.FeatherAge := fageSecondYear
+        else
+        if (qeGrid.Cells[17, r] = rsAgeThirdYear) then
+          Obj.FeatherAge := fageThirdYear
+        else
+        if (qeGrid.Cells[17, r] = rsAgeFourthYear) then
+          Obj.FeatherAge := fageFourthYear
+        else
+        if (qeGrid.Cells[17, r] = rsAgeFifthYear) then
+          Obj.FeatherAge := fageFifthYear
+        else
+          Obj.FeatherAge := fageUnknown;
+        Obj.Notes := qeGrid.Cells[18, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataGazetteer;
