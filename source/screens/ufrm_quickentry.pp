@@ -161,7 +161,8 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations,
   data_consts, data_columns, data_getvalue,
-  models_record_types, models_taxonomy, models_bands, models_botany, models_birds,
+  models_record_types, models_taxonomy, models_bands, models_botany, models_birds, models_breeding,
+  models_sampling,
   uDarkStyleParams,
   udm_main;
 
@@ -754,13 +755,146 @@ begin
 end;
 
 procedure TfrmQuickEntry.ImportDataEggs;
+var
+  Obj: TEgg;
+  Repo: TEggRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TEgg.Create();
+    Repo := TEggRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.FieldNumber := qeGrid.Cells[1, r];
+        Obj.EggSeq := StrToIntDef(qeGrid.Cells[2, r], 0);
+        Obj.MeasureDate := StrToDateDef(qeGrid.Cells[3, r], NullDate);
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[4, r]);
+        Obj.HostEgg := qeGrid.Cells[5, r] = '1';
+        Obj.ResearcherId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[6, r]);
+        // Egg shape
+        if (qeGrid.Cells[7, r] = rsEggSpherical) then
+          Obj.EggShape := esSpherical
+        else
+        if (qeGrid.Cells[7, r] = rsEggOval) then
+          Obj.EggShape := esOval
+        else
+        if (qeGrid.Cells[7, r] = rsEggElliptical) then
+          Obj.EggShape := esElliptical
+        else
+        if (qeGrid.Cells[7, r] = rsEggConical) then
+          Obj.EggShape := esConical
+        else
+        if (qeGrid.Cells[7, r] = rsEggBiconical) then
+          Obj.EggShape := esBiconical
+        else
+        if (qeGrid.Cells[7, r] = rsEggCylindrical) then
+          Obj.EggShape := esCylindrical
+        else
+        if (qeGrid.Cells[7, r] = rsEggLongitudinal) then
+          Obj.EggShape := esLongitudinal
+        else
+        if (qeGrid.Cells[7, r] = rsEggPyriform) then
+          Obj.EggShape := esPiriform
+        else
+          Obj.EggShape := esUnknown;
+        Obj.EggStage := qeGrid.Cells[8, r];
+        Obj.EggshellColor := qeGrid.Cells[9, r];
+        // Eggshell pattern
+        if (qeGrid.Cells[10, r] = rsEggSpots) then
+          Obj.EggshellPattern := espSpots
+        else
+        if (qeGrid.Cells[10, r] = rsEggBlotches) then
+          Obj.EggshellPattern := espBlotches
+        else
+        if (qeGrid.Cells[10, r] = rsEggScrawls) then
+          Obj.EggshellPattern := espScrawls
+        else
+        if (qeGrid.Cells[10, r] = rsEggSquiggles) then
+          Obj.EggshellPattern := espSquiggles
+        else
+        if (qeGrid.Cells[10, r] = rsEggStreaks) then
+          Obj.EggshellPattern := espStreaks
+        else
+        if (qeGrid.Cells[10, r] = rsEggBlotchesSquiggles) then
+          Obj.EggshellPattern := espBlotchesSquiggles
+        else
+        if (qeGrid.Cells[10, r] = rsEggSpotsSquiggles) then
+          Obj.EggshellPattern := espSpotsSquiggles
+        else
+          Obj.EggshellPattern := espUnknown;
+        // Eggshell texture
+        if (qeGrid.Cells[11, r] = rsEggChalky) then
+          Obj.EggshellTexture := estChalky
+        else
+        if (qeGrid.Cells[11, r] = rsEggGlossy) then
+          Obj.EggshellTexture := estGlossy
+        else
+        if (qeGrid.Cells[11, r] = rsEggPitted) then
+          Obj.EggshellTexture := estPitted
+        else
+        if (qeGrid.Cells[11, r] = rsEggShiny) then
+          Obj.EggshellTexture := estShiny
+        else
+          Obj.EggshellTexture := estUnknown;
+        Obj.Width := StrToFloatDef(qeGrid.Cells[12, r], 0.0);
+        Obj.Length := StrToFloatDef(qeGrid.Cells[13, r], 0.0);
+        Obj.Mass := StrToFloatDef(qeGrid.Cells[14, r], 0.0);
+        Obj.EggHatched := qeGrid.Cells[15, r] = '1';
+        Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, qeGrid.Cells[16, r]);
+        Obj.Notes := qeGrid.Cells[17, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataExpeditions;
+var
+  Obj: TExpedition;
+  Repo: TExpeditionRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TExpedition.Create();
+    Repo := TExpeditionRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Name := qeGrid.Cells[0, r];
+        Obj.StartDate := StrToDateDef(qeGrid.Cells[1, r], NullDate);
+        Obj.EndDate := StrToDateDef(qeGrid.Cells[2, r], NullDate);
+        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_PROJECT_TITLE, qeGrid.Cells[3, r]);
+        Obj.Description := qeGrid.Cells[4, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataFeathers;
@@ -1628,7 +1762,7 @@ begin
 
   // Set the array of validation rules
   // Do not forget to update the length when the schema changes
-  SetLength(FColRules, 17);
+  SetLength(FColRules, 18);
   for i := Low(FColRules) to High(FColRules) do
     FColRules[i].Clear;
 
