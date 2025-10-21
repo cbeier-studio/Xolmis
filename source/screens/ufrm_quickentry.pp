@@ -162,7 +162,8 @@ uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations,
   data_consts, data_columns, data_getvalue,
   models_record_types, models_taxonomy, models_bands, models_botany, models_birds, models_breeding,
-  models_sampling,
+  models_geo, models_sampling, models_institutions, models_methods, models_sampling_plots, models_permits,
+  models_projects,
   uDarkStyleParams,
   udm_main;
 
@@ -1028,83 +1029,842 @@ begin
 end;
 
 procedure TfrmQuickEntry.ImportDataGazetteer;
+var
+  Obj: TSite;
+  Repo: TSiteRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSite.Create();
+    Repo := TSiteRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Name := qeGrid.Cells[0, r];
+        Obj.Abbreviation := qeGrid.Cells[1, r];
+        // Type
+        if (qeGrid.Cells[2, r] = rsCaptionCountry) then
+          Obj.Rank := srCountry
+        else
+        if (qeGrid.Cells[2, r] = rsCaptionState) then
+          Obj.Rank := srState
+        else
+        if (qeGrid.Cells[2, r] = rsCaptionRegion) then
+          Obj.Rank := srRegion
+        else
+        if (qeGrid.Cells[2, r] = rsCaptionMunicipality) then
+          Obj.Rank := srMunicipality
+        else
+        if (qeGrid.Cells[2, r] = rsCaptionDistrict) then
+          Obj.Rank := srDistrict
+        else
+        if (qeGrid.Cells[2, r] = rsCaptionLocality) then
+          Obj.Rank := srLocality
+        else
+          Obj.Rank := srNone;
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[3, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[4, r], 0.0);
+        Obj.Altitude := StrToFloatDef(qeGrid.Cells[5, r], 0.0);
+        Obj.ParentSiteId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[6, r]);
+        Obj.FullName := qeGrid.Cells[7, r];
+        Obj.EbirdName := qeGrid.Cells[8, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataIndividuals;
+var
+  Obj: TIndividual;
+  Repo: TIndividualRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TIndividual.Create();
+    Repo := TIndividualRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.BandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, qeGrid.Cells[1, r]);
+        Obj.BandingDate := StrToDateDef(qeGrid.Cells[2, r], NullDate);
+        Obj.DoubleBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, qeGrid.Cells[3, r]);
+        Obj.RemovedBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, qeGrid.Cells[4, r]);
+        Obj.BandChangeDate := StrToDateDef(qeGrid.Cells[5, r], NullDate);
+        Obj.RightLegBelow := qeGrid.Cells[6, r];
+        Obj.LeftLegBelow := qeGrid.Cells[7, r];
+        // Sex
+        if (qeGrid.Cells[8, r] = rsSexMale) then
+          Obj.Sex := sexMale
+        else
+        if (qeGrid.Cells[8, r] = rsSexFemale) then
+          Obj.Sex := sexFemale
+        else
+          Obj.Sex := sexUnknown;
+        // Age
+        if (qeGrid.Cells[9, r] = rsAgeNestling) then
+          Obj.Age := ageNestling
+        else
+        if (qeGrid.Cells[9, r] = rsAgeFledgling) then
+          Obj.Age := ageFledgling
+        else
+        if (qeGrid.Cells[9, r] = rsAgeJuvenile) then
+          Obj.Age := ageJuvenile
+        else
+        if (qeGrid.Cells[9, r] = rsAgeAdult) then
+          Obj.Age := ageAdult
+        else
+        if (qeGrid.Cells[9, r] = rsAgeFirstYear) then
+          Obj.Age := ageFirstYear
+        else
+        if (qeGrid.Cells[9, r] = rsAgeSecondYear) then
+          Obj.Age := ageSecondYear
+        else
+        if (qeGrid.Cells[9, r] = rsAgeThirdYear) then
+          Obj.Age := ageThirdYear
+        else
+        if (qeGrid.Cells[9, r] = rsAgeFourthYear) then
+          Obj.Age := ageFourthYear
+        else
+        if (qeGrid.Cells[9, r] = rsAgeFifthYear) then
+          Obj.Age := ageFifthYear
+        else
+          Obj.Age := ageUnknown;
+        Obj.BirthYear := StrToIntDef(qeGrid.Cells[10, r], 0);
+        Obj.BirthMonth := StrToIntDef(qeGrid.Cells[11, r], 0);
+        Obj.BirthDay := StrToIntDef(qeGrid.Cells[12, r], 0);
+        Obj.DeathYear := StrToIntDef(qeGrid.Cells[13, r], 0);
+        Obj.DeathMonth := StrTointDef(qeGrid.Cells[14, r], 0);
+        Obj.DeathDay := StrToIntDef(qeGrid.Cells[15, r], 0);
+        Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, qeGrid.Cells[16, r]);
+        Obj.FatherId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, qeGrid.Cells[17, r]);
+        Obj.MotherId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, qeGrid.Cells[18, r]);
+        Obj.RecognizableMarkings := qeGrid.Cells[19, r];
+        Obj.Notes := qeGrid.Cells[20, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataInstitutions;
+var
+  Obj: TInstitution;
+  Repo: TInstitutionRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TInstitution.Create();
+    Repo := TInstitutionRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.FullName := qeGrid.Cells[0, r];
+        Obj.Abbreviation := qeGrid.Cells[1, r];
+        Obj.ManagerName := qeGrid.Cells[2, r];
+        Obj.Email := qeGrid.Cells[3, r];
+        Obj.Phone := qeGrid.Cells[4, r];
+        Obj.PostalCode := qeGrid.Cells[5, r];
+        Obj.Address1 := qeGrid.Cells[6, r];
+        Obj.Address2 := qeGrid.Cells[7, r];
+        Obj.Neighborhood := qeGrid.Cells[8, r];
+        Obj.MunicipalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[9, r]);
+        Obj.StateId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[10, r]);
+        Obj.CountryId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[11, r]);
+        Obj.Notes := qeGrid.Cells[12, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataMethods;
+var
+  Obj: TMethod;
+  Repo: TMethodRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TMethod.Create();
+    Repo := TMethodRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Name := qeGrid.Cells[0, r];
+        Obj.Abbreviation := qeGrid.Cells[1, r];
+        Obj.Category := qeGrid.Cells[2, r];
+        Obj.EbirdName := qeGrid.Cells[3, r];
+        Obj.Description := qeGrid.Cells[4, r];
+        Obj.RecommendedUses := qeGrid.Cells[5, r];
+        Obj.Notes := qeGrid.Cells[6, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataNestOwners;
+var
+  Obj: TNestOwner;
+  Repo: TNestOwnerRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TNestOwner.Create();
+    Repo := TNestOwnerRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        // Role
+        if (qeGrid.Cells[0, r] = rsNestMale) then
+          Obj.Role := nrlMale
+        else
+        if (qeGrid.Cells[0, r] = rsNestFemale) then
+          Obj.Role := nrlFemale
+        else
+        if (qeGrid.Cells[0, r] = rsNestHelper) then
+          Obj.Role := nrlHelper
+        else
+        if (qeGrid.Cells[0, r] = rsNestOffspring) then
+          Obj.Role := nrlOffspring
+        else
+          Obj.Role := nrlUnknown;
+        Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, qeGrid.Cells[1, r]);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataNestRevisions;
+var
+  Obj: TNestRevision;
+  Repo: TNestRevisionRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TNestRevision.Create();
+    Repo := TNestRevisionRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.RevisionDate := StrToDateDef(qeGrid.Cells[0, r], NullDate);
+        Obj.RevisionTime := StrToTimeDef(qeGrid.Cells[1, r], NullTime);
+        Obj.Observer1Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[2, r]);
+        Obj.Observer2Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[3, r]);
+        // Nest stage
+        if (qeGrid.Cells[4, r] = rsNestBuilding) then
+          Obj.NestStage := nsgConstruction
+        else
+        if (qeGrid.Cells[4, r] = rsNestLaying) then
+          Obj.NestStage := nsgLaying
+        else
+        if (qeGrid.Cells[4, r] = rsNestIncubating) then
+          Obj.NestStage := nsgIncubation
+        else
+        if (qeGrid.Cells[4, r] = rsNestHatching) then
+          Obj.NestStage := nsgHatching
+        else
+        if (qeGrid.Cells[4, r] = rsNestNestling) then
+          Obj.NestStage := nsgNestling
+        else
+        if (qeGrid.Cells[4, r] = rsNestInactive) then
+          Obj.NestStage := nsgInactive
+        else
+          Obj.NestStage := nsgUnknown;
+        // Nest status
+        if (qeGrid.Cells[5, r] = rsNestInactive) then
+          Obj.NestStatus := nstInactive
+        else
+        if (qeGrid.Cells[5, r] = rsNestActive) then
+          Obj.NestStatus := nstActive
+        else
+          Obj.NestStatus := nstUnknown;
+        Obj.HostEggsTally := StrToIntDef(qeGrid.Cells[6, r], 0);
+        Obj.HostNestlingsTally := StrToIntDef(qeGrid.Cells[7, r], 0);
+        Obj.NidoparasiteId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[8, r]);
+        Obj.NidoparasiteEggsTally := StrToIntDef(qeGrid.Cells[9, r], 0);
+        Obj.NidoparasiteNestlingsTally := StrToIntDef(qeGrid.Cells[10, r], 0);
+        Obj.HavePhilornisLarvae := qeGrid.Cells[11, r] = '1';
+        Obj.Notes := qeGrid.Cells[12, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataNests;
+var
+  Obj: TNest;
+  Repo: TNestRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TNest.Create();
+    Repo := TNestRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.FieldNumber := qeGrid.Cells[1, r];
+        // Nest fate
+        if (qeGrid.Cells[2, r] = rsNestLost) then
+          Obj.NestFate := nfLoss
+        else
+        if (qeGrid.Cells[2, r] = rsNestSuccess) then
+          Obj.NestFate := nfSuccess
+        else
+          Obj.NestFate := nfUnknown;
+        Obj.FoundDate := StrToDateDef(qeGrid.Cells[3, r], NullDate);
+        Obj.LastDate := StrToDateDef(qeGrid.Cells[4, r], NullDate);
+        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_PROJECT_TITLE, qeGrid.Cells[5, r]);
+        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[6, r]);
+        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[7, r]);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[8, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[9, r], 0.0);
+        Obj.Description := qeGrid.Cells[10, r];
+        Obj.NestProductivity := StrToIntDef(qeGrid.Cells[11, r], 0);
+        // Nest shape
+        if (qeGrid.Cells[12, r] = rsNestShapeScrape) then
+          Obj.NestShape := 'SC'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapeCup) then
+          Obj.NestShape := 'CP'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapePlate) then
+          Obj.NestShape := 'PT'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapeSphere) then
+          Obj.NestShape := 'SP'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapePendent) then
+          Obj.NestShape := 'PD'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapePlatform) then
+          Obj.NestShape := 'PL'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapeMound) then
+          Obj.NestShape := 'MN'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapeBurrow) then
+          Obj.NestShape := 'BR'
+        else
+        if (qeGrid.Cells[12, r] = rsNestShapeCavity) then
+          Obj.NestShape := 'CV';
+        // Support
+        if (qeGrid.Cells[13, r] = rsSupportGround) then
+          Obj.SupportType := 'G'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportHerbBush) then
+          Obj.SupportType := 'H'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportBranchFork) then
+          Obj.SupportType := 'F'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportLeaves) then
+          Obj.SupportType := 'L'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportLedge) then
+          Obj.SupportType := 'D'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportRockCliff) then
+          Obj.SupportType := 'C'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportRavine) then
+          Obj.SupportType := 'R'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportNestBox) then
+          Obj.SupportType := 'B'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportAnthropic) then
+          Obj.SupportType := 'A'
+        else
+        if (qeGrid.Cells[13, r] = rsSupportOther) then
+          Obj.SupportType := 'O';
+        Obj.HeightAboveGround := StrToFloatDef(qeGrid.Cells[14, r], 0.0);
+        Obj.SupportPlant1Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, qeGrid.Cells[15, r]);
+        Obj.SupportPlant2Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, qeGrid.Cells[16, r]);
+        Obj.OtherSupport := qeGrid.Cells[17, r];
+        Obj.PlantHeight := StrToFloatDef(qeGrid.Cells[18, r], 0.0);
+        Obj.PlantDbh := StrToFloatDef(qeGrid.Cells[19, r], 0.0);
+        Obj.PlantMaxDiameter := StrToFloatDef(qeGrid.Cells[20, r], 0.0);
+        Obj.PlantMinDiameter := StrToFloatDef(qeGrid.Cells[21, r], 0.0);
+        Obj.ConstructionDays := StrToIntDef(qeGrid.Cells[22, r], 0);
+        Obj.IncubationDays := StrToIntDef(qeGrid.Cells[23, r], 0);
+        Obj.NestlingDays := StrToIntDef(qeGrid.Cells[24, r], 0);
+        Obj.ActiveDays := StrToIntDef(qeGrid.Cells[25, r], 0);
+        Obj.InternalMinDiameter := StrToFloatDef(qeGrid.Cells[26, r], 0.0);
+        Obj.InternalMaxDiameter := StrToFloatDef(qeGrid.Cells[27, r], 0.0);
+        Obj.ExternalMinDiameter := StrToFloatDef(qeGrid.Cells[28, r], 0.0);
+        Obj.ExternalMaxDiameter := StrToFloatDef(qeGrid.Cells[29, r], 0.0);
+        Obj.InternalHeight := StrToFloatDef(qeGrid.Cells[30, r], 0.0);
+        Obj.ExternalHeight := StrToFloatDef(qeGrid.Cells[31, r], 0.0);
+        Obj.EdgeDistance := StrToFloatDef(qeGrid.Cells[32, r], 0.0);
+        Obj.CenterDistance := StrToFloatDef(qeGrid.Cells[33, r], 0.0);
+        Obj.NestCover := StrToIntDef(qeGrid.Cells[34, r], 0);
+        Obj.Notes := qeGrid.Cells[35, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataNetEfforts;
+var
+  Obj: TNetEffort;
+  Repo: TNetEffortRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TNetEffort.Create();
+    Repo := TNetEffortRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.PermanentNetId := GetKey(TBL_PERMANENT_NETS, COL_PERMANENT_NET_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.NetNumber := StrToIntDef(qeGrid.Cells[1, r], 0);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[2, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[3, r], 0.0);
+        Obj.NetLength := StrToFloatDef(qeGrid.Cells[4, r], 0.0);
+        Obj.NetHeight := StrToFloatDef(qeGrid.Cells[5, r], 0.0);
+        Obj.NetMesh := StrToIntDef(qeGrid.Cells[6, r], 0);
+        Obj.SampleDate := StrToDateDef(qeGrid.Cells[7, r], NullDate);
+        Obj.NetOpen1 := StrToTimeDef(qeGrid.Cells[8, r], NullTime);
+        Obj.NetClose1 := StrToTimeDef(qeGrid.Cells[9, r], NullTime);
+        Obj.NetOpen2 := StrToTimeDef(qeGrid.Cells[10, r], NullTime);
+        Obj.NetClose2 := StrToTimeDef(qeGrid.Cells[11, r], NullTime);
+        Obj.NetOpen3 := StrToTimeDef(qeGrid.Cells[12, r], NullTime);
+        Obj.NetClose3 := StrToTimeDef(qeGrid.Cells[13, r], NullTime);
+        Obj.NetOpen4 := StrToTimeDef(qeGrid.Cells[14, r], NullTime);
+        Obj.NetClose4 := StrToTimeDef(qeGrid.Cells[15, r], NullTime);
+        Obj.Notes := qeGrid.Cells[16, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataPermanentNets;
+var
+  Obj: TPermanentNet;
+  Repo: TPermanentNetRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TPermanentNet.Create();
+    Repo := TPermanentNetRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.NetNumber := StrToIntDef(qeGrid.Cells[0, r], 0);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[1, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[2, r], 0.0);
+        Obj.Notes := qeGrid.Cells[3, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataPermits;
+var
+  Obj: TPermit;
+  Repo: TPermitRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TPermit.Create();
+    Repo := TPermitRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Name := qeGrid.Cells[0, r];
+        Obj.Number := qeGrid.Cells[1, r];
+        // Type
+        if (qeGrid.Cells[2, r] = rsPermitBanding) then
+          Obj.PermitType := 'B'
+        else
+        if (qeGrid.Cells[2, r] = rsPermitCollection) then
+          Obj.PermitType := 'C'
+        else
+        if (qeGrid.Cells[2, r] = rsPermitResearch) then
+          Obj.PermitType := 'R'
+        else
+        if (qeGrid.Cells[2, r] = rsPermitEntry) then
+          Obj.PermitType := 'E'
+        else
+        if (qeGrid.Cells[2, r] = rsPermitTransport) then
+          Obj.PermitType := 'T'
+        else
+          Obj.PermitType := 'O';
+        Obj.Dispatcher := qeGrid.Cells[3, r];
+        Obj.DispatchDate := StrToDateDef(qeGrid.Cells[4, r], NullDate);
+        Obj.ExpireDate := StrToDateDef(qeGrid.Cells[5, r], NullDate);
+        Obj.Notes := qeGrid.Cells[6, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataProjectBudgets;
+var
+  Obj: TProjectRubric;
+  Repo: TProjectRubricRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TProjectRubric.Create();
+    Repo := TProjectRubricRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.FundingSource := qeGrid.Cells[0, r];
+        Obj.Rubric := qeGrid.Cells[1, r];
+        Obj.ItemName := qeGrid.Cells[2, r];
+        Obj.Amount := StrToFloatDef(qeGrid.Cells[3, r], 0.0);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataProjectChronograms;
+var
+  Obj: TProjectActivity;
+  Repo: TProjectActivityRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TProjectActivity.Create();
+    Repo := TProjectActivityRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Description := qeGrid.Cells[0, r];
+        // Status
+        if (qeGrid.Cells[1, r] = rsActivityToDo) then
+          Obj.Status := astToDo
+        else
+        if (qeGrid.Cells[1, r] = rsActivityInProgress) then
+          Obj.Status := astInProgress
+        else
+        if (qeGrid.Cells[1, r] = rsActivityNeedsReview) then
+          Obj.Status := astNeedsReview
+        else
+        if (qeGrid.Cells[1, r] = rsActivityBlocked) then
+          Obj.Status := astBlocked
+        else
+        if (qeGrid.Cells[1, r] = rsActivityDelayed) then
+          Obj.Status := astDelayed
+        else
+        if (qeGrid.Cells[1, r] = rsActivityCanceled) then
+          Obj.Status := astCanceled
+        else
+        if (qeGrid.Cells[1, r] = rsActivityDone) then
+          Obj.Status := astDone;
+        Obj.StartDate := StrToDateDef(qeGrid.Cells[2, r], NullDate);
+        Obj.TargetDate := StrToDateDef(qeGrid.Cells[3, r], NullDate);
+        Obj.EndDate := StrToDateDef(qeGrid.Cells[4, r], NullDate);
+        Obj.GoalId := GetKey(TBL_PROJECT_GOALS, COL_GOAL_ID, COL_GOAL_DESCRIPTION, qeGrid.Cells[5, r]);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataProjectExpenses;
+var
+  Obj: TProjectExpense;
+  Repo: TProjectExpenseRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TProjectExpense.Create();
+    Repo := TProjectExpenseRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.BudgetId := GetKey(TBL_PROJECT_BUDGET, COL_BUDGET_ID, COL_RUBRIC, qeGrid.Cells[0, r]);
+        Obj.Description := qeGrid.Cells[1, r];
+        Obj.ExpenseDate := StrToDateDef(qeGrid.Cells[2, r], NullDate);
+        Obj.Amount := StrToFloatDef(qeGrid.Cells[3, r], 0.0);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataProjectGoals;
+var
+  Obj: TProjectGoal;
+  Repo: TProjectGoalRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TProjectGoal.Create();
+    Repo := TProjectGoalRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Description := qeGrid.Cells[0, r];
+        // Type
+        if (qeGrid.Cells[1, r] = rsGoalPending) then
+          Obj.Status := gstPending
+        else
+        if (qeGrid.Cells[1, r] = rsGoalReached) then
+          Obj.Status := gstReached
+        else
+        if (qeGrid.Cells[1, r] = rsGoalCanceled) then
+          Obj.Status := gstCanceled;
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataProjects;
+var
+  Obj: TProject;
+  Repo: TProjectRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TProject.Create();
+    Repo := TProjectRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.Title := qeGrid.Cells[0, r];
+        Obj.ShortTitle := qeGrid.Cells[1, r];
+        Obj.ProtocolNumber := qeGrid.Cells[2, r];
+        Obj.StartDate := StrToDateDef(qeGrid.Cells[3, r], NullDate);
+        Obj.EndDate := StrToDateDef(qeGrid.Cells[4, r], NullDate);
+        Obj.WebsiteUri := qeGrid.Cells[5, r];
+        Obj.EmailAddress := qeGrid.Cells[6, r];
+        Obj.ContactName := qeGrid.Cells[7, r];
+        Obj.MainGoal := qeGrid.Cells[8, r];
+        Obj.Risks := qeGrid.Cells[9, r];
+        Obj.ProjectAbstract := qeGrid.Cells[10, r];
+        Obj.Notes := qeGrid.Cells[11, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataProjectTeam;
+var
+  Obj: TProjectMember;
+  Repo: TProjectMemberRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TProjectMember.Create();
+    Repo := TProjectMemberRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.PersonId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.IsProjectManager := qeGrid.Cells[1, r] = '1';
+        Obj.InstitutionId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_FULL_NAME, qeGrid.Cells[2, r]);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataResearchers;
@@ -3328,21 +4088,8 @@ begin
   //Net mesh
   CurrCol := qeGrid.Columns.Add;
   CurrCol.Title.Caption := rscMistnetMesh;
-  CurrCol.Width := 170;
-  CurrCol.SizePriority := 0;
-  with CurrCol.PickList do
-  begin
-    Clear;
-    Add('14x14');
-    Add('16x16');
-    Add('19x19');
-    Add('20x20');
-    Add('22x22');
-    Add('30x30');
-    Add('45x45');
-    Add('60x60');
-    Add('70x70');
-  end;
+  CurrCol.Alignment := taRightJustify;
+  qeGrid.AutoSizeColumn(CurrCol.Index);
   FColFieldNames.Add('net_mesh');
   FColRules[CurrCol.Index].RequiredField := False;
   //Date *
