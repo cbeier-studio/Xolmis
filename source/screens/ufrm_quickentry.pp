@@ -163,7 +163,7 @@ uses
   data_consts, data_columns, data_getvalue,
   models_record_types, models_taxonomy, models_bands, models_botany, models_birds, models_breeding,
   models_geo, models_sampling, models_institutions, models_methods, models_sampling_plots, models_permits,
-  models_projects,
+  models_projects, models_people, models_specimens, models_sightings,
   uDarkStyleParams,
   udm_main;
 
@@ -1868,43 +1868,457 @@ begin
 end;
 
 procedure TfrmQuickEntry.ImportDataResearchers;
+var
+  Obj: TPerson;
+  Repo: TPersonRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TPerson.Create();
+    Repo := TPersonRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.FullName := qeGrid.Cells[0, r];
+        Obj.Citation := qeGrid.Cells[1, r];
+        Obj.Abbreviation := qeGrid.Cells[2, r];
+        Obj.TitleTreatment := qeGrid.Cells[3, r];
+        Obj.Gender := qeGrid.Cells[4, r];
+        Obj.BirthDate := StrToDateDef(qeGrid.Cells[5, r], NullDate);
+        Obj.DeathDate := StrToDateDef(qeGrid.Cells[6, r], NullDate);
+        Obj.IdDocument1 := qeGrid.Cells[7, r];
+        Obj.IdDocument2 := qeGrid.Cells[8, r];
+        Obj.Email := qeGrid.Cells[9, r];
+        Obj.Phone1 := qeGrid.Cells[10, r];
+        Obj.Phone2 := qeGrid.Cells[11, r];
+        Obj.InstitutionId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_FULL_NAME, qeGrid.Cells[12, r]);
+        Obj.Department := qeGrid.Cells[13, r];
+        Obj.JobRole := qeGrid.Cells[14, r];
+        Obj.PostalCode := qeGrid.Cells[15, r];
+        Obj.Address1 := qeGrid.Cells[16, r];
+        Obj.Address2 := qeGrid.Cells[17, r];
+        Obj.Neighborhood := qeGrid.Cells[18, r];
+        Obj.MunicipalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[19, r]);
+        Obj.StateId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[20, r]);
+        Obj.CountryId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[21, r]);
+        Obj.LattesUri := qeGrid.Cells[22, r];
+        Obj.OrcidUri := qeGrid.Cells[23, r];
+        Obj.XTwitterUri := qeGrid.Cells[24, r];
+        Obj.InstagramUri := qeGrid.Cells[25, r];
+        Obj.WebsiteUri := qeGrid.Cells[26, r];
+        Obj.Notes := qeGrid.Cells[27, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataSamplePreps;
+var
+  Obj: TSamplePrep;
+  Repo: TSamplePrepRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSamplePrep.Create();
+    Repo := TSamplePrepRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.AccessionNum := qeGrid.Cells[0, r];
+        Obj.AccessionSeq := qeGrid.Cells[1, r];
+        Obj.AccessionType := qeGrid.Cells[2, r];
+        // Type
+        if (qeGrid.Cells[2, r] = rsSampleSkinStandard) then
+          Obj.AccessionType := 'NS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleSkinShmoo) then
+          Obj.AccessionType := 'SS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleSkinMounted) then
+          Obj.AccessionType := 'MS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleOpenedWing) then
+          Obj.AccessionType := 'OW'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleSkeletonWhole) then
+          Obj.AccessionType := 'WS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleSkeletonPartial) then
+          Obj.AccessionType := 'PS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleNest) then
+          Obj.AccessionType := 'N'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleEgg) then
+          Obj.AccessionType := 'EGG'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleParasites) then
+          Obj.AccessionType := 'P'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleFeathers) then
+          Obj.AccessionType := 'F'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleBloodDry) then
+          Obj.AccessionType := 'BD'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleBloodWet) then
+          Obj.AccessionType := 'BL'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleBloodSmear) then
+          Obj.AccessionType := 'BS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleSexing) then
+          Obj.AccessionType := 'SX'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleGeneticSequence) then
+          Obj.AccessionType := 'GS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleMicrobialCulture) then
+          Obj.AccessionType := 'MC'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleTissues) then
+          Obj.AccessionType := 'TS'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleEyes) then
+          Obj.AccessionType := 'EYE'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleTongue) then
+          Obj.AccessionType := 'T'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleSyrinx) then
+          Obj.AccessionType := 'S'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleGonads) then
+          Obj.AccessionType := 'G'
+        else
+        if (qeGrid.Cells[2, r] = rsSampleStomach) then
+          Obj.AccessionType := 'M';
+        Obj.PreparationDate := StrToDateDef(qeGrid.Cells[3, r], NullDate);
+        Obj.PreparerId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[4, r]);
+        Obj.Notes := qeGrid.Cells[5, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataSamplingPlots;
+var
+  Obj: TSamplingPlot;
+  Repo: TSamplingPlotRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSamplingPlot.Create();
+    Repo := TSamplingPlotRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.FullName := qeGrid.Cells[0, r];
+        Obj.Abbreviation := qeGrid.Cells[1, r];
+        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[2, r]);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[3, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[4, r], 0.0);
+        Obj.Description := qeGrid.Cells[5, r];
+        Obj.Notes := qeGrid.Cells[6, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataSightings;
+var
+  Obj: TSighting;
+  Repo: TSightingRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSighting.Create();
+    Repo := TSightingRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.SurveyId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[1, r]);
+        Obj.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, qeGrid.Cells[2, r]);
+        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[3, r]);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[4, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[5, r], 0.0);
+        Obj.SightingDate := StrToDateDef(qeGrid.Cells[6, r], NullDate);
+        Obj.SightingTime := StrToTimeDef(qeGrid.Cells[7, r], NullTime);
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[8, r]);
+        Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, qeGrid.Cells[9, r]);
+        Obj.SubjectTally := StrToIntDef(qeGrid.Cells[10, r], 0);
+        Obj.SubjectDistance := StrToFloatDef(qeGrid.Cells[11, r], 0.0);
+        Obj.DetectionType := qeGrid.Cells[12, r];
+        Obj.BreedingStatus := qeGrid.Cells[13, r];
+        Obj.MackinnonListNumber := StrToIntDef(qeGrid.Cells[14, r], 0);
+        Obj.SubjectCaptured := qeGrid.Cells[15, r] = '1';
+        Obj.SubjectSeen := qeGrid.Cells[16, r] = '1';
+        Obj.SubjectHeard := qeGrid.Cells[17, r] = '1';
+        Obj.SubjectPhotographed := qeGrid.Cells[18, r] = '1';
+        Obj.SubjectRecorded := qeGrid.Cells[19, r] = '1';
+        Obj.NewCapturesTally := StrToIntDef(qeGrid.Cells[20, r], 0);
+        Obj.RecapturesTally := StrToIntDef(qeGrid.Cells[21, r], 0);
+        Obj.UnbandedTally := StrToIntDef(qeGrid.Cells[22, r], 0);
+        Obj.MalesTally := qeGrid.Cells[23, r];
+        Obj.FemalesTally := qeGrid.Cells[24, r];
+        Obj.NotSexedTally := qeGrid.Cells[25, r];
+        Obj.AdultsTally := qeGrid.Cells[26, r];
+        Obj.ImmatureTally := qeGrid.Cells[27, r];
+        Obj.NotAgedTally := qeGrid.Cells[28, r];
+        Obj.IsOnEbird := qeGrid.Cells[29, r] = '1';
+        Obj.NotSurveying := qeGrid.Cells[30, r] = '1';
+        Obj.Notes := qeGrid.Cells[31, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataSpecimenCollectors;
+var
+  Obj: TSpecimenCollector;
+  Repo: TSpecimenCollectorRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSpecimenCollector.Create();
+    Repo := TSpecimenCollectorRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.PersonId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataSpecimens;
+var
+  Obj: TSpecimen;
+  Repo: TSpecimenRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSpecimen.Create();
+    Repo := TSpecimenRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.FieldNumber := qeGrid.Cells[0, r];
+        // Type
+        if (qeGrid.Cells[1, r] = rsSpecimenCarcassWhole) then
+          Obj.SampleType := sptWholeCarcass
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenCarcassPartial) then
+          Obj.SampleType := sptPartialCarcass
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenNest) then
+          Obj.SampleType := sptNest
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenBones) then
+          Obj.SampleType := sptBones
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenEgg) then
+          Obj.SampleType := sptEgg
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenParasites) then
+          Obj.SampleType := sptParasites
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenFeathers) then
+          Obj.SampleType := sptFeathers
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenBlood) then
+          Obj.SampleType := sptBlood
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenClaw) then
+          Obj.SampleType := sptClaw
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenSwab) then
+          Obj.SampleType := sptSwab
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenTissues) then
+          Obj.SampleType := sptTissues
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenFeces) then
+          Obj.SampleType := sptFeces
+        else
+        if (qeGrid.Cells[1, r] = rsSpecimenRegurgite) then
+          Obj.SampleType := sptRegurgite;
+        Obj.CollectionYear := StrToIntDef(qeGrid.Cells[2, r], 0);
+        Obj.CollectionMonth := StrToIntDef(qeGrid.Cells[3, r], 0);
+        Obj.CollectionDay := StrToIntDef(qeGrid.Cells[4, r], 0);
+        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[5, r]);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[6, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[7, r], 0.0);
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, qeGrid.Cells[8, r]);
+        Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, qeGrid.Cells[9, r]);
+        Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, qeGrid.Cells[10, r]);
+        Obj.EggId := GetKey(TBL_EGGS, COL_EGG_ID, COL_FULL_NAME, qeGrid.Cells[11, r]);
+        Obj.Notes := qeGrid.Cells[12, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataSurveys;
+var
+  Obj: TSurvey;
+  Repo: TSurveyRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSurvey.Create();
+    Repo := TSurveyRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.ExpeditionId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.SurveyDate := StrToDateDef(qeGrid.Cells[1, r], NullDate);
+        Obj.Duration := StrToIntDef(qeGrid.Cells[2, r], 0);
+        Obj.StartTime := StrToTimeDef(qeGrid.Cells[3, r], NullTime);
+        Obj.EndTime := StrToTimeDef(qeGrid.Cells[4, r], NullTime);
+        Obj.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, qeGrid.Cells[5, r]);
+        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, qeGrid.Cells[6, r]);
+        Obj.NetStationId := GetKey(TBL_SAMPLING_PLOTS, COL_SAMPLING_PLOT_ID, COL_FULL_NAME, qeGrid.Cells[7, r]);
+        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_PROJECT_TITLE, qeGrid.Cells[8, r]);
+        Obj.StartLongitude := StrToFloatDef(qeGrid.Cells[9, r], 0.0);
+        Obj.StartLatitude := StrToFloatDef(qeGrid.Cells[10, r], 0.0);
+        Obj.EndLongitude := StrToFloatDef(qeGrid.Cells[11, r], 0.0);
+        Obj.EndLatitude := StrToFloatDef(qeGrid.Cells[12, r], 0.0);
+        Obj.ObserversTally := StrToIntDef(qeGrid.Cells[13, r], 0);
+        Obj.SampleId := qeGrid.Cells[14, r];
+        Obj.TotalArea := StrToFloatDef(qeGrid.Cells[15, r], 0.0);
+        Obj.TotalDistance := StrToFloatDef(qeGrid.Cells[16, r], 0.0);
+        Obj.TotalNets := StrToIntDef(qeGrid.Cells[17, r], 0);
+        Obj.Habitat := qeGrid.Cells[18, r];
+        Obj.NetRounds := qeGrid.Cells[19, r];
+        Obj.Notes := qeGrid.Cells[20, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataSurveyTeam;
+var
+  Obj: TSurveyMember;
+  Repo: TSurveyMemberRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TSurveyMember.Create();
+    Repo := TSurveyMemberRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.PersonId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, qeGrid.Cells[0, r]);
+        Obj.Visitor := qeGrid.Cells[1, r] = '1';
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataVegetation;
