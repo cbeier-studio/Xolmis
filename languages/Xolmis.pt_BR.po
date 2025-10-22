@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data_columns.rsc1stsecondarychord
 msgctxt "data_columns.rsc1stsecondarychord"
@@ -14170,6 +14170,11 @@ msgstr "O módulo do arquivo é diferente do módulo do Quick Entry."
 msgctxt "utils_locale.rserrormontadata"
 msgid "Error in year digits (%d). Send this issue to the Support."
 msgstr "Erro nos dígitos do ano (%d). Comunique o problema ao Suporte."
+
+#: utils_locale.rserrornoimporterregisteredforextension
+#, object-pascal-format
+msgid "No importer registered for %s"
+msgstr "Nenhum importador registrado para %s"
 
 #: utils_locale.rserroroptimizingdatabase
 #, object-pascal-format

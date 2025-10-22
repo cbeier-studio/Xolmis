@@ -14185,6 +14185,11 @@ msgctxt "utils_locale.rserrormontadata"
 msgid "Error in year digits (%d). Send this issue to the Support."
 msgstr ""
 
+#: utils_locale.rserrornoimporterregisteredforextension
+#, object-pascal-format
+msgid "No importer registered for %s"
+msgstr ""
+
 #: utils_locale.rserroroptimizingdatabase
 #, object-pascal-format
 msgctxt "utils_locale.rserroroptimizingdatabase"

@@ -990,9 +990,6 @@ begin
         if (qeGrid.Cells[17, r] = rsAgeFledgling) then
           Obj.FeatherAge := fageFledgling
         else
-        if (qeGrid.Cells[17, r] = rsAgeJuvenile) then
-          Obj.FeatherAge := fageJuvenile
-        else
         if (qeGrid.Cells[17, r] = rsAgeAdult) then
           Obj.FeatherAge := fageAdult
         else
@@ -1941,8 +1938,7 @@ begin
       begin
         Obj.Clear;
         Obj.AccessionNum := qeGrid.Cells[0, r];
-        Obj.AccessionSeq := qeGrid.Cells[1, r];
-        Obj.AccessionType := qeGrid.Cells[2, r];
+        Obj.AccessionSeq := StrToIntDef(qeGrid.Cells[1, r], 0);
         // Type
         if (qeGrid.Cells[2, r] = rsSampleSkinStandard) then
           Obj.AccessionType := 'NS'
@@ -2322,13 +2318,253 @@ begin
 end;
 
 procedure TfrmQuickEntry.ImportDataVegetation;
+var
+  Obj: TVegetation;
+  Repo: TVegetationRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TVegetation.Create();
+    Repo := TVegetationRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.SampleDate := StrToDateDef(qeGrid.Cells[0, r], NullDate);
+        Obj.SampleTime := StrToTimeDef(qeGrid.Cells[1, r], NullTime);
+        Obj.Longitude := StrToFloatDef(qeGrid.Cells[2, r], 0.0);
+        Obj.Latitude := StrToFloatDef(qeGrid.Cells[3, r], 0.0);
+        // Herbs - distribution
+        if (qeGrid.Cells[4, r] = rsDistributionNone) then
+          Obj.HerbsDistribution := disNone
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionRare) then
+          Obj.HerbsDistribution := disRare
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionFewSparse) then
+          Obj.HerbsDistribution := disFewSparseIndividuals
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionOnePatch) then
+          Obj.HerbsDistribution := disOnePatch
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionOnePatchFewSparse) then
+          Obj.HerbsDistribution := disOnePatchFewSparseIndividuals
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionManySparse) then
+          Obj.HerbsDistribution := disManySparseIndividuals
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionOnePatchManySparse) then
+          Obj.HerbsDistribution := disOnePatchManySparseIndividuals
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionFewPatches) then
+          Obj.HerbsDistribution := disFewPatches
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionFewPatchesSparse) then
+          Obj.HerbsDistribution := disFewPatchesSparseIndividuals
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionManyPatches) then
+          Obj.HerbsDistribution := disManyPatches
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionManyPatchesSparse) then
+          Obj.HerbsDistribution := disManyPatchesSparseIndividuals
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionEvenHighDensity) then
+          Obj.HerbsDistribution := disHighDensityIndividuals
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionContinuousFewGaps) then
+          Obj.HerbsDistribution := disContinuousCoverWithGaps
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionContinuousDense) then
+          Obj.HerbsDistribution := disContinuousDenseCover
+        else
+        if (qeGrid.Cells[4, r] = rsDistributionContinuousDenseEdge) then
+          Obj.HerbsDistribution := disContinuousDenseCoverWithEdge
+        else
+          Obj.HerbsDistribution := disNone;
+        Obj.HerbsProportion := StrToIntDef(qeGrid.Cells[5, r], 0);
+        Obj.HerbsAvgHeight := StrToIntDef(qeGrid.Cells[6, r], 0);
+        // Shrubs - distribution
+        if (qeGrid.Cells[7, r] = rsDistributionNone) then
+          Obj.ShrubsDistribution := disNone
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionRare) then
+          Obj.ShrubsDistribution := disRare
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionFewSparse) then
+          Obj.ShrubsDistribution := disFewSparseIndividuals
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionOnePatch) then
+          Obj.ShrubsDistribution := disOnePatch
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionOnePatchFewSparse) then
+          Obj.ShrubsDistribution := disOnePatchFewSparseIndividuals
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionManySparse) then
+          Obj.ShrubsDistribution := disManySparseIndividuals
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionOnePatchManySparse) then
+          Obj.ShrubsDistribution := disOnePatchManySparseIndividuals
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionFewPatches) then
+          Obj.ShrubsDistribution := disFewPatches
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionFewPatchesSparse) then
+          Obj.ShrubsDistribution := disFewPatchesSparseIndividuals
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionManyPatches) then
+          Obj.ShrubsDistribution := disManyPatches
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionManyPatchesSparse) then
+          Obj.ShrubsDistribution := disManyPatchesSparseIndividuals
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionEvenHighDensity) then
+          Obj.ShrubsDistribution := disHighDensityIndividuals
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionContinuousFewGaps) then
+          Obj.ShrubsDistribution := disContinuousCoverWithGaps
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionContinuousDense) then
+          Obj.ShrubsDistribution := disContinuousDenseCover
+        else
+        if (qeGrid.Cells[7, r] = rsDistributionContinuousDenseEdge) then
+          Obj.ShrubsDistribution := disContinuousDenseCoverWithEdge
+        else
+          Obj.ShrubsDistribution := disNone;
+        Obj.ShrubsProportion := StrToIntDef(qeGrid.Cells[8, r], 0);
+        Obj.ShrubsAvgHeight := StrToIntDef(qeGrid.Cells[9, r], 0);
+        // Trees - distribution
+        if (qeGrid.Cells[10, r] = rsDistributionNone) then
+          Obj.TreesDistribution := disNone
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionRare) then
+          Obj.TreesDistribution := disRare
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionFewSparse) then
+          Obj.TreesDistribution := disFewSparseIndividuals
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionOnePatch) then
+          Obj.TreesDistribution := disOnePatch
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionOnePatchFewSparse) then
+          Obj.TreesDistribution := disOnePatchFewSparseIndividuals
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionManySparse) then
+          Obj.TreesDistribution := disManySparseIndividuals
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionOnePatchManySparse) then
+          Obj.TreesDistribution := disOnePatchManySparseIndividuals
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionFewPatches) then
+          Obj.TreesDistribution := disFewPatches
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionFewPatchesSparse) then
+          Obj.TreesDistribution := disFewPatchesSparseIndividuals
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionManyPatches) then
+          Obj.TreesDistribution := disManyPatches
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionManyPatchesSparse) then
+          Obj.TreesDistribution := disManyPatchesSparseIndividuals
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionEvenHighDensity) then
+          Obj.TreesDistribution := disHighDensityIndividuals
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionContinuousFewGaps) then
+          Obj.TreesDistribution := disContinuousCoverWithGaps
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionContinuousDense) then
+          Obj.TreesDistribution := disContinuousDenseCover
+        else
+        if (qeGrid.Cells[10, r] = rsDistributionContinuousDenseEdge) then
+          Obj.TreesDistribution := disContinuousDenseCoverWithEdge
+        else
+          Obj.TreesDistribution := disNone;
+        Obj.TreesProportion := StrToIntDef(qeGrid.Cells[11, r], 0);
+        Obj.TreesAvgHeight := StrToIntDef(qeGrid.Cells[12, r], 0);
+        Obj.Notes := qeGrid.Cells[13, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.ImportDataWeatherLogs;
+var
+  Obj: TWeatherLog;
+  Repo: TWeatherLogRepository;
+  r: Integer;
 begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TWeatherLog.Create();
+    Repo := TWeatherLogRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.SampleDate := StrToDateDef(qeGrid.Cells[0, r], NullDate);
+        Obj.SampleTime := StrToTimeDef(qeGrid.Cells[1, r], NullTime);
+        // Moment
+        if (qeGrid.Cells[2, r] = rsMomentStart) then
+          Obj.SampleMoment := wmStart
+        else
+        if (qeGrid.Cells[2, r] = rsMomentMiddle) then
+          Obj.SampleMoment := wmMiddle
+        else
+        if (qeGrid.Cells[2, r] = rsMomentEnd) then
+          Obj.SampleMoment := wmEnd
+        else
+          Obj.SampleMoment := wmNone;
+        Obj.CloudCover := StrToIntDef(qeGrid.Cells[3, r], 0);
+        Obj.Temperature := StrToFloatDef(qeGrid.Cells[4, r], 0.0);
+        // Precipitation
+        if (qeGrid.Cells[5, r] = rsPrecipitationNone) then
+          Obj.Precipitation := wpNone
+        else
+        if (qeGrid.Cells[5, r] = rsPrecipitationFog) then
+          Obj.Precipitation := wpFog
+        else
+        if (qeGrid.Cells[5, r] = rsPrecipitationMist) then
+          Obj.Precipitation := wpMist
+        else
+        if (qeGrid.Cells[5, r] = rsPrecipitationDrizzle) then
+          Obj.Precipitation := wpDrizzle
+        else
+        if (qeGrid.Cells[5, r] = rsPrecipitationRain) then
+          Obj.Precipitation := wpRain
+        else
+          Obj.Precipitation := wpEmpty;
+        Obj.Rainfall := StrToIntDef(qeGrid.Cells[6, r], 0);
+        Obj.WindSpeedBft := StrToIntDef(qeGrid.Cells[7, r], 0);
+        Obj.WindSpeedKmH := StrToFloatDef(qeGrid.Cells[8, r], 0.0);
+        Obj.RelativeHumidity := StrToFloatDef(qeGrid.Cells[9, r], 0.0);
+        Obj.AtmosphericPressure := StrToFloatDef(qeGrid.Cells[10, r], 0.0);
+        Obj.Notes := qeGrid.Cells[11, r];
 
+        Repo.Insert(Obj);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
 end;
 
 procedure TfrmQuickEntry.LoadColsBands;
