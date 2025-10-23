@@ -39,7 +39,9 @@ type
     ckAudioRecording: TCheckBox;
     ckIsInEbird: TCheckBox;
     ckNotSurveying: TCheckBox;
+    cbFlightDirection: TComboBox;
     eAdultsTally: TEdit;
+    eFlightHeight: TFloatSpinEdit;
     eImmaturesTally: TEdit;
     eNotAgedTally: TEdit;
     eMalesTally: TEdit;
@@ -61,12 +63,14 @@ type
     dsLink: TDataSource;
     eDistance: TFloatSpinEdit;
     lblDistance: TLabel;
+    lblDistance1: TLabel;
     lblLatitude: TLabel;
     lblDate: TLabel;
     lblLongitude: TLabel;
     lblDetectionType: TLabel;
     lblMackinnonListNumber: TLabel;
     lblMackinnonListNumber1: TLabel;
+    lblFlightHeight: TLabel;
     lblTime: TLabel;
     lblQuantity: TLabel;
     lblMethod: TLabel;
@@ -108,6 +112,7 @@ type
     pIndividual: TPanel;
     pObserver: TPanel;
     pmNew: TPopupMenu;
+    pFlightHeightDirection: TPanel;
     pTaxon: TPanel;
     pLongitudeLatitude: TPanel;
     pDetectionBreeding: TPanel;
@@ -706,6 +711,8 @@ begin
   eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   eQuantity.Value := FSighting.SubjectTally;
   eDistance.Value := FSighting.SubjectDistance;
+  eFlightHeight.Value := FSighting.FlightHeight;
+  cbFlightDirection.ItemIndex := cbFlightDirection.Items.IndexOf(FSighting.FlightDirection);
   eDetectionType.Text := FSighting.DetectionType;
   eBreedingStatus.Text := FSighting.BreedingStatus;
   if (FSighting.MackinnonListNumber > 0) then
@@ -790,6 +797,8 @@ begin
   FSighting.IndividualId        := FIndividualId;
   FSighting.SubjectTally        := eQuantity.Value;
   FSighting.SubjectDistance     := eDistance.Value;
+  FSighting.FlightHeight        := eFlightHeight.Value;
+  FSighting.FlightDirection     := cbFlightDirection.Text;
   FSighting.DetectionType       := eDetectionType.Text;
   FSighting.BreedingStatus      := eBreedingStatus.Text;
   FSighting.MackinnonListNumber := StrToIntDef(eMackinnonListNumber.Text, 0);

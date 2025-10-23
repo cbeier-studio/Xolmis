@@ -1872,6 +1872,8 @@ begin
     'taxon_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
     'subjects_tally       INTEGER,' +
     'subject_distance     REAL,' +
+    'flight_height        REAL,' +
+    'flight_direction     VARCHAR (5),' +
     'subject_seen         BOOLEAN       DEFAULT (0),' +
     'subject_heard        BOOLEAN       DEFAULT (0),' +
     'subject_photographed BOOLEAN       DEFAULT (0),' +

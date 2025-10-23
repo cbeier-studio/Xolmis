@@ -765,6 +765,10 @@ msgctxt "data_columns.rscfinalphotonr"
 msgid "Final photo nr."
 msgstr "Nº da foto final"
 
+#: data_columns.rscflightdirection
+msgid "Flight direction"
+msgstr "Direção de voo"
+
 #: data_columns.rscflightfeathersmolt
 msgctxt "data_columns.rscflightfeathersmolt"
 msgid "Flight feathers molt"
@@ -774,6 +778,10 @@ msgstr "Muda das penas de voo"
 msgctxt "data_columns.rscflightfeatherswear"
 msgid "Flight feathers wear"
 msgstr "Desgaste das penas de voo"
+
+#: data_columns.rscflightheight
+msgid "Flight height"
+msgstr "Altura de voo"
 
 #: data_columns.rscfounddate
 msgctxt "data_columns.rscfounddate"
@@ -8434,10 +8442,18 @@ msgctxt "tedtsighting.lbldistance.caption"
 msgid "Distance (m):"
 msgstr "Distância (m):"
 
+#: tedtsighting.lbldistance1.caption
+msgid "Flight direction:"
+msgstr "Direção de voo:"
+
 #: tedtsighting.lblfemalestally.caption
 msgctxt "tedtsighting.lblfemalestally.caption"
 msgid "Nr. of females:"
 msgstr "Nº de fêmeas:"
+
+#: tedtsighting.lblflightheight.caption
+msgid "Flight height (m):"
+msgstr "Altura de voo (m):"
 
 #: tedtsighting.lblhowwasrecorded.caption
 msgctxt "tedtsighting.lblhowwasrecorded.caption"

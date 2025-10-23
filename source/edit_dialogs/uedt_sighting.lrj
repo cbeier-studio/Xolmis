@@ -44,6 +44,8 @@
 {"hash":223520967,"name":"tedtsighting.cknotsurveying.caption","sourcebytes":[79,117,116,115,105,100,101,32,116,104,101,32,115,97,109,112,108,105,110,103],"value":"Outside the sampling"},
 {"hash":180997274,"name":"tedtsighting.lblsurvey.caption","sourcebytes":[83,117,114,118,101,121,58],"value":"Survey:"},
 {"hash":132225193,"name":"tedtsighting.esurvey.buttonhint","sourcebytes":[70,105,110,100,32,115,117,114,118,101,121],"value":"Find survey"},
+{"hash":232697322,"name":"tedtsighting.lblflightheight.caption","sourcebytes":[70,108,105,103,104,116,32,104,101,105,103,104,116,32,40,109,41,58],"value":"Flight height (m):"},
+{"hash":75594570,"name":"tedtsighting.lbldistance1.caption","sourcebytes":[70,108,105,103,104,116,32,100,105,114,101,99,116,105,111,110,58],"value":"Flight direction:"},
 {"hash":128569433,"name":"tedtsighting.pmnnewsurvey.caption","sourcebytes":[78,101,119,32,115,117,114,118,101,121],"value":"New survey"},
 {"hash":214961042,"name":"tedtsighting.pmnnewperson.caption","sourcebytes":[78,101,119,32,111,98,115,101,114,118,101,114],"value":"New observer"},
 {"hash":121234372,"name":"tedtsighting.pmnnewmethod.caption","sourcebytes":[78,101,119,32,109,101,116,104,111,100],"value":"New method"},

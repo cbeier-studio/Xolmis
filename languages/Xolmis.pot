@@ -763,6 +763,10 @@ msgctxt "data_columns.rscfinalphotonr"
 msgid "Final photo nr."
 msgstr ""
 
+#: data_columns.rscflightdirection
+msgid "Flight direction"
+msgstr ""
+
 #: data_columns.rscflightfeathersmolt
 msgctxt "data_columns.rscflightfeathersmolt"
 msgid "Flight feathers molt"
@@ -771,6 +775,10 @@ msgstr ""
 #: data_columns.rscflightfeatherswear
 msgctxt "data_columns.rscflightfeatherswear"
 msgid "Flight feathers wear"
+msgstr ""
+
+#: data_columns.rscflightheight
+msgid "Flight height"
 msgstr ""
 
 #: data_columns.rscfounddate
@@ -8449,9 +8457,17 @@ msgctxt "tedtsighting.lbldistance.caption"
 msgid "Distance (m):"
 msgstr ""
 
+#: tedtsighting.lbldistance1.caption
+msgid "Flight direction:"
+msgstr ""
+
 #: tedtsighting.lblfemalestally.caption
 msgctxt "tedtsighting.lblfemalestally.caption"
 msgid "Nr. of females:"
+msgstr ""
+
+#: tedtsighting.lblflightheight.caption
+msgid "Flight height (m):"
 msgstr ""
 
 #: tedtsighting.lblhowwasrecorded.caption

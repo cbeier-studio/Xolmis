@@ -40,6 +40,8 @@ type
     FIndividualId: Integer;
     FSubjectTally: Integer;
     FSubjectDistance: Double;
+    FFlightHeight: Double;
+    FFlightDirection: String;
     FMethodId: Integer;
     FMackinnonListNumber: Integer;
     FSubjectCaptured: Boolean;
@@ -84,6 +86,8 @@ type
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property SubjectTally: Integer read FSubjectTally write FSubjectTally;
     property SubjectDistance: Double read FSubjectDistance write FSubjectDistance;
+    property FlightHeight: Double read FFlightHeight write FFlightHeight;
+    property FlightDirection: String read FFlightDirection write FFlightDirection;
     property MethodId: Integer read FMethodId write FMethodId;
     property MackinnonListNumber: Integer read FMackinnonListNumber write FMackinnonListNumber;
     property SubjectCaptured: Boolean read FSubjectCaptured write FSubjectCaptured;
@@ -155,6 +159,8 @@ begin
     FIndividualId := TSighting(Source).IndividualId;
     FSubjectTally := TSighting(Source).SubjectTally;
     FSubjectDistance := TSighting(Source).SubjectDistance;
+    FFlightHeight := TSighting(Source).FlightHeight;
+    FFlightDirection := TSighting(Source).FlightDirection;
     FMethodId := TSighting(Source).MethodId;
     FMackinnonListNumber := TSighting(Source).MackinnonListNumber;
     FSubjectCaptured := TSighting(Source).SubjectCaptured;
@@ -193,6 +199,8 @@ begin
   FIndividualId := 0;
   FSubjectTally := 0;
   FSubjectDistance := 0.0;
+  FFlightHeight := 0.0;
+  FFlightDirection := EmptyStr;
   FMethodId := 0;
   FMackinnonListNumber := 0;
   FSubjectCaptured := False;
@@ -247,6 +255,10 @@ begin
   if FieldValuesDiff(rscIndividuals, aOld.SubjectTally, FSubjectTally, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscDistanceM, aOld.SubjectDistance, FSubjectDistance, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFlightHeight, aOld.FlightHeight, FFlightHeight, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFlightDirection, aOld.FlightDirection, FFlightDirection, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
     Changes.Add(R);
@@ -312,6 +324,8 @@ begin
     FIndividualId         := Obj.Get('individual_id', 0);
     FSubjectTally         := Obj.Get('subject_tally', 0);
     FSubjectDistance      := Obj.Get('subject_distance', 0.0);
+    FFlightHeight         := Obj.Get('flight_height', 0.0);
+    FFlightDirection      := Obj.Get('flight_direction', '');
     FMethodId             := Obj.Get('method_id', 0);
     FMackinnonListNumber  := Obj.Get('mackinnon_list_number', 0);
     FSubjectCaptured      := Obj.Get('captured', False);
@@ -355,6 +369,8 @@ begin
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('subject_tally', FSubjectTally);
     JSONObject.Add('subject_distance', FSubjectDistance);
+    JSONObject.Add('flight_height', FFlightHeight);
+    JSONObject.Add('flight_direction', FFlightDirection);
     JSONObject.Add('method_id', FMethodId);
     JSONObject.Add('mackinnon_list_number', FMackinnonListNumber);
     JSONObject.Add('captured', FSubjectCaptured);
@@ -387,13 +403,15 @@ function TSighting.ToString: String;
 begin
   Result := Format('Sighting(Id=%d, SurveyId=%d, SightingDate=%s, SightingTime=%s, LocalityId=%d, ' +
     'Longitude=%f, Latitude=%f, ObserverId=%d, TaxonId=%d, IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, ' +
+    'FlightHeight=%f, FlightDirection=%s, ' +
     'MethodId=%d, MackinnonListNumber=%d, Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
     'MalesTally=%s, FemalesTally=%s, NotSexedTally=%s, AdultsTally=%s, ImmaturesTally=%s, NotAgedTally=%s, ' +
     'NewCapturesTally=%d, RecapturesTally=%d, UnbandedTally=%d, DetectionType=%s, BreedingStatus=%s, ' +
     'NotSurveying=%s, IsOnEbird=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude,
-    FObserverId, FTaxonId, FIndividualId, FSubjectTally, FSubjectDistance, FMethodId, FMackinnonListNumber,
+    FObserverId, FTaxonId, FIndividualId, FSubjectTally, FSubjectDistance,
+    FFlightHeight, FFlightDirection, FMethodId, FMackinnonListNumber,
     BoolToStr(FSubjectCaptured, 'True', 'False'), BoolToStr(FSubjectSeen, 'True', 'False'),
     BoolToStr(FSubjectHeard, 'True', 'False'), BoolToStr(FSubjectPhotographed, 'True', 'False'),
     BoolToStr(FSubjectRecorded, 'True', 'False'), FMalesTally, FFemalesTally, FNotSexedTally, FAdultsTally,
@@ -518,6 +536,8 @@ begin
       'taxon_id, ' +
       'subjects_tally, ' +
       'subject_distance, ' +
+      'flight_height, ' +
+      'flight_direction, ' +
       'subject_seen, ' +
       'subject_heard, ' +
       'subject_photographed, ' +
@@ -616,6 +636,8 @@ begin
       'taxon_id, ' +
       'subjects_tally, ' +
       'subject_distance, ' +
+      'flight_height, ' +
+      'flight_direction, ' +
       'subject_seen, ' +
       'subject_heard, ' +
       'subject_photographed, ' +
@@ -681,6 +703,8 @@ begin
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.SubjectTally := FieldByName('subjects_tally').AsInteger;
     R.SubjectDistance := FieldByName('subject_distance').AsFloat;
+    R.FlightHeight := FieldByName('flight_height').AsFloat;
+    R.FlightDirection := FieldByName('flight_direction').AsString;
     R.MethodId := FieldByName('method_id').AsInteger;
     R.MackinnonListNumber := FieldByName('mackinnon_list_num').AsInteger;
     R.SubjectCaptured := FieldByName('subject_captured').AsBoolean;
@@ -741,6 +765,8 @@ begin
       'taxon_id, ' +
       'subjects_tally, ' +
       'subject_distance, ' +
+      'flight_height, ' +
+      'flight_direction, ' +
       'subject_seen, ' +
       'subject_heard, ' +
       'subject_photographed, ' +
@@ -778,6 +804,8 @@ begin
       ':taxon_id, ' +
       ':subjects_tally, ' +
       ':subject_distance, ' +
+      ':flight_height, ' +
+      ':flight_direction, ' +
       ':subject_seen, ' +
       ':subject_heard, ' +
       ':subject_photographed, ' +
@@ -813,6 +841,8 @@ begin
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetIntParam(ParamByName('subjects_tally'), R.SubjectTally);
     SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
+    SetFloatParam(ParamByName('flight_height'), R.FlightHeight);
+    SetStrParam(ParamByName('flight_direction'), R.FlightDirection);
     ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
     ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
     ParamByName('subject_heard').AsBoolean := R.SubjectHeard;
@@ -883,6 +913,8 @@ begin
       'taxon_id = :taxon_id, ' +
       'subjects_tally = :subjects_tally, ' +
       'subject_distance = :subject_distance, ' +
+      'flight_height = :flight_height, ' +
+      'flight_direction = :flight_direction, ' +
       'subject_seen = :subject_seen, ' +
       'subject_heard = :subject_heard, ' +
       'subject_photographed = :subject_photographed, ' +
@@ -921,6 +953,8 @@ begin
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetIntParam(ParamByName('subjects_tally'), R.SubjectTally);
     SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
+    SetFloatParam(ParamByName('flight_height'), R.FlightHeight);
+    SetStrParam(ParamByName('flight_direction'), R.FlightDirection);
     ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
     ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
     ParamByName('subject_heard').AsBoolean := R.SubjectHeard;

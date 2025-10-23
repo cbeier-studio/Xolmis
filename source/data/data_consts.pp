@@ -376,6 +376,8 @@ const
   COL_MACKINNON_LIST_NUMBER = 'mackinnon_list_num';
   COL_SUBJECTS_TALLY = 'subjects_tally';
   COL_SUBJECT_DISTANCE = 'subject_distance';
+  COL_FLIGHT_HEIGHT = 'flight_height';
+  COL_FLIGHT_DIRECTION = 'flight_direction';
   COL_SUBJECT_SEEN = 'subject_seen';
   COL_SUBJECT_HEARD = 'subject_heard';
   COL_SUBJECT_PHOTOGRAPHED = 'subject_photographed';

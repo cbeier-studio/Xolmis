@@ -21,7 +21,7 @@ unit io_csv;
 interface
 
 uses
-  Classes, SysUtils, SdfData, Math, io_core;
+  Classes, SysUtils, SdfData, Math, LConvEncoding, io_core;
 
 type
 
@@ -56,6 +56,7 @@ begin
   Result := TStringList.Create;
   DS := TSdfDataSet.Create(nil);
   try
+    //DS.CodePage := GuessEncoding();
     DS.Delimiter := Options.Delimiter;
     //DS.QuoteChar := Options.QuoteChar;
     DS.FirstLineAsSchema := Options.HasHeader;

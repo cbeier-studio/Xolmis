@@ -151,6 +151,8 @@ resourcestring
   rscObserver = 'Observer';
   rscIndividuals = '# individuals';
   rscDistanceM = 'Distance (m)';
+  rscFlightHeight = 'Flight height';
+  rscFlightDirection = 'Flight direction';
   rscSeen = 'Seen';
   rscHeard = 'Heard';
   rscPhotographed = 'Photographed';
@@ -1557,6 +1559,8 @@ begin
         'observer_name':          Fields[i].DisplayLabel := rscObserver;
         'subjects_tally':         Fields[i].DisplayLabel := rscIndividuals;
         'subject_distance':       Fields[i].DisplayLabel := rscDistanceM;
+        'flight_height':          Fields[i].DisplayLabel := rscFlightHeight;
+        'flight_direction':       Fields[i].DisplayLabel := rscFlightDirection;
         'subject_seen':           Fields[i].DisplayLabel := rscSeen;
         'subject_heard':          Fields[i].DisplayLabel := rscHeard;
         'subject_photographed':   Fields[i].DisplayLabel := rscPhotographed;
@@ -2425,6 +2429,13 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
       end;
+      'flight_direction':
+      begin
+        Add('SELECT flight_direction AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
 
       'mackinnon_list_num':
       begin
@@ -2437,6 +2448,13 @@ begin
       'subject_distance':
       begin
         Add('SELECT taxon_name AS name, AVG(subject_distance) AS mean');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY mean DESC');
+      end;
+      'flight_height':
+      begin
+        Add('SELECT taxon_name AS name, AVG(flight_height) AS mean');
         Add('FROM (' + aWhereText + ')');
         Add('GROUP BY name');
         Add('ORDER BY mean DESC');

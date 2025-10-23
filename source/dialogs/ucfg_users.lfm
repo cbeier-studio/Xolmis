@@ -73,7 +73,7 @@ object cfgUsers: TcfgUsers
       Height = 282
       Top = 96
       Width = 312
-      Anchors = [akTop, akLeft, akBottom]
+      Anchors = [akTop, akLeft, akRight, akBottom]
       AutoFillColumns = True
       Color = clWindow
       Columns = <      

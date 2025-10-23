@@ -371,6 +371,8 @@ type
     qSightingsexported_status: TBooleanField;
     qSightingsfamily_id: TLongintField;
     qSightingsfemales_tally: TStringField;
+    qSightingsflight_direction: TStringField;
+    qSightingsflight_height: TFloatField;
     qSightingsfull_name: TStringField;
     qSightingsgenus_id: TLongintField;
     qSightingsimmatures_tally: TStringField;

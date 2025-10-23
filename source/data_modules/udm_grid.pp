@@ -751,6 +751,8 @@ type
     qSamplingPlotsstate_name: TStringField;
     qSightingscountry_id: TLongintField;
     qSightingsfamily_id: TLongintField;
+    qSightingsflight_direction: TStringField;
+    qSightingsflight_height: TFloatField;
     qSightingsgenus_id: TLongintField;
     qSightingsindividual_name: TStringField;
     qSightingslocality_name: TStringField;
