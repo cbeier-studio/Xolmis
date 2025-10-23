@@ -3112,6 +3112,11 @@ msgstr ""
 msgid "Xolmis - Manage connections"
 msgstr ""
 
+#: tcfgdatabase.esearch.texthint
+msgctxt "tcfgdatabase.esearch.texthint"
+msgid "Search"
+msgstr ""
+
 #: tcfgdatabase.mmoptimizedb.caption
 msgctxt "tcfgdatabase.mmoptimizedb.caption"
 msgid "Optimize database"
@@ -3157,6 +3162,11 @@ msgstr ""
 #: tcfgdatabase.pmnewdatabase.caption
 msgctxt "tcfgdatabase.pmnewdatabase.caption"
 msgid "New database"
+msgstr ""
+
+#: tcfgdatabase.sbclearsearch.hint
+msgctxt "tcfgdatabase.sbclearsearch.hint"
+msgid "Clear search"
 msgstr ""
 
 #: tcfgdatabase.sbclose.caption
@@ -3410,6 +3420,11 @@ msgstr ""
 msgid "Manage users"
 msgstr ""
 
+#: tcfgusers.esearch.texthint
+msgctxt "tcfgusers.esearch.texthint"
+msgid "Search"
+msgstr ""
+
 #: tcfgusers.gridusers.columns[0].title.caption
 msgctxt "tcfgusers.gridusers.columns[0].title.caption"
 msgid "Username"
@@ -3447,6 +3462,11 @@ msgstr ""
 #: tcfgusers.sbchangepassword.hint
 msgctxt "tcfgusers.sbchangepassword.hint"
 msgid "Change password"
+msgstr ""
+
+#: tcfgusers.sbclearsearch.hint
+msgctxt "tcfgusers.sbclearsearch.hint"
+msgid "Clear search"
 msgstr ""
 
 #: tcfgusers.sbclose.caption

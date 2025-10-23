@@ -79,6 +79,8 @@ uses
     aSorting: String = ''; aDirection: String = '');
   procedure SetUsersSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
+  procedure SetConnectionsSQL(const aSQL: TStrings; aFilter: TFilterValue;
+    aSorting: String = ''; aDirection: String = '');
 
 implementation
 
@@ -1421,6 +1423,37 @@ begin
         Add('WHERE (ft.active_status = 1) AND (ft.marked_status = 1)');
       fvDeleted:
         Add('WHERE (ft.active_status = 0)');
+    end;
+    if Trim(aSorting) <> '' then
+    begin
+      if aDirection = '' then
+        AD := 'ASC'
+      else
+        AD := aDirection;
+      Add('ORDER BY ' + aSorting + {' COLLATE pt_BR ' +} AD);
+    end;
+  end;
+end;
+
+procedure SetConnectionsSQL(const aSQL: TStrings; aFilter: TFilterValue; aSorting: String; aDirection: String);
+var
+  AD: String;
+begin
+  with aSQL do
+  begin
+    Clear;
+    Add('SELECT * FROM connections');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        Add('WHERE (connection_id = -1) AND (active_status = 1)');
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (active_status = 1) AND (marked_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
     end;
     if Trim(aSorting) <> '' then
     begin

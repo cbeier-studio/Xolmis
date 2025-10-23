@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, Menus,
-  atshapelinebgra, BCPanel, VirtualDBGrid, VirtualTrees;
+  atshapelinebgra, BCPanel, VirtualDBGrid, VirtualTrees, ColorSpeedButton;
 
 type
 
@@ -30,9 +30,11 @@ type
 
   TcfgDatabase = class(TForm)
     dsConn: TDataSource;
+    eSearch: TEdit;
     iButtonsDark: TImageList;
     iconDB: TImageList;
     iButtons: TImageList;
+    iconSearch: TImage;
     lineBottom: TShapeLineBGRA;
     mmVacuumDB: TMenuItem;
     mmOptimizeDB: TMenuItem;
@@ -50,6 +52,8 @@ type
     pmTools: TPopupMenu;
     pmGrid: TPopupMenu;
     pmNew: TPopupMenu;
+    pSearch: TBCPanel;
+    sbClearSearch: TColorSpeedButton;
     sbClose: TButton;
     sbDelete: TSpeedButton;
     sbEdit: TSpeedButton;
@@ -62,8 +66,10 @@ type
     Separator4: TMenuItem;
     Separator7: TShapeLineBGRA;
     Separator8: TShapeLineBGRA;
+    TimerFind: TTimer;
     vtConnections: TVirtualDBGrid;
     procedure dsConnStateChange(Sender: TObject);
+    procedure eSearchChange(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure mmOptimizeDBClick(Sender: TObject);
@@ -71,12 +77,14 @@ type
     procedure mmVacuumDBClick(Sender: TObject);
     procedure pmAddExistingDatabaseClick(Sender: TObject);
     procedure pmNewDatabaseClick(Sender: TObject);
+    procedure sbClearSearchClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
     procedure sbMoreClick(Sender: TObject);
     procedure sbNewClick(Sender: TObject);
     procedure sbEditClick(Sender: TObject);
     procedure sbDeleteClick(Sender: TObject);
     procedure sbRefreshRecordsClick(Sender: TObject);
+    procedure TimerFindTimer(Sender: TObject);
     procedure vtConnectionsGetImageIndex(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer);
   private
@@ -92,16 +100,68 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, models_users, data_types, data_management, utils_dialogs, utils_themes, udm_main, uedt_database,
+  utils_locale, utils_global, utils_dialogs, utils_themes, data_types, data_search,
+  udm_main, uedt_database,
   uDarkStyleParams;
 
 {$R *.lfm}
 
 { TcfgDatabase }
 
-procedure TcfgDatabase.sbCloseClick(Sender: TObject);
+procedure TcfgDatabase.ApplyDarkMode;
 begin
-  GravaStat(Name, 'sbClose', 'click');
+  pChildToolbar.Background.Color := clCardBGDefaultDark;
+  pChildToolbar.Border.Color := clCardBGSecondaryDark;
+  pClient.Color := clSolidBGBaseDark;
+
+  sbNew.Images := iButtonsDark;
+  sbEdit.Images := iButtonsDark;
+  sbMore.Images := iButtonsDark;
+  sbRefreshRecords.Images := iButtonsDark;
+  sbDelete.Images := iButtonsDark;
+  pmNew.Images := iButtonsDark;
+  pmTools.Images := iButtonsDark;
+  pmGrid.Images := iButtonsDark;
+
+  pSearch.Background.Color := clCardBGDefaultDark;
+  pSearch.Border.Color := clSolidBGSecondaryDark;
+  pSearch.ParentBackground := True;
+  eSearch.Color := pSearch.Background.Color;
+  iconSearch.Images := iButtonsDark;
+  sbClearSearch.Images := iButtonsDark;
+  sbClearSearch.StateHover.Color := clSolidBGSecondaryDark;
+  sbClearSearch.StateActive.Color := clSolidBGTertiaryDark;
+  sbClearSearch.StateNormal.Color := pSearch.Background.Color;
+end;
+
+procedure TcfgDatabase.dsConnStateChange(Sender: TObject);
+begin
+  UpdateButtons;
+end;
+
+procedure TcfgDatabase.eSearchChange(Sender: TObject);
+begin
+  TimerFind.Enabled := False;
+  TimerFind.Enabled := True;
+
+  sbClearSearch.Visible := Length(eSearch.Text) > 0;
+end;
+
+procedure TcfgDatabase.FormKeyPress(Sender: TObject; var Key: char);
+begin
+  { CANCEL = Esc }
+  if Key = #27 then
+  begin
+    GravaStat(Name, '', 'Esc');
+    {$IFDEF DEBUG}
+    LogDebug('HOTKEY: Esc');
+    {$ENDIF}
+    Key := #0;
+    if (eSearch.Text <> EmptyStr) then
+      eSearch.Clear
+    else
+      ModalResult := mrClose;
+  end;
 end;
 
 procedure TcfgDatabase.FormShow(Sender: TObject);
@@ -199,39 +259,18 @@ begin
   dsConn.DataSet.Refresh;
 end;
 
-procedure TcfgDatabase.FormKeyPress(Sender: TObject; var Key: char);
+procedure TcfgDatabase.sbClearSearchClick(Sender: TObject);
 begin
-  { CANCEL = Esc }
-  if Key = #27 then
-  begin
-    GravaStat(Name, '', 'Esc');
-    {$IFDEF DEBUG}
-    LogDebug('HOTKEY: Esc');
-    {$ENDIF}
-    Key := #0;
-    ModalResult := mrClose;
-  end;
+  LogDebug('Search cleared');
+
+  eSearch.Clear;
+  if eSearch.CanSetFocus then
+    eSearch.SetFocus;
 end;
 
-procedure TcfgDatabase.ApplyDarkMode;
+procedure TcfgDatabase.sbCloseClick(Sender: TObject);
 begin
-  pChildToolbar.Background.Color := clCardBGDefaultDark;
-  pChildToolbar.Border.Color := clCardBGSecondaryDark;
-  pClient.Color := clSolidBGBaseDark;
-
-  sbNew.Images := iButtonsDark;
-  sbEdit.Images := iButtonsDark;
-  sbMore.Images := iButtonsDark;
-  sbRefreshRecords.Images := iButtonsDark;
-  sbDelete.Images := iButtonsDark;
-  pmNew.Images := iButtonsDark;
-  pmTools.Images := iButtonsDark;
-  pmGrid.Images := iButtonsDark;
-end;
-
-procedure TcfgDatabase.dsConnStateChange(Sender: TObject);
-begin
-  UpdateButtons;
+  GravaStat(Name, 'sbClose', 'click');
 end;
 
 procedure TcfgDatabase.sbNewClick(Sender: TObject);
@@ -247,6 +286,34 @@ begin
 
   dsConn.DataSet.Refresh;
 
+  UpdateButtons;
+end;
+
+procedure TcfgDatabase.TimerFindTimer(Sender: TObject);
+begin
+  TimerFind.Enabled := False;
+
+  dsConn.DataSet.Close;
+  SetConnectionsSQL(DMM.qsConn.SQL, fvNone);
+
+  if (eSearch.Text <> EmptyStr) then
+  begin
+    with DMM.qsConn, SQL do
+    begin
+      Add('WHERE (connection_name LIKE :connection_name)');
+      Add('ORDER BY connection_name ASC');
+
+      ParamByName('connection_name').AsString := '%' + eSearch.Text + '%';
+    end;
+  end
+  else
+  begin
+    with DMM.qsConn, SQL do
+    begin
+      Add('ORDER BY connection_name ASC');
+    end;
+  end;
+  dsConn.DataSet.Open;
   UpdateButtons;
 end;
 
@@ -295,6 +362,8 @@ begin
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
         mmTestConnection.Enabled := False;
+        eSearch.Enabled := False;
+        sbClearSearch.Enabled := False;
       end;
     dsBrowse:
       begin
@@ -304,6 +373,8 @@ begin
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
         mmTestConnection.Enabled := dsConn.DataSet.RecordCount > 0;
+        eSearch.Enabled := True;
+        sbClearSearch.Enabled := True;
       end;
     dsEdit, dsInsert:
       begin
@@ -313,6 +384,8 @@ begin
         sbRefreshRecords.Enabled := False;
         sbClose.Enabled := False;
         mmTestConnection.Enabled := False;
+        eSearch.Enabled := False;
+        sbClearSearch.Enabled := False;
       end;
   end;
   pmgRefresh.Enabled := sbRefreshRecords.Enabled;

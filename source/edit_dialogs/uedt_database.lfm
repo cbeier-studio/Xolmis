@@ -288,6 +288,7 @@ object edtDatabase: TedtDatabase
       Align = alTop
       BorderSpacing.Bottom = 8
       Caption = 'Remote database'
+      Enabled = False
       TabOrder = 2
       OnChange = ckRemoteDBChange
       OnKeyPress = eNameKeyPress

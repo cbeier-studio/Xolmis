@@ -6,6 +6,8 @@
 {"hash":137105230,"name":"tcfgdatabase.sbnew.hint","sourcebytes":[78,101,119,32,99,111,110,110,101,99,116,105,111,110],"value":"New connection"},
 {"hash":54297379,"name":"tcfgdatabase.sbmore.hint","sourcebytes":[77,111,114,101,32,111,112,116,105,111,110,115],"value":"More options"},
 {"hash":87468659,"name":"tcfgdatabase.sbrefreshrecords.hint","sourcebytes":[82,101,102,114,101,115,104,32,114,101,99,111,114,100,115],"value":"Refresh records"},
+{"hash":94079128,"name":"tcfgdatabase.esearch.texthint","sourcebytes":[83,101,97,114,99,104],"value":"Search"},
+{"hash":54079704,"name":"tcfgdatabase.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
 {"hash":4863637,"name":"tcfgdatabase.sbclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
 {"hash":249319630,"name":"tcfgdatabase.mmtestconnection.caption","sourcebytes":[84,101,115,116,32,99,111,110,110,101,99,116,105,111,110],"value":"Test connection"},
 {"hash":214009141,"name":"tcfgdatabase.mmoptimizedb.caption","sourcebytes":[79,112,116,105,109,105,122,101,32,100,97,116,97,98,97,115,101],"value":"Optimize database"},

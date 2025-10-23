@@ -3089,6 +3089,11 @@ msgstr "Salvar"
 msgid "Xolmis - Manage connections"
 msgstr "Gerenciar conexões"
 
+#: tcfgdatabase.esearch.texthint
+msgctxt "tcfgdatabase.esearch.texthint"
+msgid "Search"
+msgstr "Pesquisar"
+
 #: tcfgdatabase.mmoptimizedb.caption
 msgctxt "tcfgdatabase.mmoptimizedb.caption"
 msgid "Optimize database"
@@ -3135,6 +3140,11 @@ msgstr "Testar conexão"
 msgctxt "tcfgdatabase.pmnewdatabase.caption"
 msgid "New database"
 msgstr "Novo banco de dados"
+
+#: tcfgdatabase.sbclearsearch.hint
+msgctxt "tcfgdatabase.sbclearsearch.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
 
 #: tcfgdatabase.sbclose.caption
 msgctxt "tcfgdatabase.sbclose.caption"
@@ -3387,6 +3397,11 @@ msgstr "Restaurar"
 msgid "Manage users"
 msgstr "Gerenciar usuários"
 
+#: tcfgusers.esearch.texthint
+msgctxt "tcfgusers.esearch.texthint"
+msgid "Search"
+msgstr "Pesquisar"
+
 #: tcfgusers.gridusers.columns[0].title.caption
 msgctxt "tcfgusers.gridusers.columns[0].title.caption"
 msgid "Username"
@@ -3425,6 +3440,11 @@ msgstr "Atualizar"
 msgctxt "tcfgusers.sbchangepassword.hint"
 msgid "Change password"
 msgstr "Trocar senha"
+
+#: tcfgusers.sbclearsearch.hint
+msgctxt "tcfgusers.sbclearsearch.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
 
 #: tcfgusers.sbclose.caption
 msgctxt "tcfgusers.sbclose.caption"

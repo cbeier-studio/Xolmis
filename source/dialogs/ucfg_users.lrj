@@ -8,6 +8,8 @@
 {"hash":15202308,"name":"tcfgusers.sbchangepassword.hint","sourcebytes":[67,104,97,110,103,101,32,112,97,115,115,119,111,114,100],"value":"Change password"},
 {"hash":171772674,"name":"tcfgusers.sbdelete.hint","sourcebytes":[68,101,108,101,116,101,32,117,115,101,114],"value":"Delete user"},
 {"hash":87468659,"name":"tcfgusers.sbrefreshrecords.hint","sourcebytes":[82,101,102,114,101,115,104,32,114,101,99,111,114,100,115],"value":"Refresh records"},
+{"hash":94079128,"name":"tcfgusers.esearch.texthint","sourcebytes":[83,101,97,114,99,104],"value":"Search"},
+{"hash":54079704,"name":"tcfgusers.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
 {"hash":146640072,"name":"tcfgusers.pmgrefresh.caption","sourcebytes":[82,101,102,114,101,115,104],"value":"Refresh"},
 {"hash":21703,"name":"tcfgusers.pmgnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":310020,"name":"tcfgusers.pmgedit.caption","sourcebytes":[69,100,105,116],"value":"Edit"},
