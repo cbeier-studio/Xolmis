@@ -33,6 +33,7 @@ type
     btnHelp: TSpeedButton;
     cbSampleMoment: TComboBox;
     cbPrecipitation: TComboBox;
+    cbWindDirection: TComboBox;
     dsLink: TDataSource;
     eSampleTime: TEdit;
     eSampleDate: TEditButton;
@@ -45,6 +46,8 @@ type
     lblRelativeHumidity: TLabel;
     lblSampleMoment: TLabel;
     lblSampleMoment1: TLabel;
+    lblWindDirection: TLabel;
+    lblWindDirection1: TLabel;
     lblTemperature: TLabel;
     lblSampleDate: TLabel;
     lblWindSpeedBft: TLabel;
@@ -60,6 +63,7 @@ type
     pContent: TPanel;
     pNotes: TPanel;
     pSampleDateTime: TPanel;
+    pWindDirection: TPanel;
     pWindSpeed: TPanel;
     pPrecipitationRainfall: TPanel;
     pCloudCoverTemperature: TPanel;
@@ -227,6 +231,8 @@ begin
   eRainfall.Value := FWeather.Rainfall;
   eWindSpeedBft.Value := FWeather.WindSpeedBft;
   eWindSpeedKmh.Value := FWeather.WindSpeedKmH;
+  if (FWeather.WindDirection <> EmptyStr) then
+    cbWindDirection.ItemIndex := cbWindDirection.Items.IndexOf(FWeather.WindDirection);
   eRelativeHumidity.Value := FWeather.RelativeHumidity;
   eAtmosphericPressure.Value := FWeather.AtmosphericPressure;
   mNotes.Text := FWeather.Notes;
@@ -280,6 +286,7 @@ begin
   FWeather.Rainfall            := eRainfall.Value;
   FWeather.WindSpeedBft        := eWindSpeedBft.Value;
   FWeather.WindSpeedKmH        := eWindSpeedKmh.Value;
+  FWeather.WindDirection       := cbWindDirection.Text;
   FWeather.RelativeHumidity    := eRelativeHumidity.Value;
   FWeather.AtmosphericPressure := eAtmosphericPressure.Value;
   FWeather.Notes               := mNotes.Text;

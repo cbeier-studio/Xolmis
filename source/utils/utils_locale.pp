@@ -212,6 +212,7 @@ uses
     rsProgressCreatingView = 'Creating view: %s (%d/%d)';
     rsProgressPopulatingTables = 'Populating tables... This may take a few minutes.';
     rsProgressOptimizingDatabase = 'Optimizing database...';
+    rsUpgradingDatabaseSchema = 'Upgrading database schema...';
 
     { Splash screen messages }
     rsStartingXolmis = 'Starting Xolmis...';
@@ -1035,10 +1036,12 @@ uses
     rsMobileQualitativeTimed = 'Timed Qualitative List';
     rsMobileQualitativeInterval = 'Intervaled Qualitative List';
     rsMobileMackinnonList = 'Mackinnon List';
-    rsMobileTransectionCount = 'Transection Count';
+    rsMobileTransectCount = 'Transect Count';
     rsMobilePointCount = 'Point Count';
     rsMobileBanding = 'Banding';
     rsMobileCasual = 'Casual Observation';
+    rsMobileTransectDetection = 'Detection Transect';
+    rsMobilePointDetection = 'Detection Point Count';
 
     rsMobileSurveyCreated = 'Survey created: %d - %s';
     rsMobileSurveyUpdated = 'Survey updated: %d - %s';

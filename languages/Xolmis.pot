@@ -2449,6 +2449,10 @@ msgctxt "data_columns.rscwindbft"
 msgid "Wind (Bft)"
 msgstr ""
 
+#: data_columns.rscwinddirection
+msgid "Wind direction"
+msgstr ""
+
 #: data_columns.rscwindkmh
 msgctxt "data_columns.rscwindkmh"
 msgid "Wind (km/h)"
@@ -7829,6 +7833,11 @@ msgstr ""
 msgid "Save profile picture as..."
 msgstr ""
 
+#: tedtperson.pmnnewinstitution.caption
+msgctxt "tedtperson.pmnnewinstitution.caption"
+msgid "New institution"
+msgstr ""
+
 #: tedtperson.pmnnewtoponym.caption
 msgctxt "tedtperson.pmnnewtoponym.caption"
 msgid "New toponym"
@@ -9286,6 +9295,10 @@ msgstr ""
 #: tedtweatherlog.lbltemperature.caption
 msgctxt "tedtweatherlog.lbltemperature.caption"
 msgid "Temperature (°C):"
+msgstr ""
+
+#: tedtweatherlog.lblwinddirection.caption
+msgid "Wind direction:"
 msgstr ""
 
 #: tedtweatherlog.lblwindspeedbft.caption
@@ -15137,6 +15150,10 @@ msgctxt "utils_locale.rsmobilepointcount"
 msgid "Point Count"
 msgstr ""
 
+#: utils_locale.rsmobilepointdetection
+msgid "Detection Point Count"
+msgstr ""
+
 #: utils_locale.rsmobilequalitativefree
 msgctxt "utils_locale.rsmobilequalitativefree"
 msgid "Free Qualitative List"
@@ -15194,9 +15211,12 @@ msgctxt "utils_locale.rsmobilesurveyupdated"
 msgid "Survey updated: %d - %s"
 msgstr ""
 
-#: utils_locale.rsmobiletransectioncount
-msgctxt "utils_locale.rsmobiletransectioncount"
-msgid "Transection Count"
+#: utils_locale.rsmobiletransectcount
+msgid "Transect Count"
+msgstr ""
+
+#: utils_locale.rsmobiletransectdetection
+msgid "Detection Transect"
 msgstr ""
 
 #: utils_locale.rsmobilevegetationexists
@@ -17038,6 +17058,10 @@ msgstr ""
 #: utils_locale.rsupdatesumcaptures
 msgctxt "utils_locale.rsupdatesumcaptures"
 msgid "The sum of new captures, recaptures, and unmarked individuals does not match the total count. Update it?"
+msgstr ""
+
+#: utils_locale.rsupgradingdatabaseschema
+msgid "Upgrading database schema..."
 msgstr ""
 
 #: utils_locale.rsusenewdatabaseoption

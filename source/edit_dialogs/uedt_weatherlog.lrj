@@ -16,5 +16,6 @@
 {"hash":119595626,"name":"tedtweatherlog.lblcloudcover.caption","sourcebytes":[67,108,111,117,100,32,99,111,118,101,114,32,40,37,41,58],"value":"Cloud cover (%):"},
 {"hash":6998794,"name":"tedtweatherlog.lbltemperature.caption","sourcebytes":[84,101,109,112,101,114,97,116,117,114,101,32,40,194,176,67,41,58],"value":"Temperature (\u00B0C):"},
 {"hash":212080010,"name":"tedtweatherlog.lblrelativehumidity.caption","sourcebytes":[82,101,108,97,116,105,118,101,32,104,117,109,105,100,105,116,121,32,40,37,41,58],"value":"Relative humidity (%):"},
-{"hash":48757322,"name":"tedtweatherlog.lblatmosphericpressure.caption","sourcebytes":[65,116,109,111,115,112,104,101,114,105,99,32,112,114,101,115,115,117,114,101,32,40,109,80,97,41,58],"value":"Atmospheric pressure (mPa):"}
+{"hash":48757322,"name":"tedtweatherlog.lblatmosphericpressure.caption","sourcebytes":[65,116,109,111,115,112,104,101,114,105,99,32,112,114,101,115,115,117,114,101,32,40,109,80,97,41,58],"value":"Atmospheric pressure (mPa):"},
+{"hash":265161882,"name":"tedtweatherlog.lblwinddirection.caption","sourcebytes":[87,105,110,100,32,100,105,114,101,99,116,105,111,110,58],"value":"Wind direction:"}
 ]}

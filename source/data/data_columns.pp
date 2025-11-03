@@ -435,6 +435,7 @@ resourcestring
   rscTemperatureC = 'Temperature (°C)';
   rscWindBft = 'Wind (Bft)';
   rscWindKmH = 'Wind (km/h)';
+  rscWindDirection = 'Wind direction';
   rscRelativeHumidity = 'Relative humidity (%)';
   rscAtmosphericPressureH = 'Atmospheric pressure (hPa)';
   rscPermanentNetID = 'Permanent net ID';

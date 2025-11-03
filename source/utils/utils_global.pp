@@ -644,14 +644,14 @@ begin
         if not DMM.sqlCon.Connected then
           DMM.sqlCon.Open;
         LogDebug('Database connected');
+        Result := True;
       except
         Result := False;
         raise EDatabaseError.Create(rsErrorConnectingDatabase);
       end;
 
-      UpgradeDatabaseSchema(databaseConnection.Manager);
-
-      Result := True;
+      if DMM.sqlCon.Connected then
+        UpgradeDatabaseSchema(databaseConnection.Manager);
     end;
   finally
     FreeAndNil(dlgConnect);

@@ -418,6 +418,7 @@ type
     qWeatherLogsuser_inserted: TLongintField;
     qWeatherLogsuser_updated: TLongintField;
     qWeatherLogsweather_id: TLongintField;
+    qWeatherLogswind_direction: TStringField;
     qWeatherLogswind_speed_bft: TLongintField;
     qWeatherLogswind_speed_kmh: TFloatField;
     procedure DataModuleCreate(Sender: TObject);

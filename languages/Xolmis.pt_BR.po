@@ -2451,6 +2451,10 @@ msgctxt "data_columns.rscwindbft"
 msgid "Wind (Bft)"
 msgstr "Vento (Bft)"
 
+#: data_columns.rscwinddirection
+msgid "Wind direction"
+msgstr "Direção do vento"
+
 #: data_columns.rscwindkmh
 msgctxt "data_columns.rscwindkmh"
 msgid "Wind (km/h)"
@@ -7815,6 +7819,11 @@ msgstr "Remover imagem de perfil"
 msgid "Save profile picture as..."
 msgstr "Salvar imagem de perfil como..."
 
+#: tedtperson.pmnnewinstitution.caption
+msgctxt "tedtperson.pmnnewinstitution.caption"
+msgid "New institution"
+msgstr "Nova instituição"
+
 #: tedtperson.pmnnewtoponym.caption
 msgctxt "tedtperson.pmnnewtoponym.caption"
 msgid "New toponym"
@@ -9272,6 +9281,10 @@ msgstr "Hora:"
 msgctxt "tedtweatherlog.lbltemperature.caption"
 msgid "Temperature (°C):"
 msgstr "Temperatura (°C):"
+
+#: tedtweatherlog.lblwinddirection.caption
+msgid "Wind direction:"
+msgstr "Direção do vento:"
 
 #: tedtweatherlog.lblwindspeedbft.caption
 msgid "Wind speed (Beaufort):"
@@ -15123,6 +15136,10 @@ msgctxt "utils_locale.rsmobilepointcount"
 msgid "Point Count"
 msgstr "Ponto de contagem"
 
+#: utils_locale.rsmobilepointdetection
+msgid "Detection Point Count"
+msgstr ""
+
 #: utils_locale.rsmobilequalitativefree
 msgctxt "utils_locale.rsmobilequalitativefree"
 msgid "Free Qualitative List"
@@ -15180,10 +15197,13 @@ msgctxt "utils_locale.rsmobilesurveyupdated"
 msgid "Survey updated: %d - %s"
 msgstr "Amostragem atualizada: %d - %s"
 
-#: utils_locale.rsmobiletransectioncount
-msgctxt "utils_locale.rsmobiletransectioncount"
-msgid "Transection Count"
-msgstr "Contagem em transecção"
+#: utils_locale.rsmobiletransectcount
+msgid "Transect Count"
+msgstr ""
+
+#: utils_locale.rsmobiletransectdetection
+msgid "Detection Transect"
+msgstr ""
 
 #: utils_locale.rsmobilevegetationexists
 #, object-pascal-format
@@ -17034,6 +17054,10 @@ msgctxt "utils_locale.rsupdatesumcaptures"
 msgid "The sum of new captures, recaptures, and unmarked individuals does not match the total count. Update it?"
 msgstr "A soma das novas capturas, recapturas e indivíduos não marcados difere do número total de indivíduos. Deseja atualizar?"
 
+#: utils_locale.rsupgradingdatabaseschema
+msgid "Upgrading database schema..."
+msgstr ""
+
 #: utils_locale.rsusenewdatabaseoption
 msgctxt "utils_locale.rsusenewdatabaseoption"
 msgid "The database file was not found. Use the New database option."
@@ -17128,3 +17152,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

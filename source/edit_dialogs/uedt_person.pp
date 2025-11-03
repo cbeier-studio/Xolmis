@@ -69,6 +69,7 @@ type
     lblOrcid: TLabel;
     lblPhone2: TLabel;
     lblZipCode1: TLabel;
+    pmnNewInstitution: TMenuItem;
     pmnNewToponym: TMenuItem;
     mNotes: TMemo;
     pImageToolbar: TBCPanel;
@@ -156,6 +157,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure mmCopyImageClick(Sender: TObject);
     procedure mmPasteImageClick(Sender: TObject);
+    procedure pmnNewInstitutionClick(Sender: TObject);
     procedure pmnNewToponymClick(Sender: TObject);
     procedure sbAddImageClick(Sender: TObject);
     procedure sbRemoveImageClick(Sender: TObject);
@@ -495,6 +497,11 @@ begin
   imgProfile.PasteFromClipboard;
 end;
 
+procedure TedtPerson.pmnNewInstitutionClick(Sender: TObject);
+begin
+  EditInstitution(DMG.qInstitutions, True);
+end;
+
 procedure TedtPerson.pmnNewToponymClick(Sender: TObject);
 begin
   EditSite(DMG.qGazetteer, True);
@@ -544,23 +551,23 @@ procedure TedtPerson.SetRecord;
 begin
   FPerson.FullName       := eFullname.Text;
   FPerson.Citation       := eCitation.Text;
-  FPerson.Abbreviation        := eAbbreviation.Text;
+  FPerson.Abbreviation   := eAbbreviation.Text;
   FPerson.TitleTreatment := cbTreatment.Text;
   FPerson.Gender         := cbGender.Text;
   if eBirthDate.Text = EmptyStr then
-    FPerson.BirthDate := NullDate
+    FPerson.BirthDate    := NullDate
   else
-    FPerson.BirthDate      := StrToDate(eBirthDate.Text);
+    FPerson.BirthDate    := StrToDateDef(eBirthDate.Text, NullDate);
   if eDeathDate.Text = EmptyStr then
-    FPerson.DeathDate := NullDate
+    FPerson.DeathDate    := NullDate
   else
-    FPerson.DeathDate      := StrToDate(eDeathDate.Text);
+    FPerson.DeathDate    := StrToDateDef(eDeathDate.Text, NullDate);
   FPerson.IdDocument1    := eRG.Text;
   FPerson.IdDocument2    := eCPF.Text;
   FPerson.Email          := eEmail.Text;
   FPerson.Phone1         := ePhone1.Text;
   FPerson.Phone2         := ePhone2.Text;
-  FPerson.PostalCode        := eZipCode.Text;
+  FPerson.PostalCode     := eZipCode.Text;
   FPerson.Address1       := eAddress1.Text;
   FPerson.Address2       := eAddress2.Text;
   FPerson.Neighborhood   := eNeighborhood.Text;
@@ -572,7 +579,7 @@ begin
   FPerson.JobRole        := eJobRole.Text;
   FPerson.LattesUri      := eLattes.Text;
   FPerson.OrcidUri       := eOrcid.Text;
-  FPerson.XTwitterUri     := eTwitter.Text;
+  FPerson.XTwitterUri    := eTwitter.Text;
   FPerson.InstagramUri   := eInstagram.Text;
   FPerson.WebsiteUri     := eWebsite.Text;
   FPerson.Notes          := mNotes.Text;
@@ -594,6 +601,8 @@ begin
   if (eAbbreviation.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscAbbreviation]));
 
+  vbd1 := False;
+  vdd1 := False;
   // Dates
   if (eBirthDate.Text <> EmptyStr) then
     vbd1 := ValidDate(eBirthDate.Text, rsDateBirth, Msgs);

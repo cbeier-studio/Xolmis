@@ -55,6 +55,9 @@ type
     FCount: Integer;
     FNotes: String;
     FSampleTime: TDateTime;
+    FDistance: Double;
+    FFlightHeight: Double;
+    FFlightDirection: String;
     FSightingKey: Integer;
     FPoiList: TMobilePoiList;
   public
@@ -102,6 +105,7 @@ type
     FPrecipitation: TPrecipitation;
     FTemperature: Double;
     FWindSpeed: Integer;
+    FWindDirection: String;
     FAtmosphericPressure: Double;
     FRelativeHumidity: Double;
   public
@@ -331,6 +335,9 @@ begin
   FCount := 0;
   FNotes := EmptyStr;
   FSampleTime := NullDateTime;
+  FDistance := 0;
+  FFlightHeight := 0;
+  FFlightDirection := EmptyStr;
   FSightingKey := 0;
 
   FPoiList.Clear;
@@ -357,6 +364,9 @@ begin
     FCount := JSONObj.Get('count', 0);
     FNotes := JSONObj.Get('notes', '');
     FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
+    FDistance := JSONObj.Get('distance', 0.0);
+    FFlightHeight := JSONObj.Get('flightHeight', 0.0);
+    FFlightDirection := JSONObj.Get('flightDirection', '');
     PoiArray := JSONObj.FindPath('pois') as TJSONArray;
     if Assigned(PoiArray) then
       LoadPoiList(PoiArray);
@@ -385,6 +395,9 @@ begin
   aSighting.Notes := FNotes;
   aSighting.SightingDate := FSampleTime;
   aSighting.SightingTime := FSampleTime;
+  aSighting.SubjectDistance := FDistance;
+  aSighting.FlightHeight := FFlightHeight;
+  aSighting.FlightDirection := FFlightDirection;
 end;
 
 { TMobileVegetation }
@@ -462,6 +475,7 @@ begin
   FPrecipitation := wpEmpty;
   FTemperature := 0;
   FWindSpeed := 0;
+  FWindDirection := EmptyStr;
   FAtmosphericPressure := 0;
   FRelativeHumidity := 0;
 end;
@@ -480,6 +494,7 @@ begin
     FPrecipitation := TPrecipitation(JSONObj.Get('precipitation', Integer(wpNone)));
     FTemperature := JSONObj.Get('temperature', 0);
     FWindSpeed := JSONObj.Get('windSpeed', 0);
+    FWindDirection := JSONObj.Get('windDirection', '');
     FAtmosphericPressure := JSONObj.Get('atmosphericPressure', 0);
     FRelativeHumidity := JSONObj.Get('relativeHumidity', 0);
   end;
@@ -493,6 +508,7 @@ begin
   aWeatherLog.Precipitation := FPrecipitation;
   aWeatherLog.Temperature := FTemperature;
   aWeatherLog.WindSpeedBft := FWindSpeed;
+  aWeatherLog.WindDirection := FWindDirection;
   aWeatherLog.AtmosphericPressure := FAtmosphericPressure;
   aWeatherLog.RelativeHumidity := FRelativeHumidity;
 end;
@@ -650,7 +666,7 @@ begin
       aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_INTERVAL);
     invMackinnonList:
       aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_MACKINNON_LIST);
-    invTransectionCount:
+    invTransectCount:
       aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_TRANSECTION_COUNT);
     invPointCount:
       aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_POINT_COUNT);

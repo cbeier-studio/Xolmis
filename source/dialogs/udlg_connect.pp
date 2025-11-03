@@ -146,7 +146,7 @@ begin
   eUsername.Clear;
   ePassword.Clear;
 
-  CloseAction := caFree;
+  //CloseAction := caFree;
 end;
 
 procedure TdlgConnect.FormShow(Sender: TObject);

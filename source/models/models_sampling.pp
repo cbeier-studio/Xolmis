@@ -168,6 +168,7 @@ type
     FTemperature: Double;
     FWindSpeedBft: Integer;
     FWindSpeedKmH: Double;
+    FWindDirection: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
@@ -191,6 +192,7 @@ type
     property Temperature: Double read FTemperature write FTemperature;
     property WindSpeedBft: Integer read FWindSpeedBft write FWindSpeedBft;
     property WindSpeedKmH: Double read FWindSpeedKmH write FWindSpeedKmH;
+    property WindDirection: String read FWindDirection write FWindDirection;
     property RelativeHumidity: Double read FRelativeHumidity write FRelativeHumidity;
     property AtmosphericPressure: Double read FAtmosphericPressure write FAtmosphericPressure;
     property Notes: String read FNotes write FNotes;
@@ -3297,6 +3299,7 @@ begin
   FTemperature := 0;
   FWindSpeedBft := 0;
   FWindSpeedKmH := 0;
+  FWindDirection := EmptyStr;
 end;
 
 function TWeatherLog.Clone: TXolmisRecord;
@@ -3338,6 +3341,8 @@ begin
   if FieldValuesDiff(rscWindBft, aOld.WindSpeedBft, FWindSpeedBft, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscWindKmH, aOld.WindSpeedKmH, FWindSpeedKmH, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscWindDirection, aOld.WindDirection, FWindDirection, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
@@ -3383,6 +3388,7 @@ begin
     FTemperature      := Obj.Get('temperature', 0.0);
     FWindSpeedBft     := Obj.Get('wind_speed_bft', 0);
     FWindSpeedKmH     := Obj.Get('wind_speed_kmh', 0.0);
+    FWindDirection    := Obj.Get('wind_direction', '');
     FNotes            := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -3408,6 +3414,7 @@ begin
     JSONObject.Add('temperature', FTemperature);
     JSONObject.Add('wind_speed_bft', FWindSpeedBft);
     JSONObject.Add('wind_speed_kmh', FWindSpeedKmH);
+    JSONObject.Add('wind_direction', FWindDirection);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -3420,11 +3427,11 @@ function TWeatherLog.ToString: String;
 begin
   Result := Format('WeatherLog(Id=%d, SampleDate=%s, SampleTime=%s, SampleMoment=%s, SurveyId=%d, ObserverId=%d, ' +
     'AtmosphericPressure=%f, CloudCover=%d, Precipitation=%s, Rainfall=%d, RelativeHumidity=%f, Temperature=%f, ' +
-    'WindSpeedBft=%d, WindSpeedKmH=%f, Notes=%s, ' +
+    'WindSpeedBft=%d, WindSpeedKmH=%f, WindDirection=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, DateToStr(FSampleDate), TimeToStr(FSampleTime), SAMPLE_MOMENTS[FSampleMoment], FSurveyId, FObserverId,
     FAtmosphericPressure, FCloudCover, PRECIPITATION_VALUES[FPrecipitation], FRainfall, FRelativeHumidity,
-    FTemperature, FWindSpeedBft, FWindSpeedKmH, FNotes,
+    FTemperature, FWindSpeedBft, FWindSpeedKmH, FWindDirection, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -3547,6 +3554,7 @@ begin
       'temperature, ' +
       'wind_speed_bft, ' +
       'wind_speed_kmh, ' +
+      'wind_direction, ' +
       'relative_humidity, ' +
       'atmospheric_pressure, ' +
       'notes, ' +
@@ -3627,6 +3635,7 @@ begin
       'temperature, ' +
       'wind_speed_bft, ' +
       'wind_speed_kmh, ' +
+      'wind_direction, ' +
       'relative_humidity, ' +
       'atmospheric_pressure, ' +
       'notes, ' +
@@ -3692,6 +3701,7 @@ begin
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.WindSpeedBft := FieldByName('wind_speed_bft').AsInteger;
     R.WindSpeedKmH := FieldByName('wind_speed_kmh').AsFloat;
+    R.WindDirection := FieldByName('wind_direction').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
     GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
@@ -3729,6 +3739,7 @@ begin
       'temperature, ' +
       'wind_speed_bft, ' +
       'wind_speed_kmh, ' +
+      'wind_direction, ' +
       'relative_humidity, ' +
       'atmospheric_pressure, ' +
       'notes, ' +
@@ -3746,6 +3757,7 @@ begin
       ':temperature, ' +
       ':wind_speed_bft, ' +
       ':wind_speed_kmh, ' +
+      ':wind_direction, ' +
       ':relative_humidity, ' +
       ':atmospheric_pressure, ' +
       ':notes, ' +
@@ -3763,6 +3775,7 @@ begin
     ParamByName('temperature').AsFloat := R.Temperature;
     ParamByName('wind_speed_bft').AsInteger := R.WindSpeedBft;
     ParamByName('wind_speed_kmh').AsFloat := R.WindSpeedKmH;
+    SetStrParam(ParamByName('wind_direction'), R.WindDirection);
     ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
     SetFloatParam(ParamByName('atmospheric_pressure'), R.AtmosphericPressure);
     SetStrParam(ParamByName('notes'), R.Notes);
@@ -3814,6 +3827,7 @@ begin
       'temperature = :temperature, ' +
       'wind_speed_bft = :wind_speed_bft, ' +
       'wind_speed_kmh = :wind_speed_kmh, ' +
+      'wind_direction = :wind_direction, ' +
       'relative_humidity = :relative_humidity, ' +
       'atmospheric_pressure = :atmospheric_pressure, ' +
       'notes = :notes, ' +
@@ -3834,6 +3848,7 @@ begin
     ParamByName('temperature').AsFloat := R.Temperature;
     ParamByName('wind_speed_bft').AsInteger := R.WindSpeedBft;
     ParamByName('wind_speed_kmh').AsFloat := R.WindSpeedKmH;
+    SetStrParam(ParamByName('wind_direction'), R.WindDirection);
     ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
     SetFloatParam(ParamByName('atmospheric_pressure'), R.AtmosphericPressure);
     SetStrParam(ParamByName('notes'), R.Notes);

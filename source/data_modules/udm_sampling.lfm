@@ -4203,6 +4203,12 @@ object DMS: TDMS
         Precision = -1
       end    
       item
+        Name = 'wind_direction'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
         Name = 'relative_humidity'
         DataType = ftFloat
         Precision = -1
@@ -4430,11 +4436,22 @@ object DMS: TDMS
       Required = False
       Precision = -1
     end
+    object qWeatherLogswind_direction: TStringField
+      DisplayLabel = 'Wind direction'
+      FieldKind = fkData
+      FieldName = 'wind_direction'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 5
+    end
     object qWeatherLogsrelative_humidity: TFloatField
       DisplayLabel = 'Relative humidity (%)'
       FieldKind = fkData
       FieldName = 'relative_humidity'
-      Index = 13
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4446,7 +4463,7 @@ object DMS: TDMS
       DisplayLabel = 'Atmospheric pressure (hPa)'
       FieldKind = fkData
       FieldName = 'atmospheric_pressure'
-      Index = 14
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4458,7 +4475,7 @@ object DMS: TDMS
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 15
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4470,7 +4487,7 @@ object DMS: TDMS
       DisplayLabel = 'Weather log (ID)'
       FieldKind = fkData
       FieldName = 'weather_id'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -4481,7 +4498,7 @@ object DMS: TDMS
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4492,7 +4509,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4503,7 +4520,7 @@ object DMS: TDMS
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4514,7 +4531,7 @@ object DMS: TDMS
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4525,7 +4542,7 @@ object DMS: TDMS
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -4537,7 +4554,7 @@ object DMS: TDMS
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

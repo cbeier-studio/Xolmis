@@ -1,24 +1,23 @@
 object edtWeatherLog: TedtWeatherLog
   Left = 373
-  Height = 462
+  Height = 519
   Top = 34
   Width = 400
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New weather log entry'
-  ClientHeight = 462
+  ClientHeight = 519
   ClientWidth = 400
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 419
+    Top = 464
     Width = 400
     Align = alTop
     LineColor = 9276813
@@ -28,7 +27,7 @@ object edtWeatherLog: TedtWeatherLog
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 421
+    Top = 466
     Width = 400
     Align = alTop
     AutoSize = True
@@ -94,34 +93,34 @@ object edtWeatherLog: TedtWeatherLog
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 419
+    Height = 464
     Top = 0
     Width = 400
     HorzScrollBar.Page = 400
-    VertScrollBar.Page = 419
+    VertScrollBar.Page = 464
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 419
+    ClientHeight = 464
     ClientWidth = 400
     Constraints.MinWidth = 176
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 419
+      Height = 464
       Top = 0
       Width = 400
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 8
-      ClientHeight = 419
+      ClientHeight = 464
       ClientWidth = 400
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 291
+        Top = 336
         Width = 400
         Align = alTop
         AutoSize = True
@@ -135,7 +134,7 @@ object edtWeatherLog: TedtWeatherLog
         ClientHeight = 112
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 7
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -477,7 +476,7 @@ object edtWeatherLog: TedtWeatherLog
       object pHumidityPressure: TPanel
         Left = 0
         Height = 45
-        Top = 233
+        Top = 278
         Width = 400
         Align = alTop
         AutoSize = True
@@ -492,7 +491,7 @@ object edtWeatherLog: TedtWeatherLog
         ClientHeight = 45
         ClientWidth = 400
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 6
         object lblRelativeHumidity: TLabel
           Left = 16
           Height = 15
@@ -534,6 +533,66 @@ object edtWeatherLog: TedtWeatherLog
           DecimalPlaces = 1
           MaxValue = 9999
           TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eSampleTimeKeyPress
+        end
+      end
+      object pWindDirection: TPanel
+        Left = 0
+        Height = 45
+        Top = 233
+        Width = 400
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 400
+        ParentBackground = False
+        TabOrder = 5
+        object lblWindDirection: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Wind direction:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblWindDirection1: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbWindDirection: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 176
+          ItemHeight = 15
+          Items.Strings = (
+            'N'
+            'E'
+            'W'
+            'S'
+            'NE'
+            'NW'
+            'SE'
+            'SW'
+          )
+          Style = csDropDownList
+          TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end

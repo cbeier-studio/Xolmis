@@ -1519,5 +1519,9 @@ object edtPerson: TedtPerson
       Caption = 'New toponym'
       OnClick = pmnNewToponymClick
     end
+    object pmnNewInstitution: TMenuItem
+      Caption = 'New institution'
+      OnClick = pmnNewInstitutionClick
+    end
   end
 end

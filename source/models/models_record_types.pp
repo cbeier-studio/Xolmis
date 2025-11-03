@@ -358,7 +358,8 @@ type
   // Xolmis Mobile
   TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
   TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invQualitativeInterval, invMackinnonList,
-                          invTransectionCount, invPointCount, invBanding, invCasual);
+                          invTransectCount, invPointCount, invBanding, invCasual, invTransectDetection,
+                          invPointDetection);
 
 { Constants used in records }
 

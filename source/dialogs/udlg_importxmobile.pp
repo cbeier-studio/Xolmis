@@ -511,10 +511,12 @@ begin
     invQualitativeTimed: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeTimed);
     invQualitativeInterval: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeInterval);
     invMackinnonList: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileMackinnonList);
-    invTransectionCount: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectionCount);
+    invTransectCount: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectCount);
     invPointCount: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointCount);
     invBanding: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
     invCasual: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileCasual);
+    invTransectDetection: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectDetection);
+    invPointDetection: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointDetection);
   end;
 end;
 

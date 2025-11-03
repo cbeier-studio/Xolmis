@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 1;
+  SCHEMA_VERSION: Integer = 2;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -142,8 +142,9 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_conversions, utils_debug, utils_count,
-  data_consts, models_users, udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress;
+  utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_debug,
+  data_consts, models_users,
+  udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
 
   {
   -----------------------------------------------------------------------------------------
@@ -740,10 +741,13 @@ var
 begin
   Result := False;
 
-  OldVersion := StrToIntDef(ReadDatabaseMetadata(DMM.sqlCon, 'version'), SCHEMA_VERSION);
+  OldVersion := StrToIntDef(ReadDatabaseMetadata(DMM.sqlCon, 'version'), 1);
 
   if OldVersion = SCHEMA_VERSION then
     Exit;
+
+  dlgLoading.Show;
+  dlgLoading.UpdateProgress(rsUpgradingDatabaseSchema, -1);
 
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
@@ -756,12 +760,14 @@ begin
 
   try
     try
-      //if OldVersion < 2 then
-      //begin
-      //  LogDebug(Format('Upgrading database to version %d', [OldVersion]));
-      //
-      //  Result := True;
-      //end;
+      if OldVersion < 2 then
+      begin
+        LogDebug(Format('Upgrading database to version %d', [OldVersion]));
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE weather_logs ADD COLUMN wind_direction VARCHAR (5);');
+
+        Result := True;
+      end;
 
       //if OldVersion < 3 then
       //begin
@@ -789,6 +795,7 @@ begin
   finally
     DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = on;');
     LogEvent(leaFinish, 'Upgrade database schema');
+    dlgLoading.Hide;
   end;
 
   if Result then
@@ -1684,6 +1691,7 @@ begin
     'temperature          REAL,' +
     'wind_speed_bft       INTEGER,' +
     'wind_speed_kmh       REAL,' +
+    'wind_direction       VARCHAR (5),' +
     'relative_humidity    REAL,' +
     'atmospheric_pressure REAL,' +
     'notes                TEXT,' +
@@ -2415,6 +2423,7 @@ begin
     'taxon_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
     'individual_id        INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
     'capture_id           INTEGER       REFERENCES captures (capture_id) ON UPDATE CASCADE,' +
+    'feather_id           INTEGER       REFERENCES feathers (feather_id) ON UPDATE CASCADE,' +
     'locality_id          INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'author_id            INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
     'survey_id            INTEGER,' +

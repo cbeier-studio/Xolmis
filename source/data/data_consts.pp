@@ -347,6 +347,7 @@ const
   COL_TEMPERATURE = 'temperature';
   COL_WIND_SPEED_BFT = 'wind_speed_bft';
   COL_WIND_SPEED_KMH = 'wind_speed_kmh';
+  COL_WIND_DIRECTION = 'wind_direction';
   COL_RELATIVE_HUMIDITY = 'relative_humidity';
   COL_ATMOSPHERIC_PRESSURE = 'atmospheric_pressure';
 

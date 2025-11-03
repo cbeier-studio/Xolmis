@@ -9112,6 +9112,7 @@ begin
       UpdateButtons(dsLink.DataSet);
       UpdateFilterPanels;
       UpdateChildRightPanel;
+      pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
     end;
   finally
     isWorking := False;
