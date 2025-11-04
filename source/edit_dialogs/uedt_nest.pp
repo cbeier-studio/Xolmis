@@ -34,6 +34,7 @@ type
     btnNew: TBitBtn;
     cbNestFate: TComboBox;
     cbNestShape: TComboBox;
+    cbLossCause: TComboBox;
     cbSupportType: TComboBox;
     eOtherSupport: TEdit;
     eSupportPlant1: TEditButton;
@@ -84,20 +85,21 @@ type
     lblExternalHeight: TLabel;
     lblBandStatus3: TLabel;
     lblBandStatus4: TLabel;
-    lblRequester5: TLabel;
+    lblLossCause: TLabel;
+    lblNestShape: TLabel;
     lblSupportType: TLabel;
     lblPlantHeight: TLabel;
     lblPlantMaxDiameter: TLabel;
     lblBandStatus8: TLabel;
     lblBandStatus9: TLabel;
     lblNotes: TLabel;
-    lblNotes1: TLabel;
+    lblDescription: TLabel;
     lblRequester: TLabel;
     lblRequester1: TLabel;
     lblSupportPlant1: TLabel;
     lblOtherSupport: TLabel;
     lblSupportPlant2: TLabel;
-    lblRequester2: TLabel;
+    lblProductivity: TLabel;
     lblRequester3: TLabel;
     lblNestCover: TLabel;
     lblLocality: TLabel;
@@ -117,6 +119,7 @@ type
     pObserver: TPanel;
     pExternalDiameter: TPanel;
     pmNew: TPopupMenu;
+    pLossCause: TPanel;
     pSupportPlant2: TPanel;
     pNestCover: TPanel;
     pProductivity: TPanel;
@@ -574,6 +577,10 @@ begin
   cbNestShape.Items.CommaText := '"' + rsNestShapeScrape + '","' + rsNestShapeCup + '","' +
     rsNestShapePlate + '","' + rsNestShapeSphere + '","' + rsNestShapePendent + '","' +
     rsNestShapePlatform + '","' + rsNestShapeMound + '","' + rsNestShapeBurrow + '","' + rsNestShapeCavity + '"';
+  cbLossCause.Items.CommaText := '"' + rsLossUnknown + '","' +
+    rsLossPredation + '","' + rsLossParasitism + '","' + rsLossDisease + '","' +
+    rsLossWeather + '","' + rsLossFire + '","' + rsLossAbandonment + '","' + rsLossPollution + '","' +
+    rsLossHumanDisturbance + '","' + rsLossImproperManagement + '"';
 end;
 
 procedure TedtNest.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -665,6 +672,18 @@ begin
     'MN': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeMound);
     'BR': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeBurrow);
     'CV': cbNestShape.ItemIndex := cbNestShape.Items.IndexOf(rsNestShapeCavity);
+  end;
+  case FNest.LossCause of
+    nlcUnknown:             cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossUnknown);
+    nlcPredation:           cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossPredation);
+    nlcParasitism:          cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossParasitism);
+    nlcDisease:             cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossDisease);
+    nlcWeather:             cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossWeather);
+    nlcFire:                cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossFire);
+    nlcAbandonment:         cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossAbandonment);
+    nlcPollution:           cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossPollution);
+    nlcHumanDisturbance:    cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossHumanDisturbance);
+    nlcImproperManagement:  cbLossCause.ItemIndex := cbLossCause.Items.IndexOf(rsLossImproperManagement);
   end;
   case FNest.SupportType of
     'G': cbSupportType.ItemIndex := cbSupportType.Items.IndexOf(rsSupportGround);
@@ -800,6 +819,18 @@ begin
     7: FNest.NestShape := 'BR';
     8: FNest.NestShape := 'CV';
   end;
+  case cbLossCause.ItemIndex of
+    0: FNest.LossCause := nlcUnknown;
+    1: FNest.LossCause := nlcPredation;
+    2: FNest.LossCause := nlcParasitism;
+    3: FNest.LossCause := nlcDisease;
+    4: FNest.LossCause := nlcWeather;
+    5: FNest.LossCause := nlcFire;
+    6: FNest.LossCause := nlcAbandonment;
+    7: FNest.LossCause := nlcPollution;
+    8: FNest.LossCause := nlcHumanDisturbance;
+    9: FNest.LossCause := nlcImproperManagement;
+  end;
   case cbSupportType.ItemIndex of
     0: FNest.SupportType := 'G';
     1: FNest.SupportType := 'H';
@@ -861,6 +892,8 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscLongitude]));
   if (cbSupportType.ItemIndex = cbSupportType.Items.Count - 1) then
     Msgs.Add(Format(rsRequiredField, [rscOtherSupport]));
+  if (cbNestFate.ItemIndex = 0) and (cbLossCause.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscLossCause]));
 
   // Dates
   if eFoundDate.Text <> EmptyStr then

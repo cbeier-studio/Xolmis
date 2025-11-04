@@ -596,6 +596,7 @@ const
   COL_NESTLING_DAYS = 'nestling_days';
   COL_ACTIVE_DAYS = 'active_days';
   COL_NEST_FATE = 'nest_fate';
+  COL_LOSS_CAUSE = 'loss_cause';
   COL_NEST_PRODUCTIVITY = 'nest_productivity';
   COL_FOUND_DATE = 'found_date';
   COL_LAST_DATE = 'last_date';

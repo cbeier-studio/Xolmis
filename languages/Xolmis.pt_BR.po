@@ -1138,6 +1138,10 @@ msgctxt "data_columns.rsclongitude"
 msgid "Longitude"
 msgstr "Longitude"
 
+#: data_columns.rsclosscause
+msgid "Cause of loss"
+msgstr "Causa da perda"
+
 #: data_columns.rscmackinnonlist
 msgctxt "data_columns.rscmackinnonlist"
 msgid "Mackinnon list"
@@ -6996,6 +7000,11 @@ msgctxt "tedtnest.lblconstructiondays.caption"
 msgid "Days building:"
 msgstr "Dias de construção:"
 
+#: tedtnest.lbldescription.caption
+msgctxt "tedtnest.lbldescription.caption"
+msgid "Nest description:"
+msgstr "Descrição do ninho:"
+
 #: tedtnest.lbledgedistance.caption
 msgctxt "tedtnest.lbledgedistance.caption"
 msgid "Distance from plant edge:"
@@ -7042,6 +7051,10 @@ msgctxt "tedtnest.lbllocality.caption"
 msgid "Locality: *"
 msgstr "Localidade: *"
 
+#: tedtnest.lbllosscause.caption
+msgid "Cause of loss:"
+msgstr "Causa da perda:"
+
 #: tedtnest.lblnestcover.caption
 msgctxt "tedtnest.lblnestcover.caption"
 msgid "Cover (%):"
@@ -7052,14 +7065,15 @@ msgctxt "tedtnest.lblnestlingdays.caption"
 msgid "Nestling-days:"
 msgstr "Dias de ninhego:"
 
+#: tedtnest.lblnestshape.caption
+msgctxt "tedtnest.lblnestshape.caption"
+msgid "Nest shape:"
+msgstr "Forma do ninho:"
+
 #: tedtnest.lblnotes.caption
 msgctxt "tedtnest.lblnotes.caption"
 msgid "Notes:"
 msgstr "Anotações:"
-
-#: tedtnest.lblnotes1.caption
-msgid "Nest description:"
-msgstr "Descrição do ninho:"
 
 #: tedtnest.lblothersupport.caption
 msgctxt "tedtnest.lblothersupport.caption"
@@ -7086,6 +7100,11 @@ msgctxt "tedtnest.lblplantmindiameter.caption"
 msgid "Lesser plant diameter:"
 msgstr "Menor diâmetro da planta:"
 
+#: tedtnest.lblproductivity.caption
+msgctxt "tedtnest.lblproductivity.caption"
+msgid "Productivity:"
+msgstr "Produtividade:"
+
 #: tedtnest.lblrequester.caption
 msgctxt "tedtnest.lblrequester.caption"
 msgid "Field number: *"
@@ -7096,17 +7115,9 @@ msgctxt "tedtnest.lblrequester1.caption"
 msgid "Observer: *"
 msgstr "Observador: *"
 
-#: tedtnest.lblrequester2.caption
-msgid "Productivity:"
-msgstr "Produtividade:"
-
 #: tedtnest.lblrequester3.caption
 msgid "Fate:"
 msgstr "Destino:"
-
-#: tedtnest.lblrequester5.caption
-msgid "Nest shape:"
-msgstr "Forma do ninho:"
 
 #: tedtnest.lblsupplier1.caption
 msgctxt "tedtnest.lblsupplier1.caption"
@@ -15012,6 +15023,47 @@ msgctxt "utils_locale.rslongitudecaption"
 msgid "Longitude: <font color=\"$00C75F5B\">%s</font>"
 msgstr "Longitude: <font color=\"$00C75F5B\">%s</font>"
 
+#: utils_locale.rslossabandonment
+msgid "Abandonment"
+msgstr "Abandono"
+
+#: utils_locale.rslossdisease
+msgid "Disease"
+msgstr "Doença"
+
+#: utils_locale.rslossfire
+msgid "Fire"
+msgstr "Fogo"
+
+#: utils_locale.rslosshumandisturbance
+msgid "Human disturbance"
+msgstr "Perturbação humana"
+
+#: utils_locale.rslossimpropermanagement
+msgid "Improper management"
+msgstr "Manejo impróprio"
+
+#: utils_locale.rslossparasitism
+msgid "Parasitism"
+msgstr "Parasitismo"
+
+#: utils_locale.rslosspollution
+msgid "Pollution/garbage"
+msgstr "Poluição/lixo"
+
+#: utils_locale.rslosspredation
+msgid "Predation"
+msgstr "Predação"
+
+#: utils_locale.rslossunknown
+msgctxt "utils_locale.rslossunknown"
+msgid "Unknown"
+msgstr "Indeterminada"
+
+#: utils_locale.rslossweather
+msgid "Weather/climate"
+msgstr "Intempéries/clima"
+
 #: utils_locale.rsmainwindowloaded
 msgctxt "utils_locale.rsmainwindowloaded"
 msgid "Main window loaded!"
@@ -15138,7 +15190,7 @@ msgstr "Ponto de contagem"
 
 #: utils_locale.rsmobilepointdetection
 msgid "Detection Point Count"
-msgstr ""
+msgstr "Ponto de detecções"
 
 #: utils_locale.rsmobilequalitativefree
 msgctxt "utils_locale.rsmobilequalitativefree"
@@ -15199,11 +15251,11 @@ msgstr "Amostragem atualizada: %d - %s"
 
 #: utils_locale.rsmobiletransectcount
 msgid "Transect Count"
-msgstr ""
+msgstr "Contagem em transecto"
 
 #: utils_locale.rsmobiletransectdetection
 msgid "Detection Transect"
-msgstr ""
+msgstr "Transecto de detecções"
 
 #: utils_locale.rsmobilevegetationexists
 #, object-pascal-format
@@ -17056,7 +17108,7 @@ msgstr "A soma das novas capturas, recapturas e indivíduos não marcados difere
 
 #: utils_locale.rsupgradingdatabaseschema
 msgid "Upgrading database schema..."
-msgstr ""
+msgstr "Atualizando esquema do banco de dados..."
 
 #: utils_locale.rsusenewdatabaseoption
 msgctxt "utils_locale.rsusenewdatabaseoption"
@@ -17152,4 +17204,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

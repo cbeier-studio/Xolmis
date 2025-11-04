@@ -660,6 +660,7 @@ type
     qNestsgenus_id: TLongintField;
     qNestsinternal_max_diameter: TFloatField;
     qNestsinternal_min_diameter: TFloatField;
+    qNestsloss_cause: TStringField;
     qNestsorder_id: TLongintField;
     qNestsspecies_id: TLongintField;
     qNeststaxon_formatted_name: TStringField;
@@ -1364,6 +1365,7 @@ type
     procedure qNestsBeforePost(DataSet: TDataSet);
     procedure qNestsfound_dateValidate(Sender: TField);
     procedure qNestslast_dateValidate(Sender: TField);
+    procedure qNestsloss_causeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestsnest_fateGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNestsnest_fateSetText(Sender: TField; const aText: string);
     procedure qNestsnest_shapeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -3577,13 +3579,34 @@ begin
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateLast, DateToStr(Sender.AsDateTime)]);
 end;
 
+procedure TDMG.qNestsloss_causeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+      'U': aText := rsLossUnknown;
+    'PRE': aText := rsLossPredation;
+    'PAR': aText := rsLossParasitism;
+    'DIS': aText := rsLossDisease;
+    'WEA': aText := rsLossWeather;
+    'FIR': aText := rsLossFire;
+    'ABD': aText := rsLossAbandonment;
+    'POL': aText := rsLossPollution;
+    'HDT': aText := rsLossHumanDisturbance;
+    'IMN': aText := rsLossImproperManagement;
+  end;
+
+  DisplayText := True;
+end;
+
 procedure TDMG.qNestsnest_fateGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
   if Sender.AsString = EmptyStr then
     Exit;
 
   case Sender.AsString of
-    'P': aText := rsNestLost;
+    'L': aText := rsNestLost;
     'S': aText := rsNestSuccess;
     'U': aText := rsNestUnknown;
   end;
@@ -3597,7 +3620,7 @@ begin
     Exit;
 
   if aText = rsNestLost then
-    Sender.AsString := 'P'
+    Sender.AsString := 'L'
   else
   if aText = rsNestSuccess then
     Sender.AsString := 'S'

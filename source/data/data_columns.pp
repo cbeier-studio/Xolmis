@@ -332,6 +332,7 @@ resourcestring
   rscLC = 'LC';
   rscGrowthBarWidth = 'Growth bar width';
   rscNestFate = 'Nest fate';
+  rscLossCause = 'Cause of loss';
   rscShape = 'Shape';
   rscSupportType = 'Support type';
   rscSupportPlant1ID = 'Support plant 1 ID';
@@ -1473,6 +1474,7 @@ begin
         'temperature':            Fields[i].DisplayLabel := rscTemperatureC;
         'wind_speed_bft':         Fields[i].DisplayLabel := rscWindBft;
         'wind_speed_kmh':         Fields[i].DisplayLabel := rscWindKmH;
+        'wind_direction':         Fields[i].DisplayLabel := rscWindDirection;
         'relative_humidity':      Fields[i].DisplayLabel := rscRelativeHumidity;
         'atmospheric_pressure':   Fields[i].DisplayLabel := rscAtmosphericPressureH;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
@@ -1927,6 +1929,7 @@ begin
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'field_number':           Fields[i].DisplayLabel := rscFieldNumber;
         'nest_fate':              Fields[i].DisplayLabel := rscNestFate;
+        'loss_cause':             Fields[i].DisplayLabel := rscLossCause;
         'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
         'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
         'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
@@ -2902,7 +2905,7 @@ begin
         Add('ORDER BY tally DESC');
         MacroByName('AFIELD').Value := aFieldName;
       end;
-      'nest_fate', 'nest_shape', 'support_type', 'other_support':
+      'nest_fate', 'loss_cause', 'nest_shape', 'support_type', 'other_support':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');

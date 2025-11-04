@@ -319,6 +319,8 @@ type
   TEggshellTexture = (estUnknown, estChalky, estShiny, estGlossy, estPitted);
   TNestStatus = (nstInactive, nstActive, nstUnknown);
   TNestStage = (nsgInactive, nsgConstruction, nsgLaying, nsgIncubation, nsgHatching, nsgNestling, nsgUnknown);
+  TLossCause = (nlcUnknown, nlcPredation, nlcParasitism, nlcDisease, nlcWeather, nlcFire, nlcAbandonment,
+    nlcPollution, nlcHumanDisturbance, nlcImproperManagement);
 
   // Images
   TImageType = (
@@ -446,6 +448,7 @@ const
   EGGSHELL_TEXTURES: array[TEggshellTexture] of Char = ('U', 'C', 'S', 'G', 'P');
   NEST_STATUSES: array[TNestStatus] of Char = ('I', 'A', 'U');
   NEST_STAGES: array[TNestStage] of Char = ('X', 'C', 'L', 'I', 'H', 'N', 'U');
+  LOSS_CAUSES: array[TLossCause] of String = ('U', 'PRE', 'PAR', 'DIS', 'WEA', 'FIR', 'ABD', 'POL', 'HDT', 'IMN');
 
   // Images
   IMAGE_TYPES: array[TImageType] of String = (

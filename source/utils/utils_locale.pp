@@ -786,6 +786,18 @@ uses
     rsNestHelper = 'Helper';
     rsNestOffspring = 'Offspring';
 
+    { Nests' loss causes }
+    rsLossUnknown = 'Unknown';
+    rsLossPredation = 'Predation';
+    rsLossParasitism = 'Parasitism';
+    rsLossDisease = 'Disease';
+    rsLossWeather = 'Weather/climate';
+    rsLossFire = 'Fire';
+    rsLossAbandonment = 'Abandonment';
+    rsLossPollution = 'Pollution/garbage';
+    rsLossHumanDisturbance = 'Human disturbance';
+    rsLossImproperManagement = 'Improper management';
+
     { Eggs }
     rsEggSpherical = 'Spherical';
     rsEggElliptical = 'Elliptical';

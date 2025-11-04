@@ -7811,7 +7811,7 @@ begin
           TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
         end;
       end;
-      'P':       // Lost
+      'L':       // Lost
       begin
         if IsDarkModeEnabled then
         begin

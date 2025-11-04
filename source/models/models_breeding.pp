@@ -61,6 +61,7 @@ type
     FNestlingDays: Double;
     FActiveDays: Double;
     FNestFate: TNestFate;
+    FLossCause: TLossCause;
     FNestProductivity: Integer;
     FFoundDate: TDate;
     FLastDate: TDate;
@@ -110,6 +111,7 @@ type
     property NestlingDays: Double read FNestlingDays write FNestlingDays;
     property ActiveDays: Double read FActiveDays write FActiveDays;
     property NestFate: TNestFate read FNestFate write FNestFate;
+    property LossCause: TLossCause read FLossCause write FLossCause;
     property NestProductivity: Integer read FNestProductivity write FNestProductivity;
     property FoundDate: TDate read FFoundDate write FFoundDate;
     property LastDate: TDate read FLastDate write FLastDate;
@@ -1741,6 +1743,7 @@ begin
   FNestlingDays := 0.0;
   FActiveDays := 0.0;
   FNestFate := nfUnknown;
+  FLossCause := nlcUnknown;
   FNestProductivity := 0;
   FFoundDate := NullDate;
   FLastDate := NullDate;
@@ -1828,6 +1831,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscNestFate, aOld.NestFate, FNestFate, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscLossCause, aOld.LossCause, FLossCause, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscNestProductivity, aOld.NestProductivity, FNestProductivity, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFoundDate, aOld.FoundDate, FFoundDate, R) then
@@ -1890,6 +1895,19 @@ begin
     else
       FNestFate := nfUnknown;
     end;
+    case Obj.Get('loss_cause', '') of
+      'PRE': FLossCause := nlcPredation;
+      'PAR': FLossCause := nlcParasitism;
+      'DIS': FLossCause := nlcDisease;
+      'WEA': FLossCause := nlcWeather;
+      'FIR': FLossCause := nlcFire;
+      'ABD': FLossCause := nlcAbandonment;
+      'POL': FLossCause := nlcPollution;
+      'HDT': FLossCause := nlcHumanDisturbance;
+      'IMN': FLossCause := nlcImproperManagement;
+    else
+      FLossCause := nlcUnknown;
+    end;
     FNestProductivity := Obj.Get('nest_productivity', 0);
     FFoundDate        := Obj.Get('found_date', NullDate);
     FLastDate         := Obj.Get('last_date_active', NullDate);
@@ -1938,6 +1956,7 @@ begin
     JSONObject.Add('nestling_days', FNestlingDays);
     JSONObject.Add('active_days', FActiveDays);
     JSONObject.Add('nest_fate', NEST_FATES[FNestFate]);
+    JSONObject.Add('loss_cause', LOSS_CAUSES[FLossCause]);
     JSONObject.Add('nest_productivity', FNestProductivity);
     JSONObject.Add('found_date', FFoundDate);
     JSONObject.Add('last_date_active', FLastDate);
@@ -1957,7 +1976,7 @@ begin
     'OtherSupport=%s, HeightAboveGround=%f, InternalMaxDiameter=%f, InternalMinDiameter=%f, ExternalMaxDiameter=%f, ' +
     'ExternalMinDiameter=%f, InternalHeight=%f, ExternalHeight=%f, EdgeDistance=%f, CenterDistance=%f, ' +
     'NestCover=%d, PlantMaxDiameter=%f, PlantMinDiameter=%f, PlantHeight=%f, PlantDbh=%f, ConstructionDays=%f, ' +
-    'IncubationDays=%f, NestlingDays=%f, ActiveDays=%f, NestFate=%s, NestProductivity=%d, FoundDate=%s, ' +
+    'IncubationDays=%f, NestlingDays=%f, ActiveDays=%f, NestFate=%s, LossCause=%s, NestProductivity=%d, FoundDate=%s, ' +
     'LastDate=%s, Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FFieldNumber, FObserverId, FProjectId, FLocalityId, FLongitude, FLatitude, FTaxonId,
@@ -1965,7 +1984,8 @@ begin
     FInternalMaxDiameter, FInternalMinDiameter, FExternalMaxDiameter, FExternalMinDiameter,
     FInternalHeight, FExternalHeight, FEdgeDistance, FCenterDistance, FNestCover, FPlantMaxDiameter,
     FPlantMinDiameter, FPlantHeight, FPlantDbh, FConstructionDays, FIncubationDays, FNestlingDays, FActiveDays,
-    NEST_FATES[FNestFate], FNestProductivity, DateToStr(FFoundDate), DateToStr(FLastDate), FDescription, FNotes,
+    NEST_FATES[FNestFate], LOSS_CAUSES[FLossCause], FNestProductivity, DateToStr(FFoundDate), DateToStr(FLastDate),
+    FDescription, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -2103,6 +2123,7 @@ begin
       'nestling_days, ' +
       'active_days, ' +
       'nest_fate, ' +
+      'loss_cause, ' +
       'nest_productivity, ' +
       'found_date, ' +
       'last_date, ' +
@@ -2205,6 +2226,7 @@ begin
       'nestling_days, ' +
       'active_days, ' +
       'nest_fate, ' +
+      'loss_cause, ' +
       'nest_productivity, ' +
       'found_date, ' +
       'last_date, ' +
@@ -2282,6 +2304,19 @@ begin
     else
       R.NestFate := nfUnknown;
     end;
+    case FieldByName('loss_cause').AsString of
+      'PRE': R.LossCause := nlcPredation;
+      'PAR': R.LossCause := nlcParasitism;
+      'DIS': R.LossCause := nlcDisease;
+      'WEA': R.LossCause := nlcWeather;
+      'FIR': R.LossCause := nlcFire;
+      'ABD': R.LossCause := nlcAbandonment;
+      'POL': R.LossCause := nlcPollution;
+      'HDT': R.LossCause := nlcHumanDisturbance;
+      'IMN': R.LossCause := nlcImproperManagement;
+    else
+      R.LossCause := nlcUnknown;
+    end;
     R.NestProductivity := FieldByName('nest_productivity').AsInteger;
     R.FoundDate := FieldByName('found_date').AsDateTime;
     R.LastDate := FieldByName('last_date').AsDateTime;
@@ -2339,7 +2374,8 @@ begin
       'plant_min_diameter, ' +
       'plant_height, ' +
       'plant_dbh, ' +
-      'nest_fate,' +
+      'nest_fate, ' +
+      'loss_cause, ' +
       'nest_productivity, ' +
       'found_date, ' +
       'last_date, ' +
@@ -2379,7 +2415,8 @@ begin
       ':plant_min_diameter, ' +
       ':plant_height, ' +
       ':plant_dbh, ' +
-      ':nest_fate,' +
+      ':nest_fate, ' +
+      ':loss_cause, ' +
       ':nest_productivity, ' +
       'date(:found_date), ' +
       'date(:last_date), ' +
@@ -2419,6 +2456,10 @@ begin
     SetFloatParam(ParamByName('plant_height'), R.PlantHeight);
     SetFloatParam(ParamByName('plant_dbh'), R.PlantDbh);
     ParamByName('nest_fate').AsString := NEST_FATES[R.NestFate];
+    if R.NestFate = nfLoss then
+      ParamByName('loss_cause').AsString := LOSS_CAUSES[R.LossCause]
+    else
+      ParamByName('loss_cause').Clear;
     ParamByName('nest_productivity').AsInteger := R.NestProductivity;
     SetDateParam(ParamByName('found_date'), R.FoundDate);
     SetDateParam(ParamByName('last_date'), R.LastDate);
@@ -2494,6 +2535,7 @@ begin
     Add('  plant_height = :plant_height,');
     Add('  plant_dbh = :plant_dbh,');
     Add('  nest_fate = :nest_fate,');
+    Add('  loss_cause = :loss_cause,');
     Add('  nest_productivity = :nest_productivity,');
     Add('  found_date = date(:found_date),');
     Add('  last_date = date(:last_date),');
@@ -2534,6 +2576,10 @@ begin
     SetFloatParam(ParamByName('plant_height'), R.PlantHeight);
     SetFloatParam(ParamByName('plant_dbh'), R.PlantDbh);
     ParamByName('nest_fate').AsString := NEST_FATES[R.NestFate];
+    if R.NestFate = nfLoss then
+      ParamByName('loss_cause').AsString := LOSS_CAUSES[R.LossCause]
+    else
+      ParamByName('loss_cause').Clear;
     ParamByName('nest_productivity').AsInteger := R.NestProductivity;
     SetDateParam(ParamByName('found_date'), R.FoundDate);
     SetDateParam(ParamByName('last_date'), R.LastDate);

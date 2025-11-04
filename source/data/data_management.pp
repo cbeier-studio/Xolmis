@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 2;
+  SCHEMA_VERSION: Integer = 3;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -762,19 +762,21 @@ begin
     try
       if OldVersion < 2 then
       begin
-        LogDebug(Format('Upgrading database to version %d', [OldVersion]));
+        LogDebug('Upgrading database schema to version 2');
 
         DMM.sqlCon.ExecuteDirect('ALTER TABLE weather_logs ADD COLUMN wind_direction VARCHAR (5);');
 
         Result := True;
       end;
 
-      //if OldVersion < 3 then
-      //begin
-      //  LogDebug(Format('Upgrading database to version %d', [OldVersion]));
-      //
-      //  Result := True;
-      //end;
+      if OldVersion < 3 then
+      begin
+        LogDebug('Upgrading database schema to version 3');
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nests ADD COLUMN loss_cause VARCHAR (5);');
+
+        Result := True;
+      end;
 
       if Result then
       begin
@@ -2190,6 +2192,7 @@ begin
     'nestling_days         REAL,' +
     'active_days           REAL,' +
     'nest_fate             CHAR (1),' +
+    'loss_cause            VARCHAR (5),' +
     'nest_productivity     INTEGER,' +
     'found_date            DATE,' +
     'last_date             DATE,' +
