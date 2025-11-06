@@ -491,6 +491,7 @@ resourcestring
   rscRecorderModel = 'Recorder model';
   rscMicModel = 'Microphone model';
   rscFilterModel = 'Filter model';
+  rscCameraModel = 'Camera model';
   rscProtocolNr = 'Protocol nr.';
   rscMainGoal = 'Main goal';
   rscRisks = 'Risks';

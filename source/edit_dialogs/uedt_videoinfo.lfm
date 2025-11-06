@@ -1,0 +1,936 @@
+object edtVideoInfo: TedtVideoInfo
+  Left = 370
+  Height = 686
+  Top = 250
+  Width = 416
+  BorderIcons = [biSystemMenu]
+  Caption = 'Video info'
+  ClientHeight = 686
+  ClientWidth = 416
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 638
+    Width = 416
+    Align = alTop
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 42
+    Top = 640
+    Width = 416
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 42
+    ClientWidth = 416
+    TabOrder = 1
+    object sbSave: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 152
+      Height = 25
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Caption = 'Save'
+      Constraints.MinWidth = 120
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object sbCancel: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 280
+      Height = 25
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Caption = 'Cancel'
+      Constraints.MinWidth = 120
+      ModalResult = 2
+      TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 58
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 2
+      OnClick = btnNewClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+  end
+  object SBox: TScrollBox
+    Left = 0
+    Height = 638
+    Top = 0
+    Width = 416
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
+    VertScrollBar.Page = 638
+    Align = alTop
+    BorderStyle = bsNone
+    ClientHeight = 638
+    ClientWidth = 399
+    Constraints.MinWidth = 176
+    TabOrder = 0
+    object pClient: TPanel
+      Left = 0
+      Height = 847
+      Top = 0
+      Width = 399
+      Align = alTop
+      AutoSize = True
+      BevelOuter = bvNone
+      ChildSizing.TopBottomSpacing = 16
+      ClientHeight = 847
+      ClientWidth = 399
+      TabOrder = 0
+      object pLocality: TPanel
+        Left = 0
+        Height = 45
+        Top = 297
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 5
+        object lblLocality: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Locality:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLocality: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ButtonHint = 'Find locality'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eLocalityButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLocalityKeyPress
+        end
+      end
+      object pAuthor: TPanel
+        Left = 0
+        Height = 45
+        Top = 104
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 1
+        object lblAuthor: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Author:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eAuthor: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ButtonHint = 'Find author'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eAuthorButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eAuthorKeyPress
+        end
+      end
+      object pSubtitle: TPanel
+        Left = 0
+        Height = 88
+        Top = 16
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 88
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 0
+        object lblNotes1: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          Align = alTop
+          BorderSpacing.Top = 3
+          Caption = 'Subtitle:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object mSubtitle: TMemo
+          Left = 16
+          Height = 66
+          Top = 22
+          Width = 367
+          Align = alTop
+          Constraints.MinWidth = 365
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+        end
+      end
+      object pDateTime: TPanel
+        Left = 0
+        Height = 45
+        Top = 149
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 2
+        object lblRecordingDate: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Recording date: *'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblRecordingTime: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 175
+          BorderSpacing.Top = 3
+          Caption = 'Recording time:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eRecordingDate: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 176
+          ButtonHint = 'Open calendar'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 1
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          TextHint = 'DD/MM/YYYY'
+          OnButtonClick = eRecordingDateButtonClick
+          OnEditingDone = eRecordingDateEditingDone
+          OnKeyDown = FormKeyDown
+        end
+        object eRecordingTime: TEdit
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 175
+          TabOrder = 1
+          TextHint = 'HH:MM'
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pVideoType: TPanel
+        Left = 0
+        Height = 45
+        Top = 194
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 3
+        object lblVideoType: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Recording type:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbVideoType: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pLongitudeLatitude: TPanel
+        Left = 0
+        Height = 45
+        Top = 342
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 6
+        object lblLongitude: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Longitude:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLatitude: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 175
+          BorderSpacing.Top = 3
+          Caption = 'Latitude:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLongitude: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 176
+          ButtonHint = 'Edit/import coordinate'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
+        end
+        object eLatitude: TEditButton
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 175
+          ButtonHint = 'Edit/import coordinate'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 3
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eLongitudeButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eLongitudeKeyPress
+        end
+      end
+      object pTaxon: TPanel
+        Left = 0
+        Height = 45
+        Top = 400
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 7
+        object lblTaxon: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Taxon:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eTaxon: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ButtonHint = 'Find taxon'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eTaxonButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eTaxonKeyPress
+        end
+      end
+      object pVideoFile: TPanel
+        Left = 0
+        Height = 45
+        Top = 239
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 4
+        object lblVideoFile: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Recording file: *'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eVideoFile: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ButtonHint = 'Choose file'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 6
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eVideoFileButtonClick
+          OnEditingDone = eRecordingDateEditingDone
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pCameraModel: TPanel
+        Left = 0
+        Height = 45
+        Top = 458
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 8
+        object lblCameraModel: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Camera model:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eCameraModel: TEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pDistance: TPanel
+        Left = 0
+        Height = 45
+        Top = 548
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 10
+        object lblDistance: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'Distance (m):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDistance1: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 175
+          BorderSpacing.Top = 3
+          ParentColor = False
+          ParentFont = False
+        end
+        object eDistance: TFloatSpinEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 176
+          DecimalPlaces = 1
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pRecordingContext: TPanel
+        Left = 0
+        Height = 45
+        Top = 503
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 9
+        object lblRecordingContext: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Context of the recording:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eRecordingContext: TEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pHabitat: TPanel
+        Left = 0
+        Height = 45
+        Top = 593
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 11
+        object lblHabitat: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Habitat:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eHabitat: TEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pLicenseTypeYear: TPanel
+        Left = 0
+        Height = 45
+        Top = 651
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 12
+        object lblLicenseType: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 176
+          BorderSpacing.Top = 3
+          Caption = 'License type:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblLicenseYear: TLabel
+          Left = 208
+          Height = 15
+          Top = 3
+          Width = 175
+          BorderSpacing.Top = 3
+          Caption = 'License year:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbLicenseType: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 176
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+        object eLicenseYear: TEdit
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 175
+          NumbersOnly = True
+          TabOrder = 1
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pLicenseOwner: TPanel
+        Left = 0
+        Height = 45
+        Top = 696
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 13
+        object lblLicenseOwner: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'License owner:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLicenseOwner: TEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pLicenseNotes: TPanel
+        Left = 0
+        Height = 45
+        Top = 741
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 14
+        object lblLicenseNotes: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'License notes:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLicenseNotes: TEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pLicenseUri: TPanel
+        Left = 0
+        Height = 45
+        Top = 786
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 15
+        object lblLicenseUri: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'License URL:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eLicenseUri: TEdit
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+    end
+  end
+  object pmNew: TPopupMenu
+    Left = 155
+    Top = 525
+    object pmnNewPerson: TMenuItem
+      Caption = 'New author'
+      OnClick = pmnNewPersonClick
+    end
+    object pmnNewLocality: TMenuItem
+      Caption = 'New locality'
+      OnClick = pmnNewLocalityClick
+    end
+  end
+  object dsLink: TDataSource
+    DataSet = frmCustomGrid.qAudios
+    Left = 348
+    Top = 82
+  end
+end

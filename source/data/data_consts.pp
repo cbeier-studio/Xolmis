@@ -69,6 +69,7 @@ const
   TBL_IMAGES = 'images';
   TBL_AUDIO_LIBRARY = 'audio_library';
   TBL_DOCUMENTS = 'documents';
+  TBL_VIDEOS = 'videos';
 
   // Common columns
 const
@@ -686,6 +687,13 @@ const
   COL_DOCUMENT_PATH = 'document_path';
   COL_DOCUMENT_DATE = 'document_date';
   COL_DOCUMENT_TIME = 'document_time';
+
+  // Videos columns
+const
+  COL_VIDEO_ID = 'video_id';
+  COL_VIDEO_TYPE = 'video_type';
+  COL_CAMERA_MODEL = 'camera_model';
+  COL_FILE_PATH = 'file_path';
 
 
 implementation

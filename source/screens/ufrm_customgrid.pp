@@ -49,18 +49,69 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
+    DropVideos: TDropFileTarget;
+    dsVideos: TDataSource;
+    gridVideos: TDBGrid;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
     MvPluginManager: TMvPluginManager;
     MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin;
     MvPluginManagerMapScalePlugin1: TMapScalePlugin;
+    cardVideos: TPage;
+    pmvAddVideo: TMenuItem;
+    pmvVideoInfo: TMenuItem;
+    pmvDelVideo: TMenuItem;
+    pmvPlayVideo: TMenuItem;
+    pmvRefreshVideos: TMenuItem;
+    pmVideos: TPopupMenu;
+    pVideosToolbar: TBCPanel;
     pmpBandsBalance: TMenuItem;
     pmgBandHistory: TMenuItem;
     pmpBandHistory: TMenuItem;
     pmpTransferBandsTo: TMenuItem;
     pmMore: TPopupMenu;
+    qVideos: TSQLQuery;
+    qVideosactive_status: TBooleanField;
+    qVideoscamera_model: TStringField;
+    qVideoscapture_id: TLongintField;
+    qVideosdistance: TFloatField;
+    qVideosexported_status: TBooleanField;
+    qVideosfile_path: TStringField;
+    qVideosfull_name: TStringField;
+    qVideoshabitat: TStringField;
+    qVideosindividual_id: TLongintField;
+    qVideosinsert_date: TDateTimeField;
+    qVideoslatitude: TFloatField;
+    qVideoslicense_notes: TStringField;
+    qVideoslicense_owner: TStringField;
+    qVideoslicense_type: TStringField;
+    qVideoslicense_uri: TStringField;
+    qVideoslicense_year: TLongintField;
+    qVideoslocality_id: TLongintField;
+    qVideoslongitude: TFloatField;
+    qVideosmarked_status: TBooleanField;
+    qVideosnest_id: TLongintField;
+    qVideosnest_revision_id: TLongintField;
+    qVideosnotes: TMemoField;
+    qVideosrecorder_id: TLongintField;
+    qVideosrecording_context: TStringField;
+    qVideosrecording_date: TDateField;
+    qVideosrecording_time: TTimeField;
+    qVideossighting_id: TLongintField;
+    qVideossubtitle: TMemoField;
+    qVideossurvey_id: TLongintField;
+    qVideostaxon_id: TLongintField;
+    qVideosupdate_date: TDateTimeField;
+    qVideosuser_inserted: TLongintField;
+    qVideosuser_updated: TLongintField;
+    qVideosvideo_id: TLongintField;
+    qVideosvideo_type: TStringField;
+    sbAddVideo: TSpeedButton;
     sbAddFeathersBatch: TSpeedButton;
+    sbVideoInfo: TSpeedButton;
+    sbDelVideo: TSpeedButton;
     sbEmptyQuickEntry: TSpeedButton;
+    sbPlayVideo: TSpeedButton;
     sbQuickEntry: TSpeedButton;
     sbInsertBatch: TSpeedButton;
     sbQuickEntryChild: TSpeedButton;
@@ -68,9 +119,15 @@ type
     sbEmptyNewRecord: TSpeedButton;
     sbEmptyImport: TSpeedButton;
     sbEmptyClearAll: TSpeedButton;
+    sbShowVideos: TSpeedButton;
+    Separator35: TShapeLineBGRA;
+    Separator36: TMenuItem;
+    Separator37: TMenuItem;
+    Separator38: TMenuItem;
     TimerUpdate: TTimer;
     TimerOpen: TTimer;
     TimerChildUpdate: TTimer;
+    titleVideos: TLabel;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
     DropAudios: TDropFileTarget;
@@ -876,6 +933,7 @@ type
     procedure DropAudiosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
     procedure DropDocsDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
     procedure DropImagesDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
+    procedure DropVideosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
     procedure dsAudiosDataChange(Sender: TObject; Field: TField);
     procedure dsAudiosStateChange(Sender: TObject);
     procedure dsDocsDataChange(Sender: TObject; Field: TField);
@@ -897,6 +955,8 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
     procedure dsRecycleStateChange(Sender: TObject);
+    procedure dsVideosDataChange(Sender: TObject; Field: TField);
+    procedure dsVideosStateChange(Sender: TObject);
     procedure eAddChildClick(Sender: TObject);
     procedure eAddChildKeyPress(Sender: TObject; var Key: char);
     procedure eCycleCodeFilterButtonClick(Sender: TObject);
@@ -944,6 +1004,7 @@ type
     procedure gridDocsDblClick(Sender: TObject);
     procedure gridDocsDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure gridVideosDblClick(Sender: TObject);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
     procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
@@ -1011,6 +1072,7 @@ type
     procedure pmtColapseAllClick(Sender: TObject);
     procedure pmtExpandAllClick(Sender: TObject);
     procedure pmtRefreshClick(Sender: TObject);
+    procedure pmvRefreshVideosClick(Sender: TObject);
     procedure qAudiosaudio_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qAudiosaudio_typeSetText(Sender: TField; const aText: string);
     procedure qAudiosBeforePost(DataSet: TDataSet);
@@ -1024,12 +1086,14 @@ type
     procedure qImagesBeforePost(DataSet: TDataSet);
     procedure qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qImagesimage_typeSetText(Sender: TField; const aText: string);
+    procedure qVideosBeforePost(DataSet: TDataSet);
     procedure sbAddAudioClick(Sender: TObject);
     procedure sbAddChildClick(Sender: TObject);
     procedure sbAddDocClick(Sender: TObject);
     procedure sbAddFeathersBatchClick(Sender: TObject);
     procedure sbAddImageClick(Sender: TObject);
     procedure sbAddNetsBatchClick(Sender: TObject);
+    procedure sbAddVideoClick(Sender: TObject);
     procedure sbAudioInfoClick(Sender: TObject);
     procedure sbCancelRecordClick(Sender: TObject);
     procedure sbChildVerificationsClick(Sender: TObject);
@@ -1042,6 +1106,7 @@ type
     procedure sbDelImageClick(Sender: TObject);
     procedure sbDelPermanentlyClick(Sender: TObject);
     procedure sbDelRecordClick(Sender: TObject);
+    procedure sbDelVideoClick(Sender: TObject);
     procedure sbDocInfoClick(Sender: TObject);
     procedure sbEditChildClick(Sender: TObject);
     procedure sbEditRecordClick(Sender: TObject);
@@ -1062,6 +1127,7 @@ type
     procedure sbNextRecordClick(Sender: TObject);
     procedure sbOpenDocClick(Sender: TObject);
     procedure sbPlayAudioClick(Sender: TObject);
+    procedure sbPlayVideoClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
     procedure sbPriorRecordClick(Sender: TObject);
@@ -1082,6 +1148,7 @@ type
     procedure sbShareRecordsClick(Sender: TObject);
     procedure sbShowChildSidePanelClick(Sender: TObject);
     procedure sbShowRecordClick(Sender: TObject);
+    procedure sbVideoInfoClick(Sender: TObject);
     procedure sbViewImageClick(Sender: TObject);
     procedure SetFilters(Sender: TObject);
     procedure SplitChildMoved(Sender: TObject);
@@ -1151,6 +1218,7 @@ type
     procedure AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       isAnAlias: Boolean = False);
+    procedure AddVideo(aDataSet: TDataSet; aFileName: String);
     procedure ApplyDarkMode;
     procedure CellKeyPress(Sender: TObject; var Key: Char);
 
@@ -1299,6 +1367,7 @@ type
     procedure SetSidePanel(aValue: Boolean);
     procedure SetSideIndex(aValue: Integer);
     procedure SetSearchString(aValue: String);
+    procedure SetVideos;
 
     function Search(aValue: String): Boolean;
     function SearchBands(aValue: String): Boolean;
@@ -1334,6 +1403,7 @@ type
     procedure UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
     procedure UpdateImageButtons(aDataSet: TDataSet);
     procedure UpdateAudioButtons(aDataSet: TDataSet);
+    procedure UpdateVideoButtons(aDataSet: TDataSet);
     procedure UpdateDocButtons(aDataSet: TDataSet);
     procedure UpdateRecycleButtons(aDataset: TDataSet);
     procedure UpdateRowHeights;
@@ -1795,7 +1865,7 @@ begin
 
   with aDataset do
   begin
-    // Check if the image is in the dataset
+    // Check if the audio is in the dataset
     if not RecordExists(tbAudioLibrary, COL_AUDIO_FILE, relPath) then
     begin
       Append;
@@ -2006,6 +2076,48 @@ begin
   UpdateGridTitles(DBG, FSearch);
 end;
 
+procedure TfrmCustomGrid.AddVideo(aDataSet: TDataSet; aFileName: String);
+var
+  relPath: String;
+  SearchRec: TSearchRec;
+  CreationDate: TDateTime;
+begin
+  if not (FileExists(aFileName)) then
+  begin
+    //LogError(Format(rsImageNotFound, [aFileName]));
+    Exit;
+  end;
+
+  if FindFirst(aFileName, faAnyFile, SearchRec) = 0 then
+  try
+    CreationDate := FileDateToDateTime(SearchRec.Time);
+  finally
+    FindClose(SearchRec);
+  end;
+
+  relPath := ExtractRelativePath(xSettings.VideosFolder, aFileName);
+
+  with aDataset do
+  begin
+    // Check if the video is in the dataset
+    if not RecordExists(tbVideos, COL_FILE_PATH, relPath) then
+    begin
+      Append;
+      FieldByName(COL_FILE_PATH).AsString := relPath;
+    end
+    else
+    begin
+      Locate(COL_FILE_PATH, relPath, []);
+      Edit;
+    end;
+    FieldByName(COL_RECORDING_DATE).AsDateTime := CreationDate;
+    FieldByName(COL_RECORDING_TIME).AsDateTime := CreationDate;
+
+    Post;
+    TSQLQuery(aDataSet).ApplyUpdates;
+  end;
+end;
+
 procedure TfrmCustomGrid.ApplyDarkMode;
 begin
   // Set panels colors
@@ -2019,6 +2131,8 @@ begin
   pImagesToolbar.Border.Color := clCardBGSecondaryDark;
   pAudiosToolbar.Background.Color := clCardBGDefaultDark;
   pAudiosToolbar.Border.Color := clCardBGSecondaryDark;
+  pVideosToolbar.Background.Color := clCardBGDefaultDark;
+  pVideosToolbar.Border.Color := clCardBGSecondaryDark;
   pDocsToolbar.Background.Color := clCardBGDefaultDark;
   pDocsToolbar.Border.Color := clCardBGSecondaryDark;
   pMapToolbar.Background.Color := clCardBGDefaultDark;
@@ -2065,6 +2179,7 @@ begin
   pmMarkColumns.Images := iButtonsDark;
   pmImages.Images := iButtonsDark;
   pmAudios.Images := iButtonsDark;
+  pmVideos.Images := iButtonsDark;
   pmDocs.Images := iButtonsDark;
   pmAddChild.Images := DMM.iAddMenuDark;
   pmMore.Images := iButtonsDark;
@@ -2113,6 +2228,11 @@ begin
   sbAudioInfo.Images := iButtonsDark;
   sbPlayAudio.Images := iButtonsDark;
   sbDelAudio.Images := iButtonsDark;
+  sbShowVideos.Images := iButtonsDark;
+  sbAddVideo.Images := iButtonsDark;
+  sbVideoInfo.Images := iButtonsDark;
+  sbPlayVideo.Images := iButtonsDark;
+  sbDelVideo.Images := iButtonsDark;
   sbShowDocs.Images := iButtonsDark;
   sbAddDoc.Images := iButtonsDark;
   sbDocInfo.Images := iButtonsDark;
@@ -4065,6 +4185,59 @@ begin
   //  Effect := DROPEFFECT_NONE;
 end;
 
+procedure TfrmCustomGrid.DropVideosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
+  var Effect: Longint);
+const
+  SupportedVideos: array of String = ('.avi','.mp4','.m4v','.mov','.wmv','.mkv');
+var
+  i: Integer;
+begin
+  dlgProgress := TdlgProgress.Create(nil);
+  try
+    dlgProgress.Show;
+    dlgProgress.Title := rsImportVideosTitle;
+    dlgProgress.Text := rsProgressPreparing;
+    dlgProgress.Max := DropVideos.Files.Count;
+    stopProcess := False;
+    Application.ProcessMessages;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlCon.StartTransaction;
+    try
+      for i := 0 to DropVideos.Files.Count - 1 do
+      begin
+        dlgProgress.Text := Format(rsProgressImportVideos, [i + 1, DropVideos.Files.Count]);
+
+        if (ExtractFileExt(DropVideos.Files[i]) in SupportedVideos) then
+          AddVideo(qAudios, DropVideos.Files[i]);
+        { #todo : Better treatment of not supported video files }
+
+        dlgProgress.Position := i + 1;
+        Application.ProcessMessages;
+        if stopProcess then
+          Break;
+      end;
+      if stopProcess then
+        DMM.sqlTrans.RollbackRetaining
+      else
+        DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+    dlgProgress.Text := rsProgressFinishing;
+    dlgProgress.Position := DropVideos.Files.Count;
+    Application.ProcessMessages;
+    stopProcess := False;
+  finally
+    dlgProgress.Close;
+    FreeAndNil(dlgProgress);
+  end;
+
+  // Reject drop if it is a move operation
+  //if (Effect = DROPEFFECT_MOVE) then
+  //  Effect := DROPEFFECT_NONE;
+end;
+
 procedure TfrmCustomGrid.dsAudiosDataChange(Sender: TObject; Field: TField);
 begin
   UpdateAudioButtons(qAudios);
@@ -4235,6 +4408,19 @@ end;
 procedure TfrmCustomGrid.dsRecycleStateChange(Sender: TObject);
 begin
   UpdateRecycleButtons(qRecycle);
+end;
+
+procedure TfrmCustomGrid.dsVideosDataChange(Sender: TObject; Field: TField);
+begin
+  UpdateVideoButtons(qVideos);
+  {$IFDEF DEBUG}
+  LogDebug('Param: ' + qVideos.Params[0].Name + ' ' + qVideos.Params[0].AsString + '; Count: ' + IntToStr(qVideos.RecordCount));
+  {$ENDIF}
+end;
+
+procedure TfrmCustomGrid.dsVideosStateChange(Sender: TObject);
+begin
+  UpdateVideoButtons(qVideos);
 end;
 
 procedure TfrmCustomGrid.eAddChildClick(Sender: TObject);
@@ -6095,6 +6281,12 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.gridVideosDblClick(Sender: TObject);
+begin
+  if sbPlayVideo.Enabled then
+    sbPlayVideoClick(nil);
+end;
+
 procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
   var AResultWidth: Integer);
 begin
@@ -6289,6 +6481,7 @@ begin
     LoadColumnsConfigGrid;
   SetImages;
   SetAudios;
+  SetVideos;
   SetDocs;
   SetRecycle;
   FCanToggle := True;
@@ -7142,6 +7335,14 @@ begin
   else
   if pmTree.PopupComponent = tvDateFilter then
     LoadDateTreeData(FTableType, tvDateFilter);
+end;
+
+procedure TfrmCustomGrid.pmvRefreshVideosClick(Sender: TObject);
+begin
+  if isWorking then
+    Exit;
+
+  qVideos.Refresh;
 end;
 
 procedure TfrmCustomGrid.PrepareCanvasBands(var Column: TColumn; var sender: TObject);
@@ -8388,6 +8589,11 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.qVideosBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
 procedure TfrmCustomGrid.RefreshMap;
 var
   poi: TGpsPoint;
@@ -8639,6 +8845,54 @@ begin
   end;
 
   GetChildDataSet.Refresh;
+end;
+
+procedure TfrmCustomGrid.sbAddVideoClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  DMM.OpenVideos.InitialDir := xSettings.VideosFolder;
+  if DMM.OpenVideos.Execute then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    try
+      dlgProgress.Show;
+      dlgProgress.Title := rsImportVideosTitle;
+      dlgProgress.Text := rsProgressPreparing;
+      dlgProgress.Max := DMM.OpenVideos.Files.Count;
+      stopProcess := False;
+      Application.ProcessMessages;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlCon.StartTransaction;
+      try
+        for i := 0 to DMM.OpenVideos.Files.Count - 1 do
+        begin
+          dlgProgress.Text := Format(rsProgressImportVideos, [i + 1, DMM.OpenVideos.Files.Count]);
+
+          AddVideo(qVideos, DMM.OpenVideos.Files[i]);
+
+          dlgProgress.Position := i + 1;
+          Application.ProcessMessages;
+          if stopProcess then
+            Break;
+        end;
+        if stopProcess then
+          DMM.sqlTrans.RollbackRetaining
+        else
+          DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+      dlgProgress.Text := rsProgressFinishing;
+      dlgProgress.Position := DMM.OpenVideos.Files.Count;
+      Application.ProcessMessages;
+      stopProcess := False;
+    finally
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbAudioInfoClick(Sender: TObject);
@@ -8900,6 +9154,20 @@ begin
     // Update the recycle bin
     dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);
+  finally
+    isWorking := False;
+  end;
+end;
+
+procedure TfrmCustomGrid.sbDelVideoClick(Sender: TObject);
+begin
+  if isWorking then
+    Exit;
+
+  isWorking := True;
+  try
+    DeleteRecord(tbVideos, qVideos);
+    UpdateVideoButtons(qVideos);
   finally
     isWorking := False;
   end;
@@ -9256,6 +9524,13 @@ begin
   OpenDocument(qAudios.FieldByName(COL_AUDIO_FILE).AsString);
 end;
 
+procedure TfrmCustomGrid.sbPlayVideoClick(Sender: TObject);
+begin
+  { #todo : Video player }
+  // Temporary solution
+  OpenDocument(qVideos.FieldByName(COL_FILE_PATH).AsString);
+end;
+
 procedure TfrmCustomGrid.sbPrintClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
@@ -9508,6 +9783,11 @@ begin
     Summary;
 
   //frmMain.UpdateMenu(frmMain.PGW.ActivePageComponent);
+end;
+
+procedure TfrmCustomGrid.sbVideoInfoClick(Sender: TObject);
+begin
+  EditVideoInfo(qVideos, dsLink.DataSet, FTableType);
 end;
 
 procedure TfrmCustomGrid.sbViewImageClick(Sender: TObject);
@@ -11882,6 +12162,7 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
   sbShowImages.Visible := True;
+  sbShowVideos.Visible := True;
   sbShowDocs.Visible := True;
 
   // Set the print menu
@@ -12032,6 +12313,7 @@ begin
   // Set visible buttons
   sbShowImages.Visible := True;
   sbShowAudio.Visible := True;
+  sbShowVideos.Visible := True;
   sbShowDocs.Visible := True;
   sbRecordVerifications.Visible := True;
   sbShowSummary.Visible := True;
@@ -12104,6 +12386,7 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
   sbShowImages.Visible := True;
+  sbShowVideos.Visible := True;
   sbShowDocs.Visible := True;
   sbRecordVerifications.Visible := True;
 
@@ -12143,6 +12426,7 @@ begin
   sbShowSummary.Visible := True;
   //sbShowImages.Visible := True;
   //sbShowAudio.Visible := True;
+  //sbShowVideos.Visible := True;
   //sbShowDocs.Visible := True;
 end;
 
@@ -12252,6 +12536,7 @@ begin
   sbShowSummary.Visible := True;
   sbShowImages.Visible := True;
   sbShowAudio.Visible := True;
+  sbShowVideos.Visible := True;
   sbShowDocs.Visible := True;
 
   // Set the print menu
@@ -12312,6 +12597,7 @@ begin
   mapGeo.Active := True;
   sbShowMap.Visible := True;
   sbShowImages.Visible := True;
+  sbShowVideos.Visible := True;
   sbShowDocs.Visible := True;
 
   // Set the print menu
@@ -12527,6 +12813,49 @@ begin
   FSidePanel := aValue;
   pSide.Visible := FSidePanel;
   //SplitRight.Visible := pSide.Visible;
+end;
+
+procedure TfrmCustomGrid.SetVideos;
+begin
+  with qVideos, SQL do
+  begin
+    case FTableType of
+      tbNone: ;
+      //tbGazetteer: ;
+      //tbSamplingPlots: ;
+      //tbPermanentNets: ;
+      //tbInstitutions: ;
+      //tbPeople: ;
+      //tbProjects: ;
+      //tbPermits: ;
+      //tbZooTaxa: ;
+      //tbBotanicTaxa: ;
+      tbIndividuals:    Add('WHERE (vid.active_status = 1) AND (vid.individual_id = :individual_id)');
+      tbCaptures:       Add('WHERE (vid.active_status = 1) AND (vid.capture_id = :capture_id)');
+      //tbFeathers: ;
+      tbNests:          Add('WHERE (vid.active_status = 1) AND (vid.nest_id = :nest_id)');
+      tbNestRevisions:  Add('WHERE (vid.active_status = 1) AND (vid.nest_revision_id = :nest_revision_id)');
+      //tbEggs: ;
+      //tbMethods: ;
+      //tbExpeditions: ;
+      tbSurveys:        Add('WHERE (vid.active_status = 1) AND (vid.survey_id = :survey_id)');
+      //tbWeatherLogs: ;
+      tbSightings:      Add('WHERE (vid.active_status = 1) AND (vid.sighting_id = :sighting_id)');
+      //tbSpecimens: ;
+      //tbSamplePreps: ;
+      //tbVegetation: ;
+    end;
+  end;
+
+  if FTableType in [tbIndividuals, tbCaptures, tbNests, tbNestRevisions, tbSurveys, tbSightings] then
+  begin
+    qVideos.SQL.Add('ORDER BY vid.recording_date, vid.recording_time ASC');
+    qVideos.DataSource := dsLink;
+    //{$IFDEF DEBUG}
+    //LogSQL(qImages.SQL);
+    //{$ENDIF}
+    qVideos.Open;
+  end;
 end;
 
 procedure TfrmCustomGrid.SetSideIndex(aValue: Integer);
@@ -13423,6 +13752,45 @@ begin
   gridDocs.DefaultRowHeight := xSettings.DefaultRowHeight;
   gridSummary.DefaultRowHeight := xSettings.DefaultRowHeight;
   gridColumns.DefaultRowHeight := xSettings.DefaultRowHeight;
+end;
+
+procedure TfrmCustomGrid.UpdateVideoButtons(aDataSet: TDataSet);
+begin
+  if isClosing then
+    Exit;
+
+  case aDataSet.State of
+    dsInactive:
+    begin
+      sbAddVideo.Enabled := False;
+      sbVideoInfo.Enabled := False;
+      sbDelVideo.Enabled := False;
+      sbPlayVideo.Enabled := False;
+
+    end;
+    dsBrowse:
+    begin
+      sbAddVideo.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbVideoInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbDelVideo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbPlayVideo.Enabled := (aDataSet.RecordCount > 0);
+
+    end;
+    dsEdit, dsInsert:
+    begin
+      sbAddVideo.Enabled := False;
+      sbVideoInfo.Enabled := False;
+      sbDelVideo.Enabled := False;
+      sbPlayVideo.Enabled := False;
+
+    end;
+  end;
+
+  pmvAddVideo.Enabled := sbAddVideo.Enabled;
+  pmvVideoInfo.Enabled := sbVideoInfo.Enabled;
+  pmvDelVideo.Enabled := sbDelVideo.Enabled;
+  pmvPlayVideo.Enabled := sbPlayVideo.Enabled;
+  pmvRefreshVideos.Enabled := sbAddVideo.Enabled;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanels;

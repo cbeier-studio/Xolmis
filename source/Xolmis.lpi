@@ -191,7 +191,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="483"/>
+      <BuildNr Value="484"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1455,6 +1455,12 @@
       <Unit>
         <Filename Value="models\models_methods.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_videoinfo.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtVideoInfo"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
     <Debugger>

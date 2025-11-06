@@ -1,5 +1,6 @@
 {"version":1,"strings":[
 {"hash":117901219,"name":"tdmm.openimgs.title","sourcebytes":[65,100,100,32,105,109,97,103,101,115],"value":"Add images"},
 {"hash":16515251,"name":"tdmm.openaudios.title","sourcebytes":[65,100,100,32,97,117,100,105,111,32,114,101,99,111,114,100,105,110,103,115],"value":"Add audio recordings"},
-{"hash":220589731,"name":"tdmm.opendocs.title","sourcebytes":[65,100,100,32,100,111,99,117,109,101,110,116,115],"value":"Add documents"}
+{"hash":220589731,"name":"tdmm.opendocs.title","sourcebytes":[65,100,100,32,100,111,99,117,109,101,110,116,115],"value":"Add documents"},
+{"hash":130798083,"name":"tdmm.openvideos.title","sourcebytes":[65,100,100,32,118,105,100,101,111,115],"value":"Add videos"}
 ]}

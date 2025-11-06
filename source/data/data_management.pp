@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 3;
+  SCHEMA_VERSION: Integer = 4;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -90,6 +90,7 @@ const
   procedure CreateImagesTable(Connection: TSQLConnector);
   procedure CreateDocumentsTable(Connection: TSQLConnector);
   procedure CreateAudioLibraryTable(Connection: TSQLConnector);
+  procedure CreateVideosTable(connection: TSQLConnector);
 
   procedure CreateNextBirthdaysView(Connection: TSQLConnector);
   procedure CreateLastSurveysView(Connection: TSQLConnector);
@@ -311,7 +312,7 @@ begin
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := 50; // Number of tables and views to create
+    dlgProgress.Max := 51; // Number of tables and views to create
     dlgProgress.Position := 0;
     dlgProgress.Show;
     Application.ProcessMessages;
@@ -604,6 +605,12 @@ begin
         CreateAudioLibraryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
+        // Videos
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVideos, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateVideosTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
         // >> Create views
         // Next birthdays
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleNextBirthdays, dlgProgress.Position + 1, dlgProgress.Max]);
@@ -774,6 +781,15 @@ begin
         LogDebug('Upgrading database schema to version 3');
 
         DMM.sqlCon.ExecuteDirect('ALTER TABLE nests ADD COLUMN loss_cause VARCHAR (5);');
+
+        Result := True;
+      end;
+
+      if OldVersion < 4 then
+      begin
+        LogDebug('Upgrading database schema to version 4');
+
+        CreateVideosTable(DMM.sqlCon);
 
         Result := True;
       end;
@@ -2529,6 +2545,48 @@ begin
     'license_notes     VARCHAR (100),' +
     'license_owner     VARCHAR (150),' +
     'audio_file        VARCHAR (250),' +
+    'subtitle          TEXT,' +
+    'notes             TEXT,' +
+    'user_inserted     INTEGER,' +
+    'user_updated      INTEGER,' +
+    'insert_date       DATETIME,' +
+    'update_date       DATETIME,' +
+    'exported_status   BOOLEAN       DEFAULT (0),' +
+    'marked_status     BOOLEAN       DEFAULT (0),' +
+    'active_status     BOOLEAN       DEFAULT (1)' +
+  ');');
+end;
+
+procedure CreateVideosTable(connection: TSQLConnector);
+begin
+  LogDebug('Creating videos table');
+  Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS videos (' +
+    'video_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
+    'full_name         VARCHAR (100),' +
+    'taxon_id          INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+    'individual_id     INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
+    'capture_id        INTEGER       REFERENCES captures (capture_id) ON UPDATE CASCADE,' +
+    'survey_id         INTEGER       REFERENCES surveys (survey_id) ON UPDATE CASCADE,' +
+    'sighting_id       INTEGER       REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
+    'nest_id           INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
+    'nest_revision_id  INTEGER       REFERENCES nest_revisions (nest_revision_id) ON UPDATE CASCADE,' +
+    'video_type        VARCHAR (15),' +
+    'locality_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
+    'recording_date    DATE,' +
+    'recording_time    TIME,' +
+    'recorder_id       INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+    'longitude         REAL,' +
+    'latitude          REAL,' +
+    'recording_context VARCHAR (60),' +
+    'habitat           VARCHAR (60),' +
+    'camera_model      VARCHAR (60),' +
+    'distance          REAL,' +
+    'license_type      VARCHAR (20),' +
+    'license_year      INTEGER,' +
+    'license_uri       VARCHAR (200),' +
+    'license_notes     VARCHAR (100),' +
+    'license_owner     VARCHAR (150),' +
+    'file_path         VARCHAR (250),' +
     'subtitle          TEXT,' +
     'notes             TEXT,' +
     'user_inserted     INTEGER,' +

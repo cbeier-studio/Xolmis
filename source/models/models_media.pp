@@ -289,6 +289,93 @@ type
     procedure Delete(E: TXolmisRecord); override;
   end;
 
+  { TVideoData }
+
+  TVideoData = class(TXolmisRecord)
+  protected
+    FRecordingDate: TDate;
+    FRecordingTime: TTime;
+    FVideoType: String;
+    FFilename: String;
+    FSubtitle: String;
+    FAuthorId: Integer;
+    FLongitude: Double;
+    FLatitude: Double;
+    FLocalityId: Integer;
+    FTaxonId: Integer;
+    FIndividualId: Integer;
+    FCaptureId: Integer;
+    FSurveyId: Integer;
+    FSightingId: Integer;
+    FNestId: Integer;
+    FNestRevisionId: Integer;
+    FDistance: Double;
+    FContext: String;
+    FHabitat: String;
+    FCameraModel: String;
+    FLicenseType: String;
+    FLicenseYear: Integer;
+    FLicenseOwner: String;
+    FLicenseNotes: String;
+    FLicenseUri: String;
+    FFullName: String;
+    FNotes: String;
+  public
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
+    procedure Clear; override;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const aOld: TVideoData; var Changes: TStrings): Boolean; virtual;
+    function EqualsTo(const Other: TVideoData): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
+    function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
+  published
+    property RecordingDate: TDate read FRecordingDate write FRecordingDate;
+    property RecordingTime: TTime read FRecordingTime write FRecordingTime;
+    property VideoType: String read FVideoType write FVideoType;
+    property Filename: String read FFilename write FFilename;
+    property Subtitle: String read FSubtitle write FSubtitle;
+    property AuthorId: Integer read FAuthorId write FAuthorId;
+    property Longitude: Extended read FLongitude write FLongitude;
+    property Latitude: Extended read FLatitude write FLatitude;
+    property LocalityId: Integer read FLocalityId write FLocalityId;
+    property TaxonId: Integer read FTaxonId write FTaxonId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
+    property CaptureId: Integer read FCaptureId write FCaptureId;
+    property SurveyId: Integer read FSurveyId write FSurveyId;
+    property SightingId: Integer read FSightingId write FSightingId;
+    property NestId: Integer read FNestId write FNestId;
+    property NestRevisionId: Integer read FNestRevisionId write FNestRevisionId;
+    property Distance: Double read FDistance write FDistance;
+    property Context: String read FContext write FContext;
+    property Habitat: String read FHabitat write FHabitat;
+    property CameraModel: String read FCameraModel write FCameraModel;
+    property LicenseType: String read FLicenseType write FLicenseType;
+    property LicenseYear: Integer read FLicenseYear write FLicenseYear;
+    property LicenseOwner: String read FLicenseOwner write FLicenseOwner;
+    property LicenseNotes: String read FLicenseNotes write FLicenseNotes;
+    property LicenseUri: String read FLicenseUri write FLicenseUri;
+    property FullName: String read FFullName write FFullName;
+    property Notes: String read FNotes write FNotes;
+  end;
+
+  { TVideoRepository }
+
+  TVideoRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
 implementation
 
 uses
@@ -1361,7 +1448,7 @@ end;
 
 function TAudioData.ToString: String;
 begin
-  Result := Format('AudioDate(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, AudioType=%s, Filename=%s, Subtitle=%s, ' +
+  Result := Format('AudioData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, AudioType=%s, Filename=%s, Subtitle=%s, ' +
     'AuthorId=%d, LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, ' +
     'SightingId=%d, SpecimenId=%d, SurveyId=%d, Temperature=%f, CloudCover=%d, Precipitation=%s, RelativeHumidity=%f, ' +
     'WindSpeedBft=%d, SubjectsTally=%d, Distance=%f, Context=%s, Habitat=%s, PlaybackUsed=%s, RecorderModel=%s, ' +
@@ -1484,12 +1571,14 @@ begin
         'taxon_id, ' +
         'individual_id, ' +
         'specimen_id, ' +
+        //'survey_id, ' +
         'sighting_id, ' +
         'audio_type, ' +
         'locality_id, ' +
         'recording_date, ' +
         'recorder_id, ' +
         'recording_time, ' +
+        'coordinate_precision, ' +
         'longitude, ' +
         'latitude, ' +
         'temperature, ' +
@@ -1554,12 +1643,14 @@ begin
         'taxon_id, ' +
         'individual_id, ' +
         'specimen_id, ' +
+        //'survey_id' +
         'sighting_id, ' +
         'audio_type, ' +
         'locality_id, ' +
         'recording_date, ' +
         'recorder_id, ' +
         'recording_time, ' +
+        'coordinate_precision, ' +
         'longitude, ' +
         'latitude, ' +
         'temperature, ' +
@@ -1630,13 +1721,13 @@ begin
     R.SightingId := FieldByName('sighting_id').AsInteger;
     R.SpecimenId := FieldByName('specimen_id').AsInteger;
     R.LocalityId := FieldByName('locality_id').AsInteger;
-    //case FieldByName('coordinate_precision').AsString of
-    //  'E': R.CoordinatePrecision := cpExact;
-    //  'A': R.CoordinatePrecision := cpApproximated;
-    //  'R': R.CoordinatePrecision := cpReference;
-    //else
-    //  R.CoordinatePrecision := cpEmpty;
-    //end;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.Longitude := FieldByName('longitude').AsFloat;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Temperature := FieldByName('temperature').AsFloat;
@@ -1702,6 +1793,7 @@ begin
       'recording_date, ' +
       'recorder_id, ' +
       'recording_time, ' +
+      'coordinate_precision, ' +
       'longitude, ' +
       'latitude, ' +
       'temperature, ' +
@@ -1738,6 +1830,7 @@ begin
       'date(:recording_date), ' +
       ':recorder_id, ' +
       'time(:recording_time), ' +
+      ':coordinate_precision, ' +
       ':longitude, ' +
       ':latitude, ' +
       ':temperature, ' +
@@ -1770,7 +1863,7 @@ begin
 
     ParamByName('audio_file').AsString := R.Filename;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
-    //SetForeignParam(ParamByName('author_id'), R.AuthorId);
+    SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
@@ -1778,7 +1871,7 @@ begin
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('sighting_id'), R.SightingId);
     SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
-    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    //SetForeignParam(ParamByName('survey_id'), R.SurveyId);
     ParamByName('temperature').AsFloat := R.Temperature;
     ParamByName('cloud_cover').AsInteger := R.CloudCover;
     case R.Precipitation of
@@ -2577,6 +2670,736 @@ begin
     SetStrParam(ParamByName('license_uri'), R.LicenseUri);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('document_id').AsInteger := R.Id;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+{ TVideoData }
+
+constructor TVideoData.Create(aValue: Integer);
+begin
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TVideoData.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TVideoData then
+  begin
+    FRecordingDate := TVideoData(Source).RecordingDate;
+    FRecordingTime := TVideoData(Source).RecordingTime;
+    FVideoType := TVideoData(Source).VideoType;
+    FFilename := TVideoData(Source).Filename;
+    FSubtitle := TVideoData(Source).Subtitle;
+    FAuthorId := TVideoData(Source).AuthorId;
+    FLongitude := TVideoData(Source).Longitude;
+    FLatitude := TVideoData(Source).Latitude;
+    FLocalityId := TVideoData(Source).LocalityId;
+    FTaxonId := TVideoData(Source).TaxonId;
+    FIndividualId := TVideoData(Source).IndividualId;
+    FCaptureId := TVideoData(Source).CaptureId;
+    FSurveyId := TVideoData(Source).SurveyId;
+    FSightingId := TVideoData(Source).SightingId;
+    FNestId := TVideoData(Source).NestId;
+    FNestRevisionId := TVideoData(Source).NestRevisionId;
+    FDistance := TVideoData(Source).Distance;
+    FContext := TVideoData(Source).Context;
+    FHabitat := TVideoData(Source).Habitat;
+    FCameraModel := TVideoData(Source).CameraModel;
+    FLicenseType := TVideoData(Source).LicenseType;
+    FLicenseYear := TVideoData(Source).LicenseYear;
+    FLicenseOwner := TVideoData(Source).LicenseOwner;
+    FLicenseNotes := TVideoData(Source).LicenseNotes;
+    FLicenseUri := TVideoData(Source).LicenseUri;
+    FFullName := TVideoData(Source).FullName;
+    FNotes := TVideoData(Source).Notes;
+  end;
+end;
+
+procedure TVideoData.Clear;
+begin
+  inherited Clear;
+  FRecordingDate := NullDate;
+  FRecordingTime := NullTime;
+  FVideoType := EmptyStr;
+  FFilename := EmptyStr;
+  FSubtitle := EmptyStr;
+  FAuthorId := 0;
+  FLongitude := 0.0;
+  FLatitude := 0.0;
+  FLocalityId := 0;
+  FTaxonId := 0;
+  FIndividualId := 0;
+  FCaptureId := 0;
+  FSurveyId := 0;
+  FSightingId := 0;
+  FNestId := 0;
+  FNestRevisionId := 0;
+  FDistance := 0.0;
+  FContext := EmptyStr;
+  FHabitat := EmptyStr;
+  FCameraModel := EmptyStr;
+  FLicenseType := EmptyStr;
+  FLicenseYear := 0;
+  FLicenseOwner := EmptyStr;
+  FLicenseNotes := EmptyStr;
+  FLicenseUri := EmptyStr;
+  FFullName := EmptyStr;
+  FNotes := EmptyStr;
+end;
+
+function TVideoData.Clone: TXolmisRecord;
+begin
+  Result := TVideoData(inherited Clone);
+end;
+
+function TVideoData.Diff(const aOld: TVideoData; var Changes: TStrings): Boolean;
+var
+  R: String;
+begin
+  Result := False;
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscDate, aOld.RecordingDate, FRecordingDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTime, aOld.RecordingTime, FRecordingTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscType, aOld.VideoType, FVideoType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscSurveyID, aOld.SurveyId, FSurveyId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestID, aOld.NestId, FNestId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNestRevisionID, aOld.NestRevisionId, FNestRevisionId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscDistanceM, aOld.Distance, FDistance, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscContext, aOld.Context, FContext, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHabitat, aOld.Habitat, FHabitat, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCameraModel, aOld.CameraModel, FCameraModel, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseType, aOld.LicenseType, FLicenseType, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseYear, aOld.LicenseYear, FLicenseYear, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseOwner, aOld.LicenseOwner, FLicenseOwner, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseNotes, aOld.LicenseNotes, FLicenseNotes, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLicenseUri, aOld.LicenseUri, FLicenseUri, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TVideoData.EqualsTo(const Other: TVideoData): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TVideoData.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FFullName       := Obj.Get('full_name', '');
+    FRecordingDate  := Obj.Get('recording_date', NullDate);
+    FRecordingTime  := Obj.Get('recording_time', NullTime);
+    FVideoType      := Obj.Get('video_type', '');
+    FFilename       := Obj.Get('filename', '');
+    FSubtitle       := Obj.Get('subtitle', '');
+    FAuthorId       := Obj.Get('author_id', 0);
+    FLocalityId     := Obj.Get('locality_id', 0);
+    FLongitude      := Obj.Get('longitude', 0.0);
+    FLatitude       := Obj.Get('latitude', 0.0);
+    FTaxonId        := Obj.Get('taxon_id', 0);
+    FIndividualId   := Obj.Get('individual_id', 0);
+    FCaptureId      := Obj.Get('capture_id', 0);
+    FSightingId     := Obj.Get('sighting_id', 0);
+    FNestId         := Obj.Get('nest_id', 0);
+    FNestRevisionId := Obj.Get('nest_revision_id', 0);
+    FSurveyId       := Obj.Get('survey_id', 0);
+    FDistance       := Obj.Get('distance', 0.0);
+    FContext        := Obj.Get('context', '');
+    FHabitat        := Obj.Get('habitat', '');
+    FCameraModel    := Obj.Get('camera_model', '');
+    FLicenseType    := Obj.Get('license_type', '');
+    FLicenseYear    := Obj.Get('license_year', 0);
+    FLicenseOwner   := Obj.Get('license_owner', '');
+    FLicenseNotes   := Obj.Get('license_notes', '');
+    FLicenseUri     := Obj.Get('license_url', '');
+    FNotes          := Obj.Get('notes', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TVideoData.ToJSON: String;
+var
+  JSONObject: TJSONObject;
+begin
+  JSONObject := TJSONObject.Create;
+  try
+    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('recording_date', FRecordingDate);
+    JSONObject.Add('recording_time', FRecordingTime);
+    JSONObject.Add('video_type', FVideoType);
+    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('subtitle', FSubtitle);
+    JSONObject.Add('author_id', FAuthorId);
+    JSONObject.Add('locality_id', FLocalityId);
+    JSONObject.Add('longitude', FLongitude);
+    JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('capture_id', FCaptureId);
+    JSONObject.Add('sighting_id', FSightingId);
+    JSONObject.Add('nest_id', FNestId);
+    JSONObject.Add('nest_revision_id', FNestRevisionId);
+    JSONObject.Add('survey_id', FSurveyId);
+    JSONObject.Add('distance', FDistance);
+    JSONObject.Add('context', FContext);
+    JSONObject.Add('habitat', FHabitat);
+    JSONObject.Add('camera_model', FCameraModel);
+    JSONObject.Add('license_type', FLicenseType);
+    JSONObject.Add('license_year', FLicenseYear);
+    JSONObject.Add('license_owner', FLicenseOwner);
+    JSONObject.Add('license_notes', FLicenseNotes);
+    JSONObject.Add('license_url', FLicenseUri);
+    JSONObject.Add('notes', FNotes);
+
+    Result := JSONObject.AsJSON;
+  finally
+    JSONObject.Free;
+  end;
+end;
+
+function TVideoData.ToString: String;
+begin
+  Result := Format('VideoData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, VideoType=%s, Filename=%s, Subtitle=%s, ' +
+    'AuthorId=%d, LocalityId=%d, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
+    'SightingId=%d, NestId=%d, NestRevisionId=%d, SurveyId=%d, ' +
+    'Distance=%f, Context=%s, Habitat=%s, CameraModel=%s, ' +
+    'LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
+    'Notes=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), FVideoType, FFilename, FSubtitle,
+    FAuthorId, FLocalityId, FLongitude, FLatitude, FTaxonId, FIndividualId, FCaptureId,
+    FSightingId, FNestId, FNestRevisionId, FSurveyId,
+    FDistance, FContext, FHabitat,
+    FCameraModel, FLicenseType, FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
+    FNotes,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TVideoData.Validate(out Msg: string): Boolean;
+begin
+  if FFilename = EmptyStr then
+  begin
+    Msg := 'Filename required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TVideoRepository }
+
+procedure TVideoRepository.Delete(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TVideoData;
+begin
+  if not (E is TVideoData) then
+    raise Exception.Create('Delete: Expected TVideoData');
+
+  R := TVideoData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TVideoRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_VIDEO_ID;
+      ParamByName('aid').AsInteger := R.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TVideoRepository.Exists(const Id: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_VIDEO_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TVideoRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..2] of string = (COL_VIDEO_ID, COL_FULL_NAME, COL_FILE_PATH); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TVideoData) then
+    raise Exception.Create('FindBy: Expected TVideoData');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    Add('SELECT ' +
+        'video_id, ' +
+        'full_name, ' +
+        'taxon_id, ' +
+        'individual_id, ' +
+        'capture_id, ' +
+        'nest_id, ' +
+        'nest_revision_id, ' +
+        'survey_id, ' +
+        'sighting_id, ' +
+        'video_type, ' +
+        'locality_id, ' +
+        'recording_date, ' +
+        'recorder_id, ' +
+        'recording_time, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'recording_context, ' +
+        'habitat, ' +
+        'camera_model, ' +
+        'distance, ' +
+        'license_type, ' +
+        'license_year, ' +
+        'license_uri, ' +
+        'license_notes, ' +
+        'license_owner, ' +
+        'file_path, ' +
+        'subtitle, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM videos');
+    Add('WHERE %afield = :avalue');
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TVideoData(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TVideoRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TVideoData) then
+    raise Exception.Create('GetById: Expected TVideoData');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT ' +
+        'video_id, ' +
+        'full_name, ' +
+        'taxon_id, ' +
+        'individual_id, ' +
+        'capture_id, ' +
+        'nest_id, ' +
+        'nest_revision_id, ' +
+        'survey_id, ' +
+        'sighting_id, ' +
+        'video_type, ' +
+        'locality_id, ' +
+        'recording_date, ' +
+        'recorder_id, ' +
+        'recording_time, ' +
+        'longitude, ' +
+        'latitude, ' +
+        'recording_context, ' +
+        'habitat, ' +
+        'camera_model, ' +
+        'distance, ' +
+        'license_type, ' +
+        'license_year, ' +
+        'license_uri, ' +
+        'license_notes, ' +
+        'license_owner, ' +
+        'file_path, ' +
+        'subtitle, ' +
+        'notes, ' +
+        'user_inserted, ' +
+        'user_updated, ' +
+        'datetime(insert_date, ''localtime'') AS insert_date, ' +
+        'datetime(update_date, ''localtime'') AS update_date, ' +
+        'exported_status, ' +
+        'marked_status, ' +
+        'active_status ' +
+      'FROM videos');
+    Add('WHERE video_id = :cod');
+    ParamByName('COD').AsInteger := Id;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, TVideoData(E));
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TVideoRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TVideoData;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TVideoData) then
+    raise Exception.Create('Hydrate: Expected TVideoData');
+
+  R := TVideoData(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('video_id').AsInteger;
+    R.FullName := FieldByName('full_name').AsString;
+    R.RecordingDate := FieldByName('recording_date').AsDateTime;
+    R.RecordingTime := FieldByName('recording_time').AsDateTime;
+    R.VideoType := FieldByName('video_type').AsString;
+    R.Subtitle := FieldByName('subtitle').AsString;
+    R.Filename := FieldByName('file_path').AsString;
+    R.AuthorId := FieldByName('recorder_id').AsInteger;
+    R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.CaptureId := FieldByName('capture_id').AsInteger;
+    R.SurveyId := FieldByName('survey_id').AsInteger;
+    R.SightingId := FieldByName('sighting_id').AsInteger;
+    R.NestId := FieldByName('nest_id').AsInteger;
+    R.NestRevisionId := FieldByName('nest_revision_id').AsInteger;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
+    //case FieldByName('coordinate_precision').AsString of
+    //  'E': R.CoordinatePrecision := cpExact;
+    //  'A': R.CoordinatePrecision := cpApproximated;
+    //  'R': R.CoordinatePrecision := cpReference;
+    //else
+    //  R.CoordinatePrecision := cpEmpty;
+    //end;
+    R.Longitude := FieldByName('longitude').AsFloat;
+    R.Latitude := FieldByName('latitude').AsFloat;
+    R.Distance := FieldByName('distance').AsFloat;
+    R.Context := FieldByName('recording_context').AsString;
+    R.Habitat := FieldByName('habitat').AsString;
+    R.CameraModel := FieldByName('camera_model').AsString;
+    R.LicenseType := FieldByName('license_type').AsString;
+    R.LicenseYear := FieldByName('license_year').AsInteger;
+    R.LicenseOwner := FieldByName('license_owner').AsString;
+    R.LicenseNotes := FieldByName('license_notes').AsString;
+    R.LicenseUri := FieldByName('license_uri').AsString;
+    R.Notes := FieldByName('notes').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TVideoRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TVideoData;
+begin
+  if not (E is TVideoData) then
+    raise Exception.Create('Insert: Expected TVideoData');
+
+  R := TVideoData(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('INSERT INTO videos (' +
+      'full_name, ' +
+      'taxon_id, ' +
+      'individual_id, ' +
+      'capture_id, ' +
+      'nest_id, ' +
+      'nest_revision_id, ' +
+      'survey_id, ' +
+      'sighting_id, ' +
+      'video_type, ' +
+      'locality_id, ' +
+      'recording_date, ' +
+      'recorder_id, ' +
+      'recording_time, ' +
+      'longitude, ' +
+      'latitude, ' +
+      'recording_context, ' +
+      'habitat, ' +
+      'camera_model, ' +
+      'distance, ' +
+      'license_type, ' +
+      'license_year, ' +
+      'license_uri, ' +
+      'license_notes, ' +
+      'license_owner, ' +
+      'file_path, ' +
+      'subtitle, ' +
+      'notes, ' +
+      'user_inserted, ' +
+      'insert_date) ');
+    Add('VALUES (' +
+      ':full_name, ' +
+      ':taxon_id, ' +
+      ':individual_id, ' +
+      ':capture_id, ' +
+      ':nest_id, ' +
+      ':nest_revision_id, ' +
+      ':survey_id, ' +
+      ':sighting_id, ' +
+      ':video_type, ' +
+      ':locality_id, ' +
+      'date(:recording_date), ' +
+      ':recorder_id, ' +
+      'time(:recording_time), ' +
+      ':longitude, ' +
+      ':latitude, ' +
+      ':recording_context, ' +
+      ':habitat, ' +
+      ':camera_model, ' +
+      ':distance, ' +
+      ':license_type, ' +
+      ':license_year, ' +
+      ':license_uri, ' +
+      ':license_notes, ' +
+      ':license_owner, ' +
+      ':file_path, ' +
+      ':subtitle, ' +
+      ':notes, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))');
+
+    SetDateParam(ParamByName('recording_date'), R.RecordingDate);
+    SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
+    ParamByName('video_type').AsString := R.VideoType;
+
+    ParamByName('file_path').AsString := R.Filename;
+    SetStrParam(ParamByName('subtitle'), R.Subtitle);
+    SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    //ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    SetForeignParam(ParamByName('nest_revision_id'), R.NestRevisionId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    ParamByName('distance').AsFloat := R.Distance;
+    SetStrParam(ParamByName('recording_context'), R.Context);
+    SetStrParam(ParamByName('habitat'), R.Habitat);
+    SetStrParam(ParamByName('camera_model'), R.CameraModel);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TVideoRepository.TableName: string;
+begin
+  Result := TBL_VIDEOS;
+end;
+
+procedure TVideoRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TVideoData;
+begin
+  if not (E is TVideoData) then
+    raise Exception.Create('Update: Expected TVideoData');
+
+  R := TVideoData(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TVideoRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('UPDATE videos SET ' +
+      'full_name = :full_name, ' +
+      'taxon_id = :taxon_id, ' +
+      'individual_id = :individual_id, ' +
+      'capture_id = :capture_id, ' +
+      'nest_id = :nest_id, ' +
+      'nest_revision_id = :nest_revision_id, ' +
+      'survey_id = :survey_id, ' +
+      'sighting_id = :sighting_id, ' +
+      'video_type = :video_type, ' +
+      'locality_id = :locality_id, ' +
+      'recording_date = date(:recording_date), ' +
+      'recorder_id = :recorder_id, ' +
+      'recording_time = time(:recording_time), ' +
+      'longitude = :longitude, ' +
+      'latitude = :latitude, ' +
+      'recording_context = :recording_context, ' +
+      'habitat = :habitat, ' +
+      'camera_model = :camera_model, ' +
+      'distance = :distance, ' +
+      'license_type = :license_type, ' +
+      'license_year = :license_year, ' +
+      'license_uri = :license_uri, ' +
+      'license_notes = :license_notes, ' +
+      'license_owner = :license_owner, ' +
+      'file_path = :file_path, ' +
+      'subtitle = :subtitle, ' +
+      'notes = :notes, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec'') ');
+    Add('WHERE (video_id = :video_id)');
+
+    SetDateParam(ParamByName('recording_date'), R.RecordingDate);
+    SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
+    ParamByName('video_type').AsString := R.VideoType;
+
+    ParamByName('file_path').AsString := R.Filename;
+    SetStrParam(ParamByName('subtitle'), R.Subtitle);
+    SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    //ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('sighting_id'), R.SightingId);
+    SetForeignParam(ParamByName('nest_id'), R.NestId);
+    SetForeignParam(ParamByName('nest_revision_id'), R.NestRevisionId);
+    SetForeignParam(ParamByName('survey_id'), R.SurveyId);
+    ParamByName('distance').AsFloat := R.Distance;
+    SetStrParam(ParamByName('recording_context'), R.Context);
+    SetStrParam(ParamByName('habitat'), R.Habitat);
+    SetStrParam(ParamByName('camera_model'), R.CameraModel);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('license_type'), R.LicenseType);
+    SetIntParam(ParamByName('license_year'), R.LicenseYear);
+    SetStrParam(ParamByName('license_owner'), R.LicenseOwner);
+    SetStrParam(ParamByName('license_notes'), R.LicenseNotes);
+    SetStrParam(ParamByName('license_uri'), R.LicenseUri);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('video_id').AsInteger := R.Id;
 
     ExecSQL;
   finally

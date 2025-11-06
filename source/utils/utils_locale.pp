@@ -90,6 +90,7 @@ uses
     rsTitleImages = 'Images';
     rsTitleDocuments = 'Documents and links';
     rsTitleAudioLibrary = 'Audio recordings';
+    rsTitleVideos = 'Videos';
     rsTitleNextBirthdays = 'Next birthdays';
     rsTitleLastSurveys = 'Last surveys';
     rsTitleLastLifers = 'Last lifers';
@@ -192,6 +193,7 @@ uses
     rsProgressPreparing = 'Preparing...';
     rsProgressImportImages = 'Processing %d of %d images...';
     rsProgressImportAudios = 'Processing %d of %d audio files...';
+    rsProgressImportVideos = 'Processing %d of %d videos...';
     rsProgressImportDocs = 'Processing %d of %d documents...';
     rsProgressExporting = 'Exporting data: %d%%';
     rsProgressUnpreparing = 'Unpreparing...';
@@ -292,6 +294,7 @@ uses
     { Importation messages }
     rsImportImagesTitle = 'Import images';
     rsImportAudiosTitle = 'Import audio files';
+    rsImportVideosTitle = 'Import video files';
     rsImportDocsTitle = 'Import documents';
     rsImportCanceled = 'Import canceled!';
     rsImportCanceledByUser = 'Import canceled by the user.';

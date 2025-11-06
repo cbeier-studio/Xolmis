@@ -100,7 +100,8 @@ type
     tbProjectChronograms,
     tbProjectBudgets,
     tbProjectExpenses,
-    tbPoiLibrary);
+    tbPoiLibrary,
+    tbVideos);
 
   TTablesDictionary = specialize TFPGMap<String, TTableType>;
   TLocaleTablesDictionary = specialize TFPGMap<TTableType, String>;
@@ -109,7 +110,7 @@ const
   TABLE_ALIASES: array [TTableType] of String = ('',
     'u','rh','rv','g','pl','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','ft',
     'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg',
-    'pg','pc','pb','px','poi');
+    'pg','pc','pb','px','poi','vid');
   TABLE_NAMES: array [TTableType] of String = ('',
     'users',
     'record_history',
@@ -152,7 +153,8 @@ const
     'project_chronograms',
     'project_budgets',
     'project_expenses',
-    'poi_library');
+    'poi_library',
+    'videos');
 
 type
   TCriteriaType = (crNone,
@@ -497,6 +499,8 @@ begin
   TablesDict.Add(rsTitleImages, tbImages);
   TablesDict.Add(rsTitleAudioLibrary, tbAudioLibrary);
   TablesDict.Add(rsTitleDocuments, tbDocuments);
+  TablesDict.Add(rsTitlePoiLibrary, tbPoiLibrary);
+  TablesDict.Add(rsTitleVideos, tbVideos);
 end;
 
 procedure LoadLocaleTablesDict;
@@ -547,6 +551,8 @@ begin
   LocaleTablesDict.Add(tbImages, rsTitleImages);
   LocaleTablesDict.Add(tbAudioLibrary, rsTitleAudioLibrary);
   LocaleTablesDict.Add(tbDocuments, rsTitleDocuments);
+  LocaleTablesDict.Add(tbPoiLibrary, rsTitlePoiLibrary);
+  LocaleTablesDict.Add(tbVideos, rsTitleVideos);
 end;
 
 { TTableInfo }

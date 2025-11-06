@@ -119,6 +119,7 @@ const
   HELP_SURVEYS: String          = 'surveys.html';
   HELP_TAXA: String             = 'taxa.html';
   HELP_USERS: String            = 'users.html';
+  HELP_VIDEOS: String           = 'videos.html';
 
   HELP_ADDING_AND_EDITING_DATA: String    = 'adding-and-editing-data.html';
   HELP_CONNECTIONS: String                = 'connections.html';
@@ -168,7 +169,7 @@ type
     FVernacularNamesLanguage, FTaxonomy: Integer;
     FShowSynonyms: Boolean;
     { Media }
-    FImagesFolder, FAudiosFolder, FDocumentsFolder: String;
+    FImagesFolder, FAudiosFolder, FVideosFolder, FDocumentsFolder: String;
     FOpenAfterExport: Boolean;
     { Security }
     FRememberUser, FRememberConnection: Boolean;
@@ -191,6 +192,7 @@ type
     procedure SetFileName(aValue: String);
     procedure SetImagesFolder(aValue: String);
     procedure SetAudiosFolder(aValue: String);
+    procedure SetVideosFolder(aValue: String);
     procedure SetDocumentsFolder(aValue: String);
     procedure SetBackupFolder(aValue: String);
     procedure SetLastPathUsed(aValue: String);
@@ -228,6 +230,7 @@ type
     { Media }
     property ImagesFolder: String read FImagesFolder write SetImagesFolder;
     property AudiosFolder: String read FAudiosFolder write SetAudiosFolder;
+    property VideosFolder: String read FVideosFolder write SetVideosFolder;
     property DocumentsFolder: String read FDocumentsFolder write SetDocumentsFolder;
     property OpenFileAfterExport: Boolean read FOpenAfterExport write FOpenAfterExport;
     { Security }
@@ -779,6 +782,11 @@ begin
   FLastPathUsed := ExtractFileRoot(aValue);
 end;
 
+procedure TXolmisSettings.SetVideosFolder(aValue: String);
+begin
+  FVideosFolder := IncludeTrailingPathDelimiter(aValue);
+end;
+
 procedure TXolmisSettings.SetAudiosFolder(aValue: String);
 begin
   FAudiosFolder := IncludeTrailingPathDelimiter(aValue);
@@ -845,6 +853,7 @@ begin
   { Media }
   FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
   FAudiosFolder := FConfig.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
+  FVideosFolder := FConfig.GetValue('/MEDIA/VideosFolder', ConcatPaths([InstallDir, 'videos']));
   FDocumentsFolder := FConfig.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'attachments']));
   FOpenAfterExport := FConfig.GetValue('/MEDIA/OpenAfterExport', True);
   { Security }
@@ -898,6 +907,7 @@ begin
   { Media }
   FConfig.SetValue('/MEDIA/ImagesFolder', FImagesFolder);
   FConfig.SetValue('/MEDIA/AudiosFolder', FAudiosFolder);
+  FConfig.SetValue('/MEDIA/VideosFolder', FVideosFolder);
   FConfig.SetValue('/MEDIA/DocumentsFolder', FDocumentsFolder);
   FConfig.SetValue('/MEDIA/OpenAfterExport', FOpenAfterExport);
   { Security }

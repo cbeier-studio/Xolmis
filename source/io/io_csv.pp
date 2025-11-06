@@ -56,10 +56,12 @@ begin
   Result := TStringList.Create;
   DS := TSdfDataSet.Create(nil);
   try
-    //DS.CodePage := GuessEncoding();
+    //DS.CodePage := GuessEncoding(Stream.ReadAnsiString);
+    DS.CodePage := Options.Encoding;
     DS.Delimiter := Options.Delimiter;
     //DS.QuoteChar := Options.QuoteChar;
     DS.FirstLineAsSchema := Options.HasHeader;
+    //Stream.Position := 0;
     DS.LoadFromStream(Stream);
     DS.Open;
 

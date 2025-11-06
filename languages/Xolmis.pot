@@ -270,6 +270,10 @@ msgctxt "data_columns.rsccamera"
 msgid "Camera"
 msgstr ""
 
+#: data_columns.rsccameramodel
+msgid "Camera model"
+msgstr ""
+
 #: data_columns.rsccandelete
 msgid "Can delete"
 msgstr ""
@@ -5096,6 +5100,10 @@ msgstr ""
 msgid "Add images"
 msgstr ""
 
+#: tdmm.openvideos.title
+msgid "Add videos"
+msgstr ""
+
 #: tedtaudioinfo.btnnew.caption
 msgctxt "tedtaudioinfo.btnnew.caption"
 msgid "New"
@@ -5155,10 +5163,12 @@ msgid "Find taxon"
 msgstr ""
 
 #: tedtaudioinfo.lblaudiofile.caption
+msgctxt "tedtaudioinfo.lblaudiofile.caption"
 msgid "Recording file: *"
 msgstr ""
 
 #: tedtaudioinfo.lblaudiotype.caption
+msgctxt "tedtaudioinfo.lblaudiotype.caption"
 msgid "Recording type:"
 msgstr ""
 
@@ -5182,6 +5192,7 @@ msgid "Filter model:"
 msgstr ""
 
 #: tedtaudioinfo.lblhabitat.caption
+msgctxt "tedtaudioinfo.lblhabitat.caption"
 msgid "Habitat:"
 msgstr ""
 
@@ -5244,14 +5255,17 @@ msgid "Recorder model:"
 msgstr ""
 
 #: tedtaudioinfo.lblrecordingcontext.caption
+msgctxt "tedtaudioinfo.lblrecordingcontext.caption"
 msgid "Context of the recording:"
 msgstr ""
 
 #: tedtaudioinfo.lblrecordingdate.caption
+msgctxt "tedtaudioinfo.lblrecordingdate.caption"
 msgid "Recording date: *"
 msgstr ""
 
 #: tedtaudioinfo.lblrecordingtime.caption
+msgctxt "tedtaudioinfo.lblrecordingtime.caption"
 msgid "Recording time:"
 msgstr ""
 
@@ -9246,6 +9260,174 @@ msgctxt "tedtvegetation.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtvideoinfo.btnnew.caption
+msgctxt "tedtvideoinfo.btnnew.caption"
+msgid "New"
+msgstr ""
+
+#: tedtvideoinfo.caption
+msgid "Video info"
+msgstr ""
+
+#: tedtvideoinfo.eauthor.buttonhint
+msgctxt "tedtvideoinfo.eauthor.buttonhint"
+msgid "Find author"
+msgstr ""
+
+#: tedtvideoinfo.elatitude.buttonhint
+msgctxt "tedtvideoinfo.elatitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr ""
+
+#: tedtvideoinfo.elocality.buttonhint
+msgctxt "tedtvideoinfo.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tedtvideoinfo.elongitude.buttonhint
+msgctxt "tedtvideoinfo.elongitude.buttonhint"
+msgid "Edit/import coordinate"
+msgstr ""
+
+#: tedtvideoinfo.erecordingdate.buttonhint
+msgctxt "tedtvideoinfo.erecordingdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtvideoinfo.erecordingdate.texthint
+msgctxt "tedtvideoinfo.erecordingdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtvideoinfo.erecordingtime.texthint
+msgctxt "tedtvideoinfo.erecordingtime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtvideoinfo.etaxon.buttonhint
+msgctxt "tedtvideoinfo.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tedtvideoinfo.evideofile.buttonhint
+msgctxt "tedtvideoinfo.evideofile.buttonhint"
+msgid "Choose file"
+msgstr ""
+
+#: tedtvideoinfo.lblauthor.caption
+msgctxt "tedtvideoinfo.lblauthor.caption"
+msgid "Author:"
+msgstr ""
+
+#: tedtvideoinfo.lblcameramodel.caption
+msgid "Camera model:"
+msgstr ""
+
+#: tedtvideoinfo.lbldistance.caption
+msgctxt "tedtvideoinfo.lbldistance.caption"
+msgid "Distance (m):"
+msgstr ""
+
+#: tedtvideoinfo.lblhabitat.caption
+msgctxt "tedtvideoinfo.lblhabitat.caption"
+msgid "Habitat:"
+msgstr ""
+
+#: tedtvideoinfo.lbllatitude.caption
+msgctxt "tedtvideoinfo.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtvideoinfo.lbllicensenotes.caption
+msgctxt "tedtvideoinfo.lbllicensenotes.caption"
+msgid "License notes:"
+msgstr ""
+
+#: tedtvideoinfo.lbllicenseowner.caption
+msgctxt "tedtvideoinfo.lbllicenseowner.caption"
+msgid "License owner:"
+msgstr ""
+
+#: tedtvideoinfo.lbllicensetype.caption
+msgctxt "tedtvideoinfo.lbllicensetype.caption"
+msgid "License type:"
+msgstr ""
+
+#: tedtvideoinfo.lbllicenseuri.caption
+msgctxt "tedtvideoinfo.lbllicenseuri.caption"
+msgid "License URL:"
+msgstr ""
+
+#: tedtvideoinfo.lbllicenseyear.caption
+msgctxt "tedtvideoinfo.lbllicenseyear.caption"
+msgid "License year:"
+msgstr ""
+
+#: tedtvideoinfo.lbllocality.caption
+msgctxt "tedtvideoinfo.lbllocality.caption"
+msgid "Locality:"
+msgstr ""
+
+#: tedtvideoinfo.lbllongitude.caption
+msgctxt "tedtvideoinfo.lbllongitude.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtvideoinfo.lblnotes1.caption
+msgctxt "tedtvideoinfo.lblnotes1.caption"
+msgid "Subtitle:"
+msgstr ""
+
+#: tedtvideoinfo.lblrecordingcontext.caption
+msgctxt "tedtvideoinfo.lblrecordingcontext.caption"
+msgid "Context of the recording:"
+msgstr ""
+
+#: tedtvideoinfo.lblrecordingdate.caption
+msgctxt "tedtvideoinfo.lblrecordingdate.caption"
+msgid "Recording date: *"
+msgstr ""
+
+#: tedtvideoinfo.lblrecordingtime.caption
+msgctxt "tedtvideoinfo.lblrecordingtime.caption"
+msgid "Recording time:"
+msgstr ""
+
+#: tedtvideoinfo.lbltaxon.caption
+msgctxt "tedtvideoinfo.lbltaxon.caption"
+msgid "Taxon:"
+msgstr ""
+
+#: tedtvideoinfo.lblvideofile.caption
+msgctxt "tedtvideoinfo.lblvideofile.caption"
+msgid "Recording file: *"
+msgstr ""
+
+#: tedtvideoinfo.lblvideotype.caption
+msgctxt "tedtvideoinfo.lblvideotype.caption"
+msgid "Recording type:"
+msgstr ""
+
+#: tedtvideoinfo.pmnnewlocality.caption
+msgctxt "tedtvideoinfo.pmnnewlocality.caption"
+msgid "New locality"
+msgstr ""
+
+#: tedtvideoinfo.pmnnewperson.caption
+msgctxt "tedtvideoinfo.pmnnewperson.caption"
+msgid "New author"
+msgstr ""
+
+#: tedtvideoinfo.sbcancel.caption
+msgctxt "tedtvideoinfo.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtvideoinfo.sbsave.caption
+msgctxt "tedtvideoinfo.sbsave.caption"
+msgid "Save"
+msgstr ""
+
 #: tedtweatherlog.esampledate.buttonhint
 msgctxt "tedtweatherlog.esampledate.buttonhint"
 msgid "Open calendar"
@@ -9595,6 +9777,7 @@ msgid "Time"
 msgstr ""
 
 #: tfrmcustomgrid.gridaudios.columns[2].title.caption
+msgctxt "tfrmcustomgrid.gridaudios.columns[2].title.caption"
 msgid "Fullname"
 msgstr ""
 
@@ -9619,6 +9802,21 @@ msgstr ""
 
 #: tfrmcustomgrid.griddocs.columns[1].title.caption
 msgid "File path"
+msgstr ""
+
+#: tfrmcustomgrid.gridvideos.columns[0].title.caption
+msgctxt "tfrmcustomgrid.gridvideos.columns[0].title.caption"
+msgid "Date"
+msgstr ""
+
+#: tfrmcustomgrid.gridvideos.columns[1].title.caption
+msgctxt "tfrmcustomgrid.gridvideos.columns[1].title.caption"
+msgid "Time"
+msgstr ""
+
+#: tfrmcustomgrid.gridvideos.columns[2].title.caption
+msgctxt "tfrmcustomgrid.gridvideos.columns[2].title.caption"
+msgid "Fullname"
 msgstr ""
 
 #: tfrmcustomgrid.lblagefilter.caption
@@ -9985,6 +10183,7 @@ msgid "&Delete"
 msgstr ""
 
 #: tfrmcustomgrid.pmaplayaudio.caption
+msgctxt "tfrmcustomgrid.pmaplayaudio.caption"
 msgid "&Play selected audio"
 msgstr ""
 
@@ -10581,6 +10780,30 @@ msgctxt "tfrmcustomgrid.pmtrefresh.caption"
 msgid "&Refresh"
 msgstr ""
 
+#: tfrmcustomgrid.pmvaddvideo.caption
+msgid "Add &new video(s)"
+msgstr ""
+
+#: tfrmcustomgrid.pmvdelvideo.caption
+msgctxt "tfrmcustomgrid.pmvdelvideo.caption"
+msgid "&Delete"
+msgstr ""
+
+#: tfrmcustomgrid.pmvplayvideo.caption
+msgctxt "tfrmcustomgrid.pmvplayvideo.caption"
+msgid "&Play selected video"
+msgstr ""
+
+#: tfrmcustomgrid.pmvrefreshvideos.caption
+msgctxt "tfrmcustomgrid.pmvrefreshvideos.caption"
+msgid "&Refresh"
+msgstr ""
+
+#: tfrmcustomgrid.pmvvideoinfo.caption
+msgctxt "tfrmcustomgrid.pmvvideoinfo.caption"
+msgid "View/&edit info"
+msgstr ""
+
 #: tfrmcustomgrid.rbescapedall.caption
 msgctxt "tfrmcustomgrid.rbescapedall.caption"
 msgid "All"
@@ -10807,6 +11030,7 @@ msgid "Yes"
 msgstr ""
 
 #: tfrmcustomgrid.sbaddaudio.hint
+msgctxt "tfrmcustomgrid.sbaddaudio.hint"
 msgid "Add audio recording"
 msgstr ""
 
@@ -10831,7 +11055,13 @@ msgstr ""
 msgid "New batch of mistnets"
 msgstr ""
 
+#: tfrmcustomgrid.sbaddvideo.hint
+msgctxt "tfrmcustomgrid.sbaddvideo.hint"
+msgid "Add video"
+msgstr ""
+
 #: tfrmcustomgrid.sbaudioinfo.hint
+msgctxt "tfrmcustomgrid.sbaudioinfo.hint"
 msgid "View and edit audio info"
 msgstr ""
 
@@ -10872,6 +11102,7 @@ msgid "Autoadjust the columns width"
 msgstr ""
 
 #: tfrmcustomgrid.sbdelaudio.hint
+msgctxt "tfrmcustomgrid.sbdelaudio.hint"
 msgid "Delete audio"
 msgstr ""
 
@@ -10896,6 +11127,11 @@ msgstr ""
 #: tfrmcustomgrid.sbdelrecord.hint
 msgctxt "tfrmcustomgrid.sbdelrecord.hint"
 msgid "Delete selected record"
+msgstr ""
+
+#: tfrmcustomgrid.sbdelvideo.hint
+msgctxt "tfrmcustomgrid.sbdelvideo.hint"
+msgid "Delete video"
 msgstr ""
 
 #: tfrmcustomgrid.sbdocinfo.hint
@@ -10998,7 +11234,13 @@ msgid "Open document/link in the default app"
 msgstr ""
 
 #: tfrmcustomgrid.sbplayaudio.hint
+msgctxt "tfrmcustomgrid.sbplayaudio.hint"
 msgid "Play/stop audio"
+msgstr ""
+
+#: tfrmcustomgrid.sbplayvideo.hint
+msgctxt "tfrmcustomgrid.sbplayvideo.hint"
+msgid "Play/stop video"
 msgstr ""
 
 #: tfrmcustomgrid.sbprint.hint
@@ -11133,6 +11375,16 @@ msgctxt "tfrmcustomgrid.sbshowsummary.hint"
 msgid "Summary"
 msgstr ""
 
+#: tfrmcustomgrid.sbshowvideos.hint
+msgctxt "tfrmcustomgrid.sbshowvideos.hint"
+msgid "Videos"
+msgstr ""
+
+#: tfrmcustomgrid.sbvideoinfo.hint
+msgctxt "tfrmcustomgrid.sbvideoinfo.hint"
+msgid "View and edit video info"
+msgstr ""
+
 #: tfrmcustomgrid.sbviewimage.hint
 msgid "View image"
 msgstr ""
@@ -11175,6 +11427,11 @@ msgstr ""
 #: tfrmcustomgrid.titlesummary.caption
 msgctxt "tfrmcustomgrid.titlesummary.caption"
 msgid "Summary"
+msgstr ""
+
+#: tfrmcustomgrid.titlevideos.caption
+msgctxt "tfrmcustomgrid.titlevideos.caption"
+msgid "Videos"
 msgstr ""
 
 #: tfrmcustomgrid.titleviewrecord.caption
@@ -14785,6 +15042,10 @@ msgctxt "utils_locale.rsimportingfile"
 msgid "Importing file %s"
 msgstr ""
 
+#: utils_locale.rsimportvideostitle
+msgid "Import video files"
+msgstr ""
+
 #: utils_locale.rsinactiverecordduplicated
 #, object-pascal-format
 msgctxt "utils_locale.rsinactiverecordduplicated"
@@ -15786,6 +16047,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsprogressimportimages"
 msgid "Processing %d of %d images..."
+msgstr ""
+
+#: utils_locale.rsprogressimportvideos
+#, object-pascal-format
+msgid "Processing %d of %d videos..."
 msgstr ""
 
 #: utils_locale.rsprogressloadingcsvfile
@@ -16984,6 +17250,11 @@ msgstr ""
 #: utils_locale.rstitleverifications
 msgctxt "utils_locale.rstitleverifications"
 msgid "Verifications"
+msgstr ""
+
+#: utils_locale.rstitlevideos
+msgctxt "utils_locale.rstitlevideos"
+msgid "Videos"
 msgstr ""
 
 #: utils_locale.rstitleweather

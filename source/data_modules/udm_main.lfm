@@ -16309,4 +16309,12 @@ object DMM: TDMM
       20D827A82B752791E97F953CA873
     }
   end
+  object OpenVideos: TOpenDialog
+    Title = 'Add videos'
+    DefaultExt = '.mp4'
+    Filter = 'Supported video files|*.avi;*.mp4;*.m4v;*.mov;*.wmv;*.mkv|AVI files|*.avi|MP4 files|*.mp4;*.m4v|MOV files|*.mov|WMV files|*.wmv|MKV files|*.mkv|All files|*.*'
+    Options = [ofHideReadOnly, ofAllowMultiSelect, ofFileMustExist, ofEnableSizing, ofViewDetail]
+    Left = 402
+    Top = 304
+  end
 end

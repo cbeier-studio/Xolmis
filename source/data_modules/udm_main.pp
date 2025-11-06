@@ -50,6 +50,7 @@ type
     iTreesDark: TImageList;
     iWebDark: TImageList;
     OpenAudios: TOpenDialog;
+    OpenVideos: TOpenDialog;
     OpenDocs: TOpenDialog;
     OpenKmlDlg: TOpenDialog;
     qsConnlast_backup: TDateTimeField;
