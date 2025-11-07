@@ -3387,6 +3387,10 @@ msgstr "Usar formatação condicional nas grades"
 msgid "Language of vernacular names"
 msgstr "Idioma dos nomes vernaculares"
 
+#: tcfgoptions.lblvideospath.caption
+msgid "Video files location"
+msgstr "Local dos arquivos de vídeo"
+
 #: tcfgoptions.sbcheckupdatesnow.caption
 msgid "Check now"
 msgstr "Verificar agora"

@@ -3410,6 +3410,10 @@ msgstr ""
 msgid "Language of vernacular names"
 msgstr ""
 
+#: tcfgoptions.lblvideospath.caption
+msgid "Video files location"
+msgstr ""
+
 #: tcfgoptions.sbcheckupdatesnow.caption
 msgid "Check now"
 msgstr ""

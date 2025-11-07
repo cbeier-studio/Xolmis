@@ -30,6 +30,10 @@ type
 
   TcfgOptions = class(TForm)
     btnHelp: TSpeedButton;
+    eVideosPath: TDirectoryEdit;
+    icoVideosPath: TImage;
+    lblVideosPath: TLabel;
+    pVideosPath: TBCPanel;
     sliderRowHeight: TBCFluentSlider;
     btnDefaultRowHeight: TButton;
     cbCheckUpdates: TComboBox;
@@ -175,6 +179,7 @@ type
     procedure eAudiosPathChange(Sender: TObject);
     procedure eBackupPathChange(Sender: TObject);
     procedure eImagesPathChange(Sender: TObject);
+    procedure eVideosPathChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lblPrivacyTermsClick(Sender: TObject);
@@ -232,6 +237,7 @@ begin
   icoShowSynonyms.Images := iIconsDark;
   icoImagesPath.Images := iIconsDark;
   icoAudiosPath.Images := iIconsDark;
+  icoVideosPath.Images := iIconsDark;
   icoDocumentsPath.Images := iIconsDark;
   icoRememberConnection.Images := iIconsDark;
   icoRememberUser.Images := iIconsDark;
@@ -270,6 +276,8 @@ begin
   pImagesPath.Border.Color := clSystemSolidNeutralFGDark;
   pAudiosPath.Background.Color := clSolidBGSecondaryDark;
   pAudiosPath.Border.Color := clSystemSolidNeutralFGDark;
+  pVideosPath.Background.Color := clSolidBGSecondaryDark;
+  pVideosPath.Border.Color := clSystemSolidNeutralFGDark;
   pAttachmentsPath.Background.Color := clSolidBGSecondaryDark;
   pAttachmentsPath.Border.Color := clSystemSolidNeutralFGDark;
   pOpenAfterExport.Background.Color := clSolidBGSecondaryDark;
@@ -304,6 +312,7 @@ begin
 
   eImagesPath.Images := DMM.iEditsDark;
   eAudiosPath.Images := DMM.iEditsDark;
+  eVideosPath.Images := DMM.iEditsDark;
   eAttachmentsPath.Images := DMM.iEditsDark;
   eBackupPath.Images := DMM.iEditsDark;
 end;
@@ -376,6 +385,12 @@ procedure TcfgOptions.eImagesPathChange(Sender: TObject);
 begin
   xSettings.ImagesFolder := eImagesPath.Text;
   { #todo : Update images' file path if the folder changed }
+end;
+
+procedure TcfgOptions.eVideosPathChange(Sender: TObject);
+begin
+  xSettings.VideosFolder := eVideosPath.Text;
+  { #todo : Update videos' file path if the folder changed }
 end;
 
 procedure TcfgOptions.FormDestroy(Sender: TObject);
@@ -465,6 +480,7 @@ begin
   { MEDIA }
   eImagesPath.Text := xSettings.ImagesFolder;
   eAudiosPath.Text := xSettings.AudiosFolder;
+  eVideosPath.Text := xSettings.VideosFolder;
   eAttachmentsPath.Text := xSettings.DocumentsFolder;
 
   { SECURITY }

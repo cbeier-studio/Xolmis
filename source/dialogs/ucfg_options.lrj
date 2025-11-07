@@ -24,6 +24,7 @@
 {"hash":322350,"name":"tcfgoptions.lblaudiospath.caption","sourcebytes":[65,117,100,105,111,32,102,105,108,101,115,32,108,111,99,97,116,105,111,110],"value":"Audio files location"},
 {"hash":91641134,"name":"tcfgoptions.lblattachmentspath.caption","sourcebytes":[68,111,99,117,109,101,110,116,115,32,108,111,99,97,116,105,111,110],"value":"Documents location"},
 {"hash":103324292,"name":"tcfgoptions.lblopenafterexport.caption","sourcebytes":[79,112,101,110,32,102,105,108,101,115,32,97,102,116,101,114,32,101,120,112,111,114,116],"value":"Open files after export"},
+{"hash":68741742,"name":"tcfgoptions.lblvideospath.caption","sourcebytes":[86,105,100,101,111,32,102,105,108,101,115,32,108,111,99,97,116,105,111,110],"value":"Video files location"},
 {"hash":123475193,"name":"tcfgoptions.lbltitlesecurity.caption","sourcebytes":[83,101,99,117,114,105,116,121,32,97,110,100,32,112,114,105,118,97,99,121],"value":"Security and privacy"},
 {"hash":246441950,"name":"tcfgoptions.lblrememberconnection.caption","sourcebytes":[82,101,109,101,109,98,101,114,32,99,111,110,110,101,99,116,105,111,110,32,102,114,111,109,32,108,97,115,116,32,115,101,115,115,105,111,110],"value":"Remember connection from last session"},
 {"hash":235644878,"name":"tcfgoptions.lblrememberuser.caption","sourcebytes":[82,101,109,101,109,98,101,114,32,117,115,101,114,32,102,114,111,109,32,108,97,115,116,32,115,101,115,115,105,111,110],"value":"Remember user from last session"},
