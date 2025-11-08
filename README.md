@@ -17,26 +17,27 @@ Xolmis is an ornithological data management system intended for researchers and 
 Here is a list of the main features:
 
 - [x] Management of database connections.
-- [x] Start page with dashboard.
+- [ ] Start page with dashboard.
 - [x] Management of expeditions and samplings.
 - [x] Lists of sightings and samples collection.
 - [x] Bands and markings management (Brazilian system/CEMAVE).
-- [x] Management of known individuals and captures (including molt data).
+- [x] Management of known individuals and captures (including feathers and molt data).
 - [x] Record of breeding biology data.
 - [x] Record of institutions, researchers, and projects.
 - [x] Management of permits.
 - [x] Record of toponyms (gazetteer) and sampling plots.
-- [ ] Updated bird taxonomies (Clements/eBird, IOC, and CBRO).
+- [ ] Updated bird taxonomies (Clements/eBird, AviList).
 - [x] Geographical coordinates converter (WGS84) from/to Decimal Degrees, DMS, and UTM formats.
+- [x] Import data from [Xolmis Mobile](https://github.com/cbeier-studio/xolmis_mobile) (JSON file).
 - [x] Import eBird records (CSV file).
-- [x] Import banding journals (CSV file).
-- [x] Import captures (CSV file).
+- [x] Import banding journals and captures (CSV file).
 - [ ] Import nests (CSV file).
+- [ ] Import data from files with different schemas (CSV, JSON, ODS, XLSX, XML, and DBF formats).
 - [x] Import and export geographical coordinates from/to file (CSV, KML, GPX, and GeoJSON formats).
 - [x] Export data to file (CSV, JSON, ODS, XLSX, and XML formats).
 - [x] Show geographical coordinates on a map.
 - [x] Column summaries.
-- [ ] Attachment of images, audio recording, documents and links to the field records.
+- [x] Attachment of images, audio recording, videos, documents and links to the field records.
 - [ ] Print and export data to PDF.
 
 See the [Milestones](https://github.com/cbeier-studio/Xolmis/milestones) for more information on planned features.
@@ -57,7 +58,7 @@ You can create [pull requests](https://github.com/cbeier-studio/xolmis/pulls) di
 
 ### Coding
 
-If you want to help in Xolmis development, please send me a message to [hello@christianbeier.studio](mailto://hello@christianbeier.studio).
+If you want to help in Xolmis development, please send me a message to [hello@christianbeier.studio](mailto:hello@christianbeier.studio).
 
 For requirements and packages needed, see the [Wiki](https://github.com/cbeier-studio/Xolmis/wiki/Installing).
 
