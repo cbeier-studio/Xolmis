@@ -3530,6 +3530,10 @@ msgctxt "tdlgabout.lblappversion.caption"
 msgid "Version"
 msgstr ""
 
+#: tdlgabout.lblmastersponsor.caption
+msgid "Master sponsor"
+msgstr ""
+
 #: tdlgabout.linkclementsversion.caption
 msgctxt "tdlgabout.linkclementsversion.caption"
 msgid "Clements/eBird"
@@ -4027,6 +4031,10 @@ msgstr ""
 #: tdlgexport.caption
 msgctxt "tdlgexport.caption"
 msgid "Export data"
+msgstr ""
+
+#: tdlgexport.ckexportchildrecords.caption
+msgid "Export related records"
 msgstr ""
 
 #: tdlgexport.ckusedarwincoreformat.caption

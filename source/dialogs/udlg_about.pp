@@ -29,9 +29,12 @@ type
   { TdlgAbout }
 
   TdlgAbout = class(TForm)
+    imgMasterSponsor: TImage;
+    lblMasterSponsor: TLabel;
     linkClementsVersion: TATLabelLink;
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    pSponsors: TPanel;
     pClementsVersion: TLabel;
     pAppVersion: TLabel;
     pVersion: TBCPanel;

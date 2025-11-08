@@ -32,6 +32,12 @@ type
     btnHelp: TSpeedButton;
     eVideosPath: TDirectoryEdit;
     icoVideosPath: TImage;
+    lblTitleAppearance: TLabel;
+    lblTitleBackup: TLabel;
+    lblTitleCollection: TLabel;
+    lblTitleInterface: TLabel;
+    lblTitleMedia: TLabel;
+    lblTitleSecurity: TLabel;
     lblVideosPath: TLabel;
     pVideosPath: TBCPanel;
     sliderRowHeight: TBCFluentSlider;
@@ -96,12 +102,6 @@ type
     lblSelectedThemeRestart: TLabel;
     lblShowSynonyms: TLabel;
     lblStartupBackup: TLabel;
-    lblTitleBackup: TLabel;
-    lblTitleCollection: TLabel;
-    lblTitleInterface: TLabel;
-    lblTitleAppearance: TLabel;
-    lblTitleMedia: TLabel;
-    lblTitleSecurity: TLabel;
     lblVernacularNames: TLabel;
     nbPages: TNotebook;
     pRowHeight: TBCPanel;

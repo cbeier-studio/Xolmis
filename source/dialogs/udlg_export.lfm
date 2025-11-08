@@ -9,7 +9,6 @@ object dlgExport: TdlgExport
   ClientWidth = 664
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
@@ -186,6 +185,17 @@ object dlgExport: TdlgExport
         Align = alRight
         Caption = 'Use Darwin Core format'
         TabOrder = 1
+        Visible = False
+      end
+      object ckExportChildRecords: TCheckBox
+        Left = 156
+        Height = 26
+        Top = 8
+        Width = 132
+        Align = alRight
+        BorderSpacing.Right = 16
+        Caption = 'Export related records'
+        TabOrder = 2
         Visible = False
       end
     end

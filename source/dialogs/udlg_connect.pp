@@ -87,6 +87,7 @@ end;
 
 procedure TdlgConnect.cbConnectionChange(Sender: TObject);
 begin
+  eUsername.Clear;
   UpdateButtons;
 end;
 

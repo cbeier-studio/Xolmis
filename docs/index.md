@@ -38,6 +38,7 @@ This section describes the interface and general features of Xolmis.
 - [Importing data](importing-data.md)
 - [Images](images.md)
 - [Audio recordings](audio-recordings.md)
+- [Videos](videos.md)
 - [Documents and links](documents.md)
 - [Map](map.md)
 - [Summary](summary.md)

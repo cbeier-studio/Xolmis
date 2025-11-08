@@ -33,6 +33,7 @@ type
     btnOptions: TBitBtn;
     ckUseDarwinCoreFormat: TCheckBox;
     cklbColumns: TCheckListBox;
+    ckExportChildRecords: TCheckBox;
     iButtonsDark: TImageList;
     iIcons: TImageList;
     iButtons: TImageList;
@@ -279,6 +280,7 @@ begin
   tvFiletype.Enabled := False;
   cklbColumns.Enabled := False;
   btnOptions.Enabled := False;
+  ckExportChildRecords.Enabled := False;
   ckUseDarwinCoreFormat.Enabled := False;
 
   // Save the last path used
@@ -301,6 +303,7 @@ procedure TdlgExport.tvFiletypeSelectionChanged(Sender: TObject);
 begin
   ckUseDarwinCoreFormat.Enabled := True;
   btnOptions.Enabled := tvFiletype.Selected.Index = 0;
+  ckExportChildRecords.Enabled := (tvFiletype.Selected.Index = 1) or (tvFiletype.Selected.Index = 4);
 
   sbRun.Enabled := IsRequiredFilled;
 end;

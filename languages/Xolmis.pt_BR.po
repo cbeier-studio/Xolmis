@@ -3506,6 +3506,10 @@ msgctxt "tdlgabout.lblappversion.caption"
 msgid "Version"
 msgstr "Versão"
 
+#: tdlgabout.lblmastersponsor.caption
+msgid "Master sponsor"
+msgstr "Patrocinador Platina"
+
 #: tdlgabout.linkclementsversion.caption
 msgctxt "tdlgabout.linkclementsversion.caption"
 msgid "Clements/eBird"
@@ -4008,6 +4012,10 @@ msgstr "Opções"
 msgctxt "tdlgexport.caption"
 msgid "Export data"
 msgstr "Exportar dados"
+
+#: tdlgexport.ckexportchildrecords.caption
+msgid "Export related records"
+msgstr "Exportar registros relacionados"
 
 #: tdlgexport.ckusedarwincoreformat.caption
 msgid "Use Darwin Core format"

@@ -24,10 +24,10 @@ Recording date | Yes | Date of creation of the recording
 Recording time | | Time of creation of the recording
 Recording type | | Which was recorded, see details below
 Recording file | Yes | Relative file path of the recording
-Locality | | Site where the image was created
+Locality | | Site where the recording was created
 Longitude | | X axis/longitude of the geographical coordinate
 Latitude | | Y axis/latitude of the geographical coordinate
-Taxon | | Taxon represented in the image
+Taxon | | Taxon represented in the recording
 Recorder model | | Model of the recorder used
 Microphone model | | Model of the microphone used
 Filter model | | Model of the filter used
