@@ -9,6 +9,7 @@ object cfgOptions: TcfgOptions
   ClientWidth = 857
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel
@@ -72,7 +73,7 @@ object cfgOptions: TcfgOptions
     Height = 421
     Top = 0
     Width = 657
-    PageIndex = 0
+    PageIndex = 1
     Align = alClient
     TabOrder = 2
     object pgGeneral: TPage
@@ -1057,7 +1058,7 @@ object cfgOptions: TcfgOptions
         Top = 48
         Width = 657
         HorzScrollBar.Page = 265
-        VertScrollBar.Page = 165
+        VertScrollBar.Page = 118
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 373
@@ -1066,7 +1067,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentCollection: TPanel
           Left = 0
-          Height = 165
+          Height = 118
           Top = 0
           Width = 657
           Align = alTop
@@ -1074,7 +1075,7 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 165
+          ClientHeight = 118
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
@@ -1172,104 +1173,10 @@ object cfgOptions: TcfgOptions
               OnChange = cbVernacularNamesChange
             end
           end
-          object pMainTaxonomy: TBCPanel
-            Left = 16
-            Height = 47
-            Top = 55
-            Width = 625
-            Align = alTop
-            AutoSize = True
-            ChildSizing.LeftRightSpacing = 16
-            ChildSizing.TopBottomSpacing = 12
-            ChildSizing.HorizontalSpacing = 8
-            Background.Color = 16448250
-            Background.Gradient1.StartColor = clWhite
-            Background.Gradient1.EndColor = clBlack
-            Background.Gradient1.GradientType = gtLinear
-            Background.Gradient1.Point1XPercent = 0
-            Background.Gradient1.Point1YPercent = 0
-            Background.Gradient1.Point2XPercent = 0
-            Background.Gradient1.Point2YPercent = 100
-            Background.Gradient2.StartColor = clWhite
-            Background.Gradient2.EndColor = clBlack
-            Background.Gradient2.GradientType = gtLinear
-            Background.Gradient2.Point1XPercent = 0
-            Background.Gradient2.Point1YPercent = 0
-            Background.Gradient2.Point2XPercent = 0
-            Background.Gradient2.Point2YPercent = 100
-            Background.Gradient1EndPercent = 35
-            Background.Style = bbsColor
-            BevelInner = bvNone
-            BevelOuter = bvNone
-            BevelWidth = 1
-            Border.Color = 13750737
-            Border.Style = bboSolid
-            BorderBCStyle = bpsBorder
-            FontEx.Color = clDefault
-            FontEx.FontQuality = fqSystemClearType
-            FontEx.Shadow = False
-            FontEx.ShadowRadius = 5
-            FontEx.ShadowOffsetX = 5
-            FontEx.ShadowOffsetY = 5
-            FontEx.Style = []
-            ParentBackground = True
-            Rounding.RoundX = 8
-            Rounding.RoundY = 8
-            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 1
-            object icoMainTaxonomy: TImage
-              AnchorSideLeft.Control = pMainTaxonomy
-              AnchorSideTop.Control = pMainTaxonomy
-              AnchorSideTop.Side = asrCenter
-              Left = 16
-              Height = 20
-              Top = 13
-              Width = 20
-              AutoSize = True
-              Center = True
-              ImageIndex = 14
-              Images = iIcons
-              Proportional = True
-            end
-            object lblMainTaxonomy: TLabel
-              AnchorSideLeft.Control = icoMainTaxonomy
-              AnchorSideLeft.Side = asrBottom
-              AnchorSideTop.Control = pMainTaxonomy
-              AnchorSideTop.Side = asrCenter
-              Left = 44
-              Height = 15
-              Top = 16
-              Width = 100
-              Caption = 'Prefered taxonomy'
-              Layout = tlCenter
-              ParentColor = False
-            end
-            object cbMainTaxonomy: TComboBox
-              AnchorSideTop.Control = pMainTaxonomy
-              AnchorSideTop.Side = asrCenter
-              AnchorSideRight.Control = pMainTaxonomy
-              AnchorSideRight.Side = asrBottom
-              Left = 436
-              Height = 23
-              Top = 12
-              Width = 173
-              Anchors = [akTop, akRight]
-              Color = clWhite
-              ItemHeight = 15
-              Items.Strings = (
-                'Clements/eBird'
-                'IOC'
-                'CBRO'
-              )
-              Style = csDropDownList
-              TabOrder = 0
-              OnChange = cbMainTaxonomyChange
-            end
-          end
           object pShowSynonyms: TBCPanel
             Left = 16
             Height = 47
-            Top = 102
+            Top = 55
             Width = 625
             Align = alTop
             BorderSpacing.Bottom = 16
@@ -1310,7 +1217,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-            TabOrder = 2
+            TabOrder = 1
             object icoShowSynonyms: TImage
               AnchorSideLeft.Control = pShowSynonyms
               AnchorSideTop.Control = pShowSynonyms

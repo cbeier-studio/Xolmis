@@ -3297,10 +3297,6 @@ msgstr "Usar tecla <Enter/Return> para ir para o próximo controle"
 msgid "Images location"
 msgstr "Local das imagens"
 
-#: tcfgoptions.lblmaintaxonomy.caption
-msgid "Prefered taxonomy"
-msgstr "Taxonomia preferida"
-
 #: tcfgoptions.lblmanagebackups.caption
 msgid "Manage backups"
 msgstr "Gerenciar backups"

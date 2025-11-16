@@ -166,7 +166,8 @@ type
     FDefaultRowHeight: Integer;
     FAlternateRowColor: TColor;
     { Collection }
-    FVernacularNamesLanguage, FTaxonomy: Integer;
+    FVernacularNamesLanguage: Integer;
+    //FTaxonomy: Integer;
     FShowSynonyms: Boolean;
     { Media }
     FImagesFolder, FAudiosFolder, FVideosFolder, FDocumentsFolder: String;
@@ -223,7 +224,7 @@ type
     property AlternateRowColor: TColor read FAlternateRowColor write FAlternateRowColor;
     { Collection }
     property VernacularNamesLanguage: Integer read FVernacularNamesLanguage write FVernacularNamesLanguage;
-    property Taxonomy: Integer read FTaxonomy write FTaxonomy;
+    //property Taxonomy: Integer read FTaxonomy write FTaxonomy;
     property ShowSynonyms: Boolean read FShowSynonyms write FShowSynonyms;
     { Media }
     property ImagesFolder: String read FImagesFolder write SetImagesFolder;
@@ -842,7 +843,7 @@ begin
   FAlternateRowColor := FConfig.GetValue('/APPEARANCE/AlternateRowColor', StringToColor('$00FFFFFF'));
   { Collection }
   FVernacularNamesLanguage := FConfig.GetValue('/COLLECTION/VernacularNamesLanguage', 0);
-  FTaxonomy := FConfig.GetValue('/COLLECTION/Taxonomy', 0);
+  //FTaxonomy := FConfig.GetValue('/COLLECTION/Taxonomy', 0);
   FShowSynonyms := FConfig.GetValue('/COLLECTION/ShowSynonyms', True);
   { Media }
   FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
@@ -892,7 +893,7 @@ begin
   FConfig.SetValue('/APPEARANCE/AlternateRowColor', ColorToString(FAlternateRowColor));
   { Collection }
   FConfig.SetValue('/COLLECTION/VernacularNamesLanguage', FVernacularNamesLanguage);
-  FConfig.SetValue('/COLLECTION/Taxonomy', FTaxonomy);
+  //FConfig.SetValue('/COLLECTION/Taxonomy', FTaxonomy);
   FConfig.SetValue('/COLLECTION/ShowSynonyms', FShowSynonyms);
   { Media }
   FConfig.SetValue('/MEDIA/ImagesFolder', FImagesFolder);

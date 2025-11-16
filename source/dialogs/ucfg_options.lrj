@@ -16,7 +16,6 @@
 {"hash":182799956,"name":"tcfgoptions.btndefaultrowheight.caption","sourcebytes":[83,101,116,32,100,101,102,97,117,108,116],"value":"Set default"},
 {"hash":193790965,"name":"tcfgoptions.lbltitleappearance.caption","sourcebytes":[65,112,112,101,97,114,97,110,99,101],"value":"Appearance"},
 {"hash":188478083,"name":"tcfgoptions.lblvernacularnames.caption","sourcebytes":[76,97,110,103,117,97,103,101,32,111,102,32,118,101,114,110,97,99,117,108,97,114,32,110,97,109,101,115],"value":"Language of vernacular names"},
-{"hash":72006185,"name":"tcfgoptions.lblmaintaxonomy.caption","sourcebytes":[80,114,101,102,101,114,101,100,32,116,97,120,111,110,111,109,121],"value":"Prefered taxonomy"},
 {"hash":32438243,"name":"tcfgoptions.lblshowsynonyms.caption","sourcebytes":[83,104,111,119,32,115,121,110,111,110,121,109,115,32,105,110,32,115,101,97,114,99,104,32,114,101,115,117,108,116,115],"value":"Show synonyms in search results"},
 {"hash":46008942,"name":"tcfgoptions.lbltitlecollection.caption","sourcebytes":[67,111,108,108,101,99,116,105,111,110],"value":"Collection"},
 {"hash":38054270,"name":"tcfgoptions.lblimagespath.caption","sourcebytes":[73,109,97,103,101,115,32,108,111,99,97,116,105,111,110],"value":"Images location"},

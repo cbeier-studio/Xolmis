@@ -561,11 +561,11 @@ begin
         Add('WHERE (active_status = 0)');
     end;
 
-    case xSettings.Taxonomy of
-      0: Add('AND (clements_taxonomy = 1)');
-      1: Add('AND (ioc_taxonomy = 1)');
-      2: Add('AND (cbro_taxonomy = 1)');
-    end;
+    //case xSettings.Taxonomy of
+    //  0: Add('AND (clements_taxonomy = 1)');
+    //  1: Add('AND (ioc_taxonomy = 1)');
+    //  2: Add('AND (cbro_taxonomy = 1)');
+    //end;
     if not xSettings.ShowSynonyms then
       Add('AND ((valid_id = 0) OR (valid_id ISNULL))');
 

@@ -45,7 +45,6 @@ type
     cbCheckUpdates: TComboBox;
     cbClearDeleted: TComboBox;
     cbStartPage: TComboBox;
-    cbMainTaxonomy: TComboBox;
     cbSelectedTheme: TComboBox;
     cbVernacularNames: TComboBox;
     cbStartupBackup: TComboBox;
@@ -70,7 +69,6 @@ type
     icoUseConditionalFormatting: TImage;
     icoShowOutliers: TImage;
     icoClearDeleted: TImage;
-    icoMainTaxonomy: TImage;
     icoEnterAsTab: TImage;
     icoVernacularNames: TImage;
     icoShowSynonyms: TImage;
@@ -94,7 +92,6 @@ type
     lblConfirmCancel: TLabel;
     lblEnterAsTab: TLabel;
     lblImagesPath: TLabel;
-    lblMainTaxonomy: TLabel;
     lblManageBackups: TLabel;
     lblRememberConnection: TLabel;
     lblRememberUser: TLabel;
@@ -132,7 +129,6 @@ type
     pgCollection: TPage;
     pgMedia: TPage;
     pImagesPath: TBCPanel;
-    pMainTaxonomy: TBCPanel;
     pManageBackups: TBCPanel;
     pRememberConnection: TBCPanel;
     pRememberUser: TBCPanel;
@@ -170,7 +166,6 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
-    procedure cbMainTaxonomyChange(Sender: TObject);
     procedure cbSelectedThemeChange(Sender: TObject);
     procedure cbStartPageChange(Sender: TObject);
     procedure cbStartupBackupSelect(Sender: TObject);
@@ -233,7 +228,7 @@ begin
   icoUseConditionalFormatting.Images := iIconsDark;
   icoShowOutliers.Images := iIconsDark;
   icoVernacularNames.Images := iIconsDark;
-  icoMainTaxonomy.Images := iIconsDark;
+  //icoMainTaxonomy.Images := iIconsDark;
   icoShowSynonyms.Images := iIconsDark;
   icoImagesPath.Images := iIconsDark;
   icoAudiosPath.Images := iIconsDark;
@@ -268,8 +263,8 @@ begin
   pShowOutliers.Border.Color := clSystemSolidNeutralFGDark;
   pVernacularNames.Background.Color := clSolidBGSecondaryDark;
   pVernacularNames.Border.Color := clSystemSolidNeutralFGDark;
-  pMainTaxonomy.Background.Color := clSolidBGSecondaryDark;
-  pMainTaxonomy.Border.Color := clSystemSolidNeutralFGDark;
+  //pMainTaxonomy.Background.Color := clSolidBGSecondaryDark;
+  //pMainTaxonomy.Border.Color := clSystemSolidNeutralFGDark;
   pShowSynonyms.Background.Color := clSolidBGSecondaryDark;
   pShowSynonyms.Border.Color := clSystemSolidNeutralFGDark;
   pImagesPath.Background.Color := clSolidBGSecondaryDark;
@@ -326,11 +321,6 @@ end;
 procedure TcfgOptions.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_SETTINGS);
-end;
-
-procedure TcfgOptions.cbMainTaxonomyChange(Sender: TObject);
-begin
-  xSettings.Taxonomy := cbMainTaxonomy.ItemIndex;
 end;
 
 procedure TcfgOptions.cbSelectedThemeChange(Sender: TObject);
@@ -474,7 +464,7 @@ begin
 
   { COLLECTION }
   cbVernacularNames.ItemIndex := xSettings.VernacularNamesLanguage;
-  cbMainTaxonomy.ItemIndex := xSettings.Taxonomy;
+  //cbMainTaxonomy.ItemIndex := xSettings.Taxonomy;
   tsShowSynonyms.Checked := xSettings.ShowSynonyms;
 
   { MEDIA }

@@ -754,7 +754,7 @@ end;
 procedure TfrmMain.ApplyFormSettings;
 begin
   // Update active taxonomy
-  ActiveTaxonomy := xSettings.Taxonomy;
+  //ActiveTaxonomy := xSettings.Taxonomy;
   // SBarTaxonomy.Caption:= TAXONOMY_NAMES[ActiveTaxonomy];
 
   // Get user permissions

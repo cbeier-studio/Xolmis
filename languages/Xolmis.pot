@@ -3320,10 +3320,6 @@ msgstr ""
 msgid "Images location"
 msgstr ""
 
-#: tcfgoptions.lblmaintaxonomy.caption
-msgid "Prefered taxonomy"
-msgstr ""
-
 #: tcfgoptions.lblmanagebackups.caption
 msgid "Manage backups"
 msgstr ""
