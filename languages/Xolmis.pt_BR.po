@@ -3506,8 +3506,8 @@ msgctxt "tdlgabout.lblappversion.caption"
 msgid "Version"
 msgstr "Versão"
 
-#: tdlgabout.lblmastersponsor.caption
-msgid "Master sponsor"
+#: tdlgabout.lblplatinumsponsor.caption
+msgid "Platinum sponsor"
 msgstr "Patrocinador Platina"
 
 #: tdlgabout.linkclementsversion.caption
@@ -4876,6 +4876,12 @@ msgstr "Anexos"
 #: tdlgonboarding.lbltitlewelcome.caption
 msgid "Welcome to Xolmis"
 msgstr "Bem-vindo(a) ao Xolmis"
+
+#: tdlgonboarding.lblvideospath.caption
+#, fuzzy
+msgctxt "tdlgonboarding.lblvideospath.caption"
+msgid "Videos"
+msgstr "Vídeos"
 
 #: tdlgonboarding.lblwelcomeinstruction.caption
 msgid ""
@@ -10189,10 +10195,13 @@ msgctxt "tfrmcustomgrid.pmarefreshaudios.caption"
 msgid "&Refresh"
 msgstr "Atuali&zar"
 
-#: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
-msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
-msgid "Adjust columns' &width to content"
-msgstr "Ajustar co&lunas ao conteúdo"
+#: tfrmcustomgrid.pmcallcolumnsautoadjustwidth.caption
+msgid "Adjust all columns' &width to content"
+msgstr "Ajustar largura de todas colunas ao conteúdo"
+
+#: tfrmcustomgrid.pmccolumnautoadjustwidth.caption
+msgid "Adjust column's width to content"
+msgstr "Ajustar largura da coluna ao conteúdo"
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption
 msgid "Sort column &ascending"
@@ -15682,7 +15691,7 @@ msgstr "Postura"
 #: utils_locale.rsnestlost
 msgctxt "utils_locale.rsnestlost"
 msgid "Lost"
-msgstr "Perdida"
+msgstr "Perdido"
 
 #: utils_locale.rsnestmale
 msgctxt "utils_locale.rsnestmale"
@@ -15767,7 +15776,7 @@ msgstr "Sucesso"
 #: utils_locale.rsnestunknown
 msgctxt "utils_locale.rsnestunknown"
 msgid "Unknown"
-msgstr "Indeterminada"
+msgstr "Indeterminado"
 
 #: utils_locale.rsnever
 msgctxt "utils_locale.rsnever"
@@ -17487,3 +17496,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

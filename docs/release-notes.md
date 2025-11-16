@@ -33,9 +33,7 @@ Initial release.
 - Column calculated summaries, showing counts and average values.
 - Record verifications to keep track of records that need corrections or other action.
 - Export data to common file formats: CSV, JSON, MS Excel (XLSX), Open Document (ODS), and XML.
-- Attach images to a record in selected modules.
-- Attach audio files to a record in selected modules.
-- Attach documents and links to a record in selected modules.
+- Attach images, audio recordings, videos, documents and links to a record in selected modules.
 - Internal image viewer.
 - Import files with custom schemas.
 - Import and export geographical coordinates in common file formats: KML/KMZ, GPX, GeoJSON, and CSV.
@@ -55,8 +53,8 @@ Initial release.
 
 ### Enhancements
 
-- Updated Clements taxonomy to v2024.
-- Updated SQLite to v3.50.1.
+- Updated Clements taxonomy to v2025.
+- Updated SQLite to v3.50.4.
 
 *[CSV]: Comma Separated Values
 *[JSON]: JavaScript Object Notation

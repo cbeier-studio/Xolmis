@@ -4,12 +4,12 @@ A gazetteer is a catalog of toponyms or known site names. Toponyms are used in m
 
 The toponyms follow a hierarchy, defined by the type of toponym and the parent toponym:
 
-> - Country
-    - State
-        - Region
-            - Municipality
-                - District
-                    - Locality
+> Country
+    ⨽ State
+        ⨽ Region
+            ⨽ Municipality
+                ⨽ District
+                    ⨽ Locality
 
 ## Adding and editing
 

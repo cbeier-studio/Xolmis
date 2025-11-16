@@ -102,14 +102,14 @@ begin
     vlResult.Values['sqlite3.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'sqlite3.dll']))
   else
     vlResult.Values['sqlite3.dll'] := 'Not found';
-  if FileExists(ConcatPaths([InstallDir, 'fbclient.dll'])) then
-    vlResult.Values['fbclient.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'fbclient.dll']))
-  else
-    vlResult.Values['fbclient.dll'] := 'Not found';
-  if FileExists(ConcatPaths([InstallDir, 'libpq.dll'])) then
-    vlResult.Values['libpq.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'libpq.dll']))
-  else
-    vlResult.Values['libpq.dll'] := 'Not found';
+  //if FileExists(ConcatPaths([InstallDir, 'fbclient.dll'])) then
+  //  vlResult.Values['fbclient.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'fbclient.dll']))
+  //else
+  //  vlResult.Values['fbclient.dll'] := 'Not found';
+  //if FileExists(ConcatPaths([InstallDir, 'libpq.dll'])) then
+  //  vlResult.Values['libpq.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'libpq.dll']))
+  //else
+  //  vlResult.Values['libpq.dll'] := 'Not found';
   if IsFontInstalled('Fira Code') then
     vlResult.Values['Fira Code font'] := 'Installed'
   else
@@ -159,6 +159,7 @@ begin
     end;
   end;
   vlResult.Values['Schema version'] := ReadDatabaseMetadata(DMM.sqlCon, 'version');
+  vlResult.Values['Taxonomy version'] := ReadDatabaseMetadata(DMM.sqlCon, 'taxonomy_version');
 
   vlResult.AutoSizeColumn(0);
 end;

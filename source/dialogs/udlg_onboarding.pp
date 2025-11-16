@@ -15,16 +15,19 @@ type
   TdlgOnboarding = class(TForm)
     btnSaveLocations: TBitBtn;
     dsConn: TDataSource;
+    eVideosPath: TDirectoryEdit;
     eDocumentsPath: TDirectoryEdit;
     eAudiosPath: TDirectoryEdit;
     eImagesPath: TDirectoryEdit;
     icoAudiosPath: TImage;
+    icoVideosPath: TImage;
     icoDocumentsPath: TImage;
     icoImagesPath: TImage;
     imgWelcome: TImage;
     iFinished: TImageList;
     iFinishedDark: TImageList;
     imgFinished: TImage;
+    lblVideosPath: TLabel;
     lblFinishedInstruction: TLabel;
     lblDocumentsPath: TLabel;
     lblAudiosPath: TLabel;
@@ -32,6 +35,7 @@ type
     lblImagesPath: TLabel;
     lblTitleFinished: TLabel;
     lblTitleMedia: TLabel;
+    pVideosPath: TBCPanel;
     pgFinished: TPage;
     pgMedia: TPage;
     pDocumentsPath: TBCPanel;
@@ -104,10 +108,12 @@ begin
   arrowOpenDatabase.Images := iButtonsDark;
   icoImagesPath.Images := iButtonsDark;
   icoAudiosPath.Images := iButtonsDark;
+  icoVideosPath.Images := iButtonsDark;
   icoDocumentsPath.Images := iButtonsDark;
 
   eImagesPath.Images := DMM.iEditsDark;
   eAudiosPath.Images := DMM.iEditsDark;
+  eVideosPath.Images := DMM.iEditsDark;
   eDocumentsPath.Images := DMM.iEditsDark;
 
   pNewDatabase.Background.Color := clSolidBGSecondaryDark;
@@ -118,6 +124,8 @@ begin
   pImagesPath.Border.Color := clSystemSolidNeutralFGDark;
   pAudiosPath.Background.Color := clSolidBGSecondaryDark;
   pAudiosPath.Border.Color := clSystemSolidNeutralFGDark;
+  pVideosPath.Background.Color := clSolidBGSecondaryDark;
+  pVideosPath.Border.Color := clSystemSolidNeutralFGDark;
   pDocumentsPath.Background.Color := clSolidBGSecondaryDark;
   pDocumentsPath.Border.Color := clSystemSolidNeutralFGDark;
 end;
@@ -126,6 +134,7 @@ procedure TdlgOnboarding.btnSaveLocationsClick(Sender: TObject);
 begin
   xSettings.ImagesFolder := eImagesPath.Directory;
   xSettings.AudiosFolder := eAudiosPath.Directory;
+  xSettings.VideosFolder := eVideosPath.Directory;
   xSettings.DocumentsFolder := eDocumentsPath.Directory;
   xSettings.SaveToFile;
 
@@ -147,6 +156,7 @@ procedure TdlgOnboarding.FormShow(Sender: TObject);
 begin
   eImagesPath.Directory := xSettings.ImagesFolder;
   eAudiosPath.Directory := xSettings.AudiosFolder;
+  eVideosPath.Directory := xSettings.VideosFolder;
   eDocumentsPath.Directory := xSettings.DocumentsFolder;
 end;
 

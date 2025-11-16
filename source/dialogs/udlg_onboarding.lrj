@@ -15,6 +15,7 @@
 {"hash":19159491,"name":"tdlgonboarding.lblaudiospath.caption","sourcebytes":[65,117,100,105,111,32,102,105,108,101,115],"value":"Audio files"},
 {"hash":180621027,"name":"tdlgonboarding.lbldocumentspath.caption","sourcebytes":[68,111,99,117,109,101,110,116,115],"value":"Documents"},
 {"hash":366789,"name":"tdlgonboarding.btnsavelocations.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":97496163,"name":"tdlgonboarding.lblvideospath.caption","sourcebytes":[86,105,100,101,111,115],"value":"Videos"},
 {"hash":5282404,"name":"tdlgonboarding.lbltitlefinished.caption","sourcebytes":[70,105,110,105,115,104,101,100],"value":"Finished"},
 {"hash":129600302,"name":"tdlgonboarding.lblfinishedinstruction.caption","sourcebytes":[89,111,117,114,32,99,111,110,102,105,103,117,114,97,116,105,111,110,32,105,115,32,100,111,110,101,33,13,10,13,10,89,111,117,32,99,97,110,32,115,116,97,114,116,32,117,115,105,110,103,32,88,111,108,109,105,115,32,97,110,100,32,97,108,108,32,105,116,115,32,102,101,97,116,117,114,101,115,46],"value":"Your configuration is done!\r\n\r\nYou can start using Xolmis and all its features."},
 {"hash":177752476,"name":"tdlgonboarding.sbcancel.caption","sourcebytes":[38,67,97,110,99,101,108],"value":"&Cancel"},

@@ -10,6 +10,7 @@ object dlgDiagnostic: TdlgDiagnostic
   ClientWidth = 592
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnShow = FormShow
   object pTitle: TPanel
     Left = 0
@@ -104,7 +105,7 @@ object dlgDiagnostic: TdlgDiagnostic
     )
     ColWidths = (
       64
-      507
+      528
     )
   end
   object iButtons: TImageList

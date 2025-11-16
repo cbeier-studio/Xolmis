@@ -18,7 +18,7 @@ Check for Xolmis updates | Check for updates periodically | Daily
 
     Deleted records are kept inactivated in the database. On every startup, Xolmis will check if there are inactive records with more than 30, 60, 90 or 120 days, as configured in the Settings, then permanently delete them. If you do not want inactive records to be permanently deleted automatically, set the _Clear deleted records automatically (in days)_ setting to **Never**.
 
-    {==Images, audio recordings and documents are always deleted permanently without inactivating the records.==}  
+    {==Images, audio recordings, videos, and documents are always deleted permanently without inactivating the records.==}  
 
 ## Appearance
 
@@ -48,6 +48,7 @@ Setting | Description | Default
 --- | --- | ---
 Images location | Folder path where all the images are stored | `.\images\` in install folder
 Audio files location | Folder path where all the audio recordings are stored | `.\sounds\` in install folder
+Videos location | Folder path where all the videos are stored | `.\videos\` in install folder
 Documents location | Folder path where all document files are stored | `.\attachments\` in install folder
 Open files after export | If enabled, opens exported file in the default application for each filetype | Disabled
 

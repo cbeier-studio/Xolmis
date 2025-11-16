@@ -187,8 +187,6 @@ type
     FDelimiterIndex: Integer;
     FDelimiter: Char;
     FDecimalSeparator: Char;
-    { Versions }
-    FClementsVersion, FIocVersion, FCbroVersion: String;
     procedure SetFileName(aValue: String);
     procedure SetImagesFolder(aValue: String);
     procedure SetAudiosFolder(aValue: String);
@@ -252,10 +250,6 @@ type
     property DelimiterIndex: Integer read FDelimiterIndex write FDelimiterIndex;
     property Delimiter: Char read FDelimiter write FDelimiter;
     property DecimalSeparator: Char read FDecimalSeparator write FDecimalSeparator;
-    { Versions }
-    property ClementsVersion: String read FClementsVersion;
-    property IocVersion: String read FIocVersion;
-    property CbroVersion: String read FCbroVersion;
   end;
 
 type
@@ -874,10 +868,6 @@ begin
   FDelimiterIndex := FConfig.GetValue('/CSV/DelimiterIndex', 0);
   FDelimiter := FConfig.GetValue('/CSV/Delimiter', ';')[1];
   FDecimalSeparator := FConfig.GetValue('/CSV/DecimalSeparator', ',')[1];
-  { Versions }
-  FClementsVersion := FConfig.GetValue('/VERSIONS/Clements', '2023');
-  FIocVersion := FConfig.GetValue('/VERSIONS/IOC', '14.1');
-  FCbroVersion := FConfig.GetValue('/VERSIONS/CBRO', '2021');
 end;
 
 procedure TXolmisSettings.SaveToFile;

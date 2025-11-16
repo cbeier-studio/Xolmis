@@ -3530,8 +3530,8 @@ msgctxt "tdlgabout.lblappversion.caption"
 msgid "Version"
 msgstr ""
 
-#: tdlgabout.lblmastersponsor.caption
-msgid "Master sponsor"
+#: tdlgabout.lblplatinumsponsor.caption
+msgid "Platinum sponsor"
 msgstr ""
 
 #: tdlgabout.linkclementsversion.caption
@@ -4892,6 +4892,11 @@ msgstr ""
 
 #: tdlgonboarding.lbltitlewelcome.caption
 msgid "Welcome to Xolmis"
+msgstr ""
+
+#: tdlgonboarding.lblvideospath.caption
+msgctxt "tdlgonboarding.lblvideospath.caption"
+msgid "Videos"
 msgstr ""
 
 #: tdlgonboarding.lblwelcomeinstruction.caption
@@ -10204,9 +10209,12 @@ msgctxt "tfrmcustomgrid.pmarefreshaudios.caption"
 msgid "&Refresh"
 msgstr ""
 
-#: tfrmcustomgrid.pmccolumnsautoadjustwidth.caption
-msgctxt "tfrmcustomgrid.pmccolumnsautoadjustwidth.caption"
-msgid "Adjust columns' &width to content"
+#: tfrmcustomgrid.pmcallcolumnsautoadjustwidth.caption
+msgid "Adjust all columns' &width to content"
+msgstr ""
+
+#: tfrmcustomgrid.pmccolumnautoadjustwidth.caption
+msgid "Adjust column's width to content"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption

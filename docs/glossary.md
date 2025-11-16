@@ -26,6 +26,10 @@ Here are some terms used throughout this documentation.
 
 :   A **dialog** with the purpose of insert or edit data records. Each **module** have its own edit dialog.
 
+**Gazetteer**
+
+:   It is a catalog of **toponyms** or named places on a map.
+
 **GeoAssist**
 
 :   Name of the tool used to help fill geographical coordinates in records.
@@ -57,3 +61,7 @@ Here are some terms used throughout this documentation.
 **Start page**
 
 :   Same as **home**.
+
+**Toponym**
+
+:   A named place on a map.

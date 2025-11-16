@@ -54,6 +54,7 @@ type
     gridVideos: TDBGrid;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmcColumnAutoAdjustWidth: TMenuItem;
     MvPluginManager: TMvPluginManager;
     MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin;
     MvPluginManagerMapScalePlugin1: TMapScalePlugin;
@@ -383,7 +384,7 @@ type
     pmiViewImage: TMenuItem;
     pmiDelImage: TMenuItem;
     pmiRefreshImages: TMenuItem;
-    pmcColumnsAutoAdjustWidth: TMenuItem;
+    pmcAllColumnsAutoAdjustWidth: TMenuItem;
     pmcColumnSortAsc: TMenuItem;
     pmcColumnSortDesc: TMenuItem;
     pmcHideColumn: TMenuItem;
@@ -1012,6 +1013,7 @@ type
     procedure pmAddDocumentClick(Sender: TObject);
     procedure pmAddLinkClick(Sender: TObject);
     procedure pmaRefreshAudiosClick(Sender: TObject);
+    procedure pmcColumnAutoAdjustWidthClick(Sender: TObject);
     procedure pmcColumnSortAscClick(Sender: TObject);
     procedure pmcColumnSortDescClick(Sender: TObject);
     procedure pmcHideColumnClick(Sender: TObject);
@@ -6677,6 +6679,12 @@ begin
     Exit;
 
   qAudios.Refresh;
+end;
+
+procedure TfrmCustomGrid.pmcColumnAutoAdjustWidthClick(Sender: TObject);
+begin
+  if DBG.SelectedIndex > -1 then
+    DBG.AutoAdjustColumn(FStartCol);
 end;
 
 procedure TfrmCustomGrid.pmcColumnSortAscClick(Sender: TObject);

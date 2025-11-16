@@ -101,6 +101,7 @@ Icon | Button | Panel function
 :material-filter: | Quick filters | Options to filter the records of the module
 :material-image: | Images | Images attached to the selected record
 :material-microphone: | Audio recordings | Audio recordings attached to the selected record
+:material-video: | Videos | Videos attached to the selected record
 :material-attachment: | Documents and links | Documents and/or links attached to the selected record
 :material-map: | Map | Display geographical coordinates of the selected record on a map
 :material-list-box: | Summary | Show counts or average values for the selected column of the main grid
@@ -130,8 +131,17 @@ Icon | Button | Function
 --- | --- | ---
 :material-plus-circle: | Add recording | Insert new audio recordings from files
 :material-pencil: | View and edit recording info | Edit the selected recording info
-:material-play: | Play recording | Opens the selected recording file in the default audio application
+:material-play: | Play recording | Opens the selected recording file in the default audio player
 :material-delete: | Delete recording | Delete the selected audio recording
+
+#### Videos toolbar
+
+Icon | Button | Function
+--- | --- | ---
+:material-plus-circle: | Add video | Insert new videos from files
+:material-pencil: | View and edit video info | Edit the selected video info
+:material-play: | Play video | Opens the selected video file in the default video player
+:material-delete: | Delete video | Delete the selected video
 
 #### Documents and links toolbar
 

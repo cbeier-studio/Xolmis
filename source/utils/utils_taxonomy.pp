@@ -38,6 +38,9 @@ var
   { Taxonomies management }
   procedure RewriteTaxonHierarchy;
 
+  function ReadTaxonomyVersion: Double;
+  procedure WriteTaxonomyVersion(aVersion: Double);
+
   procedure SplitTaxon(aSubspecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
     ExecNow: Boolean = True);
   procedure LumpTaxon(aSpecies, ToSpecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
@@ -801,6 +804,19 @@ begin
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
   end;
+end;
+
+function ReadTaxonomyVersion: Double;
+var
+  S: String;
+begin
+  S := ReadDatabaseMetadata(DMM.sqlCon, 'taxonomy_version');
+  Result := StrToFloatDef(S, 2025.0);
+end;
+
+procedure WriteTaxonomyVersion(aVersion: Double);
+begin
+  WriteDatabaseMetadata(DMM.sqlCon, 'taxonomy_version', FloatToStr(aVersion));
 end;
 
 procedure SplitTaxon(aSubspecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;

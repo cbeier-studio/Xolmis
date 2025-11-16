@@ -30,7 +30,7 @@ type
 
   TdlgAbout = class(TForm)
     imgMasterSponsor: TImage;
-    lblMasterSponsor: TLabel;
+    lblPlatinumSponsor: TLabel;
     linkClementsVersion: TATLabelLink;
     iButtons: TImageList;
     iButtonsDark: TImageList;
@@ -71,7 +71,7 @@ var
 implementation
 
 uses
-  utils_global, utils_autoupdate, utils_themes, uDarkStyleParams;
+  utils_global, utils_taxonomy, utils_autoupdate, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -103,7 +103,7 @@ begin
 
   pAppVersion.Caption := GetBuildInfoAsString;
 
-  pClementsVersion.Caption := xSettings.ClementsVersion;
+  pClementsVersion.Caption := FloatToStr(ReadTaxonomyVersion);
   //pIocVersion.Caption := xSettings.IocVersion;
   //pCbroVersion.Caption := xSettings.CbroVersion;
 end;

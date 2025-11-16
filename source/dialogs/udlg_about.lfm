@@ -11,6 +11,7 @@ object dlgAbout: TdlgAbout
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     AnchorSideLeft.Control = Owner
@@ -381,23 +382,23 @@ object dlgAbout: TdlgAbout
       ClientWidth = 251
       ParentBackground = False
       TabOrder = 2
-      object lblMasterSponsor: TLabel
+      object lblPlatinumSponsor: TLabel
         AnchorSideLeft.Control = pSponsors
         AnchorSideLeft.Side = asrCenter
         AnchorSideTop.Control = pSponsors
-        Left = 83
+        Left = 78
         Height = 15
         Top = 0
-        Width = 85
+        Width = 95
         BorderSpacing.Bottom = 16
-        Caption = 'Master sponsor'
+        Caption = 'Platinum sponsor'
         Font.Height = -12
         Font.Style = [fsBold]
         ParentFont = False
       end
       object imgMasterSponsor: TImage
         AnchorSideLeft.Control = pSponsors
-        AnchorSideTop.Control = lblMasterSponsor
+        AnchorSideTop.Control = lblPlatinumSponsor
         AnchorSideTop.Side = asrBottom
         AnchorSideRight.Control = pSponsors
         AnchorSideRight.Side = asrBottom

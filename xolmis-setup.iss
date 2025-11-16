@@ -1,6 +1,6 @@
 
 #define MyAppName "Xolmis"
-#define MyAppVersion "0.1.0"
+#define MyAppVersion GetVersionNumbersString("Xolmis.exe")
 #define MyAppPublisher "Christian Beier Studio"
 #define MyAppExeName "Xolmis.exe"
 #define MyAppSource "win64\x86_64"
@@ -20,9 +20,9 @@ OutputBaseFilename=xolmis-{#MyAppVersion}-win64
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
-VersionInfoVersion=0.1.0.472
+VersionInfoVersion={#MyAppVersion}
 VersionInfoCopyright=Christian Beier
-VersionInfoProductName=Xolmis
+VersionInfoProductName={#MyAppName}
 MinVersion=0,10.0
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
