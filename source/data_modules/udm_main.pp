@@ -35,6 +35,8 @@ type
     FPSExport: TFPSExport;
     iAddMenuDark: TImageList;
     iBandTypesDark: TImageList;
+    iTips: TImageList;
+    iTipsDark: TImageList;
     iWeb: TImageList;
     iCheckboxDark: TImageList;
     iEditsDark: TImageList;

@@ -11,11 +11,12 @@ object frmMaintenance: TfrmMaintenance
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 397
+    Top = 396
     Width = 684
     Align = alBottom
     LineColor = 9276813
@@ -24,8 +25,8 @@ object frmMaintenance: TfrmMaintenance
   end
   object pBottom: TPanel
     Left = 0
-    Height = 41
-    Top = 399
+    Height = 42
+    Top = 398
     Width = 684
     Align = alBottom
     AutoSize = True
@@ -33,12 +34,12 @@ object frmMaintenance: TfrmMaintenance
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 8
     ChildSizing.HorizontalSpacing = 8
-    ClientHeight = 41
+    ClientHeight = 42
     ClientWidth = 684
     TabOrder = 0
     object sbClose: TButton
       Left = 550
-      Height = 25
+      Height = 26
       Top = 8
       Width = 118
       Align = alRight
@@ -46,10 +47,23 @@ object frmMaintenance: TfrmMaintenance
       ModalResult = 11
       TabOrder = 0
     end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
   end
   object pContent: TPanel
     Left = 0
-    Height = 397
+    Height = 396
     Top = 0
     Width = 684
     Align = alClient
@@ -62,7 +76,7 @@ object frmMaintenance: TfrmMaintenance
     ChildSizing.ShrinkHorizontal = crsSameSize
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 3
-    ClientHeight = 397
+    ClientHeight = 396
     ClientWidth = 684
     TabOrder = 1
     object pDatabaseBackup: TBCPanel

@@ -379,7 +379,7 @@ uses
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
   udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
-  udlg_importxmobile, udlg_import, udlg_splash, udlg_loading,
+  udlg_importxmobile, udlg_import, udlg_splash, udlg_loading, udlg_tourtip,
   ufrm_geoconverter, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
@@ -929,6 +929,9 @@ begin
   if Assigned(TablesDict) then
     TablesDict.Free;
 
+  if Assigned(dlgTourTip) then
+    dlgTourTip.Free;
+
   if Assigned(dlgLoading) then
     dlgLoading.Free;
 
@@ -969,6 +972,16 @@ begin
   if oldPPI <> 96 then
   begin
     navTabs.OptScalePercents := (oldPPI * 100) div 96;
+  end;
+
+  // Create the onboarding tour dialog
+  dlgTourTip := TdlgTourTip.Create(nil);
+  with dlgTourTip do
+  begin
+    if IsDarkModeEnabled then
+      IconImages := DMM.iTipsDark
+    else
+      IconImages := DMM.iTips;
   end;
 
   { Initialize notification system }
@@ -1096,6 +1109,13 @@ begin
     xSettings.SaveToFile;
 
     pSplash.Visible := False;
+
+    { Show onboarding tour }
+    //with dlgTourTip do
+    //begin
+    //  AddTip(sbInsertRecord, 2, 'Use the New button to insert records without the need to open the modules.', olBottom);
+    //  NextTip;
+    //end;
   end
   else
   begin

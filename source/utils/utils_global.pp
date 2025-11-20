@@ -133,6 +133,7 @@ const
   HELP_SEARCH_AND_FILTERING_DATA: String  = 'search-and-filtering-data.html';
   HELP_SETTINGS: String                   = 'settings.html';
   HELP_SUMMARY: String                    = 'summary.html';
+  HELP_MAINTENANCE: String                = 'maintenance.html';
 
 type
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);

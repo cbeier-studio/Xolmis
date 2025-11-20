@@ -29,6 +29,7 @@ type
   { TfrmMaintenance }
 
   TfrmMaintenance = class(TForm)
+    btnHelp: TSpeedButton;
     icoRecreateImageThumbnails: TImage;
     icoDatabaseBackup: TImage;
     icoDatabaseIntegrity: TImage;
@@ -86,6 +87,7 @@ type
     titleManageLogs: TLabel;
     titleClearTemporaryFiles: TLabel;
     titleDiagnostic: TLabel;
+    procedure btnHelpClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnBackupDatabaseClick(Sender: TObject);
     procedure btnClearLogsClick(Sender: TObject);
@@ -147,6 +149,7 @@ begin
   sbClearTemporaryFiles.Images := iIconsDark;
   sbDiagnostic.Images := iIconsDark;
   sbRecreateImageThumbnails.Images := iIconsDark;
+  btnHelp.Images := DMM.iEditsDark;
 
   pDatabaseBackup.Background.Color := clSolidBGBaseDark;
   pDatabaseBackup.Border.Color := clSystemSolidNeutralFGDark;
@@ -492,6 +495,11 @@ begin
   //FLog := ConcatPaths([AppDataDir, LOG_FILE]);
   //if FileExists(FLog) then
   //  DeleteFile(FLog);
+end;
+
+procedure TfrmMaintenance.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_MAINTENANCE);
 end;
 
 procedure TfrmMaintenance.btnRecreateImageThumbnailsClick(Sender: TObject);

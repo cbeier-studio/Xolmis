@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="161">
+      <ExcludedIdentifiers Count="163">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -185,6 +185,8 @@
         <Item159 Value="tfrmMain.SBar.Panels[3].Text"/>
         <Item160 Value="tfrmMain.SBar.Panels[4].Text"/>
         <Item161 Value="tfrmMain.SBar.Panels[5].Text"/>
+        <Item162 Value="tdlgTourTip.Caption"/>
+        <Item163 Value="tdlgTourTip.lblText.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
@@ -1460,6 +1462,13 @@
         <Filename Value="edit_dialogs\uedt_videoinfo.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtVideoInfo"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_tourtip.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgTourTip"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>

@@ -98,7 +98,6 @@ object dlgAbout: TdlgAbout
     ChildSizing.HorizontalSpacing = 16
     ClientHeight = 260
     ClientWidth = 573
-    Color = 16444392
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
@@ -352,7 +351,7 @@ object dlgAbout: TdlgAbout
         Cursor = crHandPoint
         Left = 17
         Height = 15
-        Hint = 'Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, '#13#10'J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,'#13#10'and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. '#13#10'Downloaded from https://www.birds.cornell.edu/clementschecklist/download/'
+        Hint = 'Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, J. A. Gerbracht, '#13#10'D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith, and '#13#10'C. L. Wood. 2025. The eBird/Clements checklist of Birds of the World: v2025. '#13#10'Downloaded from https://www.birds.cornell.edu/clementschecklist/download/'
         Top = 12
         Width = 82
         Caption = 'Clements/eBird'

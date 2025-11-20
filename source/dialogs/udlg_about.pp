@@ -80,12 +80,12 @@ uses
 procedure TdlgAbout.ApplyDarkMode;
 begin
   pTitle.Color := clSolidBGBaseDark;
-  pContent.Color := clVioletBG1Dark;
+  //pContent.Color := clVioletBG1Dark;
 
-  pVersion.Background.Color := clCardBGDefaultDark;
-  pVersion.Border.Color := clCardBGSecondaryDark;
-  pClements.Background.Color := clCardBGDefaultDark;
-  pClements.Border.Color := clCardBGSecondaryDark;
+  pVersion.Background.Color := clSolidBGSecondaryDark;
+  pVersion.Border.Color := clSystemSolidNeutralFGDark;
+  pClements.Background.Color := clSolidBGSecondaryDark;
+  pClements.Border.Color := clSystemSolidNeutralFGDark;
   //pIOC.Background.Color := clCardBGDefaultDark;
   //pIOC.Border.Color := clCardBGSecondaryDark;
   //pCBRO.Background.Color := clCardBGDefaultDark;

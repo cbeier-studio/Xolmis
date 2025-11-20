@@ -1391,6 +1391,10 @@ begin
     Port := C.FieldByName('database_port').AsInteger;
     UserName := C.FieldByName('user_name').AsString;
     Password := C.FieldByName('user_password').AsString;
+    if C.FieldByName('last_backup').IsNull then
+    begin
+      SetLastBackup;
+    end;
     LastBackup := C.FieldByName('last_backup').AsDateTime;
     IsLocal := Server = 'localhost';
     case Manager of
@@ -1464,6 +1468,7 @@ procedure TDBParams.SetLastBackup;
 begin
   DMM.sysCon.ExecuteDirect('UPDATE connections SET last_backup = datetime(''now'', ''localtime'') ' +
     'WHERE connection_name = ' + QuotedStr(Name));
+  LastBackup := Now;
 end;
 
 function TDBParams.TestConnection: Boolean;

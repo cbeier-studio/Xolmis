@@ -1,0 +1,6 @@
+{"version":1,"strings":[
+{"hash":374466,"name":"tdlgtourtip.caption","sourcebytes":[84,111,117,114],"value":"Tour"},
+{"hash":41587822,"name":"tdlgtourtip.lbltext.caption","sourcebytes":[84,105,112,32,116,101,120,116,46],"value":"Tip text."},
+{"hash":347380,"name":"tdlgtourtip.btnnext.caption","sourcebytes":[78,101,120,116],"value":"Next"},
+{"hash":185221347,"name":"tdlgtourtip.btnclose.caption","sourcebytes":[68,105,115,109,105,115,115],"value":"Dismiss"}
+]}

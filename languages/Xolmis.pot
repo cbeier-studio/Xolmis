@@ -3537,9 +3537,9 @@ msgstr ""
 
 #: tdlgabout.linkclementsversion.hint
 msgid ""
-"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
-"J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,\n"
-"and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
+"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, J. A. Gerbracht, \n"
+"D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith, and \n"
+"C. L. Wood. 2025. The eBird/Clements checklist of Birds of the World: v2025. \n"
 "Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
 msgstr ""
 
@@ -5095,6 +5095,15 @@ msgstr ""
 
 #: tdlgsplash.caption
 msgid "Starting Xolmis"
+msgstr ""
+
+#: tdlgtourtip.btnclose.caption
+msgid "Dismiss"
+msgstr ""
+
+#: tdlgtourtip.btnnext.caption
+msgctxt "tdlgtourtip.btnnext.caption"
+msgid "Next"
 msgstr ""
 
 #: tdlgvalidate.sbok.caption

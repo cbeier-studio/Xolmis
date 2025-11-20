@@ -93,6 +93,7 @@ procedure TdlgRecVerifications.ApplyDarkMode;
 begin
   sbInsertRecord.Images := iButtonsDark;
   sbDelRecord.Images := iButtonsDark;
+  btnHelp.Images := DMM.iEditsDark;
 
   pmGrid.Images := iButtonsDark;
 end;

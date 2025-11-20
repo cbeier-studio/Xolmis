@@ -3512,10 +3512,16 @@ msgid "Clements/eBird"
 msgstr "Clements/eBird"
 
 #: tdlgabout.linkclementsversion.hint
+#, fuzzy
+#| msgid ""
+#| "Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
+#| "J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,\n"
+#| "and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
+#| "Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
 msgid ""
-"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
-"J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,\n"
-"and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
+"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, J. A. Gerbracht, \n"
+"D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith, and \n"
+"C. L. Wood. 2025. The eBird/Clements checklist of Birds of the World: v2025. \n"
 "Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
 msgstr ""
 "Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
@@ -4874,7 +4880,6 @@ msgid "Welcome to Xolmis"
 msgstr "Bem-vindo(a) ao Xolmis"
 
 #: tdlgonboarding.lblvideospath.caption
-#, fuzzy
 msgctxt "tdlgonboarding.lblvideospath.caption"
 msgid "Videos"
 msgstr "Vídeos"
@@ -5083,6 +5088,16 @@ msgstr "Aplicar"
 #: tdlgsplash.caption
 msgid "Starting Xolmis"
 msgstr "Iniciando o Xolmis"
+
+#: tdlgtourtip.btnclose.caption
+msgid "Dismiss"
+msgstr ""
+
+#: tdlgtourtip.btnnext.caption
+#, fuzzy
+msgctxt "tdlgtourtip.btnnext.caption"
+msgid "Next"
+msgstr "Próximo"
 
 #: tdlgvalidate.sbok.caption
 msgid "OK"
