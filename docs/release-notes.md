@@ -1,60 +1,91 @@
 # Release notes
 
-## v0.1 (2025-11-20)
+This section documents the changes, new features, and improvements introduced in each version of **Xolmis**. Release notes help users understand what has been added, modified, or planned for future updates.
 
-Initial release.
+## v0.1 (release date)
+
+Initial release of Xolmis.
 
 ### New features
 
-- Creation and management of database files.
-- Management of users per database.
-- The following modules were implemented:
-    - Gazetteer
-    - Sampling plots
-    - Institutions
-    - Researchers
-    - Projects with simple chronogram and budget control
-    - Permits
-    - Botanical taxa
-    - Taxa
-    - Methods
-    - Expeditions
-    - Surveys with mist net effort, weather log and vegetation samples
-    - Sightings
-    - Specimens with sample preparations
-    - Bands
-    - Individuals
-    - Captures
-    - Feathers
-    - Nests and eggs
-- Quick Entry tool to insert records in batches in a spreadsheet-like interface.
-- Batch insert dialog for bands, feathers and mist net effort.
-- Quick and simple data filters.
-- Column calculated summaries, showing counts and average values.
-- Record verifications to keep track of records that need corrections or other action.
-- Export data to common file formats: CSV, JSON, MS Excel (XLSX), Open Document (ODS), and XML.
-- Attach images, audio recordings, videos, documents and links to a record in selected modules.
-- Internal image viewer.
-- Import files with custom schemas.
-- Import and export geographical coordinates in common file formats: KML/KMZ, GPX, GeoJSON, and CSV.
-- Import JSON files generated on Xolmis Mobile app.
-- Import eBird Record Format CSV files.
-- Generate reports to print and export to PDF.
-- Print data grids.
-- Record history to keep track of data changes.
-- Settings dialog to customize Xolmis appearance and behavior.
-- Maintenance tools to keep the databases and app running smoothly.
-- Geographical coordinates converter in three WGS84 formats: decimal degrees, DMS and UTM.
-- GeoAssist tool to help fill geographical coordinates.
-- Semi-automated band stock control with transfer of bands, balance of available bands and history of transactions.
-- Deleted records stay in a "recycle bin", then it is emptied periodically or manually.
-- Simple map to view geographical coordinates within selected modules.
-- Added support to dark mode (experimental).
+- **Database management**
+    - Creation and management of database files.
+    - User management per database, allowing multi-user environments.
+
+- **Implemented modules**
+    - **[Gazetteer](gazetteer.md)** – hierarchical catalog of toponyms.
+    - **[Sampling plots](sampling-plots.md)** – definition of sampling areas.
+    - **[Institutions](institutions.md)** – management of affiliated organizations.
+    - **[Researchers](researchers.md)** – registry of people involved in projects and observations.
+    - **[Projects](projects.md)** – with chronogram and budget control.
+    - **[Permits](permits.md)** – management of research authorizations.
+    - **[Botanical taxa](botanical-taxa.md)** – registry of plant taxa.
+    - **[Taxa](taxa.md)** – registry of bird taxa.
+    - **[Methods](methods.md)** – sampling methods and protocols.
+    - **[Expeditions](expeditions.md)** – organization of field trips.
+    - **[Surveys](surveys.md)** – with mist net effort, weather log, and vegetation samples.
+    - **[Sightings](sightings.md)** – bird observations.
+    - **[Specimens](specimens.md)** – with sample preparations.
+    - **[Bands](bands.md)** – management of bird bands/rings.
+    - **[Individuals](individuals.md)** – registry of birds with identifiers.
+    - **[Captures](captures.md)** – detailed capture records.
+    - **[Feathers](feathers.md)** – feather sampling records.
+    - **[Nests](nests.md) and [eggs](eggs.md)** – breeding data.
+
+- **Data entry tools**
+    - [Quick Entry](adding-and-editing-data.md#quick-entry) tool for batch insertion in a spreadsheet-like interface.
+    - Batch insert dialogs for [bands](bands.md#adding-a-new-batch), [feathers](feathers.md#adding-a-new-batch), and [mist net effort](adding-and-editing-data.md#adding-a-new-record).
+
+- **Data management**
+    - Quick and simple filters for records.
+    - Column summaries with counts and averages.
+    - [Record verification](record-verifications.md) system to track corrections or required actions.
+    - [Record history](record-history.md) to monitor changes over time.
+    - Deleted records stored in a "recycle bin", emptied manually or periodically.
+
+- **Import and export**
+    - [Export](exporting-data.md) to common formats: CSV, JSON, MS Excel (XLSX), Open Document (ODS), and XML.
+    - [Import](importing-data.md#import-wizard) files with custom schemas.
+    - [Import](importing-data.md#geographical-coordinates) and [export](map.md#exporting-coordinates) geographical coordinates in KML/KMZ, GPX, GeoJSON, and CSV.
+    - [Import](importing-data.md#xolmis-mobile) JSON files generated by **Xolmis Mobile**.
+    - [Import](importing-data.md#ebird-records) eBird Record Format CSV files.
+    - Generate [reports](print-data.md) for printing and export to PDF.
+    - [Print](print-data.md#print-grid) data grids.
+
+- **Media support**
+    - Attach [images](images.md), [audio recordings](audio-recordings.md), [videos](videos.md), [documents and links](documents.md) to records in selected modules.
+    - Internal [image viewer](images.md#image-viewer).
+
+- **Geographical tools**
+    - Geographical [coordinates converter](coordinates-converter.md) in three WGS84 formats: decimal degrees, DMS, and UTM.
+    - **[GeoAssist](adding-and-editing-data.md#geoassist)** tool to help fill geographical coordinates.
+    - Simple [map](map.md) to view coordinates within selected modules.
+
+- **Band management**
+    - Semi-automated band stock control with transfer, balance of available bands, and transaction history.
+
+- **Customization and maintenance**
+    - [Settings](settings.md) dialog to customize appearance and behavior.
+    - [Maintenance](maintenance.md) tools to keep databases and the application running smoothly.
+    - Added support for **dark mode** (experimental).
 
 ### Enhancements
 
-- Updated Clements taxonomy to v2025.
-- Updated SQLite to v3.50.4.
+- Updated **[Clements taxonomy](https://www.birds.cornell.edu/clementschecklist/)** to v2025, ensuring alignment with the latest ornithological classification.
+
+### Technical updates
+
+- Updated **Lazarus** to v4.4 (development environment).  
+- Updated **SQLite** to v3.50.4 (database engine).
+
+## What's next
+
+Planned features for upcoming releases:
+
+- Interactive map to select coordinates directly for longitude and latitude fields.  
+- Generator of colored band combinations.  
+- Support for **Darwin Core** files (standard for biodiversity data exchange).  
+- Export data to **eBird** format for direct integration with the platform.  
 
 *[CSV]: Comma Separated Values
 *[JSON]: JavaScript Object Notation

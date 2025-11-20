@@ -1,79 +1,125 @@
 # Specimens
 
-A specimen represents a collected sample, which could be of many types. Specimen data are important to relate them to other records and also to deposit them in scientific collections in museums and research institutions.
+A **specimen** represents a collected biological or ecological sample, which can take many forms. Specimen data are fundamental for linking field records to physical evidence and for depositing samples in scientific collections maintained by museums, universities, and research institutions. By documenting specimens in Xolmis, researchers ensure that samples are traceable, standardized, and available for future studies.
 
-The Specimen module allow to record specimens and preparations made from them. To access the Specimen module, go to menu **Sampling → Specimens**.
+The **Specimens** module allows you to record specimens and the preparations derived from them. To access the module, go to **Sampling → Specimens**.
 
-## Adding or editing
+## Adding or editing specimens
 
-To add a new specimen, click in the add button :material-plus-circle: at the module toolbar. Alternatively, you can click in the purple plus sign :material-plus-circle: at the top right of the window, and click in **New specimen**. You can add specimens in batches using [Quick Entry](adding-and-editing-data.md#quick-entry). To edit a specimen, select it in the grid and click the edit button :material-pencil: at the module toolbar. Alternatively, you can double click the record in the grid, right click the record and select **Edit**, or use the keyboard shortcut ++ctrl+e++.
+To add a new specimen:
 
-The edit dialog presents the following fields:
+- Click the add button :material-plus-circle: in the module toolbar.  
+- Alternatively, click the purple plus sign :material-plus-circle: at the top right of the window and select **New specimen**.  
+- You can also add specimens in batches using [Quick Entry](adding-and-editing-data.md#quick-entry).  
 
-Field | Required | Description
---- | --- | ---
-Field number | Yes | Code used to identify the sample
-Type | Yes | The type of sample collected: Whole carcass, Partial carcass, Nest, Bones, Egg, Parasites, Feathers, Blood, Claw, Swab, Tissues, Feces, and Regurgite
-Collection date | Yes | Date of collection
-Locality | Yes | Site where the sample was collected
-Longitude | | X axis/longitude of the geographical coordinate
-Latitude | | Y axis/latitude of the geographical coordinate
-Taxon | Yes | The taxon to which the sample pertains
-Individual | | The individual bird to which the sample pertains
-Nest | | The nest to which the sample pertains
-Egg | | The egg to which the sample pertains
-Notes | | Any other info about the sample collected
+To edit a specimen:
+
+- Select it in the grid and click the edit button :material-pencil: in the toolbar.  
+- Or double-click the record, right-click and select **Edit**, or use the shortcut ++ctrl+e++.  
+
+### Specimen fields
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Field number** | Yes | Unique code used to identify the sample in the field |
+| **Type** | Yes | Type of sample collected: Whole carcass, Partial carcass, Nest, Bones, Egg, Parasites, Feathers, Blood, Claw, Swab, Tissues, Feces, Regurgitate |
+| **Collection date** | Yes | Date when the sample was collected |
+| **Locality** | Yes | Site where the sample was collected |
+| **Longitude** |  | Longitude coordinate of the collection site |
+| **Latitude** |  | Latitude coordinate of the collection site |
+| **Taxon** | Yes | Taxon to which the sample pertains |
+| **Individual** |  | Individual bird linked to the sample |
+| **Nest** |  | Nest linked to the sample |
+| **Egg** |  | Egg linked to the sample |
+| **Notes** |  | Any additional information about the sample |
 
 ## Collectors
 
-A collector is a researcher that collected the specimen, and a specimen can have many collectors.
+A **collector** is a researcher who collected the specimen.  
+A specimen can have multiple collectors associated with it.
 
-To add a collector to a specimen, click the add button :material-plus-circle: at the related navigation bar. You can add collectors in batches using [Quick Entry](adding-and-editing-data.md#quick-entry). And to edit a collector, click the edit button :material-pencil: at the related toolbar, or double click the collector, or right click the collector and select **Edit**.
+To add a collector:
 
-The edit dialog presented have the following field:
+- Click the add button :material-plus-circle: in the related navigation bar.  
+- Use [Quick Entry](adding-and-editing-data.md#quick-entry) for batch additions.  
 
-Field | Required | Description
---- | --- | ---
-Collector | Yes | Person who collected the specimen
+To edit a collector:
+
+- Click the edit button :material-pencil: in the toolbar.  
+- Or double-click the collector, right-click and select **Edit**.  
+
+### Collector fields
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Collector** | Yes | Person who collected the specimen |
 
 ## Sample preparations
 
-Specimen can go through preparations and procedures, resulting in new data and samples.
+Specimens often undergo **preparations and procedures**, resulting in new data or derivative samples. Preparations document how the specimen was processed and preserved, ensuring traceability in scientific collections.
 
-To add a sample preparation to a specimen, click the add button :material-plus-circle: at the related navigation bar. You can add sample preparations in batches using [Quick Entry](adding-and-editing-data.md#quick-entry). And to edit a sample preparation, click the edit button :material-pencil: at the related toolbar, or double click the sample preparation, or right click on it and select **Edit**.
+To add a preparation:
 
-The edit dialog presented have the following fields:
+- Click the add button :material-plus-circle: in the related navigation bar.  
+- Use [Quick Entry](adding-and-editing-data.md#quick-entry) for batch additions.  
 
-Field | Required | Description
---- | --- | ---
-Accession number | Yes | Accession number received after preparation
-Duplicate/part number | | Sequential duplicate number for the accession
-Type | Yes | The type of preparation, what was made of the sample, see details below
-Preparation date | | Date of preparation
-Preparer | | Person who prepared the sample
-Notes | | Any other info about the preparation
+To edit a preparation:
+
+- Click the edit button :material-pencil: in the toolbar.  
+- Or double-click the preparation, right-click and select **Edit**.  
+
+### Preparation fields
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Accession number** | Yes | Accession number assigned after preparation |
+| **Duplicate/part number** |  | Sequential duplicate number for the accession |
+| **Type** | Yes | Type of preparation (see list below) |
+| **Preparation date** |  | Date when the preparation was made |
+| **Preparer** |  | Person who prepared the sample |
+| **Notes** |  | Any additional information about the preparation |
 
 ### Preparation types
 
-- **Skin (standard)**: scientific taxidermy keeping the bill with the skin.
-- **Skin (shmoo)**: scientific taxidermy removing the whole skull.
-- **Skin (mounted)**: mounted taxidermy, depicting the specimen in a posture as it is alive.
-- **Wing open**: just a open wing removed detached from the body.
-- **Skeleton (whole)**: complete skeleton.
-- **Skeleton (partial)**: incomplete skeleton.
-- **Nest**: a whole nest.
-- **Egg**: an eggshell.
-- **Parasites**: parasites removed from the specimen.
-- **Feathers**: feathers removed from the specimen.
-- **Blood (dry)**: dry blood sample in filter paper.
-- **Blood (wet)**: blood sample stored in alcohol or other liquid.
-- **Blood (smear)**: blood smeared on a microscope slide.
-- **Sexing**: result of sexing from a blood sample.
-- **Genetic sequencing**: result of genetic sequencing.
-- **Microbial culture**: microbial culture made using swab sample.
-- **Tissues**: tissue samples of organs of the specimen.
-- **Eyes**: the whole eyes of the specimen.
-- **Tongue**: the whole tongue of the specimen.
-- **Syrinx**: the whole syrinx of the specimen.
-- **Gonads**: the whole gonads of the specimen.
-- **Stomach**: the whole stomach of the specimen and its contents.
+- **Skin (standard)** – Scientific taxidermy keeping the bill with the skin.  
+- **Skin (shmoo)** – Scientific taxidermy removing the whole skull.  
+- **Skin (mounted)** – Mounted taxidermy, depicting the specimen in a lifelike posture.  
+- **Wing open** – Detached open wing.  
+- **Skeleton (whole)** – Complete skeleton.  
+- **Skeleton (partial)** – Incomplete skeleton.  
+- **Nest** – Whole nest preserved.  
+- **Egg** – Eggshell preserved.  
+- **Parasites** – Parasites removed from the specimen.  
+- **Feathers** – Feathers removed from the specimen.  
+- **Blood (dry)** – Blood sample dried on filter paper.  
+- **Blood (wet)** – Blood sample stored in alcohol or other liquid.  
+- **Blood (smear)** – Blood smeared on a microscope slide.  
+- **Sexing** – Result of sex determination from a blood sample.  
+- **Genetic sequencing** – Result of DNA sequencing.  
+- **Microbial culture** – Culture derived from swab samples.  
+- **Tissues** – Tissue samples from organs.  
+- **Eyes** – Whole eyes preserved.  
+- **Tongue** – Whole tongue preserved.  
+- **Syrinx** – Whole syrinx preserved.  
+- **Gonads** – Whole gonads preserved.  
+- **Stomach** – Whole stomach and its contents preserved.  
+
+## Best practices
+
+- **Use consistent field numbers**: Ensure each specimen has a unique identifier.  
+- **Record precise locality and coordinates**: Essential for ecological and biogeographical studies.  
+- **Link specimens to individuals, nests, or eggs**: Strengthens traceability across modules.  
+- **Document collectors and preparers**: Provides accountability and historical context.  
+- **Specify preparation types clearly**: Helps future researchers understand how the specimen was processed.  
+- **Add detailed notes**: Record unusual conditions, preservation methods, or contextual information.  
+
+## Relation to other modules
+
+Specimens are interconnected with several parts of Xolmis:
+
+- **[Surveys](surveys.md)** – Specimens are linked to survey events.  
+- **[Captures](captures.md)** – Specimens may originate from capture records.  
+- **[Individuals](individuals.md)** – Specimens can be tied to specific banded birds.  
+- **[Nests](nests.md) and [Eggs](eggs.md)** – Samples may derive from breeding records.  
+
+By managing specimens in Xolmis, researchers ensure that collected samples are **traceable, standardized, and scientifically valuable**, supporting long-term ornithological and ecological research.

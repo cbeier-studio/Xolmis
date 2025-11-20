@@ -3,10 +3,77 @@ site_url: ""
 use_directory_urls: false
 repo_url: https://github.com/cbeier-studio/Xolmis
 site_author: Christian Beier
+copyright: Copyright &copy; 2024-2025 Christian Beier
 nav:
   - Home: index.md
+  - About Xolmis:
+    - Introduction: introduction.md
+    - Release Notes: release-notes.md
+    - Privacy Policy: privacy.md
+    - License: license.md
+    - Third Party Announcements: third-party.md
+    - Glossary: glossary.md
+    - Feedback: feedback.md
+    - Xolmis Mobile: xolmis-mobile.md
+    - Best Practices: best-practices.md
+    - FAQ: faq.md
+  - Getting Started:
+    - Installing: installing.md
+    - Starting a new database: first-steps.md
+    - Connections: connections.md
+    - Users: users.md
+    - Settings: settings.md
+  - Using Xolmis:
+    - User interface: interface.md
+    - Keyboard shortcuts: shortcuts.md
+    - Adding and editing data: adding-and-editing-data.md
+    - Search and filtering data: search-and-filtering-data.md
+    - Exporting data: exporting-data.md
+    - Importing data: importing-data.md
+    - Images: images.md
+    - Audio recordings: audio-recordings.md
+    - Videos: videos.md
+    - Documents and links: documents.md
+    - Map: map.md
+    - Summary: summary.md
+    - Record verifications: record-verifications.md
+    - Record history: record-history.md
+    - Print data: print-data.md
+    - Maintenance: maintenance.md
+  - Modules:
+    - Geo:
+      - Gazetteer: gazetteer.md
+      - Sampling plots: sampling-plots.md
+      - Coordinates converter: coordinates-converter.md
+    - Management:
+      - Institutions: institutions.md
+      - Researchers: researchers.md
+      - Projects: projects.md
+      - Permits: permits.md
+    - Sampling:
+      - Methods: methods.md
+      - Expeditions: expeditions.md
+      - Surveys: surveys.md
+      - Sightings: sightings.md
+      - Specimens: specimens.md
+    - Individuals:
+      - Bands: bands.md
+      - Individuals: individuals.md
+      - Captures: captures.md
+      - Feathers: feathers.md
+    - Breeding:
+      - Nests: nests.md
+      - Eggs: eggs.md
+    - Taxonomy:
+      - Botanical taxa: botanical-taxa.md
+      - Taxa: taxa.md
 theme:
   name: material
+  logo: img/xolmis-icon.png
+  language: en
+  features:
+    - search.highlight
+    - search.suggest
 markdown_extensions: 
   - abbr
   - admonition
@@ -20,9 +87,15 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.tilde
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 plugins: 
   - search
   - badges
   - offline
+  - tags

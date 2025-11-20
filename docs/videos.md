@@ -1,40 +1,110 @@
 # Videos
 
-Some modules support attach video recordings to records. Open the videos side panel clicking in the video camera icon :material-video: on the right toolbar, if present.
+The **Videos** feature allows researchers to attach video recordings to records in selected modules. Videos are valuable for documenting bird behavior, habitat conditions, fieldwork activities, or any other dynamic evidence that complements textual and photographic data. By linking videos directly to records, Xolmis ensures that multimedia information is organized, traceable, and available for future analysis.
+
+Open the videos side panel by clicking the video camera icon :material-video: in the right toolbar (if available in the module).
 
 !!! danger
+    Before adding any recordings, go to [Settings](settings.md) in the **Media** section and set the **video files location**. Videos are saved with a file path relative to this location. Changing the location afterwards can cause problems in accessing files.
 
-    Before adding any recordings, go to [Settings](settings.md) in the Media section and set the video files location. The recordings added save the file path relative to this location. Changing the location afterwards can be problematic, at the moment. We are working on a solution.
+    {==A solution for dynamic relocation is under development.==}
+
+## Toolbar
+
+Icon | Button | Function
+--- | --- | ---
+:material-plus-circle: | Add video | Insert new videos from files
+:material-pencil: | View and edit video info | Edit the selected video info
+:material-play: | Play video | Opens the selected video file in the default video player
+:material-delete: | Delete video | Delete the selected video
 
 ## Adding videos
 
-You can add videos clicking in the add button :material-plus-circle: at the toolbar of the videos side panel. Then select all the files that you want to attach to the current record and click **Open**. The progress of adding the recordings is shown. Some video files have metadata, that is used to get some info about the recording, such as date of creation. Other video info must be edited manually afterwards.
+You can add videos in two ways:
 
-Alternatively, you can add videos simply dragging the files from a file explorer and dropping on the videos side panel.
+1. **Using the add button**  
+      - Click the **Add** button :material-plus-circle: in the toolbar of the videos side panel.  
+      - Select one or more video files to attach to the current record.  
+      - Click **Open** to confirm.  
+      - The system will show the progress of adding the recordings.  
+      - If metadata is present (e.g., creation date, GPS coordinates), it will be automatically extracted. Other information must be edited manually afterwards.
+
+2. **Drag and drop**  
+      - Drag video files from your file explorer.  
+      - Drop them directly into the videos side panel.  
+
+This flexibility allows quick integration of field recordings into the database.
 
 ## Editing video info
 
-To edit the video info, click in the edit button :material-pencil: at the toolbar of the videos side panel.
+To edit video information:
 
-Field | Required | Description
---- | --- | ---
-Subtitle | | Description of the recording
-Author | | Person that created the recording
-Recording date | Yes | Date of creation of the recording
-Recording time | | Time of creation of the recording
-Recording type | | Which was recorded, see details below
-Recording file | Yes | Relative file path of the recording
-Locality | | Site where the video was created
-Longitude | | X axis/longitude of the geographical coordinate
-Latitude | | Y axis/latitude of the geographical coordinate
-Taxon | | Taxon represented in the video
-Camera model | | Model of the camera used
-Context of the recording | | What the individuals recorded were doing
-Distance (m) | | Distance of the individuals while recording, in meters
-License type | | Type of recording license
-License year | | Year the recording was licensed
-License owner | | Recording rights owner
-License notes | | Notes about the licensing
-License URL | | URL to the license text
+1. Select the video in the side panel.  
+2. Click the **Edit** button :material-pencil: in the toolbar.  
+3. A dialog will open with editable fields.  
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Subtitle** |  | Short description of the recording |
+| **Author** |  | Person who created the recording |
+| **Recording date** | Yes | Date when the recording was made |
+| **Recording time** |  | Time when the recording was made |
+| **Recording type** |  | Type of recording (see below) |
+| **Recording file** | Yes | Relative file path of the recording |
+| **Locality** |  | Site where the recording was made |
+| **Longitude** |  | Longitude coordinate of the recording |
+| **Latitude** |  | Latitude coordinate of the recording |
+| **Taxon** |  | Taxon represented in the recording |
+| **Camera model** |  | Model of the camera used |
+| **Context of the recording** |  | Behavior or activity of the individuals recorded |
+| **Distance (m)** |  | Distance from the individuals to the camera |
+| **License type** |  | Type of license applied to the recording |
+| **License year** |  | Year of the license |
+| **License owner** |  | Rights holder of the recording |
+| **License notes** |  | Additional notes about licensing |
+| **License URL** |  | Link to the license text |
 
 ### Recording types
+
+Recording types classify the nature of the video captured. Examples include:
+
+- **Behavioral** – Displays specific behaviors such as foraging, vocalizing, mating, or nest building.  
+- **Environmental** – Shows habitat conditions, vegetation, or weather context.  
+- **Fieldwork** – Documents research activities, mist net setup, or team operations.  
+- **Morphological** – Focuses on physical traits of individuals (e.g., plumage, banding process).  
+- **Nest monitoring** – Records nest activity, eggs, or nestlings.  
+- **Other** – Any video not covered by the categories above.  
+
+### License types
+
+Licensing ensures proper use and sharing of videos:
+
+- **Copyright** – All rights reserved.  
+- **CC BY** – Creative Commons with attribution.  
+- **CC BY-SA** – Creative Commons with attribution and derivatives under the same license.  
+- **CC BY-ND** – Creative Commons with attribution and no derivatives.  
+- **CC BY-NC** – Creative Commons with attribution and no commercial use.  
+- **CC BY-NC-SA** – Creative Commons with attribution, no commercial use, and derivatives under the same license.  
+- **CC BY-NC-ND** – Creative Commons with attribution, no commercial use, and no derivatives.  
+- **CC0** – Public domain (Creative Commons).  
+- **Commercial** – Custom license with contractual terms.
+
+## Best practices
+
+- **Set video location first**: Avoid broken links by configuring the storage path before adding files.  
+- **Use descriptive subtitles**: Helps identify recordings quickly in lists and reports.  
+- **Record metadata in the field**: Note taxon, locality, and context during recording to minimize manual editing later.  
+- **Respect licensing**: Always define license type and owner to ensure compliance with copyright.  
+- **Link to taxa and locality**: Strengthens the ecological value of videos by connecting them to species and habitats.  
+- **Keep file sizes manageable**: Large video files may slow down performance; compress when possible.  
+
+## Relation to other modules
+
+Videos can be attached in several modules:
+
+- **[Sightings](sightings.md)** – Document observed behaviors or environmental context.  
+- **[Captures](captures.md)** – Record handling procedures or morphological details.  
+- **[Individuals](individuals.md)** – Associate videos with specific banded birds.  
+- **[Nests](nests.md)** – Monitor breeding activity and nestling development.
+
+By managing videos in Xolmis, researchers integrate dynamic evidence into ornithological studies, enriching datasets with multimedia content and supporting long-term ecological monitoring.

@@ -1,90 +1,31 @@
 # Xolmis User Manual
 
-Welcome to the manual for Xolmis Desktop, the ornithological data management system.
+Welcome to the **Xolmis Desktop User Manual**
 
-!!! warning
+Xolmis is an ornithological data management system designed to help researchers, students, and institutions organize, analyze, and share bird-related data with precision and consistency.
 
-    Xolmis is in the early stages of development and is subject to some breaking changes. It includes this documentation.
+## What you’ll find here
 
-## About Xolmis
+This manual is your companion for exploring Xolmis. It will help you:
 
-This section describes Xolmis, including its legal notices.
+- **Get started quickly** – Learn how to install, configure, and create your first database.  
+- **Master the essentials** – Discover tools for adding, editing, searching, and exporting data.  
+- **Explore specialized modules** – From surveys and specimens to nests and taxonomy, each module is explained in detail.  
+- **Connect the dots** – See how Xolmis integrates with external platforms like eBird and supports scientific collections.  
+- **Stay in control** – Understand settings, privacy, and backup options to keep your data safe.  
 
-- [Introduction](introduction.md)
-- [Release notes](release-notes.md)
-- [Privacy Policy](privacy.md)
-- [License](license.md)
-- [Third party announcements](third-party.md)
-- [Glossary](glossary.md)
+## How to use this manual
 
-## Getting started
+- Begin with **Getting started** if you are new to Xolmis.  
+- Move on to **Using Xolmis** for general tools and workflows.  
+- Dive into **Modules** for detailed guidance on specific types of data.  
+- Refer to **About Xolmis** for background, policies, and legal information.  
+- Use the built-in **Search** to quickly find topics.  
 
-This section first steps in Xolmis.
+## A note for explorers
 
-- [Installing](installing.md)
-- [Connections](connections.md)
-- [Users](users.md)
-- [Settings](settings.md)
-- [User interface](interface.md)
-- [Feedback](feedback.md)
+Xolmis was built to make ornithological data **traceable, standardized, and comparable** across projects. Whether you are documenting a single nest, managing thousands of captures, or preparing specimens for a museum, this manual will guide you step by step.
 
-## Using Xolmis
+---
 
-This section describes the interface and general features of Xolmis.
-
-- [Adding and editing data](adding-and-editing-data.md)
-- [Search and filtering data](search-and-filtering-data.md)
-- [Exporting data](exporting-data.md)
-- [Importing data](importing-data.md)
-- [Images](images.md)
-- [Audio recordings](audio-recordings.md)
-- [Videos](videos.md)
-- [Documents and links](documents.md)
-- [Map](map.md)
-- [Summary](summary.md)
-- [Record verifications](record-verifications.md)
-- [Record history](record-history.md)
-- [Print data](print-data.md)
-
-## Modules
-
-This section describes each module (type of data) of Xolmis.
-
-### Geo
-
-- [Gazetteer](gazetteer.md)
-- [Sampling plots](sampling-plots.md)
-- [Coordinates converter](coordinates-converter.md)
-
-### Management
-
-- [Institutions](institutions.md)
-- [Researchers](researchers.md)
-- [Projects](projects.md)
-- [Permits](permits.md)
-
-### Survey
-
-- [Methods](methods.md)
-- [Expeditions](expeditions.md)
-- [Surveys](surveys.md)
-- [Sightings](sightings.md)
-- [Specimens](specimens.md)
-
-### Individuals
-
-- [Bands (Rings)](bands.md)
-- [Individuals](individuals.md)
-- [Captures](captures.md)
-- [Feathers](feathers.md)
-
-### Breeding
-
-- [Nests](nests.md)
-- [Nest revisions](nests.md#nest-revisions)
-- [Eggs](eggs.md)
-
-### Taxonomy
-
-- [Botanical taxa](botanical-taxa.md)
-- [Taxa](taxa.md)
+Ready? Let’s take flight with Xolmis.
