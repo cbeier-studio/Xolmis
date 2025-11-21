@@ -28,7 +28,7 @@ Xolmis is prepared to work with the **[Brazilian National Banding System](https:
     We plan to include support for other national and international banding systems.
     Contributors familiar with these systems are welcome to collaborate. Contact us if you are interested.
 
-Open the Bands module in the main menu: **Individuals → Bands**.
+Open the Bands module in the main menu: **Management → Bands**.
 
 ## Adding or editing bands
 
@@ -53,6 +53,8 @@ When creating or editing a band record, the following fields are available:
 
 ## Adding a new batch
 
+![New batch of bands dialog](img/batch-bands-dialog.png)
+
 The **New batch** dialog allows you to add multiple bands at once, sharing common attributes such as size, type, source, and supplier. Every number from the **Start number** to the **Final number** will be added as an individual band record.
 
 | Field | Required | Description |
@@ -72,6 +74,8 @@ The **New batch** dialog allows you to add multiple bands at once, sharing commo
 | **Sender** |  | Person who transferred the batch |
 
 ## Transferring bands
+
+![Transfer bands dialog](img/transfer-bands-dialog.png)
 
 To transfer a batch of bands to another bander:
 
@@ -103,6 +107,8 @@ This ensures traceability and compliance with national banding systems.
 
 ## Bands balance
 
+![Bands balance dialog](img/bands-balance-dialog.png)
+
 The **Bands balance** view shows:
 
 - The quantity of bands available for each size  
@@ -116,7 +122,7 @@ These indicators help predict when to reorder bands:
 
 Right-click on the list to access the popup menu:
 
-- **Refresh** or press ++F5++ to update values  
+- **Refresh** or press ++f5++ to update values  
 - **Export CSV** to save the list as a CSV file  
 - **Print** to generate a report (printable or exportable as PDF)
 

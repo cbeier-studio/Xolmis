@@ -2,7 +2,7 @@
 
 A **specimen** represents a collected biological or ecological sample, which can take many forms. Specimen data are fundamental for linking field records to physical evidence and for depositing samples in scientific collections maintained by museums, universities, and research institutions. By documenting specimens in Xolmis, researchers ensure that samples are traceable, standardized, and available for future studies.
 
-The **Specimens** module allows you to record specimens and the preparations derived from them. To access the module, go to **Sampling → Specimens**.
+The **Specimens** module allows you to record specimens and the preparations derived from them. To access the module, go to **Fieldwork → Specimens**.
 
 ## Adding or editing specimens
 

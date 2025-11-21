@@ -2,7 +2,7 @@
 
 The **Surveys** module is used to record sampling events in the field. A survey represents a structured activity where researchers collect ornithological data using defined methods such as point counts, transects, mist nets, or opportunistic observations. Surveys are essential for organizing fieldwork, linking captures and observations to specific sampling contexts, and ensuring that data can be analyzed consistently.
 
-Open the Surveys module in the main menu: **Sampling → Surveys**.
+Open the Surveys module in the main menu: **Fieldwork → Surveys**.
 
 ## Adding or editing a survey
 
@@ -63,6 +63,8 @@ Mist nets used during surveys can be recorded with detailed information:
 | **Notes** |  | Any other information about the mist net |
 
 ### Adding nets in batches
+
+![New batch of nets dialog](img/batch-nets-dialog.png)
 
 The **Add nets in batches** dialog is designed to simplify the registration of mist net effort during surveys. Instead of adding each net one by one, you can define a range of nets (from a start number to an end number) and apply shared information to all of them at once. This speeds up data entry and ensures consistency across records.
 

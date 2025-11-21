@@ -2,7 +2,7 @@
 
 The **Methods** module is used to register and manage the sampling methods applied during fieldwork. A method defines **how data is collected**, ensuring that surveys, captures, and observations are standardized and comparable. By documenting methods, Xolmis allows researchers to maintain consistency across projects and facilitates integration with external platforms such as eBird.
 
-Open the Methods module in the main menu: **Sampling → Methods**.
+Open the Methods module in the main menu: **Fieldwork → Methods**.
 
 ## Adding or editing a method
 

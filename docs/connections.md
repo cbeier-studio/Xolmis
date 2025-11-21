@@ -6,6 +6,8 @@ Xolmis works with [SQLite](http://www.sqlite.org) database files. Each database 
 
 Open the connections dialog in the menu: **File → Manage connections**. This dialog allows you to create, edit, and delete connections, as well as configure access credentials.
 
+![Connections dialog](img/connections-dialog.png)
+
 ### Creating a new database
 
 To create a new database file and connection:
@@ -23,7 +25,7 @@ All databases are created with a default **admin user**.
 - Click **Apply** to save the password.
 
 !!! warning
-    It is **not recommended** to use the Admin user for regular work in Xolmis. The admin account should be reserved for maintenance and configuration tasks.
+    It is **not recommended** to use the `admin` user for regular work in Xolmis. The `admin` account should be reserved for maintenance and configuration tasks.
 
 Create a **standard user** for daily use:
 
@@ -78,7 +80,7 @@ When Xolmis starts, it displays the **Connection dialog**.
 - Enter your **username and password** for the selected connection.  
 
 !!! tip
-    If you frequently connect to the same database (or only have one connection), enable the option to **save the last used connection** in the Settings. This also applies to the username, making login faster.
+    If you frequently connect to the same database (or only have one connection), enable the option to **save the last used connection** in the [Settings](settings.md). This also applies to the username, making login faster.
 
 While running Xolmis, you can switch to another database in the main menu **File → Connect to database** or using the shortcut ++ctrl+alt+o++. This will close the current connection and open the selected one.
 

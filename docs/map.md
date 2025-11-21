@@ -4,6 +4,8 @@ The **Map** feature allows you to visualize geographical coordinates stored in r
 
 Open the map by clicking the **Map** button :material-map: in the right toolbar of the module.
 
+![Map view](img/map-view.png)
+
 ## Navigating the map
 
 The map provides basic interactive controls:
@@ -23,7 +25,8 @@ This visualization helps distinguish between general survey locations and specif
 
 ## Exporting coordinates
 
-At the top toolbar of the map, you can export the coordinates currently displayed by clicking the **share** button :material-share:.  
+At the top toolbar of the map, you can export the coordinates currently displayed by clicking the **share** button :material-share:. 
+
 Supported export formats include:
 
 - **KML** (default) – Compatible with Google Earth and other GIS tools.  
@@ -54,3 +57,8 @@ The Map feature is integrated with several modules:
 - **[Nests](nests.md)** – Map breeding locations.  
 
 By using the Map feature, researchers can explore spatial patterns, identify sampling coverage, and integrate Xolmis data with external GIS tools for advanced ecological analyses.
+
+*[GIS]: Geographic Information System
+*[GPX]: GPS Exchange Format
+*[KML]: Keyhole Markup Language
+*[KMZ]: Compressed Keyhole Markup Language

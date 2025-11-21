@@ -1,10 +1,14 @@
 # Record verifications
 
-The **Record verifications** module is used to track the **quality and accuracy of data** stored in Xolmis. Verification ensures that records are reliable, consistent, and suitable for scientific analysis. Each verification is performed by a researcher and stored as a **read-only audit trail**, helping maintain transparency and accountability in collaborative projects.
+The **Record verifications** module is used to track the **quality and accuracy of data** stored in Xolmis. Verification ensures that records are reliable, consistent, and suitable for scientific analysis. Each verification is performed by a researcher and stored as an **audit trail**, helping maintain transparency and accountability in collaborative projects.
 
-## Adding or editing a verification
+![Record verifications dialog](img/record-verifications-dialog.png)
 
-When creating or editing a verification record, the following fields are available:
+## Adding a verification
+
+![New record verification dialog](img/new-record-verification-dialog.png)
+
+When creating a verification record, the following fields are available:
 
 | Field | Required | Description |
 | --- | --- | --- |

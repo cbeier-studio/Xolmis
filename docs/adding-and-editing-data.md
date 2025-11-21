@@ -80,6 +80,8 @@ When searching for taxa, both **scientific** and **vernacular names** are displa
 
 ### Calendar dialog
 
+![Calendar dialog](img/calendar-dialog.png)
+
 Fields with a calendar button :material-calendar-month: open the **Calendar dialog**. Features include:
 
 - A calendar control to navigate days, months, and years.  
@@ -88,6 +90,8 @@ Fields with a calendar button :material-calendar-month: open the **Calendar dial
 This tool ensures precise date entry, especially for long-term monitoring.
 
 ### GeoAssist
+
+![GeoAssist dialog - convert](img/geoassist-dialog1.png) ![GeoAssist dialog - imported](img/geoassist-dialog2.png)
 
 Fields with a map marker :material-map-marker: and pencil button open the **GeoAssist dialog**. GeoAssist provides two tabs:
 
@@ -98,6 +102,8 @@ GeoAssist ensures geographical data is standardized and accurate.
 
 ### Colored bands editor
 
+![Colored bands editor](img/colored-bands-dialog.png)
+
 Fields with a band :material-cylinder: and color wheel button open the **Colored bands editor**.
 
 - Select colors by clicking on them, following the top-to-bottom sequence.  
@@ -107,6 +113,8 @@ Fields with a band :material-cylinder: and color wheel button open the **Colored
 This tool supports semi-automated band management and ensures consistency in color-coded banding schemes.
 
 ### Multiple selection dialogs
+
+![Multiple selection dialog](img/multiselect-dialog.png)
 
 For fields that allow multiple selections:
 

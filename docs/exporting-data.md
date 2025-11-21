@@ -20,12 +20,55 @@ The **Quick export** feature is designed to make exporting data fast and flexibl
 
 ### Choosing the format
 
-On the left panel of the dialog, select the file format to which you want to export. Xolmis supports multiple formats, such as:
+On the left panel of the dialog, select the file format to which you want to export. Xolmis supports multiple formats, each suited to different use cases:
 
-- **CSV** – Ideal for spreadsheets and statistical software.
-- **JSON** – Useful for structured data exchange and integration with APIs.
-- **ODS and XLSX** - Spreadsheet documents, alternatives to CSV files.
-- **XML** – Suitable for interoperability with legacy systems.
+#### CSV
+
+**Best for:** spreadsheets, statistical software, and simple tabular data exchange. CSV files are lightweight and widely supported, but they do not preserve formatting or complex structures.
+
+Example:
+```csv
+id,name,species
+1,John Doe,Turdus rufiventris
+2,Jane Smith,Tyrannus melancholicus
+```
+
+#### JSON
+
+**Best for:** structured data exchange, integration with APIs, and modern applications. JSON is human-readable and machine-friendly, making it ideal for interoperability with web services and programming environments.
+
+Example:
+```json
+{
+    "id": 1,
+    "name": "John Doe",
+    "species": "Turdus rufiventris"
+}
+```
+
+#### XML
+
+**Best for:** interoperability with legacy systems and applications that require strict schema definitions. XML is verbose but highly standardized, often used in enterprise environments and older data pipelines.
+
+Example:
+```xml
+<record>
+    <id>1</id>
+    <name>John Doe</name>
+    <species>Turdus rufiventris</species>
+</record>
+```
+
+#### ODS and XLSX
+
+**Best for:** spreadsheet documents with formatting, formulas, and multiple sheets. ODS (OpenDocument Spreadsheet) is an open standard, while XLSX is the Microsoft Excel format. Both are alternatives to CSV when richer spreadsheet features are needed.
+
+#### Tips for choosing the right format
+
+- Use **CSV** if you need simplicity and compatibility with most tools.
+- Use **JSON** if you plan to integrate with APIs or modern applications.
+- Use **XML** if you need compatibility with legacy systems or strict schema validation.
+- Use **ODS/XLSX** if you want to preserve spreadsheet features like formatting, formulas, or multiple tabs.
 
 ### Configuring options
 

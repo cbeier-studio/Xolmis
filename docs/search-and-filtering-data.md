@@ -10,23 +10,21 @@ Simply type the value you want to search. Results are updated as you type, suppo
 
 ### Search the exact value
 
-To search for an exact match, start typing `=` (equal sign) followed by the value. 
+To search for an exact match, start typing `=` (equal sign) followed by the value.
 
 !!! example
     `=abc` will return only records that exactly match "abc".
 
 ### Search value starting with
 
-By default, searches return partial matches regardless of whether the value is at the beginning, middle, or end.  
-To restrict results to values starting with the typed text, use `:` (colon).  
+By default, searches return partial matches regardless of whether the value is at the beginning, middle, or end. To restrict results to values starting with the typed text, use `:` (colon).  
 
 !!! example
     `:abc` will return only values beginning with "abc".
 
 ### Multiple words search
 
-You can search for multiple words by separating them with spaces.  
-This is useful for composite names.  
+You can search for multiple words by separating them with spaces. This is useful for composite names.  
 
 !!! example
     
@@ -35,7 +33,10 @@ This is useful for composite names.
 
 ### Syllabic search
 
-If you only remember fragments of a word or are unsure of the spelling, use the connector `+` (plus) to combine syllables. Example: `abro+pus` will return all taxa containing "Abroscopus".
+If you only remember fragments of a word or are unsure of the spelling, use the connector `+` (plus) to combine syllables.
+
+!!! example
+    `abro+pus` will return all taxa containing "Abroscopus".
 
 ## Filtering data
 
@@ -65,11 +66,11 @@ You can check one or multiple values to filter results.
 
 #### List filters
 
-List filters are presented as a **combobox**. You can select only one value at a time, making them useful for categorical fields.
+List filters are presented as a **suspended list**. You can select only one value at a time, making them useful for categorical fields.
 
 #### Lookup filters
 
-Lookup filters combine a text field with a search button. You can start typing directly or click the button to open a **find dialog**. Select the desired value to apply the filter. Only one value can be selected at a time.
+Lookup filters combine a text field with a search button. You can start typing directly or click the button to open a **[find dialog](adding-and-editing-data.md#find-dialog)**. Select the desired value to apply the filter. Only one value can be selected at a time.
 
 ## Best practices
 

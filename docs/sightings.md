@@ -2,7 +2,7 @@
 
 The **Sightings** module is used to record bird observations made during fieldwork. A sighting represents a **direct or indirect detection of a bird**, whether by visual observation, vocalization, capture, or other evidence. Sightings are fundamental for biodiversity monitoring, as they allow researchers to document species presence, abundance, and behavior in a standardized way.
 
-Open the Sightings module in the main menu: **Sampling → Sightings**. Alternatively, sightings can be viewed grouped by survey in the **[Surveys](surveys.md)** module.
+Open the Sightings module in the main menu: **Fieldwork → Sightings**. Alternatively, sightings can be viewed grouped by survey in the **[Surveys](surveys.md)** module.
 
 ## Adding or editing a sighting
 

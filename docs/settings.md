@@ -2,6 +2,8 @@
 
 The **Settings** module allows you to customize the appearance, behavior, and data management preferences of Xolmis. It is accessible in the main menu: **File → Settings**. Opening this option displays a dialog with a list of categories on the left. Each category contains specific settings that can be adjusted according to your workflow.
 
+![Settings dialog](img/settings-dialog1.png)
+
 ## General
 
 This section contains general system settings that affect the overall behavior of Xolmis.

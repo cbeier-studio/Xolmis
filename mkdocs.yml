@@ -9,14 +9,15 @@ nav:
   - About Xolmis:
     - Introduction: introduction.md
     - Release Notes: release-notes.md
-    - Privacy Policy: privacy.md
-    - License: license.md
-    - Third Party Announcements: third-party.md
+    - FAQ: faq.md
+    - Best Practices: best-practices.md
+    - Xolmis Mobile: xolmis-mobile.md
     - Glossary: glossary.md
     - Feedback: feedback.md
-    - Xolmis Mobile: xolmis-mobile.md
-    - Best Practices: best-practices.md
-    - FAQ: faq.md
+    - Sponsors: sponsors.md
+    - Privacy Policy: privacy.md
+    - License: license.md
+    - Third-Party Notices: third-party.md
   - Getting Started:
     - Installing: installing.md
     - Starting a new database: first-steps.md
@@ -50,18 +51,16 @@ nav:
       - Researchers: researchers.md
       - Projects: projects.md
       - Permits: permits.md
-    - Sampling:
+      - Bands: bands.md
+    - Fieldwork:
       - Methods: methods.md
       - Expeditions: expeditions.md
       - Surveys: surveys.md
       - Sightings: sightings.md
       - Specimens: specimens.md
-    - Individuals:
-      - Bands: bands.md
       - Individuals: individuals.md
       - Captures: captures.md
       - Feathers: feathers.md
-    - Breeding:
       - Nests: nests.md
       - Eggs: eggs.md
     - Taxonomy:

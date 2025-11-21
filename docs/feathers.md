@@ -2,7 +2,7 @@
 
 The **Feathers** module is used to record samples of feathers collected from birds. Feather sampling is an important method in ornithology, as feathers can provide information about molt cycles, growth rates, diet, contaminants, and even genetic material. Each feather record is linked to a taxon and locality, and can also be grouped by individual in the **Individuals** module.
 
-Open the Feathers module in the main menu: **Individuals → Feathers**. Alternatively, view feathers grouped by individual in the **[Individuals](individuals.md)** module.
+Open the Feathers module in the main menu: **Fieldwork → Feathers**. Alternatively, view feathers grouped by individual in the **[Individuals](individuals.md)** module.
 
 ## Adding or editing a feather record
 
@@ -67,6 +67,8 @@ Feather age relates to the molt cycle and helps determine the bird’s stage of 
 - **Fifth year** – Feather from a bird in its fifth calendar year  
 
 ## Adding a new batch
+
+![New batch of feathers dialog](img/batch-feathers-dialog1.png)
 
 The **Add new batch** dialog is used to insert multiple feather records at once, streamlining the process of documenting molt and growth data. Instead of adding feathers individually, you can group them into a batch linked to a specific sampling event.
 

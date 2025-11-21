@@ -19,6 +19,7 @@ These shortcuts apply to actions within modules (e.g., Captures, Sightings, Nest
 
 | Shortcut | Feature |
 | --- | --- |
+| ++f5++ | Refresh records |
 | ++ctrl+n++ | Create a new record |
 | ++ctrl+e++ | Edit the selected record |
 | ++ctrl+del++ | Delete the selected record |

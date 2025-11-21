@@ -2,9 +2,18 @@
 
 The **Maintenance** tool in Xolmis provides a set of utilities designed to keep your system and database running smoothly. It centralizes several "mini-tools" that help with backup, optimization, diagnostics, and cleanup tasks, ensuring long-term stability and performance.
 
+!!! info
+    The mini-tools available in the Maintenance section are designed to keep your system running smoothly. **You do not need to execute them manually under normal circumstances.** Most of these tasks are performed **automatically**, either on a **periodic schedule** or **triggered after other operations**. Manual execution should only be considered in **specific cases**, such as persistent or recurring errors, or noticeable slowdown in system performance. By default, Xolmis ensures that maintenance routines are handled in the background, minimizing the need for user intervention.
+
+
 To access the Maintenance tool, go to **File → Maintenance** in the main menu.
 
+![Maintenance screen](img/maintenance-screen.png)
+
 ## Available mini-tools
+
+!!! warning
+    Some mini-tools must be used with caution. When an action could affect the user data, it is recommended to create a backup first.
 
 ### Database backup
 
@@ -50,6 +59,8 @@ To access the Maintenance tool, go to **File → Maintenance** in the main menu.
 - Safe to use regularly.
 
 ### Diagnostic
+
+![Diagnostic dialog](img/diagnostic-dialog.png)
 
 - Generates a diagnostic report of the system.
 - Includes information about configuration and potential issues.

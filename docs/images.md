@@ -4,6 +4,8 @@ The **Images** feature allows researchers to attach photographs and other visual
 
 Open the images side panel by clicking the image icon :material-image: on the right toolbar (if available in the module).
 
+![Images view](img/images-view.png)
+
 !!! danger
     Before adding any images, go to [Settings](settings.md) in the **Media** section and set the **images location**. Images are saved with a file path relative to this location. Changing the location afterwards can cause problems in accessing files.
 
@@ -11,12 +13,12 @@ Open the images side panel by clicking the image icon :material-image: on the ri
 
 ## Toolbar
 
-Icon | Button | Function
---- | --- | ---
-:material-plus-circle: | Add image | Insert new images from files
-:material-pencil: | View and edit image info | Edit the selected image info
-:material-image-search: | View image | Opens the selected image in the image viewer
-:material-delete: | Delete image | Delete the selected image
+| Icon | Button | Function |
+| --- | --- | --- |
+| :material-plus-circle: | Add image | Insert new images from files |
+| :material-pencil: | View and edit image info | Edit the selected image info |
+| :material-image-search: | View image | Opens the selected image in the image viewer |
+| :material-delete: | Delete image | Delete the selected image |
 
 ## Adding images
 
@@ -107,6 +109,8 @@ Licensing ensures proper use and sharing of images:
 ## Image viewer
 
 The **Image viewer** allows you to preview and interact with images attached to records in Xolmis. It provides several options to adjust visualization, perform quick edits, and manage images directly from the system.
+
+![Image viewer](img/image-viewer-screen.png)
 
 ### Available options
 

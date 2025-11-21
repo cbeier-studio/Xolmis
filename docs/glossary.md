@@ -34,13 +34,6 @@ Here are some terms used throughout this documentation.
 
 :    *CSV* (Comma-Separated Values) is a plain text format used to store tabular data, where each line represents a *row* and values are separated by commas (or semicolons). In Xolmis, CSV files are commonly used for importing or exporting *grids* of *records*.  
 
-     **Example**
-     ```
-     id,name,species
-     1,John Doe,Turdus rufiventris
-     2,Jane Smith,Tyrannus melancholicus
-     ```
-
 **Data grid**
 
 :    A *data grid* (or just *grid*) is the tabular interface used to display *records* in *rows* and *columns*. In Xolmis, grids resemble *spreadsheets* but are directly linked to the *database*, allowing filtering, sorting, and editing of *records*.
@@ -108,15 +101,6 @@ Here are some terms used throughout this documentation.
 **JSON**
 
 :    *JSON* (JavaScript Object Notation) is a lightweight data-interchange format that uses key-value pairs and arrays. In Xolmis, JSON is used for structured data exchange between *modules* and external applications.  
-
-     **Example**
-     ```json
-     {
-       "id": 1,
-       "name": "John Doe",
-       "species": "Turdus rufiventris"
-     }
-     ```
 
 **KML**
 
@@ -272,16 +256,7 @@ Here are some terms used throughout this documentation.
 
 **XML**
 
-:    *XML* (Extensible Markup Language) is a markup format that uses tags to define structured data. In Xolmis, XML can be used for data exchange and integration with other systems.  
-
-     **Example**
-     ```xml
-     <record>
-       <id>1</id>
-       <name>John Doe</name>
-       <species>Turdus rufiventris</species>
-     </record>
-     ```
+:    *XML* (Extensible Markup Language) is a markup format that uses tags to define structured data. In Xolmis, XML can be used for data exchange and integration with other systems.
 
 **ZIP**
 

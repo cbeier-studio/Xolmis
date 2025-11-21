@@ -2,7 +2,7 @@
 
 The **Expeditions** module is used to organize and document field trips carried out for ornithological research. An expedition represents a **defined period of fieldwork**, usually involving a team of researchers, specific goals, and a geographic area. By registering expeditions, you can group surveys, captures, and observations under a common context, making it easier to track activities and results.
 
-Open the Expeditions module in the main menu: **Sampling → Expeditions**.
+Open the Expeditions module in the main menu: **Fieldwork → Expeditions**.
 
 ## Adding or editing an expedition
 

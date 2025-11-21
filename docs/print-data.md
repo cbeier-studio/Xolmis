@@ -7,6 +7,8 @@ Most modules in Xolmis include a **print button** :material-printer: that opens 
 
 ## Print grid
 
+![Print grid preview](img/print-grid-screen.png)
+
 The **Print grid** option generates a report with the **exact same layout** as the module’s data grid. To use it:
 
 1. Click the print button :material-printer: in the module toolbar.  
@@ -17,6 +19,8 @@ The **Print grid** option generates a report with the **exact same layout** as t
     As many modules contain numerous columns, a single record may span multiple pages in the generated report. This can result in a large number of pages if the dataset is extensive.
 
 ## Print preview
+
+![Print preview](img/print-preview-screen.png)
 
 Other reports use the **Xolmis print preview window**, which offers more flexibility and a standardized interface. Features include:
 

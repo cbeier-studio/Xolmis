@@ -2,7 +2,7 @@
 
 The **Captures** module is used to record detailed information about birds captured during fieldwork. Each capture represents a specific event in which an individual bird was handled, measured, banded, or sampled. Captures are essential for demographic studies, health monitoring, and long-term tracking of individuals.
 
-Open the Captures module in the main menu: **Individuals → Captures**. Captures can also be viewed grouped by individual in the **[Individuals](individuals.md)** module, allowing you to track the capture history of each bird.
+Open the Captures module in the main menu: **Fieldwork → Captures**. Captures can also be viewed grouped by individual in the **[Individuals](individuals.md)** module, allowing you to track the capture history of each bird.
 
 ## Adding or editing a capture
 

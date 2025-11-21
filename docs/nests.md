@@ -2,7 +2,7 @@
 
 The **Nests** module is used to record and manage information about bird nests. It allows researchers to document nest characteristics, productivity, supporting structures, and breeding outcomes. By maintaining detailed nest records, Xolmis supports studies on breeding biology, reproductive success, and habitat preferences.
 
-Open the Nests module in the main menu: **Breeding → Nests**.
+Open the Nests module in the main menu: **Fieldwork → Nests**.
 
 ## Adding or editing a nest
 

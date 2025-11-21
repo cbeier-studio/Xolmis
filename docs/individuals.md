@@ -2,7 +2,7 @@
 
 The **Individuals** module is used to register and manage information about specific birds. Each record represents a single bird, identified by its taxon and optionally by a band (ring). This module is central to long-term monitoring, as it allows you to track individuals across captures, sightings, nests, and other records.
 
-Open the Individuals module in the main menu: **Individuals → Individuals**.
+Open the Individuals module in the main menu: **Fieldwork → Individuals**.
 
 ## Adding or editing an individual
 

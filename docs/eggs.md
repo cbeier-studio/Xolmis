@@ -2,7 +2,7 @@
 
 The **Eggs** module is used to record detailed information about bird eggs. It allows researchers to document measurements, morphology, coloration, and hatching outcomes, providing valuable data for studies on breeding biology, reproductive success, and species-specific traits.
 
-Open the Eggs module in the main menu: **Breeding → Eggs**. Alternatively, eggs can be viewed grouped by nest in the **[Nests](nests.md)** module.
+Open the Eggs module in the main menu: **Fieldwork → Eggs**. Alternatively, eggs can be viewed grouped by nest in the **[Nests](nests.md)** module.
 
 ## Adding or editing an egg record
 
