@@ -255,7 +255,9 @@ end;
 
 procedure TcfgDatabase.pmNewDatabaseClick(Sender: TObject);
 begin
-  NewDatabase;
+  if NewDatabase then
+    ShowOnboardingBig(obtNewDatabase);
+
   dsConn.DataSet.Refresh;
 end;
 

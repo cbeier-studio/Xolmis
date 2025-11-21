@@ -197,9 +197,18 @@ type
     procedure SetBackupFolder(aValue: String);
     procedure SetLastPathUsed(aValue: String);
   public
+    { Onboarding }
+    FirstAppExecution, FirstDeletedRecord, FirstMediaAdded, FirstSummaryView, FirstColumnsView,
+    FirstQuickExport, FirstMapView, FirstNewBatchBands, FirstTransferBands, FirstBandsOpen,
+    FirstFeathersOpen, FirstNewBatchNets, FirstProjectsOpen, FirstGazetteerOpen, FirstBotanicalTaxaOpen,
+    FirstTaxaOpen, FirstCoordinateConverterOpen, FirstGeoAssistUse, FirstQuickEntryUse, FirstUsersOpen,
+    FirstImportWizardUse, FirstImportMobileUse, FirstImportEbirdUse, FirstSettingsOpen, FirstCapturesOpen,
+    FirstAutomaticBackup, FirstDeletedRecordsCleaning, FirstSearchUse, FirstFeedback: Boolean;
+  public
     constructor Create;
     destructor Destroy; override;
     procedure LoadFromFile;
+    procedure SaveOnboarding(aPath: String; aValue: Boolean);
     procedure SaveToFile;
     procedure Reset;
     procedure Delete(aSection, aKey: String);
@@ -870,6 +879,36 @@ begin
   FDelimiterIndex := FConfig.GetValue('/CSV/DelimiterIndex', 0);
   FDelimiter := FConfig.GetValue('/CSV/Delimiter', ';')[1];
   FDecimalSeparator := FConfig.GetValue('/CSV/DecimalSeparator', ',')[1];
+  { Onboarding }
+  FirstAppExecution := FConfig.GetValue('/ONBOARDING/FirstAppExecution', True);
+  FirstDeletedRecord := FConfig.GetValue('/ONBOARDING/FirstDeletedRecord', True);
+  FirstMediaAdded := FConfig.GetValue('/ONBOARDING/FirstMediaAdded', True);
+  FirstSummaryView := FConfig.GetValue('/ONBOARDING/FirstSummaryView', True);
+  FirstColumnsView := FConfig.GetValue('/ONBOARDING/FirstColumnsView', True);
+  FirstQuickExport := FConfig.GetValue('/ONBOARDING/FirstQuickExport', True);
+  FirstMapView := FConfig.GetValue('/ONBOARDING/FirstMapView', True);
+  FirstNewBatchBands := FConfig.GetValue('/ONBOARDING/FirstNewBatchBands', True);
+  FirstTransferBands := FConfig.GetValue('/ONBOARDING/FirstTransferBands', True);
+  FirstBandsOpen := FConfig.GetValue('/ONBOARDING/FirstBandsOpen', True);
+  FirstFeathersOpen := FConfig.GetValue('/ONBOARDING/FirstFeathersOpen', True);
+  FirstNewBatchNets := FConfig.GetValue('/ONBOARDING/FirstNewBatchNets', True);
+  FirstProjectsOpen := FConfig.GetValue('/ONBOARDING/FirstProjectsOpen', True);
+  FirstGazetteerOpen := FConfig.GetValue('/ONBOARDING/FirstGazetteerOpen', True);
+  FirstBotanicalTaxaOpen := FConfig.GetValue('/ONBOARDING/FirstBotanicalTaxaOpen', True);
+  FirstTaxaOpen := FConfig.GetValue('/ONBOARDING/FirstTaxaOpen', True);
+  FirstCoordinateConverterOpen := FConfig.GetValue('/ONBOARDING/FirstCoordinateConverterOpen', True);
+  FirstGeoAssistUse := FConfig.GetValue('/ONBOARDING/FirstGeoAssistUse', True);
+  FirstQuickEntryUse := FConfig.GetValue('/ONBOARDING/FirstQuickEntryUse', True);
+  FirstUsersOpen := FConfig.GetValue('/ONBOARDING/FirstUsersOpen', True);
+  FirstImportWizardUse := FConfig.GetValue('/ONBOARDING/FirstImportWizardUse', True);
+  FirstImportMobileUse := FConfig.GetValue('/ONBOARDING/FirstImportMobileUse', True);
+  FirstImportEbirdUse := FConfig.GetValue('/ONBOARDING/FirstImportEbirdUse', True);
+  FirstSettingsOpen := FConfig.GetValue('/ONBOARDING/FirstSettingsOpen', True);
+  FirstCapturesOpen := FConfig.GetValue('/ONBOARDING/FirstCapturesOpen', True);
+  FirstAutomaticBackup := FConfig.GetValue('/ONBOARDING/FirstAutomaticBackup', True);
+  FirstDeletedRecordsCleaning := FConfig.GetValue('/ONBOARDING/FirstDeletedRecordsCleaning', True);
+  FirstSearchUse := FConfig.GetValue('/ONBOARDING/FirstSearchUse', True);
+  FirstFeedback := FConfig.GetValue('/ONBOARDING/FirstFeedback', True);
 end;
 
 procedure TXolmisSettings.SaveToFile;
@@ -930,6 +969,13 @@ begin
   FConfig.Flush;
 
   LoadFromFile;
+end;
+
+procedure TXolmisSettings.SaveOnboarding(aPath: String; aValue: Boolean);
+begin
+  FConfig.SetValue(aPath, aValue);
+
+  FConfig.Flush;
 end;
 
 procedure TXolmisSettings.Delete(aSection, aKey: String);

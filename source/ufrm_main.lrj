@@ -73,7 +73,7 @@
 {"hash":87418310,"name":"tfrmmain.actlogoff.caption","sourcebytes":[76,111,103,111,102,102],"value":"Logoff"},
 {"hash":4710148,"name":"tfrmmain.actexit.caption","sourcebytes":[69,38,120,105,116],"value":"E&xit"},
 {"hash":193644115,"name":"tfrmmain.actopenfeathers.caption","sourcebytes":[38,70,101,97,116,104,101,114,115],"value":"&Feathers"},
-{"hash":115395143,"name":"tfrmmain.actwhatsnew.caption","sourcebytes":[87,104,97,116,39,115,32,110,101,119],"value":"What's new"},
+{"hash":263705091,"name":"tfrmmain.actreleasenotes.caption","sourcebytes":[82,101,108,101,97,115,101,32,110,111,116,101,115],"value":"Release notes"},
 {"hash":251242165,"name":"tfrmmain.actwebsite.caption","sourcebytes":[88,111,108,109,105,115,39,32,119,101,98,115,105,116,101],"value":"Xolmis' website"},
 {"hash":110481474,"name":"tfrmmain.pmtclosetab.caption","sourcebytes":[38,67,108,111,115,101,32,116,97,98],"value":"&Close tab"},
 {"hash":83616611,"name":"tfrmmain.pmtcloseallothertabs.caption","sourcebytes":[67,108,111,115,101,32,97,108,108,32,38,111,116,104,101,114,32,116,97,98,115],"value":"Close all &other tabs"},
@@ -98,12 +98,10 @@
 {"hash":81075838,"name":"tfrmmain.pmanewnetstation.caption","sourcebytes":[78,101,119,32,109,105,115,116,110,101,116,32,115,116,97,116,105,111,110],"value":"New mistnet station"},
 {"hash":2805797,"name":"tfrmmain.mmfile.caption","sourcebytes":[38,70,105,108,101],"value":"&File"},
 {"hash":84178580,"name":"tfrmmain.mmfimport.caption","sourcebytes":[73,109,112,111,114,116],"value":"Import"},
-{"hash":138872279,"name":"tfrmmain.mmsampling.caption","sourcebytes":[38,83,97,109,112,108,105,110,103],"value":"&Sampling"},
-{"hash":239861043,"name":"tfrmmain.mmindividuals.caption","sourcebytes":[38,73,110,100,105,118,105,100,117,97,108,115],"value":"&Individuals"},
-{"hash":146507479,"name":"tfrmmain.mmbreeding.caption","sourcebytes":[38,66,114,101,101,100,105,110,103],"value":"&Breeding"},
+{"hash":40446283,"name":"tfrmmain.mmfieldwork.caption","sourcebytes":[70,105,101,108,100,38,119,111,114,107],"value":"Field&work"},
+{"hash":83671793,"name":"tfrmmain.mmmedia.caption","sourcebytes":[77,38,101,100,105,97],"value":"M&edia"},
 {"hash":133235732,"name":"tfrmmain.mmentities.caption","sourcebytes":[38,77,97,110,97,103,101,109,101,110,116],"value":"&Management"},
 {"hash":175551,"name":"tfrmmain.mmgeo.caption","sourcebytes":[38,71,101,111],"value":"&Geo"},
 {"hash":150372329,"name":"tfrmmain.mmtaxonomy.caption","sourcebytes":[38,84,97,120,111,110,111,109,121],"value":"&Taxonomy"},
-{"hash":83671793,"name":"tfrmmain.mmmedia.caption","sourcebytes":[77,38,101,100,105,97],"value":"M&edia"},
 {"hash":2812976,"name":"tfrmmain.mmhelp.caption","sourcebytes":[38,72,101,108,112],"value":"&Help"}
 ]}

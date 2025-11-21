@@ -1113,9 +1113,10 @@ object frmMain: TfrmMain
       ImageIndex = 13
       OnExecute = actOpenFeathersExecute
     end
-    object actWhatsNew: TAction
+    object actReleaseNotes: TAction
       Category = 'Help'
-      Caption = 'What''s new'
+      Caption = 'Release notes'
+      OnExecute = actReleaseNotesExecute
     end
     object actWebsite: TAction
       Category = 'Help'
@@ -9137,8 +9138,8 @@ object frmMain: TfrmMain
         Action = actExit
       end
     end
-    object mmSampling: TMenuItem
-      Caption = '&Sampling'
+    object mmFieldwork: TMenuItem
+      Caption = 'Field&work'
       object mmsMethods: TMenuItem
         Action = actOpenMethods
       end
@@ -9160,41 +9161,45 @@ object frmMain: TfrmMain
       object Separator16: TMenuItem
         Caption = '-'
       end
+      object mmsIndividuals: TMenuItem
+        Action = actOpenIndividuals
+      end
+      object mmsCaptures: TMenuItem
+        Action = actOpenCaptures
+      end
+      object mmsFeathers: TMenuItem
+        Action = actOpenFeathers
+      end
+      object Separator6: TMenuItem
+        Caption = '-'
+      end
+      object mmsNests: TMenuItem
+        Action = actOpenNests
+      end
+      object mmsNestRevisions: TMenuItem
+        Action = actOpenNestRevisions
+      end
+      object mmsEggs: TMenuItem
+        Action = actOpenEggs
+      end
+      object Separator5: TMenuItem
+        Caption = '-'
+      end
       object mmsSpecimens: TMenuItem
         Action = actOpenSpecimens
       end
     end
-    object mmIndividuals: TMenuItem
-      Caption = '&Individuals'
-      object mmiBands: TMenuItem
-        Action = actOpenBands
+    object mmMedia: TMenuItem
+      Caption = 'M&edia'
+      Visible = False
+      object mmmImageGallery: TMenuItem
+        Action = actOpenImagesList
       end
-      object Separator17: TMenuItem
-        Caption = '-'
+      object mmmAudioLibrary: TMenuItem
+        Action = actOpenRecordingsList
       end
-      object mmiIndividuals: TMenuItem
-        Action = actOpenIndividuals
-      end
-      object Separator18: TMenuItem
-        Caption = '-'
-      end
-      object mmiCaptures: TMenuItem
-        Action = actOpenCaptures
-      end
-      object mmiFeathers: TMenuItem
-        Action = actOpenFeathers
-      end
-    end
-    object mmBreeding: TMenuItem
-      Caption = '&Breeding'
-      object mmbNests: TMenuItem
-        Action = actOpenNests
-      end
-      object mmbNestRevisions: TMenuItem
-        Action = actOpenNestRevisions
-      end
-      object mmbEggs: TMenuItem
-        Action = actOpenEggs
+      object mmmAttachments: TMenuItem
+        Action = actOpenDocumentsList
       end
     end
     object mmEntities: TMenuItem
@@ -9213,6 +9218,12 @@ object frmMain: TfrmMain
       end
       object mmePermits: TMenuItem
         Action = actOpenPermits
+      end
+      object Separator4: TMenuItem
+        Caption = '-'
+      end
+      object mmeBands: TMenuItem
+        Action = actOpenBands
       end
     end
     object mmGeo: TMenuItem
@@ -9242,28 +9253,15 @@ object frmMain: TfrmMain
         Action = actOpenBotany
       end
     end
-    object mmMedia: TMenuItem
-      Caption = 'M&edia'
-      Visible = False
-      object mmmImageGallery: TMenuItem
-        Action = actOpenImagesList
-      end
-      object mmmAudioLibrary: TMenuItem
-        Action = actOpenRecordingsList
-      end
-      object mmmAttachments: TMenuItem
-        Action = actOpenDocumentsList
-      end
-    end
     object mmHelp: TMenuItem
       Caption = '&Help'
-      object mmhHelp: TMenuItem
+      object mmhManual: TMenuItem
         Action = actOpenManual
       end
-      object MenuItem1: TMenuItem
-        Action = actWhatsNew
+      object mmhReleaseNotes: TMenuItem
+        Action = actReleaseNotes
       end
-      object MenuItem2: TMenuItem
+      object mmhWebsite: TMenuItem
         Action = actWebsite
       end
       object Separator22: TMenuItem

@@ -1,0 +1,6 @@
+{"version":1,"strings":[
+{"hash":100021251,"name":"tdlgbigtip.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"},
+{"hash":152768005,"name":"tdlgbigtip.lbltitle.caption","sourcebytes":[108,98,108,84,105,116,108,101],"value":"lblTitle"},
+{"hash":185221347,"name":"tdlgbigtip.btnclose.caption","sourcebytes":[68,105,115,109,105,115,115],"value":"Dismiss"},
+{"hash":43101316,"name":"tdlgbigtip.lbltext.caption","sourcebytes":[108,98,108,84,101,120,116],"value":"lblText"}
+]}

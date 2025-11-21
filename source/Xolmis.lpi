@@ -23,7 +23,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="163">
+      <ExcludedIdentifiers Count="166">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -187,13 +187,16 @@
         <Item161 Value="tfrmMain.SBar.Panels[5].Text"/>
         <Item162 Value="tdlgTourTip.Caption"/>
         <Item163 Value="tdlgTourTip.lblText.Caption"/>
+        <Item164 Value="tdlgBigTip.Caption"/>
+        <Item165 Value="tdlgBigTip.lblText.Caption"/>
+        <Item166 Value="tdlgBigTip.lblTitle.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="484"/>
+      <BuildNr Value="485"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1468,6 +1471,13 @@
         <Filename Value="dialogs\udlg_tourtip.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgTourTip"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_bigtip.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgBigTip"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

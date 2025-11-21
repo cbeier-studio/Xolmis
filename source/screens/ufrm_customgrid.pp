@@ -7281,6 +7281,13 @@ begin
     Exit;
 
   isWorking := True;
+  if xSettings.FirstTransferBands then
+  begin
+    ShowOnboardingBig(obtTransferBands);
+    xSettings.FirstTransferBands := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstTransferBands', False);
+  end;
+
   try
     batchBandsTransfer := TbatchBandsTransfer.Create(nil);
     with batchBandsTransfer do
@@ -8843,6 +8850,13 @@ end;
 
 procedure TfrmCustomGrid.sbAddNetsBatchClick(Sender: TObject);
 begin
+  if xSettings.FirstNewBatchNets then
+  begin
+    ShowOnboardingBig(obtNewBatchNets);
+    xSettings.FirstNewBatchNets := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstNewBatchNets', False);
+  end;
+
   batchNetEffort := TbatchNetEffort.Create(nil);
   with batchNetEffort do
   try
@@ -9008,6 +9022,13 @@ begin
     Exit;
 
   isWorking := True;
+  if xSettings.FirstDeletedRecord then
+  begin
+    ShowOnboardingBig(obtDeleteRecord);
+    xSettings.FirstDeletedRecord := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstDeletedRecord', False);
+  end;
+
   try
     case FTableType of
       //tbNone: ;
@@ -9153,6 +9174,13 @@ begin
     Exit;
 
   isWorking := True;
+  if xSettings.FirstDeletedRecord then
+  begin
+    ShowOnboardingBig(obtDeleteRecord);
+    xSettings.FirstDeletedRecord := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstDeletedRecord', False);
+  end;
+
   try
     // Inactivate the selected record
     DeleteRecord(FTableType, dsLink.DataSet);
@@ -9307,6 +9335,13 @@ begin
     Exit;
 
   isWorking := True;
+  if xSettings.FirstNewBatchBands then
+  begin
+    ShowOnboardingBig(obtNewBatchBands);
+    xSettings.FirstNewBatchBands := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstNewBatchBands', False);
+  end;
+
   try
     case FTableType of
       //tbNone: ;
@@ -9580,6 +9615,13 @@ end;
 
 procedure TfrmCustomGrid.sbQuickEntryChildClick(Sender: TObject);
 begin
+  if xSettings.FirstQuickEntryUse then
+  begin
+    ShowOnboardingBig(obtQuickEntry);
+    xSettings.FirstQuickEntryUse := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstQuickEntryUse', False);
+  end;
+
   frmQuickEntry := TfrmQuickEntry.Create(nil);
   with frmQuickEntry do
   try
@@ -9592,6 +9634,13 @@ end;
 
 procedure TfrmCustomGrid.sbQuickEntryClick(Sender: TObject);
 begin
+  if xSettings.FirstQuickEntryUse then
+  begin
+    ShowOnboardingBig(obtQuickEntry);
+    xSettings.FirstQuickEntryUse := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstQuickEntryUse', False);
+  end;
+
   frmQuickEntry := TfrmQuickEntry.Create(nil);
   with frmQuickEntry do
   try
@@ -9731,6 +9780,13 @@ end;
 
 procedure TfrmCustomGrid.sbShareChildClick(Sender: TObject);
 begin
+  if xSettings.FirstQuickExport then
+  begin
+    ShowOnboardingBig(obtQuickExport);
+    xSettings.FirstQuickExport := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstQuickExport', False);
+  end;
+
   case nbChilds.PageIndex of
     0: ExportDlg(dsLink1.DataSet);
     1: ExportDlg(dsLink2.DataSet);
@@ -9770,6 +9826,13 @@ end;
 
 procedure TfrmCustomGrid.sbShareRecordsClick(Sender: TObject);
 begin
+  if xSettings.FirstQuickExport then
+  begin
+    ShowOnboardingBig(obtQuickExport);
+    xSettings.FirstQuickExport := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstQuickExport', False);
+  end;
+
   ExportDlg(dsLink.DataSet);
 end;
 
@@ -9785,7 +9848,50 @@ begin
   //SplitRight.Visible := pSide.Visible;
 
   if (Sender as TSpeedButton).Down then
+  begin
     cpSide.PageIndex := (Sender as TSpeedButton).Tag;
+
+    if (cpSide.ActivePageComponent = cardMap) then
+    begin
+      if xSettings.FirstMapView then
+      begin
+        ShowOnboardingBig(obtMap);
+        xSettings.FirstMapView := False;
+        xSettings.SaveOnboarding('/ONBOARDING/FirstMapView', False);
+      end;
+    end
+    else
+    if (cpSide.ActivePageComponent = cardImages) or (cpSide.ActivePageComponent = cardAudio) or
+      (cpSide.ActivePageComponent = cardVideos) or (cpSide.ActivePageComponent = cardDocs) then
+    begin
+      if xSettings.FirstMediaAdded then
+      begin
+        ShowOnboardingBig(obtAddMedia);
+        xSettings.FirstMediaAdded := False;
+        xSettings.SaveOnboarding('/ONBOARDING/FirstMediaAdded', False);
+      end;
+    end
+    else
+    if (cpSide.ActivePageComponent = cardSummary) then
+    begin
+      if xSettings.FirstSummaryView then
+      begin
+        ShowOnboardingBig(obtSummary);
+        xSettings.FirstSummaryView := False;
+        xSettings.SaveOnboarding('/ONBOARDING/FirstSummaryView', False);
+      end;
+    end
+    else
+    if (cpSide.ActivePageComponent = cardColumns) then
+    begin
+      if xSettings.FirstColumnsView then
+      begin
+        ShowOnboardingBig(obtGridSettings);
+        xSettings.FirstColumnsView := False;
+        xSettings.SaveOnboarding('/ONBOARDING/FirstColumnsView', False);
+      end;
+    end;
+  end;
 
   if (pSide.Visible) and (cpSide.ActivePageComponent = cardSummary) then
     Summary;

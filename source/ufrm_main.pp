@@ -50,7 +50,7 @@ type
     actImportXolmisMobile: TAction;
     actDBNew: TAction;
     actWebsite: TAction;
-    actWhatsNew: TAction;
+    actReleaseNotes: TAction;
     actOpenFeathers: TAction;
     actMaintenance: TAction;
     actOpenBandHistory: TAction;
@@ -96,8 +96,15 @@ type
     iPopup: TImageList;
     iSearchDark: TImageList;
     lblEmptyNotifications: TLabel;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
+    mmhReleaseNotes: TMenuItem;
+    mmhWebsite: TMenuItem;
+    mmsEggs: TMenuItem;
+    mmsNestRevisions: TMenuItem;
+    mmsNests: TMenuItem;
+    mmsFeathers: TMenuItem;
+    mmsCaptures: TMenuItem;
+    mmsIndividuals: TMenuItem;
+    mmeBands: TMenuItem;
     pmaNewFeathersBatch: TMenuItem;
     pmaNewBandsBatch: TMenuItem;
     pEmptyNotifications: TBCPanel;
@@ -113,8 +120,10 @@ type
     sbEmptyOpenNests: TSpeedButton;
     sbEmptyOpenProjects: TSpeedButton;
     SBar: TStatusBar;
+    Separator4: TMenuItem;
+    Separator5: TMenuItem;
+    Separator6: TMenuItem;
     titleNotifications: TLabel;
-    mmiFeathers: TMenuItem;
     mmfNewDB: TMenuItem;
     mmfImportXolmisMobile: TMenuItem;
     mmhCheckUpdates: TMenuItem;
@@ -126,29 +135,21 @@ type
     mmsSightings: TMenuItem;
     mmsMethods: TMenuItem;
     mmsSpecimens: TMenuItem;
-    mmiBands: TMenuItem;
-    mmSampling: TMenuItem;
-    mmiIndividuals: TMenuItem;
-    mmiCaptures: TMenuItem;
-    mmbNests: TMenuItem;
-    mmbNestRevisions: TMenuItem;
-    mmbEggs: TMenuItem;
+    mmFieldwork: TMenuItem;
     mmeInstitutions: TMenuItem;
     mmeResearchers: TMenuItem;
     mmeProjects: TMenuItem;
     mmePermits: TMenuItem;
-    mmIndividuals: TMenuItem;
     mmgGazetteer: TMenuItem;
     mmgSamplingPlots: TMenuItem;
     mmgCoordinatesConverter: TMenuItem;
     mmtTaxa: TMenuItem;
     mmtBotanicTaxa: TMenuItem;
-    mmhHelp: TMenuItem;
+    mmhManual: TMenuItem;
     mmhFeedback: TMenuItem;
     mmhAbout: TMenuItem;
     mmMedia: TMenuItem;
     mmmImageGallery: TMenuItem;
-    mmBreeding: TMenuItem;
     mmmAudioLibrary: TMenuItem;
     mmmAttachments: TMenuItem;
     mmfConnectDB: TMenuItem;
@@ -215,8 +216,6 @@ type
     Separator14: TMenuItem;
     Separator15: TMenuItem;
     Separator16: TMenuItem;
-    Separator17: TMenuItem;
-    Separator18: TMenuItem;
     Separator19: TMenuItem;
     Separator2: TMenuItem;
     Separator20: TMenuItem;
@@ -278,6 +277,7 @@ type
     procedure actOpenSpecimensExecute(Sender: TObject);
     procedure actOpenSurveysExecute(Sender: TObject);
     procedure actOpenTaxaExecute(Sender: TObject);
+    procedure actReleaseNotesExecute(Sender: TObject);
     procedure actSettingsExecute(Sender: TObject);
     procedure actViewBandsBalanceExecute(Sender: TObject);
     procedure AppEventsException(Sender: TObject; E: Exception);
@@ -407,6 +407,13 @@ end;
 
 procedure TfrmMain.actCoordinatesConverterExecute(Sender: TObject);
 begin
+  if xSettings.FirstCoordinateConverterOpen then
+  begin
+    ShowOnboardingBig(obtCoordinatesConverter);
+    xSettings.FirstCoordinateConverterOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstCoordinateConverterOpen', False);
+  end;
+
   OpenTab(Sender, frmGeoConverter, TfrmGeoConverter, rsTitleCoordinateConverter, False);
 end;
 
@@ -425,6 +432,7 @@ end;
 procedure TfrmMain.actDBNewExecute(Sender: TObject);
 begin
   if NewDatabase then
+  begin
     if ConnectDatabase then
     begin
       CloseAllTabs;
@@ -432,7 +440,10 @@ begin
 
       UpdateMenu(PGW.ActivePageComponent);
       UpdateStatusBar;
+
+      ShowOnboardingBig(obtNewDatabase);
     end;
+  end;
 end;
 
 procedure TfrmMain.actDBSettingsExecute(Sender: TObject);
@@ -447,6 +458,13 @@ end;
 
 procedure TfrmMain.actGiveFeedbackExecute(Sender: TObject);
 begin
+  if xSettings.FirstFeedback then
+  begin
+    ShowOnboardingBig(obtFeedback);
+    xSettings.FirstFeedback := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstFeedback', False);
+  end;
+
   OpenUrl('https://github.com/cbeier-studio/Xolmis/issues');
 end;
 
@@ -480,6 +498,13 @@ end;
 
 procedure TfrmMain.actImportEbirdExecute(Sender: TObject);
 begin
+  if xSettings.FirstImportEbirdUse then
+  begin
+    ShowOnboardingBig(obtImportEbird);
+    xSettings.FirstImportEbirdUse := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstImportEbirdUse', False);
+  end;
+
   DMM.OpenCsvDlg.Title := rsTitleImportFile;
   if DMM.OpenCsvDlg.Execute then
   begin
@@ -500,6 +525,13 @@ end;
 
 procedure TfrmMain.actImportWizardExecute(Sender: TObject);
 begin
+  if xSettings.FirstImportWizardUse then
+  begin
+    ShowOnboardingBig(obtImportWizard);
+    xSettings.FirstImportWizardUse := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstImportWizardUse', False);
+  end;
+
   dlgImport := TdlgImport.Create(nil);
   with dlgImport do
   try
@@ -511,6 +543,13 @@ end;
 
 procedure TfrmMain.actImportXolmisMobileExecute(Sender: TObject);
 begin
+  if xSettings.FirstImportMobileUse then
+  begin
+    ShowOnboardingBig(obtImportMobile);
+    xSettings.FirstImportMobileUse := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstImportMobileUse', False);
+  end;
+
   dlgImportXMobile := TdlgImportXMobile.Create(nil);
   with dlgImportXMobile do
   try
@@ -553,11 +592,25 @@ end;
 
 procedure TfrmMain.actManageUsersExecute(Sender: TObject);
 begin
+  if xSettings.FirstUsersOpen then
+  begin
+    ShowOnboardingBig(obtUsers);
+    xSettings.FirstUsersOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstUsersOpen', False);
+  end;
+
   AbreForm(TcfgUsers, cfgUsers);
 end;
 
 procedure TfrmMain.actNewBandsExecute(Sender: TObject);
 begin
+  if xSettings.FirstNewBatchBands then
+  begin
+    ShowOnboardingBig(obtNewBatchBands);
+    xSettings.FirstNewBatchBands := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstNewBatchBands', False);
+  end;
+
   Application.CreateForm(TbatchBands, batchBands);
   with batchBands do
   try
@@ -574,16 +627,37 @@ end;
 
 procedure TfrmMain.actOpenBandsExecute(Sender: TObject);
 begin
+  if xSettings.FirstBandsOpen then
+  begin
+    ShowOnboardingBig(obtBands);
+    xSettings.FirstBandsOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstBandsOpen', False);
+  end;
+
   OpenForm(Sender, fBands, tbBands, rsTitleBands, actOpenBands.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenBotanyExecute(Sender: TObject);
 begin
+  if xSettings.FirstBotanicalTaxaOpen then
+  begin
+    ShowOnboardingBig(obtBotanicalTaxa);
+    xSettings.FirstBotanicalTaxaOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstBotanicalTaxaOpen', False);
+  end;
+
   OpenForm(Sender, fBotanicTaxa, tbBotanicTaxa, rsTitleBotanicalTaxa, actOpenBotany.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenCapturesExecute(Sender: TObject);
 begin
+  if xSettings.FirstCapturesOpen then
+  begin
+    ShowOnboardingBig(obtCaptureOutliers);
+    xSettings.FirstCapturesOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstCapturesOpen', False);
+  end;
+
   OpenForm(Sender, fCaptures, tbCaptures, rsTitleCaptures, actOpenCaptures.ImageIndex);
 end;
 
@@ -599,11 +673,25 @@ end;
 
 procedure TfrmMain.actOpenFeathersExecute(Sender: TObject);
 begin
+  if xSettings.FirstFeathersOpen then
+  begin
+    ShowOnboardingBig(obtFeathers);
+    xSettings.FirstFeathersOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstFeathersOpen', False);
+  end;
+
   OpenForm(Sender, fFeathers, tbFeathers, rsCaptionFeathers, actOpenFeathers.ImageIndex);
 end;
 
 procedure TfrmMain.actOpenGazetteerExecute(Sender: TObject);
 begin
+  if xSettings.FirstGazetteerOpen then
+  begin
+    ShowOnboardingBig(obtGazetteer);
+    xSettings.FirstGazetteerOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstGazetteerOpen', False);
+  end;
+
   OpenForm(Sender, fGazetteer, tbGazetteer, rsTitleGazetteer, actOpenGazetteer.ImageIndex);
 end;
 
@@ -649,6 +737,13 @@ end;
 
 procedure TfrmMain.actOpenProjectsExecute(Sender: TObject);
 begin
+  if xSettings.FirstProjectsOpen then
+  begin
+    ShowOnboardingBig(obtProjects);
+    xSettings.FirstProjectsOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstProjectsOpen', False);
+  end;
+
   OpenForm(Sender, fProjects, tbProjects, rsTitleProjects, actOpenProjects.ImageIndex);
 end;
 
@@ -674,11 +769,30 @@ end;
 
 procedure TfrmMain.actOpenTaxaExecute(Sender: TObject);
 begin
+  if xSettings.FirstTaxaOpen then
+  begin
+    ShowOnboardingBig(obtTaxa);
+    xSettings.FirstTaxaOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstTaxaOpen', False);
+  end;
+
   OpenTab(Sender, frmTaxa, TfrmTaxa, rsTitleZooTaxa, False);
+end;
+
+procedure TfrmMain.actReleaseNotesExecute(Sender: TObject);
+begin
+  OpenHelp(HELP_RELEASE_NOTES);
 end;
 
 procedure TfrmMain.actSettingsExecute(Sender: TObject);
 begin
+  if xSettings.FirstSettingsOpen then
+  begin
+    ShowOnboardingBig(obtDarkMode);
+    xSettings.FirstSettingsOpen := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstSettingsOpen', False);
+  end;
+
   AbreForm(TcfgOptions, cfgOptions);
 
   ApplyFormSettings;
@@ -802,6 +916,13 @@ end;
 
 procedure TfrmMain.eSearchEnter(Sender: TObject);
 begin
+  if xSettings.FirstSearchUse then
+  begin
+    ShowOnboardingBig(obtSearch);
+    xSettings.FirstSearchUse := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstSearchUse', False);
+  end;
+
   if eSearch.Text = EmptyStr then
     pSearch.Width := ClientWidth div 4;
   if IsDarkModeEnabled then
@@ -850,6 +971,13 @@ begin
   { Clear deleted records }
   if xSettings.ClearDeletedPeriod > 0 then
   begin
+    if xSettings.FirstDeletedRecordsCleaning then
+    begin
+      ShowOnboardingBig(obtClearDeletedRecords);
+      xSettings.FirstDeletedRecordsCleaning := False;
+      xSettings.SaveOnboarding('/ONBOARDING/FirstDeletedRecordsCleaning', False);
+    end;
+
     ClearDeleted(xSettings.ClearDeletedPeriod * 30);
   end;
 
@@ -859,17 +987,44 @@ begin
     1:
     begin
       if DaysBetween(Now, databaseConnection.LastBackup) >= 1 then
+      begin
+        if xSettings.FirstAutomaticBackup then
+        begin
+          ShowOnboardingBig(obtAutomaticBackup);
+          xSettings.FirstAutomaticBackup := False;
+          xSettings.SaveOnboarding('/ONBOARDING/FirstAutomaticBackup', False);
+        end;
+
         VacuumIntoBackup(False); // NewBackup;
+      end;
     end;
     2:
     begin
       if DaysBetween(Now, databaseConnection.LastBackup) >= 7 then
+      begin
+        if xSettings.FirstAutomaticBackup then
+        begin
+          ShowOnboardingBig(obtAutomaticBackup);
+          xSettings.FirstAutomaticBackup := False;
+          xSettings.SaveOnboarding('/ONBOARDING/FirstAutomaticBackup', False);
+        end;
+
         VacuumIntoBackup(False); // NewBackup;
+      end;
     end;
     3:
     begin
       if DaysBetween(Now, databaseConnection.LastBackup) >= 30 then
+      begin
+        if xSettings.FirstAutomaticBackup then
+        begin
+          ShowOnboardingBig(obtAutomaticBackup);
+          xSettings.FirstAutomaticBackup := False;
+          xSettings.SaveOnboarding('/ONBOARDING/FirstAutomaticBackup', False);
+        end;
+
         VacuumIntoBackup(False); // NewBackup;
+      end;
     end;
   end;
 

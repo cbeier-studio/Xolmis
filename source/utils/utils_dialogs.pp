@@ -23,6 +23,12 @@ interface
 uses
   Classes, SysUtils, Controls, StdCtrls, Dialogs, DB, RegExpr, EditBtn;
 
+type
+  TBigTipType = (obtDeleteRecord, obtAddMedia, obtSummary, obtGridSettings, obtQuickExport, obtMap, obtNewBatchBands,
+    obtTransferBands, obtBands, obtFeathers, obtNewBatchNets, obtProjects, obtGazetteer, obtBotanicalTaxa, obtTaxa,
+    obtCoordinatesConverter, obtGeoAssist, obtQuickEntry, obtUsers, obtImportWizard, obtImportMobile, obtImportEbird,
+    obtDarkMode, obtCaptureOutliers, obtAutomaticBackup, obtClearDeletedRecords, obtSearch, obtFeedback, obtNewDatabase);
+
   function MsgDlg(aTitle, aText: String; aType: TMsgDlgType): Boolean;
   procedure ProgressDlg(aTitle, aText: String; aMin: Integer = 0; aMax: Integer = 100);
   procedure ValidateDlg(aList: TStrings; aHeader: String = '');
@@ -54,11 +60,14 @@ uses
   function BreedingDialog(aBreeding: String; aDataset: TDataset; aCampo: String): Boolean; overload;
   function BreedingDialog(aEdit: TEditButton): Boolean; overload;
 
+  { Onboarding dialogs }
+  procedure ShowOnboardingBig(aTip: TBigTipType);
+
 implementation
 
 uses
   utils_locale, utils_global, data_types, data_management, models_sampling, udm_main, models_record_types,
-  udlg_find, udlg_validate, udlg_plantminer, udlg_authorship, udlg_export,
+  udlg_find, udlg_validate, udlg_plantminer, udlg_authorship, udlg_export, udlg_bigtip,
   udlg_calendar, udlg_colorbands, ulst_cyclecode, ulst_moltlimits, ulst_howsexedaged,
   ulst_detectiontype, ulst_breedingstatus;
 
@@ -602,6 +611,18 @@ begin
   finally
     FreeAndNil(dlgExport);
     LogEvent(leaClose, 'Export dialog');
+  end;
+end;
+
+procedure ShowOnboardingBig(aTip: TBigTipType);
+begin
+  dlgBigTip := TdlgBigTip.Create(nil);
+  with dlgBigTip do
+  try
+    TipType := aTip;
+    ShowModal;
+  finally
+    FreeAndNil(dlgBigTip);
   end;
 end;
 

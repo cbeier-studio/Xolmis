@@ -458,6 +458,149 @@ uses
     //rsFutureDate = '<b>%s</b> must be after <b>%s</b> (<font color="green">%s</font>).';
     //rsFuturePartialDate = '<b>%s</b> must be before or equal to <b>%s</b> (<font color="green">%s</font>).';
 
+    { Onboarding }
+    rsAddMediaFiles = 'Add media files';
+    rsSummary = 'Summary';
+    rsColumns = 'Columns';
+    rsQuickExport = 'Quick Export';
+    rsMapView = 'Map view';
+    rsNewBatchOfBands = 'New batch of bands';
+    rsTransferBands = 'Transfer bands';
+    rsNewBatchOfNets = 'New batch of mist nets';
+    rsGeoAssist = 'GeoAssist';
+    rsQuickEntry = 'Quick Entry';
+    rsImportWizard = 'Import Wizard';
+    rsImportXolmisMobile = 'Import from Xolmis Mobile';
+    rsImportEbirdData = 'Import eBird data';
+    rsDarkMode = 'Dark mode';
+    rsMeasurementsOutliers = 'Measurement outliers';
+    rsAutomaticBackup = 'Automatic Backup';
+    rsCleaningDeletedRecords = 'Cleaning Deleted Records';
+    rsSearch = 'Search';
+    rsFeedback = 'Feedback';
+    rsOnboardingDeleteRecord = 'When you delete a record in Xolmis, it is not removed immediately. ' +
+        'Instead, the record is moved to a temporary "recycle bin" area, where it can be restored if needed.' + LineEnding + LineEnding +
+        'Please note that records in the recycle bin are periodically cleared to free up space. ' +
+        'You can configure how often the recycle bin is emptied in Settings.' + LineEnding + LineEnding +
+        'This ensures you have a chance to recover deleted records while keeping your database clean and efficient.';
+    rsOnboardingAddMedia = 'To add files in Xolmis, you have two options:' + LineEnding +
+        '1. Click the Add button in the side panel to select files from your computer.' + LineEnding +
+        '2. Or simply drag and drop files into the side panel.' + LineEnding + LineEnding +
+        'This makes it easy to attach images, audio, video, or documents directly to your records.';
+    rsOnboardingSummary = 'The Summary view provides quick statistics for the selected column. ' +
+        'Depending on the type of data, it may show a simple count, average, or other basic measures. ' +
+        'This helps you understand patterns in your dataset without leaving the grid.' + LineEnding + LineEnding +
+        'If a statistic is available for the chosen column, it will be displayed automatically in the side panel.';
+    rsOnboardingGridSettings = 'The Columns panel lets you customize how your data grid is displayed.' + LineEnding + LineEnding +
+        'You can: choose which columns are visible, reorder columns to match your workflow, ' +
+        'adjust column widths to fit their content, and increase or decrease the row height for better readability.' + LineEnding + LineEnding +
+        'Use these options to tailor the grid layout to your needs and make data exploration more efficient.';
+    rsOnboardingQuickExport = 'The exported content will match exactly what you see in the data grid, including any filters or search criteria applied.' + LineEnding + LineEnding +
+        'To proceed:' + LineEnding +
+        '1. Select the desired file format from the list on the left.' + LineEnding +
+        '2. Check or uncheck the columns to include or exclude them from the export.' + LineEnding + LineEnding +
+        'This ensures you have full control over the structure and scope of the exported dataset.';
+    rsOnboardingMap = 'The Map view lets you explore the geographic distribution of your records.' + LineEnding + LineEnding +
+        'If you need to export coordinates, use the Export button located in the side panel above the map. ' +
+        'This allows you to save the geographic data for use in other applications or analyses.';
+    rsOnboardingNewBatchBands = 'The "New batch of bands" dialog allows you to create a set of bands at once.' + LineEnding + LineEnding +
+        'You can define the start and end numbers of the bands sequence, and other details to generate multiple bands efficiently. ' +
+        'This helps organize individual records by assigning unique band codes without having to enter them one by one.' + LineEnding + LineEnding +
+        'Once created, the batch will be available for use across your dataset.';
+    rsOnboardingTransferBands = 'The "Transfer bands" dialog allows you to move a range of band identifiers to another bander.' + LineEnding + LineEnding +
+        'You define the starting and ending numbers of the batch, and all bands within that interval will be transferred.' + LineEnding + LineEnding +
+        'This makes it easy to reassign bands between users.';
+    rsOnboardingBands = 'The Bands module is where you manage all band identifiers used in your records.' + LineEnding + LineEnding +
+        'Here you can create new batches of bands, transfer bands between banders, and track their usage. ' +
+        'This central view helps you keep bands organized and ensures consistency across your dataset. ' +
+        'Use it to maintain clear control over band assignments and availability.';
+    rsOnboardingFeathers = 'The Feathers module allows you to manage individual feather records linked to your dataset.' + LineEnding + LineEnding +
+        'You can add feathers one by one or create them in batches for faster entry. ' +
+        'Beyond storing individual records, this module can also be used to analyze molting patterns, helping you study feather replacement across individuals or groups.' + LineEnding + LineEnding +
+        'Use it to keep feather data organized, accessible, and valuable for both detailed records and broader biological insights.';
+    rsOnboardingNewBatchNets = 'The "New batch of nets" dialog allows you to create multiple net records at once.' + LineEnding + LineEnding +
+        'You define the starting and ending numbers of the batch, and each net in that interval will be generated automatically. ' +
+        'For every net, you can assign opening and closing times, as well as its height and length.' + LineEnding + LineEnding +
+        'This makes it easy to register a complete set of nets consistently without entering each one individually.';
+    rsOnboardingProjects = 'The Projects module helps you organize and track your research initiatives.' + LineEnding + LineEnding +
+        'Here you can define project timelines with schedules and milestones, and manage budgets including related expenses. ' +
+        'This central view keeps both planning and financial information connected, making it easier to monitor progress and resource allocation.' + LineEnding + LineEnding +
+        'Use it to maintain clear oversight of your projects from start to finish.';
+    rsOnboardingGazetteer = 'The Gazetteer module organizes place names in a hierarchical structure.' + LineEnding + LineEnding +
+        'Each toponym can be linked to a higher-level entry by filling in the Parent toponym field. ' +
+        'This hierarchy allows you to build relationships between locations, making it easier to navigate and analyze geographic data.' + LineEnding + LineEnding +
+        'Use the Parent toponym to ensure your gazetteer reflects the correct structure of countries, states, municipalities and localities.';
+    rsOnboardingBotanicalTaxa = 'The Botanical taxa module organizes plant taxa in a hierarchical structure.' + LineEnding + LineEnding +
+        'Each taxon can be linked to a higher-level entry by filling in the Parent taxon field. ' +
+        'This hierarchy allows you to represent relationships between species, genera, families, and other ranks.' + LineEnding + LineEnding +
+        'Use the Parent taxon to ensure your botanical dataset reflects the correct taxonomic structure.';
+    rsOnboardingTaxa = 'The Taxa module is a read-only consultation tool.' + LineEnding + LineEnding +
+        'To begin, search for a taxon using the search field.' + LineEnding +
+        'Once selected, the module will display information and basic statistics related to that taxon.' + LineEnding + LineEnding +
+        'Use this view to explore taxonomic details without modifying the underlying data.';
+    rsOnboardingCoordinatesConverter = 'The Coordinate Converter allows you to transform coordinates into different formats.' + LineEnding + LineEnding +
+        'You can provide coordinates by typing them directly, pasting from another source, or opening a file. ' +
+        'This flexibility makes it easy to work with geographic data from various inputs.' + LineEnding + LineEnding +
+        'Use the converter to quickly standardize coordinates for analysis or export.';
+    rsOnboardingGeoAssist = 'GeoAssist helps you fill in geographic coordinates within the modules.' + LineEnding + LineEnding +
+        'You can enter longitude and latitude manually in DMS (degrees, minutes, seconds) format, ' +
+        'or select from a list of previously imported coordinates.' + LineEnding + LineEnding +
+        'This tool makes it easier to ensure accurate location data and streamline the process of adding geographic information to your records.';
+    rsOnboardingQuickEntry = 'Quick Entry provides a spreadsheet-style interface for faster data input.' + LineEnding + LineEnding +
+        'You can add multiple records directly in the grid and ' +
+        'All entries are validated before being saved to the database, ensuring data quality and consistency.' + LineEnding + LineEnding +
+        'Use Quick Entry to capture information quickly while maintaining accuracy across your dataset.';
+    rsOnboardingUsers = 'The Users module allows you to manage system accounts.' + LineEnding + LineEnding +
+        'Here you can assign permissions to control what each user can access or modify. ' +
+        'Users can also change their own password to keep their account secure.' + LineEnding + LineEnding +
+        'Use this module to maintain proper access levels and ensure account security across the system.';
+    rsOnboardingImportWizard = 'The Import Wizard guides you through bringing external data into the system.' + LineEnding + LineEnding +
+        'The process has three main steps:' + LineEnding +
+        '1. Select the file you want to import.' + LineEnding +
+        '2. Verify and adjust the column mapping to ensure fields align correctly.' + LineEnding +
+        '3. Import the data into the database.' + LineEnding + LineEnding +
+        'This step-by-step flow helps guarantee that your data is integrated accurately and consistently.';
+    rsOnboardingImportMobile = 'The Xolmis Mobile Import guides you through bringing field data into the system.' + LineEnding + LineEnding +
+        'The process includes the following steps:' + LineEnding +
+        '1. Select the file you want to import.' + LineEnding +
+        '2. Optionally, specify the expedition to which the data belongs.' + LineEnding +
+        '3. Review the records to be imported and fill in any missing values.' + LineEnding +
+        '4. Import the data into the database.' + LineEnding + LineEnding +
+        'This workflow ensures that mobile-collected information is integrated accurately and consistently.';
+    rsOnboardingImportEbird = 'The eBird Import allows you to bring bird observation records into the system.' + LineEnding + LineEnding +
+        'Simply select the file, and the import will be performed automatically. ' +
+        'Please note that the data must first be manually exported from your eBird profile.' + LineEnding + LineEnding +
+        'This ensures that your observations are integrated quickly and consistently.';
+    rsOnboardingDarkMode = 'Dark mode changes the interface to a darker color scheme, reducing eye strain and improving visibility in low-light environments.' + LineEnding + LineEnding +
+        'You can enable or disable Dark mode at any time in Settings.';
+    rsOnboardingCaptureOutliers = 'The Captures module displays morphometric values for each record.' + LineEnding + LineEnding +
+        'Cells containing values that appear to be outliers are highlighted in yellow to draw attention. ' +
+        'If you prefer, this automatic highlighting can be disabled in Settings.' + LineEnding + LineEnding +
+        'Use this feature to quickly spot unusual measurements while keeping control over how data is presented.';
+    rsOnboardingAutomaticBackup = 'An automatic backup of your data will be created now.' + LineEnding + LineEnding +
+        'You can define how often backups are performed by adjusting the periodicity in Settings.' + LineEnding + LineEnding +
+        'This ensures your information is safely stored and kept up to date according to your preferences.';
+    rsOnboardingClearDeletedRecords = 'Deleted records are automatically cleaned up when starting Xolmis.' + LineEnding + LineEnding +
+        'The period of time that a deleted record remains in the recycle bin before being permanently removed can be defined in Settings.' + LineEnding + LineEnding +
+        'This ensures your database stays organized while giving you control over how long deleted data is retained.';
+    rsOnboardingSearch = 'The Search bar helps you quickly find records in the current module.' + LineEnding + LineEnding +
+        'Here are some tips to refine your queries:' + LineEnding +
+        '- Start with ":" to search for terms that begin with the entered text.' + LineEnding +
+        '- Start with "=" to search for an exact match.' + LineEnding +
+        '- Separate terms with spaces to search for them in separated words.' + LineEnding + LineEnding +
+        'You can also use the Ctrl+F keyboard shortcut to go to the search bar instantly.';
+    rsOnboardingFeedback = 'The Feedback option opens the Xolmis GitHub Issues page. ' +
+        'There you can report bugs you encounter or suggest new features for future development.' + LineEnding + LineEnding +
+        'Your input helps improve the system and ensures that Xolmis continues to evolve with user needs.';
+    rsOnboardingNewDatabase = 'A new database has been created.' + LineEnding + LineEnding +
+        'To get started, you should enter the core information in the following order:' + LineEnding +
+        '1. Gazetteer' + LineEnding +
+        '2. Sampling plots' + LineEnding +
+        '3. Institutions' + LineEnding +
+        '4. Researchers' + LineEnding + LineEnding +
+        'Optionally, you may also add: Projects, Permits, Bands, and Methods.' + LineEnding + LineEnding +
+        'Following this sequence ensures that your database is properly structured and ready for use.';
+
     { Hints }
     rsHintCheckUncheckAll = 'Mark/unmark all';
     rsHintHeaderAllUnmarked = 'No marked records';

@@ -3512,22 +3512,16 @@ msgid "Clements/eBird"
 msgstr "Clements/eBird"
 
 #: tdlgabout.linkclementsversion.hint
-#, fuzzy
-#| msgid ""
-#| "Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
-#| "J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,\n"
-#| "and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
-#| "Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
 msgid ""
 "Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, J. A. Gerbracht, \n"
 "D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith, and \n"
 "C. L. Wood. 2025. The eBird/Clements checklist of Birds of the World: v2025. \n"
 "Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
 msgstr ""
-"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, T. A. Fredericks, \n"
-"J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith,\n"
-"and C. L. Wood. 2024. The eBird/Clements checklist of Birds of the World: v2024. \n"
-"Downloaded from https://www.birds.cornell.edu/clementschecklist/download/"
+"Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, J. A. Gerbracht, \n"
+"D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith, and \n"
+"C. L. Wood. 2025. The eBird/Clements checklist of Birds of the World: v2025. \n"
+"Download em https://www.birds.cornell.edu/clementschecklist/download/"
 
 #: tdlgabout.linklicense.caption
 msgid "License terms"
@@ -3766,6 +3760,11 @@ msgstr "Calculando o saldo das anilhas..."
 msgctxt "tdlgbandsbalance.sbclose.caption"
 msgid "Close"
 msgstr "Fechar"
+
+#: tdlgbigtip.btnclose.caption
+msgctxt "tdlgbigtip.btnclose.caption"
+msgid "Dismiss"
+msgstr "Dispensar"
 
 #: tdlgcalendar.caption
 msgid "Select date"
@@ -4106,6 +4105,7 @@ msgid "Options"
 msgstr "Opções"
 
 #: tdlggeoassist.caption
+msgctxt "tdlggeoassist.caption"
 msgid "GeoAssist"
 msgstr "GeoAssist"
 
@@ -4510,6 +4510,7 @@ msgid "&Help"
 msgstr "A&juda"
 
 #: tdlgimportxmobile.caption
+msgctxt "tdlgimportxmobile.caption"
 msgid "Import from Xolmis Mobile"
 msgstr "Importar do Xolmis Mobile"
 
@@ -5090,11 +5091,11 @@ msgid "Starting Xolmis"
 msgstr "Iniciando o Xolmis"
 
 #: tdlgtourtip.btnclose.caption
+msgctxt "tdlgtourtip.btnclose.caption"
 msgid "Dismiss"
-msgstr ""
+msgstr "Dispensar"
 
 #: tdlgtourtip.btnnext.caption
-#, fuzzy
 msgctxt "tdlgtourtip.btnnext.caption"
 msgid "Next"
 msgstr "Próximo"
@@ -11930,6 +11931,10 @@ msgctxt "tfrmmain.actprint.caption"
 msgid "Print"
 msgstr "Imprimir"
 
+#: tfrmmain.actreleasenotes.caption
+msgid "Release notes"
+msgstr "Notas da versão"
+
 #: tfrmmain.actsettings.caption
 msgctxt "tfrmmain.actsettings.caption"
 msgid "&Settings"
@@ -11943,10 +11948,6 @@ msgstr "Sa&ldo"
 #: tfrmmain.actwebsite.caption
 msgid "Xolmis' website"
 msgstr "Website do Xolmis"
-
-#: tfrmmain.actwhatsnew.caption
-msgid "What's new"
-msgstr "Novidades"
 
 #: tfrmmain.esearch.texthint
 msgctxt "tfrmmain.esearch.texthint"
@@ -11962,15 +11963,14 @@ msgctxt "tfrmmain.lblloading.caption"
 msgid "Welcome"
 msgstr "Bem-vindo(a)"
 
-#: tfrmmain.mmbreeding.caption
-msgctxt "tfrmmain.mmbreeding.caption"
-msgid "&Breeding"
-msgstr "&Reprodução"
-
 #: tfrmmain.mmentities.caption
 msgctxt "tfrmmain.mmentities.caption"
 msgid "&Management"
 msgstr "G&estão"
+
+#: tfrmmain.mmfieldwork.caption
+msgid "Field&work"
+msgstr "Trabalho de &campo"
 
 #: tfrmmain.mmfile.caption
 msgctxt "tfrmmain.mmfile.caption"
@@ -11992,20 +11992,10 @@ msgctxt "tfrmmain.mmhelp.caption"
 msgid "&Help"
 msgstr "A&juda"
 
-#: tfrmmain.mmindividuals.caption
-msgctxt "tfrmmain.mmindividuals.caption"
-msgid "&Individuals"
-msgstr "&Indivíduos"
-
 #: tfrmmain.mmmedia.caption
 msgctxt "tfrmmain.mmmedia.caption"
 msgid "M&edia"
 msgstr "Mí&dias"
-
-#: tfrmmain.mmsampling.caption
-msgctxt "tfrmmain.mmsampling.caption"
-msgid "&Sampling"
-msgstr "Amo&stragem"
 
 #: tfrmmain.mmtaxonomy.caption
 msgctxt "tfrmmain.mmtaxonomy.caption"
@@ -12839,6 +12829,10 @@ msgctxt "utils_locale.rsactivitytodo"
 msgid "To do"
 msgstr "A fazer"
 
+#: utils_locale.rsaddmediafiles
+msgid "Add media files"
+msgstr "Adicionar mídias"
+
 #: utils_locale.rsadminuser
 msgctxt "utils_locale.rsadminuser"
 msgid "Administrator"
@@ -12918,6 +12912,10 @@ msgstr "Autoria"
 msgctxt "utils_locale.rsauto"
 msgid "Auto"
 msgstr "Auto"
+
+#: utils_locale.rsautomaticbackup
+msgid "Automatic Backup"
+msgstr "Backup automático"
 
 #: utils_locale.rsbackupindays
 #, object-pascal-format
@@ -13648,6 +13646,10 @@ msgctxt "utils_locale.rscheckupdates"
 msgid "Check updates"
 msgstr "Verificar atualizações"
 
+#: utils_locale.rscleaningdeletedrecords
+msgid "Cleaning Deleted Records"
+msgstr "Limpando registros apagados"
+
 #: utils_locale.rsclearlogsprompt
 msgctxt "utils_locale.rsclearlogsprompt"
 msgid "Do you really want to delete all log files?"
@@ -13754,6 +13756,11 @@ msgctxt "utils_locale.rscoloryellow"
 msgid "yellow"
 msgstr "amarelo"
 
+#: utils_locale.rscolumns
+msgctxt "utils_locale.rscolumns"
+msgid "Columns"
+msgstr "Colunas"
+
 #: utils_locale.rscompressingbackup
 msgctxt "utils_locale.rscompressingbackup"
 msgid "Compressing backup..."
@@ -13818,6 +13825,10 @@ msgstr "Diariamente"
 msgctxt "utils_locale.rsdark"
 msgid "Dark"
 msgstr "Escuro"
+
+#: utils_locale.rsdarkmode
+msgid "Dark mode"
+msgstr "Modo escuro"
 
 #: utils_locale.rsdatebandchange
 msgctxt "utils_locale.rsdatebandchange"
@@ -14681,6 +14692,10 @@ msgctxt "utils_locale.rsfeces"
 msgid "Feces"
 msgstr "Fezes"
 
+#: utils_locale.rsfeedback
+msgid "Feedback"
+msgstr "Feedback"
+
 #: utils_locale.rsfieldnotallowedinfindby
 #, object-pascal-format
 msgid "Field \"%s\" not allowed in FindBy."
@@ -14914,6 +14929,11 @@ msgctxt "utils_locale.rsgenderlist"
 msgid "he/him,she/her,they/them"
 msgstr "ele,ela,el@s"
 
+#: utils_locale.rsgeoassist
+msgctxt "utils_locale.rsgeoassist"
+msgid "GeoAssist"
+msgstr "GeoAssist"
+
 #: utils_locale.rsgoalcanceled
 msgctxt "utils_locale.rsgoalcanceled"
 msgid "Canceled"
@@ -15049,6 +15069,10 @@ msgctxt "utils_locale.rsimportdocstitle"
 msgid "Import documents"
 msgstr "Importar documentos"
 
+#: utils_locale.rsimportebirddata
+msgid "Import eBird data"
+msgstr "Importar dados do eBird"
+
 #: utils_locale.rsimportimagestitle
 msgctxt "utils_locale.rsimportimagestitle"
 msgid "Import images"
@@ -15063,6 +15087,15 @@ msgstr "Importando arquivo %s"
 #: utils_locale.rsimportvideostitle
 msgid "Import video files"
 msgstr "Importar vídeos"
+
+#: utils_locale.rsimportwizard
+msgid "Import Wizard"
+msgstr "Assistente de importação"
+
+#: utils_locale.rsimportxolmismobile
+msgctxt "utils_locale.rsimportxolmismobile"
+msgid "Import from Xolmis Mobile"
+msgstr "Importar do Xolmis Mobile"
 
 #: utils_locale.rsinactiverecordduplicated
 #, object-pascal-format
@@ -15362,6 +15395,10 @@ msgctxt "utils_locale.rsmainwindowloaded"
 msgid "Main window loaded!"
 msgstr "Janela principal carregada!"
 
+#: utils_locale.rsmapview
+msgid "Map view"
+msgstr "Visualização do mapa"
+
 #: utils_locale.rsmarked
 msgctxt "utils_locale.rsmarked"
 msgid "marked"
@@ -15377,6 +15414,10 @@ msgstr "marcado"
 msgctxt "utils_locale.rsmaxcollectorsreached"
 msgid "The maximum number of authors (%d) was reached!"
 msgstr "O número máximo de autores (%d) foi atingido!"
+
+#: utils_locale.rsmeasurementsoutliers
+msgid "Measurement outliers"
+msgstr "Outliers de morfometria"
 
 #: utils_locale.rsminpasswordlength
 msgctxt "utils_locale.rsminpasswordlength"
@@ -15794,6 +15835,15 @@ msgctxt "utils_locale.rsnever"
 msgid "Never"
 msgstr "Nunca"
 
+#: utils_locale.rsnewbatchofbands
+msgctxt "utils_locale.rsnewbatchofbands"
+msgid "New batch of bands"
+msgstr "Novo lote de anilhas"
+
+#: utils_locale.rsnewbatchofnets
+msgid "New batch of mist nets"
+msgstr "Novo lote de redes"
+
 #: utils_locale.rsnewdatabase
 msgctxt "utils_locale.rsnewdatabase"
 msgid "New database"
@@ -15868,6 +15918,430 @@ msgstr "nenhum usuário encontrado"
 msgctxt "utils_locale.rsnumberofrecords"
 msgid "Number of records"
 msgstr "Nº de registros"
+
+#: utils_locale.rsonboardingaddmedia
+msgid ""
+"To add files in Xolmis, you have two options:\n"
+"1. Click the Add button in the side panel to select files from your computer.\n"
+"2. Or simply drag and drop files into the side panel.\n"
+"\n"
+"This makes it easy to attach images, audio, video, or documents directly to your records."
+msgstr ""
+"Para adicionar arquivos no Xolmis, você tem duas opções:\n"
+"1. Clique no botão Adicionar do painel lateral para selecionar arquivos do seu computador.\n"
+"2. Ou simplesmente arraste e solte arquivos no painel lateral.\n"
+"\n"
+"Isso torna fácil para anexar imagens, áudios, vídeos, ou documentos diretamente aos seus registros."
+
+#: utils_locale.rsonboardingautomaticbackup
+msgid ""
+"An automatic backup of your data will be created now.\n"
+"\n"
+"You can define how often backups are performed by adjusting the periodicity in Settings.\n"
+"\n"
+"This ensures your information is safely stored and kept up to date according to your preferences."
+msgstr ""
+"Um backup automático dos seus dados será criado agora.\n"
+"\n"
+"Você pode definir com que frequência os backup são executados ajustando a periodicidade nas Opções.\n"
+"\n"
+"Isso garante que sua informação está guardada de forma segura e atualizada de acordo com suas preferências."
+
+#: utils_locale.rsonboardingbands
+msgid ""
+"The Bands module is where you manage all band identifiers used in your records.\n"
+"\n"
+"Here you can create new batches of bands, transfer bands between banders, and track their usage. This central view helps you keep bands organized and ensures consistency across your dataset. Use it to maintain clear control over band assignments and availability."
+msgstr ""
+"O módulo de Anilhas e onde você administra todos identificadores de anilhas usados nos seus registros.\n"
+"\n"
+"Aqui você pode criar novos lotes de anilhas, transferir anilhas entre anilhadores, e rastrear seu uso. Esta visão central ajuda você a manter as anilhas organizadas e garante consistência no seu conjunto de dados. Use-o para manter controle claro das atribuições e disponibilidade de anilhas."
+
+#: utils_locale.rsonboardingbotanicaltaxa
+msgid ""
+"The Botanical taxa module organizes plant taxa in a hierarchical structure.\n"
+"\n"
+"Each taxon can be linked to a higher-level entry by filling in the Parent taxon field. This hierarchy allows you to represent relationships between species, genera, families, and other ranks.\n"
+"\n"
+"Use the Parent taxon to ensure your botanical dataset reflects the correct taxonomic structure."
+msgstr ""
+"O módulo de Táxons botânicos organiza os táxons de plantas em uma estrutura hierárquica.\n"
+"\n"
+"Cada táxon pode ser ligado a um táxon de nivel mais alto preenchendo o campo Táxon pai. Esta hierarquia permite você representar relacionamentos entre espécies, gêneros, famílias e outros níveis.\n"
+"\n"
+"Use o táxon pai para garantir que seu conjunto de dados botânico reflita a estrutura taxonômica correta."
+
+#: utils_locale.rsonboardingcaptureoutliers
+msgid ""
+"The Captures module displays morphometric values for each record.\n"
+"\n"
+"Cells containing values that appear to be outliers are highlighted in yellow to draw attention. If you prefer, this automatic highlighting can be disabled in Settings.\n"
+"\n"
+"Use this feature to quickly spot unusual measurements while keeping control over how data is presented."
+msgstr ""
+"O módulo de Capturas apresenta valores morfométricos para cada registro.\n"
+"\n"
+"Células contendo valores que aparentam ser outliers são grifados em amarelo para chamar atenção. Se você preferir, a formatação automática pode ser desabilitada nas Opções.\n"
+"\n"
+"Use essa funcionalidade para rapidamente encontrar medidas discrepantes enquanto mantém controle de como os dados são apresentados."
+
+#: utils_locale.rsonboardingcleardeletedrecords
+msgid ""
+"Deleted records are automatically cleaned up when starting Xolmis.\n"
+"\n"
+"The period of time that a deleted record remains in the recycle bin before being permanently removed can be defined in Settings.\n"
+"\n"
+"This ensures your database stays organized while giving you control over how long deleted data is retained."
+msgstr ""
+"Registros apagados são automaticamente limpos ao encerrar o Xolmis.\n"
+"\n"
+"O período de tempo que um registro apagado permanece na lixeira antes de ser permanentemente removido pode ser definido nas Opções.\n"
+"\n"
+"Isso garante que seu banco de dados fique organizado enquanto dá controle de quanto tempo dados apagados são retidos."
+
+#: utils_locale.rsonboardingcoordinatesconverter
+msgid ""
+"The Coordinate Converter allows you to transform coordinates into different formats.\n"
+"\n"
+"You can provide coordinates by typing them directly, pasting from another source, or opening a file. This flexibility makes it easy to work with geographic data from various inputs.\n"
+"\n"
+"Use the converter to quickly standardize coordinates for analysis or export."
+msgstr ""
+"O Conversor de coordenadas permite você transformar coordenadas em diferentes formatos.\n"
+"\n"
+"Você pode fornecer coordenadas digitando diretamente, colando de outra fonte, ou abrindo de um arquivo. Essa flexibilidade torna fácil trabalhar com dados geográficos de várias origens.\n"
+"\n"
+"Use o conversor para rapidamente padronizar coordenadas para análises ou exportação."
+
+#: utils_locale.rsonboardingdarkmode
+msgid ""
+"Dark mode changes the interface to a darker color scheme, reducing eye strain and improving visibility in low-light environments.\n"
+"\n"
+"You can enable or disable Dark mode at any time in Settings."
+msgstr ""
+"O modo escuro muda a interface para um esquema de cores mais escuro, reduzindo cansaço visual e melhorando a visibilidade em ambientes pouco iluminados.\n"
+"\n"
+"Você pode habilitar ou desabilitar o modo escuro a qualquer momento nas Opções."
+
+#: utils_locale.rsonboardingdeleterecord
+msgid ""
+"When you delete a record in Xolmis, it is not removed immediately. Instead, the record is moved to a temporary \"recycle bin\" area, where it can be restored if needed.\n"
+"\n"
+"Please note that records in the recycle bin are periodically cleared to free up space. You can configure how often the recycle bin is emptied in Settings.\n"
+"\n"
+"This ensures you have a chance to recover deleted records while keeping your database clean and efficient."
+msgstr ""
+"Quando você apaga um registro no Xolmis, ele não é removido imediatamente. Em vez disso, o registro é movido para uma \"lixeira\" temporária, onde ele pode ser restaurado se necessário.\n"
+"\n"
+"Por favor, note que registros na lixeira podem ser periodicamente removidos para liberar espaço. Você pode configurar quão frequentemente a lixeira é limpa nas Opções.\n"
+"\n"
+"Isso garante que você tem chance de recuperar registros apagados enquanto mantém seu banco de dados limpo e eficiente."
+
+#: utils_locale.rsonboardingfeathers
+msgid ""
+"The Feathers module allows you to manage individual feather records linked to your dataset.\n"
+"\n"
+"You can add feathers one by one or create them in batches for faster entry. Beyond storing individual records, this module can also be used to analyze molting patterns, helping you study feather replacement across individuals or groups.\n"
+"\n"
+"Use it to keep feather data organized, accessible, and valuable for both detailed records and broader biological insights."
+msgstr ""
+"O módulo de Penas permite você gerenciar registros de penas individuais ligadas ao seu conjunto de dados.\n"
+"\n"
+"Você pode adicionar penas uma por uma ou criar elas em lotes para entrada rápida. Além de armazenar registros individuais, esse módulo pode ser usado também para verificar padrões de muda de penas, ajudando você a estudar a muda entre indivíduos ou grupos.\n"
+"\n"
+"Use-o para manter dados de penas organizados, acessíveis, e valioso para ambos registros detalhados ou entedimentos biológicos mais amplos."
+
+#: utils_locale.rsonboardingfeedback
+msgid ""
+"The Feedback option opens the Xolmis GitHub Issues page. There you can report bugs you encounter or suggest new features for future development.\n"
+"\n"
+"Your input helps improve the system and ensures that Xolmis continues to evolve with user needs."
+msgstr ""
+"A opção de Feedback abre a página do GitHub Issues do Xolmis. Lá você pode relatar bugs encontrados ou sugerir novas funcionalidades para desenvolvimento futuro.\n"
+"\n"
+"Seus comentários ajudam a melhorar o sistema e garantem que o Xolmis continue a evoluir de acordo com as necessidades do usuário."
+
+#: utils_locale.rsonboardinggazetteer
+msgid ""
+"The Gazetteer module organizes place names in a hierarchical structure.\n"
+"\n"
+"Each toponym can be linked to a higher-level entry by filling in the Parent toponym field. This hierarchy allows you to build relationships between locations, making it easier to navigate and analyze geographic data.\n"
+"\n"
+"Use the Parent toponym to ensure your gazetteer reflects the correct structure of countries, states, municipalities and localities."
+msgstr ""
+"O módulo Gazetteer organiza nomes de lugares em uma estrutura hierárquica.\n"
+"\n"
+"Cada topônimo pode ser ligado a outro de nível superior preenchendo o campo Topônimo pai. Essa hierarquia permite que você construa relacionamentos entre locais, facilitando a navegação e análise de dados geográficos.\n"
+"\n"
+"Use o topônimo pai para garantr que seu gazetteer reflita a correta estrutura de países, estados, municípios e localidades."
+
+#: utils_locale.rsonboardinggeoassist
+msgid ""
+"GeoAssist helps you fill in geographic coordinates within the modules.\n"
+"\n"
+"You can enter longitude and latitude manually in DMS (degrees, minutes, seconds) format, or select from a list of previously imported coordinates.\n"
+"\n"
+"This tool makes it easier to ensure accurate location data and streamline the process of adding geographic information to your records."
+msgstr ""
+"O GeoAssist ajuda você a preencher coordenadas geográficas dentro dos módulos.\n"
+"\n"
+"Você pode entrar longitude e latitude manualmente em graus, minutos e segundos, ou selecionar de uma lista de coordenadas previamente importadas.\n"
+"\n"
+"Essa ferramenta facilita a garantia de dados de localização acurados e simplifica o process de adicão de informação geográfica nos seus registros."
+
+#: utils_locale.rsonboardinggridsettings
+msgid ""
+"The Columns panel lets you customize how your data grid is displayed.\n"
+"\n"
+"You can: choose which columns are visible, reorder columns to match your workflow, adjust column widths to fit their content, and increase or decrease the row height for better readability.\n"
+"\n"
+"Use these options to tailor the grid layout to your needs and make data exploration more efficient."
+msgstr ""
+"O painel de Colunas permite você personalizar como a sua grade de dados é mostrada.\n"
+"\n"
+"Você pode: escolher quais colunas estão visíveis, reordenar colunas para encaixar no seu fluxo de trabalho, ajustar a largura das colunas para o conteúdo, e aumentar ou diminuir a altura das linhas para melhorar a legibilidade.\n"
+"\n"
+"Use essas opções para criar o layout de grade para suas necessidades e fazer a exploração de dados mais eficiente."
+
+#: utils_locale.rsonboardingimportebird
+msgid ""
+"The eBird Import allows you to bring bird observation records into the system.\n"
+"\n"
+"Simply select the file, and the import will be performed automatically. Please note that the data must first be manually exported from your eBird profile.\n"
+"\n"
+"This ensures that your observations are integrated quickly and consistently."
+msgstr ""
+"A importação do eBird permite você trazer registros de observação de aves para o sistema.\n"
+"\n"
+"Simplesmente selecione o arquivo e a importação será realizada automaticamente. Note que os dados precisam ser primeiro exportados manualmente do seu perfil do eBird.\n"
+"\n"
+"Isso garante que suas observações serão integradas rápida e consistentemente."
+
+#: utils_locale.rsonboardingimportmobile
+msgid ""
+"The Xolmis Mobile Import guides you through bringing field data into the system.\n"
+"\n"
+"The process includes the following steps:\n"
+"1. Select the file you want to import.\n"
+"2. Optionally, specify the expedition to which the data belongs.\n"
+"3. Review the records to be imported and fill in any missing values.\n"
+"4. Import the data into the database.\n"
+"\n"
+"This workflow ensures that mobile-collected information is integrated accurately and consistently."
+msgstr ""
+"A importação do Xolmis Mobile guia você para trazer dados de campo para o sistema.\n"
+"\n"
+"O processo inclui os seguintes passos:\n"
+"1. Selecione o arquivo que deseja importar.\n"
+"2. Opcionalmente, especifique a expedição à qual os dados pertencem.\n"
+"3. Revise os registros que serão importados e preencha qualquer valor faltante.\n"
+"4. Importe os dados no banco de dados.\n"
+"\n"
+"Esse fluxo de trabalaho assegura que informações coletadas em dispositivos móveis sejam integradas acurada e consistentemente."
+
+#: utils_locale.rsonboardingimportwizard
+msgid ""
+"The Import Wizard guides you through bringing external data into the system.\n"
+"\n"
+"The process has three main steps:\n"
+"1. Select the file you want to import.\n"
+"2. Verify and adjust the column mapping to ensure fields align correctly.\n"
+"3. Import the data into the database.\n"
+"\n"
+"This step-by-step flow helps guarantee that your data is integrated accurately and consistently."
+msgstr ""
+"O assistente de importação guia você para trazer dados externos para o sistema.\n"
+"\n"
+"O processo tem três etapas principais:\n"
+"1. Selecione o arquiv que deseja importar.\n"
+"2. Verifique e ajuste o mapeamento de colunas para assegurar o alinhamento correto dos campos.\n"
+"3. Importe os dados no banco de dados.\n"
+"\n"
+"Esse fluxo passo-a-passo ajuda a garantir que seus dados sejam integrados acurada e consistentemente."
+
+#: utils_locale.rsonboardingmap
+msgid ""
+"The Map view lets you explore the geographic distribution of your records.\n"
+"\n"
+"If you need to export coordinates, use the Export button located in the side panel above the map. This allows you to save the geographic data for use in other applications or analyses."
+msgstr ""
+"A visualização do mapa permite você explorar a distribuição geográfica dos seus registros.\n"
+"\n"
+"Se você precisar exportar coordenadas, use o botão Exportar localizado no painel lateral acima do mapa. Isso permite que você salve dados geográficos para usar em outros aplicativos ou análises."
+
+#: utils_locale.rsonboardingnewbatchbands
+msgid ""
+"The \"New batch of bands\" dialog allows you to create a set of bands at once.\n"
+"\n"
+"You can define the start and end numbers of the bands sequence, and other details to generate multiple bands efficiently. This helps organize individual records by assigning unique band codes without having to enter them one by one.\n"
+"\n"
+"Once created, the batch will be available for use across your dataset."
+msgstr ""
+"O diálogo de Novo lote de anilhas permite você criar um conjunto de anilhas de uma vez.\n"
+"\n"
+"Você pode definir os números de início e fim da sequência de anilhas, e outros detalhes para gerar múltiplas anilhas eficientemente. Isso ajuda a organizar registros individuais atribuindo códigos de anilhas únicos sem ter que digitar uma por uma.\n"
+"\n"
+"Uma vez criado, o lote estará disponível para uso no seu conjunto de dados."
+
+#: utils_locale.rsonboardingnewbatchnets
+msgid ""
+"The \"New batch of nets\" dialog allows you to create multiple net records at once.\n"
+"\n"
+"You define the starting and ending numbers of the batch, and each net in that interval will be generated automatically. For every net, you can assign opening and closing times, as well as its height and length.\n"
+"\n"
+"This makes it easy to register a complete set of nets consistently without entering each one individually."
+msgstr ""
+"O diálogo de Novo lote de redes permite você criar múltiplos registros de esforço de rede de uma vez.\n"
+"\n"
+"Você define os números inicial e final do lote, e cada rede nesse intervalo é gerada automaticamente. Para cada rede, você pode atribuir horários de abertura e fechamento, bem como sua altura e seu comprimento.\n"
+"\n"
+"Isso facilita o registro de um conjunto completo de redes consistentemente sem digitar cada uma individualmente."
+
+#: utils_locale.rsonboardingnewdatabase
+msgid ""
+"A new database has been created.\n"
+"\n"
+"To get started, you should enter the core information in the following order:\n"
+"1. Gazetteer\n"
+"2. Sampling plots\n"
+"3. Institutions\n"
+"4. Researchers\n"
+"\n"
+"Optionally, you may also add: Projects, Permits, Bands, and Methods.\n"
+"\n"
+"Following this sequence ensures that your database is properly structured and ready for use."
+msgstr ""
+"Um novo banco de dados foi criado.\n"
+"\n"
+"Para começar, você deve entrar informações básicas na seguinte ordem:\n"
+"1. Gazetteer\n"
+"2. Parcelas amostrais\n"
+"3. Instituições\n"
+"4. Pesquisadores\n"
+"\n"
+"Opcionalmente, você pode adicionar também: Projetos, Licenças, Anilhas, e Métodos.\n"
+"\n"
+"Seguindo essa sequência garante que ser banco de dados está propriamente estruturado e pronto para uso."
+
+#: utils_locale.rsonboardingprojects
+msgid ""
+"The Projects module helps you organize and track your research initiatives.\n"
+"\n"
+"Here you can define project timelines with schedules and milestones, and manage budgets including related expenses. This central view keeps both planning and financial information connected, making it easier to monitor progress and resource allocation.\n"
+"\n"
+"Use it to maintain clear oversight of your projects from start to finish."
+msgstr ""
+"O módulo de Projetos ajuda a organizar e acompanhar suas iniciativas de pesquisa.\n"
+"\n"
+"Aqui você pode definir cronogramas com datas e marcos, e gerenciar orçamentos incluindo despesas relacionadas. Essa visão central mantém ambas informações financeiras e planejamento conectados, facilitando o monitoramento do progresso e a alocação de recursos.\n"
+"\n"
+"Use-o para manter uma supervisão clara dos seus projetos do início ao fim."
+
+#: utils_locale.rsonboardingquickentry
+msgid ""
+"Quick Entry provides a spreadsheet-style interface for faster data input.\n"
+"\n"
+"You can add multiple records directly in the grid and All entries are validated before being saved to the database, ensuring data quality and consistency.\n"
+"\n"
+"Use Quick Entry to capture information quickly while maintaining accuracy across your dataset."
+msgstr ""
+"Quick Entry fornece uma interface semelhante a planilha para entrada rápida de dados.\n"
+"\n"
+"Você pode adicionar múltiplos registros diretamente na grade e todas entradas são validadas antes de serem salvas no banco de dados, garantindo a qualidade e consistência dos dados.\n"
+"\n"
+"Uso o Quick Entry para capturas informações rapidamente enquanto mantém a acurácia no seu conjunto de dados."
+
+#: utils_locale.rsonboardingquickexport
+msgid ""
+"The exported content will match exactly what you see in the data grid, including any filters or search criteria applied.\n"
+"\n"
+"To proceed:\n"
+"1. Select the desired file format from the list on the left.\n"
+"2. Check or uncheck the columns to include or exclude them from the export.\n"
+"\n"
+"This ensures you have full control over the structure and scope of the exported dataset."
+msgstr ""
+"O conteúdo exportado irá corresponder exatamente o que você vê na grade de dados, incluindo quaisquer filtros ou critérios de busca aplicados.\n"
+"\n"
+"Para prosseguir:\n"
+"1. Selecione o formato de arquivo desejado na lista da esquerda.\n"
+"2. Marque ou desmarque as colunas para incluir ou excluir da exportação.\n"
+"\n"
+"Isso garante que você tenha controle total sobre a estrutura e escopo do conjunto de dados exportado."
+
+#: utils_locale.rsonboardingsearch
+msgid ""
+"The Search bar helps you quickly find records in the current module.\n"
+"\n"
+"Here are some tips to refine your queries:\n"
+"- Start with \":\" to search for terms that begin with the entered text.\n"
+"- Start with \"=\" to search for an exact match.\n"
+"- Separate terms with spaces to search for them in separated words.\n"
+"\n"
+"You can also use the Ctrl+F keyboard shortcut to go to the search bar instantly."
+msgstr ""
+"A barra de pesquisa ajuda você a encontrar registros rapidamente no módulo atual.\n"
+"\n"
+"Aqui estão algumas dicas para refinar suas buscas:\n"
+"- Inicie com \":\" para buscar por termos que iniciam com o texto informado.\n"
+"- Inicie com \"=\" para buscar por correspondências exatas.\n"
+"- Separe termos com espaços para buscar cada um em palavras separadas.\n"
+"\n"
+"Você também pode usar o atalho de teclado Ctrl+F para ir para a barra de pesquisa instantaneamente."
+
+#: utils_locale.rsonboardingsummary
+msgid ""
+"The Summary view provides quick statistics for the selected column. Depending on the type of data, it may show a simple count, average, or other basic measures. This helps you understand patterns in your dataset without leaving the grid.\n"
+"\n"
+"If a statistic is available for the chosen column, it will be displayed automatically in the side panel."
+msgstr ""
+"A visualização do Resumo fornece estatísticas rápidas para a coluna selecionada. Dependendo do tipo de dado, pode mostrar contagem simples, média, ou outra medida básica. Isso ajuda você a entender padrões no seu conjunto de dados sem deixar a grade.\n"
+"\n"
+"Se uma estatística está disponível para a coluna selecionada, ela será mostrada automaticamente no painel lateral."
+
+#: utils_locale.rsonboardingtaxa
+msgid ""
+"The Taxa module is a read-only consultation tool.\n"
+"\n"
+"To begin, search for a taxon using the search field.\n"
+"Once selected, the module will display information and basic statistics related to that taxon.\n"
+"\n"
+"Use this view to explore taxonomic details without modifying the underlying data."
+msgstr ""
+"O módulo de Táxons é uma ferramenta de consulta somente-leitura.\n"
+"\n"
+"Para começar, pesquise por um táxon usando o campo de pesquisa.\n"
+"Uma vez selecionado, o módulo mostrará informações e estatísticas básicas relacionadas ao táxon.\n"
+"\n"
+"Use essa ferramenta para explorar detalhes taxonômicos sem modificar os dados subjacentes."
+
+#: utils_locale.rsonboardingtransferbands
+msgid ""
+"The \"Transfer bands\" dialog allows you to move a range of band identifiers to another bander.\n"
+"\n"
+"You define the starting and ending numbers of the batch, and all bands within that interval will be transferred.\n"
+"\n"
+"This makes it easy to reassign bands between users."
+msgstr ""
+"O diálogo de Transferir anilhas permite você mover um intervalo de anilhas para outro anilhador.\n"
+"\n"
+"Você define os números inicial e final do lote, e todas anilhas nele serão transferidas.\n"
+"\n"
+"Isso facilita a realocação de anilhas entre usuários."
+
+#: utils_locale.rsonboardingusers
+msgid ""
+"The Users module allows you to manage system accounts.\n"
+"\n"
+"Here you can assign permissions to control what each user can access or modify. Users can also change their own password to keep their account secure.\n"
+"\n"
+"Use this module to maintain proper access levels and ensure account security across the system."
+msgstr ""
+"O módulo de Usuários permite você gerenciar as contas do sistema.\n"
+"\n"
+"Aqui você pode atribuir permissões para controlar o que cada usuário pode acessar e modificar. Usuários podem também alterar suas senhas para manter as contas seguras.\n"
+"\n"
+"Use este módulo para manter níveis de acesso apropriados e garantir a segurança das contas no sistema."
 
 #: utils_locale.rsoneselected
 #, object-pascal-format
@@ -16146,6 +16620,15 @@ msgstr "Selecione a amostragem para gerar o relatório:"
 msgctxt "utils_locale.rsqualifieronlyingenus"
 msgid "The sp. qualifier can only be used with genera rank."
 msgstr "O qualificador sp. só pode ser usado com nível de gênero."
+
+#: utils_locale.rsquickentry
+msgctxt "utils_locale.rsquickentry"
+msgid "Quick Entry"
+msgstr "Quick Entry"
+
+#: utils_locale.rsquickexport
+msgid "Quick Export"
+msgstr "Exportação rápida"
 
 #: utils_locale.rsrecnoempty
 msgctxt "utils_locale.rsrecnoempty"
@@ -16460,6 +16943,11 @@ msgctxt "utils_locale.rssampletongue"
 msgid "Tongue"
 msgstr "Língua"
 
+#: utils_locale.rssearch
+msgctxt "utils_locale.rssearch"
+msgid "Search"
+msgstr "Pesquisar"
+
 #: utils_locale.rsseasonality
 msgctxt "utils_locale.rsseasonality"
 msgid "Seasonality"
@@ -16767,6 +17255,11 @@ msgstr "%s foi atualizado com sucesso!"
 msgctxt "utils_locale.rssuccessfulupdateadminpassword"
 msgid "The Admin password was updated successfully!"
 msgstr "A senha do Admin foi atualizada com sucesso!"
+
+#: utils_locale.rssummary
+msgctxt "utils_locale.rssummary"
+msgid "Summary"
+msgstr "Resumo"
 
 #: utils_locale.rssupportanthropic
 msgctxt "utils_locale.rssupportanthropic"
@@ -17383,6 +17876,11 @@ msgctxt "utils_locale.rstraitsecondary"
 msgid "Secondary"
 msgstr "Secundária"
 
+#: utils_locale.rstransferbands
+msgctxt "utils_locale.rstransferbands"
+msgid "Transfer bands"
+msgstr "Transferir anilhas"
+
 #: utils_locale.rstreatmentlist
 msgctxt "utils_locale.rstreatmentlist"
 msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
@@ -17507,4 +18005,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-
