@@ -98,3 +98,77 @@ plugins:
   - badges
   - offline
   - tags
+  - i18n:
+      docs_structure: folder
+      reconfigure_material: true
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: pt
+          name: Português
+          build: true
+          site_name: "Manual do Usuário do Xolmis"
+          nav:
+            - Home: index.md
+            - Sobre o Xolmis:
+              - Introdução: introduction.md
+              - Notas de versão: release-notes.md
+              - FAQ: faq.md
+              - Boas práticas: best-practices.md
+              - Xolmis Mobile: xolmis-mobile.md
+              - Glossário: glossary.md
+              - Feedback: feedback.md
+              - Patrocinadores: sponsors.md
+              - Política de privacidade: privacy.md
+              - Licença: license.md
+              - Aviso de terceiros: third-party.md
+            - Primeiros passos:
+              - Instalando: installing.md
+              - Iniciando um novo banco de dados: first-steps.md
+              - Conexões: connections.md
+              - Usários: users.md
+              - Configurações: settings.md
+            - Usando o Xolmis:
+              - Interface de usuário: interface.md
+              - Atalhos de teclado: shortcuts.md
+              - Adicionando e editando dados: adding-and-editing-data.md
+              - Busca e filtragem de dados: search-and-filtering-data.md
+              - Exportando dados: exporting-data.md
+              - Importando dados: importing-data.md
+              - Imagens: images.md
+              - Gravações de áudio: audio-recordings.md
+              - Vídeos: videos.md
+              - Documentos e links: documents.md
+              - Mapa: map.md
+              - Resumo: summary.md
+              - Verificações do registro: record-verifications.md
+              - Histórico do registro: record-history.md
+              - Imprimir dados: print-data.md
+              - Manutenção: maintenance.md
+            - Módulos:
+              - Geo:
+                - Gazetteer: gazetteer.md
+                - Parcelas amostrais: sampling-plots.md
+                - Conversor de coordenadas: coordinates-converter.md
+              - Gestão:
+                - Instituições: institutions.md
+                - Pesquisadores: researchers.md
+                - Projetos: projects.md
+                - Licenças: permits.md
+                - Anilhas: bands.md
+              - Trabalho de campo:
+                - Métodos: methods.md
+                - Expedições: expeditions.md
+                - Amostragens: surveys.md
+                - Observações: sightings.md
+                - Espécimes: specimens.md
+                - Indivíduos: individuals.md
+                - Capturas: captures.md
+                - Penas: feathers.md
+                - Ninhos: nests.md
+                - Ovos: eggs.md
+              - Taxonomia:
+                - Táxons botânicos: botanical-taxa.md
+                - Táxons: taxa.md

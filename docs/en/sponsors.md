@@ -10,4 +10,4 @@ The Platinum sponsor represents our highest level of partnership. It provides st
 
 [![Alianza del Pastizal logo](img/alianza-del-pastizal.png)](https://www.alianzadelpastizal.org.br/)
 
-A regional initiative dedicated to the conservation of grassland ecosystems in South America. Their sponsorship strengthens Xolmis as a software for managing biodiversity data and supports collaborative efforts among institutions, researchers, and conservation projects. For more information: [Alianza del Pastizal Brasil](https://www.alianzadelpastizal.org.br/).
+A regional initiative dedicated to the conservation of grassland ecosystems in South America. In addition to sponsoring, Alianza del Pastizal also uses **Xolmis** in its activities, strengthening the system as software for managing biodiversity data and supporting collaborative efforts among institutions, researchers, and conservation projects. For more information: [Alianza del Pastizal Brasil](https://www.alianzadelpastizal.org.br/).
