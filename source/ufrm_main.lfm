@@ -1015,6 +1015,7 @@ object frmMain: TfrmMain
     object actImportXolmisMobile: TAction
       Category = 'Import'
       Caption = 'Xolmis mobile'
+      ShortCut = 16461
       OnExecute = actImportXolmisMobileExecute
     end
     object actImportEbird: TAction
@@ -1040,6 +1041,7 @@ object frmMain: TfrmMain
     object actImportWizard: TAction
       Category = 'Import'
       Caption = 'Import &wizard'
+      ShortCut = 16457
       OnExecute = actImportWizardExecute
     end
     object actDBNew: TAction
@@ -1254,6 +1256,19 @@ object frmMain: TfrmMain
       Caption = 'Close &all tabs'
       ImageIndex = 10
       OnClick = pmtCloseAllTabsClick
+    end
+    object Separator7: TMenuItem
+      Caption = '-'
+    end
+    object pmtNextTab: TMenuItem
+      Caption = '&Next tab'
+      ShortCut = 16574
+      OnClick = pmtNextTabClick
+    end
+    object pmtPriorTab: TMenuItem
+      Caption = '&Prior tab'
+      ShortCut = 16572
+      OnClick = pmtPriorTabClick
     end
   end
   object TimerFind: TTimer

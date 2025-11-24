@@ -96,6 +96,8 @@ type
     iPopup: TImageList;
     iSearchDark: TImageList;
     lblEmptyNotifications: TLabel;
+    pmtPriorTab: TMenuItem;
+    pmtNextTab: TMenuItem;
     mmhReleaseNotes: TMenuItem;
     mmhWebsite: TMenuItem;
     mmsEggs: TMenuItem;
@@ -123,6 +125,7 @@ type
     Separator4: TMenuItem;
     Separator5: TMenuItem;
     Separator6: TMenuItem;
+    Separator7: TMenuItem;
     titleNotifications: TLabel;
     mmfNewDB: TMenuItem;
     mmfImportXolmisMobile: TMenuItem;
@@ -316,6 +319,8 @@ type
     procedure pmtCloseAllOtherTabsClick(Sender: TObject);
     procedure pmtCloseAllTabsClick(Sender: TObject);
     procedure pmtCloseTabClick(Sender: TObject);
+    procedure pmtNextTabClick(Sender: TObject);
+    procedure pmtPriorTabClick(Sender: TObject);
     procedure SBarMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure sbBackNotificationsClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
@@ -1639,6 +1644,18 @@ end;
 procedure TfrmMain.pmtCloseTabClick(Sender: TObject);
 begin
   navTabs.DeleteTab(navTabs.TabIndex, True, False);
+end;
+
+procedure TfrmMain.pmtNextTabClick(Sender: TObject);
+begin
+  if navTabs.TabIndex < navTabs.TabCount - 1 then
+    navTabs.TabIndex := navTabs.TabIndex + 1;
+end;
+
+procedure TfrmMain.pmtPriorTabClick(Sender: TObject);
+begin
+  if navTabs.TabIndex > 0  then
+    navTabs.TabIndex := navTabs.TabIndex - 1;
 end;
 
 procedure TfrmMain.RefreshNotifications;

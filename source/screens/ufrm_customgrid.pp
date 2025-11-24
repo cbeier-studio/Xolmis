@@ -5059,8 +5059,38 @@ end;
 
 procedure TfrmCustomGrid.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
+  //{ NEXT TAB = Ctrl + . }
+  //if ([ssCtrl] = Shift) and (Key = VK_OEM_PERIOD) then
+  //begin
+  //  Key := 0;
+  //  if (dsLink.State in [dsInsert, dsEdit]) then
+  //    Exit;
+  //
+  //  if frmMain.pmtNextTab.Enabled then
+  //    frmMain.pmtNextTabClick(nil);
+  //end;
+  //{ PRIOR TAB = Ctrl + , }
+  //if ([ssCtrl] = Shift) and (Key = VK_OEM_COMMA) then
+  //begin
+  //  Key := 0;
+  //  if (dsLink.State in [dsInsert, dsEdit]) then
+  //    Exit;
+  //
+  //  if frmMain.pmtPriorTab.Enabled then
+  //    frmMain.pmtPriorTabClick(nil);
+  //end;
+  { NEW BATCH = Ctrl + B }
+  if ([ssCtrl] = Shift) and (Key = Ord('B')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if sbInsertBatch.Visible then
+      sbInsertBatchClick(nil);
+  end;
   { FIND = Ctrl + F }
-  if (ssCtrl in Shift) and (Key = Ord('F')) then
+  if ([ssCtrl] = Shift) and (Key = Ord('F')) then
   begin
     Key := 0;
     if (dsLink.State in [dsInsert, dsEdit]) then
@@ -5068,6 +5098,127 @@ begin
 
     if frmMain.eSearch.CanSetFocus then
       frmMain.eSearch.SetFocus;
+  end;
+  { SHOW/HIDE RELATED PANEL = Ctrl + J }
+  if ([ssCtrl] = Shift) and (Key = Ord('J')) then
+  begin
+    Key := 0;
+    //if (dsLink.State in [dsInsert, dsEdit]) then
+    //  Exit;
+
+    { #todo : Show/hide related panel }
+  end;
+  { QUICK ENTRY = Ctrl + Q }
+  if ([ssCtrl] = Shift) and (Key = Ord('Q')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    sbQuickEntryClick(nil);
+  end;
+  { SHOW QUICK FILTERS = Ctrl + Shift + F }
+  if ([ssCtrl, ssShift] = Shift) and (Key = Ord('F')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if sbShowQuickFilters.Enabled then
+    begin
+      sbShowQuickFilters.Down := True;
+      sbShowRecordClick(sbShowQuickFilters);
+    end;
+  end;
+  { SHOW IMAGES = Ctrl + Alt + I }
+  if ([ssCtrl, ssAlt] = Shift) and (Key = Ord('I')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if (sbShowImages.Visible) and (sbShowImages.Enabled) then
+    begin
+      sbShowImages.Down := True;
+      sbShowRecordClick(sbShowImages);
+    end;
+  end;
+  { SHOW AUDIO RECORDINGS = Ctrl + Alt + A }
+  if ([ssCtrl, ssAlt] = Shift) and (Key = Ord('A')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if (sbShowAudio.Visible) and (sbShowAudio.Enabled) then
+    begin
+      sbShowAudio.Down := True;
+      sbShowRecordClick(sbShowAudio);
+    end;
+  end;
+  { SHOW VIDEOS = Ctrl + Alt + V }
+  if ([ssCtrl, ssAlt] = Shift) and (Key = Ord('V')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if (sbShowVideos.Visible) and (sbShowVideos.Enabled) then
+    begin
+      sbShowVideos.Down := True;
+      sbShowRecordClick(sbShowVideos);
+    end;
+  end;
+  { SHOW DOCUMENTS = Ctrl + Alt + D }
+  if ([ssCtrl, ssAlt] = Shift) and (Key = Ord('D')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if (sbShowDocs.Visible) and (sbShowDocs.Enabled) then
+    begin
+      sbShowDocs.Down := True;
+      sbShowRecordClick(sbShowDocs);
+    end;
+  end;
+  { SHOW MAP = Ctrl + Alt + M }
+  if ([ssCtrl, ssAlt] = Shift) and (Key = Ord('M')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if (sbShowMap.Visible) and (sbShowMap.Enabled) then
+    begin
+      sbShowMap.Down := True;
+      sbShowRecordClick(sbShowMap);
+    end;
+  end;
+  { SHOW SUMMARY = Ctrl + Alt + L }
+  if ([ssCtrl, ssAlt] = Shift) and (Key = Ord('L')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if (sbShowSummary.Visible) and (sbShowSummary.Enabled) then
+    begin
+      sbShowSummary.Down := True;
+      sbShowRecordClick(sbShowSummary);
+    end;
+  end;
+  { QUICK EXPORT = Ctrl + Alt + E }
+  if ([ssCtrl, ssAlt] = Shift) and (Key = Ord('E')) then
+  begin
+    Key := 0;
+    if (dsLink.State in [dsInsert, dsEdit]) then
+      Exit;
+
+    if (sbShareRecords.Visible) and (sbShareRecords.Enabled) then
+    begin
+      sbShareRecordsClick(nil);
+    end;
   end;
 end;
 

@@ -12122,6 +12122,14 @@ msgstr ""
 msgid "&Close tab"
 msgstr ""
 
+#: tfrmmain.pmtnexttab.caption
+msgid "&Next tab"
+msgstr ""
+
+#: tfrmmain.pmtpriortab.caption
+msgid "&Prior tab"
+msgstr ""
+
 #: tfrmmain.sbclearsearch.hint
 msgctxt "tfrmmain.sbclearsearch.hint"
 msgid "Clear search"

@@ -84,7 +84,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            327
+            348
           )
         end
       end
@@ -10187,6 +10187,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmgRecordVerifications: TMenuItem
       Caption = 'Record &verifications'
       ImageIndex = 85
+      ShortCut = 49234
     end
     object pmgRecordHistory: TMenuItem
       Caption = 'Record &history'
@@ -28325,6 +28326,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmpTransferBandsTo: TMenuItem
       Caption = 'Transfer bands to...'
       ImageIndex = 110
+      ShortCut = 24660
       Visible = False
       OnClick = pmpTransferBandsToClick
     end
@@ -28337,6 +28339,7 @@ object frmCustomGrid: TfrmCustomGrid
     object pmpBandsBalance: TMenuItem
       Caption = 'Bands balance'
       ImageIndex = 112
+      ShortCut = 24642
       Visible = False
       OnClick = pmpBandsBalanceClick
     end

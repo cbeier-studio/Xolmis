@@ -12104,6 +12104,14 @@ msgstr "Fechar todas &as guias"
 msgid "&Close tab"
 msgstr "&Fechar guia"
 
+#: tfrmmain.pmtnexttab.caption
+msgid "&Next tab"
+msgstr ""
+
+#: tfrmmain.pmtpriortab.caption
+msgid "&Prior tab"
+msgstr ""
+
 #: tfrmmain.sbclearsearch.hint
 msgctxt "tfrmmain.sbclearsearch.hint"
 msgid "Clear search"
@@ -18005,3 +18013,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+
