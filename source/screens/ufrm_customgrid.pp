@@ -54,6 +54,8 @@ type
     gridVideos: TDBGrid;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmpAddCountriesAndStates: TMenuItem;
+    pmpAddMunicipalities: TMenuItem;
     pmcColumnAutoAdjustWidth: TMenuItem;
     MvPluginManager: TMvPluginManager;
     MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin;
@@ -1048,6 +1050,8 @@ type
     procedure pmmMarkAllColumnsClick(Sender: TObject);
     procedure pmmUnmarkAllClick(Sender: TObject);
     procedure pmmUnmarkAllColumnsClick(Sender: TObject);
+    procedure pmpAddCountriesAndStatesClick(Sender: TObject);
+    procedure pmpAddMunicipalitiesClick(Sender: TObject);
     procedure pmpBandHistoryClick(Sender: TObject);
     procedure pmpBandsBalanceClick(Sender: TObject);
     procedure pmPrintBandsByCarrierClick(Sender: TObject);
@@ -1473,7 +1477,7 @@ uses
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
-  ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory,
+  ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory, udlg_gazetteerautofill,
   ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer;
 
 {$R *.lfm}
@@ -2168,6 +2172,18 @@ begin
   pChildRightPanel.Border.Color := clCardBGSecondaryDark;
 
   pSideToolbar.Color := clSolidBGQuaternaryDark;
+
+  // Set font colors
+  titleViewRecord.Font.Color := clVioletFG1Dark;
+  titleQuickFilters.Font.Color := clVioletFG1Dark;
+  titleImages.Font.Color := clVioletFG1Dark;
+  titleAudios.Font.Color := clVioletFG1Dark;
+  titleVideos.Font.Color := clVioletFG1Dark;
+  titleDocs.Font.Color := clVioletFG1Dark;
+  titleMap.Font.Color := clVioletFG1Dark;
+  titleSummary.Font.Color := clVioletFG1Dark;
+  titleColumns.Font.Color := clVioletFG1Dark;
+  titleRecycle.Font.Color := clVioletFG1Dark;
 
   // Set images
   DBG.TitleImageList := iHeadersDark;
@@ -7197,6 +7213,40 @@ begin
     AddGridColumns(FTableType, DBG);
   finally
     FCanToggle := True;
+  end;
+end;
+
+procedure TfrmCustomGrid.pmpAddCountriesAndStatesClick(Sender: TObject);
+begin
+  dlgGazetteerAutofill := TdlgGazetteerAutofill.Create(nil);
+  with dlgGazetteerAutofill do
+  try
+    AutofillType := gatCountries;
+    if ShowModal = mrOK then
+      sbRefreshRecordsClick(nil);
+  finally
+    FreeAndNil(dlgGazetteerAutofill);
+  end;
+end;
+
+procedure TfrmCustomGrid.pmpAddMunicipalitiesClick(Sender: TObject);
+begin
+  if dsLink.DataSet.FieldByName('site_rank').AsString <> SITE_RANKS[srState] then
+  begin
+    MsgDlg(rsTitleInformation, rsToponymMustBeState, mtInformation);
+    Exit;
+  end;
+
+  dlgGazetteerAutofill := TdlgGazetteerAutofill.Create(nil);
+  with dlgGazetteerAutofill do
+  try
+    AutofillType := gatCities;
+    CountryName := GetName('gazetteer', 'site_name', 'site_id', dsLink.DataSet.FieldByName('country_id').AsInteger);
+    StateName := dsLink.DataSet.FieldByName('site_name').AsString;
+    if ShowModal = mrOK then
+      sbRefreshRecordsClick(nil);
+  finally
+    FreeAndNil(dlgGazetteerAutofill);
   end;
 end;
 
@@ -12562,6 +12612,11 @@ begin
   sbShowMap.Visible := True;
   sbShowSummary.Visible := True;
   //sbShowDocs.Visible := True;
+  sbMoreOptions.Visible := True;
+
+  // Set the more options menu
+  pmpAddCountriesAndStates.Visible := True;
+  pmpAddMunicipalities.Visible := True;
 
   // Set the print menu
   pmPrintGazetteer.Visible := True;

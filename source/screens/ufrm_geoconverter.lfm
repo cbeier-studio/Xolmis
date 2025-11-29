@@ -6,7 +6,7 @@ object frmGeoConverter: TfrmGeoConverter
   Caption = 'Coordinates converter'
   ClientHeight = 720
   ClientWidth = 1193
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
@@ -603,7 +603,7 @@ object frmGeoConverter: TfrmGeoConverter
       OnKeyUp = seConvertFromKeyUp
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 71
+      Gutter.Width = 61
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1063,6 +1063,8 @@ object frmGeoConverter: TfrmGeoConverter
           MouseActions = <>
           MaxExtraMarksColums = 0
           Options = [sgmoDeDuplicateMarksOnOverflow]
+          MarkupInfo.Background = clBtnFace
+          MarkupInfo.Foreground = clNone
         end
         object SynGutterLineNumber1: TSynGutterLineNumber
           Width = 21
@@ -1080,6 +1082,9 @@ object frmGeoConverter: TfrmGeoConverter
           MouseActions = <>
           ModifiedColor = 59900
           SavedColor = clGreen
+          MarkupInfo.Background = clNone
+          MarkupInfo.Foreground = clGreen
+          MarkupInfo.FrameColor = 59900
         end
         object SynGutterSeparator1: TSynGutterSeparator
           Width = 2
@@ -1260,7 +1265,7 @@ object frmGeoConverter: TfrmGeoConverter
       TabOrder = 0
       Gutter.Color = clWhite
       Gutter.RightOffset = 16
-      Gutter.Width = 71
+      Gutter.Width = 61
       Gutter.MouseActions = <>
       RightGutter.Width = 0
       RightGutter.MouseActions = <>
@@ -1719,6 +1724,8 @@ object frmGeoConverter: TfrmGeoConverter
           MouseActions = <>
           MaxExtraMarksColums = 0
           Options = [sgmoDeDuplicateMarksOnOverflow]
+          MarkupInfo.Background = clBtnFace
+          MarkupInfo.Foreground = clNone
         end
         object SynGutterLineNumber1: TSynGutterLineNumber
           Width = 21
@@ -1736,6 +1743,9 @@ object frmGeoConverter: TfrmGeoConverter
           MouseActions = <>
           ModifiedColor = 59900
           SavedColor = clGreen
+          MarkupInfo.Background = clNone
+          MarkupInfo.Foreground = clGreen
+          MarkupInfo.FrameColor = 59900
         end
         object SynGutterSeparator1: TSynGutterSeparator
           Width = 2

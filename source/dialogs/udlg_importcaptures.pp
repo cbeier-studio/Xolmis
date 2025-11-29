@@ -129,6 +129,9 @@ begin
   pEffortFile.Border.Color := clSystemSolidNeutralFGDark;
   pCaptureFile.Background.Color := clCardBGDefaultDark;
   pCaptureFile.Border.Color := clSystemSolidNeutralFGDark;
+
+  lblTitleImportFiles.Font.Color := clVioletFG1Dark;
+  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgImportCaptures.eCaptureFileChange(Sender: TObject);

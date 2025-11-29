@@ -43,6 +43,7 @@ Source: "{#MyAppSource}\Xolmis.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppSource}\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "languages\Xolmis.pt_BR.mo"; DestDir: "{app}\languages"
 Source: "resources\zoo_taxa_init.csv"; DestDir: "{localappdata}\{#MyAppName}"
+Source: "resources\countries+states+cities.json"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "reports\*.lrf"; DestDir: "{app}\reports"
 Source: "site\*"; DestDir: "{app}\docs"; Flags: recursesubdirs 
 Source: "resources\FiraCode-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall

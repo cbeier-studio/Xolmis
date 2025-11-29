@@ -3763,8 +3763,8 @@ msgstr "Fechar"
 
 #: tdlgbigtip.btnclose.caption
 msgctxt "tdlgbigtip.btnclose.caption"
-msgid "Dismiss"
-msgstr "Dispensar"
+msgid "Close"
+msgstr "Fechar"
 
 #: tdlgcalendar.caption
 msgid "Select date"
@@ -4103,6 +4103,20 @@ msgstr "Limpar busca"
 msgctxt "tdlgfindtaxon.sboptions.hint"
 msgid "Options"
 msgstr "Opções"
+
+#: tdlggazetteerautofill.caption
+msgid "Add toponyms to Gazetteer"
+msgstr "Adicionar topônimos ao Gazetteer"
+
+#: tdlggazetteerautofill.sbcancel.caption
+msgctxt "tdlggazetteerautofill.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tdlggazetteerautofill.sbsave.caption
+msgctxt "tdlggazetteerautofill.sbsave.caption"
+msgid "Apply"
+msgstr "Aplicar"
 
 #: tdlggeoassist.caption
 msgctxt "tdlggeoassist.caption"
@@ -10491,6 +10505,14 @@ msgctxt "tfrmcustomgrid.pmmunmarkallcolumns.caption"
 msgid "&Unmark all"
 msgstr "&Desmarcar todos"
 
+#: tfrmcustomgrid.pmpaddcountriesandstates.caption
+msgid "Add countries and states"
+msgstr "Adicionar países e estados"
+
+#: tfrmcustomgrid.pmpaddmunicipalities.caption
+msgid "Add municipalities"
+msgstr "Adicionar municípios"
+
 #: tfrmcustomgrid.pmpbandhistory.caption
 msgctxt "tfrmcustomgrid.pmpbandhistory.caption"
 msgid "Band history"
@@ -12106,11 +12128,11 @@ msgstr "&Fechar guia"
 
 #: tfrmmain.pmtnexttab.caption
 msgid "&Next tab"
-msgstr ""
+msgstr "Aba &seguinte"
 
 #: tfrmmain.pmtpriortab.caption
 msgid "&Prior tab"
-msgstr ""
+msgstr "Aba &anterior"
 
 #: tfrmmain.sbclearsearch.hint
 msgctxt "tfrmmain.sbclearsearch.hint"
@@ -12906,6 +12928,10 @@ msgctxt "utils_locale.rsasymmetrical"
 msgid "Asymmetrical"
 msgstr "Assimétrica"
 
+#: utils_locale.rsatleastoneitemmustbechecked
+msgid "At least one item must be selected to proceed."
+msgstr "Ao menos um item deve ser selecionado para prosseguir."
+
 #: utils_locale.rsaudiorecorded
 msgctxt "utils_locale.rsaudiorecorded"
 msgid "Audio recorded"
@@ -12920,6 +12946,14 @@ msgstr "Autoria"
 msgctxt "utils_locale.rsauto"
 msgid "Auto"
 msgstr "Auto"
+
+#: utils_locale.rsautofillcities
+msgid "Select the cities/municipalities that you want to add to your Gazetteer, from the state/province below:"
+msgstr "Selecione as cidades/municípios que deseja adicionar ao seu Gazetteer, do estado/província abaixo:"
+
+#: utils_locale.rsautofillcountries
+msgid "Select the countries that you want to add to your Gazetteer, with their states/provinces:"
+msgstr "Selecione os países que deseja adicionar ao seu Gazetteer, com os seus estados/províncias:"
 
 #: utils_locale.rsautomaticbackup
 msgid "Automatic Backup"
@@ -15156,6 +15190,10 @@ msgctxt "utils_locale.rsinsertedbyimport"
 msgid "Inserted by import"
 msgstr "Inserido por importação"
 
+#: utils_locale.rsinsertingtoponyms
+msgid "Inserting toponyms in Gazetteer..."
+msgstr "Inserindo topônimos no Gazetteer..."
+
 #: utils_locale.rsintegritycheckreturnederrors
 msgctxt "utils_locale.rsintegritycheckreturnederrors"
 msgid "The database integrity check returned some errors."
@@ -15316,6 +15354,14 @@ msgstr "Carregando %s..."
 msgctxt "utils_locale.rsloadingjsonfile"
 msgid "Loading JSON file..."
 msgstr "Carregando arquivo JSON..."
+
+#: utils_locale.rsloadinglistofcities
+msgid "Loading list of cities..."
+msgstr "Carregando lista de cidades..."
+
+#: utils_locale.rsloadinglistofcountries
+msgid "Loading list of countries..."
+msgstr "Carregando lista de países..."
 
 #: utils_locale.rsloadingmainwindow
 msgctxt "utils_locale.rsloadingmainwindow"
@@ -17804,6 +17850,10 @@ msgctxt "utils_locale.rstonumberlessthanzero"
 msgid "The final number must be greater than zero."
 msgstr "O número final deve ser maior que zero."
 
+#: utils_locale.rstoponymmustbestate
+msgid "The selected toponym must be a state or province."
+msgstr "O topônimo selecionado deve ser um estado ou uma província."
+
 #: utils_locale.rstotalmarked
 #, object-pascal-format
 msgctxt "utils_locale.rstotalmarked"
@@ -18013,4 +18063,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

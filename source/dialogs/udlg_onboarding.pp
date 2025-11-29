@@ -128,6 +128,11 @@ begin
   pVideosPath.Border.Color := clSystemSolidNeutralFGDark;
   pDocumentsPath.Background.Color := clSolidBGSecondaryDark;
   pDocumentsPath.Border.Color := clSystemSolidNeutralFGDark;
+
+  lblTitleWelcome.Font.Color := clVioletFG1Dark;
+  lblTitleDatabase.Font.Color := clVioletFG1Dark;
+  lblTitleMedia.Font.Color := clVioletFG1Dark;
+  lblTitleFinished.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgOnboarding.btnSaveLocationsClick(Sender: TObject);

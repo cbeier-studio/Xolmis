@@ -13,6 +13,7 @@ object dlgGeoAssist: TdlgGeoAssist
   Constraints.MinWidth = 349
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
@@ -530,7 +531,6 @@ object dlgGeoAssist: TdlgGeoAssist
     Top = 144
     object MvPluginManagerMapScalePlugin1: TMapScalePlugin
       MapView = mapGeo
-      BackgroundOpacity = 0.550000011920929
     end
     object MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin
       MapView = mapGeo

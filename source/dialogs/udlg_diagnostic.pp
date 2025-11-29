@@ -48,6 +48,8 @@ procedure TdlgDiagnostic.ApplyDarkMode;
 begin
   pTitle.Color := clSolidBGBaseDark;
 
+  lblAppName.Font.Color := clVioletFG1Dark;
+
   sbCopy.Images := iButtonsDark;
 end;
 

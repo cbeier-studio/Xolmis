@@ -73,7 +73,7 @@ object cfgOptions: TcfgOptions
     Height = 421
     Top = 0
     Width = 657
-    PageIndex = 1
+    PageIndex = 0
     Align = alClient
     TabOrder = 2
     object pgGeneral: TPage

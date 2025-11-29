@@ -43,7 +43,8 @@ source_docs/html_docs/
 #*.sqlite3
 test/
 Output/
-*.json
+#*.json
 *.ini
+.DS_Store
 components/fpexif/lib/
 

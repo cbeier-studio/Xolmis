@@ -1,0 +1,112 @@
+object dlgGazetteerAutofill: TdlgGazetteerAutofill
+  Left = 370
+  Height = 530
+  Top = 250
+  Width = 650
+  AutoSize = True
+  BorderStyle = bsDialog
+  Caption = 'Add toponyms to Gazetteer'
+  ClientHeight = 530
+  ClientWidth = 650
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  object lblHint: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 16
+    Height = 15
+    Top = 16
+    Width = 618
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 16
+    BorderSpacing.Top = 16
+    BorderSpacing.Right = 16
+    Caption = 'Select the countries that you want to add to your Gazetteer.'
+    WordWrap = True
+  end
+  object lblState: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = lblHint
+    AnchorSideTop.Side = asrBottom
+    Left = 16
+    Height = 28
+    Top = 39
+    Width = 66
+    BorderSpacing.Left = 16
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 16
+    Caption = 'lblState'
+    Font.Color = 13066075
+    Font.Height = -20
+    ParentFont = False
+  end
+  object pBottom: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = CKL
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 41
+    Top = 483
+    Width = 650
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 41
+    ClientWidth = 650
+    TabOrder = 0
+    object sbSave: TBitBtn
+      Left = 386
+      Height = 25
+      Top = 8
+      Width = 120
+      Align = alRight
+      AutoSize = True
+      Caption = 'Apply'
+      Constraints.MinWidth = 120
+      TabOrder = 0
+      OnClick = sbSaveClick
+    end
+    object sbCancel: TBitBtn
+      Left = 514
+      Height = 25
+      Top = 8
+      Width = 120
+      Align = alRight
+      AutoSize = True
+      Caption = 'Cancel'
+      Constraints.MinWidth = 120
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+  object CKL: TCheckListBox
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = lblState
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 400
+    Top = 83
+    Width = 650
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 16
+    Columns = 3
+    Constraints.MinWidth = 650
+    ItemHeight = 0
+    TabOrder = 1
+  end
+end

@@ -83,6 +83,8 @@ procedure TdlgProgress.ApplyDarkMode;
 begin
   lblTitle.Font.Color := clVioletFG1Dark;
   sbCancel.Images := iButtonsDark;
+
+  lblTitle.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgProgress.FormClose(Sender: TObject; var CloseAction: TCloseAction);

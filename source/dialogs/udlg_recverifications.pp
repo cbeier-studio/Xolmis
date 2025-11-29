@@ -83,7 +83,7 @@ var
 implementation
 
 uses
-  utils_locale, data_columns, data_management, utils_global, utils_system, udm_main, uDarkStyleParams;
+  utils_locale, data_columns, data_management, utils_global, utils_system, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -96,6 +96,8 @@ begin
   btnHelp.Images := DMM.iEditsDark;
 
   pmGrid.Images := iButtonsDark;
+
+  txtRecordId.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgRecVerifications.btnHelpClick(Sender: TObject);

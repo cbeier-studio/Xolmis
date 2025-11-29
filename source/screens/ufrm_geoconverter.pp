@@ -163,6 +163,8 @@ begin
   pFormatInfo.Background.Color := clVioletBG1Dark;
   pFormatInfo.Border.Color := clCardBGSecondaryDark;
 
+  lblOptions.Font.Color := clVioletFG1Dark;
+
   SplitSynEdit.ParentColor := True;
   seConvertFrom.Color := clSolidBGSecondaryDark;
   seConvertFrom.Gutter.Color := clSolidBGSecondaryDark;

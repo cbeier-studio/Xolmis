@@ -90,6 +90,8 @@ uses
 procedure TdlgRecHistory.ApplyDarkMode;
 begin
   SBox.Color := clCardBGDefaultDark;
+
+  txtRecordId.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgRecHistory.btnHelpClick(Sender: TObject);

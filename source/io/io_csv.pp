@@ -76,31 +76,18 @@ procedure TCSVImporter.Import(Stream: TStream; const Options: TImportOptions; Ro
 var
   ds: TSdfDataSet;
   row: TXRow;
-  i, total, idx: Integer;
-  delim: Char;
+  i, total: Integer;
 begin
   ds := TSdfDataSet.Create(nil);
   try
-    delim := ',';
-    //if Options.Params <> nil then
-      if Options.Delimiter <> '' then
-        delim := Options.Delimiter;
-
-    ds.FileName := ''; // leitura via stream → salvamos para temp ou usamos LoadFromStream (TSdfDataSet usa arquivo)
-    // Caminho simples: gravar stream em arquivo temporário
-    with TFileStream.Create(GetTempFileName, fmCreate) do
-    try
-      CopyFrom(Stream, 0);
-      ds.FileName := FileName;
-    finally
-      Free;
-    end;
-
-    ds.Delimiter := delim;
+    ds.Delimiter := Options.Delimiter;
     ds.FirstLineAsSchema := Options.HasHeader;
     if Options.Encoding <> '' then ds.CodePage := Options.Encoding;
 
+    Stream.Position := 0;
+    ds.LoadFromStream(Stream);
     ds.Open;
+
     total := ds.RecordCount;
     ds.First;
     while not ds.EOF do
@@ -110,10 +97,7 @@ begin
       row := TXRow.Create;
       try
         for i := 0 to ds.FieldCount - 1 do
-        begin
-          idx := row.Add(ds.Fields[i].FieldName + '=' + ds.Fields[i].AsString);
-          // row.Names[idx] já é FieldName; row.ValueFromIndex[idx] é valor
-        end;
+          row.Values[ds.Fields[i].FieldName] := ds.Fields[i].AsString;
         if Assigned(RowOut) then RowOut(row);
       finally
         row.Free;
@@ -126,6 +110,7 @@ begin
   finally
     ds.Free;
   end;
+
 end;
 
 procedure TCSVImporter.PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer;

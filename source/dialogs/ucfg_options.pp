@@ -294,6 +294,13 @@ begin
   pManageBackups.Background.Color := clSolidBGSecondaryDark;
   pManageBackups.Border.Color := clSystemSolidNeutralFGDark;
 
+  lblTitleInterface.Font.Color := clVioletFG1Dark;
+  lblTitleAppearance.Font.Color := clVioletFG1Dark;
+  lblTitleCollection.Font.Color := clVioletFG1Dark;
+  lblTitleMedia.Font.Color := clVioletFG1Dark;
+  lblTitleSecurity.Font.Color := clVioletFG1Dark;
+  lblTitleBackup.Font.Color := clVioletFG1Dark;
+
   tsEnterAsTab.Color := pEnterAsTab.Background.Color;
   tsConfirmCancel.Color := pConfirmCancel.Background.Color;
   tsUseConditionalFormatting.Color := pConfirmCancel.Background.Color;

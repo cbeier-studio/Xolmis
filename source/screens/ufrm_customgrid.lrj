@@ -413,6 +413,8 @@
 {"hash":161021646,"name":"tfrmcustomgrid.pmptransferbandsto.caption","sourcebytes":[84,114,97,110,115,102,101,114,32,98,97,110,100,115,32,116,111,46,46,46],"value":"Transfer bands to..."},
 {"hash":193130745,"name":"tfrmcustomgrid.pmpbandhistory.caption","sourcebytes":[66,97,110,100,32,104,105,115,116,111,114,121],"value":"Band history"},
 {"hash":17224117,"name":"tfrmcustomgrid.pmpbandsbalance.caption","sourcebytes":[66,97,110,100,115,32,98,97,108,97,110,99,101],"value":"Bands balance"},
+{"hash":153301235,"name":"tfrmcustomgrid.pmpaddcountriesandstates.caption","sourcebytes":[65,100,100,32,99,111,117,110,116,114,105,101,115,32,97,110,100,32,115,116,97,116,101,115],"value":"Add countries and states"},
+{"hash":136751347,"name":"tfrmcustomgrid.pmpaddmunicipalities.caption","sourcebytes":[65,100,100,32,109,117,110,105,99,105,112,97,108,105,116,105,101,115],"value":"Add municipalities"},
 {"hash":156378045,"name":"tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice","sourcebytes":[77,97,112,32,100,97,116,97,32,102,114,111,109,32,91,104,116,116,112,115,58,47,47,119,119,119,46,111,112,101,110,115,116,114,101,101,116,109,97,112,46,111,114,103,47,99,111,112,121,114,105,103,104,116,32,79,112,101,110,83,116,114,101,101,116,77,97,112,32,97,110,100,32,99,111,110,116,114,105,98,117,116,111,114,115,93],"value":"Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"},
 {"hash":44117689,"name":"tfrmcustomgrid.pmvaddvideo.caption","sourcebytes":[65,100,100,32,38,110,101,119,32,118,105,100,101,111,40,115,41],"value":"Add &new video(s)"},
 {"hash":214397871,"name":"tfrmcustomgrid.pmvvideoinfo.caption","sourcebytes":[86,105,101,119,47,38,101,100,105,116,32,105,110,102,111],"value":"View/&edit info"},

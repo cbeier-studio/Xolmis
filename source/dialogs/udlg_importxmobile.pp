@@ -286,6 +286,11 @@ begin
 
   eSourceFile.Images := iButtonsDark;
 
+  lblTitleSource.Font.Color := clVioletFG1Dark;
+  lblTitleMap.Font.Color := clVioletFG1Dark;
+  lblTitleProgress.Font.Color := clVioletFG1Dark;
+  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
+
   icoFileStatus.Images := imgFinishedDark;
   icoImportFinished.Images := imgFinishedDark;
 end;

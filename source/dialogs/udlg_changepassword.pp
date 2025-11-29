@@ -64,7 +64,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_graphics, utils_dialogs, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_graphics, utils_dialogs, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -98,6 +98,8 @@ procedure TdlgChangePassword.ApplyDarkMode;
 begin
   eNewPassword.Images := iButtonsDark;
   eConfirmPassword.Images := iButtonsDark;
+
+  lblUsername.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgChangePassword.eNewPasswordButtonClick(Sender: TObject);

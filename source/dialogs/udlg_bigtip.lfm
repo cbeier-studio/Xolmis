@@ -34,13 +34,13 @@ object dlgBigTip: TdlgBigTip
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    Left = 348
+    Left = 359
     Height = 25
     Top = 203
-    Width = 66
+    Width = 55
     Anchors = [akTop, akRight]
     AutoSize = True
-    Caption = 'Dismiss'
+    Caption = 'Close'
     Default = True
     ModalResult = 1
     TabOrder = 0

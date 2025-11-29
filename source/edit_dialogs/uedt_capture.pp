@@ -296,7 +296,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations,
-  utils_editdialogs, data_types, data_consts, data_getvalue, data_columns, models_taxonomy,
+  utils_editdialogs, utils_themes, data_types, data_consts, data_getvalue, data_columns, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -327,6 +327,10 @@ begin
   eHowSexed.Images := DMM.iEditsDark;
   ePhotographer1.Images := DMM.iEditsDark;
   ePhotographer2.Images := DMM.iEditsDark;
+
+  lblTitleCapture.Font.Color := clVioletFG1Dark;
+  lblTitleMetrics.Font.Color := clVioletFG1Dark;
+  lblTitleCollection.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TedtCapture.btnHelpClick(Sender: TObject);

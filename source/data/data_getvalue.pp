@@ -33,7 +33,10 @@ type
   function GetFieldValue(aTable, aField, aKeyField: String; aKeyValue: Integer): Variant;
   function GetLatLong(aTable, aLongField, aLatField, aNameField, aKeyField: String;
     aKeyValue: Integer; var aMapPoint: TMapPoint): Boolean;
-  function GetSiteKey(aNameValue: String): Integer;
+  function GetSiteKey(aNameValue: String; aCountryId: Integer = 0; aStateId: Integer = 0; aMunicipalityId: Integer = 0): Integer;
+  function GetCountryKey(aNameValue: String): Integer;
+  function GetStateKey(aNameValue: String; aCountryId: Integer): Integer;
+  function GetMunicipalityKey(aNameValue: String; aCountryId, aStateId: Integer): Integer;
   function GetRankFromSite(aSiteKey: Integer): String;
   function GetRankFromTaxon(aTaxonKey: Integer): Integer;
   function GetRank(const aKey: Integer): TZooRank;
@@ -224,7 +227,8 @@ begin
   end;
 end;
 
-function GetSiteKey(aNameValue: String): Integer;
+function GetSiteKey(aNameValue: String; aCountryId: Integer; aStateId: Integer; aMunicipalityId: Integer
+  ): Integer;
 var
   Qry: TSQLQuery;
   S: String;
@@ -246,9 +250,147 @@ begin
         S := aNameValue;
 
       Add('SELECT site_id FROM gazetteer');
-      Add('WHERE (site_name = :aname)');
-      Add('   OR (site_acronym = :aname)');
+      Add('WHERE ((site_name = :aname)');
+      Add('   OR (site_acronym = :aname))');
+      if aCountryId > 0 then
+        Add('  AND (country_id = :country_id)');
+      if aStateId > 0 then
+        Add('  AND (state_id = :state_id)');
+      if aMunicipalityId > 0 then
+        Add('  AND (municipality_id = :municipality_id)');
       ParamByName('ANAME').AsString := S;
+      if aCountryId > 0 then
+        ParamByName('country_id').AsInteger := aCountryId;
+      if aStateId > 0 then
+        ParamByName('state_id').AsInteger := aStateId;
+      if aMunicipalityId > 0 then
+        ParamByName('municipality_id').AsInteger := aMunicipalityId;
+      // GravaLogSQL(SQL);
+      Open;
+      if (RecordCount > 0) then
+      begin
+        Result := FieldByName('site_id').AsInteger;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+end;
+
+function GetCountryKey(aNameValue: String): Integer;
+var
+  S: String;
+  Qry: TSQLQuery;
+begin
+  Result := 0;
+  S := EmptyStr;
+
+  if aNameValue <> EmptyStr then
+  begin
+    Qry := TSQLQuery.Create(DMM.sqlCon);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Clear;
+
+      if (Pos(',', aNameValue) > 0) or (Pos(';', aNameValue) > 0) then
+        S := ExtractDelimited(1, aNameValue, [',', ';'])
+      else
+        S := aNameValue;
+
+      Add('SELECT site_id FROM gazetteer');
+      Add('WHERE ((site_name = :aname)');
+      Add('   OR (site_acronym = :aname))');
+      Add('  AND (site_rank = :site_rank)');
+      ParamByName('ANAME').AsString := S;
+      ParamByName('site_rank').AsString := SITE_RANKS[srCountry];
+      // GravaLogSQL(SQL);
+      Open;
+      if (RecordCount > 0) then
+      begin
+        Result := FieldByName('site_id').AsInteger;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+end;
+
+function GetStateKey(aNameValue: String; aCountryId: Integer): Integer;
+var
+  S: String;
+  Qry: TSQLQuery;
+begin
+  Result := 0;
+  S := EmptyStr;
+
+  if aNameValue <> EmptyStr then
+  begin
+    Qry := TSQLQuery.Create(DMM.sqlCon);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Clear;
+
+      if (Pos(',', aNameValue) > 0) or (Pos(';', aNameValue) > 0) then
+        S := ExtractDelimited(1, aNameValue, [',', ';'])
+      else
+        S := aNameValue;
+
+      Add('SELECT site_id FROM gazetteer');
+      Add('WHERE ((site_name = :aname)');
+      Add('   OR (site_acronym = :aname))');
+      Add('  AND (site_rank = :site_rank)');
+      Add('  AND (country_id = :country_id)');
+      ParamByName('ANAME').AsString := S;
+      ParamByName('site_rank').AsString := SITE_RANKS[srState];
+      ParamByName('country_id').AsInteger := aCountryId;
+      // GravaLogSQL(SQL);
+      Open;
+      if (RecordCount > 0) then
+      begin
+        Result := FieldByName('site_id').AsInteger;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+end;
+
+function GetMunicipalityKey(aNameValue: String; aCountryId, aStateId: Integer): Integer;
+var
+  S: String;
+  Qry: TSQLQuery;
+begin
+  Result := 0;
+  S := EmptyStr;
+
+  if aNameValue <> EmptyStr then
+  begin
+    Qry := TSQLQuery.Create(DMM.sqlCon);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Clear;
+
+      if (Pos(',', aNameValue) > 0) or (Pos(';', aNameValue) > 0) then
+        S := ExtractDelimited(1, aNameValue, [',', ';'])
+      else
+        S := aNameValue;
+
+      Add('SELECT site_id FROM gazetteer');
+      Add('WHERE ((site_name = :aname)');
+      Add('   OR (site_acronym = :aname))');
+      Add('  AND (site_rank = :site_rank)');
+      Add('  AND (country_id = :country_id)');
+      Add('  AND (state_id = :state_id)');
+      ParamByName('ANAME').AsString := S;
+      ParamByName('site_rank').AsString := SITE_RANKS[srMunicipality];
+      ParamByName('country_id').AsInteger := aCountryId;
+      ParamByName('state_id').AsInteger := aStateId;
       // GravaLogSQL(SQL);
       Open;
       if (RecordCount > 0) then

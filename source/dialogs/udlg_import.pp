@@ -118,7 +118,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global,
+  utils_locale, utils_global, utils_themes,
   udm_grid, udm_sampling, ucfg_delimiters, uDarkStyleParams;
 
 {$R *.lfm}
@@ -133,6 +133,13 @@ begin
   pmFields.Images := iButtonsDark;
   sbRetry.Images := iButtonsDark;
   sbSaveLog.Images := iButtonsDark;
+
+  lblTitleSource.Font.Color := clVioletFG1Dark;
+  lblTitleFields.Font.Color := clVioletFG1Dark;
+  lblTitleConfirm.Font.Color := clVioletFG1Dark;
+  lblTitleProgress.Font.Color := clVioletFG1Dark;
+  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
+
   icoImportFinished.Images := imgFinishedDark;
 end;
 

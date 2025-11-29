@@ -69,6 +69,8 @@ uses
 procedure TdlgBandHistory.ApplyDarkMode;
 begin
   SBox.Color := clCardBGDefaultDark;
+
+  lblBandName.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgBandHistory.btnHelpClick(Sender: TObject);

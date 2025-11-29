@@ -242,6 +242,15 @@ begin
 
   pNestProductivity.Background.Color := clSolidBGSecondaryDark;
   pNestProductivity.Border.Color := clSystemSolidNeutralFGDark;
+
+  txtScientificName.Font.Color := clVioletFG1Dark;
+  txtValidName.Font.Color := clVioletFG1Dark;
+  lblLinkCaptures.Font.Color := clVioletFG1Dark;
+  lblLinkEggs.Font.Color := clVioletFG1Dark;
+  lblLinkIndividuals.Font.Color := clVioletFG1Dark;
+  lblLinkNests.Font.Color := clVioletFG1Dark;
+  lblLinkSightings.Font.Color := clVioletFG1Dark;
+  lblLinkSpecimens.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TfrmTaxa.dsLinkDataChange(Sender: TObject; Field: TField);

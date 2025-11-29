@@ -14,7 +14,7 @@ object dlgProgress: TdlgProgress
   Constraints.MinWidth = 400
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnClose = FormClose
   OnShow = FormShow
   object pBottom: TPanel

@@ -11,6 +11,7 @@ object cfgDelimiters: TcfgDelimiters
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel

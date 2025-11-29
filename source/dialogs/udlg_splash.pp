@@ -19,7 +19,7 @@ type
     PBar: TProgressBar;
     procedure FormShow(Sender: TObject);
   private
-
+    procedure ApplyDarkMode;
   public
     procedure UpdateProgress(const Msg: String; Percent: Integer);
   end;
@@ -30,17 +30,25 @@ var
 implementation
 
 uses
-  utils_system;
+  utils_system, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgSplash }
+
+procedure TdlgSplash.ApplyDarkMode;
+begin
+  lblAppName.Font.Color := clVioletFG1Dark;
+end;
 
 procedure TdlgSplash.FormShow(Sender: TObject);
 begin
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcOn);
   {$ENDIF}
+
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 end;
 
 procedure TdlgSplash.UpdateProgress(const Msg: String; Percent: Integer);

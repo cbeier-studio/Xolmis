@@ -83,6 +83,8 @@ uses
   models_people,
   models_permits,
   models_specimens,
+  models_sampling_plots,
+  models_methods,
   { IO }
   io_core,
   io_csv,
@@ -133,6 +135,8 @@ uses
   udlg_loading,
   udlg_selectrecord,
   udlg_onboarding,
+  udlg_tourtip,
+  udlg_bigtip,
   ulst_breedingstatus,
   ulst_cyclecode,
   ulst_detectiontype,
@@ -181,6 +185,7 @@ uses
   uedt_projectrubric,
   uedt_projectexpense,
   uedt_feather,
+  uedt_videoinfo,
   { Configuration dialogs }
   ucfg_database,
   ucfg_delimiters,
@@ -193,7 +198,7 @@ uses
   ufrm_imageviewer,
   ufrm_printpreview,
   ufrm_taxa,
-  ufrm_quickentry, models_sampling_plots, models_methods, uedt_videoinfo, udlg_tourtip, udlg_bigtip;
+  ufrm_quickentry, udlg_gazetteerautofill;
 
 {$R *.res}
 

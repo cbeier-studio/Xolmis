@@ -92,6 +92,9 @@ begin
   pDecimalSeparator.Background.Color := clCardBGDefaultDark;
   pDecimalSeparator.Border.Color := clSystemSolidNeutralFGDark;
 
+  lblTitleFields.Font.Color := clVioletFG1Dark;
+  lblTitleNumbers.Font.Color := clVioletFG1Dark;
+
   tsHaveHeader.Color := pHaveHeader.Background.Color;
   tsQuotedAsText.Color := pQuotedAsText.Background.Color;
 end;

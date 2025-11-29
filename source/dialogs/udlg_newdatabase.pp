@@ -120,7 +120,8 @@ var
 implementation
 
 uses
-  utils_global, utils_locale, data_types, data_management, utils_graphics, utils_dialogs, udm_main, uDarkStyleParams;
+  utils_global, utils_locale, data_types, data_management, utils_graphics, utils_dialogs, utils_themes,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -131,6 +132,10 @@ begin
   eDBFile.Images := iButtonsDark;
   eNewPass.Images := iButtonsDark;
   eConfirmPass.Images := iButtonsDark;
+
+  lblTitleConnection.Font.Color := clVioletFG1Dark;
+  lblTitleAuthentication.Font.Color := clVioletFG1Dark;
+  lblTitleUser.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgNewDatabase.btnHelpClick(Sender: TObject);

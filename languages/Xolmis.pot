@@ -3783,7 +3783,7 @@ msgstr ""
 
 #: tdlgbigtip.btnclose.caption
 msgctxt "tdlgbigtip.btnclose.caption"
-msgid "Dismiss"
+msgid "Close"
 msgstr ""
 
 #: tdlgcalendar.caption
@@ -4122,6 +4122,20 @@ msgstr ""
 #: tdlgfindtaxon.sboptions.hint
 msgctxt "tdlgfindtaxon.sboptions.hint"
 msgid "Options"
+msgstr ""
+
+#: tdlggazetteerautofill.caption
+msgid "Add toponyms to Gazetteer"
+msgstr ""
+
+#: tdlggazetteerautofill.sbcancel.caption
+msgctxt "tdlggazetteerautofill.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlggazetteerautofill.sbsave.caption
+msgctxt "tdlggazetteerautofill.sbsave.caption"
+msgid "Apply"
 msgstr ""
 
 #: tdlggeoassist.caption
@@ -10508,6 +10522,14 @@ msgctxt "tfrmcustomgrid.pmmunmarkallcolumns.caption"
 msgid "&Unmark all"
 msgstr ""
 
+#: tfrmcustomgrid.pmpaddcountriesandstates.caption
+msgid "Add countries and states"
+msgstr ""
+
+#: tfrmcustomgrid.pmpaddmunicipalities.caption
+msgid "Add municipalities"
+msgstr ""
+
 #: tfrmcustomgrid.pmpbandhistory.caption
 msgctxt "tfrmcustomgrid.pmpbandhistory.caption"
 msgid "Band history"
@@ -12924,6 +12946,10 @@ msgctxt "utils_locale.rsasymmetrical"
 msgid "Asymmetrical"
 msgstr ""
 
+#: utils_locale.rsatleastoneitemmustbechecked
+msgid "At least one item must be selected to proceed."
+msgstr ""
+
 #: utils_locale.rsaudiorecorded
 msgctxt "utils_locale.rsaudiorecorded"
 msgid "Audio recorded"
@@ -12937,6 +12963,14 @@ msgstr ""
 #: utils_locale.rsauto
 msgctxt "utils_locale.rsauto"
 msgid "Auto"
+msgstr ""
+
+#: utils_locale.rsautofillcities
+msgid "Select the cities/municipalities that you want to add to your Gazetteer, from the state/province below:"
+msgstr ""
+
+#: utils_locale.rsautofillcountries
+msgid "Select the countries that you want to add to your Gazetteer, with their states/provinces:"
 msgstr ""
 
 #: utils_locale.rsautomaticbackup
@@ -15170,6 +15204,10 @@ msgctxt "utils_locale.rsinsertedbyimport"
 msgid "Inserted by import"
 msgstr ""
 
+#: utils_locale.rsinsertingtoponyms
+msgid "Inserting toponyms in Gazetteer..."
+msgstr ""
+
 #: utils_locale.rsintegritycheckreturnederrors
 msgctxt "utils_locale.rsintegritycheckreturnederrors"
 msgid "The database integrity check returned some errors."
@@ -15329,6 +15367,14 @@ msgstr ""
 #: utils_locale.rsloadingjsonfile
 msgctxt "utils_locale.rsloadingjsonfile"
 msgid "Loading JSON file..."
+msgstr ""
+
+#: utils_locale.rsloadinglistofcities
+msgid "Loading list of cities..."
+msgstr ""
+
+#: utils_locale.rsloadinglistofcountries
+msgid "Loading list of countries..."
 msgstr ""
 
 #: utils_locale.rsloadingmainwindow
@@ -17654,6 +17700,10 @@ msgstr ""
 #: utils_locale.rstonumberlessthanzero
 msgctxt "utils_locale.rstonumberlessthanzero"
 msgid "The final number must be greater than zero."
+msgstr ""
+
+#: utils_locale.rstoponymmustbestate
+msgid "The selected toponym must be a state or province."
 msgstr ""
 
 #: utils_locale.rstotalmarked

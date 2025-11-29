@@ -41,6 +41,41 @@ Ao criar ou editar um topônimo, os seguintes campos estão disponíveis:
 !!! info "Hierarquia de locais"
     A hierarquia é usada para exibir nomes de locais agrupados como uma árvore, por exemplo em [Filtros rápidos](search-and-filtering-data.md#filtros-rapidos). É essencial atribuir o **Topônimo pai** correto para cada entrada, caso contrário a estrutura ficará inconsistente e os filtros podem não funcionar adequadamente.
 
+### Adição semiautomática de topônimos
+
+O **Gazetteer** é a base geográfica do Xolmis, responsável por organizar localidades de forma hierárquica (país → estado/província → município → localidade específica). Para agilizar o processo de preenchimento, o sistema oferece ferramentas de **adição semiautomática de topônimos**, evitando que o usuário precise cadastrar manualmente cada item.
+
+Essas ferramentas permitem importar listas completas de países, estados e municípios diretamente para o banco de dados, garantindo consistência e economia de tempo.
+
+#### Como adicionar países e estados
+
+![Adicionar países e estados](img/add-countries-and-states.png)
+
+No botão de **Mais opções** :material-dots-horizontal:, selecione **Adicionar países e estados**.  
+Será aberto um diálogo com a lista de países disponíveis. Ao marcar um país, você pode optar por incluir também todos os seus estados ou províncias.  
+
+- É possível selecionar múltiplos países de uma só vez.  
+- Os estados são adicionados automaticamente vinculados ao respectivo país.  
+- Após confirmar a seleção, clique em **Aplicar** para que os registros sejam criados no Gazetteer.  
+
+#### Como adicionar municípios
+
+![Adicionar municípios](img/add-municipalities.png)
+
+Ao selecionar um estado já presente no Gazetteer, ficará disponível a opção **Adicionar municípios** no botão **Mais opções** :material-dots-horizontal:.  
+Essa ferramenta abre uma lista com todos os municípios do estado escolhido, permitindo que você selecione quantos desejar.  
+
+- Os municípios são adicionados hierarquicamente, vinculados ao estado correspondente.  
+- É possível selecionar todos os municípios de um estado ou apenas alguns específicos.  
+- Após a seleção, clique em **Aplicar** para concluir a importação.  
+
+#### Benefícios da adição semiautomática
+
+- **Rapidez**: centenas de topônimos podem ser adicionados em poucos cliques.  
+- **Consistência**: os nomes seguem padrões oficiais, reduzindo erros de digitação.  
+- **Hierarquia automática**: países, estados e municípios são organizados corretamente na estrutura do Gazetteer.  
+- **Integração**: os topônimos adicionados ficam imediatamente disponíveis para uso em outros módulos do Xolmis.  
+
 ## Dicas e boas práticas
 
 - **Comece amplo, depois refine**: sempre inicie adicionando países, depois estados/províncias e só então municípios e localidades.  

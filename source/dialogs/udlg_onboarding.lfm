@@ -12,10 +12,10 @@ object dlgOnboarding: TdlgOnboarding
   OnShow = FormShow
   object nbPages: TNotebook
     Left = 0
-    Height = 329
+    Height = 282
     Top = 0
     Width = 498
-    PageIndex = 2
+    PageIndex = 0
     Align = alTop
     AutoSize = True
     TabOrder = 0
@@ -878,7 +878,7 @@ object dlgOnboarding: TdlgOnboarding
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 329
+    Top = 282
     Width = 498
     Align = alTop
     LineColor = 9276813
@@ -888,7 +888,7 @@ object dlgOnboarding: TdlgOnboarding
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 331
+    Top = 284
     Width = 498
     Align = alTop
     AutoSize = True

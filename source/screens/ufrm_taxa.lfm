@@ -7,7 +7,7 @@ object frmTaxa: TfrmTaxa
   ClientHeight = 636
   ClientWidth = 1179
   Color = clWindow
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
@@ -30,7 +30,7 @@ object frmTaxa: TfrmTaxa
     Columns = <    
       item
         Title.Caption = 'Taxon'
-        Width = 308
+        Width = 287
         FieldName = 'full_name'
       end    
       item

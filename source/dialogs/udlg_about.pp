@@ -91,6 +91,12 @@ begin
   //pCBRO.Background.Color := clCardBGDefaultDark;
   //pCBRO.Border.Color := clCardBGSecondaryDark;
 
+  lblAppName.Font.Color := clVioletFG1Dark;
+  linkClementsVersion.Font.Color := clVioletFG1Dark;
+  linkWebsite.Font.Color := clVioletFG1Dark;
+  linkPrivacy.Font.Color := clVioletFG1Dark;
+  linkLicense.Font.Color := clVioletFG1Dark;
+  linkThirdParty.Font.Color := clVioletFG1Dark;
   pAppVersion.Font.Color := clTextPrimaryDark;
 
   sbCopy.Images := iButtonsDark;

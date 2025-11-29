@@ -323,6 +323,8 @@ begin
   pLat.Border.Color := clSystemSolidNeutralFGDark;
   pDecimal.Background.Color := clCardBGDefaultDark;
   pDecimal.Border.Color := clSystemSolidNeutralFGDark;
+
+  pDecimal.FontEx.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgGeoAssist.btnHelpClick(Sender: TObject);

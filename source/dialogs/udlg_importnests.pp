@@ -129,6 +129,9 @@ begin
   pRevisionFile.Border.Color := clSystemSolidNeutralFGDark;
   pEggFile.Background.Color := clCardBGDefaultDark;
   pEggFile.Border.Color := clSystemSolidNeutralFGDark;
+
+  lblTitleImportFiles.Font.Color := clVioletFG1Dark;
+  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgImportNests.eEggFileChange(Sender: TObject);

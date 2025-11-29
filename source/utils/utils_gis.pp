@@ -42,11 +42,15 @@ type
   TMapAxis = (maBoth, maLongitude, maLatitude);
   TMapHemisphere = (mhNorth, mhSouth, mhEast, mhWest);
 
+  TGazetteerAutofillType = (gatCountries, gatCities);
+
 const
   GLOBE_HEMISPHERES: array[TMapHemisphere] of Char = ('N', 'S', 'E', 'W');
   UTM_BANDS: array[-9..10] of Char = ('C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P',
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X');
   DMS_SYMBOLS: set of Char = [#176, #186, #39, #146, #180, #34, #148];  { °, º, ', ’, ´, ", ” }
+
+  GAZETTEER_AUTOFILL_SOURCE_FILE: String = 'countries+states+cities.json';
 
 type
 
@@ -108,6 +112,43 @@ type
 
   TMapPointList = specialize TFPGObjectList<TMapPointObject>;
 
+type
+  TCountry = record
+    Id: Integer;
+    Name: String;
+    NamePtbr: String;
+    Iso2: String;
+    Iso3: String;
+    Capital: String;
+    Region: String;
+    SubRegion: String;
+    Latitude: String;
+    Longitude: String;
+  end;
+
+  TProvince = record
+    Id: Integer;
+    Name: String;
+    Iso2: String;
+    Iso3166_2: String;
+    Latitude: String;
+    Longitude: String;
+    DivisionType: String;
+  end;
+
+  TCity = record
+    Id: Integer;
+    Name: String;
+    Latitude: String;
+    Longitude: String;
+    Timezone: String;
+  end;
+
+  PCountry = ^TCountry;
+  PProvince = ^TProvince;
+  PCity = ^TCity;
+
+
   { Geographic coordinates conversion routines }
 
   function RemoveSymbolsDMS(aCoord: String): String;
@@ -151,6 +192,12 @@ type
     : Boolean; overload;
   function GeoAssistDlg(aControl: TControl; LongitudeEdit, LatitudeEdit: TCustomEditButton)
     : Boolean; overload;
+
+  { Gazetteer Autofill }
+  function LoadCountriesFromJSON(const Lang: String): TList;
+  function LoadCountryFromJSON(const CountryIso: String): TCountry;
+  function LoadCitiesFromJSON(CountryIso2, StateIso2: String): TList;
+
 
 implementation
 
@@ -799,7 +846,7 @@ begin
     DeleteFile(aKMLFile);
 end;
 
-procedure LoadGPXPoints(const aFileName: string);
+procedure LoadGPXPoints(const aFileName: String);
 var
   Doc: TXMLDocument;
   RootNode, Node: TDOMNode;
@@ -830,7 +877,7 @@ begin
   end;
 end;
 
-procedure LoadCSVPoints(const aFileName: string);
+procedure LoadCSVPoints(const aFileName: String);
 var
   CSV: TCSVDocument;
   i: Integer;
@@ -854,7 +901,7 @@ begin
   end;
 end;
 
-procedure LoadGeoJSONPoints(const aFileName: string);
+procedure LoadGeoJSONPoints(const aFileName: String);
 var
   JSONData: TJSONData;
   JSONObject: TJSONObject;
@@ -885,7 +932,7 @@ begin
   end;
 end;
 
-function ReadGeoJSONToString(const FileName: string): string;
+function ReadGeoJSONToString(const FileName: String): String;
 var
   FileStream: TFileStream;
   StringStream: TStringStream;
@@ -1094,6 +1141,179 @@ function MercatorToDecimal(aMerc: TMercatorPoint): TMapPoint;
 begin
   Result.X := aMerc.X / DATUM_A;
   Result.Y := RadToDeg(2 * ArcTan(Exp(aMerc.Y / DATUM_A)) - Pi / 2);
+end;
+
+{ Gazetteer Autofill }
+
+function LoadCountriesFromJSON(const Lang: String): TList;
+var
+  JSONData: TJSONData;
+  JSONArray: TJSONArray;
+  CountryObj, TranslationsObj: TJSONObject;
+  Parser: TJSONParser;
+  FS: TFileStream;
+  i: Integer;
+  Country: ^TCountry;
+  CountryName: String;
+  FileName: String;
+begin
+  Result := TList.Create;
+  FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
+  FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+  try
+    Parser := TJSONParser.Create(FS, True);
+    try
+      JSONData := Parser.Parse;
+      JSONArray := TJSONArray(JSONData);
+
+      for i := 0 to JSONArray.Count - 1 do
+      begin
+        CountryObj := JSONArray.Objects[i];
+        New(Country);
+
+        // get name translations
+        if CountryObj.Find('translations') <> nil then
+        begin
+          TranslationsObj := CountryObj.Objects['translations'];
+          CountryName := TranslationsObj.Get('pt-BR', CountryObj.Get('name', ''));
+        end
+        else
+          CountryName := EmptyStr;
+
+        Country^.Id := CountryObj.Get('id', 0);
+        Country^.Name := CountryObj.Get('name', '');
+        Country^.NamePtbr := CountryName;
+        Country^.Iso2 := CountryObj.Get('iso2', '');
+        Country^.Iso3 := CountryObj.Get('iso3', '');
+        Country^.Capital := CountryObj.Get('capital', '');
+        Country^.Region := CountryObj.Get('region', '');
+        Country^.SubRegion := CountryObj.Get('subregion', '');
+        Result.Add(Country);
+      end;
+    finally
+      Parser.Free;
+      JSONData.Free;
+    end;
+  finally
+    FS.Free;
+  end;
+end;
+
+function LoadCountryFromJSON(const CountryIso: String): TCountry;
+var
+  JSONData: TJSONData;
+  JSONArray: TJSONArray;
+  CountryObj, TranslationsObj: TJSONObject;
+  Parser: TJSONParser;
+  FS: TFileStream;
+  i: Integer;
+  CountryPtbr: String;
+  FileName: String;
+begin
+  FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
+  FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+  try
+    Parser := TJSONParser.Create(FS, True);
+    try
+      JSONData := Parser.Parse;
+      JSONArray := TJSONArray(JSONData);
+
+      for i := 0 to JSONArray.Count - 1 do
+      begin
+        CountryObj := JSONArray.Objects[i];
+
+        if SameText(CountryIso, CountryObj.Get('iso2', '')) then
+        begin
+          // get name translations
+          if CountryObj.Find('translations') <> nil then
+          begin
+            TranslationsObj := CountryObj.Objects['translations'];
+            CountryPtbr := TranslationsObj.Get('pt-BR', CountryObj.Get('name', ''));
+          end
+          else
+            CountryPtbr := EmptyStr;
+
+          Result.Id := CountryObj.Get('id', 0);
+          Result.Name := CountryObj.Get('name', '');
+          Result.NamePtbr := CountryPtbr;
+          Result.Iso2 := CountryObj.Get('iso2', '');
+          Result.Iso3 := CountryObj.Get('iso3', '');
+          Result.Capital := CountryObj.Get('capital', '');
+          Result.Region := CountryObj.Get('region', '');
+          Result.SubRegion := CountryObj.Get('subregion', '');
+
+          Break;
+        end;
+      end;
+    finally
+      Parser.Free;
+      JSONData.Free;
+    end;
+  finally
+    FS.Free;
+  end;
+end;
+
+function LoadCitiesFromJSON(CountryIso2, StateIso2: String): TList;
+var
+  JSONData: TJSONData;
+  JSONArray: TJSONArray;
+  CountryObj, StateObj, CityObj: TJSONObject;
+  Parser: TJSONParser;
+  FS: TFileStream;
+  i, j, k: Integer;
+  StatesArray, CitiesArray: TJSONArray;
+  City: ^TCity;
+  FileName: String;
+begin
+  Result := TList.Create;
+  FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
+  FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+  try
+    Parser := TJSONParser.Create(FS, True);
+    try
+      JSONData := Parser.Parse;
+      JSONArray := TJSONArray(JSONData);
+
+      // iterate countries
+      for i := 0 to JSONArray.Count - 1 do
+      begin
+        CountryObj := JSONArray.Objects[i];
+        if SameText(CountryObj.Get('name', ''), CountryIso2) then
+        begin
+          StatesArray := CountryObj.Arrays['states'];
+          // iterate states
+          for j := 0 to StatesArray.Count - 1 do
+          begin
+            StateObj := StatesArray.Objects[j];
+            if SameText(StateObj.Get('name', ''), StateIso2) then
+            begin
+              CitiesArray := StateObj.Arrays['cities'];
+              // iterate cities
+              for k := 0 to CitiesArray.Count - 1 do
+              begin
+                CityObj := CitiesArray.Objects[k];
+                New(City);
+                City^.Id := CityObj.Get('id', 0);
+                City^.Name := CityObj.Get('name', '');
+                City^.Latitude := CityObj.Get('latitude', '');
+                City^.Longitude := CityObj.Get('longitude', '');
+                City^.Timezone := CityObj.Get('timezone', '');
+                Result.Add(City);
+              end;
+              Exit; // state found
+            end;
+          end;
+        end;
+      end;
+    finally
+      Parser.Free;
+      JSONData.Free;
+    end;
+  finally
+    FS.Free;
+  end;
+
 end;
 
 { TUTMPoint }

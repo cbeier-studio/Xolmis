@@ -72,7 +72,9 @@ var
 
 implementation
 
-uses utils_locale, utils_global, models_users, utils_dialogs, utils_graphics, udm_main, ucfg_database, uDarkStyleParams;
+uses
+  utils_locale, utils_global, models_users, utils_dialogs, utils_graphics, utils_themes,
+  udm_main, ucfg_database, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -83,6 +85,8 @@ begin
   pBottom.ParentBackground := True;
   ePassword.Images := iButtonsDark;
 
+  lblLogin.Font.Color := clVioletFG1Dark;
+  linkManageConn.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgConnect.cbConnectionChange(Sender: TObject);

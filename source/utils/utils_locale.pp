@@ -306,6 +306,8 @@ uses
     rsLoadingCSVFile = 'Loading CSV file...';
     rsLoadingJSONFile = 'Loading JSON file...';
     rsLoadingRecordsToImport = 'Loading records to import...';
+    rsLoadingListOfCountries = 'Loading list of countries...';
+    rsLoadingListOfCities = 'Loading list of cities...';
     rsCalculatingBandBalance = 'Calculating band balance...';
     rsCheckingDatabaseIntegrity = 'Checking database integrity...';
 
@@ -378,6 +380,13 @@ uses
     { Authentication messages }
     rsInvalidLogin = 'User not found.';
     rsIncorrectPassword = 'Incorrect password.';
+
+    { Gazetteer Autofill }
+    rsAutofillCountries = 'Select the countries that you want to add to your Gazetteer, with their states/provinces:';
+    rsAutofillCities = 'Select the cities/municipalities that you want to add to your Gazetteer, from the state/province below:';
+    rsInsertingToponyms = 'Inserting toponyms in Gazetteer...';
+    rsToponymMustBeState = 'The selected toponym must be a state or province.';
+    rsAtLeastOneItemMustBeChecked = 'At least one item must be selected to proceed.';
 
     { Validation messages }
     rsCPFTooShort = 'CPF number must have 11 digits.';

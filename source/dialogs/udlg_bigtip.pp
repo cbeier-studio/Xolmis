@@ -49,6 +49,8 @@ procedure TdlgBigTip.ApplyDarkMode;
 begin
   Color := clVioletBG1Dark;
 
+  lblTitle.Font.Color := clVioletFG1Dark;
+
   imgTip.Images := iTipDark;
 end;
 

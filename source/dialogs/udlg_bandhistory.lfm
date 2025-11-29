@@ -10,7 +10,7 @@ object dlgBandHistory: TdlgBandHistory
   Constraints.MinWidth = 672
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -133,7 +133,7 @@ object dlgBandHistory: TdlgBandHistory
       item
         Alignment = taCenter
         Title.Caption = 'Date'
-        Width = 112
+        Width = 111
         FieldName = 'event_date'
       end    
       item
@@ -148,13 +148,13 @@ object dlgBandHistory: TdlgBandHistory
           'Baixa'
         )
         Title.Caption = 'Type'
-        Width = 112
+        Width = 111
         FieldName = 'event_type'
       end    
       item
         Alignment = taCenter
         Title.Caption = 'Order number'
-        Width = 112
+        Width = 110
         FieldName = 'order_number'
       end    
       item

@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":75069634,"name":"tdlggazetteerautofill.caption","sourcebytes":[65,100,100,32,116,111,112,111,110,121,109,115,32,116,111,32,71,97,122,101,116,116,101,101,114],"value":"Add toponyms to Gazetteer"},
+{"hash":94707438,"name":"tdlggazetteerautofill.lblhint.caption","sourcebytes":[83,101,108,101,99,116,32,116,104,101,32,99,111,117,110,116,114,105,101,115,32,116,104,97,116,32,121,111,117,32,119,97,110,116,32,116,111,32,97,100,100,32,116,111,32,121,111,117,114,32,71,97,122,101,116,116,101,101,114,46],"value":"Select the countries that you want to add to your Gazetteer."},
+{"hash":152743813,"name":"tdlggazetteerautofill.lblstate.caption","sourcebytes":[108,98,108,83,116,97,116,101],"value":"lblState"},
+{"hash":4749113,"name":"tdlggazetteerautofill.sbsave.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tdlggazetteerautofill.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}
