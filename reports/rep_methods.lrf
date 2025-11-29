@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2025-04-10 08:12:44"/>
+    <ReportLastChange Value="2025-11-29 17:05:26"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -300,7 +300,7 @@
           <Size>
             <Left Value="334"/>
             <Top Value="119"/>
-            <Width Value="72"/>
+            <Width Value="126"/>
             <Height Value="18"/>
           </Size>
           <Flags Value="3"/>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Acronym&#xD;&#xA;"/>
+            <Memo Value="Abbreviation&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -371,7 +371,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qMethods.&quot;method_acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qMethods.&quot;abbreviation&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

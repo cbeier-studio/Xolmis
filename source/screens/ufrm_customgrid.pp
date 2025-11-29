@@ -12460,7 +12460,7 @@ begin
 
   // Set the print menu
   pmPrintBotanicTaxa.Visible := True;
-  pmPrintBotanicTaxaHierarchical.Visible := True;
+  //pmPrintBotanicTaxaHierarchical.Visible := True;
   pmPrintBotanicTaxaRecorded.Visible := True;
 end;
 
@@ -12620,7 +12620,7 @@ begin
 
   // Set the print menu
   pmPrintGazetteer.Visible := True;
-  pmPrintGazetteerHierarchical.Visible := True;
+  //pmPrintGazetteerHierarchical.Visible := True;
 end;
 
 procedure TfrmCustomGrid.SetGridIndividuals;

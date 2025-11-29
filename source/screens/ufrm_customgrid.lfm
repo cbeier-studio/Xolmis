@@ -84,7 +84,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            327
+            348
           )
         end
       end
