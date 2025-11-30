@@ -30,7 +30,6 @@ uses
   sdflaz,
   tachartlazaruspkg, lazdbexport, memdslaz, printer4lazarus, tachartbgra,
   virtualdbgrid_package,
-  FrameViewer09,
   uDarkStyleParams, uMetaDarkStyle, uDarkStyleSchemes,
   { Utils }
   utils_autoupdate,

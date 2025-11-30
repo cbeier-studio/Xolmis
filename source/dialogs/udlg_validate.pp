@@ -21,14 +21,14 @@ unit udlg_validate;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, atshapelinebgra, HtmlView;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, IpHtml, atshapelinebgra;
 
 type
 
   { TdlgValidate }
 
   TdlgValidate = class(TForm)
-    LV: THtmlViewer;
+    LV: TIpHtmlPanel;
     lineBottom: TShapeLineBGRA;
     sbOK: TButton;
     pBottom: TPanel;
@@ -112,7 +112,7 @@ begin
   FHtml.Add('</ul>');
   FHtml.Add('</body>');
 
-  LV.LoadFromString(FHtml.Text);
+  LV.SetHtmlFromStr(FHtml.Text);
   LV.Refresh;
 end;
 

@@ -10,7 +10,7 @@ object dlgValidate: TdlgValidate
   ClientWidth = 504
   PopupMode = pmAuto
   Position = poMainFormCenter
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
@@ -51,26 +51,25 @@ object dlgValidate: TdlgValidate
     ArrowColor = clBlack
     LineWidth = 1
   end
-  object LV: THtmlViewer
+  object LV: TIpHtmlPanel
     Left = 0
     Height = 188
     Top = 0
     Width = 504
-    BorderStyle = htNone
-    DefBackground = clWindow
-    DefFontColor = clBlack
-    DefFontName = 'Default'
-    DefFontSize = 0
-    HistoryMaxCount = 0
-    HtOptions = [htPrintTableBackground, htPrintMonochromeBlack, htShowVScroll, htNoFocusRect]
-    NoSelect = False
-    PrintMarginBottom = 2
-    PrintMarginLeft = 2
-    PrintMarginRight = 2
-    PrintMarginTop = 2
-    PrintScale = 1
-    ScrollBars = ssAutoVertical
     Align = alClient
+    FixedTypeface = 'Courier New'
+    DefaultTypeFace = 'default'
+    DefaultFontSize = 12
+    FlagErrors = False
+    MarginHeight = 5
+    PrintSettings.MarginLeft = 0.5
+    PrintSettings.MarginTop = 0.5
+    PrintSettings.MarginRight = 0.5
+    PrintSettings.MarginBottom = 0.5
+    PrintSettings.Preview.Left = 480
+    PrintSettings.Preview.Top = 270
+    PrintSettings.Preview.Width = 1440
+    PrintSettings.Preview.Height = 810
     TabOrder = 1
   end
 end

@@ -400,6 +400,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="TurboPowerIPro"/>
+      </Item>
+      <Item>
         <PackageName Value="virtualtreeview_package"/>
       </Item>
       <Item>
@@ -453,9 +456,6 @@
       </Item>
       <Item>
         <PackageName Value="TAChartLazarusPkg"/>
-      </Item>
-      <Item>
-        <PackageName Value="FrameViewer09"/>
       </Item>
       <Item>
         <PackageName Value="SynEditDsgn"/>

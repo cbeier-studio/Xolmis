@@ -95,7 +95,7 @@ object dlgImportNests: TdlgImportNests
     Height = 306
     Top = 0
     Width = 759
-    PageIndex = 0
+    PageIndex = 1
     Align = alClient
     TabOrder = 1
     object pgImportFiles: TPage
@@ -591,24 +591,27 @@ object dlgImportNests: TdlgImportNests
           Rounding.RoundX = 8
           Rounding.RoundY = 8
           TabOrder = 0
-          object hvProgress: THtmlViewer
+          object hvProgress: TIpHtmlPanel
             Left = 16
             Height = 240
             Top = 12
             Width = 693
-            BorderStyle = htNone
-            DefBackground = 16448250
-            DefFontName = 'Default'
-            HistoryMaxCount = 0
-            HtOptions = [htPrintTableBackground, htPrintMonochromeBlack, htShowVScroll, htNoFocusRect]
-            NoSelect = True
-            PrintMarginBottom = 2
-            PrintMarginLeft = 2
-            PrintMarginRight = 2
-            PrintMarginTop = 2
-            PrintScale = 1
-            ScrollBars = ssAutoVertical
             Align = alClient
+            BgColor = 16448250
+            FixedTypeface = 'Courier New'
+            DefaultTypeFace = 'default'
+            DefaultFontSize = 12
+            FlagErrors = False
+            MarginHeight = 5
+            PrintSettings.MarginLeft = 0.5
+            PrintSettings.MarginTop = 0.5
+            PrintSettings.MarginRight = 0.5
+            PrintSettings.MarginBottom = 0.5
+            PrintSettings.Preview.Left = 480
+            PrintSettings.Preview.Top = 270
+            PrintSettings.Preview.Width = 1440
+            PrintSettings.Preview.Height = 810
+            ScrollDist = 0
             TabOrder = 0
           end
         end

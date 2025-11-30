@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
-  Buttons, StrUtils, atshapelinebgra, BCPanel, HtmlView;
+  Buttons, IpHtml, StrUtils, atshapelinebgra, BCPanel;
 
 type
 
@@ -35,9 +35,9 @@ type
     iIcons: TImageList;
     iIconsDark: TImageList;
     imgFinishedDark: TImageList;
+    hvProgress: TIpHtmlPanel;
     pRetry: TBCPanel;
     imgFinished: TImageList;
-    hvProgress: THtmlViewer;
     icoImportFinished: TImage;
     lblSubtitleImportFinished: TLabel;
     lblTitleImportFinished: TLabel;
@@ -219,19 +219,19 @@ begin
   sbRun.Visible := False;
 
   FProgressList.Add(rsProgressImportBandingJournal);
-  hvProgress.LoadFromString(FProgressList.Text);
+  hvProgress.SetHtmlFromStr(FProgressList.Text);
   ImportNestDataV1(eNestFile.FileName, barProgress);
 
   if not stopProcess then
   begin
     FProgressList.Add(rsProgressImportBandingEffort);
-    hvProgress.LoadFromString(FProgressList.Text);
+    hvProgress.SetHtmlFromStr(FProgressList.Text);
     ImportNestRevisionsV1(eRevisionFile.FileName, barProgress);
 
     if not stopProcess then
     begin
       FProgressList.Add(rsProgressImportCaptures);
-      hvProgress.LoadFromString(FProgressList.Text);
+      hvProgress.SetHtmlFromStr(FProgressList.Text);
       ImportEggDataV1(eEggFile.FileName, barProgress);
     end;
   end;

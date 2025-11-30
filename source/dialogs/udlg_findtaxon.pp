@@ -22,8 +22,8 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, LCLType, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
-  DBControlGrid, StdCtrls, Buttons, BCPanel, ColorSpeedButton, HtmlView, RegExpr, StrUtils,
-  utils_system, models_taxonomy, data_types, Grids, HTMLUn2, HtmlGlobals, models_record_types;
+  DBControlGrid, StdCtrls, Buttons, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
+  utils_system, models_taxonomy, data_types, Grids, models_record_types;
 
 type
 
@@ -32,11 +32,10 @@ type
   TdlgFindTaxon = class(TForm)
     iButtons: TImageList;
     iButtonsDark: TImageList;
-    lblName: THtmlViewer;
     lblVernacular: TDBText;
     dsFind: TDataSource;
     EP: TEdit;
-    lblName1: TDBText;
+    lblName: TDBText;
     pSearchBar: TPanel;
     pContent: TPanel;
     pEP: TBCPanel;
@@ -227,6 +226,7 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  lblName.DataField := 'full_name';
   Verna := xSettings.VernacularNamesLanguage;
   case Verna of
     0:
@@ -275,12 +275,12 @@ begin
   //  pContent.Color := clHighlight
   //else
   //  pContent.Color := clWhite;
-  lblName.DefBackground := pContent.Color;
-
-  if qFind.Active then
-    lblName.LoadFromString(qFind.FieldByName('formatted_name').AsString)
-  else
-    lblName.Clear;
+  //lblName.BgColor := pContent.Color;
+  //
+  //if qFind.Active then
+  //  lblName.SetHtmlFromStr(qFind.FieldByName('formatted_name').AsString)
+  //else
+  //  lblName.SetHtmlFromStr(EmptyStr);
 end;
 
 function TdlgFindTaxon.Pesquisar(aValor: String): Boolean;
