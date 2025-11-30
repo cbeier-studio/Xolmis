@@ -26,8 +26,8 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
-  DBControlGrid, data_types, data_filters, Types, ImgList, ToggleSwitch, DragDropFile, mvMapViewer, mvDE_BGRA,
-  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class, DropTarget;
+  DBControlGrid, data_types, data_filters, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA,
+  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class;
 
 type
   { TStringMemoEditor }
@@ -49,7 +49,6 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
-    DropVideos: TDropFileTarget;
     dsVideos: TDataSource;
     gridVideos: TDBGrid;
     lblProjectBalance: TLabel;
@@ -133,9 +132,6 @@ type
     titleVideos: TLabel;
     txtProjectBalance: TLabel;
     pChildRightPanel: TBCPanel;
-    DropAudios: TDropFileTarget;
-    DropDocs: TDropFileTarget;
-    DropImages: TDropFileTarget;
     dsDocs: TDataSource;
     dsLink6: TDataSource;
     gridChild6: TDBGrid;
@@ -933,10 +929,6 @@ type
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
-    procedure DropAudiosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
-    procedure DropDocsDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
-    procedure DropImagesDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
-    procedure DropVideosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint; var Effect: Longint);
     procedure dsAudiosDataChange(Sender: TObject; Field: TField);
     procedure dsAudiosStateChange(Sender: TObject);
     procedure dsDocsDataChange(Sender: TObject; Field: TField);
@@ -996,6 +988,7 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormDropFiles(Sender: TObject; const FileNames: array of string);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormResize(Sender: TObject);
@@ -4048,214 +4041,6 @@ begin
 
 end;
 
-procedure TfrmCustomGrid.DropAudiosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
-  var Effect: Longint);
-const
-  SupportedAudios: array of String = ('.wav','.mp3','.aac','.flac');
-var
-  i: Integer;
-begin
-  dlgProgress := TdlgProgress.Create(nil);
-  try
-    dlgProgress.Show;
-    dlgProgress.Title := rsImportAudiosTitle;
-    dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := DropAudios.Files.Count;
-    stopProcess := False;
-    Application.ProcessMessages;
-    if not DMM.sqlTrans.Active then
-      DMM.sqlCon.StartTransaction;
-    try
-      for i := 0 to DropAudios.Files.Count - 1 do
-      begin
-        dlgProgress.Text := Format(rsProgressImportAudios, [i + 1, DropAudios.Files.Count]);
-
-        if (ExtractFileExt(DropAudios.Files[i]) in SupportedAudios) then
-          AddAudio(qAudios, DropAudios.Files[i]);
-        { #todo : Better treatment of not supported audio files }
-
-        dlgProgress.Position := i + 1;
-        Application.ProcessMessages;
-        if stopProcess then
-          Break;
-      end;
-      if stopProcess then
-        DMM.sqlTrans.RollbackRetaining
-      else
-        DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-    dlgProgress.Text := rsProgressFinishing;
-    dlgProgress.Position := DropAudios.Files.Count;
-    Application.ProcessMessages;
-    stopProcess := False;
-  finally
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
-  end;
-
-  // Reject drop if it is a move operation
-  //if (Effect = DROPEFFECT_MOVE) then
-  //  Effect := DROPEFFECT_NONE;
-end;
-
-procedure TfrmCustomGrid.DropDocsDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
-  var Effect: Longint);
-var
-  i: Integer;
-begin
-  dlgProgress := TdlgProgress.Create(nil);
-  try
-    dlgProgress.Show;
-    dlgProgress.Title := rsImportDocsTitle;
-    dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := DropDocs.Files.Count;
-    stopProcess := False;
-    Application.ProcessMessages;
-    if not DMM.sqlTrans.Active then
-      DMM.sqlCon.StartTransaction;
-    try
-      for i := 0 to DropDocs.Files.Count - 1 do
-      begin
-        dlgProgress.Text := Format(rsProgressImportDocs, [i + 1, DropDocs.Files.Count]);
-
-        AddDocument(qDocs, DropDocs.Files[i]);
-
-        dlgProgress.Position := i + 1;
-        Application.ProcessMessages;
-        if stopProcess then
-          Break;
-      end;
-      if stopProcess then
-        DMM.sqlTrans.RollbackRetaining
-      else
-        DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-    dlgProgress.Text := rsProgressFinishing;
-    dlgProgress.Position := DropDocs.Files.Count;
-    Application.ProcessMessages;
-    stopProcess := False;
-  finally
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
-  end;
-
-  // Reject drop if it is a move operation
-  //if (Effect = DROPEFFECT_MOVE) then
-  //  Effect := DROPEFFECT_NONE;
-end;
-
-procedure TfrmCustomGrid.DropImagesDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
-  var Effect: Longint);
-const
-  SupportedImages: array of String = ('.png','.xpm','.bmp','.jpeg','.jpg','.jpe','.jfif','.tif','.tiff','.pbm','.pgm','.ppm');
-var
-  i: Integer;
-begin
-  dlgProgress := TdlgProgress.Create(nil);
-  try
-    dlgProgress.Show;
-    dlgProgress.Title := rsImportImagesTitle;
-    dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := DropImages.Files.Count;
-    stopProcess := False;
-    Application.ProcessMessages;
-    if not DMM.sqlTrans.Active then
-      DMM.sqlCon.StartTransaction;
-    try
-      for i := 0 to DropImages.Files.Count - 1 do
-      begin
-        dlgProgress.Text := Format(rsProgressImportImages, [i + 1, DropImages.Files.Count]);
-
-        if (ExtractFileExt(DropImages.Files[i]) in SupportedImages) then
-          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, DropImages.Files[i]);
-        { #todo : Better treatment of not supported image files }
-
-        dlgProgress.Position := i + 1;
-        Application.ProcessMessages;
-        if stopProcess then
-          Break;
-      end;
-      if stopProcess then
-        DMM.sqlTrans.RollbackRetaining
-      else
-        DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-    dlgProgress.Text := rsProgressFinishing;
-    dlgProgress.Position := DropImages.Files.Count;
-    Application.ProcessMessages;
-    stopProcess := False;
-  finally
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
-  end;
-
-  // Reject drop if it is a move operation
-  //if (Effect = DROPEFFECT_MOVE) then
-  //  Effect := DROPEFFECT_NONE;
-end;
-
-procedure TfrmCustomGrid.DropVideosDrop(Sender: TObject; ShiftState: TShiftState; APoint: TPoint;
-  var Effect: Longint);
-const
-  SupportedVideos: array of String = ('.avi','.mp4','.m4v','.mov','.wmv','.mkv');
-var
-  i: Integer;
-begin
-  dlgProgress := TdlgProgress.Create(nil);
-  try
-    dlgProgress.Show;
-    dlgProgress.Title := rsImportVideosTitle;
-    dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := DropVideos.Files.Count;
-    stopProcess := False;
-    Application.ProcessMessages;
-    if not DMM.sqlTrans.Active then
-      DMM.sqlCon.StartTransaction;
-    try
-      for i := 0 to DropVideos.Files.Count - 1 do
-      begin
-        dlgProgress.Text := Format(rsProgressImportVideos, [i + 1, DropVideos.Files.Count]);
-
-        if (ExtractFileExt(DropVideos.Files[i]) in SupportedVideos) then
-          AddVideo(qAudios, DropVideos.Files[i]);
-        { #todo : Better treatment of not supported video files }
-
-        dlgProgress.Position := i + 1;
-        Application.ProcessMessages;
-        if stopProcess then
-          Break;
-      end;
-      if stopProcess then
-        DMM.sqlTrans.RollbackRetaining
-      else
-        DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
-    end;
-    dlgProgress.Text := rsProgressFinishing;
-    dlgProgress.Position := DropVideos.Files.Count;
-    Application.ProcessMessages;
-    stopProcess := False;
-  finally
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
-  end;
-
-  // Reject drop if it is a move operation
-  //if (Effect = DROPEFFECT_MOVE) then
-  //  Effect := DROPEFFECT_NONE;
-end;
-
 procedure TfrmCustomGrid.dsAudiosDataChange(Sender: TObject; Field: TField);
 begin
   UpdateAudioButtons(qAudios);
@@ -5071,6 +4856,68 @@ begin
   panelTabs.Free;
 
   FreeAndNil(FSearch);
+end;
+
+procedure TfrmCustomGrid.FormDropFiles(Sender: TObject; const FileNames: array of string);
+const
+  SupportedImages: array of String = ('.png','.xpm','.bmp','.jpeg','.jpg','.jpe','.jfif','.tif','.tiff','.pbm','.pgm','.ppm');
+  SupportedAudios: array of String = ('.wav','.mp3','.aac','.flac', '.wma');
+  SupportedVideos: array of String = ('.avi','.mp4','.m4v','.mov','.wmv','.mkv');
+  SupportedDocs: array of String = ('.doc','.docx','.odt','.rtf','.txt','.md',
+    '.xls','.xlsx','.ods','.csv','.ppt','.pptx','.odp','.pdf','.r','.rmd','.py','.xml','.json','.htm','.html',
+    '.kml','.kmz','.gpx','.geojson','.shp','.qgs','.qgz','.psd','.ai','.cdr','.svg','.dxf','.wmf','.eps',
+    '.db','.dbf','.sqlite3','.sdb3','.fdb','.accdb');
+var
+  i: Integer;
+begin
+  dlgProgress := TdlgProgress.Create(nil);
+  try
+    dlgProgress.Show;
+    dlgProgress.Title := rsImportImagesTitle;
+    dlgProgress.Text := rsProgressPreparing;
+    dlgProgress.Max := Length(FileNames);
+    stopProcess := False;
+    Application.ProcessMessages;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlCon.StartTransaction;
+    try
+      for i := 0 to Length(FileNames) - 1 do
+      begin
+        dlgProgress.Text := Format(rsProgressImportImages, [i + 1, Length(FileNames)]);
+
+        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedImages) then
+          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, FileNames[i])
+        else
+        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedAudios) then
+          AddAudio(qAudios, FileNames[i])
+        else
+        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedVideos) then
+          AddVideo(qAudios, FileNames[i])
+        else
+        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedDocs) then
+          AddDocument(qDocs, FileNames[i]);
+
+        dlgProgress.Position := i + 1;
+        Application.ProcessMessages;
+        if stopProcess then
+          Break;
+      end;
+      if stopProcess then
+        DMM.sqlTrans.RollbackRetaining
+      else
+        DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+    dlgProgress.Text := rsProgressFinishing;
+    dlgProgress.Position := Length(FileNames);
+    Application.ProcessMessages;
+    stopProcess := False;
+  finally
+    dlgProgress.Close;
+    FreeAndNil(dlgProgress);
+  end;
 end;
 
 procedure TfrmCustomGrid.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
