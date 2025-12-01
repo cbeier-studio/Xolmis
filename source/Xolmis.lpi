@@ -1436,6 +1436,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_attachmedia.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgAttachMedia"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
     <Debugger>
       <StoreDebuggerClassConfInSession Value="True"/>

@@ -95,6 +95,7 @@ const
   HELP_INTERFACE: String      = 'interface.html';
   HELP_INTRODUCTION: String   = 'introduction.html';
   HELP_RELEASE_NOTES: String  = 'release-notes.html';
+  HELP_XOLMIS_MOBILE: String  = 'xolmis-mobile.html';
 
   HELP_AUDIO_RECORDINGS: String = 'audio-recordings.html';
   HELP_BANDS: String            = 'bands.html';

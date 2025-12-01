@@ -24,6 +24,28 @@ uses
   Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
 
 type
+  TAttachMediaType = (amtImages, amtAudios, amtVideos, amtDocuments);
+  TAttachMediaTypes = set of TAttachMediaType;
+
+  TMediaAttachment = record
+    TaxonId: Integer;
+    IndividualId: Integer;
+    CaptureId: Integer;
+    FeatherId: Integer;
+    LocalityId: Integer;
+    AuthorId: Integer;
+    SurveyId: Integer;
+    SightingId: Integer;
+    NestId: Integer;
+    NestRevisionId: Integer;
+    EggId: Integer;
+    SpecimenId: Integer;
+    PermitId: Integer;
+    ProjectId: Integer;
+    ExpeditionId: Integer;
+    SamplingPlotId: Integer;
+    MethodId: Integer;
+  end;
 
   { TImageData }
 

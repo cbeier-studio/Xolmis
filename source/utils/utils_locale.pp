@@ -191,6 +191,7 @@ uses
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
+    rsProgressImportFiles = 'Processing %d of %d files...';
     rsProgressImportImages = 'Processing %d of %d images...';
     rsProgressImportAudios = 'Processing %d of %d audio files...';
     rsProgressImportVideos = 'Processing %d of %d videos...';
@@ -292,14 +293,16 @@ uses
     rsPreparingRestore = 'Preparing backup restore...';
 
     { Importation messages }
+    rsImportFilesTitle = 'Import files';
     rsImportImagesTitle = 'Import images';
     rsImportAudiosTitle = 'Import audio files';
-    rsImportVideosTitle = 'Import video files';
+    rsImportVideosTitle = 'Import videos';
     rsImportDocsTitle = 'Import documents';
     rsImportCanceled = 'Import canceled!';
     rsImportCanceledByUser = 'Import canceled by the user.';
     rsBatchCanceledByUser = 'Operation was canceled by user.';
     rsImportingFile = 'Importing file %s';
+    rsModuleDoesNotSupportAttachments = 'This module does not support file attachments.';
 
     { Loading messages }
     rsLoadingForm = 'Loading %s...';

@@ -27,7 +27,7 @@ uses
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
   DBControlGrid, data_types, data_filters, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA,
-  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class;
+  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class, models_media;
 
 type
   { TStringMemoEditor }
@@ -1196,6 +1196,7 @@ type
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
     FPlantKeyFilter, FSamplingPlotKeyFilter, FEggKeyFilter: Integer;
+    FMediaTypes: TAttachMediaTypes;
     FCanToggle: Boolean;
     FIsResizing: Boolean;
     FIsMoving: Boolean;
@@ -1211,14 +1212,15 @@ type
     panelTabs: specialize TFPGList<TCustomPanelTab>;
     procedure CreatePanelTabs;
 
-    procedure AddAudio(aDataSet: TDataSet; aFileName: String);
-    procedure AddDocument(aDataSet: TDataSet; aFileName: String);
+    procedure AddAudio(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
+    procedure AddDocument(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       isAnAlias: Boolean = False);
-    procedure AddVideo(aDataSet: TDataSet; aFileName: String);
+    procedure AddVideo(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
     procedure ApplyDarkMode;
+    function AttachMediaDlg(aTableType: TTableType): TMediaAttachment;
     procedure CellKeyPress(Sender: TObject; var Key: Char);
 
     procedure ClearSearch;
@@ -1470,7 +1472,7 @@ uses
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
-  ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory, udlg_gazetteerautofill,
+  ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory, udlg_gazetteerautofill, udlg_attachmedia,
   ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer;
 
 {$R *.lfm}
@@ -1841,7 +1843,7 @@ end;
 
 { TfrmCustomGrid }
 
-procedure TfrmCustomGrid.AddAudio(aDataSet: TDataSet; aFileName: String);
+procedure TfrmCustomGrid.AddAudio(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
 var
   relPath: String;
   SearchRec: TSearchRec;
@@ -1878,12 +1880,25 @@ begin
     FieldByName(COL_RECORDING_DATE).AsDateTime := CreationDate;
     FieldByName(COL_RECORDING_TIME).AsDateTime := CreationDate;
 
+    if aAttachment.AuthorId > 0 then
+      FieldByName(COL_RECORDER_ID).AsInteger := aAttachment.AuthorId;
+    if aAttachment.LocalityId > 0 then
+      FieldByName(COL_LOCALITY_ID).AsInteger := aAttachment.LocalityId;
+    if aAttachment.TaxonId > 0 then
+      FieldByName(COL_TAXON_ID).AsInteger := aAttachment.TaxonId;
+    if aAttachment.IndividualId > 0 then
+      FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
+    if aAttachment.SightingId > 0 then
+      FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
+    if aAttachment.SpecimenId > 0 then
+      FieldByName(COL_SPECIMEN_ID).AsInteger := aAttachment.SpecimenId;
+
     Post;
     TSQLQuery(aDataSet).ApplyUpdates;
   end;
 end;
 
-procedure TfrmCustomGrid.AddDocument(aDataSet: TDataSet; aFileName: String);
+procedure TfrmCustomGrid.AddDocument(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
 var
   relPath: String;
   SearchRec: TSearchRec;
@@ -1921,6 +1936,31 @@ begin
     end;
     FieldByName(COL_DOCUMENT_DATE).AsDateTime := CreationDate;
     FieldByName(COL_DOCUMENT_TIME).AsDateTime := CreationDate;
+
+    if aAttachment.AuthorId > 0 then
+      FieldByName(COL_PERSON_ID).AsInteger := aAttachment.AuthorId;
+    if aAttachment.MethodId > 0 then
+      FieldByName(COL_METHOD_ID).AsInteger := aAttachment.MethodId;
+    if aAttachment.IndividualId > 0 then
+      FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
+    if aAttachment.CaptureId > 0 then
+      FieldByName(COL_CAPTURE_ID).AsInteger := aAttachment.CaptureId;
+    if aAttachment.ExpeditionId > 0 then
+      FieldByName(COL_EXPEDITION_ID).AsInteger := aAttachment.ExpeditionId;
+    if aAttachment.SurveyId > 0 then
+      FieldByName(COL_SURVEY_ID).AsInteger := aAttachment.SurveyId;
+    if aAttachment.SightingId > 0 then
+      FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
+    if aAttachment.NestId > 0 then
+      FieldByName(COL_NEST_ID).AsInteger := aAttachment.NestId;
+    if aAttachment.SpecimenId > 0 then
+      FieldByName(COL_SPECIMEN_ID).AsInteger := aAttachment.SpecimenId;
+    if aAttachment.SamplingPlotId > 0 then
+      FieldByName(COL_NET_STATION_ID).AsInteger := aAttachment.SamplingPlotId;
+    if aAttachment.ProjectId > 0 then
+      FieldByName(COL_PROJECT_ID).AsInteger := aAttachment.ProjectId;
+    if aAttachment.PermitId > 0 then
+      FieldByName(COL_PERMIT_ID).AsInteger := aAttachment.PermitId;
 
     Post;
     TSQLQuery(aDataSet).ApplyUpdates;
@@ -2075,7 +2115,7 @@ begin
   UpdateGridTitles(DBG, FSearch);
 end;
 
-procedure TfrmCustomGrid.AddVideo(aDataSet: TDataSet; aFileName: String);
+procedure TfrmCustomGrid.AddVideo(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
 var
   relPath: String;
   SearchRec: TSearchRec;
@@ -2111,6 +2151,25 @@ begin
     end;
     FieldByName(COL_RECORDING_DATE).AsDateTime := CreationDate;
     FieldByName(COL_RECORDING_TIME).AsDateTime := CreationDate;
+
+    if aAttachment.AuthorId > 0 then
+      FieldByName(COL_RECORDER_ID).AsInteger := aAttachment.AuthorId;
+    if aAttachment.LocalityId > 0 then
+      FieldByName(COL_LOCALITY_ID).AsInteger := aAttachment.LocalityId;
+    if aAttachment.TaxonId > 0 then
+      FieldByName(COL_TAXON_ID).AsInteger := aAttachment.TaxonId;
+    if aAttachment.IndividualId > 0 then
+      FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
+    if aAttachment.CaptureId > 0 then
+      FieldByName(COL_CAPTURE_ID).AsInteger := aAttachment.CaptureId;
+    if aAttachment.SurveyId > 0 then
+      FieldByName(COL_SURVEY_ID).AsInteger := aAttachment.SurveyId;
+    if aAttachment.SightingId > 0 then
+      FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
+    if aAttachment.NestId > 0 then
+      FieldByName(COL_NEST_ID).AsInteger := aAttachment.NestId;
+    if aAttachment.NestRevisionId > 0 then
+      FieldByName(COL_NEST_REVISION_ID).AsInteger := aAttachment.NestRevisionId;
 
     Post;
     TSQLQuery(aDataSet).ApplyUpdates;
@@ -2483,6 +2542,140 @@ begin
   icoEggPatternFilter.Images := iIconsDark;
   icoPermitTypeFilter.Images := iIconsDark;
   icoReplacedBandFilter.Images := iIconsDark;
+end;
+
+function TfrmCustomGrid.AttachMediaDlg(aTableType: TTableType): TMediaAttachment;
+begin
+  dlgAttachMedia := TdlgAttachMedia.Create(nil);
+  with dlgAttachMedia do
+  try
+    case aTableType of
+      tbSamplingPlots:
+      begin
+        SamplingPlotId := DMG.qSamplingPlots.FieldByName(COL_SAMPLING_PLOT_ID).AsInteger;
+        LocalityId := DMG.qSamplingPlots.FieldByName(COL_LOCALITY_ID).AsInteger;
+      end;
+      tbPeople:
+      begin
+        AuthorId := DMG.qPeople.FieldByName(COL_PERSON_ID).AsInteger;
+      end;
+      tbProjects:
+      begin
+        ProjectId := DMG.qProjects.FieldByName(COL_PROJECT_ID).AsInteger;
+      end;
+      tbPermits:
+      begin
+        PermitId := DMG.qPermits.FieldByName(COL_PERMIT_ID).AsInteger;
+        ProjectId := DMG.qPermits.FieldByName(COL_PROJECT_ID).AsInteger;
+      end;
+      tbIndividuals:
+      begin
+        IndividualId := DMG.qIndividuals.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        TaxonId := DMG.qIndividuals.FieldByName(COL_TAXON_ID).AsInteger;
+        NestId := DMG.qIndividuals.FieldByName(COL_NEST_ID).AsInteger;
+      end;
+      tbCaptures:
+      begin
+        CaptureId := DMG.qCaptures.FieldByName(COL_CAPTURE_ID).AsInteger;
+        AuthorId := DMG.qCaptures.FieldByName(COL_PHOTOGRAPHER_1_ID).AsInteger;
+        LocalityId := DMG.qCaptures.FieldByName(COL_LOCALITY_ID).AsInteger;
+        TaxonId := DMG.qCaptures.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := DMG.qCaptures.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        SurveyId := DMG.qCaptures.FieldByName(COL_SURVEY_ID).AsInteger;
+        ProjectId := DMG.qCaptures.FieldByName(COL_PROJECT_ID).AsInteger;
+        SamplingPlotId := DMG.qCaptures.FieldByName(COL_NET_STATION_ID).AsInteger;
+      end;
+      tbFeathers:
+      begin
+        TaxonId := DMG.qFeathers.FieldByName(COL_TAXON_ID).AsInteger;
+        LocalityId := DMG.qFeathers.FieldByName(COL_LOCALITY_ID).AsInteger;
+        AuthorId := DMG.qFeathers.FieldByName(COL_OBSERVER_ID).AsInteger;
+        IndividualId := DMG.qFeathers.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        CaptureId := DMG.qFeathers.FieldByName(COL_CAPTURE_ID).AsInteger;
+        SightingId := DMG.qFeathers.FieldByName(COL_SIGHTING_ID).AsInteger;
+      end;
+      tbNests:
+      begin
+        NestId := DMG.qNests.FieldByName(COL_NEST_ID).AsInteger;
+        AuthorId := DMG.qNests.FieldByName(COL_OBSERVER_ID).AsInteger;
+        LocalityId := DMG.qNests.FieldByName(COL_LOCALITY_ID).AsInteger;
+        TaxonId := DMG.qNests.FieldByName(COL_TAXON_ID).AsInteger;
+        ProjectId := DMG.qNests.FieldByName(COL_PROJECT_ID).AsInteger;
+      end;
+      tbNestRevisions:
+      begin
+        NestRevisionId := DMG.qNestRevisions.FieldByName(COL_NEST_REVISION_ID).AsInteger;
+        NestId := DMG.qNestRevisions.FieldByName(COL_NEST_ID).AsInteger;
+        AuthorId := DMG.qNestRevisions.FieldByName(COL_OBSERVER_1_ID).AsInteger;
+      end;
+      tbEggs:
+      begin
+        EggId := DMG.qEggs.FieldByName(COL_EGG_ID).AsInteger;
+        NestId := DMG.qEggs.FieldByName(COL_NEST_ID).AsInteger;
+        TaxonId := DMG.qEggs.FieldByName(COL_TAXON_ID).AsInteger;
+        AuthorId := DMG.qEggs.FieldByName(COL_RESEARCHER_ID).AsInteger;
+        IndividualId := DMG.qEggs.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+      end;
+      tbMethods:
+      begin
+        MethodId := DMG.qMethods.FieldByName(COL_METHOD_ID).AsInteger;
+      end;
+      tbExpeditions:
+      begin
+        ExpeditionId := DMG.qExpeditions.FieldByName(COL_EXPEDITION_ID).AsInteger;
+        ProjectId := DMG.qExpeditions.FieldByName(COL_PROJECT_ID).AsInteger;
+      end;
+      tbSurveys:
+      begin
+        LocalityId := DMG.qSurveys.FieldByName(COL_LOCALITY_ID).AsInteger;
+        MethodId := DMG.qSurveys.FieldByName(COL_METHOD_ID).AsInteger;
+        ExpeditionId := DMG.qSurveys.FieldByName(COL_EXPEDITION_ID).AsInteger;
+        SamplingPlotId := DMG.qSurveys.FieldByName(COL_LOCALITY_ID).AsInteger;
+        ProjectId := DMG.qSurveys.FieldByName(COL_PROJECT_ID).AsInteger;
+      end;
+      tbSightings:
+      begin
+        SightingId := DMG.qSightings.FieldByName(COL_SIGHTING_ID).AsInteger;
+        SurveyId := DMG.qSightings.FieldByName(COL_SURVEY_ID).AsInteger;
+        IndividualId := DMG.qSightings.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        LocalityId := DMG.qSightings.FieldByName(COL_LOCALITY_ID).AsInteger;
+        MethodId := DMG.qSightings.FieldByName(COL_METHOD_ID).AsInteger;
+        AuthorId := DMG.qSightings.FieldByName(COL_OBSERVER_ID).AsInteger;
+        TaxonId := DMG.qSightings.FieldByName(COL_TAXON_ID).AsInteger;
+      end;
+      tbSpecimens:
+      begin
+        SpecimenId := DMG.qSpecimens.FieldByName(COL_SPECIMEN_ID).AsInteger;
+        TaxonId := DMG.qSpecimens.FieldByName(COL_TAXON_ID).AsInteger;
+        LocalityId := DMG.qSpecimens.FieldByName(COL_LOCALITY_ID).AsInteger;
+        IndividualId := DMG.qSpecimens.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        NestId := DMG.qSpecimens.FieldByName(COL_NEST_ID).AsInteger;
+        EggId := DMG.qSpecimens.FieldByName(COL_EGG_ID).AsInteger;
+      end;
+    end;
+    if ShowModal = mrOK then
+    begin
+      Result.AuthorId := AuthorId;
+      Result.LocalityId := LocalityId;
+      Result.TaxonId := TaxonId;
+      Result.IndividualId := IndividualId;
+      Result.CaptureId := CaptureId;
+      Result.FeatherId := FeatherId;
+      Result.ExpeditionId := ExpeditionId;
+      Result.SurveyId := SurveyId;
+      Result.SightingId := SightingId;
+      Result.NestId := NestId;
+      Result.NestRevisionId := NestRevisionId;
+      Result.EggId := EggId;
+      Result.SpecimenId := SpecimenId;
+      Result.ProjectId := ProjectId;
+      Result.PermitId := PermitId;
+      Result.SamplingPlotId := SamplingPlotId;
+      Result.MethodId := MethodId;
+    end;
+  finally
+    FreeAndNil(dlgAttachMedia);
+  end;
 end;
 
 procedure TfrmCustomGrid.CellKeyPress(Sender: TObject; var Key: Char);
@@ -4869,11 +5062,21 @@ const
     '.db','.dbf','.sqlite3','.sdb3','.fdb','.accdb');
 var
   i: Integer;
+  FAttachment: TMediaAttachment;
 begin
+  if not (sbShowImages.Visible) and not (sbShowImages.Visible) and not (sbShowImages.Visible) and
+    not (sbShowImages.Visible) then
+  begin
+    MsgDlg(rsTitleInformation, rsModuleDoesNotSupportAttachments, mtInformation);
+    Exit;
+  end;
+
+  FAttachment := AttachMediaDlg(FTableType);
+
   dlgProgress := TdlgProgress.Create(nil);
   try
     dlgProgress.Show;
-    dlgProgress.Title := rsImportImagesTitle;
+    dlgProgress.Title := rsImportFilesTitle;
     dlgProgress.Text := rsProgressPreparing;
     dlgProgress.Max := Length(FileNames);
     stopProcess := False;
@@ -4883,19 +5086,19 @@ begin
     try
       for i := 0 to Length(FileNames) - 1 do
       begin
-        dlgProgress.Text := Format(rsProgressImportImages, [i + 1, Length(FileNames)]);
+        dlgProgress.Text := Format(rsProgressImportFiles, [i + 1, Length(FileNames)]);
 
-        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedImages) then
-          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, FileNames[i])
+        if (sbShowImages.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedImages) then
+          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, FileNames[i], FAttachment)
         else
-        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedAudios) then
-          AddAudio(qAudios, FileNames[i])
+        if (sbShowAudio.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedAudios) then
+          AddAudio(qAudios, FileNames[i], FAttachment)
         else
-        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedVideos) then
-          AddVideo(qAudios, FileNames[i])
+        if (sbShowVideos.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedVideos) then
+          AddVideo(qAudios, FileNames[i], FAttachment)
         else
-        if (LowerCase(ExtractFileExt(FileNames[i])) in SupportedDocs) then
-          AddDocument(qDocs, FileNames[i]);
+        if (sbShowDocs.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedDocs) then
+          AddDocument(qDocs, FileNames[i], FAttachment);
 
         dlgProgress.Position := i + 1;
         Application.ProcessMessages;
@@ -6637,10 +6840,13 @@ end;
 procedure TfrmCustomGrid.pmAddDocumentClick(Sender: TObject);
 var
   i: Integer;
+  FAttachment: TMediaAttachment;
 begin
   DMM.OpenDocs.InitialDir := xSettings.DocumentsFolder;
   if DMM.OpenDocs.Execute then
   begin
+    FAttachment := AttachMediaDlg(FTableType);
+
     dlgProgress := TdlgProgress.Create(nil);
     try
       dlgProgress.Show;
@@ -8755,10 +8961,13 @@ end;
 procedure TfrmCustomGrid.sbAddAudioClick(Sender: TObject);
 var
   i: Integer;
+  FAttachment: TMediaAttachment;
 begin
   DMM.OpenAudios.InitialDir := xSettings.AudiosFolder;
   if DMM.OpenAudios.Execute then
   begin
+    FAttachment := AttachMediaDlg(FTableType);
+
     dlgProgress := TdlgProgress.Create(nil);
     try
       dlgProgress.Show;
@@ -8774,7 +8983,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportAudios, [i + 1, DMM.OpenAudios.Files.Count]);
 
-          AddAudio(qAudios, DMM.OpenAudios.Files[i]);
+          AddAudio(qAudios, DMM.OpenAudios.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -8851,10 +9060,13 @@ end;
 procedure TfrmCustomGrid.sbAddImageClick(Sender: TObject);
 var
   i: Integer;
+  FAttachment: TMediaAttachment;
 begin
   DMM.OpenImgs.InitialDir := xSettings.ImagesFolder;
   if DMM.OpenImgs.Execute then
   begin
+    FAttachment := AttachMediaDlg(FTableType);
+
     dlgProgress := TdlgProgress.Create(nil);
     try
       dlgProgress.Show;
@@ -8870,7 +9082,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportImages, [i + 1, DMM.OpenImgs.Files.Count]);
 
-          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, DMM.OpenImgs.Files[i]);
+          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, DMM.OpenImgs.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -8920,10 +9132,13 @@ end;
 procedure TfrmCustomGrid.sbAddVideoClick(Sender: TObject);
 var
   i: Integer;
+  FAttachment: TMediaAttachment;
 begin
   DMM.OpenVideos.InitialDir := xSettings.VideosFolder;
   if DMM.OpenVideos.Execute then
   begin
+    FAttachment := AttachMediaDlg(FTableType);
+
     dlgProgress := TdlgProgress.Create(nil);
     try
       dlgProgress.Show;
@@ -12234,6 +12449,7 @@ end;
 procedure TfrmCustomGrid.SetGridAndChild;
 begin
   FChildTable := tbNone;
+  FMediaTypes := [];
 
   case FTableType of
     tbInstitutions:   SetGridInstitutions;
@@ -12315,6 +12531,7 @@ procedure TfrmCustomGrid.SetGridCaptures;
 begin
   Caption := rsTitleCaptures;
   FSearch.DataSet := DMG.qCaptures;
+  FMediaTypes := [amtImages, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_CAPTURE_DATE, sdDescending);
 
@@ -12380,6 +12597,7 @@ procedure TfrmCustomGrid.SetGridEggs;
 begin
   Caption := rsTitleEggs;
   FSearch.DataSet := DMG.qEggs;
+  FMediaTypes := [amtImages];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12400,6 +12618,7 @@ procedure TfrmCustomGrid.SetGridExpeditions;
 begin
   Caption := rsCaptionExpeditions;
   FSearch.DataSet := DMG.qExpeditions;
+  FMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_START_DATE, sdDescending);
 
@@ -12431,6 +12650,7 @@ procedure TfrmCustomGrid.SetGridFeathers;
 begin
   Caption := rsCaptionFeathers;
   FSearch.DataSet := DMG.qFeathers;
+  FMediaTypes := [amtImages];
   // Set the default data sorting
   AddSortedField(COL_SAMPLE_DATE, sdDescending);
 
@@ -12474,6 +12694,7 @@ procedure TfrmCustomGrid.SetGridIndividuals;
 begin
   Caption := rsTitleIndividuals;
   FSearch.DataSet := DMG.qIndividuals;
+  FMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12530,6 +12751,7 @@ procedure TfrmCustomGrid.SetGridMethods;
 begin
   Caption := rsTitleMethods;
   FSearch.DataSet := DMG.qMethods;
+  FMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_METHOD_NAME, sdAscending);
 
@@ -12545,6 +12767,7 @@ procedure TfrmCustomGrid.SetGridNests;
 begin
   Caption := rsTitleNests;
   FSearch.DataSet := DMG.qNests;
+  FMediaTypes := [amtImages, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12601,6 +12824,7 @@ procedure TfrmCustomGrid.SetGridSamplingPlots;
 begin
   Caption := rsTitleSamplingPlots;
   FSearch.DataSet := DMG.qSamplingPlots;
+  FMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12630,6 +12854,7 @@ procedure TfrmCustomGrid.SetGridPeople;
 begin
   Caption := rsTitleResearchers;
   FSearch.DataSet := DMG.qPeople;
+  FMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12645,6 +12870,7 @@ procedure TfrmCustomGrid.SetGridPermits;
 begin
   Caption := rsTitlePermits;
   FSearch.DataSet := DMG.qPermits;
+  FMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_PERMIT_NAME, sdAscending);
 
@@ -12662,6 +12888,7 @@ procedure TfrmCustomGrid.SetGridProjects;
 begin
   Caption := rsTitleProjects;
   FSearch.DataSet := DMG.qProjects;
+  FMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_PROJECT_TITLE, sdAscending);
 
@@ -12693,6 +12920,7 @@ procedure TfrmCustomGrid.SetGridSightings;
 begin
   Caption := rsTitleSightings;
   FSearch.DataSet := DMG.qSightings;
+  FMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_SIGHTING_DATE, sdDescending);
 
@@ -12719,6 +12947,7 @@ procedure TfrmCustomGrid.SetGridSpecimens;
 begin
   Caption := rsTitleSpecimens;
   FSearch.DataSet := DMG.qSpecimens;
+  FMediaTypes := [amtImages, amtAudios, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12755,6 +12984,7 @@ procedure TfrmCustomGrid.SetGridSurveys;
 begin
   Caption := rsTitleSurveys;
   FSearch.DataSet := DMG.qSurveys;
+  FMediaTypes := [amtImages, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_SURVEY_DATE, sdDescending);
 

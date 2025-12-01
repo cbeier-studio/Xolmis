@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Dialogs, LazFileUtils, DB, SQLDB, Graphics, ExtCtrls,
   BGRABitmap, BGRABitmapTypes, fpeMetadata, FPImage,
-  data_types;
+  data_types, models_media;
 
 const
   OFFSET_MEMORY_STREAM: Int64 = 0;
@@ -32,7 +32,7 @@ const
 
   { Image (BLOB field) manipulation }
   function AddImage(aDataset: TDataset; aTable: TTableType; aPathField, aBlobField: String;
-    aFileName: String): Boolean;
+    aFileName: String; aAttachment: TMediaAttachment): Boolean;
   procedure ExibeFoto(DataSet: TDataset; aBlobField: String; TargetImage: TImage);
   procedure GravaFoto(DataSet: TDataset; aBlobField, FileName: String);
   procedure GravaJpeg(DataSet: TDataset; aBlobField: String; JpgImg: TJpegImage);
@@ -56,7 +56,8 @@ uses
 { Image (BLOB field) manipulation }
 { ----------------------------------------------------------------------------------------- }
 
-function AddImage(aDataset: TDataset; aTable: TTableType; aPathField, aBlobField: String; aFileName: String): Boolean;
+function AddImage(aDataset: TDataset; aTable: TTableType; aPathField, aBlobField: String; aFileName: String;
+  aAttachment: TMediaAttachment): Boolean;
 var
   imgExif: TImgInfo;
   aTag: TTag;
@@ -118,6 +119,32 @@ begin
         FieldByName(COL_LONGITUDE).AsFloat := long;
         FieldByName(COL_LATITUDE).AsFloat := lat;
       end;
+
+      if aAttachment.AuthorId > 0 then
+        FieldByName(COL_AUTHOR_ID).AsInteger := aAttachment.AuthorId;
+      if aAttachment.LocalityId > 0 then
+        FieldByName(COL_LOCALITY_ID).AsInteger := aAttachment.LocalityId;
+      if aAttachment.TaxonId > 0 then
+        FieldByName(COL_TAXON_ID).AsInteger := aAttachment.TaxonId;
+      if aAttachment.IndividualId > 0 then
+        FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
+      if aAttachment.CaptureId > 0 then
+        FieldByName(COL_CAPTURE_ID).AsInteger := aAttachment.CaptureId;
+      if aAttachment.FeatherId > 0 then
+        FieldByName(COL_FEATHER_ID).AsInteger := aAttachment.FeatherId;
+      if aAttachment.SurveyId > 0 then
+        FieldByName(COL_SURVEY_ID).AsInteger := aAttachment.SurveyId;
+      if aAttachment.SightingId > 0 then
+        FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
+      if aAttachment.NestId > 0 then
+        FieldByName(COL_NEST_ID).AsInteger := aAttachment.NestId;
+      if aAttachment.NestRevisionId > 0 then
+        FieldByName(COL_NEST_REVISION_ID).AsInteger := aAttachment.NestRevisionId;
+      if aAttachment.EggId > 0 then
+        FieldByName(COL_EGG_ID).AsInteger := aAttachment.EggId;
+      if aAttachment.SpecimenId > 0 then
+        FieldByName(COL_SPECIMEN_ID).AsInteger := aAttachment.SpecimenId;
+
       //(FieldByName(aBlobField) as TBlobField).LoadFromStream(CreateImageThumbnail(aFileName));
       CreateImageThumbnail(aFileName, aDataSet);
       Post;

@@ -197,7 +197,7 @@ uses
   ufrm_imageviewer,
   ufrm_printpreview,
   ufrm_taxa,
-  ufrm_quickentry, udlg_gazetteerautofill;
+  ufrm_quickentry, udlg_gazetteerautofill, udlg_attachmedia;
 
 {$R *.res}
 
