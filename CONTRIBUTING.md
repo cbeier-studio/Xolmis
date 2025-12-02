@@ -1,31 +1,64 @@
 # Contributing to Xolmis
 
-Thank you for your interest in contributing to Xolmis! Here are some guidelines to help you get started.
+Thank you for your interest in contributing to **Xolmis**!  
+We welcome contributions from the community to help improve ornithological data management tools.
 
 ## How to Contribute
 
-- **Issues:** Before opening a new issue, check if a similar one already exists. If not, feel free to open a new one.
-- **Pull Requests:** Make sure your code adheres to the project's style guidelines. Fork the repository, create a branch for your feature or fix, and submit a pull request (PR).
+### Reporting Issues
 
-## Code Standards
+- Use the [GitHub Issues](https://github.com/cbeier-studio/Xolmis/issues) page to report bugs, request features, or suggest improvements.
+- Provide clear steps to reproduce bugs and include screenshots or logs when possible.
+- For security-related issues, please follow our [Security Policy](SECURITY.md) and report privately.
 
-Keep the code clean and well-documented. Use comments to explain complex parts and follow naming conventions.
+### Suggesting Features
 
-## Reporting Issues
+- Open a feature request issue describing the problem and the proposed solution.
+- Explain how the feature would benefit users and provide examples if possible.
 
-If you find a bug or have a suggestion, create an issue on GitHub. Describe the problem or idea in detail so we can understand and assist as best as possible.
+### Submitting Code
 
-## Requirements
+1. Fork the repository and create your branch from `main`.
+2. Follow the coding style guidelines:
+   - Pascal code should use **Lazarus/Free Pascal conventions**.
+   - Keep functions small and focused.
+   - Document public methods and types using **FPDoc**.
+3. Add or update unit tests when applicable.
+4. Ensure all tests pass before submitting.
+5. Commit messages should be clear and descriptive:
+   - Use the format: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`.
+   - Example: `fix: handle missing EXIF metadata in AddImage`.
 
-- **Tests:** If possible, include tests for your changes.
-- **Documentation:** Update documentation as needed to reflect the changes made.
+### Pull Requests
 
-## Communication
+- Ensure your PR is linked to an issue (if applicable).
+- Provide a clear description of the changes and their purpose.
+- Keep PRs focused: avoid mixing unrelated changes.
+- PRs will be reviewed by maintainers before merging.
 
-If you have questions or want to discuss something, use GitHub issues or contact us at [hello@christianbeier.studio].
+## Development Setup
 
-## Code of Conduct
+Please refer to the official Wiki for instructions on setting up your development environment:  
 
-All contributors must follow our [Code of Conduct](https://github.com/cbeier-studio/Xolmis/blob/main/CODE_OF_CONDUCT.md).
+- [Setting Up Your Development Environment](https://github.com/cbeier-studio/Xolmis/wiki/Setting-Up-Your-Development-Environment)
+- [Style Guide and Code Review](https://github.com/cbeier-studio/Xolmis/wiki/Style-Guide-and-Code-Review)
+- [Building Xolmis](https://github.com/cbeier-studio/Xolmis/wiki/Building-Xolmis)
 
-We appreciate your interest in contributing to Xolmis. Together, we can make this project even better!
+## Documentation
+
+- All new code must include FPDoc comments for functions, classes, and types.
+- Update `CHANGELOG.md` when adding new features or fixing bugs.
+- If you add new modules, update the documentation in `docs/`.
+
+## Community Guidelines
+
+- Be respectful and constructive in discussions.
+- Follow the [Code of Conduct](https://github.com/cbeier-studio/Xolmis/blob/main/CODE_OF_CONDUCT.md).
+- Contributions are licensed under the same license as the project (GPL-3.0).
+
+## Getting Started
+
+If you’re unsure where to begin, check the open issues labeled `good first issue`.
+We encourage new contributors to start with documentation, tests, or small bug fixes.
+
+Thank you for helping make **Xolmis** better!

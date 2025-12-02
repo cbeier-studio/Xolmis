@@ -2,10 +2,21 @@
 <fpdoc-descriptions>
   <package name="Xolmis">
     <module name="data_blobs">
-      <element name="AddImage"><short>Add an image file to the database</short></element>
-      <element name="CreateImageThumbnail"><short>Create a thumbnail for an image</short></element>
-      <element name="RecreateThumbnails"><short>Recreate all thumbnails in the database</short></element>
-      <element name="ViewImage"><short>Open image in the image viewer</short></element>
+      <element name="AddImage"><short>Add an image file to the database</short><descr><p>Adds an image file to the specified dataset and links it to the current module record. The method extracts EXIF metadata (creation date, GPS coordinates) from the image, generates a thumbnail, and stores both the relative path and binary data in the dataset. It also associates the image with related entities through the provided <var>TMediaAttachment</var>.</p><p>If the image already exists in the dataset (based on the relative path), the record is updated; otherwise, a new record is appended. After insertion or update, the dataset changes are posted and applied.
+</p><p><var>aDataSet</var> is the dataset (<var>TDataset</var>) where the image record will be inserted or updated.</p><p><var>aTable</var> is the table type (<var>TTableType</var>) representing the current module, used to check for existing records.</p><p><var>aPathField</var> is the name of the field that stores the relative path of the image file.</p><p><var>aBlobField</var> is the name of the blob field where the image thumbnail is stored.</p><p><var>aFileName</var> is the full path of the image file to be added.</p><p><var>aAttachment</var> is a <var>TMediaAttachment</var> record containing foreign key identifiers (author, locality, taxon, individual, capture, etc.) to be linked with the image record.</p><p>Returns <b>True</b> if the image was successfully added or updated in the dataset; <b>False</b> otherwise. Raises <var>EFileNotFoundException</var> if the specified file does not exist.</p>
+        </descr>
+      </element>
+      <element name="CreateImageThumbnail"><short>Create a thumbnail for an image</short>
+      </element>
+      <element name="RecreateThumbnails"><short>Recreate all thumbnails in the database</short>
+      </element>
+      <element name="ViewImage"><short>Open image in the image viewer</short>
+      </element>
+    <short>Image BLOB field manipulation utilities.</short><descr><p>The <var>data_blobs</var> unit provides functions and procedures to manage image data stored in database BLOB fields. It includes operations for adding, displaying, saving, deleting, exporting, and viewing images associated with dataset records. The unit also supports extracting EXIF metadata, generating thumbnails, and linking images to related entities through <var>TMediaAttachment</var>.</p><p>Typical use cases include:</p><ul><li>Adding images to a dataset with automatic thumbnail creation.</li><li>Displaying images from BLOB fields in UI controls.</li><li>Exporting or saving images to external files.</li><li>Recreating thumbnails for existing records.</li><li>Viewing images in a dedicated viewer form.</li>
+        </ul><p>Internally, the unit leverages Lazarus database components, BGRA Bitmap routines, and Free Pascal EXIF metadata support to handle image content efficiently.</p>
+      </descr><element name="THUMB_SIZE"><short>Constant of the image thumbnail creation size, in pixels.</short>
+      </element><element name="THUMB_QUALITY"><short>Constant of image thumbnail quality, in percentage.</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

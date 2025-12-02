@@ -15,7 +15,8 @@
       </element><element name="TfrmCustomGrid.LoadRecordColumns"><short>Loads the column names in the record view side panel.</short>
       </element><element name="TfrmCustomGrid.UpdateFilterPanels"><short>Set visibility of filter panels for the current table type.</short>
       </element>
-    <element name="TfrmCustomGrid.AddGridColumns"><short>Adds the columns of a table into a TDBGrid</short>
+    <element name="TfrmCustomGrid.AddGridColumns"><short>Adds the columns of a table into a <var>TDBGrid</var>
+        </short>
       <descr>It only adds visible columns and set the columns' properties using <link id="TfrmCustomGrid.SetGridColumns"/>.
 </descr>
       </element><element name="TfrmCustomGrid.AddSortedField"><short>Adds a field to the sorting list</short>
@@ -29,10 +30,10 @@
       <descr><p>While running it, the <var>FCanToggle</var> is <b>False</b> and changed to <b>True</b> at the end of the process.</p>
         </descr>
       </element><element name="TfrmCustomGrid.LoadRecordRow"><short>Loads the record data from the selected row to the record view side panel.</short>
-      </element><element name="TfrmCustomGrid.Search"><short>Use this method to run a search or filter</short>
+      </element><element name="TfrmCustomGrid.Search"><short>Use this method to run a search or filter.</short>
       <descr><p><var>aValue</var> is the value to be searched.</p>
         </descr>
-      </element><element name="TfrmCustomGrid.SetSearchString"><short>Sets the SearchString property</short>
+      </element><element name="TfrmCustomGrid.SetSearchString"><short>Sets the SearchString property.</short>
       <descr><p><var>aValue</var> is the new value for the <var>SearchString</var>.</p>
         </descr>
       </element><element name="TfrmCustomGrid.SearchString"><short>String containing a typed search value</short>
@@ -54,10 +55,10 @@
       </element><element name="TfrmCustomGrid.RefreshMap"><short>Update the map with the current record coordinates</short>
       </element><element name="TfrmCustomGrid.RefreshMapSurvey"><short>Update the map with the coordinates of mistnets of the current survey record</short>
       </element><element name="TfrmCustomGrid.SaveColumns"><short>Save columns' settings</short>
-      </element><element name="TfrmCustomGrid.SetAudios"><short>Set the dataset and grid of audio recordings side panel</short>
-      </element><element name="TfrmCustomGrid.SetImages"><short>Set the dataset and grid of the images side panel</short>
-      </element><element name="TfrmCustomGrid.SetRecycle"><short>Set the dataset and grid of the recycle bin side panel</short>
-      </element><element name="TfrmCustomGrid.Summary"><short>Set the dataset of the summary side panel</short>
+      </element><element name="TfrmCustomGrid.SetAudios"><short>Set the dataset and grid of audio recordings side panel.</short>
+      </element><element name="TfrmCustomGrid.SetImages"><short>Set the dataset and grid of the images side panel.</short>
+      </element><element name="TfrmCustomGrid.SetRecycle"><short>Set the dataset and grid of the recycle bin side panel.</short>
+      </element><element name="TfrmCustomGrid.Summary"><short>Set the dataset of the summary side panel.</short>
       </element><element name="TfrmCustomGrid.UpdateButtons"><short>Update the state of the main buttons</short>
       <descr><p>It updates the state of the buttons and menus for the main table.</p>
         </descr>
@@ -76,14 +77,14 @@
       </element><element name="TfrmCustomGrid.UpdateGridTitles"><short>Update the grid columns titles with sorting indication.</short>
       <descr><p>It adds an up (descending sorting) or down (ascending sorintg) arrow on the titles of sorted columns.</p><p><var>aGrid</var> is the target <var>TDBGrid</var>.</p><p><var>aSearch</var> is the <var>TCustomSearch</var> with the sorting parameters.</p>
         </descr>
-      </element><element name="TfrmCustomGrid.UpdateImageButtons"><short>Update the images side panel buttons</short>
+      </element><element name="TfrmCustomGrid.UpdateImageButtons"><short>Update the images side panel buttons.</short>
       </element><element name="TfrmCustomGrid.UpdateAudioButtons"><short>Update the audio recordings side panel buttons</short>
       </element><element name="TfrmCustomGrid.TableType"><short>Table type of the master datasource</short>
       </element><element name="TfrmCustomGrid.ShowSidePanel"><short>Update the visibility of the side panel</short>
       </element><element name="TfrmCustomGrid.SidePanelIndex"><short>Change the side panel page index</short>
       </element><element name="TfrmCustomGrid.CanToggle"><short>Variable that indicates if the filters can change</short>
       </element>
-    <element name="TfrmCustomGrid.SetDocs"><short>Set the dataset and grid of the documents side panel</short>
+    <element name="TfrmCustomGrid.SetDocs"><short>Set the dataset and grid of the documents side panel.</short>
       </element><element name="TfrmCustomGrid.UpdateChildRightPanel"><short>Update the detail right panel</short>
       <descr>It updates the current project budget and rubric balances in the detail right panel.
 </descr>
@@ -99,10 +100,10 @@
       </element><element name="TfrmCustomGrid.LoadColumnsConfigGrid"><short>Load data in the columns grid side panel</short>
       </element><element name="TfrmCustomGrid.LoadColumnsConfig"><short>Load and setup the grid columns settings from file.</short>
       </element><element name="TfrmCustomGrid.AddDocument"><short>Add new document to the database</short>
-      <descr><p><var>aDataSet</var> is the documents target <var>TDataSet</var>.</p><p><var>aFileName</var> is the file path for the document.</p><p>It extracts the file creation date and time to fill the record.</p>
+      <descr><p><var>aDataSet</var> is the documents target <var>TDataSet</var>.</p><p><var>aFileName</var> is the file path for the document.</p><p><var>aAttachment</var> is the record with foreign keys to which the document is associated.</p><p>It extracts the file creation date and time to fill the record.</p>
         </descr>
       </element><element name="TfrmCustomGrid.AddAudio"><short>Add new audio recording to the database</short>
-      <descr><p><var>aDataSet</var> is the audio recordings target <var>TDataSet</var>.</p><p><var>aFileName</var> is the file path for the audio recording.</p><p>It extracts the file creation date and time to fill the record.</p>
+      <descr><p><var>aDataSet</var> is the audio recordings target <var>TDataSet</var>.</p><p><var>aFileName</var> is the file path for the audio recording.</p><p><var>aAttachment</var> is the record with foreign keys to which the audio recording is associated.</p><p>It extracts the file creation date and time to fill the record.</p>
         </descr>
       </element><element name="TfrmCustomGrid.CreatePanelTabs"><short>Setup detail tabs</short>
       </element><element name="TfrmCustomGrid.PanelTabs"><short>List of detail tabs</short>
@@ -345,6 +346,15 @@
       </element><element name="TfrmCustomGrid.oldSidePanel"><short>Previous side panel visibility value.</short>
       </element><element name="TfrmCustomGrid.FSideIndex"><short>Current side panel page index.</short>
       </element><element name="TfrmCustomGrid.oldSideIndex"><short>Previous side panel page index.</short>
+      </element>
+    <element name="TfrmCustomGrid.AttachMediaDlg"><short>Show dialog to attach media or document files to data records.</short><descr><p>Displays the media attachment dialog for the current module and returns a <var>TMediaAttachment</var> record with foreign keys populated according to the specified table type.</p><p>This method creates and shows the <var>TdlgAttachMedia</var> dialog, initializes its fields based on the active dataset for the given <var>aTableType</var>, and if the user confirms the operation (<var>ShowModal = mrOK</var>), it returns a <var>TMediaAttachment</var> structure containing the related identifiers such as author, locality, taxon, individual, capture, feather, expedition, survey, sighting, nest, nest revision, egg, specimen, project, permit, sampling plot, and method.</p><p><var>aTableType</var> The table type (<var>TTableType</var>) representing the current module. Determines which foreign keys are set in the attachment.
+    </p><p>Returns a <var>TMediaAttachment</var> record with identifiers associated with the selected record in the module. If the user cancels the dialog, the returned record remains uninitialized.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.AddVideo"><short>Add new video recording to the database.</short><descr><p><var>aDataSet</var> is the video recordings target <var>TDataSet</var>.</p><p><var>aFileName</var> is the file path for the video recording.</p><p><p><var>aAttachment</var> is the record with foreign keys to which the video is associated.</p>
+It extracts the file creation date and time to fill the record.</p>
+        </descr>
+      </element><element name="TfrmCustomGrid.SetVideos"><short>Set the dataset and grid of videos side panel.</short>
+      </element><element name="TfrmCustomGrid.UpdateVideoButtons"><short>Update the videos side panel buttons.</short>
       </element>
     </module>
   </package>

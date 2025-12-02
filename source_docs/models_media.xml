@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fpdoc-descriptions><package name="Xolmis"><module name="models_media"><short>Library of data models for media info.</short><descr><p>Currently includes:</p><ul><li><var>TImageData</var>
           </li><li><var>TAudioData</var>
+          </li><li><var>TVideoData</var>
           </li><li><var>TDocumentData</var>
           </li>
         </ul>
       </descr><element name="TDocumentData"><short>Document or link record model.</short>
       </element><element name="TAudioData"><short>Audio recording record model.</short>
-      </element><element name="TImageData"><short>Image record model.</short>
+      </element><element name="TImageData"><short>Entity class representing image records in the Xolmis database.</short>
+      <descr><p>The <var>TImageData</var> class models metadata and relationships for images stored in the system. It inherits from <var>TXolmisRecord</var> and provides persistence, comparison, and validation methods. Each property corresponds to a field in the image table, including descriptive attributes (filename, subtitle, type), temporal information (date, time), spatial information (longitude, latitude, coordinate precision), and foreign keys linking the image to related entities such as taxa, individuals, captures, surveys, sightings, nests, eggs, specimens, projects, and localities.</p><p>The class also stores licensing information (type, year, owner, notes, URI) to ensure proper attribution and usage rights. Utility methods allow cloning, JSON serialization/deserialization, equality checks, difference tracking, and validation of required fields.</p>
+        </descr>
+      </element>
+    <element name="TMediaAttachment"><short>Record type for linking media attachments to related entities.</short><descr><p>The <var>TMediaAttachment</var> record encapsulates foreign key identifiers that associate a media file (image, audio, video, or document) with specific entities in the database. Each field corresponds to a possible relation, such as taxon, individual, capture event, locality, or project. This structure is typically filled when attaching media through the import wizard or the attachment dialog, ensuring that the media is properly linked to the relevant biological or administrative context.</p>
+        </descr>
+      </element><element name="TImageRepository"><short>Repository class for managing image records.</short><descr><p>The <var>TImageRepository</var> class provides a repository implementation for handling image records in the Xolmis database. It inherits from <var>TXolmisRepository</var> and overrides core persistence methods to support CRUD operations (create, read, update, delete) on image entities.</p><p>This repository encapsulates database access logic, including:</p><ul><li>Checking if an image record exists by its identifier.</li><li>Finding records by arbitrary field values.</li><li>Retrieving records by primary key.</li><li>Hydrating entity objects (<var>TXolmisRecord</var>) from dataset rows.</li><li>Inserting new image records into the database.</li><li>Updating existing image records.</li><li>Deleting image records.</li>
+          </ul><p>By centralizing these operations, <var>TImageRepository</var> ensures consistent handling of image data across the application and abstracts the details of SQL queries and dataset manipulation.</p>
+        </descr>
+      </element><element name="TImageRepository.TableName"><short>Returns the name of the database table managed by this repository.</short>
+      </element><element name="TImageRepository.Exists"><short>Checks whether an image record with the given identifier exists.</short>
+      </element><element name="TImageRepository.FindBy"><short>Finds an image record by a specific field name and value, and fills the provided entity object.</short>
+      </element><element name="TImageRepository.GetById"><short>Retrieves an image record by its identifier and fills the provided entity object.</short>
+      </element><element name="TImageRepository.Hydrate"><short>Populates an entity object (<var>TXolmisRecord</var>) with data from the given dataset.</short>
+      </element><element name="TImageRepository.Insert"><short>Inserts a new image record into the database.</short>
+      </element><element name="TImageRepository.Update"><short>Updates an existing image record in the database.</short>
+      </element><element name="TImageRepository.Delete"><short>Deletes an image record from the database.</short>
+      </element><element name="TImageData.Create"><short>Creates a new image record instance with an optional identifier.</short>
+      </element><element name="TImageData.Clear"><short>Clears all field values, resetting the record to its default state.</short>
+      </element><element name="TImageData.Assign"><short>Copies values from another persistent object into this record.</short>
+      </element><element name="TImageData.Clone"><short>Creates and returns a deep copy of this image record.</short>
+      </element><element name="TImageData.Diff"><short>Compares this record with an older version and reports differences.</short>
+      </element><element name="TImageData.EqualsTo"><short>Checks whether this record is equal to another image record.</short>
+      </element><element name="TImageData.FromJSON"><short>Populates this record from a JSON string.</short>
+      </element><element name="TImageData.ToJSON"><short>Serializes this record into a JSON string.</short>
+      </element><element name="TImageData.ToString"><short>Returns a string representation of the record for debugging/logging.</short>
+      </element><element name="TImageData.Validate"><short>Validates the record fields and returns <b>True</b> if valid, <b>False</b> otherwise.</short><descr><p>An error message is returned in <var>Msg</var> when validation fails.</p>
+        </descr>
+      </element><element name="TImageData.ImageDate"><short>Date when the image was created or captured.</short>
+      </element><element name="TImageData.ImageTime"><short>Time when the image was created or captured.</short>
+      </element><element name="TImageData.ImageType"><short>Type of image based on content.</short>
+      </element><element name="TImageData.Filename"><short>Filename of the image file.</short>
+      </element><element name="TImageData.Subtitle"><short>Subtitle or caption describing the image.</short>
+      </element><element name="TImageData.AuthorId"><short>Identifier of the author or photographer.</short>
+      </element><element name="TImageData.CoordinatePrecision"><short>Precision level of the geographical coordinates.</short>
+      </element><element name="TImageData.Longitude"><short>Longitude coordinate associated with the image.</short>
+      </element><element name="TImageData.Latitude"><short>Latitude coordinate associated with the image.</short>
+      </element><element name="TImageData.LocalityId"><short>Identifier of the locality linked to the image.</short>
+      </element><element name="TImageData.TaxonId"><short>Identifier of the taxon linked to the image.</short>
+      </element><element name="TImageData.CaptureId"><short>Identifier of the capture event linked to the image.</short>
+      </element><element name="TImageData.IndividualId"><short>Identifier of the individual linked to the image.</short>
+      </element><element name="TImageData.SurveyId"><short>Identifier of the survey linked to the image.</short>
+      </element><element name="TImageData.SightingId"><short>Identifier of the sighting linked to the image.</short>
+      </element><element name="TImageData.NestId"><short>Identifier of the nest linked to the image.</short>
+      </element><element name="TImageData.NestRevisionId"><short>Identifier of the nest revision linked to the image.</short>
+      </element><element name="TImageData.EggId"><short>Identifier of the egg linked to the image.</short>
+      </element><element name="TImageData.SpecimenId"><short>Identifier of the specimen linked to the image.</short>
+      </element><element name="TImageData.LicenseType"><short>Type of license under which the image is published.</short>
+      </element><element name="TImageData.LicenseYear"><short>Year of the license.</short>
+      </element><element name="TImageData.LicenseOwner"><short>Owner of the license.</short>
+      </element><element name="TImageData.LicenseNotes"><short>Notes or remarks about the license.</short>
+      </element><element name="TImageData.LicenseUri"><short>URI pointing to the license details.</short>
       </element>
     </module>
   </package>
