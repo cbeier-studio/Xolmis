@@ -712,6 +712,10 @@ msgctxt "data_columns.rscfatherid"
 msgid "Father ID"
 msgstr ""
 
+#: data_columns.rscfeatherid
+msgid "Feather ID"
+msgstr ""
+
 #: data_columns.rscfeathermites
 msgctxt "data_columns.rscfeathermites"
 msgid "Feather mites"

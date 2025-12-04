@@ -1848,6 +1848,8 @@ var
   relPath: String;
   SearchRec: TSearchRec;
   CreationDate: TDateTime;
+  Media: TAudioData;
+  Repo: TAudioRepository;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -1864,37 +1866,37 @@ begin
 
   relPath := ExtractRelativePath(xSettings.AudiosFolder, aFileName);
 
-  with aDataset do
-  begin
+  Repo := TAudioRepository.Create(DMM.sqlCon);
+  Media := TAudioData.Create();
+  try
     // Check if the audio is in the dataset
-    if not RecordExists(tbAudioLibrary, COL_AUDIO_FILE, relPath) then
-    begin
-      Append;
-      FieldByName(COL_AUDIO_FILE).AsString := relPath;
-    end
-    else
-    begin
-      Locate(COL_AUDIO_FILE, relPath, []);
-      Edit;
-    end;
-    FieldByName(COL_RECORDING_DATE).AsDateTime := CreationDate;
-    FieldByName(COL_RECORDING_TIME).AsDateTime := CreationDate;
+    Repo.FindBy(COL_AUDIO_FILE, relPath, Media);
+
+    if Media.IsNew then
+      Media.Filename := relPath;
+    Media.RecordingDate := CreationDate;
+    Media.RecordingTime := CreationDate;
 
     if aAttachment.AuthorId > 0 then
-      FieldByName(COL_RECORDER_ID).AsInteger := aAttachment.AuthorId;
+      Media.AuthorId := aAttachment.AuthorId;
     if aAttachment.LocalityId > 0 then
-      FieldByName(COL_LOCALITY_ID).AsInteger := aAttachment.LocalityId;
+      Media.LocalityId := aAttachment.LocalityId;
     if aAttachment.TaxonId > 0 then
-      FieldByName(COL_TAXON_ID).AsInteger := aAttachment.TaxonId;
+      Media.TaxonId := aAttachment.TaxonId;
     if aAttachment.IndividualId > 0 then
-      FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
+      Media.IndividualId := aAttachment.IndividualId;
     if aAttachment.SightingId > 0 then
-      FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
+      Media.SightingId := aAttachment.SightingId;
     if aAttachment.SpecimenId > 0 then
-      FieldByName(COL_SPECIMEN_ID).AsInteger := aAttachment.SpecimenId;
+      Media.SpecimenId := aAttachment.SpecimenId;
 
-    Post;
-    TSQLQuery(aDataSet).ApplyUpdates;
+    if Media.IsNew then
+      Repo.Insert(Media)
+    else
+      Repo.Update(Media);
+  finally
+    Media.Free;
+    Repo.Free;
   end;
 end;
 
@@ -1924,27 +1926,29 @@ begin
   Repo := TDocumentRepository.Create(DMM.sqlCon);
   Media := TDocumentData.Create();
   try
-    case FTableType of
-      tbSamplingPlots:  Repo.FindBySamplingPlot(relPath, aAttachment.SamplingPlotId, Media);
-      tbProjects:       Repo.FindByProject(relPath, aAttachment.ProjectId, Media);
-      tbPermits:        Repo.FindByPermit(relPath, aAttachment.PermitId, Media);
-      tbIndividuals:    Repo.FindByIndividual(relPath, aAttachment.IndividualId, Media);
-      tbCaptures:       Repo.FindByCapture(relPath, aAttachment.CaptureId, Media);
-      tbNests:          Repo.FindByNest(relPath, aAttachment.NestId, Media);
-      tbMethods:        Repo.FindByMethod(relPath, aAttachment.MethodId, Media);
-      tbExpeditions:    Repo.FindByExpedition(relPath, aAttachment.ExpeditionId, Media);
-      tbSurveys:        Repo.FindBySurvey(relPath, aAttachment.SurveyId, Media);
-      tbSightings:      Repo.FindBySighting(relPath, aAttachment.SightingId, Media);
-      tbSpecimens:      Repo.FindBySpecimen(relPath, aAttachment.SpecimenId, Media);
-    else
-      raise Exception.Create(rsErrorTableNotSupportedInDocuments);
-    end;
+    //case FTableType of
+    //  tbSamplingPlots:  Repo.FindBySamplingPlot(relPath, aAttachment.SamplingPlotId, Media);
+    //  tbProjects:       Repo.FindByProject(relPath, aAttachment.ProjectId, Media);
+    //  tbPermits:        Repo.FindByPermit(relPath, aAttachment.PermitId, Media);
+    //  tbIndividuals:    Repo.FindByIndividual(relPath, aAttachment.IndividualId, Media);
+    //  tbCaptures:       Repo.FindByCapture(relPath, aAttachment.CaptureId, Media);
+    //  tbNests:          Repo.FindByNest(relPath, aAttachment.NestId, Media);
+    //  tbMethods:        Repo.FindByMethod(relPath, aAttachment.MethodId, Media);
+    //  tbExpeditions:    Repo.FindByExpedition(relPath, aAttachment.ExpeditionId, Media);
+    //  tbSurveys:        Repo.FindBySurvey(relPath, aAttachment.SurveyId, Media);
+    //  tbSightings:      Repo.FindBySighting(relPath, aAttachment.SightingId, Media);
+    //  tbSpecimens:      Repo.FindBySpecimen(relPath, aAttachment.SpecimenId, Media);
+    //else
+    //  raise Exception.Create(rsErrorTableNotSupportedInDocuments);
+    //end;
+    Repo.FindBy(COL_DOCUMENT_PATH, relPath, Media);
 
     if Media.IsNew then
       Media.FileName := relPath;
     Media.DocumentDate := CreationDate;
     Media.DocumentTime := CreationDate;
     Media.DocumentType := GetFileCategoryFromExt(ExtractFileExt(aFileName));
+    Media.Name := StringReplace(ExtractFileName(relPath), ExtractFileExt(relPath), '', []);
 
     if aAttachment.AuthorId > 0 then
       Media.PersonId := aAttachment.AuthorId;
@@ -2135,6 +2139,8 @@ var
   relPath: String;
   SearchRec: TSearchRec;
   CreationDate: TDateTime;
+  Media: TVideoData;
+  Repo: TVideoRepository;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -2151,43 +2157,42 @@ begin
 
   relPath := ExtractRelativePath(xSettings.VideosFolder, aFileName);
 
-  with aDataset do
-  begin
-    // Check if the video is in the dataset
-    if not RecordExists(tbVideos, COL_FILE_PATH, relPath) then
-    begin
-      Append;
-      FieldByName(COL_FILE_PATH).AsString := relPath;
-    end
-    else
-    begin
-      Locate(COL_FILE_PATH, relPath, []);
-      Edit;
-    end;
-    FieldByName(COL_RECORDING_DATE).AsDateTime := CreationDate;
-    FieldByName(COL_RECORDING_TIME).AsDateTime := CreationDate;
+  Repo := TVideoRepository.Create(DMM.sqlCon);
+  Media := TVideoData.Create();
+  try
+    Repo.FindBy(COL_FILE_PATH, relPath, Media);
+
+    if Media.IsNew then
+      Media.FileName := relPath;
+    Media.RecordingDate := CreationDate;
+    Media.RecordingTime := CreationDate;
 
     if aAttachment.AuthorId > 0 then
-      FieldByName(COL_RECORDER_ID).AsInteger := aAttachment.AuthorId;
+      Media.AuthorId := aAttachment.AuthorId;
     if aAttachment.LocalityId > 0 then
-      FieldByName(COL_LOCALITY_ID).AsInteger := aAttachment.LocalityId;
+      Media.LocalityId := aAttachment.LocalityId;
     if aAttachment.TaxonId > 0 then
-      FieldByName(COL_TAXON_ID).AsInteger := aAttachment.TaxonId;
+      Media.TaxonId := aAttachment.TaxonId;
     if aAttachment.IndividualId > 0 then
-      FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
+      Media.IndividualId := aAttachment.IndividualId;
     if aAttachment.CaptureId > 0 then
-      FieldByName(COL_CAPTURE_ID).AsInteger := aAttachment.CaptureId;
+      Media.CaptureId := aAttachment.CaptureId;
     if aAttachment.SurveyId > 0 then
-      FieldByName(COL_SURVEY_ID).AsInteger := aAttachment.SurveyId;
+      Media.SurveyId := aAttachment.SurveyId;
     if aAttachment.SightingId > 0 then
-      FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
+      Media.SightingId := aAttachment.SightingId;
     if aAttachment.NestId > 0 then
-      FieldByName(COL_NEST_ID).AsInteger := aAttachment.NestId;
+      Media.NestId := aAttachment.NestId;
     if aAttachment.NestRevisionId > 0 then
-      FieldByName(COL_NEST_REVISION_ID).AsInteger := aAttachment.NestRevisionId;
+      Media.NestRevisionId := aAttachment.NestRevisionId;
 
-    Post;
-    TSQLQuery(aDataSet).ApplyUpdates;
+    if Media.IsNew then
+      Repo.Insert(Media)
+    else
+      Repo.Update(Media);
+  finally
+    Media.Free;
+    Repo.Free;
   end;
 end;
 

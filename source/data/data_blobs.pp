@@ -64,7 +64,8 @@ var
   relPath: String;
   CreationDate: TDateTime;
   long, lat: Double;
-  sthumb: TMemoryStream;
+  Media: TImageData;
+  Repo: TImageRepository;
 begin
   Result := False;
 
@@ -96,63 +97,64 @@ begin
   end;
 
   { Create image thumbnail as JPEG }
-  //sthumb := TMemoryStream.Create;
+  Repo := TImageRepository.Create(DMM.sqlCon);
+  Media := TImageData.Create();
   try
-    { Insert the image into the dataset }
+    Repo.FindBy(COL_IMAGE_FILENAME, relPath, Media);
+
+    if Media.IsNew then
+      Media.FileName := relPath;
+    Media.ImageDate := CreationDate;
+    Media.ImageTime := CreationDate;
+    if (long < 200) and (lat < 200) then
+    begin
+      Media.Longitude := long;
+      Media.Latitude := lat;
+    end;
+
+    if aAttachment.AuthorId > 0 then
+      Media.AuthorId := aAttachment.AuthorId;
+    if aAttachment.LocalityId > 0 then
+      Media.LocalityId := aAttachment.LocalityId;
+    if aAttachment.TaxonId > 0 then
+      Media.TaxonId := aAttachment.TaxonId;
+    if aAttachment.IndividualId > 0 then
+      Media.IndividualId := aAttachment.IndividualId;
+    if aAttachment.CaptureId > 0 then
+      Media.CaptureId := aAttachment.CaptureId;
+    if aAttachment.FeatherId > 0 then
+      Media.FeatherId := aAttachment.FeatherId;
+    if aAttachment.SurveyId > 0 then
+      Media.SurveyId := aAttachment.SurveyId;
+    if aAttachment.SightingId > 0 then
+      Media.SightingId := aAttachment.SightingId;
+    if aAttachment.NestId > 0 then
+      Media.NestId := aAttachment.NestId;
+    if aAttachment.NestRevisionId > 0 then
+      Media.NestRevisionId := aAttachment.NestRevisionId;
+    if aAttachment.EggId > 0 then
+      Media.EggId := aAttachment.EggId;
+    if aAttachment.SpecimenId > 0 then
+      Media.SpecimenId := aAttachment.SpecimenId;
+
+    if Media.IsNew then
+      Repo.Insert(Media)
+    else
+      Repo.Update(Media);
+
     with aDataset do
     begin
-      // Check if the image is in the dataset
-      if not RecordExists(aTable, aPathField, relPath) then
-      begin
-        Append;
-        FieldByName(aPathField).AsString := relPath;
-      end
-      else
-      begin
-        Locate(aPathField, relPath, []);
-        Edit;
-      end;
-      FieldByName(COL_IMAGE_DATE).AsDateTime := CreationDate;
-      FieldByName(COL_IMAGE_TIME).AsDateTime := CreationDate;
-      if (long < 200) and (lat < 200) then
-      begin
-        FieldByName(COL_LONGITUDE).AsFloat := long;
-        FieldByName(COL_LATITUDE).AsFloat := lat;
-      end;
-
-      if aAttachment.AuthorId > 0 then
-        FieldByName(COL_AUTHOR_ID).AsInteger := aAttachment.AuthorId;
-      if aAttachment.LocalityId > 0 then
-        FieldByName(COL_LOCALITY_ID).AsInteger := aAttachment.LocalityId;
-      if aAttachment.TaxonId > 0 then
-        FieldByName(COL_TAXON_ID).AsInteger := aAttachment.TaxonId;
-      if aAttachment.IndividualId > 0 then
-        FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
-      if aAttachment.CaptureId > 0 then
-        FieldByName(COL_CAPTURE_ID).AsInteger := aAttachment.CaptureId;
-      if aAttachment.FeatherId > 0 then
-        FieldByName(COL_FEATHER_ID).AsInteger := aAttachment.FeatherId;
-      if aAttachment.SurveyId > 0 then
-        FieldByName(COL_SURVEY_ID).AsInteger := aAttachment.SurveyId;
-      if aAttachment.SightingId > 0 then
-        FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
-      if aAttachment.NestId > 0 then
-        FieldByName(COL_NEST_ID).AsInteger := aAttachment.NestId;
-      if aAttachment.NestRevisionId > 0 then
-        FieldByName(COL_NEST_REVISION_ID).AsInteger := aAttachment.NestRevisionId;
-      if aAttachment.EggId > 0 then
-        FieldByName(COL_EGG_ID).AsInteger := aAttachment.EggId;
-      if aAttachment.SpecimenId > 0 then
-        FieldByName(COL_SPECIMEN_ID).AsInteger := aAttachment.SpecimenId;
-
-      //(FieldByName(aBlobField) as TBlobField).LoadFromStream(CreateImageThumbnail(aFileName));
+      Refresh;
+      Locate(aPathField, relPath, []);
+      Edit;
       CreateImageThumbnail(aFileName, aDataSet);
       Post;
       TSQLQuery(aDataSet).ApplyUpdates;
     end;
     Result := True;
   finally
-    //sthumb.Free;
+    Media.Free;
+    Repo.Free;
   end;
 end;
 

@@ -64,6 +64,7 @@ type
     FLocalityId: Integer;
     FTaxonId: Integer;
     FCaptureId: Integer;
+    FFeatherId: Integer;
     FIndividualId: Integer;
     FSurveyId: Integer;
     FSightingId: Integer;
@@ -102,6 +103,7 @@ type
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property CaptureId: Integer read FCaptureId write FCaptureId;
+    property FeatherId: Integer read FFeatherId write FFeatherId;
     property SurveyId: Integer read FSurveyId write FSurveyId;
     property SightingId: Integer read FSightingId write FSightingId;
     property NestId: Integer read FNestId write FNestId;
@@ -472,6 +474,7 @@ begin
   FLocalityId := 0;
   FTaxonId := 0;
   FCaptureId := 0;
+  FFeatherId := 0;
   FIndividualId := 0;
   FSurveyId := 0;
   FSightingId := 0;
@@ -527,6 +530,8 @@ begin
   if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscCaptureID, aOld.CaptureId, FCaptureId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFeatherID, aOld.FeatherId, FFeatherId, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSightingID, aOld.SightingId, FSightingId, R) then
     Changes.Add(R);
@@ -617,6 +622,7 @@ begin
     FTaxonId        := Obj.Get('taxon_id', 0);
     FIndividualId   := Obj.Get('individual_id', 0);
     FCaptureId      := Obj.Get('capture_id', 0);
+    FFeatherId      := Obj.Get('feather_id', 0);
     FSightingId     := Obj.Get('sighting_id', 0);
     FSpecimenId     := Obj.Get('specimen_id', 0);
     FSurveyId       := Obj.Get('survey_id', 0);
@@ -652,6 +658,7 @@ begin
     JSONObject.Add('taxon_id', FTaxonId);
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('capture_id', FCaptureId);
+    JSONObject.Add('feather_id', FFeatherId);
     JSONObject.Add('sighting_id', FSightingId);
     JSONObject.Add('specimen_id', FSpecimenId);
     JSONObject.Add('survey_id', FSurveyId);
@@ -674,12 +681,12 @@ function TImageData.ToString: String;
 begin
   Result := Format('ImageData(Id=%d, ImageDate=%s, ImageTime=%s, ImageType=%s, Filename=%s, Subtitle=%s, AuthorId=%d, ' +
     'LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
-    'SightingId=%d, SpecimenId=%d, SurveyId=%d, NestId=%d, NestRevisionId=%d, EggId=%d, LicenseType=%s, ' +
+    'FeatherId=%d, SightingId=%d, SpecimenId=%d, SurveyId=%d, NestId=%d, NestRevisionId=%d, EggId=%d, LicenseType=%s, ' +
     'LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, DateToStr(FImageDate), TimeToStr(FImageTime), IMAGE_TYPES[FImageType], FFilename, FSubtitle, FAuthorId,
     FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
-    FCaptureId, FSightingId, FSpecimenId, FSurveyId, FNestId, FNestRevisionId, FEggId, FLicenseType,
+    FCaptureId, FFeatherId, FSightingId, FSpecimenId, FSurveyId, FNestId, FNestRevisionId, FEggId, FLicenseType,
     FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -793,6 +800,7 @@ begin
         'taxon_id, ' +
         'individual_id, ' +
         'capture_id, ' +
+        'feather_id, ' +
         'locality_id, ' +
         'author_id, ' +
         'survey_id, ' +
@@ -855,6 +863,7 @@ begin
         'taxon_id, ' +
         'individual_id, ' +
         'capture_id, ' +
+        'feather_id, ' +
         'locality_id, ' +
         'author_id, ' +
         'survey_id, ' +
@@ -949,6 +958,7 @@ begin
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.CaptureId := FieldByName('capture_id').AsInteger;
+    R.FeatherId := FieldByName('feather_id').AsInteger;
     R.SightingId := FieldByName('sighting_id').AsInteger;
     R.SurveyId := FieldByName('survey_id').AsInteger;
     R.NestId := FieldByName('nest_id').AsInteger;
@@ -1002,6 +1012,7 @@ begin
       'taxon_id, ' +
       'individual_id, ' +
       'capture_id, ' +
+      'feather_id, ' +
       'locality_id, ' +
       'author_id, ' +
       'survey_id, ' +
@@ -1030,6 +1041,7 @@ begin
       ':taxon_id, ' +
       ':individual_id, ' +
       ':capture_id, ' +
+      ':feather_id, ' +
       ':locality_id, ' +
       ':author_id, ' +
       ':survey_id, ' +
@@ -1070,6 +1082,7 @@ begin
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('feather_id'), R.FeatherId);
     SetForeignParam(ParamByName('sighting_id'), R.SightingId);
     SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
@@ -1124,6 +1137,7 @@ begin
       'taxon_id = :taxon_id, ' +
       'individual_id = :individual_id, ' +
       'capture_id = :capture_id, ' +
+      'feather_id = :feather_id, ' +
       'locality_id = :locality_id, ' +
       'author_id = :author_id, ' +
       'survey_id = :survey_id, ' +
@@ -1165,6 +1179,7 @@ begin
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    SetForeignParam(ParamByName('feather_id'), R.FeatherId);
     SetForeignParam(ParamByName('sighting_id'), R.SightingId);
     SetForeignParam(ParamByName('specimen_id'), R.SpecimenId);
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);

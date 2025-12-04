@@ -503,6 +503,7 @@ resourcestring
   rscItem = 'Item';
   rscAmount = 'Amount';
   rscBudgetID = 'Budget ID';
+  rscFeatherID = 'Feather ID';
   rscSymmetry = 'Symmetry';
   rscFeatherTrait = 'Feather trait';
   rscFeatherNumber = 'Feather number';
