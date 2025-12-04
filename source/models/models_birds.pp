@@ -338,6 +338,7 @@ type
     FGrowthBarWidth: Double;
     FBarbDensity: Double;
     FFeatherAge: TFeatherAge;
+    FFullName: String;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -372,6 +373,7 @@ type
     property GrowthBarWidth: Double read FGrowthBarWidth write FGrowthBarWidth;
     property BarbDensity: Double read FBarbDensity write FBarbDensity;
     property FeatherAge: TFeatherAge read FFeatherAge write FFeatherAge;
+    property FullName: String read FFullName write FFullName;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -460,6 +462,7 @@ begin
   FGrowthBarWidth := 0.0;
   FBarbDensity := 0.0;
   FFeatherAge := fageUnknown;
+  FFullName := EmptyStr;
   FNotes := EmptyStr;
 end;
 
@@ -520,6 +523,8 @@ begin
   if FieldValuesDiff(rscBarbDensity, aOld.BarbDensity, FBarbDensity, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscAge, aOld.FeatherAge, FFeatherAge, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
@@ -601,6 +606,7 @@ begin
     else
       FFeatherAge := fageUnknown;
     end;
+    FFullName     := Obj.Get('full_name', '');
     FNotes        := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -634,6 +640,7 @@ begin
     JSONObject.Add('growth_bar_width', FGrowthBarWidth);
     JSONObject.Add('barb_density', FBarbDensity);
     JSONObject.Add('feather_age', FEATHER_AGES[FFeatherAge]);
+    JSONObject.Add('full_name', FFullName);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -647,12 +654,12 @@ begin
   Result := Format('Feather(Id=%d, SampleDate=%s, SampleTime=%s, TaxonId=%d, LocalityId=%d, IndividualId=%d, ' +
     'CaptureId=%d, SightingId=%d, ObserverId=%d, SourceType=%s, Symmetry=%s, FeatherTrait=%s, FeatherNumber=%d, ' +
     'BodySide=%s, PercentGrown=%f, FeatherLength=%f, FeatherArea=%f, FeatherMass=%f, RachisWidth=%f, ' +
-    'GrowthBarWidth=%f, BarbDensity=%f, FeatherAge=%s, Notes=%s, ' +
+    'GrowthBarWidth=%f, BarbDensity=%f, FeatherAge=%s, FullName=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FTaxonId, FLocalityId, FIndividualId, FCaptureId,
     FSightingId, FObserverId, FEATHER_DATA_SOURCES[FSourceType], SYMMETRIES[FSymmetrical], FEATHER_TRAITS[FFeatherTrait],
     FFeatherNumber, BODY_SIDES[FBodySide], FPercentGrown, FFeatherLength, FFeatherArea, FFeatherMass,
-    FRachisWidth, FGrowthBarWidth, FBarbDensity, FEATHER_AGES[FFeatherAge], FNotes,
+    FRachisWidth, FGrowthBarWidth, FBarbDensity, FEATHER_AGES[FFeatherAge], FFullName, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -780,6 +787,7 @@ begin
       'growth_bar_width, ' +
       'barb_density, ' +
       'feather_age, ' +
+      'full_name, ' +
       'notes, ' +
       'user_inserted, ' +
       'user_updated, ' +
@@ -839,6 +847,7 @@ begin
       'growth_bar_width, ' +
       'barb_density, ' +
       'feather_age, ' +
+      'full_name, ' +
       'notes, ' +
       'user_inserted, ' +
       'user_updated, ' +
@@ -937,6 +946,7 @@ begin
     else
       R.FeatherAge := fageUnknown;
     end;
+    R.FullName := FieldByName('full_name').AsString;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -985,6 +995,7 @@ begin
       'growth_bar_width, ' +
       'barb_density, ' +
       'feather_age, ' +
+      'full_name, ' +
       'notes, ' +
       'user_inserted, ' +
       'insert_date) ');
@@ -1010,6 +1021,7 @@ begin
       ':growth_bar_width, ' +
       ':barb_density, ' +
       ':feather_age, ' +
+      ':full_name, ' +
       ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'', ''subsec''))');
@@ -1035,6 +1047,8 @@ begin
     SetFloatParam(ParamByName('growth_bar_width'), R.GrowthBarWidth);
     SetFloatParam(ParamByName('barb_density'), R.BarbDensity);
     ParamByName('feather_age').AsString := FEATHER_AGES[R.FeatherAge];
+    ParamByName('full_name').AsString := GetFeatherFullname(R.SampleDate, R.TaxonId, FEATHER_TRAITS[R.FeatherTrait],
+      R.FeatherNumber, BODY_SIDES[R.BodySide], FEATHER_AGES[R.FeatherAge]);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
@@ -1094,6 +1108,7 @@ begin
       'growth_bar_width = :growth_bar_width, ' +
       'barb_density = :barb_density, ' +
       'feather_age = :feather_age, ' +
+      'full_name = :full_name, ' +
       'notes = :notes, ' +
       'exported_status = :exported_status, ' +
       'marked_status = :marked_status, ' +
@@ -1123,6 +1138,8 @@ begin
     SetFloatParam(ParamByName('growth_bar_width'), R.GrowthBarWidth);
     SetFloatParam(ParamByName('barb_density'), R.BarbDensity);
     ParamByName('feather_age').AsString := FEATHER_AGES[R.FeatherAge];
+    ParamByName('full_name').AsString := GetFeatherFullname(R.SampleDate, R.TaxonId, FEATHER_TRAITS[R.FeatherTrait],
+      R.FeatherNumber, BODY_SIDES[R.BodySide], FEATHER_AGES[R.FeatherAge]);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;

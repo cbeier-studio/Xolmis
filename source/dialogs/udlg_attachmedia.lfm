@@ -227,7 +227,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find individual'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -278,7 +278,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find capture'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -329,7 +329,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find feather'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -380,7 +380,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find expedition'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -431,7 +431,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find survey'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -482,7 +482,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find sighting'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -533,7 +533,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find nest'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -584,7 +584,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find nest revision'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -635,7 +635,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find egg'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -686,7 +686,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find specimen'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -737,7 +737,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find project'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -788,7 +788,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find permit'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -839,7 +839,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find sampling plot'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -890,7 +890,7 @@ object dlgAttachMedia: TdlgAttachMedia
           Height = 23
           Top = 22
           Width = 433
-          ButtonHint = 'Find taxon'
+          ButtonHint = 'Find method'
           ButtonWidth = 23
           Images = DMM.iEdits
           ImageIndex = 0
@@ -947,7 +947,6 @@ object dlgAttachMedia: TdlgAttachMedia
       AutoSize = True
       Caption = 'Save'
       Constraints.MinWidth = 120
-      Enabled = False
       TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown

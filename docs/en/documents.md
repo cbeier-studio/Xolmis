@@ -9,16 +9,49 @@ The **Documents and links** feature allows researchers to attach external files 
 
 ## Toolbar
 
-Icon | Button | Function
---- | --- | ---
-:material-plus-circle: | Add document/link | Insert new documents from files or link URL
-:material-pencil: | View and edit document/link info | Edit the selected document or link info
-:material-open-in-new: | View document/link | Opens the selected document or link in the default application
-:material-delete: | Delete document/link | Delete the selected document or link
+| Icon | Button | Function |
+| --- | --- | --- |
+| :material-plus-circle: | Add document/link | Insert new documents from files or link URL |
+| :material-pencil: | View and edit document/link info | Edit the selected document or link info |
+| :material-open-in-new: | View document/link | Opens the selected document or link in the default application |
+| :material-delete: | Delete document/link | Delete the selected document or link |
 
-## Adding or editing document info
+## Adding documents
 
-When attaching a document or link, the following fields are available:
+You can add documents in two ways:
+
+1. **Using the add button**  
+      - Click the **Add** button :material-plus-circle: and the option **Add documents** at the top toolbar of the documents and links side panel.  
+      - Select one or more files to attach to the current record.  
+      - Click **Open** to confirm.  
+      - The system will show the progress of adding the files.  
+
+2. **Drag and drop**  
+      - Drag files from your file explorer.  
+      - Drop them directly into the documents and links side panel.
+      - The system will show the progress of adding the files.  
+
+3. **Edit metadata**
+      - If metadata is present (e.g., creation date), it will be automatically extracted.
+      - Link the documents to records using the dialog that opened.
+      - Other information must be edited manually afterwards.
+
+This flexibility allows quick integration of documents into the database.
+
+## Adding link
+
+- Click the **Add** button :material-plus-circle: and the option **Add link** at the top toolbar of the documents and links side panel.  
+- Fill the metadata in the dialog that opened, and click the **Save** button.
+
+## Editing document or link info
+
+To edit document or link information:
+
+1. Select the document or link in the side panel.  
+2. Click the **Edit** button :material-pencil: in the toolbar.  
+3. A dialog will open with editable fields.  
+
+![Edit document or link dialog](img/edit-document-link-dialog.png)
 
 | Field | Required | Description |
 | --- | --- | --- |

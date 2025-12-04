@@ -144,7 +144,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="487"/>
+      <BuildNr Value="491"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2025 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1440,6 +1440,7 @@
         <Filename Value="dialogs\udlg_attachmedia.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgAttachMedia"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>

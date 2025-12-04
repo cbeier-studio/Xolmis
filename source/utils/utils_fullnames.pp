@@ -33,6 +33,8 @@ uses
     Formatted: Boolean = False): String;
   function GetCaptureFullname(aDate: TDate; aTaxon, aBand: Integer;
     aSex, aCaptureType, aCycle: String; Formatted: Boolean = False): String;
+  function GetFeatherFullname(aDate: TDate; aTaxonId: Integer; aFeatherTrait: String; aFeatherNumber: Integer;
+    aBodySide: String = ''; aFeatherAge: String = ''): String;
   function GetBandFullname(aSize: String; aNumber: Integer; aSupplier: Integer): String;
   function GetPermanentNetFullName(aNetStation, aNetNumber: Integer): String;
   function GetNestFullName(aDate: TDate; aTaxon: Integer; aSite: Integer; aFieldNumber: String = ''): String;
@@ -265,6 +267,22 @@ begin
   SiteName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aSiteId);
 
   Result := Trim(Format('%s-%s, %s, %s', [aFieldNumber, SPECIMEN_TYPES[Ord(aSampleType)], TaxonName, SiteName]));
+end;
+
+function GetFeatherFullname(aDate: TDate; aTaxonId: Integer; aFeatherTrait: String; aFeatherNumber: Integer;
+  aBodySide: String; aFeatherAge: String): String;
+var
+  TaxonName: String;
+  aYear, aMonth, aDay: word;
+begin
+  Result := EmptyStr;
+
+  TaxonName := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, aTaxonId);
+
+  DecodeDate(aDate, aYear, aMonth, aDay);
+
+  Result := Trim(Format('%s %4.4d-%2.2d-%2.2d %s%d%s %s', [TaxonName, aYear, aMonth, aDay, aFeatherTrait,
+    aFeatherNumber, aBodySide, aFeatherAge]));
 end;
 
 end.

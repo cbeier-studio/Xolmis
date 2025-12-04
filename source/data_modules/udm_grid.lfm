@@ -7003,7 +7003,7 @@ object DMG: TDMG
       Size = 100
     end
     object qInstitutionsacronym: TStringField
-      DisplayLabel = 'Acronym'
+      DisplayLabel = 'Abbreviation'
       FieldKind = fkData
       FieldName = 'acronym'
       Index = 2
@@ -10755,7 +10755,7 @@ object DMG: TDMG
     end
     object qGazetteersite_acronym: TStringField
       Alignment = taCenter
-      DisplayLabel = 'Acronym'
+      DisplayLabel = 'Abbreviation'
       DisplayWidth = 15
       FieldKind = fkData
       FieldName = 'site_acronym'
@@ -11272,6 +11272,7 @@ object DMG: TDMG
       Size = 100
     end
     object qSamplingPlotsacronym: TStringField
+      DisplayLabel = 'Abbreviation'
       FieldKind = fkData
       FieldName = 'acronym'
       Index = 2

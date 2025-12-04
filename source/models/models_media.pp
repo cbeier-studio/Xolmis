@@ -21,13 +21,14 @@ unit models_media;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, utils_global;
 
 type
   TAttachMediaType = (amtImages, amtAudios, amtVideos, amtDocuments);
   TAttachMediaTypes = set of TAttachMediaType;
 
   TMediaAttachment = record
+    Loaded: Boolean;
     TaxonId: Integer;
     IndividualId: Integer;
     CaptureId: Integer;
@@ -239,7 +240,7 @@ type
     FName: String;
     FDocumentDate: TDate;
     FDocumentTime: TTime;
-    FDocumentType: String;
+    FDocumentType: TFileCategory;
     FFilename: String;
     FAuthorId: Integer;
     FPermitId: Integer;
@@ -274,7 +275,7 @@ type
     property Name: String read FName write FName;
     property DocumentDate: TDate read FDocumentDate write FDocumentDate;
     property DocumentTime: TTime read FDocumentTime write FDocumentTime;
-    property DocumentType: String read FDocumentType write FDocumentType;
+    property DocumentType: TFileCategory read FDocumentType write FDocumentType;
     property FileName: String read FFilename write FFilename;
     property AuthorId: Integer read FAuthorId write FAuthorId;
     property PermitId: Integer read FPermitId write FPermitId;
@@ -304,6 +305,17 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByMethod(const aFilePath: String; const aMethodId: Integer; E: TDocumentData);
+    procedure FindByIndividual(const aFilePath: String; const aIndividualId: Integer; E: TDocumentData);
+    procedure FindByCapture(const aFilePath: String; const aCaptureId: Integer; E: TDocumentData);
+    procedure FindByExpedition(const aFilePath: String; const aExpeditionId: Integer; E: TDocumentData);
+    procedure FindBySurvey(const aFilePath: String; const aSurveyId: Integer; E: TDocumentData);
+    procedure FindBySighting(const aFilePath: String; const aSightingId: Integer; E: TDocumentData);
+    procedure FindByNest(const aFilePath: String; const aNestId: Integer; E: TDocumentData);
+    procedure FindBySpecimen(const aFilePath: String; const aSpecimenId: Integer; E: TDocumentData);
+    procedure FindBySamplingPlot(const aFilePath: String; const aSamplingPlotId: Integer; E: TDocumentData);
+    procedure FindByProject(const aFilePath: String; const aProjectId: Integer; E: TDocumentData);
+    procedure FindByPermit(const aFilePath: String; const aPermitId: Integer; E: TDocumentData);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
@@ -401,7 +413,7 @@ type
 implementation
 
 uses
-  utils_global, utils_locale, utils_validations, data_columns, data_setparam, models_users, data_consts,
+  utils_locale, utils_validations, data_columns, data_setparam, models_users, data_consts,
   data_getvalue, udm_main;
 
 { TImageData }
@@ -2092,7 +2104,7 @@ begin
   FName := EmptyStr;
   FDocumentDate := NullDate;
   FDocumentTime := NullTime;
-  FDocumentType := EmptyStr;
+  FDocumentType := fcOther;
   FFilename := EmptyStr;
   FAuthorId := 0;
   FPermitId := 0;
@@ -2194,7 +2206,32 @@ begin
     FDocumentDate   := Obj.Get('document_date', NullDate);
     FDocumentTime   := Obj.Get('document_time', NullTime);
     FName           := Obj.Get('name', '');
-    FDocumentType   := Obj.Get('document_type', '');
+    case Obj.Get('document_type', '') of
+      'url': FDocumentType := fcUrl;
+      'doc': FDocumentType := fcText;
+      'spr': FDocumentType := fcSpreadsheet;
+      'prs': FDocumentType := fcPresentation;
+      'pdf': FDocumentType := fcPdf;
+      'img': FDocumentType := fcImage;
+      'aud': FDocumentType := fcAudio;
+      'vid': FDocumentType := fcVideo;
+      'cod': FDocumentType := fcSourceCode;
+      'db':  FDocumentType := fcDatabase;
+      'gis': FDocumentType := fcGis;
+      'scr': FDocumentType := fcScript;
+      'web': FDocumentType := fcWebpage;
+      'ds':  FDocumentType := fcDataset;
+      'sta': FDocumentType := fcStatistic;
+      'vec': FDocumentType := fcVectorial;
+      'arc': FDocumentType := fcArchive;
+      'bib': FDocumentType := fcBibliography;
+      'met': FDocumentType := fcMetadata;
+      'gen': FDocumentType := fcBioinformatic;
+      'ebk': FDocumentType := fcEbook;
+      'not': FDocumentType := fcNote;
+    else
+      FDocumentType := fcOther;
+    end;
     FFilename       := Obj.Get('filename', '');
     FPermitId       := Obj.Get('permit_id', 0);
     FProjectId      := Obj.Get('project_id', 0);
@@ -2227,7 +2264,7 @@ begin
     JSONObject.Add('document_date', FDocumentDate);
     JSONObject.Add('document_time', FDocumentTime);
     JSONObject.Add('name', FName);
-    JSONObject.Add('document_type', FDocumentType);
+    JSONObject.Add('document_type', FILE_CATEGORIES[FDocumentType]);
     JSONObject.Add('filename', FFilename);
     JSONObject.Add('permit_id', FPermitId);
     JSONObject.Add('project_id', FProjectId);
@@ -2260,7 +2297,7 @@ begin
     'SurveyId=%d, NestId=%d, SamplingPlotId=%d, MethodId=%d, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, ' +
     'LicenseNotes=%s, LicenseUri=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, DateToStr(FDocumentDate), TimeToStr(FDocumentTime), FName, FDocumentType, FFilename, FPermitId, FProjectId,
+    [FId, DateToStr(FDocumentDate), TimeToStr(FDocumentTime), FName, FILE_CATEGORIES[FDocumentType], FFilename, FPermitId, FProjectId,
     FPersonId, FIndividualId, FCaptureId, FSightingId, FSpecimenId, FExpeditionId, FSurveyId, FNestId,
     FSamplingPlotId, FMethodId, FLicenseType, FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -2415,6 +2452,277 @@ begin
   end;
 end;
 
+procedure TDocumentRepository.FindByCapture(const aFilePath: String; const aCaptureId: Integer; E: TDocumentData
+  );
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (capture_id = :capture_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('capture_id').AsInteger := aCaptureId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindByExpedition(const aFilePath: String; const aExpeditionId: Integer;
+  E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (expedition_id = :expedition_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('expedition_id').AsInteger := aExpeditionId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindByIndividual(const aFilePath: String; const aIndividualId: Integer;
+  E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (individual_id = :individual_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('individual_id').AsInteger := aIndividualId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindByMethod(const aFilePath: String; const aMethodId: Integer; E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (method_id = :method_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('method_id').AsInteger := aMethodId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindByNest(const aFilePath: String; const aNestId: Integer; E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (nest_id = :nest_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('nest_id').AsInteger := aNestId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindByPermit(const aFilePath: String; const aPermitId: Integer; E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (permit_id = :permit_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('permit_id').AsInteger := aPermitId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindByProject(const aFilePath: String; const aProjectId: Integer; E: TDocumentData
+  );
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (project_id = :project_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('project_id').AsInteger := aProjectId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindBySamplingPlot(const aFilePath: String; const aSamplingPlotId: Integer;
+  E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (net_station_id = :net_station_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('net_station_id').AsInteger := aSamplingPlotId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindBySighting(const aFilePath: String; const aSightingId: Integer;
+  E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (sighting_id = :sighting_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('sighting_id').AsInteger := aSightingId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindBySpecimen(const aFilePath: String; const aSpecimenId: Integer;
+  E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (specimen_id = :specimen_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('specimen_id').AsInteger := aSpecimenId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TDocumentRepository.FindBySurvey(const aFilePath: String; const aSurveyId: Integer; E: TDocumentData);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add('SELECT * FROM documents');
+    Add('WHERE (document_path = :document_path)');
+    Add('AND (survey_id = :survey_id)');
+    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('survey_id').AsInteger := aSurveyId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TDocumentRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2487,7 +2795,32 @@ begin
     R.Name := FieldByName('document_name').AsString;
     R.DocumentDate := FieldByName('document_date').AsDateTime;
     R.DocumentTime := FieldByName('document_time').AsDateTime;
-    R.DocumentType := FieldByName('document_type').AsString;
+    case FieldByName('document_type').AsString of
+      'url': R.DocumentType := fcUrl;
+      'doc': R.DocumentType := fcText;
+      'spr': R.DocumentType := fcSpreadsheet;
+      'prs': R.DocumentType := fcPresentation;
+      'pdf': R.DocumentType := fcPdf;
+      'img': R.DocumentType := fcImage;
+      'aud': R.DocumentType := fcAudio;
+      'vid': R.DocumentType := fcVideo;
+      'cod': R.DocumentType := fcSourceCode;
+      'db':  R.DocumentType := fcDatabase;
+      'gis': R.DocumentType := fcGis;
+      'scr': R.DocumentType := fcScript;
+      'web': R.DocumentType := fcWebpage;
+      'ds':  R.DocumentType := fcDataset;
+      'sta': R.DocumentType := fcStatistic;
+      'vec': R.DocumentType := fcVectorial;
+      'arc': R.DocumentType := fcArchive;
+      'bib': R.DocumentType := fcBibliography;
+      'met': R.DocumentType := fcMetadata;
+      'gen': R.DocumentType := fcBioinformatic;
+      'ebk': R.DocumentType := fcEbook;
+      'not': R.DocumentType := fcNote;
+    else
+      R.DocumentType := fcOther;
+    end;
     R.Filename := FieldByName('document_path').AsString;
     //R.AuthorId := FieldByName('author_id').AsInteger;
     R.PermitId := FieldByName('permit_id').AsInteger;
@@ -2586,7 +2919,7 @@ begin
     SetDateParam(ParamByName('document_date'), R.DocumentDate);
     SetTimeParam(ParamByName('document_time'), R.DocumentTime);
     ParamByName('document_name').AsString := R.Name;
-    ParamByName('document_type').AsString := R.DocumentType;
+    ParamByName('document_type').AsString := FILE_CATEGORIES[R.DocumentType];
     ParamByName('document_path').AsString := R.Filename;
     SetForeignParam(ParamByName('permit_id'), R.PermitId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
@@ -2671,7 +3004,7 @@ begin
     SetDateParam(ParamByName('document_date'), R.DocumentDate);
     SetTimeParam(ParamByName('document_time'), R.DocumentTime);
     ParamByName('document_name').AsString := R.Name;
-    ParamByName('document_type').AsString := R.DocumentType;
+    ParamByName('document_type').AsString := FILE_CATEGORIES[R.DocumentType];
     ParamByName('document_path').AsString := R.Filename;
     SetForeignParam(ParamByName('permit_id'), R.PermitId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);

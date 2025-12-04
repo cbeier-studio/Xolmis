@@ -9,16 +9,49 @@ O recurso de **Documentos e links** permite que pesquisadores anexem arquivos ex
 
 ## Barra de ferramentas
 
-Ícone | Botão | Função  
---- | --- | ---  
-:material-plus-circle: | Adicionar documento/link | Inserir novos documentos a partir de arquivos ou URL de link  
-:material-pencil: | Visualizar e editar informações do documento/link | Editar informações do documento ou link selecionado  
-:material-open-in-new: | Visualizar documento/link | Abre o documento ou link selecionado no aplicativo padrão  
-:material-delete: | Excluir documento/link | Exclui o documento ou link selecionado  
+| Ícone | Botão | Função |
+| --- | --- | --- |
+| :material-plus-circle: | Adicionar documento/link | Inserir novos documentos a partir de arquivos ou URL de link |
+| :material-pencil: | Visualizar e editar informações do documento/link | Editar informações do documento ou link selecionado |
+| :material-open-in-new: | Visualizar documento/link | Abre o documento ou link selecionado no aplicativo padrão |
+| :material-delete: | Excluir documento/link | Exclui o documento ou link selecionado |
 
-## Adicionando ou editando informações de documentos
+## Adicionando documentos
 
-Ao anexar um documento ou link, os seguintes campos estão disponíveis:
+Você pode adicionar documentos de duas maneiras:
+
+1. **Usando o botão adicionar**
+      - Clique no botão **Adicionar** :material-plus-circle: e na opção **Adicionar documentos** na barra superior do painel lateral de documentos e links.  
+      - Selecione um ou mais arquivos para anexar ao registro atual.  
+      - Clique em **Abrir** para confirmar.  
+      - O sistema mostrará o progresso da adição dos arquivos.  
+
+2. **Arrastar e soltar**  
+      - Arraste arquivos do explorador de arquivos.  
+      - Solte-os diretamente no painel lateral de documentos e links.  
+      - O sistema mostrará o progresso da adição dos arquivos.  
+
+3. **Editar metadados**
+      - Se metadados estiverem presentes (ex.: data de criação), eles serão extraídos automaticamente.
+      - Relacione os arquivos a registros usando o diálogo que é aberto.
+      - Outras informações devem ser editadas manualmente depois.
+
+Essa flexibilidade permite integrar rapidamente documentos ao banco de dados.
+
+## Adicionando link
+
+- Clique o botão **Adicionar** :material-plus-circle: e a opção **Adicionar link** na barra superior do painel lateral de documentos e links.  
+- Preencha os metadados no diálogo que abrir, e clique no botão **Salvar**.
+
+## Editando informações do documento ou link
+
+Para editar informações do documento ou link:
+
+1. Selecione um documento ou link no painel lateral.  
+2. Clique no botão **Editar** :material-pencil: na barra de ferramentas.  
+3. Um diálogo será aberto com campos editáveis.
+
+![Diálogo para editar documento ou link](img/edit-document-link-dialog.png)
 
 | Campo | Obrigatório | Descrição |
 | --- | --- | --- |

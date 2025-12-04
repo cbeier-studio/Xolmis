@@ -7218,7 +7218,7 @@ object frmCustomGrid: TfrmCustomGrid
               FieldName = 'document_path'
             end>
           DataSource = dsDocs
-          Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgDisableDelete]
+          Options = [dgTitles, dgIndicator, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgDisableDelete, dgTruncCellHints, dgCellEllipsis]
           PopupMenu = pmDocs
           Scrollbars = ssVertical
           TabOrder = 1
@@ -28105,7 +28105,7 @@ object frmCustomGrid: TfrmCustomGrid
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qDocspermit_id: TLongintField
       DisplayLabel = 'Permit ID'

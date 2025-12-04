@@ -2737,6 +2737,7 @@ msgid "HH:MM"
 msgstr ""
 
 #: tbatchfeathers.lblcapture.caption
+msgctxt "tbatchfeathers.lblcapture.caption"
 msgid "Capture:"
 msgstr ""
 
@@ -2891,6 +2892,7 @@ msgid "Time:"
 msgstr ""
 
 #: tbatchfeathers.lblsighting.caption
+msgctxt "tbatchfeathers.lblsighting.caption"
 msgid "Sighting:"
 msgstr ""
 
@@ -3572,6 +3574,273 @@ msgstr ""
 #: tdlgabout.sbcopy.caption
 msgctxt "tdlgabout.sbcopy.caption"
 msgid "Copy"
+msgstr ""
+
+#: tdlgattachmedia.btnnew.caption
+msgctxt "tdlgattachmedia.btnnew.caption"
+msgid "New"
+msgstr ""
+
+#: tdlgattachmedia.caption
+msgid "Attach media"
+msgstr ""
+
+#: tdlgattachmedia.eauthor.buttonhint
+msgctxt "tdlgattachmedia.eauthor.buttonhint"
+msgid "Find author"
+msgstr ""
+
+#: tdlgattachmedia.ecapture.buttonhint
+msgctxt "tdlgattachmedia.ecapture.buttonhint"
+msgid "Find capture"
+msgstr ""
+
+#: tdlgattachmedia.eegg.buttonhint
+msgctxt "tdlgattachmedia.eegg.buttonhint"
+msgid "Find egg"
+msgstr ""
+
+#: tdlgattachmedia.eexpedition.buttonhint
+msgctxt "tdlgattachmedia.eexpedition.buttonhint"
+msgid "Find expedition"
+msgstr ""
+
+#: tdlgattachmedia.efeather.buttonhint
+msgctxt "tdlgattachmedia.efeather.buttonhint"
+msgid "Find feather"
+msgstr ""
+
+#: tdlgattachmedia.eindividual.buttonhint
+msgctxt "tdlgattachmedia.eindividual.buttonhint"
+msgid "Find individual"
+msgstr ""
+
+#: tdlgattachmedia.elocality.buttonhint
+msgctxt "tdlgattachmedia.elocality.buttonhint"
+msgid "Find locality"
+msgstr ""
+
+#: tdlgattachmedia.emethod.buttonhint
+msgctxt "tdlgattachmedia.emethod.buttonhint"
+msgid "Find method"
+msgstr ""
+
+#: tdlgattachmedia.enest.buttonhint
+msgctxt "tdlgattachmedia.enest.buttonhint"
+msgid "Find nest"
+msgstr ""
+
+#: tdlgattachmedia.enestrevision.buttonhint
+msgctxt "tdlgattachmedia.enestrevision.buttonhint"
+msgid "Find nest revision"
+msgstr ""
+
+#: tdlgattachmedia.epermit.buttonhint
+msgctxt "tdlgattachmedia.epermit.buttonhint"
+msgid "Find permit"
+msgstr ""
+
+#: tdlgattachmedia.eproject.buttonhint
+msgctxt "tdlgattachmedia.eproject.buttonhint"
+msgid "Find project"
+msgstr ""
+
+#: tdlgattachmedia.esamplingplot.buttonhint
+msgctxt "tdlgattachmedia.esamplingplot.buttonhint"
+msgid "Find sampling plot"
+msgstr ""
+
+#: tdlgattachmedia.esighting.buttonhint
+msgctxt "tdlgattachmedia.esighting.buttonhint"
+msgid "Find sighting"
+msgstr ""
+
+#: tdlgattachmedia.especimen.buttonhint
+msgctxt "tdlgattachmedia.especimen.buttonhint"
+msgid "Find specimen"
+msgstr ""
+
+#: tdlgattachmedia.esurvey.buttonhint
+msgctxt "tdlgattachmedia.esurvey.buttonhint"
+msgid "Find survey"
+msgstr ""
+
+#: tdlgattachmedia.etaxon.buttonhint
+msgctxt "tdlgattachmedia.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tdlgattachmedia.lblauthor.caption
+msgctxt "tdlgattachmedia.lblauthor.caption"
+msgid "Author:"
+msgstr ""
+
+#: tdlgattachmedia.lblcapture.caption
+msgctxt "tdlgattachmedia.lblcapture.caption"
+msgid "Capture:"
+msgstr ""
+
+#: tdlgattachmedia.lblegg.caption
+msgctxt "tdlgattachmedia.lblegg.caption"
+msgid "Egg:"
+msgstr ""
+
+#: tdlgattachmedia.lblexpedition.caption
+msgctxt "tdlgattachmedia.lblexpedition.caption"
+msgid "Expedition:"
+msgstr ""
+
+#: tdlgattachmedia.lblfeather.caption
+msgid "Feather:"
+msgstr ""
+
+#: tdlgattachmedia.lblhint.caption
+msgid "Attach the files being imported to the records below:"
+msgstr ""
+
+#: tdlgattachmedia.lblindividual.caption
+msgctxt "tdlgattachmedia.lblindividual.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tdlgattachmedia.lbllocality.caption
+msgctxt "tdlgattachmedia.lbllocality.caption"
+msgid "Locality:"
+msgstr ""
+
+#: tdlgattachmedia.lblmethod.caption
+msgid "Method:"
+msgstr ""
+
+#: tdlgattachmedia.lblnest.caption
+msgctxt "tdlgattachmedia.lblnest.caption"
+msgid "Nest:"
+msgstr ""
+
+#: tdlgattachmedia.lblnestrevision.caption
+msgid "Nest revision:"
+msgstr ""
+
+#: tdlgattachmedia.lblpermit.caption
+msgid "Permit:"
+msgstr ""
+
+#: tdlgattachmedia.lblproject.caption
+msgctxt "tdlgattachmedia.lblproject.caption"
+msgid "Project:"
+msgstr ""
+
+#: tdlgattachmedia.lblsamplingplot.caption
+msgid "Sampling plot:"
+msgstr ""
+
+#: tdlgattachmedia.lblsighting.caption
+msgctxt "tdlgattachmedia.lblsighting.caption"
+msgid "Sighting:"
+msgstr ""
+
+#: tdlgattachmedia.lblspecimen.caption
+msgid "Specimen:"
+msgstr ""
+
+#: tdlgattachmedia.lbltaxon.caption
+msgctxt "tdlgattachmedia.lbltaxon.caption"
+msgid "Taxon:"
+msgstr ""
+
+#: tdlgattachmedia.lbsurvey.caption
+msgctxt "tdlgattachmedia.lbsurvey.caption"
+msgid "Survey:"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewcapture.caption
+msgctxt "tdlgattachmedia.pmnnewcapture.caption"
+msgid "New capture"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewegg.caption
+msgctxt "tdlgattachmedia.pmnnewegg.caption"
+msgid "New egg"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewexpedition.caption
+msgctxt "tdlgattachmedia.pmnnewexpedition.caption"
+msgid "New expedition"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewfeather.caption
+msgctxt "tdlgattachmedia.pmnnewfeather.caption"
+msgid "New feather"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewindividual.caption
+msgctxt "tdlgattachmedia.pmnnewindividual.caption"
+msgid "New individual"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewlocality.caption
+msgctxt "tdlgattachmedia.pmnnewlocality.caption"
+msgid "New locality"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewmethod.caption
+msgctxt "tdlgattachmedia.pmnnewmethod.caption"
+msgid "New method"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewnest.caption
+msgctxt "tdlgattachmedia.pmnnewnest.caption"
+msgid "New nest"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewnestrevision.caption
+msgctxt "tdlgattachmedia.pmnnewnestrevision.caption"
+msgid "New nest revision"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewpermit.caption
+msgctxt "tdlgattachmedia.pmnnewpermit.caption"
+msgid "New permit"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewperson.caption
+msgctxt "tdlgattachmedia.pmnnewperson.caption"
+msgid "New author"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewproject.caption
+msgctxt "tdlgattachmedia.pmnnewproject.caption"
+msgid "New project"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewsamplingplot.caption
+msgctxt "tdlgattachmedia.pmnnewsamplingplot.caption"
+msgid "New sampling plot"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewsighting.caption
+msgctxt "tdlgattachmedia.pmnnewsighting.caption"
+msgid "New sighting"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewspecimen.caption
+msgctxt "tdlgattachmedia.pmnnewspecimen.caption"
+msgid "New specimen"
+msgstr ""
+
+#: tdlgattachmedia.pmnnewsurvey.caption
+msgctxt "tdlgattachmedia.pmnnewsurvey.caption"
+msgid "New survey"
+msgstr ""
+
+#: tdlgattachmedia.sbcancel.caption
+msgctxt "tdlgattachmedia.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgattachmedia.sbsave.caption
+msgctxt "tdlgattachmedia.sbsave.caption"
+msgid "Save"
 msgstr ""
 
 #: tdlgauthorship.caption
@@ -8362,6 +8631,7 @@ msgid "New"
 msgstr ""
 
 #: tedtsamplingplot.caption
+msgctxt "tedtsamplingplot.caption"
 msgid "New sampling plot"
 msgstr ""
 
@@ -14208,9 +14478,21 @@ msgctxt "utils_locale.rsdistributionrare"
 msgid "Rare"
 msgstr ""
 
+#: utils_locale.rsdocarchive
+msgid "Archive"
+msgstr ""
+
 #: utils_locale.rsdocaudio
 msgctxt "utils_locale.rsdocaudio"
 msgid "Audio file"
+msgstr ""
+
+#: utils_locale.rsdocbibliography
+msgid "Bibliography"
+msgstr ""
+
+#: utils_locale.rsdocbioinformatic
+msgid "Bioinformatic"
 msgstr ""
 
 #: utils_locale.rsdoccode
@@ -14223,9 +14505,17 @@ msgctxt "utils_locale.rsdocdatabase"
 msgid "Database"
 msgstr ""
 
+#: utils_locale.rsdocdataset
+msgid "Dataset"
+msgstr ""
+
 #: utils_locale.rsdocdocument
 msgctxt "utils_locale.rsdocdocument"
 msgid "Document"
+msgstr ""
+
+#: utils_locale.rsdocebook
+msgid "eBook"
 msgstr ""
 
 #: utils_locale.rsdocgis
@@ -14236,6 +14526,15 @@ msgstr ""
 #: utils_locale.rsdocimage
 msgctxt "utils_locale.rsdocimage"
 msgid "Image"
+msgstr ""
+
+#: utils_locale.rsdocmetadata
+msgid "Metadata"
+msgstr ""
+
+#: utils_locale.rsdocnote
+msgctxt "utils_locale.rsdocnote"
+msgid "Note"
 msgstr ""
 
 #: utils_locale.rsdocother
@@ -14253,9 +14552,17 @@ msgctxt "utils_locale.rsdocpresentation"
 msgid "Presentation"
 msgstr ""
 
+#: utils_locale.rsdocscript
+msgid "Script"
+msgstr ""
+
 #: utils_locale.rsdocspreadsheet
 msgctxt "utils_locale.rsdocspreadsheet"
 msgid "Spreadsheet"
+msgstr ""
+
+#: utils_locale.rsdocstatistic
+msgid "Statistic"
 msgstr ""
 
 #: utils_locale.rsdocurl
@@ -14263,9 +14570,17 @@ msgctxt "utils_locale.rsdocurl"
 msgid "URL"
 msgstr ""
 
+#: utils_locale.rsdocvectorial
+msgid "Vectorial"
+msgstr ""
+
 #: utils_locale.rsdocvideo
 msgctxt "utils_locale.rsdocvideo"
 msgid "Video"
+msgstr ""
+
+#: utils_locale.rsdocwebpage
+msgid "Webpage"
 msgstr ""
 
 #: utils_locale.rsdropfileshere
@@ -14636,6 +14951,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrortablenotfound"
 msgid "Table '%s' not found."
+msgstr ""
+
+#: utils_locale.rserrortablenotsupportedindocuments
+msgid "Table not supported in documents and links."
 msgstr ""
 
 #: utils_locale.rserrortitlehelpnotfound
@@ -15129,6 +15448,10 @@ msgstr ""
 msgid "Import eBird data"
 msgstr ""
 
+#: utils_locale.rsimportfilestitle
+msgid "Import files"
+msgstr ""
+
 #: utils_locale.rsimportimagestitle
 msgctxt "utils_locale.rsimportimagestitle"
 msgid "Import images"
@@ -15141,7 +15464,7 @@ msgid "Importing file %s"
 msgstr ""
 
 #: utils_locale.rsimportvideostitle
-msgid "Import video files"
+msgid "Import videos"
 msgstr ""
 
 #: utils_locale.rsimportwizard
@@ -15674,6 +15997,14 @@ msgstr ""
 #: utils_locale.rsmodificationsnotsaved
 msgctxt "utils_locale.rsmodificationsnotsaved"
 msgid "Changes not saved"
+msgstr ""
+
+#: utils_locale.rsmoduledoesnotsupportattachments
+msgid "This module does not support file attachments."
+msgstr ""
+
+#: utils_locale.rsmoduledoesnotsupportsomefilesbeingattached
+msgid "This module does not support some files being attached."
 msgstr ""
 
 #: utils_locale.rsmoltcycles
@@ -16447,6 +16778,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsprogressimportdocs"
 msgid "Processing %d of %d documents..."
+msgstr ""
+
+#: utils_locale.rsprogressimportfiles
+#, object-pascal-format
+msgid "Processing %d of %d files..."
 msgstr ""
 
 #: utils_locale.rsprogressimportimages

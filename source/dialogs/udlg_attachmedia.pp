@@ -5,7 +5,7 @@ unit udlg_attachmedia;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Menus, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Menus, StdCtrls, Character,
   ATShapeLineBGRA, Buttons, EditBtn, models_media;
 
 type
@@ -133,10 +133,10 @@ type
     FAuthorId, FLocalityId, FTaxonId, FIndividualId, FCaptureId, FFeatherId: Integer;
     FExpeditionId, FSurveyId, FSightingId, FNestId, FNestRevisionId, FEggId, FSpecimenId: Integer;
     FProjectId, FPermitId, FSamplingPlotId, FMethodId: Integer;
-    FAttachmentType: TAttachMediaType;
+    FAttachmentType: TAttachMediaTypes;
     procedure ApplyDarkMode;
   public
-    property AttachmentType: TAttachMediaType read FAttachmentType write FAttachmentType;
+    property AttachmentType: TAttachMediaTypes read FAttachmentType write FAttachmentType;
     property AuthorId: Integer read FAuthorId write FAuthorId;
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
@@ -162,7 +162,7 @@ var
 implementation
 
 uses
-  utils_dialogs, utils_editdialogs, utils_finddialogs, models_record_types, data_types, data_getvalue,
+  utils_global, utils_dialogs, utils_editdialogs, utils_finddialogs, models_record_types, data_types, data_getvalue,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -789,69 +789,85 @@ begin
     ApplyDarkMode;
 
   // Show fields by attachment type
-  //case FAttachmentType of
-  //  amtImages:
-  //  begin
-  //    pTaxon.Visible := True;
-  //    pIndividual.Visible := True;
-  //    pCapture.Visible := True;
-  //    pFeather.Visible := True;
-  //    pSurvey.Visible := True;
-  //    pSighting.Visible := True;
-  //    pNest.Visible := True;
-  //    pNestRevision.Visible := True;
-  //    pEgg.Visible := True;
-  //    pSpecimen.Visible := True;
-  //  end;
-  //  amtAudios:
-  //  begin
-  //    pTaxon.Visible := True;
-  //    pIndividual.Visible := True;
-  //    pSighting.Visible := True;
-  //    pSpecimen.Visible := True;
-  //  end;
-  //  amtVideos:
-  //  begin
-  //    pTaxon.Visible := True;
-  //    pIndividual.Visible := True;
-  //    pCapture.Visible := True;
-  //    pSurvey.Visible := True;
-  //    pSighting.Visible := True;
-  //    pNest.Visible := True;
-  //    pNestRevision.Visible := True;
-  //  end;
-  //  amtDocuments:
-  //  begin
-  //    pIndividual.Visible := True;
-  //    pCapture.Visible := True;
-  //    pExpedition.Visible := True;
-  //    pSurvey.Visible := True;
-  //    pSighting.Visible := True;
-  //    pNest.Visible := True;
-  //    pSpecimen.Visible := True;
-  //    pProject.Visible := True;
-  //    pPermit.Visible := True;
-  //    pSamplingPlot.Visible := True;
-  //    pMethod.Visible := True;
-  //  end;
-  //end;
+  pLocality.Visible := (FAttachmentType <> [amtDocuments]);
+  if (amtImages in FAttachmentType) then
+  begin
+    pTaxon.Visible := True;
+    pIndividual.Visible := True;
+    pCapture.Visible := True;
+    pFeather.Visible := True;
+    pSurvey.Visible := True;
+    pSighting.Visible := True;
+    pNest.Visible := True;
+    pNestRevision.Visible := True;
+    pEgg.Visible := True;
+    pSpecimen.Visible := True;
+  end;
+  if (amtAudios in FAttachmentType) then
+  begin
+    pTaxon.Visible := True;
+    pIndividual.Visible := True;
+    pSighting.Visible := True;
+    pSpecimen.Visible := True;
+  end;
+  if (amtVideos in FAttachmentType) then
+  begin
+    pTaxon.Visible := True;
+    pIndividual.Visible := True;
+    pCapture.Visible := True;
+    pSurvey.Visible := True;
+    pSighting.Visible := True;
+    pNest.Visible := True;
+    pNestRevision.Visible := True;
+  end;
+  if (amtDocuments in FAttachmentType) then
+  begin
+    pIndividual.Visible := True;
+    pCapture.Visible := True;
+    pExpedition.Visible := True;
+    pSurvey.Visible := True;
+    pSighting.Visible := True;
+    pNest.Visible := True;
+    pSpecimen.Visible := True;
+    pProject.Visible := True;
+    pPermit.Visible := True;
+    pSamplingPlot.Visible := True;
+    pMethod.Visible := True;
+  end;
 
   // Show all fields
-  pTaxon.Visible := True;
-  pIndividual.Visible := True;
-  pCapture.Visible := True;
-  pFeather.Visible := True;
-  pExpedition.Visible := True;
-  pSurvey.Visible := True;
-  pSighting.Visible := True;
-  pNest.Visible := True;
-  pNestRevision.Visible := True;
-  pEgg.Visible := True;
-  pSpecimen.Visible := True;
-  pProject.Visible := True;
-  pPermit.Visible := True;
-  pSamplingPlot.Visible := True;
-  pMethod.Visible := True;
+  //pTaxon.Visible := True;
+  //pIndividual.Visible := True;
+  //pCapture.Visible := True;
+  //pFeather.Visible := True;
+  //pExpedition.Visible := True;
+  //pSurvey.Visible := True;
+  //pSighting.Visible := True;
+  //pNest.Visible := True;
+  //pNestRevision.Visible := True;
+  //pEgg.Visible := True;
+  //pSpecimen.Visible := True;
+  //pProject.Visible := True;
+  //pPermit.Visible := True;
+  //pSamplingPlot.Visible := True;
+  //pMethod.Visible := True;
+
+  // Set New menu options visibility
+  pmnNewLocality.Visible := pLocality.Visible;
+  pmnNewIndividual.Visible := pIndividual.Visible;
+  pmnNewCapture.Visible := pCapture.Visible;
+  pmnNewFeather.Visible := pFeather.Visible;
+  pmnNewExpedition.Visible := pExpedition.Visible;
+  pmnNewSurvey.Visible := pSurvey.Visible;
+  pmnNewSighting.Visible := pSighting.Visible;
+  pmnNewNest.Visible := pNest.Visible;
+  pmnNewNestRevision.Visible := pNestRevision.Visible;
+  pmnNewEgg.Visible := pEgg.Visible;
+  pmnNewSpecimen.Visible := pSpecimen.Visible;
+  pmnNewProject.Visible := pProject.Visible;
+  pmnNewPermit.Visible := pPermit.Visible;
+  pmnNewSamplingPlot.Visible := pSamplingPlot.Visible;
+  pmnNewMethod.Visible := pMethod.Visible;
 
   // Load fields
   if FAuthorId > 0 then

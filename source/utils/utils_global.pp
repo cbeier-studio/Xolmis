@@ -136,12 +136,65 @@ const
   HELP_SUMMARY: String                    = 'summary.html';
   HELP_MAINTENANCE: String                = 'maintenance.html';
 
+  { File extensions }
+const
+  TEXT_EXTENSIONS: array of String = ('.doc','.docx','.odt','.rtf','.txt','.md','.tex','.pages');
+  SPREADSHEET_EXTENSIONS: array of String = ('.xls','.xlsx','.xlsm','.ods','.csv','.tsv','.numbers');
+  PRESENTATION_EXTENSIONS: array of String = ('.ppt','.pptx','.pps','.ppsx','.odp','.key');
+  PDF_EXTENSIONS: array of String = ('.pdf','.xps');
+  SCRIPT_EXTENSIONS: array of String = ('.r','.rmd','.rscript','.qmd','.py','.ipynb','.sql','.psql','.jl',
+    '.sh','.bash','.bat','.ps1','.iss','.pl','.rb','.wl');
+  WEBPAGE_EXTENSIONS: array of String = ('.htm','.html','.xhtml','.php','.js','.ts','.css','.asp','.aspx',
+    '.jsp','.cgi','.wasm');
+  SOURCE_CODE_EXTENSIONS: array of String = ('.java','.c','.cpp','.cc','.h','.hpp','.cs','.go','.vb','.lua',
+    '.swift','.kt','.kts','.dart','.pas','.pp','.inc','.lpi','.lpr','.lpk','.lfm','.lrs','.dpr','.dproj','.dfm',
+    '.dpk','.fmx','.cbl','.cob','.po','.for','.f90','.f95','.hs','.ml','.mli','.ocaml','.scm','.ss','.lisp',
+    '.cl','.cu','.scala','.ex','.exs','.erl','.hrl','.adb','.ads','.groovy','.clj','.cljs','.rs');
+  INTEROPERABLE_EXTENSIONS: array of String = ('.xml','.json','.ndjson','.jsonl','.yaml','.yml','.rdf','.owl',
+    '.dwc','.abc','.toml','.ini','.parquet','.orc');
+  GIS_EXTENSIONS: array of String = ('.kml','.kmz','.gpx','.geojson','.shp','.qgs','.qgz','.qlr','.qml','.gpkg',
+    '.aprx','.lpkx','.mpkx','.tbx','.mxd','.lyr','.geotiff','.grib','.vrt');
+  IMAGE_EXTENSIONS: array of String = ('.jpg','.jpeg','.jpe','.jfif','.png','.bmp','.tif','.tiff','.gif','.xcf',
+    '.xpm','.pbm','.pgm','.ppm','.psd','.psb','.webp','.heic','.heif','.hif','.dng','.raw','.cr2','.cr3','.nef','.nrw',
+    '.arw','.srf','.sr2','.raf','.orf','.rw2','.rwl','.pef','.kdc','.mrw','.afphoto','.j2k','.jp2','.jxr',
+    '.wdp','.hdp','.jxl','.tga');
+  AUDIO_EXTENSIONS: array of String = ('.wav','.mp3','.aac','.flac','.wma','.ogg','.midi','.mid','.aif','.aiff');
+  VIDEO_EXTENSIONS: array of String = ('.mp4','.mpg','.mpeg','.wmv','.avi','.mov','.m4v','.mkv','.webm','.3gp',
+    '.vob','.mts','.m2ts','.avif');
+  VECTORIAL_EXTENSIONS: array of String = ('.ai','.cdr','.svg','.svgz','.dwg','.dxf','.emf','.wmf','.wmz','.eps',
+    '.odg','.skp','.indd','.idml','.afdesign','.afpub','.cnv','.dia','.ccdx');
+  DATABASE_EXTENSIONS: array of String = ('.db','.db3','.dbf','.sqlite','.sqlite3','.sdb3','.fdb','.gdb',
+    '.accdb','.mdb','.odb','.myd','.myi','.ibd','.pgsql','.bson','.tpy');
+  ARCHIVE_EXTENSIONS: array of String = ('.zip','.7z','.rar','.tar','.gz','.bz2','.zoo','.arc','.lzma','.xz','.pea');
+  BIBLIOGRAPHY_EXTENSIONS: array of String = ('.bib','.ris','.endnote','.enl','.csl','.cff');
+  STATISTIC_EXTENSIONS: array of String = ('.sav','.dta','.sas7bdat','.mat','.m','.rdata','.rds','.h5','.hdf5',
+    '.nc','.netcdf','.dat','.nb','.fits','.fts','.fit');
+  METADATA_EXTENSIONS: array of String = ('.exif','.tdms');
+  BIOINFORMATIC_EXTENSIONS: array of String = ('.pdb','.fasta','.fa','.fastq','.fq','.gb','.gbk','.vcf','.bcf',
+    '.gff','.gff3','.gtf','.sam','.bam','.cram','.bed','.sdf','.mmcif','.mol2','.cel','.gct','.phy','.nex',
+    '.nexus','.aln','.stockholm','.obo','.mesquite','.trees','.tre','.nwk','.dnd');
+  EBOOK_EXTENSIONS: array of String = ('.epub','.mobi','.azw','.azw3','.kf8','.lit','.fb2','.ibooks','.djvu');
+  NOTES_EXTENSIONS: array of String = ('.one','.enex','.jex');
+
+  SUPPORTED_IMAGE_EXTENSIONS: array of String = ('.png','.xpm','.bmp','.jpeg','.jpg','.jpe','.jfif',
+    '.tif','.tiff','.pbm','.pgm','.ppm');
+  SUPPORTED_AUDIO_EXTENSIONS: array of String = ('.wav','.mp3','.aac','.flac', '.wma');
+  SUPPORTED_VIDEO_EXTENSIONS: array of String = ('.avi','.mp4','.m4v','.mov','.wmv','.mkv');
+  UNSUPPORTED_IMAGE_EXTENSIONS: array of String = ('.gif','.xcf','.psd','.psb','.webp','.heic','.heif','.hif','.dng',
+    '.raw','.cr2','.cr3','.nef','.nrw','.arw','.srf','.sr2','.raf','.orf','.rw2','.rwl','.pef','.kdc','.mrw',
+    '.afphoto','.j2k','.jp2','.jxr','.wdp','.hdp','.jxl','.tga');
+
 type
+  TFileCategory = (fcOther, fcUrl, fcText, fcSpreadsheet, fcPresentation, fcPdf, fcWebpage, fcScript, fcSourceCode,
+    fcDataset, fcDatabase, fcGis, fcArchive, fcImage, fcAudio, fcVideo, fcVectorial, fcBibliography, fcStatistic,
+    fcBioinformatic, fcEbook, fcNote, fcMetadata);
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);
   TLogEventAction = (leaStarting, leaEnd, leaStart, leaFinish, leaOpen, leaClose, leaActiveTab,
     leaExecute, leaCommit, leaRollback);
 
 const
+  FILE_CATEGORIES: array [TFileCategory] of String = ('oth','url','doc','spr','prs','pdf','web','scr','cod','ds',
+    'db','gis','arc','img','aud','vid','vec','bib','sta','gen','ebk','not','met');
   HISTORY_ACTIONS: array [THistoryAction] of String = ('I', 'U', 'D', 'R');
   LOG_EVENT_ACTIONS: array[TLogEventAction] of String = ('STARTING', 'END', 'START', 'FINISH', 'OPEN', 'CLOSE',
     'ACTIVE TAB', 'EXECUTE', 'COMMIT', 'ROLLBACK');
@@ -347,6 +400,8 @@ var
 
   { Help manipulation }
   procedure OpenHelp(aHelpFile: String; aTopic: String = '');
+
+  function GetFileCategoryFromExt(aExtension: String): TFileCategory;
 
 
 implementation
@@ -767,6 +822,74 @@ begin
   //  HelpUrl := HelpUrl + '#' + aTopic;
 
   OpenURL(HelpUrl);
+end;
+
+function GetFileCategoryFromExt(aExtension: String): TFileCategory;
+
+  function ContainsExt(const Arr: array of String; const Ext: String): Boolean;
+  var
+    i: Integer;
+    e, target: String;
+  begin
+    target := LowerCase(Ext);
+    for i := 0 to High(Arr) do
+    begin
+      e := LowerCase(Arr[i]);
+      if SameText(e, target) then
+        Exit(True);
+    end;
+    Result := False;
+  end;
+
+begin
+  if (aExtension <> '') and (aExtension[1] <> '.') then
+    aExtension := '.' + aExtension;
+  aExtension := LowerCase(aExtension);
+
+  if ContainsExt(TEXT_EXTENSIONS, aExtension) then
+    Result := fcText
+  else if ContainsExt(SPREADSHEET_EXTENSIONS, aExtension) then
+    Result := fcSpreadsheet
+  else if ContainsExt(PRESENTATION_EXTENSIONS, aExtension) then
+    Result := fcPresentation
+  else if ContainsExt(PDF_EXTENSIONS, aExtension) then
+    Result := fcPdf
+  else if ContainsExt(IMAGE_EXTENSIONS, aExtension) then
+    Result := fcImage
+  else if ContainsExt(AUDIO_EXTENSIONS, aExtension) then
+    Result := fcAudio
+  else if ContainsExt(VIDEO_EXTENSIONS, aExtension) then
+    Result := fcVideo
+  else if ContainsExt(VECTORIAL_EXTENSIONS, aExtension) then
+    Result := fcVectorial
+  else if ContainsExt(SCRIPT_EXTENSIONS, aExtension) then
+    Result := fcScript
+  else if ContainsExt(WEBPAGE_EXTENSIONS, aExtension) then
+    Result := fcWebpage
+  else if ContainsExt(SOURCE_CODE_EXTENSIONS, aExtension) then
+    Result := fcSourceCode
+  else if ContainsExt(INTEROPERABLE_EXTENSIONS, aExtension) then
+    Result := fcDataset
+  else if ContainsExt(DATABASE_EXTENSIONS, aExtension) then
+    Result := fcDatabase
+  else if ContainsExt(GIS_EXTENSIONS, aExtension) then
+    Result := fcGis
+  else if ContainsExt(ARCHIVE_EXTENSIONS, aExtension) then
+    Result := fcArchive
+  else if ContainsExt(STATISTIC_EXTENSIONS, aExtension) then
+    Result := fcStatistic
+  else if ContainsExt(BIOINFORMATIC_EXTENSIONS, aExtension) then
+    Result := fcBioinformatic
+  else if ContainsExt(METADATA_EXTENSIONS, aExtension) then
+    Result := fcMetadata
+  else if ContainsExt(BIBLIOGRAPHY_EXTENSIONS, aExtension) then
+    Result := fcBibliography
+  else if ContainsExt(NOTES_EXTENSIONS, aExtension) then
+    Result := fcNote
+  else if ContainsExt(EBOOK_EXTENSIONS, aExtension) then
+    Result := fcEbook
+  else
+    Result := fcOther;
 end;
 
 { TXolmisSettings }

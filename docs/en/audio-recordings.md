@@ -26,12 +26,17 @@ You can add audio recordings in two ways:
       - Click the **Add** button :material-plus-circle: in the toolbar of the audio recordings side panel.  
       - Select one or more files to attach to the current record.  
       - Click **Open** to confirm.  
-      - The system will display the progress of the upload.  
-      - If metadata is present (e.g., creation date), it will be automatically extracted. Other information must be edited manually afterwards.
+      - The system will display the progress of adding the recordings.  
 
 2. **Drag and drop**  
       - Drag audio files from your file explorer.  
       - Drop them directly into the audio recordings side panel.  
+      - The system will display the progress of adding the recordings.  
+
+3. **Edit metadata**
+      - If metadata is present (e.g., creation date), it will be automatically extracted.
+      - Link the audio recordings to records using the dialog that opens.
+      - Other information must be edited manually afterwards.
 
 This flexibility allows quick integration of field recordings into the database.
 

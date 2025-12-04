@@ -29,11 +29,16 @@ You can add images in two ways:
       - Select one or more image files to attach to the current record.  
       - Click **Open** to confirm.  
       - The system will show the progress of adding the images.  
-      - If metadata is present (e.g., creation date, GPS coordinates), it will be automatically extracted. Other information must be edited manually afterwards.
 
 2. **Drag and drop**  
       - Drag image files from your file explorer.  
-      - Drop them directly into the images side panel.  
+      - Drop them directly into the images side panel.
+      - The system will show the progress of adding the images.  
+
+3. **Edit metadata**
+      - If metadata is present (e.g., creation date, GPS coordinates), it will be automatically extracted.
+      - Link the images to records using the dialog that opens.
+      - Other information must be edited manually afterwards.
 
 This flexibility allows quick integration of field photographs into the database.
 

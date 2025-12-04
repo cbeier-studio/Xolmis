@@ -1196,7 +1196,7 @@ type
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
     FPlantKeyFilter, FSamplingPlotKeyFilter, FEggKeyFilter: Integer;
-    FMediaTypes: TAttachMediaTypes;
+    FSupportedMediaTypes: TAttachMediaTypes;
     FCanToggle: Boolean;
     FIsResizing: Boolean;
     FIsMoving: Boolean;
@@ -1220,7 +1220,7 @@ type
       isAnAlias: Boolean = False);
     procedure AddVideo(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
     procedure ApplyDarkMode;
-    function AttachMediaDlg(aTableType: TTableType): TMediaAttachment;
+    function AttachMediaDlg(aTableType: TTableType; aMediaType: TAttachMediaTypes = []): TMediaAttachment;
     procedure CellKeyPress(Sender: TObject; var Key: Char);
 
     procedure ClearSearch;
@@ -1903,6 +1903,8 @@ var
   relPath: String;
   SearchRec: TSearchRec;
   CreationDate: TDateTime;
+  Media: TDocumentData;
+  Repo: TDocumentRepository;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -1917,53 +1919,66 @@ begin
     FindClose(SearchRec);
   end;
 
-  { #todo : Get document type from file extension }
-
   relPath := ExtractRelativePath(xSettings.DocumentsFolder, aFileName);
 
-  with aDataset do
-  begin
-    // Check if the document is in the dataset
-    if not RecordExists(tbDocuments, COL_DOCUMENT_PATH, relPath) then
-    begin
-      Append;
-      FieldByName(COL_DOCUMENT_PATH).AsString := relPath;
-    end
+  Repo := TDocumentRepository.Create(DMM.sqlCon);
+  Media := TDocumentData.Create();
+  try
+    case FTableType of
+      tbSamplingPlots:  Repo.FindBySamplingPlot(relPath, aAttachment.SamplingPlotId, Media);
+      tbProjects:       Repo.FindByProject(relPath, aAttachment.ProjectId, Media);
+      tbPermits:        Repo.FindByPermit(relPath, aAttachment.PermitId, Media);
+      tbIndividuals:    Repo.FindByIndividual(relPath, aAttachment.IndividualId, Media);
+      tbCaptures:       Repo.FindByCapture(relPath, aAttachment.CaptureId, Media);
+      tbNests:          Repo.FindByNest(relPath, aAttachment.NestId, Media);
+      tbMethods:        Repo.FindByMethod(relPath, aAttachment.MethodId, Media);
+      tbExpeditions:    Repo.FindByExpedition(relPath, aAttachment.ExpeditionId, Media);
+      tbSurveys:        Repo.FindBySurvey(relPath, aAttachment.SurveyId, Media);
+      tbSightings:      Repo.FindBySighting(relPath, aAttachment.SightingId, Media);
+      tbSpecimens:      Repo.FindBySpecimen(relPath, aAttachment.SpecimenId, Media);
     else
-    begin
-      Locate(COL_DOCUMENT_PATH, relPath, []);
-      Edit;
+      raise Exception.Create(rsErrorTableNotSupportedInDocuments);
     end;
-    FieldByName(COL_DOCUMENT_DATE).AsDateTime := CreationDate;
-    FieldByName(COL_DOCUMENT_TIME).AsDateTime := CreationDate;
+
+    if Media.IsNew then
+      Media.FileName := relPath;
+    Media.DocumentDate := CreationDate;
+    Media.DocumentTime := CreationDate;
+    Media.DocumentType := GetFileCategoryFromExt(ExtractFileExt(aFileName));
 
     if aAttachment.AuthorId > 0 then
-      FieldByName(COL_PERSON_ID).AsInteger := aAttachment.AuthorId;
+      Media.PersonId := aAttachment.AuthorId;
     if aAttachment.MethodId > 0 then
-      FieldByName(COL_METHOD_ID).AsInteger := aAttachment.MethodId;
+      Media.MethodId := aAttachment.MethodId;
     if aAttachment.IndividualId > 0 then
-      FieldByName(COL_INDIVIDUAL_ID).AsInteger := aAttachment.IndividualId;
+      Media.IndividualId := aAttachment.IndividualId;
     if aAttachment.CaptureId > 0 then
-      FieldByName(COL_CAPTURE_ID).AsInteger := aAttachment.CaptureId;
+      Media.CaptureId := aAttachment.CaptureId;
     if aAttachment.ExpeditionId > 0 then
-      FieldByName(COL_EXPEDITION_ID).AsInteger := aAttachment.ExpeditionId;
+      Media.ExpeditionId := aAttachment.ExpeditionId;
     if aAttachment.SurveyId > 0 then
-      FieldByName(COL_SURVEY_ID).AsInteger := aAttachment.SurveyId;
+      Media.SurveyId := aAttachment.SurveyId;
     if aAttachment.SightingId > 0 then
-      FieldByName(COL_SIGHTING_ID).AsInteger := aAttachment.SightingId;
+      Media.SightingId := aAttachment.SightingId;
     if aAttachment.NestId > 0 then
-      FieldByName(COL_NEST_ID).AsInteger := aAttachment.NestId;
+      Media.NestId := aAttachment.NestId;
     if aAttachment.SpecimenId > 0 then
-      FieldByName(COL_SPECIMEN_ID).AsInteger := aAttachment.SpecimenId;
+      Media.SpecimenId := aAttachment.SpecimenId;
     if aAttachment.SamplingPlotId > 0 then
-      FieldByName(COL_NET_STATION_ID).AsInteger := aAttachment.SamplingPlotId;
+      Media.SamplingPlotId := aAttachment.SamplingPlotId;
     if aAttachment.ProjectId > 0 then
-      FieldByName(COL_PROJECT_ID).AsInteger := aAttachment.ProjectId;
+      Media.ProjectId := aAttachment.ProjectId;
     if aAttachment.PermitId > 0 then
-      FieldByName(COL_PERMIT_ID).AsInteger := aAttachment.PermitId;
+      Media.PermitId := aAttachment.PermitId;
 
-    Post;
-    TSQLQuery(aDataSet).ApplyUpdates;
+    if Media.IsNew then
+      Repo.Insert(Media)
+    else
+      Repo.Update(Media);
+
+  finally
+    Media.Free;
+    Repo.Free;
   end;
 end;
 
@@ -2544,11 +2559,12 @@ begin
   icoReplacedBandFilter.Images := iIconsDark;
 end;
 
-function TfrmCustomGrid.AttachMediaDlg(aTableType: TTableType): TMediaAttachment;
+function TfrmCustomGrid.AttachMediaDlg(aTableType: TTableType; aMediaType: TAttachMediaTypes): TMediaAttachment;
 begin
   dlgAttachMedia := TdlgAttachMedia.Create(nil);
   with dlgAttachMedia do
   try
+    AttachmentType := aMediaType;
     case aTableType of
       tbSamplingPlots:
       begin
@@ -2655,6 +2671,7 @@ begin
     end;
     if ShowModal = mrOK then
     begin
+      Result.Loaded := True;
       Result.AuthorId := AuthorId;
       Result.LocalityId := LocalityId;
       Result.TaxonId := TaxonId;
@@ -2672,7 +2689,9 @@ begin
       Result.PermitId := PermitId;
       Result.SamplingPlotId := SamplingPlotId;
       Result.MethodId := MethodId;
-    end;
+    end
+    else
+      Result.Loaded := False;
   finally
     FreeAndNil(dlgAttachMedia);
   end;
@@ -5052,74 +5071,143 @@ begin
 end;
 
 procedure TfrmCustomGrid.FormDropFiles(Sender: TObject; const FileNames: array of string);
-const
-  SupportedImages: array of String = ('.png','.xpm','.bmp','.jpeg','.jpg','.jpe','.jfif','.tif','.tiff','.pbm','.pgm','.ppm');
-  SupportedAudios: array of String = ('.wav','.mp3','.aac','.flac', '.wma');
-  SupportedVideos: array of String = ('.avi','.mp4','.m4v','.mov','.wmv','.mkv');
-  SupportedDocs: array of String = ('.doc','.docx','.odt','.rtf','.txt','.md',
-    '.xls','.xlsx','.ods','.csv','.ppt','.pptx','.odp','.pdf','.r','.rmd','.py','.xml','.json','.htm','.html',
-    '.kml','.kmz','.gpx','.geojson','.shp','.qgs','.qgz','.psd','.ai','.cdr','.svg','.dxf','.wmf','.eps',
-    '.db','.dbf','.sqlite3','.sdb3','.fdb','.accdb');
 var
   i: Integer;
+  Ext: String;
   FAttachment: TMediaAttachment;
+  SupportedDocs: TStringList;
+  importingMediaTypes, unsupportedMedia: TAttachMediaTypes;
 begin
-  if not (sbShowImages.Visible) and not (sbShowImages.Visible) and not (sbShowImages.Visible) and
-    not (sbShowImages.Visible) then
+  if (FSupportedMediaTypes = []) then
   begin
     MsgDlg(rsTitleInformation, rsModuleDoesNotSupportAttachments, mtInformation);
     Exit;
   end;
 
-  FAttachment := AttachMediaDlg(FTableType);
-
-  dlgProgress := TdlgProgress.Create(nil);
+  SupportedDocs := TStringList.Create;
   try
-    dlgProgress.Show;
-    dlgProgress.Title := rsImportFilesTitle;
-    dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := Length(FileNames);
-    stopProcess := False;
-    Application.ProcessMessages;
-    if not DMM.sqlTrans.Active then
-      DMM.sqlCon.StartTransaction;
+    // Merge the supported documents list
+    SupportedDocs.AddStrings(TEXT_EXTENSIONS);
+    SupportedDocs.AddStrings(SPREADSHEET_EXTENSIONS);
+    SupportedDocs.AddStrings(PRESENTATION_EXTENSIONS);
+    SupportedDocs.AddStrings(SCRIPT_EXTENSIONS);
+    SupportedDocs.AddStrings(WEBPAGE_EXTENSIONS);
+    SupportedDocs.AddStrings(SOURCE_CODE_EXTENSIONS);
+    SupportedDocs.AddStrings(INTEROPERABLE_EXTENSIONS);
+    SupportedDocs.AddStrings(GIS_EXTENSIONS);
+    SupportedDocs.AddStrings(VECTORIAL_EXTENSIONS);
+    SupportedDocs.AddStrings(DATABASE_EXTENSIONS);
+    SupportedDocs.AddStrings(ARCHIVE_EXTENSIONS);
+    SupportedDocs.AddStrings(BIBLIOGRAPHY_EXTENSIONS);
+    SupportedDocs.AddStrings(STATISTIC_EXTENSIONS);
+    SupportedDocs.AddStrings(BIOINFORMATIC_EXTENSIONS);
+    SupportedDocs.AddStrings(METADATA_EXTENSIONS);
+    SupportedDocs.AddStrings(EBOOK_EXTENSIONS);
+    SupportedDocs.AddStrings(NOTES_EXTENSIONS);
+    SupportedDocs.AddStrings(UNSUPPORTED_IMAGE_EXTENSIONS);
+
+    // Get media types to be imported
+    importingMediaTypes := [];
+    dlgLoading.Show;
     try
+      Ext := EmptyStr;
+      dlgLoading.UpdateProgress(rsProgressPreparing, -1);
       for i := 0 to Length(FileNames) - 1 do
       begin
-        dlgProgress.Text := Format(rsProgressImportFiles, [i + 1, Length(FileNames)]);
+        Ext := LowerCase(ExtractFileExt(FileNames[i]));
 
-        if (sbShowImages.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedImages) then
-          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, FileNames[i], FAttachment)
+        if (Ext in SUPPORTED_IMAGE_EXTENSIONS) then
+          importingMediaTypes := importingMediaTypes + [amtImages]
         else
-        if (sbShowAudio.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedAudios) then
-          AddAudio(qAudios, FileNames[i], FAttachment)
+        if (Ext in SUPPORTED_AUDIO_EXTENSIONS) then
+          importingMediaTypes := importingMediaTypes + [amtAudios]
         else
-        if (sbShowVideos.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedVideos) then
-          AddVideo(qAudios, FileNames[i], FAttachment)
+        if (Ext in SUPPORTED_VIDEO_EXTENSIONS) then
+          importingMediaTypes := importingMediaTypes + [amtVideos]
         else
-        if (sbShowDocs.Visible) and (LowerCase(ExtractFileExt(FileNames[i])) in SupportedDocs) then
-          AddDocument(qDocs, FileNames[i], FAttachment);
+        if (SupportedDocs.IndexOf(Ext) <> -1) then
+          importingMediaTypes := importingMediaTypes + [amtDocuments];
 
-        dlgProgress.Position := i + 1;
         Application.ProcessMessages;
-        if stopProcess then
-          Break;
       end;
-      if stopProcess then
-        DMM.sqlTrans.RollbackRetaining
-      else
-        DMM.sqlTrans.CommitRetaining;
-    except
-      DMM.sqlTrans.RollbackRetaining;
-      raise;
+    finally
+      dlgLoading.Hide;
     end;
-    dlgProgress.Text := rsProgressFinishing;
-    dlgProgress.Position := Length(FileNames);
-    Application.ProcessMessages;
-    stopProcess := False;
+
+    // Check if there are unsupported files in the current module
+    unsupportedMedia := importingMediaTypes - FSupportedMediaTypes;
+    if unsupportedMedia <> [] then
+    begin
+      MsgDlg(rsTitleInformation, rsModuleDoesNotSupportSomeFilesBeingAttached, mtInformation);
+      Exit;
+    end;
+
+    // Show media attachment dialog
+    FAttachment := AttachMediaDlg(FTableType, importingMediaTypes);
+    // If the attachment was cancelled
+    if (FAttachment.Loaded = False) then
+      Exit;
+
+    // Show progress dialog
+    dlgProgress := TdlgProgress.Create(nil);
+    try
+      dlgProgress.Show;
+      dlgProgress.Title := rsImportFilesTitle;
+      dlgProgress.Text := rsProgressPreparing;
+      dlgProgress.Max := Length(FileNames);
+      stopProcess := False;
+      Application.ProcessMessages;
+      if not DMM.sqlTrans.Active then
+        DMM.sqlCon.StartTransaction;
+      try
+        Ext := EmptyStr;
+        for i := 0 to Length(FileNames) - 1 do
+        begin
+          dlgProgress.Text := Format(rsProgressImportFiles, [i + 1, Length(FileNames)]);
+
+          Ext := LowerCase(ExtractFileExt(FileNames[i]));
+
+          // Import media by type
+          if (sbShowImages.Visible) and (Ext in SUPPORTED_IMAGE_EXTENSIONS) then
+            AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, FileNames[i], FAttachment)
+          else
+          if (sbShowAudio.Visible) and (Ext in SUPPORTED_AUDIO_EXTENSIONS) then
+            AddAudio(qAudios, FileNames[i], FAttachment)
+          else
+          if (sbShowVideos.Visible) and (Ext in SUPPORTED_VIDEO_EXTENSIONS) then
+            AddVideo(qAudios, FileNames[i], FAttachment)
+          else
+          if (sbShowDocs.Visible) and (SupportedDocs.IndexOf(Ext) <> -1) then
+            AddDocument(qDocs, FileNames[i], FAttachment);
+
+          dlgProgress.Position := i + 1;
+          Application.ProcessMessages;
+          if stopProcess then
+            Break;
+        end;
+        if stopProcess then
+          DMM.sqlTrans.RollbackRetaining
+        else
+          DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+      dlgProgress.Text := rsProgressFinishing;
+      dlgProgress.Position := Length(FileNames);
+      Application.ProcessMessages;
+      stopProcess := False;
+
+      qImages.Refresh;
+      qAudios.Refresh;
+      qVideos.Refresh;
+      qDocs.Refresh;
+    finally
+      dlgProgress.Close;
+      FreeAndNil(dlgProgress);
+    end;
   finally
-    dlgProgress.Close;
-    FreeAndNil(dlgProgress);
+    FreeAndNil(SupportedDocs);
   end;
 end;
 
@@ -6451,7 +6539,7 @@ var
 begin
   ImgIndex := -1;
 
-  if Column.FieldName = 'document_type' then
+  if Column.FieldName = COL_DOCUMENT_TYPE then
   begin
     // Get image index from cell value
     case Column.Field.AsString of
@@ -6478,6 +6566,8 @@ begin
     begin
       // Calc scale factor for the screen DPI
       ScaleFactor := Screen.PixelsPerInch / 96; // 96 DPI is the default
+
+      gridDocs.Canvas.FillRect(Rect);
 
       // Calc scaled dimensions, keeping proportion
       TargetWidth := Round((Rect.Width - 4) * ScaleFactor); // 2 pixels of margin on both sides
@@ -6845,7 +6935,10 @@ begin
   DMM.OpenDocs.InitialDir := xSettings.DocumentsFolder;
   if DMM.OpenDocs.Execute then
   begin
-    FAttachment := AttachMediaDlg(FTableType);
+    FAttachment := AttachMediaDlg(FTableType, [amtDocuments]);
+    // If the attachment was cancelled
+    if (FAttachment.Loaded = False) then
+      Exit;
 
     dlgProgress := TdlgProgress.Create(nil);
     try
@@ -6862,7 +6955,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportDocs, [i + 1, DMM.OpenDocs.Files.Count]);
 
-          AddDocument(qDocs, DMM.OpenDocs.Files[i]);
+          AddDocument(qDocs, DMM.OpenDocs.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -8575,7 +8668,19 @@ begin
     'cod': aText := rsDocCode;
     'db':  aText := rsDocDatabase;
     'gis': aText := rsDocGis;
-    'oth': aText := rsDocOther;
+    'scr': aText := rsDocScript;
+    'web': aText := rsDocWebpage;
+    'ds':  aText := rsDocDataset;
+    'sta': aText := rsDocStatistic;
+    'vec': aText := rsDocVectorial;
+    'arc': aText := rsDocArchive;
+    'bib': aText := rsDocBibliography;
+    'met': aText := rsDocMetadata;
+    'gen': aText := rsDocBioinformatic;
+    'ebk': aText := rsDocEbook;
+    'not': aText := rsDocNote;
+  else
+    aText := rsDocOther;
   end;
 
   DisplayText := True;
@@ -8966,7 +9071,10 @@ begin
   DMM.OpenAudios.InitialDir := xSettings.AudiosFolder;
   if DMM.OpenAudios.Execute then
   begin
-    FAttachment := AttachMediaDlg(FTableType);
+    FAttachment := AttachMediaDlg(FTableType, [amtAudios]);
+    // If the attachment was cancelled
+    if (FAttachment.Loaded = False) then
+      Exit;
 
     dlgProgress := TdlgProgress.Create(nil);
     try
@@ -9065,7 +9173,10 @@ begin
   DMM.OpenImgs.InitialDir := xSettings.ImagesFolder;
   if DMM.OpenImgs.Execute then
   begin
-    FAttachment := AttachMediaDlg(FTableType);
+    FAttachment := AttachMediaDlg(FTableType, [amtImages]);
+    // If the attachment was cancelled
+    if (FAttachment.Loaded = False) then
+      Exit;
 
     dlgProgress := TdlgProgress.Create(nil);
     try
@@ -9137,7 +9248,10 @@ begin
   DMM.OpenVideos.InitialDir := xSettings.VideosFolder;
   if DMM.OpenVideos.Execute then
   begin
-    FAttachment := AttachMediaDlg(FTableType);
+    FAttachment := AttachMediaDlg(FTableType, [amtVideos]);
+    // If the attachment was cancelled
+    if (FAttachment.Loaded = False) then
+      Exit;
 
     dlgProgress := TdlgProgress.Create(nil);
     try
@@ -9154,7 +9268,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportVideos, [i + 1, DMM.OpenVideos.Files.Count]);
 
-          AddVideo(qVideos, DMM.OpenVideos.Files[i]);
+          AddVideo(qVideos, DMM.OpenVideos.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -12449,7 +12563,7 @@ end;
 procedure TfrmCustomGrid.SetGridAndChild;
 begin
   FChildTable := tbNone;
-  FMediaTypes := [];
+  FSupportedMediaTypes := [];
 
   case FTableType of
     tbInstitutions:   SetGridInstitutions;
@@ -12531,7 +12645,7 @@ procedure TfrmCustomGrid.SetGridCaptures;
 begin
   Caption := rsTitleCaptures;
   FSearch.DataSet := DMG.qCaptures;
-  FMediaTypes := [amtImages, amtVideos, amtDocuments];
+  FSupportedMediaTypes := [amtImages, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_CAPTURE_DATE, sdDescending);
 
@@ -12597,7 +12711,7 @@ procedure TfrmCustomGrid.SetGridEggs;
 begin
   Caption := rsTitleEggs;
   FSearch.DataSet := DMG.qEggs;
-  FMediaTypes := [amtImages];
+  FSupportedMediaTypes := [amtImages];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12618,7 +12732,7 @@ procedure TfrmCustomGrid.SetGridExpeditions;
 begin
   Caption := rsCaptionExpeditions;
   FSearch.DataSet := DMG.qExpeditions;
-  FMediaTypes := [amtDocuments];
+  FSupportedMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_START_DATE, sdDescending);
 
@@ -12650,7 +12764,7 @@ procedure TfrmCustomGrid.SetGridFeathers;
 begin
   Caption := rsCaptionFeathers;
   FSearch.DataSet := DMG.qFeathers;
-  FMediaTypes := [amtImages];
+  FSupportedMediaTypes := [amtImages];
   // Set the default data sorting
   AddSortedField(COL_SAMPLE_DATE, sdDescending);
 
@@ -12694,7 +12808,7 @@ procedure TfrmCustomGrid.SetGridIndividuals;
 begin
   Caption := rsTitleIndividuals;
   FSearch.DataSet := DMG.qIndividuals;
-  FMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
+  FSupportedMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12751,7 +12865,7 @@ procedure TfrmCustomGrid.SetGridMethods;
 begin
   Caption := rsTitleMethods;
   FSearch.DataSet := DMG.qMethods;
-  FMediaTypes := [amtDocuments];
+  FSupportedMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_METHOD_NAME, sdAscending);
 
@@ -12767,7 +12881,7 @@ procedure TfrmCustomGrid.SetGridNests;
 begin
   Caption := rsTitleNests;
   FSearch.DataSet := DMG.qNests;
-  FMediaTypes := [amtImages, amtVideos, amtDocuments];
+  FSupportedMediaTypes := [amtImages, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12824,7 +12938,7 @@ procedure TfrmCustomGrid.SetGridSamplingPlots;
 begin
   Caption := rsTitleSamplingPlots;
   FSearch.DataSet := DMG.qSamplingPlots;
-  FMediaTypes := [amtDocuments];
+  FSupportedMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12854,7 +12968,7 @@ procedure TfrmCustomGrid.SetGridPeople;
 begin
   Caption := rsTitleResearchers;
   FSearch.DataSet := DMG.qPeople;
-  FMediaTypes := [amtDocuments];
+  FSupportedMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12870,7 +12984,7 @@ procedure TfrmCustomGrid.SetGridPermits;
 begin
   Caption := rsTitlePermits;
   FSearch.DataSet := DMG.qPermits;
-  FMediaTypes := [amtDocuments];
+  FSupportedMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_PERMIT_NAME, sdAscending);
 
@@ -12888,7 +13002,7 @@ procedure TfrmCustomGrid.SetGridProjects;
 begin
   Caption := rsTitleProjects;
   FSearch.DataSet := DMG.qProjects;
-  FMediaTypes := [amtDocuments];
+  FSupportedMediaTypes := [amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_PROJECT_TITLE, sdAscending);
 
@@ -12920,7 +13034,7 @@ procedure TfrmCustomGrid.SetGridSightings;
 begin
   Caption := rsTitleSightings;
   FSearch.DataSet := DMG.qSightings;
-  FMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
+  FSupportedMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_SIGHTING_DATE, sdDescending);
 
@@ -12947,7 +13061,7 @@ procedure TfrmCustomGrid.SetGridSpecimens;
 begin
   Caption := rsTitleSpecimens;
   FSearch.DataSet := DMG.qSpecimens;
-  FMediaTypes := [amtImages, amtAudios, amtDocuments];
+  FSupportedMediaTypes := [amtImages, amtAudios, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_FULL_NAME, sdAscending);
 
@@ -12984,7 +13098,7 @@ procedure TfrmCustomGrid.SetGridSurveys;
 begin
   Caption := rsTitleSurveys;
   FSearch.DataSet := DMG.qSurveys;
-  FMediaTypes := [amtImages, amtVideos, amtDocuments];
+  FSupportedMediaTypes := [amtImages, amtVideos, amtDocuments];
   // Set the default data sorting
   AddSortedField(COL_SURVEY_DATE, sdDescending);
 

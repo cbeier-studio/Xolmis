@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 4;
+  SCHEMA_VERSION: Integer = 5;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -794,8 +794,18 @@ begin
         Result := True;
       end;
 
+      if OldVersion < 5 then
+      begin
+        LogDebug('Upgrading database schema to version 5');
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE feathers ADD COLUMN full_name VARCHAR (200);');
+
+        Result := True;
+      end;
+
       if Result then
       begin
+        WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
         DMM.sqlTrans.CommitRetaining;
         //MsgDlg(rsTitleInformation, rsSuccessfulDatabaseUpgrade, mtInformation);
         LogInfo('User database succesfully upgraded');
@@ -816,8 +826,8 @@ begin
     dlgLoading.Hide;
   end;
 
-  if Result then
-    WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
+  //if Result then
+  //  WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
 end;
 
 function ReadDatabaseMetadata(Connection: TSQLConnector; aKey: String): String;
@@ -2085,6 +2095,7 @@ begin
     'growth_bar_width REAL,' +
     'barb_density     REAL,' +
     'feather_age      VARCHAR (5),' +
+    'full_name        VARCHAR (200),' +
     'notes            TEXT,' +
     'user_inserted    INTEGER,' +
     'user_updated     INTEGER,' +

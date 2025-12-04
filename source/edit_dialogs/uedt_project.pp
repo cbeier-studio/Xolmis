@@ -281,6 +281,8 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscShortTitle]));
 
   // Dates
+  vsd1 := False;
+  ved1 := False;
   if (eStartDate.Text <> EmptyStr) then
     vsd1 := ValidDate(eStartDate.Text, rscStartDate, Msgs);
   if (eEndDate.Text <> EmptyStr) then

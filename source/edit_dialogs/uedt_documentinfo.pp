@@ -191,11 +191,23 @@ begin
   cbDocumentType.Items.Add(rsDocSpreadsheet);
   cbDocumentType.Items.Add(rsDocPresentation);
   cbDocumentType.Items.Add(rsDocPdf);
+  cbDocumentType.Items.Add(rsDocWebpage);
+  cbDocumentType.Items.Add(rsDocScript);
   cbDocumentType.Items.Add(rsDocCode);
+  cbDocumentType.Items.Add(rsDocDataset);
   cbDocumentType.Items.Add(rsDocImage);
+  cbDocumentType.Items.Add(rsDocVectorial);
   cbDocumentType.Items.Add(rsDocAudio);
+  cbDocumentType.Items.Add(rsDocVideo);
   cbDocumentType.Items.Add(rsDocDatabase);
   cbDocumentType.Items.Add(rsDocGis);
+  cbDocumentType.Items.Add(rsDocArchive);
+  cbDocumentType.Items.Add(rsDocBibliography);
+  cbDocumentType.Items.Add(rsDocStatistic);
+  cbDocumentType.Items.Add(rsDocBioinformatic);
+  cbDocumentType.Items.Add(rsDocEbook);
+  cbDocumentType.Items.Add(rsDocNote);
+  cbDocumentType.Items.Add(rsDocMetadata);
   cbDocumentType.Items.Add(rsDocOther);
 
   if not FIsNew then
@@ -204,7 +216,32 @@ end;
 
 procedure TedtDocumentInfo.GetRecord;
 begin
-  cbDocumentType.Text := FDocument.DocumentType;
+  case FDocument.DocumentType of
+    fcUrl:            cbDocumentType.Text := rsDocUrl;
+    fcText:           cbDocumentType.Text := rsDocDocument;
+    fcSpreadsheet:    cbDocumentType.Text := rsDocSpreadsheet;
+    fcPresentation:   cbDocumentType.Text := rsDocPresentation;
+    fcPdf:            cbDocumentType.Text := rsDocPdf;
+    fcWebpage:        cbDocumentType.Text := rsDocWebpage;
+    fcScript:         cbDocumentType.Text := rsDocScript;
+    fcSourceCode:     cbDocumentType.Text := rsDocCode;
+    fcDataset:        cbDocumentType.Text := rsDocDataset;
+    fcDatabase:       cbDocumentType.Text := rsDocDatabase;
+    fcGis:            cbDocumentType.Text := rsDocGis;
+    fcArchive:        cbDocumentType.Text := rsDocArchive;
+    fcImage:          cbDocumentType.Text := rsDocImage;
+    fcAudio:          cbDocumentType.Text := rsDocAudio;
+    fcVideo:          cbDocumentType.Text := rsDocVideo;
+    fcVectorial:      cbDocumentType.Text := rsDocVectorial;
+    fcBibliography:   cbDocumentType.Text := rsDocBibliography;
+    fcStatistic:      cbDocumentType.Text := rsDocStatistic;
+    fcBioinformatic:  cbDocumentType.Text := rsDocBioinformatic;
+    fcEbook:          cbDocumentType.Text := rsDocEbook;
+    fcNote:           cbDocumentType.Text := rsDocNote;
+    fcMetadata:       cbDocumentType.Text := rsDocMetadata;
+  else
+    cbDocumentType.Text := rsDocOther;
+  end;
   eDocumentTitle.Text := FDocument.Name;
   eDocumentDate.Text := DateToStr(FDocument.DocumentDate);
   eDocumentTime.Text := TimeToStr(FDocument.DocumentTime);
@@ -244,7 +281,73 @@ end;
 
 procedure TedtDocumentInfo.SetRecord;
 begin
-  FDocument.DocumentType := cbDocumentType.Text;
+  if cbDocumentType.Text = rsDocUrl then
+    FDocument.DocumentType := fcUrl
+  else
+  if cbDocumentType.Text = rsDocDocument then
+    FDocument.DocumentType := fcText
+  else
+  if cbDocumentType.Text = rsDocSpreadsheet then
+    FDocument.DocumentType := fcSpreadsheet
+  else
+  if cbDocumentType.Text = rsDocPresentation then
+    FDocument.DocumentType := fcPresentation
+  else
+  if cbDocumentType.Text = rsDocPdf then
+    FDocument.DocumentType := fcPdf
+  else
+  if cbDocumentType.Text = rsDocWebpage then
+    FDocument.DocumentType := fcWebpage
+  else
+  if cbDocumentType.Text = rsDocScript then
+    FDocument.DocumentType := fcScript
+  else
+  if cbDocumentType.Text = rsDocCode then
+    FDocument.DocumentType := fcSourceCode
+  else
+  if cbDocumentType.Text = rsDocDataset then
+    FDocument.DocumentType := fcDataset
+  else
+  if cbDocumentType.Text = rsDocDatabase then
+    FDocument.DocumentType := fcDatabase
+  else
+  if cbDocumentType.Text = rsDocGis then
+    FDocument.DocumentType := fcGis
+  else
+  if cbDocumentType.Text = rsDocArchive then
+    FDocument.DocumentType := fcArchive
+  else
+  if cbDocumentType.Text = rsDocImage then
+    FDocument.DocumentType := fcImage
+  else
+  if cbDocumentType.Text = rsDocVectorial then
+    FDocument.DocumentType := fcVectorial
+  else
+  if cbDocumentType.Text = rsDocAudio then
+    FDocument.DocumentType := fcAudio
+  else
+  if cbDocumentType.Text = rsDocVideo then
+    FDocument.DocumentType := fcVideo
+  else
+  if cbDocumentType.Text = rsDocBibliography then
+    FDocument.DocumentType := fcBibliography
+  else
+  if cbDocumentType.Text = rsDocStatistic then
+    FDocument.DocumentType := fcStatistic
+  else
+  if cbDocumentType.Text = rsDocBioinformatic then
+    FDocument.DocumentType := fcBioinformatic
+  else
+  if cbDocumentType.Text = rsDocEbook then
+    FDocument.DocumentType := fcEbook
+  else
+  if cbDocumentType.Text = rsDocNote then
+    FDocument.DocumentType := fcNote
+  else
+  if cbDocumentType.Text = rsDocMetadata then
+    FDocument.DocumentType := fcMetadata
+  else
+    FDocument.DocumentType := fcOther;
   FDocument.Name         := eDocumentTitle.Text;
   FDocument.DocumentDate := TextToDate(eDocumentDate.Text);
   FDocument.DocumentTime := TextToTime(eDocumentTime.Text);

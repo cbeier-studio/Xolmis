@@ -26,12 +26,17 @@ Você pode adicionar gravações de duas maneiras:
       - Clique no botão **Adicionar** :material-plus-circle: na barra de ferramentas do painel lateral de gravações.  
       - Selecione um ou mais arquivos para anexar ao registro atual.  
       - Clique em **Abrir** para confirmar.  
-      - O sistema exibirá o progresso do envio.  
-      - Se metadados estiverem presentes (ex.: data de criação), eles serão extraídos automaticamente. Outras informações devem ser editadas manualmente depois.
+      - O sistema exibirá o progresso da adição das gravações.  
 
 2. **Arrastar e soltar**  
       - Arraste arquivos de áudio do explorador de arquivos.  
       - Solte-os diretamente no painel lateral de gravações.  
+      - O sistema exibirá o progresso da adição das gravações.  
+
+3. **Editar metadados**
+      - Se metadados estiverem presentes (ex.: data de criação), eles serão extraídos automaticamente.
+      - Relacione as gravações de áudio a registros usando o diálogo que é aberto.
+      - Outras informações devem ser editadas manualmente depois.
 
 Essa flexibilidade permite integrar rapidamente gravações de campo ao banco de dados.
 

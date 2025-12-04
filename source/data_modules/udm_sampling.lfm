@@ -3357,7 +3357,7 @@ object DMS: TDMS
     end
     object qSurveyTeamperson_acronym: TStringField
       Alignment = taCenter
-      DisplayLabel = 'Acronym'
+      DisplayLabel = 'Abbreviation'
       FieldKind = fkData
       FieldName = 'person_acronym'
       Index = 4

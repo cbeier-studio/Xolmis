@@ -71,6 +71,7 @@ type
     procedure FindCaptures(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindEggs(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindExpeditions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure FindFeathers(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindGazetteer(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindIndividuals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
     procedure FindInstitutions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
@@ -328,6 +329,33 @@ begin
       fvReset:
         begin
           Add('WHERE (expedition_name ' + Operador + ' :VALPARAM) ');
+          Add('AND (active_status = 1)');
+        end;
+      fvAll:
+        Add('WHERE (active_status = 1)');
+      fvMarked:
+        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+      fvDeleted:
+        Add('WHERE (active_status = 0)');
+    end;
+  end;
+end;
+
+procedure TdlgFind.FindFeathers(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+var
+  Operador: String;
+begin
+  Operador := GetCriteria(aCriteria);
+
+  with aSQL do
+  begin
+    Add('SELECT feather_id, full_name FROM feathers ');
+    case aFilter of
+      fvNone:
+        ; // do nothing
+      fvReset:
+        begin
+          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
           Add('AND (active_status = 1)');
         end;
       fvAll:
@@ -1161,6 +1189,7 @@ begin
     tbBands:          SetupFields('band_id', 'full_name');
     tbIndividuals:    SetupFields('individual_id', 'full_name');
     tbCaptures:       SetupFields('capture_id', 'full_name');
+    tbFeathers:       SetupFields('feather_id', 'full_name');
     //tbImages: ;
     //tbAudioLibrary: ;
   end;
@@ -1372,6 +1401,7 @@ begin
       tbBands:          FindBands(aSQL, aFilter, aCriteria);
       tbIndividuals:    FindIndividuals(aSQL, aFilter, aCriteria);
       tbCaptures:       FindCaptures(aSQL, aFilter, aCriteria);
+      tbFeathers:       FindFeathers(aSQL, aFilter, aCriteria);
       //tbImages: ;
       //tbAudioLibrary: ;
     end;
@@ -1456,6 +1486,7 @@ begin
       tbBands:          SetupResult('band_id', 'full_name');
       tbIndividuals:    SetupResult('individual_id', 'full_name');
       tbCaptures:       SetupResult('capture_id', 'full_name');
+      tbFeathers:       SetupResult('feather_id', 'full_name');
       //tbImages: ;
       //tbAudioLibrary: ;
     end;

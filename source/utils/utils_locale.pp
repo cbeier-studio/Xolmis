@@ -188,6 +188,7 @@ uses
     rsErrorLoadingDataFromJSONFile = 'Error loading data from the JSON file: %s';
     rsErrorModuleIsDifferent = 'The file module is different from the Quick Entry module.';
     rsErrorNoImporterRegisteredForExtension = 'No importer registered for %s';
+    rsErrorTableNotSupportedInDocuments = 'Table not supported in documents and links.';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
@@ -303,6 +304,7 @@ uses
     rsBatchCanceledByUser = 'Operation was canceled by user.';
     rsImportingFile = 'Importing file %s';
     rsModuleDoesNotSupportAttachments = 'This module does not support file attachments.';
+    rsModuleDoesNotSupportSomeFilesBeingAttached = 'This module does not support some files being attached.';
 
     { Loading messages }
     rsLoadingForm = 'Loading %s...';
@@ -1172,6 +1174,17 @@ uses
     rsDocVideo = 'Video';
     rsDocCode = 'Source code';
     rsDocGis = 'GIS file';
+    rsDocScript = 'Script';
+    rsDocWebpage = 'Webpage';
+    rsDocDataset = 'Dataset';
+    rsDocStatistic = 'Statistic';
+    rsDocVectorial = 'Vectorial';
+    rsDocArchive = 'Archive';
+    rsDocBibliography = 'Bibliography';
+    rsDocMetadata = 'Metadata';
+    rsDocBioinformatic = 'Bioinformatic';
+    rsDocEbook = 'eBook';
+    rsDocNote = 'Note';
     rsDocOther = 'Other';
 
     { CSV options }
