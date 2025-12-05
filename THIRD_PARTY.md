@@ -1,33 +1,727 @@
-# Third-party announcements
+# Third-Party Notices
 
-## HtmlViewer (v) 11
+## Countries + States + Cities
 
-Copyright (c) 1995 - 2008 by L. David Baldwin
+Data by Countries States Cities Database
+https://github.com/dr5hn/countries-states-cities-database | ODbL v1.0
 
-Copyright (c) 2008 - 2009 by Sebastian Zierer (Delphi 2009 Port)
+### ODC Open Database License (ODbL)
 
-Copyright (c) 2008 - 2010 by Arvid Winkelsdorf (Fixes)
+**Preamble**
 
-Copyright (c) 2009 - 2022 by Bernd Gabriel (Fixes, Enhancements)
+The Open Database License (ODbL) is a license agreement intended to
+allow users to freely share, modify, and use this Database while
+maintaining this same freedom for others. Many databases are covered by
+copyright, and therefore this document licenses these rights. Some
+jurisdictions, mainly in the European Union, have specific rights that
+cover databases, and so the ODbL addresses these rights, too. Finally,
+the ODbL is also an agreement in contract for users of this Database to
+act in certain ways in return for accessing this Database.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: 
+Databases can contain a wide variety of types of content (images,
+audiovisual material, and sounds all in the same database, for example),
+and so the ODbL only governs the rights over the Database, and not the
+contents of the Database individually. Licensors should use the ODbL
+together with another license for the contents, if the contents have a
+single set of rights that uniformly covers all of the contents. If the
+contents have multiple sets of different rights, Licensors should
+describe what rights govern what contents together in the individual
+record or in some other way that clarifies what rights apply. 
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. 
+Sometimes the contents of a database, or the database itself, can be
+covered by other rights not addressed here (such as private contracts,
+trade mark over the name, or privacy rights / data protection rights
+over information in the contents), and so you are advised that you may
+have to consult other documents or clear other rights before doing
+activities not covered by this License.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+The Licensor (as defined below) 
 
-Note that the source modules HTMLGIF1.PAS, DITHERUNIT.PAS and HTMLMISC.PAS are covered by separate copyright notices located in those modules:
+and 
 
-Copyright (c) 1995 - 2008 by Anders Melander (DitherUnit.pas)
+You (as defined below) 
 
-Copyright (c) 1995 - 2008 by Ron Collins (HtmlGif1.pas)
+agree as follows: 
 
-Copyright (c) 2006 - 2009 by Phil Hess (HtmlMisc.pas)
+**1.0 Definitions of Capitalised Words**
 
-------------------------------------------------------------------------
+"Collective Database" - Means this Database in unmodified form as part
+of a collection of independent databases in themselves that together are
+assembled into a collective whole. A work that constitutes a Collective
+Database will not be considered a Derivative Database.
 
-## IBX - ibcontrols.lpk
+"Convey" - As a verb, means Using the Database, a Derivative Database,
+or the Database as part of a Collective Database in any way that enables
+a Person to make or receive copies of the Database or a Derivative
+Database.  Conveying does not include interaction with a user through a
+computer network, or creating and Using a Produced Work, where no
+transfer of a copy of the Database or a Derivative Database occurs.
+"Contents" - The contents of this Database, which includes the
+information, independent works, or other material collected into the
+Database. For example, the contents of the Database could be factual
+data or works such as images, audiovisual material, text, or sounds.
+
+"Database" - A collection of material (the Contents) arranged in a
+systematic or methodical way and individually accessible by electronic
+or other means offered under the terms of this License.
+
+"Database Directive" - Means Directive 96/9/EC of the European
+Parliament and of the Council of 11 March 1996 on the legal protection
+of databases, as amended or succeeded.
+
+"Database Right" - Means rights resulting from the Chapter III ("sui
+generis") rights in the Database Directive (as amended and as transposed
+by member states), which includes the Extraction and Re-utilisation of
+the whole or a Substantial part of the Contents, as well as any similar
+rights available in the relevant jurisdiction under Section 10.4. 
+
+"Derivative Database" - Means a database based upon the Database, and
+includes any translation, adaptation, arrangement, modification, or any
+other alteration of the Database or of a Substantial part of the
+Contents. This includes, but is not limited to, Extracting or
+Re-utilising the whole or a Substantial part of the Contents in a new
+Database.
+
+"Extraction" - Means the permanent or temporary transfer of all or a
+Substantial part of the Contents to another medium by any means or in
+any form.
+
+"License" - Means this license agreement and is both a license of rights
+such as copyright and Database Rights and an agreement in contract.
+
+"Licensor" - Means the Person that offers the Database under the terms
+of this License. 
+
+"Person" - Means a natural or legal person or a body of persons
+corporate or incorporate.
+
+"Produced Work" -  a work (such as an image, audiovisual material, text,
+or sounds) resulting from using the whole or a Substantial part of the
+Contents (via a search or other query) from this Database, a Derivative
+Database, or this Database as part of a Collective Database.  
+
+"Publicly" - means to Persons other than You or under Your control by
+either more than 50% ownership or by the power to direct their
+activities (such as contracting with an independent consultant). 
+
+"Re-utilisation" - means any form of making available to the public all
+or a Substantial part of the Contents by the distribution of copies, by
+renting, by online or other forms of transmission.
+
+"Substantial" - Means substantial in terms of quantity or quality or a
+combination of both. The repeated and systematic Extraction or
+Re-utilisation of insubstantial parts of the Contents may amount to the
+Extraction or Re-utilisation of a Substantial part of the Contents.
+
+"Use" - As a verb, means doing any act that is restricted by copyright
+or Database Rights whether in the original medium or any other; and
+includes without limitation distributing, copying, publicly performing,
+publicly displaying, and preparing derivative works of the Database, as
+well as modifying the Database as may be technically necessary to use it
+in a different mode or format. 
+
+"You" - Means a Person exercising rights under this License who has not
+previously violated the terms of this License with respect to the
+Database, or who has received express permission from the Licensor to
+exercise rights under this License despite a previous violation.
+
+Words in the singular include the plural and vice versa.
+
+**2.0 What this License covers**
+
+2.1. Legal effect of this document. This License is:
+
+  a. A license of applicable copyright and neighbouring rights;
+
+  b. A license of the Database Right; and
+
+  c. An agreement in contract between You and the Licensor.
+
+2.2 Legal rights covered. This License covers the legal rights in the
+Database, including:
+
+  a. Copyright. Any copyright or neighbouring rights in the Database.
+  The copyright licensed includes any individual elements of the
+  Database, but does not cover the copyright over the Contents
+  independent of this Database. See Section 2.4 for details. Copyright
+  law varies between jurisdictions, but is likely to cover: the Database
+  model or schema, which is the structure, arrangement, and organisation
+  of the Database, and can also include the Database tables and table
+  indexes; the data entry and output sheets; and the Field names of
+  Contents stored in the Database;
+
+  b. Database Rights. Database Rights only extend to the Extraction and
+  Re-utilisation of the whole or a Substantial part of the Contents.
+  Database Rights can apply even when there is no copyright over the
+  Database. Database Rights can also apply when the Contents are removed
+  from the Database and are selected and arranged in a way that would
+  not infringe any applicable copyright; and
+
+  c. Contract. This is an agreement between You and the Licensor for
+  access to the Database. In return you agree to certain conditions of
+  use on this access as outlined in this License. 
+
+2.3 Rights not covered. 
+
+  a. This License does not apply to computer programs used in the making
+  or operation of the Database; 
+
+  b. This License does not cover any patents over the Contents or the
+  Database; and
+
+  c. This License does not cover any trademarks associated with the
+  Database. 
+
+2.4 Relationship to Contents in the Database. The individual items of
+the Contents contained in this Database may be covered by other rights,
+including copyright, patent, data protection, privacy, or personality
+rights, and this License does not cover any rights (other than Database
+Rights or in contract) in individual Contents contained in the Database.
+For example, if used on a Database of images (the Contents), this
+License would not apply to copyright over individual images, which could
+have their own separate licenses, or one single license covering all of
+the rights over the images.  
+
+**3.0 Rights granted**
+
+3.1 Subject to the terms and conditions of this License, the Licensor
+grants to You a worldwide, royalty-free, non-exclusive, terminable (but
+only under Section 9) license to Use the Database for the duration of
+any applicable copyright and Database Rights. These rights explicitly
+include commercial use, and do not exclude any field of endeavour. To
+the extent possible in the relevant jurisdiction, these rights may be
+exercised in all media and formats whether now known or created in the
+future. 
+
+The rights granted cover, for example:
+
+  a. Extraction and Re-utilisation of the whole or a Substantial part of
+  the Contents;
+
+  b. Creation of Derivative Databases;
+
+  c. Creation of Collective Databases;
+
+  d. Creation of temporary or permanent reproductions by any means and
+  in any form, in whole or in part, including of any Derivative
+  Databases or as a part of Collective Databases; and
+
+  e. Distribution, communication, display, lending, making available, or
+  performance to the public by any means and in any form, in whole or in
+  part, including of any Derivative Database or as a part of Collective
+  Databases.
+
+3.2 Compulsory license schemes. For the avoidance of doubt:
+
+  a. Non-waivable compulsory license schemes. In those jurisdictions in
+  which the right to collect royalties through any statutory or
+  compulsory licensing scheme cannot be waived, the Licensor reserves
+  the exclusive right to collect such royalties for any exercise by You
+  of the rights granted under this License;
+
+  b. Waivable compulsory license schemes. In those jurisdictions in
+  which the right to collect royalties through any statutory or
+  compulsory licensing scheme can be waived, the Licensor waives the
+  exclusive right to collect such royalties for any exercise by You of
+  the rights granted under this License; and,
+
+  c. Voluntary license schemes. The Licensor waives the right to collect
+  royalties, whether individually or, in the event that the Licensor is
+  a member of a collecting society that administers voluntary licensing
+  schemes, via that society, from any exercise by You of the rights
+  granted under this License.
+
+3.3 The right to release the Database under different terms, or to stop
+distributing or making available the Database, is reserved. Note that
+this Database may be multiple-licensed, and so You may have the choice
+of using alternative licenses for this Database. Subject to Section
+10.4, all other rights not expressly granted by Licensor are reserved.
+
+**4.0 Conditions of Use**
+
+4.1 The rights granted in Section 3 above are expressly made subject to
+Your complying with the following conditions of use. These are important
+conditions of this License, and if You fail to follow them, You will be
+in material breach of its terms.
+
+4.2 Notices. If You Publicly Convey this Database, any Derivative
+Database, or the Database as part of a Collective Database, then You
+must: 
+
+  a. Do so only under the terms of this License or another license
+  permitted under Section 4.4;
+
+  b. Include a copy of this License (or, as applicable, a license
+  permitted under Section 4.4) or its Uniform Resource Identifier (URI)
+  with the Database or Derivative Database, including both in the
+  Database or Derivative Database and in any relevant documentation; and
+
+  c. Keep intact any copyright or Database Right notices and notices
+  that refer to this License.
+
+  d. If it is not possible to put the required notices in a particular
+  file due to its structure, then You must include the notices in a
+  location (such as a relevant directory) where users would be likely to
+  look for it.
+
+4.3 Notice for using output (Contents). Creating and Using a Produced
+Work does not require the notice in Section 4.2. However, if you
+Publicly Use a Produced Work, You must include a notice associated with
+the Produced Work reasonably calculated to make any Person that uses,
+views, accesses, interacts with, or is otherwise exposed to the Produced
+Work aware that Content was obtained from the Database, Derivative
+Database, or the Database as part of a Collective Database, and that it
+is available under this License.
+
+  a. Example notice. The following text will satisfy notice under
+  Section 4.3:
+
+        Contains information from DATABASE NAME, which is made available
+        here under the Open Database License (ODbL).
+
+DATABASE NAME should be replaced with the name of the Database and a
+hyperlink to the URI of the Database. "Open Database License" should
+contain a hyperlink to the URI of the text of this License. If
+hyperlinks are not possible, You should include the plain text of the
+required URI's with the above notice.
+ 
+4.4 Share alike. 
+
+  a. Any Derivative Database that You Publicly Use must be only under
+  the terms of: 
+
+    i. This License;
+
+    ii. A later version of this License similar in spirit to this
+      License; or
+
+    iii. A compatible license. 
+
+  If You license the Derivative Database under one of the licenses
+  mentioned in (iii), You must comply with the terms of that license. 
+
+  b. For the avoidance of doubt, Extraction or Re-utilisation of the
+  whole or a Substantial part of the Contents into a new database is a
+  Derivative Database and must comply with Section 4.4. 
+
+  c. Derivative Databases and Produced Works.  A Derivative Database is
+  Publicly Used and so must comply with Section 4.4. if a Produced Work
+  created from the Derivative Database is Publicly Used.
+
+  d. Share Alike and additional Contents. For the avoidance of doubt,
+  You must not add Contents to Derivative Databases under Section 4.4 a
+  that are incompatible with the rights granted under this License. 
+
+  e. Compatible licenses. Licensors may authorise a proxy to determine
+  compatible licenses under Section 4.4 a iii. If they do so, the
+  authorised proxy's public statement of acceptance of a compatible
+  license grants You permission to use the compatible license.
+
+
+4.5 Limits of Share Alike.  The requirements of Section 4.4 do not apply
+in the following:
+
+  a. For the avoidance of doubt, You are not required to license
+  Collective Databases under this License if You incorporate this
+  Database or a Derivative Database in the collection, but this License
+  still applies to this Database or a Derivative Database as a part of
+  the Collective Database; 
+
+  b. Using this Database, a Derivative Database, or this Database as
+  part of a Collective Database to create a Produced Work does not
+  create a Derivative Database for purposes of  Section 4.4; and
+
+  c. Use of a Derivative Database internally within an organisation is
+  not to the public and therefore does not fall under the requirements
+  of Section 4.4.
+
+4.6 Access to Derivative Databases. If You Publicly Use a Derivative
+Database or a Produced Work from a Derivative Database, You must also
+offer to recipients of the Derivative Database or Produced Work a copy
+in a machine readable form of:
+
+  a. The entire Derivative Database; or
+
+  b. A file containing all of the alterations made to the Database or
+  the method of making the alterations to the Database (such as an
+  algorithm), including any additional Contents, that make up all the
+  differences between the Database and the Derivative Database.
+
+The Derivative Database (under a.) or alteration file (under b.) must be
+available at no more than a reasonable production cost for physical
+distributions and free of charge if distributed over the internet.
+
+4.7 Technological measures and additional terms
+
+  a. This License does not allow You to impose (except subject to
+  Section 4.7 b.)  any terms or any technological measures on the
+  Database, a Derivative Database, or the whole or a Substantial part of
+  the Contents that alter or restrict the terms of this License, or any
+  rights granted under it, or have the effect or intent of restricting
+  the ability of any person to exercise those rights.
+
+  b. Parallel distribution. You may impose terms or technological
+  measures on the Database, a Derivative Database, or the whole or a
+  Substantial part of the Contents (a "Restricted Database") in
+  contravention of Section 4.74 a. only if You also make a copy of the
+  Database or a Derivative Database available to the recipient of the
+  Restricted Database:
+
+    i. That is available without additional fee;
+
+    ii. That is available in a medium that does not alter or restrict
+    the terms of this License, or any rights granted under it, or have
+    the effect or intent of restricting the ability of any person to
+    exercise those rights (an "Unrestricted Database"); and
+
+    iii. The Unrestricted Database is at least as accessible to the
+    recipient as a practical matter as the Restricted Database.
+
+  c. For the avoidance of doubt, You may place this Database or a
+  Derivative Database in an authenticated environment, behind a
+  password, or within a similar access control scheme provided that You
+  do not alter or restrict the terms of this License or any rights
+  granted under it or have the effect or intent of restricting the
+  ability of any person to exercise those rights. 
+
+4.8 Licensing of others. You may not sublicense the Database. Each time
+You communicate the Database, the whole or Substantial part of the
+Contents, or any Derivative Database to anyone else in any way, the
+Licensor offers to the recipient a license to the Database on the same
+terms and conditions as this License. You are not responsible for
+enforcing compliance by third parties with this License, but You may
+enforce any rights that You have over a Derivative Database. You are
+solely responsible for any modifications of a Derivative Database made
+by You or another Person at Your direction. You may not impose any
+further restrictions on the exercise of the rights granted or affirmed
+under this License.
+
+**5.0 Moral rights**
+
+5.1 Moral rights. This section covers moral rights, including any rights
+to be identified as the author of the Database or to object to treatment
+that would otherwise prejudice the author's honour and reputation, or
+any other derogatory treatment:
+
+  a. For jurisdictions allowing waiver of moral rights, Licensor waives
+  all moral rights that Licensor may have in the Database to the fullest
+  extent possible by the law of the relevant jurisdiction under Section
+  10.4; 
+
+  b. If waiver of moral rights under Section 5.1 a in the relevant
+  jurisdiction is not possible, Licensor agrees not to assert any moral
+  rights over the Database and waives all claims in moral rights to the
+  fullest extent possible by the law of the relevant jurisdiction under
+  Section 10.4; and
+
+  c. For jurisdictions not allowing waiver or an agreement not to assert
+  moral rights under Section 5.1 a and b, the author may retain their
+  moral rights over certain aspects of the Database.
+
+Please note that some jurisdictions do not allow for the waiver of moral
+rights, and so moral rights may still subsist over the Database in some
+jurisdictions.
+
+**6.0 Fair dealing, Database exceptions, and other rights not affected**
+
+6.1 This License does not affect any rights that You or anyone else may
+independently have under any applicable law to make any use of this
+Database, including without limitation:
+
+  a. Exceptions to the Database Right including: Extraction of Contents
+  from non-electronic Databases for private purposes, Extraction for
+  purposes of illustration for teaching or scientific research, and
+  Extraction or Re-utilisation for public security or an administrative
+  or judicial procedure. 
+
+  b. Fair dealing, fair use, or any other legally recognised limitation
+  or exception to infringement of copyright or other applicable laws. 
+
+6.2 This License does not affect any rights of lawful users to Extract
+and Re-utilise insubstantial parts of the Contents, evaluated
+quantitatively or qualitatively, for any purposes whatsoever, including
+creating a Derivative Database (subject to other rights over the
+Contents, see Section 2.4). The repeated and systematic Extraction or
+Re-utilisation of insubstantial parts of the Contents may however amount
+to the Extraction or Re-utilisation of a Substantial part of the
+Contents.
+
+**7.0 Warranties and Disclaimer**
+
+7.1 The Database is licensed by the Licensor "as is" and without any
+warranty of any kind, either express, implied, or arising by statute,
+custom, course of dealing, or trade usage. Licensor specifically
+disclaims any and all implied warranties or conditions of title,
+non-infringement, accuracy or completeness, the presence or absence of
+errors, fitness for a particular purpose, merchantability, or otherwise.
+Some jurisdictions do not allow the exclusion of implied warranties, so
+this exclusion may not apply to You.
+
+**8.0 Limitation of liability**
+
+8.1 Subject to any liability that may not be excluded or limited by law,
+the Licensor is not liable for, and expressly excludes, all liability
+for loss or damage however and whenever caused to anyone by any use
+under this License, whether by You or by anyone else, and whether caused
+by any fault on the part of the Licensor or not. This exclusion of
+liability includes, but is not limited to, any special, incidental,
+consequential, punitive, or exemplary damages such as loss of revenue,
+data, anticipated profits, and lost business. This exclusion applies
+even if the Licensor has been advised of the possibility of such
+damages.
+
+8.2 If liability may not be excluded by law, it is limited to actual and
+direct financial loss to the extent it is caused by proved negligence on
+the part of the Licensor.
+
+**9.0 Termination of Your rights under this License**
+
+9.1 Any breach by You of the terms and conditions of this License
+automatically terminates this License with immediate effect and without
+notice to You. For the avoidance of doubt, Persons who have received the
+Database, the whole or a Substantial part of the Contents, Derivative
+Databases, or the Database as part of a Collective Database from You
+under this License will not have their licenses terminated provided
+their use is in full compliance with this License or a license granted
+under Section 4.8 of this License.  Sections 1, 2, 7, 8, 9 and 10 will
+survive any termination of this License.
+
+9.2 If You are not in breach of the terms of this License, the Licensor
+will not terminate Your rights under it. 
+
+9.3 Unless terminated under Section 9.1, this License is granted to You
+for the duration of applicable rights in the Database. 
+
+9.4 Reinstatement of rights. If you cease any breach of the terms and
+conditions of this License, then your full rights under this License
+will be reinstated:
+
+  a. Provisionally and subject to permanent termination until the 60th
+  day after cessation of breach; 
+
+  b. Permanently on the 60th day after cessation of breach unless
+  otherwise reasonably notified by the Licensor; or
+
+  c.  Permanently if reasonably notified by the Licensor of the
+  violation, this is the first time You have received notice of
+  violation of this License from  the Licensor, and You cure the
+  violation prior to 30 days after your receipt of the notice.
+
+Persons subject to permanent termination of rights are not eligible to
+be a recipient and receive a license under Section 4.8.
+
+9.5 Notwithstanding the above, Licensor reserves the right to release
+the Database under different license terms or to stop distributing or
+making available the Database. Releasing the Database under different
+license terms or stopping the distribution of the Database will not
+withdraw this License (or any other license that has been, or is
+required to be, granted under the terms of this License), and this
+License will continue in full force and effect unless terminated as
+stated above.
+
+**10.0 General**
+
+10.1 If any provision of this License is held to be invalid or
+unenforceable, that must not affect the validity or enforceability of
+the remainder of the terms and conditions of this License and each
+remaining provision of this License shall be valid and enforced to the
+fullest extent permitted by law. 
+
+10.2 This License is the entire agreement between the parties with
+respect to the rights granted here over the Database. It replaces any
+earlier understandings, agreements or representations with respect to
+the Database. 
+
+10.3 If You are in breach of the terms of this License, You will not be
+entitled to rely on the terms of this License or to complain of any
+breach by the Licensor. 
+
+10.4 Choice of law. This License takes effect in and will be governed by
+the laws of the relevant jurisdiction in which the License terms are
+sought to be enforced. If the standard suite of rights granted under
+applicable copyright law and Database Rights in the relevant
+jurisdiction includes additional rights not granted under this License,
+these additional rights are granted in this License in order to meet the
+terms of this License.
+
+For more information, please refer to <https://opendatacommons.org/licenses/odbl/>
+
+---
+
+## BGRA Bitmap, BGRA Controls
+
+### GNU LESSER GENERAL PUBLIC LICENSE
+
+Version 3, 29 June 2007
+
+Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+
+
+This version of the GNU Lesser General Public License incorporates the terms and conditions of version 3 of the GNU General Public License, supplemented by the additional permissions listed below.
+
+0. Additional Definitions.
+
+As used herein, "this License" refers to version 3 of the GNU Lesser General Public License, and the "GNU GPL" refers to version 3 of the GNU General Public License.
+
+"The Library" refers to a covered work governed by this License, other than an Application or a Combined Work as defined below.
+
+An "Application" is any work that makes use of an interface provided by the Library, but which is not otherwise based on the Library. Defining a subclass of a class defined by the Library is deemed a mode of using an interface provided by the Library.
+
+A "Combined Work" is a work produced by combining or linking an Application with the Library. The particular version of the Library with which the Combined Work was made is also called the "Linked Version".
+
+The "Minimal Corresponding Source" for a Combined Work means the Corresponding Source for the Combined Work, excluding any source code for portions of the Combined Work that, considered in isolation, are based on the Application, and not on the Linked Version.
+
+The "Corresponding Application Code" for a Combined Work means the object code and/or source code for the Application, including any data and utility programs needed for reproducing the Combined Work from the Application, but excluding the System Libraries of the Combined Work.
+
+1. Exception to Section 3 of the GNU GPL.
+
+You may convey a covered work under sections 3 and 4 of this License without being bound by section 3 of the GNU GPL.
+
+2. Conveying Modified Versions.
+
+If you modify a copy of the Library, and, in your modifications, a facility refers to a function or data to be supplied by an Application that uses the facility (other than as an argument passed when the facility is invoked), then you may convey a copy of the modified version:
+
+- a) under this License, provided that you make a good faith effort to ensure that, in the event an Application does not supply the function or data, the facility still operates, and performs whatever part of its purpose remains meaningful, or
+- b) under the GNU GPL, with none of the additional permissions of this License applicable to that copy.
+
+3. Object Code Incorporating Material from Library Header Files.
+
+The object code form of an Application may incorporate material from a header file that is part of the Library.  You may convey such object code under terms of your choice, provided that, if the incorporated material is not limited to numerical parameters, data structure layouts and accessors, or small macros, inline functions and templates (ten or fewer lines in length), you do both of the following:
+
+- a) Give prominent notice with each copy of the object code that the Library is used in it and that the Library and its use are covered by this License.
+- b) Accompany the object code with a copy of the GNU GPL and this license document.
+
+4. Combined Works.
+
+You may convey a Combined Work under terms of your choice that, taken together, effectively do not restrict modification of the portions of the Library contained in the Combined Work and reverse
+engineering for debugging such modifications, if you also do each of the following:
+
+- a) Give prominent notice with each copy of the Combined Work that the Library is used in it and that the Library and its use are covered by this License.
+- b) Accompany the Combined Work with a copy of the GNU GPL and this license document.
+- c) For a Combined Work that displays copyright notices during execution, include the copyright notice for the Library among these notices, as well as a reference directing the user to the copies of the GNU GPL and this license document.
+- d) Do one of the following:
+    - 0) Convey the Minimal Corresponding Source under the terms of this License, and the Corresponding Application Code in a form suitable for, and under terms that permit, the user to recombine or relink the Application with a modified version of the Linked Version to produce a modified Combined Work, in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.
+    - 1) Use a suitable shared library mechanism for linking with the Library. A suitable mechanism is one that (a) uses at run time a copy of the Library already present on the user's computer system, and (b) will operate properly with a modified version of the Library that is interface-compatible with the Linked Version.
+- e) Provide Installation Information, but only if you would otherwise be required to provide such information under section 6 of the GNU GPL, and only to the extent that such information is necessary to install and execute a modified version of the Combined Work produced by recombining or relinking the Application with a modified version of the Linked Version. (If you use option 4d0, the Installation Information must accompany the Minimal Corresponding Source and Corresponding Application Code. If you use option 4d1, you must provide the Installation Information in the manner specified by section 6 of the GNU GPL for conveying Corresponding Source.)
+
+5. Combined Libraries.
+
+You may place library facilities that are a work based on the Library side by side in a single library together with other library facilities that are not Applications and are not covered by this License, and convey such a combined library under terms of your choice, if you do both of the following:
+
+- a) Accompany the combined library with a copy of the same work based on the Library, uncombined with any other library facilities, conveyed under the terms of this License.
+- b) Give prominent notice with the combined library that part of it is a work based on the Library, and explaining where to find the accompanying uncombined form of the same work.
+
+6. Revised Versions of the GNU Lesser General Public License.
+
+The Free Software Foundation may publish revised and/or new versions of the GNU Lesser General Public License from time to time. Such new versions will be similar in spirit to the present version, but may differ in detail to address new problems or concerns.
+
+Each version is given a distinguishing version number. If the Library as you received it specifies that a certain numbered version of the GNU Lesser General Public License "or any later version"
+applies to it, you have the option of following the terms and conditions either of that published version or of any later version published by the Free Software Foundation. If the Library as you received it does not specify a version number of the GNU Lesser General Public License, you may choose any version of the GNU Lesser General Public License ever published by the Free Software Foundation.
+
+If the Library as you received it specifies that a proxy can decide whether future versions of the GNU Lesser General Public License shall apply, that proxy's public statement of acceptance of any version is permanent authorization for you to choose that version for the Library.
+
+---
+
+## DBFLaz, LazDBExport
+
+Michael Van Canneyt
+
+LGPL with linking exception (LCL license)
+
+---
+
+## FPExif
+
+Werner Pamler
+
+LGPL with linking exception (LCL license)
+
+---
+
+## LazReport
+
+Olivier Guilbaud, Jesus Reyes A., Aleksey Lagunov
+
+Modified LGPL
+See license.txt and license-lazreport.txt for details.
+
+---
+
+## lr_DialogDesign
+
+Lazarus, Lagunov A.A.
+
+modified LGPL-2
+
+---
+
+## lr_pdfexport
+
+Copyright (C) 2016 alexs alexs75.at.yandex.ru
+
+The module is designed to create an image of the report with the exact positioning of objects and subsequent binding to the worksheet
+
+This library is free software; you can redistribute it and/or modify it under the terms of the GNU Library General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version with the following modification:
+
+As a special exception, the copyright holders of this library give you permission to link this library with independent modules to produce an executable, regardless of the license terms of these independent modules,and to copy and distribute the resulting executable under terms of your choice, provided that you also meet, for each linked independent module, the terms and conditions of the license of that module. An independent module is a module which is not derived from or based on this library. If you modify this library, you may extend this exception to your version of the library, but you are not obligated to do so. If you do not wish to do so, delete this exception statement from your version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Library General Public License for more details.
+
+You should have received a copy of the GNU Library General Public License along with this library; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+---
+
+## Printer4Lazarus
+
+Olivier Guilbaud
+
+LGPL
+
+---
+
+## LazMapViewer
+
+Maciej Kaczkowski, ti_dic, Werner Pamler, Ekkehard Domning, Yuliyan Ivanov
+
+Modified LGPL with linking exception, like FreePascal RTL/FCL and Lazarus LCL
+
+---
+
+## lazmapviewer_bgra
+
+jc99, Werner Pamler, Yuliyan Ivanov
+
+Modified LGPL with linking exception, like FreePascal RTL/FCL and Lazarus LCL
+
+---
+
+## MetaDarkStyle
+
+Andrey Zubarev (zamtmn@yandex.ru) Alexander Koblov (alexx2000@mail.ru)
+
+GNU Lesser General Public License as published by the Free Software Foundation either version 2.1 of the License, or (at your option) any later version.
+
+---
+
+## SynEdit, SynEditDsgn
+
+Lazarus Team, SynEdit
+
+### MPL-1.1 or GPL-2 at the users choice
+
+SynEdit and all it's units are subject to the Mozilla Public License Version 1.1 (the "License"); you may not use these files except in compliance with the License. You may obtain a copy of the License at http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language governing rights and limitations under the License.
+
+Alternatively, the contents of these files may be used under the terms of the GNU General Public License Version 2 or later (the "GPL"), in which case the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of these files only under the terms of the GPL and not to allow others to use your version of this file under the MPL, indicate your decision by deleting the provisions above and replace them with the notice and other provisions required by the GPL. If you do not delete the provisions above, a recipient may use your version of this file under either the MPL or the GPL.
+
+---
+
+## Dynamic Database Controls (ibcontrols)
+
+Tony Whyman
 
 ### Initial Developer's PUBLIC LICENSE
 
@@ -248,226 +942,16 @@ All Rights Reserved.
 
 Contributor(s): ______________________________________. 
 
-------------------------------------------------------------------------
-
-## IBX - dclibx.lpk
-
-### INTERBASE PUBLIC LICENSE 
-
-Version 1.0 
-
-1. Definitions. 
-
-1.0.1. "Commercial Use" means distribution or otherwise making the Covered Code available to a third party. 
-
-1.1. "Contributor" means each entity that creates or contributes to the creation of Modifications. 
-
-1.2. "Contributor Version" means the combination of the Original Code, prior Modifications used by a Contributor, and the Modifications made by that particular Contributor. 
-
-1.3. "Covered Code" means the Original Code or Modifications or the combination of the Original Code and Modifications, in each case including portions thereof. 
-
-1.4. "Electronic Distribution Mechanism" means a mechanism generally accepted in the software development community for the electronic transfer of data. 
-
-1.5. "Executable" means Covered Code in any form other than Source Code. 
-
-1.6. "Initial Developer" means the individual or entity identified as the Initial Developer in the Source Code notice required by Exhibit A. 
-
-1.7. "Larger Work" means a work which combines Covered Code or portions thereof with code not governed by the terms of this License. 
-
-1.8. "License" means this document. 
-
-1.8.1. "Licensable" means having the right to grant, to the maximum extent possible, whether at the time of the initial grant or subsequently acquired, any and all of the rights conveyed herein. 
-
-1.9. "Modifications" means any addition to or deletion from the substance or structure of either the Original Code or any previous Modifications. When Covered Code is released as a series of files, a Modification is: 
-
-A. Any addition to or deletion from the contents of a file containing Original Code or previous Modifications. 
-
-B. Any new file that contains any part of the Original Code or previous Modifications. 
-
-1.10. "Original Code" means Source Code of computer software code which is described in the Source Code notice required by Exhibit A as Original Code, and which, at the time of its release under this License is not already Covered Code governed by this License. 
-
-1.10.1. "Patent Claims" means any patent claim(s), now owned or hereafter acquired, including without limitation, method, process, and apparatus claims, in any patent Licensable by grantor. 
-
-1.11. "Source Code" means the preferred form of the Covered Code for making modifications to it, including all modules it contains, plus any associated interface definition files, scripts used to control compilation and installation of an Executable, or source code differential comparisons against either the Original Code or another well known, available Covered Code of the Contributor's choice. The Source Code can be in a compressed or archival form, provided the appropriate decompression or de-archiving software is widely available for no charge. 
-
-1.12. "You" (or "Your") means an individual or a legal entity exercising rights under, and complying with, all of the terms of, this License or a future version of this License issued under Section 6.1. For legal entities, "You" includes any entity which controls, is controlled by, or is under common control with You. For purposes of this definition, "control" means (a) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (b) ownership of more than fifty percent (50%) of the outstanding shares or beneficial ownership of such entity.
-
-2. Source Code License. 
-
-2.1. The Initial Developer Grant. 
-
-The Initial Developer hereby grants You a world-wide, royalty-free, non-exclusive license, subject to third party intellectual property claims: 
-
-(a) under intellectual property rights (other than patent or trademark) Licensable by Initial Developer to use, reproduce, modify, display, perform, sublicense and distribute the Original Code (or portions thereof) with or without Modifications, and/or as part of a Larger Work; and 
-
-(b) under Patents Claims infringed by the making, using or selling of Original Code, to make, have made, use, practice, sell, and offer for sale, and/or otherwise dispose of the Original Code (or portions thereof). 
-
-(c) the licenses granted in this Section 2.1(a) and (b) are effective on the date Initial Developer first distributes Original Code under the terms of this License. 
-
-(d) Notwithstanding Section 2.1(b) above, no patent license is granted: 1) for code that You delete from the Original Code; 2) separate from the Original Code; or 3) for infringements caused by: i) the modification of the Original Code or ii) the combination of the Original Code with other software or devices. 
-
-2.2. Contributor Grant. 
-
-Subject to third party intellectual property claims, each Contributor hereby grants You a world-wide, royalty-free, non-exclusive license 
-
-(a) under intellectual property rights (other than patent or trademark) Licensable by Contributor, to use, reproduce, modify, display, perform, sublicense and distribute the Modifications created by such Contributor (or portions thereof) either on an unmodified basis, with other Modifications, as Covered Code and/or as part of a Larger Work; and 
-
-(b) under Patent Claims infringed by the making, using, or selling of Modifications made by that Contributor either alone and/or in combination with its Contributor Version (or portions of such combination), to make, use, sell, offer for sale, have made, and/or otherwise dispose of: 1) Modifications made by that Contributor (or portions thereof); and 2) the combination of Modifications made by that Contributor with its Contributor Version (or portions of such combination). 
-
-(c) the licenses granted in Sections 2.2(a) and 2.2(b) are effective on the date Contributor first makes Commercial Use of the Covered Code.
-
-(d) Notwithstanding Section 2.2(b) above, no patent license is granted: 1) for any code that Contributor has deleted from the Contributor Version; 2) separate from the Contributor Version; 3) for infringements caused by: i) third party modifications of Contributor Version or ii) the combination of Modifications made by that Contributor with other software (except as part of the Contributor Version) or other devices; or 4) under Patent Claims infringed by Covered Code in the absence of Modifications made by that Contributor.
-
-3. Distribution Obligations. 
-
-3.1. Application of License. 
-
-The Modifications which You create or to which You contribute are governed by the terms of this License, including without limitation Section 2.2. The Source Code version of Covered Code may be distributed only under the terms of this License or a future version of this License released under Section 6.1, and You must include a copy of this License with every copy of the Source Code You distribute. You may not offer or impose any terms on any Source Code version that alters or restricts the applicable version of this License or the recipients' rights hereunder. However, You may include an additional document offering the additional rights described in Section 3.5. 
-
-3.2. Availability of Source Code. 
-
-Any Modification which You create or to which You contribute must be made available in Source Code form under the terms of this License either on the same media as an Executable version or via an accepted Electronic Distribution Mechanism to anyone to whom you made an Executable version available; and if made available via Electronic Distribution Mechanism, must remain available for at least twelve (12) months after the date it initially became available, or at least six (6) months after a subsequent version of that particular Modification has been made available to such recipients. You are responsible for ensuring that the Source Code version remains available even if the Electronic Distribution Mechanism is maintained by a third party. 
-
-3.3. Description of Modifications. 
-
-You must cause all Covered Code to which You contribute to contain a file documenting the changes You made to create that Covered Code and the date of any change. You must include a prominent statement that the Modification is derived, directly or indirectly, from Original Code provided by the Initial Developer and including the name of the Initial Developer in (a) the Source Code, and (b) in any notice in an Executable version or related documentation in which You describe the origin or ownership of the Covered Code. 
-
-3.4. Intellectual Property Matters
-
-(a) Third Party Claims. 
-
-If Contributor has knowledge that a license under a third party's intellectual property rights is required to exercise the rights granted by such Contributor under Sections 2.1 or 2.2, Contributor must include a text file with the Source Code distribution titled "LEGAL'' which describes the claim and the party making the claim in sufficient detail that a recipient will know whom to contact. If Contributor obtains such knowledge after the Modification is made available as described in Section 3.2, Contributor shall promptly modify the LEGAL file in all copies Contributor makes available thereafter and shall take other steps (such as notifying appropriate mailing lists or newsgroups) reasonably calculated to inform those who received the Covered Code that new knowledge has been obtained. 
-
-(b) Contributor APIs. 
-
-If Contributor's Modifications include an application programming interface and Contributor has knowledge of patent licenses which are reasonably necessary to implement that API, Contributor must also include this information in the LEGAL file. 
-
-(c) Representations. 
-
-Contributor represents that, except as disclosed pursuant to Section 3.4(a) above, Contributor believes that Contributor's Modifications are Contributor's original creation(s) and/or Contributor has sufficient rights to grant the rights conveyed by this License.
-
-3.5. Required Notices. 
-
-You must duplicate the notice in Exhibit A in each file of the Source Code. If it is not possible to put such notice in a particular Source Code file due to its structure, then You must include such notice in a location (such as a relevant directory) where a user would be likely to look for such a notice. If You created one or more Modification(s) You may add your name as a Contributor to the notice described in Exhibit A. You must also duplicate this License in any documentation for the Source Code where You describe recipients' rights or ownership rights relating to Covered Code. You may choose to offer, and to charge a fee for, warranty, support, indemnity or liability obligations to one or more recipients of Covered Code. However, You may do so only on Your own behalf, and not on behalf of the Initial Developer or any Contributor. You must make it absolutely clear than any such warranty, support, indemnity or liability obligation is offered by You alone, and You hereby agree to indemnify the Initial Developer and every Contributor for any liability incurred by the Initial Developer or such Contributor as a result of warranty, support, indemnity or liability terms You offer.
-
-3.6. Distribution of Executable Versions. 
-
-You may distribute Covered Code in Executable form only if the requirements of Section 3.1-3.5 have been met for that Covered Code, and if You include a notice stating that the Source Code version of the Covered Code is available under the terms of this License, including a description of how and where You have fulfilled the obligations of Section 3.2. The notice must be conspicuously included in any notice in an Executable version, related documentation or collateral in which You describe recipients' rights relating to the Covered Code. You may distribute the Executable version of Covered Code or ownership rights under a license of Your choice, which may contain terms different from this License, provided that You are in compliance with the terms of this License and that the license for the Executable version does not attempt to limit or alter the recipient's rights in the Source Code version from the rights set forth in this License. If You distribute the Executable version under a different license You must make it absolutely clear that any terms which differ from this License are offered by You alone, not by the Initial Developer or any Contributor. You hereby agree to indemnify the Initial Developer and every Contributor for any liability incurred by the Initial Developer or such Contributor as a result of any such terms You offer. 
-
-3.7. Larger Works. 
-
-You may create a Larger Work by combining Covered Code with other code not governed by the terms of this License and distribute the Larger Work as a single product. In such a case, You must make sure the requirements of this License are fulfilled for the Covered Code.
-
-4. Inability to Comply Due to Statute or Regulation. 
-
-If it is impossible for You to comply with any of the terms of this License with respect to some or all of the Covered Code due to statute, judicial order, or regulation then You must: (a) comply with the terms of this License to the maximum extent possible; and (b) describe the limitations and the code they affect. Such description must be included in the LEGAL file described in Section 3.4 and must be included with all distributions of the Source Code. Except to the extent prohibited by statute or regulation, such description must be sufficiently detailed for a recipient of ordinary skill to be able to understand it.
-
-5. Application of this License. 
-
-This License applies to code to which the Initial Developer has attached the notice in Exhibit A and to related Covered Code.
-
-6. Versions of the License. 
-
-6.1. New Versions. 
-
-Inprise Corporation ("Inprise") may publish revised and/or new versions of the License from time to time. Each version will be given a distinguishing version number. 
-
-6.2. Effect of New Versions. 
-
-Once Covered Code has been published under a particular version of the License, You may always continue to use it under the terms of that version. You may also choose to use such Covered Code under the terms of any subsequent version of the License published by Inprise. No one other than Inprise has the right to modify the terms applicable to Covered Code created under this License. 
-
-6.3. Derivative Works. 
-
-If You create or use a modified version of this License (which you may only do in order to apply it to code which is not already Covered Code governed by this License), You must (a) rename Your license so that the phrases "Mozilla", "MOZILLAPL", "MOZPL", "Netscape", "MPL", "NPL", "Inprise", "ISC", "InterBase", "IB" or any confusingly similar phrase do not appear in your license (except to note that your license differs from this License) and (b) otherwise make it clear that Your version of the license contains terms which differ from the Mozilla Public License and Netscape Public License. (Filling in the name of the Initial Developer, Original Code or Contributor in the notice described in Exhibit A shall not of themselves be deemed to be modifications of this License.)
-
-6.4 Origin of the InterBase Public License.
-
-The InterBase Public License V 1.0 is based on the Mozilla Public License V 1.1 with the following changes: 
-
-1) The license is published by Inprise Corporation. Only Inprise Corporation can modify the terms applicable to Covered Code. 
-
-2) The license can be modified and used for code which is not already governed by this license. Modified versions of the license must be renamed to avoid confusion with Netscape's or Inprise Corporation's public license and must include a description of changes from the InterBase Public License.
-
-3) The name of the license in Exhibit A is the "InterBase Public License". 
-
-4) The reference to an alternative license in Exhibit A has been removed.
-
-5) Amendments I, II, III, V, and VI have been deleted.
-
-6) Exhibit A, Netscape Public License has been deleted
-
-7) A new amendment (II) has been added, describing the required and restricted rights to use the trademarks of Inprise Corporation.
-
-8) DISCLAIMER OF WARRANTY. 
-
-COVERED CODE IS PROVIDED UNDER THIS LICENSE ON AN "AS IS" BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT THE COVERED CODE IS FREE OF DEFECTS, MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE COVERED CODE IS WITH YOU. SHOULD ANY COVERED CODE PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL DEVELOPER OR ANY OTHER CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY COVERED CODE IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER.
-
-8. TERMINATION. 
-
-8.1. This License and the rights granted hereunder will terminate automatically if You fail to comply with terms herein and fail to cure such breach within 30 days of becoming aware of the breach. All sublicenses to the Covered Code which are properly granted shall survive any termination of this License. Provisions which, by their nature, must remain in effect beyond the termination of this License shall survive. 
-
-8.2. If You initiate litigation by asserting a patent infringement claim (excluding declaratory judgment actions) against Initial Developer or a Contributor (the Initial Developer or Contributor against whom You file such action is referred to as "Participant") alleging that: 
-
-(a) such Participant's Contributor Version directly or indirectly infringes any patent, then any and all rights granted by such Participant to You under Sections 2.1 and/or 2.2 of this License shall, upon 60 days notice from Participant terminate prospectively, unless if within 60 days after receipt of notice You either: 
-(i) agree in writing to pay Participant a mutually agreeable reasonable royalty for Your past and future use of Modifications made by such Participant, or (ii) withdraw Your litigation claim with respect to the Contributor Version against such Participant. If within 60 days of notice, a reasonable royalty and payment arrangement are not mutually agreed upon in writing by the parties or the litigation claim is not withdrawn, the rights granted by Participant to You under Sections 2.1 and/or 2.2 automatically terminate at the expiration of the 60 day notice period specified above. 
-
-(b) any software, hardware, or device, other than such Participant's Contributor Version, directly or indirectly infringes any patent, then any rights granted to You by such Participant under Sections 2.1(b) and 2.2(b) are revoked effective as of the date You first made, used, sold, distributed, or had made, Modifications made by that Participant. 
-
-8.3. If You assert a patent infringement claim against Participant alleging that such Participant's Contributor Version directly or indirectly infringes any patent where such claim is resolved (such as by license or settlement) prior to the initiation of patent infringement litigation, then the reasonable value of the licenses granted by such Participant under Sections 2.1 or 2.2 shall be taken into account in determining the amount or value of any payment or license. 
-
-8.4. In the event of termination under Sections 8.1 or 8.2 above, all end user license agreements (excluding distributors and resellers) which have been validly granted by You or any distributor hereunder prior to termination shall survive termination.
-
-9. LIMITATION OF LIABILITY.
-
-UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL YOU, THE INITIAL DEVELOPER, ANY OTHER CONTRIBUTOR, OR ANY DISTRIBUTOR OF COVERED CODE, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON FOR ANY INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER COMMERCIAL DAMAGES OR LOSSES, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES. THIS LIMITATION OF LIABILITY SHALL NOT APPLY TO LIABILITY FOR DEATH OR PERSONAL INJURY RESULTING FROM SUCH PARTY'S NEGLIGENCE TO THE EXTENT APPLICABLE LAW PROHIBITS SUCH LIMITATION. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THIS EXCLUSION AND LIMITATION MAY NOT APPLY TO YOU.
-
-10.  U.S. GOVERNMENT END USERS. 
-
-The Covered Code is a "commercial item," as that term is defined in 48 C.F.R. 2.101 (Oct. 1995), consisting of "commercial computer software" and "commercial computer software documentation," as such terms are used in 48 C.F.R. 12.212 (Sept. 1995). Consistent with 48 C.F.R. 12.212 and 48 C.F.R. 227.7202-1 through 227.7202-4 (June 1995), all U.S. Government End Users acquire Covered Code with only those rights set forth herein. 
-
-11.  MISCELLANEOUS. 
-
-This License represents the complete agreement concerning subject matter hereof. If any provision of this License is held to be unenforceable, such provision shall be reformed only to the extent necessary to make it enforceable. This License shall be governed by California law provisions (except to the extent applicable law, if any, provides otherwise), excluding its conflict-of-law provisions. With respect to disputes in which at least one party is a citizen of, or an entity chartered or registered to do business in the United States of America, any litigation relating to this License shall be subject to the jurisdiction of the Federal Courts of the Northern District of California, with venue lying in Santa Clara County, California, with the losing party responsible for costs, including without limitation, court costs and reasonable attorneys' fees and expenses. The application of the United Nations Convention on Contracts for the International Sale of Goods is expressly excluded. Any law or regulation which provides that the language of a contract shall be construed against the drafter shall not apply to this License.
-
-12.  RESPONSIBILITY FOR CLAIMS. 
-
-As between Initial Developer and the Contributors, each party is responsible for claims and damages arising, directly or indirectly, out of its utilization of rights under this License and You agree to work with Initial Developer and Contributors to distribute such responsibility on an equitable basis. Nothing herein is intended or shall be deemed to constitute any admission of liability. 
-
-13.  MULTIPLE-LICENSED CODE. 
-
-Initial Developer may designate portions of the Covered Code as "Multiple-Licensed". "Multiple-Licensed" means that the Initial Developer permits you to utilize portions of the Covered Code under Your choice of the IPL or the alternative licenses, if any, specified by the Initial Developer in the file described in Exhibit A.
-
-**EXHIBIT A** - InterBase Public License.
-
-"The contents of this file are subject to the InterBase Public License Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.Inprise.com/IPL.html 
-
-Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language governing rights and limitations under the License. 
-
-The Original Code was created by Inprise Corporation and its predecessors. 
-Portions created by Inprise Corporation are Copyright (C) Inprise Corporation. All Rights Reserved. 
-
-Contributor(s): ______________________________________. 
-
-**AMENDMENTS**
-
-I. Inprise and logo. This License does not grant any rights to use the trademarks "Inprise", "InterBase," "Java" or "JavaScript" even if such marks are included in the Original Code or Modifications. 
-
-II. Trademark Usage. 
-
-II.1. Advertising Materials. All advertising materials mentioning features or use of the covered Code must display the following acknowledgement: "This product includes software developed by Inprise Corporation."
-
-II.2. Endorsements. The names "Inprise," "InterBase," "ISC," and "IB" must not be used to endorse or promote Contributor Versions or Larger Works without the prior written permission of Inprise.
-
-II.3. Product Names. Contributor Versions and Larger Works may not be called "Inprise" or "InterBase" nor may the words "Inprise" or "InterBase" appear in their names without the prior written permission of Inprise Corporation.
-
-------------------------------------------------------------------------
+---
 
 ## DCPCrypt
+
+David Barton, Barko & Graeme Geldenhuys
 
 DCPcrypt is open source software (released under the MIT license) and as such there is no charge for inclusion in other software.
 http://www.cityinthesky.co.uk/cryptography.html
 
-------------------------------------------------------------------------
+---
 
 ## FluentUI System Icons & FluentUI Emoji
 
@@ -481,18 +965,19 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-------------------------------------------------------------------------
+---
 
 ## ATFlatControls
 
 The license is MPL 2.0 or LGPL.
 Copyright (C) Alexey Torgashin (UVviewsoft.com)
 
-------------------------------------------------------------------------
+---
 
-## Fira Code fonts
+## Fira Code and Fira Sans fonts
 
-Copyright (c) 2014, The Fira Code Project Authors (https://github.com/tonsky/FiraCode)
+Copyright (c) 2014-2020, The Fira Code Project Authors (https://github.com/tonsky/FiraCode)
+Copyright (c) 2012-2015, The Mozilla Foundation and Telefonica S.A.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
@@ -538,3 +1023,9 @@ This license becomes null and void if any of the above conditions are not met.
 **DISCLAIMER**
 
 THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE FONT SOFTWARE.
+
+---
+
+## The eBird/Clements checklist of Birds of the World
+
+Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, J. A. Gerbracht, D. Lepage, A. Spencer, S. M. Billerman, B. L. Sullivan, M. Smith, and C. L. Wood. 2025. *The eBird/Clements checklist of Birds of the World*: v2025. Downloaded from [https://www.birds.cornell.edu/clementschecklist/download/](https://www.birds.cornell.edu/clementschecklist/download/)

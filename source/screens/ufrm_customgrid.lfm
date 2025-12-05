@@ -86,7 +86,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -26096,7 +26096,7 @@ object frmCustomGrid: TfrmCustomGrid
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qImagesimage_date: TDateField
       FieldKind = fkData
@@ -28103,7 +28103,7 @@ object frmCustomGrid: TfrmCustomGrid
       FieldName = 'document_id'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
       Required = False
     end
@@ -28767,9 +28767,9 @@ object frmCustomGrid: TfrmCustomGrid
       FieldName = 'video_id'
       Index = 0
       LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
-      Required = True
+      Required = False
     end
     object qVideosfull_name: TStringField
       DisplayLabel = 'Fullname'

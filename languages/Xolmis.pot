@@ -4613,9 +4613,19 @@ msgctxt "tdlgimport.sbsavelog.caption"
 msgid "Save log"
 msgstr ""
 
+#: tdlgimportcaptures.btngeneratefiles.caption
+msgctxt "tdlgimportcaptures.btngeneratefiles.caption"
+msgid "Generate files"
+msgstr ""
+
+#: tdlgimportcaptures.btnhelp.caption
+msgctxt "tdlgimportcaptures.btnhelp.caption"
+msgid "&Help"
+msgstr ""
+
 #: tdlgimportcaptures.caption
 msgctxt "tdlgimportcaptures.caption"
-msgid "Import data"
+msgid "Import banding data"
 msgstr ""
 
 #: tdlgimportcaptures.ecapturefile.hint
@@ -4657,6 +4667,11 @@ msgstr ""
 msgid "Field efforts"
 msgstr ""
 
+#: tdlgimportcaptures.lblgeneratefiles.caption
+msgctxt "tdlgimportcaptures.lblgeneratefiles.caption"
+msgid "Generate empty files to fill the data"
+msgstr ""
+
 #: tdlgimportcaptures.lbljournalfile.caption
 msgid "Field journal"
 msgstr ""
@@ -4669,6 +4684,11 @@ msgstr ""
 #: tdlgimportcaptures.lbltitleimportfiles.caption
 msgctxt "tdlgimportcaptures.lbltitleimportfiles.caption"
 msgid "Files to import"
+msgstr ""
+
+#: tdlgimportcaptures.savedlg.title
+msgctxt "tdlgimportcaptures.savedlg.title"
+msgid "Generate files as"
 msgstr ""
 
 #: tdlgimportcaptures.sbcancel.caption
@@ -4706,9 +4726,19 @@ msgctxt "tdlgimportcaptures.sbrun.caption"
 msgid "Import"
 msgstr ""
 
+#: tdlgimportnests.btngeneratefiles.caption
+msgctxt "tdlgimportnests.btngeneratefiles.caption"
+msgid "Generate files"
+msgstr ""
+
+#: tdlgimportnests.btnhelp.caption
+msgctxt "tdlgimportnests.btnhelp.caption"
+msgid "&Help"
+msgstr ""
+
 #: tdlgimportnests.caption
 msgctxt "tdlgimportnests.caption"
-msgid "Import data"
+msgid "Import nesting data"
 msgstr ""
 
 #: tdlgimportnests.eeggfile.hint
@@ -4746,6 +4776,11 @@ msgctxt "tdlgimportnests.lbleggfile.caption"
 msgid "Eggs"
 msgstr ""
 
+#: tdlgimportnests.lblgeneratefiles.caption
+msgctxt "tdlgimportnests.lblgeneratefiles.caption"
+msgid "Generate empty files to fill the data"
+msgstr ""
+
 #: tdlgimportnests.lblnestfile.caption
 msgctxt "tdlgimportnests.lblnestfile.caption"
 msgid "Nests"
@@ -4774,6 +4809,11 @@ msgstr ""
 #: tdlgimportnests.lbltitleimportfinished.caption
 msgctxt "tdlgimportnests.lbltitleimportfinished.caption"
 msgid "Finished importing!"
+msgstr ""
+
+#: tdlgimportnests.savedlg.title
+msgctxt "tdlgimportnests.savedlg.title"
+msgid "Generate files as"
 msgstr ""
 
 #: tdlgimportnests.sbcancel.caption

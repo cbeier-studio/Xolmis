@@ -21,7 +21,7 @@ unit udlg_importcaptures;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
+  Classes, SysUtils, LResources, LCLIntf, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
   Buttons, IpHtml, StrUtils, atshapelinebgra, BCPanel;
 
 type
@@ -30,12 +30,16 @@ type
 
   TdlgImportCaptures = class(TForm)
     barProgress: TProgressBar;
+    btnGenerateFiles: TButton;
+    btnHelp: TBitBtn;
     iButtonsDark: TImageList;
     iIcons: TImageList;
     iButtons: TImageList;
     iIconsDark: TImageList;
     imgFinishedDark: TImageList;
     hvProgress: TIpHtmlPanel;
+    lblGenerateFiles: TLabel;
+    pGenerateFiles: TBCPanel;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     icoImportFinished: TImage;
@@ -65,6 +69,7 @@ type
     pEffortFile: TBCPanel;
     pJournalFile: TBCPanel;
     pProgress: TBCPanel;
+    SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbClearEffortFile: TSpeedButton;
     sbClearCaptureFile: TSpeedButton;
@@ -72,6 +77,7 @@ type
     sbRetry: TBitBtn;
     sbRun: TButton;
     sbClearJournalFile: TSpeedButton;
+    procedure btnGenerateFilesClick(Sender: TObject);
     procedure eCaptureFileChange(Sender: TObject);
     procedure eEffortFileChange(Sender: TObject);
     procedure eJournalFileButtonClick(Sender: TObject);
@@ -112,6 +118,7 @@ begin
   sbClearEffortFile.Images := iButtonsDark;
   sbClearCaptureFile.Images := iButtonsDark;
   sbRetry.Images := iButtonsDark;
+  btnHelp.Images := iButtonsDark;
 
   icoJournalFile.Images := iIconsDark;
   icoEffortFile.Images := iIconsDark;
@@ -119,19 +126,64 @@ begin
 
   icoImportFinished.Images := imgFinishedDark;
 
-  pProgress.Background.Color := clCardBGDefaultDark;
+  pProgress.Background.Color := clSolidBGSecondaryDark;
   pProgress.Border.Color := clSystemSolidNeutralFGDark;
   pProgress.Color := pContentProgress.Background.Color;
 
-  pJournalFile.Background.Color := clCardBGDefaultDark;
+  pJournalFile.Background.Color := clSolidBGSecondaryDark;
   pJournalFile.Border.Color := clSystemSolidNeutralFGDark;
-  pEffortFile.Background.Color := clCardBGDefaultDark;
+  pEffortFile.Background.Color := clSolidBGSecondaryDark;
   pEffortFile.Border.Color := clSystemSolidNeutralFGDark;
-  pCaptureFile.Background.Color := clCardBGDefaultDark;
+  pCaptureFile.Background.Color := clSolidBGSecondaryDark;
   pCaptureFile.Border.Color := clSystemSolidNeutralFGDark;
+  pGenerateFiles.Background.Color := clSolidBGSecondaryDark;
+  pGenerateFiles.Border.Color := clSystemSolidNeutralFGDark;
 
   lblTitleImportFiles.Font.Color := clVioletFG1Dark;
   lblTitleImportFinished.Font.Color := clVioletFG1Dark;
+end;
+
+procedure TdlgImportCaptures.btnGenerateFilesClick(Sender: TObject);
+var
+  Csv: TStrings;
+  journalFilename, weatherFilename, effortFilename, capturesFilename: String;
+begin
+  SaveDlg.InitialDir := xSettings.LastPathUsed;
+  if SaveDlg.Execute then
+  begin
+    journalFilename := StringReplace(SaveDlg.FileName, '.csv', '_journal.csv', []);
+    weatherFilename := StringReplace(SaveDlg.FileName, '.csv', '_weather.csv', []);
+    effortFilename := StringReplace(SaveDlg.FileName, '.csv', '_effort.csv', []);
+    capturesFilename := SaveDlg.FileName;
+
+    Csv := TStringList.Create;
+    try
+      Csv.Add(BANDING_JOURNAL_SCHEMA);
+      Csv.SaveToFile(journalFilename);
+      if xSettings.OpenFileAfterExport then
+        OpenDocument(journalFilename);
+
+      Csv.Clear;
+      Csv.Add(WEATHER_LOG_SCHEMA);
+      Csv.SaveToFile(weatherFilename);
+      if xSettings.OpenFileAfterExport then
+        OpenDocument(weatherFilename);
+
+      Csv.Clear;
+      Csv.Add(NET_EFFORT_SCHEMA);
+      Csv.SaveToFile(effortFilename);
+      if xSettings.OpenFileAfterExport then
+        OpenDocument(effortFilename);
+
+      Csv.Clear;
+      Csv.Add(BANDING_SCHEMA);
+      Csv.SaveToFile(capturesFilename);
+      if xSettings.OpenFileAfterExport then
+        OpenDocument(capturesFilename);
+    finally
+      FreeAndNil(Csv);
+    end;
+  end;
 end;
 
 procedure TdlgImportCaptures.eCaptureFileChange(Sender: TObject);

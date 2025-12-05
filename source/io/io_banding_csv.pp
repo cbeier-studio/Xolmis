@@ -28,7 +28,10 @@ uses
 
 const
   BANDING_JOURNAL_SCHEMA: String = 'LOCALITY;NET STATION;SAMPLING DATE;START TIME;END TIME;LONGITUDE;LATITUDE;' +
-    'TEAM;NOTES';
+    'TEAM;NOTES;WEATHER TIME 1;WEATHER MOMENT 1;CLOUD COVER 1;PRECIPITATION 1;TEMPERATURE 1;WIND SPEED 1;HUMIDITY 1;' +
+    'WEATHER TIME 2;WEATHER MOMENT 2;CLOUD COVER 2;PRECIPITATION 2;TEMPERATURE 2;WIND SPEED 2;HUMIDITY 2;' +
+    'WEATHER TIME 3;WEATHER MOMENT 3;CLOUD COVER 3;PRECIPITATION 3;TEMPERATURE 3;WIND SPEED 3;HUMIDITY 3;' +
+    'WEATHER TIME 4;WEATHER MOMENT 4;CLOUD COVER 4;PRECIPITATION 4;TEMPERATURE 4;WIND SPEED 4;HUMIDITY 4';
 
   WEATHER_LOG_SCHEMA: String = 'TIME;MOMENT;CLOUD COVER;PRECIPITATION;TEMPERATURE;WIND SPEED;HUMIDITY';
 
@@ -609,21 +612,87 @@ begin
 end;
 
 procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
+
+  procedure UpdateProgress(Current, Total: Integer);
+  begin
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := Current;
+      aProgressBar.Max := Total;
+    end
+    else if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Position := Current;
+      dlgProgress.Max := Total;
+      dlgProgress.Text := Format(rsProgressRecords, [Current, Total]);
+    end;
+  end;
+
+  procedure InsertWeatherLog(const RegWeather: TWeatherSample; SurveyId: Integer; aSampleDate: TDateTime);
+  var
+    W: TWeatherLog;
+    WeatherRepo: TWeatherLogRepository;
+  begin
+    if (RegWeather.Precipitation <> wpEmpty) or (RegWeather.CloudCover >= 0) then
+    begin
+      WeatherRepo := TWeatherLogRepository.Create(DMM.sqlCon);
+      W := TWeatherLog.Create;
+      try
+        W.SurveyId := SurveyId;
+        W.SampleDate := aSampleDate;
+        W.SampleTime := RegWeather.SamplingTime;
+        W.SampleMoment := RegWeather.SamplingMoment;
+        W.Temperature := RegWeather.Temperature;
+        W.Precipitation := RegWeather.Precipitation;
+        W.CloudCover := RegWeather.CloudCover;
+        W.WindSpeedBft := RegWeather.WindSpeed;
+        W.RelativeHumidity := RegWeather.Humidity;
+
+        WeatherRepo.Insert(W);
+        WriteRecHistory(tbWeatherLogs, haCreated, W.Id, '', '', '', rsInsertedByImport);
+      finally
+        W.Free;
+        WeatherRepo.Free;
+      end;
+    end;
+  end;
+
+  procedure InsertSurveyTeam(const TeamStr: String; SurveyId: Integer);
+  var
+    Member: TSurveyMember;
+    i: Integer;
+    MemberRepo: TSurveyMemberRepository;
+  begin
+    if TeamStr = '' then
+      Exit;
+
+    MemberRepo := TSurveyMemberRepository.Create(DMM.sqlCon);
+    Member := TSurveyMember.Create;
+    try
+      for i := 0 to WordCount(TeamStr, [',',';']) - 1 do
+      begin
+        Member.SurveyId := SurveyId;
+        Member.PersonId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION,
+                                  ExtractWord(i, TeamStr, [',',';']));
+        MemberRepo.Insert(Member);
+        WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
+      end;
+    finally
+      Member.Free;
+      MemberRepo.Free;
+    end;
+  end;
+
 var
   CSV: TSdfDataSet;
   Reg: TBandingJournal;
-  SiteRepo: TSiteRepository;
-  Toponimo: TSite;
   NetStation: TSamplingPlot;
-  SPlotRepo: TSamplingPlotRepository;
+  Toponimo: TSite;
   Survey: TSurvey;
+  aMethod: Integer;
   SurveyRepo: TSurveyRepository;
-  Weather1, Weather2, Weather3, Weather4: TWeatherLog;
-  WeatherRepo: TWeatherLogRepository;
-  Member: TSurveyMember;
-  MemberRepo: TSurveyMemberRepository;
-  strDate: String;
-  pp, aMethod: Integer;
+  SiteRepo: TSiteRepository;
+  SPlotRepo: TSamplingPlotRepository;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -633,6 +702,8 @@ begin
 
   LogEvent(leaStart, Format('Import banding journal: %s', [aCSVFile]));
   stopProcess := False;
+
+  // inicializa progress bar ou diálogo
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -640,224 +711,77 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+
   SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
-  MemberRepo := TSurveyMemberRepository.Create(DMM.sqlCon);
-  WeatherRepo := TWeatherLogRepository.Create(DMM.sqlCon);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
-  try
-    { Define CSV format settings }
-    with CSV do
-    begin
-      Delimiter := ';';
-      FirstLineAsSchema := True;
-      CodePage := 'Windows-1252';
-      Schema.AddDelimitedText(BANDING_JOURNAL_SCHEMA, ';', True);
-      FileName := aCSVFile;
-      Open;
-    end;
 
-    if Assigned(aProgressBar) then
-    begin
-      aProgressBar.Position := 0;
-      aProgressBar.Max := CSV.RecordCount;
-    end
-    else
-    if Assigned(dlgProgress) then
-    begin
-      dlgProgress.Position := 0;
-      dlgProgress.Max := CSV.RecordCount;
-    end;
+  try
+    // Configuração do CSV
+    CSV.Delimiter := ';';
+    CSV.FirstLineAsSchema := True;
+    CSV.CodePage := 'Windows-1252';
+    CSV.Schema.AddDelimitedText(BANDING_JOURNAL_SCHEMA, ';', True);
+    CSV.FileName := aCSVFile;
+    CSV.Open;
+
+    UpdateProgress(0, CSV.RecordCount);
+
     DMM.sqlTrans.StartTransaction;
     try
       CSV.First;
-      repeat
-        if Assigned(dlgProgress) then
-          dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
-        // Reset variables
+      while not (CSV.Eof or stopProcess) do
+      begin
         Reg.Clear;
-        strDate := '';
-
         Reg.FromCSV(CSV);
 
-        strDate := FormatDateTime(MASK_ISO_DATE, Reg.SamplingDate);
-        //if not CSV.FieldByName('START TIME').IsNull then
-        //  strStartTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.StartTime)
-        //else
-        //  strStartTime := EmptyStr;
-        //if not CSV.FieldByName('END TIME').IsNull then
-        //  strEndTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.EndTime)
-        //else
-        //  strEndTime := EmptyStr;
-        //if not CSV.FieldByName('WEATHER TIME 1').IsNull then
-        //  strWeatherTime1 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather1.SamplingTime)
-        //else
-        //  strWeatherTime1 := EmptyStr;
-        //if not CSV.FieldByName('WEATHER TIME 2').IsNull then
-        //  strWeatherTime2 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather2.SamplingTime)
-        //else
-        //  strWeatherTime2 := EmptyStr;
-        //if not CSV.FieldByName('WEATHER TIME 3').IsNull then
-        //  strWeatherTime3 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather3.SamplingTime)
-        //else
-        //  strWeatherTime3 := EmptyStr;
-        //if not CSV.FieldByName('WEATHER TIME 4').IsNull then
-        //  strWeatherTime4 := FormatDateTime(MASK_DISPLAY_TIME, Reg.Weather4.SamplingTime)
-        //else
-        //  strWeatherTime4 := EmptyStr;
-
-
+        NetStation := TSamplingPlot.Create;
+        Toponimo := TSite.Create;
+        Survey := TSurvey.Create;
         try
-          NetStation := TSamplingPlot.Create;
-          Toponimo := TSite.Create;
-          Survey := TSurvey.Create;
           aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
-
-          // Get net station and locality
           SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
           if NetStation.Id > 0 then
-          begin
             SiteRepo.GetById(NetStation.LocalityId, Toponimo);
-          end;
 
-          // Check if the survey exists
           SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id, Survey);
-          if (Survey.Id = 0) then
+          if Survey.Id = 0 then
           begin
+            // preencher Survey
             Survey.SurveyDate := Reg.SamplingDate;
             Survey.StartTime := Reg.StartTime;
             Survey.EndTime := Reg.EndTime;
-
-            Survey.Duration := 0;
             Survey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, 'Banding');
             Survey.NetStationId := NetStation.Id;
             Survey.LocalityId := Toponimo.Id;
             Survey.StartLongitude := Reg.Longitude;
             Survey.StartLatitude := Reg.Latitude;
-            //Survey.EndLongitude := ;
-            //Survey.EndLatitude := ;
-            //Survey.TotalNets := ;
             Survey.Notes := Reg.Notes;
 
             SurveyRepo.Insert(Survey);
-
             if Survey.Id > 0 then
             begin
-              // Insert record history
               WriteRecHistory(tbSurveys, haCreated, Survey.Id, '', '', '', rsInsertedByImport);
+              InsertSurveyTeam(Reg.Team, Survey.Id);
 
-              // Insert the survey team
-              if (Reg.Team <> EmptyStr) then
-              try
-                Member := TSurveyMember.Create;
-
-                for pp := 0 to (WordCount(Reg.Team, [',', ';']) - 1) do
-                begin
-                  Member.SurveyId := Survey.Id;
-                  Member.PersonId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, ExtractWord(pp, Reg.Team, [',', ';']));
-
-                  MemberRepo.Insert(Member);
-                  WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
-                end;
-
-              finally
-                FreeAndNil(Member);
-              end;
-
-              // Insert the weather logs
-              if (Reg.Weather1.Precipitation <> wpEmpty) or (Reg.Weather1.CloudCover >= 0) then
-              try
-                Weather1 := TWeatherLog.Create;
-                Weather1.SurveyId := Survey.Id;
-                Weather1.SampleDate := Reg.SamplingDate;
-                Weather1.SampleTime := Reg.Weather1.SamplingTime;
-                Weather1.SampleMoment := Reg.Weather1.SamplingMoment;
-                Weather1.Temperature := Reg.Weather1.Temperature;
-                Weather1.Precipitation := Reg.Weather1.Precipitation;
-                Weather1.CloudCover := Reg.Weather1.CloudCover;
-                Weather1.WindSpeedBft := Reg.Weather1.WindSpeed;
-                Weather1.RelativeHumidity := Reg.Weather1.Humidity;
-
-                WeatherRepo.Insert(Weather1);
-                WriteRecHistory(tbWeatherLogs, haCreated, Weather1.Id, '', '', '', rsInsertedByImport);
-              finally
-                FreeAndNil(Weather1);
-              end;
-
-              if (Reg.Weather2.Precipitation <> wpEmpty) or (Reg.Weather2.CloudCover >= 0) then
-              try
-                Weather2 := TWeatherLog.Create;
-                Weather2.SurveyId := Survey.Id;
-                Weather2.SampleDate := Reg.SamplingDate;
-                Weather2.SampleTime := Reg.Weather2.SamplingTime;
-                Weather2.SampleMoment := Reg.Weather2.SamplingMoment;
-                Weather2.Temperature := Reg.Weather2.Temperature;
-                Weather2.Precipitation := Reg.Weather2.Precipitation;
-                Weather2.CloudCover := Reg.Weather2.CloudCover;
-                Weather2.WindSpeedBft := Reg.Weather2.WindSpeed;
-                Weather2.RelativeHumidity := Reg.Weather2.Humidity;
-
-                WeatherRepo.Insert(Weather2);
-                WriteRecHistory(tbWeatherLogs, haCreated, Weather2.Id, '', '', '', rsInsertedByImport);
-              finally
-                FreeAndNil(Weather2);
-              end;
-
-              if (Reg.Weather3.Precipitation <> wpEmpty) or (Reg.Weather3.CloudCover >= 0) then
-              try
-                Weather3 := TWeatherLog.Create;
-                Weather3.SurveyId := Survey.Id;
-                Weather3.SampleDate := Reg.SamplingDate;
-                Weather3.SampleTime := Reg.Weather3.SamplingTime;
-                Weather3.SampleMoment := Reg.Weather3.SamplingMoment;
-                Weather3.Temperature := Reg.Weather3.Temperature;
-                Weather3.Precipitation := Reg.Weather3.Precipitation;
-                Weather3.CloudCover := Reg.Weather3.CloudCover;
-                Weather3.WindSpeedBft := Reg.Weather3.WindSpeed;
-                Weather3.RelativeHumidity := Reg.Weather3.Humidity;
-
-                WeatherRepo.Insert(Weather3);
-                WriteRecHistory(tbWeatherLogs, haCreated, Weather3.Id, '', '', '', rsInsertedByImport);
-              finally
-                FreeAndNil(Weather3);
-              end;
-
-              if (Reg.Weather4.Precipitation <> wpEmpty) or (Reg.Weather4.CloudCover >= 0) then
-              try
-                Weather4 := TWeatherLog.Create;
-                Weather4.SurveyId := Survey.Id;
-                Weather4.SampleDate := Reg.SamplingDate;
-                Weather4.SampleTime := Reg.Weather4.SamplingTime;
-                Weather4.SampleMoment := Reg.Weather4.SamplingMoment;
-                Weather4.Temperature := Reg.Weather4.Temperature;
-                Weather4.Precipitation := Reg.Weather4.Precipitation;
-                Weather4.CloudCover := Reg.Weather4.CloudCover;
-                Weather4.WindSpeedBft := Reg.Weather4.WindSpeed;
-                Weather4.RelativeHumidity := Reg.Weather4.Humidity;
-
-                WeatherRepo.Insert(Weather4);
-                WriteRecHistory(tbWeatherLogs, haCreated, Weather4.Id, '', '', '', rsInsertedByImport);
-              finally
-                FreeAndNil(Weather4);
-              end;
+              // inserir condições climáticas
+              InsertWeatherLog(Reg.Weather1, Survey.Id, Reg.SamplingDate);
+              InsertWeatherLog(Reg.Weather2, Survey.Id, Reg.SamplingDate);
+              InsertWeatherLog(Reg.Weather3, Survey.Id, Reg.SamplingDate);
+              InsertWeatherLog(Reg.Weather4, Survey.Id, Reg.SamplingDate);
             end;
           end;
-
         finally
-          FreeAndNil(NetStation);
-          FreeAndNil(Toponimo);
-          FreeAndNil(Survey);
+          NetStation.Free;
+          Toponimo.Free;
+          Survey.Free;
         end;
 
-        if Assigned(aProgressBar) then
-          aProgressBar.Position := CSV.RecNo
-        else
-        if Assigned(dlgProgress) then
-          dlgProgress.Position := CSV.RecNo;
+        UpdateProgress(CSV.RecNo, CSV.RecordCount);
         Application.ProcessMessages;
         CSV.Next;
-      until CSV.Eof or stopProcess;
+      end;
 
       if stopProcess then
       begin
@@ -875,21 +799,18 @@ begin
       DMM.sqlTrans.RollbackRetaining;
       raise;
     end;
-
   finally
     CSV.Close;
-    FreeAndNil(CSV);
+    CSV.Free;
     SiteRepo.Free;
     SPlotRepo.Free;
-    WeatherRepo.Free;
-    MemberRepo.Free;
     SurveyRepo.Free;
     if Assigned(dlgProgress) then
     begin
       dlgProgress.Close;
-      FreeAndNil(dlgProgress);
+      dlgProgress.Free;
     end;
-    LogEvent(leaFinish, 'Import banding journal')
+    LogEvent(leaFinish, 'Import banding journal');
   end;
 end;
 

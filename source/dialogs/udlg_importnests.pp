@@ -21,7 +21,7 @@ unit udlg_importnests;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
+  Classes, SysUtils, LResources, LCLIntf, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
   Buttons, IpHtml, StrUtils, atshapelinebgra, BCPanel;
 
 type
@@ -30,12 +30,16 @@ type
 
   TdlgImportNests = class(TForm)
     barProgress: TProgressBar;
+    btnGenerateFiles: TButton;
+    btnHelp: TBitBtn;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     iIcons: TImageList;
     iIconsDark: TImageList;
     imgFinishedDark: TImageList;
     hvProgress: TIpHtmlPanel;
+    lblGenerateFiles: TLabel;
+    pGenerateFiles: TBCPanel;
     pRetry: TBCPanel;
     imgFinished: TImageList;
     icoImportFinished: TImage;
@@ -65,6 +69,7 @@ type
     pRevisionFile: TBCPanel;
     pNestFile: TBCPanel;
     pProgress: TBCPanel;
+    SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbClearRevisionFile: TSpeedButton;
     sbClearEggFile: TSpeedButton;
@@ -72,6 +77,7 @@ type
     sbRetry: TBitBtn;
     sbRun: TButton;
     sbClearNestFile: TSpeedButton;
+    procedure btnGenerateFilesClick(Sender: TObject);
     procedure eEggFileChange(Sender: TObject);
     procedure eRevisionFileChange(Sender: TObject);
     procedure eNestFileButtonClick(Sender: TObject);
@@ -112,6 +118,7 @@ begin
   sbClearRevisionFile.Images := iButtonsDark;
   sbClearEggFile.Images := iButtonsDark;
   sbRetry.Images := iButtonsDark;
+  btnHelp.Images := iButtonsDark;
 
   icoNestFile.Images := iIconsDark;
   icoRevisionFile.Images := iIconsDark;
@@ -119,19 +126,58 @@ begin
 
   icoImportFinished.Images := imgFinishedDark;
 
-  pProgress.Background.Color := clCardBGDefaultDark;
+  pProgress.Background.Color := clSolidBGSecondaryDark;
   pProgress.Border.Color := clSystemSolidNeutralFGDark;
   pProgress.Color := pContentProgress.Background.Color;
 
-  pNestFile.Background.Color := clCardBGDefaultDark;
+  pNestFile.Background.Color := clSolidBGSecondaryDark;
   pNestFile.Border.Color := clSystemSolidNeutralFGDark;
-  pRevisionFile.Background.Color := clCardBGDefaultDark;
+  pRevisionFile.Background.Color := clSolidBGSecondaryDark;
   pRevisionFile.Border.Color := clSystemSolidNeutralFGDark;
-  pEggFile.Background.Color := clCardBGDefaultDark;
+  pEggFile.Background.Color := clSolidBGSecondaryDark;
   pEggFile.Border.Color := clSystemSolidNeutralFGDark;
+  pGenerateFiles.Background.Color := clSolidBGSecondaryDark;
+  pGenerateFiles.Border.Color := clSystemSolidNeutralFGDark;
 
   lblTitleImportFiles.Font.Color := clVioletFG1Dark;
   lblTitleImportFinished.Font.Color := clVioletFG1Dark;
+end;
+
+procedure TdlgImportNests.btnGenerateFilesClick(Sender: TObject);
+var
+  Csv: TStrings;
+  nestsFilename, revisionsFilename, eggsFilename: String;
+begin
+  SaveDlg.InitialDir := xSettings.LastPathUsed;
+  if SaveDlg.Execute then
+  begin
+    nestsFilename := SaveDlg.FileName;
+    revisionsFilename := StringReplace(SaveDlg.FileName, '.csv', '_revisions.csv', []);
+    eggsFilename := StringReplace(SaveDlg.FileName, '.csv', '_eggs.csv', []);
+
+    Csv := TStringList.Create;
+    try
+      Csv.Add(NEST_SCHEMA);
+      Csv.SaveToFile(nestsFilename);
+      if xSettings.OpenFileAfterExport then
+        OpenDocument(nestsFilename);
+
+      Csv.Clear;
+      Csv.Add(NEST_REVISION_SCHEMA);
+      Csv.SaveToFile(revisionsFilename);
+      if xSettings.OpenFileAfterExport then
+        OpenDocument(revisionsFilename);
+
+      Csv.Clear;
+      Csv.Add(EGG_SCHEMA);
+      Csv.SaveToFile(eggsFilename);
+      if xSettings.OpenFileAfterExport then
+        OpenDocument(eggsFilename);
+    finally
+      FreeAndNil(Csv);
+    end;
+
+  end;
 end;
 
 procedure TdlgImportNests.eEggFileChange(Sender: TObject);

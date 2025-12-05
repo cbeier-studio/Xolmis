@@ -25,13 +25,12 @@ You can add documents in two ways:
       - Select one or more files to attach to the current record.  
       - Click **Open** to confirm.  
       - The system will show the progress of adding the files.  
-
 2. **Drag and drop**  
       - Drag files from your file explorer.  
       - Drop them directly into the documents and links side panel.
       - The system will show the progress of adding the files.  
 
-3. **Edit metadata**
+- **Edit metadata**
       - If metadata is present (e.g., creation date), it will be automatically extracted.
       - Link the documents to records using the dialog that opened.
       - Other information must be edited manually afterwards.

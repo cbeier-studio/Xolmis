@@ -3,7 +3,7 @@
 A free, open source, multi-platform ornithological data manager, built using Lazarus/FPC.
 
 > [!IMPORTANT]
-> Xolmis is in the early stages of development and is subject to some breaking changes. As soon as possible, a stable version will be made available to anyone who intends to use the app in production.
+> Xolmis is in the early stages of development and is subject to some breaking changes.
 
 Xolmis is an ornithological data management system intended for researchers and birdwatchers. It was designed to aggregate separated data files (_e.g._ CSV files and Excel spreadsheets), which may end up being lost over time. In addition to the objective of aggregating different types of data collected in research and observations, it also aims to facilitate the curation, crossing and sharing of data, while increasing its consistency and security.
 
@@ -26,7 +26,7 @@ Here is a list of the main features:
 - [x] Record of institutions, researchers, and projects.
 - [x] Management of permits.
 - [x] Record of toponyms (gazetteer) and sampling plots.
-- [ ] Updated bird taxonomies (Clements/eBird, AviList).
+- [x] Updated bird taxonomies (Clements/eBird).
 - [x] Geographical coordinates converter (WGS84) from/to Decimal Degrees, DMS, and UTM formats.
 - [x] Import data from [Xolmis Mobile](https://github.com/cbeier-studio/xolmis_mobile) (JSON file).
 - [x] Import eBird records (CSV file).
@@ -41,6 +41,14 @@ Here is a list of the main features:
 - [ ] Print and export data to PDF.
 
 See the [Milestones](https://github.com/cbeier-studio/Xolmis/milestones) for more information on planned features.
+
+## Technology Stack
+
+- **Language:** Free Pascal  
+- **IDE:** Lazarus  
+- **Database:** SQLite  
+- **Configuration:** JSON (`jsonconf` package)  
+- **Documentation:** FPDoc (developer), MkDocs + Material for MkDocs (user)  
 
 ## Download and installation
 
@@ -66,4 +74,16 @@ For requirements and packages needed, see the [Wiki](https://github.com/cbeier-s
 
 Xolmis is available under the [GPL-3.0 license](https://github.com/cbeier-studio/xolmis/blob/main/LICENSE).
 
+We use data from [Countries States Cities Database](https://github.com/dr5hn/countries-states-cities-database), available under the [ODbL v1.0](https://github.com/dr5hn/countries-states-cities-database/blob/master/LICENSE).
+
 Icons used in Xolmis were adapted from [Fluent UI System Icons](https://github.com/microsoft/fluentui-system-icons) and [Fluent Emoji](https://github.com/microsoft/fluentui-emoji). Both were made available by Microsoft Corporation under the [MIT license](https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE).
+
+## Acknowledgements
+
+Xolmis is developed to support ornithological research, conservation, and citizen science.  
+We thank all contributors, institutions, and communities engaged in bird monitoring and ecological studies.
+Special thanks to our sponsors!
+
+### Platinum Sponsor
+
+[![Alianza del Pastizal - Platinum Sponsor](/docs/img/alianza-del-pastizal.png)](http://www.alianzadelpastizal.org.br)

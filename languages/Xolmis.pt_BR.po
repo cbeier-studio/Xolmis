@@ -4592,10 +4592,20 @@ msgctxt "tdlgimport.sbsavelog.caption"
 msgid "Save log"
 msgstr "Salvar log"
 
+#: tdlgimportcaptures.btngeneratefiles.caption
+msgctxt "tdlgimportcaptures.btngeneratefiles.caption"
+msgid "Generate files"
+msgstr "Gerar arquivos"
+
+#: tdlgimportcaptures.btnhelp.caption
+msgctxt "tdlgimportcaptures.btnhelp.caption"
+msgid "&Help"
+msgstr "A&juda"
+
 #: tdlgimportcaptures.caption
 msgctxt "tdlgimportcaptures.caption"
-msgid "Import data"
-msgstr "Importar dados"
+msgid "Import banding data"
+msgstr "Importar dados de anilhamento"
 
 #: tdlgimportcaptures.ecapturefile.hint
 msgctxt "tdlgimportcaptures.ecapturefile.hint"
@@ -4636,6 +4646,11 @@ msgstr "Capturas"
 msgid "Field efforts"
 msgstr "Esforços"
 
+#: tdlgimportcaptures.lblgeneratefiles.caption
+msgctxt "tdlgimportcaptures.lblgeneratefiles.caption"
+msgid "Generate empty files to fill the data"
+msgstr "Gerar arquivos vazios para preencher os dados"
+
 #: tdlgimportcaptures.lbljournalfile.caption
 msgid "Field journal"
 msgstr "Diário de campo"
@@ -4649,6 +4664,11 @@ msgstr "Selecione ao menos um arquivo para iniciar a importação."
 msgctxt "tdlgimportcaptures.lbltitleimportfiles.caption"
 msgid "Files to import"
 msgstr "Arquivos a importar"
+
+#: tdlgimportcaptures.savedlg.title
+msgctxt "tdlgimportcaptures.savedlg.title"
+msgid "Generate files as"
+msgstr "Gerar arquivos como"
 
 #: tdlgimportcaptures.sbcancel.caption
 msgctxt "tdlgimportcaptures.sbcancel.caption"
@@ -4685,10 +4705,20 @@ msgctxt "tdlgimportcaptures.sbrun.caption"
 msgid "Import"
 msgstr "Importar"
 
+#: tdlgimportnests.btngeneratefiles.caption
+msgctxt "tdlgimportnests.btngeneratefiles.caption"
+msgid "Generate files"
+msgstr "Gerar arquivos"
+
+#: tdlgimportnests.btnhelp.caption
+msgctxt "tdlgimportnests.btnhelp.caption"
+msgid "&Help"
+msgstr "A&juda"
+
 #: tdlgimportnests.caption
 msgctxt "tdlgimportnests.caption"
-msgid "Import data"
-msgstr "Importar dados"
+msgid "Import nesting data"
+msgstr "Importar dados de nidificação"
 
 #: tdlgimportnests.eeggfile.hint
 msgctxt "tdlgimportnests.eeggfile.hint"
@@ -4725,6 +4755,11 @@ msgctxt "tdlgimportnests.lbleggfile.caption"
 msgid "Eggs"
 msgstr "Ovos"
 
+#: tdlgimportnests.lblgeneratefiles.caption
+msgctxt "tdlgimportnests.lblgeneratefiles.caption"
+msgid "Generate empty files to fill the data"
+msgstr "Gerar arquivos vazios para preencher os dados"
+
 #: tdlgimportnests.lblnestfile.caption
 msgctxt "tdlgimportnests.lblnestfile.caption"
 msgid "Nests"
@@ -4754,6 +4789,11 @@ msgstr "Arquivos a importar"
 msgctxt "tdlgimportnests.lbltitleimportfinished.caption"
 msgid "Finished importing!"
 msgstr "Importação finalizada!"
+
+#: tdlgimportnests.savedlg.title
+msgctxt "tdlgimportnests.savedlg.title"
+msgid "Generate files as"
+msgstr "Gerar arquivos como"
 
 #: tdlgimportnests.sbcancel.caption
 msgctxt "tdlgimportnests.sbcancel.caption"

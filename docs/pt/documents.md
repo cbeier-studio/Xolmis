@@ -25,13 +25,12 @@ Você pode adicionar documentos de duas maneiras:
       - Selecione um ou mais arquivos para anexar ao registro atual.  
       - Clique em **Abrir** para confirmar.  
       - O sistema mostrará o progresso da adição dos arquivos.  
-
 2. **Arrastar e soltar**  
       - Arraste arquivos do explorador de arquivos.  
       - Solte-os diretamente no painel lateral de documentos e links.  
       - O sistema mostrará o progresso da adição dos arquivos.  
 
-3. **Editar metadados**
+- **Editar metadados**
       - Se metadados estiverem presentes (ex.: data de criação), eles serão extraídos automaticamente.
       - Relacione os arquivos a registros usando o diálogo que é aberto.
       - Outras informações devem ser editadas manualmente depois.

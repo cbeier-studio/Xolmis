@@ -27,15 +27,14 @@ You can add videos in two ways:
       - Select one or more video files to attach to the current record.  
       - Click **Open** to confirm.  
       - The system will show the progress of adding the recordings.  
-
 2. **Drag and drop**  
       - Drag video files from your file explorer.  
       - Drop them directly into the videos side panel.  
       - The system will show the progress of adding the recordings.  
 
-3. **Edit metadata**
+- **Edit metadata**
       - If metadata is present (e.g., creation date, GPS coordinates), it will be automatically extracted.
-      - Link the videos to records using the dialog that opens.
+      - Link the videos to records using the dialog that opened.
       - Other information must be edited manually afterwards.
 
 This flexibility allows quick integration of field recordings into the database.

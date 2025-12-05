@@ -27,13 +27,12 @@ Você pode adicionar vídeos de duas maneiras:
       - Selecione um ou mais arquivos de vídeo para anexar ao registro atual.  
       - Clique em **Abrir** para confirmar.  
       - O sistema mostrará o progresso da adição das gravações.  
-
 2. **Arrastar e soltar**  
       - Arraste arquivos de vídeo do explorador de arquivos.  
       - Solte-os diretamente no painel lateral de vídeos.  
       - O sistema mostrará o progresso da adição das gravações.  
 
-3. **Editar metadados**
+- **Editar metadados**
       - Se metadados estiverem presentes (ex.: data de criação, coordenadas GPS), eles serão extraídos automaticamente.
       - Relacione os vídeos a registros usando o diálogo que é aberto.
       - Outras informações devem ser editadas manualmente depois.

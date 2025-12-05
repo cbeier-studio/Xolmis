@@ -196,9 +196,6 @@ object dlgFindTaxon: TdlgFindTaxon
       ChildSizing.ControlsPerLine = 1
       ClientHeight = 37
       ClientWidth = 286
-      Color = clWindow
-      ParentBackground = False
-      ParentColor = False
       TabOrder = 0
       Visible = False
       OnClick = pContentClick
