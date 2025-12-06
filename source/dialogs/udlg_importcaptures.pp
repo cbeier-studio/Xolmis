@@ -78,6 +78,7 @@ type
     sbRun: TButton;
     sbClearJournalFile: TSpeedButton;
     procedure btnGenerateFilesClick(Sender: TObject);
+    procedure btnHelpClick(Sender: TObject);
     procedure eCaptureFileChange(Sender: TObject);
     procedure eEffortFileChange(Sender: TObject);
     procedure eJournalFileButtonClick(Sender: TObject);
@@ -184,6 +185,11 @@ begin
       FreeAndNil(Csv);
     end;
   end;
+end;
+
+procedure TdlgImportCaptures.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_IMPORTING_BANDING_DATA);
 end;
 
 procedure TdlgImportCaptures.eCaptureFileChange(Sender: TObject);

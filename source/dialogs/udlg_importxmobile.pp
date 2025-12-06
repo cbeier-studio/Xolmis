@@ -855,6 +855,7 @@ begin
   DMM.sqlTrans.CommitRetaining;
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
+  LogEvent(leaStart, 'Import inventories from JSON');
   try
     SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
     aSurvey := TSurvey.Create();
@@ -956,11 +957,13 @@ begin
       nbPages.PageIndex := 3;
     end;
   end;
+  LogEvent(leaFinish, 'Import inventories from JSON');
 
   if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
     DMM.sqlTrans.RollbackRetaining;
+    LogInfo('Import canceled by user, transaction was rolled back');
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
@@ -969,7 +972,9 @@ begin
   begin
     mProgress.Append(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
+    LogInfo('Import finished successfully, transaction committed');
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    LogInfo('Database optimized');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
@@ -1000,6 +1005,7 @@ begin
   DMM.sqlTrans.CommitRetaining;
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
+  LogEvent(leaStart, 'Import nests from JSON');
   try
     Repo := TNestRepository.Create(DMM.sqlCon);
     aNest := TNest.Create();
@@ -1090,11 +1096,13 @@ begin
       nbPages.PageIndex := 3;
     end;
   end;
+  LogEvent(leaFinish, 'Import nests from JSON');
 
   if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
     DMM.sqlTrans.RollbackRetaining;
+    LogInfo('Import canceled by user, transaction was rolled back');
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
@@ -1103,7 +1111,9 @@ begin
   begin
     mProgress.Append(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
+    LogInfo('Import finished successfully, transaction committed');
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    LogInfo('Database optimized');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
@@ -1361,6 +1371,7 @@ begin
   DMM.sqlTrans.CommitRetaining;
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
+  LogEvent(leaStart, 'Import specimens from JSON');
   try
     Repo := TSpecimenRepository.Create(DMM.sqlCon);
     aSpecimen := TSpecimen.Create();
@@ -1440,11 +1451,13 @@ begin
       nbPages.PageIndex := 3;
     end;
   end;
+  LogEvent(leaFinish, 'Import specimens from JSON');
 
   if stopProcess then
   begin
     mProgress.Append(rsImportCanceledByUser);
     DMM.sqlTrans.RollbackRetaining;
+    LogInfo('Import canceled by user, transaction was rolled back');
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
@@ -1453,7 +1466,9 @@ begin
   begin
     mProgress.Append(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
+    LogInfo('Import finished successfully, transaction committed');
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    LogInfo('Database optimized');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
@@ -1659,6 +1674,7 @@ begin
   if aJSON = nil then
     Exit;
 
+  LogEvent(leaStart, 'Load inventories from JSON');
   try
     if aJSON is TJSONObject then
     begin
@@ -1692,6 +1708,7 @@ begin
       MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
     end;
   end;
+  LogEvent(leaFinish, 'Load inventories from JSON');
 end;
 
 procedure TdlgImportXMobile.LoadMapGrid;
@@ -1705,6 +1722,7 @@ begin
   gridMap.Clean([gzNormal]);
   r := 1;
 
+  LogEvent(leaStart, 'Load map grid');
   case FContentType of
     mctEmpty: ;
     mctInventory, mctInventories:
@@ -1813,6 +1831,7 @@ begin
       dlgLoading.Max := 100;
     end;
   end;
+  LogEvent(leaFinish, 'Load map grid');
 end;
 
 function TdlgImportXMobile.LoadNestsFromJSON(aJSON: TJSONData): Boolean;
@@ -1828,6 +1847,7 @@ begin
   if aJSON = nil then
     Exit;
 
+  LogEvent(leaStart, 'Load nests from JSON');
   try
     if aJSON is TJSONObject then
     begin
@@ -1860,6 +1880,7 @@ begin
       MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
     end;
   end;
+  LogEvent(leaFinish, 'Load nests from JSON');
 end;
 
 function TdlgImportXMobile.LoadSpecimensFromJSON(aJSON: TJSONData): Boolean;
@@ -1875,6 +1896,7 @@ begin
   if aJSON = nil then
     Exit;
 
+  LogEvent(leaStart, 'Load specimens from JSON');
   try
     if aJSON is TJSONArray then
     begin
@@ -1899,6 +1921,7 @@ begin
       MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
     end;
   end;
+  LogEvent(leaFinish, 'Load specimens from JSON');
 end;
 
 function TdlgImportXMobile.LocalityExists(aLocality: String): Boolean;

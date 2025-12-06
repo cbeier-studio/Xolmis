@@ -344,6 +344,7 @@ begin
         dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL DEFERRED;');
         dbMaria: ;
       end;
+      LogDebug('Database foreign keys disabled');
 
       try
         // >> Create tables
@@ -656,7 +657,7 @@ begin
 
         Trans.CommitRetaining;
         if not Trans.Active then
-        Trans.StartTransaction;
+          Trans.StartTransaction;
 
         // Populate tables
         dlgProgress.Text := rsProgressPopulatingTables;
@@ -670,14 +671,14 @@ begin
 
         Trans.CommitRetaining;
         if not Trans.Active then
-        Trans.StartTransaction;
+          Trans.StartTransaction;
 
         // Populate bird taxa
         PopulateZooTaxaTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
         if not Trans.Active then
-        Trans.StartTransaction;
+          Trans.StartTransaction;
 
       finally
         case databaseConnection.Manager of
@@ -686,6 +687,7 @@ begin
           dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL IMMEDIATE;');
           dbMaria: ;
         end;
+        LogDebug('Database foreign keys enabled');
       end;
 
       // Write metadata to the database

@@ -3284,6 +3284,8 @@ begin
   FSearch.RunSearch;
 
   FCanToggle := True;
+
+  LogDebug('Filters cleared');
 end;
 
 procedure TfrmCustomGrid.ClearSightingFilters;
@@ -6627,6 +6629,8 @@ begin
   LoadFieldsSettings(dsLink.dataset, ColsFile);
 
   LoadColumnsConfigGrid;
+
+  LogDebug('Loaded columns settings: ' + ColsFile);
 end;
 
 procedure TfrmCustomGrid.LoadColumnsConfigGrid;
@@ -9066,6 +9070,8 @@ begin
   ColsFile := ConcatPaths([AppDataDir, ColsFolder, TABLE_NAMES[FTableType] + '_columns.json']);
 
   SaveFieldsSettings(dsLink.DataSet, ColsFile);
+
+  LogDebug('Columns settings saved: ' + ColsFile);
 end;
 
 procedure TfrmCustomGrid.sbAddAudioClick(Sender: TObject);
@@ -10344,6 +10350,8 @@ begin
     isWorking := False;
     DBG.EndUpdate;
   end;
+
+  LogDebug('Filters applied');
 end;
 
 function TfrmCustomGrid.SearchBands(aValue: String): Boolean;

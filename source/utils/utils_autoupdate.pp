@@ -130,6 +130,7 @@ begin
   { SSL initialization has to be done by hand here }
   //InitSSLInterface;
 
+  LogEvent(leaStart, 'Check for Xolmis updates');
   Client := TFPHttpClient.Create(nil);
   Response := TStringStream.Create('');
   try
@@ -141,24 +142,33 @@ begin
       Versao := Data.FindPath('tag_name').AsString;
       Atual := GetBuildInfoAsString;
       if CompareVersion(Versao, Atual) > 0 then
-        Result := ckrNewVersion
+      begin
+        Result := ckrNewVersion;
+        LogDebug(Format('There is a Xolmis update (%s -> %s)', [Atual, Versao]));
+      end
       else
+      begin
         Result := ckrUpdated;
+        LogDebug(Format('Xolmis is up to date (%s)', [Atual]));
+      end;
     except
       on E: Exception do
       begin
         Result := ckrError;
+        LogDebug(Format('Exception while checking Xolmis updates: %s', [E.Message]));
         MsgDlg(rsCheckUpdates, rsErrorCheckingUpdates + LineEnding + E.Message, mtError);
       end;
     end;
   finally
     Client.Free;
     Response.Free;
+    LogEvent(leaFinish, 'Check for Xolmis updates');
   end;
 end;
 
 procedure RunUpdate;
 begin
+  // Temporarily, it will lead to the download webpage
   OpenUrl(AUTOUPDATE_URL);
 end;
 

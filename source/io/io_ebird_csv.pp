@@ -105,6 +105,7 @@ var
 begin
   if not FileExists(aCSVFile) then
   begin
+    LogError(Format('eBird import aborted: file not found (%s)', [aCSVFile]));
     MsgDlg(rsTitleImportFile, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
@@ -123,6 +124,7 @@ begin
     { Load CSV file using TSdfDataSet }
     //LoadEbirdFile(aCSVFile, CSV);
     Reg.FromCSV(CSV);
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     dlgProgress.Position := 0;
     dlgProgress.Max := CSV.RecordCount;
@@ -165,6 +167,7 @@ begin
             Survey.UserInserted := ActiveUser.Id;
 
             SurveyRepo.Insert(Survey);
+            LogInfo(Format('Survey record inserted with ID=%d', [Survey.Id]));
           end;
 
           { Check if the record already exists }
@@ -182,6 +185,7 @@ begin
             Sight.UserInserted := ActiveUser.Id;
 
             SightRepo.Insert(Sight);
+            LogInfo(Format('Sighting record inserted with ID=%d', [Sight.Id]));
           end
           else
           begin
@@ -192,6 +196,7 @@ begin
             Sight.UserUpdated := ActiveUser.Id;
 
             SightRepo.Update(Sight);
+            LogInfo(Format('Sighting record with ID=%d updated', [Sight.Id]));
           end;
         finally
           FreeAndNil(Taxon);
@@ -208,17 +213,21 @@ begin
       if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
+        LogWarning('eBird import canceled by user, transaction rolled back.');
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
       begin
         dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
+        LogInfo('eBird import finished successfully, transaction committed.');
         DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+        LogInfo('Database optimized.');
         MsgDlg(rsTitleImportFile, rsSuccessfulImportEbird, mtInformation);
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during eBird import, transaction rolled back.');
       raise;
     end;
 

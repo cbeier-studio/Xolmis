@@ -616,6 +616,7 @@ end;
 
 procedure ShowOnboardingBig(aTip: TBigTipType);
 begin
+  LogEvent(leaOpen, 'Big onboarding dialog');
   dlgBigTip := TdlgBigTip.Create(nil);
   with dlgBigTip do
   try
@@ -623,6 +624,7 @@ begin
     ShowModal;
   finally
     FreeAndNil(dlgBigTip);
+    LogEvent(leaClose, 'Big onboarding dialog');
   end;
 end;
 

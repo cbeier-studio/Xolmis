@@ -232,6 +232,9 @@ uses
     rsSuccessfulImportBandingJournal = 'Banding journals imported successfully!';
     rsSuccessfulImportBandingEffort = 'Banding effort imported successfully!';
     rsSuccessfulImportCaptures = 'Captures file imported successfully!';
+    rsSuccessfulImportNests = 'Nests imported successfully!';
+    rsSuccessfulImportNestRevisions = 'Nest revisions imported successfully!';
+    rsSuccessfulImportEggs = 'Eggs imported successfully!';
     rsSuccessfulBackup = 'Backup file created successfully: %s';
     rsSuccessfulRestore = 'Backup restored successfully: %s';
     rsSuccessfulImportCoordinates = 'Coordinates imported successfully!';

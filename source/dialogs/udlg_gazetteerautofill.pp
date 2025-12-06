@@ -116,6 +116,7 @@ begin
           end;
           dlgLoading.UpdateProgress(rsLoadingListOfCountries + ' ' + IntToStr(CKL.Count), -1);
         end;
+        LogDebug('List of countries loaded');
       end;
       gatCities:
       begin
@@ -142,6 +143,7 @@ begin
           end;
           dlgLoading.UpdateProgress(rsLoadingListOfCities + ' ' + IntToStr(CKL.Count), -1);
         end;
+        LogDebug(Format('List of cities loaded (%s)', [FStateName]));
       end;
     end;
     CKL.Sorted := True;
@@ -194,6 +196,7 @@ var
   CityName: String;
   FileName: String;
 begin
+  LogEvent(leaStart, 'Insert cities from state');
   FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
   FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
@@ -243,6 +246,7 @@ begin
                       Site.Latitude := StrToFloatDef(CityObj.Get('latitude', '0'), 0);
 
                       SiteRepo.Insert(Site);
+                      LogInfo(Format('Site record inserted with ID=%d', [Site.Id]));
                       Break; // city found
                     end;
                   end;
@@ -262,6 +266,7 @@ begin
     Site.Free;
     SiteRepo.Free;
     FS.Free;
+    LogEvent(leaFinish, 'Insert cities from state');
   end;
 end;
 
@@ -280,6 +285,7 @@ var
   FileName: String;
   currentLang: TLanguageID;
 begin
+  LogEvent(leaStart, 'Insert countries and states');
   FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
   FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
@@ -331,6 +337,7 @@ begin
               Country.Abbreviation := CountryObj.Get('iso2', '');
 
               SiteRepo.Insert(Country);
+              LogInfo(Format('Country record inserted with ID=%d', [Country.Id]));
 
               // Insert states
               StatesArray := CountryObj.Arrays['states'];
@@ -346,6 +353,7 @@ begin
                 Site.Latitude := StrToFloatDef(StateObj.Get('latitude', '0'), 0);
 
                 SiteRepo.Insert(Site);
+                LogInfo(Format('State record inserted with ID=%d', [Site.Id]));
               end;
               DMM.sqlTrans.CommitRetaining;
 
@@ -362,6 +370,7 @@ begin
     Country.Free;
     SiteRepo.Free;
     FS.Free;
+    LogEvent(leaFinish, 'Insert countries and states');
   end;
 end;
 

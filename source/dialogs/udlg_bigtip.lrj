@@ -1,6 +1,6 @@
 {"version":1,"strings":[
 {"hash":100021251,"name":"tdlgbigtip.caption","sourcebytes":[88,111,108,109,105,115],"value":"Xolmis"},
 {"hash":152768005,"name":"tdlgbigtip.lbltitle.caption","sourcebytes":[108,98,108,84,105,116,108,101],"value":"lblTitle"},
-{"hash":4863637,"name":"tdlgbigtip.btnclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
+{"hash":106627349,"name":"tdlgbigtip.btnclose.caption","sourcebytes":[67,111,110,116,105,110,117,101],"value":"Continue"},
 {"hash":43101316,"name":"tdlgbigtip.lbltext.caption","sourcebytes":[108,98,108,84,101,120,116],"value":"lblText"}
 ]}

@@ -127,6 +127,8 @@ const
   HELP_COORDINATES_CONVERTER: String      = 'coordinates-converter.html';
   HELP_EXPORTING_DATA: String             = 'exporting-data.html';
   HELP_IMPORTING_DATA: String             = 'importing-data.html';
+  HELP_IMPORTING_BANDING_DATA: String     = 'importing-banding-data.html';
+  HELP_IMPORTING_NESTING_DATA: String     = 'importing-nesting-data.html';
   HELP_MAP: String                        = 'map.html';
   HELP_PRINT_DATA: String                 = 'print-data.html';
   HELP_RECORD_HISTORY: String             = 'record-history.html';
@@ -487,7 +489,7 @@ begin
       if (Round(LogSizeMB)) >= MAX_LOG_SIZE then
       begin
         Result := True;
-        LogWarning('Log file reached maximum size');
+        LogWarning('Log file reached maximum size, started new log file');
         Logs.Assign(FindAllFiles(AppDataDir, 'xlmslog-old*.txt'));
         oldLog := ConcatPaths([AppDataDir, Format('xlmslog-old-%d.txt', [Logs.Count + 1])]);
         RenameFile(currLog, oldLog);
@@ -537,6 +539,8 @@ begin
     //{$ENDIF}
 
     ExecSQL;
+
+    LogDebug(Format('Record history written for Table=%s, ID=%d', [TABLE_NAMES[aTable], aCodigo));
   finally
     FreeAndNil(Qry);
   end;
@@ -696,6 +700,7 @@ function ConnectDatabase: Boolean;
 begin
   Result := False;
 
+  LogEvent(leaOpen, 'Connect dialog');
   dlgConnect := TdlgConnect.Create(nil);
   with dlgConnect do
   try
@@ -719,6 +724,7 @@ begin
     end;
   finally
     FreeAndNil(dlgConnect);
+    LogEvent(leaClose, 'Connect dialog');
   end;
 end;
 
@@ -822,6 +828,8 @@ begin
   //  HelpUrl := HelpUrl + '#' + aTopic;
 
   OpenURL(HelpUrl);
+
+  LogDebug('Help file opened: ' + aHelpFile);
 end;
 
 function GetFileCategoryFromExt(aExtension: String): TFileCategory;
@@ -1033,6 +1041,8 @@ begin
   FirstDeletedRecordsCleaning := FConfig.GetValue('/ONBOARDING/FirstDeletedRecordsCleaning', True);
   FirstSearchUse := FConfig.GetValue('/ONBOARDING/FirstSearchUse', True);
   FirstFeedback := FConfig.GetValue('/ONBOARDING/FirstFeedback', True);
+
+  LogDebug('Settings loaded from file: ' + FConfig.Filename);
 end;
 
 procedure TXolmisSettings.SaveToFile;
@@ -1085,6 +1095,8 @@ begin
   FConfig.SetValue('/CSV/DecimalSeparator', FDecimalSeparator);
 
   FConfig.Flush;
+
+  LogDebug('Settings saved to file: ' + FConfig.Filename);
 end;
 
 procedure TXolmisSettings.Reset;
@@ -1092,6 +1104,7 @@ begin
   FConfig.Clear;
   FConfig.Flush;
 
+  LogDebug('Reset settings');
   LoadFromFile;
 end;
 

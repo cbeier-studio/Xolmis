@@ -426,6 +426,7 @@ procedure TfrmMain.actDBConnectExecute(Sender: TObject);
 begin
   if ConnectDatabase then
   begin
+    LogDebug('Database connection changed');
     CloseAllTabs;
     sbHomeClick(nil);
 

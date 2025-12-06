@@ -129,6 +129,7 @@ var
 begin
   if not FileExists(aCSVFile) then
   begin
+    LogError(Format('Nest import aborted: file not found (%s)', [aCSVFile]));
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
@@ -149,6 +150,7 @@ begin
   try
     { Define CSV format settings }
     LoadNestingFile(aCSVFile, CSV);
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     if Assigned(aProgressBar) then
     begin
@@ -233,6 +235,7 @@ begin
             Nest.UserInserted := ActiveUser.Id;
 
             NestRepo.Insert(Nest);
+            LogInfo(Format('Nest record inserted with ID=%d', [Nest.Id]));
 
             // Insert record history
             WriteRecHistory(tbNests, haCreated, Nest.Id, '', '', '', rsInsertedByImport);
@@ -257,6 +260,7 @@ begin
       if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
+        LogWarning('Nest import canceled by user, transaction rolled back.');
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
@@ -264,12 +268,14 @@ begin
         if Assigned(dlgProgress) then
         begin
           dlgProgress.Text := rsProgressFinishing;
-          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportNests, mtInformation);
         end;
         DMM.sqlTrans.CommitRetaining;
+        LogInfo('Nest import finished successfully, transaction committed.');
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during nest import, transaction rolled back.');
       raise;
     end;
 
@@ -302,6 +308,7 @@ var
 begin
   if not FileExists(aCSVFile) then
   begin
+    LogError(Format('Nest revision import aborted: file not found (%s)', [aCSVFile]));
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
@@ -322,6 +329,7 @@ begin
   try
     { Define CSV format settings }
     LoadNestingFile(aCSVFile, CSV);
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     if Assigned(aProgressBar) then
     begin
@@ -401,6 +409,7 @@ begin
             Revision.UserInserted := ActiveUser.Id;
 
             RevisionRepo.Insert(Revision);
+            LogInfo(Format('Nest revision record inserted with ID=%d', [Revision.Id]));
 
             // Insert record history
             WriteRecHistory(tbNestRevisions, haCreated, Revision.Id, '', '', '', rsInsertedByImport);
@@ -425,6 +434,7 @@ begin
       if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
+        LogWarning('Nest revision import canceled by user, transaction rolled back.');
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
@@ -432,12 +442,14 @@ begin
         if Assigned(dlgProgress) then
         begin
           dlgProgress.Text := rsProgressFinishing;
-          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportNestRevisions, mtInformation);
         end;
         DMM.sqlTrans.CommitRetaining;
+        LogInfo('Nest revision import finished successfully, transaction committed.');
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during nest revision import, transaction rolled back.');
       raise;
     end;
 
@@ -470,6 +482,7 @@ var
 begin
   if not FileExists(aCSVFile) then
   begin
+    LogError(Format('Egg import aborted: file not found (%s)', [aCSVFile]));
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
@@ -490,6 +503,7 @@ begin
   try
     { Define CSV format settings }
     LoadNestingFile(aCSVFile, CSV);
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     if Assigned(aProgressBar) then
     begin
@@ -534,7 +548,7 @@ begin
 
           // Check if the egg exists
           EggRepo.FindByFieldNumber(Nest.Id, CSV.FieldByName('field_number').AsString, aDate, aObserver, Egg);
-          if (Egg.Id = 0) then
+          if (Egg.IsNew) then
           begin
             Egg.FieldNumber := CSV.FieldByName('field_number').AsString;
             Egg.EggSeq := CSV.FieldByName('egg_seq').AsInteger;
@@ -588,6 +602,7 @@ begin
             Egg.UserInserted := ActiveUser.Id;
 
             EggRepo.Insert(Egg);
+            LogInfo(Format('Egg record inserted with ID=%d', [Egg.Id]));
 
             // Insert record history
             WriteRecHistory(tbEggs, haCreated, Egg.Id, '', '', '', rsInsertedByImport);
@@ -612,6 +627,7 @@ begin
       if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
+        LogWarning('Egg import canceled by user, transaction rolled back.');
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
@@ -619,12 +635,14 @@ begin
         if Assigned(dlgProgress) then
         begin
           dlgProgress.Text := rsProgressFinishing;
-          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportEggs, mtInformation);
         end;
         DMM.sqlTrans.CommitRetaining;
+        LogInfo('Egg import finished successfully, transaction committed.');
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during egg import, transaction rolled back.');
       raise;
     end;
 

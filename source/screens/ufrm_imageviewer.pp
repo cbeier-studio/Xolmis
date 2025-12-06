@@ -258,6 +258,7 @@ begin
   FOriginal.Draw(FImage.Canvas, 0, 0);
 
   Clipboard.Assign(FImage);
+  LogDebug('Image copied to clipboard');
 end;
 
 procedure TfrmImageViewer.sbFlipHorizontalClick(Sender: TObject);
@@ -283,6 +284,7 @@ begin
   FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, xSettings.ImagesFolder);
 
   OpenDocument(FPath);
+  LogDebug('Image opened externally');
 end;
 
 procedure TfrmImageViewer.sbRotateLeftClick(Sender: TObject);
@@ -311,7 +313,10 @@ procedure TfrmImageViewer.sbSaveAsClick(Sender: TObject);
 begin
   SaveDlg.InitialDir := xSettings.LastPathUsed;
   if SaveDlg.Execute then
+  begin
     FOriginal.SaveToFile(SaveDlg.FileName);
+    LogInfo('Image saved to file: ' + SaveDlg.FileName);
+  end;
 end;
 
 procedure TfrmImageViewer.sbZoom100Click(Sender: TObject);

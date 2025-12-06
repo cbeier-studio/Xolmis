@@ -66,6 +66,7 @@ begin
 
   if aDataSource.DataSet.RecordCount > 0 then
   begin
+    LogEvent(leaOpen, 'Print preview: ' + aReportFile);
     frmPrintPreview := TfrmPrintPreview.Create(nil);
     with frmPrintPreview do
     try
@@ -80,10 +81,14 @@ begin
       ShowModal;
     finally
       FreeAndNil(frmPrintPreview);
+      LogEvent(leaClose, 'Print preview: ' + aReportFile);
     end;
   end
   else
+  begin
+    LogDebug('Nothing to print: ' + aReportFile);
     MsgDlg(rsPrintRecordsTitle, rsNothingToPrint, mtInformation);
+  end;
 end;
 
 end.

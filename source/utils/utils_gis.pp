@@ -633,6 +633,7 @@ begin
       Zip.Free;
       DeleteFile(aFileName); // Remove the KML file
     end;
+    LogDebug('Compressed KML file: ' + ChangeFileExt(aFileName, '.kmz'));
   end;
 end;
 
@@ -669,6 +670,7 @@ begin
     end;
 
     WriteXMLFile(Doc, aFileName);
+    LogDebug('Exported GPX file: ' + aFileName);
   finally
     Doc.Free;
   end;
@@ -694,6 +696,7 @@ begin
       CSV.AddCell(i + 1, MapPoints[i].Data.Notes);
     end;
     CSV.SaveToFile(aFileName);
+    LogDebug('Exported CSV file: ' + aFileName);
   finally
     CSV.Free;
   end;
@@ -756,6 +759,7 @@ begin
     JSONString := TStringStream.Create(JSONPretty);
     try
       JSONString.SaveToFile(aFileName);
+      LogDebug('Exported GeoJSON file: ' + aFileName);
     finally
       JSONString.Free;
     end;
@@ -775,6 +779,7 @@ var
   Zipped: Boolean;
   CoordList: TStringList;
 begin
+  LogEvent(leaStart, 'Load points from KML');
   Zipped := False;
   if ExtractFileExt(aFileName) = '.kmz' then
   begin
@@ -787,6 +792,7 @@ begin
       Unzip.Examine;
       aKMLFile := ConcatPaths([TempDir, Unzip.Entries[0].ArchiveFileName]); // Assuming that the first file is the KML
       Unzip.UnZipAllFiles;
+      LogDebug('Decompressed KMZ file: ' + aFileName);
     finally
       Unzip.Free;
     end;
@@ -836,9 +842,11 @@ begin
         end;
       end;
     end;
+    LogDebug(Format('Loaded %d KML points to GeoAssist', [PlacemarkList.Count]));
   finally
     DMM.tabGeoBank.EnableControls;
     Doc.Free;
+    LogEvent(leaFinish, 'Load points from KML');
   end;
 
   // Delete the extracted KML file
@@ -852,13 +860,16 @@ var
   RootNode, Node: TDOMNode;
   i: Integer;
 begin
+  LogEvent(leaStart, 'Load points from GPX');
   ReadXMLFile(Doc, aFileName);
   DMM.tabGeoBank.DisableControls;
   try
     RootNode := Doc.DocumentElement;
     Node := RootNode.FirstChild;
+    i := 0;
     while Assigned(Node) do
     begin
+      Inc(i);
       if Node.NodeName = 'wpt' then
       begin
         DMM.tabGeoBank.Append;
@@ -871,9 +882,11 @@ begin
       end;
       Node := Node.NextSibling;
     end;
+    LogDebug(Format('Loaded %d GPX points to GeoAssist', [i]));
   finally
     DMM.tabGeoBank.EnableControls;
     Doc.Free;
+    LogEvent(leaFinish, 'Load points from GPX');
   end;
 end;
 
@@ -882,6 +895,7 @@ var
   CSV: TCSVDocument;
   i: Integer;
 begin
+  LogEvent(leaStart, 'Load points from CSV');
   CSV := TCSVDocument.Create;
   DMM.tabGeoBank.DisableControls;
   try
@@ -895,9 +909,11 @@ begin
       DMM.tabGeoBank.FieldByName('notes').AsString := CSV.Cells[3, i];
       DMM.tabGeoBank.Post;
     end;
+    LogDebug(Format('Loaded %d CSV points to GeoAssist', [CSV.RowCount]));
   finally
     DMM.tabGeoBank.EnableControls;
     CSV.Free;
+    LogEvent(leaFinish, 'Load points from CSV');
   end;
 end;
 
@@ -909,6 +925,7 @@ var
   Coordinates: TJSONArray;
   i: Integer;
 begin
+  LogEvent(leaStart, 'Load points from GeoJSON');
   JSONData := GetJSON(ReadGeoJSONToString(aFileName));
   DMM.tabGeoBank.DisableControls;
   try
@@ -926,9 +943,11 @@ begin
         DMM.tabGeoBank.Post;
       end;
     end;
+    LogDebug(Format('Loaded %d GeoJSON points to GeoAssist', [JSONArray.Count]));
   finally
     DMM.tabGeoBank.EnableControls;
     JSONData.Free;
+    LogEvent(leaFinish, 'Load points from GeoJSON');
   end;
 end;
 
@@ -954,6 +973,7 @@ var
   nameField, longField, latField: String;
   BM: TBookmark;
 begin
+  LogEvent(leaStart, 'Convert DB coordinates to MapPoints');
   if aTableType = tbSurveys then
   begin
     longField := 'start_longitude';
@@ -989,9 +1009,11 @@ begin
 
       aDataSet.Next;
     end;
+    LogDebug(Format('Converted %d coordinates to MapPoints', [aMapPointList.Count]));
   finally
     aDataSet.EnableControls;
     aDataSet.Bookmark := BM;
+    LogEvent(leaFinish, 'Convert DB coordinates to MapPoints');
   end;
 end;
 
@@ -1157,6 +1179,7 @@ var
   CountryName: String;
   FileName: String;
 begin
+  LogEvent(leaStart, 'Load countries from JSON');
   Result := TList.Create;
   FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
   FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
@@ -1196,7 +1219,9 @@ begin
     end;
   finally
     FS.Free;
+    LogEvent(leaFinish, 'Load countries from JSON');
   end;
+  LogInfo(Format('Countries loaded from JSON with %d records', [Result.Count]));
 end;
 
 function LoadCountryFromJSON(const CountryIso: String): TCountry;
@@ -1210,6 +1235,7 @@ var
   CountryPtbr: String;
   FileName: String;
 begin
+  LogEvent(leaStart, 'Load country from JSON');
   FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
   FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
   try
@@ -1242,6 +1268,7 @@ begin
           Result.Region := CountryObj.Get('region', '');
           Result.SubRegion := CountryObj.Get('subregion', '');
 
+          LogInfo('Country found: ' + Result.Name);
           Break;
         end;
       end;
@@ -1251,6 +1278,7 @@ begin
     end;
   finally
     FS.Free;
+    LogEvent(leaFinish, 'Load country from JSON');
   end;
 end;
 
@@ -1266,6 +1294,7 @@ var
   City: ^TCity;
   FileName: String;
 begin
+  LogEvent(leaStart, 'Load cities from JSON');
   Result := TList.Create;
   FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
   FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
@@ -1312,8 +1341,9 @@ begin
     end;
   finally
     FS.Free;
+    LogEvent(leaFinish, 'Load cities from JSON');
   end;
-
+  LogInfo(Format('Cities loaded from JSON with %d records', [Result.Count]));
 end;
 
 { TUTMPoint }

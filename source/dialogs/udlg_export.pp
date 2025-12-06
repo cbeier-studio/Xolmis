@@ -287,6 +287,7 @@ begin
   xSettings.LastPathUsed := ExtractFilePath(FFileName);
 
   // Export data to the filetype selected
+  LogEvent(leaStart, 'Export file: ' + FFileName);
   case tvFiletype.Selected.Index of
     0: ExportToCSV;
     1: ExportToJSON;
@@ -294,6 +295,7 @@ begin
     3: ExportToXLSX;
     4: ExportToXML;
   end;
+  LogEvent(leaFinish, 'Export file: ' + FFileName);
 
   // Close dialog
   ModalResult := mrOk;

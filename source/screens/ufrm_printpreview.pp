@@ -284,6 +284,7 @@ begin
     end;
 
     Report.PrintPreparedReport(nPages, PrintDlg.Copies);
+    LogInfo('Report sent to printer');
   end;
 end;
 
@@ -296,6 +297,7 @@ begin
     begin
       Report.ExportFilename := SaveDlg.FileName;
       Report.ExportTo(TlrPdfExportFilter, SaveDlg.FileName);
+      LogInfo('Report exported to PDF: ' + SaveDlg.FileName);
 
       if xSettings.OpenFileAfterExport then
         OpenDocument(SaveDlg.FileName);

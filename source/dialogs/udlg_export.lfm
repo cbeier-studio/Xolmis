@@ -9,6 +9,7 @@ object dlgExport: TdlgExport
   ClientWidth = 664
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0

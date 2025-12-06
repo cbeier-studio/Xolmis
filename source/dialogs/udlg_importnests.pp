@@ -78,6 +78,7 @@ type
     sbRun: TButton;
     sbClearNestFile: TSpeedButton;
     procedure btnGenerateFilesClick(Sender: TObject);
+    procedure btnHelpClick(Sender: TObject);
     procedure eEggFileChange(Sender: TObject);
     procedure eRevisionFileChange(Sender: TObject);
     procedure eNestFileButtonClick(Sender: TObject);
@@ -178,6 +179,11 @@ begin
     end;
 
   end;
+end;
+
+procedure TdlgImportNests.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_IMPORTING_NESTING_DATA);
 end;
 
 procedure TdlgImportNests.eEggFileChange(Sender: TObject);

@@ -300,27 +300,37 @@ begin
   if not DMM.tabGeoBank.Active then
     DMM.tabGeoBank.Open;
 
+  LogEvent(leaStart, 'Add converted coordinates to GeoAssist');
   L := TStringList.Create;
-  L.Text := seConverted.Lines.Text;
-
-  for i := 0 to L.Count - 1 do
-  begin
-    S := Trim(L[i]);
-    if S <> EmptyStr then
-    begin
-      { #todo : Convert coordinate to decimal format }
-      MP.FromString(S);
-      with DMM.tabGeoBank do
+  try
+    L.Text := seConverted.Lines.Text;
+    try
+      for i := 0 to L.Count - 1 do
       begin
-        Append;
-        FieldByName('coordinate_name').AsString := 'Converted_' + IntToStr(i + 1);
-        FieldByName('longitude').AsFloat := MP.X;
-        FieldByName('latitude').AsFloat := MP.Y;
-        Post;
+        S := Trim(L[i]);
+        if S <> EmptyStr then
+        begin
+          { #todo : Convert coordinate to decimal format }
+          MP.FromString(S);
+          with DMM.tabGeoBank do
+          begin
+            Append;
+            FieldByName('coordinate_name').AsString := 'Converted_' + IntToStr(i + 1);
+            FieldByName('longitude').AsFloat := MP.X;
+            FieldByName('latitude').AsFloat := MP.Y;
+            Post;
+          end;
+        end;
       end;
+    except
+      LogWarning('Exception while adding coordinates to GeoAssist');
+      raise;
     end;
+  finally
+    L.Free;
+    LogEvent(leaFinish, 'Add converted coordinates to GeoAssist');
   end;
-  L.Free;
+
   MsgDlg(rsSuccessfulImportCoordinates, rsCoordinatesAvailableToUse, mtInformation);
 end;
 
@@ -502,6 +512,7 @@ begin
   begin
     seConvertFrom.Lines.LoadFromFile(OpenDlg.FileName);
     seConvertFrom.Lines.Text := FormatCoordinates(seConvertFrom.Lines.Text);
+    LogInfo('Coordinates loaded from file: ' + OpenDlg.FileName);
   end;
 end;
 
@@ -515,6 +526,7 @@ begin
   if SaveDlg.Execute then
   begin
     seConverted.Lines.SaveToFile(SaveDlg.FileName);
+    LogInfo('Converted coordinates saved to file: ' + SaveDlg.FileName);
   end;
 end;
 

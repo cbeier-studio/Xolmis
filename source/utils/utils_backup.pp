@@ -480,6 +480,7 @@ begin
 
   targetPath := AppDataDir;
 
+  LogEvent(leaStart, 'Restore settings backup: ' + aFilename);
   fzip := TUnZipper.Create;
   try
     fzip.FileName := aFilename;
@@ -492,6 +493,7 @@ begin
   finally
     fzip.Free;
   end;
+  LogEvent(leaFinish, 'Restore settings backup: ' + aFilename);
 
   Result := True;
   MsgDlg(rsTitleRestore, Format(rsSuccessfulRestore, [ExtractFileName(aFilename)]), mtInformation);

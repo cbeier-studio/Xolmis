@@ -101,6 +101,7 @@ object dlgImportCaptures: TdlgImportCaptures
       Images = iButtons
       ImageIndex = 3
       TabOrder = 3
+      OnClick = btnHelpClick
     end
   end
   object nbContent: TNotebook

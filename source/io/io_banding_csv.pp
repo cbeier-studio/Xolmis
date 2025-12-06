@@ -233,6 +233,7 @@ var
 begin
   if not FileExists(aCSVFile) then
   begin
+    LogError(Format('Capture import aborted: file not found (%s)', [aCSVFile]));
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
@@ -249,7 +250,8 @@ begin
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
-    Reg.FromCSV(CSV);
+    LoadBandingFile(aCSVFile, CSV);
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     if Assigned(aProgressBar) then
     begin
@@ -345,6 +347,7 @@ begin
                 Band.UserInserted := ActiveUser.Id;
 
                 BandRepo.Insert(Band);
+                LogInfo(Format('Band record inserted with ID=%d', [Band.Id]));
               end;
             end;
 
@@ -367,6 +370,7 @@ begin
                   RemovedBand.UserInserted := ActiveUser.Id;
 
                   BandRepo.Insert(RemovedBand);
+                  LogInfo(Format('Removed band record inserted with ID=%d', [RemovedBand.Id]));
                 end;
               end;
             end;
@@ -392,6 +396,7 @@ begin
               Individuo.UserInserted := ActiveUser.Id;
 
               IndividualRepo.Insert(Individuo);
+              LogInfo(Format('Individual record inserted with ID=%d', [Individuo.Id]));
             end;
 
             // Check if the capture record exists
@@ -486,6 +491,7 @@ begin
               Captura.UserInserted := ActiveUser.Id;
 
               CaptureRepo.Insert(Captura);
+              LogInfo(Format('Capture record inserted with ID=%d', [Captura.Id]));
             end
             else
             begin
@@ -501,21 +507,31 @@ begin
               Captura.UserUpdated := ActiveUser.Id;
 
               CaptureRepo.Update(Captura);
+              LogInfo(Format('Capture record with ID=%d updated', [Captura.Id]));
             end;
 
             // Update band status
             if (Trim(Reg.RemovedBand) <> '') then
+            begin
               UpdateBand(RemovedBand.Id, Individuo.Id, 'R', Reg.CaptureDate);
+              LogInfo(Format('Band ID=%d status updated to removed', [RemovedBand.Id]));
+            end;
             UpdateBand(Band.Id, Individuo.Id, 'U', Reg.CaptureDate);
+            LogInfo(Format('Band ID=%d status updated to used', [Band.Id]));
 
             // Update individual band
             if Reg.CaptureType = 'N' then
             begin
               UpdateIndividual(Individuo.Id, Reg.CaptureDate);
+              LogInfo(Format('Individual ID=%d banding date updated', [Individuo.Id]));
             end;
             if Reg.CaptureType = 'C' then
+            begin
               ChangeIndividualBand(Individuo.Id, Band.Id, RemovedBand.Id, Reg.CaptureDate,
                 Reg.RemovedBand);
+              LogInfo(Format('Individual ID=%d band updated with ID=%d (removed band ID=%d)',
+                [Individuo.Id, Band.Id, RemovedBand.Id]));
+            end;
           finally
             FreeAndNil(Taxon);
             FreeAndNil(NetStation);
@@ -557,15 +573,22 @@ begin
                 Band.UserInserted := ActiveUser.Id;
 
                 BandRepo.Insert(Band);
+                LogInfo(Format('Band record inserted with ID=%d', [Band.Id]));
               end;
             end;
 
             // Update band status
             if (Reg.CaptureType = 'L') then    // Lost band
-              UpdateBand(Band.Id, 0, 'L', Reg.CaptureDate)
+            begin
+              UpdateBand(Band.Id, 0, 'L', Reg.CaptureDate);
+              LogInfo(Format('Band ID=%d status updated to lost', [Band.Id]));
+            end
             else
             if (Reg.CaptureType = 'Q') then    // Broken band
+            begin
               UpdateBand(Band.Id, 0, 'Q', Reg.CaptureDate);
+              LogInfo(Format('Band ID=%d status updated to broken', [Band.Id]));
+            end;
           finally
             FreeAndNil(Band);
             BandRepo.Free;
@@ -585,6 +608,7 @@ begin
       if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
+        LogWarning('Capture import canceled by user, transaction rolled back.');
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
@@ -592,10 +616,12 @@ begin
         if Assigned(dlgProgress) then
           dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
+        LogInfo('Capture import finished successfully, transaction committed.');
         MsgDlg(rsTitleImportFile, rsSuccessfulImportCaptures, mtInformation);
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during capture import, transaction rolled back.');
       raise;
     end;
 
@@ -649,6 +675,8 @@ procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
         W.RelativeHumidity := RegWeather.Humidity;
 
         WeatherRepo.Insert(W);
+        LogInfo(Format('Weather record inserted with ID=%d', [W.Id]));
+
         WriteRecHistory(tbWeatherLogs, haCreated, W.Id, '', '', '', rsInsertedByImport);
       finally
         W.Free;
@@ -675,6 +703,8 @@ procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
         Member.PersonId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION,
                                   ExtractWord(i, TeamStr, [',',';']));
         MemberRepo.Insert(Member);
+        LogInfo(Format('Survey member record inserted with ID=%d', [Member.Id]));
+
         WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
       end;
     finally
@@ -696,6 +726,7 @@ var
 begin
   if not FileExists(aCSVFile) then
   begin
+    LogError(Format('Banding journal import aborted: file not found (%s)', [aCSVFile]));
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
@@ -725,6 +756,7 @@ begin
     CSV.Schema.AddDelimitedText(BANDING_JOURNAL_SCHEMA, ';', True);
     CSV.FileName := aCSVFile;
     CSV.Open;
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     UpdateProgress(0, CSV.RecordCount);
 
@@ -760,7 +792,9 @@ begin
             Survey.Notes := Reg.Notes;
 
             SurveyRepo.Insert(Survey);
-            if Survey.Id > 0 then
+            LogInfo(Format('Survey record inserted with ID=%d', [Survey.Id]));
+
+            if Survey.IsNew then
             begin
               WriteRecHistory(tbSurveys, haCreated, Survey.Id, '', '', '', rsInsertedByImport);
               InsertSurveyTeam(Reg.Team, Survey.Id);
@@ -786,6 +820,7 @@ begin
       if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
+        LogWarning('Banding journal import canceled by user, transaction rolled back.');
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
@@ -793,10 +828,12 @@ begin
         if Assigned(dlgProgress) then
           dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
+        LogInfo('Banding journal import finished successfully, transaction committed.');
         MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingJournal, mtInformation);
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during banding journal import, transaction rolled back.');
       raise;
     end;
   finally
@@ -831,6 +868,7 @@ var
 begin
   if not FileExists(aCSVFile) then
   begin
+    LogError(Format('Banding effort import aborted: file not found (%s)', [aCSVFile]));
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
@@ -860,6 +898,7 @@ begin
       FileName := aCSVFile;
       Open;
     end;
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     if Assigned(aProgressBar) then
     begin
@@ -924,6 +963,7 @@ begin
               NetSite.NetClose4 := Reg.NetBout4.CloseTime;
 
               NetRepo.Insert(NetSite);
+              LogInfo(Format('Net effort record inserted with ID=%d', [NetSite.Id]));
 
               // Insert record history
               WriteRecHistory(tbNetsEffort, haCreated, NetSite.Id, '', '', '', rsInsertedByImport);
@@ -950,6 +990,7 @@ begin
       if stopProcess then
       begin
         DMM.sqlTrans.Rollback;
+        LogWarning('Banding effort import canceled by user, transaction rolled back.');
         MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
@@ -957,10 +998,12 @@ begin
         if Assigned(dlgProgress) then
           dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
+        LogInfo('Banding effort import finished successfully, transaction committed.');
         MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during banding effort import, transaction rolled back.');
       raise;
     end;
 
