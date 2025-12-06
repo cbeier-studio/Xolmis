@@ -31,6 +31,8 @@ nav:
     - Search and filtering data: search-and-filtering-data.md
     - Exporting data: exporting-data.md
     - Importing data: importing-data.md
+    - Importing Banding Data: importing-banding-data.md
+    - Importing Nesting Data: importing-nesting-data.md
     - Images: images.md
     - Audio recordings: audio-recordings.md
     - Videos: videos.md
@@ -150,6 +152,8 @@ plugins:
               - Busca e filtragem de dados: search-and-filtering-data.md
               - Exportando dados: exporting-data.md
               - Importando dados: importing-data.md
+              - Importando dados de anilhamento: importing-banding-data.md
+              - Importando dados de nidificação: importing-nesting-data.md
               - Imagens: images.md
               - Gravações de áudio: audio-recordings.md
               - Vídeos: videos.md
