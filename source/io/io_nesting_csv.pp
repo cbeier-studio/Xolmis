@@ -107,16 +107,13 @@ type
   procedure ImportNestDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportNestRevisionsV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportEggDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
-  function ValidateNestSchemaV1(aCSVFile: String): Boolean;
-  function ValidateNestRevisionSchemaV1(aCSVFile: String): Boolean;
-  function ValidateEggSchemaV1(aCSVFile: String): Boolean;
 
 implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_system, utils_fullnames,
-  data_types, data_management, data_getvalue, data_consts,
-  models_users, models_taxonomy, models_birds, models_geo, models_breeding, models_sightings, models_bands,
+  data_types, data_getvalue, data_consts, io_csv,
+  models_users, models_taxonomy, models_geo, models_breeding,
   udm_main, udlg_progress;
 
 procedure ImportNestDataV1(aCSVFile: String; aProgressBar: TProgressBar);
@@ -137,7 +134,7 @@ begin
     Exit;
   end;
 
-  if not ValidateNestSchemaV1(aCSVFile) then
+  if not ValidateCSVSchema(aCSVFile, NEST_SCHEMA, 'nests') then
     Exit;
 
   LogEvent(leaStart, Format('Import nests file: %s', [aCSVFile]));
@@ -319,7 +316,7 @@ begin
     Exit;
   end;
 
-  if not ValidateNestRevisionSchemaV1(aCSVFile) then
+  if not ValidateCSVSchema(aCSVFile, NEST_REVISION_SCHEMA, 'nest revisions') then
     Exit;
 
   LogEvent(leaStart, Format('Import nest revisions: %s', [aCSVFile]));
@@ -496,7 +493,7 @@ begin
     Exit;
   end;
 
-  if not ValidateEggSchemaV1(aCSVFile) then
+  if not ValidateCSVSchema(aCSVFile, EGG_SCHEMA, 'eggs') then
     Exit;
 
   LogEvent(leaStart, Format('Import eggs file: %s', [aCSVFile]));
@@ -683,195 +680,6 @@ begin
     //Schema.AddDelimitedText(NEST_SCHEMA, ';', True);
     FileName := aCSVFile;
     Open;
-  end;
-end;
-
-function ValidateNestSchemaV1(aCSVFile: String): Boolean;
-var
-  F: TextFile;
-  csvSchema, Cols: TStringList;
-  Header: String;
-  i: Integer;
-begin
-  Result := False;
-  if not FileExists(aCSVFile) then
-  begin
-    LogError('File not found: ' + aCSVFile);
-    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
-    Exit;
-  end;
-
-  LogEvent(leaStart, 'Validate nest CSV schema');
-  csvSchema := TStringList.Create;
-  Cols := TStringList.Create;
-
-  AssignFile(F, aCSVFile);
-  Reset(F);
-
-  try
-    ReadLn(F, Header);
-
-    csvSchema.Delimiter := ';';
-    csvSchema.StrictDelimiter := True;
-    csvSchema.DelimitedText := NEST_SCHEMA;
-
-    Cols.Delimiter := ';';
-    Cols.StrictDelimiter := True;
-    Cols.DelimitedText := Header;
-
-    try
-      if Cols.Count <> csvSchema.Count then
-      begin
-        LogError('Column count mismatch');
-        MsgDlg(rsTitleError, rsColumnCountMismatch, mtError);
-        Exit;
-      end;
-
-      for i := 0 to csvSchema.Count - 1 do
-      begin
-        if not SameText(Cols[i], csvSchema[i]) then
-        begin
-          LogError(Format('Column %d mismatch. Expected "%s", got "%s".', [i+1, csvSchema[i], Cols[i]]));
-          MsgDlg(rsTitleError, Format(rsColumnMismatch, [i+1, csvSchema[i], Cols[i]]), mtError);
-          Exit;
-        end;
-      end;
-
-      Result := True;
-      LogDebug('CSV header is valid');
-    finally
-      Cols.Free;
-      csvSchema.Free;
-    end;
-  finally
-    CloseFile(F);
-    LogEvent(leaFinish, 'Validate nest CSV schema');
-  end;
-end;
-
-function ValidateNestRevisionSchemaV1(aCSVFile: String): Boolean;
-var
-  F: TextFile;
-  csvSchema, Cols: TStringList;
-  Header: String;
-  i: Integer;
-begin
-  Result := False;
-  if not FileExists(aCSVFile) then
-  begin
-    LogError('File not found: ' + aCSVFile);
-    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
-    Exit;
-  end;
-
-  LogEvent(leaStart, 'Validate nest revision CSV schema');
-  csvSchema := TStringList.Create;
-  Cols := TStringList.Create;
-
-  AssignFile(F, aCSVFile);
-  Reset(F);
-
-  try
-    ReadLn(F, Header);
-
-    csvSchema.Delimiter := ';';
-    csvSchema.StrictDelimiter := True;
-    csvSchema.DelimitedText := NEST_REVISION_SCHEMA;
-
-    Cols.Delimiter := ';';
-    Cols.StrictDelimiter := True;
-    Cols.DelimitedText := Header;
-
-    try
-      if Cols.Count <> csvSchema.Count then
-      begin
-        LogError('Column count mismatch');
-        MsgDlg(rsTitleError, rsColumnCountMismatch, mtError);
-        Exit;
-      end;
-
-      for i := 0 to csvSchema.Count - 1 do
-      begin
-        if not SameText(Cols[i], csvSchema[i]) then
-        begin
-          LogError(Format('Column %d mismatch. Expected "%s", got "%s".', [i+1, csvSchema[i], Cols[i]]));
-          MsgDlg(rsTitleError, Format(rsColumnMismatch, [i+1, csvSchema[i], Cols[i]]), mtError);
-          Exit;
-        end;
-      end;
-
-      Result := True;
-      LogDebug('CSV header is valid');
-    finally
-      Cols.Free;
-      csvSchema.Free;
-    end;
-  finally
-    CloseFile(F);
-    LogEvent(leaFinish, 'Validate nest revision CSV schema');
-  end;
-end;
-
-function ValidateEggSchemaV1(aCSVFile: String): Boolean;
-var
-  F: TextFile;
-  csvSchema, Cols: TStringList;
-  Header: String;
-  i: Integer;
-begin
-  Result := False;
-  if not FileExists(aCSVFile) then
-  begin
-    LogError('File not found: ' + aCSVFile);
-    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
-    Exit;
-  end;
-
-  LogEvent(leaStart, 'Validate egg CSV schema');
-  csvSchema := TStringList.Create;
-  Cols := TStringList.Create;
-
-  AssignFile(F, aCSVFile);
-  Reset(F);
-
-  try
-    ReadLn(F, Header);
-
-    csvSchema.Delimiter := ';';
-    csvSchema.StrictDelimiter := True;
-    csvSchema.DelimitedText := EGG_SCHEMA;
-
-    Cols.Delimiter := ';';
-    Cols.StrictDelimiter := True;
-    Cols.DelimitedText := Header;
-
-    try
-      if Cols.Count <> csvSchema.Count then
-      begin
-        LogError('Column count mismatch');
-        MsgDlg(rsTitleError, rsColumnCountMismatch, mtError);
-        Exit;
-      end;
-
-      for i := 0 to csvSchema.Count - 1 do
-      begin
-        if not SameText(Cols[i], csvSchema[i]) then
-        begin
-          LogError(Format('Column %d mismatch. Expected "%s", got "%s".', [i+1, csvSchema[i], Cols[i]]));
-          MsgDlg(rsTitleError, Format(rsColumnMismatch, [i+1, csvSchema[i], Cols[i]]), mtError);
-          Exit;
-        end;
-      end;
-
-      Result := True;
-      LogDebug('CSV header is valid');
-    finally
-      Cols.Free;
-      csvSchema.Free;
-    end;
-  finally
-    CloseFile(F);
-    LogEvent(leaFinish, 'Validate egg CSV schema');
   end;
 end;
 

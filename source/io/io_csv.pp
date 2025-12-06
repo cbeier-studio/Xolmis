@@ -21,7 +21,7 @@ unit io_csv;
 interface
 
 uses
-  Classes, SysUtils, SdfData, Math, LConvEncoding, io_core;
+  Classes, SysUtils, Dialogs, SdfData, Math, LConvEncoding, io_core;
 
 type
 
@@ -36,10 +36,76 @@ type
     procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
   end;
 
+  function ValidateCSVSchema(const aCSVFile, aSchema, aSchemaName: String): Boolean;
+
 implementation
 
 uses
-  LazUTF8;
+  LazUTF8, utils_locale, utils_global, utils_dialogs;
+
+function ValidateCSVSchema(const aCSVFile, aSchema, aSchemaName: String): Boolean;
+var
+  F: TextFile;
+  csvSchema, Cols: TStringList;
+  Header: String;
+  i: Integer;
+begin
+  Result := False;
+  if not FileExists(aCSVFile) then
+  begin
+    LogError('File not found: ' + aCSVFile);
+    MsgDlg(rsTitleValidateSchema, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
+
+  LogEvent(leaStart, 'Validate ' + aSchemaName + ' CSV schema');
+  csvSchema := TStringList.Create;
+  Cols := TStringList.Create;
+
+  AssignFile(F, aCSVFile);
+  Reset(F);
+
+  try
+    ReadLn(F, Header);
+
+    csvSchema.Delimiter := ';';
+    csvSchema.StrictDelimiter := True;
+    csvSchema.DelimitedText := aSchema;
+
+    Cols.Delimiter := ';';
+    Cols.StrictDelimiter := True;
+    Cols.DelimitedText := Header;
+
+    try
+      // Check if all columns of CSV file are in the schema
+      for i := 0 to Cols.Count - 1 do
+      begin
+        if csvSchema.IndexOf(Cols[i]) = -1 then
+        begin
+          LogError(Format('Unexpected column "%s" found in CSV header', [Cols[i]]));
+          MsgDlg(rsTitleValidateSchema, Format(rsUnexpectedColumnFound, [Cols[i]]), mtError);
+          Exit;
+        end;
+      end;
+
+      // If CSV file has less columns than the schema, just log a warning
+      if Cols.Count < csvSchema.Count then
+      begin
+        LogWarning(Format('CSV has %d columns, schema defines %d. Import will proceed with available columns.',
+          [Cols.Count, csvSchema.Count]));
+      end;
+
+      Result := True;
+      LogDebug('CSV header is valid');
+    finally
+      Cols.Free;
+      csvSchema.Free;
+    end;
+  finally
+    CloseFile(F);
+    LogEvent(leaFinish, 'Validate ' + aSchemaName + ' CSV schema');
+  end;
+end;
 
 { TCSVImporter }
 

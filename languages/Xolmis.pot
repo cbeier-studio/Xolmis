@@ -17037,7 +17037,7 @@ msgstr ""
 
 #: utils_locale.rsrequiredcolumnnotfound
 #, object-pascal-format
-msgid "Required column \"%s\" not found"
+msgid "Required column \"%s\" not found."
 msgstr ""
 
 #: utils_locale.rsrequiredfield
@@ -18073,6 +18073,10 @@ msgctxt "utils_locale.rstitleusers"
 msgid "Users"
 msgstr ""
 
+#: utils_locale.rstitlevalidateschema
+msgid "Validate schema"
+msgstr ""
+
 #: utils_locale.rstitlevegetation
 msgctxt "utils_locale.rstitlevegetation"
 msgid "Vegetation sample"
@@ -18200,6 +18204,11 @@ msgstr ""
 #: utils_locale.rstreatmentlist
 msgctxt "utils_locale.rstreatmentlist"
 msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
+msgstr ""
+
+#: utils_locale.rsunexpectedcolumnfound
+#, object-pascal-format
+msgid "Unexpected column \"%s\" found in CSV header."
 msgstr ""
 
 #: utils_locale.rsunresolved

@@ -257,7 +257,7 @@ begin
   if not FileExists(FileName) then
   begin
     LogError('File not found: ' + FileName);
-    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [FileName]), mtError);
+    MsgDlg(rsTitleValidateSchema, Format(rsErrorFileNotFound, [FileName]), mtError);
     Exit;
   end;
 
@@ -276,7 +276,7 @@ begin
         if Cols.IndexOf(EBIRD_SCHEMA[i]) = -1 then
         begin
           LogError(Format('Required column "%s" not found', [EBIRD_SCHEMA[i]]));
-          MsgDlg(rsTitleError, Format(rsRequiredColumnNotFound, []), mtError);
+          MsgDlg(rsTitleValidateSchema, Format(rsRequiredColumnNotFound, []), mtError);
           Exit;
         end;
       end;

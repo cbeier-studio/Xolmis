@@ -130,6 +130,7 @@ uses
     rsTitleLogin = 'Login';
     rsTitleNoConnectionsFound = 'No connections found';
     rsTitleProfilePicture = 'Profile picture';
+    rsTitleValidateSchema = 'Validate schema';
     rsClosing = 'Closing...';
 
     { Input messages }
@@ -458,7 +459,8 @@ uses
     rsExceededMaxLength = '%s exceeded the maximum length (%d of %d).';
     rsColumnCountMismatch = 'Column count mismatch.';
     rsColumnMismatch = 'Column %d mismatch. Expected "%s", got "%s".';
-    rsRequiredColumnNotFound = 'Required column "%s" not found';
+    rsRequiredColumnNotFound = 'Required column "%s" not found.';
+    rsUnexpectedColumnFound = 'Unexpected column "%s" found in CSV header.';
 
     { HTML validation messages }
     //rsForeignNotExist = 'Selected <b>%s</b> does not exist. Select a valid record.';
