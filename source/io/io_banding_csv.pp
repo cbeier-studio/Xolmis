@@ -184,6 +184,9 @@ type
   procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
   procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
+  function ValidateBandingSchemaV1(aCSVFile: String): Boolean;
+  function ValidateJournalSchemaV1(aCSVFile: String): Boolean;
+  function ValidateEffortSchemaV1(aCSVFile: String): Boolean;
 
 implementation
 
@@ -237,6 +240,9 @@ begin
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
+
+  if not ValidateBandingSchemaV1(aCSVFile) then
+    Exit;
 
   LogEvent(leaStart, Format('Import banding file: %s', [aCSVFile]));
   stopProcess := False;
@@ -731,6 +737,9 @@ begin
     Exit;
   end;
 
+  if not ValidateJournalSchemaV1(aCSVFile) then
+    Exit;
+
   LogEvent(leaStart, Format('Import banding journal: %s', [aCSVFile]));
   stopProcess := False;
 
@@ -872,6 +881,9 @@ begin
     MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
+
+  if not ValidateEffortSchemaV1(aCSVFile) then
+    Exit;
 
   LogEvent(leaStart, Format('Import banding effort: %s', [aCSVFile]));
   stopProcess := False;
@@ -1020,6 +1032,195 @@ begin
       FreeAndNil(dlgProgress);
     end;
     LogEvent(leaFinish, 'Import banding effort')
+  end;
+end;
+
+function ValidateBandingSchemaV1(aCSVFile: String): Boolean;
+var
+  F: TextFile;
+  csvSchema, Cols: TStringList;
+  Header: String;
+  i: Integer;
+begin
+  Result := False;
+  if not FileExists(aCSVFile) then
+  begin
+    LogError('File not found: ' + aCSVFile);
+    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
+
+  LogEvent(leaStart, 'Validate banding CSV schema');
+  csvSchema := TStringList.Create;
+  Cols := TStringList.Create;
+
+  AssignFile(F, aCSVFile);
+  Reset(F);
+
+  try
+    ReadLn(F, Header);
+
+    csvSchema.Delimiter := ';';
+    csvSchema.StrictDelimiter := True;
+    csvSchema.DelimitedText := BANDING_SCHEMA;
+
+    Cols.Delimiter := ';';
+    Cols.StrictDelimiter := True;
+    Cols.DelimitedText := Header;
+
+    try
+      if Cols.Count <> csvSchema.Count then
+      begin
+        LogError('Column count mismatch');
+        MsgDlg(rsTitleError, rsColumnCountMismatch, mtError);
+        Exit;
+      end;
+
+      for i := 0 to csvSchema.Count - 1 do
+      begin
+        if not SameText(Cols[i], csvSchema[i]) then
+        begin
+          LogError(Format('Column %d mismatch. Expected "%s", got "%s".', [i+1, csvSchema[i], Cols[i]]));
+          MsgDlg(rsTitleError, Format(rsColumnMismatch, [i+1, csvSchema[i], Cols[i]]), mtError);
+          Exit;
+        end;
+      end;
+
+      Result := True;
+      LogDebug('CSV header is valid');
+    finally
+      Cols.Free;
+      csvSchema.Free;
+    end;
+  finally
+    CloseFile(F);
+    LogEvent(leaFinish, 'Validate banding CSV schema');
+  end;
+end;
+
+function ValidateJournalSchemaV1(aCSVFile: String): Boolean;
+var
+  F: TextFile;
+  csvSchema, Cols: TStringList;
+  Header: String;
+  i: Integer;
+begin
+  Result := False;
+  if not FileExists(aCSVFile) then
+  begin
+    LogError('File not found: ' + aCSVFile);
+    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
+
+  LogEvent(leaStart, 'Validate banding journal CSV schema');
+  csvSchema := TStringList.Create;
+  Cols := TStringList.Create;
+
+  AssignFile(F, aCSVFile);
+  Reset(F);
+
+  try
+    ReadLn(F, Header);
+
+    csvSchema.Delimiter := ';';
+    csvSchema.StrictDelimiter := True;
+    csvSchema.DelimitedText := BANDING_JOURNAL_SCHEMA;
+
+    Cols.Delimiter := ';';
+    Cols.StrictDelimiter := True;
+    Cols.DelimitedText := Header;
+
+    try
+      if Cols.Count <> csvSchema.Count then
+      begin
+        LogError('Column count mismatch');
+        MsgDlg(rsTitleError, rsColumnCountMismatch, mtError);
+        Exit;
+      end;
+
+      for i := 0 to csvSchema.Count - 1 do
+      begin
+        if not SameText(Cols[i], csvSchema[i]) then
+        begin
+          LogError(Format('Column %d mismatch. Expected "%s", got "%s".', [i+1, csvSchema[i], Cols[i]]));
+          MsgDlg(rsTitleError, Format(rsColumnMismatch, [i+1, csvSchema[i], Cols[i]]), mtError);
+          Exit;
+        end;
+      end;
+
+      Result := True;
+      LogDebug('CSV header is valid');
+    finally
+      Cols.Free;
+      csvSchema.Free;
+    end;
+  finally
+    CloseFile(F);
+    LogEvent(leaFinish, 'Validate banding journal CSV schema');
+  end;
+end;
+
+function ValidateEffortSchemaV1(aCSVFile: String): Boolean;
+var
+  F: TextFile;
+  csvSchema, Cols: TStringList;
+  Header: String;
+  i: Integer;
+begin
+  Result := False;
+  if not FileExists(aCSVFile) then
+  begin
+    LogError('File not found: ' + aCSVFile);
+    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
+
+  LogEvent(leaStart, 'Validate net effort CSV schema');
+  csvSchema := TStringList.Create;
+  Cols := TStringList.Create;
+
+  AssignFile(F, aCSVFile);
+  Reset(F);
+
+  try
+    ReadLn(F, Header);
+
+    csvSchema.Delimiter := ';';
+    csvSchema.StrictDelimiter := True;
+    csvSchema.DelimitedText := NET_EFFORT_SCHEMA;
+
+    Cols.Delimiter := ';';
+    Cols.StrictDelimiter := True;
+    Cols.DelimitedText := Header;
+
+    try
+      if Cols.Count <> csvSchema.Count then
+      begin
+        LogError('Column count mismatch');
+        MsgDlg(rsTitleError, rsColumnCountMismatch, mtError);
+        Exit;
+      end;
+
+      for i := 0 to csvSchema.Count - 1 do
+      begin
+        if not SameText(Cols[i], csvSchema[i]) then
+        begin
+          LogError(Format('Column %d mismatch. Expected "%s", got "%s".', [i+1, csvSchema[i], Cols[i]]));
+          MsgDlg(rsTitleError, Format(rsColumnMismatch, [i+1, csvSchema[i], Cols[i]]), mtError);
+          Exit;
+        end;
+      end;
+
+      Result := True;
+      LogDebug('CSV header is valid');
+    finally
+      Cols.Free;
+      csvSchema.Free;
+    end;
+  finally
+    CloseFile(F);
+    LogEvent(leaFinish, 'Validate net effort CSV schema');
   end;
 end;
 

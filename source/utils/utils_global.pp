@@ -540,7 +540,7 @@ begin
 
     ExecSQL;
 
-    LogDebug(Format('Record history written for Table=%s, ID=%d', [TABLE_NAMES[aTable], aCodigo));
+    LogDebug(Format('Record history written for Table=%s, ID=%d', [TABLE_NAMES[aTable], aCodigo]));
   finally
     FreeAndNil(Qry);
   end;

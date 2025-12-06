@@ -4056,7 +4056,7 @@ msgstr ""
 
 #: tdlgbigtip.btnclose.caption
 msgctxt "tdlgbigtip.btnclose.caption"
-msgid "Close"
+msgid "Continue"
 msgstr ""
 
 #: tdlgcalendar.caption
@@ -14128,6 +14128,15 @@ msgctxt "utils_locale.rscoloryellow"
 msgid "yellow"
 msgstr ""
 
+#: utils_locale.rscolumncountmismatch
+msgid "Column count mismatch."
+msgstr ""
+
+#: utils_locale.rscolumnmismatch
+#, object-pascal-format
+msgid "Column %d mismatch. Expected \"%s\", got \"%s\"."
+msgstr ""
+
 #: utils_locale.rscolumns
 msgctxt "utils_locale.rscolumns"
 msgid "Columns"
@@ -17026,6 +17035,11 @@ msgctxt "utils_locale.rsrequiredclosetime1"
 msgid "The Close time 1 must be entered."
 msgstr ""
 
+#: utils_locale.rsrequiredcolumnnotfound
+#, object-pascal-format
+msgid "Required column \"%s\" not found"
+msgstr ""
+
 #: utils_locale.rsrequiredfield
 #, object-pascal-format
 msgctxt "utils_locale.rsrequiredfield"
@@ -17508,6 +17522,18 @@ msgstr ""
 #: utils_locale.rssuccessfulimportebird
 msgctxt "utils_locale.rssuccessfulimportebird"
 msgid "eBird file imported successfully!"
+msgstr ""
+
+#: utils_locale.rssuccessfulimporteggs
+msgid "Eggs imported successfully!"
+msgstr ""
+
+#: utils_locale.rssuccessfulimportnestrevisions
+msgid "Nest revisions imported successfully!"
+msgstr ""
+
+#: utils_locale.rssuccessfulimportnests
+msgid "Nests imported successfully!"
 msgstr ""
 
 #: utils_locale.rssuccessfulnewbatch

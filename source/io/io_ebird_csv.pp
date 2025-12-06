@@ -68,6 +68,7 @@ type
 
   procedure LoadEbirdFile(const aCSVFile: String; CSV: TSdfDataSet);
   procedure ImportEbirdData(aCSVFile: String);
+  function ValidateEbirdSchema(const FileName: String): Boolean;
 
 implementation
 
@@ -109,6 +110,9 @@ begin
     MsgDlg(rsTitleImportFile, Format(rsErrorFileNotFound, [aCSVFile]), mtError);
     Exit;
   end;
+
+  if not ValidateEbirdSchema(aCSVFile) then
+    Exit;
 
   LogEvent(leaStart, Format('Import eBird file: %s', [aCSVFile]));
   stopProcess := False;
@@ -239,6 +243,51 @@ begin
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
     LogEvent(leaFinish, 'Import eBird file');
+  end;
+end;
+
+function ValidateEbirdSchema(const FileName: String): Boolean;
+var
+  F: TextFile;
+  Header: String;
+  Cols: TStringList;
+  i: Integer;
+begin
+  Result := False;
+  if not FileExists(FileName) then
+  begin
+    LogError('File not found: ' + FileName);
+    MsgDlg(rsTitleError, Format(rsErrorFileNotFound, [FileName]), mtError);
+    Exit;
+  end;
+
+  LogEvent(leaStart, 'Validate eBird Record CSV schema');
+  AssignFile(F, FileName, CP_UTF8);  // open file with UTF8 encoding
+  Reset(F);
+  try
+    ReadLn(F, Header);
+    Cols := TStringList.Create;
+    Cols.Delimiter := ',';
+    Cols.StrictDelimiter := True;
+    Cols.DelimitedText := Header;
+    try
+      for i := Low(EBIRD_SCHEMA) to High(EBIRD_SCHEMA) do
+      begin
+        if Cols.IndexOf(EBIRD_SCHEMA[i]) = -1 then
+        begin
+          LogError(Format('Required column "%s" not found', [EBIRD_SCHEMA[i]]));
+          MsgDlg(rsTitleError, Format(rsRequiredColumnNotFound, []), mtError);
+          Exit;
+        end;
+      end;
+      Result := True;
+      LogDebug('CSV header is valid for eBird schema.');
+    finally
+      Cols.Free;
+    end;
+  finally
+    CloseFile(F);
+    LogEvent(leaFinish, 'Validate eBird Record CSV schema');
   end;
 end;
 

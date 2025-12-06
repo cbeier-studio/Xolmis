@@ -456,6 +456,9 @@ uses
     rsMustBeAValidDateTime = '%s must have a valid date and time.';
     rsMustBeAValidBoolean = '%s must have a valid boolean.';
     rsExceededMaxLength = '%s exceeded the maximum length (%d of %d).';
+    rsColumnCountMismatch = 'Column count mismatch.';
+    rsColumnMismatch = 'Column %d mismatch. Expected "%s", got "%s".';
+    rsRequiredColumnNotFound = 'Required column "%s" not found';
 
     { HTML validation messages }
     //rsForeignNotExist = 'Selected <b>%s</b> does not exist. Select a valid record.';
