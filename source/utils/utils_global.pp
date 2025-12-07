@@ -234,7 +234,7 @@ type
     FLastUser, FLastConnection: String;
     FAutoUpdates: Integer;
     { Privacy }
-    FAllowWriteLogs, FAllowUsageData: Boolean;
+    FAllowWriteLogs, FWriteDetailedLogs, FAllowUsageData: Boolean;
     { Backup }
     FBackupFolder: String;
     FAutomaticBackup: Integer;
@@ -306,6 +306,7 @@ type
     property AutoUpdates: Integer read FAutoUpdates write FAutoUpdates;
     { Privacy }
     property AllowWriteLogs: Boolean read FAllowWriteLogs write FAllowWriteLogs;
+    property WriteDetailedLogs: Boolean read FWriteDetailedLogs write FWriteDetailedLogs;
     property AllowSendUsageData: Boolean read FAllowUsageData write FAllowUsageData;
     { Backup }
     property BackupFolder: String read FBackupFolder write SetBackupFolder;
@@ -1000,6 +1001,7 @@ begin
   FLastConnection := FConfig.GetValue('/SECURITY/LastConnection', EmptyStr);
   { Privacy }
   FAllowWriteLogs := FConfig.GetValue('/PRIVACY/AllowWriteLogs', False);
+  FWriteDetailedLogs := FConfig.GetValue('/PRIVACY/WriteDetailedLogs', False);
   FAllowUsageData := FConfig.GetValue('/PRIVACY/AllowUsageData', False);
   { Backup }
   FBackupFolder := FConfig.GetValue('/BACKUP/BackupFolder', ConcatPaths([InstallDir, 'backup']));
@@ -1082,6 +1084,7 @@ begin
   FConfig.SetValue('/SECURITY/LastConnection', FLastConnection);
   { Privacy }
   FConfig.SetValue('/PRIVACY/AllowWriteLogs', FAllowWriteLogs);
+  FConfig.SetValue('/PRIVACY/WriteDetailedLogs', FWriteDetailedLogs);
   FConfig.SetValue('/PRIVACY/AllowUsageData', FAllowUsageData);
   { Backup }
   FConfig.SetValue('/BACKUP/BackupFolder', FBackupFolder);

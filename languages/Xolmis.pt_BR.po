@@ -3393,6 +3393,10 @@ msgstr "Idioma dos nomes vernaculares"
 msgid "Video files location"
 msgstr "Local dos arquivos de vídeo"
 
+#: tcfgoptions.lblwritedetailedlogs.caption
+msgid "Enable detailed commands logging"
+msgstr "Habilitar log de comandos detalhados"
+
 #: tcfgoptions.sbcheckupdatesnow.caption
 msgid "Check now"
 msgstr "Verificar agora"

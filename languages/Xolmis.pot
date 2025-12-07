@@ -3416,6 +3416,10 @@ msgstr ""
 msgid "Video files location"
 msgstr ""
 
+#: tcfgoptions.lblwritedetailedlogs.caption
+msgid "Enable detailed commands logging"
+msgstr ""
+
 #: tcfgoptions.sbcheckupdatesnow.caption
 msgid "Check now"
 msgstr ""

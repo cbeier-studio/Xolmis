@@ -31,6 +31,7 @@
 {"hash":147782113,"name":"tcfgoptions.lblallowusagedata.caption","sourcebytes":[65,108,108,111,119,32,88,111,108,109,105,115,32,116,111,32,99,111,108,108,101,99,116,32,97,110,111,110,121,109,111,117,115,32,117,115,97,103,101,32,100,97,116,97],"value":"Allow Xolmis to collect anonymous usage data"},
 {"hash":87409505,"name":"tcfgoptions.sbclearusagedata.caption","sourcebytes":[67,108,101,97,114,32,117,115,97,103,101,32,100,97,116,97],"value":"Clear usage data"},
 {"hash":216666291,"name":"tcfgoptions.lblprivacyterms.caption","sourcebytes":[80,114,105,118,97,99,121,32,116,101,114,109,115],"value":"Privacy terms"},
+{"hash":99398903,"name":"tcfgoptions.lblwritedetailedlogs.caption","sourcebytes":[69,110,97,98,108,101,32,100,101,116,97,105,108,101,100,32,99,111,109,109,97,110,100,115,32,108,111,103,103,105,110,103],"value":"Enable detailed commands logging"},
 {"hash":123475193,"name":"tcfgoptions.lbltitlesecurity.caption","sourcebytes":[83,101,99,117,114,105,116,121,32,97,110,100,32,112,114,105,118,97,99,121],"value":"Security and privacy"},
 {"hash":142879474,"name":"tcfgoptions.lblbackuppath.caption","sourcebytes":[66,97,99,107,117,112,32,102,105,108,101,115,32,102,111,108,100,101,114],"value":"Backup files folder"},
 {"hash":215934499,"name":"tcfgoptions.lblstartupbackup.caption","sourcebytes":[67,114,101,97,116,101,32,98,97,99,107,117,112,32,119,104,101,110,32,88,111,108,109,105,115,32,99,108,111,115,101,115],"value":"Create backup when Xolmis closes"},

@@ -31,7 +31,9 @@ type
   TcfgOptions = class(TForm)
     btnHelp: TSpeedButton;
     eVideosPath: TDirectoryEdit;
+    icoWriteDetailedLogs: TImage;
     icoVideosPath: TImage;
+    lblWriteDetailedLogs: TLabel;
     lblTitleAppearance: TLabel;
     lblTitleBackup: TLabel;
     lblTitleCollection: TLabel;
@@ -39,6 +41,7 @@ type
     lblTitleMedia: TLabel;
     lblTitleSecurity: TLabel;
     lblVideosPath: TLabel;
+    pWriteDetailedLogs: TBCPanel;
     pVideosPath: TBCPanel;
     sliderRowHeight: TBCFluentSlider;
     btnDefaultRowHeight: TButton;
@@ -151,6 +154,7 @@ type
     scrollMedia: TScrollBox;
     scrollSecurity: TScrollBox;
     scrollBackup: TScrollBox;
+    tsWriteDetailedLogs: TToggleSwitch;
     tsRememberConnection: TToggleSwitch;
     tsRememberUser: TToggleSwitch;
     tsWriteLogs: TToggleSwitch;
@@ -192,6 +196,7 @@ type
     procedure tsShowOutliersChange(Sender: TObject);
     procedure tsShowSynonymsChange(Sender: TObject);
     procedure tsUseConditionalFormattingChange(Sender: TObject);
+    procedure tsWriteDetailedLogsChange(Sender: TObject);
     procedure tsWriteLogsChange(Sender: TObject);
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
@@ -237,6 +242,7 @@ begin
   icoRememberConnection.Images := iIconsDark;
   icoRememberUser.Images := iIconsDark;
   icoAllowWriteLog.Images := iIconsDark;
+  icoWriteDetailedLogs.Images := iIconsDark;
   icoAllowUsageData.Images := iIconsDark;
   imgPrivacyTerms.Images := iIconsDark;
   icoBackupPath.Images := iIconsDark;
@@ -283,6 +289,8 @@ begin
   pRememberUser.Border.Color := clSystemSolidNeutralFGDark;
   pAllowWriteLog.Background.Color := clSolidBGSecondaryDark;
   pAllowWriteLog.Border.Color := clSystemSolidNeutralFGDark;
+  pWriteDetailedLogs.Background.Color := clSolidBGSecondaryDark;
+  pWriteDetailedLogs.Border.Color := clSystemSolidNeutralFGDark;
   pAllowUsageData.Background.Color := clSolidBGSecondaryDark;
   pAllowUsageData.Border.Color := clSystemSolidNeutralFGDark;
   pPrivacyTerms.Background.Color := clSolidBGSecondaryDark;
@@ -310,6 +318,7 @@ begin
   tsRememberConnection.Color := pConfirmCancel.Background.Color;
   tsRememberUser.Color := pConfirmCancel.Background.Color;
   tsWriteLogs.Color := pConfirmCancel.Background.Color;
+  tsWriteDetailedLogs.Color := pConfirmCancel.Background.Color;
   tsAllowUsageData.Color := pConfirmCancel.Background.Color;
 
   eImagesPath.Images := DMM.iEditsDark;
@@ -487,6 +496,7 @@ begin
 
   { PRIVACY }
   tsWriteLogs.Checked := xSettings.AllowWriteLogs;
+  tsWriteDetailedLogs.Checked := xSettings.WriteDetailedLogs;
   tsAllowUsageData.Checked := xSettings.AllowSendUsageData;
 
   { BACKUP AND RESTORE }
@@ -598,9 +608,16 @@ begin
   tsShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
 end;
 
+procedure TcfgOptions.tsWriteDetailedLogsChange(Sender: TObject);
+begin
+  xSettings.WriteDetailedLogs := tsWriteDetailedLogs.Checked;
+end;
+
 procedure TcfgOptions.tsWriteLogsChange(Sender: TObject);
 begin
   xSettings.AllowWriteLogs := tsWriteLogs.Checked;
+  lblWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
+  tsWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
 end;
 
 procedure TcfgOptions.tvMenuSelectionChanged(Sender: TObject);

@@ -73,7 +73,7 @@ object cfgOptions: TcfgOptions
     Height = 421
     Top = 0
     Width = 657
-    PageIndex = 0
+    PageIndex = 4
     Align = alClient
     TabOrder = 2
     object pgGeneral: TPage
@@ -1824,7 +1824,7 @@ object cfgOptions: TcfgOptions
         Top = 48
         Width = 657
         HorzScrollBar.Page = 345
-        VertScrollBar.Page = 256
+        VertScrollBar.Page = 303
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 373
@@ -1833,7 +1833,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentSecurity: TPanel
           Left = 0
-          Height = 256
+          Height = 303
           Top = 0
           Width = 657
           Align = alTop
@@ -1841,7 +1841,7 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 256
+          ClientHeight = 303
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
@@ -2130,7 +2130,7 @@ object cfgOptions: TcfgOptions
           object pAllowUsageData: TBCPanel
             Left = 16
             Height = 47
-            Top = 157
+            Top = 204
             Width = 625
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -2233,7 +2233,7 @@ object cfgOptions: TcfgOptions
           object pPrivacyTerms: TBCPanel
             Left = 16
             Height = 44
-            Top = 204
+            Top = 251
             Width = 625
             Align = alTop
             AutoSize = True
@@ -2307,6 +2307,94 @@ object cfgOptions: TcfgOptions
               Images = iIcons
               Proportional = True
               OnClick = lblPrivacyTermsClick
+            end
+          end
+          object pWriteDetailedLogs: TBCPanel
+            Left = 16
+            Height = 47
+            Top = 157
+            Width = 625
+            Align = alTop
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 5
+            object icoWriteDetailedLogs: TImage
+              AnchorSideLeft.Control = pWriteDetailedLogs
+              AnchorSideTop.Control = pWriteDetailedLogs
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 20
+              Top = 13
+              Width = 20
+              Center = True
+              ImageIndex = -1
+              Images = iIcons
+              Proportional = True
+            end
+            object lblWriteDetailedLogs: TLabel
+              AnchorSideLeft.Control = icoWriteDetailedLogs
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pWriteDetailedLogs
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 16
+              Width = 187
+              Caption = 'Enable detailed commands logging'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsWriteDetailedLogs: TToggleSwitch
+              AnchorSideTop.Control = pWriteDetailedLogs
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pWriteDetailedLogs
+              AnchorSideRight.Side = asrBottom
+              Left = 559
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsWriteDetailedLogsChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
             end
           end
         end

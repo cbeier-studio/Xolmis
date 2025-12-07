@@ -403,23 +403,42 @@ begin
 end;
 
 procedure TDMM.sqlConLog(Sender: TSQLConnection; EventType: TDBEventType; const Msg: String);
-//var
-//  EventName: String;
 begin
-  //EventName := EmptyStr;
+  if not xSettings.AllowWriteLogs then
+    Exit;
+
   case EventType of
     detCustom: ;
     detPrepare: ;
-    detExecute: LogEvent(leaExecute, Msg);
+    detExecute:
+    begin
+      if xSettings.WriteDetailedLogs then
+      begin
+        //if not Msg.Contains('FROM record_verifications') then
+          LogEvent(leaExecute, Msg);
+      end
+      else
+      begin
+        if (Pos('INSERT', UpperCase(Msg)) > 0) or
+           (Pos('UPDATE', UpperCase(Msg)) > 0) or
+           (Pos('DELETE', UpperCase(Msg)) > 0) then
+          LogEvent(leaExecute, Msg);
+      end;
+    end;
     detFetch: ;
     detCommit: LogEvent(leaCommit, Msg);
     detRollBack: LogEvent(leaRollback, Msg);
-    detParamValue: LogInfo(Msg);
-    detActualSQL: LogInfo(Msg);
+    detParamValue:
+    begin
+      if xSettings.WriteDetailedLogs then
+        LogInfo(Msg);
+    end;
+    detActualSQL:
+    begin
+      if xSettings.WriteDetailedLogs then
+        LogInfo(Msg);
+    end;
   end;
-
-  //if EventName <> EmptyStr then
-  //  LogEvent(EventName, Msg);
 end;
 
 procedure TDMM.sysConBeforeConnect(Sender: TObject);
