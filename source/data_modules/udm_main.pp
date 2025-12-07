@@ -404,7 +404,7 @@ end;
 
 procedure TDMM.sqlConLog(Sender: TSQLConnection; EventType: TDBEventType; const Msg: String);
 begin
-  if not xSettings.AllowWriteLogs then
+  if not xSettings.AllowWriteLogs or not evLog.Active then
     Exit;
 
   case EventType of

@@ -1043,8 +1043,6 @@ begin
   FirstDeletedRecordsCleaning := FConfig.GetValue('/ONBOARDING/FirstDeletedRecordsCleaning', True);
   FirstSearchUse := FConfig.GetValue('/ONBOARDING/FirstSearchUse', True);
   FirstFeedback := FConfig.GetValue('/ONBOARDING/FirstFeedback', True);
-
-  LogDebug('Settings loaded from file: ' + FConfig.Filename);
 end;
 
 procedure TXolmisSettings.SaveToFile;

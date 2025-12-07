@@ -457,6 +457,11 @@ begin
   pManageBackups.Enabled := not (ActiveUser.IsVisitor);
 
   LoadConfig;
+
+  lblShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
+  tsShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
+  lblWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
+  tsWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
 end;
 
 procedure TcfgOptions.lblPrivacyTermsClick(Sender: TObject);
@@ -616,6 +621,7 @@ end;
 procedure TcfgOptions.tsWriteLogsChange(Sender: TObject);
 begin
   xSettings.AllowWriteLogs := tsWriteLogs.Checked;
+
   lblWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
   tsWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
 end;
