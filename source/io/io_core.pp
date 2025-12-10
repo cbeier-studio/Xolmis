@@ -21,7 +21,7 @@ unit io_core;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, fgl;
+  Classes, SysUtils, Dialogs, Variants, StrUtils, fgl, data_types;
 
 type
   EImportError = class(Exception);
@@ -29,7 +29,35 @@ type
   TImportFileType = (iftCSV, iftTSV, iftExcel, iftExcelOOXML, iftOpenDocument, iftJSON, iftNDJSON, iftDBF, iftXML,
                       iftKML, iftGPX, iftGeoJSON);
 
-  TFieldsMap = specialize TFPGMap<string, string>;
+  TValueTransformation = (vtrTrim, vtrLowerCase, vtrUpperCase, vtrSentenceCase, vtrTitleCase, vtrBoolean,
+    vtrRemoveAccents, vtrNormalizeWhitespace, vtrReplaceChars, vtrScale, vtrRound,
+    vtrExtractYear, vtrExtractMonth, vtrExtractDay, vtrConvertCoordinates, vtrSplitCoordinates);
+  TNullHandling = (nhIgnore, nhDefaultValue, nhUseMean, nhUseMedian, nhUseMode);
+  TScaleOperation = (sopMultiply, sopDivide);
+  TSourceCoordinatesFormat = (scfDMS, scfUTM);
+
+  TFieldMapping = class
+  public
+    SourceField: String;
+    TargetField: String;
+    Import: Boolean;
+    LookupTable: TTableType;
+    LookupField: String;
+    Transformations: set of TValueTransformation;
+    IsCorrespondingKey: Boolean;
+    NullHandling: TNullHandling;
+    DefaultValue: Variant;
+    ReplaceCharFrom: String;
+    ReplaceCharTo: String;
+    RoundPrecision: Integer;
+    ScaleOperation: TScaleOperation;
+    ScaleSize: Double;
+    CoordinatesFormat: TSourceCoordinatesFormat;
+  end;
+
+  TFieldsMap = specialize TFPGObjectList<TFieldMapping>;
+
+  TFieldsDictionary = specialize TFPGMap<String, String>;
 
   TExportFiletype = (xfCSV, xfJSON, xfODS, xfXLSX, xfXML);
 
@@ -42,8 +70,13 @@ type
     function IsCancellationRequested: Boolean;
   end;
 
+  TImportStrategy = (istAppend, istReplace, istUpdate);
+  TImportErrorHandling = (iehAbort, iehIgnore);
+
   // Import options
   TImportOptions = record
+    Strategy: TImportStrategy;
+    ErrorHandling: TImportErrorHandling;
     Encoding: String;         // 'UTF-8', 'latin1', 'Windows-1252' etc.
     Delimiter: Char;          // CSV/TSV
     HasHeader: Boolean;       // CSV/TSV, XLSX/ODS
@@ -52,6 +85,7 @@ type
     SkipEmptyLines: Boolean;  // CSV/TSV
     ForceNDJSON: Boolean;     // JSON
     IgnoreNulls: Boolean;     // JSON
+    RecordsPath: String;      // JSON
     RecordNodeName: String;   // XML
     SheetName: String;        // XLSX/ODS
     SheetIndex: Integer;      // XLSX/ODS
@@ -170,7 +204,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, Zipper;
+  utils_locale, utils_global, utils_dialogs, data_getvalue, Zipper;
 
 function ExtractExt(const FileName: string): string;
 begin
@@ -225,25 +259,75 @@ begin
 end;
 
 procedure TFieldMapper.AddMapping(const SourceField, DestField: string);
+var
+  FFieldMapping: TFieldMapping;
 begin
-  FMap[SourceField] := DestField;
+  FFieldMapping := TFieldMapping.Create;
+  FFieldMapping.SourceField := SourceField;
+  FFieldMapping.TargetField := DestField;
+  FFieldMapping.LookupTable := tbNone;
+  FMap.Add(FFieldMapping);
 end;
 
 function TFieldMapper.Apply(const Row: TXRow): TXRow;
 var
-  i: Integer;
-  NewRow: TXRow;
-  Src, Dst: string;
+  Mapping: TFieldMapping;
+  SourceValue, DestValue: String;
+  I: Integer;
 begin
-  NewRow := TXRow.Create;
-  for i := 0 to FMap.Count - 1 do
+  Result := TXRow.Create;
+
+  for I := 0 to FMap.Count - 1 do
   begin
-    Src := FMap.Keys[i];
-    Dst := FMap.Data[i];
-    if Row.IndexOfName(Src) >= 0 then
-      NewRow.Values[Dst] := Row.Values[Src];
+    Mapping := FMap[I];
+    if not Mapping.Import then
+      Continue;
+
+    // 1. Get value from source row
+    SourceValue := Row.Values[Mapping.SourceField];
+
+    DestValue := SourceValue;
+
+    // 2. Null handling
+    if (DestValue = '') then
+    begin
+      case Mapping.NullHandling of
+        nhIgnore:
+          Continue; // do not add to target value
+        nhDefaultValue:
+          DestValue := VarToStr(Mapping.DefaultValue);
+      end;
+    end;
+
+    // 3. Apply transformations
+    if vtrTrim in Mapping.Transformations then
+      DestValue := Trim(DestValue);
+    if vtrLowerCase in Mapping.Transformations then
+      DestValue := LowerCase(DestValue);
+    if vtrUpperCase in Mapping.Transformations then
+      DestValue := UpperCase(DestValue);
+    if vtrSentenceCase in Mapping.Transformations then
+      DestValue := AnsiLowerCase(DestValue); { #todo : Convert string to sentence case }
+    if vtrTitleCase in Mapping.Transformations then
+      DestValue := AnsiProperCase(DestValue, [' ']);
+    if vtrBoolean in Mapping.Transformations then
+    begin
+      if SameText(DestValue, 'true') or (DestValue = '1') or SameText(DestValue, 'sim') or
+        SameText(DestValue, 'yes') or SameText(DestValue, 'S') or SameText(DestValue, 'Y') or
+        SameText(DestValue, 'T') then
+        DestValue := 'True'
+      else
+        DestValue := 'False';
+    end;
+
+    // 4. Lookup (if it is set)
+    if (Mapping.LookupTable <> tbNone) then
+      DestValue := IntToStr(GetKey(TABLE_NAMES[Mapping.LookupTable], PRIMARY_KEY_FIELDS[Mapping.LookupTable],
+        Mapping.LookupField, DestValue));
+
+    // 5. Set result
+    Result.Values[Mapping.TargetField] := DestValue;
   end;
-  Result := NewRow;
 end;
 
 destructor TFieldMapper.Destroy;
@@ -254,12 +338,31 @@ end;
 
 function TFieldMapper.ValidateRequired(const RequiredFields: array of string): Boolean;
 var
-  f: string;
+  Req: string;
+  I: Integer;
+  Mapping: TFieldMapping;
+  Found: Boolean;
 begin
   Result := True;
-  for f in RequiredFields do
-    if FMap.IndexOfData(f) < 0 then
-      Exit(False);
+  for Req in RequiredFields do
+  begin
+    Found := False;
+    for I := 0 to FMap.Count - 1 do
+    begin
+      Mapping := FMap[I];
+      if SameText(Mapping.TargetField, Req) and Mapping.Import then
+      begin
+        Found := True;
+        Break;
+      end;
+    end;
+
+    if not Found then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
 end;
 
 { TImporterRegistry }

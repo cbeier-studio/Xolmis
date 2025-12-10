@@ -1,13 +1,13 @@
 object dlgImport: TdlgImport
   Left = 361
-  Height = 474
+  Height = 545
   Top = 250
   Width = 920
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Import wizard'
-  ClientHeight = 474
+  ClientHeight = 545
   ClientWidth = 920
   PopupMode = pmAuto
   Position = poScreenCenter
@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 0
+    PageIndex = 2
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -160,59 +160,6 @@ object dlgImport: TdlgImport
             Caption = 'Source and target '
           end
         end
-        object lblTarget: TLabel
-          AnchorSideLeft.Control = pContentSource
-          AnchorSideTop.Control = pSourceOptions
-          AnchorSideTop.Side = asrBottom
-          Left = 16
-          Height = 15
-          Top = 167
-          Width = 73
-          BorderSpacing.Bottom = 4
-          Caption = 'Target table: *'
-          Layout = tlCenter
-          ParentColor = False
-        end
-        object lblSourceFile: TLabel
-          AnchorSideLeft.Control = pContentSource
-          AnchorSideTop.Control = lblSourceInstruction
-          AnchorSideTop.Side = asrBottom
-          Left = 16
-          Height = 15
-          Top = 83
-          Width = 66
-          BorderSpacing.Bottom = 4
-          Caption = 'Source file: *'
-          Layout = tlCenter
-          ParentColor = False
-        end
-        object eSourceFile: TEditButton
-          AnchorSideLeft.Control = pContentSource
-          AnchorSideTop.Control = lblSourceFile
-          AnchorSideTop.Side = asrBottom
-          AnchorSideRight.Control = pContentSource
-          AnchorSideRight.Side = asrBottom
-          Left = 16
-          Height = 23
-          Top = 102
-          Width = 888
-          Anchors = [akTop, akLeft, akRight]
-          BorderSpacing.Bottom = 8
-          ButtonHint = 'Select file'
-          ButtonWidth = 24
-          Images = iButtons
-          ImageIndex = 2
-          MaxLength = 0
-          NumGlyphs = 1
-          ParentShowHint = False
-          PasswordChar = #0
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 1
-          TextHint = 'Select a file...'
-          OnButtonClick = eSourceFileButtonClick
-          OnChange = eSourceFileChange
-        end
         object lblSourceInstruction: TLabel
           AnchorSideLeft.Control = pContentSource
           AnchorSideTop.Control = pTitleSource
@@ -224,54 +171,1085 @@ object dlgImport: TdlgImport
           BorderSpacing.Bottom = 16
           Caption = 'Select a target table and a source file to import.'
         end
-        object cbTarget: TComboBox
-          AnchorSideLeft.Control = pContentSource
-          AnchorSideTop.Control = lblTarget
-          AnchorSideTop.Side = asrBottom
-          AnchorSideRight.Control = pContentSource
-          AnchorSideRight.Side = asrBottom
-          Left = 16
-          Height = 23
-          Top = 186
-          Width = 888
-          Anchors = [akTop, akLeft, akRight]
-          BorderSpacing.Bottom = 8
-          ItemHeight = 15
-          Style = csDropDownList
-          TabOrder = 2
-          TextHint = 'Select a table...'
-          OnChange = cbTargetChange
-          OnSelect = cbTargetSelect
-        end
         object pSourceOptions: TPanel
           AnchorSideLeft.Control = pContentSource
-          AnchorSideTop.Control = eSourceFile
           AnchorSideTop.Side = asrBottom
           Left = 16
-          Height = 26
+          Height = 0
           Top = 133
-          Width = 107
+          Width = 0
           AutoSize = True
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ChildSizing.HorizontalSpacing = 8
-          ClientHeight = 26
-          ClientWidth = 107
           ParentBackground = False
-          TabOrder = 3
-          object btnOptions: TBitBtn
-            Left = 0
-            Height = 26
-            Top = 0
-            Width = 107
-            Align = alLeft
-            AutoSize = True
-            Caption = 'File options'
-            DisabledImageIndex = 4
+          TabOrder = 1
+        end
+        object pSourceFile: TBCPanel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = lblSourceInstruction
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentSource
+          AnchorSideRight.Side = asrBottom
+          Left = 16
+          Height = 66
+          Top = 83
+          Width = 888
+          Anchors = [akTop, akLeft, akRight]
+          AutoSize = True
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 2
+          object lblSourceFile: TLabel
+            AnchorSideLeft.Control = pSourceFile
+            AnchorSideTop.Control = pSourceFile
+            Left = 16
+            Height = 15
+            Top = 12
+            Width = 66
+            BorderSpacing.Bottom = 4
+            Caption = 'Source file: *'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object eSourceFile: TEditButton
+            AnchorSideLeft.Control = pSourceFile
+            AnchorSideTop.Control = lblSourceFile
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = pSourceFile
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 23
+            Top = 31
+            Width = 856
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Bottom = 8
+            ButtonHint = 'Select file'
+            ButtonWidth = 24
             Images = iButtons
-            ImageIndex = 3
+            ImageIndex = 2
+            MaxLength = 0
+            NumGlyphs = 1
+            ParentShowHint = False
+            PasswordChar = #0
+            ShowHint = True
+            Spacing = 0
             TabOrder = 0
-            OnClick = btnOptionsClick
+            TextHint = 'Select a file...'
+            OnButtonClick = eSourceFileButtonClick
+            OnChange = eSourceFileChange
+          end
+        end
+        object pTarget: TBCPanel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = pSourceFile
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentSource
+          AnchorSideRight.Side = asrBottom
+          Left = 16
+          Height = 66
+          Top = 149
+          Width = 888
+          Anchors = [akTop, akLeft, akRight]
+          AutoSize = True
+          BorderSpacing.Bottom = 16
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 3
+          object lblTarget: TLabel
+            AnchorSideLeft.Control = pTarget
+            AnchorSideTop.Control = pTarget
+            Left = 16
+            Height = 15
+            Top = 12
+            Width = 73
+            BorderSpacing.Bottom = 4
+            Caption = 'Target table: *'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbTarget: TComboBox
+            AnchorSideLeft.Control = pTarget
+            AnchorSideTop.Control = lblTarget
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = pTarget
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 23
+            Top = 31
+            Width = 856
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Bottom = 8
+            ItemHeight = 15
+            Style = csDropDownList
+            TabOrder = 0
+            TextHint = 'Select a table...'
+            OnChange = cbTargetChange
+            OnSelect = cbTargetSelect
+          end
+        end
+        object pImportSettings: TBCPanel
+          AnchorSideLeft.Control = pContentSource
+          AnchorSideTop.Control = pTarget
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentSource
+          AnchorSideRight.Side = asrBottom
+          Left = 16
+          Height = 50
+          Top = 231
+          Width = 888
+          Anchors = [akTop, akLeft, akRight]
+          AutoSize = True
+          BorderSpacing.Bottom = 16
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 4
+          object lblImportSettings: TLabel
+            AnchorSideLeft.Control = pImportSettings
+            AnchorSideTop.Control = pImportSettings
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 18
+            Width = 83
+            Caption = 'Import settings:'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbImportSettings: TComboBox
+            AnchorSideLeft.Control = lblImportSettings
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = pImportSettings
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = sbClearImportSettings
+            Left = 107
+            Height = 23
+            Top = 14
+            Width = 731
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Bottom = 8
+            ItemHeight = 15
+            Style = csDropDownList
+            TabOrder = 0
+            OnChange = cbTargetChange
+            OnSelect = cbImportSettingsSelect
+          end
+          object sbClearImportSettings: TSpeedButton
+            AnchorSideTop.Control = pImportSettings
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pImportSettings
+            AnchorSideRight.Side = asrBottom
+            Left = 846
+            Height = 26
+            Top = 12
+            Width = 26
+            Anchors = [akTop, akRight]
+            AutoSize = True
+            Images = iButtons
+            ImageIndex = 12
+            OnClick = sbClearImportSettingsClick
+          end
+        end
+      end
+    end
+    object pgSettings: TPage
+      object pTitleSource1: TPanel
+        AnchorSideLeft.Control = pgSettings
+        AnchorSideTop.Control = pgSettings
+        AnchorSideRight.Control = pgSettings
+        AnchorSideRight.Side = asrBottom
+        Left = 16
+        Height = 28
+        Top = 16
+        Width = 888
+        Alignment = taLeftJustify
+        Anchors = [akTop, akLeft, akRight]
+        AutoSize = True
+        BorderSpacing.Left = 16
+        BorderSpacing.Top = 16
+        BorderSpacing.Right = 16
+        BorderSpacing.Bottom = 8
+        BevelOuter = bvNone
+        ClientHeight = 28
+        ClientWidth = 888
+        Font.Color = 13066075
+        Font.Height = -20
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 0
+        object lblTitleSettings: TLabel
+          Left = 0
+          Height = 28
+          Top = 0
+          Width = 133
+          Align = alLeft
+          Caption = 'Import settings'
+        end
+      end
+      object lblSettingsInstruction: TLabel
+        AnchorSideLeft.Control = pgSettings
+        AnchorSideTop.Control = pTitleSource1
+        AnchorSideTop.Side = asrBottom
+        Left = 16
+        Height = 15
+        Top = 52
+        Width = 242
+        BorderSpacing.Left = 16
+        BorderSpacing.Bottom = 16
+        Caption = 'Define source file and general import settings.'
+      end
+      object sboxSettings: TScrollBox
+        AnchorSideLeft.Control = pgSettings
+        AnchorSideTop.Control = lblSettingsInstruction
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = pgSettings
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = pgSettings
+        AnchorSideBottom.Side = asrBottom
+        Left = 0
+        Height = 347
+        Top = 83
+        Width = 920
+        HorzScrollBar.Page = 455
+        VertScrollBar.Page = 347
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        BorderStyle = bsNone
+        ClientHeight = 347
+        ClientWidth = 920
+        TabOrder = 1
+        object pHaveHeader: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 165
+          Width = 871
+          Align = alTop
+          BorderSpacing.Left = 16
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 16
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 0
+          Visible = False
+          object lblHaveHeader: TLabel
+            AnchorSideLeft.Control = pHaveHeader
+            AnchorSideTop.Control = pHaveHeader
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 98
+            Caption = 'First row as header'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object tsHaveHeader: TToggleSwitch
+            AnchorSideTop.Control = pHaveHeader
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pHaveHeader
+            AnchorSideRight.Side = asrBottom
+            Left = 805
+            Height = 25
+            Top = 11
+            Width = 50
+            OnColor = 13066075
+            OffColor = clSilver
+            Anchors = [akTop, akRight]
+            Color = 16448250
+            Constraints.MaxHeight = 25
+            Constraints.MaxWidth = 50
+          end
+        end
+        object pDelimiter: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 212
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 1
+          Visible = False
+          object lblDelimiter: TLabel
+            AnchorSideLeft.Control = pDelimiter
+            AnchorSideTop.Control = pDelimiter
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 48
+            Caption = 'Delimiter'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbDelimiter: TComboBox
+            AnchorSideTop.Control = pDelimiter
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = eOther
+            Left = 682
+            Height = 23
+            Top = 12
+            Width = 123
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Semicolon'
+              'Colon'
+              'Tab'
+              'Other...'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Semicolon'
+            OnSelect = cbDelimiterSelect
+          end
+          object eOther: TEdit
+            AnchorSideTop.Control = pDelimiter
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pDelimiter
+            AnchorSideRight.Side = asrBottom
+            Left = 813
+            Height = 23
+            Top = 12
+            Width = 42
+            Anchors = [akTop, akRight]
+            TabOrder = 1
+            Visible = False
+          end
+        end
+        object pDecimalSeparator: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 322
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 2
+          Visible = False
+          object lblDecimalSeparator: TLabel
+            AnchorSideLeft.Control = pDecimalSeparator
+            AnchorSideTop.Control = pDecimalSeparator
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 95
+            Caption = 'Decimal separator'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbDecimalSeparator: TComboBox
+            AnchorSideTop.Control = pDecimalSeparator
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pDecimalSeparator
+            AnchorSideRight.Side = asrBottom
+            Left = 732
+            Height = 23
+            Top = 12
+            Width = 123
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Colon'
+              'Period'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Colon'
+          end
+        end
+        object pEncoding: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 110
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 3
+          Visible = False
+          object lblEncoding: TLabel
+            AnchorSideLeft.Control = pEncoding
+            AnchorSideTop.Control = pEncoding
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 71
+            Caption = 'File encoding'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbEncoding: TComboBox
+            AnchorSideTop.Control = pEncoding
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pEncoding
+            AnchorSideRight.Side = asrBottom
+            Left = 682
+            Height = 23
+            Top = 12
+            Width = 173
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'System encoding'
+              'UTF-8'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'System encoding'
+          end
+        end
+        object pKeyPath: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 377
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 4
+          Visible = False
+          object lblKeyPath: TLabel
+            AnchorSideLeft.Control = pKeyPath
+            AnchorSideTop.Control = pKeyPath
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 90
+            Caption = 'Records key path'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object eKeyPath: TEdit
+            AnchorSideTop.Control = pKeyPath
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pKeyPath
+            AnchorSideRight.Side = asrBottom
+            Left = 464
+            Height = 23
+            Top = 12
+            Width = 391
+            Anchors = [akTop, akRight]
+            TabOrder = 0
+            Visible = False
+          end
+        end
+        object pSheet: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 267
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 5
+          Visible = False
+          object lblSheet: TLabel
+            AnchorSideLeft.Control = pSheet
+            AnchorSideTop.Control = pSheet
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 63
+            Caption = 'Sheet or tab'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbSheet: TComboBox
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Side = asrBottom
+            Left = 464
+            Height = 23
+            Top = 12
+            Width = 391
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            Style = csDropDownList
+            TabOrder = 0
+          end
+        end
+        object pRecordXPath: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 432
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 6
+          Visible = False
+          object lblRecordXPath: TLabel
+            AnchorSideLeft.Control = pRecordXPath
+            AnchorSideTop.Control = pRecordXPath
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 71
+            Caption = 'Record XPath'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object eRecordXPath: TEdit
+            AnchorSideTop.Control = pRecordXPath
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pRecordXPath
+            AnchorSideRight.Side = asrBottom
+            Left = 464
+            Height = 23
+            Top = 12
+            Width = 391
+            Anchors = [akTop, akRight]
+            TabOrder = 0
+            Visible = False
+          end
+        end
+        object pImportStrategy: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 8
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 16
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 7
+          object lblImportStrategy: TLabel
+            AnchorSideLeft.Control = pImportStrategy
+            AnchorSideTop.Control = pImportStrategy
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 81
+            Caption = 'Import strategy'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbImportStrategy: TComboBox
+            AnchorSideTop.Control = pImportStrategy
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pImportStrategy
+            AnchorSideRight.Side = asrBottom
+            Left = 682
+            Height = 23
+            Top = 12
+            Width = 173
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Append'
+              'Replace'
+              'Update'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Append'
+          end
+        end
+        object pErrorHandling: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 55
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 8
+          object lblErrorHandling: TLabel
+            AnchorSideLeft.Control = pErrorHandling
+            AnchorSideTop.Control = pErrorHandling
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 75
+            Caption = 'Error handling'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbErrorHandling: TComboBox
+            AnchorSideTop.Control = pErrorHandling
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pErrorHandling
+            AnchorSideRight.Side = asrBottom
+            Left = 682
+            Height = 23
+            Top = 12
+            Width = 173
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Abort on first error'
+              'Ignore and log errors'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Abort on first error'
           end
         end
       end
@@ -303,7 +1281,9 @@ object dlgImport: TdlgImport
           Alignment = taLeftJustify
           Anchors = [akTop, akLeft, akRight]
           AutoSize = True
+          BorderSpacing.Left = 16
           BorderSpacing.Top = 16
+          BorderSpacing.Right = 16
           BorderSpacing.Bottom = 8
           BevelOuter = bvNone
           ClientHeight = 28
@@ -330,6 +1310,8 @@ object dlgImport: TdlgImport
           Height = 15
           Top = 52
           Width = 361
+          BorderSpacing.Left = 16
+          BorderSpacing.Right = 16
           BorderSpacing.Bottom = 16
           Caption = 'Configure the field mappings from the source file to the target table.'
           WordWrap = True
@@ -338,17 +1320,17 @@ object dlgImport: TdlgImport
           AnchorSideLeft.Control = pContentFields
           AnchorSideTop.Control = lblFieldsInstruction
           AnchorSideTop.Side = asrBottom
-          AnchorSideRight.Control = pContentFields
-          AnchorSideRight.Side = asrBottom
+          AnchorSideRight.Control = sboxField
           AnchorSideBottom.Control = pContentFields
           AnchorSideBottom.Side = asrBottom
           Left = 16
           Height = 331
           Top = 83
-          Width = 888
+          Width = 556
           Anchors = [akTop, akLeft, akRight, akBottom]
           AutoFillColumns = True
-          ColCount = 6
+          BorderSpacing.Right = 4
+          ColCount = 4
           Columns = <          
             item
               Alignment = taCenter
@@ -360,17 +1342,7 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 245
-            end          
-            item
-              ButtonStyle = cbsPickList
-              Title.Caption = 'Search table'
-              Width = 245
-            end          
-            item
-              SizePriority = 0
-              Title.Caption = 'Default value'
-              Width = 120
+              Width = 274
             end>
           FixedCols = 2
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
@@ -381,9 +1353,7 @@ object dlgImport: TdlgImport
             64
             154
             60
-            245
-            245
-            120
+            274
           )
           Cells = (
             1
@@ -391,6 +1361,1309 @@ object dlgImport: TdlgImport
             0
             'Source field'
           )
+        end
+        object sbSaveSettings: TSpeedButton
+          AnchorSideTop.Control = lblFieldsInstruction
+          AnchorSideRight.Control = sboxField
+          AnchorSideRight.Side = asrBottom
+          Left = 806
+          Height = 26
+          Top = 52
+          Width = 98
+          Anchors = [akTop, akRight]
+          AutoSize = True
+          Caption = 'Save settings'
+          Images = iButtons
+          ImageIndex = 10
+        end
+        object sboxField: TScrollBox
+          AnchorSideTop.Control = lblFieldsInstruction
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentFields
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pContentFields
+          AnchorSideBottom.Side = asrBottom
+          Left = 576
+          Height = 331
+          Top = 83
+          Width = 328
+          HorzScrollBar.Page = 247
+          VertScrollBar.Page = 327
+          Anchors = [akTop, akRight, akBottom]
+          ChildSizing.LeftRightSpacing = 8
+          ChildSizing.TopBottomSpacing = 8
+          ClientHeight = 327
+          ClientWidth = 307
+          TabOrder = 2
+          object pLookupTable: TBCPanel
+            Left = 8
+            Height = 66
+            Top = 63
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 0
+            object lblLookupTable: TLabel
+              AnchorSideLeft.Control = pLookupTable
+              AnchorSideTop.Control = pLookupTable
+              Left = 16
+              Height = 15
+              Top = 12
+              Width = 72
+              BorderSpacing.Bottom = 4
+              Caption = 'Lookup table:'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object cbLookupTable: TComboBox
+              AnchorSideLeft.Control = pLookupTable
+              AnchorSideTop.Control = lblLookupTable
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pLookupTable
+              AnchorSideRight.Side = asrBottom
+              Left = 16
+              Height = 23
+              Top = 31
+              Width = 259
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Bottom = 8
+              ItemHeight = 15
+              Style = csDropDownList
+              TabOrder = 0
+              TextHint = 'Select a table...'
+              OnChange = cbTargetChange
+              OnSelect = cbTargetSelect
+            end
+          end
+          object pLookupField: TBCPanel
+            Left = 8
+            Height = 66
+            Top = 129
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            BorderSpacing.Bottom = 8
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+            TabOrder = 1
+            object lblLookupField: TLabel
+              AnchorSideLeft.Control = pLookupField
+              AnchorSideTop.Control = pLookupField
+              Left = 16
+              Height = 15
+              Top = 12
+              Width = 69
+              BorderSpacing.Bottom = 4
+              Caption = 'Lookup field:'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object cbLookupField: TComboBox
+              AnchorSideLeft.Control = pLookupField
+              AnchorSideTop.Control = lblLookupField
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pLookupField
+              AnchorSideRight.Side = asrBottom
+              Left = 16
+              Height = 23
+              Top = 31
+              Width = 259
+              Anchors = [akTop, akLeft, akRight]
+              BorderSpacing.Bottom = 8
+              ItemHeight = 15
+              Style = csDropDownList
+              TabOrder = 0
+              TextHint = 'Select a table...'
+              OnChange = cbTargetChange
+              OnSelect = cbTargetSelect
+            end
+          end
+          object pPrimaryKey: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 8
+            Width = 291
+            Align = alTop
+            BorderSpacing.Bottom = 8
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            TabOrder = 2
+            object lblPrimaryKey: TLabel
+              AnchorSideLeft.Control = pPrimaryKey
+              AnchorSideTop.Control = pPrimaryKey
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 156
+              Caption = 'Primary or corresponding key'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsPrimaryKey: TToggleSwitch
+              AnchorSideTop.Control = pPrimaryKey
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pPrimaryKey
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+          end
+          object pNullHandling: TBCPanel
+            Left = 8
+            Height = 74
+            Top = 203
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            BorderSpacing.Bottom = 8
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            TabOrder = 3
+            object lblNullHandling: TLabel
+              AnchorSideLeft.Control = pNullHandling
+              AnchorSideTop.Control = cbNullHandling
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 58
+              Caption = 'Null values'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object cbNullHandling: TComboBox
+              AnchorSideTop.Control = pNullHandling
+              AnchorSideRight.Control = pNullHandling
+              AnchorSideRight.Side = asrBottom
+              Left = 127
+              Height = 23
+              Top = 12
+              Width = 148
+              Anchors = [akTop, akRight]
+              Color = clWhite
+              ItemHeight = 15
+              ItemIndex = 0
+              Items.Strings = (
+                'Ignore'
+                'Default value'
+                'Mean value'
+                'Median value'
+                'Mode value'
+              )
+              Style = csDropDownList
+              TabOrder = 0
+              Text = 'Ignore'
+              OnSelect = cbNullHandlingSelect
+            end
+            object eDefaultValue: TEdit
+              AnchorSideTop.Control = cbNullHandling
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pNullHandling
+              AnchorSideRight.Side = asrBottom
+              Left = 127
+              Height = 23
+              Top = 39
+              Width = 148
+              Anchors = [akTop, akRight]
+              BorderSpacing.Top = 4
+              TabOrder = 1
+              TextHint = 'Inform default value'
+              Visible = False
+            end
+          end
+          object pTrimValue: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 285
+            Width = 291
+            Align = alTop
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 4
+            object lblTrimValue: TLabel
+              AnchorSideLeft.Control = pTrimValue
+              AnchorSideTop.Control = pTrimValue
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 55
+              Caption = 'Trim value'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsTrimValue: TToggleSwitch
+              AnchorSideTop.Control = pTrimValue
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pTrimValue
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+          end
+          object pBooleanValue: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 332
+            Width = 291
+            Align = alTop
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 5
+            object lblBooleanValue: TLabel
+              AnchorSideLeft.Control = pBooleanValue
+              AnchorSideTop.Control = pBooleanValue
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 74
+              Caption = 'Boolean value'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsBooleanValue: TToggleSwitch
+              AnchorSideTop.Control = pBooleanValue
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pBooleanValue
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+          end
+          object pTextCase: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 379
+            Width = 291
+            Align = alTop
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 6
+            object lblTextCase: TLabel
+              AnchorSideLeft.Control = pTextCase
+              AnchorSideTop.Control = pTextCase
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 47
+              Caption = 'Text case'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object cbTextCase: TComboBox
+              AnchorSideRight.Side = asrBottom
+              Left = 127
+              Height = 23
+              Top = 12
+              Width = 148
+              Anchors = [akTop, akRight]
+              Color = clWhite
+              ItemHeight = 15
+              ItemIndex = 0
+              Items.Strings = (
+                'Original case'
+                'Lower case'
+                'Upper case'
+                'Sentence case'
+                'Title case'
+              )
+              Style = csDropDownList
+              TabOrder = 0
+              Text = 'Original case'
+              OnSelect = cbDelimiterSelect
+            end
+          end
+          object pRemoveAccents: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 426
+            Width = 291
+            Align = alTop
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 7
+            object lblRemoveAccents: TLabel
+              AnchorSideLeft.Control = pRemoveAccents
+              AnchorSideTop.Control = pRemoveAccents
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 86
+              Caption = 'Remove accents'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsRemoveAccents: TToggleSwitch
+              AnchorSideTop.Control = pRemoveAccents
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pRemoveAccents
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+          end
+          object pNormalizeWhitespace: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 473
+            Width = 291
+            Align = alTop
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 8
+            object lblNormalizeWhitespace: TLabel
+              AnchorSideLeft.Control = pNormalizeWhitespace
+              AnchorSideTop.Control = pNormalizeWhitespace
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 116
+              Caption = 'Normalize whitespace'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsNormalizeWhitespace: TToggleSwitch
+              AnchorSideTop.Control = pNormalizeWhitespace
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pNormalizeWhitespace
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+          end
+          object pReplaceChars: TBCPanel
+            Left = 8
+            Height = 76
+            Top = 520
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 9
+            object lblReplaceChars: TLabel
+              AnchorSideLeft.Control = pReplaceChars
+              AnchorSideTop.Control = tsReplaceChars
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 17
+              Width = 72
+              Caption = 'Replace chars'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsReplaceChars: TToggleSwitch
+              AnchorSideTop.Control = pReplaceChars
+              AnchorSideRight.Control = pReplaceChars
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 12
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsReplaceCharsChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+            object eReplaceCharFrom: TEdit
+              AnchorSideTop.Control = tsReplaceChars
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = arrowReplaceChars
+              Left = 137
+              Height = 23
+              Top = 41
+              Width = 53
+              Anchors = [akTop, akRight]
+              BorderSpacing.Top = 4
+              TabOrder = 1
+              TextHint = 'From'
+              Visible = False
+            end
+            object eReplaceCharTo: TEdit
+              AnchorSideTop.Control = tsReplaceChars
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pReplaceChars
+              AnchorSideRight.Side = asrBottom
+              Left = 222
+              Height = 23
+              Top = 41
+              Width = 53
+              Anchors = [akTop, akRight]
+              BorderSpacing.Top = 4
+              TabOrder = 2
+              TextHint = 'To'
+              Visible = False
+            end
+            object arrowReplaceChars: TImage
+              AnchorSideTop.Control = eReplaceCharTo
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = eReplaceCharTo
+              Left = 198
+              Height = 16
+              Top = 44
+              Width = 16
+              Anchors = [akTop, akRight]
+              AutoSize = True
+              ImageIndex = 11
+              Images = iButtons
+              Visible = False
+            end
+          end
+          object pRoundValue: TBCPanel
+            Left = 8
+            Height = 76
+            Top = 596
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 10
+            object lblRoundValue: TLabel
+              AnchorSideLeft.Control = pRoundValue
+              AnchorSideTop.Control = tsRoundValue
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 17
+              Width = 66
+              Caption = 'Round value'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsRoundValue: TToggleSwitch
+              AnchorSideTop.Control = pRoundValue
+              AnchorSideRight.Control = pRoundValue
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 12
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsRoundValueChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+            object eRoundPrecision: TSpinEdit
+              AnchorSideTop.Control = tsRoundValue
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pRoundValue
+              AnchorSideRight.Side = asrBottom
+              Left = 209
+              Height = 23
+              Top = 41
+              Width = 66
+              Anchors = [akTop, akRight]
+              BorderSpacing.Top = 4
+              TabOrder = 1
+              Value = 2
+              Visible = False
+            end
+          end
+          object pScaleValue: TBCPanel
+            Left = 8
+            Height = 76
+            Top = 672
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 11
+            object lblScaleValue: TLabel
+              AnchorSideLeft.Control = pScaleValue
+              AnchorSideTop.Control = tsScaleValue
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 17
+              Width = 58
+              Caption = 'Scale value'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsScaleValue: TToggleSwitch
+              AnchorSideTop.Control = pScaleValue
+              AnchorSideRight.Control = pScaleValue
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 12
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsScaleValueChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+            object cbScaleOperation: TComboBox
+              AnchorSideTop.Control = eScale
+              AnchorSideRight.Control = eScale
+              Left = 76
+              Height = 23
+              Top = 41
+              Width = 100
+              Anchors = [akTop, akRight]
+              ItemHeight = 15
+              Items.Strings = (
+                'Multiply'
+                'Divide'
+              )
+              Style = csDropDownList
+              TabOrder = 1
+              Visible = False
+            end
+            object eScale: TFloatSpinEdit
+              AnchorSideTop.Control = tsScaleValue
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pScaleValue
+              AnchorSideRight.Side = asrBottom
+              Left = 184
+              Height = 23
+              Top = 41
+              Width = 91
+              Anchors = [akTop, akRight]
+              BorderSpacing.Top = 4
+              TabOrder = 2
+              Value = 10
+            end
+          end
+          object pSplitCoordinates: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 900
+            Width = 291
+            Align = alTop
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+            TabOrder = 12
+            object lblSplitCoordinates: TLabel
+              AnchorSideLeft.Control = pSplitCoordinates
+              AnchorSideTop.Control = pSplitCoordinates
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 88
+              Caption = 'Split coordinates'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsSplitCoordinates: TToggleSwitch
+              AnchorSideTop.Control = pSplitCoordinates
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pSplitCoordinates
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 11
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+          end
+          object pConvertCoordinates: TBCPanel
+            Left = 8
+            Height = 76
+            Top = 824
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 13
+            object lblConvertCoordinates: TLabel
+              AnchorSideLeft.Control = pConvertCoordinates
+              AnchorSideTop.Control = tsConvertCoordinates
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 17
+              Width = 107
+              Caption = 'Convert coordinates'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsConvertCoordinates: TToggleSwitch
+              AnchorSideTop.Control = pConvertCoordinates
+              AnchorSideRight.Control = pConvertCoordinates
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 12
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsConvertCoordinatesChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+            object cbSourceCoordinatesFormat: TComboBox
+              AnchorSideTop.Control = tsConvertCoordinates
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pConvertCoordinates
+              AnchorSideRight.Side = asrBottom
+              Left = 90
+              Height = 23
+              Top = 41
+              Width = 185
+              Anchors = [akTop, akRight]
+              BorderSpacing.Top = 4
+              ItemHeight = 15
+              Items.Strings = (
+                'Degrees, Minutes and Seconds'
+                'UTM'
+              )
+              Style = csDropDownList
+              TabOrder = 1
+              Visible = False
+            end
+          end
+          object pExtractDatePart: TBCPanel
+            Left = 8
+            Height = 76
+            Top = 748
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 14
+            object lblExtractDatePart: TLabel
+              AnchorSideLeft.Control = pExtractDatePart
+              AnchorSideTop.Control = tsExtractDatePart
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 17
+              Width = 85
+              Caption = 'Extract date part'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object tsExtractDatePart: TToggleSwitch
+              AnchorSideTop.Control = pExtractDatePart
+              AnchorSideRight.Control = pExtractDatePart
+              AnchorSideRight.Side = asrBottom
+              Left = 225
+              Height = 25
+              Top = 12
+              Width = 50
+              OnColor = 13066075
+              OffColor = clSilver
+              OnChange = tsExtractDatePartChange
+              Anchors = [akTop, akRight]
+              Color = 16448250
+              Constraints.MaxHeight = 25
+              Constraints.MaxWidth = 50
+            end
+            object cbExtractDatePart: TComboBox
+              AnchorSideTop.Control = tsExtractDatePart
+              AnchorSideTop.Side = asrBottom
+              AnchorSideRight.Control = pExtractDatePart
+              AnchorSideRight.Side = asrBottom
+              Left = 175
+              Height = 23
+              Top = 41
+              Width = 100
+              Anchors = [akTop, akRight]
+              BorderSpacing.Top = 4
+              ItemHeight = 15
+              Items.Strings = (
+                'Day'
+                'Month'
+                'Year'
+              )
+              Style = csDropDownList
+              TabOrder = 1
+              Visible = False
+            end
+          end
         end
       end
     end
@@ -745,256 +3018,288 @@ object dlgImport: TdlgImport
     Left = 32
     Top = 224
     Bitmap = {
-      4C7A0B0000001000000010000000620700000000000078DAED9A7B4C96551CC7
-      C56BB34D67B2595826A47325FDE1866118826699F39FB6FE80E505483467D9EA
-      1F12C2CB02F3124D1B8613B756B314E62DA56172111404EA3501532E99F80242
-      DC41E4AE76FAFE9EFD5E767C38CFF33E2FCC4AE3D93E7BCF73CEEF7BCE797EE7
-      F63CE7BC23460C5FF2E5E9E939017C0092413593CC71139C686780ABE03B1004
-      9E6128FC3DA73D67A07507B560B549FEABD9C65D917600C449F7C1C0062E5258
-      8AFF826C15FA336012873D7C7D7DEF1416160A82C214C76993C8D6891FD64446
-      468ABEBE3E8D8D1B370A8A73A10DB4F22F5DBA2408B97C17F208E2E7B7C9CF3F
-      7C3D90317304F80E41FF06A807F38690C712CEC36F0879BCC679CC070B411DB8
-      06BE056BC17827FAE7410D6804FEE071E0055680245004A61B6827839BE06D2E
-      9BEAB1403FAED8E609853E5137FEBF021D20506747E33F51A14F051339ECEBEF
-      EF2F8E1D3B2666CF9EDD49F591EC2692AD133FAC8F8A8AD2C67E7E7EBEF0F6F6
-      EE42DCAB2EB4C39373E7CEED2B282810972F5F167E7E7E347F3483C52EE4F126
-      38CF736E08F50BF6E9EB43E81F2F731E4B8690872FE7B1740879BC446BD22334
-      7FD09AF20928E1F1160546BAA08FDBB973676E474747456767A73D3434B41871
-      FBADE601BB96DEDEDE16C77A857047585858318FE33F993FC0E70663AF7FAD93
-      B8D7D3D3D3E8A0ABABAB3A212181FAE33E233DD9C4C6C65EC0D8ABF1F1F169D6
-      3367CE9C56D8FE050ECAEF00A447190D01010155D9D9D9E7BABBBBEBF00CAD2A
-      C83FD1D1D1F9D09C90F5717171B9870F1FCE563CC7005A5B5BA99DDA64FDBC79
-      F3A8CC0E2BFAB2B2B23C68CECAFAA2A2A21C2B5AD01D181858AD9B933AA94E56
-      F4A9A9A9D9B03FAA9F3BE3E3E3CFA3FE6D26DA9E9292920BB366CDAAD1CFE1FC
-      8E77C0CBCBEBF6CC9933EFA8401ACD8199E045937E380A8C96A0FB918CDBF09B
-      C6A0E69685BC065C95FB8CC28ED6F7AD0A6EA6A7A70B82BF05282E54A10F7541
-      BFD6C5FA5F61163E2AFE36F1BFCA5F7ACCFC6F45BFF651F1F7F0657E1D3C78D0
-      1FFCCABC6262170AA21454DEB87143545454080A73DC72857E0D885550535555
-      25080A73DC7A17EABF085C6116FD433E732306A95D0CCA99C52EE83680EDA0B6
-      BABA5A1014E6383DEB14FA60F031B05FBF7E5D1014E6383D2B4DEA311F14307E
-      C323C8F5EB74C888692008EC62283CCD826E1C88057781D041713160AC89F617
-      854E0FD98C53E877C876F99FFA8ABA8BC73528ACCB63BB4E3B03DC73A4FF1436
-      4A7435D945F991488DAEC61B5A9CA427DB19923E44CE3FF37D775175769F381D
-      EA26D2D68C17F7FABA45D68753F5755825E9E38D9EF7DAF1CDA2BEF0942A2D5E
-      D2EF516933374C117D1D2D2227F205957EB7A45FA1D25FF9E65D614FFBD2A81D
-      964B7A4F559BA7AF9BA0A1D0DE01D3756DB0556F5799B15743A1DFA268FF3120
-      5BB6CB786FB2864E4B36630CFAE06810017A1465F670DA280BE3C01D2C05D10C
-      85DD1FA235773A5801F6807810026658D08D015B4067727272515A5A5A36DEE3
-      B2112EA438B0133C66A01D05B2F00D5B5A5757774DFFFDD6D8D8684F4A4AFA0D
-      3636304EA18F3874E8D0EFF876EE25FBFAFA7A91959525323333456D6DAD9607
-      BEB1EF220F5A8763755A77AA5F4D4D4D99A3BC93274F6A7BD7B47F45FB68F8B6
-      D4E21B1A1A2AF8599E95F44BA96C8716DFE822373757D3A03E0269A2ADADADFF
-      595087CBD00449FAE89494945CD5776B7171B1F62E2CC79D3973E61C34BB9CE9
-      A91E284BF38513FD7DF577505E5E2E72727206D44951FF01FE23E8D9A90E729C
-      CA7FAAF6236C369BC8CBCBEBD71AB59FAEFF9439FA4F7B7B7BBFDF9DF51FA9FF
-      6EE6FE5B4C7EE2FE5BC475DE61A4558C9FE560378F9F5556C6CF43FE9D4EFBDF
-      DB809DF77A65282E966C4CF47BE8CCA9B2B252343535DD07C5F119D46E137D6B
-      4B4B8BE1BE51737333E95BD936C4E21EE07D900DDB560C512FFE83FADBB76EDD
-      32D4521AD980B1A057A1DF17131373DF3CE780E2280D3609C087CE3415FAA7C0
-      5EDA97E43D5299364E239B1F418493BEA8DF871B4F6753E034C8A07467E79FBC
-      8FDDC7D073D39EE747AEEC6BFFCFF6E93CA80FB0AF848EDB9CE661A2DFA7D0E9
-      4930D1DFB6A06F779C6FA9C68F8AE0E060919191D17FCFB695467A3A775BB66C
-      59BF96D65EFAD5E985919EB4A4D9B66DDB00AD15BDA3DCD2D2D2015A67E3DF8A
-      FFCCC6BF95F63319FF1E9CDE6E506E02DBA4381BFF8ABCC772B9A4CDB230FED7
-      531B4BE5F7F2FF30229C69872FCD7F745EFE039FA513C7797FD80D84819506BA
-      27B88D7EE6F3DFA9E0693E53CFE0336E5A073619E88F8278551BF19A10CFEDB9
-      C9E0BC99CEF7C728D2E6EBFAE34A85CDD7AA7D6D177C46E795DE0F5ACFFF8F3A
-      35D8FAC3E62D6A5B57FC27D950FBA7837706D17EA48DE17E30D262FFA1BE3385
-      CEEA019D1BE6D0BDC5FE7B82FFAB51C7EF0DE1C36778A63E0BE0FF6A19CDFD4D
-      603BCDC5067A9BE33B57FF2E4BF7B4168687870B9E57C69ABDFF7A7B7B0BBBDD
-      AE85E997EEF97CDE91C76766FAC4C4444D4371F4BB7FFFFEFE34AA073DCB60DE
-      BFF5EFE10F424F7575D45D467E0E33BDEC3B19D98F667AB3E7906D1E80DEC667
-      86A67AB6B129F40B9CF45F0736FDFFBAFECDEB6F5E7716E0
+      4C7A0D00000010000000100000004A0800000000000078DAED9A7B5055451CC7
+      7DA496CDD854F4D232258D29E80F66340C23B1EC61FE93F6874C6A40A939964D
+      FD6340F82830B368B0281C71A6A9B1544625CDF2C1234848A86B022608197001
+      21DE20F256DBBEBF33BFCBAC873DE79ECB8D52BB67E63377EFEEEFFB3B7B7EBB
+      7BF69CDD336C98E7908FC993278F03AF836450CD2473DE3827DA29A0087C0516
+      827B184A7FCD65F71968BD402D78D9C4FFCB6CE3A528DB06E2A4FF21C0068E53
+      5ACAFF886C15FA23E0664E8F0F0808B8909F9F2F084A531E97DD4CB64EE2B02C
+      323252F4F5F56944444408CA73A10DB4F39F38714210F2F95DF0B190AFDF265F
+      BFE7189231B31B04B8A17F06D483196EF8789A7D04BAE1E349F63113CC0675E0
+      0CF8122C07639DE81F0035A01104811B8137580C76810230C9407B2B380B5EE0
+      73533D1ED38F2BB6B945A14FD28DFFCF400708D6D9D1F84F52E80F829B381D10
+      141424F6EEDD2B7C7D7D3BA93E92DD4D64EB240E2BA3A2A2B4B19F9B9B2BFCFC
+      FCBA90F7840BED70E7F4E9D3FBF2F2F2C4C9932745606020DD3F9AC11C177C3C
+      078EF23D3794FA05C7F42937FAC723ECE369377C04B08FB96EF87898E6A46BE8
+      FE4173CADBA098C75B1418E1823E6ED3A64D391D1D1DE59D9D9DF6B0B0B042E4
+      6DB5EA03762DBDBDBD2D8EF90AE98EF0F0F0421EC77F327F800F0DC65EFF5C27
+      71A9A7A7A7D14157575775626222F5C72D467AB2898D8DFD0963AF66DAB469CD
+      7AFCFDFD5B61FB17D82E3F03901EE76898356B56555656D68FDDDDDD75B88656
+      15149FE8E8E85C68BE91F5717171393B77EECC525CC7005A5B5BA99DDA64FD8C
+      1933E89C1D56F4252525C7A0F941D6171414645BD182EEE0E0E06ADD3DA993EA
+      64457FF0E0C12CD8EFD1DF3B1312128EA2FE6D26DA9EE2E2E29F7C7C7C6AF4F7
+      707EC6DBE6EDED7D7EEAD4A91754A08CEE8119E021937E38125C2741FF4730C3
+      3D4F1A83BAB7CCE639A048EE330A3B9ADFD72B389B969626087E17A0BC30853E
+      CC05FD7217EB7F8A997DADC4DB24FEAA78E9318BBF15FDF26B25DE9EC3FCD8BE
+      7D7B10F89579D4C42E0C4429A8ACA8A810E5E5E582D29CB748A15F066215D454
+      55550982D29CB7D285FA3F0E4E318FFF4B311B4E0C523B079432735CD0AD021B
+      416D7575B52028CD797A5628F421E02D602F2B2B1304A5394FCF12937ACC0479
+      4CA06704B97E1C0A1D36112C041F30949E68413706C4828B40E8A0BC1830DA44
+      FB8B42A7876CC628F4EFCB76B9EF0688BAE3291A94D6F9D8A8D34E01971CE587
+      C3478AAE26BB28DD1DA9D1D558A1E5497AB29D22E94365FF19AF7989AA1FB688
+      4361C345EAB2B1E2525FB7C87C6382BE0E2F4AFA04A3EB3D93B256D4E77FAB2A
+      4B90F49B55DA8C557788BE8E16911DF9A04A1F2FE917ABF4A7BE7845D8533F36
+      6A8745927EB2AACDD3568CD350682F8049BA3658AFB7AB4CFF5443A15FA768FF
+      51204BB64B7FF5560D9D966C4619F4C1EBC06AD0A338670F978DB4300EBCC05C
+      10CD50DAEB2A9A732781C560334800A1608A05DD28B00E7426272717A4A6A666
+      E1392E0BE97CCA039BC0F506DA912013EFB0A7EBEAEACEE8DFDF1A1B1BEDBB76
+      EDFA0D36363046A15FBD63C78EDFF1EEDC4BF6F5F5F52233335364646488DADA
+      5ACD07DEB12FC207CDC3B13AAD17D5AFA6A6A6C471BEFDFBF76B6BD7B47E45EB
+      6878B7D4F21B1A1ACAF95AEE95F473E9DC0E2DDED1454E4E8EA6417D04CA445B
+      5B5BFFB5A00E27A15928E9A30F1C3890A37A6F2D2C2CD49E85E5BC23478EFC08
+      CD07CEF4540F9C4B8B8513FD65F577505A5A2AB2B3B307D44951FF01F123E8DA
+      A90E729E2A7EAAF6236C369B3876EC58BFD6A8FD74FDA7C4D17FDADBDBFBE3EE
+      ACFF48FD772DF7DF428A13F7DF02AEF3FB465AC5F85904E279FCBC6865FC5CE5
+      EFE9B4FEBD01D879AD5786F262C9C644BF99F69C2A2B2B455353D365501EEF41
+      C59BE85B5B5A5A0CD78D9A9B9B49DFCAB6A116D7002F836CD8B6DC4DBDB802F5
+      E7CF9D3B67A8A532B201A341AF42BF252626E6B2FB9C03CAA332D8248269B4A7
+      A9D0DF053EA575495E239569E332B2F90EAC76D217F5EB7063696F0A1C02E954
+      EE6CFF93D7B1FB18BA6E5AF37CD39575EDFFD93ADD78EA031C2BA1E33C978D37
+      D16F51E8F4249AE8CF5BD0B73BF6B754E34745484888484F4FEFFFCFB695467A
+      DA779B376F5EBF96E65EFAD5E985919EB4A4D9B061C300AD15BDE3BCA74F9F1E
+      A07536FEADC4CF6CFC5B693F93F13F9ECBDB0DCE9BC836079C8D7F85EFD17C5E
+      D2665A18FF2BA98DA5F3F7F27718AB9D693D87163FDA2FDFC77BE9440AAF0F0F
+      07E1608981EE166EA39F79FF7702B89BF7D4D3798F9BE6813506FA3D2041D546
+      3C2724707BAE31D86FA6FDFD518AB299BAFEB84461F3B96A5DDB8598D17EA5DF
+      50EBF9FBA86F075B7FD83C4F6DEB4AFC241B6AFF34F0D220DA8FB431DC0F4658
+      EC3FD477EEA0BD7A40FB86D9F4DF62FFFD86BFD5A8E3E786A59E3D3CD398CDE2
+      6FB58CEEFD4D6023DD8B0DF436C77BAEFE5996FED35CB874E952C1F795D166CF
+      BF7E7E7EC26EB76B69FAA5FFBC3FEFF0F19E993E292949D3501EFD6EDDBAB5BF
+      8CEA41D73298E76FFD73F850E8A9AE8EBACBC8D761A697632723C7D14C6F761D
+      B2CD10E86DBC6768AA671B9B42FF9893FEEBC0A6FFAECB730CE97DE57BF0AC1B
+      FA00FEFEC79DB9F97E500122DDF07117CFD19FA8E62F93EF0F64E2017D4BFBF5
+      3FAD77B7FE4EB43E1CBF0837DA2FF4BFE83F9EC370AEFFDE0D6D03FD5EA95A7E
+      57DCCDDF9F46F0FB87532DCA6FA06FFB7C7C7CCAF0FE7E1447D1FCF9F3C9470F
+      F930D1DD0EDEE5EF4A7B5252528ECBF3D682050BC8479489BECCDFDF3FBFB8B8
+      D87EF8F0E1026F6FEF26FA75E8F3F2F24A609367A20FA66F251D1ABD8FF8F8F8
+      1C94EF7772ED4A1FFBF6EDFBD5D7D797CE1F6421EE037C70ECF6B8D0CEFD3E8A
+      8A8AEC1CD31B5CEC2B9A0F8A297EDF19643F271F65E0B6A11C8B7F0304DBD436
     }
     BitmapAdv = {
-      4C69020000004C7A0B0000001400000014000000EA0900000000000078DAED9B
-      095055D719C7C52569A369D3464D1D8DA98A2C2A2EB5566CA8519B946AA69936
-      D84AEB689036D60EC54A30425A83D3AADD74ECD45652081250D6A828826C4D59
-      8214080F312E3C95B048D8777980A0694FFFDF9BF3DE5CAEE72EEFC1D868DE9D
-      F9CDBCF3EE39FF7B96EF7C67B9E78E19E3B81E846BD6AC594F82BD2007B48056
-      F01EF803986AA3D62FB9C65FC077C053A4019E077FE6DAC1C049875618F800B8
-      AAC4990DCE833F6A68F9822A309987BF00C2411368066F8327F8BD274025F057
-      D01A0B6E82453CEC04F2B66DDBC60C0603ABA8A860DBB76F67F8AF048CE3715C
-      F8732608F4D682424978E5D2A54B597F7F3FBB73E78E99DBB76F334F4F4FD25C
-      2B8947EDE523D0DB055E9284B7EED8B1C3AA6521343494F48224F1A8BDC274B4
-      8BAEFCD96033547FB9547F656565E6FA0B0C0C24AD624BFDD9A1F93838021A78
-      1B475ADAD77139AE51F69F645BDF1E45BD67B99F7C6034C10C90CEFD229106F6
-      D0D862A3268D1B035CD31D4C0333C18BE0307F5E20F9601D5A01A09AFBFE1651
-      D9696CE17E669F86D68FC135309D87BD25F9FC2E784B327E7C99C7F557D13352
-      FD49C6934CF27F1E1E1E164D7FF06FC9F8E1C6CBF088408BC6568324FC8D75EB
-      D699FD726969A95CD35B367EAC17E805CBC68F57838383ADBE5EA6394912EF05
-      F0A68E76F9D692254B585F5F9F55B3A4A484393B3B0FD86B9F4897EDEFEFCFCE
-      9F3FCFAE5DBBC676EEDC49E387C15E9B479AC7C001709DCF050E82CF3D887D73
-      1435BF09621C1EFF533F1E3DC6E7E106EEFF880CCB7CD50EBDD7828282CABABB
-      BB8D0303031F1357AF5E2D9A3B772EF9A32576E85D31994CD5F2F9685D5D5DA9
-      8B8B4B8F640C21AE8010F04515BD96C1C1C10EB91E313434D48DB96993057AEE
-      FEFDFB8B90E6F7F6E88940DC764AA347AFB6B6B6342020A07CC58A15AD4A601E
-      4DFD96F1768B0013457A353535252B57AE6C686C6C3420DC0ADAD4E8EDEDADC2
-      3AA00CE9DF91EB612E7F13CF6D461B57EA2D37D1D6D6F621D27F2CD73B74E850
-      21618B1671E9D2255ACBA5C9F530DEF452196CD41BF0F2F26A24BF25D7CBCECE
-      CEB7356FA9A9A9F9481B2F68DF9BD4376CD1822D36BABBBB7722EDD3A2756F64
-      646401E2DDD5A385B6ABF7F5F5BD4AE3B682FDD17A3601E36BBF9B9BDBA01AAE
-      AEAE4388FB11785D6B8D8EFBE3693EA285C3233F74E30BCDC793F97C347AA4EB
-      6AA44F3D70E000831F63212121E4F70E6BC4CFE2FE51C89C3973586767A7B96F
-      609C92DF4F1885FCFD6D14EA2F89D7DF51C7BEC47DB5DDAF900FE773E36360CA
-      08F512F6EDDB67B68D3D7BF6906D1CB543C36ACFB367CF664D4D4D8CCF15989A
-      9DEBB16769FEC2C2C2ECCA9FA0FEE2B8EDC65AF6531D97E3D27B1D3F7E7C1A38
-      0AAAC061F0F808F54ED0BE715757172B2C2C64081FD4889F066E2B11171767DD
-      DB6E6F6F27BDFF4AEE1F13E88D058FA890467BDA587BB0E2E262D27B4B726FAC
-      1DE57D86CA0CDA400CF892C3AAEE9BED4E0727411748064FD9A131014CE49C2C
-      2F2F37EF85910D231C27B92762BC402F1598380CEB3CB3ED624D62B15D930A31
-      1A798D269BEDE8E860454545A4776484F5F724F83B3082BF02C7DCE721BB325F
-      19F355100A4E805A5003DE052160A60D3A4EE0E7C0049802BDE0A7145787D6BB
-      2A3A72E2D53471EF55799AAC2DE358D9A117D90707D7B22CBFB122CD5714B49E
-      919791B43AABCB5893E1346B2E4F651D378A459A3D60BA402F58FE6CCA5393E1
-      8C35DC72318395FEE979511E03057A89F27879413358DE6B33ADE1E68A7456BC
-      F759915E8C40EF865ADD1B934358BBF17D96E9E724BA7F45A06754D2CAD93A89
-      99DA6FB2F702262B3DEFA240EFB8925E45B82FAB2F7847CD6E8E0AF47EA5143F
-      77C77496BB7D9A9ADE2F047AD3409728FEFB6FCC6305212E4A5AED60AA820DFE
-      4494E652F456F6E1DB5B94F4D66BF4B7481BFADB119D3EE147A04345A70DBC6C
-      A3BF9A0AB68208700118C03F781F9FE2F0E8F77D8EE58E39F8BEE4E4E4A28484
-      0413E8C2EF3CFCF726EE3D6D83CEB8F8F8F8D0C4C4C47E83C1F0495D5D9D796E
-      D4D3D3C36A6A6AE83DE65DD247BC2DC0494B0B3A859999997D945E692F96D60B
-      67CE9C3125252525AAE9215FBB486B686848FAAEC29CAFFAFA7A26FD7F707090
-      A5A4A49850FE1F2AE4CD85CA48F33D699AD4D454969B9BCB727272585656D6B0
-      7CB6B6B63294BD0769A708F2F65BAA2F69FCEAEA6A969F9F6F0D676464B0E6E6
-      E6619AB8DF073D3FB91EDAAE80EA5E1A97F6E76EDDBA650D9F3B77CE9C27691C
-      DABB43B9A2E47AC877B734AD1C5A6B656767DFF33FE5177931DAA247EBC09327
-      4F0E7B57ADA5272AAF85EBD7AF9BE7D1A27B4AE515B587523DEA690FFC37576E
-      2F5A7A127B99AC60CFAFC32686D9B3A52DA8CCB2F765AAF66C477FEBD3EA6F12
-      7F10A2E40F4A4A4AEE707FE0A7E50F04FE6A2FDABD10E97BA1DF89DFFFC27FBB
-      6DF1578EEB53B757BC52F29EA355009D9FF9819E338A88E3B96AD52A96969646
-      EF4C85D0DE958F8F0FEDD1FE4C87DEB153A74E69BE1BBC7CF932ED295FE069C6
-      A9E87D44FBCD7ADE37CE9F3F9FF2F879F01B15BD6A1BF5E8CC42CD28EB0D2995
-      F921D5BBABA2974CB6A7A545BE1AF642EF9227F0FC8D55D05BE5EDED6DB65935
-      DBDBB46913E3675116830A0D9B7E999F3BFF04FC47C005EA1BFC1CD619F06B1D
-      FDC4899745C444EA97FCAC6281E86CB6408FCEEA05F1F37D4332FAF859427A77
-      3EDEE1413FF3E3C77A90AFF2EE8ECECE6C058FEAD07A4EC7BB400B013AF4926C
-      D0BBC2D38C57F3CF6A1A6BD6AC61AB57AF96FE47FE6AAF3D7A5E5E5EACA1A181
-      6DD8B041AE57A7476FE3C68D6CC18205E6DF8B162D6246A391EDDEBD5BFE1C4D
-      FF6C891B1E1E6E7EAFB378F162F3F9D388880851BE75EBD1F905CC53CD7BEEE9
-      E9E9E6F048F42C9A7486D7DDDD5DA98D48EF8E8A9E4DF6C2CF060D2A9D21B2D5
-      9EE9ECA28EF1C387BE2351D1B9486799A9BF81537AC60F8DE7D118F2359042DF
-      EFE8F1F97C3CA2EF736A05F9A3FA2FA77C39C60FC725B19949E00D3E4FA16F99
-      1AF9FC6717EFB764CF193AB59EE3BE210A7C8F7F5F31838F5531FCBC3B7D07D6
-      AD43CB8BE7E7059538B43EEAD4D2E3E5A8927E9F2088532AE92B5ABE80E668C7
-      46B10D9245DF4A8C408FCE58CEB2213EADB7D247516F3EB83C5AE545DCCDF273
-      C523690FC43D01B669D8CB0D357B91C4FD3E1F931E1D057B5EC7BFE3FCBA8DFD
-      8DCEF9BDC4FBDB749EA758DEDF56D8E90FCEF2FC3648FD81C3633A2EFA068C7F
-      3FA635B7A26F177EA735DFA075F9E9D3A7CDEBFA79F3E6DDB31F4EFBBECECECE
-      ACA5A585F9F9F9313E5F545B2F74D3792D2D3DFA4DF7366FDECC34F69BAC7ACB
-      962DBB67CF99F67769AE2FF9D684F46AF5E8C5C4C4B0850B170EAB375A3F4445
-      4559F568CF1CFF9BF4E8E9E1FFA5171B1B7B4F59A5787878B0E8E868DD7ACB97
-      2F679595958AF9AAAAAA62F42DB95E3DAA77B5773F030303CCCDCDED61D0FB67
-      4A4A8A796F4F4BCFD5D5959D3D7B96F4F254F49681221BD65CB48FE5F959F6A1
-      FF038A73B5CE4C7A0B0000001800000018000000630D00000000000078DAED9C
-      095417C71DC703A24D3436C6D898F499F7E281A8B45EB1798DF18C4710698CFA
-      AC42D46ABDA807A2A81154A2867AE049456D6A1B5F3C49446D3C828807881C8A
-      A917A808289708DE5C828A4C7FBFED6FFF6FB39DDD9DFD1FD657FFFBDEE701CB
-      EC7766E7FCCD6F67E6A5979CD78B7E356FDEFC4DE0232000F007BA01AFDBA8E9
-      020C022E014C8324A0AB15DAEE4002695C00A6023D803780B781BEC06C208FC2
-      EC067E21A8DD8C9EBB05FC11A8A313F615E073A01248031A1A68370632807B80
-      A7E27E0B201A2801F281BF034D14FFEF073C06E2809FE9E8AF07AA95790ABFB7
-      02CA5AB56AC5264E9CC8FCFCFCE4BCC7776CA408379CEE076A6837022A800DAA
-      FBDFB76EDD9A656565B1C78F1F4BC4C7C7CB71AC54853D02E4F0F214EE05D133
-      6D5575E8C1D4A9532DDA323E3E3E18364DA5F13BD2F884A38F753B5C75CF15F5
-      A74D9BA6A57F8613FE5BC0DB445DDD87F9939D9D6DD14E4C4C94F367951DDA2E
-      966F3996EFA4499394E59B6F6B1B56C4D112D803DC060A80CDA2EDC96C9FE1EC
-      8D9D97F3B2AAEDAC016638507F1DF52BF31DA4EF42E3DE338F037E6F0A74A7F1
-      FE33A083DE386B360EF83919A855D93E35C061A0931571BC85633AE92C50D810
-      68FF34A771703E7083E2DD263A16902D984E63FD7E651C9CB0F5291EB47F92F1
-      6F01FBE722500A7C4879F50FD57B0C04366258C5731F93FD1303D4D5D15F0E3C
-      017EA31A1F6B38E5710D784D11CE97C204686837445B01D8A2B67FDAB469C302
-      020218278E151CFB271BED088EFE0C7AFE576AFB07B5D16E983D7BB63A8E1E2A
-      8D813AF60FDAF5619CFBF795F6953A0E4EDDC6BAE465A2AEEE41FB273333D312
-      C7B871E398BDDA3968BC8BF634DA3F63C78E65C3860D632D5AB440ED87768C03
-      E7045BA8CE5CA6BEB0F1FFAABF72C6611847A003E3580ACC725A1C2FA48DF56B
-      6007708EC648E420E06327EDEA76EDDA55CE9D3B3775D1A245C988AFAF6F06D5
-      E92F6CD4DFE1E9E959595D5D7D5B3DD78D8C8C3C4171A00DE9A76204F0BE9E1F
-      84F42F040707A7AAB565D6AF5F7F82FA652D52F4E694E8475ABC7871B2963E52
-      555575B3B2B2325F456E727272028CD155A0B1DD167D3DC2C3C34FE2582AAA0F
-      E570272A2A2A7EC4881119DDBB77BF6144C78E1D1F503E1DE0D537A53E6AFBF8
-      F8646179CF9933E754444444A2086BD7AE4DC4E740EB29F0A9967E5050D0E9F6
-      EDDB97959696665A91573554A79379FA376EDCF811EB49025CD696C5A64D9BD0
-      37784BADBF60C18294810307667B79795D83704FACD4AFEED1A307DAD5D16AFD
-      B66DDB4A36474141419AB5698F898989A772EEA6D6C7FB818181566B43FB28C1
-      3A013A51BCFAE3EEEEFEA4A2A2E2BAB5FA4B972E4D22BBEB1D8E7EC6840913CE
-      5AAB7DF7EEDD0CA817389759A8E567EBD3A74FDEE3FF5CA6B41F3D7A543174E8
-      D02BE4337B4543DF0BF3DFCFCF2F7DFFFEFDF1B1B1B142601BC7FA46F3A9EE06
-      7DE8EFC9BEACD5E927D594D13CAD9B89B1C00DA8C7C18D83D327E7BC9E373B6C
-      18F94E6E0291E8FBB0A3367EFB6283070F66212121AC53A74ED8C64E09D83F68
-      232D142073D0A041D8174B7DCFE9D3A7E576BC4511A607477F95689F00F6A3A5
-      6F2B2B2B631CBBEBA00DF9130E362A8B8B8B634545456CD6AC598CBE39B9DB29
-      FF1B908F48E9270B72C03CEE036022FAFE5EE07684DFF4C600FDB1AFB7B336CE
-      1B1E29CAB110BFCDDA491BFD9CB7C78C19C3727373A536D4A54B178CE33B1B34
-      D7ABDB91D267B56EDD3A66624CDECDD16FAF68DF7FC1707BF7EEB5E8E3B73BFA
-      FE2BD287F417789F686CA7D83E478D1A25A7CBD78EE5FB26F942AE0338F799E4
-      B4159C97F372FCB575EBD601403490092C019AD951FB7DA016E638D23A0598BF
-      30F83B11703578AE13F0B90019070E1C401F85D4EFC17C1FF591BF29C2FC96A3
-      1F41E10C494E4E660A3F0B2F4C0C47DF05A827C0EA9D3B77B2FCFC7C565E5ECE
-      92929250AF1A68A708E36A43FEBF0AA42BD2FA14986DE7FA83EFDA159804347D
-      81DB5113CA031F2C373B6B8F029E28CAB1C496760ACFD6011A10EF00F78E1F3F
-      2ED9F7B76EDD62D1D1D118C73F1561F4A8C3D1FF4ADD4EEEDEBD6B6947E7CF9F
-      67A2ED0FD8CFD16F0DCC24C2309CD2BE3A72E4083E57A808A3473781FCDAB27D
-      FB76867974F0E041395D83EC58BE8D8059C019E07B60987364725ECFD315F387
-      975C80AE4020B00DB802E402D1C05CA02FE066A5F6DBC03E8019900AB431A9ED
-      0BDC13D096A90682005701ED4F4DE8AA996DA0DD0428D17A3ECEFF35762CE02D
-      A3F768A7A3FF2DF7B9312E2CEF4824AB7954C96A6B9EB0A2D42876786203AD38
-      4EF3CA1CEEB96BA5EBD4D25E0CAF9C7D7F6697B64E63B5B54F59FAD713F4DEC3
-      5BA34CB9E1337705B3FBD9A9D27BE0DFA5B9FF6277D20FEBE98772F45769853F
-      34B60E3B3CE955E9F7A4D0CED2BB607EE9E8EFE3E82718D50F2CDFCAE2ABACEA
-      5E213B3AADA95ED8228EFE5123FDCCEFE64A694F5BE965544FF339FACB8DF4B3
-      F62E64B72FC458CA41873D1CFD6146FA87C6B8B2D8F12F8BB4B3108EFEBB46CF
-      A5ADE8CFCEFFF53311FD7E1AED6B93DE7365F9E7594D55B9549F74C21DD7EA87
-      E0FECF813CAD6713433C59CA975DF5B4CB81E6067D501F1BFA377FC1FEB93F50
-      6042F701301AC7231363402360B380F621A0990D63A4073012580B240269C046
-      603CD0C94C9A9DD77337BFC3399317100AEC038A8062E000B010F006DCACD46E
-      497E11796EF1302A2AEA0282BF2BEEA7021E26E7E67F022A71EE1F17179770F3
-      E6CDACEAEAEA1A854FA3A6B8B838EBE8D1A30910A606A802A68BF81D20CC584C
-      17CC8D72F3F3F3D38DBE8D1716165E86B039F42E930DB49B01A5DBB66D2BA8A8
-      A828576BC13DC967A2BEFF102E88E33A3C5B0134D7C997184CC7F5EBD7CFA9BE
-      DFB393274FB21D3B76E07B497E2BD9BF2483EF4ABE94E3BC7C827BEFA136CC15
-      4FA8D387DF18F07FE7CE9DB3CC83737272FEEB3D62636313289F3EE4E8A39F81
-      5DBB76ED9CFAB9B4B43476ECD831CBDFF85D00E7ADEA70F40EA83F9DA38FFE33
-      CCE332F5739817F2F746F45B61388C93570E94475B39FA3F42B9E6EAD5152CDF
-      DDBB774BBE085E392350465741EB9235FA67CE9C91D29E9797A71946475F337F
-      6452525218B4294D6D83FCD12C5F5E39F030285FCDFAA968AB52F96AFDDFA07E
-      5ADA97D63BECD9B387EDDAB54B2FEDB55AED4BD13F3CD0EA1F30FD05050556F5
-      0F36F66FD744FA37453EF9535AE4FEF9AA40FF1C60C62F4CE3CB09C538520563
-      4B3A677C493133BE70C6C78F81F9E43B44FFDB4D1A2B436D191F9DD7FFE7857B
-      8B69CD732E7DD3D703D7B26DC26FC582DAB886A606D7DC040505B1E0E0605D70
-      1F89BBBB3B7ED7CED45AB7A7D28FEED0A103BB7FFFBE99F598F2B7F39102FA19
-      93274F36BBF690E1FE21DC9B43FBE51BEBE85F91F7029901D701C0B3CB807906
-      6BA0EDA17FDBC1FA8CB77FCAA9FF42E89F1A3E7CB829ED929212867BC3E0D960
-      DAAB58ABB54E05F70FE25A399C47A02D6BA48DDFAE67CE9C29F70FB89EEC1B20
-      4BA7FE37A4B584CC244B69BF5931EEBF33E883DC68FFE75C7A5F3DA603EFD17A
-      AA43B476BBB5605FFD09A56B890EF8FF5DC01DDA23EA67629CA94F6B3B73285D
-      3C704DF579DAF7D5CA393A3BAF6760FF0CA133679E0AB65DACBF33B5FA349576
-      7F2BFA06992001FD7D36E8E70AE85FB6411FA9CBDB3BA21C5F44B5D02E6CD9B2
-      A5FA7E3D4A63435BF4713D25FA37D0D6E3E8D7A8F74E99D11F3972A4A47DF6EC
-      5986B6AA86FE1722FAB8467BDEBC7996BFF16C185C2F827EAC8E1D3BF2E297F5
-      1789E8A33F00C7C1F9F3E7335F5F5F491BFD631ADAA6F571DCC6B562B26FE9E2
-      C58BF27A7CBBE8CBF504D773615E75EEDCD9A8EC4DEB9BC448DF1EED4B4FDFA6
-      FE81D6EEA37D35D311FD1BD09B7EEF65C7FE399BFAE77A748657A1D1391626C7
-      0BB4F9FA9036C63740F0B9D7815413F97343545B11C7CB74B6C63C9DB5E69837
-      BDB06C9DA3BFF3E2D4A1CE40089D0F964FB63E9E73B212CF1454F976EA9BAC9B
-      E1D49F3CA536FD35EDD348A2F904A3F3D87E897BAF815041EDD6740E9FBCE7BD
-      A1C63C2A88E61965948E2502DA6ED4D68BF5FA290AFB01EDFB92DBB0887E0885
-      F51608FB8D421BCFCFE96710BE19EDD9D9ECA0BA229F31E8E120FD155456AE56
-      3E3F1EEBB1CEFF8F01F136A42F8CCAC1C541FA91B487C8C541F983E3D10F8E28
-      5FB24DF08C862F1D513F15E74B7E24D8BE069AD0F6A0B46F37D13F9418F50F14
-      BE2DED87C4FEE40DC1F4B82BFAB7B51AFD5B3D1ADBAB691F6D4F2B6C87E58AFE
-      F9229D0B8967779D56ECFDDB299A6E9DF12598CE7095CF65FD01588C76957304
-      765ECFD0D671A3B3862F09DAE4B5745ECB0041FF0FCE5D98BFBF3F5BBD7AB534
-      FFF7F6F6967E57837B5FE57DEA14D7574671A08F77C8902116FF75CF9E3DA5EF
-      6C3CDFF6E6CD9B25DD3B77EEB0952B57CA716CD48B03CF439A32658A297D798F
-      C98A152B98915DA3D6C76F01FDFAF593D2A83AE7848D1F3F5EF2433C7CF8D072
-      1FF7DDE35919A2FAB8074EEFCCA265CB96FD24DE888808B9CCEB8AE823786E72
-      6464E44FCA76CD9A35DCF5391B366CB0F80944F5CDF03CE9E3B795C0C040E6E1
-      E1A199FF5836A3478F967C4E66F5C3C2C2A4E7434343B9ED0B090F0F679E9E9E
-      92DFCCAC7EDFBE7D99C8B7602C7B4C07FACECCE8F7EEDD9BCD983143E42C2449
-      B3B4B4F445D08F91FB376BF4D18F49B690AB51FF8C7EC801030668D61D1979EF
-      3D7E27A4EFFC8B0DC697290ADBCD0C45E817569EE9EEBC8CAF7F0387BF2AF3
+      4C69020000004C7A0D0000001400000014000000490B00000000000078DAED9C
+      095055D719C7C52D6D344B1B3575342602B2A8B8D45AD110A336D14A26B12EA9
+      5A4745DA1833142BC188690DB655DBB43AB6DA6AAA11828A20515104594C8A20
+      52401E625C00252C2ADB631710414D4FFFDFCB79CCF57AEEF21E6F4CA4EFCEFC
+      66DE7DF79CFF3DCB77BEB3DC736FB76EF6E35138860E1DFA0CD8004E822A6004
+      9F833F8301166AFD9A6BFC0D4C07CF92067805FC956B0702071D5AC1E02C7055
+      09E308CE800F35B4168042D08F9F3F0976820A50093E064FF36B4F833CE0ABA0
+      D51D5C03A3F9B90338B562C50A663018586E6E2E5BB97225C37F99A0070FE3C2
+      EFD34BA03713A449CE278F1B378EDDBA758BDDB973C7C4EDDBB799A7A72769CE
+      9484A3FA9A2BD05B03DE909C2F5FB56A55879699B56BD7925E80241CD557B08E
+      7AD1953E0B6C86CA2F99CA2F3B3BDB547EFEFEFEA495612E3F2B349F003B4019
+      AFE3DDE6FAB51FF6C3C6FE936CEB2736D47B91FBC94746130C0671DC2F12B160
+      3DF52D166A52BFD1CA35DDC1403004BC06B6F3FBF9930FD6A1E5078AB8EFAF12
+      E59DFA16EE67366A682D040560103F9F2149E74FC14792FEE3FB3CACAF8A5E3E
+      959FA43F4920FFE7E1E161D6F405FF91F41F6E3C0FBD055AD4B71A24E73FF6F6
+      F636F9E5ACAC2CB9E60C59FF314FA01728EB3FDE0A0C0CECF0F532CDBE9270AF
+      820F74D4CB4B63C78E652D2D2D1D9A999999CCD9D9B9D55AFB44BC245F5F5F76
+      E6CC19565050C056AF5E4DFD87C15A9B479CC7C16670858F05B680EF3C8A6DD3
+      869A934098DDE37FEBFBA3C7F938DCC0FD1F116F1EAF5AA1F76E404040764343
+      437E6B6BEB0DE2F2E5CBE9C3860D237F34D60ABD4BCDCDCD45F2F16869696996
+      8B8B4BA3A40F212E8120F0948A5E555B5B5BAD5C8F686F6F6FC0D8B4C20CDD77
+      D3A64DE988F3276BF444206C0DC5D1A357525292E5E7E7973371E244A3121847
+      53BB65BCDE76813E22BDE2E2E2CCC99327979597971B706E04D56A3435351562
+      1E908DF89FC8F53096BF86FB56A28EF3F4E69BA8AEAEFE02F16FC8F5B66EDD9A
+      4658A2455CB87081E672B1723DF4374D94070BF55ABDBCBCCAC96FC9F5929292
+      522C4D5B4C4C4C0AE21E10D4EF356A1B9668C116CBDDDDDDEB10F739D1BC77F7
+      EEDDA90877578F16EAEEFA82050B2E53BFAD607F349F8D40FF7ACBCDCDAD4D0D
+      5757D77684FD12BCA73547C7F59E341ED1C2EE91BB5CFF42E3F1283E1E0DEDEC
+      BC1AF163366FDECCE0C758505010F9BDED1AE113B97F14E2E4E4C4EAEAEA4C6D
+      03FD94FC7A840DD2F70F1B94DF415E7E21F67589876ABB3F201FCEC7C6FB40FF
+      4EEA456CDCB8D1641BEBD7AF27DB08B142A3C39E1D1D1D59454505E36305A666
+      E77AEC599ABEE0E060ABD22728BF706EBB7BCDEBA9F6C37EE83DF6EFDF3F1084
+      8042B01D3CD149BD43B46E5C5F5FCFD2D2D218CEB768848F05B795080F0FEF58
+      DBAEA9A921BDFF4AAEEF13E87507BD5588A5356DCC3D58464606E97D24B9D6DD
+      8AFC3E4F7906D5200C7CCF6E550FCD760781C3A01E448167ADD0E805FA700EE7
+      E4E498D6C2C886711E2EB926A2A7402F06347318E67926DBC59CC46CBBCD2A84
+      69A435946CB6B6B696A5A7A793DE8E4E96DF33E09F201F6C03F6B14F173B1296
+      767B01AC0587400928069F822030C4021D07F03668064C8126F04B0AAB43EB53
+      151D3907D43471ED2D799CC4653D58F6D6D7D8D92D3359A24F7791E65205ADE7
+      E57924ADBAA26C566138CA2A736258EDD50C9166231824D00B94DF9BD2546138
+      D6715E753E9E65FDE515511AFD057A91F270A70206B353EF0EE938AFCC8D6319
+      1B5E14E98509F4AEAA957D7E5410ABC93FCD127C1C44D72F09F4F295B44E2EEF
+      CB9A6BAEB1CFFDFA29DDEFBC406FBF925EEECE05EC7AEA276A761322D0FB8D52
+      F8E4558358F2CA816A7AEF08F406827A51F8D3EF0F67A9412E4A5A356080820D
+      FE4214E742E872F6C5C7CB94F4E669B4B7DD16B4B71D3A7DC2CF41AD8A4E3598
+      63A1BF1A0096835DE01C30807FF136DEDFEED11FFA18CB1D63F08D515151E911
+      1111CDA01EBF4FE1BF0F70ED390B747A1C3870606D6464E42D83C170AFB4B4D4
+      34366A6C6C64C5C5C5F41CF32EE923DC32E0A0A5059DB4848484168AAFB4164B
+      F38563C78E351F3C7830524D0FE95A435AEDEDEDD26715A6745DBF7E9D49FF6F
+      6B6B63D1D1D1CDC8FF9B0A6973A13CD2784F1A27262686252727B393274FB2C4
+      C4C4FBD269341A19F2DE88B8FD0569FB039597347C5151114B4949E9388F8F8F
+      67959595F769E27A0BF47CE47AA8BB542A7B69585A9FBB79F366C7F98913274C
+      699286A1B53BE46B8F5C0FE96E90C6954373ADA4A4A407FEA7F4222DF996E8D1
+      3CF0F0E1C3F73DABD6D213E5D7CC952B574CE368D135A5FC8AEA43A91CF5D407
+      FE1B26B7172D3D89BDF453B0E7F76013F7D9B3B92E28CFB2E765AAF66C457B6B
+      D16A6F127F10A4E40F323333EF707FE0A3E50F04FE6A03EA3D0DF19BA05F87DF
+      FFC67FEB2CF157F6E35BB7563C59F29CC32880F6CFCCD6B34711613CA74C99C2
+      626363E999A9105ABB9A3B772EADD1FE4A87DEBE23478E683E1BBC78F122AD29
+      9FE3717AA8E87D49EBCD7A9E378E183182D2F85DF03B15BD220BF568CF42B18D
+      F5DA95F2DC45F5EEAAE84591ED696991AF86BDD0B3E45E3C7DDD15F4A6CC9831
+      C364B36AB6B778F162C6F7A28C01B91A363D87EF3BBF07BE12708EDA06DF8775
+      0CFC56473B71E07911D187DA25DFAB982ADA9B2DD0A3BD7A017C7F5FBB8C16BE
+      97909E9DF7B47BD0FFFBFE631E48517976477B679683C77468BDACE359A0193F
+      1D7A072DD0BBC4E3F454F3CF6A1AD3A64D6353A74E95FE47FE6A83357A5E5E5E
+      ACACAC8CCD9F3F5FAE57AA476FD1A2456CE4C891A6DFA3478F66F9F9F96CDDBA
+      75F2FB68FA6773D89D3B779A9EEB8C1933C6B4FF74D7AE5DA274EBD6A3FD0B18
+      A79AD6DCE3E2E24CE79DD1336BD21E5E777777A53A22BD3B2A7A16D90BDF1BD4
+      A6B487C8527BA6BD8B3AFA8FB9F41E898ACE79DACB4CED0D1CD1D37F68DC8FFA
+      901F82687A7F478FCFE7FD11BD9F5322481F957F0EA5CBDE7FD80F89CDF405EF
+      F3710ABDCB54CEC73F6B78BB257B8ED7A9F532F70D7BC0EBFCFD8AC1BCAF0AE3
+      FBDDE93DB0061D5A5E3C3DAFAA84A1F9519D961ECF47A1F4FD0441982C495BD1
+      F2053446DB67C33A8812BD2BD1093DDA6339D482F034DF8AB3A1DE0870D156F9
+      45D825F27DC59DA90F843D045668D8CB55357B9184FD19EF931EB3813D7BF3F7
+      387F64617BA37D7E6FF0F63688A7692F6F6F13ADF407C7797ACBA4FEC0EE31ED
+      07BD03C6DF1FD31A5BD1BB0B7FD41A6FD0BCFCE8D1A3A679FDF0E1C31F580FA7
+      755F676767565555C57C7C7C181F2FAACD171A68BF96961EFDA66B4B962C611A
+      EB4D1D7AE3C78F7F60CD99D67769AC2F79D784F44AF4E8858585B151A346DD57
+      6E347FD8B3674F871EAD99E3FF663D7A7AF8A6F4F6EEDDFB405EA5787878B0D0
+      D050DD7A13264C607979798AE92A2C2C64F42EB95E3D2A77B5673FADADADCCCD
+      CDAD2BE87D161D1D6D5ADBD3D273757565C78F1F27BD532A7AE341BA05732E5A
+      C7F2B47B52FB21B0A5133447B0A1DE24FE8C65BE0D3547D27B69E01D1B6ABEC0
+      C79CC136D4A46FA3E4826D7ABE89A253F349BEEE182EEA83A99CC1EF2DE443FE
+      BE7BA40DF56E8BF4ACC8EF537CFD7E5F67D74DF8F76AA83EFEDED9FA18FAF541
+      73DA7536C8A307B7E715366C6F6FDAC8DEE2D4E64CF6A3CBF603E3689E6E432D
+      B2C9D7BB8216FFDE13AD35BF0D2658ABC59F756E737272327A7B7BA7CD9933E7
+      B48B8B4B318D0FADD0A27587CF264D9A94555353D324D9E3746FE1C285A9FC7B
+      557ABECBD59B3FE3AC85D6598C3F8BCACACA6A65E3D2AF30AFA3B58D693ACA29
+      CFD3D333BBA0A0E006C5F5F7F74F1169FAFAFA529F16A4A1E74C7B3342424232
+      A571459A4B972E4D559B534A3447D19A8F9A26E6A877F19BD6E05ED25917AA9A
+      B366CD3A8DEB472DE9839434A74F9F4EE3FE0B967E8B47A469341A1B1D1D1DAB
+      ADFD96845C73F6ECD994CF6D3668A7A3F8BA5C85ADDEA7E5DFDC99F84DF9D7FF
+      01DF05DED64C7A0D0000001800000018000000100F00000000000078DAED9D09
+      5457551EC703C9A9CCB4655AE6D8995C1014C5A5A633994BE6122093658751C8
+      7502254542FE5A824A684E1AAE8C68364E7912514A44730911179055A0DC4043
+      40D9445051D90404B9F3FBBD7E8FF37ABDF5BF9427FEEF9CCF111EF77DEF7B77
+      FDDDDF5D7CE001EBD5DEAFEEDDBB3F0DBC0EF803BEC050E07113356D80F1C079
+      80C9900A0C3142DB1E48228DB3801F301C7812780E180D2C008A29CC6EE0CF1A
+      B5BBD173D7807F011D14C23E0C7C04D40359406715ED27805CE026E024B8DF03
+      88012A8112E07FC05382BF8F01EE0209C09F14F437028DC234859F7B0135BD7A
+      F5623367CE645E5E5E7CDAE3377615849B48F70364B4BB0275C026D1FDEF7AF7
+      EECDF2F3F3D9DDBB7739121313F938568BC21E010AA5D214EE19E8993EA23274
+      DBCFCFAF4D9BC7DDDD1DC3668934FE411A6F4AE863D90E13DDB345FDB973E7CA
+      E9674B84FF0670D35156F761FA141414B469272727F3E9B3C60C7517F3B716F3
+      77D6AC59C2FC2D31B50E0BE2E809C402D7815260ABD6FAA4B7CDB0B6C6D6CB7A
+      195577D601F32CA8BF81DA95C516D2B7A17EEF378F037E7E061846FDFDBBC000
+      A57E566F1CF0EF6CA05564FBB40087814146C4F12CF6E9A4B3446043A0FDD39D
+      FAC1C5C0158A77BBD6BE806CC11CEAEBF70BE39008FB08C583F64F1AFEAEC1FE
+      39075403AF525A7D29FA8E71C0E71856F0DC1B64FFC4010F2AE87F0634037F13
+      F58F2D12F97109E82208E74961FC65B43BA3AD006C13DB3F8E8E8ECCDFDF9F49
+      C4B14AC2FE29403B42427F1E3DDF4F6CFFA036DA0D0B162C10C7315CA4314EC1
+      FE41BB7EB9C4FD5B42FB4A1C8744D9C6B2E4A2A3ACC6A2FD939797D716C77BEF
+      BDC7CC55CF41E305B4A7D1FE99316306F3F0F0603D7AF440ED3B668C03C704DB
+      A8CC5CA0B6F089DFABBDB2C6A11A478005E35801CCB75A1CEDD2C6EA0FEC004E
+      531F891C04DCCDA4DDD8B76FDFFA850B17662C5DBA340DF1F4F4CCA532FDB189
+      FA3B9C9C9CEA1B1B1BAF8BC7BA11111127280EB421BD444C025E56F28390FED9
+      A0A0A00CB136CFC68D1B4F50BB2C47BAD29812FD48CB962D4B93D3471A1A1AAE
+      D6D7D79788284A4B4B4B823EBA0134A24CD157222C2C2C05FB52ADFA900F37A2
+      A3A313274D9A943B6CD8B02B6A0C1C38F036A5D301A9F226D4476D7777F77CCC
+      EF0F3FFCF064787878B216D6AF5F9F8CCF81D63DE02D397D83C190E9ECEC5C53
+      5D5D9D67445AB550994E93D2BF72E5CA0F584E92E032362FB66CD982BEC16B62
+      FD254B96A48F1B37AEC0C5C5E512846B3652BF71F8F0E16857C788F5FBF4E9C3
+      D91CA5A5A559C6BE7B5C5C5C22E5F350B13EDE0F0808305A1BEA47259609D089
+      962A3FF6F6F6CD757575978DD55FB162452AD95DCF4BE8E7FAF8F89C3256BBAA
+      AA2A17CA058E6542E5FC6CA3468D2ABEFBF3A54BBBA9A9A9EE9D77DEF9897C66
+      0FCBE8BB60FA7B7979E5ECDFBF3F313E3E5E1358C7B1BCD1786A984A1BFA4FB2
+      2F5B15DA493135344E1BAAA32FB0033A4A602781D52767BDEE373BCC837C2757
+      8108F47D98511BE7BED8DB6FBFCD828383D9A04183B08E9DD460FFA08D14AA81
+      BCF1E3C7635BCCB53D9999997C3DDE2608335C427F8DD63601ECC7B6B6ADA6A6
+      8649D85D074D489F30B051594242022B2F2F67F3E7CF6734E7646FA6F4EF443E
+      22A19FCC608171DC2BC04CF4FDB5E37A84737AD381B1D8D69B591BC70D4D827C
+      2CC3B9593369A39FF3FAF4E9D35951511157875E7AE9258CE35B1334378AEB91
+      D067B561C306A6A34FDE2DA1EF2CA8DFFFC1707BF6EC69D3C7B93B9AFFD5D286
+      8CD5F03D31584FB17E4E9932857F2F4F33E6EFD3E40BB90CE0D86796D556B05E
+      D6CBF2576464A42B1003E4019F02DDCCA8FD32D00A631C6E9D028C5F18FC9E0C
+      D8AA3C3708F84803B9070E1C401F05D7EEC1781FF591FF0AC2FC5D423F9CC2A9
+      929696C6047E16A9307112FA3640470DACDDB973272B292961B5B5B52C353515
+      F51A81BE8230B626A4FFA3408EE05DEF010BCC5C7EF05B8700B38067DA713D7A
+      8AD2C01DF3CDCCDA538066413E569A524FE1D90E4027E279E0E6F1E3C739FBFE
+      DAB56B2C262606E3D82B08A3440709FD2FC4F5A4AAAAAAAD1E9D39738669AD7F
+      C07E09FDDE4020B11CC309EDAB23478EE0736582304A0CD5905EDBA2A2A218A6
+      D1C18307F9F71A6FC6FCED0ACC07B281EF000F6BCF64BDEEA72B6EDA0336C010
+      2000D80EFC04140131C04260346067A4F673C03E80A9900138EAD4F6046E6AD0
+      E669040C80AD06EDB774E88A59A0A2FD145029F77C826F1776CCFF59B5EFE8AB
+      A0FF8DE473D36D58F19108D6D254CF5A5B9A597946343B3CB3935C1C9952790E
+      F7ECE5DEEBE48AD7185E85FBFECDCE47CE65ADADF758CE573E4ADFE12693A792
+      E1F37605B15B0519DC77E0EFD5453FB21B398795F44324F4D7C8853F34A3033B
+      3CEB51EEE7D490C1DCB7607A29E8EF93D04F522B1F98BFF5151759C3CD327674
+      EE334A61CB25F48FAAE9E77DBB907BF7ACD52E6AE5B44442FF3335FDFC3DA1EC
+      FAD9B8B67C50205642DF434DFFD0745B16EFFD90967A162CA1FF82DA7359ABC6
+      B2339BDFD5A23F46A67E6D517AAEA6E40C6B69A8E5CA9342B8E372ED10DC7F0C
+      28967B3639D889A57F324449BB16E8AED2068D32A17DF3D5D83E8F054A75E8DE
+      06A6627FA4A30FE80A6CD5A07D08E866421FE9004C06D603C94016F039E00D0C
+      D2F3CED6EBBE1BDFE198C9050801F601E5400570000805DC003B23B57B925F84
+      1F5BDC898E8E3E8BE0CF82FB198083CEB1F9FB403D8EFD13121292AE5EBD9ADF
+      D8D8D822F069B4545454E41F3D7A3409C2B4000DC0075AFC0E106606BE178C8D
+      8A4A4A4A72D4E6C6CBCACA2E40D842FA96D92ADADD80EAEDDBB797D6D5D5D58A
+      B5E01EE73311DFBF0317C471199EAD03BA2BA44B1CBEC7E5CB974F8BE6EF594A
+      4A0ADBB163077E17E7B7E2FD4B3CF8ADE44B392E954E70EF45D486B1E209F1FB
+      E11C03FEEDF4E9D36DE3E0C2C2C25F7D477C7C7C12A5D3AB12FAE86760972E5D
+      3A2D7E2E2B2B8B1D3B76ACED779C17C071AB381C7D03EA7F20A18FFE334CE31A
+      F1739816FC7C23FAAD301CC629950F94469112FA3F40BE16299515CCDFDDBB77
+      73BE08A97C46208F2E82D67963F4B3B3B3B9772F2E2E960DA3A02F9B3E3CE9E9
+      E90CEA94ACB64AFAC8E6AF543E48A192BFB2E5535057B9FC95FBBB4AF96CAB5F
+      72DF101B1BCB76EDDAA5F4EEAD72F54BD03EDC966B1FF0FD4B4B4B8D6A1F4C6C
+      DF2E6969DF04E9E44BEFC2B7CF1735B4CFFE7AFCC2D4BF9C10F4230DD0B7E448
+      F42FE97AFA1789FEF10D6031F90ED1FF7695FACA1053FA47EBF5C7BC706F31AD
+      792EA2397D25702DDB169C2BD6A88D6B685A70CD8DC160604141418AE03E127B
+      7B7B9CD7CE935BB727D28F19306000BB75EB969EF598FCDCF9640DFAB9B367CF
+      D6BBF690E1FE21DC9B43FBE59F50D0FF89DF0BA4075C0700CFAE0416A9AC8136
+      87FE750BEB33A9FD5356FD76A17F72E2C489BAB42B2B2B19EE0D83678368AF62
+      ABDC3A15DC3F886BE5701C81B6AC9A36CE5D070606F2ED03AE27FB1AC85728FF
+      9D692D21D3C90ADA6F5681FBEF54DA203BDAFFB990BE57890F8017693DD5215A
+      BBDD5B635BFD26BDD7A70AE0DF770137688FA8978E7EE6115ADB5948EF2505AE
+      A93E43FBBE7A597B67EBF51BD83F13E8CC997B1AEB2E96DF40B9364DA43DD688
+      B681C7A0417F9F09FA451AF42F98A08F3C28B57744D8BF68D542BBB067CF9EE2
+      FB1DE91D3B9BA28FEB29D1BF81B69E847E8B78EF941EFDC9932773DAA74E9D62
+      68ABCAE87FAC451FD7682F5AB4A8ED773C1B06D78BA01F6BE0C08152F1F3FA4B
+      B5E8A33F00FBC1C58B17334F4F4F4E1BFD6332DABAF5B1DFC6B562BC6FE9DCB9
+      73FC7A7CB3E8F3E504D773615A0D1E3C582DEF75EBEB444DDF1CF54B49DFA4F6
+      81D6EEA37D156889F60D18493FBF66C6F6B980DAE78E74865799DA39163AFB0B
+      B4F9469136C6E7AAF1B9C7810C1DE97345ABB6208E87E86C8D450A6BCD316D5E
+      C3BCB5F6FED64BA20C0D0682E97CB012B2F5F19C93D578A6A0C8B7F388CEB219
+      46EDC93DAAD35FD13E8D541A4F303A8FED2FB8F71A08D1A8DD9BCEE1E3F7BC77
+      96194719689C5143EFF1A9066D3BAAEB154AED14857D85F67DF175588B7E3085
+      75D310F66B81369E9F3346257C37DAB3B3D54265853F63D0C142FAAB28AF6C8D
+      7CDE1BCBB1C2DF8F018926BCDF72CA071B0BE947D01E221B0BA50FF647DF5B22
+      7FC936C1331A3EB144F9149C2FF9BAC6FA354E87B603BD7B948EF6A152AD7DA0
+      F07D683F24B6274F6A7C1F7B41FBB65EA67DEB487D7B23EDA31D6184EDF099A0
+      7D3E47E742E2D95D9982BD7F3BB5BEB742FF124467B8F2E7B27E0F2C43BBCADA
+      035BAFDFD0D6B1A3B386CF6BB4C95BE9BC16578DFE1F1CBB305F5F5FB676ED5A
+      6EFCEFE6E6C6FD2C06F7BEF2FBD429AE2FD4E2401FEF840913DAFCD723468CE0
+      E6D9A47CDB5BB76EE5746FDCB8C156AF5ECDC7F1B9521C781ED29C397374E9F3
+      7B4C56AD5AC5D4EC1AB13ECE058C1933867B47D13927CCDBDB9BF343DCB973A7
+      ED3EEEBBC7B332B4EAE31E38A5338B56AE5CF98B78C3C3C3F93C7F508B3E82E7
+      26474444FC226FD7AD5B27B93E67D3A64D6D7E02ADFA7AB89FF4716E25202080
+      393838C8A63FE6CDD4A953399F935EFDE5CB9773CF87848448D62F242C2C8C39
+      3939717E33BDFAA3478F665AE68231EFF13DD077A6477FE4C8916CDEBC795ACE
+      42E234ABABABDB837E1CDFBE19A38F7E4CB2856CD5DA67F443BABABACA961D1E
+      7EEF3DCE13D23CFF3295FE658EC076D34339FA858567BA5B2FEBF507B4C1D6D0
+      F9ABB616D29F2718B7D859288E408A638F5C5B668638DE275BE49096B55146C6
+      318DE6138E038F5AD067D44CE74B77B1501C6FD238F807A5B12AAE0143FF8C91
+      54509EA7FD5EFA66489F6C53C6F22AF99B6AEEFCA5B38DEE915FAD9385EA579C
+      B9EB97C057156BEEF641D0BEEDB044FB46ED73B8A5DA67EB65BD2C6C5FB8D0DC
+      92AB85B41BC9FFDBD582DA8FB7276DB43DE8FFEFE827B4434CD58667FE4ABEE6
+      16C138AB917CEA5E266ABBD25C4CB59F9F5FE2DEBD7B7F8C8C8C3CE9E1E17142
+      105FB65E6D3CA792DAF826070787C2A2A2A24AF198372525E50295F1833AB5ED
+      E9AC37F45954E15C56545454A6D4B83A3434943F53FC650DBAB6F4CE38877273
+      F3E6CD6955555575CECECEE7E4E2A8A8A8B8A5F5AC7F7EDCDEAF5FBF0BA5A5A5
+      D705670ACBC681EBF2F1FFD512FF1F6632FA8FD1DC585374747496E8DC62C938
+      305FE8FD7D35A67D173D714C9B362D51EF5C9CD638BCBDBD13C9AEDA6044B957
+      8CA37FFFFEBCEFE34763D7E1C8C5515757D7ECE8E87891D6F83C6962BBF5AB38
+      7C7C7C12F5ACF1D11387C16048A476E14B33B7BF5D04EB8C4A2D31C6A238701F
+      D0ABF75B7FFF7F090CF5C6
     }
   end
   object iButtonsDark: TImageList
@@ -1002,210 +3307,235 @@ object dlgImport: TdlgImport
     Left = 84
     Top = 224
     Bitmap = {
-      4C7A0B0000001000000010000000710600000000000078DAED9A7F4C55551CC0
-      1578FAB2D234FAB1F9B3E20FCBE2610D0C1091C01E0F74CB01A142E826C6088B
-      4DF9A198615ACB5F699B214226CB6AD3A21FDA6833C581F3D714082B5D3F2C2A
-      8B99A535E411227AFA7E5FDFB79D4EDF73EF7D3CD9FCC1DD3EE372EEF773EE79
-      E77CCFBDEFDD73FBF5EBDBE4ADABAB6B30F01CB01D38456CA7B2C1266E08701C
-      780748074612B8FF2E1DBB4FE30603ADC05C83FAE7524C3073EC0D60ADF4FF4C
-      A081982995BF8AB18CBF0B184AFB23806E4010B83F9C8E0DC558937EC8915C2F
-      4FFB3006C375E7F7A18E19C05162665F66F7EA9C791F98E0879F08FC063CEA47
-      1D4EAA23CA8F3AA6501DD1401C701AF80E780BF3171864E2DF0FFC0AFC0EC400
-      3703F70299C036A01918A3716F077E0166D1B9B11D9394987914338CF12B95F9
-      5F06B4039395389CFF958CFF293084F6274873CF8DED91E28660AC493F3CA3CC
-      FD0E20DE8771B8BBEBDF4DAEE32C90E0431D4F00FBE89A3B1BF382FAF4713FF2
-      2392EA70FA51C704AAC3E5471D11784FBA8EAE1F98FBEB81BF68AC2F009B01BB
-      457F3973BF417602FD2DF83F30EE25BA6F4FA5F678CBDB80D781BB24FF8CE25E
-      A0FB6FB2E2CAAC3368CF40201BE8D4B8C81983F35BA1F33AF2BFEF812FF7DF8B
-      3DF0D749FE30BAAE9EB3E061FE6C90F3A76F339C9B76208DB0F7C07F53EAFBCD
-      0671077D18FB8357FAFC269F3F95B0F78D57EF8EDF8D365E57FBB678F1621B30
-      95B0F5C0DF0408A2DC206E1F7081412860593DE307525B55AA24B78ACA027D68
-      BF1D7892B05F03E33508C82006F938CEF859B74AFDB595CA546C8C5F077430E3
-      D5C15067D08E8D925BD6C37C7512B61B71CE8AC639A38074603581FBA32C7803
-      8197806E402860D90A6080817B84F154306620E3AF94E38E6D4F15F333A33CE0
-      BE52C72B8A1B025CF21EEF3E3A5B3C36D1212A4AA778888F7178CA241F634324
-      7FB65CFFB9BA4CB12C2F565C6E9823FE3E94251C0F3D204EEF99A5B6214BF237
-      E83E6FD99204913B2B923BB641F25FE3DC3FF6668888471E142777A673FE7AC9
-      CFE4FC6DAB5DE2E5FCC9BA71C890FC7BB8313FBFFF290F8C7B1118A38CC13235
-      6EF9B3B11E18BF94197F1B5027C7FD599FE9417131C6A6C9C120A008E864CED9
-      49C7022DCC8360C0053C4FE07EF03574CF1E0EA4012B8135C00C60B4052F0828
-      01BA98EB7837B00218A071F1FEBB87F1540E73754059A11C979B9B2BE2E3E345
-      5C5C9CC8C9C951EB58A1B8C140A71C131E1E2EA64F9F2E525353C5F8F1E3C5A2
-      458BD4CF325AF25DB25B5858281213133D4E7171B118376E9CC8CFCF57DB902E
-      F94B759F37252545C4C6C672C7D64AFE12CE5DB870A1080D0D157979799CBF4A
-      F29D9C9F9191215C2E976E1CD2247F18E056638A8A8A44414101E7627E8C50C6
-      60BE1A376DDA344F3F327E0933FE01C00E390ECFBD60C102D5ADC53CD5E46000
-      B5C3ADF9DE5868E5BB1FF58793E6C20B401270C775FE3B1F9F959700DFD2B35E
-      999F8155C09D067E414D4D8D484848F0CC3D9998981851555585BFE73619F85F
-      24252589B163C7B284858509B7DB7D1EE202F17932E39FC2F3E87CA4ADAD4DD0
-      EFC3937EFA1781003FFDC02BEC9F703A9D5A17AF23EDEDED1DF46CB3537D2E0B
-      FF2FA9AEAE16111111FF731D0E87282B2BC3735701A1B88EC2F4DF6DC06A5A7B
-      B9AC80E356416BB11F629E99E4228E7190C44DF4CC7D07508F65263E3EFB3841
-      CF7EBB681DE63050A4F65BDFF69FF15B4BF35D7D5EE3A6F5ED91067E8985E73E
-      5B0CFC1316FC0ECA875C6EFE724E6363A3C8CACA92CB70FEB4E8FCD6D656D1D0
-      D0E0896D6A6A12919191A2B6B656F5D9F98BC75B5A5A447474B4282F2F175151
-      5162F7EEDD6A9B0C7DA4B9B95924272773AEE1FCB7D87F76CDFCB7347E8003F8
-      5C933F6B0CF2A792E6FF0778ADF131376DC0C374EDD86F61FEE31AEE49E9FCB8
-      35E179CDDCBECDD37FB85EFE31ADA5E35AE967B4F6DD9FCA27693C5C87F984FA
-      FC385D3370DCBFF43EF7A5BF4B357E35E568B6A64DE7753EAD37E3B13CE6D87B
-      4A3E16323198DB3F71EB95F42EC132A218EFA14CCC317C0FC38F3EB7E4D3BD6D
-      8B2FED67AE1335BEF49F14934A31734CC66F9EC6C5F1DBAB9B834CFEE01AF446
-      A091CA0E71EF5E6972E5237A57C39BBFD956D6A26FE0393F91DED5C27E0E90D7
-      79F1BD1BEAC752DDF727283F20399CEFFDFF6DAE0E659DFE16CA65DCFF9ADE47
-      319BBFB2BF0EB855BA2F6D54FC6F4C7C33CEF6A2BFDEDB76E6FE5A61C1C7F783
-      7E64CEF915DD7FCDFC004D9BDBA9EEDEF20FF8E0EFD2E4EF110B3E7E7F08BF5A
-      E6DD3F33D223F4
+      4C7A0D0000001000000010000000500700000000000078DAED9A0B4C95551CC0
+      15BC7AB3D2347A6C2A5AB966595CAD81022222D8E5826E39305408DDD41862B1
+      292FF199E652346D19A266B2EC31357A68A3650A81F99A0262A5BD2C2A8BCCD2
+      1A7209113DFDFFB7FFDD4EA7FFF7B8F74A4BBDDFF61B1FE7FBFFCE77EE797CAF
+      733A75F26FF2D6D6D6D603780AD8069C22B6515A0F037720701C780D4801FA11
+      B8FF3A1DBB47C30D021A81693AF94FA39820E6D84BC02AE9FF49400D31494A7F
+      0E63197F17D08BF6FB02ED802070BF0F1DEB85B106F59021B96E9EF0A00DFA68
+      9DDF833C2602478849FE9EDDA163E64D60980F7E3CF00B30DC873CEC9447840F
+      798CA13C228118E034F035F00AF65FA0BB817F1FF013F02B1005DC08DC0DA401
+      5B817A6080867B2BF0233099CE8DE518A9C4CCA098DE8CBF5119FFC54033304A
+      89C3F1BF91F1DF077AD2FE3069EC39B13C525C4F8C35A88799CAD86F01623D68
+      873BDBFEDEE43CCE02711EE4F128B097AEB953B05F509D3EE243FF08A73CEC3E
+      E4318CF270F8904718DE93AEA1EB07F6FD35C01FD4D617804D80D5A4BF84B9DF
+      203B81CE26FC6F19F712DDB7C75279DCE94DC08BC01D927F46712FD0FD375171
+      6556EB94A71B301D68D57091333AE73743EB35E47FE3852FD7DFD35EF8AB25BF
+      375D57CF99F0B0FFAC95FB8F7FD31D9B56600261F5C27F59AAFB4D3A71073C68
+      FB0357FAFC06BF3F99B0FADBAB63DBEF7A6BAFFFFB3677EE5C0B3096B078E1AF
+      070451A213B717B8C0201430AD9AF103A9AC2AA5925B4A69811E94DF0A3C4658
+      AF82F6EA0EA412DD3D6C67FCAD5BA4FADA42692A16C6AF025A98F66A61A8D229
+      C73AC92DF6B2BFDA09CBF5386645EDD46020052822703FD884D70D7806680784
+      02A62D05BAEAB887194F0563BA31FE7239EED8B664312B2DC205EE2B793CABB8
+      03814BEEE3ED47A688D1236C62C3A2312E62A36CAE34C9C7D881923F45CEFF5C
+      559A589C152D2ED74C157F1E4C17B607EF17A7F74C56CB902EF96BB57E6FF1BC
+      389139399C3BB656F29FE7DCDF2A5345D8C30F88933B53387F8DE4A771FED622
+      8758963D4AAB1D5225FF2EAECDCFEF7BDC05E35E0406286DB0588D5BF264B40B
+      C65FC4B4BF05A892E37EAF4E73A1B81863D1E8835D803CA09539672B1D0B3431
+      0E820007309FC0FDA0ABE89EDD0798002C0756021381FE26BC2E4021D0C65CC7
+      DB81A540570D17EFBF7B184FE5109707A4E5CA7199999922363656C4C4C4888C
+      8C0C358FA58A1B04B4CA31A1A1A162FCF8F1223939590C1D3A54141414A8BFA5
+      BFE43B6437373757C4C7C7BB9CFCFC7C3178F060919D9DAD962145F21768FDDE
+      A4A424111D1DCD1D5B25F9F33877CE9C392224244464656571FE0AC9B7737E6A
+      6AAA70381C5AED3041F27B034E35262F2F4FE4E4E4702EF68FBE4A1BCC52E3C6
+      8D1BE7AA47C62F64DA3F00D821C7E1B967CF9EADBA15D84F35FA600095C3A9F1
+      DC986BE6D98FEAC34E6361219000DC768DBFE7E3B7F242E02BFAD62BF303B002
+      B85DC7CF292F2F17717171AEB127131515254A4B4BF17D6EBD8EFF4942428218
+      346810CB90214384D3E93C0F7181F83D99F14FE179B47CA4A9A949D0FBE1491F
+      FD8B40808F7EE015F64FD8ED764D17AF23CDCDCD2DF46DB355FD2E0BFFCF2B2B
+      2B13616161FF726D369B282E2EC673970221388FC2D4DF2D4011CDBD5C56C076
+      DB4073B16F633F33E88BD8C65D246EA06FEE3B806A4C33F0F1DBC709FAF6DB46
+      F33087803CB5DEFCDB3FDA6F158D77F57B8D93E6B7FBE9F88526BEFB6CD6F14F
+      98F05BA83F6472E397736A6B6B457A7ABA9C86E3A741CB6F6C6C14353535AED8
+      BABA3A111E1E2E2A2A2A549F1DBF78BCA1A1414446468A9292121111112176EF
+      DEAD9649D747EAEBEB45626222E7EA8E7F93F567D518FFA6DA0FB0014735FACF
+      4A9DFEB391C6FF5B78ADF1B06F5A8087E8DAB1CFC4F8C739DC93D2F971ABC3F3
+      1AB9FECD557F385FFE2ECDA5E35CE98734F7DD99D2476A78380FF31ED5F971BA
+      6660BB7FEAFEEE4B7F1768F865D447A76B94E9BC964FF3CD782C8B39B65DE98F
+      B94C0CF6EDEFB9F94A5A4BB098C8C77B2813730CD761F850E7A67CBAB76DF6A4
+      FCCC75A2DC93FA9362922966AA41FBCDD070B1FD2AB5C620D37F700E7A1D504B
+      6907B9B5571A7DE51D5AABE1EEBFD3CDCC455FC7637E04ADD5C27A0E90E77971
+      DD0DD5E322ADE72748DF2F399CEFFEFF552E0F659EFE26EACBB8FF05AD47311A
+      BFB2BF1AB859BA2FAD53FC2F0D7C23CE76A0BFC65D76E6FEBAC1848FEB83BE63
+      CEF919DD7F8DFC008D323753DE1DE5EFF7C0DFA5D17F0F9BF0F1F921D43FE2FF
+      B3EBCA56ADE70593BE7B2D5E920F7984D0F3F52C1FF208063EA7EF20DC3302AE
+      772D30A0889EDDB9FB373E5F2D33E005F2B77B517EBC861EA57589011EBAF7D2
+      1AAD422FCE3B1CF899FB6663D2DFE9CB7A3FFFC6D669288E4B2F5DF7FAC9B15E
+      F6055C6B96E8851B4EAEC3442CAE1BFC80D6FB6EA2F5EC9966FA113E5B30F70E
+      5C5716ACE3E0FAC9F9F49E81DFAE3E66F27843C797D7CF55D27B56B5E237E8F8
+      A3E9B9DB1DFB11A5574969870D7EF7287A4F77C75753392AE9FF9926EA2E5AC9
+      632FDD8F0BCD3E7BD3BB56B394C70E2F9F65DDEF8A0BBDECE711F4DEDAA1F37E
+      7F010D8BF212
     }
     BitmapAdv = {
-      4C69020000004C7A0B0000001400000014000000010800000000000078DAED9B
-      0B50155518C745302D9B292B2DB5B21A5F9595CA9028686A9A6299A494822229
-      0A6A282924488E3AD9C3502B75341F5926931A548E834DA39683CF92D09C9134
-      9F68F94AF015A968CAE9FF31DF75764EE79CDDBD5C1BD1BB33BF99BB77CFFEF6
-      F59DEF9CDD3D5BAD9A7FAA0AD3A54B97EE0693C16A701CFC09BE07EF817A2E5D
-      49ECF8103C07EE2507E80232D99D02021CB826807CD0CC50E611B0114CB171F5
-      037BC13D3C7F07980B8E82636001A8C3CBEE043BC1608DAB3A38049EB2CCAF07
-      42623308E4324D793B3514BE08B0C132DF59E1F2D0CD528EAE571F856F2C78D1
-      323FC2E01B652947D76B8283EBE268FF5CC48CEDF9F3C249D7F7637084CFFB7C
-      BAAEFEDAEE9FAE41FEA4D87AD687BE30CE9355C6091A825C7090C9E5FC7D974B
-      27B51BE7D9D91CDC071E00CF8319DCB624396C3F5E03FB39F71F571D3BE765CA
-      336FDBB8A2C16F749C3CDFDDB29F21D456805ABCAC0ED80506197CB43C8C7F07
-      82559CF33CCE416099A57C3343FB416D6B81653E54CAA31E672CB8DF526E95A6
-      FD4891DA8F618ADCEC71D692F663BC83EBD251D3769CF7263E2916C01A852F5F
-      77DD1D386F03D3C01EF02B980A6A8276DE3A0DDBAA4ACE45FE8C7FDDB747D4E7
-      9E05FE92EA42B897BE699AFA7A0E047BE13BAEF1ADE5BEE046C5B2D3E003557B
-      82FFFE5694FF81F3C206435F9598E4709F5B68FAA832FB1CEE9F534EF87DD7BD
-      EF58257CAA78995A09DF24858FEEBF6782332E3CA7C074B7FD37FF7453B42FB5
-      C0EB201B0C71D217B7F1CD94622FD5A6FCB24AD48F390A5F38D51B03459263BB
-      659937ED1FF5A38AD9F53B68E2836B42F7108F56F65A5CA7F146C7F618F50D7C
-      E00AB6F43FE8D95F0B2F1CD678D923C5C64E9B580ABED6F12CB9DF93CA4FACE4
-      F9ABC1F7D5D97C5F18E8CF88FEC9CD346EDCB85BC010F02988F6816F2A101646
-      DA945F0C2E181012E596651F297C1DC13B060E49BE1D96654F7B71BCE1E024BB
-      0E83A63E388741A00508B801E38D8EAD2508F481AB8DE5DC1793D70BC7B3E07D
-      E680141B7B2CCB54B455F83E03A54CB9E4BB6259A662BACDBE4E907C6F54F2FC
-      0582FE603ED5FD1B31DE6EF6496C7DF521900E7240113800B2411A78D0852700
-      2482522034FC05E2A9AC0357B6C123F385C9896543E5752EFF1C27D62EE825D6
-      2D8C14570A94CE388DAB917C8CE48AEC162C8645B71509FD4245548F6095F30C
-      68A8F0A5C8DBA67D4A8C0EBD3A3FF8E53662D3A29754FB3852E15B2A973BB63A
-      461C59157D757EC82BA1A260491F956F91C2B7C774EEE74DEC2AFAF50C11E5EA
-      7358A8F0EDD2B9CE6D8A15ED439F10A7F206E8B6B75DE1CBD2F97267BD20C60E
-      0937C5CD42852F5957FED89A1871E287FE26DF7085AF3E38A52ABF77455F7160
-      655F9DAB18D4D3C4608C6A9DA59911E2ABE93D74BE289BFA36DF457D9BED3027
-      BC024A0C9E13A0B7CB7C550F248079601B280073B98ED7F567F4FFBDBFD61864
-      806FB8EFBC172C03A9A0810B4F75900CCE2BFAF41E4E717F24C081EB5B834766
-      9E8D6FB4BC4E7A7ABA888B8B13F1F1F115BF15CE3E1A5753F9BE252D2D4D8484
-      84884E9D3A890E1D3A88F0F070958FFAAF7515BE8972D98103078A2E5DBA5C9D
-      6FD7AE9D484C4C543907297CB972B951A34689D1A3475F9D0F0B0B13C3870F57
-      F9662B7C474DE7BE57AF5E15C7AC59BE45E1FB43E74A494911AD5AB512A9A9A9
-      3ADF26856FB9CE171D1D2D2222224C713343E17B53573E3939B9621F0DBE5885
-      AF11F7FDFF539EAE013935AE23E04E4D0C26A8D6898A8A12B1B1B13A5F7743FD
-      08004B5CD4B74C07F9809CB1E08CC143C7D8C365BE6A0086814FC076900FE680
-      C1A08E3FA357D9E7CECFF0734ECF9858191A7FF9929367A028D376DFBE7D2229
-      29498486862AA11C9B9F9F4FCF68E31DF8B2287F366FDEDC486464A4282B2BDB
-      EA798E6EF0EDEFDCB9B3AD8F387BF6ACE077406F1A7C075CFA6EA5757CECBBA4
-      7B677083FA2E1B7CD9147B762E6A9B2E5EBC58C8CFF92F1A7C9D0A0B0B2B6256
-      E7A276382F2F4FF0FB8256609B4D4CF7E671E7741C57146CE5F78D147B2BC038
-      07F524808F45456D1E2BB712E48120073E1A9F3206ECE6F36385C615FC08DE70
-      E2F24F377CFB11C571A57B7747EF9113685CA103574717EF044738F07DE9C2B7
-      83D70932E5679363F7EEDD82DA3FCB7F94AF267BE32B2A2A12EDDBB7179B376F
-      967D079DF8D6AF5F2F4E9F3E5DF1BBA4A4A422E7656565C9DBB1CDCF9EB253A6
-      4C11313131A2B8B8580C1830A0625EB1DF8E7D68AF45464646C5FD1BE56C9AAF
-      8CCFE3CCC9C911A5A5A5BA6B44BE7F0C3E57F142B102CA74E311DCC63368E9A0
-      FDE8C363084DF56D288FE3FDC649FB61B33D6A435A83E53CCE30C8617B94A618
-      5322F87A521B97E16F3FAA7CEEAFC1634D12789C441BAA6396E5610EE3A5067F
-      9B57A688970B34DE9EBF37A0BA9B60E36A0C7E01E5E013D013D4E76F2CE87B86
-      CFD9BB5FFE364CE10AE258A57BA3AE9A325DA5FA68F28DB7FB7ECCF28D0451AA
-      1B7BC5758CC63E2FF6D1B56CC6DB8CF2912F867D0FBB5887CEF777946F7CE47B
-      9CD7E9ED8BE345D981BCCE83BEB81E289BA31A6BEB265E2C6523B9EC189BF35B
-      608A672ED70394F018F5EA0EEB1B6D7B217D53C3F5AD21EFD3E796B1F98D5CE4
-      95B734F9E03C9F97402FF3556BCE5743B9BDF5B74155B7FD7912ACE3B8A0FC7E
-      42112FB5F9FBD84CBB7B10EE2F0907BE0BFC3BD7E4E4EFA7DDF884E91B6FC9D7
-      84EB94D57584EBF865CB7F270DFD53AB8FEAE9DDD272DAB77715FBECC4E786FF
-      DBB7583E56A9DCEDE07D173E6A4BB618F6E7307FAB5DEED0D7C0F0FD90879ADC
-      1FAACABEAFBDF015187C4FF2B308A7BE9FE81EED66CEA1FF02DE9495C34C7A0B
-      00000018000000180000005D0A00000000000078DAED9C0F7015C51DC7254111
-      518B88D8B460454D9B3F3590600D4608944042212521402920494AA149416D20
-      81240C88C3281DA8548B5A8AB6D52161287F92190245CA9F428861F8D7326DC1
-      12112B01FF900022C4904460FBFDBDFE1E73F3666F6FEFDD3DCA90BB99CFE4BD
-      CBEE67EFF6F676F7F6DDEE2DB7785B7BDFDADADA7A8021E059900F06807B1C3A
-      3B800CF01E1026D482A420DC91A09A1DFF044F8364702F880043C16C7082C354
-      80FB34DD3D395E039802C215613B8362F0253800EEB270770347C039106BD8FF
-      10580F4E837AF07BD0DDF0FF616DFFDBB6814E0AFFEBA0C598A7F8FC08B820C9
-      7B3AC7AE8670E3797F8189BB2B6802BF0DD8BF41717D5F0A08BB1D1C97E529F6
-      15729CE88032745EE13F10E0F821EF1F25F153D95E12B02FCCC27F50127E0D18
-      61A3AC5629FC4B5DB877E9FA5E94B8EB9DDEC386341E0695A0119C046FE9DE4F
-      76EB0CAF36F6366F0BEADE7919CC0CA1FF55AE57E685C8DF81DBBDEB9E063EDF
-      0F06727B3F09F451B5B376D3C0DFE9E06A40FD7C196C05F141A4F175439B3EDF
-      D087A0FE4F6F6E07E7818F39DD72DDB680FB8287B9ADDF684C4312F60E4E87FA
-      3F7BE8BB46FFE75FE00BF024E7D51F02CE6324584E610DF1D2B8FFF30EB855E1
-      5F0CBE02DF0B681F2F07A441D7E343F03543B8091CE65913F75DDC575869D1FF
-      31A6F12B49FFE703EA4748FC3339FE7735FA3FFE3492031C2315FD1FEAD7BF20
-      D9FFB949DF64BE49D9A6B234DC4659AD54F47FE6B9704F3FC8FDE94077B38B69
-      D033C14A2E33FFE6BAB0DBFFABBEF2D2B04CA3208469FC1214793D8E76D9C79A
-      C4CFEFC6B69C9E677F21ABD36DBAB314F524F13B276920EE4E0B3F9D47776EFF
-      1780E703788EC7083A9BF84F29DC546FF632F42D54C75147FD1B89FF6393F054
-      1F7F8B9E47B96F2134586933EF22789C4968522F71CC92E42951C66336C2065F
-      D8C89F60F0FC9EDF6DFF4917FD9F0751BFD961BFC43FDA45FF5326F5CC44AE1F
-      AF04E1BCC275E114AFA5F6B69BBC1F368EC74E3E05AFD1D8878BEE01927B6B9F
-      EA77208EF7B849FB1E489D599FC4102659E25FEA62FDF36707F9B344E2A3FE4B
-      A44BF9DF25A01F4763378521788E7B02FC8CC6FEDAF17D44BFE9E58254D0D165
-      F78F41ABE13AD2F341844BEE7BF9B7A8C072B8D681F37517EFAF0A893FCE707F
-      2F3389775AB30E49D5389FF512FF0417AF6F0F1E0BF90F7817E479BFDF799BB7
-      857E2B2D2DFD01580FEAC022D0D345F7E3E02A10066A409845BC7850ACC19100
-      B79F370C61FA4BFCBF3189170CEF48FC1DC06D1AFC5AE26B01318630610EF2FF
-      4E70D8E0BE0266BB5C7EE85C93401EB8BF1DDF47DD390FD2E9BAB9EC9E0CBE32
-      5CC7D3A097035F38E8C2F402E724E57083218C8A70897F858BF7D74689FFDB60
-      16F38249BC5386302A0668E4D74A893FC3C5EBDB151481839CEFE3BC96C9DB6E
-      A44DFC2DB703480205A01C1C051F81F5A0040C051D837447802A202CD80BA26C
-      BA2780731A6E3F2DA0108469B8336D7803996DE1EE0E4E9BC5BF50335934EE98
-      64751E310AFF1A59BCAB0773C5C2670689BE71312236365ACCCC7D5234EFC936
-      4B63BFEC9A635FA4D971ED2BCF12515151E2E5E21451B668B888898E126B5F1A
-      A13A8F1126D7541A7EC58261E247E98FF9CE83BE8F1EDE4F4C1997A8F23F27F1
-      2F350B7FF9408EF8B276B2EFF3918A71BE73A1FC52F8AB24FE6AABF241D7376D
-      705F31E8893871E6AFCAEBFC89C4BFC3CAFFC68254DFB1EFFE63A65539AD97F8
-      175BF95F9D3B544C1BDFFFDA75505029F18FB3F25F81B7656FB6CE7D3657E27F
-      D02ADEBB6F8F1655CBD275FCC34CEEAF3755F13252134442DF585F795284DB69
-      560F61FFDDE08459DC631BC68BBFAF1EA3725F04BD2DEAA01407F55BBE66FD9C
-      0A4EDAF09E07D9D41ED96803BA82B734DC5B404F076DE477C053E01550030E80
-      E5602A88B773CCDE76C33DDFD1736E322804ABC131701CACA1676A3038D86775
-      C47B006CD37816AA060FD93CE69F820B369EB79AC0CF29AE863FDBC1735D9E85
-      BB27386F16BFB0B0D087C579F456E4CB1659BC92921291969686BE4FAC888989
-      11A9A9A9A2B8B8D82C8D9DB26B8E7D8F991D576E6EAEAFDDCDCACA1263C78EF5
-      7DCECECE569DC700893FDF2CFCA851A3447272F2B5EFFDFAF51343860C51F90B
-      24FE37CDC2535ECC9933C7F779DAB469BEE3A73415FE7289FF9055F998356B96
-      888F8FF71D7F5151912AEC5189FF80959F8E998E3D2F2FCFAA9C1E96F8975BF9
-      D3D3D3454A4A8ACE7DF0B6C43FD52A1E955345B934F2B4C41F67158FCA694E4E
-      8E8E3FD1E41E5BAB8A97909020FAF4E963E5AE32AB87B0FF3ED0601677FAF4E9
-      223F3F5FE5A631AF088B3A68B483FA6DA2661D9D013EB3E16DB43B3EC463937F
-      D270573A19C3E571EB1CB00CEC017BC16BE027E0519D36C5DBDACF46738BC166
-      F011FFA6AF82DE475B6163EE7522BDEFD1D0D020D6AD5B2756AD5AA564EBD6AD
-      E2D2A54BFE77806FD7F0579C3D7BD6D73E513BA2C38C1933FCBF9D4FD4F0BF57
-      5555A5ED26A8BFD2D4D444FE853C5FFE1E85BFAEB2B2D2969FB878F122F917F1
-      5CADB210FB1B42EC1766EF1978FE9BDEBFBFB6B6D6963B292949B4B4B4085EA7
-      613ECDDD5094CF25ADADADBE76352E2ECED23D70E040515151E1AF1F12F95DFE
-      F7157E9A43B8DFE6BB4434D7E4459E6FD6A0BA7F398D8E3CFFB384F35305CD5B
-      49E0791F7FE1799C919A757506BFFFB34801FD7F1D38C3F34927D86867BAF03B
-      59C7792E9F0C72FE83E77D3DECB5CEDE761DFA3F63782E90EE3BFA1FF0DCDE30
-      0D779A83770E676AF8373AF07FA8E13FEAF0BD49AABB7AA9FA0FBAAEE6E6667F
-      BD6FE456EE2BDEE9C4BF6BD72E5FFBB069D32699FF8A6CFEB5AE9FDCF48C4D63
-      4DD45735F1CFD7F14F9D3A559497975FFB5E5D5DED736766668A3367CEC8D2F7
-      FB9FD7F1171414F8DAC1B2B23251535373CDDDD8D868767EB6FC740D694C203A
-      3ADA97DF191919829E0D14F967CBEF4F83C665685CCCC21D94DF26567E37EE2F
-      95DF51FD40F795AA2E725ABFF11A65F47990A28EC8B2593F1FA3F9E2B4DE07AD
-      F7C4F3D4EE70B1BDA03E5F0ABB85EEDA09F41C08F6DAC89F5376D665E0346EE7
-      6B324FF1AE39CD5B1DEC669E78DB4DD51F8A0773799D8F7A5E4F641FAF1196C4
-      6168CDB4ED36BD9D78AE91D57DBCD330CFA493A63BD2300FBD95D74EA27AE301
-      70379FD37C9E5F664CAB93863BDCF08C77083C6A12AE5C722E3AFE520E7B5435
-      E6C5CFA246F7760DF737792E17CDB94A0C4159F1AF31B826446571896E5FD824
-      FE0ED51C22FE3FF90706E1EEC0CFF26D21F277E3B89F85227F780D4AE5DC4127
-      D7D730F6B350B37CF6B7E1FE86618DA0EFDBB8BF3A6BFA37719C72B7EA07C371
-      6FE6B09F1AD7C4B248E31149FD3686D7C9A0795B23B86DF7E7C927B239A71AF5
-      F3628DFA79B5EE712BDA97525EC3F504CF91DBCCE3E543BC16D8DBAE635FA70B
-      9745FAED6B37EFDB6D52EE13783DB6D5BA6B1C1BD6C0159A7EE39A14C51AFE3A
-      077E62B685FF92433F11A5E93F64D2CF113C8E4D7DB96CC9FF5ED1F413B1BCC6
-      F3E0002239FC363BE364123FCD9D2D92F833795DC1AB12FF491BFE60B891FCD4
-      76D5805D26D4F27A8FC1F8A9CDEEA1D927AE09C29FC86B136E511CFF465E7B74
-      6410FE706EC3ADF2FB196EF3DB83BFCE057FAD66FD1CAC3FC7A27D29E1F6C5AE
-      FF7D1EC7BACD6BA9F5B7FF02B434A2FF
+      4C69020000004C7A0D0000001400000014000000FB0800000000000078DAED9C
+      0B50554518C743B0EC356596955656536A650F6388AB80A961896590520989A4
+      2868A164502839DAF4D2347B58565A964AA541E534D434F61AB2B4222C67A287
+      4FEC619A908F280552B6FFC77CD739B3EDEED9733995E8BD33BF190E67CFEF9E
+      C7B7DFEE3967F71E7144F8D31A3E8D8D8D1DC0FDE05DB00DFC0ADE07D341478F
+      AE5C763C06AE06A79203248299ECCE071116AEA9A00274339439177C0266B8B8
+      8681F5E0645E3E013C0B7E015BC173A03DAF3B117C0B46695C6DC00FE052C7F2
+      0A20245681482ED395BFA7ADC297043E762CF757B8825CE32847D76BA8C27737
+      B8DEB17C9BC137C1518EAED7548BEB62B57F1E62C6F5FC85E0A4EBFB0CD8C2E7
+      7D3E5DD7706D0F7FFE85FC49B175958FBE38CE93ADC6093A8332B09929E3FC7D
+      924727B51B7BD8D91D9C06CE04D78227B86DC9B56C3F6E071B39F76F531D3BE7
+      65CA330FB8B8D2C0F7749CBC3CD0B19F31D4568076BCAE3DF80E8C34F8687D1C
+      FF1D099673CE0B3A4782A58EF2DD0CED07B5AD958EE580944783CE0C7086A3DC
+      724DFB912FB51F6315B939E86C27EDC7148BEBD257D376EC09253E2916C07B0A
+      5F85EEBA5B388F018F8075E01B300B1C057A87EA347C576B722E0C67FC83BE3D
+      A23EF793E077A92EC487E87B44535FFF04D121F8B6697C1F725FF013C5BA9DE0
+      51557B82FFFDA128FF01E7858F0D7D55E25ECB7DEEA1E9A3CA6CB0DC3F5BB687
+      7D07BD6F6B0B7CAA7899D502DFBD0A1FDD7FCF01BB3C787680D95EFB6FE1CF61
+      D1BEB40377801230DAA62FEEE29B23C55E814BF9A52DA81F4F2B7CF1546F0C54
+      4B8E358E75A1B47FD48FAA61D78FE07C1FAE09DD435CD0D26B7190C61B1DDB85
+      D437F0C115EDE87FD0B3BF1E21389CF1B24E8A8D6F5D6229FADF8E67C93D5D2A
+      3FAD85E7AF2DDF5797F07D61643823863F5E3E93274F3E128C062F80341F7CB3
+      807030DEA5FC62B0D780906872AC7B5CE1EB0B1E34F083E4FBDAB1EE8A108E37
+      1EFCC6AE9F41571FCE6114E801220EC178A363BB0C44FAE08A759CFB1AF286E0
+      B80A3CCC6C9262639D639D8A5E0ADF8BA08E69927CFB1DEB54CC76D9D7A992EF
+      AE169EBF48700B984F75FF508CB7C3FD2356DF7A3698044A4135D8044A402138
+      CB832702E4803A2034FC0EB2A8AC85ABC4E09179D9E4C4BA31F236FBBEC8141F
+      3E972C3E5A9022F6572A9D991A5717F918C995724DB4189BD64B640F0B88D441
+      D12AE72ED059E1CB97BF9BF629272D706079D48DB162E5C21B54FB385EE15B22
+      97DBFA6EBAD8B23CEDC0F2E89B02A2F295A12ADF42856F9DE9DCCF9B36400C1B
+      1C239AD4E7B04AE1FB4EE7FA73658648085C2C76940FD77DDF1A85AF58E72B7B
+      F23A71F7E87853DC2C50F8F274E5B7BE972EB67F708BC9374EE13B1DEC50955F
+      FFE6CD62D35B37EB5C35A0A32606D355DB2C9999245E9B3D48E74B75A96FF33D
+      D4B7B99639E126506BF06C07433CE6AB8E201BCC035F824AF02CD7F153C219FD
+      3FEFAF9D078AC01BDC775E0F968202D0C983A70DC8037B147DFA203BB83F1261
+      E17ADBE09199E7E29B286F3369D22491999929B2B2B29AFF5638876A5C5DE5FB
+      96C2C24211131323FAF5EB27FAF4E923E2E3E3553EEABF9EA2F04D93CB8E1831
+      422426261E58EEDDBBB7C8C9C95139472A7C6572B9091326888913271E588E8B
+      8B13E3C68D53F9E62A7CBF98CE7D727272F3316BD67FAEF0FDA473E5E7E78B9E
+      3D7B8A8282029D6FA5C2B74CE74B4B4B13494949A6B87942E1BB47573E2F2FAF
+      791F0DBE0C85AF0BF7FDFF519EAE013935AE2DE0444D0C66ABB6494D4D151919
+      193ADF4043FD8800AF78A86F332DF2013933C02E83878E7190C77CD5098C05CF
+      8335A0023C0D4681F6E18CDE6A9F3B5FC9CF398363626568FCE50D36CF4051A6
+      D7860D1B446E6EAE0804024A28C7565454D033DA2C0B5F31E5CFEEDDBB1B4949
+      4911F5F5F5AB83CFD10DBE8DFDFBF777F511BB77EF16FC0EE81E836F9347DFD1
+      B48DCFBE46DD3B8343D4B7CFE02BA1D8737351DBD4D0D050C5CFF91B0CBE7E55
+      5555CD31AB73513B5C5E5E2EF87D414FF0A54B4C0FE171E7741CFB15ACE6F78D
+      147B6F82C916F524828F45C5B13C56EE2D500EA22C7C343EE54EB096CF8F131A
+      57F029B8CBC615FE1CF2ED472AC795EEDD1DBD47CEA6718516AEBE1EDE09DE66
+      E17BD583EF6BDE26CA949F4D8EB56BD70A6AFF1CFFA37C757F28BEEAEA6A9190
+      902056AD5A25FB36DBF856AC582176EEDCD9FC776D6D6D73CE2B2E2E96BFC735
+      3F07CBCE983143A4A7A78B9A9A1A317CF8F0E665C57E5BFBD05E8BA2A2A2E6FB
+      37CAD9B4DC125FD0595A5A2AEAEAEA74D7887C7F197C9EE2856205D4EBC62378
+      8D67709945FB3194C7109AEADB181EC7FB864DFBE1F27DD4865C0E96F138C328
+      CBF6A85031A644F0F5A436AE28DC7EB4FADCDF96C79A64F3388958AA638EF571
+      96F1D296E7E6D52BE2652F8DB7E7F9065477B35D5CE781AF4013781E0C06A7F3
+      1C0B9ACFB088BD1BE5B9610A5714C72ADD1B0DD0941920D547936F8ADBFC31C7
+      1C09A24E37F68AEB188D7D5EECD3B5ECC6DF99EA932F9D7DE778D886CEF73B94
+      6F7CF25DC4DB0CF1E3785176046F73961FD703654B55636DBDC48BA36C0A97BD
+      D3E5FC569AE299CB0D02B53C46BD8D657DA3EF5E40736AB8BE75E67D5AE4189B
+      DFC5435EB94F930FF6F079890C315F5DCEF96A0CB7B7E136A8F5B63F97808F38
+      2E28BF6F57C4CBB13C3F76A6DB3D08F79784856F2FFF5D6672F2FC692F3E619A
+      E32DF9CEE73AE5746DE13ABECFF1BFDF0CFD53A78FEA6907693DEDDB438A7DB6
+      F179E1BFF62D968F552A771C78D8838FDA92CF0DFBF333CFD56EB2F47532CC1F
+      0A7214F7875AB3EFF5107C9506DF25FC2CC2D6F719DDA3853369F8A388A597C0
+      153EFA06F2FB94AB7D7406785ED6301F9D17703D1FEFA3F34C9E33F0808FCE0E
+      5C7FE7A9FA82F85F323F83F0C27DDCBF5CA8E9FB4FF7C8A3DCB6BFE6C3F11ECF
+      F33D97A8E6C77B7475E4FBDA393ECC6B3A87E7874CF1E1182F063FB9DDE35BBA
+      12B80D18E253BC2D0BB71587653B40F7B7737D74FD68F3EEBB35B8F899DC007E
+      C616FCCD90B3BDBAF87D633EE7DE60FF8CFACA4FF17395C11E5DB18EBEA74CB1
+      A527829F396DE6B6E4468333D6C57586F48EACD1C599EFE2BB947F9740583A8B
+      2C8EB78F0767A2E539B471BEEF31E64CCEEB9DBFFDD2426783D7DF8573712EF2
+      A19E069DBBE9F72F7CCA49BDC075FF577EFD1B83343B4F4C7A0D000000180000
+      0018000000A10B00000000000078DAED9D0B7016C51DC0254190871411B1B4A0
+      A2A4E6510309D6602081124878A42404280292A4189A0808810492501065282D
+      542AA296A26D754818CA23992120501E9210C300A1A50FB044C0CA4391041009
+      428884EDFFFFF5FF313BDFECEDEDDEDD47197237F31BBE1CBBBFBDDBDBDBDDDB
+      EF76BF7BEE71B7A6BE35343474020600D3802CA02FF0804D67332009F8186006
+      5402D116DC41403939FE094C0562810781CEC04060167092C214030F29BABB50
+      BC1A6022102809DB0AC803BE01AA80FB4DDC1D8023C045208CDBFF38B0013807
+      9C02FE0074E4FE7F50C3FFB61D404B89FF6DA09ECF53F8DC1DB82CC87B3CC7F6
+      5CB831B43FDBC0DD1EB802FCCE67FF46C9F57DCD27EC4EE084284F615F0EC509
+      F129439724FE2A1FC74F68FF70811FCBF6129F7D0126FE8382F06B81A11A65B5
+      54E25FEAC0BD8BD7B74EE03E65F71EE6D2780228016A81D3C07BAAF7936E9DE1
+      D6C6EEE66E96EE9DD781197EF4BF49F5CA5C3FF99B51BB77DBD380CF0F0331D4
+      DE8F077AC8DA59DD34E0DFC9C04D9FFAF906B01D88B090C677B9367D1ED787C0
+      FE4F376A07E7029F53BA45AA6D01F5050F535BBF894F4310B635A583FD9FBDF8
+      B742FFE75FC0D7401FCAAB3FFA9CC730600586E5E22550FF672B70AFC4BF18F8
+      16F8914FFB78C3270DBC1E9F02DFE1C28DA530D30CDCF7535F619549FF874FE3
+      3782FECF71EC4708FC3328FE0F15FA3FDE34627D1CC324FD1FECD72F14ECFFCA
+      A06F32CFA06C63591AAC51564B24FD9FB90EDCD38F517FDAD77DD5C134F09960
+      1595997F535DD8E1FF555FB96998A691EDC7347E05E4BA3D8E26D9C71A4FCFEF
+      7C5B8ECFB3D34575BAA63B45524F22BFB79306C4DD6DE2C7F3E848EDFF7CE015
+      1F5EA631825606FE331237D69B5DB9BE85EC38AAB17F23F07F6E101EEBE347F1
+      7994FA164C81559A79D799C6999822A7048E99823C450A69CC8669F0B546FE58
+      C1F5BB7EA7FDA71DF47F65A17ED3E180C03FC241FFF306F5CC38AA1F1B2D381B
+      A92E9CE8B6D4EE7697F7C346D3D8C959E02D1CFB70D0DD57706FED977D0F44F1
+      9E3168DF7DA936EA9370616205FEA50ED63F1FD8C89F25021FF65F821CCAFF36
+      3EFD381CBBC9F1C373DCB3C0CF71ECAF09DF47F89D5E3A100F3477D8FD1C709D
+      BB8EF87CD0D921F783F45D946F395C67C3F9B683F757B1C01FCEDDDFCB0DE29D
+      53AC43E215CE6783C03FD6C1EBDB89C642FE037C0464BADFDFB99BBBF97F2B28
+      2818026C00AA8145401707DDCF003701C651010498C48B00F21438E2E3F6F20E
+      17A6B7C0FF86413C2B6C15F89B012D14F8ADC0570F847261026CE47F5BE030E7
+      6E0466395C7EF05CA3814CE0E1267C1F75A43C48C4EBE6B07B02F02D771DCF01
+      5D6DF80281364457E0A2A01C6EE4C2C80814F8573A787F6D12F87F00CC24161A
+      C43BC38591D15721BF5609FC490E5EDFF6402E7090F27DB4DB32B9DB9DB4B1BF
+      A63703A2816CA008380A7C066C00F2818140738BEECE4029C04CD807046BBAC7
+      021715DC5EEA811C2040C19DACE1F5659689BB2370CE28FEE58A09AC76D778B3
+      F30895F8D78AE2DD3C98CE16BCD48FF50C0F656161216C467A1F76756FAA511A
+      0744D71CF605191DD7FEA214161C1CCC5ECF8B63858B06B3D09060B6EEB5A1B2
+      F3186A704D85E157CE1FC47E9AF8B4E73CF0EF11837BB189A3A364FE9705FEA5
+      46E16F54A5B16F2A27783E1F291EED3917CC2F89BF54E02F372B1F787D13FAF7
+      64FD9E0D67E73F945EE72F04FE5D66FE77E6C77B8E7DCF9F92CDCAE929817FB1
+      99FFCD3903D9A431BD6F5D07092502FF68337F2378EBF7A5AADC677304FEC7CC
+      E27DF4FE0856BA3C51C53FC8E0FE7A57162F293E9245F60CF3942749B8DD46F5
+      10EC6F079C348A7B6CE318F6B7352365EE3AA09B491D1467A37ECB52AC9FE381
+      D31ADE4B402AB6471A6D407BE03D05F736A08B8D36F249E0796019500154012B
+      800C2042E798DDED8E7BBEC3E7DC58200758031C034E006BF1991AE86FF5591D
+      E23D02EC5078162A071ED73CE61780CB1ACF5B57801731AE823FD5C6735DA689
+      BB0B70C9287E4E4E8E0793F3E826C9976DA278F9F9F92C212101FA3E612C3434
+      94C5C7C7B3BCBC3CA334768BAE39EC7BDAE8B8D2D3D33DED6E4A4A0A1B356A94
+      E7736A6AAAEC3CFA0AFC5946E1870F1FCE6263636FFDDDAB572F3660C000993F
+      5BE07FD7283CE6C5ECD9B33D9F274D9AE4397E4C53E22F12F80F99958F993367
+      B2888808CFF1E7E6E6CAC21E15F8ABCCFC78CC78EC99999966E5F4B0C0BFC2CC
+      9F9898C8E2E2E254EE83F705FE0CB378584E25E59267AAC01F6E160FCB695A5A
+      9A8A3FCAE01E5B278B171919C97AF4E861E62E35AA8760FF43408D51DCC99327
+      B3ACAC2C991BC7BC3A9BD441236CD46FE314EBE824E04B0D6FADEEF8108D4DFE
+      59C15D62670C97C6ADD380E5C05E601FF016F033E0299536C5DD9ACE86738B81
+      2DC067F49DBE0C7C1F6DA5C6DCEB287CDFA3A6A686AD5FBF9EAD5EBD5ACAF6ED
+      DBD9B56BD7BCEF00DFA7E02FBE70E182A77DC27644852953A678BF3B1FA7E0FF
+      B8B4B454D98D607FE5CA952BE85F40F3E51F90F8AB4B4A4AB4FC485D5D1DFA17
+      D15CAD423FFB6BFCEC6746EF19B8FEBBDE7FA0B2B252CB1D1D1DCDEAEBEB19AD
+      D3300FE76E48CAE792EBD7AF7BDAD5F0F07053774C4C0C2B2E2EF6D60F51F42E
+      FF27123FCE213CA0F92E11CE35F925CD37AB91DDBF9446739AFF994FF92903E7
+      AD44D2BC8FBFD03CCE20C5BA3A89DEFF592401FF7F3D709EE6938ED56867DAD0
+      3B5927682E9F0874FE83E67D3DE1B6CEEE761BFA3F23692E90EA3BFAC7696E6F
+      80823BC1C63B873314FC9B6CF83F55F01FB5F9DE24D65D5D65FD0755D7D5AB57
+      BDF53ECFBDD4576C6BC75F5656E6691F366FDE2CF2378AE65FABFAD18DCFD838
+      D6847D5503FF3C157F4646062B2A2ABAF5777979B9C79D9C9CCCCE9F3F2F4ADF
+      EB7F45C59F9D9DED69070B0B0B594545C52D776D6DADD1F969F9F11AE2984048
+      488827BF939292183E1B48F24FCBEF4D03C765705CCCC46DC9AF8999DF89FB4B
+      E6B7553FE07D25AB8BECD66FB446197EEE27A9235234EBE763385F1CD7FBC0F5
+      9E689E5A6B07DB0BECF3C5919BA9AE9D80CF81C03E8DFC39A3B32E03A5711F5D
+      93B99277CD71DE6A7F27F3C4DDEEAAFE50043087D6F93845EB89ECA735C2A229
+      0CAE99B653D3DB92E61A99DDC7BBB979262D15DD41DC3CF4EBB47612D61B8F00
+      EDE89CE6D1FC323EAD960AEE40EE19EF10F09441B822C1B9A8F80B28EC51D998
+      173D8BF2EE9D0AEEEFD35C2E9C7315E587B2E25D6370AD9FCAE212D5BEB041FC
+      5DB23944F4FFE88FB1E06E46CFF20D7EF277A0B85FFA237F680D4AE9DC413BD7
+      971BFB59A0583E7B6BB8BFC7AD11F4638DFBAB95A27F33C52972AA7EE08E7B0B
+      853DCBAF896592467741FD3692D6C9C0795B43A96DF7E6C917A239A70AF5F362
+      85FA798DEA714BDA97025AC3F524CD91DB42E3E503DC16D8DD6E635FA70D9545
+      FCEE6B0FEDDB6350EE23693DB635AA6B1C736BE032453FBF26459E82BFDA861F
+      9965E2BF66D38F042BFA0F19F473188D63635F2E55F07FCB14FD4818ADF1DCDF
+      87200ABF43679C4CE0C7B9B3B9027F32AD2B7853E03FADE1B7C29DE4C7B6AB02
+      2833A092D67BB4E2C736BB93629FB8C2823F8AD626DC2639FE4DB4F6E8300BFE
+      406AC3CDF2FB256AF39B82BFDA017FA562FD6CD59F66D2BEE453FBA2EBFF84C6
+      B15AB82DB5BBDDC57DB05FE03DE247FFAB745FBDE1AFF52CE87B71466B1F07F8
+      319FBCCF5FCDFD94C674EAA36CB4BA5EB6421A2FD03326F6B5DAF8298DE7A81F
+      81EB98B49384C367E80F2CE25D5FAF4CE2CFA0317F2BD4887E13C3A1FC1942EF
+      5BFC5DA5CFA4E91E49FDBC7D4EFD5E05E74EA5B1A232A3EF7C6DB85FA4B2BF55
+      759C48C33D8BFBDD9A160EBB73C95D68B6A69945FFAFF1775FDCB580DCCD8F6D
+      745BD9EF00D8748FA13A63A81FDD1F3ADD96356537FD1E06B651FD7C7ED3C196
+      1BE23C49630CBEEF6316D1F72DEB6DB8BB73BF5120E22C8D0DB4D6F4E2B8FC10
+      FA3CCDE4D971ABA6BB17B7366381621A7D14BCF8DECB42EE773A98461AD315FB
+      1846F1CDD258A2E06F653016A89246AA62DE5B49A341676D540B69BC6AA1DCAB
+      A631CA6A1DAF90C65407EA2DA3346E5AF9FE56238D650ED7BF7C1AC7FDF19E0F
+      A581FDC29E775A5FE2BFC1B488D3
     }
   end
   object OpenDlg: TOpenDialog
@@ -1215,31 +3545,6 @@ object dlgImport: TdlgImport
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 176
     Top = 224
-  end
-  object dsSdf: TSdfDataSet
-    FileMustExist = True
-    ReadOnly = True
-    FieldDefs = <>
-    AllowMultiLine = False
-    Delimiter = ';'
-    FirstLineAsSchema = True
-    StripTrailingDelimiters = False
-    Left = 176
-    Top = 304
-  end
-  object dsWorksheet: TsWorksheetDataset
-    FileFormat = sfOOXML
-    FieldDefs = <>
-    Left = 247
-    Top = 304
-  end
-  object dsDbf: TDbf
-    IndexDefs = <>
-    ReadOnly = True
-    TableLevel = 4
-    FilterOptions = []
-    Left = 400
-    Top = 304
   end
   object pmFields: TPopupMenu
     Images = iButtons
@@ -1427,11 +3732,5 @@ object dlgImport: TdlgImport
     Options = [ofOverwritePrompt, ofEnableSizing, ofViewDetail]
     Left = 247
     Top = 224
-  end
-  object dsMem: TBufDataset
-    PacketRecords = -1
-    FieldDefs = <>
-    Left = 329
-    Top = 304
   end
 end

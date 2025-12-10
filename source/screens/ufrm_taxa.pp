@@ -217,6 +217,7 @@ begin
   sbGoogleSearch.Images := DMM.iWebDark;
   sbGoogleImages.Images := DMM.iWebDark;
   sbGoogleScholar.Images := DMM.iWebDark;
+  sbBirdsOfTheWorld.Images := DMM.iWebDark;
   sbEbird.Images := DMM.iWebDark;
   sbWikiaves.Images := DMM.iWebDark;
   sbIUCNRedList.Images := DMM.iWebDark;

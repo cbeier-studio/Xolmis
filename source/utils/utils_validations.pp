@@ -184,14 +184,14 @@ begin
   end;
   if Length(aCPF) < 11 then
   begin
-    LogError('CPF menor que 11 algarismos');
+    LogError('CPF is less than 11 digits');
     MsgDlg('', rsCPFTooShort, mtError);
     Result := False;
     Exit;
   end;
   if ExecRegExpr('^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}\-[0-9]{2}$', aCPF) then
   begin
-    LogError('CNPJ foi informado no campo de CPF');
+    LogError('CNPJ informed in CPF field');
     MsgDlg('', rsCNPJInCPF, mtError);
     Result := False;
     Exit;
@@ -252,14 +252,14 @@ begin
   end;
   if ExecRegExpr('^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$', aCNPJ) then
   begin
-    LogError('CPF foi informado no campo de CNPJ');
+    LogError('CPF informed in CNPJ field');
     MsgDlg('', rsCPFInCNPJ, mtError);
     Result := False;
     Exit;
   end;
   if Length(aCNPJ) < 14 then
   begin
-    LogError('CNPJ menor que 14 algarismos');
+    LogError('CNPJ is less than 14 digits');
     MsgDlg('', rsCNPJTooShort, mtError);
     Result := False;
     Exit;
@@ -317,6 +317,7 @@ begin
   Check := IntToStr(Digito1) + IntToStr(Digito2);
   if Check <> Copy(aCNPJ, SUCC(Length(aCNPJ) - 2), 2) then
   begin
+    LogError('CNPJ verification digits did not match');
     Result := False;
   end
   else

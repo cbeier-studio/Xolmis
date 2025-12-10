@@ -3221,14 +3221,17 @@ msgid "Semicolon"
 msgstr "Ponto e vírgula"
 
 #: tcfgdelimiters.lbldecimalseparator.caption
+msgctxt "tcfgdelimiters.lbldecimalseparator.caption"
 msgid "Decimal separator"
 msgstr "Separador decimal"
 
 #: tcfgdelimiters.lbldelimiter.caption
+msgctxt "tcfgdelimiters.lbldelimiter.caption"
 msgid "Delimiter"
 msgstr "Delimitador"
 
 #: tcfgdelimiters.lblhaveheader.caption
+msgctxt "tcfgdelimiters.lblhaveheader.caption"
 msgid "First row as header"
 msgstr "Primeira linha com cabeçalho"
 
@@ -4458,18 +4461,67 @@ msgctxt "tdlgimport.btnhelp.caption"
 msgid "&Help"
 msgstr "A&juda"
 
-#: tdlgimport.btnoptions.caption
-msgctxt "tdlgimport.btnoptions.caption"
-msgid "File options"
-msgstr "Opções do arquivo"
-
 #: tdlgimport.caption
 msgid "Import wizard"
 msgstr "Assistente de importação"
 
-#: tdlgimport.cbtarget.texthint
+#: tdlgimport.cbdecimalseparator.text
+msgctxt "tdlgimport.cbdecimalseparator.text"
+msgid "Colon"
+msgstr "Vírgula"
+
+#: tdlgimport.cbdelimiter.text
+msgctxt "tdlgimport.cbdelimiter.text"
+msgid "Semicolon"
+msgstr "Ponto e vírgula"
+
+#: tdlgimport.cbencoding.text
+msgid "System encoding"
+msgstr "Codificação do sistema"
+
+#: tdlgimport.cberrorhandling.text
+msgid "Abort on first error"
+msgstr "Parar no primeiro erro"
+
+#: tdlgimport.cbimportstrategy.text
+msgid "Append"
+msgstr "Inserir"
+
+#: tdlgimport.cblookupfield.texthint
+msgctxt "tdlgimport.cblookupfield.texthint"
 msgid "Select a table..."
 msgstr "Selecione uma tabela..."
+
+#: tdlgimport.cblookuptable.texthint
+msgctxt "tdlgimport.cblookuptable.texthint"
+msgid "Select a table..."
+msgstr "Selecione uma tabela..."
+
+#: tdlgimport.cbnullhandling.text
+msgctxt "tdlgimport.cbnullhandling.text"
+msgid "Ignore"
+msgstr "Ignorar"
+
+#: tdlgimport.cbtarget.texthint
+msgctxt "tdlgimport.cbtarget.texthint"
+msgid "Select a table..."
+msgstr "Selecione uma tabela..."
+
+#: tdlgimport.cbtextcase.text
+msgid "Original case"
+msgstr "Caixa original"
+
+#: tdlgimport.edefaultvalue.texthint
+msgid "Inform default value"
+msgstr "Informe o valor padrão"
+
+#: tdlgimport.ereplacecharfrom.texthint
+msgid "From"
+msgstr "De"
+
+#: tdlgimport.ereplacecharto.texthint
+msgid "To"
+msgstr "Para"
 
 #: tdlgimport.esourcefile.buttonhint
 msgctxt "tdlgimport.esourcefile.buttonhint"
@@ -4491,26 +4543,112 @@ msgctxt "tdlgimport.gridfields.columns[1].title.caption"
 msgid "Target field"
 msgstr "Campo destino"
 
-#: tdlgimport.gridfields.columns[2].title.caption
-msgctxt "tdlgimport.gridfields.columns[2].title.caption"
-msgid "Search table"
-msgstr "Tabela de busca"
-
-#: tdlgimport.gridfields.columns[3].title.caption
-msgid "Default value"
-msgstr "Valor padrão"
+#: tdlgimport.lblbooleanvalue.caption
+msgid "Boolean value"
+msgstr "Valor lógico"
 
 #: tdlgimport.lblconfirminstruction.caption
 msgid "Check if the data sampled is correct."
 msgstr "Verifique se os dados amostrados estão corretos."
 
+#: tdlgimport.lblconvertcoordinates.caption
+msgid "Convert coordinates"
+msgstr "Converter coordenadas"
+
+#: tdlgimport.lbldecimalseparator.caption
+msgctxt "tdlgimport.lbldecimalseparator.caption"
+msgid "Decimal separator"
+msgstr "Separador decimal"
+
+#: tdlgimport.lbldelimiter.caption
+msgctxt "tdlgimport.lbldelimiter.caption"
+msgid "Delimiter"
+msgstr "Delimitador"
+
+#: tdlgimport.lblencoding.caption
+msgid "File encoding"
+msgstr "Codificação do arquivo"
+
+#: tdlgimport.lblerrorhandling.caption
+msgid "Error handling"
+msgstr "Gerenciamento de erros"
+
+#: tdlgimport.lblextractdatepart.caption
+msgid "Extract date part"
+msgstr "Extrair parte da data"
+
 #: tdlgimport.lblfieldsinstruction.caption
 msgid "Configure the field mappings from the source file to the target table."
 msgstr "Configure o mapeamento dos campos do arquivo de origem para a tabela destino."
 
+#: tdlgimport.lblhaveheader.caption
+msgctxt "tdlgimport.lblhaveheader.caption"
+msgid "First row as header"
+msgstr "Primeira linha com cabeçalho"
+
+#: tdlgimport.lblimportsettings.caption
+msgid "Import settings:"
+msgstr "Configurações de importação:"
+
+#: tdlgimport.lblimportstrategy.caption
+msgid "Import strategy"
+msgstr "Estratégia de importação"
+
+#: tdlgimport.lblkeypath.caption
+msgid "Records key path"
+msgstr "Caminho da chave dos registros"
+
+#: tdlgimport.lbllookupfield.caption
+msgid "Lookup field:"
+msgstr "Campo de busca:"
+
+#: tdlgimport.lbllookuptable.caption
+msgid "Lookup table:"
+msgstr "Tabela de busca:"
+
+#: tdlgimport.lblnormalizewhitespace.caption
+msgid "Normalize whitespace"
+msgstr "Normalizar espaços em branco"
+
+#: tdlgimport.lblnullhandling.caption
+msgid "Null values"
+msgstr "Valores nulos"
+
+#: tdlgimport.lblprimarykey.caption
+msgid "Primary or corresponding key"
+msgstr "Chave primária ou de correspondência"
+
 #: tdlgimport.lblprogressinstruction.caption
 msgid "Please wait, while importing the data."
 msgstr "Por favor, espere enquanto os dados são importados."
+
+#: tdlgimport.lblrecordxpath.caption
+msgid "Record XPath"
+msgstr "XPath de registro"
+
+#: tdlgimport.lblremoveaccents.caption
+msgid "Remove accents"
+msgstr "Remover acentos"
+
+#: tdlgimport.lblreplacechars.caption
+msgid "Replace chars"
+msgstr "Substituir caracteres"
+
+#: tdlgimport.lblroundvalue.caption
+msgid "Round value"
+msgstr "Arredondar valor"
+
+#: tdlgimport.lblscalevalue.caption
+msgid "Scale value"
+msgstr "Converter valor"
+
+#: tdlgimport.lblsettingsinstruction.caption
+msgid "Define source file and general import settings."
+msgstr "Defina as configurações gerais e do arquivo de origem."
+
+#: tdlgimport.lblsheet.caption
+msgid "Sheet or tab"
+msgstr "Planilha ou aba"
 
 #: tdlgimport.lblsourcefile.caption
 msgctxt "tdlgimport.lblsourcefile.caption"
@@ -4521,6 +4659,10 @@ msgstr "Arquivo de origem: *"
 msgid "Select a target table and a source file to import."
 msgstr "Selecione uma tabela destino e um arquivo de origem para importar."
 
+#: tdlgimport.lblsplitcoordinates.caption
+msgid "Split coordinates"
+msgstr "Separar coordenadas"
+
 #: tdlgimport.lblsubtitleimportfinished.caption
 msgctxt "tdlgimport.lblsubtitleimportfinished.caption"
 msgid "The selected file(s) were sucessfully imported."
@@ -4529,6 +4671,10 @@ msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
 #: tdlgimport.lbltarget.caption
 msgid "Target table: *"
 msgstr "Tabela destino: *"
+
+#: tdlgimport.lbltextcase.caption
+msgid "Text case"
+msgstr "Caixa do texto"
 
 #: tdlgimport.lbltitleconfirm.caption
 msgctxt "tdlgimport.lbltitleconfirm.caption"
@@ -4549,9 +4695,17 @@ msgctxt "tdlgimport.lbltitleprogress.caption"
 msgid "Importing"
 msgstr "Importando"
 
+#: tdlgimport.lbltitlesettings.caption
+msgid "Import settings"
+msgstr "Configurações de importação"
+
 #: tdlgimport.lbltitlesource.caption
 msgid "Source and target "
 msgstr "Origem e destino "
+
+#: tdlgimport.lbltrimvalue.caption
+msgid "Trim value"
+msgstr "Aparar valor"
 
 #: tdlgimport.opendlg.title
 msgctxt "tdlgimport.opendlg.title"
@@ -4595,6 +4749,10 @@ msgstr "Tentar novamente"
 msgctxt "tdlgimport.sbsavelog.caption"
 msgid "Save log"
 msgstr "Salvar log"
+
+#: tdlgimport.sbsavesettings.caption
+msgid "Save settings"
+msgstr "Salvar configurações"
 
 #: tdlgimportcaptures.btngeneratefiles.caption
 msgctxt "tdlgimportcaptures.btngeneratefiles.caption"
@@ -16582,21 +16740,23 @@ msgstr ""
 
 #: utils_locale.rsonboardingimportwizard
 msgid ""
-"The Import Wizard guides you through bringing external data into the system.\n"
+"The Import Wizard guides you through bringing external data into the Xolmis.\n"
 "\n"
-"The process has three main steps:\n"
-"1. Select the file you want to import.\n"
-"2. Verify and adjust the column mapping to ensure fields align correctly.\n"
-"3. Import the data into the database.\n"
+"The process has four main steps:\n"
+"1. Select the file you want to import and the target destination.\n"
+"2. Configure how to read the file.\n"
+"3. Verify and adjust the field mapping to ensure fields align correctly.\n"
+"4. Import the data into the database.\n"
 "\n"
 "This step-by-step flow helps guarantee that your data is integrated accurately and consistently."
 msgstr ""
 "O assistente de importação guia você para trazer dados externos para o sistema.\n"
 "\n"
 "O processo tem três etapas principais:\n"
-"1. Selecione o arquiv que deseja importar.\n"
-"2. Verifique e ajuste o mapeamento de colunas para assegurar o alinhamento correto dos campos.\n"
-"3. Importe os dados no banco de dados.\n"
+"1. Selecione o arquivo que deseja importar e o destino desejado.\n"
+"2. Configure como ler o arquivo.\n"
+"3. Verifique e ajuste o mapeamento de colunas para assegurar o alinhamento correto dos campos.\n"
+"4. Importe os dados no banco de dados.\n"
 "\n"
 "Esse fluxo passo-a-passo ajuda a garantir que seus dados sejam integrados acurada e consistentemente."
 

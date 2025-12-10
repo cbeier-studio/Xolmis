@@ -190,6 +190,7 @@ uses
     rsErrorModuleIsDifferent = 'The file module is different from the Quick Entry module.';
     rsErrorNoImporterRegisteredForExtension = 'No importer registered for %s';
     rsErrorTableNotSupportedInDocuments = 'Table not supported in documents and links.';
+    rsErrorFileFormatNotSupported = 'File format not supported: %s';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
@@ -576,11 +577,12 @@ uses
         'Here you can assign permissions to control what each user can access or modify. ' +
         'Users can also change their own password to keep their account secure.' + LineEnding + LineEnding +
         'Use this module to maintain proper access levels and ensure account security across the system.';
-    rsOnboardingImportWizard = 'The Import Wizard guides you through bringing external data into the system.' + LineEnding + LineEnding +
-        'The process has three main steps:' + LineEnding +
-        '1. Select the file you want to import.' + LineEnding +
-        '2. Verify and adjust the column mapping to ensure fields align correctly.' + LineEnding +
-        '3. Import the data into the database.' + LineEnding + LineEnding +
+    rsOnboardingImportWizard = 'The Import Wizard guides you through bringing external data into the Xolmis.' + LineEnding + LineEnding +
+        'The process has four main steps:' + LineEnding +
+        '1. Select the file you want to import and the target destination.' + LineEnding +
+        '2. Configure how to read the file.' + LineEnding +
+        '3. Verify and adjust the field mapping to ensure fields align correctly.' + LineEnding +
+        '4. Import the data into the database.' + LineEnding + LineEnding +
         'This step-by-step flow helps guarantee that your data is integrated accurately and consistently.';
     rsOnboardingImportMobile = 'The Xolmis Mobile Import guides you through bringing field data into the system.' + LineEnding + LineEnding +
         'The process includes the following steps:' + LineEnding +
@@ -807,6 +809,9 @@ uses
     rsDateFound = 'Date found';
     rsDateLast = 'Last date active';
     rsDateImage = 'Image date';
+    rsDateDay = 'Day';
+    rsDateMonth = 'Month';
+    rsDateYear = 'Year';
 
     { Times }
     rsTimeCapture = 'Capture time';
@@ -1195,13 +1200,33 @@ uses
     rsDocNote = 'Note';
     rsDocOther = 'Other';
 
-    { CSV options }
+    { Import/export options }
     rsDelimiterSemicolon = 'Semicolon';
     rsDelimiterColon = 'Colon';
     rsDelimiterTab = 'Tab';
     rsDelimiterOther = 'Other...';
     rsDecimalSeparatorColon = 'Colon';
     rsDecimalSeparatorPeriod = 'Period';
+    rsImportStrategyAppend = 'Append';
+    rsImportStrategyReplace = 'Replace';
+    rsImportStrategyUpdate = 'Update';
+    rsAbortOnError = 'Abort on first error';
+    rsIgnoreErrors = 'Ignore and log errors';
+    rsSystemEncoding = 'System encoding';
+    rsNullIgnore = 'Ignore';
+    rsNullDefaultValue = 'Default value';
+    rsNullMeanValue = 'Mean value';
+    rsNullMedianValue = 'Median value';
+    rsNullModeValue = 'Mode value';
+    rsTextCaseOriginal = 'Original case';
+    rsTextCaseLower = 'Lower case';
+    rsTextCaseUpper = 'Upper case';
+    rsTextCaseSentence = 'Sentence case';
+    rsTextCaseTitle = 'Title case';
+    rsScaleMultiply = 'Multiply';
+    rsScaleDivide = 'Divide';
+    rsCoordinatesDms = 'Degrees, Minutes and Seconds';
+    rsCoordinatesUtm = 'UTM';
 
     { Versions }
     rsVersionStr = 'Version %s';

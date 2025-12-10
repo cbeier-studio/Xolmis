@@ -6,8 +6,9 @@ interface
 
 uses
   BCPanel, Classes, SysUtils, SdfData, fpjson, fpjsondataset, ExtJSDataSet, LCLIntf, fgl,
-  dbf, csvdataset, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, fpsDataset, fpsTypes,
+  dbf, csvdataset, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
+  StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, Spin, fpsDataset, fpsTypes, fpSpreadsheet, xlsbiff8,
+  xlsxooxml,
   atshapelinebgra, io_core, io_csv, io_dbf, io_json, io_ods, io_xlsx, io_xml, data_types;
 
 type
@@ -16,32 +17,102 @@ type
 
   TdlgImport = class(TForm)
     btnHelp: TBitBtn;
-    btnOptions: TBitBtn;
-    dsMem: TBufDataset;
+    cbDecimalSeparator: TComboBox;
+    cbErrorHandling: TComboBox;
+    cbImportStrategy: TComboBox;
+    cbNullHandling: TComboBox;
+    cbEncoding: TComboBox;
+    cbTextCase: TComboBox;
+    cbSheet: TComboBox;
+    cbDelimiter: TComboBox;
     cbTarget: TComboBox;
-    dsDbf: TDbf;
+    cbImportSettings: TComboBox;
+    cbLookupTable: TComboBox;
+    cbLookupField: TComboBox;
+    cbScaleOperation: TComboBox;
+    cbExtractDatePart: TComboBox;
+    cbSourceCoordinatesFormat: TComboBox;
+    eReplaceCharFrom: TEdit;
+    eReplaceCharTo: TEdit;
+    eOther: TEdit;
+    eKeyPath: TEdit;
+    eDefaultValue: TEdit;
+    eRecordXPath: TEdit;
     eSourceFile: TEditButton;
+    eScale: TFloatSpinEdit;
     gridConfirm: TStringGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoImportFinished: TImage;
+    arrowReplaceChars: TImage;
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
+    lblRemoveAccents: TLabel;
+    lblNormalizeWhitespace: TLabel;
+    lblReplaceChars: TLabel;
+    lblRoundValue: TLabel;
+    lblScaleValue: TLabel;
+    lblSplitCoordinates: TLabel;
+    lblConvertCoordinates: TLabel;
+    lblExtractDatePart: TLabel;
+    lblDecimalSeparator: TLabel;
+    lblNullHandling: TLabel;
+    lblEncoding: TLabel;
+    lblPrimaryKey: TLabel;
+    lblKeyPath: TLabel;
+    lblTrimValue: TLabel;
+    lblSheet: TLabel;
+    lblRecordXPath: TLabel;
+    lblImportStrategy: TLabel;
+    lblErrorHandling: TLabel;
+    lblDelimiter: TLabel;
+    lblHaveHeader: TLabel;
+    lblImportSettings: TLabel;
     lblProgressInstruction: TLabel;
     lblFieldsInstruction: TLabel;
     lblConfirmInstruction: TLabel;
-    lblSourceInstruction: TLabel;
     lblSourceFile: TLabel;
+    lblSourceInstruction: TLabel;
+    lblSettingsInstruction: TLabel;
     lblSubtitleImportFinished: TLabel;
     lblTarget: TLabel;
+    lblLookupTable: TLabel;
+    lblLookupField: TLabel;
     lblTitleImportFinished: TLabel;
     lblTitleProgress: TLabel;
     lblTitleFields: TLabel;
     lblTitleConfirm: TLabel;
     lblTitleSource: TLabel;
+    lblTitleSettings: TLabel;
+    lblBooleanValue: TLabel;
+    lblTextCase: TLabel;
     lineBottom: TShapeLineBGRA;
+    pRemoveAccents: TBCPanel;
+    pNormalizeWhitespace: TBCPanel;
+    pReplaceChars: TBCPanel;
+    pRoundValue: TBCPanel;
+    pScaleValue: TBCPanel;
+    pSplitCoordinates: TBCPanel;
+    pConvertCoordinates: TBCPanel;
+    pExtractDatePart: TBCPanel;
+    pDecimalSeparator: TBCPanel;
+    pNullHandling: TBCPanel;
+    pEncoding: TBCPanel;
+    pPrimaryKey: TBCPanel;
+    pKeyPath: TBCPanel;
+    pTrimValue: TBCPanel;
+    pSheet: TBCPanel;
+    pRecordXPath: TBCPanel;
+    pImportStrategy: TBCPanel;
+    pErrorHandling: TBCPanel;
+    pDelimiter: TBCPanel;
+    pgSettings: TPage;
+    pHaveHeader: TBCPanel;
+    pTarget: TBCPanel;
     pContentFinished: TBCPanel;
+    pImportSettings: TBCPanel;
     pgFinished: TPage;
+    pSourceFile: TBCPanel;
     pmfSelectAll: TMenuItem;
     pmfDeselectAll: TMenuItem;
     mProgress: TMemo;
@@ -60,21 +131,43 @@ type
     pmFields: TPopupMenu;
     pRetry: TBCPanel;
     pSourceOptions: TPanel;
+    pLookupTable: TBCPanel;
+    pLookupField: TBCPanel;
     pTitleProgress: TPanel;
     pTitleFields: TPanel;
     pTitleConfirm: TPanel;
     pTitleSource: TPanel;
+    pTitleSource1: TPanel;
+    pBooleanValue: TBCPanel;
+    pTextCase: TBCPanel;
     SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbNext: TButton;
     sbPrior: TButton;
     gridFields: TStringGrid;
-    dsSdf: TSdfDataSet;
-    dsWorksheet: TsWorksheetDataset;
     sbRetry: TBitBtn;
     sbSaveLog: TBitBtn;
+    sboxSettings: TScrollBox;
+    sbSaveSettings: TSpeedButton;
+    sboxField: TScrollBox;
+    eRoundPrecision: TSpinEdit;
+    sbClearImportSettings: TSpeedButton;
+    tsRemoveAccents: TToggleSwitch;
+    tsNormalizeWhitespace: TToggleSwitch;
+    tsReplaceChars: TToggleSwitch;
+    tsRoundValue: TToggleSwitch;
+    tsScaleValue: TToggleSwitch;
+    tsSplitCoordinates: TToggleSwitch;
+    tsConvertCoordinates: TToggleSwitch;
+    tsExtractDatePart: TToggleSwitch;
+    tsHaveHeader: TToggleSwitch;
+    tsPrimaryKey: TToggleSwitch;
+    tsTrimValue: TToggleSwitch;
+    tsBooleanValue: TToggleSwitch;
     procedure btnHelpClick(Sender: TObject);
-    procedure btnOptionsClick(Sender: TObject);
+    procedure cbDelimiterSelect(Sender: TObject);
+    procedure cbImportSettingsSelect(Sender: TObject);
+    procedure cbNullHandlingSelect(Sender: TObject);
     procedure cbTargetChange(Sender: TObject);
     procedure cbTargetSelect(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
@@ -85,10 +178,17 @@ type
     procedure pmfDeselectAllClick(Sender: TObject);
     procedure pmfSelectAllClick(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
+    procedure sbClearImportSettingsClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPriorClick(Sender: TObject);
     procedure sbSaveLogClick(Sender: TObject);
+    procedure tsConvertCoordinatesChange(Sender: TObject);
+    procedure tsExtractDatePartChange(Sender: TObject);
+    procedure tsReplaceCharsChange(Sender: TObject);
+    procedure tsRoundValueChange(Sender: TObject);
+    procedure tsScaleValueChange(Sender: TObject);
   private
+    FSourceFile: String;
     FFileFormat: TImportFileType;
     FImporter: TImporter;
     FCSVImporter: TCSVImporter;
@@ -100,13 +200,21 @@ type
     FDataSet: TDataSet;
     dsJSON: TExtJSJSONObjectDataSet;
     FFieldMap: TFieldsMap;
+    FTargetFields: TFieldsDictionary;
     FTableType: TTableType;
+    FSavedSettings: String;
+    FImportSettings: TImportOptions;
     procedure ApplyDarkMode;
     function IsRequiredFilledSource: Boolean;
+    procedure GetSheetsList;
+    procedure LoadFieldMap;
     procedure LoadFields;
+    procedure LoadImportSettings;
     procedure LoadSearchTables;
     procedure LoadTargetFields;
     procedure LoadTargetTables;
+    procedure SetImportSettings;
+    procedure UpdateImportSettings;
     function ValidateFields: Boolean;
   public
 
@@ -127,18 +235,89 @@ uses
 
 procedure TdlgImport.ApplyDarkMode;
 begin
-  btnOptions.Images := iButtonsDark;
   btnHelp.Images := iButtonsDark;
   eSourceFile.Images := iButtonsDark;
   pmFields.Images := iButtonsDark;
+  sbClearImportSettings.Images := iButtonsDark;
+  sbSaveSettings.Images := iButtonsDark;
   sbRetry.Images := iButtonsDark;
   sbSaveLog.Images := iButtonsDark;
+  arrowReplaceChars.Images := iButtonsDark;
+
+  pSourceFile.Background.Color := clSolidBGSecondaryDark;
+  pSourceFile.Border.Color := clSystemSolidNeutralFGDark;
+  pTarget.Background.Color := clSolidBGSecondaryDark;
+  pTarget.Border.Color := clSystemSolidNeutralFGDark;
+  pImportSettings.Background.Color := clSolidBGSecondaryDark;
+  pImportSettings.Border.Color := clSystemSolidNeutralFGDark;
+  pImportStrategy.Background.Color := clSolidBGSecondaryDark;
+  pImportStrategy.Border.Color := clSystemSolidNeutralFGDark;
+  pErrorHandling.Background.Color := clSolidBGSecondaryDark;
+  pErrorHandling.Border.Color := clSystemSolidNeutralFGDark;
+  pEncoding.Background.Color := clSolidBGSecondaryDark;
+  pEncoding.Border.Color := clSystemSolidNeutralFGDark;
+  pHaveHeader.Background.Color := clSolidBGSecondaryDark;
+  pHaveHeader.Border.Color := clSystemSolidNeutralFGDark;
+  pDelimiter.Background.Color := clSolidBGSecondaryDark;
+  pDelimiter.Border.Color := clSystemSolidNeutralFGDark;
+  pDecimalSeparator.Background.Color := clSolidBGSecondaryDark;
+  pDecimalSeparator.Border.Color := clSystemSolidNeutralFGDark;
+  pKeyPath.Background.Color := clSolidBGSecondaryDark;
+  pKeyPath.Border.Color := clSystemSolidNeutralFGDark;
+  pSheet.Background.Color := clSolidBGSecondaryDark;
+  pSheet.Border.Color := clSystemSolidNeutralFGDark;
+  pRecordXPath.Background.Color := clSolidBGSecondaryDark;
+  pRecordXPath.Border.Color := clSystemSolidNeutralFGDark;
+  pPrimaryKey.Background.Color := clSolidBGSecondaryDark;
+  pPrimaryKey.Border.Color := clSystemSolidNeutralFGDark;
+  pLookupTable.Background.Color := clSolidBGSecondaryDark;
+  pLookupTable.Border.Color := clSystemSolidNeutralFGDark;
+  pLookupField.Background.Color := clSolidBGSecondaryDark;
+  pLookupField.Border.Color := clSystemSolidNeutralFGDark;
+  pNullHandling.Background.Color := clSolidBGSecondaryDark;
+  pNullHandling.Border.Color := clSystemSolidNeutralFGDark;
+  pTrimValue.Background.Color := clSolidBGSecondaryDark;
+  pTrimValue.Border.Color := clSystemSolidNeutralFGDark;
+  pBooleanValue.Background.Color := clSolidBGSecondaryDark;
+  pBooleanValue.Border.Color := clSystemSolidNeutralFGDark;
+  pTextCase.Background.Color := clSolidBGSecondaryDark;
+  pTextCase.Border.Color := clSystemSolidNeutralFGDark;
+  pRemoveAccents.Background.Color := clSolidBGSecondaryDark;
+  pRemoveAccents.Border.Color := clSystemSolidNeutralFGDark;
+  pNormalizeWhitespace.Background.Color := clSolidBGSecondaryDark;
+  pNormalizeWhitespace.Border.Color := clSystemSolidNeutralFGDark;
+  pReplaceChars.Background.Color := clSolidBGSecondaryDark;
+  pReplaceChars.Border.Color := clSystemSolidNeutralFGDark;
+  pRoundValue.Background.Color := clSolidBGSecondaryDark;
+  pRoundValue.Border.Color := clSystemSolidNeutralFGDark;
+  pScaleValue.Background.Color := clSolidBGSecondaryDark;
+  pScaleValue.Border.Color := clSystemSolidNeutralFGDark;
+  pExtractDatePart.Background.Color := clSolidBGSecondaryDark;
+  pExtractDatePart.Border.Color := clSystemSolidNeutralFGDark;
+  pConvertCoordinates.Background.Color := clSolidBGSecondaryDark;
+  pConvertCoordinates.Border.Color := clSystemSolidNeutralFGDark;
+  pSplitCoordinates.Background.Color := clSolidBGSecondaryDark;
+  pSplitCoordinates.Border.Color := clSystemSolidNeutralFGDark;
 
   lblTitleSource.Font.Color := clVioletFG1Dark;
+  lblTitleSettings.Font.Color := clVioletFG1Dark;
   lblTitleFields.Font.Color := clVioletFG1Dark;
   lblTitleConfirm.Font.Color := clVioletFG1Dark;
   lblTitleProgress.Font.Color := clVioletFG1Dark;
   lblTitleImportFinished.Font.Color := clVioletFG1Dark;
+
+  tsHaveHeader.Color := pHaveHeader.Background.Color;
+  tsPrimaryKey.Color := pPrimaryKey.Background.Color;
+  tsTrimValue.Color := pTrimValue.Background.Color;
+  tsBooleanValue.Color := pBooleanValue.Background.Color;
+  tsRemoveAccents.Color := pBooleanValue.Background.Color;
+  tsNormalizeWhitespace.Color := pBooleanValue.Background.Color;
+  tsReplaceChars.Color := pBooleanValue.Background.Color;
+  tsRoundValue.Color := pBooleanValue.Background.Color;
+  tsScaleValue.Color := pBooleanValue.Background.Color;
+  tsExtractDatePart.Color := pBooleanValue.Background.Color;
+  tsConvertCoordinates.Color := pBooleanValue.Background.Color;
+  tsSplitCoordinates.Color := pBooleanValue.Background.Color;
 
   icoImportFinished.Images := imgFinishedDark;
 end;
@@ -148,28 +327,19 @@ begin
   OpenHelp(HELP_IMPORTING_DATA, 'import-wizard');
 end;
 
-procedure TdlgImport.btnOptionsClick(Sender: TObject);
+procedure TdlgImport.cbDelimiterSelect(Sender: TObject);
 begin
-  cfgDelimiters := TcfgDelimiters.Create(nil);
-  with cfgDelimiters do
-  try
-    //QuotedAsText := dsSdf.QuoteChar = '"';
-    Delimiter := dsSdf.Delimiter;
-    //DecimalSeparator := dsSdf.DecimalSeparator;
-    HaveHeader := dsSdf.FirstLineAsSchema;
-    if ShowModal = mrOk then
-    begin
-      //if QuotedAsText then
-      //  dsSdf.QuoteChar := '"'
-      //else
-      //  dsSdf.QuoteChar := #0;
-      dsSdf.Delimiter := Delimiter;
-      //dsSdf.DecimalSeparator := DecimalSeparator;
-      dsSdf.FirstLineAsSchema := HaveHeader;
-    end;
-  finally
-    FreeAndNil(cfgDelimiters);
-  end;
+  eOther.Visible := cbDelimiter.ItemIndex = 3;
+end;
+
+procedure TdlgImport.cbImportSettingsSelect(Sender: TObject);
+begin
+  FSavedSettings := cbImportSettings.Text;
+end;
+
+procedure TdlgImport.cbNullHandlingSelect(Sender: TObject);
+begin
+  eDefaultValue.Visible := cbNullHandling.ItemIndex = 1;
 end;
 
 procedure TdlgImport.cbTargetChange(Sender: TObject);
@@ -202,72 +372,48 @@ begin
   if not FileExists(eSourceFile.Text) then
     Exit;
 
-  if eSourceFile.Text <> EmptyStr then
-    case ExtractFileExt(eSourceFile.Text) of
+  FSourceFile := eSourceFile.Text;
+
+  if FSourceFile <> EmptyStr then
+    case ExtractFileExt(FSourceFile) of
       '.csv', '.tsv':
       begin
         case ExtractFileExt(eSourceFile.Text) of
           '.csv': FFileFormat := iftCSV;
-          '.tsv': FFileFormat := iftTSV;
-        end;
-        FDataSet := dsSdf;
-        if ExtractFileExt(eSourceFile.Text) = '.tsv' then
-        begin
-          dsSdf.Delimiter := #9; // Tab character
-        end;
-        cfgDelimiters := TcfgDelimiters.Create(nil);
-        with cfgDelimiters do
-        try
-          Delimiter := dsSdf.Delimiter;
-          HaveHeader := dsSdf.FirstLineAsSchema;
-          if ShowModal = mrOk then
+          '.tsv':
           begin
-            dsSdf.Delimiter := Delimiter;
-            dsSdf.FirstLineAsSchema := HaveHeader;
+            FFileFormat := iftTSV;
+            FImportSettings.Delimiter := #9;
           end;
-        finally
-          FreeAndNil(cfgDelimiters);
         end;
-        dsSdf.FileName := eSourceFile.Text;
       end;
       '.xlsx', '.xls', '.ods':
       begin
-        FDataSet := dsWorksheet;
-        dsWorksheet.FileName := eSourceFile.Text;
-        case ExtractFileExt(eSourceFile.Text) of
+        case ExtractFileExt(FSourceFile) of
           '.xlsx':
           begin
-            dsWorksheet.FileFormat := sfOOXML;
             FFileFormat := iftExcelOOXML;
           end;
           '.xls':
           begin
-            dsWorksheet.FileFormat := sfExcel8;
             FFileFormat := iftExcel;
           end;
           '.ods':
           begin
-            dsWorksheet.FileFormat := sfOpenDocument;
             FFileFormat := iftOpenDocument;
           end;
         end;
       end;
       '.json', '.ndjson':
       begin
-        case ExtractFileExt(eSourceFile.Text) of
+        case ExtractFileExt(FSourceFile) of
           '.json':   FFileFormat := iftJSON;
           '.ndjson': FFileFormat := iftNDJSON;
         end;
-        dsJSON := TExtJSJSONObjectDataSet.Create(nil);
-        FDataSet := dsJSON;
-        dsJSON.LoadFromFile(eSourceFile.Text);
       end;
       '.dbf':
       begin
         FFileFormat := iftDBF;
-        FDataSet := dsDbf;
-        dsDbf.FilePathFull := ExtractFilePath(eSourceFile.Text);
-        dsDbf.TableName := ExtractFileName(eSourceFile.Text);
       end;
       '.kml', '.kmz':
       begin
@@ -281,14 +427,13 @@ begin
       begin
         FFileFormat := iftGeoJSON;
       end;
-    else
-      FDataSet := dsMem;
     end;
 end;
 
 procedure TdlgImport.FormCreate(Sender: TObject);
 begin
   FFieldMap := TFieldsMap.Create;
+  FTargetFields := TFieldsDictionary.Create;
   FTableType := tbNone;
   LoadTablesDict;
 end;
@@ -303,6 +448,8 @@ begin
 
   if Assigned(FFieldMap) then
     FFieldMap.Free;
+  if Assigned(FTargetFields) then
+    FTargetFields.Free;
   if Assigned(TablesDict) then
     FreeAndNil(TablesDict);
 end;
@@ -313,6 +460,68 @@ begin
     ApplyDarkMode;
 
   LoadTargetTables;
+
+  // Translate comboboxes' items
+  cbImportStrategy.Items.Clear;
+  cbImportStrategy.Items.Add(rsImportStrategyAppend);
+  cbImportStrategy.Items.Add(rsImportStrategyReplace);
+  cbImportStrategy.Items.Add(rsImportStrategyUpdate);
+  cbErrorHandling.Items.Clear;
+  cbErrorHandling.Items.Add(rsAbortOnError);
+  cbErrorHandling.Items.Add(rsIgnoreErrors);
+  cbEncoding.Items.Clear;
+  cbEncoding.Items.Add(rsSystemEncoding);
+  cbEncoding.Items.Add(TEncoding.UTF8.EncodingName);
+  cbDelimiter.Items.Clear;
+  cbDelimiter.Items.Add(rsDelimiterSemicolon);
+  cbDelimiter.Items.Add(rsDelimiterColon);
+  cbDelimiter.Items.Add(rsDelimiterTab);
+  cbDelimiter.Items.Add(rsDelimiterOther);
+  cbDecimalSeparator.Items.Clear;
+  cbDecimalSeparator.Items.Add(rsDecimalSeparatorColon);
+  cbDecimalSeparator.Items.Add(rsDecimalSeparatorPeriod);
+  cbNullHandling.Items.Clear;
+  cbNullHandling.Items.Add(rsNullIgnore);
+  cbNullHandling.Items.Add(rsNullDefaultValue);
+  cbNullHandling.Items.Add(rsNullMeanValue);
+  cbNullHandling.Items.Add(rsNullMedianValue);
+  cbNullHandling.Items.Add(rsNullModeValue);
+  cbTextCase.Items.Clear;
+  cbTextCase.Items.Add(rsTextCaseOriginal);
+  cbTextCase.Items.Add(rsTextCaseLower);
+  cbTextCase.Items.Add(rsTextCaseUpper);
+  cbTextCase.Items.Add(rsTextCaseSentence);
+  cbTextCase.Items.Add(rsTextCaseTitle);
+  cbScaleOperation.Items.Clear;
+  cbScaleOperation.Items.Add(rsScaleMultiply);
+  cbScaleOperation.Items.Add(rsScaleDivide);
+  cbExtractDatePart.Items.Clear;
+  cbExtractDatePart.Items.Add(rsDateDay);
+  cbExtractDatePart.Items.Add(rsDateMonth);
+  cbExtractDatePart.Items.Add(rsDateYear);
+  cbSourceCoordinatesFormat.Items.Clear;
+  cbSourceCoordinatesFormat.Items.Add(rsCoordinatesDms);
+  cbSourceCoordinatesFormat.Items.Add(rsCoordinatesUtm);
+end;
+
+procedure TdlgImport.GetSheetsList;
+var
+  Workbook: TsWorkbook;
+  i: Integer;
+begin
+  Workbook := TsWorkbook.Create;
+  try
+    case FFileFormat of
+      iftExcel:        Workbook.ReadFromFile(FSourceFile, sfExcel8);
+      iftExcelOOXML:   Workbook.ReadFromFile(FSourceFile, sfExcelXML);
+      iftOpenDocument: Workbook.ReadFromFile(FSourceFile, sfOpenDocument);
+    end;
+    cbSheet.Items.Clear;
+    for i := 0 to Workbook.GetWorksheetCount - 1 do
+      cbSheet.Items.Add(Workbook.GetWorksheetByIndex(i).Name);
+  finally
+    Workbook.Free;
+  end;
 end;
 
 function TdlgImport.IsRequiredFilledSource: Boolean;
@@ -321,6 +530,58 @@ begin
 
   if (eSourceFile.Text <> EmptyStr) and (cbTarget.ItemIndex >= 0) then
     Result := True;
+end;
+
+procedure TdlgImport.LoadFieldMap;
+var
+  Stream: TFileStream;
+  Importer: TImporter;
+  FieldNames: TStringList;
+  Mapping: TFieldMapping;
+  Ext: string;
+  i: Integer;
+begin
+  Stream := TFileStream.Create(FSourceFile, fmOpenRead or fmShareDenyWrite);
+  try
+    Ext := LowerCase(ExtractFileExt(FSourceFile));
+
+    // Select the Importer
+    case FFileFormat of
+      iftCSV,
+      iftTSV: Importer := TCSVImporter.Create;
+      iftExcel,
+      iftExcelOOXML: Importer := TXLSXImporter.Create;
+      iftOpenDocument: Importer := TODSImporter.Create;
+      iftJSON,
+      iftNDJSON: Importer := TJSONImporter.Create;
+      iftDBF: Importer := TDBFImporter.Create;
+      iftXML: Importer := TXMLImporter.Create;
+    else
+      raise EImportError.CreateFmt(rsErrorFileFormatNotSupported, [Ext]);
+    end;
+
+    try
+      // Get field names
+      FieldNames := Importer.GetFieldNames(Stream, FImportSettings);
+
+      FFieldMap.Clear;
+
+      // Add field to the map
+      for i := 0 to FieldNames.Count - 1 do
+      begin
+        Mapping := TFieldMapping.Create;
+        Mapping.SourceField := FieldNames[i];
+
+        Mapping.TargetField := EmptyStr;
+        Mapping.Import := False;
+        FFieldMap.Add(Mapping);
+      end;
+    finally
+      Importer.Free;
+    end;
+  finally
+    Stream.Free;
+  end;
 end;
 
 procedure TdlgImport.LoadFields;
@@ -334,20 +595,61 @@ begin
   try
     gridFields.ColWidths[0] := 40;
     gridFields.RowCount := 1; // Clear rows
-    gridFields.RowCount := FDataSet.FieldCount + 1;
+    gridFields.RowCount := FFieldMap.Count + 1;
 
-    for i := 0 to FDataSet.FieldCount - 1 do
+    for i := 0 to FFieldMap.Count - 1 do
     begin
-      gridFields.Cells[1, i+1] := FDataSet.Fields[i].DisplayLabel;
+      gridFields.Cells[1, i+1] := FFieldMap[i].SourceField;
     end;
 
     // Target field picklist
     LoadTargetFields;
 
     // Search table picklist
-    LoadSearchTables;
+    //LoadSearchTables;
   finally
     gridFields.EndUpdate;
+  end;
+end;
+
+procedure TdlgImport.LoadImportSettings;
+begin
+  if FSavedSettings <> EmptyStr then
+  begin
+    case FImportSettings.Strategy of
+      istAppend:  cbImportStrategy.ItemIndex := 0;
+      istReplace: cbImportStrategy.ItemIndex := 1;
+      istUpdate:  cbImportStrategy.ItemIndex := 2;
+    end;
+    case FImportSettings.ErrorHandling of
+      iehAbort:  cbErrorHandling.ItemIndex := 0;
+      iehIgnore: cbErrorHandling.ItemIndex := 1;
+    end;
+    if FImportSettings.Encoding = TEncoding.Default.EncodingName then
+      cbEncoding.ItemIndex := 0
+    else
+      cbEncoding.ItemIndex := 1;
+
+    case FImportSettings.Delimiter of
+      ';': cbDelimiter.ItemIndex := 0;
+      ',': cbDelimiter.ItemIndex := 1;
+      #9 : cbDelimiter.ItemIndex := 2;
+    else
+      cbDelimiter.ItemIndex := 3;
+      eOther.Visible := True;
+      eOther.Text := FImportSettings.Delimiter;
+    end;
+
+    tsHaveHeader.Checked := FImportSettings.HasHeader;
+
+    case FImportSettings.DecimalSeparator of
+      ',': cbDecimalSeparator.ItemIndex := 0;
+      '.': cbDecimalSeparator.ItemIndex := 1;
+    end;
+
+    cbSheet.Text := FImportSettings.SheetName;
+    eKeyPath.Text := FImportSettings.RecordsPath;
+    eRecordXPath.Text := FImportSettings.RecordNodeName;
   end;
 end;
 
@@ -378,6 +680,10 @@ begin
     Add(rsTitleResearchers);
     Add(rsTitleProjects);
     Add(rsTitleProjectMembers);
+    Add(rsTitleProjectGoals);
+    Add(rsTitleProjectChronograms);
+    Add(rsTitleProjectBudgets);
+    Add(rsTitleProjectExpenses);
     Add(rsTitlePermits);
     Add(rsTitleGazetteer);
     Add(rsTitleSamplingPlots);
@@ -408,6 +714,10 @@ begin
     tbPeople:               FDS := DMG.qPeople;
     tbProjects:             FDS := DMG.qProjects;
     tbProjectTeams:         FDS := DMG.qProjectTeam;
+    tbProjectGoals:         FDS := DMG.qProjectGoals;
+    tbProjectChronograms:   FDS := DMG.qProjectChronogram;
+    tbProjectBudgets:       FDS := DMG.qProjectBudget;
+    tbProjectExpenses:      FDS := DMG.qProjectExpenses;
     tbPermits:              FDS := DMG.qPermits;
     tbTaxonRanks: ;
     tbZooTaxa: ;
@@ -437,10 +747,11 @@ begin
     tbVegetation:           FDS := DMS.qVegetation;
   end;
 
+  FTargetFields.Clear;
   gridFields.Columns[3].PickList.Clear;
   for i := 0 to FDS.FieldCount - 1 do
   begin
-    FFieldMap.Add(FDS.Fields[i].DisplayLabel, FDS.Fields[i].FieldName);
+    FTargetFields.Add(FDS.Fields[i].DisplayLabel, FDS.Fields[i].FieldName);
     gridFields.Columns[3].PickList.Add(FDS.Fields[i].DisplayLabel);
   end;
 
@@ -473,6 +784,10 @@ begin
     Add(rsTitleResearchers);
     Add(rsTitleProjects);
     Add(rsTitleProjectMembers);
+    Add(rsTitleProjectGoals);
+    Add(rsTitleProjectChronograms);
+    Add(rsTitleProjectBudgets);
+    Add(rsTitleProjectExpenses);
     Add(rsTitlePermits);
     Add(rsTitleGazetteer);
     Add(rsTitleSamplingPlots);
@@ -512,18 +827,39 @@ begin
   ModalResult := mrCancel;
 end;
 
+procedure TdlgImport.sbClearImportSettingsClick(Sender: TObject);
+begin
+  FSavedSettings := EmptyStr;
+  cbImportSettings.ItemIndex := -1;
+end;
+
 procedure TdlgImport.sbNextClick(Sender: TObject);
 begin
   nbPages.PageIndex := nbPages.PageIndex + 1;
 
-  if nbPages.PageIndex = 2 then
+  // Progress
+  if nbPages.PageIndex = 4 then
   begin
 
   end;
 
-  if nbPages.PageIndex = 1 then
+  // Confirmation
+  if nbPages.PageIndex = 3 then
+  begin
+
+  end;
+
+  // Fields
+  if nbPages.PageIndex = 2 then
   begin
     LoadFields;
+  end;
+
+  // Import settings
+  if nbPages.PageIndex = 1 then
+  begin
+    UpdateImportSettings;
+    LoadImportSettings;
   end;
 
   sbPrior.Enabled := nbPages.PageIndex > 0;
@@ -544,6 +880,167 @@ begin
   begin
     mProgress.Lines.SaveToFile(SaveDlg.FileName);
     OpenDocument(SaveDlg.FileName);
+  end;
+end;
+
+procedure TdlgImport.SetImportSettings;
+var
+  cOther: Char;
+  sOther: String;
+begin
+  { Strategy }
+  case cbImportStrategy.ItemIndex of
+    0: FImportSettings.Strategy := istAppend;
+    1: FImportSettings.Strategy := istReplace;
+    2: FImportSettings.Strategy := istUpdate;
+  end;
+  { Error handling }
+  case cbErrorHandling.ItemIndex of
+    0: FImportSettings.ErrorHandling := iehAbort;
+    1: FImportSettings.ErrorHandling := iehIgnore;
+  end;
+
+  { Encoding }
+  case cbEncoding.ItemIndex of
+    0: FImportSettings.Encoding := TEncoding.Default.EncodingName;
+    1: FImportSettings.Encoding := TEncoding.UTF8.EncodingName;
+  end;
+  { Header }
+  FImportSettings.HasHeader := tsHaveHeader.Checked;
+
+  { Delimiter }
+  cOther := #0;
+  if (cbDelimiter.ItemIndex = 3) and (Length(Trim(eOther.Text)) > 0) then
+  begin
+    sOther := eOther.Text;
+    cOther := sOther[1];
+  end;
+  case cbDelimiter.ItemIndex of
+    0: FImportSettings.Delimiter := ';'; { semicolon }
+    1: FImportSettings.Delimiter := ','; { comma }
+    2: FImportSettings.Delimiter := #9;  { <Tab> }
+    3: FImportSettings.Delimiter := cOther;   { other delimiter }
+  end;
+  { Decimal separator }
+  case cbDecimalSeparator.ItemIndex of
+    0: FImportSettings.DecimalSeparator := ',';  { comma }
+    1: FImportSettings.DecimalSeparator := '.';  { period/point }
+  end;
+
+  { Records path }
+  FImportSettings.RecordsPath := eKeyPath.Text;
+
+  { Sheet name }
+  FImportSettings.SheetName := cbSheet.Text;
+
+  { Record node }
+  FImportSettings.RecordNodeName := eRecordXPath.Text;
+end;
+
+procedure TdlgImport.tsConvertCoordinatesChange(Sender: TObject);
+begin
+
+  cbSourceCoordinatesFormat.Visible := tsConvertCoordinates.Checked;
+end;
+
+procedure TdlgImport.tsExtractDatePartChange(Sender: TObject);
+begin
+
+  cbExtractDatePart.Visible := tsExtractDatePart.Checked;
+end;
+
+procedure TdlgImport.tsReplaceCharsChange(Sender: TObject);
+begin
+
+  eReplaceCharTo.Visible := tsReplaceChars.Checked;
+  arrowReplaceChars.Visible := eReplaceCharTo.Visible;
+  eReplaceCharFrom.Visible := eReplaceCharTo.Visible;
+end;
+
+procedure TdlgImport.tsRoundValueChange(Sender: TObject);
+begin
+
+  eRoundPrecision.Visible := tsRoundValue.Checked;
+end;
+
+procedure TdlgImport.tsScaleValueChange(Sender: TObject);
+begin
+
+  eScale.Visible := tsScaleValue.Checked;
+  cbScaleOperation.Visible := eScale.Visible;
+end;
+
+procedure TdlgImport.UpdateImportSettings;
+begin
+  case FFileFormat of
+    iftCSV:
+    begin
+      pEncoding.Visible := True;
+      pHaveHeader.Visible := True;
+      pDelimiter.Visible := True;
+      pDecimalSeparator.Visible := True;
+      pSheet.Visible := False;
+      pKeyPath.Visible := False;
+      pRecordXPath.Visible := False;
+    end;
+    iftTSV:
+    begin
+      pEncoding.Visible := True;
+      pHaveHeader.Visible := True;
+      pDelimiter.Visible := True;
+      pDecimalSeparator.Visible := True;
+      pSheet.Visible := False;
+      pKeyPath.Visible := False;
+      pRecordXPath.Visible := False;
+    end;
+    iftExcel,
+    iftExcelOOXML,
+    iftOpenDocument:
+    begin
+      pEncoding.Visible := False;
+      pHaveHeader.Visible := True;
+      pDelimiter.Visible := False;
+      pDecimalSeparator.Visible := True;
+      pSheet.Visible := False;
+      pKeyPath.Visible := False;
+      pRecordXPath.Visible := False;
+
+      GetSheetsList;
+    end;
+    iftJSON,
+    iftNDJSON:
+    begin
+      pEncoding.Visible := True;
+      pHaveHeader.Visible := False;
+      pDelimiter.Visible := False;
+      pDecimalSeparator.Visible := True;
+      pSheet.Visible := False;
+      pKeyPath.Visible := True;
+      pRecordXPath.Visible := False;
+    end;
+    iftDBF:
+    begin
+      pEncoding.Visible := True;
+      pHaveHeader.Visible := False;
+      pDelimiter.Visible := False;
+      pDecimalSeparator.Visible := False;
+      pSheet.Visible := False;
+      pKeyPath.Visible := False;
+      pRecordXPath.Visible := False;
+    end;
+    iftXML:
+    begin
+      pEncoding.Visible := True;
+      pHaveHeader.Visible := False;
+      pDelimiter.Visible := False;
+      pDecimalSeparator.Visible := True;
+      pSheet.Visible := False;
+      pKeyPath.Visible := False;
+      pRecordXPath.Visible := True;
+    end;
+    iftKML: ;
+    iftGPX: ;
+    iftGeoJSON: ;
   end;
 end;
 
