@@ -21,7 +21,7 @@ unit io_json;
 interface
 
 uses
-  Classes, SysUtils, fpjson, jsonparser, jsonreader, Math, streamex, io_core;
+  Classes, SysUtils, fpjson, jsonparser, jsonreader, LConvEncoding, Math, streamex, io_core;
 
 type
 
@@ -166,34 +166,135 @@ end;
 
 function TJSONImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
+  RawBytes: TBytes;
+  RawText, Utf8Text, DetectedEncoding: String;
+  Utf8Stream: TStringStream;
   Parser: TJSONParser;
-  Data: TJSONData;
+  Data, Node: TJSONData;
   Arr: TJSONArray;
   Obj: TJSONObject;
+  SL: TStringList;
+  Line: String;
   i: Integer;
+
+  function ResolveRecordsPath(Root: TJSONData; const Path: String): TJSONData;
+  var
+    Parts: TStringArray;
+    J: Integer;
+    Cur: TJSONData;
+  begin
+    Result := Root;
+    if Path = '' then Exit;
+
+    Parts := Path.Split(['/']);
+    Cur := Root;
+
+    for J := 0 to High(Parts) do
+    begin
+      if (Cur.JSONType = jtObject) and (TJSONObject(Cur).Find(Parts[J]) <> nil) then
+        Cur := TJSONObject(Cur).Find(Parts[J])
+      else
+        Exit(nil);
+    end;
+
+    Result := Cur;
+  end;
+
 begin
   Result := TStringList.Create;
+
+  // Read bytes from stream
   Stream.Position := 0;
-  Parser := TJSONParser.Create(Stream);
+  SetLength(RawText, Stream.Size);
+  if Stream.Size > 0 then
+    Stream.ReadBuffer(RawText[1], Stream.Size);
+
+  // Convert encoding → UTF-8
+  if Options.Encoding <> '' then
+    Utf8Text := ConvertEncoding(RawText, Options.Encoding, 'utf-8')
+  else
+  begin
+    DetectedEncoding := GuessEncoding(RawText);
+    Utf8Text := ConvertEncoding(RawText, DetectedEncoding, 'utf-8');
+  end;
+
+  // NDJSON: get only the first line
+  if Options.ForceNDJSON then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.Text := Utf8Text;
+      if SL.Count > 0 then
+      begin
+        Line := SL[0].Trim;
+        if Line <> '' then
+        begin
+          Utf8Stream := TStringStream.Create(Line, TEncoding.UTF8);
+          try
+            Parser := TJSONParser.Create(Utf8Stream);
+            Data := Parser.Parse;
+            try
+              if Data.JSONType = jtObject then
+              begin
+                Obj := TJSONObject(Data);
+                for i := 0 to Obj.Count - 1 do
+                  if not (Options.IgnoreNulls and (Obj.Items[i].JSONType = jtNull)) then
+                    Result.Add(Obj.Names[i]);
+              end;
+            finally
+              Data.Free;
+            end;
+          finally
+            Parser.Free;
+            Utf8Stream.Free;
+          end;
+        end;
+      end;
+    finally
+      SL.Free;
+    end;
+    Exit;
+  end;
+
+  // Regular JSON
+  Utf8Stream := TStringStream.Create(Utf8Text, TEncoding.UTF8);
   try
+    Parser := TJSONParser.Create(Utf8Stream);
     Data := Parser.Parse;
     try
-      if (Data.JSONType = jtArray) and (TJSONArray(Data).Count > 0) then
+      Node := ResolveRecordsPath(Data, Options.RecordsPath);
+      if Node = nil then Exit;
+
+      // Array of objects
+      if (Node.JSONType = jtArray) and (TJSONArray(Node).Count > 0) then
       begin
-        Arr := TJSONArray(Data);
+        Arr := TJSONArray(Node);
         if Arr.Items[0].JSONType = jtObject then
         begin
           Obj := TJSONObject(Arr.Items[0]);
           for i := 0 to Obj.Count - 1 do
-            Result.Add(Obj.Names[i]);
+            if not (Options.IgnoreNulls and (Obj.Items[i].JSONType = jtNull)) then
+              Result.Add(Obj.Names[i]);
         end;
+      end
+
+      // Simple object
+      else if Node.JSONType = jtObject then
+      begin
+        Obj := TJSONObject(Node);
+        for i := 0 to Obj.Count - 1 do
+          if not (Options.IgnoreNulls and (Obj.Items[i].JSONType = jtNull)) then
+            Result.Add(Obj.Names[i]);
       end;
+
     finally
       Data.Free;
     end;
   finally
     Parser.Free;
+    Utf8Stream.Free;
   end;
+
 end;
 
 procedure TJSONImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);

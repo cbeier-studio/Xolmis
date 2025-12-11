@@ -51,6 +51,7 @@ var
   Worksheet: TsWorksheet;
   ColCount, c: Integer;
   Cell: PCell;
+  HeaderText: String;
 begin
   Result := TStringList.Create;
   Stream.Position := 0;
@@ -58,27 +59,51 @@ begin
   Workbook := TsWorkbook.Create;
   try
     Workbook.ReadFromStream(Stream, sfidOpenDocument);
-    if Options.SheetIndex >= 0 then
+
+    // Select sheet by name, if informed
+    if Options.SheetName <> '' then
+      Worksheet := Workbook.GetWorksheetByName(Options.SheetName)
+    else if Options.SheetIndex >= 0 then
       Worksheet := Workbook.GetWorksheetByIndex(Options.SheetIndex)
     else
       Worksheet := Workbook.GetFirstWorksheet;
 
     if Worksheet = nil then Exit;
 
-    ColCount := Worksheet.GetLastColIndex;
+    // Determine columns number based on header row
+    if Options.HasHeader then
+      ColCount := Worksheet.GetLastOccupiedColIndex
+    else
+      ColCount := Worksheet.GetLastColIndex;
+
     for c := 0 to ColCount do
     begin
       if Options.HasHeader then
       begin
         Cell := Worksheet.FindCell(0, c);
+
         if Assigned(Cell) then
-          Result.Add(Worksheet.ReadAsText(Cell))
+        begin
+          HeaderText := Worksheet.ReadAsText(Cell);
+
+          if Options.TrimFields then
+            HeaderText := Trim(HeaderText);
+
+          if (HeaderText = '') and Options.IgnoreNulls then
+            Continue;
+
+          if HeaderText <> '' then
+            Result.Add(HeaderText)
+          else
+            Result.Add('Col' + IntToStr(c+1));
+        end
         else
           Result.Add('Col' + IntToStr(c+1));
       end
       else
         Result.Add('Col' + IntToStr(c+1));
     end;
+
   finally
     Workbook.Free;
   end;

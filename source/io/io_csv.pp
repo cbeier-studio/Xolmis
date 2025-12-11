@@ -117,25 +117,70 @@ end;
 function TCSVImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
   DS: TSdfDataSet;
+  Utf8Stream: TStringStream;
+  RawBytes: TBytes;
+  RawText, Utf8Text, DetectedEncoding: String;
+  SL: TStringList;
   i: Integer;
 begin
   Result := TStringList.Create;
+
+  // Read bytes from stream
+  Stream.Position := 0;
+  SetLength(RawText, Stream.Size);
+  if Stream.Size > 0 then
+    Stream.ReadBuffer(RawText[1], Stream.Size);
+
+  // Convert encoding → UTF-8
+  if Options.Encoding <> '' then
+    Utf8Text := ConvertEncoding(RawText, Options.Encoding, 'utf-8')
+  else
+  begin
+    DetectedEncoding := GuessEncoding(RawText);
+    Utf8Text := ConvertEncoding(RawText, DetectedEncoding, 'utf-8');
+  end;
+
+  // Remove empty lines if needed
+  if Options.SkipEmptyLines then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.Text := Utf8Text;
+      for i := SL.Count - 1 downto 0 do
+        if Trim(SL[i]) = '' then
+          SL.Delete(i);
+      Utf8Text := SL.Text;
+    finally
+      SL.Free;
+    end;
+  end;
+
+  // Create stream UTF-8 for the TSdfDataSet
+  Utf8Stream := TStringStream.Create(Utf8Text, TEncoding.UTF8);
+
   DS := TSdfDataSet.Create(nil);
   try
-    //DS.CodePage := GuessEncoding(Stream.ReadAnsiString);
-    DS.CodePage := Options.Encoding;
     DS.Delimiter := Options.Delimiter;
     //DS.QuoteChar := Options.QuoteChar;
     DS.FirstLineAsSchema := Options.HasHeader;
-    //Stream.Position := 0;
-    DS.LoadFromStream(Stream);
+
+    // TrimFields (se suportado)
+    //{$IF declared(soTrimFields)}
+    //if Options.TrimFields then
+    //  DS.Options := DS.Options + [soTrimFields];
+    //{$ENDIF}
+
+    DS.LoadFromStream(Utf8Stream);
     DS.Open;
 
     for i := 0 to DS.Fields.Count - 1 do
       Result.Add(DS.Fields[i].FieldName);
+
   finally
     DS.Free;
+    Utf8Stream.Free;
   end;
+
 end;
 
 procedure TCSVImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);

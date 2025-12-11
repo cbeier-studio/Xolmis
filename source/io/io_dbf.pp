@@ -65,9 +65,13 @@ function TDBFImporter.GetFieldNames(Stream: TStream; const Options: TImportOptio
 var
   DS: TDbf;
   i: Integer;
-  TmpFile: String;
+  TmpFile, TmpMemo: String;
+  Header: array[0..31] of Byte;
+  LangID: Byte;
 begin
   Result := TStringList.Create;
+
+  // Create temporary file
   TmpFile := GetTempFileName;
   try
     Stream.Position := 0;
@@ -78,19 +82,49 @@ begin
       Free;
     end;
 
+    // Detect if memo file (DBT/FPT) exists
+    TmpMemo := ChangeFileExt(TmpFile, '.dbt');
+    if not FileExists(TmpMemo) then
+      TmpMemo := ChangeFileExt(TmpFile, '.fpt');
+
+    // Detect encoding from DBF header (byte 29)
+    Stream.Position := 0;
+    //Stream.ReadBuffer(Header, SizeOf(Header));
+    //LangID := Header[29];
+
     DS := TDbf.Create(nil);
     try
       DS.FilePath := ExtractFilePath(TmpFile);
       DS.TableName := ExtractFileName(TmpFile);
+
+      // Encoding
+      //if Options.Encoding <> '' then
+      //  DS.CodePage := Options.Encoding
+      //else
+      //  DS.LanguageID := LangID; // use DBF encoding
+
+      // Open table
       DS.Open;
 
+      // Extract field names
       for i := 0 to DS.Fields.Count - 1 do
-        Result.Add(DS.Fields[i].FieldName);
+      begin
+        if Options.TrimFields then
+          Result.Add(Trim(DS.Fields[i].FieldName))
+        else
+          Result.Add(DS.Fields[i].FieldName);
+      end;
+
     finally
+      DS.Close;
       DS.Free;
     end;
+
   finally
+    // Remove temporary files
     DeleteFile(TmpFile);
+    if FileExists(TmpMemo) then
+      DeleteFile(TmpMemo);
   end;
 end;
 

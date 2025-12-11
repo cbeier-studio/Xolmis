@@ -4497,14 +4497,17 @@ msgid "Semicolon"
 msgstr ""
 
 #: tdlgimport.cbencoding.text
+msgctxt "tdlgimport.cbencoding.text"
 msgid "System encoding"
 msgstr ""
 
 #: tdlgimport.cberrorhandling.text
+msgctxt "tdlgimport.cberrorhandling.text"
 msgid "Abort on first error"
 msgstr ""
 
 #: tdlgimport.cbimportstrategy.text
+msgctxt "tdlgimport.cbimportstrategy.text"
 msgid "Append"
 msgstr ""
 
@@ -4529,6 +4532,7 @@ msgid "Select a table..."
 msgstr ""
 
 #: tdlgimport.cbtextcase.text
+msgctxt "tdlgimport.cbtextcase.text"
 msgid "Original case"
 msgstr ""
 
@@ -13272,6 +13276,11 @@ msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr ""
 
+#: utils_locale.rsabortonerror
+msgctxt "utils_locale.rsabortonerror"
+msgid "Abort on first error"
+msgstr ""
+
 #: utils_locale.rsaccepted
 msgctxt "utils_locale.rsaccepted"
 msgid "Accepted"
@@ -14329,9 +14338,18 @@ msgctxt "utils_locale.rscoordinatesavailabletouse"
 msgid "Coordinates are available at the Coordinates Editor."
 msgstr ""
 
+#: utils_locale.rscoordinatesdms
+msgid "Degrees, Minutes and Seconds"
+msgstr ""
+
 #: utils_locale.rscoordinatesnameinput
 msgctxt "utils_locale.rscoordinatesnameinput"
 msgid "Give a name to the coordinates set:"
+msgstr ""
+
+#: utils_locale.rscoordinatesutm
+msgctxt "utils_locale.rscoordinatesutm"
+msgid "UTM"
 msgstr ""
 
 #: utils_locale.rscpfincnpj
@@ -14398,6 +14416,10 @@ msgctxt "utils_locale.rsdatecollection"
 msgid "Collection date"
 msgstr ""
 
+#: utils_locale.rsdateday
+msgid "Day"
+msgstr ""
+
 #: utils_locale.rsdatedeath
 msgctxt "utils_locale.rsdatedeath"
 msgid "Death date"
@@ -14453,6 +14475,11 @@ msgctxt "utils_locale.rsdatemeasured"
 msgid "Measurement date"
 msgstr ""
 
+#: utils_locale.rsdatemonth
+msgctxt "utils_locale.rsdatemonth"
+msgid "Month"
+msgstr ""
+
 #: utils_locale.rsdatenestrevision
 msgctxt "utils_locale.rsdatenestrevision"
 msgid "Nest revision date"
@@ -14504,6 +14531,11 @@ msgstr ""
 
 #: utils_locale.rsdatetransfer
 msgid "Transfer date"
+msgstr ""
+
+#: utils_locale.rsdateyear
+msgctxt "utils_locale.rsdateyear"
+msgid "Year"
 msgstr ""
 
 #: utils_locale.rsdeadbird
@@ -15049,6 +15081,11 @@ msgstr ""
 #: utils_locale.rserrorfieldsandvaluesdiffer
 msgctxt "utils_locale.rserrorfieldsandvaluesdiffer"
 msgid "The length of field and value lists do not match."
+msgstr ""
+
+#: utils_locale.rserrorfileformatnotsupported
+#, object-pascal-format
+msgid "File format not supported: %s"
 msgstr ""
 
 #: utils_locale.rserrorfilenotfound
@@ -15627,6 +15664,10 @@ msgctxt "utils_locale.rsignoreaction"
 msgid "Ignore"
 msgstr ""
 
+#: utils_locale.rsignoreerrors
+msgid "Ignore and log errors"
+msgstr ""
+
 #: utils_locale.rsimagenotfound
 #, object-pascal-format
 msgctxt "utils_locale.rsimagenotfound"
@@ -15676,6 +15717,19 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsimportingfile"
 msgid "Importing file %s"
+msgstr ""
+
+#: utils_locale.rsimportstrategyappend
+msgctxt "utils_locale.rsimportstrategyappend"
+msgid "Append"
+msgstr ""
+
+#: utils_locale.rsimportstrategyreplace
+msgid "Replace"
+msgstr ""
+
+#: utils_locale.rsimportstrategyupdate
+msgid "Update"
 msgstr ""
 
 #: utils_locale.rsimportvideostitle
@@ -16524,6 +16578,27 @@ msgstr ""
 #: utils_locale.rsnouserfound
 msgctxt "utils_locale.rsnouserfound"
 msgid "no user found"
+msgstr ""
+
+#: utils_locale.rsnulldefaultvalue
+msgid "Default value"
+msgstr ""
+
+#: utils_locale.rsnullignore
+msgctxt "utils_locale.rsnullignore"
+msgid "Ignore"
+msgstr ""
+
+#: utils_locale.rsnullmeanvalue
+msgid "Mean value"
+msgstr ""
+
+#: utils_locale.rsnullmedianvalue
+msgid "Median value"
+msgstr ""
+
+#: utils_locale.rsnullmodevalue
+msgid "Mode value"
 msgstr ""
 
 #: utils_locale.rsnumberofrecords
@@ -17406,6 +17481,14 @@ msgctxt "utils_locale.rssampletongue"
 msgid "Tongue"
 msgstr ""
 
+#: utils_locale.rsscaledivide
+msgid "Divide"
+msgstr ""
+
+#: utils_locale.rsscalemultiply
+msgid "Multiply"
+msgstr ""
+
 #: utils_locale.rssearch
 msgctxt "utils_locale.rssearch"
 msgid "Search"
@@ -17796,6 +17879,11 @@ msgctxt "utils_locale.rssynonym"
 msgid "Synonym"
 msgstr ""
 
+#: utils_locale.rssystemencoding
+msgctxt "utils_locale.rssystemencoding"
+msgid "System encoding"
+msgstr ""
+
 #: utils_locale.rstabbreeding
 msgctxt "utils_locale.rstabbreeding"
 msgid "Breeding"
@@ -17839,6 +17927,27 @@ msgstr ""
 #: utils_locale.rsteam
 msgctxt "utils_locale.rsteam"
 msgid "Team"
+msgstr ""
+
+#: utils_locale.rstextcaselower
+msgid "Lower case"
+msgstr ""
+
+#: utils_locale.rstextcaseoriginal
+msgctxt "utils_locale.rstextcaseoriginal"
+msgid "Original case"
+msgstr ""
+
+#: utils_locale.rstextcasesentence
+msgid "Sentence case"
+msgstr ""
+
+#: utils_locale.rstextcasetitle
+msgid "Title case"
+msgstr ""
+
+#: utils_locale.rstextcaseupper
+msgid "Upper case"
 msgstr ""
 
 #: utils_locale.rstimecapture

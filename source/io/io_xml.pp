@@ -21,7 +21,7 @@ unit io_xml;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLRead, io_core;
+  Classes, SysUtils, DOM, XMLRead, LConvEncoding, io_core;
 
 type
 
@@ -74,28 +74,99 @@ end;
 
 function TXMLImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
+  RawBytes: TBytes;
+  RawText, Utf8Text, DetectedEncoding: String;
+  Utf8Stream: TStringStream;
   Doc: TXMLDocument;
   NodeList: TDOMNodeList;
   Node, Child: TDOMNode;
-  j: Integer;
+  Attr: TDOMAttr;
+  SL: TStringList;
+  i, j: Integer;
+
+  function ResolvePath(Node: TDOMNode; const Path: String): TDOMNode;
+  var
+    Parts: TStringArray;
+    P: String;
+    K: Integer;
+    Cur: TDOMNode;
+  begin
+    Result := Node;
+    if Path = '' then Exit;
+
+    Parts := Path.Split(['/']);
+    Cur := Node;
+
+    for K := 0 to High(Parts) do
+    begin
+      P := Parts[K];
+      Cur := Cur.FindNode(P);
+      if Cur = nil then Exit(nil);
+    end;
+
+    Result := Cur;
+  end;
+
 begin
   Result := TStringList.Create;
+
+  // Read bytes from stream
   Stream.Position := 0;
-  ReadXMLFile(Doc, Stream);
+  SetLength(RawText, Stream.Size);
+  if Stream.Size > 0 then
+    Stream.ReadBuffer(RawText[1], Stream.Size);
+
+  // Convert encoding → UTF-8
+  if Options.Encoding <> '' then
+    Utf8Text := ConvertEncoding(RawText, Options.Encoding, 'utf-8')
+  else
+  begin
+    DetectedEncoding := GuessEncoding(RawText);
+    Utf8Text := ConvertEncoding(RawText, DetectedEncoding, 'utf-8');
+  end;
+
+  // Create stream UTF-8
+  Utf8Stream := TStringStream.Create(Utf8Text, TEncoding.UTF8);
+
   try
-    NodeList := Doc.GetElementsByTagName(Options.RecordNodeName);
-    if NodeList.Count > 0 then
-    begin
-      Node := NodeList[0];
-      for j := 0 to Node.ChildNodes.Count - 1 do
+    ReadXMLFile(Doc, Utf8Stream);
+
+    // Apply RecordsPath if needed
+    Node := ResolvePath(Doc.DocumentElement, Options.RecordsPath);
+    if Node = nil then Exit;
+
+    // Find RecordNodeName
+    NodeList := Node.GetChildNodes;
+    if NodeList.Count = 0 then Exit;
+
+    Node := NodeList[0];
+
+    // Node attributes
+    if Node.Attributes <> nil then
+      for i := 0 to Node.Attributes.Length - 1 do
       begin
-        Child := Node.ChildNodes[j];
-        if (Child.NodeType = ELEMENT_NODE) then
+        Attr := TDOMAttr(Node.Attributes.Item[i]);
+        if not (Options.IgnoreNulls and (Attr.Value = '')) then
+          Result.Add(Attr.Name);
+      end;
+
+    // Child elements
+    for j := 0 to Node.ChildNodes.Count - 1 do
+    begin
+      Child := Node.ChildNodes[j];
+
+      if Child.NodeType = ELEMENT_NODE then
+      begin
+        if Options.TrimFields then
+          Result.Add(Trim(Child.NodeName))
+        else
           Result.Add(Child.NodeName);
       end;
     end;
+
   finally
     Doc.Free;
+    Utf8Stream.Free;
   end;
 end;
 

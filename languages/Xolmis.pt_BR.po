@@ -4476,14 +4476,17 @@ msgid "Semicolon"
 msgstr "Ponto e vírgula"
 
 #: tdlgimport.cbencoding.text
+msgctxt "tdlgimport.cbencoding.text"
 msgid "System encoding"
 msgstr "Codificação do sistema"
 
 #: tdlgimport.cberrorhandling.text
+msgctxt "tdlgimport.cberrorhandling.text"
 msgid "Abort on first error"
 msgstr "Parar no primeiro erro"
 
 #: tdlgimport.cbimportstrategy.text
+msgctxt "tdlgimport.cbimportstrategy.text"
 msgid "Append"
 msgstr "Inserir"
 
@@ -4508,6 +4511,7 @@ msgid "Select a table..."
 msgstr "Selecione uma tabela..."
 
 #: tdlgimport.cbtextcase.text
+msgctxt "tdlgimport.cbtextcase.text"
 msgid "Original case"
 msgstr "Caixa original"
 
@@ -13253,6 +13257,11 @@ msgctxt "tlstmoltlimits.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
 
+#: utils_locale.rsabortonerror
+msgctxt "utils_locale.rsabortonerror"
+msgid "Abort on first error"
+msgstr "Parar no primeiro erro"
+
 #: utils_locale.rsaccepted
 msgctxt "utils_locale.rsaccepted"
 msgid "Accepted"
@@ -14312,10 +14321,19 @@ msgctxt "utils_locale.rscoordinatesavailabletouse"
 msgid "Coordinates are available at the Coordinates Editor."
 msgstr "Coordenadas estão disponíveis no Editor de Coordenadas."
 
+#: utils_locale.rscoordinatesdms
+msgid "Degrees, Minutes and Seconds"
+msgstr "Graus, Minutos e Segundos"
+
 #: utils_locale.rscoordinatesnameinput
 msgctxt "utils_locale.rscoordinatesnameinput"
 msgid "Give a name to the coordinates set:"
 msgstr "Nomeie o conjunto de coordenadas:"
+
+#: utils_locale.rscoordinatesutm
+msgctxt "utils_locale.rscoordinatesutm"
+msgid "UTM"
+msgstr "UTM"
 
 #: utils_locale.rscpfincnpj
 msgctxt "utils_locale.rscpfincnpj"
@@ -14381,6 +14399,10 @@ msgctxt "utils_locale.rsdatecollection"
 msgid "Collection date"
 msgstr "Data de coleta"
 
+#: utils_locale.rsdateday
+msgid "Day"
+msgstr "Dia"
+
 #: utils_locale.rsdatedeath
 msgctxt "utils_locale.rsdatedeath"
 msgid "Death date"
@@ -14436,6 +14458,11 @@ msgctxt "utils_locale.rsdatemeasured"
 msgid "Measurement date"
 msgstr "Data de medição"
 
+#: utils_locale.rsdatemonth
+msgctxt "utils_locale.rsdatemonth"
+msgid "Month"
+msgstr "Mês"
+
 #: utils_locale.rsdatenestrevision
 msgctxt "utils_locale.rsdatenestrevision"
 msgid "Nest revision date"
@@ -14488,6 +14515,11 @@ msgstr "hoje"
 #: utils_locale.rsdatetransfer
 msgid "Transfer date"
 msgstr "Data da transferência"
+
+#: utils_locale.rsdateyear
+msgctxt "utils_locale.rsdateyear"
+msgid "Year"
+msgstr "Ano"
 
 #: utils_locale.rsdeadbird
 msgctxt "utils_locale.rsdeadbird"
@@ -15035,6 +15067,11 @@ msgstr "Ocorreu um erro exportando: %s"
 msgctxt "utils_locale.rserrorfieldsandvaluesdiffer"
 msgid "The length of field and value lists do not match."
 msgstr "O tamanho das listas de campos e valores não correspondem."
+
+#: utils_locale.rserrorfileformatnotsupported
+#, object-pascal-format
+msgid "File format not supported: %s"
+msgstr "Formato de arquivo não suportado: %s"
 
 #: utils_locale.rserrorfilenotfound
 #, object-pascal-format
@@ -15612,6 +15649,10 @@ msgctxt "utils_locale.rsignoreaction"
 msgid "Ignore"
 msgstr "Ignorar"
 
+#: utils_locale.rsignoreerrors
+msgid "Ignore and log errors"
+msgstr "Ignorar e logar erros"
+
 #: utils_locale.rsimagenotfound
 #, object-pascal-format
 msgctxt "utils_locale.rsimagenotfound"
@@ -15662,6 +15703,19 @@ msgstr "Importar imagens"
 msgctxt "utils_locale.rsimportingfile"
 msgid "Importing file %s"
 msgstr "Importando arquivo %s"
+
+#: utils_locale.rsimportstrategyappend
+msgctxt "utils_locale.rsimportstrategyappend"
+msgid "Append"
+msgstr "Inserir"
+
+#: utils_locale.rsimportstrategyreplace
+msgid "Replace"
+msgstr "Substituir"
+
+#: utils_locale.rsimportstrategyupdate
+msgid "Update"
+msgstr "Atualizar"
 
 #: utils_locale.rsimportvideostitle
 msgid "Import videos"
@@ -16512,6 +16566,27 @@ msgstr "Não revisado"
 msgctxt "utils_locale.rsnouserfound"
 msgid "no user found"
 msgstr "nenhum usuário encontrado"
+
+#: utils_locale.rsnulldefaultvalue
+msgid "Default value"
+msgstr "Valor padrão"
+
+#: utils_locale.rsnullignore
+msgctxt "utils_locale.rsnullignore"
+msgid "Ignore"
+msgstr "Ignorar"
+
+#: utils_locale.rsnullmeanvalue
+msgid "Mean value"
+msgstr "Média"
+
+#: utils_locale.rsnullmedianvalue
+msgid "Median value"
+msgstr "Mediana"
+
+#: utils_locale.rsnullmodevalue
+msgid "Mode value"
+msgstr "Moda"
 
 #: utils_locale.rsnumberofrecords
 msgctxt "utils_locale.rsnumberofrecords"
@@ -17554,6 +17629,14 @@ msgctxt "utils_locale.rssampletongue"
 msgid "Tongue"
 msgstr "Língua"
 
+#: utils_locale.rsscaledivide
+msgid "Divide"
+msgstr "Dividir"
+
+#: utils_locale.rsscalemultiply
+msgid "Multiply"
+msgstr "Multiplicar"
+
 #: utils_locale.rssearch
 msgctxt "utils_locale.rssearch"
 msgid "Search"
@@ -17944,6 +18027,11 @@ msgctxt "utils_locale.rssynonym"
 msgid "Synonym"
 msgstr "Sinônimo"
 
+#: utils_locale.rssystemencoding
+msgctxt "utils_locale.rssystemencoding"
+msgid "System encoding"
+msgstr "Codificação do sistema"
+
 #: utils_locale.rstabbreeding
 msgctxt "utils_locale.rstabbreeding"
 msgid "Breeding"
@@ -17988,6 +18076,27 @@ msgstr "Taxonomia"
 msgctxt "utils_locale.rsteam"
 msgid "Team"
 msgstr "Equipe"
+
+#: utils_locale.rstextcaselower
+msgid "Lower case"
+msgstr "Caixa baixa"
+
+#: utils_locale.rstextcaseoriginal
+msgctxt "utils_locale.rstextcaseoriginal"
+msgid "Original case"
+msgstr "Caixa original"
+
+#: utils_locale.rstextcasesentence
+msgid "Sentence case"
+msgstr "Caixa de frase"
+
+#: utils_locale.rstextcasetitle
+msgid "Title case"
+msgstr "Caixa de título"
+
+#: utils_locale.rstextcaseupper
+msgid "Upper case"
+msgstr "Caixa alta"
 
 #: utils_locale.rstimecapture
 msgid "Capture time"
