@@ -320,6 +320,8 @@ uses
     rsLoadingListOfCities = 'Loading list of cities...';
     rsCalculatingBandBalance = 'Calculating band balance...';
     rsCheckingDatabaseIntegrity = 'Checking database integrity...';
+    rsLoadingListOfSheets = 'Loading list of sheets...';
+    rsLoadingListOfFields = 'Loading list of fields...';
 
     { Backup messages }
     rsPromptBackupNow = 'The automatic backup will start now and may take several minutes. ' +

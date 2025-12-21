@@ -33,6 +33,7 @@ type
     vtrRemoveAccents, vtrNormalizeWhitespace, vtrReplaceChars, vtrScale, vtrRound,
     vtrExtractYear, vtrExtractMonth, vtrExtractDay, vtrConvertCoordinates, vtrSplitCoordinates);
   TNullHandling = (nhIgnore, nhDefaultValue, nhUseMean, nhUseMedian, nhUseMode);
+  TArrayHandling = (ahIgnore, ahJsonString);
   TScaleOperation = (sopMultiply, sopDivide);
   TSourceCoordinatesFormat = (scfDMS, scfUTM);
 
@@ -40,12 +41,14 @@ type
   public
     SourceField: String;
     TargetField: String;
+    DataType: TSearchDataType;
     Import: Boolean;
     LookupTable: TTableType;
     LookupField: String;
     Transformations: set of TValueTransformation;
     IsCorrespondingKey: Boolean;
     NullHandling: TNullHandling;
+    ArrayHandling: TArrayHandling;
     DefaultValue: Variant;
     ReplaceCharFrom: String;
     ReplaceCharTo: String;
@@ -58,6 +61,18 @@ type
   TFieldsMap = specialize TFPGObjectList<TFieldMapping>;
 
   TFieldsDictionary = specialize TFPGMap<String, String>;
+
+  TColumnTypeStats = class
+  public
+    Name: string;
+    Seen: Integer;
+    IntCount: Integer;
+    FloatCount: Integer;
+    DateCount: Integer;
+    TimeCount: Integer;
+    DateTimeCount: Integer;
+    BoolCount: Integer;
+  end;
 
   TExportFiletype = (xfCSV, xfJSON, xfODS, xfXLSX, xfXML);
 

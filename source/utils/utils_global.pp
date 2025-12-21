@@ -140,7 +140,7 @@ const
 
   { File extensions }
 const
-  TEXT_EXTENSIONS: array of String = ('.doc','.docx','.odt','.rtf','.txt','.md','.tex','.pages');
+  TEXT_EXTENSIONS: array of String = ('.doc','.docx','.odt','.rtf','.txt','.md','.adoc','.tex','.pages');
   SPREADSHEET_EXTENSIONS: array of String = ('.xls','.xlsx','.xlsm','.ods','.csv','.tsv','.numbers');
   PRESENTATION_EXTENSIONS: array of String = ('.ppt','.pptx','.pps','.ppsx','.odp','.key');
   PDF_EXTENSIONS: array of String = ('.pdf','.xps');

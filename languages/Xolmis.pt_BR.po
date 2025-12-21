@@ -4465,6 +4465,11 @@ msgstr "A&juda"
 msgid "Import wizard"
 msgstr "Assistente de importação"
 
+#: tdlgimport.cbarrayhandling.text
+msgctxt "tdlgimport.cbarrayhandling.text"
+msgid "Ignore"
+msgstr "Ignorar"
+
 #: tdlgimport.cbdecimalseparator.text
 msgctxt "tdlgimport.cbdecimalseparator.text"
 msgid "Colon"
@@ -4487,8 +4492,8 @@ msgstr "Parar no primeiro erro"
 
 #: tdlgimport.cbimportstrategy.text
 msgctxt "tdlgimport.cbimportstrategy.text"
-msgid "Append"
-msgstr "Inserir"
+msgid "Update"
+msgstr "Atualizar"
 
 #: tdlgimport.cblookupfield.texthint
 msgctxt "tdlgimport.cblookupfield.texthint"
@@ -4516,8 +4521,9 @@ msgid "Original case"
 msgstr "Caixa original"
 
 #: tdlgimport.edefaultvalue.texthint
-msgid "Inform default value"
-msgstr "Informe o valor padrão"
+msgctxt "tdlgimport.edefaultvalue.texthint"
+msgid "Default value"
+msgstr "Valor padrão"
 
 #: tdlgimport.ereplacecharfrom.texthint
 msgid "From"
@@ -4539,13 +4545,22 @@ msgstr "Selecione um arquivo..."
 
 #: tdlgimport.gridfields.columns[0].title.caption
 msgctxt "tdlgimport.gridfields.columns[0].title.caption"
-msgid "Import"
-msgstr "Importar"
+msgid "Source field"
+msgstr "Campo de origem"
 
 #: tdlgimport.gridfields.columns[1].title.caption
 msgctxt "tdlgimport.gridfields.columns[1].title.caption"
+msgid "Import"
+msgstr "Importar"
+
+#: tdlgimport.gridfields.columns[2].title.caption
+msgctxt "tdlgimport.gridfields.columns[2].title.caption"
 msgid "Target field"
-msgstr "Campo destino"
+msgstr "Campo de destino"
+
+#: tdlgimport.lblarrayhandling.caption
+msgid "Array fields"
+msgstr "Campos array"
 
 #: tdlgimport.lblbooleanvalue.caption
 msgid "Boolean value"
@@ -4558,6 +4573,10 @@ msgstr "Verifique se os dados amostrados estão corretos."
 #: tdlgimport.lblconvertcoordinates.caption
 msgid "Convert coordinates"
 msgstr "Converter coordenadas"
+
+#: tdlgimport.lbldatatype.caption
+msgid "Data type"
+msgstr "Tipo de dados"
 
 #: tdlgimport.lbldecimalseparator.caption
 msgctxt "tdlgimport.lbldecimalseparator.caption"
@@ -4591,8 +4610,8 @@ msgid "First row as header"
 msgstr "Primeira linha com cabeçalho"
 
 #: tdlgimport.lblimportsettings.caption
-msgid "Import settings:"
-msgstr "Configurações de importação:"
+msgid "Import profile:"
+msgstr "Perfil de importação:"
 
 #: tdlgimport.lblimportstrategy.caption
 msgid "Import strategy"
@@ -4754,9 +4773,9 @@ msgctxt "tdlgimport.sbsavelog.caption"
 msgid "Save log"
 msgstr "Salvar log"
 
-#: tdlgimport.sbsavesettings.caption
-msgid "Save settings"
-msgstr "Salvar configurações"
+#: tdlgimport.sbsaveprofile.caption
+msgid "Save import profile"
+msgstr "Salvar perfil de importação"
 
 #: tdlgimportcaptures.btngeneratefiles.caption
 msgctxt "tdlgimportcaptures.btngeneratefiles.caption"
@@ -15714,6 +15733,7 @@ msgid "Replace"
 msgstr "Substituir"
 
 #: utils_locale.rsimportstrategyupdate
+msgctxt "utils_locale.rsimportstrategyupdate"
 msgid "Update"
 msgstr "Atualizar"
 
@@ -15953,6 +15973,14 @@ msgstr "Carregando lista de cidades..."
 #: utils_locale.rsloadinglistofcountries
 msgid "Loading list of countries..."
 msgstr "Carregando lista de países..."
+
+#: utils_locale.rsloadinglistoffields
+msgid "Loading list of fields..."
+msgstr "Carregando lista de campos..."
+
+#: utils_locale.rsloadinglistofsheets
+msgid "Loading list of sheets..."
+msgstr "Carregando lista de planilhas..."
 
 #: utils_locale.rsloadingmainwindow
 msgctxt "utils_locale.rsloadingmainwindow"
@@ -16568,6 +16596,7 @@ msgid "no user found"
 msgstr "nenhum usuário encontrado"
 
 #: utils_locale.rsnulldefaultvalue
+msgctxt "utils_locale.rsnulldefaultvalue"
 msgid "Default value"
 msgstr "Valor padrão"
 

@@ -9,7 +9,146 @@ Xolmis is designed to be a **flexible data repository**, capable of integrating 
 
 ![Import wizard dialog](img/import-wizard.png)
 
-The **Import wizard** is a general tool that guides the user step by step through the import process. It is designed to validate data before insertion, ensuring consistency and reliability across the system. Future updates will include support for bulk imports, advanced error handling, and mapping of fields between external files and Xolmis tables.
+The **Import wizard** guides you through all steps required to bring external data into Xolmis safely and consistently.  
+It is designed to validate, preview, and map data before it is inserted into the database, reducing errors and ensuring compatibility with Xolmis tables.
+
+The wizard is divided into five steps:
+
+1. **Source and destination selection**  
+2. **General import settings**  
+3. **Field mapping**  
+4. **Import progress**  
+5. **Completion**
+
+Each step is described in detail below.
+
+### 1. Source and destination selection
+
+In the first step, you choose:
+
+- **Source file:** the external file you want to import (see the supported file types below).
+- **Destination table:** the Xolmis table where the data will be inserted (e.g., *Sightings*, *Individuals*, *Nests*, *Eggs*, *Specimens*, etc.).
+- **Import settings:** optionally, you can choose a saved import profile.
+
+This step ensures that the wizard loads the correct structure and prepares the appropriate field mapping options.
+
+### 2. General import settings
+
+This step configures how the file should be interpreted.  
+Different formats expose different options, but common settings include:
+
+| Option | Description | Default |
+| --- | --- | --- |
+| **Import strategy** | How to treat duplicate data. | Append |
+| **Error handling** | How to handle errors during import. | Abort on first error |
+| **File encoding** | UTF-8 or system encoding. | System encoding |
+| **First row as header** | First row contains column names. | Yes |
+| **Delimiter** | Column delimiter: Comma, Semicolon, Tab, Other. | Semicolon |
+| **Sheet or tab** | Which sheet to read from spreadsheet file. | first sheet |
+| **Decimal separator** | Comma or period (dot). | Comma |
+| **Records key path** | Path to JSON/XML key containing the list of records. | |
+| **Records XPath** | Name of the XML tag containing one record. | |
+
+| Option | CSV/TSV | ODS/XLSX | JSON | XML | DBF |
+| --- | :-: | :-: | :-: | :-: | :-: |
+| **Import strategy** | :material-check: | :material-check: | :material-check: | :material-check: | :material-check: |
+| **Error handling** | :material-check: | :material-check: | :material-check: | :material-check: | :material-check: |
+| **File encoding** | :material-check: |  | :material-check: | :material-check: | :material-check: |
+| **First row as header** | :material-check: | :material-check: |  |  |  |
+| **Delimiter** | :material-check: |  |  |  |  |
+| **Sheet or tab** |  | :material-check: |  |  |  |
+| **Decimal separator** | :material-check: | :material-check: | :material-check: | :material-check: |  |
+| **Records key path** |  |  | :material-check: | :material-check: |  |
+| **Records XPath** |  |  |  | :material-check: |  |
+
+These settings ensure that Xolmis interprets the file correctly before mapping fields.
+
+### 3. Field mapping
+
+In this step, you define how each column from the source file corresponds to fields in the destination table.
+
+The wizard automatically:
+
+- lists all fields from the source file  
+- lists all fields from the destination table  
+- attempts to **infer data types** (integer, float, date, time, boolean, text)  
+- suggests mappings when possible  
+
+You can adjust each mapping manually. For each field, the following options are available:
+
+| Option | Description | Default |
+| --- | --- | --- |
+| **Source field** | Column name from the imported file (read only). | |
+| **Target field** | Field in the Xolmis table. | |
+| **Import** | Whether this field should be imported. | |
+| **Primary or corresponding field** | Field used as reference to check duplicate records. | No |
+| **Data type** | Automatically inferred; can be overridden. | Text |
+| **Lookup table** | If the source field value needs to be searched in another table. | |
+| **Lookup field** | Which field to search in the lookup table. | |
+| **Null values** | How to treat null values: Ignore, Default value, Mean value, Median value, Mode value. | Ignore |
+| **Array fields** | How to treat array fields: Ignore, JSON string. | Ignore |
+| **Trim value**| Trim spaces from start and end of the value. | Yes |
+| **Boolean value** | Force treatment of field as boolean. | No |
+| **Text case** | Transform text case: Original case, Lower case, Upper case, Sentence case, Title case. | Original case |
+| **Remove accents** | Remove text diacritics. | No |
+| **Normalize whitespace** | Remove tabs and double spaces in the middle of text. | Yes |
+| **Replace chars** | Replace text in all text values. | No |
+| **Round value** | Round decimal numbers to a defined precision. | No |
+| **Scale value** | Multiply or divide value by a scale value. Useful to convert units. | No |
+| **Extract date part** | Extract year, month or day. | No |
+| **Convert coordinates** | Convert geographical coordinates to decimal degrees. | No |
+| **Split coordinates** | When the source coordinates have longitude and latitude in the same value. | No |
+
+The goal of this step is to ensure that every imported value matches the structure and constraints of the Xolmis database.
+
+### 4. Import progress
+
+Once the mapping is confirmed, the wizard begins the import process.
+
+The progress screen displays:
+
+- **Number of processed rows**  
+- **Warnings** (non-critical issues)  
+- **Errors** (rows that could not be imported)
+
+If errors occur, the wizard provides:
+
+- a list of problematic rows  
+- the reason for each error  
+- an option to export the error report for review
+
+This allows you to correct issues and re-import only the affected rows if needed.
+
+### 5. Completion
+
+When the import finishes, the wizard shows a summary:
+
+- Total rows processed  
+- Rows successfully imported  
+- Rows skipped  
+- Rows with errors  
+- Destination table  
+- Time elapsed
+
+You can then:
+
+- **Open the destination table** to review the imported data  
+- **Save the import profile** for future use  
+- **Export the error report** (if applicable)  
+- **Start a new import**
+
+### Saving and reusing import profiles
+
+The wizard allows you to save your import configuration as a **profile**, which includes:
+
+- file format settings  
+- delimiter, encoding, date/time formats  
+- field mappings  
+- transformations
+
+Profiles are stored in the Xolmis database and can be exported/imported as JSON files.
+
+This is especially useful for recurring imports with the same structure.
 
 ### Supported file formats
 

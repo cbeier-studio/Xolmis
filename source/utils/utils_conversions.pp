@@ -29,7 +29,11 @@ uses
   function TrimList(aList: TStrings): String; overload;
   function TrimList(aList: String): String; overload;
 
+  function NormalizeWhitespace(const aText: String; RemoveLineBreaks: Boolean): String;
+
   function RemoveDiacritics(const aText: String): String;
+
+  function SentenceCase(aText: String): String;
 
   // Boolean treatment
   function TextToBool(aValue, aTrue, aFalse: String): Boolean;
@@ -143,6 +147,60 @@ begin
   Result := S;
 end;
 
+function NormalizeWhitespace(const aText: String; RemoveLineBreaks: Boolean): String;
+var
+  i: Integer;
+  ch: Char;
+  InSpace: Boolean;
+begin
+  Result := EmptyStr;
+  InSpace := False;
+
+  for i := 1 to Length(aText) do
+  begin
+    ch := aText[i];
+
+    // Case 1: "light" whitespace (space or tab)
+    if ch in [' ', #9] then
+    begin
+      if not InSpace then
+      begin
+        Result := Result + ' ';
+        InSpace := True;
+      end;
+      Continue;
+    end;
+
+    // Case 2: line breaks
+    if ch in [#10, #13] then
+    begin
+      if RemoveLineBreaks then
+      begin
+        // Treat as regular space
+        if not InSpace then
+        begin
+          Result := Result + ' ';
+          InSpace := True;
+        end;
+      end
+      else
+      begin
+        // Keep line break
+        Result := Result + ch;
+        InSpace := False;
+      end;
+      Continue;
+    end;
+
+    // Case 3: regular character
+    Result := Result + ch;
+    InSpace := False;
+  end;
+
+  // Remove spaces from start and from end
+  //Result := Trim(Result);
+end;
+
 function RemoveDiacritics(const aText: String): String;
 const
   AccentedChars: array[1..30] of string = (
@@ -165,6 +223,18 @@ begin
   Result := aText;
   for I := Low(AccentedChars) to High(AccentedChars) do
     Result := StringReplace(Result, AccentedChars[I], PlainChars[I], [rfReplaceAll, rfIgnoreCase]);
+end;
+
+function SentenceCase(aText: String): String;
+begin
+  aText := AnsiLowerCase(aText);
+
+  if aText = EmptyStr then
+    Exit('');
+
+  aText[1] := UpCase(aText[1]);
+
+  Result := aText;
 end;
 
 { --------------------------------------------------------- }

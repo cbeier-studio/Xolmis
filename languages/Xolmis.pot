@@ -4486,6 +4486,11 @@ msgstr ""
 msgid "Import wizard"
 msgstr ""
 
+#: tdlgimport.cbarrayhandling.text
+msgctxt "tdlgimport.cbarrayhandling.text"
+msgid "Ignore"
+msgstr ""
+
 #: tdlgimport.cbdecimalseparator.text
 msgctxt "tdlgimport.cbdecimalseparator.text"
 msgid "Colon"
@@ -4508,7 +4513,7 @@ msgstr ""
 
 #: tdlgimport.cbimportstrategy.text
 msgctxt "tdlgimport.cbimportstrategy.text"
-msgid "Append"
+msgid "Update"
 msgstr ""
 
 #: tdlgimport.cblookupfield.texthint
@@ -4537,7 +4542,8 @@ msgid "Original case"
 msgstr ""
 
 #: tdlgimport.edefaultvalue.texthint
-msgid "Inform default value"
+msgctxt "tdlgimport.edefaultvalue.texthint"
+msgid "Default value"
 msgstr ""
 
 #: tdlgimport.ereplacecharfrom.texthint
@@ -4560,12 +4566,21 @@ msgstr ""
 
 #: tdlgimport.gridfields.columns[0].title.caption
 msgctxt "tdlgimport.gridfields.columns[0].title.caption"
-msgid "Import"
+msgid "Source field"
 msgstr ""
 
 #: tdlgimport.gridfields.columns[1].title.caption
 msgctxt "tdlgimport.gridfields.columns[1].title.caption"
+msgid "Import"
+msgstr ""
+
+#: tdlgimport.gridfields.columns[2].title.caption
+msgctxt "tdlgimport.gridfields.columns[2].title.caption"
 msgid "Target field"
+msgstr ""
+
+#: tdlgimport.lblarrayhandling.caption
+msgid "Array fields"
 msgstr ""
 
 #: tdlgimport.lblbooleanvalue.caption
@@ -4578,6 +4593,10 @@ msgstr ""
 
 #: tdlgimport.lblconvertcoordinates.caption
 msgid "Convert coordinates"
+msgstr ""
+
+#: tdlgimport.lbldatatype.caption
+msgid "Data type"
 msgstr ""
 
 #: tdlgimport.lbldecimalseparator.caption
@@ -4612,7 +4631,7 @@ msgid "First row as header"
 msgstr ""
 
 #: tdlgimport.lblimportsettings.caption
-msgid "Import settings:"
+msgid "Import profile:"
 msgstr ""
 
 #: tdlgimport.lblimportstrategy.caption
@@ -4775,8 +4794,8 @@ msgctxt "tdlgimport.sbsavelog.caption"
 msgid "Save log"
 msgstr ""
 
-#: tdlgimport.sbsavesettings.caption
-msgid "Save settings"
+#: tdlgimport.sbsaveprofile.caption
+msgid "Save import profile"
 msgstr ""
 
 #: tdlgimportcaptures.btngeneratefiles.caption
@@ -15729,6 +15748,7 @@ msgid "Replace"
 msgstr ""
 
 #: utils_locale.rsimportstrategyupdate
+msgctxt "utils_locale.rsimportstrategyupdate"
 msgid "Update"
 msgstr ""
 
@@ -15967,6 +15987,14 @@ msgstr ""
 
 #: utils_locale.rsloadinglistofcountries
 msgid "Loading list of countries..."
+msgstr ""
+
+#: utils_locale.rsloadinglistoffields
+msgid "Loading list of fields..."
+msgstr ""
+
+#: utils_locale.rsloadinglistofsheets
+msgid "Loading list of sheets..."
 msgstr ""
 
 #: utils_locale.rsloadingmainwindow
@@ -16581,6 +16609,7 @@ msgid "no user found"
 msgstr ""
 
 #: utils_locale.rsnulldefaultvalue
+msgctxt "utils_locale.rsnulldefaultvalue"
 msgid "Default value"
 msgstr ""
 

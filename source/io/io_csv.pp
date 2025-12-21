@@ -117,7 +117,8 @@ end;
 function TCSVImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
   DS: TSdfDataSet;
-  Utf8Stream: TStringStream;
+  Utf8Stream: TMemoryStream;
+  Bytes: RawByteString;
   RawBytes: TBytes;
   RawText, Utf8Text, DetectedEncoding: String;
   SL: TStringList;
@@ -156,7 +157,8 @@ begin
   end;
 
   // Create stream UTF-8 for the TSdfDataSet
-  Utf8Stream := TStringStream.Create(Utf8Text, TEncoding.UTF8);
+  Bytes := Utf8Text;
+  Utf8Stream := TMemoryStream.Create;
 
   DS := TSdfDataSet.Create(nil);
   try
@@ -170,6 +172,10 @@ begin
     //  DS.Options := DS.Options + [soTrimFields];
     //{$ENDIF}
 
+    if Length(Bytes) > 0 then
+      Utf8Stream.WriteBuffer(Bytes[1], Length(Bytes));
+    Utf8Stream.Position := 0;
+
     DS.LoadFromStream(Utf8Stream);
     DS.Open;
 
@@ -180,7 +186,6 @@ begin
     DS.Free;
     Utf8Stream.Free;
   end;
-
 end;
 
 procedure TCSVImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);

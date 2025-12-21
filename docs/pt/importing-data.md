@@ -7,9 +7,148 @@ O Xolmis foi projetado para ser um **repositório de dados flexível**, capaz de
 
 ## Assistente de importação
 
-![Diálogo do assistente de importação](img/import-wizard.png)
+![Import wizard dialog](img/import-wizard.png)
 
-O **Assistente de importação** é uma ferramenta geral que guia o usuário passo a passo pelo processo de importação. Ele foi projetado para validar os dados antes da inserção, garantindo consistência e confiabilidade em todo o sistema. Atualizações futuras incluirão suporte para importações em lote, tratamento avançado de erros e mapeamento de campos entre arquivos externos e tabelas do Xolmis.
+O **Assistente de importação** guia você por todas as etapas necessárias para trazer dados externos para o Xolmis de forma segura e consistente.  
+Ele foi projetado para validar, pré-visualizar e mapear dados antes de inseri-los no banco de dados, reduzindo erros e garantindo compatibilidade com as tabelas do Xolmis.
+
+O assistente é dividido em cinco etapas:
+
+1. **Seleção da origem e destino**  
+2. **Configurações gerais de importação**  
+3. **Mapeamento de campos**  
+4. **Progresso da importação**  
+5. **Conclusão**
+
+Cada etapa é descrita em detalhes abaixo.
+
+### 1. Seleção da origem e destino
+
+Na primeira etapa, você escolhe:
+
+- **Arquivo de origem:** o arquivo externo que deseja importar (veja os tipos de arquivo suportados abaixo).  
+- **Tabela de destino:** a tabela do Xolmis onde os dados serão inseridos (ex.: *Sightings*, *Individuals*, *Nests*, *Eggs*, *Specimens* etc.).  
+- **Configurações de importação:** opcionalmente, você pode escolher um perfil de importação salvo.
+
+Essa etapa garante que o assistente carregue a estrutura correta e prepare as opções adequadas de mapeamento de campos.
+
+### 2. Configurações gerais de importação
+
+Esta etapa configura como o arquivo deve ser interpretado.  
+Diferentes formatos exibem opções diferentes, mas as configurações comuns incluem:
+
+| Opção | Descrição | Padrão |
+| --- | --- | --- |
+| **Estratégia de importação** | Como tratar dados duplicados. | Acrescentar |
+| **Tratamento de erros** | Como lidar com erros durante a importação. | Abortar no primeiro erro |
+| **Codificação do arquivo** | UTF-8 ou codificação do sistema. | Codificação do sistema |
+| **Primeira linha como cabeçalho** | A primeira linha contém nomes de colunas. | Sim |
+| **Delimitador** | Delimitador de colunas: vírgula, ponto e vírgula, tabulação, outro. | Ponto e vírgula |
+| **Planilha ou aba** | Qual planilha deve ser lida no arquivo. | primeira planilha |
+| **Separador decimal** | Vírgula ou ponto. | Vírgula |
+| **Caminho da chave de registros** | Caminho para a chave JSON/XML contendo a lista de registros. | |
+| **XPath dos registros** | Nome da tag XML que contém um registro. | |
+
+| Opção | CSV/TSV | ODS/XLSX | JSON | XML | DBF |
+| --- | :-: | :-: | :-: | :-: | :-: |
+| **Estratégia de importação** | :material-check: | :material-check: | :material-check: | :material-check: | :material-check: |
+| **Tratamento de erros** | :material-check: | :material-check: | :material-check: | :material-check: | :material-check: |
+| **Codificação do arquivo** | :material-check: |  | :material-check: | :material-check: | :material-check: |
+| **Primeira linha como cabeçalho** | :material-check: | :material-check: |  |  |  |
+| **Delimitador** | :material-check: |  |  |  |  |
+| **Planilha ou aba** |  | :material-check: |  |  |  |
+| **Separador decimal** | :material-check: | :material-check: | :material-check: | :material-check: |  |
+| **Caminho da chave de registros** |  |  | :material-check: | :material-check: |  |
+| **XPath dos registros** |  |  |  | :material-check: |  |
+
+Essas configurações garantem que o Xolmis interprete o arquivo corretamente antes do mapeamento.
+
+### 3. Mapeamento de campos
+
+Nesta etapa, você define como cada coluna do arquivo de origem corresponde aos campos da tabela de destino.
+
+O assistente automaticamente:
+
+- lista todos os campos do arquivo de origem  
+- lista todos os campos da tabela de destino  
+- tenta **inferir tipos de dados** (inteiro, decimal, data, hora, booleano, texto)  
+- sugere mapeamentos quando possível  
+
+Você pode ajustar cada mapeamento manualmente. Para cada campo, estão disponíveis as seguintes opções:
+
+| Opção | Descrição | Padrão |
+| --- | --- | --- |
+| **Campo de origem** | Nome da coluna no arquivo importado (somente leitura). | |
+| **Campo de destino** | Campo correspondente na tabela do Xolmis. | |
+| **Importar** | Define se o campo deve ser importado. | |
+| **Campo primário ou correspondente** | Usado como referência para verificar registros duplicados. | Não |
+| **Tipo de dado** | Inferido automaticamente; pode ser alterado. | Texto |
+| **Tabela de busca** | Caso o valor precise ser procurado em outra tabela. | |
+| **Campo de busca** | Campo usado na tabela de busca. | |
+| **Valores nulos** | Como tratar valores nulos: Ignorar, Valor padrão, Média, Mediana, Moda. | Ignorar |
+| **Campos de array** | Como tratar arrays: Ignorar, String JSON. | Ignorar |
+| **Remover espaços** | Remove espaços no início e fim do valor. | Sim |
+| **Valor booleano** | Força o tratamento como booleano. | Não |
+| **Capitalização do texto** | Transformar caixa do texto: original, minúsculas, maiúsculas, frase, título. | Original |
+| **Remover acentos** | Remove diacríticos. | Não |
+| **Normalizar espaços** | Remove tabs e espaços duplos no meio do texto. | Sim |
+| **Substituir caracteres** | Substitui caracteres em todos os valores de texto. | Não |
+| **Arredondar valor** | Arredonda números decimais. | Não |
+| **Escalonar valor** | Multiplica ou divide o valor (útil para converter unidades). | Não |
+| **Extrair parte da data** | Extrai ano, mês ou dia. | Não |
+| **Converter coordenadas** | Converte coordenadas para graus decimais. | Não |
+| **Separar coordenadas** | Quando longitude e latitude estão no mesmo campo. | Não |
+
+O objetivo desta etapa é garantir que cada valor importado corresponda à estrutura e às restrições do banco de dados do Xolmis.
+
+### 4. Progresso da importação
+
+Após confirmar o mapeamento, o assistente inicia o processo de importação.
+
+A tela de progresso exibe:
+
+- **Número de linhas processadas**  
+- **Avisos** (problemas não críticos)  
+- **Erros** (linhas que não puderam ser importadas)
+
+Se ocorrerem erros, o assistente fornece:
+
+- uma lista das linhas problemáticas  
+- o motivo de cada erro  
+- uma opção para exportar o relatório de erros
+
+Isso permite corrigir os problemas e reimportar apenas as linhas afetadas.
+
+### 5. Conclusão
+
+Quando a importação termina, o assistente mostra um resumo:
+
+- Total de linhas processadas  
+- Linhas importadas com sucesso  
+- Linhas ignoradas  
+- Linhas com erro  
+- Tabela de destino  
+- Tempo decorrido
+
+Você pode então:
+
+- **Abrir a tabela de destino** para revisar os dados importados  
+- **Salvar o perfil de importação** para uso futuro  
+- **Exportar o relatório de erros** (se houver)  
+- **Iniciar uma nova importação**
+
+### Salvando e reutilizando perfis de importação
+
+O assistente permite salvar sua configuração de importação como um **perfil**, que inclui:
+
+- configurações de formato do arquivo  
+- delimitador, codificação, formatos de data/hora  
+- mapeamentos de campos  
+- transformações aplicadas  
+
+Os perfis são armazenados no banco de dados do Xolmis e podem ser exportados/importados como arquivos JSON.
+
+Isso é especialmente útil para importações recorrentes com a mesma estrutura.
 
 ### Formatos de arquivo suportados
 
