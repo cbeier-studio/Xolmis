@@ -203,20 +203,22 @@ end;
 
 function RemoveDiacritics(const aText: String): String;
 const
-  AccentedChars: array[1..30] of string = (
-    'á', 'à', 'â', 'ã', 'Á', 'À', 'Â', 'Ã',
+  AccentedChars: array[1..34] of string = (
+    'á', 'à', 'â', 'ã', 'ä', 'Á', 'À', 'Â', 'Ã', 'Ä',
     'é', 'ê', 'ë', 'É', 'Ê', 'Ë',
     'í', 'Í',
     'ó', 'ô', 'õ', 'ö', 'Ó', 'Ô', 'Õ', 'Ö',
     'ú', 'ü', 'Ú', 'Ü',
-    'ç', 'Ç');
-  PlainChars: array[1..30] of string = (
-    'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A',
+    'ç', 'Ç',
+    'ñ', 'Ñ');
+  PlainChars: array[1..34] of string = (
+    'a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A', 'A',
     'e', 'e', 'e', 'E', 'E', 'E',
     'i', 'I',
     'o', 'o', 'o', 'o', 'O', 'O', 'O', 'O',
     'u', 'u', 'U', 'U',
-    'c', 'C');
+    'c', 'C',
+    'n', 'N');
 var
   I: Integer;
 begin

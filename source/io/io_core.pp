@@ -21,7 +21,7 @@ unit io_core;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Variants, StrUtils, fgl, data_types;
+  Classes, SysUtils, Dialogs, Variants, StrUtils, TypInfo, fgl, fpjson, jsonparser, data_types, utils_gis;
 
 type
   EImportError = class(Exception);
@@ -32,10 +32,15 @@ type
   TValueTransformation = (vtrTrim, vtrLowerCase, vtrUpperCase, vtrSentenceCase, vtrTitleCase, vtrBoolean,
     vtrRemoveAccents, vtrNormalizeWhitespace, vtrReplaceChars, vtrScale, vtrRound,
     vtrExtractYear, vtrExtractMonth, vtrExtractDay, vtrConvertCoordinates, vtrSplitCoordinates);
+  TTypeErrorHandling = (tehIgnore, tehAbort, tehConvert);
   TNullHandling = (nhIgnore, nhDefaultValue, nhUseMean, nhUseMedian, nhUseMode);
   TArrayHandling = (ahIgnore, ahJsonString);
-  TScaleOperation = (sopMultiply, sopDivide);
-  TSourceCoordinatesFormat = (scfDMS, scfUTM);
+  TScaleOperation = (sopNone, sopMultiply, sopDivide);
+  TSourceCoordinatesFormat = (scfDD, scfDMS, scfUTM);
+
+  TValueTransformationSet = set of TValueTransformation;
+
+  { TFieldMapping }
 
   TFieldMapping = class
   public
@@ -45,8 +50,9 @@ type
     Import: Boolean;
     LookupTable: TTableType;
     LookupField: String;
-    Transformations: set of TValueTransformation;
+    Transformations: TValueTransformationSet;
     IsCorrespondingKey: Boolean;
+    TypeErrorHandling: TTypeErrorHandling;
     NullHandling: TNullHandling;
     ArrayHandling: TArrayHandling;
     DefaultValue: Variant;
@@ -56,6 +62,14 @@ type
     ScaleOperation: TScaleOperation;
     ScaleSize: Double;
     CoordinatesFormat: TSourceCoordinatesFormat;
+  public
+    function IsMapped: Boolean;
+    function IsValid: Boolean;
+    function IsLookup: Boolean;
+    function HasTransformation(T: TValueTransformation): Boolean;
+    procedure Reset(ClearSource: Boolean = False);
+    function ToJSON: String;
+    procedure FromJSON(const S: String);
   end;
 
   TFieldsMap = specialize TFPGObjectList<TFieldMapping>;
@@ -128,6 +142,7 @@ type
     DecimalSeparator: Char;   // parsing hints
     NumberFormat: String;     // parsing hints
     SRID: Integer;            // spatial data (e.g., 4326 = WGS84)
+    CoordinatesFormat: TMapCoordinateType; // spatial data (e.g., DD, DMS, UTM)
     OnProgress: TProgressProc;
     Cancel: ICancellation;
   end;
@@ -213,6 +228,12 @@ const
   EXPORT_FILE_FILTERS: array of String = ('Comma Separated Values (CSV)|*.csv',
     'JavaScript Object Notation (JSON)|*.json', 'Open Document Spreadsheet|*.ods',
     'Microsoft Excel|*.xlsx', 'Extensible Markup Language (XML)|*.xml');
+  VALUE_TRANSFORMATIONS: array of String = ('Trim', 'LowerCase', 'UpperCase', 'SentenceCase', 'TitleCase',
+    'Boolean', 'RemoveAccents', 'NormalizeWhitespace', 'ReplaceChars', 'Scale', 'Round', 'ExtractYear',
+    'ExtractMonth', 'ExtractDay', 'ConvertCoordinates', 'SplitCoordinates');
+
+  function TransformationsToString(const ASet: TValueTransformationSet): string;
+  function StringToTransformations(const S: string): TValueTransformationSet;
 
   procedure ImportFile(const FileName: string; const Options: TImportOptions; RowOut: TXRowConsumer);
 
@@ -253,6 +274,186 @@ begin
     end;
   finally
     fs.Free;
+  end;
+end;
+
+function TransformationsToString(const ASet: TValueTransformationSet): string;
+var
+  T: TValueTransformation;
+  L: TStringList;
+begin
+  L := TStringList.Create;
+  try
+    for T := Low(TValueTransformation) to High(TValueTransformation) do
+      if T in ASet then
+        L.Add(GetEnumName(TypeInfo(TValueTransformation), Ord(T)));
+
+    Result := L.CommaText; // "tvTrim,tvUppercase,tvScale"
+  finally
+    L.Free;
+  end;
+end;
+
+function StringToTransformations(const S: string): TValueTransformationSet;
+var
+  L: TStringList;
+  i, v: Integer;
+  Name: string;
+  T: TValueTransformation;
+begin
+  Result := [];
+  L := TStringList.Create;
+  try
+    L.CommaText := S;
+
+    for i := 0 to L.Count - 1 do
+    begin
+      Name := L[i];
+      v := GetEnumValue(TypeInfo(TValueTransformation), Name);
+      if v >= 0 then
+      begin
+        T := TValueTransformation(v);
+        Include(Result, T);
+      end;
+    end;
+
+  finally
+    L.Free;
+  end;
+end;
+
+{ TFieldMapping }
+
+procedure TFieldMapping.FromJSON(const S: String);
+var
+  Obj: TJSONObject;
+  Parser: TJSONParser;
+  Tmp: string;
+begin
+  Parser := TJSONParser.Create(S);
+  try
+    Obj := Parser.Parse as TJSONObject;
+
+    SourceField := Obj.Get('SourceField', '');
+    TargetField := Obj.Get('TargetField', '');
+    DataType := TSearchDataType(Obj.Get('DataType', 0));
+    Import := Obj.Get('Import', False);
+    LookupTable := TTableType(Obj.Get('LookupTable', 0));
+    LookupField := Obj.Get('LookupField', '');
+    Transformations := StringToTransformations(Obj.Get('Transformations', ''));
+    IsCorrespondingKey := Obj.Get('IsCorrespondingKey', False);
+    TypeErrorHandling := TTypeErrorHandling(Obj.Get('TypeErrorHandling', 0));
+    NullHandling := TNullHandling(Obj.Get('NullHandling', 0));
+    ArrayHandling := TArrayHandling(Obj.Get('ArrayHandling', 0));
+
+    Tmp := Obj.Get('DefaultValue', 'null');
+    if Tmp = 'null' then
+      DefaultValue := Null
+    else
+      DefaultValue := Tmp;
+
+    ReplaceCharFrom := Obj.Get('ReplaceCharFrom', '');
+    ReplaceCharTo := Obj.Get('ReplaceCharTo', '');
+    RoundPrecision := Obj.Get('RoundPrecision', 0);
+    ScaleOperation := TScaleOperation(Obj.Get('ScaleOperation', 0));
+    ScaleSize := Obj.Get('ScaleSize', 1.0);
+    CoordinatesFormat := TSourceCoordinatesFormat(Obj.Get('CoordinatesFormat', 0));
+
+  finally
+    Parser.Free;
+  end;
+end;
+
+function TFieldMapping.HasTransformation(T: TValueTransformation): Boolean;
+begin
+  Result := T in Transformations;
+end;
+
+function TFieldMapping.IsLookup: Boolean;
+begin
+  Result := (DataType = sdtLookup);
+end;
+
+function TFieldMapping.IsMapped: Boolean;
+begin
+  Result := Import and (TargetField <> '');
+end;
+
+function TFieldMapping.IsValid: Boolean;
+begin
+  // Campo não será importado → sempre válido
+  if not Import then
+    Exit(True);
+
+  // Precisa ter destino
+  if TargetField = '' then
+    Exit(False);
+
+  // Lookup precisa de tabela e campo
+  if IsLookup then
+    Result := (LookupTable <> tbNone) and (LookupField <> '')
+  else
+    Result := True;
+end;
+
+procedure TFieldMapping.Reset(ClearSource: Boolean);
+begin
+  if ClearSource then
+  begin
+    SourceField := '';
+  end;
+  TargetField := '';
+  DataType := sdtText;
+  Import := False;
+  LookupTable := tbNone;
+  LookupField := '';
+  Transformations := [];
+  IsCorrespondingKey := False;
+  TypeErrorHandling := tehIgnore;
+  NullHandling := nhIgnore;
+  ArrayHandling := ahIgnore;
+  DefaultValue := Null;
+  ReplaceCharFrom := '';
+  ReplaceCharTo := '';
+  RoundPrecision := 0;
+  ScaleOperation := sopNone;
+  ScaleSize := 1.0;
+  CoordinatesFormat := scfDD;
+end;
+
+function TFieldMapping.ToJSON: String;
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject.Create;
+  try
+    Obj.Add('SourceField', SourceField);
+    Obj.Add('TargetField', TargetField);
+    Obj.Add('DataType', Ord(DataType));
+    Obj.Add('Import', Import);
+    Obj.Add('LookupTable', Ord(LookupTable));
+    Obj.Add('LookupField', LookupField);
+    Obj.Add('Transformations', TransformationsToString(Transformations));
+    Obj.Add('IsCorrespondingKey', IsCorrespondingKey);
+    Obj.Add('TypeErrorHandling', Ord(TypeErrorHandling));
+    Obj.Add('NullHandling', Ord(NullHandling));
+    Obj.Add('ArrayHandling', Ord(ArrayHandling));
+
+    if VarIsNull(DefaultValue) then
+      Obj.Add('DefaultValue', 'null')
+    else
+      Obj.Add('DefaultValue', VarToStr(DefaultValue));
+
+    Obj.Add('ReplaceCharFrom', ReplaceCharFrom);
+    Obj.Add('ReplaceCharTo', ReplaceCharTo);
+    Obj.Add('RoundPrecision', RoundPrecision);
+    Obj.Add('ScaleOperation', Ord(ScaleOperation));
+    Obj.Add('ScaleSize', ScaleSize);
+    Obj.Add('CoordinatesFormat', Ord(CoordinatesFormat));
+
+    Result := Obj.AsJSON;
+  finally
+    Obj.Free;
   end;
 end;
 

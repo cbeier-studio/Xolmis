@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 0
+    PageIndex = 2
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -1352,6 +1352,7 @@ object dlgImport: TdlgImport
           RowCount = 2
           TabOrder = 1
           TitleStyle = tsNative
+          OnCheckboxToggled = gridFieldsCheckboxToggled
           OnSelectCell = gridFieldsSelectCell
           ColWidths = (
             64
@@ -1460,8 +1461,7 @@ object dlgImport: TdlgImport
               Style = csDropDownList
               TabOrder = 0
               TextHint = 'Select a table...'
-              OnChange = cbTargetChange
-              OnSelect = cbTargetSelect
+              OnSelect = cbLookupTableSelect
             end
           end
           object pLookupField: TBCPanel
@@ -1539,8 +1539,7 @@ object dlgImport: TdlgImport
               Style = csDropDownList
               TabOrder = 0
               TextHint = 'Select a table...'
-              OnChange = cbTargetChange
-              OnSelect = cbTargetSelect
+              OnSelect = cbLookupFieldSelect
             end
           end
           object pPrimaryKey: TBCPanel
@@ -1610,6 +1609,7 @@ object dlgImport: TdlgImport
               Width = 50
               OnColor = 13066075
               OffColor = clSilver
+              OnChange = tsPrimaryKeyChange
               Anchors = [akTop, akRight]
               Color = 16448250
               Constraints.MaxHeight = 25
@@ -1712,6 +1712,7 @@ object dlgImport: TdlgImport
               TabOrder = 1
               TextHint = 'Default value'
               Visible = False
+              OnChange = eDefaultValueChange
             end
           end
           object pTrimValue: TBCPanel
@@ -1782,6 +1783,7 @@ object dlgImport: TdlgImport
               Checked = True
               OnColor = 13066075
               OffColor = clSilver
+              OnChange = tsTrimValueChange
               Anchors = [akTop, akRight]
               Color = 16448250
               Constraints.MaxHeight = 25
@@ -1855,6 +1857,7 @@ object dlgImport: TdlgImport
               Width = 50
               OnColor = 13066075
               OffColor = clSilver
+              OnChange = tsBooleanValueChange
               Anchors = [akTop, akRight]
               Color = 16448250
               Constraints.MaxHeight = 25
@@ -1937,7 +1940,7 @@ object dlgImport: TdlgImport
               Style = csDropDownList
               TabOrder = 0
               Text = 'Original case'
-              OnSelect = cbDelimiterSelect
+              OnSelect = cbTextCaseSelect
             end
           end
           object pRemoveAccents: TBCPanel
@@ -2007,6 +2010,7 @@ object dlgImport: TdlgImport
               Width = 50
               OnColor = 13066075
               OffColor = clSilver
+              OnChange = tsRemoveAccentsChange
               Anchors = [akTop, akRight]
               Color = 16448250
               Constraints.MaxHeight = 25
@@ -2081,6 +2085,7 @@ object dlgImport: TdlgImport
               Checked = True
               OnColor = 13066075
               OffColor = clSilver
+              OnChange = tsNormalizeWhitespaceChange
               Anchors = [akTop, akRight]
               Color = 16448250
               Constraints.MaxHeight = 25
@@ -2173,6 +2178,7 @@ object dlgImport: TdlgImport
               TabOrder = 1
               TextHint = 'From'
               Visible = False
+              OnChange = eReplaceCharFromChange
             end
             object eReplaceCharTo: TEdit
               AnchorSideTop.Control = tsReplaceChars
@@ -2188,6 +2194,7 @@ object dlgImport: TdlgImport
               TabOrder = 2
               TextHint = 'To'
               Visible = False
+              OnChange = eReplaceCharToChange
             end
             object arrowReplaceChars: TImage
               AnchorSideTop.Control = eReplaceCharTo
@@ -2291,6 +2298,7 @@ object dlgImport: TdlgImport
               TabOrder = 1
               Value = 2
               Visible = False
+              OnChange = eRoundPrecisionChange
             end
           end
           object pScaleValue: TBCPanel
@@ -2375,13 +2383,17 @@ object dlgImport: TdlgImport
               Width = 100
               Anchors = [akTop, akRight]
               ItemHeight = 15
+              ItemIndex = 0
               Items.Strings = (
+                'None'
                 'Multiply'
                 'Divide'
               )
               Style = csDropDownList
               TabOrder = 1
+              Text = 'None'
               Visible = False
+              OnSelect = cbScaleOperationSelect
             end
             object eScale: TFloatSpinEdit
               AnchorSideTop.Control = tsScaleValue
@@ -2395,8 +2407,9 @@ object dlgImport: TdlgImport
               Anchors = [akTop, akRight]
               BorderSpacing.Top = 4
               TabOrder = 2
-              Value = 10
+              Value = 1
               Visible = False
+              OnChange = eScaleChange
             end
           end
           object pSplitCoordinates: TBCPanel
@@ -2466,6 +2479,7 @@ object dlgImport: TdlgImport
               Width = 50
               OnColor = 13066075
               OffColor = clSilver
+              OnChange = tsSplitCoordinatesChange
               Anchors = [akTop, akRight]
               Color = 16448250
               Constraints.MaxHeight = 25
@@ -2557,13 +2571,17 @@ object dlgImport: TdlgImport
               Anchors = [akTop, akRight]
               BorderSpacing.Top = 4
               ItemHeight = 15
+              ItemIndex = 0
               Items.Strings = (
+                'Decimal Degrees'
                 'Degrees, Minutes and Seconds'
                 'UTM'
               )
               Style = csDropDownList
               TabOrder = 1
+              Text = 'Decimal Degrees'
               Visible = False
+              OnSelect = cbSourceCoordinatesFormatSelect
             end
           end
           object pExtractDatePart: TBCPanel
@@ -2651,6 +2669,7 @@ object dlgImport: TdlgImport
               Anchors = [akTop, akRight]
               BorderSpacing.Top = 4
               ItemHeight = 15
+              ItemIndex = 2
               Items.Strings = (
                 'Day'
                 'Month'
@@ -2658,7 +2677,9 @@ object dlgImport: TdlgImport
               )
               Style = csDropDownList
               TabOrder = 1
+              Text = 'Year'
               Visible = False
+              OnSelect = cbExtractDatePartSelect
             end
           end
           object pDataType: TBCPanel
@@ -2822,7 +2843,7 @@ object dlgImport: TdlgImport
               Style = csDropDownList
               TabOrder = 0
               Text = 'Ignore'
-              OnSelect = cbNullHandlingSelect
+              OnSelect = cbArrayHandlingSelect
             end
           end
         end

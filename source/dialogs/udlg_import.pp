@@ -1,3 +1,19 @@
+{ Xolmis Import Wizard dialog
+
+  Copyright (C) 2025 Christian Beier <hello@christianbeier.studio>
+
+  This source is free software; you can redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation; either version 3 of the License, or (at your
+  option) any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  You should have received a copy of the GNU General Public License along with this program.  If not,
+  see <https://www.gnu.org/licenses/>.
+}
+
 unit udlg_import;
 
 {$mode ObjFPC}{$H+}
@@ -8,8 +24,8 @@ uses
   BCPanel, Classes, SysUtils, fpjson, LCLIntf, fgl, BGRABitmapTypes,
   dbf, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, Spin, fpsTypes, fpSpreadsheet, xlsbiff8,
-  xlsxooxml,
-  atshapelinebgra, io_core, io_csv, io_dbf, io_json, io_ods, io_xlsx, io_xml, data_types;
+  xlsxooxml, atshapelinebgra,
+  io_core, io_csv, io_dbf, io_json, io_ods, io_xlsx, io_xml, data_types;
 
 type
 
@@ -171,17 +187,30 @@ type
     tsTrimValue: TToggleSwitch;
     tsBooleanValue: TToggleSwitch;
     procedure btnHelpClick(Sender: TObject);
+    procedure cbArrayHandlingSelect(Sender: TObject);
     procedure cbDataTypeSelect(Sender: TObject);
     procedure cbDelimiterSelect(Sender: TObject);
+    procedure cbExtractDatePartSelect(Sender: TObject);
     procedure cbImportSettingsSelect(Sender: TObject);
+    procedure cbLookupFieldSelect(Sender: TObject);
+    procedure cbLookupTableSelect(Sender: TObject);
     procedure cbNullHandlingSelect(Sender: TObject);
+    procedure cbScaleOperationSelect(Sender: TObject);
+    procedure cbSourceCoordinatesFormatSelect(Sender: TObject);
     procedure cbTargetChange(Sender: TObject);
     procedure cbTargetSelect(Sender: TObject);
+    procedure cbTextCaseSelect(Sender: TObject);
+    procedure eDefaultValueChange(Sender: TObject);
+    procedure eReplaceCharFromChange(Sender: TObject);
+    procedure eReplaceCharToChange(Sender: TObject);
+    procedure eRoundPrecisionChange(Sender: TObject);
+    procedure eScaleChange(Sender: TObject);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure gridFieldsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
     procedure gridFieldsSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
     procedure pmfDeselectAllClick(Sender: TObject);
     procedure pmfSelectAllClick(Sender: TObject);
@@ -190,11 +219,17 @@ type
     procedure sbNextClick(Sender: TObject);
     procedure sbPriorClick(Sender: TObject);
     procedure sbSaveLogClick(Sender: TObject);
+    procedure tsBooleanValueChange(Sender: TObject);
     procedure tsConvertCoordinatesChange(Sender: TObject);
     procedure tsExtractDatePartChange(Sender: TObject);
+    procedure tsNormalizeWhitespaceChange(Sender: TObject);
+    procedure tsPrimaryKeyChange(Sender: TObject);
+    procedure tsRemoveAccentsChange(Sender: TObject);
     procedure tsReplaceCharsChange(Sender: TObject);
     procedure tsRoundValueChange(Sender: TObject);
     procedure tsScaleValueChange(Sender: TObject);
+    procedure tsSplitCoordinatesChange(Sender: TObject);
+    procedure tsTrimValueChange(Sender: TObject);
   private
     FSourceFile: String;
     FFileFormat: TImportFileType;
@@ -216,6 +251,7 @@ type
     ColStats: specialize TFPGObjectList<TColumnTypeStats>;
     procedure ApplyDarkMode;
     procedure CollectColumnStats(const Row: TXRow);
+    function ImportMapCount: Integer;
     function InferColumnType(Stats: TColumnTypeStats): TSearchDataType;
     function IsRequiredFilledSource: Boolean;
     procedure GetFieldSettings(AIndex: Integer);
@@ -227,6 +263,7 @@ type
     procedure LoadTargetFields;
     procedure LoadTargetTables;
     procedure SetImportSettings;
+    procedure SetMappings;
     procedure UpdateImportSettings;
     function ValidateFields: Boolean;
   public
@@ -344,8 +381,28 @@ begin
   OpenHelp(HELP_IMPORTING_DATA, 'import-wizard');
 end;
 
+procedure TdlgImport.cbArrayHandlingSelect(Sender: TObject);
+begin
+  case cbArrayHandling.ItemIndex of
+    0: FFieldMap[FFieldIndex].ArrayHandling := ahIgnore;
+    1: FFieldMap[FFieldIndex].ArrayHandling := ahJsonString;
+  end;
+end;
+
 procedure TdlgImport.cbDataTypeSelect(Sender: TObject);
 begin
+  case cbDataType.ItemIndex of
+    0: FFieldMap[FFieldIndex].DataType := sdtText;
+    1: FFieldMap[FFieldIndex].DataType := sdtInteger;
+    2: FFieldMap[FFieldIndex].DataType := sdtFloat;
+    3: FFieldMap[FFieldIndex].DataType := sdtDate;
+    4: FFieldMap[FFieldIndex].DataType := sdtTime;
+    5: FFieldMap[FFieldIndex].DataType := sdtDateTime;
+    6: FFieldMap[FFieldIndex].DataType := sdtBoolean;
+    7: FFieldMap[FFieldIndex].DataType := sdtList;
+    8: FFieldMap[FFieldIndex].DataType := sdtLookup;
+  end;
+
   pLookupTable.Visible := cbDataType.ItemIndex = 8;
   if pLookupTable.Visible = False then
     pLookupField.Visible := False;
@@ -356,14 +413,85 @@ begin
   eOther.Visible := cbDelimiter.ItemIndex = 3;
 end;
 
+procedure TdlgImport.cbExtractDatePartSelect(Sender: TObject);
+begin
+  case cbExtractDatePart.ItemIndex of
+    0:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrExtractMonth, vtrExtractYear];
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrExtractDay];
+    end;
+    1:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrExtractDay, vtrExtractYear];
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrExtractMonth];
+    end;
+    2:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrExtractDay, vtrExtractMonth];
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrExtractYear];
+    end;
+  end;
+end;
+
 procedure TdlgImport.cbImportSettingsSelect(Sender: TObject);
 begin
   FSavedSettings := cbImportSettings.Text;
 end;
 
+procedure TdlgImport.cbLookupFieldSelect(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].LookupField := cbLookupField.Text;
+end;
+
+procedure TdlgImport.cbLookupTableSelect(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].LookupTable := TablesDict[cbLookupTable.Text];
+
+  if cbLookupTable.ItemIndex >= 0 then
+  begin
+    pLookupField.Visible := True;
+    pLookupTable.Rounding.RoundOptions := [rrBottomRightSquare, rrBottomLeftSquare];
+  end
+  else
+  begin
+    pLookupField.Visible := False;
+    pLookupTable.Rounding.RoundOptions := [];
+  end;
+end;
+
 procedure TdlgImport.cbNullHandlingSelect(Sender: TObject);
 begin
+  case cbNullHandling.ItemIndex of
+    0: FFieldMap[FFieldIndex].NullHandling := nhIgnore;
+    1: FFieldMap[FFieldIndex].NullHandling := nhDefaultValue;
+    2: FFieldMap[FFieldIndex].NullHandling := nhUseMean;
+    3: FFieldMap[FFieldIndex].NullHandling := nhUseMedian;
+    4: FFieldMap[FFieldIndex].NullHandling := nhUseMode;
+  end;
+
   eDefaultValue.Visible := cbNullHandling.ItemIndex = 1;
+end;
+
+procedure TdlgImport.cbScaleOperationSelect(Sender: TObject);
+begin
+  case cbScaleOperation.ItemIndex of
+    0: FFieldMap[FFieldIndex].ScaleOperation := sopNone;
+    1: FFieldMap[FFieldIndex].ScaleOperation := sopMultiply;
+    2: FFieldMap[FFieldIndex].ScaleOperation := sopDivide;
+  end;
+end;
+
+procedure TdlgImport.cbSourceCoordinatesFormatSelect(Sender: TObject);
+begin
+  case cbSourceCoordinatesFormat.ItemIndex of
+    0: FFieldMap[FFieldIndex].CoordinatesFormat := scfDD;
+    1: FFieldMap[FFieldIndex].CoordinatesFormat := scfDMS;
+    2: FFieldMap[FFieldIndex].CoordinatesFormat := scfUTM;
+  end;
 end;
 
 procedure TdlgImport.cbTargetChange(Sender: TObject);
@@ -376,16 +504,40 @@ procedure TdlgImport.cbTargetSelect(Sender: TObject);
 begin
   if TablesDict.IndexOf(cbTarget.Text) >= 0 then
     FTableType := TablesDict[cbTarget.Text];
+end;
 
-  if cbLookupTable.ItemIndex >= 0 then
-  begin
-    pLookupField.Visible := True;
-    pLookupTable.Rounding.RoundOptions := [rrBottomRightSquare, rrBottomLeftSquare];
-  end
-  else
-  begin
-    pLookupField.Visible := False;
-    pLookupTable.Rounding.RoundOptions := [];
+procedure TdlgImport.cbTextCaseSelect(Sender: TObject);
+begin
+  case cbTextCase.ItemIndex of
+    0:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrLowerCase, vtrUpperCase, vtrSentenceCase, vtrTitleCase];
+    end;
+    1:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrUpperCase, vtrSentenceCase, vtrTitleCase];
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrLowerCase];
+    end;
+    2:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrLowerCase, vtrSentenceCase, vtrTitleCase];
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrUpperCase];
+    end;
+    3:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrLowerCase, vtrUpperCase, vtrTitleCase];
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrSentenceCase];
+    end;
+    4:
+    begin
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrLowerCase, vtrUpperCase, vtrSentenceCase];
+      FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrTitleCase];
+    end;
   end;
 end;
 
@@ -454,6 +606,31 @@ begin
       Continue;
     end;
   end;
+end;
+
+procedure TdlgImport.eDefaultValueChange(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].DefaultValue := eDefaultValue.Text;
+end;
+
+procedure TdlgImport.eReplaceCharFromChange(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].ReplaceCharFrom := eReplaceCharFrom.Text;
+end;
+
+procedure TdlgImport.eReplaceCharToChange(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].ReplaceCharTo := eReplaceCharTo.Text;
+end;
+
+procedure TdlgImport.eRoundPrecisionChange(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].RoundPrecision := eRoundPrecision.Value;
+end;
+
+procedure TdlgImport.eScaleChange(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].ScaleSize := eScale.Value;
 end;
 
 procedure TdlgImport.eSourceFileButtonClick(Sender: TObject);
@@ -725,11 +902,32 @@ begin
   end;
 end;
 
+procedure TdlgImport.gridFieldsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
+begin
+  sbNext.Enabled := ImportMapCount > 0;
+end;
+
 procedure TdlgImport.gridFieldsSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
 begin
   FFieldIndex := aRow - 1;
 
   GetFieldSettings(FFieldIndex);
+
+  pLookupTable.Visible := cbDataType.ItemIndex = 8;
+  pLookupField.Visible := (cbLookupTable.Visible) and (cbLookupTable.ItemIndex >= 0);
+end;
+
+function TdlgImport.ImportMapCount: Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+
+  for i := 1 to gridFields.RowCount - 1 do
+  begin
+    if gridFields.Cells[2, i] = '1' then
+      Inc(Result);
+  end;
 end;
 
 function TdlgImport.InferColumnType(Stats: TColumnTypeStats): TSearchDataType;
@@ -822,7 +1020,7 @@ begin
       Stream.Position := 0;
 
       // Collect samples
-      Importer.PreviewRows(Stream, FImportSettings, 50, @CollectColumnStats);
+      Importer.PreviewRows(Stream, FImportSettings, 100, @CollectColumnStats);
 
       FFieldMap.Clear;
 
@@ -1110,6 +1308,7 @@ end;
 
 procedure TdlgImport.sbNextClick(Sender: TObject);
 begin
+  sbNext.Enabled := False;
   nbPages.PageIndex := nbPages.PageIndex + 1;
 
   // Progress
@@ -1121,7 +1320,7 @@ begin
   // Confirmation
   if nbPages.PageIndex = 3 then
   begin
-
+    SetMappings;
   end;
 
   // Fields
@@ -1152,7 +1351,10 @@ begin
   end;
 
   sbPrior.Visible := (nbPages.PageIndex > 0) and (nbPages.PageIndex < 4);
-  sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
+  if nbPages.PageIndex = 2 then
+    sbNext.Enabled := ImportMapCount > 0
+  else
+    sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
 end;
 
 procedure TdlgImport.sbPriorClick(Sender: TObject);
@@ -1160,7 +1362,10 @@ begin
   nbPages.PageIndex := nbPages.PageIndex - 1;
 
   sbPrior.Visible := (nbPages.PageIndex > 0) and (nbPages.PageIndex < 4);
-  sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
+  if nbPages.PageIndex = 2 then
+    sbNext.Enabled := ImportMapCount > 0
+  else
+    sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
 end;
 
 procedure TdlgImport.sbSaveLogClick(Sender: TObject);
@@ -1226,20 +1431,71 @@ begin
   FImportSettings.RecordNodeName := eRecordXPath.Text;
 end;
 
+procedure TdlgImport.SetMappings;
+var
+  i: Integer;
+begin
+  for i := 1 to gridFields.RowCount - 1 do
+  begin
+    FFieldMap[i - 1].Import := StrToBool(gridFields.Cells[2, i]);
+    FFieldMap[i - 1].TargetField := gridFields.Cells[3, i];
+  end;
+end;
+
+procedure TdlgImport.tsBooleanValueChange(Sender: TObject);
+begin
+  if tsBooleanValue.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrBoolean]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrBoolean];
+end;
+
 procedure TdlgImport.tsConvertCoordinatesChange(Sender: TObject);
 begin
+  if tsConvertCoordinates.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrConvertCoordinates]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrConvertCoordinates];
 
   cbSourceCoordinatesFormat.Visible := tsConvertCoordinates.Checked;
 end;
 
 procedure TdlgImport.tsExtractDatePartChange(Sender: TObject);
 begin
+  if tsExtractDatePart.Checked = False then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations -
+        [vtrExtractDay, vtrExtractMonth, vtrExtractYear];
 
   cbExtractDatePart.Visible := tsExtractDatePart.Checked;
 end;
 
+procedure TdlgImport.tsNormalizeWhitespaceChange(Sender: TObject);
+begin
+  if tsNormalizeWhitespace.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrNormalizeWhitespace]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrNormalizeWhitespace];
+end;
+
+procedure TdlgImport.tsPrimaryKeyChange(Sender: TObject);
+begin
+  FFieldMap[FFieldIndex].IsCorrespondingKey := tsPrimaryKey.Checked;
+end;
+
+procedure TdlgImport.tsRemoveAccentsChange(Sender: TObject);
+begin
+  if tsRemoveAccents.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrRemoveAccents]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrRemoveAccents];
+end;
+
 procedure TdlgImport.tsReplaceCharsChange(Sender: TObject);
 begin
+  if tsReplaceChars.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrReplaceChars]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrReplaceChars];
 
   eReplaceCharTo.Visible := tsReplaceChars.Checked;
   arrowReplaceChars.Visible := eReplaceCharTo.Visible;
@@ -1248,14 +1504,39 @@ end;
 
 procedure TdlgImport.tsRoundValueChange(Sender: TObject);
 begin
+  if tsRoundValue.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrRound]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrRound];
 
   eRoundPrecision.Visible := tsRoundValue.Checked;
 end;
 
 procedure TdlgImport.tsScaleValueChange(Sender: TObject);
 begin
+  if tsScaleValue.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrScale]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrScale];
+
   eScale.Visible := tsScaleValue.Checked;
   cbScaleOperation.Visible := eScale.Visible;
+end;
+
+procedure TdlgImport.tsSplitCoordinatesChange(Sender: TObject);
+begin
+  if tsSplitCoordinates.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrSplitCoordinates]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrSplitCoordinates];
+end;
+
+procedure TdlgImport.tsTrimValueChange(Sender: TObject);
+begin
+  if tsTrimValue.Checked then
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations + [vtrTrim]
+  else
+    FFieldMap[FFieldIndex].Transformations := FFieldMap[FFieldIndex].Transformations - [vtrTrim];
 end;
 
 procedure TdlgImport.UpdateImportSettings;

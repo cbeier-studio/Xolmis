@@ -4490,6 +4490,11 @@ msgctxt "tdlgimport.cberrorhandling.text"
 msgid "Abort on first error"
 msgstr "Parar no primeiro erro"
 
+#: tdlgimport.cbextractdatepart.text
+msgctxt "tdlgimport.cbextractdatepart.text"
+msgid "Year"
+msgstr "Ano"
+
 #: tdlgimport.cbimportstrategy.text
 msgctxt "tdlgimport.cbimportstrategy.text"
 msgid "Update"
@@ -4509,6 +4514,15 @@ msgstr "Selecione uma tabela..."
 msgctxt "tdlgimport.cbnullhandling.text"
 msgid "Ignore"
 msgstr "Ignorar"
+
+#: tdlgimport.cbscaleoperation.text
+msgctxt "tdlgimport.cbscaleoperation.text"
+msgid "None"
+msgstr "Nenhum"
+
+#: tdlgimport.cbsourcecoordinatesformat.text
+msgid "Decimal Degrees"
+msgstr "Graus decimais"
 
 #: tdlgimport.cbtarget.texthint
 msgctxt "tdlgimport.cbtarget.texthint"
