@@ -1353,6 +1353,7 @@ object dlgImport: TdlgImport
           TabOrder = 1
           TitleStyle = tsNative
           OnCheckboxToggled = gridFieldsCheckboxToggled
+          OnPickListSelect = gridFieldsPickListSelect
           OnSelectCell = gridFieldsSelectCell
           ColWidths = (
             64

@@ -348,9 +348,10 @@ type
 type
 
   TRelationalField = record
-    TableType: TTableType;
-    KeyFieldName: String;
-    ResultFieldName: String;
+    LookupTable: TTableType;
+    LookupKeyField: String;
+    LookupField: String;
+    LookupResultField: String;
     DisplayFieldName: String;
   end;
 
@@ -376,7 +377,6 @@ type
 
   TTableField = class
   private
-    FTable: TTableType;
     FFieldName: String;
     FDisplayName: String;
     FDarwinCoreName: String;
@@ -391,10 +391,10 @@ type
     FVisible: Boolean;
     FSorted: Boolean;
     FEditable: Boolean;
-    FWidth: Integer;
+    FLength: Integer;
     FDescription: String;
   public
-    constructor Create(aTable: TTableType; aFieldName: String; aExportName: String = '');
+    constructor Create(aFieldName: String; aExportName: String = '');
     function GetExportName: String;
     procedure GetFieldInfo(DataSet: TDataSet);
     function GetHint: String;
@@ -404,7 +404,6 @@ type
     property LookupInfo: TRelationalField read FLookupInfo write FLookupInfo;
     property Rules: TValidationRules read FRules write FRules;
   published
-    property Table: TTableType read FTable write FTable;
     property FieldName: String read FFieldName write FFieldName;
     property DisplayName: String read FDisplayName write FDisplayName;
     property DarwinCoreName: String read FDarwinCoreName write FDarwinCoreName;
@@ -417,7 +416,7 @@ type
     property Visible: Boolean read FVisible write FVisible default True;
     property Sorted: Boolean read FSorted write FSorted default False;
     property Editable: Boolean read FEditable write FEditable;
-    property Width: Integer read FWidth write FWidth;
+    property FieldLength: Integer read FLength write FLength;
     property Description: String read FDescription write FDescription;
   end;
 
@@ -429,6 +428,7 @@ type
 
   TTableInfo = class
   private
+    FTableType: TTableType;
     FTableName: String;
     FDisplayName: String;
     FVisible: Boolean;
@@ -440,6 +440,7 @@ type
     constructor Create;
     destructor Destroy; override;
   published
+    property TableType: TTableType read FTableType write FTableType;
     property TableName: String read FTableName write FTableName;
     property DisplayName: String read FDisplayName write FDisplayName;
     property Visible: Boolean read FVisible write FVisible;
@@ -1116,9 +1117,8 @@ end;
 
 { TTableField }
 
-constructor TTableField.Create(aTable: TTableType; aFieldName: String; aExportName: String);
+constructor TTableField.Create(aFieldName: String; aExportName: String);
 begin
-  FTable := aTable;
   FFieldName := aFieldName;
   FExportName := aExportName;
 end;
@@ -1172,7 +1172,7 @@ begin
   FVisible := DataSet.FieldByName(FFieldName).Visible;
   FEditable := not DataSet.FieldByName(FFieldName).ReadOnly;
   FRules.MaxLength := DataSet.FieldByName(FFieldName).Size;
-  FWidth := DataSet.FieldByName(FFieldName).DisplayWidth;
+  FLength := DataSet.FieldByName(FFieldName).DisplayWidth;
 end;
 
 function TTableField.GetHint: String;
@@ -1180,7 +1180,7 @@ begin
   if FDescription <> EmptyStr then
     Result := FDescription
   else
-    Result := DisplayName;
+    Result := FDisplayName;
 end;
 
 function TTableField.IsEditable: Boolean;

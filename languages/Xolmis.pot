@@ -15166,15 +15166,50 @@ msgctxt "utils_locale.rserrorimporting"
 msgid "An error occurred importing: %s"
 msgstr ""
 
+#: utils_locale.rserrorinvalidbooleanforfield
+#, object-pascal-format
+msgid "Value \"%s\" is not a valid boolean for the field %s."
+msgstr ""
+
 #: utils_locale.rserrorinvaliddate
 msgctxt "utils_locale.rserrorinvaliddate"
 msgid "Invalid date. Check if it was typed correctly."
+msgstr ""
+
+#: utils_locale.rserrorinvaliddateforfield
+#, object-pascal-format
+msgid "Value \"%s\" is not a valid date for the field %s."
+msgstr ""
+
+#: utils_locale.rserrorinvaliddatetimeforfield
+#, object-pascal-format
+msgid "Value \"%s\" is not a valid date and time for the field %s."
+msgstr ""
+
+#: utils_locale.rserrorinvalidintegerforfield
+#, object-pascal-format
+msgid "Value \"%s\" is not a valid integer for the field %s."
+msgstr ""
+
+#: utils_locale.rserrorinvalidnumberforfield
+#, object-pascal-format
+msgid "Value \"%s\" is not a valid number for the field %s."
+msgstr ""
+
+#: utils_locale.rserrorinvalidtimeforfield
+#, object-pascal-format
+msgid "Value \"%s\" is not a valid time for the field %s."
 msgstr ""
 
 #: utils_locale.rserrorloadingdatafromjsonfile
 #, object-pascal-format
 msgctxt "utils_locale.rserrorloadingdatafromjsonfile"
 msgid "Error loading data from the JSON file: %s"
+msgstr ""
+
+#: utils_locale.rserrorlookupvaluenotfoundforfield
+#, object-pascal-format
+msgid "The value \"%s\" does not match any valid record in the lookup table \"%s\"."
 msgstr ""
 
 #: utils_locale.rserrormoduleisdifferent
@@ -15190,6 +15225,11 @@ msgstr ""
 #: utils_locale.rserrornoimporterregisteredforextension
 #, object-pascal-format
 msgid "No importer registered for %s"
+msgstr ""
+
+#: utils_locale.rserrornotfoundlookupvalue
+#, object-pascal-format
+msgid "Value \"%s\" was not found in the lookup table \"%s\"."
 msgstr ""
 
 #: utils_locale.rserroroptimizingdatabase
@@ -15214,6 +15254,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrorreportnotfound"
 msgid "Report template not found: %s"
+msgstr ""
+
+#: utils_locale.rserrorrequiredfield
+#, object-pascal-format
+msgid "The field \"%s\" is required and must not be empty."
 msgstr ""
 
 #: utils_locale.rserrorrestorefailed
@@ -15247,6 +15292,11 @@ msgctxt "utils_locale.rserrortitlehelpnotfound"
 msgid "Help files not found!"
 msgstr ""
 
+#: utils_locale.rserrorunsupporteddatatypeforfield
+#, object-pascal-format
+msgid "Unsupported data type for the field %s."
+msgstr ""
+
 #: utils_locale.rserrorupdatingadminpassword
 msgctxt "utils_locale.rserrorupdatingadminpassword"
 msgid "An error occurred while updating the Admin password."
@@ -15268,6 +15318,16 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrorvalidatingpassword"
 msgid "Error validating password: %s"
+msgstr ""
+
+#: utils_locale.rserrorvalueexceededmaxlength
+#, object-pascal-format
+msgid "The value \"%s\" exceeds the allowed maximum length (%d) for the field \"%s\"."
+msgstr ""
+
+#: utils_locale.rserrorvaluenotallowedforfield
+#, object-pascal-format
+msgid "The value \"%s\" is not allowed for the field \"%s\". Valid values: %s"
 msgstr ""
 
 #: utils_locale.rserrorwritingadminpassword

@@ -191,6 +191,18 @@ uses
     rsErrorNoImporterRegisteredForExtension = 'No importer registered for %s';
     rsErrorTableNotSupportedInDocuments = 'Table not supported in documents and links.';
     rsErrorFileFormatNotSupported = 'File format not supported: %s';
+    rsErrorInvalidIntegerForField = 'Value "%s" is not a valid integer for the field %s.';
+    rsErrorInvalidNumberForField = 'Value "%s" is not a valid number for the field %s.';
+    rsErrorInvalidBooleanForField = 'Value "%s" is not a valid boolean for the field %s.';
+    rsErrorInvalidDateForField = 'Value "%s" is not a valid date for the field %s.';
+    rsErrorInvalidTimeForField = 'Value "%s" is not a valid time for the field %s.';
+    rsErrorInvalidDateTimeForField = 'Value "%s" is not a valid date and time for the field %s.';
+    rsErrorUnsupportedDataTypeForField = 'Unsupported data type for the field %s.';
+    rsErrorNotFoundLookupValue = 'Value "%s" was not found in the lookup table "%s".';
+    rsErrorRequiredField = 'The field "%s" is required and must not be empty.';
+    rsErrorValueExceededMaxLength = 'The value "%s" exceeds the allowed maximum length (%d) for the field "%s".';
+    rsErrorValueNotAllowedForField = 'The value "%s" is not allowed for the field "%s". Valid values: %s';
+    rsErrorLookupValueNotFoundForField = 'The value "%s" does not match any valid record in the lookup table "%s".';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';

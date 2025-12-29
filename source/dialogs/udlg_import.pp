@@ -211,6 +211,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure gridFieldsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
+    procedure gridFieldsPickListSelect(Sender: TObject);
     procedure gridFieldsSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
     procedure pmfDeselectAllClick(Sender: TObject);
     procedure pmfSelectAllClick(Sender: TObject);
@@ -905,6 +906,20 @@ end;
 procedure TdlgImport.gridFieldsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
 begin
   sbNext.Enabled := ImportMapCount > 0;
+end;
+
+procedure TdlgImport.gridFieldsPickListSelect(Sender: TObject);
+begin
+  if gridFields.Cells[3, FFieldIndex + 1] <> EmptyStr then
+  begin
+    FFieldMap[FFieldIndex].Import := True;
+    gridFields.Cells[2, FFieldIndex + 1] := '1';
+  end
+  else
+  begin
+    FFieldMap[FFieldIndex].Import := False;
+    gridFields.Cells[2, FFieldIndex + 1] := '0';
+  end;
 end;
 
 procedure TdlgImport.gridFieldsSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
