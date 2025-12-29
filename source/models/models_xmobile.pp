@@ -583,6 +583,7 @@ begin
     FIntervalsWithoutNewSpecies := JSONObj.Get('intervalWithoutNewSpecies', 0);
     FCurrentIntervalSpeciesCount := JSONObj.Get('currentIntervalSpeciesCount', 0);
     FTotalObservers := JSONObj.Get('totalObservers', 1);
+    FObserver := JSONObj.Get('observer', '');
 
     if ExecRegExpr('^.{2,}-[A-Za-z]{2,}-[0-9]{8}-[A-Z]{0,1}[0-9]{2,}$', FId) then
     begin
@@ -590,7 +591,8 @@ begin
       if FLocalityName = EmptyStr then
         FLocalityName := ExtractDelimited(1, FId, ['-']);
       // Get observer abbreviation
-      FObserver := ExtractDelimited(2, FId, ['-']);
+      if (ExtractDelimited(2, FId, ['-']) <> FObserver) then
+        FObserver := ExtractDelimited(2, FId, ['-']);
       // Get Mackinnon list number
       if FType = invMackinnonList then
       begin
@@ -846,8 +848,9 @@ begin
     FFemale := JSONObj.Get('female', '');
     FHelpers := JSONObj.Get('helpers', '');
     FIsActive := JSONObj.Get('isActive', 0) = 1;
+    FObserver := JSONObj.Get('observer', '');
 
-    if ExecRegExpr('^[A-Za-z]*[0-9]*$', FFieldNumber) then
+    if (FObserver = EmptyStr) and (ExecRegExpr('^[A-Za-z]*[0-9]*$', FFieldNumber)) then
     begin
       RE := TRegExpr.Create;
       try
@@ -948,8 +951,9 @@ begin
     FLatitude := JSONObj.Get('latitude', 0.0);
     FNotes := JSONObj.Get('notes', '');
     FIsPending := JSONObj.Get('isPending', 0) = 1;
+    FObserver := JSONObj.Get('observer', '');;
 
-    if ExecRegExpr('^[A-Za-z]*[0-9]*$', FFieldNumber) then
+    if (FObserver <> EmptyStr) and (ExecRegExpr('^[A-Za-z]*[0-9]*$', FFieldNumber)) then
     begin
       RE := TRegExpr.Create;
       try
