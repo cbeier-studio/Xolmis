@@ -219,18 +219,18 @@ begin
   dlgSplash := TdlgSplash.Create(nil);
   dlgSplash.Show;
   dlgSplash.UpdateProgress(rsStartingXolmis, 0);
-  Application.CreateForm(TDMM, DMM);
   dlgSplash.UpdateProgress(rsLoadingConnectionDataModule, 10);
-  Application.CreateForm(TDMG, DMG);
+  Application.CreateForm(TDMM, DMM);
   dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 40);
-  Application.CreateForm(TDMB, DMB);
+  Application.CreateForm(TDMG, DMG);
   dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 60);
-  Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TDMB, DMB);
   dlgSplash.UpdateProgress(rsLoadingMainWindow, 80);
+  Application.CreateForm(TfrmMain, frmMain);
+  dlgSplash.UpdateProgress(rsMainWindowLoaded, 100);
   {$IFDEF WINDOWS}
   Application.MainFormOnTaskBar := True;
   {$ENDIF}
-  dlgSplash.UpdateProgress(rsMainWindowLoaded, 100);
   dlgSplash.Free;
   Application.Run;
 end.

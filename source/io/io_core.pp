@@ -21,7 +21,8 @@ unit io_core;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Variants, StrUtils, TypInfo, fgl, fpjson, jsonparser, data_types, utils_gis;
+  Classes, SysUtils, Dialogs, Variants, StrUtils, DateUtils, TypInfo, fgl, fpjson, jsonparser,
+  data_types, utils_gis;
 
 type
   EImportError = class(Exception);
@@ -31,11 +32,12 @@ type
 
   TValueTransformation = (vtrTrim, vtrLowerCase, vtrUpperCase, vtrSentenceCase, vtrTitleCase, vtrBoolean,
     vtrRemoveAccents, vtrNormalizeWhitespace, vtrReplaceChars, vtrScale, vtrRound,
-    vtrExtractYear, vtrExtractMonth, vtrExtractDay, vtrConvertCoordinates, vtrSplitCoordinates);
+    vtrExtractYear, vtrExtractMonth, vtrExtractDay, vtrConvertCoordinates);
   TTypeErrorHandling = (tehIgnore, tehAbort, tehConvert);
   TNullHandling = (nhIgnore, nhDefaultValue, nhUseMean, nhUseMedian, nhUseMode);
   TArrayHandling = (ahIgnore, ahJsonString);
   TScaleOperation = (sopNone, sopMultiply, sopDivide);
+  TSourceMapAxis = (smaNone, smaLong, smaLat, smaLatLong, smaLongLat);
   TSourceCoordinatesFormat = (scfDD, scfDMS, scfUTM);
 
   TValueTransformationSet = set of TValueTransformation;
@@ -61,6 +63,7 @@ type
     RoundPrecision: Integer;
     ScaleOperation: TScaleOperation;
     ScaleSize: Double;
+    CoordinateAxis: TSourceMapAxis;
     CoordinatesFormat: TSourceCoordinatesFormat;
   public
     function IsMapped: Boolean;
@@ -163,8 +166,9 @@ type
   TFieldMapper = class
   private
     FMap: TFieldsMap;
+    FOptions: TImportOptions;
   public
-    constructor Create;
+    constructor Create(AOptions: TImportOptions);
     destructor Destroy; override;
 
     procedure AddMapping(const SourceField, DestField: string);
@@ -172,12 +176,17 @@ type
     function ValidateRequired(const RequiredFields: array of string): Boolean;
 
     property Map: TFieldsMap read FMap;
+    property Options: TImportOptions read FOptions;
   end;
 
   { TImporter }
 
   TImporter = class abstract
+  protected
+    FMapper: TFieldMapper;
   public
+    property Mapper: TFieldMapper read FMapper write FMapper;
+
     class function Probe(const FileName: string; Stream: TStream): Integer; virtual; abstract;
     function CanHandleExtension(const Ext: string): Boolean; virtual; abstract;
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); virtual; abstract;
@@ -240,7 +249,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, data_getvalue, Zipper;
+  utils_locale, utils_conversions, data_consts, data_getvalue;
 
 function ExtractExt(const FileName: string): string;
 begin
@@ -468,10 +477,11 @@ end;
 
 { TFieldMapper }
 
-constructor TFieldMapper.Create;
+constructor TFieldMapper.Create(AOptions: TImportOptions);
 begin
   inherited Create;
   FMap := TFieldsMap.Create;
+  FOptions := AOptions;
 end;
 
 procedure TFieldMapper.AddMapping(const SourceField, DestField: string);
@@ -488,10 +498,20 @@ end;
 function TFieldMapper.Apply(const Row: TXRow): TXRow;
 var
   Mapping: TFieldMapping;
-  SourceValue, DestValue: String;
+  SourceValue, DestValue, lat, lon: String;
   I: Integer;
+  scaleValue: Double;
+  coordValue: Extended;
+  dateValue: TDateTime;
+  dmsPoint: TDMSPoint;
+  utmPoint: TUTMPoint;
+  FS: TFormatSettings;
 begin
   Result := TXRow.Create;
+
+  FS := DefaultFormatSettings;
+  FS.ShortDateFormat := FOptions.DateFormat;
+  FS.DecimalSeparator := FOptions.DecimalSeparator;
 
   for I := 0 to FMap.Count - 1 do
   begin
@@ -512,36 +532,195 @@ begin
           Continue; // do not add to target value
         nhDefaultValue:
           DestValue := VarToStr(Mapping.DefaultValue);
+        nhUseMean: ;
+        nhUseMedian: ;
+        nhUseMode: ;
       end;
     end;
 
     // 3. Apply transformations
     if vtrTrim in Mapping.Transformations then
       DestValue := Trim(DestValue);
+    if vtrNormalizeWhitespace in Mapping.Transformations then
+      DestValue := NormalizeWhitespace(DestValue, False);
+    if vtrReplaceChars in Mapping.Transformations then
+      DestValue := ReplaceStr(DestValue, Mapping.ReplaceCharFrom, Mapping.ReplaceCharTo);
+    if vtrRemoveAccents in Mapping.Transformations then
+      DestValue := RemoveDiacritics(DestValue);
     if vtrLowerCase in Mapping.Transformations then
       DestValue := LowerCase(DestValue);
     if vtrUpperCase in Mapping.Transformations then
       DestValue := UpperCase(DestValue);
     if vtrSentenceCase in Mapping.Transformations then
-      DestValue := AnsiLowerCase(DestValue); { #todo : Convert string to sentence case }
+      DestValue := SentenceCase(DestValue);
     if vtrTitleCase in Mapping.Transformations then
       DestValue := AnsiProperCase(DestValue, [' ']);
     if vtrBoolean in Mapping.Transformations then
     begin
       if SameText(DestValue, 'true') or (DestValue = '1') or SameText(DestValue, 'sim') or
         SameText(DestValue, 'yes') or SameText(DestValue, 'S') or SameText(DestValue, 'Y') or
-        SameText(DestValue, 'T') then
+        SameText(DestValue, 'verdadeiro') or SameText(DestValue, 'T') then
         DestValue := 'True'
       else
         DestValue := 'False';
     end;
+    if vtrScale in Mapping.Transformations then
+    begin
+      if TryStrToFloat(DestValue, scaleValue) then
+      begin
+        case Mapping.ScaleOperation of
+          sopNone: ;
+          sopMultiply: DestValue := FloatToStr(scaleValue * Mapping.ScaleSize);
+          sopDivide:   DestValue := FloatToStr(scaleValue / Mapping.ScaleSize);
+        end;
+      end;
+    end;
+    if vtrRound in Mapping.Transformations then
+    begin
+      if TryStrToFloat(DestValue, scaleValue) then
+      begin
+        if Mapping.RoundPrecision = 0 then
+          DestValue := IntToStr(Round(scaleValue))
+        else
+          DestValue := FormatFloat('0.' + StringOfChar('0', Mapping.RoundPrecision), scaleValue);
+      end;
+    end;
+    if vtrExtractDay in Mapping.Transformations then
+    begin
+      if TryStrToDate(DestValue, dateValue, FS) then
+        DestValue := IntToStr(DayOf(dateValue));
+    end;
+    if vtrExtractMonth in Mapping.Transformations then
+    begin
+      if TryStrToDate(DestValue, dateValue, FS) then
+        DestValue := IntToStr(MonthOf(dateValue));
+    end;
+    if vtrExtractYear in Mapping.Transformations then
+    begin
+      if TryStrToDate(DestValue, dateValue, FS) then
+        DestValue := IntToStr(YearOf(dateValue));
+    end;
+    if vtrConvertCoordinates in Mapping.Transformations then
+    begin
+      case Mapping.CoordinatesFormat of
+        scfDD: ;
+        scfDMS:
+        begin
+          case Mapping.CoordinateAxis of
+            smaNone: ;
+            smaLong:
+            begin
+              dmsPoint.X.FromString(DestValue);
+              DestValue := FloatToStr(DmsToDecimal(dmsPoint).X);
+            end;
+            smaLat:
+            begin
+              dmsPoint.Y.FromString(DestValue);
+              DestValue := FloatToStr(DmsToDecimal(dmsPoint).Y);
+            end;
+            smaLatLong:
+            begin
+              dmsPoint.X.FromString(ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
+              dmsPoint.Y.FromString(ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
+              DestValue := DmsToDecimal(dmsPoint).ToString();
+            end;
+            smaLongLat:
+            begin
+              dmsPoint.X.FromString(ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
+              dmsPoint.Y.FromString(ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
+              DestValue := DmsToDecimal(dmsPoint).ToString();
+            end;
+          end;
+        end;
+        scfUTM:
+        begin
+          { #todo : Select Zone, Band and Hemisphere of UTM coordinates }
+          case Mapping.CoordinateAxis of
+            smaNone: ;
+            smaLong:
+            begin
+              if TryStrToFloat(DestValue, coordValue, FS) then
+              begin
+                utmPoint.X := coordValue;
+                DestValue := FloatToStr(UtmToDecimal(utmPoint).X);
+              end;
+            end;
+            smaLat:
+            begin
+              if TryStrToFloat(DestValue, coordValue, FS) then
+              begin
+                utmPoint.Y := coordValue;
+                DestValue := FloatToStr(UtmToDecimal(utmPoint).Y);
+              end;
+            end;
+            smaLatLong:
+            begin
+              utmPoint.FromString(DestValue);
+              DestValue := UtmToDecimal(utmPoint).ToString();
+            end;
+            smaLongLat:
+            begin
+              utmPoint.FromString(DestValue);
+              DestValue := UtmToDecimal(utmPoint).ToString();
+            end;
+          end;
+        end;
+      end;
+    end;
 
     // 4. Lookup (if it is set)
     if (Mapping.LookupTable <> tbNone) then
+    begin
       DestValue := IntToStr(GetKey(TABLE_NAMES[Mapping.LookupTable], PRIMARY_KEY_FIELDS[Mapping.LookupTable],
         Mapping.LookupField, DestValue));
+      if DestValue = '0' then
+      begin
+        case Mapping.NullHandling of
+          nhIgnore: ;
+          nhDefaultValue: DestValue := VarToStr(Mapping.DefaultValue);
+          nhUseMean: ;
+          nhUseMedian: ;
+          nhUseMode: ;
+        end;
+      end;
+    end;
 
-    // 5. Set result
+    // 5. Split coordinates
+    if Mapping.CoordinateAxis in [smaLatLong, smaLongLat] then
+    begin
+      if Mapping.CoordinateAxis = smaLatLong then
+      begin
+        lat := ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+        lon := ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+      end
+      else if Mapping.CoordinateAxis = smaLongLat then
+      begin
+        lon := ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+        lat := ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+      end;
+
+      // write two fields
+      if (Mapping.TargetField = COL_START_LONGITUDE) or (Mapping.TargetField = COL_START_LATITUDE) then
+      begin
+        Result.Values[COL_START_LATITUDE] := lat;
+        Result.Values[COL_START_LONGITUDE] := lon;
+      end
+      else
+      if (Mapping.TargetField = COL_END_LONGITUDE) or (Mapping.TargetField = COL_END_LATITUDE) then
+      begin
+        Result.Values[COL_END_LATITUDE] := lat;
+        Result.Values[COL_END_LONGITUDE] := lon;
+      end
+      else
+      begin
+        Result.Values[COL_LATITUDE] := lat;
+        Result.Values[COL_LONGITUDE] := lon;
+      end;
+
+      Continue; // do not write the original field
+    end;
+
+    // 6. Set result
     Result.Values[Mapping.TargetField] := DestValue;
   end;
 end;

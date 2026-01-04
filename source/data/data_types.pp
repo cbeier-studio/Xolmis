@@ -225,6 +225,7 @@ const
   SEARCH_DATA_TYPES: array[TSearchDataType] of String = ('Text', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean', 'List', 'Lookup', 'Year', 'MonthYear');
   SEPARATORS: array [TSeparator] of Char = (#0, ';', ',', ':', '.', '|', '/', '-', '_');
+  COORDINATES_SEPARATORS: set of Char = [';', ',', ':', '|', '/'];
 
 type
 

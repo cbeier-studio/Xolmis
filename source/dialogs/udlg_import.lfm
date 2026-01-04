@@ -516,10 +516,11 @@ object dlgImport: TdlgImport
         Width = 920
         HorzScrollBar.Page = 455
         VertScrollBar.Page = 347
+        VertScrollBar.Tracking = True
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
         ClientHeight = 347
-        ClientWidth = 903
+        ClientWidth = 920
         TabOrder = 1
         object pHaveHeader: TBCPanel
           Left = 16
@@ -866,7 +867,7 @@ object dlgImport: TdlgImport
         object pKeyPath: TBCPanel
           Left = 16
           Height = 47
-          Top = 377
+          Top = 432
           Width = 871
           Align = alTop
           AutoSize = True
@@ -1015,7 +1016,7 @@ object dlgImport: TdlgImport
         object pRecordXPath: TBCPanel
           Left = 16
           Height = 47
-          Top = 432
+          Top = 487
           Width = 871
           Align = alTop
           AutoSize = True
@@ -1251,6 +1252,108 @@ object dlgImport: TdlgImport
             Text = 'Abort on first error'
           end
         end
+        object pDateFormat: TBCPanel
+          Left = 16
+          Height = 47
+          Top = 377
+          Width = 871
+          Align = alTop
+          AutoSize = True
+          BorderSpacing.Left = 16
+          BorderSpacing.Top = 8
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          TabOrder = 9
+          Visible = False
+          object lblDateFormat: TLabel
+            AnchorSideLeft.Control = pDateFormat
+            AnchorSideTop.Control = pDateFormat
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 63
+            Caption = 'Date format'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbDateFormat: TComboBox
+            AnchorSideTop.Control = pDateFormat
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pDateFormat
+            AnchorSideRight.Side = asrBottom
+            Left = 682
+            Height = 23
+            Top = 12
+            Width = 173
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'DD/MM/YYYY'
+              'DD-MM-YYYY'
+              'DD.MM.YYYY'
+              'MM/DD/YYYY'
+              'MM-DD-YYYY'
+              'MM.DD.YYYY'
+              'YYYY-MM-DD'
+              'YYYY/MM/DD'
+              'YYYY.MM.DD'
+              'DD/MMM/YYYY'
+              'DD-MMM-YYYY'
+              'MMM-DD-YYYY'
+              'YYYY-MMM-DD'
+              'DD de MMMM de YYYY'
+              'DD MMMM YYYY'
+              'MMMM DD, YYYY'
+              'YYYY MMMM DD'
+              'DD-MMM-YY'
+              'YY-MM-DD'
+              'DD/MM/YY'
+              'MM/DD/YY'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'DD/MM/YYYY'
+          end
+        end
       end
     end
     object pgFields: TPage
@@ -1384,6 +1487,7 @@ object dlgImport: TdlgImport
           Width = 328
           HorzScrollBar.Page = 247
           VertScrollBar.Page = 327
+          VertScrollBar.Tracking = True
           Anchors = [akTop, akRight, akBottom]
           ChildSizing.LeftRightSpacing = 8
           ChildSizing.TopBottomSpacing = 8
@@ -1458,6 +1562,7 @@ object dlgImport: TdlgImport
               Width = 259
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Bottom = 8
+              DropDownCount = 12
               ItemHeight = 15
               Style = csDropDownList
               TabOrder = 0
@@ -1536,6 +1641,7 @@ object dlgImport: TdlgImport
               Width = 259
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Bottom = 8
+              DropDownCount = 12
               ItemHeight = 15
               Style = csDropDownList
               TabOrder = 0
@@ -1719,7 +1825,7 @@ object dlgImport: TdlgImport
           object pTrimValue: TBCPanel
             Left = 8
             Height = 47
-            Top = 395
+            Top = 450
             Width = 291
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -1794,7 +1900,7 @@ object dlgImport: TdlgImport
           object pBooleanValue: TBCPanel
             Left = 8
             Height = 47
-            Top = 442
+            Top = 497
             Width = 291
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -1868,7 +1974,7 @@ object dlgImport: TdlgImport
           object pTextCase: TBCPanel
             Left = 8
             Height = 47
-            Top = 489
+            Top = 544
             Width = 291
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -1947,7 +2053,7 @@ object dlgImport: TdlgImport
           object pRemoveAccents: TBCPanel
             Left = 8
             Height = 47
-            Top = 536
+            Top = 591
             Width = 291
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -2021,7 +2127,7 @@ object dlgImport: TdlgImport
           object pNormalizeWhitespace: TBCPanel
             Left = 8
             Height = 47
-            Top = 583
+            Top = 638
             Width = 291
             Align = alTop
             ChildSizing.LeftRightSpacing = 16
@@ -2096,7 +2202,7 @@ object dlgImport: TdlgImport
           object pReplaceChars: TBCPanel
             Left = 8
             Height = 76
-            Top = 630
+            Top = 685
             Width = 291
             Align = alTop
             AutoSize = True
@@ -2215,7 +2321,7 @@ object dlgImport: TdlgImport
           object pRoundValue: TBCPanel
             Left = 8
             Height = 76
-            Top = 706
+            Top = 761
             Width = 291
             Align = alTop
             AutoSize = True
@@ -2305,7 +2411,7 @@ object dlgImport: TdlgImport
           object pScaleValue: TBCPanel
             Left = 8
             Height = 76
-            Top = 782
+            Top = 837
             Width = 291
             Align = alTop
             AutoSize = True
@@ -2413,84 +2519,10 @@ object dlgImport: TdlgImport
               OnChange = eScaleChange
             end
           end
-          object pSplitCoordinates: TBCPanel
-            Left = 8
-            Height = 47
-            Top = 1010
-            Width = 291
-            Align = alTop
-            ChildSizing.LeftRightSpacing = 16
-            ChildSizing.TopBottomSpacing = 12
-            ChildSizing.HorizontalSpacing = 8
-            Background.Color = 16448250
-            Background.Gradient1.StartColor = clWhite
-            Background.Gradient1.EndColor = clBlack
-            Background.Gradient1.GradientType = gtLinear
-            Background.Gradient1.Point1XPercent = 0
-            Background.Gradient1.Point1YPercent = 0
-            Background.Gradient1.Point2XPercent = 0
-            Background.Gradient1.Point2YPercent = 100
-            Background.Gradient2.StartColor = clWhite
-            Background.Gradient2.EndColor = clBlack
-            Background.Gradient2.GradientType = gtLinear
-            Background.Gradient2.Point1XPercent = 0
-            Background.Gradient2.Point1YPercent = 0
-            Background.Gradient2.Point2XPercent = 0
-            Background.Gradient2.Point2YPercent = 100
-            Background.Gradient1EndPercent = 35
-            Background.Style = bbsColor
-            BevelInner = bvNone
-            BevelOuter = bvNone
-            BevelWidth = 1
-            Border.Color = 13750737
-            Border.Style = bboSolid
-            BorderBCStyle = bpsBorder
-            FontEx.Color = clDefault
-            FontEx.FontQuality = fqSystemClearType
-            FontEx.Shadow = False
-            FontEx.ShadowRadius = 5
-            FontEx.ShadowOffsetX = 5
-            FontEx.ShadowOffsetY = 5
-            FontEx.Style = []
-            ParentBackground = True
-            Rounding.RoundX = 8
-            Rounding.RoundY = 8
-            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-            TabOrder = 12
-            object lblSplitCoordinates: TLabel
-              AnchorSideLeft.Control = pSplitCoordinates
-              AnchorSideTop.Control = pSplitCoordinates
-              AnchorSideTop.Side = asrCenter
-              Left = 16
-              Height = 15
-              Top = 16
-              Width = 88
-              Caption = 'Split coordinates'
-              Layout = tlCenter
-              ParentColor = False
-            end
-            object tsSplitCoordinates: TToggleSwitch
-              AnchorSideTop.Control = pSplitCoordinates
-              AnchorSideTop.Side = asrCenter
-              AnchorSideRight.Control = pSplitCoordinates
-              AnchorSideRight.Side = asrBottom
-              Left = 225
-              Height = 25
-              Top = 11
-              Width = 50
-              OnColor = 13066075
-              OffColor = clSilver
-              OnChange = tsSplitCoordinatesChange
-              Anchors = [akTop, akRight]
-              Color = 16448250
-              Constraints.MaxHeight = 25
-              Constraints.MaxWidth = 50
-            end
-          end
           object pConvertCoordinates: TBCPanel
             Left = 8
             Height = 76
-            Top = 934
+            Top = 989
             Width = 291
             Align = alTop
             AutoSize = True
@@ -2530,8 +2562,8 @@ object dlgImport: TdlgImport
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 13
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+            TabOrder = 12
             object lblConvertCoordinates: TLabel
               AnchorSideLeft.Control = pConvertCoordinates
               AnchorSideTop.Control = tsConvertCoordinates
@@ -2588,7 +2620,7 @@ object dlgImport: TdlgImport
           object pExtractDatePart: TBCPanel
             Left = 8
             Height = 76
-            Top = 858
+            Top = 913
             Width = 291
             Align = alTop
             AutoSize = True
@@ -2629,7 +2661,7 @@ object dlgImport: TdlgImport
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 14
+            TabOrder = 13
             object lblExtractDatePart: TLabel
               AnchorSideLeft.Control = pExtractDatePart
               AnchorSideTop.Control = tsExtractDatePart
@@ -2727,7 +2759,7 @@ object dlgImport: TdlgImport
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 15
+            TabOrder = 14
             object lblDataType: TLabel
               AnchorSideLeft.Control = pDataType
               AnchorSideTop.Control = cbDataType
@@ -2750,6 +2782,7 @@ object dlgImport: TdlgImport
               Width = 148
               Anchors = [akTop, akRight]
               Color = clWhite
+              DropDownCount = 12
               ItemHeight = 15
               Items.Strings = (
                 'Text'
@@ -2768,6 +2801,86 @@ object dlgImport: TdlgImport
             end
           end
           object pArrayHandling: TBCPanel
+            Left = 8
+            Height = 47
+            Top = 395
+            Width = 291
+            Align = alTop
+            AutoSize = True
+            BorderSpacing.Bottom = 8
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            TabOrder = 15
+            Visible = False
+            object lblArrayHandling: TLabel
+              AnchorSideLeft.Control = pArrayHandling
+              AnchorSideTop.Control = cbArrayHandling
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 15
+              Top = 16
+              Width = 59
+              Caption = 'Array fields'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object cbArrayHandling: TComboBox
+              AnchorSideTop.Control = pArrayHandling
+              AnchorSideRight.Control = pArrayHandling
+              AnchorSideRight.Side = asrBottom
+              Left = 127
+              Height = 23
+              Top = 12
+              Width = 148
+              Anchors = [akTop, akRight]
+              Color = clWhite
+              ItemHeight = 15
+              ItemIndex = 0
+              Items.Strings = (
+                'Ignore'
+                'JSON string'
+              )
+              Style = csDropDownList
+              TabOrder = 0
+              Text = 'Ignore'
+              OnSelect = cbArrayHandlingSelect
+            end
+          end
+          object pCoordinateAxis: TBCPanel
             Left = 8
             Height = 47
             Top = 340
@@ -2812,22 +2925,21 @@ object dlgImport: TdlgImport
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             TabOrder = 16
-            Visible = False
-            object lblArrayHandling: TLabel
-              AnchorSideLeft.Control = pArrayHandling
-              AnchorSideTop.Control = cbArrayHandling
+            object lblCoordinateAxis: TLabel
+              AnchorSideLeft.Control = pCoordinateAxis
+              AnchorSideTop.Control = cbCoordinateAxis
               AnchorSideTop.Side = asrCenter
               Left = 16
               Height = 15
               Top = 16
-              Width = 59
-              Caption = 'Array fields'
+              Width = 85
+              Caption = 'Coordinate field'
               Layout = tlCenter
               ParentColor = False
             end
-            object cbArrayHandling: TComboBox
-              AnchorSideTop.Control = pArrayHandling
-              AnchorSideRight.Control = pArrayHandling
+            object cbCoordinateAxis: TComboBox
+              AnchorSideTop.Control = pCoordinateAxis
+              AnchorSideRight.Control = pCoordinateAxis
               AnchorSideRight.Side = asrBottom
               Left = 127
               Height = 23
@@ -2838,13 +2950,16 @@ object dlgImport: TdlgImport
               ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
-                'Ignore'
-                'JSON string'
+                'None'
+                'Longitude'
+                'Latitude'
+                'Longitude/Latitude'
+                'Latitude/Longitude'
               )
               Style = csDropDownList
               TabOrder = 0
-              Text = 'Ignore'
-              OnSelect = cbArrayHandlingSelect
+              Text = 'None'
+              OnSelect = cbCoordinateAxisSelect
             end
           end
         end
@@ -2908,7 +3023,7 @@ object dlgImport: TdlgImport
           Caption = 'Check if the data sampled is correct.'
           WordWrap = True
         end
-        object gridConfirm: TStringGrid
+        object gridPreview: TStringGrid
           AnchorSideLeft.Control = pContentConfirm
           AnchorSideTop.Control = lblConfirmInstruction
           AnchorSideTop.Side = asrBottom
@@ -2922,6 +3037,7 @@ object dlgImport: TdlgImport
           Width = 888
           Anchors = [akTop, akLeft, akRight, akBottom]
           ColCount = 2
+          FixedCols = 0
           RowCount = 2
           TabOrder = 1
         end

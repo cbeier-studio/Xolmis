@@ -525,6 +525,8 @@ resourcestring
   procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
   procedure SaveFieldsSettings(aDataSet: TDataSet; const aFileName: String);
 
+  function GetFieldName(aDataSet: TDataSet; aDisplayName: String): String;
+
   procedure SummaryBands(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryBotanicTaxa(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryCaptures(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -1244,7 +1246,7 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'site_name':              Fields[i].DisplayLabel := rscSiteName;
-        'site_acronym':           Fields[i].DisplayLabel := rscAcronym;
+        'site_acronym':           Fields[i].DisplayLabel := rscAbbreviation;
         'site_rank':              Fields[i].DisplayLabel := rscType;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
@@ -4555,6 +4557,22 @@ begin
     begin
 
       Open;
+    end;
+  end;
+end;
+
+function GetFieldName(aDataSet: TDataSet; aDisplayName: String): String;
+var
+  i: Integer;
+begin
+  Result := EmptyStr;
+
+  for i := 0 to aDataSet.FieldCount - 1 do
+  begin
+    if SameText(aDisplayName, aDataSet.Fields[i].DisplayName) then
+    begin
+      Result := aDataSet.Fields[i].FieldName;
+      Exit;
     end;
   end;
 end;

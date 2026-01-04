@@ -220,6 +220,7 @@ uses
     rsProgressNewFeathersBatch = 'Inserting new feathers...';
     rsProgressRewritingHierarchy = 'Rewriting %s...';
     rsProgressLoadingCSVFile = 'Loading CSV file... %d%%';
+    rsProgressImportingCSVFile = 'Importing CSV file...';
     rsProgressRecords = 'Processing %d of %d records...';
     rsProgressImportBandingJournal = 'Importing banding journals...';
     rsProgressImportBandingEffort = 'Importing banding effort...';

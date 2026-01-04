@@ -4470,6 +4470,16 @@ msgctxt "tdlgimport.cbarrayhandling.text"
 msgid "Ignore"
 msgstr "Ignorar"
 
+#: tdlgimport.cbcoordinateaxis.text
+msgctxt "tdlgimport.cbcoordinateaxis.text"
+msgid "None"
+msgstr "Nenhum"
+
+#: tdlgimport.cbdateformat.text
+msgctxt "tdlgimport.cbdateformat.text"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
 #: tdlgimport.cbdecimalseparator.text
 msgctxt "tdlgimport.cbdecimalseparator.text"
 msgid "Colon"
@@ -4588,9 +4598,17 @@ msgstr "Verifique se os dados amostrados estão corretos."
 msgid "Convert coordinates"
 msgstr "Converter coordenadas"
 
+#: tdlgimport.lblcoordinateaxis.caption
+msgid "Coordinate field"
+msgstr "Campo de coordenada"
+
 #: tdlgimport.lbldatatype.caption
 msgid "Data type"
 msgstr "Tipo de dados"
+
+#: tdlgimport.lbldateformat.caption
+msgid "Date format"
+msgstr "Formato de data"
 
 #: tdlgimport.lbldecimalseparator.caption
 msgctxt "tdlgimport.lbldecimalseparator.caption"
@@ -4695,10 +4713,6 @@ msgstr "Arquivo de origem: *"
 #: tdlgimport.lblsourceinstruction.caption
 msgid "Select a target table and a source file to import."
 msgstr "Selecione uma tabela destino e um arquivo de origem para importar."
-
-#: tdlgimport.lblsplitcoordinates.caption
-msgid "Split coordinates"
-msgstr "Separar coordenadas"
 
 #: tdlgimport.lblsubtitleimportfinished.caption
 msgctxt "tdlgimport.lblsubtitleimportfinished.caption"
@@ -17326,6 +17340,10 @@ msgstr "Processando %d de %d arquivos..."
 msgctxt "utils_locale.rsprogressimportimages"
 msgid "Processing %d of %d images..."
 msgstr "Processando %d de %d imagens..."
+
+#: utils_locale.rsprogressimportingcsvfile
+msgid "Importing CSV file..."
+msgstr "Importando arquivo CSV..."
 
 #: utils_locale.rsprogressimportvideos
 #, object-pascal-format

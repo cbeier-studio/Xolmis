@@ -162,7 +162,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, data_types, data_management, data_columns, utils_dialogs;
+uses utils_locale, utils_global, data_types, data_management, data_columns, data_schema, utils_dialogs;
 
 {$R *.lfm}
 
@@ -211,10 +211,15 @@ begin
   tabGeoBank.Open;
 
   LoadLocaleTablesDict;
+
+  RegisterDatabaseSchema;
 end;
 
 procedure TDMM.DataModuleDestroy(Sender: TObject);
 begin
+  if Assigned(DBSchema) then
+    DBSchema.Free;
+
   if Assigned(LocaleTablesDict) then
     LocaleTablesDict.Free;
 

@@ -4491,6 +4491,16 @@ msgctxt "tdlgimport.cbarrayhandling.text"
 msgid "Ignore"
 msgstr ""
 
+#: tdlgimport.cbcoordinateaxis.text
+msgctxt "tdlgimport.cbcoordinateaxis.text"
+msgid "None"
+msgstr ""
+
+#: tdlgimport.cbdateformat.text
+msgctxt "tdlgimport.cbdateformat.text"
+msgid "DD/MM/YYYY"
+msgstr ""
+
 #: tdlgimport.cbdecimalseparator.text
 msgctxt "tdlgimport.cbdecimalseparator.text"
 msgid "Colon"
@@ -4609,8 +4619,16 @@ msgstr ""
 msgid "Convert coordinates"
 msgstr ""
 
+#: tdlgimport.lblcoordinateaxis.caption
+msgid "Coordinate field"
+msgstr ""
+
 #: tdlgimport.lbldatatype.caption
 msgid "Data type"
+msgstr ""
+
+#: tdlgimport.lbldateformat.caption
+msgid "Date format"
 msgstr ""
 
 #: tdlgimport.lbldecimalseparator.caption
@@ -4715,10 +4733,6 @@ msgstr ""
 
 #: tdlgimport.lblsourceinstruction.caption
 msgid "Select a target table and a source file to import."
-msgstr ""
-
-#: tdlgimport.lblsplitcoordinates.caption
-msgid "Split coordinates"
 msgstr ""
 
 #: tdlgimport.lblsubtitleimportfinished.caption
@@ -17183,6 +17197,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsprogressimportimages"
 msgid "Processing %d of %d images..."
+msgstr ""
+
+#: utils_locale.rsprogressimportingcsvfile
+msgid "Importing CSV file..."
 msgstr ""
 
 #: utils_locale.rsprogressimportvideos

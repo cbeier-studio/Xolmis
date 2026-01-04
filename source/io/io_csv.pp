@@ -119,12 +119,12 @@ var
   DS: TSdfDataSet;
   Utf8Stream: TMemoryStream;
   Bytes: RawByteString;
-  RawBytes: TBytes;
   RawText, Utf8Text, DetectedEncoding: String;
   SL: TStringList;
   i: Integer;
 begin
   Result := TStringList.Create;
+  RawText := '';
 
   // Read bytes from stream
   Stream.Position := 0;
@@ -191,14 +191,15 @@ end;
 procedure TCSVImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
 var
   ds: TSdfDataSet;
-  row: TXRow;
+  row, finalRow: TXRow;
   i, total: Integer;
 begin
   ds := TSdfDataSet.Create(nil);
   try
     ds.Delimiter := Options.Delimiter;
     ds.FirstLineAsSchema := Options.HasHeader;
-    if Options.Encoding <> '' then ds.CodePage := Options.Encoding;
+    if Options.Encoding <> '' then
+      ds.CodePage := Options.Encoding;
 
     Stream.Position := 0;
     ds.LoadFromStream(Stream);
@@ -214,33 +215,45 @@ begin
       try
         for i := 0 to ds.FieldCount - 1 do
           row.Values[ds.Fields[i].FieldName] := ds.Fields[i].AsString;
-        if Assigned(RowOut) then RowOut(row);
+
+        if Assigned(FMapper) then
+          finalRow := FMapper.Apply(row)
+        else
+          finalRow := row;
+
+        if Assigned(RowOut) then
+          RowOut(row);
       finally
+        if finalRow <> row then
+          finalRow.Free;
         row.Free;
       end;
 
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc(ds.RecNo * 100.0 / Max(1,total)), 'Importando CSV');
+        Options.OnProgress(Trunc(ds.RecNo * 100.0 / Max(1,total)), rsProgressImportingCSVFile);
       ds.Next;
     end;
   finally
     ds.Free;
   end;
-
 end;
 
 procedure TCSVImporter.PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer;
   RowOut: TXRowConsumer);
 var
   DS: TSdfDataSet;
-  Row: TXRow;
+  Row, Transformed: TXRow;
   i, Count: Integer;
 begin
   DS := TSdfDataSet.Create(nil);
   try
+    if Options.Encoding <> '' then
+      DS.CodePage := Options.Encoding;
     DS.Delimiter := Options.Delimiter;
     //DS.QuoteChar := Options.QuoteChar;
     DS.FirstLineAsSchema := Options.HasHeader;
+
+    Stream.Position := 0;
     DS.LoadFromStream(Stream);
     DS.Open;
 
@@ -250,7 +263,16 @@ begin
       Row := TXRow.Create;
       for i := 0 to DS.Fields.Count - 1 do
         Row.Values[DS.Fields[i].FieldName] := DS.Fields[i].AsString;
-      RowOut(Row);
+
+      if Assigned(FMapper) then
+        Transformed := FMapper.Apply(Row)
+      else
+        Transformed := Row;
+
+      RowOut(Transformed);
+
+      if Transformed <> Row then
+        Transformed.Free;
       Row.Free;
 
       Inc(Count);
@@ -263,12 +285,52 @@ end;
 
 class function TCSVImporter.Probe(const FileName: string; Stream: TStream): Integer;
 var
-  ext: String;
+  Ext: String;
+  Buf: array[0..2047] of Char;
+  ReadBytes: Integer;
+  S: String;
+  Score: Integer;
 begin
-  ext := LowerCase(ExtractFileExt(FileName));
-  if (ext = '.csv') or (ext = '.tsv') then Exit(90);
-  // sniff simples: presença de quebras e delimitadores
-  Result := 30;
+  Ext := LowerCase(ExtractFileExt(FileName));
+
+  // 1. Known extension → high confidence
+  if (Ext = '.csv') then Exit(95);
+  if (Ext = '.tsv') then Exit(95);
+
+  // 2. Read little piece of the file
+  Stream.Position := 0;
+  ReadBytes := Stream.Read(Buf, SizeOf(Buf));
+  SetString(S, Buf, ReadBytes);
+
+  Score := 0;
+
+  // 3. Line breaks presence → typical of CSV
+  if (Pos(#10, S) > 0) or (Pos(#13, S) > 0) then
+    Inc(Score, 10);
+
+  // 4. Common delimiters presence
+  if Pos(',', S) > 0 then Inc(Score, 20);
+  if Pos(';', S) > 0 then Inc(Score, 20);
+  if Pos(#9, S) > 0 then Inc(Score, 20); // tab (TSV)
+
+  // 5. Quotes presence → common in CSV
+  if Pos('"', S) > 0 then Inc(Score, 10);
+
+  // 6. Presence of multiple delimiters in the same line
+  if (Pos(',', S) > 0) and (Pos(',', Copy(S, Pos(#10, S)+1, 200)) > 0) then
+    Inc(Score, 10);
+
+  // 7. Signs that it is NOT a CSV file
+  if Pos('<xml', LowerCase(S)) > 0 then Dec(Score, 40);
+  if Pos('{', S) > 0 then Dec(Score, 40);  // JSON
+  if Pos('[', S) > 0 then Dec(Score, 40);  // JSON
+  if Pos('PK'#3#4, S) = 1 then Dec(Score, 50); // XLSX/ZIP signature
+
+  // 8. Ensure valid range
+  if Score < 0 then Score := 0;
+  if Score > 100 then Score := 100;
+
+  Result := Score;
 end;
 
 initialization
