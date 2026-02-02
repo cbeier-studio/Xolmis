@@ -1096,9 +1096,11 @@ var
   Importer: TImporter;
   FieldNames: TStringList;
   Mapping: TFieldMapping;
-  Ext: string;
-  i, t, tf: Integer;
+  Ext, A, Source: string;
+  i: Integer;
   S: TColumnTypeStats;
+  T: TTableSchema;
+  F: TFieldSchema;
 begin
   Stream := TFileStream.Create(FSourceFile, fmOpenRead or fmShareDenyWrite);
   try
@@ -1138,6 +1140,7 @@ begin
       Importer.PreviewRows(Stream, FImportSettings, 100, @CollectColumnStats);
 
       FFieldMap.Map.Clear;
+      T := DBSchema.GetTable(FTableType);
 
       // Add field to the map
       for i := 0 to FieldNames.Count - 1 do
@@ -1147,14 +1150,31 @@ begin
 
         // Infer field mapping
         Mapping.DataType := InferColumnType(ColStats[i]);
+
         Mapping.TargetField := EmptyStr;
-        t := FTargetFields.IndexOf(Mapping.SourceField);
-        tf := FTargetFields.IndexOfData(Mapping.SourceField);
-        if t >= 0 then
-          Mapping.TargetField := FTargetFields.Keys[t];
-        if tf >= 0 then
-          Mapping.TargetField := FTargetFields.Data[tf];
-        Mapping.Import := False;
+        Source := AnsiLowerCase(Mapping.SourceField);
+
+        for F in T.Fields do
+        begin
+          if SameText(Source, F.Name) then
+            Mapping.TargetField := F.DisplayName
+          else
+          if SameText(Source, F.DisplayName) then
+            Mapping.TargetField := F.DisplayName
+          else
+          if SameText(Source, F.DarwinCoreName) then
+            Mapping.TargetField := F.DisplayName
+          else
+          if SameText(Source, F.ExportName) then
+            Mapping.TargetField := F.DisplayName
+          else
+          if F.Aliases.Count > 0 then
+            for A in F.Aliases do
+              if SameText(Source, A) then
+                Mapping.TargetField := F.DisplayName;
+        end;
+
+        Mapping.Import := Length(Mapping.TargetField) > 0;
 
         FFieldMap.Map.Add(Mapping);
       end;
