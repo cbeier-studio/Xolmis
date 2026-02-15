@@ -932,6 +932,7 @@ object dlgOnboarding: TdlgOnboarding
       Images = iButtons
       ImageIndex = 5
       TabOrder = 1
+      OnClick = btnHelpClick
     end
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom

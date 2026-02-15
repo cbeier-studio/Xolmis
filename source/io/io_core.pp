@@ -390,15 +390,15 @@ end;
 
 function TFieldMapping.IsValid: Boolean;
 begin
-  // Campo não será importado → sempre válido
+  // Field will not be imported → always valid
   if not Import then
     Exit(True);
 
-  // Precisa ter destino
+  // Must have a target
   if TargetField = '' then
     Exit(False);
 
-  // Lookup precisa de tabela e campo
+  // Lookup must have table and field
   if IsLookup then
     Result := (LookupTable <> tbNone) and (LookupField <> '')
   else

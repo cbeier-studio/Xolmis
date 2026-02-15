@@ -293,17 +293,24 @@ uses
 
 procedure TdlgImport.AddPreviewRow(const XRow: TXRow);
 var
-  r, c: Integer;
+  i, r, c: Integer;
+  col: TGridColumn;
   key: String;
 begin
   r := gridPreview.RowCount;
   gridPreview.RowCount := r + 1;
 
   c := 0;
-  for key in XRow do
+  for i := 0 to XRow.Count - 1 do
   begin
-    gridPreview.Cells[c, r] := XRow.Values[key];
-    Inc(c);
+    key := XRow.Names[i];
+    col := gridPreview.Columns.ColumnByTitle(key);
+    if Assigned(col) then
+    begin
+      c := col.Index;
+      gridPreview.Cells[c, r] := XRow.Values[key];
+    end;
+    //Inc(c);
   end;
 end;
 
@@ -1541,12 +1548,25 @@ end;
 procedure TdlgImport.PreparePreview(FieldNames: TStringList);
 var
   i: Integer;
+  col: TGridColumn;
 begin
-  gridPreview.ColCount := FieldNames.Count;
   gridPreview.RowCount := 1; // only header for the moment
 
-  for i := 0 to FieldNames.Count - 1 do
-    gridPreview.Cells[i, 0] := FieldNames[i];
+  gridPreview.Columns.Clear;
+  for i := 0 to FFieldMap.Map.Count - 1 do
+  begin
+    if FFieldMap.Map[i].Import then
+    begin
+      col := gridPreview.Columns.Add;
+      col.Title.Caption := FFieldMap.Map[i].TargetField;
+    end;
+  end;
+  //gridPreview.ColCount := FieldNames.Count;
+
+  //for i := 0 to FieldNames.Count - 1 do
+  //begin
+  //  gridPreview.Cells[i, 0] := FieldNames[i];
+  //end;
 end;
 
 procedure TdlgImport.PreviewRows;
@@ -1589,6 +1609,7 @@ begin
       // 2. Fill grid with the first N rows
       Importer.PreviewRows(FileStream, FImportSettings, 20, @AddPreviewRow);
 
+      gridPreview.AutoSizeColumns;
     finally
       Importer.Free;
     end;

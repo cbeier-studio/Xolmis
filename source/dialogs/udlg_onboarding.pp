@@ -66,6 +66,7 @@ type
     pgWelcome: TPage;
     pBottom: TPanel;
     sbCancel: TButton;
+    procedure btnHelpClick(Sender: TObject);
     procedure btnSaveLocationsClick(Sender: TObject);
     procedure btnStartClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -133,6 +134,11 @@ begin
   lblTitleDatabase.Font.Color := clVioletFG1Dark;
   lblTitleMedia.Font.Color := clVioletFG1Dark;
   lblTitleFinished.Font.Color := clVioletFG1Dark;
+end;
+
+procedure TdlgOnboarding.btnHelpClick(Sender: TObject);
+begin
+  OpenHelp(HELP_INSTALLING, 'first-steps');
 end;
 
 procedure TdlgOnboarding.btnSaveLocationsClick(Sender: TObject);
