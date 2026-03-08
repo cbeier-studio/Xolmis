@@ -73,6 +73,46 @@
       </element><element name="TSearchGroup.AndOr"><short>Type of logical operator used to connect the fields of the group</short>
       </element>
     <short>Library with data management types and constants.</short>
+    <element name="TValidationRules"><short>Defines validation constraints that can be applied to imported field values.</short><descr><p><var>TValidationRules</var> is a record that groups together all
+      validation constraints applicable to a field during data import.
+      These rules are used to ensure that incoming values conform to
+      structural, semantic, and domain-specific requirements before being
+      accepted into the target database.
+    </p><p>The record supports several categories of validation:
+    </p><ul><li><b>RequiredField</b> — Indicates whether the field must contain a non-empty value.</li><li><b>UniqueField</b> — Specifies that the field must contain a value not already present in the target dataset.</li><li><b>MaxLength</b> — Defines the maximum allowed length for string values.</li><li><b>MinValue</b> and <b>MaxValue</b> — Specify numeric bounds for fields that represent numbers.</li><li><b>MinDateTime</b> and <b>MaxDateTime</b> — Define the valid range for date and time values.</li><li><b>FormatMask</b> — Provides a formatting pattern that the input value must match (e.g., regular expressions or custom masks).</li><li><b>ValueList</b> — Contains a comma-separated list of allowed values for enumerated fields.</li>
+          </ul><p>These rules are typically evaluated during the transformation and
+      validation phase of the import pipeline, after field mapping and
+      type conversion have been applied.
+    </p>
+        </descr><seealso><link id="TValidationRulesHelper">TValidationRulesHelper</link><link id="TFieldSchema">TFieldSchema</link>
+        </seealso>
+      </element><element name="TValidationRulesHelper"><short>Resets all validation rule fields to their default, uninitialized state.</short><descr><p>The <var>Clear</var> method initializes all fields of the
+      <var>TValidationRules</var> record to their default values.
+      This includes setting Boolean flags to <var>False</var>,
+      numeric limits to zero, date limits to zero (<var>0.0</var>),
+      and clearing any formatting masks or value lists.
+    </p><p>This method is typically called when constructing or reusing a
+      <var>TValidationRules</var> instance to ensure that no previous
+      validation constraints remain active.
+    </p>
+        </descr><seealso><link id="TValidationRules">TValidationRules</link>
+        </seealso>
+      </element><element name="TRelationalField"><short>Describes the lookup configuration for fields that reference values from another table.</short><descr><p><var>TRelationalField</var> is a record that defines how a field in the
+      imported dataset should resolve its value through a lookup operation in a
+      related table. It is used to support foreign-key relationships during the
+      import process, allowing textual or symbolic values to be converted into
+      the corresponding primary-key identifiers of the target database.
+    </p><p>Each field in this record specifies a different aspect of the lookup:
+    </p><ul><li><b>LookupTable</b> — Identifies the target table from which the lookup value should be retrieved.</li><li><b>LookupKeyField</b> — Specifies the primary-key field of the lookup table.</li><li><b>LookupField</b> — Defines the field in the lookup table that should be matched against the imported value.</li><li><b>LookupResultField</b> — Indicates which field from the lookup table should be returned as the resolved value (typically the primary key).</li><li><b>DisplayFieldName</b> — Provides a human-readable name for UI components that display lookup information.</li>
+          </ul><p>During the import process, these settings allow the system to translate
+      user-provided or external identifiers (such as names, codes, or acronyms)
+      into the internal identifiers required by the database schema. If the
+      lookup fails, the behavior depends on the configured null-handling and
+      error-handling rules of the associated field mapping.
+    </p>
+        </descr><seealso><link id="TFieldSchema">TFieldSchema</link>
+        </seealso>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

@@ -1,3 +1,19 @@
+{ Xolmis Database Schema library
+
+  Copyright (C) 2025 Christian Beier <hello@christianbeier.studio>
+
+  This source is free software; you can redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation; either version 2 of the License, or (at your
+  option) any later version.
+
+  This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+  You should have received a copy of the GNU General Public License along with this program.  If not,
+  see <https://www.gnu.org/licenses/>.
+}
+
 unit data_schema;
 
 {$mode ObjFPC}{$H+}
@@ -2310,7 +2326,7 @@ var
   AllowedValues: TStringList;
 begin
   // Required field
-  if Rules.RequiredField and VarIsNull(V) then
+  if (Rules.RequiredField) and (VarIsNull(V)) then
     raise Exception.CreateFmt(rsErrorRequiredField, [Name]);
 
   // Maximum length (for text)
@@ -2318,15 +2334,32 @@ begin
     if (not VarIsNull(V)) and (Length(VarToStr(V)) > Rules.MaxLength) then
       raise Exception.CreateFmt(rsErrorValueExceededMaxLength, [VarToStr(V), Rules.MaxLength, Name]);
 
+  // Value within range (numeric)
+  if ((DataType = sdtInteger) or (DataType = sdtFloat)) and
+    (Rules.MinValue <> Rules.MaxValue) and (not VarIsNull(V)) then
+  begin
+    if (VarAsType(V, varDouble) < Rules.MinValue) or (VarAsType(V, varDouble) > Rules.MaxValue) then
+      raise Exception.CreateFmt(rsValueNotInRange, [Name, Rules.MinValue, Rules.MaxValue]);
+  end;
+  // Value within range (date and time)
+  if ((DataType = sdtDate) or (DataType = sdtTime) or (DataType = sdtDateTime)) and
+    (Rules.MinDateTime <> Rules.MaxDateTime) and (not VarIsNull(V)) then
+  begin
+    if (VarToDateTime(V) < Rules.MinDateTime) or (VarToDateTime(V) > Rules.MaxDateTime) then
+      raise Exception.CreateFmt(rsDateTimeNotInRange, [Name, DateTimeToStr(Rules.MinDateTime), DateTimeToStr(Rules.MaxDateTime)]);
+  end;
+
   // List of allowed values
-  AllowedValues := TStringList.Create;
-  try
-    AllowedValues.CommaText := Rules.ValueList;
-    if (DataType = sdtList) and (Rules.ValueList <> EmptyStr) then
+  if (DataType = sdtList) and (Rules.ValueList <> EmptyStr) then
+  begin
+    AllowedValues := TStringList.Create;
+    try
+      AllowedValues.CommaText := Rules.ValueList;
       if (not VarIsNull(V)) and (AllowedValues.IndexOf(VarToStr(V)) < 0) then
         raise Exception.CreateFmt(rsErrorValueNotAllowedForField, [VarToStr(V), Name, Rules.ValueList]);
-  finally
-    AllowedValues.Free;
+    finally
+      AllowedValues.Free;
+    end;
   end;
 
   // Lookup: validate if ID exists

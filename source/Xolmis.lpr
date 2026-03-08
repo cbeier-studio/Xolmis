@@ -207,6 +207,7 @@ begin
 
   xSettings := TXolmisSettings.Create;
   XSettings.LoadFromFile;
+  {$IFDEF WINDOWS}
   case xSettings.SelectedTheme of
     0: PreferredAppMode := pamDefault;
     1: PreferredAppMode := pamAllowDark;
@@ -214,6 +215,7 @@ begin
     3: PreferredAppMode := pamForceLight;
   end;
   uMetaDarkStyle.ApplyMetaDarkStyle(DefaultDark);
+  {$ENDIF}
 
   Application.Initialize;
   dlgSplash := TdlgSplash.Create(nil);

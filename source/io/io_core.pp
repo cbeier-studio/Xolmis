@@ -102,18 +102,22 @@ type
     function IsCancellationRequested: Boolean;
   end;
 
-  TImportStrategy = (istAppend, istReplace, istUpdate);
+  TExistingRecordPolicy = (
+    erpInsertOnly,                // Insert new rows only, ignore existing ones
+    erpReplaceExisting,           // Replace existing rows entirely, including null values
+    erpInsertNewUpdateExisting    // Update existing rows, insert missing ones
+  );
   TImportErrorHandling = (iehAbort, iehIgnore);
 
   // Import options
   TImportOptions = record
-    Strategy: TImportStrategy;
+    ExistingRecordPolicy: TExistingRecordPolicy;
     ErrorHandling: TImportErrorHandling;
     Encoding: String;         // 'UTF-8', 'latin1', 'Windows-1252' etc.
     Delimiter: Char;          // CSV/TSV
     HasHeader: Boolean;       // CSV/TSV, XLSX/ODS
     QuoteChar: Char;          // CSV/TSV
-    TrimFields: Boolean;      // CSV/TSV, XLSX/ODS
+    TrimFields: Boolean;      // CSV/TSV, XLSX/ODS, XML
     SkipEmptyLines: Boolean;  // CSV/TSV
     ForceNDJSON: Boolean;     // JSON
     IgnoreNulls: Boolean;     // JSON
@@ -165,6 +169,7 @@ type
 
   TFieldMapper = class
   private
+    FTableType: TTableType;
     FMap: TFieldsMap;
     FOptions: TImportOptions;
   public
@@ -175,6 +180,7 @@ type
     function Apply(const Row: TXRow): TXRow;
     function ValidateRequired(const RequiredFields: array of string): Boolean;
 
+    property TableType: TTableType read FTableType write FTableType;
     property Map: TFieldsMap read FMap;
     property Options: TImportOptions read FOptions;
   end;
@@ -249,7 +255,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_conversions, data_consts, data_getvalue;
+  utils_locale, utils_conversions, data_consts, data_schema, data_getvalue;
 
 function ExtractExt(const FileName: string): string;
 begin
@@ -498,14 +504,17 @@ end;
 function TFieldMapper.Apply(const Row: TXRow): TXRow;
 var
   Mapping: TFieldMapping;
+  FSchema: TFieldSchema;
   SourceValue, DestValue, lat, lon: String;
-  I: Integer;
-  scaleValue: Double;
+  I, dummyI: Integer;
+  scaleValue, dummyF: Double;
   coordValue: Extended;
-  dateValue: TDateTime;
+  dateValue, dummyDT: TDateTime;
   dmsPoint: TDMSPoint;
   utmPoint: TUTMPoint;
   FS: TFormatSettings;
+  ConvertedValue: Variant;
+  dummyB: Boolean;
 begin
   Result := TXRow.Create;
 
@@ -515,6 +524,7 @@ begin
 
   for I := 0 to FMap.Count - 1 do
   begin
+    FSchema := nil;
     Mapping := FMap[I];
     if not Mapping.Import then
       Continue;
@@ -533,7 +543,7 @@ begin
         nhDefaultValue:
           DestValue := VarToStr(Mapping.DefaultValue);
         nhUseMean: ;
-        nhUseMedian: ;
+        nhUseMedian: ; { #todo : replace null values by mean, median, or mode on importing }
         nhUseMode: ;
       end;
     end;
@@ -720,7 +730,87 @@ begin
       Continue; // do not write the original field
     end;
 
-    // 6. Set result
+    // 6. Check data type compatibility
+    try
+      FSchema := DBSchema.GetTable(FTableType).GetField(Mapping.TargetField);
+      ConvertedValue := DestValue;
+      case FSchema.DataType of
+
+        sdtInteger, sdtYear:
+          begin
+            if not TryStrToInt(DestValue, dummyI) then
+            begin
+              case Mapping.TypeErrorHandling of
+                tehIgnore: ; // keep as string
+                tehAbort:
+                  raise Exception.CreateFmt(rsInvalidIntegerForField, [DestValue, Mapping.TargetField]);
+                //tehConvert:
+                //  ConvertedValue := StrToIntDef(DestValue, 0);
+              end;
+            end;
+          end;
+
+        sdtFloat:
+          begin
+            if not TryStrToFloat(DestValue, dummyF, FS) then
+            begin
+              case Mapping.TypeErrorHandling of
+                tehIgnore: ;
+                tehAbort:
+                  raise Exception.CreateFmt(rsInvalidFloatForField, [DestValue, Mapping.TargetField]);
+                //tehConvert:
+                //  ConvertedValue := StrToFloatDef(DestValue, 0, FS);
+              end;
+            end;
+          end;
+
+        sdtBoolean:
+          begin
+            if not TryStrToBool(DestValue, dummyB) then
+            begin
+              case Mapping.TypeErrorHandling of
+                tehIgnore: ;
+                tehAbort:
+                  raise Exception.CreateFmt(rsInvalidBooleanForField, [DestValue, Mapping.TargetField]);
+                //tehConvert:
+                //  ConvertedValue := SameText(DestValue, 'true') or (DestValue = '1');
+              end;
+            end;
+          end;
+
+        sdtDateTime, sdtDate, sdtTime:
+          begin
+            if not TryStrToDateTime(DestValue, dummyDT, FS) then
+            begin
+              case Mapping.TypeErrorHandling of
+                tehIgnore: ;
+                tehAbort:
+                  raise Exception.CreateFmt(rsInvalidDateTimeForField, [DestValue, Mapping.TargetField]);
+                //tehConvert:
+                //  ConvertedValue := 0; // fallback to epoch
+              end;
+            end;
+          end;
+
+        sdtLookup, sdtList, sdtText, sdtMonthYear:
+          begin
+            ConvertedValue := DestValue;
+          end;
+
+      end;
+    except
+      on E: Exception do
+      begin
+        case FOptions.ErrorHandling of
+          iehAbort: raise;
+          iehIgnore: ;
+        end;
+      end;
+    end;
+
+    DestValue := VarToStr(ConvertedValue);
+
+    // 7. Set result
     Result.Values[Mapping.TargetField] := DestValue;
   end;
 end;

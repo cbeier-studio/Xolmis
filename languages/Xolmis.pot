@@ -4521,14 +4521,13 @@ msgctxt "tdlgimport.cberrorhandling.text"
 msgid "Abort on first error"
 msgstr ""
 
+#: tdlgimport.cbexistingrecordpolicy.text
+msgid "Update existing"
+msgstr ""
+
 #: tdlgimport.cbextractdatepart.text
 msgctxt "tdlgimport.cbextractdatepart.text"
 msgid "Year"
-msgstr ""
-
-#: tdlgimport.cbimportstrategy.text
-msgctxt "tdlgimport.cbimportstrategy.text"
-msgid "Update"
 msgstr ""
 
 #: tdlgimport.cblookupfield.texthint
@@ -4612,7 +4611,7 @@ msgid "Boolean value"
 msgstr ""
 
 #: tdlgimport.lblconfirminstruction.caption
-msgid "Check if the data sampled is correct."
+msgid "Check the data sampled. If it is correct, click Next to import."
 msgstr ""
 
 #: tdlgimport.lblconvertcoordinates.caption
@@ -4649,6 +4648,10 @@ msgstr ""
 msgid "Error handling"
 msgstr ""
 
+#: tdlgimport.lblexistingrecordpolicy.caption
+msgid "Existing records policy"
+msgstr ""
+
 #: tdlgimport.lblextractdatepart.caption
 msgid "Extract date part"
 msgstr ""
@@ -4664,10 +4667,6 @@ msgstr ""
 
 #: tdlgimport.lblimportsettings.caption
 msgid "Import profile:"
-msgstr ""
-
-#: tdlgimport.lblimportstrategy.caption
-msgid "Import strategy"
 msgstr ""
 
 #: tdlgimport.lblkeypath.caption
@@ -4750,7 +4749,7 @@ msgstr ""
 
 #: tdlgimport.lbltitleconfirm.caption
 msgctxt "tdlgimport.lbltitleconfirm.caption"
-msgid "Confirmation"
+msgid "Preview"
 msgstr ""
 
 #: tdlgimport.lbltitlefields.caption
@@ -15913,6 +15912,11 @@ msgctxt "utils_locale.rsintegritycheckreturnederrors"
 msgid "The database integrity check returned some errors."
 msgstr ""
 
+#: utils_locale.rsinvalidbooleanforfield
+#, object-pascal-format
+msgid "Invalid boolean value \"%s\" for field %s"
+msgstr ""
+
 #: utils_locale.rsinvalidcpf
 msgctxt "utils_locale.rsinvalidcpf"
 msgid "The CPF number entered is invalid."
@@ -15930,10 +15934,25 @@ msgctxt "utils_locale.rsinvaliddaterange"
 msgid "The %s must be later than the %s."
 msgstr ""
 
+#: utils_locale.rsinvaliddatetimeforfield
+#, object-pascal-format
+msgid "Invalid date/time \"%s\" for field %s"
+msgstr ""
+
 #: utils_locale.rsinvalidemail
 #, object-pascal-format
 msgctxt "utils_locale.rsinvalidemail"
 msgid "The address %s is not a valid e-mail."
+msgstr ""
+
+#: utils_locale.rsinvalidfloatforfield
+#, object-pascal-format
+msgid "Invalid float value \"%s\" for field %s"
+msgstr ""
+
+#: utils_locale.rsinvalidintegerforfield
+#, object-pascal-format
+msgid "Invalid integer value \"%s\" for field %s"
 msgstr ""
 
 #: utils_locale.rsinvalidlatitude
@@ -17376,7 +17395,7 @@ msgstr ""
 #: utils_locale.rsrequesterandsendermustbedifferent
 #, object-pascal-format
 msgctxt "utils_locale.rsrequesterandsendermustbedifferent"
-msgid "The requester and the sender of band %s must be different."
+msgid "The requester and the sender of the band %s must be different."
 msgstr ""
 
 #: utils_locale.rsrequiredbandsize

@@ -21,7 +21,7 @@ unit models_record_types;
 interface
 
 uses
-  Classes, SysUtils, fgl, DB, SQLDB;
+  Classes, SysUtils, fgl, DB, SQLDB, io_core;
 
 type
   TTaxonHierarchy = record
@@ -124,6 +124,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); virtual; abstract;
     procedure GetById(const Id: Integer; E: TXolmisRecord); virtual; abstract;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); virtual; abstract;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); virtual; abstract;
     procedure Insert(E: TXolmisRecord); virtual; abstract;
     procedure Update(E: TXolmisRecord); virtual; abstract;
     procedure Save(E: TXolmisRecord);

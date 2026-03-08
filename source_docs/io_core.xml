@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="io_core"><element name="TFieldMapper.AddMapping"><short>Adds a new source-to-target field mapping.</short>
+      <descr><p>Creates a new <var>TFieldMapping</var> instance and adds it to the internal mapping list. The mapping associates a source field name with a target field name and initializes default transformation and validation settings.
+    </p>
+        </descr>
+      </element><element name="TFieldMapper.Apply"><short>Applies all mapping rules to a row and returns a transformed result row.</short><descr><p>Processes the given <var>TXRow</var> according to the configured mappings. For each field, the mapper applies null-handling, value transformations, coordinate conversions, lookup operations, type conversion, and validation. The result is a new <var>TXRow</var> containing only the mapped and processed fields.
+    </p><p>This method processes each <var>TFieldMapping</var> in sequence and performs the following steps:</p><ul><li>Retrieves the source value from the input row using the mapping's <var>SourceField</var>.</li><li>Applies null-handling rules (ignore, default value, statistical replacement).</li><li>Executes all configured text transformations, including trimming, whitespace normalization, character replacement, accent removal, case conversion, and sentence/title casing.</li><li>Converts boolean values from multiple textual representations into a normalized form ("True" or "False").</li><li>Applies numeric transformations such as scaling (multiply/divide) and rounding with a configurable precision.</li><li>Extracts date components (day, month, year) using the date format and decimal separator defined in <var>TImportOptions</var>.</li><li>Converts geographic coordinates between supported formats (decimal degrees, DMS, UTM), handling both single-axis and combined latitude/longitude fields.</li><li>Performs lookup operations for foreign-key fields, replacing the input value with the corresponding primary-key value from the referenced table.</li><li>Splits combined coordinate fields (e.g., "lat,long" or "long,lat") into separate latitude and longitude fields when required by the mapping.</li>
+          </ul><p>If an error occurs, the behavior depends on the configured <var>TTypeErrorHandling</var> and <var>TImportErrorHandling</var> policies.
+    </p>
+        </descr>
+      </element><element name="TFieldMapper.ValidateRequired"><short>Checks whether all required fields are present in the mapping.</short>
+      <descr><p>Verifies that each field listed in <var>RequiredFields</var> has a corresponding mapping and that the mapping is marked for import. This method is typically used before starting the import process to ensure that essential fields are properly configured.
+    </p>
+        </descr>
+      </element>
+    <element name="EImportError"><short>Exception type raised when an error occurs during the data import process.</short><descr><p><var>EImportError</var> represents errors that occur while reading,
+      parsing, transforming, or validating data during the import workflow.
+      It is used to signal fatal conditions that prevent the import from
+      continuing, such as corrupted input files, invalid formats, or
+      unrecoverable conversion failures.
+    </p>
+        </descr>
+      </element><element name="TImportFileType"><short>Identifies the supported input file formats for the import system.</short><descr><p><var>TImportFileType</var> enumerates all file types that can be
+      processed by the import engine. Each value corresponds to a specific
+      parser or importer implementation capable of reading that format.
+    </p><ul><li><b>iftCSV</b> — Comma-separated values.</li><li><b>iftTSV</b> — Tab-separated values.</li><li><b>iftExcel</b> — Legacy Excel binary format (.xls).</li><li><b>iftExcelOOXML</b> — Excel Open XML format (.xlsx).</li><li><b>iftOpenDocument</b> — OpenDocument Spreadsheet (.ods).</li><li><b>iftJSON</b> — Standard JSON array or object.</li><li><b>iftNDJSON</b> — Newline-delimited JSON.</li><li><b>iftDBF</b> — dBase database file.</li><li><b>iftXML</b> — Generic XML document.</li><li><b>iftKML</b> — Keyhole Markup Language (geospatial).</li><li><b>iftGPX</b> — GPS Exchange Format.</li><li><b>iftGeoJSON</b> — GeoJSON geospatial format.</li>
+          </ul>
+        </descr>
+      </element><element name="TValueTransformation"><short>Defines the transformations that may be applied to an imported field value.</short><descr><p><var>TValueTransformation</var> lists all supported operations that can
+      be applied to raw input values before type conversion and validation.
+      These transformations are used to normalize, clean, or reinterpret
+      textual data.
+    </p><ul><li><b>vtrTrim</b> — Removes leading and trailing whitespace.</li><li><b>vtrLowerCase</b> — Converts the value to lowercase.</li><li><b>vtrUpperCase</b> — Converts the value to uppercase.</li><li><b>vtrSentenceCase</b> — Converts the value to sentence case.</li><li><b>vtrTitleCase</b> — Converts the value to title case.</li><li><b>vtrBoolean</b> — Normalizes boolean-like strings to True/False.</li><li><b>vtrRemoveAccents</b> — Removes diacritical marks.</li><li><b>vtrNormalizeWhitespace</b> — Collapses repeated whitespace.</li><li><b>vtrReplaceChars</b> — Replaces characters according to mapping rules.</li><li><b>vtrScale</b> — Applies numeric scaling (multiply/divide).</li><li><b>vtrRound</b> — Rounds numeric values to a given precision.</li><li><b>vtrExtractYear</b> — Extracts the year from a date.</li><li><b>vtrExtractMonth</b> — Extracts the month from a date.</li><li><b>vtrExtractDay</b> — Extracts the day from a date.</li><li><b>vtrConvertCoordinates</b> — Converts coordinates between formats.</li>
+          </ul>
+        </descr>
+      </element><element name="TTypeErrorHandling"><short>Determines how type conversion errors are handled for individual fields.</short><descr><p><var>TTypeErrorHandling</var> specifies the policy to apply when a
+      value cannot be converted to the expected data type of the destination
+      field. This affects only the current field, not the entire row.
+    </p><ul><li><b>tehIgnore</b> — Keeps the original string value unchanged.</li><li><b>tehAbort</b> — Raises an exception and stops processing.</li><li><b>tehConvert</b> — Attempts fallback conversion (e.g., default values).</li>
+          </ul>
+        </descr>
+      </element><element name="TNullHandling"><short>Defines how null or empty input values should be treated.</short><descr><p><var>TNullHandling</var> controls how the importer handles empty or
+      missing values in the source data. Depending on the selected mode, the
+      importer may skip the field, substitute a default value, or apply
+      statistical replacement strategies.
+    </p><ul><li><b>nhIgnore</b> — Skips the field entirely.</li><li><b>nhDefaultValue</b> — Uses the field's configured default value.</li><li><b>nhUseMean</b> — Replaces with the mean of previously imported values.</li><li><b>nhUseMedian</b> — Replaces with the median of previously imported values.</li><li><b>nhUseMode</b> — Replaces with the most frequent value.</li>
+          </ul>
+        </descr>
+      </element><element name="TArrayHandling"><short>Specifies how array-like values should be processed during import.</short><descr><p><var>TArrayHandling</var> determines how the importer treats values
+      that represent arrays or lists in the source data.
+    </p><ul><li><b>ahIgnore</b> — Treats the array as a plain string.</li><li><b>ahJsonString</b> — Serializes the array into a JSON string.</li>
+          </ul>
+        </descr>
+      </element><element name="TScaleOperation"><short>Defines the scaling operation applied to numeric values.</short><descr><p><var>TScaleOperation</var> specifies how numeric values should be
+      scaled when the <var>vtrScale</var> transformation is active.
+    </p><ul><li><b>sopNone</b> — No scaling is applied.</li><li><b>sopMultiply</b> — Multiplies the value by a scale factor.</li><li><b>sopDivide</b> — Divides the value by a scale factor.</li>
+          </ul>
+        </descr>
+      </element><element name="TSourceMapAxis"><short>Indicates which coordinate axis or axis pair is represented by the input value.</short><descr><p><var>TSourceMapAxis</var> identifies whether the source value contains
+      a single coordinate (latitude or longitude) or a combined pair.
+    </p><ul><li><b>smaNone</b> — No coordinate axis is specified.</li><li><b>smaLong</b> — Longitude only.</li><li><b>smaLat</b> — Latitude only.</li><li><b>smaLatLong</b> — Latitude followed by longitude.</li><li><b>smaLongLat</b> — Longitude followed by latitude.</li>
+          </ul>
+        </descr>
+      </element><element name="TSourceCoordinatesFormat"><short>Specifies the coordinate format used in the source data.</short><descr><p><var>TSourceCoordinatesFormat</var> defines the representation of
+      geographic coordinates in the input dataset. The importer uses this
+      information to convert coordinates into the internal decimal-degree
+      format.
+    </p><ul><li><b>scfDD</b> — Decimal degrees.</li><li><b>scfDMS</b> — Degrees, minutes, seconds.</li><li><b>scfUTM</b> — Universal Transverse Mercator.</li>
+          </ul>
+        </descr>
+      </element><element name="TValueTransformationSet"><short>A set of value transformation flags applied to an imported field.</short><descr><p><var>TValueTransformationSet</var> is a set type that allows multiple
+      <var>TValueTransformation</var> operations to be combined and applied
+      sequentially to a field value during import.
+    </p>
+        </descr><seealso><link id="TValueTransformation">TValueTransformation</link>
+        </seealso>
+      </element><element name="TFieldMapping"><short>Defines how a single source field is mapped, transformed, and validated during data import.</short><descr><p><var>TFieldMapping</var> describes the complete set of rules applied to a single field during the import process. It specifies the source field name, the target database field, the transformations to apply, lookup behavior, null-handling policies, type-conversion rules, and additional metadata required to convert raw input values into valid database-ready values.
+    </p><p>Each instance of <var>TFieldMapping</var> corresponds to one column in the destination table. The importer iterates through all mappings to construct a transformed output row.
+    </p><p>The main properties include:</p><ul><li><b>SourceField</b> — Name of the field in the input dataset.</li><li><b>TargetField</b> — Name of the corresponding field in the destination table.</li><li><b>DataType</b> — Expected data type for the target field.</li><li><b>Import</b> — Indicates whether this field should be imported.</li><li><b>LookupTable</b> — Target table used for foreign-key lookup.</li><li><b>LookupField</b> — Field in the lookup table used for matching.</li><li><b>Transformations</b> — Set of value transformations to apply.</li><li><b>IsCorrespondingKey</b> — Marks the field as part of a key used for matching existing records.</li><li><b>TypeErrorHandling</b> — Policy for handling type conversion errors.</li><li><b>NullHandling</b> — Policy for handling empty or missing values.</li><li><b>ArrayHandling</b> — Defines how array-like values should be processed.</li><li><b>DefaultValue</b> — Value used when null-handling or type conversion requires substitution.</li><li><b>ReplaceCharFrom</b> / <b>ReplaceCharTo</b> — Character replacement rules.</li><li><b>RoundPrecision</b> — Precision used when rounding numeric values.</li><li><b>ScaleOperation</b> — Scaling operation applied to numeric values.</li><li><b>ScaleSize</b> — Factor used for scaling operations.</li><li><b>CoordinateAxis</b> — Indicates whether the field contains latitude, longitude, or both.</li><li><b>CoordinatesFormat</b> — Specifies the coordinate format (DD, DMS, UTM).</li>
+          </ul><p>The class also provides helper methods for checking mapping validity, determining whether transformations or lookups are active, resetting configuration, and serializing/deserializing the mapping to JSON.
+    </p>
+        </descr><seealso><link id="TValueTransformation">TValueTransformation</link><link id="TTypeErrorHandling">TTypeErrorHandling</link><link id="TNullHandling">TNullHandling</link><link id="TScaleOperation">TScaleOperation</link><link id="TSourceMapAxis">TSourceMapAxis</link><link id="TSourceCoordinatesFormat">TSourceCoordinatesFormat</link>
+        </seealso>
+      </element><element name="TFieldMapping.IsMapped"><short>Returns True if both source and target fields are defined.</short><descr><p>Determines whether the mapping is considered active by checking if both <var>SourceField</var> and <var>TargetField</var> contain non-empty values. A mapping that is not mapped is ignored during import.
+    </p>
+        </descr>
+      </element><element name="TFieldMapping.IsValid"><short>Checks whether the mapping contains enough information to be used during import.</short><descr><p>Validates that the mapping has a target field, a compatible data type, and any required lookup configuration. This method is used by the import wizard to detect incomplete or inconsistent mappings.
+    </p>
+        </descr>
+      </element><element name="TFieldMapping.IsLookup"><short>Indicates whether the mapping performs a lookup in another table.</short><descr><p>Returns True if <var>LookupTable</var> is not <var>tbNone</var>. Lookup mappings convert textual or symbolic values into foreign-key identifiers during import.
+    </p>
+        </descr>
+      </element><element name="TFieldMapping.HasTransformation"><short>Checks whether a specific transformation is enabled for this mapping.</short><descr><p>Returns True if the given <var>TValueTransformation</var> is present in the <var>Transformations</var> set. This is used internally by the importer to determine which operations to apply to the input value.
+    </p>
+        </descr>
+      </element><element name="TFieldMapping.Reset"><short>Resets the mapping to its default state.</short><descr><p>Clears transformation flags, lookup settings, error-handling policies, and other configuration fields. If <var>ClearSource</var> is True, the <var>SourceField</var> is also cleared. This method is used when reinitializing mappings in the import wizard.
+    </p>
+        </descr>
+      </element><element name="TFieldMapping.ToJSON"><short>Serializes the mapping configuration to a JSON string.</short><descr><p>Converts all mapping properties into a JSON representation suitable for saving user-defined import profiles. The resulting JSON can later be restored using <var>FromJSON</var>.
+    </p>
+        </descr>
+      </element><element name="TFieldMapping.FromJSON"><short>Loads the mapping configuration from a JSON string.</short><descr><p>Parses a JSON string previously generated by <var>ToJSON</var> and restores all mapping properties. This allows import configurations to be saved and reused across sessions.
+    </p>
+        </descr>
+      </element><element name="TFieldsMap"><short>A list of <var>TFieldMapping</var> objects.</short><descr><p><var>TFieldsMap</var> is a specialized object list that stores all field mappings associated with a single import operation. The importer iterates through this list to transform each row of input data.
+    </p>
+        </descr><seealso><link id="TFieldMapping">TFieldMapping</link>
+        </seealso>
+      </element><element name="TFieldsDictionary"><short>A dictionary mapping strings to strings, used for field-name translation.</short><descr><p><var>TFieldsDictionary</var> is a string-to-string map used to store associations between source field names and target field names. It is typically used for quick lookup of field correspondences or aliases.
+    </p>
+        </descr>
+      </element><element name="TColumnTypeStats"><short>Collects statistics about the data types observed in a column during import analysis.</short><descr><p><var>TColumnTypeStats</var> stores counters used to infer the most likely data type of a column in the source dataset. As each value is inspected, the importer increments the corresponding counter (integer, float, date, time, datetime, boolean). These statistics are later used to determine the best matching field type or to assist in automatic field mapping.
+    </p><ul><li><b>Name</b> — The column name being analyzed.</li><li><b>Seen</b> — Total number of values inspected.</li><li><b>IntCount</b> — Number of values successfully parsed as integers.</li><li><b>FloatCount</b> — Number of values parsed as floating-point numbers.</li><li><b>DateCount</b> — Number of values recognized as dates.</li><li><b>TimeCount</b> — Number of values recognized as times.</li><li><b>DateTimeCount</b> — Number of values recognized as full date-time values.</li><li><b>BoolCount</b> — Number of values interpreted as boolean.</li>
+          </ul><p>These statistics are typically computed during preview or schema detection phases, before the actual import begins.
+    </p>
+        </descr>
+      </element><element name="TExportFiletype"><short>Identifies the supported output formats for data export.</short><descr><p><var>TExportFiletype</var> enumerates the file formats that the system can generate when exporting data. Each value corresponds to a specific exporter implementation.
+    </p><ul><li><b>xfCSV</b> — Comma-separated values.</li><li><b>xfJSON</b> — JSON array or object.</li><li><b>xfODS</b> — OpenDocument Spreadsheet (.ods).</li><li><b>xfXLSX</b> — Excel Open XML format (.xlsx).</li><li><b>xfXML</b> — Generic XML document.</li>
+          </ul>
+        </descr>
+      </element><element name="TProgressProc"><short>Callback used to report progress during long‑running operations.</short><descr><p><var>TProgressProc</var> is a minimal progress callback invoked by importers and exporters to report the current completion percentage and an optional status message. It is typically used to update progress bars or status labels in graphical user interfaces.
+    </p><p>The <var>Percent</var> parameter ranges from 0 to 100, and <var>Msg</var> provides a human-readable description of the current operation.
+    </p>
+        </descr>
+      </element><element name="ICancellation"><short>Interface representing a simple cancellation token.</short><descr><p><var>ICancellation</var> provides a mechanism for cooperative cancellation of long-running operations such as file import or export. Implementations typically expose a flag that can be set by the user interface, allowing the importer to stop processing gracefully.
+    </p><p>The <var>IsCancellationRequested</var> method returns True when the operation should be aborted.
+    </p>
+        </descr>
+      </element><element name="TExistingRecordPolicy"><short>Defines how existing database records should be handled during import.</short><descr><p><var>TExistingRecordPolicy</var> specifies the strategy used when the importer encounters a record that already exists in the destination database. This allows the user to control whether existing rows should be preserved, replaced, or updated.
+    </p><ul><li><b>erpInsertOnly</b> — Inserts new rows only; existing rows are ignored.</li><li><b>erpReplaceExisting</b> — Replaces existing rows entirely, including null values.</li><li><b>erpInsertNewUpdateExisting</b> — Updates existing rows and inserts new ones.</li>
+          </ul><p>This policy is applied after field mapping and validation, during the database write phase of the import process.
+    </p>
+        </descr>
+      </element><element name="TImportErrorHandling"><short>Determines how the importer reacts to errors encountered during processing.</short><descr><p><var>TImportErrorHandling</var> defines the global error-handling strategy for the import process. Unlike type-level error handling, which applies to individual fields, this policy governs how the importer responds to any error that occurs while processing a row.
+    </p><ul><li><b>iehAbort</b> — Stops the entire import immediately when an error occurs.</li><li><b>iehIgnore</b> — Ignores the error and continues processing subsequent rows.</li>
+          </ul><p>This setting is typically used in combination with <var>TTypeErrorHandling</var> to provide fine-grained control over error behavior.
+    </p>
+        </descr>
+      </element><element name="TImportOptions"><short>Defines configuration settings that control how data is read, interpreted, and processed during import.</short><descr><p><var>TImportOptions</var> is a record that encapsulates all parameters required to configure the behavior of the import engine. These options influence how input files are parsed, how values are interpreted, how errors are handled, and how existing database records are treated.
+    </p><p>The record is passed to importer implementations such as CSV, JSON, XML, ODS, or XLSX readers, allowing each importer to adapt its behavior according to the user's preferences and the characteristics of the input file.
+    </p><p>The main fields include:</p><ul><li><b>ExistingRecordPolicy</b> — Determines how existing database rows are handled (insert-only, replace, or update).</li><li><b>ErrorHandling</b> — Specifies how import-level errors should be treated (abort or ignore).</li><li><b>Encoding</b> — Character encoding of the input file (e.g., UTF-8, Latin-1, Windows-1252).</li><li><b>Delimiter</b> — Field delimiter used in CSV/TSV files.</li><li><b>HasHeader</b> — Indicates whether the first row contains column names.</li><li><b>QuoteChar</b> — Character used to quote fields in CSV/TSV files.</li><li><b>TrimFields</b> — Removes leading/trailing whitespace from field values.</li><li><b>SkipEmptyLines</b> — Ignores blank lines in CSV/TSV files.</li><li><b>ForceNDJSON</b> — Forces JSON importer to treat input as newline-delimited JSON.</li><li><b>IgnoreNulls</b> — Controls whether JSON null values should be ignored.</li><li><b>RecordsPath</b> — JSONPath-like expression used to locate record arrays in JSON documents.</li><li><b>RecordNodeName</b> — Name of the XML node representing a single record.</li><li><b>SheetName</b> — Name of the sheet to import from XLSX/ODS files.</li><li><b>SheetIndex</b> — Index of the sheet to import when <var>SheetName</var> is not provided.</li><li><b>DateFormat</b> — Expected date format used for parsing date strings.</li><li><b>DecimalSeparator</b> — Character used to parse floating-point numbers.</li><li><b>SRID</b> — Spatial reference identifier used for coordinate interpretation (e.g., 4326 for WGS84).</li><li><b>OnProgress</b> — Callback invoked to report progress during import.</li><li><b>Cancel</b> — Cancellation token used to interrupt long-running imports.</li>
+          </ul><p>These options allow the import engine to support a wide variety of file formats, regional conventions, and data-cleaning requirements. They also provide hooks for user interface integration through progress reporting and cancellation.
+    </p>
+        </descr><seealso><link id="TExistingRecordPolicy">TExistingRecordPolicy</link><link id="TImportErrorHandling">TImportErrorHandling</link><link id="TProgressProc">TProgressProc</link><link id="ICancellation">ICancellation</link>
+        </seealso>
+      </element><element name="TExportOptions"><short>Defines configuration settings that control how data is formatted and written during export.</short><descr><p><var>TExportOptions</var> is a record that encapsulates all parameters used to configure the behavior of the export engine. These options influence how output files are encoded, how values are formatted, how spatial data is represented, and how progress and cancellation are handled during long-running export operations.
+    </p><p>The record is passed to exporter implementations such as CSV, JSON, XML, ODS, or XLSX writers, allowing each exporter to adapt its behavior according to the user's preferences and the requirements of the target file format.
+    </p><p>The main fields include:</p><ul><li><b>Encoding</b> — Character encoding used in the output file (e.g., UTF-8, Latin-1, Windows-1252).</li><li><b>Delimiter</b> — Field delimiter used in CSV/TSV exports.</li><li><b>HasHeader</b> — Indicates whether column names should be written as the first row.</li><li><b>QuoteChar</b> — Character used to quote fields in CSV/TSV files.</li><li><b>TrimFields</b> — Removes leading/trailing whitespace from exported values.</li><li><b>ForceNDJSON</b> — Forces JSON exporter to output newline-delimited JSON.</li><li><b>IgnoreNulls</b> — Controls whether null values should be omitted from JSON output.</li><li><b>RecordNodeName</b> — Name of the XML node representing a single exported record.</li><li><b>SheetName</b> — Name of the sheet to write in XLSX/ODS files.</li><li><b>SheetIndex</b> — Index of the sheet to write when <var>SheetName</var> is not provided.</li><li><b>AutoSizeColumns</b> — Automatically adjusts column widths in XLSX/ODS exports.</li><li><b>DateFormat</b> — Format string used when writing date values.</li><li><b>DecimalSeparator</b> — Character used when formatting floating-point numbers.</li><li><b>NumberFormat</b> — Custom numeric formatting mask applied to exported numbers.</li><li><b>SRID</b> — Spatial reference identifier used when exporting geographic coordinates.</li><li><b>CoordinatesFormat</b> — Specifies the coordinate format to use (e.g., DD, DMS, UTM).</li><li><b>OnProgress</b> — Callback invoked to report export progress.</li><li><b>Cancel</b> — Cancellation token used to interrupt long-running export operations.</li>
+          </ul><p>These options allow the export engine to support a wide variety of file formats, regional conventions, and formatting requirements. They also provide hooks for user interface integration through progress reporting and cancellation.
+    </p>
+        </descr><seealso><link id="TProgressProc">TProgressProc</link><link id="ICancellation">ICancellation</link><link id="TMapCoordinateType">TMapCoordinateType</link>
+        </seealso>
+      </element><element name="TXRow"><short>Represents a generic data row stored as a list of name=value pairs.</short><descr><p><var>TXRow</var> is a lightweight container for representing a single record during import or export operations. It inherits from <var>TStringList</var> and stores field values as key–value pairs, where the key corresponds to the field name and the value contains the associated data.
+    </p><p>Rows are produced by importers and consumed by mapping and validation components. They are also passed to row-consumer callbacks for further processing, such as inserting into a database or building an in-memory dataset.
+    </p><p>The constructor initializes the string list with <var>StrictDelimiter</var> and <var>CaseSensitive</var> settings appropriate for field-based access.
+    </p>
+        </descr>
+      </element><element name="TXRowConsumer"><short>Callback type used to process rows during import.</short><descr><p><var>TXRowConsumer</var> defines a method signature for callbacks that receive a fully mapped and validated <var>TXRow</var>. Importers invoke this callback for each processed row, allowing the caller to handle the data in a flexible manner—such as inserting into a database, accumulating results, or performing custom transformations.
+    </p><p>The callback receives the row as a <var>const</var> parameter, meaning the consumer should not modify or free the object.
+    </p>
+        </descr><seealso><link id="TXRow">TXRow</link>
+        </seealso>
+      </element><element name="TFieldMapper"><short>Applies field mappings, transformations, and validations to imported rows.</short><descr><p><var>TFieldMapper</var> is responsible for converting raw input rows into structured, validated, and type-safe rows suitable for insertion into the destination database. It uses a collection of <var>TFieldMapping</var> objects to determine how each source field should be interpreted, transformed, validated, and mapped to a target field.
+    </p><p>The mapper performs several tasks:
+    </p><ul><li>Applies null-handling rules.</li><li>Executes value transformations (trimming, case conversion, scaling, etc.).</li><li>Converts coordinate formats (DD, DMS, UTM).</li><li>Performs lookup operations for foreign-key fields.</li><li>Validates required fields.</li><li>Checks type compatibility and applies type-error policies.</li><li>Constructs a new <var>TXRow</var> containing the final mapped values.</li>
+          </ul><p>The mapper is typically used by importer classes such as CSV, JSON, XML, or spreadsheet importers. It operates independently of the file format, focusing solely on field-level transformation and validation.
+    </p>
+        </descr><seealso><link id="TFieldMapping">TFieldMapping</link><link id="TFieldsMap">TFieldsMap</link><link id="TImportOptions">TImportOptions</link>
+        </seealso>
+      </element><element name="TFieldMapper.Create"><short>Creates a new field mapper using the specified import options.</short><descr><p>Initializes the mapper and stores the provided <var>TImportOptions</var> for use during transformation and validation. The constructor also allocates the internal <var>TFieldsMap</var> used to store field mappings.
+    </p>
+        </descr>
+      </element><element name="TFieldMapper.Destroy"><short>Frees the field mapper and its associated mappings.</short><descr><p>Releases all resources owned by the mapper, including the internal <var>TFieldsMap</var>. Any <var>TFieldMapping</var> objects stored in the list are also freed.
+    </p>
+        </descr>
+      </element><element name="TFieldMapper.TableType"><short>Specifies the destination table type associated with this mapper.</short><descr><p>Determines which database table the mapped rows will be inserted into. This information is used for lookup operations, schema validation, and type checking.
+    </p>
+        </descr>
+      </element><element name="TFieldMapper.Map"><short>Returns the list of field mappings used by the mapper.</short><descr><p>Provides access to the internal <var>TFieldsMap</var> containing all <var>TFieldMapping</var> objects. Each mapping defines how a single field is processed during import.
+    </p>
+        </descr>
+      </element><element name="TFieldMapper.Options"><short>Returns the import options associated with this mapper.</short><descr><p>Exposes the <var>TImportOptions</var> record used to configure transformation, validation, error handling, and progress reporting during the import process.
+    </p>
+        </descr>
+      </element>
+    <element name="TImporter"><short>Abstract base class for all data importers.</short><descr><p><var>TImporter</var> defines the common interface and behavior required by all importer implementations. Each subclass is responsible for reading a specific file format (CSV, JSON, XML, XLSX, etc.) and converting raw input data into <var>TXRow</var> objects, which are then processed by the <var>TFieldMapper</var>.
+    </p><p>Importers typically perform the following tasks:
+    </p><ul><li>Detect whether the importer can handle a given file or extension.</li><li>Extract field names from the input source.</li><li>Read and parse rows from the input stream.</li><li>Apply mapping and validation through the associated <var>TFieldMapper</var>.</li><li>Emit processed rows through a <var>TXRowConsumer</var> callback.</li>
+          </ul><p>The class is abstract and must be subclassed to support specific formats. Each subclass registers itself in <var>TImporterRegistry</var> so that the system can automatically resolve the correct importer.
+    </p>
+        </descr><seealso><link id="TFieldMapper">TFieldMapper</link><link id="TXRow">TXRow</link><link id="TImporterRegistry">TImporterRegistry</link>
+        </seealso>
+      </element><element name="TImporter.Mapper"><short>Field mapper used to transform and validate imported rows.</short><descr><p>Provides access to the <var>TFieldMapper</var> instance responsible for applying field mappings, transformations, and validations to each row produced by the importer.
+    </p>
+        </descr>
+      </element><element name="TImporter.Probe"><short>Attempts to detect whether the importer can handle the given file.</short><descr><p><var>Probe</var> analyzes the file name and stream contents to determine whether the importer is suitable for the input. It returns an integer score, where higher values indicate a better match. The registry uses this score to select the most appropriate importer.
+    </p>
+        </descr>
+      </element><element name="TImporter.CanHandleExtension"><short>Returns True if the importer supports the given file extension.</short><descr><p>Checks whether the importer is capable of handling files with the specified extension. This is used as a fast, low-cost filter before probing the file contents.
+    </p>
+        </descr>
+      </element><element name="TImporter.Import"><short>Reads and processes all rows from the input stream.</short><descr><p>Parses the input stream according to the importer’s file format and emits each processed row through the <code>RowOut</code> callback. The method applies import options such as encoding, delimiters, date formats, and cancellation tokens.
+    </p><p>The importer does not write to the database directly; instead, it produces <var>TXRow</var> objects that are later consumed by higher-level components.
+    </p>
+        </descr>
+      </element><element name="TImporter.GetFieldNames"><short>Extracts the list of field names from the input stream.</short><descr><p>Reads the header or schema information from the input file and returns a <var>TStringList</var> containing the names of all fields. This is used by the import wizard to build mapping configurations.
+    </p>
+        </descr>
+      </element><element name="TImporter.PreviewRows"><short>Reads a limited number of rows for preview purposes.</short><descr><p>Parses up to <var>MaxRows</var> rows from the input stream and emits them through the <var>RowOut</var> callback. This is used by the import wizard to show sample data before the full import begins.
+    </p>
+        </descr>
+      </element><element name="TExporter"><short>Abstract base class for all data exporters.</short><descr><p><var>TExporter</var> defines the interface for writing data rows to various output formats such as CSV, JSON, XML, ODS, or XLSX. Subclasses implement the logic required to serialize <var>TXRow</var> objects according to the chosen file format and export options.
+    </p><p>Exporters typically:
+    </p><ul><li>Check whether they support a given file extension.</li><li>Format values according to <var>TExportOptions</var>.</li><li>Write rows sequentially to the output stream.</li><li>Support progress reporting and cancellation.</li>
+          </ul>
+        </descr><seealso><link id="TExportOptions">TExportOptions</link><link id="TXRow">TXRow</link><link id="TExporterRegistry">TExporterRegistry</link>
+        </seealso>
+      </element><element name="TExporter.CanHandleExtension"><short>Returns True if the exporter supports the given file extension.</short><descr><p>Determines whether the exporter can generate files with the specified extension. This is used by the registry to select the correct exporter.
+    </p>
+        </descr>
+      </element><element name="TExporter.Export"><short>Writes all rows to the output stream using the configured export options.</short><descr><p>Serializes the provided rows into the target file format and writes the result to the given stream. Formatting, encoding, and spatial options are applied according to the <var>TExportOptions</var> record.
+    </p>
+        </descr>
+      </element><element name="TImporterRegistry"><short>Registry of importer classes indexed by file extension.</short><descr><p><var>TImporterRegistry</var> maintains a global registry of all importer classes available in the system. Importers register themselves by file extension, allowing the registry to resolve the correct importer for a given file.
+    </p><p>The registry also supports probing, enabling it to select the best importer based on file content when multiple importers support the same extension.
+    </p>
+        </descr><seealso><link id="TImporter">TImporter</link>
+        </seealso>
+      </element><element name="TImporterRegistry.RegisterImporter"><short>Registers an importer class for the specified file extension.</short><descr><p>Adds the importer class to the registry under the given extension. The extension is stored in lowercase to ensure case‑insensitive lookup.
+    </p>
+        </descr>
+      </element><element name="TImporterRegistry.ResolveByExt"><short>Returns the importer class associated with the given extension.</short><descr><p>Looks up the importer class registered for the specified file extension. Returns <var>nil</var> if no importer is registered.
+    </p>
+        </descr>
+      </element><element name="TImporterRegistry.BestProbe"><short>Selects the importer class that best matches the given file.</short><descr><p>Calls <var>Probe</var> on all registered importers and returns the class with the highest score. This is used when file extensions are ambiguous or when auto‑detection is required.
+    </p>
+        </descr>
+      </element><element name="TExporterRegistry"><short>Registry of exporter classes indexed by file extension.</short><descr><p><var>TExporterRegistry</var> maintains a global registry of all exporter classes available in the system. Exporters register themselves by file extension, enabling automatic resolution of the correct exporter for a given output format.
+    </p>
+        </descr><seealso><link id="TExporter">TExporter</link>
+        </seealso>
+      </element><element name="TExporterRegistry.RegisterExporter"><short>Registers an exporter class for the specified file extension.</short><descr><p>Adds the exporter class to the registry under the given extension. The extension is stored in lowercase to ensure consistent lookup.
+    </p>
+        </descr>
+      </element><element name="TExporterRegistry.Resolve"><short>Returns the exporter class associated with the given extension.</short><descr><p>Looks up the exporter class registered for the specified file extension. Returns <var>nil</var> if no exporter is registered.
+    </p>
+        </descr>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

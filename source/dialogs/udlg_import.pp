@@ -25,7 +25,7 @@ uses
   dbf, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, Spin, fpsTypes, fpSpreadsheet, xlsbiff8,
   xlsxooxml, atshapelinebgra,
-  io_core, io_csv, io_dbf, io_json, io_ods, io_xlsx, io_xml, data_types;
+  io_core, io_csv, io_dbf, io_json, io_ods, io_xlsx, io_xml, data_types, models_record_types;
 
 type
 
@@ -37,7 +37,7 @@ type
     cbDecimalSeparator: TComboBox;
     cbDateFormat: TComboBox;
     cbErrorHandling: TComboBox;
-    cbImportStrategy: TComboBox;
+    cbExistingRecordPolicy: TComboBox;
     cbNullHandling: TComboBox;
     cbEncoding: TComboBox;
     cbDataType: TComboBox;
@@ -86,7 +86,7 @@ type
     lblTrimValue: TLabel;
     lblSheet: TLabel;
     lblRecordXPath: TLabel;
-    lblImportStrategy: TLabel;
+    lblExistingRecordPolicy: TLabel;
     lblErrorHandling: TLabel;
     lblDelimiter: TLabel;
     lblHaveHeader: TLabel;
@@ -129,7 +129,7 @@ type
     pTrimValue: TBCPanel;
     pSheet: TBCPanel;
     pRecordXPath: TBCPanel;
-    pImportStrategy: TBCPanel;
+    pExistingRecordPolicy: TBCPanel;
     pErrorHandling: TBCPanel;
     pDelimiter: TBCPanel;
     pgSettings: TPage;
@@ -177,7 +177,7 @@ type
     sboxField: TScrollBox;
     eRoundPrecision: TSpinEdit;
     sbClearImportSettings: TSpeedButton;
-    sbSaveProfile: TSpeedButton;
+    sbSaveProfile: TBitBtn;
     tsRemoveAccents: TToggleSwitch;
     tsNormalizeWhitespace: TToggleSwitch;
     tsReplaceChars: TToggleSwitch;
@@ -244,7 +244,7 @@ type
     FODSImporter: TODSImporter;
     FXLSImporter: TXLSXImporter;
     FXMLImporter: TXMLImporter;
-    FDataSet: TDataSet;
+    //FDataSet: TDataSet;
     FFieldMap: TFieldMapper;
     FTargetFields: TFieldsDictionary;
     FTableType: TTableType;
@@ -253,9 +253,14 @@ type
     freeDMS, FieldMapLoaded: Boolean;
     FFieldIndex: Integer;
     ColStats: specialize TFPGObjectList<TColumnTypeStats>;
+    procedure AddImportRow(const XRow: TXRow);
     procedure AddPreviewRow(const XRow: TXRow);
     procedure ApplyDarkMode;
     procedure CollectColumnStats(const Row: TXRow);
+    function CreateRecordForTable(T: TTableType): TXolmisRecord;
+    function CreateRepositoryForTable(T: TTableType): TXolmisRepository;
+    procedure DoProgress(const Percent: Byte; const Msg: string);
+    procedure ImportData;
     function ImportMapCount: Integer;
     function InferColumnType(Stats: TColumnTypeStats): TSearchDataType;
     function IsRequiredFilledSource: Boolean;
@@ -273,7 +278,7 @@ type
     procedure SetImportSettings;
     procedure SetMappings;
     procedure UpdateImportSettings;
-    function ValidateFields: Boolean;
+    function ValidateFields(const XRow: TXRow): Boolean;
   public
 
   end;
@@ -285,11 +290,85 @@ implementation
 
 uses
   utils_locale, utils_global, utils_themes, data_columns, data_schema,
+  models_bands, models_birds, models_botany, models_breeding, models_geo, models_institutions, models_methods,
+  models_people, models_permits, models_projects, models_sampling, models_sampling_plots, models_sightings,
+  models_specimens,
   udm_grid, udm_sampling, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TdlgImport }
+
+procedure TdlgImport.AddImportRow(const XRow: TXRow);
+var
+  Rec: TXolmisRecord;
+  Repo: TXolmisRepository;
+  Msg: string;
+  Exists: Boolean;
+  Id: Integer;
+begin
+  // 1. Validate fields
+  if not ValidateFields(XRow) then
+  begin
+    if FImportSettings.ErrorHandling = iehAbort then
+      raise Exception.Create('AddImportRow: Validation failed [' + XRow.CommaText + ']');
+    Exit;
+  end;
+
+  // 2. Create domain object
+  Rec := CreateRecordForTable(FTableType);
+  try
+    // 3. Create repository
+    Repo := CreateRepositoryForTable(FTableType);
+    try
+      // 4. Hydrate using repository
+      Repo.HydrateFromRow(XRow, Rec);
+
+      // 5. Validate object
+      if not Rec.Validate(Msg) then
+      begin
+        if FImportSettings.ErrorHandling = iehAbort then
+          raise Exception.Create('AddImportRow: Record validation failed: ' + Msg);
+        Exit;
+      end;
+
+      // 6. Check if record exists
+      Exists := False;
+      { #todo : Improve the existing record checking }
+      if XRow.IndexOfName('id') >= 0 then
+      begin
+        Id := StrToIntDef(XRow.Values['id'], 0);
+        Exists := Repo.Exists(Id);
+      end;
+
+      // 7. Apply writing policy
+      case FImportSettings.ExistingRecordPolicy of
+
+        erpInsertOnly:
+          if not Exists then
+            Repo.Insert(Rec);
+
+        erpReplaceExisting:
+          if Exists then
+            Repo.Update(Rec)
+          else
+            Repo.Insert(Rec);
+
+        erpInsertNewUpdateExisting:
+          if Exists then
+            Repo.Update(Rec)
+          else
+            Repo.Insert(Rec);
+      end;
+
+    finally
+      Repo.Free;
+    end;
+
+  finally
+    Rec.Free;
+  end;
+end;
 
 procedure TdlgImport.AddPreviewRow(const XRow: TXRow);
 var
@@ -310,7 +389,6 @@ begin
       c := col.Index;
       gridPreview.Cells[c, r] := XRow.Values[key];
     end;
-    //Inc(c);
   end;
 end;
 
@@ -331,8 +409,8 @@ begin
   pTarget.Border.Color := clSystemSolidNeutralFGDark;
   pImportSettings.Background.Color := clSolidBGSecondaryDark;
   pImportSettings.Border.Color := clSystemSolidNeutralFGDark;
-  pImportStrategy.Background.Color := clSolidBGSecondaryDark;
-  pImportStrategy.Border.Color := clSystemSolidNeutralFGDark;
+  pExistingRecordPolicy.Background.Color := clSolidBGSecondaryDark;
+  pExistingRecordPolicy.Border.Color := clSystemSolidNeutralFGDark;
   pErrorHandling.Background.Color := clSolidBGSecondaryDark;
   pErrorHandling.Border.Color := clSystemSolidNeutralFGDark;
   pEncoding.Background.Color := clSolidBGSecondaryDark;
@@ -603,7 +681,10 @@ end;
 procedure TdlgImport.cbTargetSelect(Sender: TObject);
 begin
   if TablesDict.IndexOf(cbTarget.Text) >= 0 then
+  begin
     FTableType := TablesDict[cbTarget.Text];
+    FFieldMap.TableType := FTableType;
+  end;
 end;
 
 procedure TdlgImport.cbTextCaseSelect(Sender: TObject);
@@ -708,6 +789,117 @@ begin
   end;
 end;
 
+function TdlgImport.CreateRecordForTable(T: TTableType): TXolmisRecord;
+begin
+  case T of
+    //tbNone: ;
+    //tbUsers: ;
+    //tbRecordHistory: ;
+    //tbRecordVerifications: ;
+    tbGazetteer:          Result := TSite.Create;
+    tbSamplingPlots:      Result := TSamplingPlot.Create;
+    tbPermanentNets:      Result := TPermanentNet.Create;
+    tbInstitutions:       Result := TInstitution.Create;
+    tbPeople:             Result := TPerson.Create;
+    tbProjects:           Result := TProject.Create;
+    tbProjectTeams:       Result := TProjectMember.Create;
+    tbPermits:            Result := TPermit.Create;
+    //tbTaxonRanks: ;
+    //tbZooTaxa: ;
+    tbBotanicTaxa:        Result := TBotanicalTaxon.Create;
+    tbBands:              Result := TBand.Create;
+    //tbBandHistory: ;
+    tbIndividuals:        Result := TIndividual.Create;
+    tbCaptures:           Result := TCapture.Create;
+    tbFeathers:           Result := TFeather.Create;
+    tbNests:              Result := TNest.Create;
+    tbNestOwners:         Result := TNestOwner.Create;
+    tbNestRevisions:      Result := TNestRevision.Create;
+    tbEggs:               Result := TEgg.Create;
+    tbMethods:            Result := TMethod.Create;
+    tbExpeditions:        Result := TExpedition.Create;
+    tbSurveys:            Result := TSurvey.Create;
+    tbSurveyTeams:        Result := TSurveyMember.Create;
+    tbNetsEffort:         Result := TNetEffort.Create;
+    tbWeatherLogs:        Result := TWeatherLog.Create;
+    tbSightings:          Result := TSighting.Create;
+    tbSpecimens:          Result := TSpecimen.Create;
+    tbSamplePreps:        Result := TSamplePrep.Create;
+    tbSpecimenCollectors: Result := TSpecimenCollector.Create;
+    //tbImages: ;
+    //tbAudioLibrary: ;
+    //tbDocuments: ;
+    tbVegetation:         Result := TVegetation.Create;
+    tbProjectGoals:       Result := TProjectGoal.Create;
+    tbProjectChronograms: Result := TProjectActivity.Create;
+    tbProjectBudgets:     Result := TProjectRubric.Create;
+    tbProjectExpenses:    Result := TProjectExpense.Create;
+    tbPoiLibrary:         Result := TPoi.Create;
+    //tbVideos: ;
+  else
+    raise Exception.Create('CreateRecordForTable: Unsupported table type');
+  end;
+end;
+
+function TdlgImport.CreateRepositoryForTable(T: TTableType): TXolmisRepository;
+begin
+  case T of
+    //tbNone: ;
+    //tbUsers: ;
+    //tbRecordHistory: ;
+    //tbRecordVerifications: ;
+    tbGazetteer:          Result := TSiteRepository.Create;
+    tbSamplingPlots:      Result := TSamplingPlotRepository.Create;
+    tbPermanentNets:      Result := TPermanentNetRepository.Create;
+    tbInstitutions:       Result := TInstitutionRepository.Create;
+    tbPeople:             Result := TPersonRepository.Create;
+    tbProjects:           Result := TProjectRepository.Create;
+    tbProjectTeams:       Result := TProjectMemberRepository.Create;
+    tbPermits:            Result := TPermitRepository.Create;
+    //tbTaxonRanks: ;
+    //tbZooTaxa: ;
+    tbBotanicTaxa:        Result := TBotanicalTaxonRepository.Create;
+    tbBands:              Result := TBandRepository.Create;
+    //tbBandHistory: ;
+    tbIndividuals:        Result := TIndividualRepository.Create;
+    tbCaptures:           Result := TCaptureRepository.Create;
+    tbFeathers:           Result := TFeatherRepository.Create;
+    tbNests:              Result := TNestRepository.Create;
+    tbNestOwners:         Result := TNestOwnerRepository.Create;
+    tbNestRevisions:      Result := TNestRevisionRepository.Create;
+    tbEggs:               Result := TEggRepository.Create;
+    tbMethods:            Result := TMethodRepository.Create;
+    tbExpeditions:        Result := TExpeditionRepository.Create;
+    tbSurveys:            Result := TSurveyRepository.Create;
+    tbSurveyTeams:        Result := TSurveyMemberRepository.Create;
+    tbNetsEffort:         Result := TNetEffortRepository.Create;
+    tbWeatherLogs:        Result := TWeatherLogRepository.Create;
+    tbSightings:          Result := TSightingRepository.Create;
+    tbSpecimens:          Result := TSpecimenRepository.Create;
+    tbSamplePreps:        Result := TSamplePrepRepository.Create;
+    tbSpecimenCollectors: Result := TSpecimenCollectorRepository.Create;
+    //tbImages: ;
+    //tbAudioLibrary: ;
+    //tbDocuments: ;
+    tbVegetation:         Result := TVegetationRepository.Create;
+    tbProjectGoals:       Result := TProjectGoalRepository.Create;
+    tbProjectChronograms: Result := TProjectActivityRepository.Create;
+    tbProjectBudgets:     Result := TProjectRubricRepository.Create;
+    tbProjectExpenses:    Result := TProjectExpenseRepository.Create;
+    tbPoiLibrary:         Result := TPoiRepository.Create;
+    //tbVideos: ;
+  else
+    raise Exception.Create('CreateRepositoryForTable: Unsupported table type');
+  end;
+end;
+
+procedure TdlgImport.DoProgress(const Percent: Byte; const Msg: string);
+begin
+  //lblProgress.Caption := Format('%d%% - %s', [Percent, Msg]);
+  PBar.Position := Percent;
+  Application.ProcessMessages;
+end;
+
 procedure TdlgImport.eDefaultValueChange(Sender: TObject);
 begin
   FFieldMap.Map[FFieldIndex].DefaultValue := eDefaultValue.Text;
@@ -754,59 +946,55 @@ begin
   FSourceFile := eSourceFile.Text;
 
   if FSourceFile <> EmptyStr then
+  begin
     case ExtractFileExt(FSourceFile) of
-      '.csv', '.tsv':
-      begin
-        case ExtractFileExt(eSourceFile.Text) of
-          '.csv': FFileFormat := iftCSV;
-          '.tsv':
-          begin
-            FFileFormat := iftTSV;
-            FImportSettings.Delimiter := #9;
-          end;
+      '.csv':
+        begin
+          FFileFormat := iftCSV;
         end;
-      end;
-      '.xlsx', '.xls', '.ods':
-      begin
-        case ExtractFileExt(FSourceFile) of
-          '.xlsx':
-          begin
-            FFileFormat := iftExcelOOXML;
-          end;
-          '.xls':
-          begin
-            FFileFormat := iftExcel;
-          end;
-          '.ods':
-          begin
-            FFileFormat := iftOpenDocument;
-          end;
+      '.tsv':
+        begin
+          FFileFormat := iftTSV;
+          FImportSettings.Delimiter := #9;
         end;
-      end;
-      '.json', '.ndjson':
-      begin
-        case ExtractFileExt(FSourceFile) of
-          '.json':   FFileFormat := iftJSON;
-          '.ndjson': FFileFormat := iftNDJSON;
+      '.xlsx':
+        begin
+          FFileFormat := iftExcelOOXML;
         end;
-      end;
+      '.xls':
+        begin
+          FFileFormat := iftExcel;
+        end;
+      '.ods':
+        begin
+          FFileFormat := iftOpenDocument;
+        end;
+      '.json':
+        begin
+          FFileFormat := iftJSON;
+        end;
+      '.ndjson':
+        begin
+          FFileFormat := iftNDJSON;
+        end;
       '.dbf':
-      begin
-        FFileFormat := iftDBF;
-      end;
+        begin
+          FFileFormat := iftDBF;
+        end;
       '.kml', '.kmz':
-      begin
-        FFileFormat := iftKML;
-      end;
+        begin
+          FFileFormat := iftKML;
+        end;
       '.gpx':
-      begin
-        FFileFormat := iftGPX;
-      end;
+        begin
+          FFileFormat := iftGPX;
+        end;
       '.geojson':
-      begin
-        FFileFormat := iftGeoJSON;
-      end;
+        begin
+          FFileFormat := iftGeoJSON;
+        end;
     end;
+  end;
 end;
 
 procedure TdlgImport.FormCreate(Sender: TObject);
@@ -840,10 +1028,10 @@ begin
   LoadTargetTables;
 
   // Translate comboboxes' items
-  cbImportStrategy.Items.Clear;
-  cbImportStrategy.Items.Add(rsImportStrategyAppend);
-  cbImportStrategy.Items.Add(rsImportStrategyReplace);
-  cbImportStrategy.Items.Add(rsImportStrategyUpdate);
+  cbExistingRecordPolicy.Items.Clear;
+  cbExistingRecordPolicy.Items.Add(rsImportStrategyAppend);
+  cbExistingRecordPolicy.Items.Add(rsImportStrategyReplace);
+  cbExistingRecordPolicy.Items.Add(rsImportStrategyUpdate);
   cbErrorHandling.Items.Clear;
   cbErrorHandling.Items.Add(rsAbortOnError);
   cbErrorHandling.Items.Add(rsIgnoreErrors);
@@ -1039,6 +1227,92 @@ begin
   pLookupField.Visible := (cbLookupTable.Visible) and (cbLookupTable.ItemIndex >= 0);
 end;
 
+procedure TdlgImport.ImportData;
+var
+  FileStream: TFileStream;
+  Importer: TImporter;
+  Ext: String;
+begin
+  if stopProcess then
+    Exit;
+
+  PBar.Position := 0;
+  PBar.Max := 100;
+
+  FileStream := TFileStream.Create(FSourceFile, fmOpenRead or fmShareDenyWrite);
+  try
+    Ext := LowerCase(ExtractFileExt(FSourceFile));
+
+    // Select the Importer
+    case FFileFormat of
+      iftCSV,
+      iftTSV: Importer := TCSVImporter.Create;
+      iftExcel,
+      iftExcelOOXML: Importer := TXLSXImporter.Create;
+      iftOpenDocument: Importer := TODSImporter.Create;
+      iftJSON,
+      iftNDJSON: Importer := TJSONImporter.Create;
+      iftDBF: Importer := TDBFImporter.Create;
+      iftXML: Importer := TXMLImporter.Create;
+    else
+      raise EImportError.CreateFmt(rsErrorFileFormatNotSupported, [Ext]);
+    end;
+
+    // commit previous transactions before start other transaction
+    DMM.sqlTrans.CommitRetaining;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    LogEvent(leaStart, 'Import data');
+    try
+      try
+        Importer.Mapper := FFieldMap;
+        FImportSettings.OnProgress := @DoProgress;
+
+        mProgress.Lines.Append(rsProgressStarting);
+        Importer.Import(FileStream, FImportSettings, @AddImportRow);
+        LogEvent(leaFinish, 'Import data');
+        mProgress.Lines.Append(rsFinishedImporting);
+      finally
+        Importer.Free;
+      end;
+    except
+      on E: Exception do
+      begin
+        mProgress.Append(Format(rsErrorImporting, [E.Message]));
+        DMM.sqlTrans.RollbackRetaining;
+        lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+        icoImportFinished.ImageIndex := 1;
+        sbCancel.Caption := rsCaptionClose;
+        nbPages.PageIndex := 5;
+      end;
+    end;
+
+    if stopProcess then
+    begin
+      mProgress.Append(rsImportCanceledByUser);
+      DMM.sqlTrans.RollbackRetaining;
+      LogInfo('Import canceled by user, transaction was rolled back');
+      lblTitleImportFinished.Caption := rsImportCanceled;
+      lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+      icoImportFinished.ImageIndex := 1;
+    end
+    else
+    begin
+      mProgress.Append(rsSuccessfulImport);
+      DMM.sqlTrans.CommitRetaining;
+      LogInfo('Import finished successfully, transaction committed');
+      DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+      LogInfo('Database optimized');
+      lblTitleImportFinished.Caption := rsFinishedImporting;
+      lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+      icoImportFinished.ImageIndex := 0;
+    end;
+    nbPages.PageIndex := 5;
+  finally
+    FileStream.Free;
+  end;
+end;
+
 function TdlgImport.ImportMapCount: Integer;
 var
   i: Integer;
@@ -1226,10 +1500,10 @@ procedure TdlgImport.LoadImportSettings;
 begin
   if FSavedSettings <> EmptyStr then
   begin
-    case FImportSettings.Strategy of
-      istAppend:  cbImportStrategy.ItemIndex := 0;
-      istReplace: cbImportStrategy.ItemIndex := 1;
-      istUpdate:  cbImportStrategy.ItemIndex := 2;
+    case FImportSettings.ExistingRecordPolicy of
+      erpInsertOnly:  cbExistingRecordPolicy.ItemIndex := 0;
+      erpReplaceExisting: cbExistingRecordPolicy.ItemIndex := 1;
+      erpInsertNewUpdateExisting:  cbExistingRecordPolicy.ItemIndex := 2;
     end;
     case FImportSettings.ErrorHandling of
       iehAbort:  cbErrorHandling.ItemIndex := 0;
@@ -1269,7 +1543,6 @@ procedure TdlgImport.LoadLookupFields;
 var
   T: TTableSchema;
   F: TFieldSchema;
-  //FDS: TDataSet;
   i: Integer;
 begin
   if not FieldMapLoaded then
@@ -1291,67 +1564,6 @@ begin
 
   if FFieldMap.Map[FFieldIndex].LookupField <> EmptyStr then
     cbLookupField.ItemIndex := cbLookupField.Items.IndexOf(T.GetField(FFieldMap.Map[FFieldIndex].LookupField).DisplayName);
-
-  //FDS := nil;
-  //
-  //if not (Assigned(DMS)) then
-  //begin
-  //  DMS := TDMS.Create(Application);
-  //  freeDMS := True;
-  //end;
-  //
-  //case FFieldMap.Map[FFieldIndex].LookupTable of
-  //  tbNone: ;
-  //  tbUsers: ;
-  //  tbRecordHistory: ;
-  //  tbRecordVerifications: ;
-  //  tbGazetteer:            FDS := DMG.qGazetteer;
-  //  tbSamplingPlots:        FDS := DMG.qSamplingPlots;
-  //  tbPermanentNets:        FDS := DMG.qPermanentNets;
-  //  tbInstitutions:         FDS := DMG.qInstitutions;
-  //  tbPeople:               FDS := DMG.qPeople;
-  //  tbProjects:             FDS := DMG.qProjects;
-  //  tbProjectTeams:         FDS := DMG.qProjectTeam;
-  //  tbProjectGoals:         FDS := DMG.qProjectGoals;
-  //  tbProjectChronograms:   FDS := DMG.qProjectChronogram;
-  //  tbProjectBudgets:       FDS := DMG.qProjectBudget;
-  //  tbProjectExpenses:      FDS := DMG.qProjectExpenses;
-  //  tbPermits:              FDS := DMG.qPermits;
-  //  tbTaxonRanks:           FDS := DMG.qTaxonRanks;
-  //  tbZooTaxa:              FDS := DMG.qTaxa;
-  //  tbBotanicTaxa:          FDS := DMG.qBotany;
-  //  tbBands:                FDS := DMG.qBands;
-  //  tbBandHistory: ;
-  //  tbIndividuals:          FDS := DMG.qIndividuals;
-  //  tbCaptures:             FDS := DMG.qCaptures;
-  //  tbFeathers:             FDS := DMG.qFeathers;
-  //  tbNests:                FDS := DMG.qNests;
-  //  tbNestOwners: ;
-  //  tbNestRevisions:        FDS := DMG.qNestRevisions;
-  //  tbEggs:                 FDS := DMG.qEggs;
-  //  tbMethods:              FDS := DMG.qMethods;
-  //  tbExpeditions:          FDS := DMG.qExpeditions;
-  //  tbSurveys:              FDS := DMG.qSurveys;
-  //  tbSurveyTeams: ;
-  //  tbNetsEffort:           FDS := DMS.qNetsEffort;
-  //  tbWeatherLogs:          FDS := DMS.qWeatherLogs;
-  //  tbSightings:            FDS := DMG.qSightings;
-  //  tbSpecimens:            FDS := DMG.qSpecimens;
-  //  tbSamplePreps:          FDS := DMG.qSamplePreps;
-  //  tbSpecimenCollectors:   FDS := DMG.qSampleCollectors;
-  //  tbImages:               FDS := DMG.qImages;
-  //  tbAudioLibrary:         FDS := DMG.qAudio;
-  //  tbDocuments:            FDS := DMG.qDocuments;
-  //  tbVegetation:           FDS := DMS.qVegetation;
-  //end;
-  //
-  //if FFieldMap.Map[FFieldIndex].LookupField <> EmptyStr then
-  //  FFieldMap.Map[FFieldIndex].LookupField := EmptyStr;
-  //cbLookupField.Items.Clear;
-  //for i := 0 to FDS.FieldCount - 1 do
-  //begin
-  //  cbLookupField.Items.Add(FDS.Fields[i].DisplayLabel);
-  //end;
 end;
 
 procedure TdlgImport.LoadSearchTables;
@@ -1398,7 +1610,6 @@ procedure TdlgImport.LoadTargetFields;
 var
   T: TTableSchema;
   F: TFieldSchema;
-  //FDS: TDataSet;
   i: Integer;
 begin
   T := DBSchema.GetTable(FTableType);
@@ -1415,67 +1626,6 @@ begin
       gridFields.Columns[2].PickList.Add(F.DisplayName);
     end;
   end;
-
-  //FDS := nil;
-  //
-  //if not (Assigned(DMS)) then
-  //begin
-  //  DMS := TDMS.Create(Application);
-  //  freeDMS := True;
-  //end;
-  //
-  //case FTableType of
-  //  tbNone: ;
-  //  tbUsers: ;
-  //  tbRecordHistory: ;
-  //  tbRecordVerifications: ;
-  //  tbGazetteer:            FDS := DMG.qGazetteer;
-  //  tbSamplingPlots:        FDS := DMG.qSamplingPlots;
-  //  tbPermanentNets:        FDS := DMG.qPermanentNets;
-  //  tbInstitutions:         FDS := DMG.qInstitutions;
-  //  tbPeople:               FDS := DMG.qPeople;
-  //  tbProjects:             FDS := DMG.qProjects;
-  //  tbProjectTeams:         FDS := DMG.qProjectTeam;
-  //  tbProjectGoals:         FDS := DMG.qProjectGoals;
-  //  tbProjectChronograms:   FDS := DMG.qProjectChronogram;
-  //  tbProjectBudgets:       FDS := DMG.qProjectBudget;
-  //  tbProjectExpenses:      FDS := DMG.qProjectExpenses;
-  //  tbPermits:              FDS := DMG.qPermits;
-  //  tbTaxonRanks: ;
-  //  tbZooTaxa: ;
-  //  tbBotanicTaxa:          FDS := DMG.qBotany;
-  //  tbBands:                FDS := DMG.qBands;
-  //  tbBandHistory: ;
-  //  tbIndividuals:          FDS := DMG.qIndividuals;
-  //  tbCaptures:             FDS := DMG.qCaptures;
-  //  tbFeathers:             FDS := DMG.qFeathers;
-  //  tbNests:                FDS := DMG.qNests;
-  //  tbNestOwners: ;
-  //  tbNestRevisions:        FDS := DMG.qNestRevisions;
-  //  tbEggs:                 FDS := DMG.qEggs;
-  //  tbMethods:              FDS := DMG.qMethods;
-  //  tbExpeditions:          FDS := DMG.qExpeditions;
-  //  tbSurveys:              FDS := DMG.qSurveys;
-  //  tbSurveyTeams: ;
-  //  tbNetsEffort:           FDS := DMS.qNetsEffort;
-  //  tbWeatherLogs:          FDS := DMS.qWeatherLogs;
-  //  tbSightings:            FDS := DMG.qSightings;
-  //  tbSpecimens:            FDS := DMG.qSpecimens;
-  //  tbSamplePreps:          FDS := DMG.qSamplePreps;
-  //  tbSpecimenCollectors:   FDS := DMG.qSampleCollectors;
-  //  tbImages:               FDS := DMG.qImages;
-  //  tbAudioLibrary:         FDS := DMG.qAudio;
-  //  tbDocuments:            FDS := DMG.qDocuments;
-  //  tbVegetation:           FDS := DMS.qVegetation;
-  //end;
-  //
-  //FTargetFields.Clear;
-  //gridFields.Columns[2].PickList.Clear;
-  //for i := 0 to FDS.FieldCount - 1 do
-  //begin
-  //  FTargetFields.Add(FDS.Fields[i].DisplayLabel, FDS.Fields[i].FieldName);
-  //  gridFields.Columns[2].PickList.Add(FDS.Fields[i].DisplayLabel);
-  //end;
 end;
 
 procedure TdlgImport.LoadTargetTables;
@@ -1635,10 +1785,10 @@ begin
   sbNext.Enabled := False;
   nbPages.PageIndex := nbPages.PageIndex + 1;
 
-  // Progress
+  // Progress / Import
   if nbPages.PageIndex = 4 then
   begin
-
+    ImportData;
   end;
 
   // Confirmation
@@ -1708,10 +1858,10 @@ var
   sOther: String;
 begin
   { Strategy }
-  case cbImportStrategy.ItemIndex of
-    0: FImportSettings.Strategy := istAppend;
-    1: FImportSettings.Strategy := istReplace;
-    2: FImportSettings.Strategy := istUpdate;
+  case cbExistingRecordPolicy.ItemIndex of
+    0: FImportSettings.ExistingRecordPolicy := erpInsertOnly;
+    1: FImportSettings.ExistingRecordPolicy := erpReplaceExisting;
+    2: FImportSettings.ExistingRecordPolicy := erpInsertNewUpdateExisting;
   end;
   { Error handling }
   case cbErrorHandling.ItemIndex of
@@ -1941,10 +2091,31 @@ begin
   end;
 end;
 
-function TdlgImport.ValidateFields: Boolean;
+function TdlgImport.ValidateFields(const XRow: TXRow): Boolean;
+var
+  i: Integer;
+  col: TFieldSchema;
+  key: String;
 begin
   Result := True;
-  { #todo : Validate values before import }
+
+  for i := 0 to XRow.Count - 1 do
+  begin
+    key := XRow.Names[i];
+    col := DBSchema.GetTable(FTableType).GetField(key);
+    if Assigned(col) then
+    begin
+      try
+        col.ValidateValue(XRow.Values[key]);
+      except
+        on E: Exception do
+        begin
+          Result := False;
+          mProgress.Lines.Append(AnsiUpperCase(rsTitleError) + ': ' + E.Message);
+        end;
+      end;
+    end;
+  end;
 end;
 
 end.

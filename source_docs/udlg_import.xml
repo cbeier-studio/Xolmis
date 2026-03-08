@@ -6,6 +6,32 @@
       </element><element name="TdlgImport.LoadTargetTables"><short>Load a list of target tables</short>
       </element><element name="TdlgImport.LoadSearchTables"><short>Load a list of tables that could be used to validate data</short>
       </element>
+    <element name="TdlgImport.LoadLookupFields"><short>Load the list of fields from a lookup table</short>
+      </element><element name="TdlgImport.LoadImportSettings"><short>Load general import settings into UI controls</short>
+      </element><element name="TdlgImport.UpdateImportSettings"><short>Show or hide controls of general import settings according to filetype</short>
+      </element><element name="TdlgImport.SetImportSettings"><short>Set general import settings from UI controls</short>
+      </element><element name="TdlgImport.PreviewRows"><short>Load and show data preview before importing</short>
+      </element><element name="TdlgImport.PreparePreview"><short>Prepare the TStringGrid to receive data preview</short>
+      </element><element name="TdlgImport.GetSheetsList"><short>Get the list of sheets of a spreadsheet file</short>
+      </element><element name="TdlgImport.GetFieldSettings"><short>Load and display settings from a mapped field</short>
+      </element><element name="TdlgImport.InferColumnType"><short>Return the field type inferred from data type</short>
+      </element><element name="TdlgImport.ImportMapCount"><short>Return the number of mapped fields checked to import</short>
+      </element><element name="TdlgImport.ImportData"><short>Execute the data import</short>
+      </element><element name="TdlgImport.DoProgress"><short>Show progress of the import</short>
+      </element><element name="TdlgImport.CollectColumnStats"><short>Try to infer data types based on a data sample</short>
+      </element><element name="TdlgImport.AddPreviewRow"><short>Add row to the data preview grid</short>
+      </element><element name="TdlgImport.AddImportRow"><short>Add data record to the database table</short>
+      </element><element name="TdlgImport.FFieldMap"><short>Map of fields to be imported with field-specific settings</short>
+      </element><element name="TdlgImport.FTableType"><short>Table that will receive the data to be imported</short>
+      </element><element name="TdlgImport.FImportSettings"><short>General import settings</short>
+      </element><element name="TdlgImport.FFieldIndex"><short>Current/selected field index</short>
+      </element><element name="TdlgImport.ColStats"><short>Store the stats to infer field type</short>
+      </element><element name="TdlgImport.FFileFormat"><short>The filetype of the source file to be imported</short>
+      </element><element name="TdlgImport.FSourceFile"><short>Path of source file to be imported</short>
+      </element><element name="TdlgImport.FImporter"><short>Generic importer</short>
+      </element><element name="TdlgImport.FieldMapLoaded"><short>Flag used to avoid some operations before the field map is fully loaded</short>
+      </element><element name="TdlgImport.FSavedSettings"><short>Name of the saved settings profile selected</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

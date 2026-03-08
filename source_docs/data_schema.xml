@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_schema"><element name="TFieldSchema"><short>Describes the schema definition and validation rules for a single database field.</short><descr><p><var>TFieldSchema</var> represents the metadata, constraints, and transformation rules associated with a single field in a database table. It defines how values should be interpreted, validated, converted, and optionally resolved through lookup tables.
+    </p><p>Field schemas are used by the import and export pipelines to ensure that incoming values match the expected data type, follow validation rules, and comply with relational constraints.
+    </p><p>The main properties include:</p><ul><li><b>Name</b> — Internal field name used in the database schema.</li><li><b>DisplayName</b> — Human-readable name used in user interfaces.</li><li><b>DarwinCoreName</b> — Corresponding Darwin Core term, when applicable.</li><li><b>ExportName</b> — Name used when exporting data to external formats.</li><li><b>Aliases</b> — Alternative names recognized during import.</li><li><b>DataType</b> — Expected data type for the field.</li><li><b>SortType</b> — Sorting behavior used in UI components.</li><li><b>IsPrimaryKey</b> — Indicates whether the field is part of the primary key.</li><li><b>IsForeignKey</b> — Indicates whether the field references another table.</li><li><b>IsVirtual</b> — True if the field is computed or not stored physically.</li><li><b>LookupInfo</b> — Lookup configuration for resolving foreign-key values.</li><li><b>Rules</b> — Validation rules applied to the field.</li><li><b>DefaultValue</b> — Default value used when no input is provided.</li><li><b>CoordinateFormat</b> — Expected coordinate format for spatial fields.</li>
+          </ul><p>The class also provides methods for validating values, converting strings into typed variants, resolving lookup references, and checking whether a referenced value exists in the related table.
+    </p>
+        </descr><seealso><link id="TRelationalField">TRelationalField</link><link id="TValidationRules">TValidationRules</link><link id="TSearchDataType">TSearchDataType</link>
+        </seealso>
+      </element><element name="TFieldSchema.Create"><short>Initializes a new field schema with default settings.</short><descr><p>Allocates internal structures such as the alias list and initializes default validation and lookup settings. Called automatically when a <var>TFieldSchema</var> instance is created.
+    </p>
+        </descr>
+      </element><element name="TFieldSchema.Destroy"><short>Frees the field schema and its associated resources.</short><descr><p>Releases memory allocated for aliases, validation rules, and lookup configuration. Called automatically when the object is destroyed.
+    </p>
+        </descr>
+      </element><element name="TFieldSchema.ValidateValue"><short>Validates a value according to the field's validation rules.</short><descr><p>Checks whether the provided value satisfies all constraints defined in <var>Rules</var>, including required fields, ranges, formats, and custom validation logic. Raises an exception if validation fails.
+    </p>
+        </descr>
+      </element><element name="TFieldSchema.ConvertValue"><short>Converts a string into a typed value according to the field's data type.</short><descr><p>Parses the input string and converts it into a <var>Variant</var> matching the field's <var>DataType</var>. This includes numeric parsing, date/time parsing, boolean normalization, and coordinate conversion when applicable.
+    </p>
+        </descr>
+      </element><element name="TFieldSchema.LookupTableName"><short>Returns the name of the lookup table associated with this field.</short><descr><p>If the field is a foreign key, this method returns the name of the table referenced by <var>LookupInfo</var>. Otherwise, it returns an empty string.
+    </p>
+        </descr>
+      </element><element name="TFieldSchema.LookupValueExists"><short>Checks whether a lookup value exists in the referenced table.</short><descr><p>Queries the lookup table defined in <var>LookupInfo</var> to determine whether the provided value corresponds to an existing record. Used during validation and import.
+    </p>
+        </descr>
+      </element><element name="TFieldSchema.ResolveLookup"><short>Resolves a textual lookup value into its corresponding key value.</short><descr><p>Converts a human-readable or symbolic value into the primary-key value of the referenced lookup table. This is used during import to translate external identifiers into internal database keys.
+    </p>
+        </descr>
+      </element><element name="TFieldSchemaList"><short>A list of <var>TFieldSchema</var> objects.</short><descr><p>Specialized object list used to store all field schemas associated with a table. Each entry describes one field's metadata, validation rules, and lookup configuration.
+    </p>
+        </descr><seealso><link id="TFieldSchema">TFieldSchema</link>
+        </seealso>
+      </element><element name="TTableSchema"><short>Describes the schema of a database table, including its fields and metadata.</short><descr><p><var>TTableSchema</var> represents the structure of a database table, including its name, display name, table type, and the list of fields defined in the table. It provides lookup methods for retrieving field schemas by internal or display name.
+    </p><p>Table schemas are used by the import and export systems to validate mappings, enforce constraints, and interpret field types.
+    </p>
+        </descr><seealso><link id="TFieldSchemaList">TFieldSchemaList</link><link id="TTableType">TTableType</link>
+        </seealso>
+      </element><element name="TTableSchema.Create"><short>Initializes a new table schema with an empty field list.</short><descr><p>Allocates the internal <var>TFieldSchemaList</var> and initializes table metadata. Called automatically when a new table schema is created.
+    </p>
+        </descr>
+      </element><element name="TTableSchema.Destroy"><short>Frees the table schema and all associated field schemas.</short><descr><p>Releases memory allocated for the field list and all contained <var>TFieldSchema</var> objects.
+    </p>
+        </descr>
+      </element><element name="TTableSchema.GetField"><short>Retrieves a field schema by internal field name.</short><descr><p>Searches the <var>Fields</var> list for a field whose <var>Name</var> matches the provided string. Returns <var>nil</var> if no matching field is found.
+    </p>
+        </descr>
+      </element><element name="TTableSchema.GetFieldByDisplayName"><short>Retrieves a field schema by its display name.</short><descr><p>Searches the <var>Fields</var> list for a field whose <var>DisplayName</var> matches the provided string. Useful for UI components and import mapping interfaces.
+    </p>
+        </descr>
+      </element><element name="TTableSchemaList"><short>A list of <var>TTableSchema</var> objects.</short><descr><p>Specialized object list used to store all table schemas in the database. Each entry describes one table and its associated fields.
+    </p>
+        </descr>
+      </element><element name="TDatabaseSchema"><short>Represents the complete schema of the database, including all tables.</short><descr><p><var>TDatabaseSchema</var> stores the full collection of table schemas that define the structure of the database. It provides lookup methods for retrieving tables by type or by name.
+    </p><p>The database schema is used throughout the import, export, and validation systems to ensure consistency and enforce structural rules.
+    </p>
+        </descr><seealso><link id="TTableSchema">TTableSchema</link><link id="TTableSchemaList">TTableSchemaList</link>
+        </seealso>
+      </element><element name="TDatabaseSchema.Create"><short>Initializes an empty database schema.</short><descr><p>Allocates the internal <var>TTableSchemaList</var> used to store table definitions. Called automatically when a new database schema is created.
+    </p>
+        </descr>
+      </element><element name="TDatabaseSchema.Destroy"><short>Frees the database schema and all contained table schemas.</short><descr><p>Releases memory allocated for the table list and all contained <var>TTableSchema</var> objects.
+    </p>
+        </descr>
+      </element><element name="TDatabaseSchema.GetTable"><short>Retrieves a table schema by table type or by name.</short><descr><p>Overloaded method that returns the <var>TTableSchema</var> associated with the given <var>TTableType</var> or with the specified table name. Returns <var>nil</var> if no matching table is found.
+    </p>
+        </descr>
+      </element><element name="DBSchema"><short>Global database schema instance used throughout the application.</short><descr><p><var>DBSchema</var> is a global instance of <var>TDatabaseSchema</var> that stores the complete structural definition of all tables and fields in the database. It is initialized during application startup and used by importers, exporters, validators, and lookup operations to ensure consistent interpretation of field types and relational constraints.
+    </p><p>The schema provides access to table definitions, field metadata, validation rules, and lookup relationships.
+    </p>
+        </descr><seealso><link id="TDatabaseSchema">TDatabaseSchema</link><link id="TTableSchema">TTableSchema</link><link id="TFieldSchema">TFieldSchema</link>
+        </seealso>
+      </element><element name="DBQuerySingleInt"><short>Executes a parameterized SQL query and returns a single integer result.</short><descr><p><var>DBQuerySingleInt</var> runs a SQL query expected to return a single integer value. The query may include one named parameter, whose value is supplied through <var>ParamValue</var>. If the query succeeds and a result is available, the method stores the integer in <var>ResultValue</var> and returns <var>True</var>.
+    </p><p>This helper function is commonly used for lookup validation, existence checks, and retrieving small scalar values from the database.
+    </p><p>Returns <var>False</var> if the query produces no rows or if the result cannot be converted to an integer.
+    </p><ul><li><b>SQL</b>: SQL query string expected to return a single integer value.</li><li><b>ParamName</b>: Name of the SQL parameter to bind.</li><li><b>ParamValue</b>: Value assigned to the SQL parameter.</li><li><b>ResultValue</b>: Output parameter receiving the integer result.</li>
+          </ul>
+        </descr>
+      </element><element name="AddField"><short>Adds a new field definition to a table schema and returns the created field.</short><descr><p><var>AddField</var> creates a new <var>TFieldSchema</var> instance, initializes it with the provided metadata, and adds it to the specified <var>TTableSchema</var>. This helper function simplifies the construction of table schemas by encapsulating common initialization logic for field definitions.
+    </p><p>The function supports configuration of data type, display name, length constraints, primary/foreign key flags, and lookup relationships.
+    </p><p>Returns the newly created <var>TFieldSchema</var> object.
+    </p>
+        </descr><seealso><link id="TFieldSchema">TFieldSchema</link><link id="TTableSchema">TTableSchema</link><link id="TSearchDataType">TSearchDataType</link>
+        </seealso>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

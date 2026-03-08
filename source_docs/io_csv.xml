@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="io_csv"><element name="TCSVImporter"><short>CSV and TSV file importer implementation.</short><descr><p><var>TCSVImporter</var> is a concrete importer class capable of reading comma-separated (CSV) and tab-separated (TSV) text files. It parses the input stream according to the delimiter, quoting rules, encoding, and trimming options specified in <var>TImportOptions</var>, producing <var>TXRow</var> objects that are then processed by the associated <var>TFieldMapper</var>.
+    </p><p>The importer supports:
+    </p><ul><li>Automatic detection of CSV/TSV structure.</li><li>Configurable delimiters and quote characters.</li><li>Optional header row detection.</li><li>Whitespace trimming and empty-line skipping.</li><li>Progress reporting and cancellation.</li>
+          </ul><p>This importer is typically registered under the <var>.csv</var> and <var>.tsv</var> extensions in <var>TImporterRegistry</var>.
+    </p>
+        </descr><seealso><link id="TImporter">TImporter</link><link id="TImportOptions">TImportOptions</link><link id="TXRow">TXRow</link>
+        </seealso>
+      </element><element name="TCSVImporter.Probe"><short>Attempts to detect whether the input stream represents a CSV or TSV file.</short><descr><p>Analyzes the file name and a small portion of the stream to determine whether the content resembles CSV or TSV data. The method returns a score indicating the likelihood that this importer can handle the file. Higher scores represent a better match.
+    </p><p>The registry uses this score when selecting the most appropriate importer for a given file.
+    </p>
+        </descr>
+      </element><element name="TCSVImporter.CanHandleExtension"><short>Returns True if the importer supports the given file extension.</short><descr><p>Checks whether the extension corresponds to a CSV or TSV file. This is a fast preliminary filter used before probing the file contents.
+    </p>
+        </descr>
+      </element><element name="TCSVImporter.Import"><short>Reads and processes all rows from a CSV or TSV stream.</short><descr><p>Parses the input stream according to the delimiter, quoting rules, encoding, and trimming options provided in <var>TImportOptions</var>. Each parsed row is converted into a <var>TXRow</var> and passed through the <var>TFieldMapper</var> before being emitted to the <var>RowOut</var> callback.
+    </p><p>The method supports progress reporting and cancellation via <var>Options.OnProgress</var> and <var>Options.Cancel</var>.
+    </p>
+        </descr>
+      </element><element name="TCSVImporter.GetFieldNames"><short>Extracts the list of column names from the CSV/TSV header.</short><descr><p>Reads the first line of the input stream and returns a <var>TStringList</var> containing the field names. If <var>Options.HasHeader</var> is False, the importer generates synthetic field names such as <var>Column1</var>, <var>Column2</var>, etc.
+    </p>
+        </descr>
+      </element><element name="TCSVImporter.PreviewRows"><short>Reads a limited number of rows for preview purposes.</short><descr><p>Parses up to <var>MaxRows</var> rows from the CSV/TSV stream and emits them through the <var>RowOut</var> callback. This is used by the import wizard to display sample data before the full import begins.
+    </p><p>The preview respects all parsing options, including delimiters, quoting, trimming, and header handling.
+    </p>
+        </descr>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

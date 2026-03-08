@@ -231,6 +231,10 @@ begin
 
       if Assigned(Options.OnProgress) then
         Options.OnProgress(Trunc(ds.RecNo * 100.0 / Max(1,total)), rsProgressImportingCSVFile);
+
+      if stopProcess then
+        Break;
+
       ds.Next;
     end;
   finally
