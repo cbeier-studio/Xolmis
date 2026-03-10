@@ -159,7 +159,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -428,9 +428,6 @@
       </Item>
       <Item>
         <PackageName Value="lazmapviewer_bgra"/>
-      </Item>
-      <Item>
-        <PackageName Value="MetaDarkStyle"/>
       </Item>
       <Item>
         <PackageName Value="laz_fpspreadsheetexport_visual"/>
