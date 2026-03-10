@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, DB, SQLDB,
-  models_record_types;
+  models_record_types, io_core;
 
 type
 
@@ -114,6 +114,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -679,6 +680,74 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TPersonRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TPerson;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TPerson) then
+    raise Exception.Create('HydrateFromRow: Expected TPerson');
+
+  R := TPerson(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('acronym') >= 0 then
+    R.Abbreviation := ARow.Values['acronym'];
+  if ARow.IndexOfName('citation') >= 0 then
+    R.Citation := ARow.Values['citation'];
+  if ARow.IndexOfName('title_treatment') >= 0 then
+    R.TitleTreatment := ARow.Values['title_treatment'];
+  if ARow.IndexOfName('gender') >= 0 then
+    R.Gender := ARow.Values['gender'];
+  if ARow.IndexOfName('birth_date') >= 0 then
+    R.BirthDate := StrToDateDef(ARow.Values['birth_date'], NullDate);
+  if ARow.IndexOfName('death_date') >= 0 then
+    R.DeathDate := StrToDateDef(ARow.Values['death_date'], NullDate);
+  if ARow.IndexOfName('national_id_card') >= 0 then
+    R.IdDocument1 := ARow.Values['national_id_card'];
+  if ARow.IndexOfName('social_security_number') >= 0 then
+    R.IdDocument2 := ARow.Values['social_security_number'];
+  if ARow.IndexOfName('email_addr') >= 0 then
+    R.Email := ARow.Values['email_addr'];
+  if ARow.IndexOfName('phone_1') >= 0 then
+    R.Phone1 := ARow.Values['phone_1'];
+  if ARow.IndexOfName('phone_2') >= 0 then
+    R.Phone2 := ARow.Values['phone_2'];
+  if ARow.IndexOfName('address_1') >= 0 then
+    R.Address1 := ARow.Values['address_1'];
+  if ARow.IndexOfName('address_2') >= 0 then
+    R.Address2 := ARow.Values['address_2'];
+  if ARow.IndexOfName('neighborhood') >= 0 then
+    R.Neighborhood := ARow.Values['neighborhood'];
+  if ARow.IndexOfName('zip_code') >= 0 then
+    R.PostalCode := ARow.Values['zip_code'];
+  if ARow.IndexOfName('municipality_id') >= 0 then
+    R.MunicipalityId := StrToIntDef(ARow.Values['municipality_id'], 0);
+  if ARow.IndexOfName('state_id') >= 0 then
+    R.StateId := StrToIntDef(ARow.Values['state_id'], 0);
+  if ARow.IndexOfName('country_id') >= 0 then
+    R.CountryId := StrToIntDef(ARow.Values['country_id'], 0);
+  if ARow.IndexOfName('institution_id') >= 0 then
+    R.InstitutionId := StrToIntDef(ARow.Values['institution_id'], 0);
+  if ARow.IndexOfName('department') >= 0 then
+    R.Department := ARow.Values['department'];
+  if ARow.IndexOfName('job_role') >= 0 then
+    R.JobRole := ARow.Values['job_role'];
+  if ARow.IndexOfName('lattes_uri') >= 0 then
+    R.LattesUri := ARow.Values['lattes_uri'];
+  if ARow.IndexOfName('orcid_uri') >= 0 then
+    R.OrcidUri := ARow.Values['orcid_uri'];
+  if ARow.IndexOfName('twitter_uri') >= 0 then
+    R.XTwitterUri := ARow.Values['twitter_uri'];
+  if ARow.IndexOfName('instagram_uri') >= 0 then
+    R.InstagramUri := ARow.Values['instagram_uri'];
+  if ARow.IndexOfName('website_uri') >= 0 then
+    R.WebsiteUri := ARow.Values['website_uri'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TPersonRepository.Insert(E: TXolmisRecord);

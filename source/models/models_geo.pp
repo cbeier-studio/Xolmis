@@ -23,7 +23,7 @@ interface
 uses
   Classes, Types, SysUtils, LazUTF8, RegExpr, DateUtils, TypInfo, fgl, fpjson,
   Forms, Controls, ExtCtrls, laz.VirtualTrees,
-  DB, SQLDB, models_record_types;
+  DB, SQLDB, models_record_types, io_core;
 
 type
 
@@ -85,6 +85,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -142,6 +143,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -663,6 +665,60 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TSiteRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSite;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSite) then
+    raise Exception.Create('HydrateFromRow: Expected TSite');
+
+  R := TSite(E);
+  if ARow.IndexOfName('site_name') >= 0 then
+    R.Name := ARow.Values['site_name'];
+  if ARow.IndexOfName('site_acronym') >= 0 then
+    R.Abbreviation := ARow.Values['site_acronym'];
+  if ARow.IndexOfName('site_rank') >= 0 then
+  begin
+    { #todo : Translate site rank also from rank names and numbers }
+    case ARow.Values['site_rank'] of
+      'P': R.Rank := srCountry;
+      'E': R.Rank := srState;
+      'R': R.Rank := srRegion;
+      'M': R.Rank := srMunicipality;
+      'D': R.Rank := srDistrict;
+      'L': R.Rank := srLocality;
+    else
+      R.Rank := srNone;
+    end;
+  end;
+  if ARow.IndexOfName('parent_site_id') >= 0 then
+    R.ParentSiteId := StrToIntDef(ARow.Values['parent_site_id'], 0);
+  if ARow.IndexOfName('municipality_id') >= 0 then
+    R.MunicipalityId := StrToIntDef(ARow.Values['municipality_id'], 0);
+  if ARow.IndexOfName('state_id') >= 0 then
+    R.StateId := StrToIntDef(ARow.Values['state_id'], 0);
+  if ARow.IndexOfName('country_id') >= 0 then
+    R.CountryId := StrToIntDef(ARow.Values['country_id'], 0);
+  if ARow.IndexOfName('language') >= 0 then
+    R.Language := ARow.Values['language'];
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('ebird_name') >= 0 then
+    R.EbirdName := ARow.Values['ebird_name'];
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('altitude') >= 0 then
+    R.Altitude := StrToFloatDef(ARow.Values['altitude'], 0);
+  if ARow.IndexOfName('description') >= 0 then
+    R.Description := ARow.Values['description'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TSiteRepository.Insert(E: TXolmisRecord);
@@ -1247,6 +1303,42 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TPoiRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TPoi;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TPoi) then
+    raise Exception.Create('HydrateFromRow: Expected TPoi');
+
+  R := TPoi(E);
+  if ARow.IndexOfName('sample_date') >= 0 then
+    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  if ARow.IndexOfName('sample_time') >= 0 then
+    R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+  if ARow.IndexOfName('poi_name') >= 0 then
+    R.PoiName := ARow.Values['poi_name'];
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('altitude') >= 0 then
+    R.Altitude := StrToFloatDef(ARow.Values['altitude'], 0);
+  if ARow.IndexOfName('observer_id') >= 0 then
+    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('sighting_id') >= 0 then
+    R.SightingId := StrToIntDef(ARow.Values['sighting_id'], 0);
+  if ARow.IndexOfName('survey_id') >= 0 then
+    R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TPoiRepository.Insert(E: TXolmisRecord);

@@ -21,7 +21,7 @@ unit models_sampling;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -63,6 +63,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -143,6 +144,7 @@ type
     procedure FindBySiteAndDate(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String; aNetStation: Integer; E: TSurvey);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -209,6 +211,7 @@ type
     procedure FindBySurvey(aSurvey: Integer; aDate, aTime: String; aObserver: Integer; E: TWeatherLog);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -251,6 +254,7 @@ type
     procedure FindBySurvey(const aSurveyKey, aPersonKey: Integer; E: TSurveyMember);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -331,6 +335,7 @@ type
     procedure FindBySurvey(aSurvey: Integer; aNetNumber: String; E: TNetEffort);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -399,6 +404,7 @@ type
     procedure FindBySurvey(aSurvey: Integer; aDate, aTime: String; aLongitude, aLatitude: Extended; aObserver: Integer; E: TVegetation);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -779,6 +785,28 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TExpeditionRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TExpedition;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TExpedition) then
+    raise Exception.Create('HydrateFromRow: Expected TExpedition');
+
+  R := TExpedition(E);
+  if ARow.IndexOfName('expedition_name') >= 0 then
+    R.Name := ARow.Values['expedition_name'];
+  if ARow.IndexOfName('start_date') >= 0 then
+    R.StartDate := StrToDateDef(ARow.Values['start_date'], NullDate);
+  if ARow.IndexOfName('end_date') >= 0 then
+    R.EndDate := StrToDateDef(ARow.Values['end_date'], NullDate);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('description') >= 0 then
+    R.Description := ARow.Values['description'];
 end;
 
 procedure TExpeditionRepository.Insert(E: TXolmisRecord);
@@ -1370,6 +1398,58 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TNetEffortRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TNetEffort;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TNetEffort) then
+    raise Exception.Create('HydrateFromRow: Expected TNetEffort');
+
+  R := TNetEffort(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('survey_id') >= 0 then
+    R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
+  if ARow.IndexOfName('net_station_id') >= 0 then
+    R.NetStationId := StrToIntDef(ARow.Values['net_station_id'], 0);
+  if ARow.IndexOfName('permanent_net_id') >= 0 then
+    R.PermanentNetId := StrToIntDef(ARow.Values['permanent_net_id'], 0);
+  if ARow.IndexOfName('net_number') >= 0 then
+    R.NetNumber := StrToIntDef(ARow.Values['net_number'], 0);
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('sample_date') >= 0 then
+    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  if ARow.IndexOfName('net_open_1') >= 0 then
+    R.NetOpen1 := StrToTimeDef(ARow.Values['net_open_1'], NullTime);
+  if ARow.IndexOfName('net_close_1') >= 0 then
+    R.NetClose1 := StrToTimeDef(ARow.Values['net_close_1'], NullTime);
+  if ARow.IndexOfName('net_open_2') >= 0 then
+    R.NetOpen2 := StrToTimeDef(ARow.Values['net_open_2'], NullTime);
+  if ARow.IndexOfName('net_close_2') >= 0 then
+    R.NetClose2 := StrToTimeDef(ARow.Values['net_close_2'], NullTime);
+  if ARow.IndexOfName('net_open_3') >= 0 then
+    R.NetOpen3 := StrToTimeDef(ARow.Values['net_open_3'], NullTime);
+  if ARow.IndexOfName('net_close_3') >= 0 then
+    R.NetClose3 := StrToTimeDef(ARow.Values['net_close_3'], NullTime);
+  if ARow.IndexOfName('net_open_4') >= 0 then
+    R.NetOpen4 := StrToTimeDef(ARow.Values['net_open_4'], NullTime);
+  if ARow.IndexOfName('net_close_4') >= 0 then
+    R.NetClose4 := StrToTimeDef(ARow.Values['net_close_4'], NullTime);
+  if ARow.IndexOfName('net_length') >= 0 then
+    R.NetLength := StrToFloatDef(ARow.Values['net_length'], 0);
+  if ARow.IndexOfName('net_height') >= 0 then
+    R.NetHeight := StrToFloatDef(ARow.Values['net_height'], 0);
+  if ARow.IndexOfName('net_mesh') >= 0 then
+    R.NetMesh := StrToIntDef(ARow.Values['net_mesh'], 0);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TNetEffortRepository.Insert(E: TXolmisRecord);
@@ -1998,6 +2078,50 @@ begin
   end;
 end;
 
+procedure TVegetationRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TVegetation;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TVegetation) then
+    raise Exception.Create('HydrateFromRow: Expected TVegetation');
+
+  R := TVegetation(E);
+  if ARow.IndexOfName('survey_id') >= 0 then
+    R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
+  if ARow.IndexOfName('sample_date') >= 0 then
+    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  if ARow.IndexOfName('sample_time') >= 0 then
+    R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('observer_id') >= 0 then
+    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
+  if ARow.IndexOfName('herbs_distribution') >= 0 then
+    R.HerbsDistribution := TStratumDistribution(StrToIntDef(ARow.Values['herbs_distribution'], 0));
+  if ARow.IndexOfName('herbs_proportion') >= 0 then
+    R.HerbsProportion := StrToIntDef(ARow.Values['herbs_proportion'], 0);
+  if ARow.IndexOfName('herbs_avg_height') >= 0 then
+    R.HerbsAvgHeight := StrToIntDef(ARow.Values['herbs_avg_height'], 0);
+  if ARow.IndexOfName('shrubs_distribution') >= 0 then
+    R.ShrubsDistribution := TStratumDistribution(StrToIntDef(ARow.Values['shrubs_distribution'], 0));
+  if ARow.IndexOfName('shrubs_proportion') >= 0 then
+    R.ShrubsProportion := StrToIntDef(ARow.Values['shrubs_proportion'], 0);
+  if ARow.IndexOfName('shrubs_avg_height') >= 0 then
+    R.ShrubsAvgHeight := StrToIntDef(ARow.Values['shrubs_avg_height'], 0);
+  if ARow.IndexOfName('trees_distribution') >= 0 then
+    R.TreesDistribution := TStratumDistribution(StrToIntDef(ARow.Values['trees_distribution'], 0));
+  if ARow.IndexOfName('trees_proportion') >= 0 then
+    R.TreesProportion := StrToIntDef(ARow.Values['trees_proportion'], 0);
+  if ARow.IndexOfName('trees_avg_height') >= 0 then
+    R.TreesAvgHeight := StrToIntDef(ARow.Values['trees_avg_height'], 0);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
+end;
+
 procedure TVegetationRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2471,6 +2595,24 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TSurveyMemberRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSurveyMember;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSurveyMember) then
+    raise Exception.Create('HydrateFromRow: Expected TSurveyMember');
+
+  R := TSurveyMember(E);
+  if ARow.IndexOfName('survey_id') >= 0 then
+    R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
+  if ARow.IndexOfName('person_id') >= 0 then
+    R.PersonId := StrToIntDef(ARow.Values['person_id'], 0);
+  if ARow.IndexOfName('visitor') >= 0 then
+    R.Visitor := StrToBoolDef(ARow.Values['visitor'], False);
 end;
 
 procedure TSurveyMemberRepository.Insert(E: TXolmisRecord);
@@ -3068,6 +3210,62 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TSurveyRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSurvey;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSurvey) then
+    raise Exception.Create('HydrateFromRow: Expected TSurvey');
+
+  R := TSurvey(E);
+  if ARow.IndexOfName('survey_date') >= 0 then
+    R.SurveyDate := StrToDateDef(ARow.Values['survey_date'], NullDate);
+  if ARow.IndexOfName('start_time') >= 0 then
+    R.StartTime := StrToTimeDef(ARow.Values['start_time'], NullTime);
+  if ARow.IndexOfName('end_time') >= 0 then
+    R.EndTime := StrToTimeDef(ARow.Values['end_time'], NullTime);
+  if ARow.IndexOfName('duration') >= 0 then
+    R.Duration := StrToIntDef(ARow.Values['duration'], 0);
+  if ARow.IndexOfName('method_id') >= 0 then
+    R.MethodId := StrToIntDef(ARow.Values['method_id'], 0);
+  if ARow.IndexOfName('net_station_id') >= 0 then
+    R.NetStationId := StrToIntDef(ARow.Values['net_station_id'], 0);
+  if ARow.IndexOfName('expedition_id') >= 0 then
+    R.ExpeditionId := StrToIntDef(ARow.Values['expedition_id'], 0);
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('sample_id') >= 0 then
+    R.SampleId := ARow.Values['sample_id'];
+  if ARow.IndexOfName('start_longitude') >= 0 then
+    R.StartLongitude := StrToFloatDef(ARow.Values['start_longitude'], 0);
+  if ARow.IndexOfName('start_latitude') >= 0 then
+    R.StartLatitude := StrToFloatDef(ARow.Values['start_latitude'], 0);
+  if ARow.IndexOfName('end_longitude') >= 0 then
+    R.EndLongitude := StrToFloatDef(ARow.Values['end_longitude'], 0);
+  if ARow.IndexOfName('end_latitude') >= 0 then
+    R.EndLatitude := StrToFloatDef(ARow.Values['end_latitude'], 0);
+  if ARow.IndexOfName('observers_tally') >= 0 then
+    R.ObserversTally := StrToIntDef(ARow.Values['observers_tally'], 0);
+  if ARow.IndexOfName('area_total') >= 0 then
+    R.TotalArea := StrToFloatDef(ARow.Values['area_total'], 0);
+  if ARow.IndexOfName('distance_total') >= 0 then
+    R.TotalDistance := StrToFloatDef(ARow.Values['distance_total'], 0);
+  if ARow.IndexOfName('nets_total') >= 0 then
+    R.TotalNets := StrToIntDef(ARow.Values['nets_total'], 0);
+  if ARow.IndexOfName('habitat') >= 0 then
+    R.Habitat := ARow.Values['habitat'];
+  if ARow.IndexOfName('net_rounds') >= 0 then
+    R.NetRounds := ARow.Values['net_rounds'];
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TSurveyRepository.Insert(E: TXolmisRecord);
@@ -3712,6 +3910,66 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TWeatherLogRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TWeatherLog;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TWeatherLog) then
+    raise Exception.Create('HydrateFromRow: Expected TWeatherLog');
+
+  R := TWeatherLog(E);
+  if ARow.IndexOfName('survey_id') >= 0 then
+    R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
+  if ARow.IndexOfName('sample_date') >= 0 then
+    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  if ARow.IndexOfName('sample_time') >= 0 then
+    R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+  if ARow.IndexOfName('sample_moment') >= 0 then
+  begin
+    case ARow.Values['sample_moment'] of
+      'S': R.SampleMoment := wmStart;
+      'M': R.SampleMoment := wmMiddle;
+      'E': R.SampleMoment := wmEnd;
+    else
+      R.SampleMoment := wmNone;
+    end;
+  end;
+  if ARow.IndexOfName('atmospheric_pressure') >= 0 then
+    R.AtmosphericPressure := StrToFloatDef(ARow.Values['atmospheric_pressure'], 0);
+  if ARow.IndexOfName('cloud_cover') >= 0 then
+    R.CloudCover := StrToIntDef(ARow.Values['cloud_cover'], 0);
+  if ARow.IndexOfName('precipitation') >= 0 then
+  begin
+    case ARow.Values['precipitation'] of
+      'N': R.Precipitation := wpNone;
+      'F': R.Precipitation := wpFog;
+      'M': R.Precipitation := wpMist;
+      'D': R.Precipitation := wpDrizzle;
+      'R': R.Precipitation := wpRain;
+    else
+      R.Precipitation := wpEmpty;
+    end;
+  end;
+  if ARow.IndexOfName('rainfall') >= 0 then
+    R.Rainfall := StrToIntDef(ARow.Values['rainfall'], 0);
+  if ARow.IndexOfName('relative_humidity') >= 0 then
+    R.RelativeHumidity := StrToFloatDef(ARow.Values['relative_humidity'], 0);
+  if ARow.IndexOfName('temperature') >= 0 then
+    R.Temperature := StrToFloatDef(ARow.Values['temperature'], 0);
+  if ARow.IndexOfName('observer_id') >= 0 then
+    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
+  if ARow.IndexOfName('wind_speed_bft') >= 0 then
+    R.WindSpeedBft := StrToIntDef(ARow.Values['wind_speed_bft'], 0);
+  if ARow.IndexOfName('wind_speed_kmh') >= 0 then
+    R.WindSpeedKmH := StrToFloatDef(ARow.Values['wind_speed_kmh'], 0);
+  if ARow.IndexOfName('wind_direction') >= 0 then
+    R.WindDirection := ARow.Values['wind_direction'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TWeatherLogRepository.Insert(E: TXolmisRecord);

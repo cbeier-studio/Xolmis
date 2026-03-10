@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, ComCtrls, DB, SQLDB, RegExpr, laz.VirtualTrees, fpjson,
-  models_record_types;
+  models_record_types, io_core;
 
 type
 
@@ -72,6 +72,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    //procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     //procedure Insert(E: TXolmisRecord); override;
     //procedure Update(E: TXolmisRecord); override;
     //procedure Delete(E: TXolmisRecord); override;
@@ -157,6 +158,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -751,6 +753,76 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TTaxonRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TTaxon;
+  RankAbbrev, IocRankAbbrev: String;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TTaxon) then
+    raise Exception.Create('HydrateFromRow: Expected TTaxon');
+
+  R := TTaxon(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('formatted_name') >= 0 then
+    R.FormattedName := ARow.Values['formatted_name'];
+  if ARow.IndexOfName('parent_taxon_id') >= 0 then
+    R.ParentTaxonId := StrToIntDef(ARow.Values['parent_taxon_id'], 0);
+  if ARow.IndexOfName('rank_id') >= 0 then
+  begin
+    RankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', StrToIntDef(ARow.Values['rank_id'], 0));
+    R.Rank := StringToZooRank(RankAbbrev);
+  end;
+  if ARow.IndexOfName('authorship') >= 0 then
+    R.Authorship := ARow.Values['authorship'];
+  if ARow.IndexOfName('sort_num') >= 0 then
+    R.SortNum := StrToFloatDef(ARow.Values['sort_num'], 0);
+  if ARow.IndexOfName('quick_code') >= 0 then
+    R.QuickCode := ARow.Values['quick_code'];
+  if ARow.IndexOfName('english_name') >= 0 then
+    R.EnglishName := ARow.Values['english_name'];
+  if ARow.IndexOfName('portuguese_name') >= 0 then
+    R.PortugueseName := ARow.Values['portuguese_name'];
+  if ARow.IndexOfName('spanish_name') >= 0 then
+    R.SpanishName := ARow.Values['spanish_name'];
+  if ARow.IndexOfName('valid_id') >= 0 then
+    R.ValidId := StrToIntDef(ARow.Values['valid_id'], 0);
+  if ARow.IndexOfName('iucn_status') >= 0 then
+    R.IucnStatus := ARow.Values['iucn_status'];
+  if ARow.IndexOfName('extinct') >= 0 then
+    R.Extinct := StrToBoolDef(ARow.Values['extinct'], False);
+  if ARow.IndexOfName('extinction_year') >= 0 then
+    R.ExtinctionYear := ARow.Values['extinction_year'];
+  if ARow.IndexOfName('distribution') >= 0 then
+    R.Distribution := ARow.Values['distribution'];
+  if ARow.IndexOfName('ebird_code') >= 0 then
+    R.EbirdCode := ARow.Values['ebird_code'];
+  if ARow.IndexOfName('order_id') >= 0 then
+    R.OrderId := StrToIntDef(ARow.Values['order_id'], 0);
+  if ARow.IndexOfName('family_id') >= 0 then
+    R.FamilyId := StrToIntDef(ARow.Values['family_id'], 0);
+  if ARow.IndexOfName('subfamily_id') >= 0 then
+    R.SubfamilyId := StrToIntDef(ARow.Values['subfamily_id'], 0);
+  if ARow.IndexOfName('genus_id') >= 0 then
+    R.GenusId := StrToIntDef(ARow.Values['genus_id'], 0);
+  if ARow.IndexOfName('species_id') >= 0 then
+    R.SpeciesId := StrToIntDef(ARow.Values['species_id'], 0);
+  if ARow.IndexOfName('subspecies_group_id') >= 0 then
+    R.SubspeciesGroupId := StrToIntDef(ARow.Values['subspecies_group_id'], 0);
+  if ARow.IndexOfName('incertae_sedis') >= 0 then
+    R.IncertaeSedis := StrToIntDef(ARow.Values['incertae_sedis'], 0);
+  if ARow.IndexOfName('other_portuguese_names') >= 0 then
+    R.OtherPortugueseNames := ARow.Values['other_portuguese_names'];
+  if ARow.IndexOfName('clements_taxonomy') >= 0 then
+    R.ClementsTaxonomy := StrToBoolDef(ARow.Values['clements_taxonomy'], True);
+  if ARow.IndexOfName('ioc_taxonomy') >= 0 then
+    R.IocTaxonomy := StrToBoolDef(ARow.Values['ioc_taxonomy'], False);
+  if ARow.IndexOfName('cbro_taxonomy') >= 0 then
+    R.CbroTaxonomy := StrToBoolDef(ARow.Values['cbro_taxonomy'], False);
 end;
 
 procedure TTaxonRepository.Insert(E: TXolmisRecord);

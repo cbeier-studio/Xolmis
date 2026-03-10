@@ -21,7 +21,7 @@ unit models_breeding;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -130,6 +130,7 @@ type
     procedure FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate; E: TNest);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -171,6 +172,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -249,6 +251,7 @@ type
     procedure FindByFieldNumber(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer; E: TEgg);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -315,6 +318,7 @@ type
     procedure FindByDate(aNest: Integer; aDate, aTime: String; aObserver: Integer; E: TNestRevision);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -787,6 +791,66 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TNestRevisionRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TNestRevision;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TNestRevision) then
+    raise Exception.Create('HydrateFromRow: Expected TNestRevision');
+
+  R := TNestRevision(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('nest_id') >= 0 then
+    R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
+  if ARow.IndexOfName('revision_date') >= 0 then
+    R.RevisionDate := StrToDateDef(ARow.Values['revision_date'], NullDate);
+  if ARow.IndexOfName('revision_time') >= 0 then
+    R.RevisionTime := StrToTimeDef(ARow.Values['revision_time'], NullTime);
+  if ARow.IndexOfName('observer_1_id') >= 0 then
+    R.Observer1Id := StrToIntDef(ARow.Values['observer_1_id'], 0);
+  if ARow.IndexOfName('observer_2_id') >= 0 then
+    R.Observer2Id := StrToIntDef(ARow.Values['observer_2_id'], 0);
+  if ARow.IndexOfName('nest_status') >= 0 then
+  begin
+    case ARow.Values['nest_status'] of
+      'I': R.NestStatus := nstInactive;
+      'A': R.NestStatus := nstActive;
+    else
+      R.NestStatus := nstUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('host_eggs_tally') >= 0 then
+    R.HostEggsTally := StrToIntDef(ARow.Values['host_eggs_tally'], 0);
+  if ARow.IndexOfName('host_nestlings_tally') >= 0 then
+    R.HostNestlingsTally := StrToIntDef(ARow.Values['host_nestlings_tally'], 0);
+  if ARow.IndexOfName('nidoparasite_eggs_tally') >= 0 then
+    R.NidoparasiteEggsTally := StrToIntDef(ARow.Values['nidoparasite_eggs_tally'], 0);
+  if ARow.IndexOfName('nidoparasite_nestlings_tally') >= 0 then
+    R.NidoparasiteNestlingsTally := StrToIntDef(ARow.Values['nidoparasite_nestlings_tally'], 0);
+  if ARow.IndexOfName('nidoparasite_id') >= 0 then
+    R.NidoparasiteId := StrToIntDef(ARow.Values['nidoparasite_id'], 0);
+  if ARow.IndexOfName('have_philornis_larvae') >= 0 then
+    R.HavePhilornisLarvae := StrToBoolDef(ARow.Values['have_philornis_larvae'], False);
+  if ARow.IndexOfName('nest_stage') >= 0 then
+  begin
+    case ARow.Values['nest_stage'] of
+      'X': R.NestStage := nsgInactive;
+      'C': R.NestStage := nsgConstruction;
+      'L': R.NestStage := nsgLaying;
+      'I': R.NestStage := nsgIncubation;
+      'H': R.NestStage := nsgHatching;
+      'N': R.NestStage := nsgNestling;
+    else
+      R.NestStage := nsgUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TNestRevisionRepository.Insert(E: TXolmisRecord);
@@ -1477,6 +1541,92 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TEggRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TEgg;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TEgg) then
+    raise Exception.Create('HydrateFromRow: Expected TEgg');
+
+  R := TEgg(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('field_number') >= 0 then
+    R.FieldNumber := ARow.Values['field_number'];
+  if ARow.IndexOfName('egg_seq') >= 0 then
+    R.EggSeq := StrToIntDef(ARow.Values['egg_seq'], 0);
+  if ARow.IndexOfName('nest_id') >= 0 then
+    R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
+  if ARow.IndexOfName('egg_shape') >= 0 then
+  begin
+    case ARow.Values['egg_shape'] of
+      'S': R.EggShape := esSpherical;
+      'E': R.EggShape := esElliptical;
+      'O': R.EggShape := esOval;
+      'P': R.EggShape := esPiriform;
+      'C': R.EggShape := esConical;
+      'B': R.EggShape := esBiconical;
+      'Y': R.EggShape := esCylindrical;
+      'L': R.EggShape := esLongitudinal;
+    else
+      R.EggShape := esUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('egg_width') >= 0 then
+    R.Width := StrToFloatDef(ARow.Values['egg_width'], 0);
+  if ARow.IndexOfName('egg_length') >= 0 then
+    R.Length := StrToFloatDef(ARow.Values['egg_length'], 0);
+  if ARow.IndexOfName('egg_mass') >= 0 then
+    R.Mass := StrToFloatDef(ARow.Values['egg_mass'], 0);
+  if ARow.IndexOfName('egg_stage') >= 0 then
+    R.EggStage := ARow.Values['egg_stage'];
+  if ARow.IndexOfName('eggshell_color') >= 0 then
+    R.EggshellColor := ARow.Values['eggshell_color'];
+  if ARow.IndexOfName('eggshell_pattern') >= 0 then
+  begin
+    case ARow.Values['eggshell_pattern'] of
+      'P':  R.EggshellPattern := espSpots;
+      'B':  R.EggshellPattern := espBlotches;
+      'S':  R.EggshellPattern := espSquiggles;
+      'T':  R.EggshellPattern := espStreaks;
+      'W':  R.EggshellPattern := espScrawls;
+      'PS': R.EggshellPattern := espSpotsSquiggles;
+      'BS': R.EggshellPattern := espBlotchesSquiggles;
+    else
+      R.EggshellPattern := espUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('eggshell_texture') >= 0 then
+  begin
+    case ARow.Values['eggshell_texture'] of
+      'C': R.EggshellTexture := estChalky;
+      'S': R.EggshellTexture := estShiny;
+      'G': R.EggshellTexture := estGlossy;
+      'P': R.EggshellTexture := estPitted;
+    else
+      R.EggshellTexture := estUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('egg_hatched') >= 0 then
+    R.EggHatched := StrToBoolDef(ARow.Values['egg_hatched'], False);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('researcher_id') >= 0 then
+    R.ResearcherId := StrToIntDef(ARow.Values['researcher_id'], 0);
+  if ARow.IndexOfName('measure_date') >= 0 then
+    R.MeasureDate := StrToDateDef(ARow.Values['measure_date'], NullDate);
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('host_egg') >= 0 then
+    R.HostEgg := StrToBoolDef(ARow.Values['host_egg'], True);
+  if ARow.IndexOfName('description') >= 0 then
+    R.Description := ARow.Values['description'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TEggRepository.Insert(E: TXolmisRecord);
@@ -2334,6 +2484,115 @@ begin
   end;
 end;
 
+procedure TNestRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TNest;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TNest) then
+    raise Exception.Create('HydrateFromRow: Expected TNest');
+
+  R := TNest(E);
+  if ARow.IndexOfName('field_number') >= 0 then
+    R.FieldNumber := ARow.Values['field_number'];
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('observer_id') >= 0 then
+    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('nest_shape') >= 0 then
+    R.NestShape := ARow.Values['nest_shape'];
+  if ARow.IndexOfName('support_type') >= 0 then
+    R.SupportType := ARow.Values['support_type'];
+  if ARow.IndexOfName('support_plant_1_id') >= 0 then
+    R.SupportPlant1Id := StrToIntDef(ARow.Values['support_plant_1_id'], 0);
+  if ARow.IndexOfName('support_plant_2_id') >= 0 then
+    R.SupportPlant2Id := StrToIntDef(ARow.Values['support_plant_2_id'], 0);
+  if ARow.IndexOfName('other_support') >= 0 then
+    R.OtherSupport := ARow.Values['other_support'];
+  if ARow.IndexOfName('height_above_ground') >= 0 then
+    R.HeightAboveGround := StrToFloatDef(ARow.Values['height_above_ground'], 0);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('internal_max_diameter') >= 0 then
+    R.InternalMaxDiameter := StrToFloatDef(ARow.Values['internal_max_diameter'], 0);
+  if ARow.IndexOfName('internal_min_diameter') >= 0 then
+    R.InternalMinDiameter := StrToFloatDef(ARow.Values['internal_min_diameter'], 0);
+  if ARow.IndexOfName('external_max_diameter') >= 0 then
+    R.ExternalMaxDiameter := StrToFloatDef(ARow.Values['external_max_diameter'], 0);
+  if ARow.IndexOfName('external_min_diameter') >= 0 then
+    R.ExternalMinDiameter := StrToFloatDef(ARow.Values['external_min_diameter'], 0);
+  if ARow.IndexOfName('internal_height') >= 0 then
+    R.InternalHeight := StrToFloatDef(ARow.Values['internal_height'], 0);
+  if ARow.IndexOfName('external_height') >= 0 then
+    R.ExternalHeight := StrToFloatDef(ARow.Values['external_height'], 0);
+  if ARow.IndexOfName('edge_distance') >= 0 then
+    R.EdgeDistance := StrToFloatDef(ARow.Values['edge_distance'], 0);
+  if ARow.IndexOfName('center_distance') >= 0 then
+    R.CenterDistance := StrToFloatDef(ARow.Values['center_distance'], 0);
+  if ARow.IndexOfName('nest_cover') >= 0 then
+    R.NestCover := StrToIntDef(ARow.Values['nest_cover'], 0);
+  if ARow.IndexOfName('plant_max_diameter') >= 0 then
+    R.PlantMaxDiameter := StrToFloatDef(ARow.Values['plant_max_diameter'], 0);
+  if ARow.IndexOfName('plant_min_diameter') >= 0 then
+    R.PlantMinDiameter := StrToFloatDef(ARow.Values['plant_min_diameter'], 0);
+  if ARow.IndexOfName('plant_height') >= 0 then
+    R.PlantHeight := StrToFloatDef(ARow.Values['plant_height'], 0);
+  if ARow.IndexOfName('plant_dbh') >= 0 then
+    R.PlantDbh := StrToFloatDef(ARow.Values['plant_dbh'], 0);
+  if ARow.IndexOfName('construction_days') >= 0 then
+    R.ConstructionDays := StrToFloatDef(ARow.Values['construction_days'], 0);
+  if ARow.IndexOfName('incubation_days') >= 0 then
+    R.IncubationDays := StrToFloatDef(ARow.Values['incubation_days'], 0);
+  if ARow.IndexOfName('nestling_days') >= 0 then
+    R.NestlingDays := StrToFloatDef(ARow.Values['nestling_days'], 0);
+  if ARow.IndexOfName('active_days') >= 0 then
+    R.ActiveDays := StrToFloatDef(ARow.Values['active_days'], 0);
+  if ARow.IndexOfName('nest_fate') >= 0 then
+  begin
+    case ARow.Values['nest_fate'] of
+      'L': R.NestFate := nfLoss;
+      'S': R.NestFate := nfSuccess;
+    else
+      R.NestFate := nfUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('loss_cause') >= 0 then
+  begin
+    case ARow.Values['loss_cause'] of
+      'PRE': R.LossCause := nlcPredation;
+      'PAR': R.LossCause := nlcParasitism;
+      'DIS': R.LossCause := nlcDisease;
+      'WEA': R.LossCause := nlcWeather;
+      'FIR': R.LossCause := nlcFire;
+      'ABD': R.LossCause := nlcAbandonment;
+      'POL': R.LossCause := nlcPollution;
+      'HDT': R.LossCause := nlcHumanDisturbance;
+      'IMN': R.LossCause := nlcImproperManagement;
+    else
+      R.LossCause := nlcUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('nest_productivity') >= 0 then
+    R.NestProductivity := StrToIntDef(ARow.Values['nest_productivity'], 0);
+  if ARow.IndexOfName('found_date') >= 0 then
+    R.FoundDate := StrToDateDef(ARow.Values['found_date'], NullDate);
+  if ARow.IndexOfName('last_date') >= 0 then
+    R.LastDate := StrToDateDef(ARow.Values['last_date'], NullDate);
+  if ARow.IndexOfName('description') >= 0 then
+    R.Description := ARow.Values['description'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
+end;
+
 procedure TNestRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2907,6 +3166,33 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TNestOwnerRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TNestOwner;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TNestOwner) then
+    raise Exception.Create('HydrateFromRow: Expected TNestOwner');
+
+  R := TNestOwner(E);
+  if ARow.IndexOfName('nest_id') >= 0 then
+    R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
+  if ARow.IndexOfName('role') >= 0 then
+  begin
+    case ARow.Values['role'] of
+      'M': R.Role := nrlMale;
+      'F': R.Role := nrlFemale;
+      'H': R.Role := nrlHelper;
+      'O': R.Role := nrlOffspring;
+    else
+      R.Role := nrlUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
 end;
 
 procedure TNestOwnerRepository.Insert(E: TXolmisRecord);

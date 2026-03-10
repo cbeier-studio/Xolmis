@@ -21,7 +21,7 @@ unit models_methods;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -69,6 +69,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -418,6 +419,34 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TMethodRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TMethod;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TMethod) then
+    raise Exception.Create('HydrateFromRow: Expected TMethod');
+
+  R := TMethod(E);
+  if ARow.IndexOfName('method_name') >= 0 then
+    R.Name := ARow.Values['method_name'];
+  if ARow.IndexOfName('abbreviation') >= 0 then
+    R.Abbreviation := ARow.Values['abbreviation'];
+  if ARow.IndexOfName('category') >= 0 then
+    R.Category := ARow.Values['category'];
+  if ARow.IndexOfName('ebird_name') >= 0 then
+    R.EbirdName := ARow.Values['ebird_name'];
+  if ARow.IndexOfName('description') >= 0 then
+    R.Description := ARow.Values['description'];
+  if ARow.IndexOfName('recommended_uses') >= 0 then
+    R.RecommendedUses := ARow.Values['recommended_uses'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
+  if ARow.IndexOfName('can_delete') >= 0 then
+    R.CanDelete := StrToBoolDef(ARow.Values['can_delete'], True);
 end;
 
 procedure TMethodRepository.Insert(E: TXolmisRecord);

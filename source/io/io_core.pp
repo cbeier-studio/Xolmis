@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Dialogs, Variants, StrUtils, DateUtils, TypInfo, fgl, fpjson, jsonparser,
-  data_types, utils_gis;
+  data_types;
 
 type
   EImportError = class(Exception);
@@ -39,6 +39,7 @@ type
   TScaleOperation = (sopNone, sopMultiply, sopDivide);
   TSourceMapAxis = (smaNone, smaLong, smaLat, smaLatLong, smaLongLat);
   TSourceCoordinatesFormat = (scfDD, scfDMS, scfUTM);
+  TTargetCoordinatesFormat = (tcfDD, tcfDMS, tcfUTM);
 
   TValueTransformationSet = set of TValueTransformation;
 
@@ -149,7 +150,7 @@ type
     DecimalSeparator: Char;   // parsing hints
     NumberFormat: String;     // parsing hints
     SRID: Integer;            // spatial data (e.g., 4326 = WGS84)
-    CoordinatesFormat: TMapCoordinateType; // spatial data (e.g., DD, DMS, UTM)
+    CoordinatesFormat: TTargetCoordinatesFormat; // spatial data (e.g., DD, DMS, UTM)
     OnProgress: TProgressProc;
     Cancel: ICancellation;
   end;
@@ -255,7 +256,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_conversions, data_consts, data_schema, data_getvalue;
+  utils_locale, utils_conversions, utils_gis, data_consts, data_schema, data_getvalue;
 
 function ExtractExt(const FileName: string): string;
 begin

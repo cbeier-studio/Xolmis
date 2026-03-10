@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, fgl,
   DB, SQLDB,
-  models_record_types,
+  models_record_types, io_core,
   udm_main;
 
 type
@@ -80,6 +80,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -123,6 +124,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -164,6 +166,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -213,6 +216,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -256,6 +260,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -299,6 +304,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -713,6 +719,42 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TProjectRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TProject;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TProject) then
+    raise Exception.Create('HydrateFromRow: Expected TProject');
+
+  R := TProject(E);
+  if ARow.IndexOfName('start_date') >= 0 then
+    R.StartDate := StrToDateDef(ARow.Values['start_date'], NullDate);
+  if ARow.IndexOfName('end_date') >= 0 then
+    R.EndDate := StrToDateDef(ARow.Values['end_date'], NullDate);
+  if ARow.IndexOfName('project_title') >= 0 then
+    R.Title := ARow.Values['project_title'];
+  if ARow.IndexOfName('short_title') >= 0 then
+    R.ShortTitle := ARow.Values['short_title'];
+  if ARow.IndexOfName('website_uri') >= 0 then
+    R.WebsiteUri := ARow.Values['website_uri'];
+  if ARow.IndexOfName('email_addr') >= 0 then
+    R.EmailAddress := ARow.Values['email_addr'];
+  if ARow.IndexOfName('contact_name') >= 0 then
+    R.ContactName := ARow.Values['contact_name'];
+  if ARow.IndexOfName('protocol_number') >= 0 then
+    R.ProtocolNumber := ARow.Values['protocol_number'];
+  if ARow.IndexOfName('main_goal') >= 0 then
+    R.MainGoal := ARow.Values['main_goal'];
+  if ARow.IndexOfName('risks') >= 0 then
+    R.Risks := ARow.Values['risks'];
+  if ARow.IndexOfName('project_abstract') >= 0 then
+    R.ProjectAbstract := ARow.Values['project_abstract'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TProjectRepository.Insert(E: TXolmisRecord);
@@ -1142,6 +1184,26 @@ begin
   end;
 end;
 
+procedure TProjectMemberRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TProjectMember;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TProjectMember) then
+    raise Exception.Create('HydrateFromRow: Expected TProjectMember');
+
+  R := TProjectMember(E);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('person_id') >= 0 then
+    R.PersonId := StrToIntDef(ARow.Values['person_id'], 0);
+  if ARow.IndexOfName('project_manager') >= 0 then
+    R.IsProjectManager := StrToBoolDef(ARow.Values['project_manager'], False);
+  if ARow.IndexOfName('institution_id') >= 0 then
+    R.InstitutionId := StrToIntDef(ARow.Values['institution_id'], 0);
+end;
+
 procedure TProjectMemberRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -1527,6 +1589,30 @@ begin
     R.Exported := FieldByName('exported_status').AsBoolean;
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
+  end;
+end;
+
+procedure TProjectGoalRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TProjectGoal;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TProjectGoal) then
+    raise Exception.Create('HydrateFromRow: Expected TProjectGoal');
+
+  R := TProjectGoal(E);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('goal_description') >= 0 then
+    R.Description := ARow.Values['goal_description'];
+  if ARow.IndexOfName('goal_status') >= 0 then
+  begin
+    case ARow.Values['goal_status'] of
+      'P': R.Status := gstPending;
+      'R': R.Status := gstReached;
+      'C': R.Status := gstCanceled;
+    end;
   end;
 end;
 
@@ -1980,6 +2066,42 @@ begin
   end;
 end;
 
+procedure TProjectActivityRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TProjectActivity;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TProjectActivity) then
+    raise Exception.Create('HydrateFromRow: Expected TProjectActivity');
+
+  R := TProjectActivity(E);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['sample_date'], 0);
+  if ARow.IndexOfName('description') >= 0 then
+    R.Description := ARow.Values['description'];
+  if ARow.IndexOfName('start_date') >= 0 then
+    R.StartDate := StrToDateDef(ARow.Values['start_date'], NullDate);
+  if ARow.IndexOfName('target_date') >= 0 then
+    R.TargetDate := StrToDateDef(ARow.Values['target_date'], NullDate);
+  if ARow.IndexOfName('end_date') >= 0 then
+    R.EndDate := StrToDateDef(ARow.Values['end_date'], NullDate);
+  if ARow.IndexOfName('goal_id') >= 0 then
+    R.GoalId := StrToIntDef(ARow.Values['goal_id'], 0);
+  if ARow.IndexOfName('progress_status') >= 0 then
+  begin
+    case ARow.Values['progress_status'] of
+      'T': R.Status := astToDo;
+      'P': R.Status := astInProgress;
+      'F': R.Status := astDone;
+      'C': R.Status := astCanceled;
+      'D': R.Status := astDelayed;
+      'R': R.Status := astNeedsReview;
+      'B': R.Status := astBlocked;
+    end;
+  end;
+end;
+
 procedure TProjectActivityRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2409,6 +2531,26 @@ begin
   end;
 end;
 
+procedure TProjectRubricRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TProjectRubric;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TProjectRubric) then
+    raise Exception.Create('HydrateFromRow: Expected TProjectRubric');
+
+  R := TProjectRubric(E);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('funding_source') >= 0 then
+    R.FundingSource := ARow.Values['funding_source'];
+  if ARow.IndexOfName('item_name') >= 0 then
+    R.ItemName := ARow.Values['item_name'];
+  if ARow.IndexOfName('amount') >= 0 then
+    R.Amount := StrToFloatDef(ARow.Values['amount'], 0);
+end;
+
 procedure TProjectRubricRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2816,6 +2958,28 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TProjectExpenseRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TProjectExpense;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TProjectExpense) then
+    raise Exception.Create('HydrateFromRow: Expected TProjectExpense');
+
+  R := TProjectExpense(E);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('budget_id') >= 0 then
+    R.BudgetId := StrToIntDef(ARow.Values['budget_id'], 0);
+  if ARow.IndexOfName('item_description') >= 0 then
+    R.Description := ARow.Values['item_description'];
+  if ARow.IndexOfName('expense_date') >= 0 then
+    R.ExpenseDate := StrToDateDef(ARow.Values['expense_date'], NullDate);
+  if ARow.IndexOfName('amount') >= 0 then
+    R.Amount := StrToFloatDef(ARow.Values['amount'], 0);
 end;
 
 procedure TProjectExpenseRepository.Insert(E: TXolmisRecord);

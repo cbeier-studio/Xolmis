@@ -293,7 +293,7 @@ uses
   models_bands, models_birds, models_botany, models_breeding, models_geo, models_institutions, models_methods,
   models_people, models_permits, models_projects, models_sampling, models_sampling_plots, models_sightings,
   models_specimens,
-  udm_grid, udm_sampling, udlg_loading, uDarkStyleParams;
+  udm_main, udm_grid, udm_sampling, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -325,12 +325,12 @@ begin
       Repo.HydrateFromRow(XRow, Rec);
 
       // 5. Validate object
-      if not Rec.Validate(Msg) then
-      begin
-        if FImportSettings.ErrorHandling = iehAbort then
-          raise Exception.Create('AddImportRow: Record validation failed: ' + Msg);
-        Exit;
-      end;
+      //if not Rec.Validate(Msg) then
+      //begin
+      //  if FImportSettings.ErrorHandling = iehAbort then
+      //    raise Exception.Create('AddImportRow: Record validation failed: ' + Msg);
+      //  Exit;
+      //end;
 
       // 6. Check if record exists
       Exists := False;
@@ -848,45 +848,45 @@ begin
     //tbUsers: ;
     //tbRecordHistory: ;
     //tbRecordVerifications: ;
-    tbGazetteer:          Result := TSiteRepository.Create;
-    tbSamplingPlots:      Result := TSamplingPlotRepository.Create;
-    tbPermanentNets:      Result := TPermanentNetRepository.Create;
-    tbInstitutions:       Result := TInstitutionRepository.Create;
-    tbPeople:             Result := TPersonRepository.Create;
-    tbProjects:           Result := TProjectRepository.Create;
-    tbProjectTeams:       Result := TProjectMemberRepository.Create;
-    tbPermits:            Result := TPermitRepository.Create;
+    tbGazetteer:          Result := TSiteRepository.Create(DMM.sqlCon);
+    tbSamplingPlots:      Result := TSamplingPlotRepository.Create(DMM.sqlCon);
+    tbPermanentNets:      Result := TPermanentNetRepository.Create(DMM.sqlCon);
+    tbInstitutions:       Result := TInstitutionRepository.Create(DMM.sqlCon);
+    tbPeople:             Result := TPersonRepository.Create(DMM.sqlCon);
+    tbProjects:           Result := TProjectRepository.Create(DMM.sqlCon);
+    tbProjectTeams:       Result := TProjectMemberRepository.Create(DMM.sqlCon);
+    tbPermits:            Result := TPermitRepository.Create(DMM.sqlCon);
     //tbTaxonRanks: ;
     //tbZooTaxa: ;
-    tbBotanicTaxa:        Result := TBotanicalTaxonRepository.Create;
-    tbBands:              Result := TBandRepository.Create;
+    tbBotanicTaxa:        Result := TBotanicalTaxonRepository.Create(DMM.sqlCon);
+    tbBands:              Result := TBandRepository.Create(DMM.sqlCon);
     //tbBandHistory: ;
-    tbIndividuals:        Result := TIndividualRepository.Create;
-    tbCaptures:           Result := TCaptureRepository.Create;
-    tbFeathers:           Result := TFeatherRepository.Create;
-    tbNests:              Result := TNestRepository.Create;
-    tbNestOwners:         Result := TNestOwnerRepository.Create;
-    tbNestRevisions:      Result := TNestRevisionRepository.Create;
-    tbEggs:               Result := TEggRepository.Create;
-    tbMethods:            Result := TMethodRepository.Create;
-    tbExpeditions:        Result := TExpeditionRepository.Create;
-    tbSurveys:            Result := TSurveyRepository.Create;
-    tbSurveyTeams:        Result := TSurveyMemberRepository.Create;
-    tbNetsEffort:         Result := TNetEffortRepository.Create;
-    tbWeatherLogs:        Result := TWeatherLogRepository.Create;
-    tbSightings:          Result := TSightingRepository.Create;
-    tbSpecimens:          Result := TSpecimenRepository.Create;
-    tbSamplePreps:        Result := TSamplePrepRepository.Create;
-    tbSpecimenCollectors: Result := TSpecimenCollectorRepository.Create;
+    tbIndividuals:        Result := TIndividualRepository.Create(DMM.sqlCon);
+    tbCaptures:           Result := TCaptureRepository.Create(DMM.sqlCon);
+    tbFeathers:           Result := TFeatherRepository.Create(DMM.sqlCon);
+    tbNests:              Result := TNestRepository.Create(DMM.sqlCon);
+    tbNestOwners:         Result := TNestOwnerRepository.Create(DMM.sqlCon);
+    tbNestRevisions:      Result := TNestRevisionRepository.Create(DMM.sqlCon);
+    tbEggs:               Result := TEggRepository.Create(DMM.sqlCon);
+    tbMethods:            Result := TMethodRepository.Create(DMM.sqlCon);
+    tbExpeditions:        Result := TExpeditionRepository.Create(DMM.sqlCon);
+    tbSurveys:            Result := TSurveyRepository.Create(DMM.sqlCon);
+    tbSurveyTeams:        Result := TSurveyMemberRepository.Create(DMM.sqlCon);
+    tbNetsEffort:         Result := TNetEffortRepository.Create(DMM.sqlCon);
+    tbWeatherLogs:        Result := TWeatherLogRepository.Create(DMM.sqlCon);
+    tbSightings:          Result := TSightingRepository.Create(DMM.sqlCon);
+    tbSpecimens:          Result := TSpecimenRepository.Create(DMM.sqlCon);
+    tbSamplePreps:        Result := TSamplePrepRepository.Create(DMM.sqlCon);
+    tbSpecimenCollectors: Result := TSpecimenCollectorRepository.Create(DMM.sqlCon);
     //tbImages: ;
     //tbAudioLibrary: ;
     //tbDocuments: ;
-    tbVegetation:         Result := TVegetationRepository.Create;
-    tbProjectGoals:       Result := TProjectGoalRepository.Create;
-    tbProjectChronograms: Result := TProjectActivityRepository.Create;
-    tbProjectBudgets:     Result := TProjectRubricRepository.Create;
-    tbProjectExpenses:    Result := TProjectExpenseRepository.Create;
-    tbPoiLibrary:         Result := TPoiRepository.Create;
+    tbVegetation:         Result := TVegetationRepository.Create(DMM.sqlCon);
+    tbProjectGoals:       Result := TProjectGoalRepository.Create(DMM.sqlCon);
+    tbProjectChronograms: Result := TProjectActivityRepository.Create(DMM.sqlCon);
+    tbProjectBudgets:     Result := TProjectRubricRepository.Create(DMM.sqlCon);
+    tbProjectExpenses:    Result := TProjectExpenseRepository.Create(DMM.sqlCon);
+    tbPoiLibrary:         Result := TPoiRepository.Create(DMM.sqlCon);
     //tbVideos: ;
   else
     raise Exception.Create('CreateRepositoryForTable: Unsupported table type');

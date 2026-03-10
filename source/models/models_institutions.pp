@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, DB, SQLDB,
-  models_record_types;
+  models_record_types, io_core;
 
 type
 
@@ -80,6 +80,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -474,6 +475,44 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TInstitutionRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TInstitution;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TInstitution) then
+    raise Exception.Create('HydrateFromRow: Expected TInstitution');
+
+  R := TInstitution(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('acronym') >= 0 then
+    R.Abbreviation := ARow.Values['acronym'];
+  if ARow.IndexOfName('manager_name') >= 0 then
+    R.ManagerName := ARow.Values['manager_name'];
+  if ARow.IndexOfName('address_1') >= 0 then
+    R.Address1 := ARow.Values['address_1'];
+  if ARow.IndexOfName('address_2') >= 0 then
+    R.Address2 := ARow.Values['address_2'];
+  if ARow.IndexOfName('neighborhood') >= 0 then
+    R.Neighborhood := ARow.Values['neighborhood'];
+  if ARow.IndexOfName('zip_code') >= 0 then
+    R.PostalCode := ARow.Values['zip_code'];
+  if ARow.IndexOfName('municipality_id') >= 0 then
+    R.MunicipalityId := StrToIntDef(ARow.Values['municipality_id'], 0);
+  if ARow.IndexOfName('state_id') >= 0 then
+    R.StateId := StrToIntDef(ARow.Values['state_id'], 0);
+  if ARow.IndexOfName('country_id') >= 0 then
+    R.CountryId := StrToIntDef(ARow.Values['country_id'], 0);
+  if ARow.IndexOfName('email_addr') >= 0 then
+    R.Email := ARow.Values['email_addr'];
+  if ARow.IndexOfName('phone_num') >= 0 then
+    R.Phone := ARow.Values['phone_num'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TInstitutionRepository.Insert(E: TXolmisRecord);

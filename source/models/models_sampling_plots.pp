@@ -21,7 +21,7 @@ unit models_sampling_plots;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -69,6 +69,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -116,6 +117,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -473,6 +475,34 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TSamplingPlotRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSamplingPlot;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSamplingPlot) then
+    raise Exception.Create('HydrateFromRow: Expected TSamplingPlot');
+
+  R := TSamplingPlot(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('acronym') >= 0 then
+    R.Abbreviation := ARow.Values['acronym'];
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('area_shape') >= 0 then
+    R.AreaShape := ARow.Values['area_shape'];
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
+  if ARow.IndexOfName('description') >= 0 then
+    R.Description := ARow.Values['description'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TSamplingPlotRepository.Insert(E: TXolmisRecord);
@@ -904,6 +934,30 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TPermanentNetRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TPermanentNet;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TPermanentNet) then
+    raise Exception.Create('HydrateFromRow: Expected TPermanentNet');
+
+  R := TPermanentNet(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('sampling_plot_id') >= 0 then
+    R.SamplingPlotId := StrToIntDef(ARow.Values['sampling_plot_id'], 0);
+  if ARow.IndexOfName('net_number') >= 0 then
+    R.NetNumber := StrToIntDef(ARow.Values['net_number'], 0);
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TPermanentNetRepository.Insert(E: TXolmisRecord);

@@ -21,7 +21,7 @@ unit models_birds;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -108,6 +108,7 @@ type
     procedure FindByBand(const aTaxon, aBand: Integer; aRightLeg: String = ''; aLeftLeg: String = ''; E: TIndividual = nil);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -306,6 +307,7 @@ type
     procedure FindByBand(const aTaxon, aBand: Integer; aCaptureType, aDate, aTime: String; E: TCapture);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -387,6 +389,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -958,6 +961,116 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TFeatherRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TFeather;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TFeather) then
+    raise Exception.Create('HydrateFromRow: Expected TFeather');
+
+  R := TFeather(E);
+  if ARow.IndexOfName('sample_date') >= 0 then
+    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  if ARow.IndexOfName('sample_time') >= 0 then
+    R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('capture_id') >= 0 then
+    R.CaptureId := StrToIntDef(ARow.Values['capture_id'], 0);
+  if ARow.IndexOfName('sighting_id') >= 0 then
+    R.SightingId := StrToIntDef(ARow.Values['sighting_id'], 0);
+  if ARow.IndexOfName('observer_id') >= 0 then
+    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
+  if ARow.IndexOfName('source_type') >= 0 then
+  begin
+    case ARow.Values['source_type'] of
+      'U': R.SourceType := fdsUnknown;
+      'C': R.SourceType := fdsCapture;
+      'S': R.SourceType := fdsSighting;
+      'P': R.SourceType := fdsPhoto;
+    else
+      R.SourceType := fdsUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('symmetrical') >= 0 then
+  begin
+    case ARow.Values['symmetrical'] of
+      'U': R.Symmetrical := symUnknown;
+      'S': R.Symmetrical := symSymmetrical;
+      'A': R.Symmetrical := symAsymmetrical;
+    else
+      R.Symmetrical := symUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('feather_trait') >= 0 then
+  begin
+    case ARow.Values['feather_trait'] of
+      'B': R.FeatherTrait := ftrBody;
+      'P': R.FeatherTrait := ftrPrimary;
+      'S': R.FeatherTrait := ftrSecondary;
+      'R': R.FeatherTrait := ftrRectrix;
+      'PC': R.FeatherTrait := ftrPrimaryCovert;
+      'GC': R.FeatherTrait := ftrGreatCovert;
+      'MC': R.FeatherTrait := ftrMedianCovert;
+      'LC': R.FeatherTrait := ftrLesserCovert;
+      'CC': R.FeatherTrait := ftrCarpalCovert;
+      'AL': R.FeatherTrait := ftrAlula;
+    end;
+  end;
+  if ARow.IndexOfName('feather_number') >= 0 then
+    R.FeatherNumber := StrToIntDef(ARow.Values['feather_number'], 0);
+  if ARow.IndexOfName('body_side') >= 0 then
+  begin
+    case ARow.Values['body_side'] of
+      'NA': R.BodySide := bsdNotApplicable;
+      'R': R.BodySide := bsdRight;
+      'L': R.BodySide := bsdLeft;
+    else
+      R.BodySide := bsdNotApplicable;
+    end;
+  end;
+  if ARow.IndexOfName('grown_percent') >= 0 then
+    R.PercentGrown := StrToFloatDef(ARow.Values['grown_percent'], 0);
+  if ARow.IndexOfName('feather_length') >= 0 then
+    R.FeatherLength := StrToFloatDef(ARow.Values['feather_length'], 0);
+  if ARow.IndexOfName('feather_area') >= 0 then
+    R.FeatherArea := StrToFloatDef(ARow.Values['feather_area'], 0);
+  if ARow.IndexOfName('feather_mass') >= 0 then
+    R.FeatherMass := StrToFloatDef(ARow.Values['feather_mass'], 0);
+  if ARow.IndexOfName('rachis_width') >= 0 then
+    R.RachisWidth := StrToFloatDef(ARow.Values['rachis_width'], 0);
+  if ARow.IndexOfName('growth_bar_width') >= 0 then
+    R.GrowthBarWidth := StrToFloatDef(ARow.Values['growth_bar_width'], 0);
+  if ARow.IndexOfName('barb_density') >= 0 then
+    R.BarbDensity := StrToFloatDef(ARow.Values['barb_density'], 0);
+  if ARow.IndexOfName('feather_age') >= 0 then
+  begin
+    case ARow.Values['feather_age'] of
+      'U': R.FeatherAge := fageUnknown;
+      'N': R.FeatherAge := fageNestling;
+      'F': R.FeatherAge := fageFledgling;
+      'A': R.FeatherAge := fageAdult;
+      'Y': R.FeatherAge := fageFirstYear;
+      'S': R.FeatherAge := fageSecondYear;
+      'T': R.FeatherAge := fageThirdYear;
+      '4': R.FeatherAge := fageFourthYear;
+      '5': R.FeatherAge := fageFifthYear;
+    else
+      R.FeatherAge := fageUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TFeatherRepository.Insert(E: TXolmisRecord);
@@ -2176,6 +2289,208 @@ begin
   end;
 end;
 
+procedure TCaptureRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TCapture;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TCapture) then
+    raise Exception.Create('HydrateFromRow: Expected TCapture');
+
+  R := TCapture(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('survey_id') >= 0 then
+    R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('capture_date') >= 0 then
+    R.CaptureDate := StrToDateDef(ARow.Values['capture_date'], NullDate);
+  if ARow.IndexOfName('capture_time') >= 0 then
+    R.CaptureTime := StrToTimeDef(ARow.Values['capture_time'], NullTime);
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
+  if ARow.IndexOfName('net_station_id') >= 0 then
+    R.NetStationId := StrToIntDef(ARow.Values['net_station_id'], 0);
+  if ARow.IndexOfName('net_id') >= 0 then
+    R.NetId := StrToIntDef(ARow.Values['net_id'], 0);
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('bander_id') >= 0 then
+    R.BanderId := StrToIntDef(ARow.Values['bander_id'], 0);
+  if ARow.IndexOfName('annotator_id') >= 0 then
+    R.AnnotatorId := StrToIntDef(ARow.Values['annotator_id'], 0);
+  if ARow.IndexOfName('subject_status') >= 0 then
+  begin
+    case ARow.Values['subject_status'] of
+      'N': R.SubjectStatus := sstNormal;
+      'I': R.SubjectStatus := sstInjured;
+      'W': R.SubjectStatus := sstWingSprain;
+      'X': R.SubjectStatus := sstStressed;
+      'D': R.SubjectStatus := sstDead;
+    end;
+  end;
+  if ARow.IndexOfName('capture_type') >= 0 then
+  begin
+    case ARow.Values['capture_type'] of
+      'N': R.CaptureType := cptNew;
+      'R': R.CaptureType := cptRecapture;
+      'S': R.CaptureType := cptSameDay;
+      'C': R.CaptureType := cptChangeBand;
+    else
+      R.CaptureType := cptUnbanded;
+    end;
+  end;
+  if ARow.IndexOfName('subject_sex') >= 0 then
+  begin
+    case ARow.Values['subject_sex'] of
+      'M': R.SubjectSex := sexMale;
+      'F': R.SubjectSex := sexFemale;
+    else
+      R.SubjectSex := sexUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('how_sexed') >= 0 then
+    R.HowSexed := ARow.Values['how_sexed'];
+  if ARow.IndexOfName('band_id') >= 0 then
+    R.BandId := StrToIntDef(ARow.Values['band_id'], 0);
+  if ARow.IndexOfName('removed_band_id') >= 0 then
+    R.RemovedBandId := StrToIntDef(ARow.Values['removed_band_id'], 0);
+  if ARow.IndexOfName('right_leg_below') >= 0 then
+    R.RightLegBelow := ARow.Values['right_leg_below'];
+  if ARow.IndexOfName('left_leg_below') >= 0 then
+    R.LeftLegBelow := ARow.Values['left_leg_below'];
+  if ARow.IndexOfName('right_leg_above') >= 0 then
+    R.RightLegAbove := ARow.Values['right_leg_above'];
+  if ARow.IndexOfName('left_leg_above') >= 0 then
+    R.LeftLegAbove := ARow.Values['left_leg_above'];
+  if ARow.IndexOfName('weight') >= 0 then
+    R.Weight := StrToFloatDef(ARow.Values['weight'], 0);
+  if ARow.IndexOfName('tarsus_length') >= 0 then
+    R.TarsusLength := StrToFloatDef(ARow.Values['tarsus_length'], 0);
+  if ARow.IndexOfName('tarsus_diameter') >= 0 then
+    R.TarsusDiameter := StrToFloatDef(ARow.Values['tarsus_diameter'], 0);
+  if ARow.IndexOfName('culmen_length') >= 0 then
+    R.CulmenLength := StrToFloatDef(ARow.Values['culmen_length'], 0);
+  if ARow.IndexOfName('exposed_culmen') >= 0 then
+    R.ExposedCulmen := StrToFloatDef(ARow.Values['exposed_culmen'], 0);
+  if ARow.IndexOfName('bill_width') >= 0 then
+    R.BillWidth := StrToFloatDef(ARow.Values['bill_width'], 0);
+  if ARow.IndexOfName('bill_height') >= 0 then
+    R.BillHeight := StrToFloatDef(ARow.Values['bill_height'], 0);
+  if ARow.IndexOfName('nostril_bill_tip') >= 0 then
+    R.NostrilBillTip := StrToFloatDef(ARow.Values['nostril_bill_tip'], 0);
+  if ARow.IndexOfName('skull_length') >= 0 then
+    R.SkullLength := StrToFloatDef(ARow.Values['skull_length'], 0);
+  if ARow.IndexOfName('halux_length_total') >= 0 then
+    R.HaluxLengthTotal := StrToFloatDef(ARow.Values['halux_length_total'], 0);
+  if ARow.IndexOfName('halux_length_claw') >= 0 then
+    R.HaluxLengthClaw := StrToFloatDef(ARow.Values['halux_length_claw'], 0);
+  if ARow.IndexOfName('halux_length_finger') >= 0 then
+    R.HaluxLengthFinger := StrToFloatDef(ARow.Values['halux_length_finger'], 0);
+  if ARow.IndexOfName('right_wing_chord') >= 0 then
+    R.RightWingChord := StrToFloatDef(ARow.Values['right_wing_chord'], 0);
+  if ARow.IndexOfName('first_secondary_chord') >= 0 then
+    R.FirstSecondaryChord := StrToFloatDef(ARow.Values['first_secondary_chord'], 0);
+  if ARow.IndexOfName('tail_length') >= 0 then
+    R.TailLength := StrToFloatDef(ARow.Values['tail_length'], 0);
+  if ARow.IndexOfName('central_retrix_length') >= 0 then
+    R.CentralRetrixLength := StrToFloatDef(ARow.Values['central_retrix_length'], 0);
+  if ARow.IndexOfName('external_retrix_length') >= 0 then
+    R.ExternalRetrixLength := StrToFloatDef(ARow.Values['external_retrix_length'], 0);
+  if ARow.IndexOfName('total_length') >= 0 then
+    R.TotalLength := StrToFloatDef(ARow.Values['total_length'], 0);
+  if ARow.IndexOfName('feather_mites') >= 0 then
+    R.FeatherMites := ARow.Values['feather_mites'];
+  if ARow.IndexOfName('fat') >= 0 then
+    R.Fat := ARow.Values['fat'];
+  if ARow.IndexOfName('brood_patch') >= 0 then
+    R.BroodPatch := ARow.Values['brood_patch'];
+  if ARow.IndexOfName('cloacal_protuberance') >= 0 then
+    R.CloacalProtuberance := ARow.Values['cloacal_protuberance'];
+  if ARow.IndexOfName('body_molt') >= 0 then
+    R.BodyMolt := ARow.Values['body_molt'];
+  if ARow.IndexOfName('flight_feathers_molt') >= 0 then
+    R.FlightFeathersMolt := ARow.Values['flight_feathers_molt'];
+  if ARow.IndexOfName('flight_feathers_wear') >= 0 then
+    R.FlightFeathersWear := ARow.Values['flight_feathers_wear'];
+  if ARow.IndexOfName('molt_limits') >= 0 then
+    R.MoltLimits := ARow.Values['molt_limits'];
+  if ARow.IndexOfName('cycle_code') >= 0 then
+    R.CycleCode := ARow.Values['cycle_code'];
+  if ARow.IndexOfName('subject_age') >= 0 then
+  begin
+    case ARow.Values['subject_age'] of
+      'N': R.SubjectAge := ageNestling;
+      'F': R.SubjectAge := ageFledgling;
+      'J': R.SubjectAge := ageJuvenile;
+      'A': R.SubjectAge := ageAdult;
+      'Y': R.SubjectAge := ageFirstYear;
+      'S': R.SubjectAge := ageSecondYear;
+      'T': R.SubjectAge := ageThirdYear;
+      '4': R.SubjectAge := ageFourthYear;
+      '5': R.SubjectAge := ageFifthYear;
+    else
+      R.SubjectAge := ageUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('how_aged') >= 0 then
+    R.HowAged := ARow.Values['how_aged'];
+  if ARow.IndexOfName('skull_ossification') >= 0 then
+    R.SkullOssification := ARow.Values['skull_ossification'];
+  if ARow.IndexOfName('kipps_index') >= 0 then
+    R.KippsIndex := StrToFloatDef(ARow.Values['kipps_index'], 0);
+  if ARow.IndexOfName('glucose') >= 0 then
+    R.Glucose := StrToFloatDef(ARow.Values['glucose'], 0);
+  if ARow.IndexOfName('hemoglobin') >= 0 then
+    R.Hemoglobin := StrToFloatDef(ARow.Values['hemoglobin'], 0);
+  if ARow.IndexOfName('hematocrit') >= 0 then
+    R.Hematocrit := StrToFloatDef(ARow.Values['hematocrit'], 0);
+  if ARow.IndexOfName('philornis_larvae_tally') >= 0 then
+    R.PhilornisLarvaeTally := StrToIntDef(ARow.Values['philornis_larvae_tally'], 0);
+  if ARow.IndexOfName('blood_sample') >= 0 then
+    R.BloodSample := StrToBoolDef(ARow.Values['blood_sample'], False);
+  if ARow.IndexOfName('feather_sample') >= 0 then
+    R.FeatherSample := StrToBoolDef(ARow.Values['feather_sample'], False);
+  if ARow.IndexOfName('claw_sample') >= 0 then
+    R.ClawSample := StrToBoolDef(ARow.Values['claw_sample'], False);
+  if ARow.IndexOfName('feces_sample') >= 0 then
+    R.FecesSample := StrToBoolDef(ARow.Values['feces_sample'], False);
+  if ARow.IndexOfName('parasite_sample') >= 0 then
+    R.ParasiteSample := StrToBoolDef(ARow.Values['parasite_sample'], False);
+  if ARow.IndexOfName('subject_collected') >= 0 then
+    R.SubjectCollected := StrToBoolDef(ARow.Values['subject_collected'], False);
+  if ARow.IndexOfName('subject_recorded') >= 0 then
+    R.SubjectRecorded := StrToBoolDef(ARow.Values['subject_recorded'], False);
+  if ARow.IndexOfName('subject_photographed') >= 0 then
+    R.SubjectPhotographed := StrToBoolDef(ARow.Values['subject_photographed'], False);
+  if ARow.IndexOfName('field_number') >= 0 then
+    R.FieldNumber := ARow.Values['field_number'];
+  if ARow.IndexOfName('photographer_1_id') >= 0 then
+    R.Photographer1Id := StrToIntDef(ARow.Values['photographer_1_id'], 0);
+  if ARow.IndexOfName('photographer_2_id') >= 0 then
+    R.Photographer2Id := StrToIntDef(ARow.Values['photographer_2_id'], 0);
+  if ARow.IndexOfName('start_photo_number') >= 0 then
+    R.StartPhotoNumber := ARow.Values['start_photo_number'];
+  if ARow.IndexOfName('end_photo_number') >= 0 then
+    R.EndPhotoNumber := ARow.Values['end_photo_number'];
+  if ARow.IndexOfName('camera_name') >= 0 then
+    R.CameraName := ARow.Values['camera_name'];
+  if ARow.IndexOfName('escaped') >= 0 then
+    R.Escaped := StrToBoolDef(ARow.Values['escaped'], False);
+  if ARow.IndexOfName('needs_review') >= 0 then
+    R.NeedsReview := StrToBoolDef(ARow.Values['needs_review'], False);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
+end;
+
 procedure TCaptureRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -3141,6 +3456,87 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TIndividualRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TIndividual;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TIndividual) then
+    raise Exception.Create('HydrateFromRow: Expected TIndividual');
+
+  R := TIndividual(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('individual_sex') >= 0 then
+  begin
+    case ARow.Values['individual_sex'] of
+      'M': R.Sex := sexMale;
+      'F': R.Sex := sexFemale;
+    else
+      R.Sex := sexUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('individual_age') >= 0 then
+  begin
+    case ARow.Values['individual_age'] of
+      'N': R.Age := ageNestling;
+      'F': R.Age := ageFledgling;
+      'J': R.Age := ageJuvenile;
+      'A': R.Age := ageAdult;
+      'Y': R.Age := ageFirstYear;
+      'S': R.Age := ageSecondYear;
+      'T': R.Age := ageThirdYear;
+      '4': R.Age := ageFourthYear;
+      '5': R.Age := ageFifthYear;
+    else
+      R.Age := ageUnknown;
+    end;
+  end;
+  if ARow.IndexOfName('nest_id') >= 0 then
+    R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
+  if ARow.IndexOfName('birth_day') >= 0 then
+    R.BirthDay := StrToIntDef(ARow.Values['birth_day'], 0);
+  if ARow.IndexOfName('birth_month') >= 0 then
+    R.BirthMonth := StrToIntDef(ARow.Values['birth_month'], 0);
+  if ARow.IndexOfName('birth_year') >= 0 then
+    R.BirthYear := StrToIntDef(ARow.Values['birth_year'], 0);
+  if ARow.IndexOfName('banding_date') >= 0 then
+    R.BandingDate := StrToDateDef(ARow.Values['banding_date'], NullDate);
+  if ARow.IndexOfName('band_change_date') >= 0 then
+    R.BandChangeDate := StrToDateDef(ARow.Values['band_change_date'], NullDate);
+  if ARow.IndexOfName('band_id') >= 0 then
+    R.BandId := StrToIntDef(ARow.Values['band_id'], 0);
+  if ARow.IndexOfName('double_band_id') >= 0 then
+    R.DoubleBandId := StrToIntDef(ARow.Values['double_band_id'], 0);
+  if ARow.IndexOfName('removed_band_id') >= 0 then
+    R.RemovedBandId := StrToIntDef(ARow.Values['removed_band_id'], 0);
+  if ARow.IndexOfName('right_leg_below') >= 0 then
+    R.RightLegBelow := ARow.Values['right_leg_below'];
+  if ARow.IndexOfName('left_leg_below') >= 0 then
+    R.LeftLegBelow := ARow.Values['left_leg_below'];
+  if ARow.IndexOfName('right_leg_above') >= 0 then
+    R.RightLegAbove := ARow.Values['right_leg_above'];
+  if ARow.IndexOfName('left_leg_above') >= 0 then
+    R.LeftLegAbove := ARow.Values['left_leg_above'];
+  if ARow.IndexOfName('father_id') >= 0 then
+    R.FatherId := StrToIntDef(ARow.Values['father_id'], 0);
+  if ARow.IndexOfName('mother_id') >= 0 then
+    R.MotherId := StrToIntDef(ARow.Values['mother_id'], 0);
+  if ARow.IndexOfName('death_day') >= 0 then
+    R.DeathDay := StrToIntDef(ARow.Values['death_day'], 0);
+  if ARow.IndexOfName('death_month') >= 0 then
+    R.DeathMonth := StrToIntDef(ARow.Values['death_month'], 0);
+  if ARow.IndexOfName('death_year') >= 0 then
+    R.DeathYear := StrToIntDef(ARow.Values['death_year'], 0);
+  if ARow.IndexOfName('recognizable_markings') >= 0 then
+    R.RecognizableMarkings := ARow.Values['recognizable_markings'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TIndividualRepository.Insert(E: TXolmisRecord);

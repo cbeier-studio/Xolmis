@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, DB, SQLDB,
-  models_record_types;
+  models_record_types, io_core;
 
 type
 
@@ -72,6 +72,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -434,6 +435,36 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TPermitRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TPermit;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TPermit) then
+    raise Exception.Create('HydrateFromRow: Expected TPermit');
+
+  R := TPermit(E);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('permit_name') >= 0 then
+    R.Name := ARow.Values['permit_name'];
+  if ARow.IndexOfName('permit_number') >= 0 then
+    R.Number := ARow.Values['permit_number'];
+  if ARow.IndexOfName('permit_type') >= 0 then
+    R.PermitType := ARow.Values['permit_type'];
+  if ARow.IndexOfName('dispatcher_name') >= 0 then
+    R.Dispatcher := ARow.Values['dispatcher_name'];
+  if ARow.IndexOfName('dispatch_date') >= 0 then
+    R.DispatchDate := StrToDateDef(ARow.Values['dispatch_date'], NullDate);
+  if ARow.IndexOfName('expire_date') >= 0 then
+    R.ExpireDate := StrToDateDef(ARow.Values['expire_date'], NullDate);
+  if ARow.IndexOfName('permit_filename') >= 0 then
+    R.FileName := ARow.Values['permit_filename'];
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TPermitRepository.Insert(E: TXolmisRecord);

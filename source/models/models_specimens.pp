@@ -21,7 +21,7 @@ unit models_specimens;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -84,6 +84,7 @@ type
     procedure FindByFieldNumber(aFieldNumber: String; aYear, aMonth, aDay: Integer; aTaxon, aLocality: Integer; E: TSpecimen);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -123,6 +124,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -182,6 +184,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -565,6 +568,42 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TSamplePrepRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSamplePrep;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSamplePrep) then
+    raise Exception.Create('HydrateFromRow: Expected TSamplePrep');
+
+  R := TSamplePrep(E);
+  if ARow.IndexOfName('specimen_id') >= 0 then
+    R.SpecimenId := StrToIntDef(ARow.Values['specimen_id'], 0);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('accession_num') >= 0 then
+    R.AccessionNum := ARow.Values['accession_num'];
+  if ARow.IndexOfName('accession_type') >= 0 then
+    R.AccessionType := ARow.Values['accession_type'];
+  if ARow.IndexOfName('accession_seq') >= 0 then
+    R.AccessionSeq := StrToIntDef(ARow.Values['accession_seq'], 0);
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('nest_id') >= 0 then
+    R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
+  if ARow.IndexOfName('egg_id') >= 0 then
+    R.EggId := StrToIntDef(ARow.Values['egg_id'], 0);
+  if ARow.IndexOfName('preparation_date') >= 0 then
+    R.PreparationDate := StrToDateDef(ARow.Values['preparation_date'], NullDate);
+  if ARow.IndexOfName('preparer_id') >= 0 then
+    R.PreparerId := StrToIntDef(ARow.Values['preparer_id'], 0);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TSamplePrepRepository.Insert(E: TXolmisRecord);
@@ -1164,6 +1203,64 @@ begin
   end;
 end;
 
+procedure TSpecimenRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSpecimen;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSpecimen) then
+    raise Exception.Create('HydrateFromRow: Expected TSpecimen');
+
+  R := TSpecimen(E);
+  if ARow.IndexOfName('field_number') >= 0 then
+    R.FieldNumber := ARow.Values['field_number'];
+  if ARow.IndexOfName('sample_type') >= 0 then
+  begin
+    case ARow.Values['sample_type'] of
+      'WS': R.SampleType := sptWholeCarcass;
+      'PS': R.SampleType := sptPartialCarcass;
+      'N':  R.SampleType := sptNest;
+      'B':  R.SampleType := sptBones;
+      'E':  R.SampleType := sptEgg;
+      'P':  R.SampleType := sptParasites;
+      'F':  R.SampleType := sptFeathers;
+      'BS': R.SampleType := sptBlood;
+      'C':  R.SampleType := sptClaw;
+      'S':  R.SampleType := sptSwab;
+      'T':  R.SampleType := sptTissues;
+      'D':  R.SampleType := sptFeces;
+      'R':  R.SampleType := sptRegurgite;
+    else
+      R.SampleType := sptEmpty;
+    end;
+  end;
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('nest_id') >= 0 then
+    R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
+  if ARow.IndexOfName('egg_id') >= 0 then
+    R.EggId := StrToIntDef(ARow.Values['egg_id'], 0);
+  if ARow.IndexOfName('collection_day') >= 0 then
+    R.CollectionDay := StrToIntDef(ARow.Values['collection_day'], 0);
+  if ARow.IndexOfName('collection_month') >= 0 then
+    R.CollectionMonth := StrToIntDef(ARow.Values['collection_month'], 0);
+  if ARow.IndexOfName('collection_year') >= 0 then
+    R.CollectionYear := StrToIntDef(ARow.Values['collection_year'], 0);
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
+end;
+
 procedure TSpecimenRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -1601,6 +1698,24 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TSpecimenCollectorRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSpecimenCollector;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSpecimenCollector) then
+    raise Exception.Create('HydrateFromRow: Expected TSpecimenCollector');
+
+  R := TSpecimenCollector(E);
+  if ARow.IndexOfName('specimen_id') >= 0 then
+    R.SpecimenId := StrToIntDef(ARow.Values['specimen_id'], 0);
+  if ARow.IndexOfName('person_id') >= 0 then
+    R.PersonId := StrToIntDef(ARow.Values['person_id'], 0);
+  if ARow.IndexOfName('collector_seq') >= 0 then
+    R.CollectorSeq := StrToIntDef(ARow.Values['collector_seq'], 0);
 end;
 
 procedure TSpecimenCollectorRepository.Insert(E: TXolmisRecord);

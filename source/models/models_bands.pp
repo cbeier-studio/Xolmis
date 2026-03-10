@@ -21,7 +21,7 @@ unit models_bands;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fgl, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fgl, fpjson, DateUtils, models_record_types, io_core;
 
 type
   TBirdMark = class
@@ -98,6 +98,7 @@ type
     procedure FindByNumber(const aSize: String; const aNumber: Integer; E: TBand);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -149,6 +150,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -648,6 +650,79 @@ begin
   end;
 end;
 
+procedure TBandRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TBand;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TBand) then
+    raise Exception.Create('HydrateFromRow: Expected TBand');
+
+  R := TBand(E);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('band_size') >= 0 then
+    R.Size := ARow.Values['band_size'];
+  if ARow.IndexOfName('band_number') >= 0 then
+    R.Number := StrToIntDef(ARow.Values['band_number'], 0);
+  if ARow.IndexOfName('band_status') >= 0 then
+  begin
+    case ARow.Values['band_status'] of
+      'D': R.Status := bstAvailable;
+      'U': R.Status := bstUsed;
+      'R': R.Status := bstRemoved;
+      'Q': R.Status := bstBroken;
+      'P': R.Status := bstLost;
+      'T': R.Status := bstTransferred;
+    end;
+  end;
+  if ARow.IndexOfName('band_source') >= 0 then
+  begin
+    case ARow.Values['band_source'] of
+      'A': R.Source := bscAcquiredFromSupplier;
+      'T': R.Source := bscTransferBetweenBanders;
+      'L': R.Source := bscLivingBirdBandedByOthers;
+      'D': R.Source := bscDeadBirdBandedByOthers;
+      'F': R.Source := bscFoundLoose;
+    end;
+  end;
+  if ARow.IndexOfName('band_prefix') >= 0 then
+    R.Prefix := ARow.Values['band_prefix'];
+  if ARow.IndexOfName('band_suffix') >= 0 then
+    R.Suffix := ARow.Values['band_suffix'];
+  if ARow.IndexOfName('supplier_id') >= 0 then
+    R.SupplierId := StrToIntDef(ARow.Values['supplier_id'], 0);
+  if ARow.IndexOfName('band_color') >= 0 then
+    R.BandColor := ARow.Values['band_color'];
+  if ARow.IndexOfName('band_type') >= 0 then
+  begin
+    case ARow.Values['band_type'] of
+      'A': R.BandType := mkButtEndBand;
+      'F': R.BandType := mkFlag;
+      'N': R.BandType := mkCollar;
+      'W': R.BandType := mkWingTag;
+      'T': R.BandType := mkTriangularBand;
+      'L': R.BandType := mkLockOnBand;
+      'R': R.BandType := mkRivetBand;
+      'C': R.BandType := mkClosedBand;
+      'O': R.BandType := mkOther;
+    end;
+  end;
+  if ARow.IndexOfName('requester_id') >= 0 then
+    R.RequesterId := StrToIntDef(ARow.Values['requester_id'], 0);
+  if ARow.IndexOfName('carrier_id') >= 0 then
+    R.CarrierId := StrToIntDef(ARow.Values['carrier_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('project_id') >= 0 then
+    R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
+  if ARow.IndexOfName('band_reported') >= 0 then
+    R.Reported := StrToBoolDef(ARow.Values['band_reported'], False);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
+end;
+
 procedure TBandRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -1144,6 +1219,44 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TBandHistoryRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TBandHistory;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TBandHistory) then
+    raise Exception.Create('HydrateFromRow: Expected TBandHistory');
+
+  R := TBandHistory(E);
+  if ARow.IndexOfName('band_id') >= 0 then
+    R.BandId := StrToIntDef(ARow.Values['band_id'], 0);
+  if ARow.IndexOfName('event_date') >= 0 then
+    R.EventDate := StrToDateDef(ARow.Values['event_date'], NullDate);
+  if ARow.IndexOfName('order_number') >= 0 then
+    R.OrderNumber := StrToIntDef(ARow.Values['order_number'], 0);
+  if ARow.IndexOfName('event_type') >= 0 then
+  begin
+    case ARow.Values['event_type'] of
+      'O': R.EventType := bevOrder;
+      'C': R.EventType := bevReceive;
+      'T': R.EventType := bevTransfer;
+      'R': R.EventType := bevRetrieve;
+      'P': R.EventType := bevReport;
+      'U': R.EventType := bevUse;
+      'D': R.EventType := bevDischarge;
+    end;
+  end;
+  if ARow.IndexOfName('supplier_id') >= 0 then
+    R.SupplierId := StrToIntDef(ARow.Values['supplier_id'], 0);
+  if ARow.IndexOfName('requester_id') >= 0 then
+    R.RequesterId := StrToIntDef(ARow.Values['requester_id'], 0);
+  if ARow.IndexOfName('sender_id') >= 0 then
+    R.SenderId := StrToIntDef(ARow.Values['sender_id'], 0);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TBandHistoryRepository.Insert(E: TXolmisRecord);

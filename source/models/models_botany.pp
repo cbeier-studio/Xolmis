@@ -21,7 +21,7 @@ unit models_botany;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, DateUtils, models_record_types, io_core;
 
 type
   TBotanicalName = record
@@ -67,6 +67,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -680,16 +681,54 @@ begin
     R.GenusId := FieldByName('genus_id').AsInteger;
     R.FamilyId := FieldByName('family_id').AsInteger;
     R.OrderId := FieldByName('order_id').AsInteger;
-    R.UserInserted := FieldByName('user_inserted').AsInteger;
-    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
     GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
     GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     R.Exported := FieldByName('exported_status').AsBoolean;
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TBotanicalTaxonRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TBotanicalTaxon;
+  FRankAbbrev: String;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TBotanicalTaxon) then
+    raise Exception.Create('HydrateFromRow: Expected TBotanicalTaxon');
+
+  R := TBotanicalTaxon(E);
+  if ARow.IndexOfName('taxon_name') >= 0 then
+    R.FullName := ARow.Values['taxon_name'];
+  if ARow.IndexOfName('authorship') >= 0 then
+    R.Authorship := ARow.Values['authorship'];
+  if ARow.IndexOfName('formatted_name') >= 0 then
+    R.FormattedName := ARow.Values['formatted_name'];
+  if ARow.IndexOfName('vernacular_name') >= 0 then
+    R.VernacularName := ARow.Values['vernacular_name'];
+  if ARow.IndexOfName('valid_id') >= 0 then
+    R.ValidId := StrToIntDef(ARow.Values['valid_id'], 0);
+  if ARow.IndexOfName('rank_id') >= 0 then
+  begin
+    FRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', StrToIntDef(ARow.Values['rank_id'], 0));
+    R.RankId := StringToBotanicRank(FRankAbbrev);
+  end;
+  if ARow.IndexOfName('parent_taxon_id') >= 0 then
+    R.ParentTaxonId := StrToIntDef(ARow.Values['parent_taxon_id'], 0);
+  if ARow.IndexOfName('species_id') >= 0 then
+    R.SpeciesId := StrToIntDef(ARow.Values['species_id'], 0);
+  if ARow.IndexOfName('genus_id') >= 0 then
+    R.GenusId := StrToIntDef(ARow.Values['genus_id'], 0);
+  if ARow.IndexOfName('family_id') >= 0 then
+    R.FamilyId := StrToIntDef(ARow.Values['family_id'], 0);
+  if ARow.IndexOfName('order_id') >= 0 then
+    R.OrderId := StrToIntDef(ARow.Values['order_id'], 0);
 end;
 
 procedure TBotanicalTaxonRepository.Insert(E: TXolmisRecord);

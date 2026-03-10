@@ -21,7 +21,7 @@ unit models_users;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
   { TUser }
@@ -68,6 +68,7 @@ type
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -434,6 +435,40 @@ begin
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TUserRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TUser;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TUser) then
+    raise Exception.Create('HydrateFromRow: Expected TUser');
+
+  R := TUser(E);
+  if ARow.IndexOfName('uuid') >= 0 then
+    R.Guid := ARow.Values['uuid'];
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('user_name') >= 0 then
+    R.UserName := ARow.Values['user_name'];
+  if ARow.IndexOfName('user_rank') >= 0 then
+  begin
+    case ARow.Values['user_rank'] of
+      'A': R.Rank := urAdministrator;
+      'S': R.Rank := urStandard;
+      'V': R.Rank := urVisitor;
+    end;
+  end;
+  if ARow.IndexOfName('allow_collection_edit') >= 0 then
+    R.AllowManageCollection := StrToBoolDef(ARow.Values['allow_collection_edit'], True);
+  if ARow.IndexOfName('allow_print') >= 0 then
+    R.AllowPrint := StrToBoolDef(ARow.Values['allow_print'], True);
+  if ARow.IndexOfName('allow_export') >= 0 then
+    R.AllowExport := StrToBoolDef(ARow.Values['allow_export'], True);
+  if ARow.IndexOfName('allow_import') >= 0 then
+    R.AllowImport := StrToBoolDef(ARow.Values['allow_import'], True);
 end;
 
 procedure TUserRepository.Insert(E: TXolmisRecord);

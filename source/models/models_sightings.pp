@@ -21,7 +21,7 @@ unit models_sightings;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -122,6 +122,7 @@ type
     procedure FindByCombo(const aSurvey, aTaxon, aObserver: Integer; E: TSighting);
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
@@ -726,16 +727,96 @@ begin
     R.NotSurveying := FieldByName('not_surveying').AsBoolean;
     R.IsOnEbird := FieldByName('ebird_available').AsBoolean;
     R.Notes := FieldByName('notes').AsString;
-    R.UserInserted := FieldByName('user_inserted').AsInteger;
-    R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
     GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
     GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
     R.Exported := FieldByName('exported_status').AsBoolean;
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
   end;
+end;
+
+procedure TSightingRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSighting;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSighting) then
+    raise Exception.Create('HydrateFromRow: Expected TSighting');
+
+  R := TSighting(E);
+  if ARow.IndexOfName('survey_id') >= 0 then
+    R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
+  if ARow.IndexOfName('sighting_date') >= 0 then
+    R.SightingDate := StrToDateDef(ARow.Values['sighting_date'], NullDate);
+  if ARow.IndexOfName('sighting_time') >= 0 then
+    R.SightingTime := StrToTimeDef(ARow.Values['sighting_time'], NullTime);
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
+  if ARow.IndexOfName('longitude') >= 0 then
+    R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
+  if ARow.IndexOfName('latitude') >= 0 then
+    R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('observer_id') >= 0 then
+    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
+  if ARow.IndexOfName('taxon_id') >= 0 then
+    R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('subjects_tally') >= 0 then
+    R.SubjectTally := StrToIntDef(ARow.Values['subjects_tally'], 0);
+  if ARow.IndexOfName('subject_distance') >= 0 then
+    R.SubjectDistance := StrToFloatDef(ARow.Values['subject_distance'], 0);
+  if ARow.IndexOfName('flight_height') >= 0 then
+    R.FlightHeight := StrToFloatDef(ARow.Values['flight_height'], 0);
+  if ARow.IndexOfName('flight_direction') >= 0 then
+    R.FlightDirection := ARow.Values['flight_direction'];
+  if ARow.IndexOfName('method_id') >= 0 then
+    R.MethodId := StrToIntDef(ARow.Values['method_id'], 0);
+  if ARow.IndexOfName('mackinnon_list_num') >= 0 then
+    R.MackinnonListNumber := StrToIntDef(ARow.Values['mackinnon_list_num'], 0);
+  if ARow.IndexOfName('subject_captured') >= 0 then
+    R.SubjectCaptured := StrToBoolDef(ARow.Values['subject_captured'], False);
+  if ARow.IndexOfName('subject_seen') >= 0 then
+    R.SubjectSeen := StrToBoolDef(ARow.Values['subject_seen'], False);
+  if ARow.IndexOfName('subject_heard') >= 0 then
+    R.SubjectHeard := StrToBoolDef(ARow.Values['subject_heard'], False);
+  if ARow.IndexOfName('subject_photographed') >= 0 then
+    R.SubjectPhotographed := StrToBoolDef(ARow.Values['subject_photographed'], False);
+  if ARow.IndexOfName('subject_recorded') >= 0 then
+    R.SubjectRecorded := StrToBoolDef(ARow.Values['subject_recorded'], False);
+  if ARow.IndexOfName('males_tally') >= 0 then
+    R.MalesTally := ARow.Values['males_tally'];
+  if ARow.IndexOfName('females_tally') >= 0 then
+    R.FemalesTally := ARow.Values['females_tally'];
+  if ARow.IndexOfName('not_sexed_tally') >= 0 then
+    R.NotSexedTally := ARow.Values['not_sexed_tally'];
+  if ARow.IndexOfName('adults_tally') >= 0 then
+    R.AdultsTally := ARow.Values['adults_tally'];
+  if ARow.IndexOfName('immatures_tally') >= 0 then
+    R.ImmatureTally := ARow.Values['immatures_tally'];
+  if ARow.IndexOfName('not_aged_tally') >= 0 then
+    R.NotAgedTally := ARow.Values['not_aged_tally'];
+  if ARow.IndexOfName('new_captures_tally') >= 0 then
+    R.NewCapturesTally := StrToIntDef(ARow.Values['new_captures_tally'], 0);
+  if ARow.IndexOfName('recaptures_tally') >= 0 then
+    R.RecapturesTally := StrToIntDef(ARow.Values['recaptures_tally'], 0);
+  if ARow.IndexOfName('unbanded_tally') >= 0 then
+    R.UnbandedTally := StrToIntDef(ARow.Values['unbanded_tally'], 0);
+  if ARow.IndexOfName('detection_type') >= 0 then
+    R.DetectionType := ARow.Values['detection_type'];
+  if ARow.IndexOfName('breeding_status') >= 0 then
+    R.BreedingStatus := ARow.Values['breeding_status'];
+  if ARow.IndexOfName('not_surveying') >= 0 then
+    R.NotSurveying := StrToBoolDef(ARow.Values['not_surveying'], False);
+  if ARow.IndexOfName('ebird_available') >= 0 then
+    R.IsOnEbird := StrToBoolDef(ARow.Values['ebird_available'], False);
+  if ARow.IndexOfName('notes') >= 0 then
+    R.Notes := ARow.Values['notes'];
 end;
 
 procedure TSightingRepository.Insert(E: TXolmisRecord);
