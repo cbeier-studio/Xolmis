@@ -18,6 +18,7 @@ unit utils_themes;
 
 {$mode objfpc}{$H+}
 {$modeSwitch advancedRecords}
+{$modeswitch objectivec1}
 
 interface
 
@@ -289,7 +290,7 @@ begin
   minOsVer.patchVersion:= 0;
 
   // Check minimum version
-  if(NSProcessInfo.ProcessInfo.isOperatingSystemAtLeastVersion(minOSVer)) then
+  if (NSProcessInfo.ProcessInfo.isOperatingSystemAtLeastVersion(minOSVer)) then
     Result := True
   else
     Result := False;

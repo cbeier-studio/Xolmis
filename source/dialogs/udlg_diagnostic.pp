@@ -1,6 +1,9 @@
 unit udlg_diagnostic;
 
 {$mode ObjFPC}{$H+}
+{$IFDEF DARWIN}
+  {$modeswitch objectivec1}
+{$ENDIF}
 
 interface
 

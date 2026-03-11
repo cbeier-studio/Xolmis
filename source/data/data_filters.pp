@@ -22,7 +22,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, LCLIntf, gettext, StrUtils,
+  Classes, SysUtils, LCLIntf, gettext, StrUtils, iosxlocale,
   { VCL }
   Graphics, ImgList, Controls, Dialogs, Forms, laz.VirtualTrees,
   { Data }
@@ -652,7 +652,22 @@ begin
       SysUtils.GetLocaleFormatSettings(Lang, FS);
       {$ENDIF}
       {$IFDEF DARWIN}
-      GetNSFormatSettings(FS, L);
+      GetMacFormatSettings(FS);
+      if Lang = $0409 then // English (USA)
+      begin
+        FS.DecimalSeparator := '.';
+        FS.ThousandSeparator := ',';
+        FS.DateSeparator := '/';
+        FS.ShortDateFormat := 'MM/DD/YYYY';
+      end
+      else
+      if Lang = $0416 then // Portuguese (Brazil)
+      begin
+        FS.DecimalSeparator := ',';
+        FS.ThousandSeparator := '.';
+        FS.DateSeparator := '/';
+        FS.ShortDateFormat := 'DD/MM/YYYY';
+      end;
       {$ENDIF}
       {$IFDEF LINUX}
       FS := FormatSettings;
@@ -1590,7 +1605,22 @@ begin
     SysUtils.GetLocaleFormatSettings(Lang, FS);
     {$ENDIF}
     {$IFDEF DARWIN}
-    GetNSFormatSettings(FS, L);
+    GetMacFormatSettings(FS);
+    if Lang = $0409 then // English (USA)
+    begin
+      FS.DecimalSeparator := '.';
+      FS.ThousandSeparator := ',';
+      FS.DateSeparator := '/';
+      FS.ShortDateFormat := 'MM/DD/YYYY';
+    end
+    else
+    if Lang = $0416 then // Portuguese (Brazil)
+    begin
+      FS.DecimalSeparator := ',';
+      FS.ThousandSeparator := '.';
+      FS.DateSeparator := '/';
+      FS.ShortDateFormat := 'DD/MM/YYYY';
+    end;
     {$ENDIF}
     {$IFDEF LINUX}
     FS := FormatSettings;

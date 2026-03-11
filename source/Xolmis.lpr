@@ -22,9 +22,7 @@ uses
   {$IFDEF UNIX}
   cthreads, clocale,
   {$ENDIF}
-  {$IFDEF HASAMIGA}
-  athreads,
-  {$ENDIF}
+  {$IFDEF DARWIN} iosxlocale, {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   {$IFDEF WINDOWS} uMetaDarkStyle, uDarkStyleParams, uDarkStyleSchemes, {$ENDIF}
   Forms, sdflaz, tachartlazaruspkg, lazdbexport, memdslaz, printer4lazarus, tachartbgra,
@@ -68,7 +66,7 @@ uses
 
 begin
   RequireDerivedFormResource := True;
-  Application.Scaled := True;
+  Application.Scaled:=True;
 
   xSettings := TXolmisSettings.Create;
   XSettings.LoadFromFile;

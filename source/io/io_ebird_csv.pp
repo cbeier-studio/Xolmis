@@ -73,6 +73,7 @@ type
 implementation
 
 uses
+  iosxlocale,
   utils_locale, utils_global, utils_dialogs, utils_system,
   data_types, data_getvalue, data_consts,
   models_users, models_taxonomy, models_geo, models_sightings,
@@ -326,7 +327,16 @@ var
   FieldValue: String;
 begin
   // Get English format for date, time and numbers
+  {$IFDEF WINDOWS}
   GetLocaleFormatSettings(1033, EnglishFS);
+  {$ENDIF}
+  {$IFDEF DARWIN}
+  GetMacFormatSettings(EnglishFS);
+  EnglishFS.DecimalSeparator := '.';
+  EnglishFS.ThousandSeparator := ',';
+  EnglishFS.DateSeparator := '/';
+  EnglishFS.ShortDateFormat := 'MM/DD/YYYY';
+  {$ENDIF}
 
   Clear;
 

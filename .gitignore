@@ -26,6 +26,7 @@
 backup/
 lib/
 win64/
+darwin/
 published/
 *.bak
 *.bat

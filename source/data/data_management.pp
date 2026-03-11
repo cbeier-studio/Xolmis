@@ -181,8 +181,8 @@ begin
         //CreateFieldsMappingTable;
 
         { Populate tables }
-        DMM.scriptTablesMap.ExecuteScript;
-        DMM.scriptFieldsMap.ExecuteScript;
+        //DMM.scriptTablesMap.ExecuteScript;
+        //DMM.scriptFieldsMap.ExecuteScript;
 
         DMM.sysTrans.CommitRetaining;
         LogInfo('System database succesfully created');

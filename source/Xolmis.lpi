@@ -155,10 +155,10 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="../$(TargetOS)/$(BuildMode)-$(TargetCPU)/Xolmis"/>
+            <Filename Value="..\$(TargetOS)\$(BuildMode)-$(TargetCPU)\Xolmis"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir);C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\"/>
+            <IncludeFiles Value="$(ProjOutDir);C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src"/>
             <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
@@ -175,8 +175,8 @@
               <StackChecks Value="True"/>
             </Checks>
             <VerifyObjMethodCallValidity Value="True"/>
-            <TargetCPU Value="x86_64"/>
-            <TargetOS Value="win64"/>
+            <TargetCPU Value="aarch64"/>
+            <TargetOS Value="darwin"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -198,18 +198,19 @@
             </Verbosity>
             <WriteFPCLogo Value="False"/>
             <CustomOptions Value="-dDEBUG"/>
+            <OtherDefines Count="2">
+              <Define0 Value="DEBUG"/>
+              <Define1 Value="NoiPhoneAll"/>
+            </OtherDefines>
           </Other>
         </CompilerOptions>
       </Item>
       <Item Name="Release-Win64">
-        <MacroValues Count="1">
-          <Macro1 Name="LCLWidgetType" Value="win32"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="../$(TargetOS)/$(TargetCPU)/Xolmis"/>
+            <Filename Value="..\$(TargetOS)\$(TargetCPU)\Xolmis"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -244,14 +245,11 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-MacOS">
-        <MacroValues Count="1">
-          <Macro2 Name="LCLWidgetType" Value="cocoa"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="../$(TargetOS)/$(TargetCPU)/Xolmis"/>
+            <Filename Value="..\$(TargetOS)\$(TargetCPU)\Xolmis"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -292,14 +290,11 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-GTK">
-        <MacroValues Count="1">
-          <Macro3 Name="LCLWidgetType" Value="gtk2"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="../$(TargetOS)/$(TargetCPU)/Xolmis"/>
+            <Filename Value="..\$(TargetOS)\$(TargetCPU)\Xolmis"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -340,14 +335,11 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-Qt">
-        <MacroValues Count="1">
-          <Macro4 Name="LCLWidgetType" Value="qt"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="../$(TargetOS)/$(TargetCPU)/Xolmis"/>
+            <Filename Value="..\$(TargetOS)\$(TargetCPU)\Xolmis"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -1454,7 +1446,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="../$(TargetOS)/$(TargetCPU)/Xolmis"/>
+      <Filename Value="..\$(TargetOS)\$(TargetCPU)\Xolmis"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

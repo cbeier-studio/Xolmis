@@ -196,7 +196,11 @@ begin
   sqliteLibLoader.ConnectionType := 'SQLite3';
   {$IFDEF MSWINDOWS}
   sqliteLibLoader.LibraryName := ConcatPaths([InstallDir, 'sqlite3.dll']);
-  {$ELSE}
+  {$ENDIF}
+  {$IFDEF DARWIN}
+  sqliteLibLoader.LibraryName := '/usr/lib/libsqlite3.dylib';
+  {$ENDIF}
+  {$IFDEF LINUX}
   sqliteLibLoader.LibraryName := '/usr/lib/x86_64-linux-gnu/libsqlite3.so.0';
   {$ENDIF} 
   sqliteLibLoader.Enabled := True;
