@@ -178,7 +178,7 @@ object dlgAbout: TdlgAbout
       Top = 16
       Width = 146
       BorderSpacing.Bottom = 16
-      Caption = '© 2020-2025 Christian Beier'
+      Caption = '© 2020-2026 Christian Beier'
       ParentColor = False
     end
     object linkWebsite: TATLabelLink

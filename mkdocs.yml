@@ -143,7 +143,7 @@ plugins:
               - Instalando: installing.md
               - Iniciando um novo banco de dados: first-steps.md
               - Conexões: connections.md
-              - Usários: users.md
+              - Usuários: users.md
               - Configurações: settings.md
             - Usando o Xolmis:
               - Interface de usuário: interface.md

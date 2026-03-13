@@ -66,7 +66,7 @@ uses
 
 begin
   RequireDerivedFormResource := True;
-  Application.Scaled:=True;
+  Application.Scaled := True;
 
   xSettings := TXolmisSettings.Create;
   XSettings.LoadFromFile;
