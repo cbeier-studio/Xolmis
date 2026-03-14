@@ -200,6 +200,9 @@ begin
             Row.Free;
           end;
         end;
+
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Break;
       end;
     end
     else
@@ -214,6 +217,9 @@ begin
         finally
           Row.Free;
         end;
+
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Break;
       end;
     end;
   finally

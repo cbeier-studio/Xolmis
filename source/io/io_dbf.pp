@@ -171,6 +171,10 @@ begin
 
       if Assigned(Options.OnProgress) then
         Options.OnProgress(Trunc((db.RecNo) * 100.0 / Max(1,total)), 'Importando DBF');
+
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
       db.Next;
     end;
   finally

@@ -22,7 +22,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, LCLIntf, gettext, StrUtils, iosxlocale,
+  Classes, SysUtils, LCLIntf, gettext, StrUtils, {$IFDEF DARWIN}iosxlocale,{$ENDIF}
   { VCL }
   Graphics, ImgList, Controls, Dialogs, Forms, laz.VirtualTrees,
   { Data }

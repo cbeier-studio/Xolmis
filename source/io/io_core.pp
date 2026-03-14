@@ -103,6 +103,17 @@ type
     function IsCancellationRequested: Boolean;
   end;
 
+  { TCancellationToken }
+
+  TCancellationToken = class(TInterfacedObject, ICancellation)
+  private
+    FCancelled: Boolean;
+  public
+    procedure RequestCancel;
+    procedure Reset;
+    function IsCancellationRequested: Boolean;
+  end;
+
   TExistingRecordPolicy = (
     erpInsertOnly,                // Insert new rows only, ignore existing ones
     erpReplaceExisting,           // Replace existing rows entirely, including null values
@@ -471,6 +482,23 @@ begin
   finally
     Obj.Free;
   end;
+end;
+
+{ TCancellationToken }
+
+procedure TCancellationToken.RequestCancel;
+begin
+  FCancelled := True;
+end;
+
+procedure TCancellationToken.Reset;
+begin
+  FCancelled := False;
+end;
+
+function TCancellationToken.IsCancellationRequested: Boolean;
+begin
+  Result := FCancelled;
 end;
 
 { TXRow }

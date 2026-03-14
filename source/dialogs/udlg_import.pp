@@ -223,6 +223,7 @@ type
     procedure sbClearImportSettingsClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPriorClick(Sender: TObject);
+    procedure sbRetryClick(Sender: TObject);
     procedure sbSaveLogClick(Sender: TObject);
     procedure tsBooleanValueChange(Sender: TObject);
     procedure tsConvertCoordinatesChange(Sender: TObject);
@@ -1001,6 +1002,7 @@ procedure TdlgImport.FormCreate(Sender: TObject);
 begin
   freeDMS := False;
   FieldMapLoaded := False;
+  FImportSettings.Cancel := TCancellationToken.Create;
   FFieldMap := TFieldMapper.Create(FImportSettings);
   FTargetFields := TFieldsDictionary.Create;
   FTableType := tbNone;
@@ -1233,7 +1235,7 @@ var
   Importer: TImporter;
   Ext: String;
 begin
-  if stopProcess then
+  if Assigned(FImportSettings.Cancel) and FImportSettings.Cancel.IsCancellationRequested then
     Exit;
 
   PBar.Position := 0;
@@ -1287,7 +1289,7 @@ begin
       end;
     end;
 
-    if stopProcess then
+    if Assigned(FImportSettings.Cancel) and FImportSettings.Cancel.IsCancellationRequested then
     begin
       mProgress.Append(rsImportCanceledByUser);
       DMM.sqlTrans.RollbackRetaining;
@@ -1771,7 +1773,14 @@ end;
 
 procedure TdlgImport.sbCancelClick(Sender: TObject);
 begin
-  ModalResult := mrCancel;
+  if FImportSettings.Cancel.IsCancellationRequested = False then
+  begin
+    TCancellationToken(FImportSettings.Cancel).RequestCancel;
+  end
+  else
+  begin
+    ModalResult := mrCancel;
+  end;
 end;
 
 procedure TdlgImport.sbClearImportSettingsClick(Sender: TObject);
@@ -1841,6 +1850,12 @@ begin
     sbNext.Enabled := ImportMapCount > 0
   else
     sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
+end;
+
+procedure TdlgImport.sbRetryClick(Sender: TObject);
+begin
+  TCancellationToken(FImportSettings.Cancel).Reset;
+  nbPages.PageIndex := 0;
 end;
 
 procedure TdlgImport.sbSaveLogClick(Sender: TObject);

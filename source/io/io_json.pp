@@ -107,6 +107,9 @@ begin
       end;
       if Assigned(Options.OnProgress) then
         Options.OnProgress(Trunc((i+1)*100.0 / Max(1, arr.Count)), 'Importando JSON');
+
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
     end;
   end
   else if root.JSONType = jtObject then
@@ -345,6 +348,9 @@ begin
           progress := Trunc(i * 100.0 / Max(1, 1000)); // estimativa simples
           Options.OnProgress(progress, 'Importando NDJSON');
         end;
+
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Break;
       end;
     finally
       Reader.Free;

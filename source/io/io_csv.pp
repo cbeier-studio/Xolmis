@@ -232,7 +232,7 @@ begin
       if Assigned(Options.OnProgress) then
         Options.OnProgress(Trunc(ds.RecNo * 100.0 / Max(1,total)), rsProgressImportingCSVFile);
 
-      if stopProcess then
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
         Break;
 
       ds.Next;

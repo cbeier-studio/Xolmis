@@ -18,7 +18,9 @@ unit utils_themes;
 
 {$mode objfpc}{$H+}
 {$modeSwitch advancedRecords}
-{$modeswitch objectivec1}
+{$IFDEF DARWIN}
+  {$modeswitch objectivec1}
+{$ENDIF}
 
 interface
 

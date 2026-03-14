@@ -246,6 +246,24 @@
     </p>
         </descr>
       </element>
+    <element name="ICancellation.IsCancellationRequested"><short>Returns <var>true</var> if a cancellation request has been issued.</short><descr><p>This method should be periodically checked by long-running loops or background tasks. When it returns <var>true</var>, the caller should stop processing and exit gracefully.
+            </p>
+        </descr>
+      </element><element name="TCancellationToken"><short>Default implementation of <var>ICancellation</var>.</short><descr><p><var>TCancellationToken</var> is a simple reference-counted class implementing the <var>ICancellation</var> interface. It stores an internal flag indicating whether cancellation has been requested. The flag can be set by calling <var>Cancel</var>, and queried via <var>IsCancellationRequested</var>.
+          </p><p>This class is intended to be passed to importers or other long-running routines through <var>TImportOptions.Cancel</var>, allowing the user interface or calling code to request cancellation at any time.
+          </p>
+        </descr>
+      </element><element name="TCancellationToken.Cancel"><short>Requests cancellation of the associated operation.</short><descr><p>Sets the internal cancellation flag to <var>true</var>. Any code that periodically checks <var>IsCancellationRequested</var> should stop processing as soon as possible after this method is called.
+            </p>
+        </descr>
+      </element><element name="TCancellationToken.IsCancellationRequested"><short>Indicates whether cancellation has been requested.</short><descr><p>Returns <var>true</var> if <var>Cancel</var> has been called. This method is typically invoked inside loops or long-running operations to allow cooperative cancellation.
+            </p>
+        </descr>
+      </element><element name="TCancellationToken.Reset"><short>Resets the internal cancellation state to <var>false</var>.</short><descr><p>Restores the cancellation token to its initial state by clearing the internal flag that indicates whether cancellation has been requested. This method is intended for scenarios where the same token instance is reused across multiple sequential operations, such as repeated data import attempts within the same dialog.
+    </p><p><b>Note:</b> This method should only be used when it is guaranteed that no other component or background task is still holding a reference to the token. In typical usage within the import dialog, where no concurrent imports occur, calling <var>Reset</var> is safe.
+    </p>
+        </descr>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 0
+    PageIndex = 5
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -520,7 +520,7 @@ object dlgImport: TdlgImport
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
         ClientHeight = 347
-        ClientWidth = 903
+        ClientWidth = 920
         TabOrder = 1
         object pHaveHeader: TBCPanel
           Left = 16
@@ -3291,6 +3291,7 @@ object dlgImport: TdlgImport
             Images = iButtons
             ImageIndex = 9
             TabOrder = 0
+            OnClick = sbRetryClick
           end
           object sbSaveLog: TBitBtn
             AnchorSideRight.Control = pRetry

@@ -73,7 +73,7 @@ type
 implementation
 
 uses
-  iosxlocale,
+  {$IFDEF DARWIN}iosxlocale,{$ENDIF}
   utils_locale, utils_global, utils_dialogs, utils_system,
   data_types, data_getvalue, data_consts,
   models_users, models_taxonomy, models_geo, models_sightings,

@@ -164,6 +164,9 @@ begin
 
       if Assigned(Options.OnProgress) then
         Options.OnProgress(Trunc((r * 100.0) / Max(1, lastRow)), 'Importando planilha');
+
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
     end;
   finally
     wb.Free;
