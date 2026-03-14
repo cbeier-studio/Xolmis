@@ -1273,6 +1273,8 @@ type
     procedure GetTaxonRankFilters;
     procedure GetZooTaxaFilters;
 
+    procedure HandleChildDataChange(PageIndex: Integer);
+
     procedure LoadColumnsConfig;
     procedure LoadColumnsConfigGrid;
     procedure LoadRecordColumns;
@@ -4301,13 +4303,7 @@ end;
 
 procedure TfrmCustomGrid.dsLink1DataChange(Sender: TObject; Field: TField);
 begin
-  UpdateChildCount;
-
-  if nbChilds.PageIndex = 0 then
-  begin
-    TimerChildUpdate.Enabled := False;
-    TimerChildUpdate.Enabled := True;
-  end;
+  HandleChildDataChange(0);
 end;
 
 procedure TfrmCustomGrid.dsLink1StateChange(Sender: TObject);
@@ -4318,13 +4314,7 @@ end;
 
 procedure TfrmCustomGrid.dsLink2DataChange(Sender: TObject; Field: TField);
 begin
-  UpdateChildCount;
-
-  if nbChilds.PageIndex = 1 then
-  begin
-    TimerChildUpdate.Enabled := False;
-    TimerChildUpdate.Enabled := True;
-  end;
+  HandleChildDataChange(1);
 end;
 
 procedure TfrmCustomGrid.dsLink2StateChange(Sender: TObject);
@@ -4335,13 +4325,7 @@ end;
 
 procedure TfrmCustomGrid.dsLink3DataChange(Sender: TObject; Field: TField);
 begin
-  UpdateChildCount;
-
-  if nbChilds.PageIndex = 2 then
-  begin
-    TimerChildUpdate.Enabled := False;
-    TimerChildUpdate.Enabled := True;
-  end;
+  HandleChildDataChange(2);
 end;
 
 procedure TfrmCustomGrid.dsLink3StateChange(Sender: TObject);
@@ -4352,15 +4336,9 @@ end;
 
 procedure TfrmCustomGrid.dsLink4DataChange(Sender: TObject; Field: TField);
 begin
-  UpdateChildCount;
+  HandleChildDataChange(3);
   if FChildTable = tbProjectBudgets then
     UpdateChildRightPanel;
-
-  if nbChilds.PageIndex = 3 then
-  begin
-    TimerChildUpdate.Enabled := False;
-    TimerChildUpdate.Enabled := True;
-  end;
 end;
 
 procedure TfrmCustomGrid.dsLink4StateChange(Sender: TObject);
@@ -4371,13 +4349,7 @@ end;
 
 procedure TfrmCustomGrid.dsLink5DataChange(Sender: TObject; Field: TField);
 begin
-  UpdateChildCount;
-
-  if nbChilds.PageIndex = 4 then
-  begin
-    TimerChildUpdate.Enabled := False;
-    TimerChildUpdate.Enabled := True;
-  end;
+  HandleChildDataChange(4);
 end;
 
 procedure TfrmCustomGrid.dsLink5StateChange(Sender: TObject);
@@ -4388,13 +4360,7 @@ end;
 
 procedure TfrmCustomGrid.dsLink6DataChange(Sender: TObject; Field: TField);
 begin
-  UpdateChildCount;
-
-  if nbChilds.PageIndex = 5 then
-  begin
-    TimerChildUpdate.Enabled := False;
-    TimerChildUpdate.Enabled := True;
-  end;
+  HandleChildDataChange(5);
 end;
 
 procedure TfrmCustomGrid.dsLink6StateChange(Sender: TObject);
@@ -4591,7 +4557,7 @@ begin
   if not FCanToggle then
     Exit;
 
-  HowAgedDialog(eHowAgedFilter);
+  HowAgedDialog(eHowSexedFilter);
 end;
 
 procedure TfrmCustomGrid.eHowSexedFilterKeyPress(Sender: TObject; var Key: char);
@@ -6601,6 +6567,16 @@ procedure TfrmCustomGrid.gridVideosDblClick(Sender: TObject);
 begin
   if sbPlayVideo.Enabled then
     sbPlayVideoClick(nil);
+end;
+
+procedure TfrmCustomGrid.HandleChildDataChange(PageIndex: Integer);
+begin
+  UpdateChildCount;
+  if nbChilds.PageIndex = PageIndex then 
+  begin
+    TimerChildUpdate.Enabled := False;
+    TimerChildUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
