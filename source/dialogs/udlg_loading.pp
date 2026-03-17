@@ -84,6 +84,7 @@ end;
 procedure TdlgLoading.BackupProgress(Sender: TObject; Remaining, PageCount: integer);
 begin
   ringProgress.Value := 100 * (Remaining - PageCount) div PageCount;
+  Application.ProcessMessages;
 end;
 
 procedure TdlgLoading.UpdateProgress(const aMessage: String; aPercent: Integer);
@@ -104,6 +105,7 @@ end;
 procedure TdlgLoading.ZipperProgress(Sender: TObject; const Pct: Double);
 begin
   ringProgress.Value := Round(Pct);
+  Application.ProcessMessages;
 end;
 
 end.

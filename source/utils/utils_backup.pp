@@ -225,8 +225,8 @@ begin
       //F_Main.Taskbar.ProgressMaxValue := 100;
       fzip := TZipper.Create;
       try
-        fzip.OnProgress := @dlgLoading.ZipperProgress;
         //fzip.OnPercent := 1;
+        fzip.OnProgress := @dlgLoading.ZipperProgress;
         fzip.FileName := zipName;
         fzip.Entries.AddFileEntry(tmpName, ExtractFileName(tmpName));
         fzip.ZipAllFiles;
