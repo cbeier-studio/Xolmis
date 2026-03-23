@@ -30,6 +30,7 @@ uses
   procedure MakeRounded(Control: TWinControl);
   procedure RoundPanels(aParentControl: TWinControl);
   procedure PaintColorBand(aColor: String; aShape: TShape; aLabel: TLabel);
+  procedure SetBoldFont(AFont: TFont);
   procedure LoadGlyph(aImgLst: TCustomImageList; aIndex: Integer; aGlyph: TBitmap);
   procedure LoadIcone(aImgLst: TCustomImageList; aIndex: Integer; aIcon: TIcon);
   procedure LoadEditButton(aButtonedEdit: TEditButton; aIndex: Integer);
@@ -98,6 +99,18 @@ begin
       Break;
     end;
   end;
+end;
+
+procedure SetBoldFont(AFont: TFont);
+begin
+  if AFont = nil then
+    Exit;
+
+  {$IFDEF MSWINDOWS}
+  AFont.Name := 'Segoe UI Semibold';
+  {$ELSE}
+  AFont.Style := [fsBold];
+  {$ENDIF}
 end;
 
 procedure LoadGlyph(aImgLst: TCustomImageList; aIndex: Integer; aGlyph: TBitmap);

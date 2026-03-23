@@ -304,6 +304,7 @@ msgid "Carrier ID"
 msgstr ""
 
 #: data_columns.rsccategory
+msgctxt "data_columns.rsccategory"
 msgid "Category"
 msgstr ""
 
@@ -10172,6 +10173,16 @@ msgctxt "tfrmcustomgrid.cbcapturetypefilter.texthint"
 msgid "None"
 msgstr ""
 
+#: tfrmcustomgrid.cbcategoryfilter.text
+msgctxt "tfrmcustomgrid.cbcategoryfilter.text"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.cbcategoryfilter.texthint
+msgctxt "tfrmcustomgrid.cbcategoryfilter.texthint"
+msgid "None"
+msgstr ""
+
 #: tfrmcustomgrid.cbcloacalprotuberancefilter.text
 msgctxt "tfrmcustomgrid.cbcloacalprotuberancefilter.text"
 msgid "All"
@@ -10428,6 +10439,11 @@ msgstr ""
 
 #: tfrmcustomgrid.lblcapturetypefilter.caption
 msgid "Capture type"
+msgstr ""
+
+#: tfrmcustomgrid.lblcategoryfilter.caption
+msgctxt "tfrmcustomgrid.lblcategoryfilter.caption"
+msgid "Category"
 msgstr ""
 
 #: tfrmcustomgrid.lblchildstatus.caption

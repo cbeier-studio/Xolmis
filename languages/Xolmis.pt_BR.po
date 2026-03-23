@@ -306,6 +306,7 @@ msgid "Carrier ID"
 msgstr "Portador ID"
 
 #: data_columns.rsccategory
+msgctxt "data_columns.rsccategory"
 msgid "Category"
 msgstr "Categoria"
 
@@ -10156,6 +10157,16 @@ msgctxt "tfrmcustomgrid.cbcapturetypefilter.texthint"
 msgid "None"
 msgstr "Nenhum"
 
+#: tfrmcustomgrid.cbcategoryfilter.text
+msgctxt "tfrmcustomgrid.cbcategoryfilter.text"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.cbcategoryfilter.texthint
+msgctxt "tfrmcustomgrid.cbcategoryfilter.texthint"
+msgid "None"
+msgstr "Nenhum"
+
 #: tfrmcustomgrid.cbcloacalprotuberancefilter.text
 msgctxt "tfrmcustomgrid.cbcloacalprotuberancefilter.text"
 msgid "All"
@@ -10413,6 +10424,11 @@ msgstr "Status na soltura"
 #: tfrmcustomgrid.lblcapturetypefilter.caption
 msgid "Capture type"
 msgstr "Tipo de captura"
+
+#: tfrmcustomgrid.lblcategoryfilter.caption
+msgctxt "tfrmcustomgrid.lblcategoryfilter.caption"
+msgid "Category"
+msgstr "Categoria"
 
 #: tfrmcustomgrid.lblchildstatus.caption
 msgctxt "tfrmcustomgrid.lblchildstatus.caption"

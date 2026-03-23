@@ -1,0 +1,343 @@
+unit modules_bands;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Graphics, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core, ufrm_customgrid;
+
+type
+
+  { TBandsModuleController }
+
+  TBandsModuleController = class(TModuleController)
+  public
+    constructor Create(AOwner: TfrmCustomGrid); override;
+
+    procedure ConfigureColumns(AGrid: TDBGrid); override;
+    procedure ClearFilters; override;
+    procedure ApplyFilters; override;
+    function Search(AValue: String): Boolean; override;
+    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+  end;
+
+implementation
+
+uses
+  utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
+  uDarkStyleParams,
+  udm_main, udm_grid;
+
+{ TBandsModuleController }
+
+constructor TBandsModuleController.Create(AOwner: TfrmCustomGrid);
+begin
+  inherited Create(AOwner);
+  FTableType := tbBands;
+  FCaptionText := rsTitleBands;
+  FDataSet := DMG.qBands;
+  FSupportedMedia := [];
+  FUiFlags := [gufShowVerifications, gufShowSummary, gufShowInsertBatch, gufShowMoreOptions,
+    gufShowTransferBands, gufShowBandsBalance, gufShowBandHistory,
+    gufPrintMain, gufPrintByCarrier, gufPrintByStatus, gufPrintWithHistory];
+  FFilterUiFlags := [fufMarked, fufBandSize, fufBandStatus, fufBandType, fufBandSource, fufBandReported,
+    fufPerson, fufInstitution, fufProject];
+
+  AddDefaultSort(COL_BAND_SIZE, sdAscending);
+  AddDefaultSort(COL_BAND_NUMBER, sdAscending);
+end;
+
+procedure TBandsModuleController.ApplyFilters;
+const
+  BandStatus: array of String = ('D', 'U', 'R', 'T', 'Q', 'P');
+  BandTypes: array of String = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
+  BandSources: array of String = ('A', 'T', 'L', 'D', 'F');
+var
+  sf: Integer;
+begin
+  with FOwner do
+  begin
+    if cbBandSizeFilter.ItemIndex > 0 then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_SIZE, rscSize, sdtText,
+        crEqual, False, cbBandSizeFilter.Text));
+    end;
+
+    if cbBandStatusFilter.ItemIndex > 0 then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_STATUS, rscStatus, sdtText,
+        crEqual, False, BandStatus[cbBandStatusFilter.ItemIndex - 1]));
+    end;
+
+    if cbBandTypeFilter.ItemIndex > 0 then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_TYPE, rscType, sdtText,
+        crEqual, False, BandTypes[cbBandTypeFilter.ItemIndex - 1]));
+    end;
+
+    if cbBandSourceFilter.ItemIndex > 0 then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_SOURCE, rscSource, sdtText,
+        crEqual, False, BandSources[cbBandSourceFilter.ItemIndex - 1]));
+    end;
+
+    if rbReportedYes.Checked then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_REPORTED, rscReported, sdtBoolean,
+        crEqual, False, '1'));
+    end;
+    if rbReportedNo.Checked then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_REPORTED, rscReported, sdtBoolean,
+        crEqual, False, '0'));
+    end;
+
+    if ePersonFilter.Text <> EmptyStr then
+      PersonFilterToSearch(FTableType, SearchConfig.QuickFilters, PersonIdFilter);
+
+    if InstitutionIdFilter > 0 then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUPPLIER_ID, rscSupplier, sdtInteger,
+        crEqual, False, IntToStr(InstitutionIdFilter)));
+    end;
+
+    if ProjectIdFilter > 0 then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscProject, sdtInteger,
+        crEqual, False, IntToStr(ProjectIdFilter)));
+    end;
+  end;
+end;
+
+procedure TBandsModuleController.ClearFilters;
+begin
+  with FOwner do
+  begin
+    cbBandSizeFilter.ItemIndex := 0;
+
+    cbBandStatusFilter.ItemIndex := 0;
+    cbBandTypeFilter.ItemIndex := 0;
+    cbBandSourceFilter.ItemIndex := 0;
+
+    rbReportedAll.Checked := True;
+
+    ePersonFilter.Clear;
+    PersonIdFilter := 0;
+    eInstitutionFilter.Clear;
+    InstitutionIdFilter := 0;
+    eProjectFilter.Clear;
+    ProjectIdFilter := 0;
+  end;
+end;
+
+procedure TBandsModuleController.ConfigureColumns(AGrid: TDBGrid);
+begin
+  with aGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName(COL_BAND_ID).Visible then
+      ColumnByFieldname(COL_BAND_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_ID).Visible then
+      ColumnByFieldname(COL_INDIVIDUAL_ID).ReadOnly := True;
+    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
+      ColumnByFieldname(COL_INDIVIDUAL_NAME).ReadOnly := True;
+
+    if DataSource.DataSet.FieldByName(COL_BAND_SIZE).Visible then
+      ColumnByFieldName(COL_BAND_SIZE).PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
+    if DataSource.DataSet.FieldByName(COL_BAND_STATUS).Visible then
+      ColumnByFieldName(COL_BAND_STATUS).PickList.AddCommaText(rsBandStatusList);
+    if DataSource.DataSet.FieldByName(COL_BAND_SOURCE).Visible then
+    begin
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandAcquiredFromSupplier);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandTransferBetweenBanders);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandLivingBirdBandedByOthers);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandDeadBirdBandedByOthers);
+      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandFoundLoose);
+    end;
+    if DataSource.DataSet.FieldByName(COL_BAND_TYPE).Visible then
+      ColumnByFieldName(COL_BAND_TYPE).PickList.AddCommaText(rsBandTypeList);
+
+    if DataSource.DataSet.FieldByName(COL_SUPPLIER_NAME).Visible then
+      ColumnByFieldName(COL_SUPPLIER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_REQUESTER_NAME).Visible then
+      ColumnByFieldname(COL_REQUESTER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_CARRIER_NAME).Visible then
+      ColumnByFieldName(COL_CARRIER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
+      ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
+  end;
+end;
+
+procedure TBandsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+begin
+  if Column.FieldName = COL_BAND_SIZE then
+  begin
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
+  end
+  else
+  if Column.FieldName = COL_BAND_STATUS then
+  begin
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
+    case Column.Field.AsString of
+      'U': // Used
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+      end;
+      'D': // Available
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemNeutralFGLight;
+        end;
+      end;
+      'R': // Removed
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGLight;
+        end;
+      end;
+      'Q': // Broken
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      end;
+      'P': // Lost
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+        end;
+      end;
+      'T': // Transferred
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Dark;
+          TDBGrid(Sender).Canvas.Font.Color := clVioletFG1Dark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Light;
+          TDBGrid(Sender).Canvas.Font.Color := clVioletFG2Light;
+        end;
+      end;
+    end;
+  end;
+end;
+
+function TBandsModuleController.Search(AValue: String): Boolean;
+var
+  i, g: Integer;
+  V1, V2: String;
+  Crit: TCriteriaType;
+begin
+  Result := False;
+
+  Crit := crLike;
+  aValue := Trim(aValue);
+  V1 := EmptyStr;
+  V2 := EmptyStr;
+
+  if aValue <> EmptyStr then
+  begin
+    if ExecRegExpr('^=.+$', aValue) then
+    begin
+      Crit := crEqual;
+      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
+    end
+    else
+    if ExecRegExpr('^:.+$', aValue) then
+    begin
+      Crit := crStartLike;
+      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+    end;
+
+    if TryStrToInt(aValue, i) then
+    begin
+      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_ID, rscId, sdtInteger, crEqual,
+        False, aValue));
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtText, Crit,
+        False, aValue));
+    end
+    else
+    if ExecRegExpr('^\d+[-‒]{1}\d+$', aValue) then
+    begin
+      Crit := crBetween;
+      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+      { split strings: unicode characters #$002D e #$2012 }
+      V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
+      V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
+      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtInteger, Crit,
+        False, V1, V2));
+    end
+    else
+    begin
+      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+        False, aValue));
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CARRIER_NAME, rscCarrier, sdtText, Crit,
+        True, aValue));
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SUPPLIER_NAME, rscSupplier, sdtText, Crit,
+        True, aValue));
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_NAME, rscProject, sdtText, Crit,
+        True, aValue));
+      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_NAME, rscIndividual, sdtText, Crit,
+        True, aValue));
+    end;
+
+  end;
+
+  ApplyFilters;
+
+  Result := FOwner.SearchConfig.RunSearch > 0;
+end;
+
+end.
+

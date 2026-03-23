@@ -60,6 +60,8 @@ type
   PDateNodeData = ^TDateNodeData;
 
   { Load lists and trees }
+  procedure LoadMethodCategories(aList: TStrings);
+
   procedure LoadTaxaTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 
   procedure LoadSpecimenDateTree(aSQL: TStrings);
@@ -103,6 +105,38 @@ type
 implementation
 
 uses utils_global, data_consts, udm_main;
+
+procedure LoadMethodCategories(aList: TStrings);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(nil);
+  Qry.Database := DMM.sqlCon;
+  with Qry, SQL do
+  try
+    SQL.Clear;
+
+    Add('SELECT DISTINCT category FROM methods');
+    Add('WHERE (category != '''') AND (category NOT NULL)');
+    Add('ORDER BY category ASC');
+
+    Open;
+    if RecordCount > 0 then
+    begin
+      First;
+      // the list must be cleared before calling this method
+      while not EOF do
+      begin
+        aList.Add(FieldByName(COL_CATEGORY).AsString);
+
+        Next;
+      end;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
 procedure LoadTaxaTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 var

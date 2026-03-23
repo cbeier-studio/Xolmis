@@ -262,6 +262,7 @@ const
 const
   COL_PROJECT_MEMBER_ID = 'project_member_id';
   COL_PROJECT_MANAGER = 'project_manager';
+  COL_PERSON_NAME = 'person_name';
 
   // Project goals columns
 const
@@ -416,6 +417,7 @@ const
   // Specimen collectors columns
 const
   COL_COLLECTOR_ID = 'collector_id';
+  COL_COLLECTOR_NAME = 'collector_name';
   COL_COLLECTOR_SEQUENCE = 'collector_seq';
 
   // Sample preps columns

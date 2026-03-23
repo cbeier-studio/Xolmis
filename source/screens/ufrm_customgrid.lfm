@@ -86,7 +86,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            327
+            348
           )
         end
       end
@@ -100,24 +100,25 @@ object frmCustomGrid: TfrmCustomGrid
           VertScrollBar.Increment = 51
           VertScrollBar.Page = 515
           VertScrollBar.Smooth = True
+          VertScrollBar.Position = 4390
           VertScrollBar.Tracking = True
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 464
+          ClientWidth = 447
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
             Left = 0
             Height = 15
-            Top = 4890
+            Top = 4947
             Width = 447
             Align = alTop
             Shape = bsSpacer
           end
           object pQuickFiltersContent: TBCPanel
             Left = 0
-            Height = 4890
+            Height = 4947
             Top = 0
             Width = 447
             Align = alTop
@@ -1715,7 +1716,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSexingFilters: TBCPanel
               Left = 9
               Height = 188
-              Top = 4681
+              Top = 4738
               Width = 429
               Align = alTop
               AutoSize = True
@@ -6469,6 +6470,101 @@ object frmCustomGrid: TfrmCustomGrid
                 Caption = 'No'
                 TabOrder = 1
                 OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pCategoryFilter: TBCPanel
+              Left = 9
+              Height = 47
+              Top = 4681
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 10
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 6
+              Rounding.RoundY = 6
+              TabOrder = 49
+              Visible = False
+              object icoCategoryFilter: TImage
+                Left = 16
+                Height = 23
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 29
+                Images = iIcons
+              end
+              object lblCategoryFilter: TLabel
+                Left = 54
+                Height = 23
+                Top = 12
+                Width = 48
+                Align = alLeft
+                Caption = 'Category'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object cbCategoryFilter: TComboBox
+                Left = 201
+                Height = 23
+                Top = 12
+                Width = 212
+                Align = alRight
+                Color = 16119285
+                ItemHeight = 15
+                ItemIndex = 0
+                Items.Strings = (
+                  'All'
+                  'N'
+                  'T'
+                  'L'
+                  'H'
+                  'F'
+                  'B'
+                  'G'
+                  'V'
+                )
+                Style = csDropDownList
+                TabOrder = 0
+                Text = 'All'
+                TextHint = 'None'
+                OnChange = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
               end

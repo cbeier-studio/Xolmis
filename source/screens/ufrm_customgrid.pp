@@ -49,10 +49,14 @@ type
   { TfrmCustomGrid }
 
   TfrmCustomGrid = class(TForm)
+    cbCategoryFilter: TComboBox;
     dsVideos: TDataSource;
     gridVideos: TDBGrid;
+    icoCategoryFilter: TImage;
+    lblCategoryFilter: TLabel;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pCategoryFilter: TBCPanel;
     pmpAddCountriesAndStates: TMenuItem;
     pmpAddMunicipalities: TMenuItem;
     pmcColumnAutoAdjustWidth: TMenuItem;
@@ -1421,6 +1425,7 @@ type
     procedure UpdateFilterPanelsGazetteer;
     procedure UpdateFilterPanelsIndividuals;
     procedure UpdateFilterPanelsInstitutions;
+    procedure UpdateFilterPanelsMethods;
     procedure UpdateFilterPanelsNestRevisions;
     procedure UpdateFilterPanelsNests;
     procedure UpdateFilterPanelsSamplingPlots;
@@ -1435,9 +1440,22 @@ type
     property TableType: TTableType read FTableType write FTableType;
     property ChildTable: TTableType read FChildTable write FChildTable;
 
+    property SearchConfig: TCustomSearch read FSearch write FSearch;
     property SearchString: String read FSearchString write SetSearchString;
     property ShowSidePanel: Boolean read FSidePanel write SetSidePanel;
     property SidePanelIndex: Integer read FSideIndex write SetSideIndex;
+
+    property PersonIdFilter: Integer read FPersonKeyFilter write FPersonKeyFilter;
+    property InstitutionIdFilter: Integer read FInstitutionKeyFilter write FInstitutionKeyFilter;
+    property SurveyIdFilter: Integer read FSurveyKeyFilter write FSurveyKeyFilter;
+    property MethodIdFilter: Integer read FMethodKeyFilter write FMethodKeyFilter;
+    property ProjectIdFilter: Integer read FProjectKeyFilter write FProjectKeyFilter;
+    property NestIdFilter: Integer read FNestKeyFilter write FNestKeyFilter;
+    property IndividualIdFilter: Integer read FIndividualKeyFilter write FIndividualKeyFilter;
+    property ExpeditionIdFilter: Integer read FExpeditionKeyFilter write FExpeditionKeyFilter;
+    property SupportPlantIdFilter: Integer read FPlantKeyFilter write FPlantKeyFilter;
+    property SamplingPlotIdFilter: Integer read FSamplingPlotKeyFilter write FSamplingPlotKeyFilter;
+    property EggIdFilter: Integer read FEggKeyFilter write FEggKeyFilter;
   end;
 
   { TCustomPanelTab }
@@ -1468,7 +1486,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
-  utils_finddialogs, utils_print, utils_validations, utils_gis, utils_taxonomy,
+  utils_finddialogs, utils_print, utils_validations, utils_gis, utils_taxonomy, utils_graphics,
   data_management, data_getvalue, data_columns, data_blobs, data_setparam, data_consts,
   models_taxonomy, models_users, models_record_types,
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
@@ -3002,7 +3020,7 @@ begin
   eInstitutionFilter.Clear;
   FInstitutionKeyFilter := 0;
   eProjectFilter.Clear;
-  FProjectKeyFilter := 0
+  FProjectKeyFilter := 0;
 end;
 
 procedure TfrmCustomGrid.ClearBotanicTaxaFilters;
@@ -7696,20 +7714,12 @@ procedure TfrmCustomGrid.PrepareCanvasBands(var Column: TColumn; var sender: TOb
 begin
   if Column.FieldName = COL_BAND_SIZE then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end
   else
   if Column.FieldName = COL_BAND_STATUS then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
       'U': // Used
       begin
@@ -7864,11 +7874,7 @@ begin
   else
   if (Column.FieldName = COL_BAND_NAME) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
       (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
     begin
@@ -7891,11 +7897,7 @@ begin
   else
   if (Column.FieldName = COL_REMOVED_BAND_NAME) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
@@ -8198,11 +8200,7 @@ procedure TfrmCustomGrid.PrepareCanvasEggs(var Column: TColumn; var sender: TObj
 begin
   if Column.FieldName = COL_EGG_SEQUENCE then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end
   else
   if Column.FieldName = COL_TAXON_NAME then
@@ -8215,11 +8213,7 @@ procedure TfrmCustomGrid.PrepareCanvasExpeditions(var Column: TColumn; var sende
 begin
   if Column.FieldName = COL_START_DATE then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8233,11 +8227,7 @@ begin
   else
   if Column.FieldName = COL_SAMPLE_DATE then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8250,11 +8240,7 @@ begin
   else
   if (Column.FieldName = COL_INDIVIDUAL_SEX) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
       'U':
       begin
@@ -8300,20 +8286,12 @@ begin
   else
   if Column.FieldName = COL_BAND_NAME then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end
   else
   if Column.FieldName = COL_REMOVED_BAND_NAME then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8321,11 +8299,7 @@ procedure TfrmCustomGrid.PrepareCanvasInstitutions(var Column: TColumn; var send
 begin
   if Column.FieldName = COL_ABBREVIATION then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8340,11 +8314,7 @@ begin
   else
   if Column.FieldName = COL_NEST_FATE then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
       'U':       // Unknown
       begin
@@ -8398,11 +8368,7 @@ begin
   else
   if Column.FieldName = COL_NEST_STATUS then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
       'U':       // Unknown
       begin
@@ -8452,11 +8418,7 @@ begin
   if (Column.FieldName = COL_SAMPLE_DATE) or
     (Column.FieldName = COL_NET_NUMBER) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8464,11 +8426,7 @@ procedure TfrmCustomGrid.PrepareCanvasPeople(var Column: TColumn; var sender: TO
 begin
   if Column.FieldName = COL_ABBREVIATION then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8476,11 +8434,7 @@ procedure TfrmCustomGrid.PrepareCanvasPermanentNets(const Column: TColumn; const
 begin
   if (Column.FieldName = COL_NET_NUMBER) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8489,11 +8443,7 @@ begin
   if (Column.FieldName = COL_EXPIRE_DATE) or
     (Column.FieldName = COL_PERMIT_NUMBER) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8502,11 +8452,7 @@ begin
   if (Column.FieldName = COL_START_DATE) or
     (Column.FieldName = COL_PROTOCOL_NUMBER) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8515,11 +8461,7 @@ begin
   if (Column.FieldName = COL_PREPARATION_DATE) or
     (Column.FieldName = COL_ACCESSION_NUMBER) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -8527,11 +8469,7 @@ procedure TfrmCustomGrid.PrepareCanvasSightings(var Column: TColumn; var sender:
 begin
   if Column.FieldName = COL_SIGHTING_DATE then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end
   else
   if Column.FieldName = COL_TAXON_NAME then
@@ -8545,11 +8483,7 @@ begin
   if (Column.FieldName = COL_COLLECTION_DATE) or
     (Column.FieldName = COL_FIELD_NUMBER) then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end
   else
   if Column.FieldName = COL_TAXON_NAME then
@@ -8562,11 +8496,7 @@ procedure TfrmCustomGrid.PrepareCanvasSurveys(var Column: TColumn; var sender: T
 begin
   if Column.FieldName = COL_SURVEY_DATE then
   begin
-    {$IFDEF MSWINDOWS}
-    TDBGrid(Sender).Canvas.Font.Name := 'Segoe UI Semibold';
-    {$ELSE}
-    TDBGrid(Sender).Canvas.Font.Style := [fsBold];
-    {$ENDIF}
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end;
 end;
 
@@ -14301,6 +14231,7 @@ begin
     tbPeople:         UpdateFilterPanelsPeople;
     tbProjects:       UpdateFilterPanelsProjects;
     tbPermits:        UpdateFilterPanelsPermits;
+    tbMethods:        UpdateFilterPanelsMethods;
     tbSamplingPlots:  UpdateFilterPanelsSamplingPlots;
     tbBotanicTaxa:    UpdateFilterPanelsBotanicTaxa;
     tbZooTaxa:        UpdateFilterPanelsZooTaxa;
@@ -14476,6 +14407,14 @@ procedure TfrmCustomGrid.UpdateFilterPanelsInstitutions;
 begin
   pSiteFilters.Visible := True;
   LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+end;
+
+procedure TfrmCustomGrid.UpdateFilterPanelsMethods;
+begin
+  cbCategoryFilter.Items.Clear;
+  cbCategoryFilter.Items.Add(rsCaptionAll);
+  LoadMethodCategories(cbCategoryFilter.Items);
+  pCategoryFilter.Visible := True;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanelsNests;
