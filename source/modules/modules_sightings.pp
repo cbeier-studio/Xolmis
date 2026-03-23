@@ -5,8 +5,8 @@ unit modules_sightings;
 interface
 
 uses
-  Classes, SysUtils, Graphics, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core;
 
 type
 
@@ -14,34 +14,34 @@ type
 
   TSightingsModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TSightingsSubmoduleController }
 
   TSightingsSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
 
 uses
   utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
-  udm_main, udm_grid, udm_sampling, udm_individuals;
+  udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid;
 
 { TSightingsModuleController }
 
-constructor TSightingsModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TSightingsModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbSightings;
@@ -49,8 +49,9 @@ begin
   FDataSet := DMG.qSightings;
   FSupportedMedia := [amtImages, amtAudios, amtVideos, amtDocuments];
   FUiFlags := [gufShowImages, gufShowAudios, gufShowVideos, gufShowDocs, gufShowSummary, gufShowMap,
-    gufShowVerifications, gufPrintMain, gufPrintByLocality, gufPrintByProject, gufPrintByTaxon,
-    gufPrintByObserver, gufPrintBySurvey];
+    gufShowVerifications];
+  FPrintUiFlags := [pufSightings, pufSightingsByLocality, pufSightingsByObserver, pufSightingsByProject,
+    pufSightingsBySurvey, pufSightingsByTaxon];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufTimeInterval, fufPerson, fufSurvey, fufMethod,
     fufIndividual, fufIsOnEbird, fufOutOfSample];
 
@@ -61,7 +62,7 @@ procedure TSightingsModuleController.ApplyFilters;
 var
   sf: Integer;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters, 'z.');
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters, 'g.');
@@ -131,7 +132,7 @@ end;
 
 procedure TSightingsModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountTaxonFilter.Caption := rsNoneSelected;
     tvTaxaFilter.ClearChecked;
@@ -189,7 +190,7 @@ begin
   end;
 end;
 
-procedure TSightingsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TSightingsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if Column.FieldName = COL_SIGHTING_DATE then
   begin
@@ -228,72 +229,75 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_ID, rscSightingID, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToTime(aValue, dt) then
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_TIME, rscTime, sdtTime, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, rscMethod, sdtText, Crit,
-        True, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_ID, rscSightingID, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToDate(aValue, dt) then
+      begin
+        aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtDate, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToTime(aValue, dt) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_TIME, rscTime, sdtTime, crEqual,
+          False, aValue));
+      end
+      else
+      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      begin
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        m := ExtractDelimited(1, aValue, ['/']);
+        y := ExtractDelimited(2, aValue, ['/']);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, rscMethod, sdtText, Crit,
+          True, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 { TSightingsSubmoduleController }
 
-constructor TSightingsSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TSightingsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbSightings;
   FCaptionText := rsTitleSightings;
-  case FOwner.TableType of
+  case TfrmCustomGrid(FOwner).TableType of
     tbSurveys:
       begin
         FDataSet := DMS.qSightings;
-        FGrid := FOwner.gridChild5;
+        FGrid := TfrmCustomGrid(FOwner).gridChild5;
         FPageIndex := 4;
       end;
     tbIndividuals:
       begin
         FDataSet := DMI.qSightings;
-        FGrid := FOwner.gridChild3;
+        FGrid := TfrmCustomGrid(FOwner).gridChild3;
         FPageIndex := 2;
       end;
   end;
@@ -332,7 +336,7 @@ begin
   end;
 end;
 
-procedure TSightingsSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TSightingsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if Column.FieldName = COL_SIGHTING_DATE then
   begin

@@ -5,8 +5,8 @@ unit modules_permits;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core;
 
 type
 
@@ -14,30 +14,32 @@ type
 
   TPermitsModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
 
 uses
-  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media, udm_main, udm_grid;
+  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
+  udm_main, udm_grid, ufrm_customgrid;
 
 { TPermitsModuleController }
 
-constructor TPermitsModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TPermitsModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbPermits;
   FCaptionText := rsTitlePermits;
   FDataSet := DMG.qPermits;
   FSupportedMedia := [amtDocuments];
-  FUiFlags := [gufShowSummary, gufShowDocs, gufPrintMain, gufPrintByDate, gufPrintByProject];
+  FUiFlags := [gufShowSummary, gufShowDocs];
+  FPrintUiFlags := [pufPermits, pufPermitsByDate, pufPermitsByProject];
   FFilterUiFlags := [fufMarked, fufDates, fufProject, fufPermitType];
 
   AddDefaultSort(COL_PERMIT_NAME, sdAscending);
@@ -49,7 +51,7 @@ const
 var
   sf: Integer;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
 
@@ -71,7 +73,7 @@ end;
 
 procedure TPermitsModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountDateFilter.Caption := rsNoneSelectedFemale;
     tvDateFilter.ClearChecked;
@@ -109,7 +111,7 @@ begin
   end;
 end;
 
-procedure TPermitsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TPermitsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if (Column.FieldName = COL_EXPIRE_DATE) or
     (Column.FieldName = COL_PERMIT_NUMBER) then
@@ -144,49 +146,52 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtDate, crEqual,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NAME, rscName, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NUMBER, rscPermitNumber, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCHER_NAME, rscDispatcher, sdtText, Crit,
-        True, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToDate(aValue, dt) then
+      begin
+        aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtDate, crEqual,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtDate, crEqual,
+          False, aValue));
+      end
+      else
+      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      begin
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        m := ExtractDelimited(1, aValue, ['/']);
+        y := ExtractDelimited(2, aValue, ['/']);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NAME, rscName, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NUMBER, rscPermitNumber, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCHER_NAME, rscDispatcher, sdtText, Crit,
+          True, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 end.

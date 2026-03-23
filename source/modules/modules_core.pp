@@ -5,7 +5,7 @@ unit modules_core;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, DBGrids, fgl, data_types, models_media, ufrm_customgrid;
+  Classes, SysUtils, Forms, DB, SQLDB, DBGrids, fgl, data_types, models_media;
 
 type
   TGridUiFlag = (
@@ -24,24 +24,36 @@ type
     gufShowAddMunicipalities,
     gufShowTransferBands,
     gufShowBandsBalance,
-    gufShowBandHistory,
-    gufPrintMain,              // module has main report
-    gufPrintByDate,            // module has report grouped by date
-    gufPrintByProject,         // module has report grouped by project
-    gufPrintByLocality,        // module has report grouped by locality
-    gufPrintByTaxon,           // module has report grouped by taxon
-    gufPrintByObserver,
-    gufPrintByCarrier,
-    gufPrintBySurvey,
-    gufPrintByNest,
-    gufPrintByExpedition,
-    gufPrintByStatus,
-    gufPrintByParents,
-    gufPrintWithHistory,
-    gufPrintRecorded
+    gufShowBandHistory
   );
 
   TGridUiFlags = set of TGridUiFlag;
+
+  TPrintUiFlag = (
+    pufMethods,
+    pufExpeditions, pufExpeditionsByProject,
+    pufSurveys, pufSurveysByExpedition, pufSurveysByLocality, pufSurveysByProject,
+    pufSightings, pufSightingsBySurvey, pufSightingsByLocality, pufSightingsByObserver, pufSightingsByProject,
+    pufSightingsByTaxon,
+    pufSpecimens, pufSpecimensByProject, pufSpecimensByLocality, pufSpecimensByTaxon, pufSpecimensByYear,
+    pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory,
+    pufIndividuals, pufIndividualsByTaxon, pufIndividualsByParents,
+    pufCaptures, pufCapturesByProject, pufCapturesByLocality, pufCapturesByDate, pufCapturesByTaxon,
+    pufColorBandCombinations,
+    pufFeathers,
+    pufNests, pufNestsByProject, pufNestsByDate, pufNestsByLocality, pufNestsByTaxon,
+    pufEggs, pufEggsByNest, pufEggsByLocality, pufEggsByTaxon,
+    pufInstitutions,
+    pufResearchers,
+    pufProjects,
+    pufPermits, pufPermitsByDate, pufPermitsByProject,
+    pufGazetteer,
+    pufSamplingPlots, pufSamplingPlotsByLocality,
+    pufBotanicalTaxa, pufBotanicalTaxaRecorded,
+    pufTaxa, pufTaxaRecorded, pufTaxaRecordedByLocality
+  );
+
+  TPrintUiFlags = set of TPrintUiFlag;
 
   TFilterUiFlag = (fufMarked, fufSites, fufSiteRank, fufPerson, fufInstitution, fufSurvey, fufProject,
     fufSupportPlant, fufExpedition, fufSamplingPlot, fufIndividual, fufNest, fufEgg, fufMethod, fufDates,
@@ -58,14 +70,14 @@ type
 
   TBaseController = class
   protected
-    FOwner: TfrmCustomGrid;
+    FOwner: TForm;
     FTableType: TTableType;
     FCaptionText: String;
     FDataSet: TDataSet;
     FUiFlags: TGridUiFlags;
     FDefaultSort: TSortedFields;
   public
-    constructor Create(AOwner: TfrmCustomGrid); virtual;
+    constructor Create(AOwner: TForm); virtual;
     destructor Destroy; override;
 
     procedure AddDefaultSort(const AFieldName: String; ADirection: TSortDirection;
@@ -87,7 +99,7 @@ type
     FRecordCount: Integer;
   public
     procedure ConfigureColumns; virtual; abstract;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); virtual; abstract;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); virtual; abstract;
   published
     property Grid: TDBGrid read FGrid write FGrid;
     property PageIndex: Integer read FPageIndex write FPageIndex;
@@ -101,11 +113,12 @@ type
   TModuleController = class(TBaseController)
   protected
     FSupportedMedia: TAttachMediaTypes;
+    FPrintUiFlags: TPrintUiFlags;
     FFilterUiFlags: TFilterUiFlags;
 
     FSubmodules: TSubmoduleList;
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
     destructor Destroy; override;
 
     procedure AddSubmodule(ATableType: TTableType; ACaptionText: String; ADataSet: TDataSet; AGrid: TDBGrid;
@@ -115,8 +128,9 @@ type
     procedure ClearFilters; virtual; abstract;
     procedure ApplyFilters; virtual; abstract;
     function Search(AValue: String): Boolean; virtual; abstract;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); virtual; abstract;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); virtual; abstract;
 
+    property PrintUiFlags: TPrintUiFlags read FPrintUiFlags;
     property FilterUiFlags: TFilterUiFlags read FFilterUiFlags;
     property Submodules: TSubmoduleList read FSubmodules;
   published
@@ -125,9 +139,12 @@ type
 
 implementation
 
+uses
+  ufrm_customgrid;
+
 { TModuleController }
 
-constructor TModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FSubmodules := TSubmoduleList.Create();
@@ -149,8 +166,11 @@ end;
 
 { TBaseController }
 
-constructor TBaseController.Create(AOwner: TfrmCustomGrid);
+constructor TBaseController.Create(AOwner: TForm);
 begin
+  if not (AOwner is TfrmCustomGrid) then
+    raise Exception.Create('Owner is not a TfrmCustomGrid');
+
   FOwner := AOwner;
   FDefaultSort := TSortedFields.Create();
 end;

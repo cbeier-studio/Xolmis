@@ -5,7 +5,7 @@ unit modules_methods;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, DBGrids, RegExpr, data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Forms, DB, SQLDB, DBGrids, RegExpr, data_types, modules_core;
 
 type
 
@@ -13,30 +13,32 @@ type
 
   TMethodsModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
 
 uses
-  utils_locale, utils_graphics, data_consts, data_columns, models_media, udm_main, udm_grid;
+  utils_locale, utils_graphics, data_consts, data_columns, models_media,
+  udm_main, udm_grid, ufrm_customgrid;
 
 { TMethodsModuleController }
 
-constructor TMethodsModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TMethodsModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbMethods;
   FCaptionText := rsTitleMethods;
   FDataSet := DMG.qMethods;
   FSupportedMedia := [amtDocuments];
-  FUiFlags := [gufShowDocs, gufShowSummary, gufPrintMain];
+  FUiFlags := [gufShowDocs, gufShowSummary];
+  FPrintUiFlags := [pufMethods];
   FFilterUiFlags := [fufMarked, fufCategory];
 
   AddDefaultSort(COL_METHOD_NAME, sdAscending);
@@ -46,17 +48,23 @@ procedure TMethodsModuleController.ApplyFilters;
 var
   sf: Integer;
 begin
-  if FOwner.cbCategoryFilter.ItemIndex > 0 then
+  with TfrmCustomGrid(FOwner) do
   begin
-    sf := FOwner.SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-    FOwner.SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CATEGORY, rscCategory, sdtText,
-      crEqual, False, FOwner.cbCategoryFilter.Text));
+    if cbCategoryFilter.ItemIndex > 0 then
+    begin
+      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
+      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CATEGORY, rscCategory, sdtText,
+        crEqual, False, cbCategoryFilter.Text));
+    end;
   end;
 end;
 
 procedure TMethodsModuleController.ClearFilters;
 begin
-  FOwner.cbCategoryFilter.ItemIndex := 0;
+  with TfrmCustomGrid(FOwner) do
+  begin
+    cbCategoryFilter.ItemIndex := 0;
+  end;
 end;
 
 procedure TMethodsModuleController.ConfigureColumns(AGrid: TDBGrid);
@@ -68,7 +76,7 @@ begin
   end;
 end;
 
-procedure TMethodsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TMethodsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if (Column.FieldName = COL_ABBREVIATION) then
   begin
@@ -100,27 +108,30 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, rscName, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, rscAbbreviation, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EBIRD_NAME, rscEBirdName, sdtText, Crit,
-        False, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, rscName, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, rscAbbreviation, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EBIRD_NAME, rscEBirdName, sdtText, Crit,
+          False, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 end.

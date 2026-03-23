@@ -5,8 +5,8 @@ unit modules_birds;
 interface
 
 uses
-  Classes, SysUtils, Graphics, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core;
 
 type
 
@@ -14,59 +14,59 @@ type
 
   TIndividualsModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TCapturesModuleController }
 
   TCapturesModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TCapturesSubmoduleController }
 
   TCapturesSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TFeathersModuleController }
 
   TFeathersModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TFeathersSubmoduleController }
 
   TFeathersSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
@@ -76,19 +76,19 @@ uses
   data_consts, data_columns, data_filters, data_getvalue,
   modules_sightings, modules_breeding, modules_specimens,
   models_media, models_record_types, uDarkStyleParams,
-  udm_main, udm_grid, udm_sampling, udm_individuals;
+  udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid;
 
 { TIndividualsModuleController }
 
-constructor TIndividualsModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TIndividualsModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbIndividuals;
   FCaptionText := rsTitleIndividuals;
   FDataSet := DMG.qIndividuals;
   FSupportedMedia := [amtImages, amtAudios, amtVideos, amtDocuments];
-  FUiFlags := [gufShowImages, gufShowVideos, gufShowAudios, gufShowDocs, gufShowSummary, gufShowVerifications,
-    gufPrintMain, gufPrintByTaxon, gufPrintByParents];
+  FUiFlags := [gufShowImages, gufShowVideos, gufShowAudios, gufShowDocs, gufShowSummary, gufShowVerifications];
+  FPrintUiFlags := [pufIndividuals, pufIndividualsByTaxon, pufIndividualsByParents];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufAge, fufSex, fufNest, fufIndividual, fufBandReplaced];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);
@@ -107,7 +107,7 @@ const
 var
   sf: Integer;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters, 'z.');
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
@@ -188,7 +188,7 @@ end;
 
 procedure TIndividualsModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountTaxonFilter.Caption := rsNoneSelected;
     tvTaxaFilter.ClearChecked;
@@ -273,7 +273,7 @@ begin
   end;
 end;
 
-procedure TIndividualsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TIndividualsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
@@ -363,61 +363,64 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtDate, crEqual,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtDate, crEqual,
-        False, aValue));
-      { #todo : PartialDate fields: birth_date and death_date }
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DOUBLE_BAND_NAME, rscDoubleBand, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_NEST_NAME, rscNest, sdtText, Crit,
-        True, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToDate(aValue, dt) then
+      begin
+        aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtDate, crEqual,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtDate, crEqual,
+          False, aValue));
+        { #todo : PartialDate fields: birth_date and death_date }
+      end
+      else
+      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      begin
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        m := ExtractDelimited(1, aValue, ['/']);
+        y := ExtractDelimited(2, aValue, ['/']);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DOUBLE_BAND_NAME, rscDoubleBand, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_NEST_NAME, rscNest, sdtText, Crit,
+          True, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 { TCapturesModuleController }
 
-constructor TCapturesModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TCapturesModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbCaptures;
@@ -425,8 +428,8 @@ begin
   FDataSet := DMG.qCaptures;
   FSupportedMedia := [amtImages, amtVideos, amtDocuments];
   FUiFlags := [gufShowImages, gufShowVideos, gufShowDocs, gufShowSummary, gufShowMap,
-    gufShowVerifications, gufPrintMain, gufPrintByLocality, gufPrintByProject, gufPrintByTaxon,
-    gufPrintByDate];
+    gufShowVerifications];
+  FPrintUiFlags := [pufCaptures, pufCapturesByDate, pufCapturesByLocality, pufCapturesByProject, pufCapturesByTaxon];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufCaptureType, fufReleaseStatus, fufAgingSpecs,
     fufSexingSpecs,fufFat, fufMoltSpecs, fufTimeInterval, fufPerson, fufSurvey, fufMethod, fufIndividual,
     fufSamplingPlot, fufNeedsReview, fufEscaped, fufPhilornisPresence, fufBandReplaced];
@@ -443,7 +446,7 @@ const
 var
   sf: Integer;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters);
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters);
@@ -636,7 +639,7 @@ end;
 
 procedure TCapturesModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountTaxonFilter.Caption := rsNoneSelected;
     tvTaxaFilter.ClearChecked;
@@ -783,7 +786,7 @@ begin
   end;
 end;
 
-procedure TCapturesModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TCapturesModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 var
   aTaxon: Integer;
 begin
@@ -1201,94 +1204,97 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToTime(aValue, dt) then
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscDate, sdtTime, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{4}[-‒]{1}\d{4}$', aValue) then
-    begin
-      Crit := crBetween;
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      { split strings: unicode characters #$002D e #$2012 }
-      V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
-      V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, Crit,
-        False, V1, V2));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_NET_STATION_NAME, rscSamplingPlot, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDER_NAME, rscBander, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ANNOTATOR_NAME, rscAnnotator, sdtText, Crit,
-        True, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToDate(aValue, dt) then
+      begin
+        aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtDate, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToTime(aValue, dt) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscDate, sdtTime, crEqual,
+          False, aValue));
+      end
+      else
+      if ExecRegExpr('^\d{4}[-‒]{1}\d{4}$', aValue) then
+      begin
+        Crit := crBetween;
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        { split strings: unicode characters #$002D e #$2012 }
+        V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
+        V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, Crit,
+          False, V1, V2));
+      end
+      else
+      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      begin
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        m := ExtractDelimited(1, aValue, ['/']);
+        y := ExtractDelimited(2, aValue, ['/']);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_NET_STATION_NAME, rscSamplingPlot, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDER_NAME, rscBander, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ANNOTATOR_NAME, rscAnnotator, sdtText, Crit,
+          True, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 { TCapturesSubmoduleController }
 
-constructor TCapturesSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TCapturesSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbCaptures;
   FCaptionText := rsTitleCaptures;
-  case FOwner.TableType of
+  case TfrmCustomGrid(FOwner).TableType of
     tbSurveys:
       begin
         FDataSet := DMS.qCaptures;
-        FGrid := FOwner.gridChild4;
+        FGrid := TfrmCustomGrid(FOwner).gridChild4;
         FPageIndex := 3;
       end;
     tbIndividuals:
       begin
         FDataSet := DMI.qCaptures;
-        FGrid := FOwner.gridChild1;
+        FGrid := TfrmCustomGrid(FOwner).gridChild1;
         FPageIndex := 0;
       end;
   end;
@@ -1391,7 +1397,7 @@ begin
   end;
 end;
 
-procedure TCapturesSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TCapturesSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 var
   aTaxon: Integer;
 begin
@@ -1785,15 +1791,15 @@ end;
 
 { TFeathersModuleController }
 
-constructor TFeathersModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TFeathersModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbFeathers;
   FCaptionText := rsTitleFeathersAndMolt;
   FDataSet := DMG.qFeathers;
   FSupportedMedia := [amtImages];
-  FUiFlags := [gufShowVerifications, gufShowImages, gufShowSummary, gufShowInsertBatch,
-    gufPrintMain];
+  FUiFlags := [gufShowVerifications, gufShowImages, gufShowSummary, gufShowInsertBatch];
+  FPrintUiFlags := [pufFeathers];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufIndividual, fufPerson, fufTimeInterval];
 
   AddDefaultSort(COL_SAMPLE_DATE, sdDescending);
@@ -1803,7 +1809,7 @@ procedure TFeathersModuleController.ApplyFilters;
 var
   sf: Integer;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters, 'z.');
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
@@ -1834,7 +1840,7 @@ end;
 
 procedure TFeathersModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountSiteFilter.Caption := rsNoneSelected;
     tvSiteFilter.ClearChecked;
@@ -1877,7 +1883,7 @@ begin
   end;
 end;
 
-procedure TFeathersModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TFeathersModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
@@ -1916,56 +1922,59 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FEATHER_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, rscObserver, sdtText, Crit,
-        False, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FEATHER_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToDate(aValue, dt) then
+      begin
+        aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtDate, crEqual,
+          False, aValue));
+      end
+      else
+      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      begin
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        m := ExtractDelimited(1, aValue, ['/']);
+        y := ExtractDelimited(2, aValue, ['/']);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, rscObserver, sdtText, Crit,
+          False, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 { TFeathersSubmoduleController }
 
-constructor TFeathersSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TFeathersSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbFeathers;
   FCaptionText := rsTitleFeathersAndMolt;
   FDataSet := DMI.qFeathers;
-  FGrid := FOwner.gridChild2;
+  FGrid := TfrmCustomGrid(FOwner).gridChild2;
   FPageIndex := 1;
   FUiFlags := [gufShowVerifications];
 
@@ -1994,7 +2003,7 @@ begin
   end;
 end;
 
-procedure TFeathersSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TFeathersSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if Column.FieldName = COL_TAXON_NAME then
   begin

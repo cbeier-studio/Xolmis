@@ -5,8 +5,8 @@ unit modules_projects;
 interface
 
 uses
-  Classes, SysUtils, Graphics, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core;
 
 type
 
@@ -14,63 +14,63 @@ type
 
   TProjectsModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TProjectMembersSubmoduleController }
 
   TProjectMembersSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TProjectGoalsSubmoduleController }
 
   TProjectGoalsSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TProjectChronogramsSubmoduleController }
 
   TProjectChronogramsSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TProjectBudgetsSubmoduleController }
 
   TProjectBudgetsSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TProjectExpensesSubmoduleController }
 
   TProjectExpensesSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
@@ -78,18 +78,19 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
-  udm_main, udm_grid;
+  udm_main, udm_grid, ufrm_customgrid;
 
 { TProjectsModuleController }
 
-constructor TProjectsModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TProjectsModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjects;
   FCaptionText := rsTitleProjects;
   FDataSet := DMG.qProjects;
   FSupportedMedia := [amtDocuments];
-  FUiFlags := [gufShowSummary, gufShowDocs, gufPrintMain];
+  FUiFlags := [gufShowSummary, gufShowDocs];
+  FPrintUiFlags := [pufProjects];
   FFilterUiFlags := [fufMarked, fufDates];
 
   AddDefaultSort(COL_PROJECT_TITLE, sdAscending);
@@ -103,7 +104,7 @@ end;
 
 procedure TProjectsModuleController.ApplyFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
   end;
@@ -111,7 +112,7 @@ end;
 
 procedure TProjectsModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountDateFilter.Caption := rsNoneSelectedFemale;
     tvDateFilter.ClearChecked;
@@ -132,7 +133,7 @@ begin
   end;
 end;
 
-procedure TProjectsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TProjectsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if (Column.FieldName = COL_START_DATE) or
     (Column.FieldName = COL_PROTOCOL_NUMBER) then
@@ -167,68 +168,71 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtDate, crEqual,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_TITLE, rscTitle, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SHORT_TITLE, rscShortTitle, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROTOCOL_NUMBER, rscProtocolNr, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CONTACT_NAME, rscContactPerson, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_MAIN_GOAL, rscMainGoal, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_RISKS, rscRisks, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ABSTRACT, rscAbstract, sdtText, Crit,
-        False, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToDate(aValue, dt) then
+      begin
+        aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtDate, crEqual,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtDate, crEqual,
+          False, aValue));
+      end
+      else
+      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      begin
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        m := ExtractDelimited(1, aValue, ['/']);
+        y := ExtractDelimited(2, aValue, ['/']);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_TITLE, rscTitle, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SHORT_TITLE, rscShortTitle, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROTOCOL_NUMBER, rscProtocolNr, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CONTACT_NAME, rscContactPerson, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_MAIN_GOAL, rscMainGoal, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_RISKS, rscRisks, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ABSTRACT, rscAbstract, sdtText, Crit,
+          False, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 { TProjectMembersSubmoduleController }
 
-constructor TProjectMembersSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TProjectMembersSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectTeams;
   FCaptionText := rsTitleProjectMembers;
   FDataSet := DMG.qProjectTeam;
-  FGrid := FOwner.gridChild1;
+  FGrid := TfrmCustomGrid(FOwner).gridChild1;
   FPageIndex := 0;
   FUiFlags := [];
 
@@ -240,20 +244,20 @@ begin
 
 end;
 
-procedure TProjectMembersSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TProjectMembersSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;
 
 { TProjectGoalsSubmoduleController }
 
-constructor TProjectGoalsSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TProjectGoalsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectGoals;
   FCaptionText := rsTitleProjectGoals;
   FDataSet := DMG.qProjectGoals;
-  FGrid := FOwner.gridChild2;
+  FGrid := TfrmCustomGrid(FOwner).gridChild2;
   FPageIndex := 1;
   FUiFlags := [];
 
@@ -265,20 +269,20 @@ begin
 
 end;
 
-procedure TProjectGoalsSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TProjectGoalsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;
 
 { TProjectChronogramsSubmoduleController }
 
-constructor TProjectChronogramsSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TProjectChronogramsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectChronograms;
   FCaptionText := rsTitleProjectChronograms;
   FDataSet := DMG.qProjectChronogram;
-  FGrid := FOwner.gridChild3;
+  FGrid := TfrmCustomGrid(FOwner).gridChild3;
   FPageIndex := 2;
   FUiFlags := [];
 
@@ -290,20 +294,20 @@ begin
 
 end;
 
-procedure TProjectChronogramsSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TProjectChronogramsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;
 
 { TProjectBudgetsSubmoduleController }
 
-constructor TProjectBudgetsSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TProjectBudgetsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectBudgets;
   FCaptionText := rsTitleProjectBudgets;
   FDataSet := DMG.qProjectBudget;
-  FGrid := FOwner.gridChild4;
+  FGrid := TfrmCustomGrid(FOwner).gridChild4;
   FPageIndex := 3;
   FUiFlags := [];
 
@@ -316,20 +320,20 @@ begin
 
 end;
 
-procedure TProjectBudgetsSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TProjectBudgetsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;
 
 { TProjectExpensesSubmoduleController }
 
-constructor TProjectExpensesSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TProjectExpensesSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectExpenses;
   FCaptionText := rsTitleProjectExpenses;
   FDataSet := DMG.qProjectExpenses;
-  FGrid := FOwner.gridChild5;
+  FGrid := TfrmCustomGrid(FOwner).gridChild5;
   FPageIndex := 4;
   FUiFlags := [];
 
@@ -341,7 +345,7 @@ begin
 
 end;
 
-procedure TProjectExpensesSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TProjectExpensesSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;

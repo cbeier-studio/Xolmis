@@ -26,8 +26,9 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
-  DBControlGrid, data_types, data_filters, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA,
-  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class, models_media;
+  DBControlGrid, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA,
+  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class,
+  data_types, data_filters, models_media, modules_core;
 
 type
   { TStringMemoEditor }
@@ -1191,6 +1192,7 @@ type
     procedure tvTaxaFilterPaintText(Sender: TBaseVirtualTree; const TargetCanvas: TCanvas;
       Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType);
   private
+    FModule: TModuleController;
     FTableType, FChildTable: TTableType;
     FSearch: TCustomSearch;
     isFiltered: Boolean;
@@ -1215,6 +1217,7 @@ type
 
     panelTabs: specialize TFPGList<TCustomPanelTab>;
     procedure CreatePanelTabs;
+    procedure CreateModules;
 
     procedure AddAudio(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
     procedure AddDocument(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
@@ -1223,59 +1226,18 @@ type
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       isAnAlias: Boolean = False);
     procedure AddVideo(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
+
     procedure ApplyDarkMode;
     function AttachMediaDlg(aTableType: TTableType; aMediaType: TAttachMediaTypes = []): TMediaAttachment;
     procedure CellKeyPress(Sender: TObject; var Key: Char);
 
     procedure ClearSearch;
-    procedure ClearBandFilters;
-    procedure ClearBotanicTaxaFilters;
-    procedure ClearCaptureFilters;
-    procedure ClearEggFilters;
-    procedure ClearExpeditionFilters;
-    procedure ClearFeatherFilters;
-    procedure ClearGazetteerFilters;
-    procedure ClearIndividualFilters;
-    procedure ClearInstitutionFilters;
-    procedure ClearMethodFilters;
-    procedure ClearNestFilters;
-    procedure ClearNestRevisionFilters;
-    procedure ClearSamplingPlotFilters;
-    procedure ClearPeopleFilters;
-    procedure ClearPermitFilters;
-    procedure ClearProjectFilters;
-    procedure ClearSightingFilters;
-    procedure ClearSpecimenFilters;
-    procedure ClearSurveyFilters;
-    procedure ClearTaxonRankFilters;
-    procedure ClearZooTaxaFilters;
 
     function GetChildDataSet: TDataSet;
 
     procedure GetColumns;
 
     procedure GetFilters;
-    procedure GetBandFilters;
-    procedure GetBotanicTaxaFilters;
-    procedure GetCaptureFilters;
-    procedure GetEggFilters;
-    procedure GetExpeditionFilters;
-    procedure GetFeatherFilters;
-    procedure GetGazetteerFilters;
-    procedure GetIndividualFilters;
-    procedure GetInstitutionFilters;
-    procedure GetMethodFilters;
-    procedure GetNestFilters;
-    procedure GetNestRevisionFilters;
-    procedure GetSamplingPlotFilters;
-    procedure GetPeopleFilters;
-    procedure GetPermitFilters;
-    procedure GetProjectFilters;
-    procedure GetSightingFilters;
-    procedure GetSpecimenFilters;
-    procedure GetSurveyFilters;
-    procedure GetTaxonRankFilters;
-    procedure GetZooTaxaFilters;
 
     procedure HandleChildDataChange(PageIndex: Integer);
 
@@ -1293,25 +1255,6 @@ type
     procedure OpenSpecimenChilds;
     procedure OpenSurveyChilds;
 
-    procedure PrepareCanvasBands(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasEggs(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasExpeditions(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasFeathers(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasIndividuals(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasInstitutions(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasNestRevisions(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasNests(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasNetsEffort(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasPeople(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasPermanentNets(const Column: TColumn; const sender: TObject);
-    procedure PrepareCanvasPermits(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasProjects(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasSamplePreps(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasSightings(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasSpecimens(var Column: TColumn; var sender: TObject);
-    procedure PrepareCanvasSurveys(var Column: TColumn; var sender: TObject);
-
     procedure QuickAddChild(aInitialValue: String = '');
 
     procedure RefreshMap;
@@ -1320,52 +1263,8 @@ type
     procedure SaveColumnsConfig;
 
     procedure SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
-    procedure SetColumnsBands(var aGrid: TDBGrid);
-    procedure SetColumnsBotanicTaxa(var aGrid: TDBGrid);
-    procedure SetColumnsCaptures(var aGrid: TDBGrid);
-    procedure SetColumnsEggs(var aGrid: TDBGrid);
-    procedure SetColumnsExpeditions(var aGrid: TDBGrid);
-    procedure SetColumnsFeathers(var aGrid: TDBGrid);
-    procedure SetColumnsGazetteer(var aGrid: TDBGrid);
-    procedure SetColumnsIndividuals(var aGrid: TDBGrid);
-    procedure SetColumnsInstitutions(var aGrid: TDBGrid);
-    procedure SetColumnsMethods(var aGrid: TDBGrid);
-    procedure SetColumnsNestOwners(var aGrid: TDBGrid);
-    procedure SetColumnsNestRevisions(var aGrid: TDBGrid);
-    procedure SetColumnsNests(var aGrid: TDBGrid);
-    procedure SetColumnsSamplingPlots(var aGrid: TDBGrid);
-    procedure SetColumnsPeople(var aGrid: TDBGrid);
-    procedure SetColumnsPermanentNets(var aGrid: TDBGrid);
-    procedure SetColumnsPermits(var aGrid: TDBGrid);
-    procedure SetColumnsProjects(var aGrid: TDBGrid);
-    procedure SetColumnsSightings(var aGrid: TDBGrid);
-    procedure SetColumnsSpecimens(var aGrid: TDBGrid);
-    procedure SetColumnsSurveys(var aGrid: TDBGrid);
-    procedure SetColumnsTaxonRanks(var aGrid: TDBGrid);
-    procedure SetColumnsVegetation(var aGrid: TDBGrid);
-    procedure SetColumnsWeatherLogs(var aGrid: TDBGrid);
 
-    procedure SetGridAndChild;
-    procedure SetGridBands;
-    procedure SetGridBotanicTaxa;
-    procedure SetGridCaptures;
-    procedure SetGridEggs;
-    procedure SetGridExpeditions;
-    procedure SetGridFeathers;
-    procedure SetGridGazetteer;
-    procedure SetGridIndividuals;
-    procedure SetGridInstitutions;
-    procedure SetGridMethods;
-    procedure SetGridNestRevisions;
-    procedure SetGridNests;
-    procedure SetGridPeople;
-    procedure SetGridPermits;
-    procedure SetGridProjects;
-    procedure SetGridSamplingPlots;
-    procedure SetGridSightings;
-    procedure SetGridSpecimens;
-    procedure SetGridSurveys;
-    procedure SetGridTaxonRanks;
+    procedure SetModule;
 
     procedure SetAudios;
     procedure SetDocs;
@@ -1377,27 +1276,6 @@ type
     procedure SetVideos;
 
     function Search(aValue: String): Boolean;
-    function SearchBands(aValue: String): Boolean;
-    function SearchBotanicTaxa(aValue: String): Boolean;
-    function SearchCaptures(aValue: String): Boolean;
-    function SearchEggs(aValue: String): Boolean;
-    function SearchExpeditions(aValue: String): Boolean;
-    function SearchFeathers(aValue: String): Boolean;
-    function SearchGazetteer(aValue: String): Boolean;
-    function SearchIndividuals(aValue: String): Boolean;
-    function SearchInstitutions(aValue: String): Boolean;
-    function SearchMethods(aValue: String): Boolean;
-    function SearchNestRevisions(aValue: String): Boolean;
-    function SearchNests(aValue: String): Boolean;
-    function SearchSamplingPlots(aValue: String): Boolean;
-    function SearchPeople(aValue: String): Boolean;
-    function SearchPermits(aValue: String): Boolean;
-    function SearchProjects(aValue: String): Boolean;
-    function SearchSightings(aValue: String): Boolean;
-    function SearchSpecimens(aValue: String): Boolean;
-    function SearchSurveys(aValue: String): Boolean;
-    function SearchTaxonRanks(aValue: String): Boolean;
-    function SearchZooTaxa(aValue: String): Boolean;
 
     procedure Summary;
 
@@ -1416,26 +1294,6 @@ type
     procedure UpdateRowHeights;
 
     procedure UpdateFilterPanels;
-    procedure UpdateFilterPanelsBands;
-    procedure UpdateFilterPanelsBotanicTaxa;
-    procedure UpdateFilterPanelsCaptures;
-    procedure UpdateFilterPanelsEggs;
-    procedure UpdateFilterPanelsExpeditions;
-    procedure UpdateFilterPanelsFeathers;
-    procedure UpdateFilterPanelsGazetteer;
-    procedure UpdateFilterPanelsIndividuals;
-    procedure UpdateFilterPanelsInstitutions;
-    procedure UpdateFilterPanelsMethods;
-    procedure UpdateFilterPanelsNestRevisions;
-    procedure UpdateFilterPanelsNests;
-    procedure UpdateFilterPanelsSamplingPlots;
-    procedure UpdateFilterPanelsPeople;
-    procedure UpdateFilterPanelsPermits;
-    procedure UpdateFilterPanelsProjects;
-    procedure UpdateFilterPanelsSightings;
-    procedure UpdateFilterPanelsSpecimens;
-    procedure UpdateFilterPanelsSurveys;
-    procedure UpdateFilterPanelsZooTaxa;
   public
     property TableType: TTableType read FTableType write FTableType;
     property ChildTable: TTableType read FChildTable write FChildTable;
@@ -1489,6 +1347,9 @@ uses
   utils_finddialogs, utils_print, utils_validations, utils_gis, utils_taxonomy, utils_graphics,
   data_management, data_getvalue, data_columns, data_blobs, data_setparam, data_consts,
   models_taxonomy, models_users, models_record_types,
+  modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
+  modules_methods, modules_people, modules_permits, modules_projects, modules_sampling, modules_sampling_plots,
+  modules_sightings, modules_specimens,
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
@@ -3005,259 +2866,6 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.ClearBandFilters;
-begin
-  cbBandSizeFilter.ItemIndex := 0;
-
-  cbBandStatusFilter.ItemIndex := 0;
-  cbBandTypeFilter.ItemIndex := 0;
-  cbBandSourceFilter.ItemIndex := 0;
-
-  rbReportedAll.Checked := True;
-
-  ePersonFilter.Clear;
-  FPersonKeyFilter := 0;
-  eInstitutionFilter.Clear;
-  FInstitutionKeyFilter := 0;
-  eProjectFilter.Clear;
-  FProjectKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearBotanicTaxaFilters;
-begin
-  lblCountTaxonRanksFilter.Caption := rsNoneSelected;
-  clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
-
-  rbIsSynonymAll.Checked := True;
-  rbHasSynonymsAll.Checked := True;
-end;
-
-procedure TfrmCustomGrid.ClearCaptureFilters;
-begin
-  lblCountTaxonFilter.Caption := rsNoneSelected;
-  tvTaxaFilter.ClearChecked;
-
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  cbCaptureTypeFilter.ItemIndex := 0;
-  cbCaptureStatusFilter.ItemIndex := 0;
-
-  cbAgeFilter.ItemIndex := 0;
-  cbSkullOssificationFilter.ItemIndex := 0;
-  eHowAgedFilter.Clear;
-
-  cbSexFilter.ItemIndex := 0;
-  cbCloacalProtuberanceFilter.ItemIndex := 0;
-  cbBroodPatchFilter.ItemIndex := 0;
-  eHowSexedFilter.Clear;
-
-  cbFatFilter.ItemIndex := 0;
-
-  cbBodyMoltFilter.ItemIndex := 0;
-  cbFFMoltFilter.ItemIndex := 0;
-  cbFFWearFilter.ItemIndex := 0;
-  eMoltLimitsFilter.Clear;
-  eCycleCodeFilter.Clear;
-
-  eStartTimeFilter.Clear;
-  eEndTimeFilter.Clear;
-
-  ePersonFilter.Clear;
-  FPersonKeyFilter := 0;
-  eSurveyFilter.Clear;
-  FSurveyKeyFilter := 0;
-  eMethodFilter.Clear;
-  FMethodKeyFilter := 0;
-  eSamplingPlotFilter.Clear;
-  FSamplingPlotKeyFilter := 0;
-  eIndividualFilter.Clear;
-  FIndividualKeyFilter := 0;
-
-  rbNeedsReviewAll.Checked := True;
-  rbEscapedAll.Checked := True;
-
-  rbPhilornisAll.Checked := True;
-  rbReplacedBandAll.Checked := True;
-end;
-
-procedure TfrmCustomGrid.ClearEggFilters;
-begin
-  lblCountTaxonFilter.Caption := rsNoneSelected;
-  tvTaxaFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  cbEggShapeFilter.ItemIndex := 0;
-  cbEggPatternFilter.ItemIndex := 0;
-  cbEggTextureFilter.ItemIndex := 0;
-
-  ePersonFilter.Clear;
-  FPersonKeyFilter := 0;
-  eNestFilter.Clear;
-  FNestKeyFilter := 0;
-  eIndividualFilter.Clear;
-  FIndividualKeyFilter := 0;
-
-  rbHatchedAll.Checked := True;
-end;
-
-procedure TfrmCustomGrid.ClearExpeditionFilters;
-begin
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  eProjectFilter.Clear;
-  FProjectKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearFeatherFilters;
-begin
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  lblCountTaxonFilter.Caption := rsNoneSelected;
-  tvTaxaFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  eStartTimeFilter.Clear;
-  eEndTimeFilter.Clear;
-
-  ePersonFilter.Clear;
-  FPersonKeyFilter := 0;
-  eIndividualFilter.Clear;
-  FIndividualKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearGazetteerFilters;
-begin
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  cbSiteRankFilter.ItemIndex := 0;
-end;
-
-procedure TfrmCustomGrid.ClearIndividualFilters;
-begin
-  lblCountTaxonFilter.Caption := rsNoneSelected;
-  tvTaxaFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  cbSexFilter.ItemIndex := 0;
-  cbCloacalProtuberanceFilter.ItemIndex := 0;
-  cbBroodPatchFilter.ItemIndex := 0;
-  eHowSexedFilter.Clear;
-
-  cbAgeFilter.ItemIndex := 0;
-  cbSkullOssificationFilter.ItemIndex := 0;
-  eHowAgedFilter.Clear;
-
-  rbWithColorBandsAll.Checked := True;
-  rbWithRecapturesAll.Checked := True;
-
-  rbReplacedBandAll.Checked := True;
-
-  eNestFilter.Clear;
-  FNestKeyFilter := 0;
-  eIndividualFilter.Clear;
-  FIndividualKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearInstitutionFilters;
-begin
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-end;
-
-procedure TfrmCustomGrid.ClearMethodFilters;
-begin
-
-end;
-
-procedure TfrmCustomGrid.ClearNestFilters;
-begin
-  lblCountTaxonFilter.Caption := rsNoneSelected;
-  tvTaxaFilter.ClearChecked;
-
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  cbNestFateFilter.ItemIndex := 0;
-
-  cbNestSupportFilter.ItemIndex := 0;
-
-  ePersonFilter.Clear;
-  FPersonKeyFilter := 0;
-  eProjectFilter.Clear;
-  FProjectKeyFilter := 0;
-  ePlantFilter.Clear;
-  FPlantKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearNestRevisionFilters;
-begin
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  cbNestStatusFilter.ItemIndex := 0;
-  cbNestStageFilter.ItemIndex := 0;
-
-  eStartTimeFilter.Clear;
-  eEndTimeFilter.Clear;
-
-  ePersonFilter.Clear;
-  FPersonKeyFilter := 0;
-  eNestFilter.Clear;
-  FNestKeyFilter := 0;
-
-  rbNidoparasiteAll.Checked := True;
-  rbPhilornisAll.Checked := True;
-end;
-
-procedure TfrmCustomGrid.ClearSamplingPlotFilters;
-begin
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-end;
-
-procedure TfrmCustomGrid.ClearPeopleFilters;
-begin
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  eInstitutionFilter.Clear;
-  FInstitutionKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearPermitFilters;
-begin
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  eProjectFilter.Clear;
-  FProjectKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearProjectFilters;
-begin
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-end;
-
 procedure TfrmCustomGrid.ClearSearch;
 begin
   if not FCanToggle then
@@ -3266,37 +2874,7 @@ begin
   FCanToggle := False;
   rbMarkedAll.Checked := True;
 
-  case TableType of
-    tbNone: ;
-    //tbProjectTeams: ;
-    tbPermits:       ClearPermitFilters;
-    tbGazetteer:     ClearGazetteerFilters;
-    tbBotanicTaxa:   ClearBotanicTaxaFilters;
-    tbNests:         ClearNestFilters;
-    tbNestRevisions: ClearNestRevisionFilters;
-    tbEggs:          ClearEggFilters;
-    tbSamplingPlots: ClearSamplingPlotFilters;
-    tbTaxonRanks:    ClearTaxonRankFilters;
-    tbZooTaxa:       ClearZooTaxaFilters;
-    tbProjects:      ClearProjectFilters;
-    tbInstitutions:  ClearInstitutionFilters;
-    tbPeople:        ClearPeopleFilters;
-    tbExpeditions:   ClearExpeditionFilters;
-    tbSurveys:       ClearSurveyFilters;
-    tbMethods:       ClearMethodFilters;
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings:     ClearSightingFilters;
-    tbSpecimens:     ClearSpecimenFilters;
-    //tbSamplePreps: ;
-    //tbPermanentNets: ;
-    tbBands:         ClearBandFilters;
-    tbIndividuals:   ClearIndividualFilters;
-    tbCaptures:      ClearCaptureFilters;
-    tbFeathers:      ClearFeatherFilters;
-    //tbImages: ;
-    //tbAudioLibrary: ;
-  end;
+  FModule.ClearFilters;
 
   //EP.Clear;
   FSearch.QuickFilters.Clear;
@@ -3308,147 +2886,47 @@ begin
   LogDebug('Filters cleared');
 end;
 
-procedure TfrmCustomGrid.ClearSightingFilters;
+procedure TfrmCustomGrid.CreateModules;
 begin
-  lblCountTaxonFilter.Caption := rsNoneSelected;
-  tvTaxaFilter.ClearChecked;
-
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  eStartTimeFilter.Clear;
-  eEndTimeFilter.Clear;
-
-  ePersonFilter.Clear;
-  FPersonKeyFilter := 0;
-  eSurveyFilter.Clear;
-  FSurveyKeyFilter := 0;
-  eMethodFilter.Clear;
-  FMethodKeyFilter := 0;
-  eIndividualFilter.Clear;
-  FIndividualKeyFilter := 0;
-
-  rbRecordInEbirdAll.Checked := True;
-  rbOutOfSampleAll.Checked := True;
-end;
-
-procedure TfrmCustomGrid.ClearSpecimenFilters;
-begin
-  lblCountTaxonFilter.Caption := rsNoneSelected;
-  tvTaxaFilter.ClearChecked;
-
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  cbMaterialFilter.ItemIndex := 0;
-
-  eNestFilter.Clear;
-  FNestKeyFilter := 0;
-  eEggFilter.Clear;
-  FEggKeyFilter := 0;
-  eIndividualFilter.Clear;
-  FIndividualKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearSurveyFilters;
-begin
-  lblCountSiteFilter.Caption := rsNoneSelected;
-  tvSiteFilter.ClearChecked;
-
-  lblCountDateFilter.Caption := rsNoneSelectedFemale;
-  tvDateFilter.ClearChecked;
-
-  eStartTimeFilter.Clear;
-  eEndTimeFilter.Clear;
-
-  eMethodFilter.Clear;
-  FMethodKeyFilter := 0;
-  eProjectFilter.Clear;
-  FProjectKeyFilter := 0;
-  eSamplingPlotFilter.Clear;
-  FSamplingPlotKeyFilter := 0;
-  eExpeditionFilter.Clear;
-  FExpeditionKeyFilter := 0;
-end;
-
-procedure TfrmCustomGrid.ClearTaxonRankFilters;
-begin
-
-end;
-
-procedure TfrmCustomGrid.ClearZooTaxaFilters;
-begin
-  lblCountTaxonRanksFilter.Caption := rsNoneSelected;
-  clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
-
-  tsTaxonomyClements.Checked := False;
-  tsTaxonomyIoc.Checked := False;
-  tsTaxonomyCbro.Checked := False;
-
-  rbExtinctAll.Checked := True;
-
-  rbIsSynonymAll.Checked := True;
-  rbHasSynonymsAll.Checked := True;
+  case FTableType of
+    tbGazetteer:      FModule := TGazetteerModuleController.Create(Self);
+    tbSamplingPlots:  FModule := TSamplingPlotsModuleController.Create(Self);
+    tbInstitutions:   FModule := TInstitutionsModuleController.Create(Self);
+    tbPeople:         FModule := TPeopleModuleController.Create(Self);
+    tbProjects:       FModule := TProjectsModuleController.Create(Self);
+    tbPermits:        FModule := TPermitsModuleController.Create(Self);
+    tbBotanicTaxa:    FModule := TBotanicalTaxaModuleController.Create(Self);
+    tbBands:          FModule := TBandsModuleController.Create(Self);
+    tbIndividuals:    FModule := TIndividualsModuleController.Create(Self);
+    tbCaptures:       FModule := TCapturesModuleController.Create(Self);
+    tbFeathers:       FModule := TFeathersModuleController.Create(Self);
+    tbNests:          FModule := TNestsModuleController.Create(Self);
+    tbNestRevisions:  FModule := TNestRevisionsModuleController.Create(Self);
+    tbEggs:           FModule := TEggsModuleController.Create(Self);
+    tbMethods:        FModule := TMethodsModuleController.Create(Self);
+    tbExpeditions:    FModule := TExpeditionsModuleController.Create(Self);
+    tbSurveys:        FModule := TSurveysModuleController.Create(Self);
+    tbSightings:      FModule := TSightingsModuleController.Create(Self);
+    tbSpecimens:      FModule := TSpecimensModuleController.Create(Self);
+  else
+    raise Exception.Create(rsErrorModuleNotSupported);
+  end;
 end;
 
 procedure TfrmCustomGrid.CreatePanelTabs;
 var
   PanelTab: TCustomPanelTab;
-  Titles: array of string;
-  Counts: array of Integer;
   i: Integer;
   XPos: Integer;
 begin
-  // Define tabs titles
-  case FTableType of
-    tbIndividuals:
-      begin
-        Titles := [rsTitleCaptures, rsCaptionFeathers, rsTitleSightings, rsTitleNests, rsTitleSpecimens];
-        Counts := [0, 0, 0, 0, 0];
-      end;
-    tbNests:
-      begin
-        Titles := [rsTitleNestOwners, rsTitleNestRevisions, rsTitleEggs];
-        Counts := [0, 0, 0];
-      end;
-    tbExpeditions:
-      begin
-        Titles := [rsTitleSurveys];
-        Counts := [0];
-      end;
-    tbSurveys:
-      begin
-        Titles := [rsTitleSurveyTeam, rsTitleNetsEffort, rsTitleWeather, rsTitleCaptures, rsTitleSightings, rsTitleVegetation];
-        Counts := [0, 0, 0, 0, 0, 0];
-      end;
-    tbSpecimens:
-      begin
-        Titles := [rsTitleSpecimenCollectors, rsTitleSamplePreps];
-        Counts := [0, 0];
-      end;
-    tbSamplingPlots:
-      begin
-        Titles := [rsTitlePermanentNets];
-        Counts := [0];
-      end;
-    tbProjects:
-      begin
-        Titles := [rsTitleProjectMembers, rsTitleGoals, rsTitleChronogram, rsTitleBudget, rsTitleExpenses];
-        Counts := [0, 0, 0, 0, 0];
-      end;
-  end;
-
   XPos := 70;
 
-  for i := 0 to High(Titles) do
+  if FModule.Submodules.Count = 0 then
+    Exit;
+
+  for i := 0 to FModule.Submodules.Count - 1 do
   begin
-    PanelTab := TCustomPanelTab.Create(pChildsBar, Self, Titles[i], Counts[i], i);
+    PanelTab := TCustomPanelTab.Create(pChildsBar, Self, FModule.Submodules[i].CaptionText, 0, i);
     PanelTab.Left := XPos;
     PanelTab.Top := 0; //i * (PanelTab.Height + 5) + 10;
 
@@ -4107,12 +3585,7 @@ end;
 
 procedure TfrmCustomGrid.DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
   AState: TGridDrawState);
-var
-  //MyTextStyle: TTextStyle;
-  aTable: TTableType;
 begin
-  aTable := tbNone;
-
   if (Column.Visible = False) then
     Exit;
   if (gdSelected in AState) or (gdFixed in AState) then
@@ -4120,127 +3593,26 @@ begin
 
   if Sender = DBG then
   begin
-    aTable := FTableType
+    FModule.PrepareCanvas(Column, Sender);
   end
   else
-  begin
-    case FTableType of
-      tbIndividuals:
-      begin
-        if Sender = gridChild1 then
-          aTable := tbCaptures
-        else
-        if Sender = gridChild2 then
-          aTable := tbFeathers
-        else
-        if Sender = gridChild3 then
-          aTable := tbSightings
-        else
-        if Sender = gridChild4 then
-          aTable := tbNests
-        else
-        if Sender = gridChild5 then
-          aTable := tbSpecimens;
-      end;
-      tbNests:
-      begin
-        if Sender = gridChild1 then
-          aTable := tbNestOwners
-        else
-        if Sender = gridChild2 then
-          aTable := tbNestRevisions
-        else
-        if Sender = gridChild3 then
-          aTable := tbEggs;
-      end;
-      tbSurveys:
-      begin
-        if Sender = gridChild1 then
-          aTable := tbSurveyTeams
-        else
-        if Sender = gridChild2 then
-          aTable := tbNetsEffort
-        else
-        if Sender = gridChild3 then
-          aTable := tbWeatherLogs
-        else
-        if Sender = gridChild4 then
-          aTable := tbCaptures
-        else
-        if Sender = gridChild5 then
-          aTable := tbSightings
-        else
-        if Sender = gridChild6 then
-          aTable := tbVegetation;
-      end;
-      tbSpecimens:
-      begin
-        if Sender = gridChild1 then
-          aTable := tbSpecimenCollectors
-        else
-        if Sender = gridChild2 then
-          aTable := tbSamplePreps;
-      end;
-      tbSamplingPlots:
-      begin
-        if Sender = gridChild1 then
-          aTable := tbPermanentNets;
-      end;
-      tbProjects:
-      begin
-        if Sender = gridChild1 then
-          aTable := tbProjectTeams
-        else
-        if Sender = gridChild2 then
-          aTable := tbProjectGoals
-        else
-        if Sender = gridChild3 then
-          aTable := tbProjectChronograms
-        else
-        if Sender = gridChild4 then
-          aTable := tbProjectBudgets
-        else
-        if Sender = gridChild5 then
-          aTable := tbProjectExpenses;
-      end;
-    end;
-  end;
-
-  case aTable of
-    tbInstitutions:   PrepareCanvasInstitutions(Column, sender);
-    tbPeople:         PrepareCanvasPeople(Column, sender);
-    tbBands:          PrepareCanvasBands(Column, sender);
-    tbIndividuals:    PrepareCanvasIndividuals(Column, sender);
-    tbCaptures:       PrepareCanvasCaptures(Column, sender);
-    tbFeathers:       PrepareCanvasFeathers(Column, Sender);
-    tbNests:          PrepareCanvasNests(Column, sender);
-    //tbNestOwners: ;
-    tbNestRevisions:  PrepareCanvasNestRevisions(Column, sender);
-    tbEggs:           PrepareCanvasEggs(Column, sender);
-    tbExpeditions:    PrepareCanvasExpeditions(Column, sender);
-    tbSurveys:        PrepareCanvasSurveys(Column, sender);
-    tbSightings:      PrepareCanvasSightings(Column, sender);
-    tbNetsEffort:     PrepareCanvasNetsEffort(Column, sender);
-    tbSpecimens:      PrepareCanvasSpecimens(Column, sender);
-    tbSamplePreps:    PrepareCanvasSamplePreps(Column, sender);
-    tbProjects:       PrepareCanvasProjects(Column, sender);
-    tbPermits:        PrepareCanvasPermits(Column, sender);
-    tbPermanentNets:  PrepareCanvasPermanentNets(Column, sender);
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    tbGazetteer: ;
-    tbSamplingPlots: ;
-    tbProjectTeams: ;
-    tbTaxonRanks: ;
-    tbZooTaxa: ;
-    tbBotanicTaxa: ;
-    //tbBandHistory: ;
-    //tbMethods: ;
-    tbSurveyTeams: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
-  end;
+  if (Sender = gridChild1) and (Assigned(gridChild1.DataSource)) then
+    FModule.Submodules[0].PrepareCanvas(Column, Sender)
+  else
+  if (Sender = gridChild2) and (Assigned(gridChild2.DataSource)) then
+    FModule.Submodules[1].PrepareCanvas(Column, Sender)
+  else
+  if (Sender = gridChild3) and (Assigned(gridChild3.DataSource)) then
+    FModule.Submodules[2].PrepareCanvas(Column, Sender)
+  else
+  if (Sender = gridChild4) and (Assigned(gridChild4.DataSource)) then
+    FModule.Submodules[3].PrepareCanvas(Column, Sender)
+  else
+  if (Sender = gridChild5) and (Assigned(gridChild5.DataSource)) then
+    FModule.Submodules[4].PrepareCanvas(Column, Sender)
+  else
+  if (Sender = gridChild6) and (Assigned(gridChild6.DataSource)) then
+    FModule.Submodules[5].PrepareCanvas(Column, Sender);
 
   // Here you choose what column will be affected (the columns of the DBGrid not SQL).
   //if Column.Field.DataType in [ftMemo,ftWideMemo] then
@@ -5059,6 +4431,8 @@ begin
   panelTabs.Free;
 
   FreeAndNil(FSearch);
+
+  FreeAndNil(FModule);
 end;
 
 procedure TfrmCustomGrid.FormDropFiles(Sender: TObject; const FileNames: array of string);
@@ -5069,7 +4443,7 @@ var
   SupportedDocs: TStringList;
   importingMediaTypes, unsupportedMedia: TAttachMediaTypes;
 begin
-  if (FSupportedMediaTypes = []) then
+  if (FModule.SupportedMedia = []) then
   begin
     MsgDlg(rsTitleInformation, rsModuleDoesNotSupportAttachments, mtInformation);
     Exit;
@@ -5126,7 +4500,7 @@ begin
     end;
 
     // Check if there are unsupported files in the current module
-    unsupportedMedia := importingMediaTypes - FSupportedMediaTypes;
+    unsupportedMedia := importingMediaTypes - FModule.SupportedMedia;
     if unsupportedMedia <> [] then
     begin
       MsgDlg(rsTitleInformation, rsModuleDoesNotSupportSomeFilesBeingAttached, mtInformation);
@@ -5390,6 +4764,9 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  // Initialize module
+  CreateModules;
+
   FSearch := TCustomSearch.Create(FTableType);
 
   mapGeo.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
@@ -5404,318 +4781,11 @@ begin
   Application.ProcessMessages;
 
   { Load datasources }
-  SetGridAndChild;
+  SetModule;
 
   // Use a timer to load the rest to speed up opening
   TimerOpen.Enabled := True;
   TimerUpdate.Enabled := True;
-end;
-
-procedure TfrmCustomGrid.GetBandFilters;
-const
-  BandStatus: array of String = ('D', 'U', 'R', 'T', 'Q', 'P');
-  BandTypes: array of String = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
-  BandSources: array of String = ('A', 'T', 'L', 'D', 'F');
-var
-  sf: Integer;
-begin
-  if cbBandSizeFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_SIZE, 'Band size', sdtText,
-      crEqual, False, cbBandSizeFilter.Text));
-  end;
-
-  if cbBandStatusFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_STATUS, 'Band status', sdtText,
-      crEqual, False, BandStatus[cbBandStatusFilter.ItemIndex - 1]));
-  end;
-
-  if cbBandTypeFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_TYPE, 'Band type', sdtText,
-      crEqual, False, BandTypes[cbBandTypeFilter.ItemIndex - 1]));
-  end;
-
-  if cbBandSourceFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_SOURCE, 'Band source', sdtText,
-      crEqual, False, BandSources[cbBandSourceFilter.ItemIndex - 1]));
-  end;
-
-  if rbReportedYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_REPORTED, 'Band reported', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbReportedNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_REPORTED, 'Band reported', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-
-  if ePersonFilter.Text <> EmptyStr then
-    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
-
-  if FInstitutionKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUPPLIER_ID, 'Supplier', sdtInteger,
-      crEqual, False, IntToStr(FInstitutionKeyFilter)));
-  end;
-
-  if FProjectKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, 'Project', sdtInteger,
-      crEqual, False, IntToStr(FProjectKeyFilter)));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetBotanicTaxaFilters;
-var
-  sf, cc, i: Integer;
-begin
-  cc := 0;
-  for i := 0 to clbTaxonRanksFilter.Count - 1 do
-    if clbTaxonRanksFilter.Checked[i] then
-      Inc(cc);
-  if cc > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    for i := 0 to clbTaxonRanksFilter.Count - 1 do
-      if clbTaxonRanksFilter.Checked[i] then
-        FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create(COL_RANK_ID, 'Rank', sdtInteger,
-          crEqual, False, IntToStr(GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_NAME, clbTaxonRanksFilter.Items[i]))));
-  end;
-
-  if rbIsSynonymYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_VALID_ID, 'Valid name', sdtInteger,
-      crNotEqual, False, '0'));
-  end;
-  if rbIsSynonymNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_VALID_ID, 'Valid name', sdtInteger,
-      crEqual, False, '0'));
-  end;
-  //if rbHasSynonymsYes.Checked then
-  //begin
-  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-  //  FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-  //    crMoreThan, False, '1'));
-  //end;
-  //if rbHasSynonymsNo.Checked then
-  //begin
-  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-  //  FSearch.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-  //    crEqual, False, '0'));
-  //end;
-end;
-
-procedure TfrmCustomGrid.GetCaptureFilters;
-const
-  BirdAge: array of String = ('U', 'A', 'I', 'J', 'N', 'F', 'S', 'T', '4', '5');
-  BirdSex: array of String = ('M', 'F', 'U');
-  CaptureType: array of String = ('N', 'R', 'S', 'C', 'U');
-  CaptureStatus: array of String = ('N', 'I', 'W', 'X', 'D');
-var
-  sf: Integer;
-begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters);
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters);
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if cbCaptureTypeFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURE_TYPE, 'Type', sdtText,
-      crEqual, False, CaptureType[cbCaptureTypeFilter.ItemIndex - 1]));
-  end;
-
-  if cbCaptureStatusFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUBJECT_STATUS, 'Status', sdtText,
-      crEqual, False, CaptureStatus[cbCaptureStatusFilter.ItemIndex - 1]));
-  end;
-
-  if cbAgeFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUBJECT_AGE, 'Age', sdtText,
-      crEqual, False, BirdAge[cbAgeFilter.ItemIndex - 1]));
-  end;
-  if eHowAgedFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_AGED, 'How was aged', sdtText,
-      crLike, False, eHowAgedFilter.Text));
-  end;
-  if cbSexFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUBJECT_SEX, 'Sex', sdtText,
-      crEqual, False, BirdSex[cbSexFilter.ItemIndex - 1]));
-  end;
-  if eHowSexedFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_SEXED, 'How was sexed', sdtText,
-      crLike, False, eHowSexedFilter.Text));
-  end;
-
-  if cbCloacalProtuberanceFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CLOACAL_PROTUBERANCE, 'Cloacal protuberance', sdtText,
-      crEqual, False, cbCloacalProtuberanceFilter.Text));
-  end;
-  if cbBroodPatchFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BROOD_PATCH, 'Brood patch', sdtText,
-      crEqual, False, cbBroodPatchFilter.Text));
-  end;
-
-  if cbFatFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FAT, 'Subcutaneous fat', sdtText,
-      crEqual, False, cbFatFilter.Text));
-  end;
-
-  if cbBodyMoltFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BODY_MOLT, 'Body molt', sdtText,
-      crEqual, False, cbBodyMoltFilter.Text));
-  end;
-  if cbFFMoltFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FLIGHT_FEATHERS_MOLT, 'Flight feathers molt', sdtText,
-      crEqual, False, cbFFMoltFilter.Text));
-  end;
-  if cbFFWearFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FLIGHT_FEATHERS_WEAR, 'Flight feathers wear', sdtText,
-      crEqual, False, cbFFWearFilter.Text));
-  end;
-  if eMoltLimitsFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MOLT_LIMITS, 'Molt limits', sdtText,
-      crLike, False, eMoltLimitsFilter.Text));
-  end;
-  if eCycleCodeFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CYCLE_CODE, 'Molt cycle', sdtText,
-      crLike, False, eCycleCodeFilter.Text));
-  end;
-
-  if cbSkullOssificationFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SKULL_OSSIFICATION, 'Skull ossification', sdtText,
-      crEqual, False, cbSkullOssificationFilter.Text));
-  end;
-
-  if FPersonKeyFilter > 0 then
-    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
-
-  if eStartTimeFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    if eEndTimeFilter.Text <> EmptyStr then
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, 'Time', sdtTime,
-        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
-    else
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, 'Time', sdtTime,
-        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-  end;
-
-  if FSurveyKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SURVEY_ID, 'Survey', sdtInteger,
-      crEqual, False, IntToStr(FSurveyKeyFilter)));
-  end;
-  if FMethodKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_METHOD_ID, 'Method', sdtInteger,
-      crEqual, False, IntToStr(FMethodKeyFilter)));
-  end;
-
-  if FIndividualKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, 'Individual', sdtInteger,
-      crEqual, False, IntToStr(FIndividualKeyFilter)));
-  end;
-
-  if rbNeedsReviewYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEEDS_REVIEW, 'Needs review', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbNeedsReviewNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEEDS_REVIEW, 'Needs review', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-
-  if rbEscapedYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_ESCAPED, 'Escaped', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbEscapedNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_ESCAPED, 'Escaped', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-
-  if rbPhilornisYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PHILORNIS_LARVAE_TALLY, '# Philornis larvae', sdtInteger,
-      crMoreThan, False, '1'));
-  end;
-  if rbPhilornisNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PHILORNIS_LARVAE_TALLY, '# Philornis larvae', sdtInteger,
-      crEqual, False, '0'));
-  end;
-
-  if rbReplacedBandYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, 'Removed band', sdtInteger,
-      crMoreThan, False, '1'));
-  end;
-  if rbReplacedBandNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, 'Removed band', sdtInteger,
-      crEqual, False, '0'));
-  end;
 end;
 
 function TfrmCustomGrid.GetChildDataSet: TDataSet;
@@ -5818,111 +4888,6 @@ begin
   gridColumns.ColWidths[0] := 40;
 end;
 
-procedure TfrmCustomGrid.GetEggFilters;
-const
-  EggShapes: array of String = ('S', 'E', 'O', 'P', 'C', 'B', 'Y', 'L', 'U');
-  EggPatterns: array of String = ('P', 'B', 'S', 'T', 'W', 'PS', 'BS', 'U');
-  EggTextures: array of String = ('C', 'S', 'G', 'P', 'U');
-var
-  sf: Integer;
-begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if ePersonFilter.Text <> EmptyStr then
-    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
-
-  if FNestKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_ID, 'Nest', sdtInteger,
-      crEqual, False, IntToStr(FNestKeyFilter)));
-  end;
-
-  if FIndividualKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, 'Individual', sdtInteger,
-      crEqual, False, IntToStr(FIndividualKeyFilter)));
-  end;
-
-  if cbEggShapeFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EGG_SHAPE, 'Shape', sdtText,
-      crEqual, False, EggShapes[cbEggShapeFilter.ItemIndex - 1]));
-  end;
-  if cbEggPatternFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EGGSHELL_PATTERN, 'Pattern', sdtText,
-      crEqual, False, EggPatterns[cbEggPatternFilter.ItemIndex - 1]));
-  end;
-  if cbEggTextureFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EGGSHELL_TEXTURE, 'Texture', sdtText,
-      crEqual, False, EggTextures[cbEggTextureFilter.ItemIndex - 1]));
-  end;
-
-  if rbHatchedYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EGG_HATCHED, 'Hatched', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbHatchedNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EGG_HATCHED, 'Hatched', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetExpeditionFilters;
-var
-  sf: Integer;
-begin
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if FProjectKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, 'Project', sdtInteger,
-      crEqual, False, IntToStr(FProjectKeyFilter)));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetFeatherFilters;
-var
-  sf: Integer;
-begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
-
-  if ePersonFilter.Text <> EmptyStr then
-    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
-
-  if eStartTimeFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    if eEndTimeFilter.Text <> EmptyStr then
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SAMPLE_TIME, 'Time', sdtTime,
-        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
-    else
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SAMPLE_TIME, 'Time', sdtTime,
-        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-  end;
-
-  if FIndividualKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, 'Individual', sdtInteger,
-      crEqual, False, IntToStr(FIndividualKeyFilter)));
-  end;
-end;
-
 procedure TfrmCustomGrid.GetFilters;
 var
   sf: Integer;
@@ -5946,535 +4911,10 @@ begin
       crEqual, False, '0'));
   end;
 
-  case TableType of
-    tbNone: ;
-    tbProjectTeams: ;
-    tbPermits:       GetPermitFilters;
-    tbGazetteer:     GetGazetteerFilters;
-    tbBotanicTaxa:   GetBotanicTaxaFilters;
-    tbNests:         GetNestFilters;
-    tbNestRevisions: GetNestRevisionFilters;
-    tbEggs:          GetEggFilters;
-    tbSamplingPlots: GetSamplingPlotFilters;
-    tbTaxonRanks:    GetTaxonRankFilters;
-    tbZooTaxa:       GetZooTaxaFilters;
-    tbProjects:      GetProjectFilters;
-    tbInstitutions:  GetInstitutionFilters;
-    tbPeople:        GetPeopleFilters;
-    tbExpeditions:   GetExpeditionFilters;
-    tbSurveys:       GetSurveyFilters;
-    tbMethods:       GetMethodFilters;
-    tbSurveyTeams: ;
-    tbNetsEffort: ;
-    tbSightings:     GetSightingFilters;
-    tbSpecimens:     GetSpecimenFilters;
-    tbSamplePreps: ;
-    tbPermanentNets: ;
-    tbBands:         GetBandFilters;
-    tbIndividuals:   GetIndividualFilters;
-    tbCaptures:      GetCaptureFilters;
-    tbFeathers:      GetFeatherFilters;
-    tbImages: ;
-    tbAudioLibrary: ;
-  end;
+  FModule.ApplyFilters;
 
   isFiltered := FSearch.QuickFilters.Count > 0;
   FCanToggle := True;
-end;
-
-procedure TfrmCustomGrid.GetGazetteerFilters;
-const
-  SiteRanks: array of String = ('P', 'E', 'R', 'M', 'D', 'L');
-var
-  sf: Integer;
-begin
-  if cbSiteRankFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SITE_RANK, 'Site rank', sdtText,
-      crEqual, False, SiteRanks[cbSiteRankFilter.ItemIndex - 1]));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetIndividualFilters;
-const
-  BirdAge: array of String = ('U', 'A', 'I', 'J', 'N', 'F', 'S', 'T', '4', '5');
-  BirdSex: array of String = ('M', 'F', 'U');
-var
-  sf: Integer;
-begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if cbSexFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_SEX, 'Sex', sdtText,
-      crEqual, False, BirdSex[cbSexFilter.ItemIndex - 1]));
-  end;
-  if cbAgeFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_AGE, 'Age', sdtText,
-      crEqual, False, BirdAge[cbAgeFilter.ItemIndex - 1]));
-  end;
-
-  if rbWithColorBandsYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_RIGHT_TARSUS, 'Right tarsus', sdtText,
-      crNotEqual, False, ''));
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_LEFT_TARSUS, 'Left tarsus', sdtText,
-      crNotEqual, False, ''));
-  end;
-  if rbWithColorBandsNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_RIGHT_TARSUS, 'Right tarsus', sdtText,
-      crEqual, False, ''));
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_LEFT_TARSUS, 'Left tarsus', sdtText,
-      crEqual, False, ''));
-  end;
-
-  if rbWithRecapturesYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURES_TALLY, 'Captures', sdtInteger,
-      crMoreThan, True, '2'));
-  end;
-  if rbWithRecapturesNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURES_TALLY, 'Captures', sdtInteger,
-      crLessThan, True, '1'));
-  end;
-
-  if FNestKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_ID, 'Nest', sdtInteger,
-      crEqual, False, IntToStr(FNestKeyFilter)));
-  end;
-
-  if FIndividualKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FATHER_ID, 'Father', sdtInteger,
-      crEqual, False, IntToStr(FIndividualKeyFilter)));
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MOTHER_ID, 'Mother', sdtInteger,
-      crEqual, False, IntToStr(FIndividualKeyFilter)));
-  end;
-
-  if rbReplacedBandYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, 'Removed band', sdtInteger,
-      crMoreThan, False, '1'));
-  end;
-  if rbReplacedBandNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, 'Removed band', sdtInteger,
-      crEqual, False, '0'));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetInstitutionFilters;
-begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'it.');
-end;
-
-procedure TfrmCustomGrid.GetMethodFilters;
-begin
-
-end;
-
-procedure TfrmCustomGrid.GetNestFilters;
-const
-  NestFate: array of String = ('P', 'S', 'U');
-  NestSupport: array of String = ('G', 'P', 'H', 'F', 'S', 'C', 'A', 'O');
-var
-  sf: Integer;
-begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if cbNestFateFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_FATE, 'Nest fate', sdtText,
-      crEqual, False, NestFate[cbNestFateFilter.ItemIndex - 1]));
-  end;
-  if cbNestSupportFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUPPORT_TYPE, 'Support type', sdtText,
-      crEqual, False, NestSupport[cbNestSupportFilter.ItemIndex - 1]));
-  end;
-
-  if ePersonFilter.Text <> EmptyStr then
-    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
-
-  if FProjectKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, 'Project', sdtInteger,
-      crEqual, False, IntToStr(FProjectKeyFilter)));
-  end;
-
-  if FPlantKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUPPORT_PLANT_1_ID, 'Support plant 1', sdtInteger,
-      crEqual, False, IntToStr(FPlantKeyFilter)));
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUPPORT_PLANT_2_ID, 'Support plant 2', sdtInteger,
-      crEqual, False, IntToStr(FPlantKeyFilter)));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetNestRevisionFilters;
-const
-  NestStatus: array of String = ('A', 'I', 'U');
-  NestStages: array of String = ('C', 'L', 'I', 'H', 'N', 'X', 'U');
-var
-  sf: Integer;
-begin
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if cbNestStatusFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_STATUS, 'Nest status', sdtText,
-      crEqual, False, NestStatus[cbNestStatusFilter.ItemIndex - 1]));
-  end;
-  if cbNestStageFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_STAGE, 'Nest stage', sdtText,
-      crEqual, False, NestStages[cbNestStageFilter.ItemIndex - 1]));
-  end;
-
-  if ePersonFilter.Text <> EmptyStr then
-    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
-
-  if eStartTimeFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    if eEndTimeFilter.Text <> EmptyStr then
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REVISION_TIME, 'Time', sdtTime,
-        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
-    else
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REVISION_TIME, 'Time', sdtTime,
-        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-  end;
-
-  if FNestKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_ID, 'Nest', sdtInteger,
-      crEqual, False, IntToStr(FNestKeyFilter)));
-  end;
-
-  if rbNidoparasiteYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NIDOPARASITE_ID, 'Nidoparasite', sdtInteger,
-      crMoreThan, False, '1'));
-  end;
-  if rbNidoparasiteNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NIDOPARASITE_ID, 'Nidoparasite', sdtInteger,
-      crEqual, False, '0'));
-  end;
-
-  if rbPhilornisYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HAVE_PHILORNIS_LARVAE, 'Philornis larvae', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbPhilornisNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HAVE_PHILORNIS_LARVAE, 'Philornis larvae', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetSamplingPlotFilters;
-begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
-end;
-
-procedure TfrmCustomGrid.GetPeopleFilters;
-var
-  sf: Integer;
-begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'p.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if FInstitutionKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INSTITUTION_ID, 'Institution', sdtInteger,
-      crEqual, False, IntToStr(FInstitutionKeyFilter)));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetPermitFilters;
-const
-  PermitTypes: array of String = ('B', 'C', 'R', 'E', 'T', 'O');
-var
-  sf: Integer;
-begin
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if FProjectKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, 'Project', sdtInteger,
-      crEqual, False, IntToStr(FProjectKeyFilter)));
-  end;
-
-  if cbPermitTypeFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PERMIT_TYPE, 'Permit type', sdtText,
-      crEqual, False, PermitTypes[cbPermitTypeFilter.ItemIndex - 1]));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetProjectFilters;
-begin
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-end;
-
-procedure TfrmCustomGrid.GetSightingFilters;
-var
-  sf: Integer;
-begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if ePersonFilter.Text <> EmptyStr then
-    PersonFilterToSearch(FTableType, FSearch.QuickFilters, FPersonKeyFilter);
-
-  if eStartTimeFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    if eEndTimeFilter.Text <> EmptyStr then
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SIGHTING_TIME, 'Time', sdtTime,
-        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
-    else
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SIGHTING_TIME, 'Time', sdtTime,
-        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-  end;
-
-  if FSurveyKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SURVEY_ID, 'Survey', sdtInteger,
-      crEqual, False, IntToStr(FSurveyKeyFilter)));
-  end;
-  if FMethodKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_METHOD_ID, 'Method', sdtInteger,
-      crEqual, False, IntToStr(FMethodKeyFilter)));
-  end;
-
-  if FIndividualKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, 'Individual', sdtInteger,
-      crEqual, False, IntToStr(FIndividualKeyFilter)));
-  end;
-
-  if rbRecordInEbirdYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EBIRD_AVAILABLE, 'Record is on eBird', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbRecordInEbirdNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EBIRD_AVAILABLE, 'Record is on eBird', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-
-  if rbOutOfSampleYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NOT_SURVEYING, 'Out of sample', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbOutOfSampleNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NOT_SURVEYING, 'Out of sample', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetSpecimenFilters;
-const
-  SampleTypes: array of String = ('WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');
-var
-  sf: Integer;
-begin
-  TaxonFilterToSearch(tvTaxaFilter, FSearch.QuickFilters, 'z.');
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'g.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if cbMaterialFilter.ItemIndex > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SAMPLE_TYPE, 'Sample type', sdtText,
-      crEqual, False, SampleTypes[cbMaterialFilter.ItemIndex - 1]));
-  end;
-
-  if FNestKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_ID, 'Nest', sdtInteger,
-      crEqual, False, IntToStr(FNestKeyFilter)));
-  end;
-  if FEggKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EGG_ID, 'Egg', sdtInteger,
-      crEqual, False, IntToStr(FEggKeyFilter)));
-  end;
-
-  if FIndividualKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, 'Individual', sdtInteger,
-      crEqual, False, IntToStr(FIndividualKeyFilter)));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetSurveyFilters;
-var
-  sf: Integer;
-begin
-  SiteFilterToSearch(tvSiteFilter, FSearch.QuickFilters, 'gl.');
-  DateFilterToSearch(FTableType, tvDateFilter, FSearch.QuickFilters);
-
-  if eStartTimeFilter.Text <> EmptyStr then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    if eEndTimeFilter.Text <> EmptyStr then
-    begin
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_START_TIME, 'Start time', sdtTime,
-        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)));
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_END_TIME, 'End time', sdtTime,
-        crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)));
-    end
-    else
-    begin
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_START_TIME, 'Start time', sdtTime,
-        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-      FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_END_TIME, 'End time', sdtTime,
-        crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-    end;
-  end;
-
-  if FMethodKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_METHOD_ID, 'Method', sdtInteger,
-      crEqual, False, IntToStr(FMethodKeyFilter)));
-  end;
-
-  if FProjectKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, 'Project', sdtInteger,
-      crEqual, False, IntToStr(FProjectKeyFilter)));
-  end;
-
-  if FExpeditionKeyFilter > 0 then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EXPEDITION_ID, 'Expedition', sdtInteger,
-      crEqual, False, IntToStr(FExpeditionKeyFilter)));
-  end;
-end;
-
-procedure TfrmCustomGrid.GetTaxonRankFilters;
-begin
-
-end;
-
-procedure TfrmCustomGrid.GetZooTaxaFilters;
-var
-  sf: Integer;
-begin
-  //if RanksFilter <> EmptyStr then
-  //  aList.Add(RanksFilter);
-
-  if tsTaxonomyClements.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('clements_taxonomy', 'Clements/eBird', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if tsTaxonomyIoc.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('ioc_taxonomy', 'IOC', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if tsTaxonomyCbro.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('cbro_taxonomy', 'CBRO', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-
-  if rbExtinctYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EXTINCT, 'Extinct', sdtBoolean,
-      crEqual, False, '1'));
-  end;
-  if rbExtinctNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EXTINCT, 'Extinct', sdtBoolean,
-      crEqual, False, '0'));
-  end;
-
-  if rbIsSynonymYes.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_VALID_ID, 'Valid name', sdtInteger,
-      crNotEqual, False, '0'));
-  end;
-  if rbIsSynonymNo.Checked then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_VALID_ID, 'Valid name', sdtInteger,
-      crEqual, False, '0'));
-  end;
-
-  //if rbHasSynonymsYes.Checked then
-  //begin
-  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-  //  FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-  //    crMoreThan, False, '1'));
-  //end;
-  //if rbHasSynonymsNo.Checked then
-  //begin
-  //  sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-  //  FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-  //    crEqual, False, '0'));
-  //end;
 end;
 
 procedure TfrmCustomGrid.gridAudiosDblClick(Sender: TObject);
@@ -6760,7 +5200,7 @@ begin
   end;
 
   { Load child grids columns }
-  if Assigned(gridChild1.DataSource) then
+  if Assigned(dsLink1.DataSet) then
   begin
     {$IFDEF DEBUG}
     Usage.AddPart('load detail table');
@@ -7708,796 +6148,6 @@ begin
     Exit;
 
   qVideos.Refresh;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasBands(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_BAND_SIZE then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end
-  else
-  if Column.FieldName = COL_BAND_STATUS then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-    case Column.Field.AsString of
-      'U': // Used
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
-      end;
-      'D': // Available
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemNeutralFGLight;
-        end;
-      end;
-      'R': // Removed
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGLight;
-        end;
-      end;
-      'Q': // Broken
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
-      end;
-      'P': // Lost
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-        end;
-      end;
-      'T': // Transferred
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Dark;
-          TDBGrid(Sender).Canvas.Font.Color := clVioletFG1Dark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Light;
-          TDBGrid(Sender).Canvas.Font.Color := clVioletFG2Light;
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasCaptures(var Column: TColumn; var sender: TObject);
-var
-  aTaxon: Integer;
-begin
-  aTaxon := 0;
-
-  if (Column.FieldName = COL_TAXON_NAME) then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end
-  else
-  if (Column.FieldName = COL_CAPTURE_TYPE) then
-  begin
-    case Column.Field.AsString of
-      'N':
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryLight;
-        end;
-      end;
-      'R', 'S':
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
-      end;
-      'C':
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-        end;
-      end;
-      'U':
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_BAND_NAME) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
-      (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
-    begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-    end
-    else
-    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
-    begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_REMOVED_BAND_NAME) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
-    begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-    end;
-  end;
-
-  { Check if UseConditionalFormatting setting is enabled }
-  if not xSettings.UseConditionalFormatting then
-    Exit;
-
-  { Paint the cell background red for invalid values }
-  if (Column.FieldName = COL_CLOACAL_PROTUBERANCE) then
-  begin
-    if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, CLOACAL_PROTUBERANCE_VALUES)) then
-    begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_BROOD_PATCH) then
-  begin
-    if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, BROOD_PATCH_VALUES)) then
-    begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_FAT) then
-  begin
-    if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, FAT_VALUES)) then
-    begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_BODY_MOLT) then
-  begin
-    if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, BODY_MOLT_VALUES)) then
-    begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_FLIGHT_FEATHERS_MOLT) then
-  begin
-    if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, FLIGHT_MOLT_VALUES)) then
-    begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_FLIGHT_FEATHERS_WEAR) then
-  begin
-    if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, FEATHER_WEAR_VALUES)) then
-    begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_SKULL_OSSIFICATION) then
-  begin
-    if (Column.Field.AsString <> '') and
-      not (MatchStr(Column.Field.AsString, SKULL_OSSIFICATION_VALUES)) then
-    begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-    end;
-  end;
-
-  { Check if ShowOutliersOnGrid setting is enabled }
-  if not xSettings.ShowOutliersOnGrid then
-    Exit;
-
-  { Paint the cell background yellow for outliers }
-  if (Column.FieldName = COL_RIGHT_WING_CHORD) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_FIRST_SECONDARY_CHORD) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_TAIL_LENGTH) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_TARSUS_LENGTH) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_TARSUS_DIAMETER) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_WEIGHT) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_EXPOSED_CULMEN) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_BILL_WIDTH) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_BILL_HEIGHT) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_NOSTRIL_BILL_TIP) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_SKULL_LENGTH) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end
-  else
-  if (Column.FieldName = COL_KIPPS_INDEX) then
-  begin
-    if (Column.Field.AsFloat <> 0.0) then
-    begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
-                    TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
-      if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
-      begin
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-        else
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      end;
-    end;
-  end;
-
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasEggs(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_EGG_SEQUENCE then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end
-  else
-  if Column.FieldName = COL_TAXON_NAME then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasExpeditions(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_START_DATE then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasFeathers(var Column: TColumn;
-  var sender: TObject);
-begin
-  if Column.FieldName = COL_TAXON_NAME then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end
-  else
-  if Column.FieldName = COL_SAMPLE_DATE then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasIndividuals(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_TAXON_NAME then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end
-  else
-  if (Column.FieldName = COL_INDIVIDUAL_SEX) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-    case Column.Field.AsString of
-      'U':
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
-      end;
-      'M':
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
-      end;
-      'F':
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-        end;
-      end;
-    end;
-  end
-  else
-  if Column.FieldName = COL_BAND_NAME then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end
-  else
-  if Column.FieldName = COL_REMOVED_BAND_NAME then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasInstitutions(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_ABBREVIATION then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasNests(var Column: TColumn; var sender: TObject);
-begin
-  if (Column.FieldName = COL_TAXON_NAME) or
-    (Column.FieldName = COL_SUPPORT_PLANT_1_NAME) or
-    (Column.FieldName = COL_SUPPORT_PLANT_2_NAME) then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end
-  else
-  if Column.FieldName = COL_NEST_FATE then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-    case Column.Field.AsString of
-      'U':       // Unknown
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-        end;
-      end;
-      'L':       // Lost
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
-      end;
-      'S':       // Success
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasNestRevisions(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_NIDOPARASITE_NAME then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end
-  else
-  if Column.FieldName = COL_NEST_STATUS then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-    case Column.Field.AsString of
-      'U':       // Unknown
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-        end;
-      end;
-      'I':       // Inactive
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
-      end;
-      'A':       // Active
-      begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasNetsEffort(var Column: TColumn; var sender: TObject);
-begin
-  if (Column.FieldName = COL_SAMPLE_DATE) or
-    (Column.FieldName = COL_NET_NUMBER) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasPeople(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_ABBREVIATION then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasPermanentNets(const Column: TColumn; const sender: TObject);
-begin
-  if (Column.FieldName = COL_NET_NUMBER) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasPermits(var Column: TColumn; var sender: TObject);
-begin
-  if (Column.FieldName = COL_EXPIRE_DATE) or
-    (Column.FieldName = COL_PERMIT_NUMBER) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasProjects(var Column: TColumn; var sender: TObject);
-begin
-  if (Column.FieldName = COL_START_DATE) or
-    (Column.FieldName = COL_PROTOCOL_NUMBER) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasSamplePreps(var Column: TColumn; var sender: TObject);
-begin
-  if (Column.FieldName = COL_PREPARATION_DATE) or
-    (Column.FieldName = COL_ACCESSION_NUMBER) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasSightings(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_SIGHTING_DATE then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end
-  else
-  if Column.FieldName = COL_TAXON_NAME then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasSpecimens(var Column: TColumn; var sender: TObject);
-begin
-  if (Column.FieldName = COL_COLLECTION_DATE) or
-    (Column.FieldName = COL_FIELD_NUMBER) then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end
-  else
-  if Column.FieldName = COL_TAXON_NAME then
-  begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-  end;
-end;
-
-procedure TfrmCustomGrid.PrepareCanvasSurveys(var Column: TColumn; var sender: TObject);
-begin
-  if Column.FieldName = COL_SURVEY_DATE then
-  begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
 end;
 
 procedure TfrmCustomGrid.qAudiosaudio_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -10220,37 +7870,8 @@ begin
     FSearch.QuickFilters.Clear;
     lblRecordStatus.Caption := rsLoadingRecords;
 
-    case TableType of
-      tbNone: ;
-      tbProjectTeams: ;
-      tbPermits:       Result := SearchPermits(aValue);
-      tbGazetteer:     Result := SearchGazetteer(aValue);
-      tbBotanicTaxa:   Result := SearchBotanicTaxa(aValue);
-      tbNests:         Result := SearchNests(aValue);
-      tbNestRevisions: Result := SearchNestRevisions(aValue);
-      tbEggs:          Result := SearchEggs(aValue);
-      tbSamplingPlots: Result := SearchSamplingPlots(aValue);
-      tbTaxonRanks:    Result := SearchTaxonRanks(aValue);
-      tbZooTaxa:       Result := SearchZooTaxa(aValue);
-      tbProjects:      Result := SearchProjects(aValue);
-      tbInstitutions:  Result := SearchInstitutions(aValue);
-      tbPeople:        Result := SearchPeople(aValue);
-      tbExpeditions:   Result := SearchExpeditions(aValue);
-      tbSurveys:       Result := SearchSurveys(aValue);
-      tbMethods:       Result := SearchMethods(aValue);
-      tbSurveyTeams: ;
-      tbNetsEffort: ;
-      tbSightings:     Result := SearchSightings(aValue);
-      tbSpecimens:     Result := SearchSpecimens(aValue);
-      tbSamplePreps: ;
-      tbPermanentNets: ;
-      tbBands:         Result := SearchBands(aValue);
-      tbIndividuals:   Result := SearchIndividuals(aValue);
-      tbCaptures:      Result := SearchCaptures(aValue);
-      tbFeathers:      Result := SearchFeathers(aValue);
-      tbImages: ;
-      tbAudioLibrary: ;
-    end;
+    Result := FModule.Search(aValue);
+
     UpdateButtons(dsLink.DataSet);
   finally
     isWorking := False;
@@ -10258,1394 +7879,6 @@ begin
   end;
 
   LogDebug('Filters applied');
-end;
-
-function TfrmCustomGrid.SearchBands(aValue: String): Boolean;
-var
-  i, g: Integer;
-  V1, V2: String;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-  V1 := EmptyStr;
-  V2 := EmptyStr;
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_ID, 'Band (ID)', sdtInteger, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, 'Band number', sdtText, Crit,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d+[-‒]{1}\d+$', aValue) then
-    begin
-      Crit := crBetween;
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      { split strings: unicode characters #$002D e #$2012 }
-      V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
-      V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, 'Band number', sdtInteger, Crit,
-        False, V1, V2));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CARRIER_NAME, 'Carrier', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SUPPLIER_NAME, 'Supplier', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_NAME, 'Project', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_NAME, 'Individual', sdtText, Crit,
-        True, aValue));
-    end;
-
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchBotanicTaxa(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_ID, 'Taxon (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, 'Scientific name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_VERNACULAR_NAME, 'Vernacular name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_AUTHORSHIP, 'Authorship', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchCaptures(aValue: String): Boolean;
-var
-  i, g: Longint;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  V1, V2, m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_ID, 'Capture (ID)', sdtInteger, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, 'Capture date', sdtYear, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, 'Capture date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToTime(aValue, dt) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, 'Capture time', sdtTime, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{4}[-‒]{1}\d{4}$', aValue) then
-    begin
-      Crit := crBetween;
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      { split strings: unicode characters #$002D e #$2012 }
-      V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
-      V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, 'Capture date', sdtYear, Crit,
-        False, V1, V2));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, 'Capture date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, 'Taxon', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, 'Band', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, 'Removed band', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, 'Locality', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_NET_STATION_NAME, 'Misnet station', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BANDER_NAME, 'Bander', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_ANNOTATOR_NAME, 'Annotator', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchEggs(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EGG_ID, 'Egg (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, Dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', Dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_MEASURE_DATE, 'Measured date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_MEASURE_DATE, 'Measured date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FIELD_NUMBER, 'Field number', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, 'Taxon', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchExpeditions(aValue: String): Boolean;
-var
-  i, g: Integer;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EXPEDITION_ID, 'Expedition (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, 'Start date', sdtDate, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, 'End date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, 'Start date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, 'End date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EXPEDITION_NAME, 'Expedition name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_DESCRIPTION, 'Description', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchFeathers(aValue: String): Boolean;
-var
-  i, g: Integer;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FEATHER_ID, 'Feather (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, 'Date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, 'Date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, 'Taxon', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, 'Locality', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, 'Observer', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchGazetteer(aValue: String): Boolean;
-var
-  i, g: Longint;
-  f: Extended;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SITE_ID, 'Toponym (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToFloat(aValue, f) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LONGITUDE, 'Longitude', sdtText, crStartLike,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LATITUDE, 'Latitude', sdtText, crStartLike,
-        False, aValue));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SITE_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SITE_ABBREVIATION, 'Acronym', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchIndividuals(aValue: String): Boolean;
-var
-  i, g: Integer;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, 'Individual (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, 'Banding date', sdtDate, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, 'Band change date', sdtDate, crEqual,
-        False, aValue));
-      { #todo : PartialDate fields: birth_date and death_date }
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, 'Banding date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, 'Band change date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, 'Taxon', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, 'Band', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_DOUBLE_BAND_NAME, 'Double band', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, 'Removed band', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_NEST_NAME, 'Nest', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchInstitutions(aValue: String): Boolean;
-var
-  i, g: Integer;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_INSTITUTION_ID, 'Institution (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, 'Acronym', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_MANAGER_NAME, 'Manager', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchMethods(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ID, 'Method (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, 'Name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, 'Abbreviation', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EBIRD_NAME, 'eBird name', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchNests(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_NEST_ID, 'Nest (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, Dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', Dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FOUND_DATE, 'Date found', sdtDate, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LAST_DATE, 'Last date seen', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FOUND_DATE, 'Date found', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LAST_DATE, 'Last date seen', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FIELD_NUMBER, 'Field number', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, 'Locality', sdtText, Crit,
-        True, aValue));
-      { #todo : Check field name }
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('z.full_name', 'Taxon', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, 'Observer', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SUPPORT_PLANT_1_NAME, 'Support plant 1', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SUPPORT_PLANT_2_NAME, 'Support plant 2', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchNestRevisions(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_NEST_REVISION_ID, 'Nest revision (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, Dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', Dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_REVISION_DATE, 'Revision date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_REVISION_DATE, 'Revision date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_NIDOPARASITE_NAME, 'Taxon', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchSamplingPlots(aValue: String): Boolean;
-var
-  i, g: Integer;
-  f: Extended;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLING_PLOT_ID, 'Sampling plot (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToFloat(aValue, f) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LONGITUDE, 'Longitude', sdtText, crStartLike,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LATITUDE, 'Latitude', sdtText, crStartLike,
-        False, aValue));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, 'Acronym', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchPeople(aValue: String): Boolean;
-var
-  i, g: Integer;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PERSON_ID, 'Person (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, 'Birth date', sdtDate, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, 'Death date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, 'Birth date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, 'Death date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, 'Acronym', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CITATION, 'Citation', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchPermits(aValue: String): Boolean;
-var
-  i, g: Longint;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_ID, 'Permit (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, 'Dispatch date', sdtDate, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, 'Expire date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, 'Dispatch date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, 'Expire date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NAME, 'Permit name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NUMBER, 'Permit number', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCHER_NAME, 'Dispatcher', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchProjects(aValue: String): Boolean;
-var
-  i, g: Integer;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_ID, 'Project (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, 'Start date', sdtDate, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, 'End date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, 'Start date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, 'End date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_TITLE, 'Title', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SHORT_TITLE, 'Short title', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PROTOCOL_NUMBER, 'Protocol number', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_CONTACT_NAME, 'Contact', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_MAIN_GOAL, 'Main goal', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_RISKS, 'Risks', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_ABSTRACT, 'Abstract', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchSightings(aValue: String): Boolean;
-var
-  i, g: Longint;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_ID, 'Sighting (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, 'Sighting date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToTime(aValue, dt) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_TIME, 'Sighting time', sdtTime, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, 'Sighting date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, 'Taxon', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, 'Locality', sdtText, Crit,
-        True, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, 'Method', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchSpecimens(aValue: String): Boolean;
-var
-  i, g: Longint;
-  dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SPECIMEN_ID, 'Specimen (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, 'Collection date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, 'Collection date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, 'Taxon', sdtText, Crit,
-        True, aValue));
-      //FSearch.Fields[g].Fields.Add(TSearchField.Create('collectors', 'Collectors', sdtText, Crit,
-      //  False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, 'Locality', sdtText, Crit,
-        True, aValue));
-      //FSearch.Fields[g].Fields.Add(TSearchField.Create('municipality_name', 'Municipality', sdtText, Crit,
-      //  True, aValue));
-      //FSearch.Fields[g].Fields.Add(TSearchField.Create('state_name', 'State', sdtText, Crit,
-      //  True, aValue));
-      //FSearch.Fields[g].Fields.Add(TSearchField.Create('country_name', 'Country', sdtText, Crit,
-      //  True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchSurveys(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Dt: TDateTime;
-  Crit: TCriteriaType;
-  m, y: String;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SURVEY_ID, 'Survey (ID)', sdtInteger, crEqual,
-        False, aValue));
-      // if i > 999 then
-      // Add('or (strftime(''%Y'',AMO_DATA) = '+QuotedStr(aValor)+'))');
-    end
-    else
-    if TryStrToDate(aValue, Dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', Dt);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, 'Survey date', sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToTime(aValue, Dt) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_START_TIME, 'Start time', sdtTime, crEqual,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_END_TIME, 'End time', sdtTime, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, 'Survey date', sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Full name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, 'Locality', sdtText, Crit,
-        True, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchTaxonRanks(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_RANK_ID, 'Rank (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_RANK_NAME, 'Name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_RANK_ABBREVIATION, 'Acronym', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
-end;
-
-function TfrmCustomGrid.SearchZooTaxa(aValue: String): Boolean;
-var
-  i, g: Longint;
-  Crit: TCriteriaType;
-begin
-  Result := False;
-
-  Crit := crLike;
-  aValue := Trim(aValue);
-
-  if aValue <> EmptyStr then
-  begin
-    if ExecRegExpr('^=.+$', aValue) then
-    begin
-      Crit := crEqual;
-      aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
-    end
-    else
-    if ExecRegExpr('^:.+$', aValue) then
-    begin
-      Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
-    end;
-
-    if TryStrToInt(aValue, i) then
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_ID, 'Taxon (ID)', sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, 'Scientific name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_ENGLISH_NAME, 'English name', sdtText, Crit,
-        False, aValue));
-      //FSearch.Fields[g].Fields.Add(TSearchField.Create('ioc_english_name', 'English name (IOC)', sdtText, Crit,
-      //  False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_SPANISH_NAME, 'Spanish name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_PORTUGUESE_NAME, 'Portuguese name', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_OTHER_NAMES, 'Other portuguese names', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_EBIRD_CODE, 'eBird code', sdtText, Crit,
-        False, aValue));
-      FSearch.Fields[g].Fields.Add(TSearchField.Create(COL_QUICK_CODE, 'Quick code', sdtText, Crit,
-        False, aValue));
-    end;
-  end;
-
-  GetFilters;
-
-  Result := FSearch.RunSearch > 0;
 end;
 
 procedure TfrmCustomGrid.SetAudios;
@@ -11673,747 +7906,6 @@ begin
     //LogSQL(qAudios.SQL);
     //{$ENDIF}
     qAudios.Open;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsBands(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_BAND_ID).Visible then
-      ColumnByFieldname(COL_BAND_ID).ReadOnly := True;
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_ID).Visible then
-      ColumnByFieldname(COL_INDIVIDUAL_ID).ReadOnly := True;
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
-      ColumnByFieldname(COL_INDIVIDUAL_NAME).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_BAND_SIZE).Visible then
-      ColumnByFieldName(COL_BAND_SIZE).PickList.AddCommaText('A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z');
-    if DataSource.DataSet.FieldByName(COL_BAND_STATUS).Visible then
-      ColumnByFieldName(COL_BAND_STATUS).PickList.AddCommaText(rsBandStatusList);
-    if DataSource.DataSet.FieldByName(COL_BAND_SOURCE).Visible then
-    begin
-      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandAcquiredFromSupplier);
-      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandTransferBetweenBanders);
-      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandLivingBirdBandedByOthers);
-      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandDeadBirdBandedByOthers);
-      ColumnByFieldName(COL_BAND_SOURCE).PickList.Add(rsBandFoundLoose);
-    end;
-    if DataSource.DataSet.FieldByName(COL_BAND_TYPE).Visible then
-      ColumnByFieldName(COL_BAND_TYPE).PickList.AddCommaText(rsBandTypeList);
-
-    if DataSource.DataSet.FieldByName(COL_SUPPLIER_NAME).Visible then
-      ColumnByFieldName(COL_SUPPLIER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_REQUESTER_NAME).Visible then
-      ColumnByFieldname(COL_REQUESTER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_CARRIER_NAME).Visible then
-      ColumnByFieldName(COL_CARRIER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
-      ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsBotanicTaxa(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_TAXON_ID).Visible then
-      ColumnByFieldname(COL_TAXON_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_PARENT_TAXON_NAME).Visible then
-      ColumnByFieldname(COL_PARENT_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_VALID_NAME).Visible then
-      ColumnByFieldname(COL_VALID_NAME).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsCaptures(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_CAPTURE_ID).Visible then
-      ColumnByFieldname(COL_CAPTURE_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_CAPTURE_DATE).Visible then
-      ColumnByFieldName(COL_CAPTURE_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
-      ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_CAPTURE_TYPE).Visible then
-      ColumnByFieldName(COL_CAPTURE_TYPE).PickList.AddCommaText(rsCaptureTypeList);
-    if DataSource.DataSet.FieldByName(COL_RIGHT_TARSUS).Visible then
-      ColumnByFieldName(COL_RIGHT_TARSUS).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LEFT_TARSUS).Visible then
-      ColumnByFieldName(COL_LEFT_TARSUS).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_RIGHT_TIBIA).Visible then
-      ColumnByFieldName(COL_RIGHT_TIBIA).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LEFT_TIBIA).Visible then
-      ColumnByFieldName(COL_LEFT_TIBIA).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
-      ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_NET_STATION_NAME).Visible then
-      ColumnByFieldname(COL_NET_STATION_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
-      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
-      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_BANDER_NAME).Visible then
-      ColumnByFieldname(COL_BANDER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_ANNOTATOR_NAME).Visible then
-      ColumnByFieldname(COL_ANNOTATOR_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_BAND_NAME).Visible then
-      ColumnByFieldname(COL_BAND_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_REMOVED_BAND_NAME).Visible then
-      ColumnByFieldname(COL_REMOVED_BAND_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_MOLT_LIMITS).Visible then
-      ColumnByFieldName(COL_MOLT_LIMITS).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_CYCLE_CODE).Visible then
-      ColumnByFieldName(COL_CYCLE_CODE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_HOW_AGED).Visible then
-      ColumnByFieldName(COL_HOW_AGED).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_HOW_SEXED).Visible then
-      ColumnByFieldName(COL_HOW_SEXED).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_PHOTOGRAPHER_1_NAME).Visible then
-      ColumnByFieldname(COL_PHOTOGRAPHER_1_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_PHOTOGRAPHER_2_NAME).Visible then
-      ColumnByFieldname(COL_PHOTOGRAPHER_2_NAME).ButtonStyle := cbsEllipsis;
-
-    if DataSource.DataSet.FieldByName(COL_CLOACAL_PROTUBERANCE).Visible then
-      ColumnByFieldName(COL_CLOACAL_PROTUBERANCE).PickList.AddCommaText('U,N,S,M,L');
-    if DataSource.DataSet.FieldByName(COL_BROOD_PATCH).Visible then
-      ColumnByFieldName(COL_BROOD_PATCH).PickList.AddCommaText('F,N,V,W,O');
-    if DataSource.DataSet.FieldByName(COL_FAT).Visible then
-      ColumnByFieldName(COL_FAT).PickList.AddCommaText('N,T,L,H,F,B,G,V');
-    if DataSource.DataSet.FieldByName(COL_BODY_MOLT).Visible then
-      ColumnByFieldName(COL_BODY_MOLT).PickList.AddCommaText('N,T,S,H,G,A,F');
-    if DataSource.DataSet.FieldByName(COL_FLIGHT_FEATHERS_MOLT).Visible then
-      ColumnByFieldName(COL_FLIGHT_FEATHERS_MOLT).PickList.AddCommaText('N,S,A');
-    if DataSource.DataSet.FieldByName(COL_FLIGHT_FEATHERS_WEAR).Visible then
-      ColumnByFieldName(COL_FLIGHT_FEATHERS_WEAR).PickList.AddCommaText('N,S,L,M,H,X');
-    if DataSource.DataSet.FieldByName(COL_SKULL_OSSIFICATION).Visible then
-      ColumnByFieldName(COL_SKULL_OSSIFICATION).PickList.AddCommaText('N,T,L,H,G,A,F');
-    if DataSource.DataSet.FieldByName(COL_SUBJECT_AGE).Visible then
-    begin
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeUnknown);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeAdult);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeJuvenile);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeFledgling);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeNestling);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeFirstYear);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeSecondYear);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeThirdYear);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeFourthYear);
-      ColumnByFieldName(COL_SUBJECT_AGE).PickList.Add(rsAgeFifthYear);
-    end;
-    if DataSource.DataSet.FieldByName(COL_SUBJECT_SEX).Visible then
-    begin
-      ColumnByFieldName(COL_SUBJECT_SEX).PickList.Add(rsSexMale);
-      ColumnByFieldName(COL_SUBJECT_SEX).PickList.Add(rsSexFemale);
-      ColumnByFieldName(COL_SUBJECT_SEX).PickList.Add(rsSexUnknown);
-    end;
-    if DataSource.DataSet.FieldByName(COL_SUBJECT_STATUS).Visible then
-    begin
-      ColumnByFieldName(COL_SUBJECT_STATUS).PickList.Add(rsStatusNormal);
-      ColumnByFieldName(COL_SUBJECT_STATUS).PickList.Add(rsStatusInjured);
-      ColumnByFieldName(COL_SUBJECT_STATUS).PickList.Add(rsStatusWingSprain);
-      ColumnByFieldName(COL_SUBJECT_STATUS).PickList.Add(rsStatusStressed);
-      ColumnByFieldName(COL_SUBJECT_STATUS).PickList.Add(rsStatusDead);
-    end;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsEggs(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_EGG_ID).Visible then
-      ColumnByFieldname(COL_EGG_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
-      ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_MEASURE_DATE).Visible then
-      ColumnByFieldName(COL_MEASURE_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
-      ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_RESEARCHER_NAME).Visible then
-      ColumnByFieldName(COL_RESEARCHER_NAME).ButtonStyle := cbsEllipsis;
-
-    if DataSource.DataSet.FieldByName(COL_EGG_SHAPE).Visible then
-    begin
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggSpherical);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggElliptical);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggOval);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggPyriform);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggConical);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggBiconical);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggCylindrical);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggLongitudinal);
-      ColumnByFieldName(COL_EGG_SHAPE).PickList.Add(rsEggUnknown);
-    end;
-
-    if DataSource.DataSet.FieldByName(COL_EGGSHELL_TEXTURE).Visible then
-    begin
-      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggChalky);
-      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggShiny);
-      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggGlossy);
-      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggPitted);
-      ColumnByFieldName(COL_EGGSHELL_TEXTURE).PickList.Add(rsEggUnknown);
-    end;
-
-    if DataSource.DataSet.FieldByName(COL_EGGSHELL_PATTERN).Visible then
-    begin
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSpots);
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggBlotches);
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSquiggles);
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggStreaks);
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggScrawls);
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggSpotsSquiggles);
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggBlotchesSquiggles);
-      ColumnByFieldName(COL_EGGSHELL_PATTERN).PickList.Add(rsEggUnknown);
-    end;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsExpeditions(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_EXPEDITION_ID).Visible then
-      ColumnByFieldname(COL_EXPEDITION_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
-      ColumnByFieldname(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_START_DATE).Visible then
-      ColumnByFieldName(COL_START_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_END_DATE).Visible then
-      ColumnByFieldName(COL_END_DATE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsFeathers(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_FEATHER_ID).Visible then
-      ColumnByFieldname(COL_FEATHER_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_SAMPLE_DATE).Visible then
-      ColumnByFieldName(COL_SAMPLE_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
-      ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
-      ColumnByFieldName(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
-      ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_SIGHTING_NAME).Visible then
-      ColumnByFieldname(COL_SIGHTING_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
-      ColumnByFieldname(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsGazetteer(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_SITE_ID).Visible then
-      ColumnByFieldname(COL_SITE_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_SITE_RANK).Visible then
-    begin
-      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionCountry);
-      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionState);
-      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionRegion);
-      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionMunicipality);
-      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionDistrict);
-      ColumnByFieldName(COL_SITE_RANK).PickList.Add(rsCaptionLocality);
-    end;
-
-    if DataSource.DataSet.FieldByName(COL_PARENT_SITE_NAME).Visible then
-      ColumnByFieldname(COL_PARENT_SITE_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
-      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
-      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsIndividuals(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_ID).Visible then
-      ColumnByFieldname(COL_INDIVIDUAL_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
-      ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_BAND_NAME).Visible then
-      ColumnByFieldName(COL_BAND_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_DOUBLE_BAND_NAME).Visible then
-      ColumnByFieldName(COL_DOUBLE_BAND_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_REMOVED_BAND_NAME).Visible then
-      ColumnByFieldName(COL_REMOVED_BAND_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_BANDING_DATE).Visible then
-      ColumnByFieldName(COL_BANDING_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_BAND_CHANGE_DATE).Visible then
-      ColumnByFieldName(COL_BAND_CHANGE_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_NEST_NAME).Visible then
-      ColumnByFieldName(COL_NEST_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_FATHER_NAME).Visible then
-      ColumnByFieldName(COL_FATHER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_MOTHER_NAME).Visible then
-      ColumnByFieldName(COL_MOTHER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_RIGHT_TARSUS).Visible then
-      ColumnByFieldName(COL_RIGHT_TARSUS).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LEFT_TARSUS).Visible then
-      ColumnByFieldName(COL_LEFT_TARSUS).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_RIGHT_TIBIA).Visible then
-      ColumnByFieldName(COL_RIGHT_TIBIA).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LEFT_TIBIA).Visible then
-      ColumnByFieldName(COL_LEFT_TIBIA).ButtonStyle := cbsEllipsis;
-
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_SEX).Visible then
-    begin
-      ColumnByFieldName(COL_INDIVIDUAL_SEX).PickList.Add(rsSexUnknown);
-      ColumnByFieldName(COL_INDIVIDUAL_SEX).PickList.Add(rsSexMale);
-      ColumnByFieldName(COL_INDIVIDUAL_SEX).PickList.Add(rsSexFemale);
-    end;
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_AGE).Visible then
-    begin
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeUnknown);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeAdult);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeJuvenile);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeFledgling);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeNestling);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeFirstYear);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeSecondYear);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeThirdYear);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeFourthYear);
-      ColumnByFieldName(COL_INDIVIDUAL_AGE).PickList.Add(rsAgeFifthYear);
-    end;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsInstitutions(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_INSTITUTION_ID).Visible then
-      ColumnByFieldname(COL_INSTITUTION_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_COUNTRY_NAME).Visible then
-      ColumnByFieldname(COL_COUNTRY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_STATE_NAME).Visible then
-      ColumnByFieldname(COL_STATE_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_MUNICIPALITY_NAME).Visible then
-      ColumnByFieldname(COL_MUNICIPALITY_NAME).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsMethods(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_METHOD_ID).Visible then
-      ColumnByFieldname(COL_METHOD_ID).ReadOnly := True;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsNestOwners(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    //ColumnByFieldname('nest_owner_id').ReadOnly:= True;
-
-    if DataSource.DataSet.FieldByName(COL_ROLE).Visible then
-      ColumnByFieldName(COL_ROLE).PickList.CommaText := rsNestOwnersRoleList;
-
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
-      ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsNestRevisions(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_NEST_REVISION_ID).Visible then
-      ColumnByFieldname(COL_NEST_REVISION_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_REVISION_DATE).Visible then
-      ColumnByFieldName(COL_REVISION_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_1_NAME).Visible then
-      ColumnByFieldName(COL_OBSERVER_1_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_2_NAME).Visible then
-      ColumnByFieldName(COL_OBSERVER_2_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_NIDOPARASITE_NAME).Visible then
-      ColumnByFieldName(COL_NIDOPARASITE_NAME).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsNests(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_NEST_ID).Visible then
-      ColumnByFieldname(COL_NEST_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
-      ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_FOUND_DATE).Visible then
-      ColumnByFieldName(COL_FOUND_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LAST_DATE).Visible then
-      ColumnByFieldName(COL_LAST_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
-      ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
-      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
-      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
-      ColumnByFieldName(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_SUPPORT_PLANT_1_NAME).Visible then
-      ColumnByFieldName(COL_SUPPORT_PLANT_1_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_SUPPORT_PLANT_2_NAME).Visible then
-      ColumnByFieldName(COL_SUPPORT_PLANT_2_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
-      ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
-
-    if DataSource.DataSet.FieldByName(COL_NEST_SHAPE).Visible then
-    begin
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeScrape);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeCup);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePlate);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeSphere);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePendent);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapePlatform);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeMound);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeBurrow);
-      ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeCavity);
-    end;
-
-    if DataSource.DataSet.FieldByName(COL_SUPPORT_TYPE).Visible then
-    begin
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportGround);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportHerbBush);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportBranchFork);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportLeaves);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportLedge);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportRockCliff);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportRavine);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportNestBox);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportAnthropic);
-      ColumnByFieldname(COL_SUPPORT_TYPE).PickList.Add(rsSupportOther);
-    end;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsSamplingPlots(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_SAMPLING_PLOT_ID).Visible then
-      ColumnByFieldname(COL_SAMPLING_PLOT_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
-      ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
-      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
-      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsPeople(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_PERSON_ID).Visible then
-      ColumnByFieldname(COL_PERSON_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_GENDER).Visible then
-      ColumnByFieldName(COL_GENDER).PickList.AddCommaText(rsGenderList);
-    if DataSource.DataSet.FieldByName(COL_TITLE_TREATMENT).Visible then
-      ColumnByFieldName(COL_TITLE_TREATMENT).PickList.AddCommaText(rsTreatmentList);
-
-    if DataSource.DataSet.FieldByName(COL_INSTITUTION_NAME).Visible then
-      ColumnByFieldname(COL_INSTITUTION_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_COUNTRY_NAME).Visible then
-      ColumnByFieldname(COL_COUNTRY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_STATE_NAME).Visible then
-      ColumnByFieldname(COL_STATE_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_MUNICIPALITY_NAME).Visible then
-      ColumnByFieldname(COL_MUNICIPALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_BIRTH_DATE).Visible then
-      ColumnByFieldName(COL_BIRTH_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_DEATH_DATE).Visible then
-      ColumnByFieldName(COL_DEATH_DATE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsPermanentNets(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_PERMANENT_NET_ID).Visible then
-      ColumnByFieldname(COL_PERMANENT_NET_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
-      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
-      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsPermits(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_PERMIT_ID).Visible then
-      ColumnByFieldname(COL_PERMIT_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
-      ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_DISPATCH_DATE).Visible then
-      ColumnByFieldName(COL_DISPATCH_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_EXPIRE_DATE).Visible then
-      ColumnByFieldName(COL_EXPIRE_DATE).ButtonStyle := cbsEllipsis;
-
-    if DataSource.DataSet.FieldByName(COL_PERMIT_TYPE).Visible then
-      with ColumnByFieldName(COL_PERMIT_TYPE).PickList do
-      begin
-        Clear;
-        Add(rsPermitBanding);
-        Add(rsPermitCollection);
-        Add(rsPermitResearch);
-        Add(rsPermitEntry);
-        Add(rsPermitTransport);
-        Add(rsPermitOther);
-      end;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsProjects(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_PROJECT_ID).Visible then
-      ColumnByFieldname(COL_PROJECT_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_START_DATE).Visible then
-      ColumnByFieldName(COL_START_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_END_DATE).Visible then
-      ColumnByFieldName(COL_END_DATE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsSightings(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_SIGHTING_ID).Visible then
-      ColumnByFieldname(COL_SIGHTING_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_SURVEY_NAME).Visible then
-      ColumnByFieldname(COL_SURVEY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
-      ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
-      ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
-      ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
-      ColumnByFieldname(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).Visible then
-      ColumnByFieldname(COL_DETECTION_TYPE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_BREEDING_STATUS).Visible then
-      ColumnByFieldname(COL_BREEDING_STATUS).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_SIGHTING_DATE).Visible then
-      ColumnByFieldname(COL_SIGHTING_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
-      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
-      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsSpecimens(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_SPECIMEN_ID).Visible then
-    begin
-      ColumnByFieldname(COL_SPECIMEN_ID).ReadOnly := True;
-      //ColumnByFieldname('specimen_id').Footer.ValueType := fvtCount;
-      //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
-    end;
-
-    if DataSource.DataSet.FieldByName(COL_SAMPLE_TYPE).Visible then
-      with ColumnByFieldName(COL_SAMPLE_TYPE).PickList do
-      begin
-        Clear;
-        Add(rsSpecimenCarcassWhole);
-        Add(rsSpecimenCarcassPartial);
-        Add(rsSpecimenNest);
-        Add(rsSpecimenBones);
-        Add(rsSpecimenEgg);
-        Add(rsSpecimenParasites);
-        Add(rsSpecimenFeathers);
-        Add(rsSpecimenBlood);
-        Add(rsSpecimenClaw);
-        Add(rsSpecimenSwab);
-        Add(rsSpecimenTissues);
-        Add(rsSpecimenFeces);
-        Add(rsSpecimenRegurgite);
-      end;
-
-    if DataSource.DataSet.FieldByName(COL_TAXON_NAME).Visible then
-      ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
-      ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
-      ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_NEST_NAME).Visible then
-      ColumnByFieldName(COL_NEST_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_EGG_NAME).Visible then
-      ColumnByFieldName(COL_EGG_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
-      ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
-      ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsSurveys(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_SURVEY_ID).Visible then
-      ColumnByFieldname(COL_SURVEY_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_SURVEY_DATE).Visible then
-      ColumnByFieldName(COL_SURVEY_DATE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_METHOD_NAME).Visible then
-      ColumnByFieldName(COL_METHOD_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
-      ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_EXPEDITION_NAME).Visible then
-      ColumnByFieldname(COL_EXPEDITION_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_NET_STATION_NAME).Visible then
-      ColumnByFieldname(COL_NET_STATION_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_START_LONGITUDE).Visible then
-      ColumnByFieldname(COL_START_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_START_LATITUDE).Visible then
-      ColumnByFieldname(COL_START_LATITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_END_LONGITUDE).Visible then
-      ColumnByFieldname(COL_END_LONGITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_END_LATITUDE).Visible then
-      ColumnByFieldname(COL_END_LATITUDE).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
-      ColumnByFieldname(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsTaxonRanks(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_RANK_ID).Visible then
-      ColumnByFieldname(COL_RANK_ID).ReadOnly := True;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsVegetation(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_VEGETATION_ID).Visible then
-      ColumnByFieldname(COL_VEGETATION_ID).ReadOnly := True;
-
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
-      ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
-
-    if DataSource.DataSet.FieldByName(COL_HERBS_DISTRIBUTION).Visible then
-      with ColumnByFieldname(COL_HERBS_DISTRIBUTION).PickList do
-      begin
-        Add(rsDistributionNone);
-        Add(rsDistributionRare);
-        Add(rsDistributionFewSparse);
-        Add(rsDistributionOnePatch);
-        Add(rsDistributionOnePatchFewSparse);
-        Add(rsDistributionManySparse);
-        Add(rsDistributionOnePatchManySparse);
-        Add(rsDistributionFewPatches);
-        Add(rsDistributionFewPatchesSparse);
-        Add(rsDistributionManyPatches);
-        Add(rsDistributionManyPatchesSparse);
-        Add(rsDistributionEvenHighDensity);
-        Add(rsDistributionContinuousFewGaps);
-        Add(rsDistributionContinuousDense);
-        Add(rsDistributionContinuousDenseEdge);
-      end;
-    if DataSource.DataSet.FieldByName(COL_SHRUBS_DISTRIBUTION).Visible then
-      with ColumnByFieldname(COL_SHRUBS_DISTRIBUTION).PickList do
-      begin
-        Add(rsDistributionNone);
-        Add(rsDistributionRare);
-        Add(rsDistributionFewSparse);
-        Add(rsDistributionOnePatch);
-        Add(rsDistributionOnePatchFewSparse);
-        Add(rsDistributionManySparse);
-        Add(rsDistributionOnePatchManySparse);
-        Add(rsDistributionFewPatches);
-        Add(rsDistributionFewPatchesSparse);
-        Add(rsDistributionManyPatches);
-        Add(rsDistributionManyPatchesSparse);
-        Add(rsDistributionEvenHighDensity);
-        Add(rsDistributionContinuousFewGaps);
-        Add(rsDistributionContinuousDense);
-        Add(rsDistributionContinuousDenseEdge);
-      end;
-    if DataSource.DataSet.FieldByName(COL_TREES_DISTRIBUTION).Visible then
-      with ColumnByFieldname(COL_TREES_DISTRIBUTION).PickList do
-      begin
-        Add(rsDistributionNone);
-        Add(rsDistributionRare);
-        Add(rsDistributionFewSparse);
-        Add(rsDistributionOnePatch);
-        Add(rsDistributionOnePatchFewSparse);
-        Add(rsDistributionManySparse);
-        Add(rsDistributionOnePatchManySparse);
-        Add(rsDistributionFewPatches);
-        Add(rsDistributionFewPatchesSparse);
-        Add(rsDistributionManyPatches);
-        Add(rsDistributionManyPatchesSparse);
-        Add(rsDistributionEvenHighDensity);
-        Add(rsDistributionContinuousFewGaps);
-        Add(rsDistributionContinuousDense);
-        Add(rsDistributionContinuousDenseEdge);
-      end;
-  end;
-end;
-
-procedure TfrmCustomGrid.SetColumnsWeatherLogs(var aGrid: TDBGrid);
-begin
-  with aGrid, Columns do
-  begin
-    if DataSource.DataSet.FieldByName(COL_WEATHER_ID).Visible then
-      ColumnByFieldname(COL_WEATHER_ID).ReadOnly:= True;
-
-    if DataSource.DataSet.FieldByName(COL_SAMPLE_MOMENT).Visible then
-    begin
-      ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentStart);
-      ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentMiddle);
-      ColumnByFieldname(COL_SAMPLE_MOMENT).PickList.Add(rsMomentEnd);
-    end;
-
-    if DataSource.DataSet.FieldByName(COL_PRECIPITATION).Visible then
-    begin
-      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationNone);
-      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationFog);
-      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationMist);
-      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationDrizzle);
-      ColumnByFieldname(COL_PRECIPITATION).PickList.Add(rsPrecipitationRain);
-    end;
   end;
 end;
 
@@ -12479,592 +7971,37 @@ begin
   Search(FSearchString);
 end;
 
-procedure TfrmCustomGrid.SetGridAndChild;
-begin
-  FChildTable := tbNone;
-  FSupportedMediaTypes := [];
-
-  case FTableType of
-    tbInstitutions:   SetGridInstitutions;
-    tbPeople:         SetGridPeople;
-    tbProjects:       SetGridProjects;
-    tbPermits:        SetGridPermits;
-    tbGazetteer:      SetGridGazetteer;
-    tbSamplingPlots:  SetGridSamplingPlots;
-    tbTaxonRanks:     SetGridTaxonRanks;
-    tbBotanicTaxa:    SetGridBotanicTaxa;
-    tbZooTaxa: ;
-    tbBands:          SetGridBands;
-    tbIndividuals:    SetGridIndividuals;
-    tbCaptures:       SetGridCaptures;
-    tbFeathers:       SetGridFeathers;
-    tbNests:          SetGridNests;
-    tbNestRevisions:  SetGridNestRevisions;
-    tbEggs:           SetGridEggs;
-    tbMethods:        SetGridMethods;
-    tbExpeditions:    SetGridExpeditions;
-    tbSurveys:        SetGridSurveys;
-    tbSightings:      SetGridSightings;
-    tbSpecimens:      SetGridSpecimens;
-  end;
-  CreatePanelTabs;
-  dsLink.DataSet := FSearch.DataSet;
-
-  SplitChild.Visible := pChild.Visible;
-  Search(EmptyStr);
-end;
-
-procedure TfrmCustomGrid.SetGridBands;
-begin
-  Caption := rsTitleBands;
-  FSearch.DataSet := DMG.qBands;
-  // Set the default data sorting
-  AddSortedField(COL_BAND_SIZE, sdAscending);
-  AddSortedField(COL_BAND_NUMBER, sdAscending);
-
-  // Set the print menu
-  pmPrintBands.Visible := True;
-  pmPrintBandsByCarrier.Visible := True;
-  pmPrintBandsWithHistory.Visible := True;
-  pmPrintBandsByStatus.Visible := True;
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-  sbInsertBatch.Visible := True;
-  sbMoreOptions.Visible := True;
-
-  // Set the more options menu
-  pmpTransferBandsTo.Visible := True;
-  pmpBandHistory.Visible := True;
-  pmpBandsBalance.Visible := True;
-
-  // Set grid menu
-  pmgBandHistory.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridBotanicTaxa;
-begin
-  Caption := rsTitleBotanicalTaxa;
-  FSearch.DataSet := DMG.qBotany;
-  // Set the default data sorting
-  AddSortedField(COL_TAXON_NAME, sdAscending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-
-  // Set the print menu
-  pmPrintBotanicTaxa.Visible := True;
-  //pmPrintBotanicTaxaHierarchical.Visible := True;
-  pmPrintBotanicTaxaRecorded.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridCaptures;
-begin
-  Caption := rsTitleCaptures;
-  FSearch.DataSet := DMG.qCaptures;
-  FSupportedMediaTypes := [amtImages, amtVideos, amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_CAPTURE_DATE, sdDescending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowSummary.Visible := True;
-  sbShowImages.Visible := True;
-  sbShowVideos.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintCaptures.Visible := True;
-  pmPrintCapturesByDate.Visible := True;
-  pmPrintCapturesByProject.Visible := True;
-  pmPrintCapturesByLocality.Visible := True;
-  pmPrintCapturesByTaxon.Visible := True;
-  pmPrintColoredBands.Visible := True;
-end;
-
 procedure TfrmCustomGrid.SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
 begin
   if aGrid.DataSource = nil then
     Exit;
 
-  case aTable of
-    tbNone: ;
-    tbInstitutions:   SetColumnsInstitutions(aGrid);
-    tbPeople:         SetColumnsPeople(aGrid);
-    tbProjects:       SetColumnsProjects(aGrid);
-    tbPermits:        SetColumnsPermits(aGrid);
-    tbGazetteer:      SetColumnsGazetteer(aGrid);
-    tbSamplingPlots:  SetColumnsSamplingPlots(aGrid);
-    tbPermanentNets:  SetColumnsPermanentNets(aGrid);
-    tbTaxonRanks:     SetColumnsTaxonRanks(aGrid);
-    tbBotanicTaxa:    SetColumnsBotanicTaxa(aGrid);
-    tbZooTaxa: ;
-    tbBands:          SetColumnsBands(aGrid);
-    tbIndividuals:    SetColumnsIndividuals(aGrid);
-    tbCaptures:       SetColumnsCaptures(aGrid);
-    tbFeathers:       SetColumnsFeathers(aGrid);
-    tbNests:          SetColumnsNests(aGrid);
-    tbNestOwners:     SetColumnsNestOwners(aGrid);
-    tbNestRevisions:  SetColumnsNestRevisions(aGrid);
-    tbEggs:           SetColumnsEggs(aGrid);
-    tbMethods:        SetColumnsMethods(aGrid);
-    tbExpeditions:    SetColumnsExpeditions(aGrid);
-    tbSurveys:        SetColumnsSurveys(aGrid);
-    tbWeatherLogs:    SetColumnsWeatherLogs(aGrid);
-    tbSightings:      SetColumnsSightings(aGrid);
-    tbSpecimens:      SetColumnsSpecimens(aGrid);
-  end;
+  if aGrid = DBG then
+    FModule.ConfigureColumns(aGrid)
+  else
+  if aGrid = gridChild1 then
+    FModule.Submodules[0].ConfigureColumns
+  else
+  if aGrid = gridChild2 then
+    FModule.Submodules[1].ConfigureColumns
+  else
+  if aGrid = gridChild3 then
+    FModule.Submodules[2].ConfigureColumns
+  else
+  if aGrid = gridChild4 then
+    FModule.Submodules[3].ConfigureColumns
+  else
+  if aGrid = gridChild5 then
+    FModule.Submodules[4].ConfigureColumns
+  else
+  if aGrid = gridChild6 then
+    FModule.Submodules[5].ConfigureColumns;
 
   //aGrid.OptionsExtra := aGrid.OptionsExtra - [dgeAutoColumns];
 
   {$IFDEF DEBUG}
   LogDebug(Format('%s: %d columns (%d visible)', [aGrid.Name, aGrid.Columns.Count, aGrid.Columns.VisibleCount]));
   {$ENDIF}
-end;
-
-procedure TfrmCustomGrid.SetGridEggs;
-begin
-  Caption := rsTitleEggs;
-  FSearch.DataSet := DMG.qEggs;
-  FSupportedMediaTypes := [amtImages];
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-  sbShowImages.Visible := True;
-  //sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintEggs.Visible := True;
-  pmPrintEggsByNest.Visible := True;
-  pmPrintEggsByLocality.Visible := True;
-  pmPrintEggsByTaxon.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridExpeditions;
-begin
-  Caption := rsCaptionExpeditions;
-  FSearch.DataSet := DMG.qExpeditions;
-  FSupportedMediaTypes := [amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_START_DATE, sdDescending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintExpeditions.Visible := True;
-  pmPrintExpeditionsByProject.Visible := True;
-
-  // Set the childs panel
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMS) then
-    DMS := TDMS.Create(nil);
-  FChildTable := tbSurveys;
-  dsLink1.DataSet := DMS.qSurveys;
-  pChildsBar.Visible := True;
-  // Set the new child menu
-  pmcNewSurvey.Visible := True;
-  // Set visible child buttons
-  sbChildVerifications.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridFeathers;
-begin
-  Caption := rsCaptionFeathers;
-  FSearch.DataSet := DMG.qFeathers;
-  FSupportedMediaTypes := [amtImages];
-  // Set the default data sorting
-  AddSortedField(COL_SAMPLE_DATE, sdDescending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowImages.Visible := True;
-  sbShowSummary.Visible := True;
-  sbInsertBatch.ImageIndex := 104;
-  sbInsertBatch.DisabledImageIndex := 105;
-  sbInsertBatch.Visible := True;
-
-  // Set the print menu
-  pmPrintFeathers.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridGazetteer;
-begin
-  Caption := rsTitleGazetteer;
-  FSearch.DataSet := DMG.qGazetteer;
-  // Set the default data sorting
-  AddSortedField(COL_SITE_NAME, sdAscending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowSummary.Visible := True;
-  //sbShowDocs.Visible := True;
-  sbMoreOptions.Visible := True;
-
-  // Set the more options menu
-  pmpAddCountriesAndStates.Visible := True;
-  pmpAddMunicipalities.Visible := True;
-
-  // Set the print menu
-  pmPrintGazetteer.Visible := True;
-  //pmPrintGazetteerHierarchical.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridIndividuals;
-begin
-  Caption := rsTitleIndividuals;
-  FSearch.DataSet := DMG.qIndividuals;
-  FSupportedMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  sbShowImages.Visible := True;
-  sbShowAudio.Visible := True;
-  sbShowVideos.Visible := True;
-  sbShowDocs.Visible := True;
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-
-  // Set the print menu
-  pmPrintIndividuals.Visible := True;
-  pmPrintIndividualsByTaxon.Visible := True;
-  pmPrintIndividualsByParents.Visible := True;
-  pmPrintColoredBands.Visible := True;
-
-  //Set the childs panel
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMI) then
-    DMI := TDMI.Create(nil);
-  FChildTable := tbCaptures;
-  dsLink1.DataSet := DMI.qCaptures;
-  dsLink2.DataSet := DMI.qFeathers;
-  dsLink3.DataSet := DMI.qSightings;
-  dsLink4.DataSet := DMI.qNests;
-  dsLink5.DataSet := DMI.qSpecimens;
-  pChildsBar.Visible := True;
-  // Set the new child menu
-  pmcNewCapture.Visible := True;
-  pmcNewFeather.Visible := True;
-  pmcNewSighting.Visible := True;
-  pmcNewNest.Visible := True;
-  pmcNewSpecimen.Visible := True;
-  // Set visible child buttons
-  sbChildVerifications.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridInstitutions;
-begin
-  Caption := rsTitleInstitutions;
-  FSearch.DataSet := DMG.qInstitutions;
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  sbShowSummary.Visible := True;
-
-  // Set the print menu
-  pmPrintInstitutions.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridMethods;
-begin
-  Caption := rsTitleMethods;
-  FSearch.DataSet := DMG.qMethods;
-  FSupportedMediaTypes := [amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_METHOD_NAME, sdAscending);
-
-  // Set visible buttons
-  sbShowDocs.Visible := True;
-  sbShowSummary.Visible := True;
-
-  // Set the print menu
-  pmPrintMethods.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridNests;
-begin
-  Caption := rsTitleNests;
-  FSearch.DataSet := DMG.qNests;
-  FSupportedMediaTypes := [amtImages, amtVideos, amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowSummary.Visible := True;
-  sbShowImages.Visible := True;
-  sbShowVideos.Visible := True;
-  sbShowDocs.Visible := True;
-  sbRecordVerifications.Visible := True;
-
-  // Set the print menu
-  pmPrintNests.Visible := True;
-  pmPrintNestsByPeriod.Visible := True;
-  pmPrintNestsByProject.Visible := True;
-  pmPrintNestsByLocality.Visible := True;
-  pmPrintNestsByTaxon.Visible := True;
-
-  // Set the childs panel
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMB) then
-    DMB := TDMB.Create(nil);
-  FChildTable := tbNestOwners;
-  dsLink1.DataSet := DMB.qNestOwners;
-  dsLink2.DataSet := DMB.qNestRevisions;
-  dsLink3.DataSet := DMB.qEggs;
-  pChildsBar.Visible := True;
-  // Set the new child menu
-  pmcNewNestOwner.Visible := True;
-  pmcNewNestRevision.Visible := True;
-  pmcNewEgg.Visible := True;
-  // Set visible child buttons
-  sbChildVerifications.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridNestRevisions;
-begin
-  Caption := rsTitleNestRevisions;
-  FSearch.DataSet := DMG.qNestRevisions;
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-  //sbShowImages.Visible := True;
-  //sbShowAudio.Visible := True;
-  //sbShowVideos.Visible := True;
-  //sbShowDocs.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridSamplingPlots;
-begin
-  Caption := rsTitleSamplingPlots;
-  FSearch.DataSet := DMG.qSamplingPlots;
-  FSupportedMediaTypes := [amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintSamplingPlots.Visible := True;
-  pmPrintSamplingPlotsByLocality.Visible := True;
-
-  // Set the childs panel
-  nbChilds.PageIndex := 0;
-  FChildTable := tbPermanentNets;
-  dsLink1.DataSet := DMG.qPermanentNets;
-  pChildsBar.Visible := True;
-  // Set the new child menu
-  pmcNewPermanentNet.Visible := True;
-  // Set visible child buttons
-  sbChildVerifications.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridPeople;
-begin
-  Caption := rsTitleResearchers;
-  FSearch.DataSet := DMG.qPeople;
-  FSupportedMediaTypes := [amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  sbShowSummary.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintResearchers.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridPermits;
-begin
-  Caption := rsTitlePermits;
-  FSearch.DataSet := DMG.qPermits;
-  FSupportedMediaTypes := [amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_PERMIT_NAME, sdAscending);
-
-  // Set visible buttons
-  sbShowSummary.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintPermits.Visible := True;
-  pmPrintPermitsByExpiration.Visible := True;
-  pmPrintPermitsByProject.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridProjects;
-begin
-  Caption := rsTitleProjects;
-  FSearch.DataSet := DMG.qProjects;
-  FSupportedMediaTypes := [amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_PROJECT_TITLE, sdAscending);
-
-  // Set visible buttons
-  sbShowSummary.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintProjects.Visible := True;
-
-  // Set the childs panel
-  nbChilds.PageIndex := 0;
-  FChildTable := tbProjectTeams;
-  dsLink1.DataSet := DMG.qProjectTeam;
-  dsLink2.DataSet := DMG.qProjectGoals;
-  dsLink3.DataSet := DMG.qProjectChronogram;
-  dsLink4.DataSet := DMG.qProjectBudget;
-  dsLink5.DataSet := DMG.qProjectExpenses;
-  pChildsBar.Visible := True;
-  // Set the new child menu
-  pmcNewProjectMember.Visible := True;
-  pmcNewProjectGoal.Visible := True;
-  pmcNewChronogramActivity.Visible := True;
-  pmcNewBudgetItem.Visible := True;
-  pmcNewExpense.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridSightings;
-begin
-  Caption := rsTitleSightings;
-  FSearch.DataSet := DMG.qSightings;
-  FSupportedMediaTypes := [amtImages, amtAudios, amtVideos, amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_SIGHTING_DATE, sdDescending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowSummary.Visible := True;
-  sbShowImages.Visible := True;
-  sbShowAudio.Visible := True;
-  sbShowVideos.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintSightings.Visible := True;
-  pmPrintSightingsBySurvey.Visible := True;
-  pmPrintSightingsByObserver.Visible := True;
-  pmPrintSightingsByProject.Visible := True;
-  pmPrintSightingsByLocality.Visible := True;
-  pmPrintSightingsByTaxon.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridSpecimens;
-begin
-  Caption := rsTitleSpecimens;
-  FSearch.DataSet := DMG.qSpecimens;
-  FSupportedMediaTypes := [amtImages, amtAudios, amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_FULL_NAME, sdAscending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowImages.Visible := True;
-  sbShowAudio.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintSpecimens.Visible := True;
-  pmPrintSpecimensByYear.Visible := True;
-  pmPrintSpecimensByProject.Visible := True;
-  pmPrintSpecimensByLocality.Visible := True;
-  pmPrintSpecimensByTaxon.Visible := True;
-
-  // Set the childs panel
-  nbChilds.PageIndex := 0;
-  FChildTable := tbSpecimenCollectors;
-  dsLink1.DataSet := DMG.qSampleCollectors;
-  dsLink2.DataSet := DMG.qSamplePreps;
-  pChildsBar.Visible := True;
-  // Set the new child menu
-  pmcNewCollector.Visible := True;
-  pmcNewSamplePrep.Visible := True;
-  // Set visible child buttons
-  sbChildVerifications.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridSurveys;
-begin
-  Caption := rsTitleSurveys;
-  FSearch.DataSet := DMG.qSurveys;
-  FSupportedMediaTypes := [amtImages, amtVideos, amtDocuments];
-  // Set the default data sorting
-  AddSortedField(COL_SURVEY_DATE, sdDescending);
-
-  // Set visible buttons
-  sbRecordVerifications.Visible := True;
-  sbShowSummary.Visible := True;
-  mapGeo.Active := True;
-  sbShowMap.Visible := True;
-  sbShowImages.Visible := True;
-  sbShowVideos.Visible := True;
-  sbShowDocs.Visible := True;
-
-  // Set the print menu
-  pmPrintSurveys.Visible := True;
-  pmPrintSurveysByExpedition.Visible := True;
-  pmPrintSurveysByLocality.Visible := True;
-  pmPrintSurveysByProject.Visible := True;
-
-  // Set the childs panel
-  nbChilds.PageIndex := 0;
-  if not Assigned(DMS) then
-    DMS := TDMS.Create(nil);
-  FChildTable := tbSurveyTeams;
-  dsLink1.DataSet := DMS.qSurveyTeam;
-  dsLink2.DataSet := DMS.qNetsEffort;
-  dsLink3.DataSet := DMS.qWeatherLogs;
-  dsLink4.DataSet := DMS.qCaptures;
-  dsLink5.DataSet := DMS.qSightings;
-  dsLink6.DataSet := DMS.qVegetation;
-  pChildsBar.Visible := True;
-  // Set the new child menu
-  pmcNewSurveyMember.Visible := True;
-  pmcNewMistnet.Visible := True;
-  pmcNewWeatherLog.Visible := True;
-  pmcNewCapture.Visible := True;
-  pmcNewSighting.Visible := True;
-  pmcNewVegetation.Visible := True;
-  // Set visible child buttons
-  sbChildVerifications.Visible := True;
-end;
-
-procedure TfrmCustomGrid.SetGridTaxonRanks;
-begin
-  Caption := rsTitleTaxonRanks;
-  FSearch.DataSet := DMG.qTaxonRanks;
-  // Set the default data sorting
-  AddSortedField(COL_RANK_SEQUENCE, sdAscending);
 end;
 
 procedure TfrmCustomGrid.SetImages;
@@ -13108,6 +8045,171 @@ begin
     //{$ENDIF}
     qImages.Open;
   end;
+end;
+
+procedure TfrmCustomGrid.SetModule;
+var
+  i: Integer;
+begin
+  Caption := FModule.CaptionText;
+  FSearch.DataSet := TSQLQuery(FModule.DataSet);
+  dsLink.DataSet := FSearch.DataSet;
+
+  // Set default data sorting
+  for i := 0 to FModule.DefaultSort.Count - 1 do
+  begin
+    AddSortedField(FModule.DefaultSort[i].FieldName, FModule.DefaultSort[i].Direction,
+      FModule.DefaultSort[i].Collation, FModule.DefaultSort[i].Lookup);
+  end;
+
+  // Set visible buttons
+  sbRecordVerifications.Visible := (gufShowVerifications in FModule.UiFlags);
+  sbShowSummary.Visible := (gufShowSummary in FModule.UiFlags);
+  if (gufShowMap in FModule.UiFlags) then
+  begin
+    mapGeo.Active := True;
+    sbShowMap.Visible := True;
+  end;
+  sbShowImages.Visible := (gufShowImages in FModule.UiFlags);
+  sbShowAudio.Visible := (gufShowAudios in FModule.UiFlags);
+  sbShowVideos.Visible := (gufShowVideos in FModule.UiFlags);
+  sbShowDocs.Visible := (gufShowDocs in FModule.UiFlags);
+  if (gufShowMoreOptions in FModule.UiFlags) then
+  begin
+    pmpAddCountriesAndStates.Visible := (gufShowAddCountries in FModule.UiFlags);
+    pmpAddMunicipalities.Visible := (gufShowAddMunicipalities in FModule.UiFlags);
+    pmpTransferBandsTo.Visible := (gufShowTransferBands in FModule.UiFlags);
+    pmpBandHistory.Visible := (gufShowBandHistory in FModule.UiFlags);
+    pmgBandHistory.Visible := (gufShowBandHistory in FModule.UiFlags);
+    pmpBandsBalance.Visible := (gufShowBandsBalance in FModule.UiFlags);
+    sbMoreOptions.Visible := True;
+  end;
+  if (gufShowInsertBatch in FModule.UiFlags) then
+  begin
+    if FModule.TableType = tbFeathers then
+    begin
+      sbInsertBatch.ImageIndex := 104;
+      sbInsertBatch.DisabledImageIndex := 105;
+    end;
+    sbInsertBatch.Visible := True;
+  end;
+
+  // Set the print menu
+  pmPrintBands.Visible := (pufBands in FModule.PrintUiFlags);
+  pmPrintBandsByCarrier.Visible := (pufBandsByCarrier in FModule.PrintUiFlags);
+  pmPrintBandsWithHistory.Visible := (pufBandsWithHistory in FModule.PrintUiFlags);
+  pmPrintBandsByStatus.Visible := (pufBandsByStatus in FModule.PrintUiFlags);
+  pmPrintBotanicTaxa.Visible := (pufBotanicalTaxa in FModule.PrintUiFlags);
+  pmPrintBotanicTaxaRecorded.Visible := (pufBotanicalTaxaRecorded in FModule.PrintUiFlags);
+  pmPrintCaptures.Visible := (pufCaptures in FModule.PrintUiFlags);
+  pmPrintCapturesByDate.Visible := (pufCapturesByDate in FModule.PrintUiFlags);
+  pmPrintCapturesByProject.Visible := (pufCapturesByProject in FModule.PrintUiFlags);
+  pmPrintCapturesByLocality.Visible := (pufCapturesByLocality in FModule.PrintUiFlags);
+  pmPrintCapturesByTaxon.Visible := (pufCapturesByTaxon in FModule.PrintUiFlags);
+  pmPrintColoredBands.Visible := (pufColorBandCombinations in FModule.PrintUiFlags);
+  pmPrintEggs.Visible := (pufEggs in FModule.PrintUiFlags);
+  pmPrintEggsByNest.Visible := (pufEggsByNest in FModule.PrintUiFlags);
+  pmPrintEggsByLocality.Visible := (pufEggsByLocality in FModule.PrintUiFlags);
+  pmPrintEggsByTaxon.Visible := (pufEggsByTaxon in FModule.PrintUiFlags);
+  pmPrintExpeditions.Visible := (pufExpeditions in FModule.PrintUiFlags);
+  pmPrintExpeditionsByProject.Visible := (pufExpeditionsByProject in FModule.PrintUiFlags);
+  pmPrintFeathers.Visible := (pufFeathers in FModule.PrintUiFlags);
+  pmPrintGazetteer.Visible := (pufGazetteer in FModule.PrintUiFlags);
+  pmPrintIndividuals.Visible := (pufIndividuals in FModule.PrintUiFlags);
+  pmPrintIndividualsByTaxon.Visible := (pufIndividualsByTaxon in FModule.PrintUiFlags);
+  pmPrintIndividualsByParents.Visible := (pufIndividualsByParents in FModule.PrintUiFlags);
+  pmPrintInstitutions.Visible := (pufInstitutions in FModule.PrintUiFlags);
+  pmPrintMethods.Visible := (pufMethods in FModule.PrintUiFlags);
+  pmPrintNests.Visible := (pufNests in FModule.PrintUiFlags);
+  pmPrintNestsByPeriod.Visible := (pufNestsByDate in FModule.PrintUiFlags);
+  pmPrintNestsByProject.Visible := (pufNestsByProject in FModule.PrintUiFlags);
+  pmPrintNestsByLocality.Visible := (pufNestsByLocality in FModule.PrintUiFlags);
+  pmPrintNestsByTaxon.Visible := (pufNestsByTaxon in FModule.PrintUiFlags);
+  pmPrintSamplingPlots.Visible := (pufSamplingPlots in FModule.PrintUiFlags);
+  pmPrintSamplingPlotsByLocality.Visible := (pufSamplingPlotsByLocality in FModule.PrintUiFlags);
+  pmPrintResearchers.Visible := (pufResearchers in FModule.PrintUiFlags);
+  pmPrintPermits.Visible := (pufPermits in FModule.PrintUiFlags);
+  pmPrintPermitsByExpiration.Visible := (pufPermitsByDate in FModule.PrintUiFlags);
+  pmPrintPermitsByProject.Visible := (pufPermitsByProject in FModule.PrintUiFlags);
+  pmPrintProjects.Visible := (pufProjects in FModule.PrintUiFlags);
+  pmPrintSightings.Visible := (pufSightings in FModule.PrintUiFlags);
+  pmPrintSightingsBySurvey.Visible := (pufSightingsBySurvey in FModule.PrintUiFlags);
+  pmPrintSightingsByObserver.Visible := (pufSightingsByObserver in FModule.PrintUiFlags);
+  pmPrintSightingsByProject.Visible := (pufSightingsByProject in FModule.PrintUiFlags);
+  pmPrintSightingsByLocality.Visible := (pufSightingsByLocality in FModule.PrintUiFlags);
+  pmPrintSightingsByTaxon.Visible := (pufSightingsByTaxon in FModule.PrintUiFlags);
+  pmPrintSpecimens.Visible := (pufSpecimens in FModule.PrintUiFlags);
+  pmPrintSpecimensByYear.Visible := (pufSpecimensByYear in FModule.PrintUiFlags);
+  pmPrintSpecimensByProject.Visible := (pufSpecimensByProject in FModule.PrintUiFlags);
+  pmPrintSpecimensByLocality.Visible := (pufSpecimensByLocality in FModule.PrintUiFlags);
+  pmPrintSpecimensByTaxon.Visible := (pufSpecimensByTaxon in FModule.PrintUiFlags);
+  pmPrintSurveys.Visible := (pufSurveys in FModule.PrintUiFlags);
+  pmPrintSurveysByExpedition.Visible := (pufSurveysByExpedition in FModule.PrintUiFlags);
+  pmPrintSurveysByLocality.Visible := (pufSurveysByLocality in FModule.PrintUiFlags);
+  pmPrintSurveysByProject.Visible := (pufSurveysByProject in FModule.PrintUiFlags);
+
+  // Set the childs panel
+  FChildTable := tbNone;
+  nbChilds.PageIndex := 0;
+  if not Assigned(DMS) then
+    DMS := TDMS.Create(nil);
+  if not Assigned(DMB) then
+    DMB := TDMB.Create(nil);
+  if not Assigned(DMI) then
+    DMI := TDMI.Create(nil);
+
+  if FModule.Submodules.Count > 0 then
+  begin
+    FChildTable := FModule.Submodules[0].TableType;
+    for i := 0 to FModule.Submodules.Count - 1 do
+    begin
+      case i of
+        0: dsLink1.DataSet := FModule.Submodules[i].DataSet;
+        1: dsLink2.DataSet := FModule.Submodules[i].DataSet;
+        2: dsLink3.DataSet := FModule.Submodules[i].DataSet;
+        3: dsLink4.DataSet := FModule.Submodules[i].DataSet;
+        4: dsLink5.DataSet := FModule.Submodules[i].DataSet;
+        5: dsLink6.DataSet := FModule.Submodules[i].DataSet;
+      end;
+    end;
+  end;
+  pChildsBar.Visible := FModule.Submodules.Count > 0;
+  // Set the new child menu
+  pmcNewSurvey.Visible := (FModule.TableType = tbExpeditions);
+
+  pmcNewCapture.Visible := (FModule.TableType = tbIndividuals);
+  pmcNewFeather.Visible := (FModule.TableType = tbIndividuals);
+  pmcNewSighting.Visible := (FModule.TableType = tbIndividuals);
+  pmcNewNest.Visible := (FModule.TableType = tbIndividuals);
+  pmcNewSpecimen.Visible := (FModule.TableType = tbIndividuals);
+
+  pmcNewNestOwner.Visible := (FModule.TableType = tbNests);
+  pmcNewNestRevision.Visible := (FModule.TableType = tbNests);
+  pmcNewEgg.Visible := (FModule.TableType = tbNests);
+
+  pmcNewPermanentNet.Visible := (FModule.TableType = tbSamplingPlots);
+
+  pmcNewProjectMember.Visible := (FModule.TableType = tbProjects);
+  pmcNewProjectGoal.Visible := (FModule.TableType = tbProjects);
+  pmcNewChronogramActivity.Visible := (FModule.TableType = tbProjects);
+  pmcNewBudgetItem.Visible := (FModule.TableType = tbProjects);
+  pmcNewExpense.Visible := (FModule.TableType = tbProjects);
+
+  pmcNewCollector.Visible := (FModule.TableType = tbSpecimens);
+  pmcNewSamplePrep.Visible := (FModule.TableType = tbSpecimens);
+
+  pmcNewSurveyMember.Visible := (FModule.TableType = tbSurveys);
+  pmcNewMistnet.Visible := (FModule.TableType = tbSurveys);
+  pmcNewWeatherLog.Visible := (FModule.TableType = tbSurveys);
+  pmcNewCapture.Visible := (FModule.TableType = tbSurveys);
+  pmcNewSighting.Visible := (FModule.TableType = tbSurveys);
+  pmcNewVegetation.Visible := (FModule.TableType = tbSurveys);
+  // Set visible child buttons
+  sbChildVerifications.Visible := (gufShowVerifications in FModule.UiFlags);
+
+  CreatePanelTabs;
+  SplitChild.Visible := pChild.Visible;
+  Search(EmptyStr);
 end;
 
 procedure TfrmCustomGrid.SetRecycle;
@@ -13847,6 +8949,8 @@ procedure TfrmCustomGrid.UpdateChildButtons(aDataSet: TDataSet);
 begin
   if isClosing then
     Exit;
+  if not Assigned(aDataSet) then
+    Exit;
 
   case aDataSet.State of
     dsInactive:
@@ -13914,6 +9018,7 @@ end;
 procedure TfrmCustomGrid.UpdateChildCount;
 var
   PanelTab: TCustomPanelTab;
+  i: Integer;
 begin
   if isClosing then
     Exit;
@@ -13926,78 +9031,85 @@ begin
     Exit;
   end;
 
-  case FTableType of
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    //tbGazetteer: ;
-    tbSamplingPlots:
+  if FModule.Submodules.Count > 0 then
+  begin
+    for i := 0 to FModule.Submodules.Count - 1 do
     begin
-      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+      panelTabs[i].UpdateCounter(FModule.Submodules[i].DataSet.RecordCount);
     end;
-    //tbPermanentNets: ;
-    //tbInstitutions: ;
-    //tbPeople: ;
-    tbProjects:
-    begin
-      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-      panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-      panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-    end;
-    //tbProjectTeams: ;
-    //tbPermits: ;
-    //tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    //tbBotanicTaxa: ;
-    //tbBands: ;
-    //tbBandHistory: ;
-    tbIndividuals:
-    begin
-      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-      panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-      panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-    end;
-    //tbCaptures: ;
-    //tbMolts: ;
-    tbNests:
-    begin
-      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-    end;
-    //tbNestRevisions: ;
-    //tbEggs: ;
-    //tbMethods: ;
-    tbExpeditions:
-    begin
-      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-    end;
-    tbSurveys:
-    begin
-      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-      panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-      panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-      panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-      panelTabs[5].UpdateCounter(dsLink6.DataSet.RecordCount);
-    end;
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings: ;
-    tbSpecimens:
-    begin
-      panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-      panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-    end;
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
   end;
 
+  //case FTableType of
+  //  //tbNone: ;
+  //  //tbUsers: ;
+  //  //tbRecordHistory: ;
+  //  //tbGazetteer: ;
+  //  tbSamplingPlots:
+  //  begin
+  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+  //  end;
+  //  //tbPermanentNets: ;
+  //  //tbInstitutions: ;
+  //  //tbPeople: ;
+  //  tbProjects:
+  //  begin
+  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+  //    panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+  //    panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+  //  end;
+  //  //tbProjectTeams: ;
+  //  //tbPermits: ;
+  //  //tbTaxonRanks: ;
+  //  //tbZooTaxa: ;
+  //  //tbBotanicTaxa: ;
+  //  //tbBands: ;
+  //  //tbBandHistory: ;
+  //  tbIndividuals:
+  //  begin
+  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+  //    panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+  //    panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+  //  end;
+  //  //tbCaptures: ;
+  //  //tbMolts: ;
+  //  tbNests:
+  //  begin
+  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+  //  end;
+  //  //tbNestRevisions: ;
+  //  //tbEggs: ;
+  //  //tbMethods: ;
+  //  tbExpeditions:
+  //  begin
+  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+  //  end;
+  //  tbSurveys:
+  //  begin
+  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
+  //    panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
+  //    panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
+  //    panelTabs[5].UpdateCounter(dsLink6.DataSet.RecordCount);
+  //  end;
+  //  //tbSurveyTeams: ;
+  //  //tbNetsEffort: ;
+  //  tbSightings: ;
+  //  tbSpecimens:
+  //  begin
+  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
+  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
+  //  end;
+  //  //tbSamplePreps: ;
+  //  //tbImages: ;
+  //  //tbAudioLibrary: ;
+  //end;
   UpdateChildStatus;
 end;
 
@@ -14225,337 +9337,273 @@ end;
 
 procedure TfrmCustomGrid.UpdateFilterPanels;
 begin
-  case TableType of
-    tbGazetteer:      UpdateFilterPanelsGazetteer;
-    tbInstitutions:   UpdateFilterPanelsInstitutions;
-    tbPeople:         UpdateFilterPanelsPeople;
-    tbProjects:       UpdateFilterPanelsProjects;
-    tbPermits:        UpdateFilterPanelsPermits;
-    tbMethods:        UpdateFilterPanelsMethods;
-    tbSamplingPlots:  UpdateFilterPanelsSamplingPlots;
-    tbBotanicTaxa:    UpdateFilterPanelsBotanicTaxa;
-    tbZooTaxa:        UpdateFilterPanelsZooTaxa;
-    tbBands:          UpdateFilterPanelsBands;
-    tbIndividuals:    UpdateFilterPanelsIndividuals;
-    tbCaptures:       UpdateFilterPanelsCaptures;
-    tbFeathers:       UpdateFilterPanelsFeathers;
-    tbNests:          UpdateFilterPanelsNests;
-    tbNestRevisions:  UpdateFilterPanelsNestRevisions;
-    tbEggs:           UpdateFilterPanelsEggs;
-    tbExpeditions:    UpdateFilterPanelsExpeditions;
-    tbSurveys:        UpdateFilterPanelsSurveys;
-    tbSightings:      UpdateFilterPanelsSightings;
-    tbSpecimens:      UpdateFilterPanelsSpecimens;
+  // Band size
+  pBandSizeFilter.Visible := (fufBandSize in FModule.FilterUiFlags);
+  // Band status
+  if (fufBandStatus in FModule.FilterUiFlags) then
+  begin
+    cbBandStatusFilter.Items.Clear;
+    cbBandStatusFilter.Items.Add(rsCaptionAll);
+    cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
+    pBandStatusFilter.Visible := True;
   end;
-end;
+  // Band type
+  if (fufBandType in FModule.FilterUiFlags) then
+  begin
+    cbBandTypeFilter.Items.Clear;
+    cbBandTypeFilter.Items.Add(rsCaptionAll);
+    cbBandTypeFilter.Items.AddCommaText(rsBandTypeList);
+    pBandTypeFilter.Visible := True;
+  end;
+  // Band source
+  if (fufBandSource in FModule.FilterUiFlags) then
+  begin
+    cbBandSourceFilter.Items.Clear;
+    cbBandSourceFilter.Items.CommaText := rsCaptionAll + ',"' + rsBandAcquiredFromSupplier + '","' +
+      rsBandTransferBetweenBanders + '","' + rsBandLivingBirdBandedByOthers + '","' +
+      rsBandDeadBirdBandedByOthers + '","' + rsBandFoundLoose + '"';
+    pBandSourceFilter.Visible := True;
+  end;
+  // Band reported
+  pReportedFilter.Visible := (fufBandReported in FModule.FilterUiFlags);
+  // Person
+  pPersonFilter.Visible := (fufPerson in FModule.FilterUiFlags);
+  // Institution
+  pInstitutionFilter.Visible := (fufInstitution in FModule.FilterUiFlags);
+  // Project
+  pProjectFilter.Visible := (fufProject in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsBands;
-begin
-  pBandSizeFilter.Visible := True;
-  cbBandStatusFilter.Items.Clear;
-  cbBandStatusFilter.Items.Add(rsCaptionAll);
-  cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
-  pBandStatusFilter.Visible := True;
-  cbBandTypeFilter.Items.Clear;
-  cbBandTypeFilter.Items.Add(rsCaptionAll);
-  cbBandTypeFilter.Items.AddCommaText(rsBandTypeList);
-  cbBandSourceFilter.Items.Clear;
-  cbBandSourceFilter.Items.CommaText := rsCaptionAll + ',"' + rsBandAcquiredFromSupplier + '","' +
-    rsBandTransferBetweenBanders + '","' + rsBandLivingBirdBandedByOthers + '","' +
-    rsBandDeadBirdBandedByOthers + '","' + rsBandFoundLoose + '"';
-  pBandSourceFilter.Visible := True;
-  pBandTypeFilter.Visible := True;
-  pReportedFilter.Visible := True;
-  pPersonFilter.Visible := True;
-  pInstitutionFilter.Visible := True;
-  pProjectFilter.Visible := True;
-  //pDatesFilters.Visible := True;
-  //LoadDateTreeData(TableType, tvDateFilter);
-end;
+  // Taxon ranks
+  if (fufTaxonRanks in FModule.FilterUiFlags) then
+  begin
+    pTaxonRanksFilters.Visible := True;
+    LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
+  end;
+  // Synonyms
+  pSynonymFilters.Visible := (fufSynonyms in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsBotanicTaxa;
-begin
-  pTaxonRanksFilters.Visible := True;
-  LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
-  pSynonymFilters.Visible := True;
-end;
+  // Taxa
+  if (fufTaxa in FModule.FilterUiFlags) then
+  begin
+    pTaxonFilters.Visible := True;
+    LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+  end;
+  // Dates
+  if (fufDates in FModule.FilterUiFlags) then
+  begin
+    pDatesFilters.Visible := True;
+    LoadDateTreeData(FTableType, tvDateFilter);
+  end;
+  // Sites
+  if (fufSites in FModule.FilterUiFlags) then
+  begin
+    pSiteFilters.Visible := True;
+    LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  end;
+  // Capture type
+  if (fufCaptureType in FModule.FilterUiFlags) then
+  begin
+    cbCaptureTypeFilter.Items.Clear;
+    cbCaptureTypeFilter.Items.Add(rsCaptionAll);
+    cbCaptureTypeFilter.Items.AddCommaText(rsCaptureTypeList);
+    pCaptureTypeFilter.Visible := True;
+  end;
+  // Release status
+  if (fufReleaseStatus in FModule.FilterUiFlags) then
+  begin
+    cbCaptureStatusFilter.Items.Clear;
+    cbCaptureStatusFilter.Items.CommaText := rsCaptionAll + ',"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
+      rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
+    pCaptureStatusFilter.Visible := True;
+  end;
+  // Aging specs
+  if (fufAgingSpecs in FModule.FilterUiFlags) then
+  begin
+    cbAgeFilter.Items.Clear;
+    cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
+      rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+      rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+    pAgingFilters.Visible := True;
+  end;
+  // Sexing specs
+  if (fufSexingSpecs in FModule.FilterUiFlags) then
+  begin
+    cbSexFilter.Items.Clear;
+    cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+    pSexingFilters.Visible := True;
+  end;
+  // Fat
+  pFatFilter.Visible := (fufFat in FModule.FilterUiFlags);
+  // Molt specs
+  pMoltingFilters.Visible := (fufMoltSpecs in FModule.FilterUiFlags);
+  // Time interval
+  pTimeFilters.Visible := (fufTimeInterval in FModule.FilterUiFlags);
+  // Survey
+  pSurveyFilter.Visible := (fufSurvey in FModule.FilterUiFlags);
+  // Method
+  pMethodFilter.Visible := (fufMethod in FModule.FilterUiFlags);
+  // Individual
+  pIndividualFilter.Visible := (fufIndividual in FModule.FilterUiFlags);
+  // Sampling plot
+  pSamplingPlotFilter.Visible := (fufSamplingPlot in FModule.FilterUiFlags);
+  // Needs review
+  pNeedsReviewFilter.Visible := (fufNeedsReview in FModule.FilterUiFlags);
+  // Escaped
+  pEscapedFilter.Visible := (fufEscaped in FModule.FilterUiFlags);
+  // Philornis presence
+  pPhilornisFilter.Visible := (fufPhilornisPresence in FModule.FilterUiFlags);
+  // Band replaced
+  pReplacedBandFilter.Visible := (fufBandReplaced in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsCaptures;
-begin
-  pTaxonFilters.Visible := True;
-  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  cbCaptureTypeFilter.Items.Clear;
-  cbCaptureTypeFilter.Items.Add(rsCaptionAll);
-  cbCaptureTypeFilter.Items.AddCommaText(rsCaptureTypeList);
-  pCaptureTypeFilter.Visible := True;
-  cbCaptureStatusFilter.Items.Clear;
-  cbCaptureStatusFilter.Items.CommaText := rsCaptionAll + ',"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
-    rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
-  pCaptureStatusFilter.Visible := True;
-  cbAgeFilter.Items.Clear;
-  cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
-    rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
-    rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
-  pAgingFilters.Visible := True;
-  cbSexFilter.Items.Clear;
-  cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
-  pSexingFilters.Visible := True;
-  pFatFilter.Visible := True;
-  pMoltingFilters.Visible := True;
-  pPersonFilter.Visible := True;
-  pTimeFilters.Visible := True;
-  pSurveyFilter.Visible := True;
-  pMethodFilter.Visible := True;
-  pIndividualFilter.Visible := True;
-  pSamplingPlotFilter.Visible := True;
-  pNeedsReviewFilter.Visible := True;
-  pEscapedFilter.Visible := True;
-  pPhilornisFilter.Visible := True;
-  pReplacedBandFilter.Visible := True;
-end;
+  // Egg specs
+  if (fufEggSpecs in FModule.FilterUiFlags) then
+  begin
+    cbEggShapeFilter.Items.Clear;
+    cbEggShapeFilter.Items.CommaText := rsCaptionAll + ',' + rsEggSpherical + ',' + rsEggElliptical + ',' + rsEggOval + ',' +
+      rsEggPyriform + ',' + rsEggConical + ',' + rsEggBiconical + ',' + rsEggCylindrical + ',' +
+      rsEggLongitudinal + ',' + rsEggUnknown;
+    cbEggPatternFilter.Items.Clear;
+    cbEggPatternFilter.Items.CommaText := rsCaptionAll + ',"' + rsEggSpots + '","' + rsEggBlotches + '","' +
+      rsEggSquiggles + '","' + rsEggStreaks + '","' + rsEggScrawls + '","' + rsEggSpotsSquiggles + '","' +
+      rsEggBlotchesSquiggles + '","' + rsEggUnknown + '"';
+    cbEggTextureFilter.Items.Clear;
+    cbEggTextureFilter.Items.CommaText := rsCaptionAll + ',' + rsEggChalky + ',' + rsEggShiny + ',' + rsEggGlossy + ',' +
+      rsEggPitted + ',' + rsEggUnknown;
+    pEggTraitsFilters.Visible := True;
+  end;
+  // Nest
+  pNestFilter.Visible := (fufNest in FModule.FilterUiFlags);
+  // Egg hatched
+  pHatchedFilter.Visible := (fufEggHatched in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsEggs;
-begin
-  pTaxonFilters.Visible := True;
-  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  cbEggShapeFilter.Items.Clear;
-  cbEggShapeFilter.Items.CommaText := rsCaptionAll + ',' + rsEggSpherical + ',' + rsEggElliptical + ',' + rsEggOval + ',' +
-    rsEggPyriform + ',' + rsEggConical + ',' + rsEggBiconical + ',' + rsEggCylindrical + ',' +
-    rsEggLongitudinal + ',' + rsEggUnknown;
-  cbEggPatternFilter.Items.Clear;
-  cbEggPatternFilter.Items.CommaText := rsCaptionAll + ',"' + rsEggSpots + '","' + rsEggBlotches + '","' +
-    rsEggSquiggles + '","' + rsEggStreaks + '","' + rsEggScrawls + '","' + rsEggSpotsSquiggles + '","' +
-    rsEggBlotchesSquiggles + '","' + rsEggUnknown + '"';
-  cbEggTextureFilter.Items.Clear;
-  cbEggTextureFilter.Items.CommaText := rsCaptionAll + ',' + rsEggChalky + ',' + rsEggShiny + ',' + rsEggGlossy + ',' +
-    rsEggPitted + ',' + rsEggUnknown;
-  pEggTraitsFilters.Visible := True;
-  pPersonFilter.Visible := True;
-  pNestFilter.Visible := True;
-  pIndividualFilter.Visible := True;
-  pHatchedFilter.Visible := True;
-end;
+  // Site rank
+  if (fufSiteRank in FModule.FilterUiFlags) then
+  begin
+    cbSiteRankFilter.Items.Clear;
+    cbSiteRankFilter.Items.Add(rsCaptionAll);
+    cbSiteRankFilter.Items.Add(rsCaptionCountry);
+    cbSiteRankFilter.Items.Add(rsCaptionState);
+    cbSiteRankFilter.Items.Add(rsCaptionRegion);
+    cbSiteRankFilter.Items.Add(rsCaptionMunicipality);
+    cbSiteRankFilter.Items.Add(rsCaptionDistrict);
+    cbSiteRankFilter.Items.Add(rsCaptionLocality);
+    pSiteRankFilter.Visible := True;
+  end;
 
-procedure TfrmCustomGrid.UpdateFilterPanelsExpeditions;
-begin
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pProjectFilter.Visible := True;
-end;
+  // Age
+  if (fufAge in FModule.FilterUiFlags) then
+  begin
+    pSkullOssificationFilter.Visible := False;
+    pHowAgedFilter.Visible := False;
+    pAgeFilter.Rounding.RoundOptions := [];
+    cbAgeFilter.Items.Clear;
+    cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
+      rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+      rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+    pAgingFilters.Visible := True;
+  end;
+  // Sex
+  if (fufSex in FModule.FilterUiFlags) then
+  begin
+    pCloacalProtuberanceFilter.Visible := False;
+    pBroodPatchFilter.Visible := False;
+    pHowSexedFilter.Visible := False;
+    pSexFilter.Rounding.RoundOptions := [];
+    cbSexFilter.Items.Clear;
+    cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+    pSexingFilters.Visible := True;
+  end;
 
-procedure TfrmCustomGrid.UpdateFilterPanelsFeathers;
-begin
-  pTaxonFilters.Visible := True;
-  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  pIndividualFilter.Visible := True;
-  pPersonFilter.Visible := True;
-  pTimeFilters.Visible := True;
-end;
+  // Category
+  if (fufCategory in FModule.FilterUiFlags) then
+  begin
+    cbCategoryFilter.Items.Clear;
+    cbCategoryFilter.Items.Add(rsCaptionAll);
+    LoadMethodCategories(cbCategoryFilter.Items);
+    pCategoryFilter.Visible := True;
+  end;
 
-procedure TfrmCustomGrid.UpdateFilterPanelsGazetteer;
-begin
-  cbSiteRankFilter.Items.Clear;
-  cbSiteRankFilter.Items.Add(rsCaptionAll);
-  cbSiteRankFilter.Items.Add(rsCaptionCountry);
-  cbSiteRankFilter.Items.Add(rsCaptionState);
-  cbSiteRankFilter.Items.Add(rsCaptionRegion);
-  cbSiteRankFilter.Items.Add(rsCaptionMunicipality);
-  cbSiteRankFilter.Items.Add(rsCaptionDistrict);
-  cbSiteRankFilter.Items.Add(rsCaptionLocality);
-  pSiteRankFilter.Visible := True;
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-end;
+  // Nest fate
+  if (fufNestFate in FModule.FilterUiFlags) then
+  begin
+    cbNestFateFilter.Items.Clear;
+    cbNestFateFilter.Items.CommaText := rsCaptionAll + ',"' + rsNestLost + '","' + rsNestSuccess + '","' +
+      rsNestUnknown + '"';
+    pNestFateFilter.Visible := True;
+  end;
+  // Support type
+  if (fufSupportType in FModule.FilterUiFlags) then
+  begin
+    cbNestSupportFilter.Items.Clear;
+    cbNestSupportFilter.Items.CommaText := rsCaptionAll + ',"' + rsSupportGround + '","' +
+      rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
+      rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
+      rsSupportAnthropic + '","' + rsSupportOther + '"';
+    pNestSupportFilter.Visible := True;
+  end;
+  // Support plant
+  pPlantFilter.Visible := (fufSupportPlant in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsIndividuals;
-begin
-  pTaxonFilters.Visible := True;
-  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pSkullOssificationFilter.Visible := False;
-  pHowAgedFilter.Visible := False;
-  pAgeFilter.Rounding.RoundOptions := [];
-  cbAgeFilter.Items.Clear;
-  cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
-    rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
-    rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
-  pAgingFilters.Visible := True;
-  pCloacalProtuberanceFilter.Visible := False;
-  pBroodPatchFilter.Visible := False;
-  pHowSexedFilter.Visible := False;
-  pSexFilter.Rounding.RoundOptions := [];
-  cbSexFilter.Items.Clear;
-  cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
-  pSexingFilters.Visible := True;
-  pNestFilter.Visible := True;
-  pIndividualFilter.Visible := True;
-  pReplacedBandFilter.Visible := True;
-end;
+  // Nest status
+  if (fufNestStatus in FModule.FilterUiFlags) then
+  begin
+    cbNestStatusFilter.Items.Clear;
+    cbNestStatusFilter.Items.CommaText := rsCaptionAll + ',' + rsNestActive + ',' + rsNestInactive + ',' + rsNestUnknown;
+    pNestStatusFilter.Visible := True;
+  end;
+  // Nest stage
+  if (fufNestStage in FModule.FilterUiFlags) then
+  begin
+    cbNestStageFilter.Items.CommaText := rsCaptionAll + ',' + rsNestBuilding + ',' + rsNestLaying + ',' +
+      rsNestIncubating + ',' + rsNestHatching + ',' + rsNestNestling + ',' + rsNestInactive + ',' +
+      rsNestUnknown;
+    pNestStageFilter.Visible := True;
+  end;
+  // Nidoparasite presence
+  pNidoparasiteFilter.Visible := (fufNidoparasitePresence in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsInstitutions;
-begin
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-end;
+  // Permit type
+  if (fufPermitType in FModule.FilterUiFlags) then
+  begin
+    cbPermitTypeFilter.Items.Clear;
+    cbPermitTypeFilter.Items.CommaText := rsCaptionAll + ',"' + rsPermitBanding + '","' + rsPermitCollection + '","' +
+      rsPermitResearch + '","' + rsPermitEntry + '","' + rsPermitTransport + '","' + rsPermitOther + '"';
+    pPermitTypeFilter.Visible := True;
+  end;
 
-procedure TfrmCustomGrid.UpdateFilterPanelsMethods;
-begin
-  cbCategoryFilter.Items.Clear;
-  cbCategoryFilter.Items.Add(rsCaptionAll);
-  LoadMethodCategories(cbCategoryFilter.Items);
-  pCategoryFilter.Visible := True;
-end;
+  // Is in eBird
+  pRecordInEbirdFilter.Visible := (fufIsOnEbird in FModule.FilterUiFlags);
+  // Out of sample
+  pOutOfSampleFilter.Visible := (fufOutOfSample in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsNests;
-begin
-  pTaxonFilters.Visible := True;
-  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  cbNestFateFilter.Items.Clear;
-  cbNestFateFilter.Items.CommaText := rsCaptionAll + ',"' + rsNestLost + '","' + rsNestSuccess + '","' +
-    rsNestUnknown + '"';
-  pNestFateFilter.Visible := True;
-  cbNestSupportFilter.Items.Clear;
-  cbNestSupportFilter.Items.CommaText := rsCaptionAll + ',"' + rsSupportGround + '","' +
-    rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
-    rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
-    rsSupportAnthropic + '","' + rsSupportOther + '"';
-  pNestSupportFilter.Visible := True;
-  pPersonFilter.Visible := True;
-  pProjectFilter.Visible := True;
-  pPlantFilter.Visible := True;
-end;
+  // Sample type
+  if (fufSampleType in FModule.FilterUiFlags) then
+  begin
+    cbMaterialFilter.Items.Clear;
+    cbMaterialFilter.Items.Add(rsCaptionAll);
+    cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
+    cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
+    cbMaterialFilter.Items.Add(rsSpecimenNest);
+    cbMaterialFilter.Items.Add(rsSpecimenBones);
+    cbMaterialFilter.Items.Add(rsSpecimenEgg);
+    cbMaterialFilter.Items.Add(rsSpecimenParasites);
+    cbMaterialFilter.Items.Add(rsSpecimenFeathers);
+    cbMaterialFilter.Items.Add(rsSpecimenBlood);
+    cbMaterialFilter.Items.Add(rsSpecimenClaw);
+    cbMaterialFilter.Items.Add(rsSpecimenSwab);
+    cbMaterialFilter.Items.Add(rsSpecimenTissues);
+    cbMaterialFilter.Items.Add(rsSpecimenFeces);
+    cbMaterialFilter.Items.Add(rsSpecimenRegurgite);
+    pMaterialFilter.Visible := True;
+  end;
+  // Egg
+  pEggFilter.Visible := (fufEgg in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsNestRevisions;
-begin
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  cbNestStatusFilter.Items.Clear;
-  cbNestStatusFilter.Items.CommaText := rsCaptionAll + ',' + rsNestActive + ',' + rsNestInactive + ',' + rsNestUnknown;
-  pNestStatusFilter.Visible := True;
-  cbNestStageFilter.Items.CommaText := rsCaptionAll + ',' + rsNestBuilding + ',' + rsNestLaying + ',' +
-    rsNestIncubating + ',' + rsNestHatching + ',' + rsNestNestling + ',' + rsNestInactive + ',' +
-    rsNestUnknown;
-  pNestStageFilter.Visible := True;
-  pPersonFilter.Visible := True;
-  pTimeFilters.Visible := True;
-  pNestFilter.Visible := True;
-  pNidoparasiteFilter.Visible := True;
-  pPhilornisFilter.Visible := True;
-end;
+  // Expedition
+  pExpeditionFilter.Visible := (fufExpedition in FModule.FilterUiFlags);
 
-procedure TfrmCustomGrid.UpdateFilterPanelsSamplingPlots;
-begin
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-end;
-
-procedure TfrmCustomGrid.UpdateFilterPanelsPeople;
-begin
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pInstitutionFilter.Visible := True;
-end;
-
-procedure TfrmCustomGrid.UpdateFilterPanelsPermits;
-begin
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pProjectFilter.Visible := True;
-  cbPermitTypeFilter.Items.Clear;
-  cbPermitTypeFilter.Items.CommaText := rsCaptionAll + ',"' + rsPermitBanding + '","' + rsPermitCollection + '","' +
-    rsPermitResearch + '","' + rsPermitEntry + '","' + rsPermitTransport + '","' + rsPermitOther + '"';
-  pPermitTypeFilter.Visible := True;
-end;
-
-procedure TfrmCustomGrid.UpdateFilterPanelsProjects;
-begin
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-end;
-
-procedure TfrmCustomGrid.UpdateFilterPanelsSightings;
-begin
-  pTaxonFilters.Visible := True;
-  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  pPersonFilter.Visible := True;
-  pTimeFilters.Visible := True;
-  pSurveyFilter.Visible := True;
-  pMethodFilter.Visible := True;
-  pIndividualFilter.Visible := True;
-  pRecordInEbirdFilter.Visible := True;
-  pOutOfSampleFilter.Visible := True;
-end;
-
-procedure TfrmCustomGrid.UpdateFilterPanelsSpecimens;
-begin
-  cbMaterialFilter.Items.Clear;
-  cbMaterialFilter.Items.Add(rsCaptionAll);
-  cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
-  cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
-  cbMaterialFilter.Items.Add(rsSpecimenNest);
-  cbMaterialFilter.Items.Add(rsSpecimenBones);
-  cbMaterialFilter.Items.Add(rsSpecimenEgg);
-  cbMaterialFilter.Items.Add(rsSpecimenParasites);
-  cbMaterialFilter.Items.Add(rsSpecimenFeathers);
-  cbMaterialFilter.Items.Add(rsSpecimenBlood);
-  cbMaterialFilter.Items.Add(rsSpecimenClaw);
-  cbMaterialFilter.Items.Add(rsSpecimenSwab);
-  cbMaterialFilter.Items.Add(rsSpecimenTissues);
-  cbMaterialFilter.Items.Add(rsSpecimenFeces);
-  cbMaterialFilter.Items.Add(rsSpecimenRegurgite);
-  pMaterialFilter.Visible := True;
-  pTaxonFilters.Visible := True;
-  LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  pNestFilter.Visible := True;
-  pEggFilter.Visible := True;
-  pIndividualFilter.Visible := True;
-end;
-
-procedure TfrmCustomGrid.UpdateFilterPanelsSurveys;
-begin
-  pMethodFilter.Visible := True;
-  pDatesFilters.Visible := True;
-  LoadDateTreeData(FTableType, tvDateFilter);
-  pSiteFilters.Visible := True;
-  LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  pTimeFilters.Visible := True;
-  pProjectFilter.Visible := True;
-  pSamplingPlotFilter.Visible := True;
-  pExpeditionFilter.Visible := True;
-end;
-
-procedure TfrmCustomGrid.UpdateFilterPanelsZooTaxa;
-begin
-  pTaxonRanksFilters.Visible := True;
-  LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
-  pTaxonomiesFilters.Visible := True;
-  pSynonymFilters.Visible := True;
-  pExtinctFilter.Visible := True;
+  pTaxonomiesFilters.Visible := (fufTaxonomies in FModule.FilterUiFlags);
+  pExtinctFilter.Visible := (fufIsExtinct in FModule.FilterUiFlags);
 end;
 
 end.

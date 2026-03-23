@@ -5,8 +5,8 @@ unit modules_bands;
 interface
 
 uses
-  Classes, SysUtils, Graphics, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core;
 
 type
 
@@ -14,13 +14,13 @@ type
 
   TBandsModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
@@ -28,11 +28,11 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
-  udm_main, udm_grid;
+  udm_main, udm_grid, ufrm_customgrid;
 
 { TBandsModuleController }
 
-constructor TBandsModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TBandsModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbBands;
@@ -40,8 +40,8 @@ begin
   FDataSet := DMG.qBands;
   FSupportedMedia := [];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowInsertBatch, gufShowMoreOptions,
-    gufShowTransferBands, gufShowBandsBalance, gufShowBandHistory,
-    gufPrintMain, gufPrintByCarrier, gufPrintByStatus, gufPrintWithHistory];
+    gufShowTransferBands, gufShowBandsBalance, gufShowBandHistory];
+  FPrintUiFlags := [pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory];
   FFilterUiFlags := [fufMarked, fufBandSize, fufBandStatus, fufBandType, fufBandSource, fufBandReported,
     fufPerson, fufInstitution, fufProject];
 
@@ -57,7 +57,7 @@ const
 var
   sf: Integer;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     if cbBandSizeFilter.ItemIndex > 0 then
     begin
@@ -121,7 +121,7 @@ end;
 
 procedure TBandsModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     cbBandSizeFilter.ItemIndex := 0;
 
@@ -177,7 +177,7 @@ begin
   end;
 end;
 
-procedure TBandsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TBandsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if Column.FieldName = COL_BAND_SIZE then
   begin
@@ -297,46 +297,48 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtText, Crit,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d+[-‒]{1}\d+$', aValue) then
-    begin
-      Crit := crBetween;
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      { split strings: unicode characters #$002D e #$2012 }
-      V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
-      V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtInteger, Crit,
-        False, V1, V2));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CARRIER_NAME, rscCarrier, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SUPPLIER_NAME, rscSupplier, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_NAME, rscProject, sdtText, Crit,
-        True, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_NAME, rscIndividual, sdtText, Crit,
-        True, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtText, Crit,
+          False, aValue));
+      end
+      else
+      if ExecRegExpr('^\d+[-‒]{1}\d+$', aValue) then
+      begin
+        Crit := crBetween;
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        { split strings: unicode characters #$002D e #$2012 }
+        V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
+        V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtInteger, Crit,
+          False, V1, V2));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CARRIER_NAME, rscCarrier, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SUPPLIER_NAME, rscSupplier, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_NAME, rscProject, sdtText, Crit,
+          True, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_NAME, rscIndividual, sdtText, Crit,
+          True, aValue));
+      end;
     end;
-
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 end.

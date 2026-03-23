@@ -15230,6 +15230,10 @@ msgstr "O valor \"%s\" não corresponde a um registro válido na tabela de consu
 msgid "The file module is different from the Quick Entry module."
 msgstr "O módulo do arquivo é diferente do módulo do Quick Entry."
 
+#: utils_locale.rserrormodulenotsupported
+msgid "The module is not supported."
+msgstr "O módulo não é suportado."
+
 #: utils_locale.rserrormontadata
 #, object-pascal-format
 msgctxt "utils_locale.rserrormontadata"

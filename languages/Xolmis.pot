@@ -15245,6 +15245,10 @@ msgstr ""
 msgid "The file module is different from the Quick Entry module."
 msgstr ""
 
+#: utils_locale.rserrormodulenotsupported
+msgid "The module is not supported."
+msgstr ""
+
 #: utils_locale.rserrormontadata
 #, object-pascal-format
 msgctxt "utils_locale.rserrormontadata"

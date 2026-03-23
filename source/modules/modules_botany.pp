@@ -5,8 +5,8 @@ unit modules_botany;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils, StdCtrls,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils, StdCtrls,
+  data_types, modules_core;
 
 type
 
@@ -14,30 +14,32 @@ type
 
   TBotanicalTaxaModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
 
 uses
-  utils_locale, data_consts, data_columns, data_filters, data_getvalue, models_media, udm_main, udm_grid;
+  utils_locale, data_consts, data_columns, data_filters, data_getvalue, models_media,
+  udm_main, udm_grid, ufrm_customgrid;
 
 { TBotanicalTaxaModuleController }
 
-constructor TBotanicalTaxaModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TBotanicalTaxaModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbBotanicTaxa;
   FCaptionText := rsTitleBotanicalTaxa;
   FDataSet := DMG.qBotany;
   FSupportedMedia := [amtDocuments];
-  FUiFlags := [gufShowVerifications, gufShowSummary, gufPrintMain, gufPrintRecorded];
+  FUiFlags := [gufShowVerifications, gufShowSummary];
+  FPrintUiFlags := [pufBotanicalTaxa, pufBotanicalTaxaRecorded];
   FFilterUiFlags := [fufMarked, fufTaxonRanks, fufSynonyms];
 
   AddDefaultSort(COL_TAXON_NAME, sdAscending);
@@ -48,7 +50,7 @@ var
   sf, cc, i: Integer;
 begin
   cc := 0;
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     for i := 0 to clbTaxonRanksFilter.Count - 1 do
       if clbTaxonRanksFilter.Checked[i] then
@@ -91,7 +93,7 @@ end;
 
 procedure TBotanicalTaxaModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountTaxonRanksFilter.Caption := rsNoneSelected;
     clbTaxonRanksFilter.CheckAll(cbUnchecked, False);
@@ -115,7 +117,7 @@ begin
   end;
 end;
 
-procedure TBotanicalTaxaModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TBotanicalTaxaModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;
@@ -144,27 +146,30 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscScientificName, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_VERNACULAR_NAME, rscVernacularNameS, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_AUTHORSHIP, rscAuthorship, sdtText, Crit,
-        False, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscScientificName, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_VERNACULAR_NAME, rscVernacularNameS, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_AUTHORSHIP, rscAuthorship, sdtText, Crit,
+          False, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 end.

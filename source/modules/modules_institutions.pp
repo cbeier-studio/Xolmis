@@ -5,8 +5,8 @@ unit modules_institutions;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core;
 
 type
 
@@ -14,30 +14,32 @@ type
 
   TInstitutionsModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
 
 uses
-  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media, udm_main, udm_grid;
+  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
+  udm_main, udm_grid, ufrm_customgrid;
 
 { TInstitutionsModuleController }
 
-constructor TInstitutionsModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TInstitutionsModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbInstitutions;
   FCaptionText := rsTitleInstitutions;
   FDataSet := DMG.qInstitutions;
   FSupportedMedia := [amtDocuments];
-  FUiFlags := [gufShowSummary, gufPrintMain];
+  FUiFlags := [gufShowSummary];
+  FPrintUiFlags := [pufInstitutions];
   FFilterUiFlags := [fufMarked, fufSites];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);
@@ -45,7 +47,7 @@ end;
 
 procedure TInstitutionsModuleController.ApplyFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters, 'it.');
   end;
@@ -53,7 +55,7 @@ end;
 
 procedure TInstitutionsModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountSiteFilter.Caption := rsNoneSelected;
     tvSiteFilter.ClearChecked;
@@ -76,7 +78,7 @@ begin
   end;
 end;
 
-procedure TInstitutionsModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TInstitutionsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if Column.FieldName = COL_ABBREVIATION then
   begin
@@ -108,27 +110,30 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INSTITUTION_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, rscAbbreviation, sdtText, Crit,
-        False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_MANAGER_NAME, rscManager, sdtText, Crit,
-        True, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INSTITUTION_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, rscAbbreviation, sdtText, Crit,
+          False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_MANAGER_NAME, rscManager, sdtText, Crit,
+          True, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 end.

@@ -5,8 +5,8 @@ unit modules_specimens;
 interface
 
 uses
-  Classes, SysUtils, Graphics, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
-  data_types, modules_core, ufrm_customgrid;
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  data_types, modules_core;
 
 type
 
@@ -14,43 +14,43 @@ type
 
   TSpecimensModuleController = class(TModuleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns(AGrid: TDBGrid); override;
     procedure ClearFilters; override;
     procedure ApplyFilters; override;
     function Search(AValue: String): Boolean; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TSpecimensSubmoduleController }
 
   TSpecimensSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TSpecimenCollectorsSubmoduleController }
 
   TSpecimenCollectorsSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
   { TSamplePrepsSubmoduleController }
 
   TSamplePrepsSubmoduleController = class(TSubmoduleController)
   public
-    constructor Create(AOwner: TfrmCustomGrid); override;
+    constructor Create(AOwner: TForm); override;
 
     procedure ConfigureColumns; override;
-    procedure PrepareCanvas(var Column: TColumn; var Sender: TObject); override;
+    procedure PrepareCanvas(Column: TColumn; Sender: TObject); override;
   end;
 
 implementation
@@ -58,19 +58,20 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
-  udm_main, udm_grid, udm_individuals;
+  udm_main, udm_grid, udm_individuals, ufrm_customgrid;
 
 { TSpecimensModuleController }
 
-constructor TSpecimensModuleController.Create(AOwner: TfrmCustomGrid);
+constructor TSpecimensModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbSpecimens;
   FCaptionText := rsTitleSpecimens;
   FDataSet := DMG.qSpecimens;
   FSupportedMedia := [amtImages, amtAudios, amtDocuments];
-  FUiFlags := [gufShowVerifications, gufShowSummary, gufShowMap, gufShowImages, gufShowAudios, gufShowDocs,
-    gufPrintMain, gufPrintByDate, gufPrintByProject, gufPrintByLocality, gufPrintByTaxon];
+  FUiFlags := [gufShowVerifications, gufShowSummary, gufShowMap, gufShowImages, gufShowAudios, gufShowDocs];
+  FPrintUiFlags := [pufSpecimens, pufSpecimensByLocality, pufSpecimensByProject, pufSpecimensByTaxon,
+    pufSpecimensByYear];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufSampleType, fufNest, fufEgg, fufIndividual];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);
@@ -85,7 +86,7 @@ const
 var
   sf: Integer;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters, 'z.');
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters, 'g.');
@@ -122,7 +123,7 @@ end;
 
 procedure TSpecimensModuleController.ClearFilters;
 begin
-  with FOwner do
+  with TfrmCustomGrid(FOwner) do
   begin
     lblCountTaxonFilter.Caption := rsNoneSelected;
     tvTaxaFilter.ClearChecked;
@@ -191,7 +192,7 @@ begin
   end;
 end;
 
-procedure TSpecimensModuleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TSpecimensModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if (Column.FieldName = COL_COLLECTION_DATE) or
     (Column.FieldName = COL_FIELD_NUMBER) then
@@ -231,62 +232,65 @@ begin
       aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
     end;
 
-    if TryStrToInt(aValue, i) then
+    with TfrmCustomGrid(FOwner) do
     begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SPECIMEN_ID, rscId, sdtInteger, crEqual,
-        False, aValue));
-    end
-    else
-    if TryStrToDate(aValue, dt) then
-    begin
-      aValue := FormatDateTime('yyyy-mm-dd', dt);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtDate, crEqual,
-        False, aValue));
-    end
-    else
-    if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
-    begin
-      aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-      m := ExtractDelimited(1, aValue, ['/']);
-      y := ExtractDelimited(2, aValue, ['/']);
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtMonthYear, crEqual,
-        False, y + '-' + m));
-    end
-    else
-    begin
-      g := FOwner.SearchConfig.Fields.Add(TSearchGroup.Create);
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
-        True, aValue));
-      //FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create('collectors', 'Collectors', sdtText, Crit,
-      //  False, aValue));
-      FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
-        True, aValue));
-      //FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create('municipality_name', 'Municipality', sdtText, Crit,
-      //  True, aValue));
-      //FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create('state_name', 'State', sdtText, Crit,
-      //  True, aValue));
-      //FOwner.SearchConfig.Fields[g].Fields.Add(TSearchField.Create('country_name', 'Country', sdtText, Crit,
-      //  True, aValue));
+      if TryStrToInt(aValue, i) then
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SPECIMEN_ID, rscId, sdtInteger, crEqual,
+          False, aValue));
+      end
+      else
+      if TryStrToDate(aValue, dt) then
+      begin
+        aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtDate, crEqual,
+          False, aValue));
+      end
+      else
+      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      begin
+        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
+        m := ExtractDelimited(1, aValue, ['/']);
+        y := ExtractDelimited(2, aValue, ['/']);
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtMonthYear, crEqual,
+          False, y + '-' + m));
+      end
+      else
+      begin
+        g := SearchConfig.Fields.Add(TSearchGroup.Create);
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+          True, aValue));
+        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('collectors', 'Collectors', sdtText, Crit,
+        //  False, aValue));
+        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+          True, aValue));
+        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('municipality_name', 'Municipality', sdtText, Crit,
+        //  True, aValue));
+        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('state_name', 'State', sdtText, Crit,
+        //  True, aValue));
+        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('country_name', 'Country', sdtText, Crit,
+        //  True, aValue));
+      end;
     end;
   end;
 
   ApplyFilters;
 
-  Result := FOwner.SearchConfig.RunSearch > 0;
+  Result := TfrmCustomGrid(FOwner).SearchConfig.RunSearch > 0;
 end;
 
 { TSpecimensSubmoduleController }
 
-constructor TSpecimensSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TSpecimensSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbSpecimens;
   FCaptionText := rsTitleSpecimens;
   FDataSet := DMI.qSpecimens;
-  FGrid := FOwner.gridChild5;
+  FGrid := TfrmCustomGrid(FOwner).gridChild5;
   FPageIndex := 4;
   FUiFlags := [gufShowVerifications];
 
@@ -340,7 +344,7 @@ begin
   end;
 end;
 
-procedure TSpecimensSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TSpecimensSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
   if (Column.FieldName = COL_COLLECTION_DATE) or
     (Column.FieldName = COL_FIELD_NUMBER) then
@@ -356,13 +360,13 @@ end;
 
 { TSpecimenCollectorsSubmoduleController }
 
-constructor TSpecimenCollectorsSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TSpecimenCollectorsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbSpecimenCollectors;
   FCaptionText := rsTitleSpecimenCollectors;
   FDataSet := DMG.qSampleCollectors;
-  FGrid := FOwner.gridChild1;
+  FGrid := TfrmCustomGrid(FOwner).gridChild1;
   FPageIndex := 0;
   FUiFlags := [gufShowVerifications];
 
@@ -374,20 +378,20 @@ begin
 
 end;
 
-procedure TSpecimenCollectorsSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TSpecimenCollectorsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;
 
 { TSamplePrepsSubmoduleController }
 
-constructor TSamplePrepsSubmoduleController.Create(AOwner: TfrmCustomGrid);
+constructor TSamplePrepsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbSamplePreps;
   FCaptionText := rsTitleSamplePreps;
   FDataSet := DMG.qSamplePreps;
-  FGrid := FOwner.gridChild2;
+  FGrid := TfrmCustomGrid(FOwner).gridChild2;
   FPageIndex := 1;
   FUiFlags := [gufShowVerifications];
 
@@ -399,7 +403,7 @@ begin
 
 end;
 
-procedure TSamplePrepsSubmoduleController.PrepareCanvas(var Column: TColumn; var Sender: TObject);
+procedure TSamplePrepsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
 
 end;
