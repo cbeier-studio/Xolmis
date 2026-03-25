@@ -1263,7 +1263,7 @@ begin
   {$IFDEF DEBUG}
   LogDebug('Search value: ' + aValue);
   {$ENDIF}
-  FSearch.Fields.Clear;
+  FSearch.TextFilters.Clear;
   FSearch.QuickFilters.Clear;
 
   gridTaxa.BeginUpdate;
@@ -1288,28 +1288,28 @@ begin
 
       if TryStrToInt(aValue, i) then
       begin
-        g := FSearch.Fields.Add(TSearchGroup.Create);
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_id', 'Taxon (ID)', sdtInteger, crEqual,
+        g := FSearch.TextFilters.Add(TSearchGroup.Create);
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('taxon_id', 'Taxon (ID)', sdtInteger, crEqual,
           False, aValue));
       end
       else
       begin
-        g := FSearch.Fields.Add(TSearchGroup.Create);
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('full_name', 'Scientific name', sdtText, Crit,
+        g := FSearch.TextFilters.Add(TSearchGroup.Create);
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('full_name', 'Scientific name', sdtText, Crit,
           False, aValue));
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('english_name', 'English name', sdtText, Crit,
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('english_name', 'English name', sdtText, Crit,
           False, aValue));
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('ioc_english_name', 'English name (IOC)', sdtText, Crit,
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('ioc_english_name', 'English name (IOC)', sdtText, Crit,
           False, aValue));
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('spanish_name', 'Spanish name', sdtText, Crit,
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('spanish_name', 'Spanish name', sdtText, Crit,
           False, aValue));
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('portuguese_name', 'Portuguese name', sdtText, Crit,
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('portuguese_name', 'Portuguese name', sdtText, Crit,
           False, aValue));
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('other_portuguese_names', 'Other portuguese names', sdtText, Crit,
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('other_portuguese_names', 'Other portuguese names', sdtText, Crit,
           False, aValue));
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('ebird_code', 'eBird code', sdtText, Crit,
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('ebird_code', 'eBird code', sdtText, Crit,
           False, aValue));
-        FSearch.Fields[g].Fields.Add(TSearchField.Create('quick_code', 'Quick code', sdtText, Crit,
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('quick_code', 'Quick code', sdtText, Crit,
           False, aValue));
       end;
     end;
@@ -1330,8 +1330,8 @@ begin
         'UNION ALL ' +
         'SELECT DISTINCT subsp.taxon_id FROM specimens AS subsp';
 
-      g := FSearch.Fields.Add(TSearchGroup.Create);
-      FSearch.Fields[g].Fields.Add(TSearchField.Create('taxon_id', 'Taxon ID', sdtInteger, crIn,
+      g := FSearch.TextFilters.Add(TSearchGroup.Create);
+      FSearch.TextFilters[g].Fields.Add(TSearchField.Create('taxon_id', 'Taxon ID', sdtInteger, crIn,
         False, subRecorded));
     end;
 

@@ -30,7 +30,7 @@ object frmTaxa: TfrmTaxa
     Columns = <    
       item
         Title.Caption = 'Taxon'
-        Width = 287
+        Width = 308
         FieldName = 'full_name'
       end    
       item

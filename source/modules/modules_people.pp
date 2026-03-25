@@ -51,15 +51,12 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Sites
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters, 'p.');
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
-
-    if InstitutionIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INSTITUTION_ID, rscInstitution, sdtInteger,
-        crEqual, False, IntToStr(InstitutionIdFilter)));
-    end;
+    // Institution
+    AddLookupFilter(SearchConfig, [COL_INSTITUTION_ID], [rscInstitution], InstitutionIdFilter);
   end;
 end;
 
@@ -143,18 +140,18 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERSON_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PERSON_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, rscBirthDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, rscBirthDate, sdtDate, crEqual,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, rscDeathDate, sdtDate, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, rscDeathDate, sdtDate, crEqual,
           False, aValue));
       end
       else
@@ -163,20 +160,20 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, rscBirthDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, rscBirthDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, rscDeathDate, sdtMonthYear, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, rscDeathDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, rscAbbreviation, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, rscAbbreviation, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CITATION, rscCitation, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CITATION, rscCitation, sdtText, Crit,
           False, aValue));
       end;
     end;

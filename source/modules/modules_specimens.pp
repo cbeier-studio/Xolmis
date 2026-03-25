@@ -88,36 +88,23 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Taxa
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters, 'z.');
+    // Sites
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters, 'g.');
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
-
+    // Sample type
     if cbMaterialFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SAMPLE_TYPE, rscType, sdtText,
-        crEqual, False, SampleTypes[cbMaterialFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_SAMPLE_TYPE, rscType, SampleTypes[cbMaterialFilter.ItemIndex - 1]);
     end;
-
-    if NestIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_ID, rscNest, sdtInteger,
-        crEqual, False, IntToStr(NestIdFilter)));
-    end;
-    if EggIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EGG_ID, rscEgg, sdtInteger,
-        crEqual, False, IntToStr(EggIdFilter)));
-    end;
-
-    if IndividualIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscIndividual, sdtInteger,
-        crEqual, False, IntToStr(IndividualIdFilter)));
-    end;
+    // Nest
+    AddLookupFilter(SearchConfig, [COL_NEST_ID], [rscNest], NestIdFilter);
+    // Egg
+    AddLookupFilter(SearchConfig, [COL_EGG_ID], [rscEgg], EggIdFilter);
+    // Individual
+    AddLookupFilter(SearchConfig, [COL_INDIVIDUAL_ID], [rscIndividual], IndividualIdFilter);
   end;
 end;
 
@@ -236,16 +223,16 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SPECIMEN_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SPECIMEN_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtDate, crEqual,
           False, aValue));
       end
       else
@@ -254,24 +241,24 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
           True, aValue));
-        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('collectors', 'Collectors', sdtText, Crit,
+        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('collectors', 'Collectors', sdtText, Crit,
         //  False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
           True, aValue));
-        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('municipality_name', 'Municipality', sdtText, Crit,
+        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('municipality_name', 'Municipality', sdtText, Crit,
         //  True, aValue));
-        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('state_name', 'State', sdtText, Crit,
+        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('state_name', 'State', sdtText, Crit,
         //  True, aValue));
-        //SearchConfig.Fields[g].Fields.Add(TSearchField.Create('country_name', 'Country', sdtText, Crit,
+        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('country_name', 'Country', sdtText, Crit,
         //  True, aValue));
       end;
     end;

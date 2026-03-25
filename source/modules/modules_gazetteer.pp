@@ -54,12 +54,12 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Site rank
     if cbSiteRankFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SITE_RANK, rscType, sdtText,
-        crEqual, False, SiteRanks[cbSiteRankFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_SITE_RANK, rscType, SiteRanks[cbSiteRankFilter.ItemIndex - 1]);
     end;
+    // Sites
     { #todo : apply filter for sites in TGazetteerModuleController }
   end;
 end;
@@ -135,25 +135,25 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SITE_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SITE_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       if TryStrToFloat(aValue, f) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LONGITUDE, rscLongitude, sdtText, crStartLike,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LONGITUDE, rscLongitude, sdtText, crStartLike,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LATITUDE, rscLatitude, sdtText, crStartLike,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LATITUDE, rscLatitude, sdtText, crStartLike,
           False, aValue));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SITE_NAME, rscFullName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SITE_NAME, rscFullName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SITE_ABBREVIATION, rscAbbreviation, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SITE_ABBREVIATION, rscAbbreviation, sdtText, Crit,
           False, aValue));
       end;
     end;

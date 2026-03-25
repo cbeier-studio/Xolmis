@@ -118,14 +118,10 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
-
-    if ProjectIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscProject, sdtInteger,
-        crEqual, False, IntToStr(ProjectIdFilter)));
-    end;
+    // Project
+    AddLookupFilter(SearchConfig, [COL_PROJECT_ID], [rscProject], ProjectIdFilter);
   end;
 end;
 
@@ -195,18 +191,18 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPEDITION_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EXPEDITION_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtDate, crEqual,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtDate, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtDate, crEqual,
           False, aValue));
       end
       else
@@ -215,18 +211,18 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtMonthYear, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPEDITION_NAME, rscName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EXPEDITION_NAME, rscName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DESCRIPTION, rscDescription, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DESCRIPTION, rscDescription, sdtText, Crit,
           False, aValue));
       end;
     end;
@@ -268,55 +264,20 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Sites
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters, 'gl.');
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
-
-    if eStartTimeFilter.Text <> EmptyStr then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      if eEndTimeFilter.Text <> EmptyStr then
-      begin
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_START_TIME, rscStartTime, sdtTime,
-          crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)));
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_END_TIME, rscEndTime, sdtTime,
-          crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)));
-      end
-      else
-      begin
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_START_TIME, rscStartTime, sdtTime,
-          crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_END_TIME, rscEndTime, sdtTime,
-          crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-      end;
-    end;
-
-    if MethodIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_METHOD_ID, rscMethod, sdtInteger,
-        crEqual, False, IntToStr(MethodIdFilter)));
-    end;
-
-    if ProjectIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscProject, sdtInteger,
-        crEqual, False, IntToStr(ProjectIdFilter)));
-    end;
-
-    if SamplingPlotIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SAMPLING_PLOT_ID, rscSamplingPlot, sdtInteger,
-        crEqual, False, IntToStr(SamplingPlotIdFilter)));
-    end;
-
-    if ExpeditionIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_EXPEDITION_ID, rscExpedition, sdtInteger,
-        crEqual, False, IntToStr(ExpeditionIdFilter)));
-    end;
+    // Time interval
+    AddTimeIntervalFilter(SearchConfig, COL_START_TIME, COL_END_TIME, eStartTimeFilter.Text, eEndTimeFilter.Text);
+    // Method
+    AddLookupFilter(SearchConfig, [COL_METHOD_ID], [rscMethod], MethodIdFilter);
+    // Project
+    AddLookupFilter(SearchConfig, [COL_PROJECT_ID], [rscProject], ProjectIdFilter);
+    // Sampling plot
+    AddLookupFilter(SearchConfig, [COL_SAMPLING_PLOT_ID], [rscSamplingPlot], SamplingPlotIdFilter);
+    // Expedition
+    AddLookupFilter(SearchConfig, [COL_EXPEDITION_ID], [rscExpedition], ExpeditionIdFilter);
   end;
 end;
 
@@ -412,8 +373,8 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SURVEY_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SURVEY_ID, rscId, sdtInteger, crEqual,
           False, aValue));
         // if i > 999 then
         // Add('or (strftime(''%Y'',AMO_DATA) = '+QuotedStr(aValor)+'))');
@@ -422,17 +383,17 @@ begin
       if TryStrToDate(aValue, Dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', Dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtDate, crEqual,
           False, aValue));
       end
       else
       if TryStrToTime(aValue, Dt) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_START_TIME, rscStartTime, sdtTime, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_TIME, rscStartTime, sdtTime, crEqual,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_END_TIME, rscEndTime, sdtTime, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_END_TIME, rscEndTime, sdtTime, crEqual,
           False, aValue));
       end
       else
@@ -441,16 +402,16 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
           True, aValue));
       end;
     end;

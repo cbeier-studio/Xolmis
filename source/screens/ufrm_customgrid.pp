@@ -1900,17 +1900,10 @@ end;
 procedure TfrmCustomGrid.AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
 begin
   case aTableType of
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    //tbGazetteer: ;
     tbSamplingPlots:
       case nbChilds.PageIndex of
         0: EditPermanentNet(DMG.qPermanentNets, dsLink.DataSet.FieldByName(COL_SAMPLING_PLOT_ID).AsInteger, isNew);
       end;
-    //tbPermanentNets: ;
-    //tbInstitutions: ;
-    //tbPeople: ;
     tbProjects:
       case nbChilds.PageIndex of
         0: EditProjectMember(DMG.qProjectTeam, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, isNew);
@@ -1919,13 +1912,6 @@ begin
         3: EditProjectRubric(DMG.qProjectBudget, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, isNew);
         4: EditProjectExpense(DMG.qProjectExpenses, dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger, 0, isNew);
       end;
-    //tbProjectTeams: ;
-    //tbPermits: ;
-    //tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    //tbBotanicTaxa: ;
-    //tbBands: ;
-    //tbBandHistory: ;
     tbIndividuals:
       case nbChilds.PageIndex of
         0: EditCapture(DMI.qCaptures, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, 0, isNew);
@@ -1934,17 +1920,12 @@ begin
         3: EditNest(DMI.qNests, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
         4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
       end;
-    //tbCaptures: ;
-    //tbMolts: ;
     tbNests:
       case nbChilds.PageIndex of
         0: EditNestOwner(DMB.qNestOwners, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, isNew);
         1: EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, isNew);
         2: EditEgg(DMB.qEggs, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, isNew);
       end;
-    //tbNestRevisions: ;
-    //tbEggs: ;
-    //tbMethods: ;
     tbExpeditions:
       case nbChilds.PageIndex of
         0: EditSurvey(DMS.qSurveys, dsLink.DataSet.FieldByName(COL_EXPEDITION_ID).AsInteger, isNew);
@@ -1958,17 +1939,11 @@ begin
         4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, 0, isNew);
         5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
       end;
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    tbSightings: ;
     tbSpecimens:
       case nbChilds.PageIndex of
         0: EditCollector(DMG.qSampleCollectors, dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger, isNew);
         1: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger, isNew);
       end;
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
   end;
 end;
 
@@ -3561,26 +3536,33 @@ end;
 procedure TfrmCustomGrid.DBGMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
   MousePos: TPoint; var Handled: Boolean);
 
-  function GetNumScrollLines: Integer;
+  function GetScrollLines: Integer;
   begin
+    {$IFDEF WINDOWS}
     SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, @Result, 0);
+    {$ELSE}
+    Result := 3; // default value for Linux/macOS
+    {$ENDIF}
   end;
 
 var
-  Direction: Shortint;
+  Grid: TDBGrid;
+  Lines: Integer;
 begin
-  Direction := 1;
-  if WheelDelta = 0 then
-    Exit
-  else if WheelDelta > 0 then
-    Direction := -1;
+  Grid := TDBGrid(Sender);
 
-  with TDBGrid(Sender) do
-  begin
-    if Assigned(DataSource) and Assigned(DataSource.DataSet) then
-      DataSource.DataSet.MoveBy(Direction * GetNumScrollLines);
-    Invalidate;
-  end;
+  if not Assigned(Grid.DataSource) or
+     not Assigned(Grid.DataSource.DataSet) then Exit;
+
+  Lines := GetScrollLines;
+
+  if WheelDelta < 0 then
+    Grid.DataSource.DataSet.MoveBy(Lines)
+  else
+    Grid.DataSource.DataSet.MoveBy(-Lines);
+
+  Grid.Invalidate;
+  Handled := True;
 end;
 
 procedure TfrmCustomGrid.DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
@@ -3833,12 +3815,6 @@ begin
     eCycleCodeFilter.Clear;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eEggFilterButtonClick(Sender: TObject);
@@ -3869,12 +3845,6 @@ begin
     FEggKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eExpeditionFilterButtonClick(Sender: TObject);
@@ -3905,12 +3875,6 @@ begin
     FExpeditionKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eHowAgedFilterButtonClick(Sender: TObject);
@@ -3934,12 +3898,6 @@ begin
     eHowAgedFilter.Clear;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eHowSexedFilterButtonClick(Sender: TObject);
@@ -3963,12 +3921,6 @@ begin
     eHowSexedFilter.Clear;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eIndividualFilterButtonClick(Sender: TObject);
@@ -3999,12 +3951,6 @@ begin
     FIndividualKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eInstitutionFilterButtonClick(Sender: TObject);
@@ -4035,12 +3981,6 @@ begin
     FInstitutionKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eMethodFilterButtonClick(Sender: TObject);
@@ -4071,12 +4011,6 @@ begin
     FMethodKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eMoltLimitsFilterButtonClick(Sender: TObject);
@@ -4100,12 +4034,6 @@ begin
     eMoltLimitsFilter.Clear;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eNestFilterButtonClick(Sender: TObject);
@@ -4136,12 +4064,6 @@ begin
     FNestKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.ePersonFilterButtonClick(Sender: TObject);
@@ -4172,12 +4094,6 @@ begin
     FPersonKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.ePlantFilterButtonClick(Sender: TObject);
@@ -4208,12 +4124,6 @@ begin
     FPlantKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eProjectFilterButtonClick(Sender: TObject);
@@ -4244,12 +4154,6 @@ begin
     FProjectKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eSamplingPlotFilterButtonClick(Sender: TObject);
@@ -4280,12 +4184,6 @@ begin
     FSamplingPlotKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.eSurveyFilterButtonClick(Sender: TObject);
@@ -4316,12 +4214,6 @@ begin
     FSurveyKeyFilter := 0;
     Key := #0;
   end;
-  //{ <ENTER/RETURN> key }
-  //if (Key = #13) and (xSettings.UseEnterAsTab) then
-  //begin
-  //  SelectNext(Sender as TWinControl, True, True);
-  //  Key := #0;
-  //end;
 end;
 
 procedure TfrmCustomGrid.FormClose(Sender: TObject;
@@ -4414,6 +4306,12 @@ begin
   // Open reports data module
   if not Assigned(DMR) then
     DMR := TDMR.Create(nil);
+  if not Assigned(DMS) then
+    DMS := TDMS.Create(nil);
+  if not Assigned(DMI) then
+    DMI := TDMI.Create(nil);
+  if not Assigned(DMB) then
+    DMB := TDMB.Create(nil);
 end;
 
 procedure TfrmCustomGrid.FormDestroy(Sender: TObject);
@@ -4792,79 +4690,10 @@ function TfrmCustomGrid.GetChildDataSet: TDataSet;
 begin
   Result := nil;
 
-  case FTableType of
-    tbSamplingPlots:
-      case nbChilds.PageIndex of
-        0: Result := dsLink1.DataSet;
-      end;
-    tbProjects:
-      case nbChilds.PageIndex of
-        0: Result := dsLink1.DataSet;
-        1: Result := dsLink2.DataSet;
-        2: Result := dsLink3.DataSet;
-        3: Result := dsLink4.DataSet;
-        4: Result := dsLink5.DataSet;
-      end;
-    tbIndividuals:
-      case nbChilds.PageIndex of
-        0: Result := dsLink1.DataSet;
-        1: Result := dsLink2.DataSet;
-        2: Result := dsLink3.DataSet;
-        3: Result := dsLink4.DataSet;
-        4: Result := dsLink5.DataSet;
-      end;
-    tbNests:
-      case nbChilds.PageIndex of
-        0: Result := dsLink1.DataSet;
-        1: Result := dsLink2.DataSet;
-        2: Result := dsLink3.DataSet;
-      end;
-    tbExpeditions:
-      case nbChilds.PageIndex of
-        0: Result := dsLink1.DataSet;
-      end;
-    tbSurveys:
-      case nbChilds.PageIndex of
-        0: Result := dsLink1.DataSet;
-        1: Result := dsLink2.DataSet;
-        2: Result := dsLink3.DataSet;
-        3: Result := dsLink4.DataSet;
-        4: Result := dsLink5.DataSet;
-        5: Result := dsLink6.DataSet;
-      end;
-    tbSightings: ;
-    tbSpecimens:
-      case nbChilds.PageIndex of
-        0: Result := dsLink1.DataSet;
-      end;
-    //tbNone: ;
-    //tbUsers: ;
-    //tbRecordHistory: ;
-    //tbGazetteer: ;
-    //tbPermanentNets: ;
-    //tbInstitutions: ;
-    //tbPeople: ;
-    //tbProjectTeams: ;
-    //tbPermits: ;
-    //tbTaxonRanks: ;
-    //tbZooTaxa: ;
-    //tbBotanicTaxa: ;
-    //tbBands: ;
-    //tbBandHistory: ;
-    //tbCaptures: ;
-    //tbMolts: ;
-    //tbNestRevisions: ;
-    //tbEggs: ;
-    //tbMethods: ;
-    //tbSurveyTeams: ;
-    //tbNetsEffort: ;
-    //tbSamplePreps: ;
-    //tbImages: ;
-    //tbAudioLibrary: ;
-  else
-    Result := nil;
+  if FModule.Submodules.Count > 0 then
+  begin
+    Result := FModule.Submodules[nbChilds.PageIndex].DataSet;
   end;
-
 end;
 
 procedure TfrmCustomGrid.GetColumns;
@@ -4889,29 +4718,15 @@ begin
 end;
 
 procedure TfrmCustomGrid.GetFilters;
-var
-  sf: Integer;
 begin
   if not FCanToggle then
     Exit;
 
   FCanToggle := False;
 
-  if (rbMarkedYes.Checked) then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MARKED_STATUS, 'Marked', sdtBoolean,
-      crEqual, False, '1'));
-  end
-  else
-  if (rbMarkedNo.Checked) then
-  begin
-    sf := FSearch.QuickFilters.Add(TSearchGroup.Create);
-    FSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MARKED_STATUS, 'Marked', sdtBoolean,
-      crEqual, False, '0'));
-  end;
+  AddBooleanFilter(FSearch, COL_MARKED_STATUS, rscMarkedStatus, rbMarkedYes.Checked, rbMarkedNo.Checked);
 
-  FModule.ApplyFilters;
+  //FModule.ApplyFilters;
 
   isFiltered := FSearch.QuickFilters.Count > 0;
   FCanToggle := True;
@@ -6975,17 +6790,10 @@ begin
 
   try
     case FTableType of
-      //tbNone: ;
-      //tbUsers: ;
-      //tbRecordHistory: ;
-      //tbGazetteer: ;
       tbSamplingPlots:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbPermanentNets, DMG.qPermanentNets);
         end;
-      //tbPermanentNets: ;
-      //tbInstitutions: ;
-      //tbPeople: ;
       tbProjects:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbProjectTeams, DMG.qProjectTeam);
@@ -6994,13 +6802,6 @@ begin
           3: DeleteRecord(tbProjectBudgets, DMG.qProjectBudget);
           4: DeleteRecord(tbProjectExpenses, DMG.qProjectExpenses);
         end;
-      //tbProjectTeams: ;
-      //tbPermits: ;
-      //tbTaxonRanks: ;
-      //tbZooTaxa: ;
-      //tbBotanicTaxa: ;
-      //tbBands: ;
-      //tbBandHistory: ;
       tbIndividuals:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbCaptures, DMI.qCaptures);
@@ -7009,17 +6810,12 @@ begin
           3: DeleteRecord(tbNests, DMI.qNests);
           4: DeleteRecord(tbSpecimens, DMI.qSpecimens);
         end;
-      //tbCaptures: ;
-      //tbMolts: ;
       tbNests:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbNestOwners, DMB.qNestOwners);
           1: DeleteRecord(tbNestRevisions, DMB.qNestRevisions);
           2: DeleteRecord(tbEggs, DMB.qEggs);
         end;
-      //tbNestRevisions: ;
-      //tbEggs: ;
-      //tbMethods: ;
       tbExpeditions:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbSurveys, DMS.qSurveys);
@@ -7033,17 +6829,11 @@ begin
           4: DeleteRecord(tbSightings, DMS.qSightings);
           5: DeleteRecord(tbVegetation, DMS.qVegetation);
         end;
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
-      tbSightings: ;
       tbSpecimens:
         case nbChilds.PageIndex of
           0: DeleteRecord(tbSpecimenCollectors, DMG.qSampleCollectors);
           1: DeleteRecord(tbSamplePreps, DMG.qSamplePreps);
         end;
-      //tbSamplePreps: ;
-      //tbImages: ;
-      //tbAudioLibrary: ;
     end;
     dsLink1.DataSet.Refresh;
     dsLink2.DataSet.Refresh;
@@ -7183,20 +6973,14 @@ begin
   isWorking := True;
   try
     case FTableType of
-      //tbNone: ;
-      //tbUsers: ;
-      //tbRecordHistory: ;
       tbGazetteer:     needsRefresh := EditSite(dsLink.DataSet);
       tbSamplingPlots: needsRefresh := EditSamplingPlot(dsLink.DataSet);
       tbInstitutions:  needsRefresh := EditInstitution(dsLink.DataSet);
       tbPeople:        needsRefresh := EditPerson(dsLink.DataSet);
       tbProjects:      needsRefresh := EditProject(dsLink.DataSet);
       tbPermits:       needsRefresh := EditPermit(dsLink.DataSet);
-      tbTaxonRanks: ;
-      //tbZooTaxa: ;
       tbBotanicTaxa:   needsRefresh := EditBotanicTaxon(dsLink.DataSet);
       tbBands:         needsRefresh := EditBand(dsLink.DataSet);
-      //tbBandHistory: ;
       tbIndividuals:   needsRefresh := EditIndividual(dsLink.DataSet);
       tbCaptures:      needsRefresh := EditCapture(dsLink.DataSet);
       tbFeathers:      needsRefresh := EditFeather(dsLink.DataSet);
@@ -7209,8 +6993,6 @@ begin
       tbSurveys:       needsRefresh := EditSurvey(dsLink.DataSet);
       tbSightings:     needsRefresh := EditSighting(dsLink.DataSet);
       tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet);
-      //tbImages: ;
-      //tbAudioLibrary: ;
     end;
 
     if needsRefresh then
@@ -7332,20 +7114,14 @@ begin
   isWorking := True;
   try
     case FTableType of
-      //tbNone: ;
-      //tbUsers: ;
-      //tbRecordHistory: ;
       tbGazetteer:     needsRefresh := EditSite(dsLink.DataSet, True);
       tbSamplingPlots: needsRefresh := EditSamplingPlot(dsLink.DataSet, True);
       tbInstitutions:  needsRefresh := EditInstitution(dsLink.DataSet, True);
       tbPeople:        needsRefresh := EditPerson(dsLink.DataSet, True);
       tbProjects:      needsRefresh := EditProject(dsLink.DataSet, True);
       tbPermits:       needsRefresh := EditPermit(dsLink.DataSet, 0, True);
-      tbTaxonRanks: ;
-      //tbZooTaxa: ;
       tbBotanicTaxa:   needsRefresh := EditBotanicTaxon(dsLink.DataSet, True);
       tbBands:         needsRefresh := EditBand(dsLink.DataSet, True);
-      //tbBandHistory: ;
       tbIndividuals:   needsRefresh := EditIndividual(dsLink.DataSet, True);
       tbCaptures:      needsRefresh := EditCapture(dsLink.DataSet, 0, 0, True);
       tbFeathers:      needsRefresh := EditFeather(dsLink.DataSet, 0, 0, 0, True);
@@ -7358,8 +7134,6 @@ begin
       tbSurveys:       needsRefresh := EditSurvey(dsLink.DataSet, 0, True);
       tbSightings:     needsRefresh := EditSighting(dsLink.DataSet, 0, 0, True);
       tbSpecimens:     needsRefresh := EditSpecimen(dsLink.DataSet, 0, True);
-      //tbImages: ;
-      //tbAudioLibrary: ;
     end;
 
     if needsRefresh then
@@ -7866,14 +7640,17 @@ begin
     {$IFDEF DEBUG}
     LogDebug('Search value: ' + aValue);
     {$ENDIF}
-    FSearch.Fields.Clear;
+    FSearch.TextFilters.Clear;
     FSearch.QuickFilters.Clear;
     lblRecordStatus.Caption := rsLoadingRecords;
+
+    AddBooleanFilter(FSearch, COL_MARKED_STATUS, rscMarkedStatus, rbMarkedYes.Checked, rbMarkedNo.Checked);
 
     Result := FModule.Search(aValue);
 
     UpdateButtons(dsLink.DataSet);
   finally
+    isFiltered := FSearch.QuickFilters.Count > 0;
     isWorking := False;
     DBG.EndUpdate;
   end;
@@ -9039,77 +8816,6 @@ begin
     end;
   end;
 
-  //case FTableType of
-  //  //tbNone: ;
-  //  //tbUsers: ;
-  //  //tbRecordHistory: ;
-  //  //tbGazetteer: ;
-  //  tbSamplingPlots:
-  //  begin
-  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-  //  end;
-  //  //tbPermanentNets: ;
-  //  //tbInstitutions: ;
-  //  //tbPeople: ;
-  //  tbProjects:
-  //  begin
-  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-  //    panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-  //    panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-  //  end;
-  //  //tbProjectTeams: ;
-  //  //tbPermits: ;
-  //  //tbTaxonRanks: ;
-  //  //tbZooTaxa: ;
-  //  //tbBotanicTaxa: ;
-  //  //tbBands: ;
-  //  //tbBandHistory: ;
-  //  tbIndividuals:
-  //  begin
-  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-  //    panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-  //    panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-  //  end;
-  //  //tbCaptures: ;
-  //  //tbMolts: ;
-  //  tbNests:
-  //  begin
-  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-  //  end;
-  //  //tbNestRevisions: ;
-  //  //tbEggs: ;
-  //  //tbMethods: ;
-  //  tbExpeditions:
-  //  begin
-  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-  //  end;
-  //  tbSurveys:
-  //  begin
-  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-  //    panelTabs[2].UpdateCounter(dsLink3.DataSet.RecordCount);
-  //    panelTabs[3].UpdateCounter(dsLink4.DataSet.RecordCount);
-  //    panelTabs[4].UpdateCounter(dsLink5.DataSet.RecordCount);
-  //    panelTabs[5].UpdateCounter(dsLink6.DataSet.RecordCount);
-  //  end;
-  //  //tbSurveyTeams: ;
-  //  //tbNetsEffort: ;
-  //  tbSightings: ;
-  //  tbSpecimens:
-  //  begin
-  //    panelTabs[0].UpdateCounter(dsLink1.DataSet.RecordCount);
-  //    panelTabs[1].UpdateCounter(dsLink2.DataSet.RecordCount);
-  //  end;
-  //  //tbSamplePreps: ;
-  //  //tbImages: ;
-  //  //tbAudioLibrary: ;
-  //end;
   UpdateChildStatus;
 end;
 

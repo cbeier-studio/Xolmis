@@ -25,7 +25,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, data_consts, data_columns, models_media,
+  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
   udm_main, udm_grid, ufrm_customgrid;
 
 { TMethodsModuleController }
@@ -50,11 +50,10 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Category
     if cbCategoryFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CATEGORY, rscCategory, sdtText,
-        crEqual, False, cbCategoryFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_CATEGORY, rscCategory, cbCategoryFilter.Text);
     end;
   end;
 end;
@@ -112,18 +111,18 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_METHOD_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, rscName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, rscName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, rscAbbreviation, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, rscAbbreviation, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EBIRD_NAME, rscEBirdName, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EBIRD_NAME, rscEBirdName, sdtText, Crit,
           False, aValue));
       end;
     end;

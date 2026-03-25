@@ -52,6 +52,7 @@ begin
   cc := 0;
   with TfrmCustomGrid(FOwner) do
   begin
+    // Taxon rank
     for i := 0 to clbTaxonRanksFilter.Count - 1 do
       if clbTaxonRanksFilter.Checked[i] then
         Inc(cc);
@@ -63,7 +64,7 @@ begin
           SearchConfig.QuickFilters.Items[sf].Fields.Add(TSearchField.Create(COL_RANK_ID, rscTaxonomicRank, sdtInteger,
             crEqual, False, IntToStr(GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_NAME, clbTaxonRanksFilter.Items[i]))));
     end;
-
+    // Is synonym
     if rbIsSynonymYes.Checked then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
@@ -76,6 +77,7 @@ begin
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_VALID_ID, rscValidName, sdtInteger,
         crEqual, False, '0'));
     end;
+    // Has synonyms
     //if rbHasSynonymsYes.Checked then
     //begin
     //  sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
@@ -150,18 +152,18 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscScientificName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscScientificName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_VERNACULAR_NAME, rscVernacularNameS, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_VERNACULAR_NAME, rscVernacularNameS, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_AUTHORSHIP, rscAuthorship, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_AUTHORSHIP, rscAuthorship, sdtText, Crit,
           False, aValue));
       end;
     end;

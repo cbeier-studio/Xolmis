@@ -316,7 +316,7 @@ type
   private
     FTableType: TTableType;
     FTableAlias: String;
-    FFields: TSearchGroups;
+    FTextFilters: TSearchGroups;
     FQuickFilters: TSearchGroups;
     FSortFields: TSortedFields;
     FDataSet: TSQLQuery;
@@ -334,7 +334,7 @@ type
   published
     property TableType: TTableType read FTableType write FTableType;
     property TableAlias: String read FTableAlias write FTableAlias;
-    property Fields: TSearchGroups read FFields write FFields;
+    property TextFilters: TSearchGroups read FTextFilters write FTextFilters;
     property QuickFilters: TSearchGroups read FQuickFilters write FQuickFilters;
     property SortFields: TSortedFields read FSortFields write FSortFields;
     property FieldCount: Integer read GetFieldCount;
@@ -649,7 +649,7 @@ constructor TCustomSearch.Create(aTable: TTableType);
 begin
   FTableType := aTable;
   FTableAlias := TABLE_ALIASES[aTable];
-  FFields := TSearchGroups.Create(True);
+  FTextFilters := TSearchGroups.Create(True);
   FQuickFilters := TSearchGroups.Create(True);
   FSortFields := TSortedFields.Create(True);
   FRecordActive := rsActive;
@@ -659,11 +659,11 @@ end;
 destructor TCustomSearch.Destroy;
 begin
   FSQLWhere.Clear;
-  FFields.Clear;
+  FTextFilters.Clear;
   FQuickFilters.Clear;
   FSortFields.Clear;
   FSQLWhere.Free;
-  FFields.Free;
+  FTextFilters.Free;
   FQuickFilters.Free;
   FSortFields.Free;
   inherited Destroy;
@@ -672,10 +672,10 @@ end;
 function TCustomSearch.GetFieldCount: Integer;
 begin
   Result := 0;
-  if not Assigned(FFields) then
+  if not Assigned(FTextFilters) then
     Exit;
 
-  Result := FFields.Count + FQuickFilters.Count;
+  Result := FTextFilters.Count + FQuickFilters.Count;
 end;
 
 function TCustomSearch.GetRecordCount: Integer;
@@ -857,7 +857,7 @@ begin
   SetSelectSQL(FDataSet.SQL, FTableType, FTableAlias);
   AndOrWhere := 'WHERE ';
 
-  // Add fields in WHERE clause
+  // Add TextFilters in WHERE clause
   if FQuickFilters.Count > 0 then
   begin
     FDataSet.SQL.Add(AndOrWhere + '(');
@@ -870,7 +870,7 @@ begin
         FDataSet.SQL.Add('(');
         FSQLWhere.Add('(');
 
-        // Iterate group fields
+        // Iterate group TextFilters
         for f := 0 to (FQuickFilters[i].Fields.Count - 1) do
         begin
           S := EmptyStr;
@@ -914,7 +914,7 @@ begin
             end;
           end;
 
-          // AND/OR fields
+          // AND/OR TextFilters
           if f < (FQuickFilters[i].Fields.Count - 1) then
           begin
             AndOrWhere := AND_OR_STR[FQuickFilters[i].AndOr] + ' ';
@@ -943,20 +943,20 @@ begin
     AndOrWhere := 'AND ';
   end;
 
-  if FFields.Count > 0 then
+  if FTextFilters.Count > 0 then
   begin
     // Iterate groups
-    for i := 0 to (FFields.Count - 1) do
+    for i := 0 to (FTextFilters.Count - 1) do
     begin
-      if FFields[i].Fields.Count > 0 then
+      if FTextFilters[i].Fields.Count > 0 then
       begin
         FDataSet.SQL.Add(AndOrWhere + '(');
         FSQLWhere.Add(AndOrWhere + '(');
-        // Iterate group fields
-        for f := 0 to (FFields[i].Fields.Count - 1) do
+        // Iterate group TextFilters
+        for f := 0 to (FTextFilters[i].Fields.Count - 1) do
         begin
           S := EmptyStr;
-          with FFields[i].Fields[f] do
+          with FTextFilters[i].Fields[f] do
           begin
             V1 := FValue1;
             V2 := FValue2;
@@ -967,38 +967,38 @@ begin
             case Criteria of
               crLike, crStartLike, crEqual, crNotEqual, crMoreThan, crLessThan:
               begin
-                if FFields[i].Fields[f].Lookup then
+                if FTextFilters[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1]);
               end;
               crBetween:
               begin
-                if FFields[i].Fields[f].Lookup then
+                if FTextFilters[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2]);
               end;
               crNull, crNotNull:
               begin
-                if FFields[i].Fields[f].Lookup then
+                if FTextFilters[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria]])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria]]);
               end;
               crIn:
               begin
-                if FFields[i].Fields[f].Lookup then
+                if FTextFilters[i].Fields[f].Lookup then
                   S := S + Format(Msk, [FFieldName, FValue1])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, FValue1]);
               end;
             end;
 
-            // AND/OR fields
-            if f < (FFields[i].Fields.Count - 1) then
+            // AND/OR TextFilters
+            if f < (FTextFilters[i].Fields.Count - 1) then
             begin
-              AndOrWhere := AND_OR_STR[FFields[i].AndOr] + ' ';
+              AndOrWhere := AND_OR_STR[FTextFilters[i].AndOr] + ' ';
               S := S + AndOrWhere;
             end;
           end;
@@ -1034,7 +1034,7 @@ begin
       FSQLWhere.Add(AndOrWhere + '(active_status = ' + S + ')');
     end;
 
-  // Add fields in ORDER BY clause
+  // Add TextFilters in ORDER BY clause
   if FSortFields.Count > 0 then
   begin
     aSort := EmptyStr;
@@ -1083,7 +1083,7 @@ end;
 procedure TCustomSearch.Reset;
 begin
   FRecordActive := rsActive;
-  FFields.Clear;
+  FTextFilters.Clear;
   FQuickFilters.Clear;
 end;
 

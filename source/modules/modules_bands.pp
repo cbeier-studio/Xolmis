@@ -59,63 +59,34 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Band size
     if cbBandSizeFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_SIZE, rscSize, sdtText,
-        crEqual, False, cbBandSizeFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_BAND_SIZE, rscSize, cbBandSizeFilter.Text);
     end;
-
+    // Band status
     if cbBandStatusFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_STATUS, rscStatus, sdtText,
-        crEqual, False, BandStatus[cbBandStatusFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_BAND_STATUS, rscStatus, BandStatus[cbBandStatusFilter.ItemIndex - 1]);
     end;
-
+    // Band type
     if cbBandTypeFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_TYPE, rscType, sdtText,
-        crEqual, False, BandTypes[cbBandTypeFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_BAND_TYPE, rscType, BandTypes[cbBandTypeFilter.ItemIndex - 1]);
     end;
-
+    // Band source
     if cbBandSourceFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_SOURCE, rscSource, sdtText,
-        crEqual, False, BandSources[cbBandSourceFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_BAND_SOURCE, rscSource, BandSources[cbBandSourceFilter.ItemIndex - 1]);
     end;
-
-    if rbReportedYes.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_REPORTED, rscReported, sdtBoolean,
-        crEqual, False, '1'));
-    end;
-    if rbReportedNo.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BAND_REPORTED, rscReported, sdtBoolean,
-        crEqual, False, '0'));
-    end;
-
-    if ePersonFilter.Text <> EmptyStr then
-      PersonFilterToSearch(FTableType, SearchConfig.QuickFilters, PersonIdFilter);
-
-    if InstitutionIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUPPLIER_ID, rscSupplier, sdtInteger,
-        crEqual, False, IntToStr(InstitutionIdFilter)));
-    end;
-
-    if ProjectIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscProject, sdtInteger,
-        crEqual, False, IntToStr(ProjectIdFilter)));
-    end;
+    // Band reported
+    AddBooleanFilter(SearchConfig, COL_BAND_REPORTED, rscReported, rbReportedYes.Checked, rbReportedNo.Checked);
+    // Person
+    AddLookupFilter(SearchConfig, [COL_CARRIER_ID], [rscCarrier], PersonIdFilter);
+    // Institution
+    AddLookupFilter(SearchConfig, [COL_SUPPLIER_ID], [rscSupplier], InstitutionIdFilter);
+    // Project
+    AddLookupFilter(SearchConfig, [COL_PROJECT_ID], [rscProject], ProjectIdFilter);
   end;
 end;
 
@@ -301,10 +272,10 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_ID, rscId, sdtInteger, crEqual,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtText, Crit,
           False, aValue));
       end
       else
@@ -315,22 +286,22 @@ begin
         { split strings: unicode characters #$002D e #$2012 }
         V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
         V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtInteger, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtInteger, Crit,
           False, V1, V2));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CARRIER_NAME, rscCarrier, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CARRIER_NAME, rscCarrier, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SUPPLIER_NAME, rscSupplier, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SUPPLIER_NAME, rscSupplier, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PROJECT_NAME, rscProject, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROJECT_NAME, rscProject, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_NAME, rscIndividual, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_NAME, rscIndividual, sdtText, Crit,
           True, aValue));
       end;
     end;

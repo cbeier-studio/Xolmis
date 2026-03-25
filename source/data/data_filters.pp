@@ -94,13 +94,18 @@ type
   procedure FilterPeopleDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroups);
 
   { Filter and sort records }
+  procedure AddBooleanFilter(aSearch: TCustomSearch; const FieldName, Caption: String; YesChecked, NoChecked: Boolean);
+  procedure AddExactTextFilter(aSearch: TCustomSearch; const FieldName, Caption: String; aText: String);
+  procedure AddLookupFilter(aSearch: TCustomSearch; const FieldNames, Captions: array of String; LookupId: Integer);
+  procedure AddNonZeroIntegerFilter(aSearch: TCustomSearch; const FieldName, Caption: String; YesChecked, NoChecked: Boolean);
+  procedure AddTimeFilter(aSearch: TCustomSearch; const FieldName, Caption: String; const TimeStart, TimeEnd: String);
+  procedure AddTimeIntervalFilter(aSearch: TCustomSearch; const FieldStart, FieldEnd: String; const TimeStart, TimeEnd: String);
+
   function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String = ''): String;
   function TaxonFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
   function SiteFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String = ''): String;
   function SiteFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
   function DateFilterToSearch(aTable: TTableType; aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
-  function PersonFilterToSearch(aTable: TTableType; aSearchGroup: TSearchGroups; aKey: Integer = 0): Boolean;
-
 
 implementation
 
@@ -1441,6 +1446,131 @@ begin
   end;
 end;
 
+procedure AddBooleanFilter(aSearch: TCustomSearch; const FieldName, Caption: String; YesChecked, NoChecked: Boolean);
+var
+  sf: Integer;
+  Value: String;
+begin
+  if YesChecked then
+    Value := '1'
+  else if NoChecked then
+    Value := '0'
+  else
+    Exit; // no filter selected
+
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+  aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtBoolean, crEqual, False, Value));
+end;
+
+procedure AddExactTextFilter(aSearch: TCustomSearch; const FieldName, Caption: String; aText: String);
+var
+  sf: Integer;
+begin
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+  aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtText,
+        crEqual, False, aText));
+end;
+
+procedure AddLookupFilter(aSearch: TCustomSearch; const FieldNames, Captions: array of String; LookupId: Integer);
+var
+  sf: Integer;
+  i: Integer;
+begin
+  if LookupId <= 0 then
+    Exit;
+
+  if Length(FieldNames) <> Length(Captions) then
+    raise Exception.Create('FieldNames and Captions must have the same length.');
+
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+
+  for i := 0 to High(FieldNames) do
+    aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldNames[i], Captions[i], sdtInteger, crEqual,
+        False, IntToStr(LookupId)));
+end;
+
+procedure AddNonZeroIntegerFilter(aSearch: TCustomSearch; const FieldName, Caption: String; YesChecked, NoChecked: Boolean);
+var
+  sf: Integer;
+  Value: String;
+  Crit: TCriteriaType;
+begin
+  if YesChecked then
+  begin
+    Value := '1';
+    Crit := crMoreThan;
+  end
+  else
+  if NoChecked then
+  begin
+    Value := '0';
+    Crit := crEqual;
+  end
+  else
+    Exit; // no filter selected
+
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+  aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtInteger, Crit, False, Value));
+  if NoChecked then
+  begin
+    aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtInteger, crNull, False));
+  end;
+end;
+
+procedure AddTimeFilter(aSearch: TCustomSearch; const FieldName, Caption: String; const TimeStart, TimeEnd: String);
+var
+  sf: Integer;
+begin
+  if (TimeStart = '') and (TimeEnd = '') then
+    Exit;
+
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+
+  if (TimeStart <> '') and (TimeEnd = '') then
+  begin
+    // exact time
+    aSearch.QuickFilters[sf].Fields.Add(
+      TSearchField.Create(FieldName, Caption, sdtTime, crEqual, False, QuotedStr(TimeStart)));
+  end
+  else
+  if (TimeStart <> '') and (TimeEnd <> '') then
+  begin
+    // interval
+    aSearch.QuickFilters[sf].Fields.Add(
+      TSearchField.Create(FieldName, Caption, sdtTime, crBetween, False, QuotedStr(TimeStart), QuotedStr(TimeEnd)));
+  end;
+end;
+
+procedure AddTimeIntervalFilter(aSearch: TCustomSearch; const FieldStart, FieldEnd: String; const TimeStart, TimeEnd: String);
+var
+  sf: Integer;
+begin
+  if (TimeStart = '') and (TimeEnd = '') then
+    Exit;
+
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+
+  if (TimeStart <> '') and (TimeEnd <> '') then
+  begin
+    // time within interval
+    // reg.start_time <= filter_end
+    aSearch.QuickFilters[sf].Fields.Add(
+      TSearchField.Create(FieldStart, rscStartTime, sdtTime, crLessThan, False, QuotedStr(TimeEnd)));
+    // reg.end_time >= filter_start
+    aSearch.QuickFilters[sf].Fields.Add(
+      TSearchField.Create(FieldEnd, rscEndTime, sdtTime, crMoreThan, False, QuotedStr(TimeStart)));
+  end
+  else
+  if (TimeStart <> '') and (TimeEnd = '') then
+  begin
+    // exact time
+    aSearch.QuickFilters[sf].Fields.Add(
+      TSearchField.Create(FieldStart, rscStartTime, sdtTime, crEqual, False, QuotedStr(TimeStart)));
+    aSearch.QuickFilters[sf].Fields.Add(
+      TSearchField.Create(FieldEnd, rscEndTime, sdtTime, crEqual, False, QuotedStr(TimeEnd)));
+  end
+end;
+
 function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String): String;
 var
   Data: PTaxonNodeData;
@@ -1746,70 +1876,6 @@ begin
   end;
 
   Result := aTotal;
-end;
-
-function PersonFilterToSearch(aTable: TTableType; aSearchGroup: TSearchGroups; aKey: Integer): Boolean;
-var
-  sf: Integer;
-begin
-  Result := False;
-  if aKey <= 0 then
-    Exit;
-
-  sf := aSearchGroup.Add(TSearchGroup.Create);
-
-  case aTable of
-    tbNone: ;
-    tbNests:
-      begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_ID, 'Observer', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-      end;
-    tbNestRevisions:
-      begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_1_ID, 'Observer 1', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_2_ID, 'Observer 2', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-      end;
-    tbEggs:
-      begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_RESEARCHER_ID, 'Researcher', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-      end;
-    tbSightings:
-      begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_ID, 'Observer', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-      end;
-    tbSpecimens: ;
-    tbSamplePreps: ;
-    tbBands:
-      begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_CARRIER_ID, 'Carrier', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-      end;
-    tbCaptures:
-      begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_BANDER_ID, 'Bander', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_ANNOTATOR_ID, 'Annotator', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_PHOTOGRAPHER_1_ID, 'Photographer 1', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_PHOTOGRAPHER_2_ID, 'Photographer 2', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-      end;
-    tbFeathers:
-      begin
-        aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(COL_OBSERVER_ID, 'Observer', sdtInteger,
-          crEqual, False, IntToStr(aKey)));
-      end;
-    tbImages: ;
-    tbAudioLibrary: ;
-  end;
-
-  Result := True;
 end;
 
 end.

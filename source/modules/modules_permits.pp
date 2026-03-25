@@ -53,20 +53,14 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
-
-    if ProjectIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscProject, sdtInteger,
-        crEqual, False, IntToStr(ProjectIdFilter)));
-    end;
-
+    // Project
+    AddLookupFilter(SearchConfig, [COL_PROJECT_ID], [rscProject], ProjectIdFilter);
+    // Permit type
     if cbPermitTypeFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PERMIT_TYPE, rscType, sdtText,
-        crEqual, False, PermitTypes[cbPermitTypeFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_PERMIT_TYPE, rscType, PermitTypes[cbPermitTypeFilter.ItemIndex - 1]);
     end;
   end;
 end;
@@ -150,18 +144,18 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PERMIT_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtDate, crEqual,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtDate, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtDate, crEqual,
           False, aValue));
       end
       else
@@ -170,20 +164,20 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DISPATCH_DATE, rscDispatchDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtMonthYear, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EXPIRE_DATE, rscExpireDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NAME, rscName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PERMIT_NAME, rscName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_PERMIT_NUMBER, rscPermitNumber, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PERMIT_NUMBER, rscPermitNumber, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DISPATCHER_NAME, rscDispatcher, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DISPATCHER_NAME, rscDispatcher, sdtText, Crit,
           True, aValue));
       end;
     end;

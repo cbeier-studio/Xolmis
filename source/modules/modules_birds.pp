@@ -109,22 +109,21 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Taxa
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters, 'z.');
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
-
+    // Sex
     if cbSexFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_SEX, rscSex, sdtText,
-        crEqual, False, BirdSex[cbSexFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_INDIVIDUAL_SEX, rscSex, BirdSex[cbSexFilter.ItemIndex - 1]);
     end;
+    // Age
     if cbAgeFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_AGE, rscAge, sdtText,
-        crEqual, False, BirdAge[cbAgeFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_INDIVIDUAL_AGE, rscAge, BirdAge[cbAgeFilter.ItemIndex - 1]);
     end;
-
+    // Has color bands
     if rbWithColorBandsYes.Checked then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
@@ -141,7 +140,7 @@ begin
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_LEFT_TARSUS, rscLeftTarsus, sdtText,
         crEqual, False, ''));
     end;
-
+    // Has recaptures
     if rbWithRecapturesYes.Checked then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
@@ -154,35 +153,12 @@ begin
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURES_TALLY, rscCaptures, sdtInteger,
         crLessThan, True, '1'));
     end;
-
-    if NestIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEST_ID, rscNest, sdtInteger,
-        crEqual, False, IntToStr(NestIdFilter)));
-    end;
-
-    if IndividualIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FATHER_ID, rscFather, sdtInteger,
-        crEqual, False, IntToStr(IndividualIdFilter)));
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MOTHER_ID, rscMother, sdtInteger,
-        crEqual, False, IntToStr(IndividualIdFilter)));
-    end;
-
-    if rbReplacedBandYes.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, rscRemovedBand, sdtInteger,
-        crMoreThan, False, '1'));
-    end;
-    if rbReplacedBandNo.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, rscRemovedBand, sdtInteger,
-        crEqual, False, '0'));
-    end;
+    // Nest
+    AddLookupFilter(SearchConfig, [COL_NEST_ID], [rscNest], NestIdFilter);
+    // Individual
+    AddLookupFilter(SearchConfig, [COL_FATHER_ID, COL_MOTHER_ID], [rscFather, rscMother], IndividualIdFilter);
+    // Band replaced
+    AddNonZeroIntegerFilter(SearchConfig, COL_REMOVED_BAND_ID, rscRemovedBand, rbReplacedBandYes.Checked, rbReplacedBandNo.Checked);
   end;
 end;
 
@@ -367,18 +343,18 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtDate, crEqual,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtDate, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtDate, crEqual,
           False, aValue));
         { #todo : PartialDate fields: birth_date and death_date }
       end
@@ -388,26 +364,26 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtMonthYear, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_DOUBLE_BAND_NAME, rscDoubleBand, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DOUBLE_BAND_NAME, rscDoubleBand, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_NEST_NAME, rscNest, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_NEST_NAME, rscNest, sdtText, Crit,
           True, aValue));
       end;
     end;
@@ -448,192 +424,115 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Taxa
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters);
+    // Sites
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters);
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
-
+    // Capture type
     if cbCaptureTypeFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURE_TYPE, rscType, sdtText,
-        crEqual, False, CaptureType[cbCaptureTypeFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_CAPTURE_TYPE, rscType, CaptureType[cbCaptureTypeFilter.ItemIndex - 1]);
     end;
-
+    // Capture status
     if cbCaptureStatusFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUBJECT_STATUS, rscStatus, sdtText,
-        crEqual, False, CaptureStatus[cbCaptureStatusFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_SUBJECT_STATUS, rscStatus, CaptureStatus[cbCaptureStatusFilter.ItemIndex - 1]);
     end;
-
+    // Age
     if cbAgeFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUBJECT_AGE, rscAge, sdtText,
-        crEqual, False, BirdAge[cbAgeFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_SUBJECT_AGE, rscAge, BirdAge[cbAgeFilter.ItemIndex - 1]);
     end;
+    // How was aged
     if eHowAgedFilter.Text <> EmptyStr then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_AGED, rscHowWasAged, sdtText,
         crLike, False, eHowAgedFilter.Text));
     end;
+    // Sex
     if cbSexFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SUBJECT_SEX, rscSex, sdtText,
-        crEqual, False, BirdSex[cbSexFilter.ItemIndex - 1]));
+      AddExactTextFilter(SearchConfig, COL_SUBJECT_SEX, rscSex, BirdSex[cbSexFilter.ItemIndex - 1]);
     end;
+    // How was sexed
     if eHowSexedFilter.Text <> EmptyStr then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_SEXED, rscHowWasSexed, sdtText,
         crLike, False, eHowSexedFilter.Text));
     end;
-
+    // Cloacal protuberance
     if cbCloacalProtuberanceFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CLOACAL_PROTUBERANCE, rscCloacalProtuberance, sdtText,
-        crEqual, False, cbCloacalProtuberanceFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_CLOACAL_PROTUBERANCE, rscCloacalProtuberance, cbCloacalProtuberanceFilter.Text);
     end;
+    // Brood patch
     if cbBroodPatchFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BROOD_PATCH, rscBroodPatch, sdtText,
-        crEqual, False, cbBroodPatchFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_BROOD_PATCH, rscBroodPatch, cbBroodPatchFilter.Text);
     end;
-
+    // Fat
     if cbFatFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FAT, rscFat, sdtText,
-        crEqual, False, cbFatFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_FAT, rscFat, cbFatFilter.Text);
     end;
-
+    // Body molt
     if cbBodyMoltFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_BODY_MOLT, rscBodyMolt, sdtText,
-        crEqual, False, cbBodyMoltFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_BODY_MOLT, rscBodyMolt, cbBodyMoltFilter.Text);
     end;
+    // Flight feathers molt
     if cbFFMoltFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FLIGHT_FEATHERS_MOLT, rscFlightFeathersMolt, sdtText,
-        crEqual, False, cbFFMoltFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_FLIGHT_FEATHERS_MOLT, rscFlightFeathersMolt, cbFFMoltFilter.Text);
     end;
+    // Flight feathers wear
     if cbFFWearFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_FLIGHT_FEATHERS_WEAR, rscFlightFeathersWear, sdtText,
-        crEqual, False, cbFFWearFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_FLIGHT_FEATHERS_WEAR, rscFlightFeathersWear, cbFFWearFilter.Text);
     end;
+    // Molt limits
     if eMoltLimitsFilter.Text <> EmptyStr then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MOLT_LIMITS, rscMoltLimits, sdtText,
         crLike, False, eMoltLimitsFilter.Text));
     end;
+    // Cycle code
     if eCycleCodeFilter.Text <> EmptyStr then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CYCLE_CODE, rscMoltCycle, sdtText,
         crLike, False, eCycleCodeFilter.Text));
     end;
-
+    // Skull ossification
     if cbSkullOssificationFilter.ItemIndex > 0 then
     begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SKULL_OSSIFICATION, rscSkullOssification, sdtText,
-        crEqual, False, cbSkullOssificationFilter.Text));
+      AddExactTextFilter(SearchConfig, COL_SKULL_OSSIFICATION, rscSkullOssification, cbSkullOssificationFilter.Text);
     end;
-
-    if PersonIdFilter > 0 then
-      PersonFilterToSearch(FTableType, SearchConfig.QuickFilters, PersonIdFilter);
-
-    if eStartTimeFilter.Text <> EmptyStr then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      if eEndTimeFilter.Text <> EmptyStr then
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscTime, sdtTime,
-          crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
-      else
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscTime, sdtTime,
-          crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-    end;
-
-    if SurveyIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SURVEY_ID, rscSurvey, sdtInteger,
-        crEqual, False, IntToStr(SurveyIdFilter)));
-    end;
-    if MethodIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_METHOD_ID, rscMethod, sdtInteger,
-        crEqual, False, IntToStr(MethodIdFilter)));
-    end;
-
-    if IndividualIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscIndividual, sdtInteger,
-        crEqual, False, IntToStr(IndividualIdFilter)));
-    end;
-
-    if rbNeedsReviewYes.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEEDS_REVIEW, rscNeedsReview, sdtBoolean,
-        crEqual, False, '1'));
-    end;
-    if rbNeedsReviewNo.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_NEEDS_REVIEW, rscNeedsReview, sdtBoolean,
-        crEqual, False, '0'));
-    end;
-
-    if rbEscapedYes.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_ESCAPED, rscEscaped, sdtBoolean,
-        crEqual, False, '1'));
-    end;
-    if rbEscapedNo.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_ESCAPED, rscEscaped, sdtBoolean,
-        crEqual, False, '0'));
-    end;
-
-    if rbPhilornisYes.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PHILORNIS_LARVAE_TALLY, rscQuantPhilornisLarvae, sdtInteger,
-        crMoreThan, False, '1'));
-    end;
-    if rbPhilornisNo.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_PHILORNIS_LARVAE_TALLY, rscQuantPhilornisLarvae, sdtInteger,
-        crEqual, False, '0'));
-    end;
-
-    if rbReplacedBandYes.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, rscRemovedBand, sdtInteger,
-        crMoreThan, False, '1'));
-    end;
-    if rbReplacedBandNo.Checked then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_ID, rscRemovedBand, sdtInteger,
-        crEqual, False, '0'));
-    end;
+    // Person
+    AddLookupFilter(SearchConfig,
+      [COL_BANDER_ID, COL_ANNOTATOR_ID, COL_PHOTOGRAPHER_1_ID, COL_PHOTOGRAPHER_2_ID],
+      [rscBander, rscAnnotator, rscPhotographer1, rscPhotographer2], PersonIdFilter);
+    // Time interval
+    AddTimeFilter(SearchConfig, COL_CAPTURE_TIME, rscTime, eStartTimeFilter.Text, eEndTimeFilter.Text);
+    // Survey
+    AddLookupFilter(SearchConfig, [COL_SURVEY_ID], [rscSurvey], SurveyIdFilter);
+    // Method
+    AddLookupFilter(SearchConfig, [COL_METHOD_ID], [rscMethod], MethodIdFilter);
+    // Individual
+    AddLookupFilter(SearchConfig, [COL_INDIVIDUAL_ID], [rscIndividual], IndividualIdFilter);
+    // Needs review
+    AddBooleanFilter(SearchConfig, COL_NEEDS_REVIEW, rscNeedsReview, rbNeedsReviewYes.Checked, rbNeedsReviewNo.Checked);
+    // Escaped
+    AddBooleanFilter(SearchConfig, COL_ESCAPED, rscEscaped, rbEscapedYes.Checked, rbEscapedNo.Checked);
+    // Philornis presence
+    AddNonZeroIntegerFilter(SearchConfig, COL_PHILORNIS_LARVAE_TALLY, rscQuantPhilornisLarvae, rbPhilornisYes.Checked, rbPhilornisNo.Checked);
+    // Band replaced
+    AddNonZeroIntegerFilter(SearchConfig, COL_REMOVED_BAND_ID, rscRemovedBand, rbReplacedBandYes.Checked, rbReplacedBandNo.Checked);
   end;
 end;
 
@@ -1208,25 +1107,25 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_ID, rscId, sdtInteger, crEqual,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, crEqual,
           False, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtDate, crEqual,
           False, aValue));
       end
       else
       if TryStrToTime(aValue, dt) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscDate, sdtTime, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscDate, sdtTime, crEqual,
           False, aValue));
       end
       else
@@ -1237,8 +1136,8 @@ begin
         { split strings: unicode characters #$002D e #$2012 }
         V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
         V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, Crit,
           False, V1, V2));
       end
       else
@@ -1247,26 +1146,26 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_NAME, rscBand, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_REMOVED_BAND_NAME, rscRemovedBand, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_NET_STATION_NAME, rscSamplingPlot, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_NET_STATION_NAME, rscSamplingPlot, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_BANDER_NAME, rscBander, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BANDER_NAME, rscBander, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_ANNOTATOR_NAME, rscAnnotator, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_ANNOTATOR_NAME, rscAnnotator, sdtText, Crit,
           True, aValue));
       end;
     end;
@@ -1811,30 +1710,18 @@ var
 begin
   with TfrmCustomGrid(FOwner) do
   begin
+    // Taxa
     TaxonFilterToSearch(tvTaxaFilter, SearchConfig.QuickFilters, 'z.');
+    // Dates
     DateFilterToSearch(FTableType, tvDateFilter, SearchConfig.QuickFilters);
+    // Sites
     SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters, 'g.');
-
-    if ePersonFilter.Text <> EmptyStr then
-      PersonFilterToSearch(FTableType, SearchConfig.QuickFilters, PersonIdFilter);
-
-    if eStartTimeFilter.Text <> EmptyStr then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      if eEndTimeFilter.Text <> EmptyStr then
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SAMPLE_TIME, rscTime, sdtTime,
-          crBetween, False, QuotedStr(eStartTimeFilter.Text), QuotedStr(eEndTimeFilter.Text)))
-      else
-        SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_SAMPLE_TIME, rscTime, sdtTime,
-          crEqual, False, QuotedStr(eStartTimeFilter.Text)));
-    end;
-
-    if IndividualIdFilter > 0 then
-    begin
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscIndividual, sdtInteger,
-        crEqual, False, IntToStr(IndividualIdFilter)));
-    end;
+    // Person
+    AddLookupFilter(SearchConfig, [COL_OBSERVER_ID], [rscObserver], PersonIdFilter);
+    // Time interval
+    AddTimeFilter(SearchConfig, COL_SAMPLE_TIME, rscTime, eStartTimeFilter.Text, eEndTimeFilter.Text);
+    // Individual
+    AddLookupFilter(SearchConfig, [COL_INDIVIDUAL_ID], [rscIndividual], IndividualIdFilter);
   end;
 end;
 
@@ -1926,16 +1813,16 @@ begin
     begin
       if TryStrToInt(aValue, i) then
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_FEATHER_ID, rscId, sdtInteger, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FEATHER_ID, rscId, sdtInteger, crEqual,
           False, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtDate, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtDate, crEqual,
           False, aValue));
       end
       else
@@ -1944,18 +1831,18 @@ begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtMonthYear, crEqual,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtMonthYear, crEqual,
           False, y + '-' + m));
       end
       else
       begin
-        g := SearchConfig.Fields.Add(TSearchGroup.Create);
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
           False, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
           True, aValue));
-        SearchConfig.Fields[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, rscObserver, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, rscObserver, sdtText, Crit,
           False, aValue));
       end;
     end;
