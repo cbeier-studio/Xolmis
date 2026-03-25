@@ -86,7 +86,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = FormKeyPress
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -104,7 +104,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 447
+          ClientWidth = 464
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel

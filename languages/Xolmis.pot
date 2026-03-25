@@ -4366,6 +4366,11 @@ msgctxt "tdlgfind.ep.texthint"
 msgid "Find..."
 msgstr ""
 
+#: tdlgfind.lblemptyquery.caption
+msgctxt "tdlgfind.lblemptyquery.caption"
+msgid "Result query is empty"
+msgstr ""
+
 #: tdlgfind.pmfshowbandsavailable.caption
 msgid "Show only available bands"
 msgstr ""
@@ -4393,6 +4398,11 @@ msgstr ""
 #: tdlgfindtaxon.ep.texthint
 msgctxt "tdlgfindtaxon.ep.texthint"
 msgid "Find..."
+msgstr ""
+
+#: tdlgfindtaxon.lblemptyquery.caption
+msgctxt "tdlgfindtaxon.lblemptyquery.caption"
+msgid "Result query is empty"
 msgstr ""
 
 #: tdlgfindtaxon.sbclose.hint

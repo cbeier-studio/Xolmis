@@ -4,5 +4,6 @@
 {"hash":108725763,"name":"tdlgfind.sboptions.hint","sourcebytes":[79,112,116,105,111,110,115],"value":"Options"},
 {"hash":54079704,"name":"tdlgfind.sbclose.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
 {"hash":346165,"name":"tdlgfind.ulist.columns[0].title.caption","sourcebytes":[78,97,109,101],"value":"Name"},
+{"hash":73584121,"name":"tdlgfind.lblemptyquery.caption","sourcebytes":[82,101,115,117,108,116,32,113,117,101,114,121,32,105,115,32,101,109,112,116,121],"value":"Result query is empty"},
 {"hash":237505603,"name":"tdlgfind.pmfshowbandsavailable.caption","sourcebytes":[83,104,111,119,32,111,110,108,121,32,97,118,97,105,108,97,98,108,101,32,98,97,110,100,115],"value":"Show only available bands"}
 ]}

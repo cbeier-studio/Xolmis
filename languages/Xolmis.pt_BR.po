@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data_columns.rsc1stsecondarychord
 msgctxt "data_columns.rsc1stsecondarychord"
@@ -4345,6 +4345,11 @@ msgctxt "tdlgfind.ep.texthint"
 msgid "Find..."
 msgstr "Buscar..."
 
+#: tdlgfind.lblemptyquery.caption
+msgctxt "tdlgfind.lblemptyquery.caption"
+msgid "Result query is empty"
+msgstr "Resultado da busca está vazio"
+
 #: tdlgfind.pmfshowbandsavailable.caption
 msgid "Show only available bands"
 msgstr "Mostrar apenas anilhas disponíveis"
@@ -4373,6 +4378,11 @@ msgstr "Buscar táxon"
 msgctxt "tdlgfindtaxon.ep.texthint"
 msgid "Find..."
 msgstr "Buscar..."
+
+#: tdlgfindtaxon.lblemptyquery.caption
+msgctxt "tdlgfindtaxon.lblemptyquery.caption"
+msgid "Result query is empty"
+msgstr "Resultado da busca está vazio"
 
 #: tdlgfindtaxon.sbclose.hint
 msgctxt "tdlgfindtaxon.sbclose.hint"

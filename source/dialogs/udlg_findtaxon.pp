@@ -32,10 +32,12 @@ type
   TdlgFindTaxon = class(TForm)
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    lblEmptyQuery: TLabel;
     lblVernacular: TDBText;
     dsFind: TDataSource;
     EP: TEdit;
     lblName: TDBText;
+    pEmptyQuery: TBCPanel;
     pSearchBar: TPanel;
     pContent: TPanel;
     pEP: TBCPanel;
@@ -44,6 +46,7 @@ type
     sbClose: TColorSpeedButton;
     TimerFind: TTimer;
     uList: TDBControlGrid;
+    procedure dsFindStateChange(Sender: TObject);
     procedure EPChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -108,6 +111,15 @@ begin
 
   uList.AlternateColor := clSolidBGSecondaryDark;
   lblVernacular.Font.Color := clGray;
+
+  pEmptyQuery.Background.Color := clCardBGDefaultDark;
+  pEmptyQuery.Border.Color := clCardBGSecondaryDark;
+  pEmptyQuery.Color := uList.Color;
+end;
+
+procedure TdlgFindTaxon.dsFindStateChange(Sender: TObject);
+begin
+  pEmptyQuery.Visible := (dsFind.DataSet.RecordCount = 0);
 end;
 
 procedure TdlgFindTaxon.EPChange(Sender: TObject);

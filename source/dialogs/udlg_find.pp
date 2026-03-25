@@ -32,6 +32,8 @@ type
   TdlgFind = class(TForm)
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    lblEmptyQuery: TLabel;
+    pEmptyQuery: TBCPanel;
     pmfShowBandsAvailable: TMenuItem;
     pmOptions: TPopupMenu;
     sbOptions: TColorSpeedButton;
@@ -43,6 +45,7 @@ type
     pHeader: TPanel;
     qFind: TSQLQuery;
     TimerFind: TTimer;
+    procedure dsFindStateChange(Sender: TObject);
     procedure EPChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -136,6 +139,15 @@ begin
   sbOptions.StateHover.Color := clSolidBGBaseDark;
   sbOptions.StateActive.Color := clSolidBGSecondaryDark;
   sbOptions.StateNormal.Color := pEP.Background.Color;
+
+  pEmptyQuery.Background.Color := clCardBGDefaultDark;
+  pEmptyQuery.Border.Color := clCardBGSecondaryDark;
+  pEmptyQuery.Color := uList.Color;
+end;
+
+procedure TdlgFind.dsFindStateChange(Sender: TObject);
+begin
+  pEmptyQuery.Visible := (dsFind.DataSet.RecordCount = 0);
 end;
 
 procedure TdlgFind.EPChange(Sender: TObject);

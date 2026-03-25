@@ -109,7 +109,7 @@ type
 
 implementation
 
-uses utils_global, data_consts, udm_main;
+uses utils_global, data_consts, data_columns, udm_main;
 
 procedure LoadMethodCategories(aList: TStrings);
 var
