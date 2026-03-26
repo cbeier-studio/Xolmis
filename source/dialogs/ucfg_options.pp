@@ -31,8 +31,10 @@ type
   TcfgOptions = class(TForm)
     btnHelp: TSpeedButton;
     eVideosPath: TDirectoryEdit;
+    icoAutoSizeColumns: TImage;
     icoWriteDetailedLogs: TImage;
     icoVideosPath: TImage;
+    lblAutoSizeColumns: TLabel;
     lblWriteDetailedLogs: TLabel;
     lblTitleAppearance: TLabel;
     lblTitleBackup: TLabel;
@@ -41,6 +43,7 @@ type
     lblTitleMedia: TLabel;
     lblTitleSecurity: TLabel;
     lblVideosPath: TLabel;
+    pAutoSizeColumns: TBCPanel;
     pWriteDetailedLogs: TBCPanel;
     pVideosPath: TBCPanel;
     sliderRowHeight: TBCFluentSlider;
@@ -154,6 +157,7 @@ type
     scrollMedia: TScrollBox;
     scrollSecurity: TScrollBox;
     scrollBackup: TScrollBox;
+    tsAutoSizeColumns: TToggleSwitch;
     tsWriteDetailedLogs: TToggleSwitch;
     tsRememberConnection: TToggleSwitch;
     tsRememberUser: TToggleSwitch;
@@ -188,6 +192,7 @@ type
     procedure sbRestoreBackupClick(Sender: TObject);
     procedure sliderRowHeightChangeValue(Sender: TObject);
     procedure tsAllowUsageDataChange(Sender: TObject);
+    procedure tsAutoSizeColumnsChange(Sender: TObject);
     procedure tsConfirmCancelChange(Sender: TObject);
     procedure tsEnterAsTabChange(Sender: TObject);
     procedure tsOpenAfterExportChange(Sender: TObject);
@@ -229,6 +234,7 @@ begin
   icoClearDeleted.Images := iIconsDark;
   icoCheckUpdates.Images := iIconsDark;
   icoSelectedTheme.Images := iIconsDark;
+  icoAutoSizeColumns.Images := iIconsDark;
   icoRowHeight.Images := iIconsDark;
   icoUseConditionalFormatting.Images := iIconsDark;
   icoShowOutliers.Images := iIconsDark;
@@ -261,6 +267,8 @@ begin
   pCheckUpdates.Border.Color := clSystemSolidNeutralFGDark;
   pSelectedTheme.Background.Color := clSolidBGSecondaryDark;
   pSelectedTheme.Border.Color := clSystemSolidNeutralFGDark;
+  pAutoSizeColumns.Background.Color := clSolidBGSecondaryDark;
+  pAutoSizeColumns.Border.Color := clSystemSolidNeutralFGDark;
   pRowHeight.Background.Color := clSolidBGSecondaryDark;
   pRowHeight.Border.Color := clSystemSolidNeutralFGDark;
   pUseConditionalFormatting.Background.Color := clSolidBGSecondaryDark;
@@ -311,6 +319,7 @@ begin
 
   tsEnterAsTab.Color := pEnterAsTab.Background.Color;
   tsConfirmCancel.Color := pConfirmCancel.Background.Color;
+  tsAutoSizeColumns.Color := pAutoSizeColumns.Background.Color;
   tsUseConditionalFormatting.Color := pConfirmCancel.Background.Color;
   tsShowOutliers.Color := pConfirmCancel.Background.Color;
   tsShowSynonyms.Color := pConfirmCancel.Background.Color;
@@ -479,6 +488,7 @@ begin
 
   { APPEARANCE }
   cbSelectedTheme.ItemIndex := xSettings.SelectedTheme;
+  tsAutoSizeColumns.Checked := xSettings.AutoAdjustColumns;
   sliderRowHeight.Value := (xSettings.DefaultRowHeight - MIN_ROW_HEIGHT) div 2;
   tsUseConditionalFormatting.Checked := xSettings.UseConditionalFormatting;
   tsShowOutliers.Checked := xSettings.ShowOutliersOnGrid;
@@ -560,6 +570,11 @@ end;
 procedure TcfgOptions.tsAllowUsageDataChange(Sender: TObject);
 begin
   xSettings.AllowSendUsageData := tsAllowUsageData.Checked;
+end;
+
+procedure TcfgOptions.tsAutoSizeColumnsChange(Sender: TObject);
+begin
+  xSettings.AutoAdjustColumns := tsAutoSizeColumns.Checked;
 end;
 
 procedure TcfgOptions.tsConfirmCancelChange(Sender: TObject);

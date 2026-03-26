@@ -1279,6 +1279,7 @@ type
 
     procedure Summary;
 
+    procedure UpdateAutoSizeColumns;
     procedure UpdateButtons(aDataSet: TDataSet);
     procedure UpdateChildBar;
     procedure UpdateChildButtons(aDataSet: TDataSet);
@@ -8332,6 +8333,8 @@ begin
   if (isWorking) or (isOpening) or (isClosing) then
     Exit;
 
+  //if (oldAutoSizeCols <> xSettings.AutoAdjustColumns) then
+    UpdateAutoSizeColumns;
   if (oldRowHeight <> xSettings.DefaultRowHeight) then
     UpdateRowHeights;
 end;
@@ -8576,6 +8579,31 @@ begin
   pmaDelAudio.Enabled := sbDelAudio.Enabled;
   pmaPlayAudio.Enabled := sbPlayAudio.Enabled;
   pmaRefreshAudios.Enabled := sbAddAudio.Enabled;
+end;
+
+procedure TfrmCustomGrid.UpdateAutoSizeColumns;
+begin
+  oldAutoSizeCols := xSettings.AutoAdjustColumns;
+  if xSettings.AutoAdjustColumns then
+  begin
+    DBG.Options := DBG.Options + [dgAutoSizeColumns];
+    gridChild1.Options := gridChild1.Options + [dgAutoSizeColumns];
+    gridChild2.Options := gridChild2.Options + [dgAutoSizeColumns];
+    gridChild3.Options := gridChild3.Options + [dgAutoSizeColumns];
+    gridChild4.Options := gridChild4.Options + [dgAutoSizeColumns];
+    gridChild5.Options := gridChild5.Options + [dgAutoSizeColumns];
+    gridChild6.Options := gridChild6.Options + [dgAutoSizeColumns];
+  end
+  else
+  begin
+    DBG.Options := DBG.Options - [dgAutoSizeColumns];
+    gridChild1.Options := gridChild1.Options - [dgAutoSizeColumns];
+    gridChild2.Options := gridChild2.Options - [dgAutoSizeColumns];
+    gridChild3.Options := gridChild3.Options - [dgAutoSizeColumns];
+    gridChild4.Options := gridChild4.Options - [dgAutoSizeColumns];
+    gridChild5.Options := gridChild5.Options - [dgAutoSizeColumns];
+    gridChild6.Options := gridChild6.Options - [dgAutoSizeColumns];
+  end;
 end;
 
 procedure TfrmCustomGrid.UpdateButtons(aDataSet: TDataSet);

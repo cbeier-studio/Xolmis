@@ -3283,6 +3283,10 @@ msgstr "Local dos documentos"
 msgid "Audio files location"
 msgstr "Local dos arquivos de áudio"
 
+#: tcfgoptions.lblautosizecolumns.caption
+msgid "Auto size columns to fit the content"
+msgstr "Ajustar largura das colunas ao conteúdo automaticamente"
+
 #: tcfgoptions.lblbackuppath.caption
 msgid "Backup files folder"
 msgstr "Pasta dos arquivos de backup"

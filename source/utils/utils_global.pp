@@ -364,6 +364,7 @@ var
   EditSourceStr: String;
   oldPPI: Integer;
   oldRowHeight: Integer;
+  //oldAutoSizeCols: Boolean;
 
   { System logging }
   procedure LogEvent(aAction: TLogEventAction; Msg: String);
@@ -979,7 +980,7 @@ begin
   { Appearance }
   FSelectedTheme := FConfig.GetValue('/APPEARANCE/SelectedTheme', 1);
   FShowGridLines := FConfig.GetValue('/APPEARANCE/ShowGridLines', True);
-  FAutoAdjustColumns := FConfig.GetValue('/APPEARANCE/AutoAdjustColumns', False);
+  FAutoAdjustColumns := FConfig.GetValue('/APPEARANCE/AutoAdjustColumns', True);
   FUseConditionalFormatting := FConfig.GetValue('/APPEARANCE/UseConditionalFormatting', True);
   FShowOutliersOnGrid := FConfig.GetValue('/APPEARANCE/ShowOutliersOnGrid', True);
   FDefaultRowHeight := FConfig.GetValue('/APPEARANCE/DefaultRowHeight', 25);
