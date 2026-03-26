@@ -448,6 +448,7 @@ begin
     // How was aged
     if eHowAgedFilter.Text <> EmptyStr then
     begin
+      { #todo : Add filter for how was aged chars within a text field }
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_AGED, rscHowWasAged, sdtText,
         crLike, False, eHowAgedFilter.Text));
@@ -460,6 +461,7 @@ begin
     // How was sexed
     if eHowSexedFilter.Text <> EmptyStr then
     begin
+      { #todo : Add filter for how was sexed chars within a text field }
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_SEXED, rscHowWasSexed, sdtText,
         crLike, False, eHowSexedFilter.Text));
@@ -497,6 +499,7 @@ begin
     // Molt limits
     if eMoltLimitsFilter.Text <> EmptyStr then
     begin
+      { #todo : Add filter for molt limits chars within a text field }
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MOLT_LIMITS, rscMoltLimits, sdtText,
         crLike, False, eMoltLimitsFilter.Text));
@@ -504,6 +507,7 @@ begin
     // Cycle code
     if eCycleCodeFilter.Text <> EmptyStr then
     begin
+      { #todo : Add filter for 3-letters cycle code within a text field }
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CYCLE_CODE, rscMoltCycle, sdtText,
         crLike, False, eCycleCodeFilter.Text));

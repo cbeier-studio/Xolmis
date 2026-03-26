@@ -1196,7 +1196,7 @@ type
     FTableType, FChildTable: TTableType;
     FSearch: TCustomSearch;
     isFiltered: Boolean;
-    FSidePanel, oldSidePanel: Boolean;
+    FSidePanel, oldSidePanel, oldAutoSizeCols: Boolean;
     FSideIndex, oldSideIndex: Integer;
     FSearchString, oldSearchString: String;
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
@@ -4291,6 +4291,7 @@ begin
   FCanToggle := False;
   isFiltered := False;
 
+  oldAutoSizeCols := False;
   oldSidePanel := False;
   oldSideIndex := -1;
 
@@ -8333,7 +8334,7 @@ begin
   if (isWorking) or (isOpening) or (isClosing) then
     Exit;
 
-  //if (oldAutoSizeCols <> xSettings.AutoAdjustColumns) then
+  if (oldAutoSizeCols <> xSettings.AutoAdjustColumns) then
     UpdateAutoSizeColumns;
   if (oldRowHeight <> xSettings.DefaultRowHeight) then
     UpdateRowHeights;
@@ -8583,7 +8584,7 @@ end;
 
 procedure TfrmCustomGrid.UpdateAutoSizeColumns;
 begin
-  //oldAutoSizeCols := xSettings.AutoAdjustColumns;
+  oldAutoSizeCols := xSettings.AutoAdjustColumns;
   if xSettings.AutoAdjustColumns then
   begin
     DBG.Options := DBG.Options + [dgAutoSizeColumns];
