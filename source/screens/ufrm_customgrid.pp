@@ -8583,7 +8583,7 @@ end;
 
 procedure TfrmCustomGrid.UpdateAutoSizeColumns;
 begin
-  oldAutoSizeCols := xSettings.AutoAdjustColumns;
+  //oldAutoSizeCols := xSettings.AutoAdjustColumns;
   if xSettings.AutoAdjustColumns then
   begin
     DBG.Options := DBG.Options + [dgAutoSizeColumns];

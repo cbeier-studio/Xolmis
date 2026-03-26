@@ -30,27 +30,56 @@ type
   TGridUiFlags = set of TGridUiFlag;
 
   TPrintUiFlag = (
+    // Methods
     pufMethods,
-    pufExpeditions, pufExpeditionsByProject,
-    pufSurveys, pufSurveysByExpedition, pufSurveysByLocality, pufSurveysByProject,
+    // Expeditions
+    pufExpeditions, pufExpeditionsByProject, pufExpeditionDetails, pufExpeditionSummary,
+    pufExpeditionCaptureRate, pufExpeditionDetectionRate, pufExpeditionDiversityIndicators,
+    pufExpeditionSpeciesChecklist,
+    // Surveys
+    pufSurveys, pufSurveysByExpedition, pufSurveysByLocality, pufSurveysByProject, pufSurveyDetails,
+    pufSurveyCaptureRate, pufSurveyDetectionRate, pufSurveyDiversityIndicators, pufNetEffort,
+    // Sightings
     pufSightings, pufSightingsBySurvey, pufSightingsByLocality, pufSightingsByObserver, pufSightingsByProject,
-    pufSightingsByTaxon,
+    pufSightingsByTaxon, pufSightingSummary, pufSightingDiversityIndicators, pufSightingPhenology,
+    pufSightingHeatMap,
+    // Specimens
     pufSpecimens, pufSpecimensByProject, pufSpecimensByLocality, pufSpecimensByTaxon, pufSpecimensByYear,
-    pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory,
-    pufIndividuals, pufIndividualsByTaxon, pufIndividualsByParents,
+    // Bands
+    pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory, pufBandsMovement,
+    pufBandSizesPerSpecies, pufBandUseByPeriod, pufBandNeedPrevisions, pufBandsDischarged,
+    // Individuals
+    pufIndividuals, pufIndividualsByTaxon, pufIndividualsByParents, pufIndividualDetails,
+    pufIndividualRecaptures, pufIndividualMorphometry, pufIndividualMolt, pufIndividualFeatherMeasurements,
+    pufIndividualBreeding, pufIndividualSurvival, pufIndividualMovement,
+    // Captures
     pufCaptures, pufCapturesByProject, pufCapturesByLocality, pufCapturesByDate, pufCapturesByTaxon,
-    pufColorBandCombinations,
+    pufCaptureDetails, pufCaptureMorphometryVariation, pufCaptureHeatMap, pufColorBandCombinations,
+    // Feathers
     pufFeathers,
-    pufNests, pufNestsByProject, pufNestsByDate, pufNestsByLocality, pufNestsByTaxon,
+    // Nests
+    pufNests, pufNestsByProject, pufNestsByDate, pufNestsByLocality, pufNestsByTaxon, pufNestDetails,
+    pufNestRevisionAgenda, pufNestHatchingRates, pufNestBreedingSuccess, pufNestClutchSize, pufNestSurvival,
+    pufNestCausesOfLoss, pufNestSeasonalitySummary,
+    // Eggs
     pufEggs, pufEggsByNest, pufEggsByLocality, pufEggsByTaxon,
+    // Institutions
     pufInstitutions,
-    pufResearchers,
-    pufProjects,
+    // Researchers
+    pufResearchers, pufResearcherSummary,
+    // Projects
+    pufProjects, pufProjectDetails, pufProjectChronogram, pufProjectFinancial, pufProjectSummary,
+    // Permits
     pufPermits, pufPermitsByDate, pufPermitsByProject,
-    pufGazetteer,
+    // Gazetteer
+    pufGazetteer, pufGazetteerHierarchical, pufGazetteerEffortIndicators, pufGazetteerHeatMap,
+    // Sampling plots
     pufSamplingPlots, pufSamplingPlotsByLocality,
-    pufBotanicalTaxa, pufBotanicalTaxaRecorded,
-    pufTaxa, pufTaxaRecorded, pufTaxaRecordedByLocality
+    // Botanical taxa
+    pufBotanicalTaxa, pufBotanicalTaxaRecorded, pufBotanicalTaxaHierarchical,
+    // Taxa
+    pufTaxa, pufTaxaRecorded, pufTaxaRecordedByLocality, pufTaxaHierarchical, pufTaxaPhenology,
+    pufTaxaConservationVsEffort
   );
 
   TPrintUiFlags = set of TPrintUiFlag;
