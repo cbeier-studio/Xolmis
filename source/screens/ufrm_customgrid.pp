@@ -7347,6 +7347,7 @@ begin
   try
     frmQuickEntry.TableType := FChildTable;
     ShowModal;
+    sbRefreshChildClick(nil);
   finally
     FreeAndNil(frmQuickEntry);
   end;
@@ -7366,6 +7367,7 @@ begin
   try
     frmQuickEntry.TableType := FTableType;
     ShowModal;
+    sbRefreshRecordsClick(nil);
   finally
     FreeAndNil(frmQuickEntry);
   end;

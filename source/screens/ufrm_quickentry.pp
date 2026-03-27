@@ -149,6 +149,7 @@ type
 
     procedure LoadData;
     procedure LoadJsonToGrid(const aFileName: String);
+    procedure ResetGrid;
     function RowHasData(aRow: Integer): Boolean;
     procedure SaveData;
     procedure SaveGridToJson(const aFileName: String);
@@ -477,6 +478,8 @@ begin
     tbProjectExpenses:      ImportDataProjectExpenses;
     tbPoiLibrary: ;
   end;
+
+  ResetGrid;
 end;
 
 procedure TfrmQuickEntry.ImportDataBands;
@@ -6743,6 +6746,7 @@ begin
 
         // Rows
         Rows := Obj.Arrays['rows'];
+        qeGrid.RowCount := Rows.Count + 1;
         for i := 0 to Rows.Count - 1 do
         begin
           RowObj := Rows.Objects[i];
@@ -6956,6 +6960,12 @@ begin
       NewValue := EmptyStr;
       Exit;
     end;
+end;
+
+procedure TfrmQuickEntry.ResetGrid;
+begin
+  qeGrid.RowCount := 2;
+  qeGrid.Clean([gzNormal]);
 end;
 
 function TfrmQuickEntry.RowHasData(aRow: Integer): Boolean;
