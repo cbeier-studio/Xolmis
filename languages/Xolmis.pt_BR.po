@@ -12132,6 +12132,7 @@ msgid "Add to GeoAssist"
 msgstr "Adicionar ao GeoAssist"
 
 #: tfrmgeoconverter.sbclear.caption
+msgctxt "tfrmgeoconverter.sbclear.caption"
 msgid "Clear all"
 msgstr "Limpar tudo"
 
@@ -13010,6 +13011,11 @@ msgctxt "tfrmquickentry.caption"
 msgid "Quick Entry"
 msgstr "Quick Entry"
 
+#: tfrmquickentry.pmgclearall.caption
+msgctxt "tfrmquickentry.pmgclearall.caption"
+msgid "Clear all"
+msgstr "Limpar tudo"
+
 #: tfrmquickentry.pmgdeleterow.caption
 msgctxt "tfrmquickentry.pmgdeleterow.caption"
 msgid "Delete row"
@@ -13039,16 +13045,6 @@ msgstr "Apagar linha"
 msgctxt "tfrmquickentry.sbimport.caption"
 msgid "Import"
 msgstr "Importar"
-
-#: tfrmquickentry.sbopen.caption
-msgctxt "tfrmquickentry.sbopen.caption"
-msgid "Open"
-msgstr "Abrir"
-
-#: tfrmquickentry.sbsaveas.caption
-msgctxt "tfrmquickentry.sbsaveas.caption"
-msgid "Save"
-msgstr "Salvar"
 
 #: tfrmtaxa.caption
 msgctxt "tfrmtaxa.caption"
@@ -14251,6 +14247,15 @@ msgstr "Verificar atualizações"
 #: utils_locale.rscleaningdeletedrecords
 msgid "Cleaning Deleted Records"
 msgstr "Limpando registros apagados"
+
+#: utils_locale.rsclearallprompt
+msgid "Do you really want to clear all rows from Quick Entry?"
+msgstr "Você realmente quer limpar todos registros do Quick Entry?"
+
+#: utils_locale.rsclearalltitle
+msgctxt "utils_locale.rsclearalltitle"
+msgid "Clear all"
+msgstr "Limpar tudo"
 
 #: utils_locale.rsclearlogsprompt
 msgctxt "utils_locale.rsclearlogsprompt"
@@ -17560,6 +17565,14 @@ msgstr "Coordenada de referência"
 msgctxt "utils_locale.rsremindlateraction"
 msgid "Remind later"
 msgstr "Lembrar depois"
+
+#: utils_locale.rsreplacedataprompt
+msgid "The Quick Entry already has data. Do you want to replace it?"
+msgstr "O Quick Entry já possui dados. Você quer substituí-los?"
+
+#: utils_locale.rsreplacedatatitle
+msgid "Replace data"
+msgstr "Substituir dados"
 
 #: utils_locale.rsreplacedsynonym
 msgctxt "utils_locale.rsreplacedsynonym"

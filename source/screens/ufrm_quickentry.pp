@@ -29,9 +29,12 @@ type
   { TfrmQuickEntry }
 
   TfrmQuickEntry = class(TForm)
+    OpenDlg: TOpenDialog;
+    pmgClearAll: TMenuItem;
     pmgDeleteRow: TMenuItem;
     pmgInsertRow: TMenuItem;
     PMGrid: TPopupMenu;
+    SaveDlg: TSaveDialog;
     sbImport: TBitBtn;
     iButtons: TImageList;
     iButtonsDark: TImageList;
@@ -47,6 +50,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure pmgClearAllClick(Sender: TObject);
     procedure qeGridColRowDeleted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
     procedure qeGridColRowInserted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
     procedure qeGridGetCellHint(Sender: TObject; ACol, ARow: Integer; var HintText: String);
@@ -61,6 +65,8 @@ type
     procedure sbCloseClick(Sender: TObject);
     procedure sbDelRowsClick(Sender: TObject);
     procedure sbImportClick(Sender: TObject);
+    procedure sbOpenClick(Sender: TObject);
+    procedure sbSaveAsClick(Sender: TObject);
   private
     FColFieldNames: TStringList;
     FColRules: array of TValidationRules;
@@ -6764,6 +6770,14 @@ begin
   end;
 end;
 
+procedure TfrmQuickEntry.pmgClearAllClick(Sender: TObject);
+begin
+  if MsgDlg(rsClearAllTitle, rsClearAllPrompt, mtConfirmation) then
+  begin
+    ResetGrid;
+  end;
+end;
+
 procedure TfrmQuickEntry.qeGridColRowDeleted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
 begin
   UpdateRowCounter;
@@ -7057,6 +7071,31 @@ begin
 
   // Import data
   ImportData;
+end;
+
+procedure TfrmQuickEntry.sbOpenClick(Sender: TObject);
+begin
+  OpenDlg.InitialDir := xSettings.LastPathUsed;
+
+  if GridHasData then
+    if MsgDlg(rsReplaceDataTitle, rsReplaceDataPrompt, mtConfirmation) then
+      ResetGrid
+    else
+      Exit;
+
+  if OpenDlg.Execute then
+  begin
+    LoadJsonToGrid(OpenDlg.FileName);
+  end;
+end;
+
+procedure TfrmQuickEntry.sbSaveAsClick(Sender: TObject);
+begin
+  SaveDlg.InitialDir := xSettings.LastPathUsed;
+  if SaveDlg.Execute then
+  begin
+    SaveGridToJson(SaveDlg.FileName);
+  end;
 end;
 
 procedure TfrmQuickEntry.SetDateCols;

@@ -12150,6 +12150,7 @@ msgid "Add to GeoAssist"
 msgstr ""
 
 #: tfrmgeoconverter.sbclear.caption
+msgctxt "tfrmgeoconverter.sbclear.caption"
 msgid "Clear all"
 msgstr ""
 
@@ -13029,6 +13030,11 @@ msgctxt "tfrmquickentry.caption"
 msgid "Quick Entry"
 msgstr ""
 
+#: tfrmquickentry.pmgclearall.caption
+msgctxt "tfrmquickentry.pmgclearall.caption"
+msgid "Clear all"
+msgstr ""
+
 #: tfrmquickentry.pmgdeleterow.caption
 msgctxt "tfrmquickentry.pmgdeleterow.caption"
 msgid "Delete row"
@@ -13057,16 +13063,6 @@ msgstr ""
 #: tfrmquickentry.sbimport.caption
 msgctxt "tfrmquickentry.sbimport.caption"
 msgid "Import"
-msgstr ""
-
-#: tfrmquickentry.sbopen.caption
-msgctxt "tfrmquickentry.sbopen.caption"
-msgid "Open"
-msgstr ""
-
-#: tfrmquickentry.sbsaveas.caption
-msgctxt "tfrmquickentry.sbsaveas.caption"
-msgid "Save"
 msgstr ""
 
 #: tfrmtaxa.caption
@@ -14267,6 +14263,15 @@ msgstr ""
 
 #: utils_locale.rscleaningdeletedrecords
 msgid "Cleaning Deleted Records"
+msgstr ""
+
+#: utils_locale.rsclearallprompt
+msgid "Do you really want to clear all rows from Quick Entry?"
+msgstr ""
+
+#: utils_locale.rsclearalltitle
+msgctxt "utils_locale.rsclearalltitle"
+msgid "Clear all"
 msgstr ""
 
 #: utils_locale.rsclearlogsprompt
@@ -17415,6 +17420,14 @@ msgstr ""
 #: utils_locale.rsremindlateraction
 msgctxt "utils_locale.rsremindlateraction"
 msgid "Remind later"
+msgstr ""
+
+#: utils_locale.rsreplacedataprompt
+msgid "The Quick Entry already has data. Do you want to replace it?"
+msgstr ""
+
+#: utils_locale.rsreplacedatatitle
+msgid "Replace data"
 msgstr ""
 
 #: utils_locale.rsreplacedsynonym

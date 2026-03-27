@@ -277,6 +277,10 @@ uses
     rsDeleteImagePrompt = 'Dow you really want to delete this record?' + LineEnding +
       'This action cannot be undone.';
     rsDeleteProfilePicture = 'Do you really want to remove the profile picture?';
+    rsClearAllTitle = 'Clear all';
+    rsClearAllPrompt = 'Do you really want to clear all rows from Quick Entry?';
+    rsReplaceDataTitle = 'Replace data';
+    rsReplaceDataPrompt = 'The Quick Entry already has data. Do you want to replace it?';
 
     rsCantDeleteRecord = 'This record cannot be deleted as it is associated with other records.';
     rsCantDeleteUser = 'User %s should not be deleted as it might affect the proper functioning of Xolmis.';
