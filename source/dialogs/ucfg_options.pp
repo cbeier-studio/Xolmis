@@ -32,9 +32,13 @@ type
     btnHelp: TSpeedButton;
     eVideosPath: TDirectoryEdit;
     icoAutoSizeColumns: TImage;
+    icoAutoFillCoordinates: TImage;
+    icoRememberCollectionInfo: TImage;
     icoWriteDetailedLogs: TImage;
     icoVideosPath: TImage;
     lblAutoSizeColumns: TLabel;
+    lblAutoFillCoordinates: TLabel;
+    lblRememberCollectionInfo: TLabel;
     lblWriteDetailedLogs: TLabel;
     lblTitleAppearance: TLabel;
     lblTitleBackup: TLabel;
@@ -44,6 +48,8 @@ type
     lblTitleSecurity: TLabel;
     lblVideosPath: TLabel;
     pAutoSizeColumns: TBCPanel;
+    pAutoFillCoordinates: TBCPanel;
+    pRememberCollectionInfo: TBCPanel;
     pWriteDetailedLogs: TBCPanel;
     pVideosPath: TBCPanel;
     sliderRowHeight: TBCFluentSlider;
@@ -158,6 +164,8 @@ type
     scrollSecurity: TScrollBox;
     scrollBackup: TScrollBox;
     tsAutoSizeColumns: TToggleSwitch;
+    tsAutoFillCoordinates: TToggleSwitch;
+    tsRememberCollectionInfo: TToggleSwitch;
     tsWriteDetailedLogs: TToggleSwitch;
     tsRememberConnection: TToggleSwitch;
     tsRememberUser: TToggleSwitch;
@@ -192,10 +200,12 @@ type
     procedure sbRestoreBackupClick(Sender: TObject);
     procedure sliderRowHeightChangeValue(Sender: TObject);
     procedure tsAllowUsageDataChange(Sender: TObject);
+    procedure tsAutoFillCoordinatesChange(Sender: TObject);
     procedure tsAutoSizeColumnsChange(Sender: TObject);
     procedure tsConfirmCancelChange(Sender: TObject);
     procedure tsEnterAsTabChange(Sender: TObject);
     procedure tsOpenAfterExportChange(Sender: TObject);
+    procedure tsRememberCollectionInfoChange(Sender: TObject);
     procedure tsRememberConnectionChange(Sender: TObject);
     procedure tsRememberUserChange(Sender: TObject);
     procedure tsShowOutliersChange(Sender: TObject);
@@ -241,6 +251,8 @@ begin
   icoVernacularNames.Images := iIconsDark;
   //icoMainTaxonomy.Images := iIconsDark;
   icoShowSynonyms.Images := iIconsDark;
+  icoRememberCollectionInfo.Images := iIconsDark;
+  icoAutoFillCoordinates.Images := iIconsDark;
   icoImagesPath.Images := iIconsDark;
   icoAudiosPath.Images := iIconsDark;
   icoVideosPath.Images := iIconsDark;
@@ -281,6 +293,10 @@ begin
   //pMainTaxonomy.Border.Color := clSystemSolidNeutralFGDark;
   pShowSynonyms.Background.Color := clSolidBGSecondaryDark;
   pShowSynonyms.Border.Color := clSystemSolidNeutralFGDark;
+  pRememberCollectionInfo.Background.Color := clSolidBGSecondaryDark;
+  pRememberCollectionInfo.Border.Color := clSystemSolidNeutralFGDark;
+  pAutoFillCoordinates.Background.Color := clSolidBGSecondaryDark;
+  pAutoFillCoordinates.Border.Color := clSystemSolidNeutralFGDark;
   pImagesPath.Background.Color := clSolidBGSecondaryDark;
   pImagesPath.Border.Color := clSystemSolidNeutralFGDark;
   pAudiosPath.Background.Color := clSolidBGSecondaryDark;
@@ -323,6 +339,8 @@ begin
   tsUseConditionalFormatting.Color := pConfirmCancel.Background.Color;
   tsShowOutliers.Color := pConfirmCancel.Background.Color;
   tsShowSynonyms.Color := pConfirmCancel.Background.Color;
+  tsRememberCollectionInfo.Color := pConfirmCancel.Background.Color;
+  tsAutoFillCoordinates.Color := pConfirmCancel.Background.Color;
   tsOpenAfterExport.Color := pConfirmCancel.Background.Color;
   tsRememberConnection.Color := pConfirmCancel.Background.Color;
   tsRememberUser.Color := pConfirmCancel.Background.Color;
@@ -572,6 +590,11 @@ begin
   xSettings.AllowSendUsageData := tsAllowUsageData.Checked;
 end;
 
+procedure TcfgOptions.tsAutoFillCoordinatesChange(Sender: TObject);
+begin
+  xSettings.AutoFillCoordinates := tsAutoFillCoordinates.Checked;
+end;
+
 procedure TcfgOptions.tsAutoSizeColumnsChange(Sender: TObject);
 begin
   xSettings.AutoAdjustColumns := tsAutoSizeColumns.Checked;
@@ -590,6 +613,11 @@ end;
 procedure TcfgOptions.tsOpenAfterExportChange(Sender: TObject);
 begin
   xSettings.OpenFileAfterExport := tsOpenAfterExport.Checked;
+end;
+
+procedure TcfgOptions.tsRememberCollectionInfoChange(Sender: TObject);
+begin
+  xSettings.RememberCollectionInfo := tsRememberCollectionInfo.Checked;
 end;
 
 procedure TcfgOptions.tsRememberConnectionChange(Sender: TObject);

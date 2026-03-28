@@ -234,6 +234,8 @@ end;
 procedure TedtBands.eCarrierButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eCarrier, FCarrierId);
+  if FCarrierId > 0 then
+    xSettings.LastObserverId := FCarrierId;
 end;
 
 procedure TedtBands.eCarrierKeyPress(Sender: TObject; var Key: char);
@@ -244,6 +246,8 @@ begin
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
     FindDlg(tbPeople, eCarrier, FCarrierId, Key);
+    if FCarrierId > 0 then
+      xSettings.LastObserverId := FCarrierId;
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -300,6 +304,8 @@ end;
 procedure TedtBands.eRequesterButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eRequester, FRequesterId);
+  if FRequesterId > 0 then
+    xSettings.LastObserverId := FRequesterId;
 end;
 
 procedure TedtBands.eRequesterKeyPress(Sender: TObject; var Key: char);
@@ -310,6 +316,8 @@ begin
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
     FindDlg(tbPeople, eRequester, FRequesterId, Key);
+    if FRequesterId > 0 then
+      xSettings.LastObserverId := FRequesterId;
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -408,6 +416,19 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionBand)]);
+
+    if (FBand.RequesterId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FBand.RequesterId := xSettings.LastObserverId;
+      FRequesterId := FBand.RequesterId;
+      eRequester.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FRequesterId);
+    end;
+    if (FBand.CarrierId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FBand.CarrierId := xSettings.LastObserverId;
+      FCarrierId := FBand.CarrierId;
+      eCarrier.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FCarrierId);
+    end;
   end
   else
   begin

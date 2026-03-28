@@ -186,6 +186,8 @@ end;
 procedure TedtFeather.eLocalityButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eLocality, FLocalityId);
+  if FLocalityId > 0 then
+    xSettings.LastLocalityId := FLocalityId;
 end;
 
 procedure TedtFeather.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -196,6 +198,8 @@ begin
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
     FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
+    if FLocalityId > 0 then
+      xSettings.LastLocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -220,6 +224,8 @@ end;
 procedure TedtFeather.eObserverButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eObserver, FObserverId);
+  if FObserverId > 0 then
+    xSettings.LastObserverId := FObserverId;
 end;
 
 procedure TedtFeather.eObserverKeyPress(Sender: TObject; var Key: char);
@@ -230,6 +236,8 @@ begin
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
     FindDlg(tbPeople, eObserver, FObserverId, Key);
+    if FObserverId > 0 then
+      xSettings.LastObserverId := FObserverId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -376,6 +384,19 @@ begin
     begin
       FObserverId := FFeather.ObserverId;
       eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+    end;
+
+    if (FFeather.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FFeather.LocalityId := xSettings.LastLocalityId;
+      FLocalityId := FFeather.LocalityId;
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    end;
+    if (FFeather.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FFeather.ObserverId := xSettings.LastObserverId;
+      FObserverId := FFeather.ObserverId;
+      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
   end
   else

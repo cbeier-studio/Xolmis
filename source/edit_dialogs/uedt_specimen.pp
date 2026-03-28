@@ -255,6 +255,8 @@ end;
 procedure TedtSpecimen.eLocalityButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eLocality, FLocalityId);
+  if FLocalityId > 0 then
+    xSettings.LastLocalityId := FLocalityId;
 end;
 
 procedure TedtSpecimen.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -265,6 +267,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
+    if FLocalityId > 0 then
+      xSettings.LastLocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -498,6 +502,13 @@ begin
     begin
       FIndividualId := FSpecimen.IndividualId;
       eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
+    end;
+
+    if (FSpecimen.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSpecimen.LocalityId := xSettings.LastLocalityId;
+      FLocalityId := FSpecimen.LocalityId;
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
   end
   else

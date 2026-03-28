@@ -488,6 +488,8 @@ end;
 procedure TedtCapture.eBanderButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eBander, FBanderId, '', COL_ABBREVIATION);
+  if FBanderId > 0 then
+    xSettings.LastObserverId := FBanderId;
 end;
 
 procedure TedtCapture.eBanderKeyPress(Sender: TObject; var Key: char);
@@ -498,6 +500,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindDlg(tbPeople, eBander, FBanderId, Key, COL_ABBREVIATION);
+    if FBanderId > 0 then
+      xSettings.LastObserverId := FBanderId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -629,6 +633,8 @@ end;
 procedure TedtCapture.eLocalityButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eLocality, FLocalityId, '', COL_SITE_NAME);
+  if FLocalityId > 0 then
+    xSettings.LastLocalityId := FLocalityId;
 end;
 
 procedure TedtCapture.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -639,6 +645,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindSiteDlg([gfAll], eLocality, FLocalityId, Key, COL_SITE_NAME);
+    if FLocalityId > 0 then
+      xSettings.LastLocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -1137,6 +1145,19 @@ begin
     begin
       FBandId := FCapture.BandId;
       eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
+    end;
+
+    if (FCapture.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FCapture.LocalityId := xSettings.LastLocalityId;
+      FLocalityId := FCapture.LocalityId;
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    end;
+    if (FCapture.BanderId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FCapture.BanderId := xSettings.LastObserverId;
+      FBanderId := FCapture.BanderId;
+      eBander.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FBanderId);
     end;
   end
   else

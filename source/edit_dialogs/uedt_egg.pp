@@ -276,6 +276,8 @@ end;
 procedure TedtEgg.eObserverButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eObserver, FObserverId);
+  if FObserverId > 0 then
+    xSettings.LastObserverId := FObserverId;
 end;
 
 procedure TedtEgg.eObserverKeyPress(Sender: TObject; var Key: char);
@@ -286,6 +288,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindDlg(tbPeople, eObserver, FObserverId, Key);
+    if FObserverId > 0 then
+      xSettings.LastObserverId := FObserverId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -422,6 +426,13 @@ begin
     end;
     eMeasureDate.Text := DateToStr(Today);
     GetVolume;
+
+    if (FEgg.ResearcherId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FEgg.ResearcherId := xSettings.LastObserverId;
+      FObserverId := FEgg.ResearcherId;
+      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+    end;
   end
   else
   begin

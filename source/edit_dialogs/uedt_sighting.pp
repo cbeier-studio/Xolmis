@@ -305,6 +305,8 @@ end;
 procedure TedtSighting.eLocalityButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eLocality, FLocalityId);
+  if FLocalityId > 0 then
+    xSettings.LastLocalityId := FLocalityId;
 end;
 
 procedure TedtSighting.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -315,6 +317,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
+    if FLocalityId > 0 then
+      xSettings.LastLocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -482,6 +486,8 @@ end;
 procedure TedtSighting.eMethodButtonClick(Sender: TObject);
 begin
   FindDlg(tbMethods, eMethod, FMethodId);
+  if FMethodId > 0 then
+    xSettings.LastMethodId := FMethodId;
 end;
 
 procedure TedtSighting.eMethodEditingDone(Sender: TObject);
@@ -497,6 +503,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindDlg(tbMethods, eMethod, FMethodId, Key);
+    if FMethodId > 0 then
+      xSettings.LastMethodId := FMethodId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -526,6 +534,8 @@ end;
 procedure TedtSighting.eObserverButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eObserver, FObserverId);
+  if FObserverId > 0 then
+    xSettings.LastObserverId := FObserverId;
 end;
 
 procedure TedtSighting.eObserverKeyPress(Sender: TObject; var Key: char);
@@ -536,6 +546,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindDlg(tbPeople, eObserver, FObserverId, Key);
+    if FObserverId > 0 then
+      xSettings.LastObserverId := FObserverId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -676,6 +688,25 @@ begin
     begin
       FTaxonId := FSighting.TaxonId;
       eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+    end;
+
+    if (FSighting.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSighting.LocalityId := xSettings.LastLocalityId;
+      FLocalityId := FSighting.LocalityId;
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    end;
+    if (FSighting.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSighting.ObserverId := xSettings.LastObserverId;
+      FObserverId := FSighting.ObserverId;
+      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+    end;
+    if (FSighting.MethodId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSighting.MethodId := xSettings.LastMethodId;
+      FMethodId := FSighting.MethodId;
+      eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
     end;
   end
   else

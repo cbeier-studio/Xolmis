@@ -137,6 +137,8 @@ procedure TedtSamplingPlot.eLocalityButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eLocality, FLocalityId);
   FSamplingPlot.LocalityId := FLocalityId;
+  if FLocalityId > 0 then
+    xSettings.LastLocalityId := FLocalityId;
 end;
 
 procedure TedtSamplingPlot.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -148,6 +150,8 @@ begin
   begin
     FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
     FSamplingPlot.LocalityId := FLocalityId;
+    if FLocalityId > 0 then
+      xSettings.LastLocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -312,6 +316,13 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSamplingPlot)]);
+
+    if (FSamplingPlot.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSamplingPlot.LocalityId := xSettings.LastLocalityId;
+      FLocalityId := FSamplingPlot.LocalityId;
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    end;
   end
   else
   begin

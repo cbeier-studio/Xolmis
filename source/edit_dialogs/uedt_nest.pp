@@ -279,6 +279,8 @@ end;
 procedure TedtNest.eLocalityButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eLocality, FLocalityId);
+  if FLocalityId > 0 then
+    xSettings.LastLocalityId := FLocalityId;
 end;
 
 procedure TedtNest.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -289,6 +291,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
+    if FLocalityId > 0 then
+      xSettings.LastLocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -400,6 +404,8 @@ end;
 procedure TedtNest.eObserverButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eObserver, FObserverId);
+  if FObserverId > 0 then
+    xSettings.LastObserverId := FObserverId;
 end;
 
 procedure TedtNest.eObserverKeyPress(Sender: TObject; var Key: char);
@@ -410,6 +416,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindDlg(tbPeople, eObserver, FObserverId, Key);
+    if FObserverId > 0 then
+      xSettings.LastObserverId := FObserverId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -620,6 +628,19 @@ begin
     begin
       FTaxonId := FNest.TaxonId;
       eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+    end;
+
+    if (FNest.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FNest.LocalityId := xSettings.LastLocalityId;
+      FLocalityId := FNest.LocalityId;
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    end;
+    if (FNest.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FNest.ObserverId := xSettings.LastObserverId;
+      FObserverId := FNest.ObserverId;
+      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
   end
   else

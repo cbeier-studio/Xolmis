@@ -238,6 +238,8 @@ end;
 procedure TedtNestRevision.eObserver1ButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eObserver1, FObserver1Id);
+  if FObserver1Id > 0 then
+    xSettings.LastObserverId := FObserver1Id;
 end;
 
 procedure TedtNestRevision.eObserver1KeyPress(Sender: TObject; var Key: char);
@@ -248,6 +250,8 @@ begin
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
     FindDlg(tbPeople, eObserver1, FObserver1Id, Key);
+    if FObserver1Id > 0 then
+      xSettings.LastObserverId := FObserver1Id;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -370,6 +374,13 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionNestRevision)]);
+
+    if (FRevision.Observer1Id = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FRevision.Observer1Id := xSettings.LastObserverId;
+      FObserver1Id := FRevision.Observer1Id;
+      eObserver1.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserver1Id);
+    end;
   end
   else
   begin

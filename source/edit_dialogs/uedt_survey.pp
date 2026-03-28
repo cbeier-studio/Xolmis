@@ -302,6 +302,8 @@ end;
 procedure TedtSurvey.eLocalityButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfAll], eLocality, FLocalityId);
+  if FLocalityId > 0 then
+    xSettings.LastLocalityId := FLocalityId;
 end;
 
 procedure TedtSurvey.eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -312,6 +314,8 @@ begin
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
     FindSiteDlg([gfAll], eLocality, FLocalityId, Key);
+    if FLocalityId > 0 then
+      xSettings.LastLocalityId := FLocalityId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -426,6 +430,8 @@ end;
 procedure TedtSurvey.eMethodButtonClick(Sender: TObject);
 begin
   FindDlg(tbMethods, eMethod, FMethodId);
+  if FMethodId > 0 then
+    xSettings.LastMethodId := FMethodId;
 end;
 
 procedure TedtSurvey.eMethodKeyPress(Sender: TObject; var Key: char);
@@ -436,6 +442,8 @@ begin
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
     FindDlg(tbMethods, eMethod, FMethodId, Key);
+    if FMethodId > 0 then
+      xSettings.LastMethodId := FMethodId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -583,6 +591,19 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
     eDate.Text := DateToStr(Today);
     AutoCalcFields;
+
+    if (FSurvey.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSurvey.LocalityId := xSettings.LastLocalityId;
+      FLocalityId := FSurvey.LocalityId;
+      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    end;
+    if (FSurvey.MethodId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSurvey.MethodId := xSettings.LastMethodId;
+      FMethodId := FSurvey.MethodId;
+      eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+    end;
   end
   else
   begin

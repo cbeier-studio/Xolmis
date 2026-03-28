@@ -160,6 +160,8 @@ procedure TedtSamplePrep.ePreparerButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, ePreparer, FPreparerId);
   FSamplePrep.PreparerId := FPreparerId;
+  if FPreparerId > 0 then
+    xSettings.LastObserverId := FPreparerId;
 end;
 
 procedure TedtSamplePrep.ePreparerKeyPress(Sender: TObject; var Key: char);
@@ -171,6 +173,8 @@ begin
   begin
     FindDlg(tbPeople, ePreparer, FPreparerId, Key);
     FSamplePrep.PreparerId := FPreparerId;
+    if FPreparerId > 0 then
+      xSettings.LastObserverId := FPreparerId;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
@@ -249,6 +253,13 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)]);
+
+    if (FSamplePrep.PreparerId = 0) and (xSettings.RememberCollectionInfo) then
+    begin
+      FSamplePrep.PreparerId := xSettings.LastObserverId;
+      FPreparerId := FSamplePrep.PreparerId;
+      ePreparer.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FPreparerId);
+    end;
   end
   else
   begin

@@ -226,6 +226,8 @@ type
     FVernacularNamesLanguage: Integer;
     //FTaxonomy: Integer;
     FShowSynonyms: Boolean;
+    FRememberCollectionInfo, FAutoFillCoordinates: Boolean;
+    FLastLocalityId, FLastObserverId, FLastMethodId: Integer;
     { Media }
     FImagesFolder, FAudiosFolder, FVideosFolder, FDocumentsFolder: String;
     FOpenAfterExport: Boolean;
@@ -292,6 +294,11 @@ type
     property VernacularNamesLanguage: Integer read FVernacularNamesLanguage write FVernacularNamesLanguage;
     //property Taxonomy: Integer read FTaxonomy write FTaxonomy;
     property ShowSynonyms: Boolean read FShowSynonyms write FShowSynonyms;
+    property RememberCollectionInfo: Boolean read FRememberCollectionInfo write FRememberCollectionInfo;
+    property AutoFillCoordinates: Boolean read FAutoFillCoordinates write FAutoFillCoordinates;
+    property LastLocalityId: Integer read FLastLocalityId write FLastLocalityId;
+    property LastObserverId: Integer read FLastObserverId write FLastObserverId;
+    property LastMethodId: Integer read FLastMethodId write FLastMethodId;
     { Media }
     property ImagesFolder: String read FImagesFolder write SetImagesFolder;
     property AudiosFolder: String read FAudiosFolder write SetAudiosFolder;
@@ -364,7 +371,6 @@ var
   EditSourceStr: String;
   oldPPI: Integer;
   oldRowHeight: Integer;
-  //oldAutoSizeCols: Boolean;
 
   { System logging }
   procedure LogEvent(aAction: TLogEventAction; Msg: String);
@@ -989,6 +995,11 @@ begin
   FVernacularNamesLanguage := FConfig.GetValue('/COLLECTION/VernacularNamesLanguage', 0);
   //FTaxonomy := FConfig.GetValue('/COLLECTION/Taxonomy', 0);
   FShowSynonyms := FConfig.GetValue('/COLLECTION/ShowSynonyms', True);
+  FRememberCollectionInfo := FConfig.GetValue('/COLLECTION/RememberCollectionInfo', True);
+  FAutoFillCoordinates := FConfig.GetValue('/COLLECTION/AutoFillCoordinates', True);
+  FLastLocalityId := FConfig.GetValue('/COLLECTION/LastLocalityId', 0);
+  FLastObserverId := FConfig.GetValue('/COLLECTION/LastObserverId', 0)
+  FLastMethodId := FConfig.GetValue('/COLLECTION/LastMethodId', 0);
   { Media }
   FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
   FAudiosFolder := FConfig.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
@@ -1006,7 +1017,7 @@ begin
   FAllowUsageData := FConfig.GetValue('/PRIVACY/AllowUsageData', False);
   { Backup }
   FBackupFolder := FConfig.GetValue('/BACKUP/BackupFolder', ConcatPaths([InstallDir, 'backup']));
-  FAutomaticBackup := FConfig.GetValue('/BACKUP/StartupBackup', 1);
+  FAutomaticBackup := FConfig.GetValue('/BACKUP/AutomaticBackup', 1);
   FBackupsToKeep := FConfig.GetValue('/BACKUP/BackupsToKeep', 10);
   { CSV options }
   FHaveHeader := FConfig.GetValue('/CSV/HaveHeader', True);
@@ -1070,6 +1081,11 @@ begin
   FConfig.SetValue('/COLLECTION/VernacularNamesLanguage', FVernacularNamesLanguage);
   //FConfig.SetValue('/COLLECTION/Taxonomy', FTaxonomy);
   FConfig.SetValue('/COLLECTION/ShowSynonyms', FShowSynonyms);
+  FConfig.SetValue('/COLLECTION/RememberCollectionInfo', FRememberCollectionInfo);
+  FConfig.SetValue('/COLLECTION/AutoFillCoordinates', FAutoFillCoordinates);
+  FConfig.SetValue('/COLLECTION/LastLocalityId', FLastLocalityId);
+  FConfig.SetValue('/COLLECTION/LastObserverId', FLastObserverId);
+  FConfig.SetValue('/COLLECTION/LastMethodId', FLastMethodId);
   { Media }
   FConfig.SetValue('/MEDIA/ImagesFolder', FImagesFolder);
   FConfig.SetValue('/MEDIA/AudiosFolder', FAudiosFolder);
@@ -1087,7 +1103,7 @@ begin
   FConfig.SetValue('/PRIVACY/AllowUsageData', FAllowUsageData);
   { Backup }
   FConfig.SetValue('/BACKUP/BackupFolder', FBackupFolder);
-  FConfig.SetValue('/BACKUP/StartupBackup', FAutomaticBackup);
+  FConfig.SetValue('/BACKUP/AutomaticBackup', FAutomaticBackup);
   FConfig.SetValue('/BACKUP/BackupsToKeep', FBackupsToKeep);
   { CSV options }
   FConfig.SetValue('/CSV/HaveHeader', FHaveHeader);
