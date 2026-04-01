@@ -378,7 +378,7 @@ uses
   utils_locale, utils_global, utils_dialogs, utils_system, utils_autoupdate, utils_permissions, utils_backup,
   utils_editdialogs, utils_themes, utils_gis,
   models_users, models_geo, models_taxonomy, models_record_types,
-  data_management, io_core, io_ebird_csv,
+  data_management, data_schema, io_core, io_ebird_csv,
   uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
@@ -1223,6 +1223,9 @@ begin
     imgSplash.ImageIndex := 5;
     imgSplash.ImageWidth := 128;
     Application.ProcessMessages;
+
+    { Register the database schema }
+    RegisterDatabaseSchema;
 
     { Load the start page }
     case xSettings.StartPage of

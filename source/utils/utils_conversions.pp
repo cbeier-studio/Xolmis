@@ -21,7 +21,7 @@ unit utils_conversions;
 interface
 
 uses
-  Classes, SysUtils, Forms, RegExpr, DateUtils;
+  Classes, SysUtils, Forms, RegExpr, DateUtils, models_record_types;
 
   function WildcardWords(aText: String; aWildcard: String = '%'): String;
   function WildcardSyllables(aText: String; aWildcard: String = '%'): String;
@@ -48,9 +48,43 @@ uses
   function StrToIntOrZero(aValue: String): Integer;
   function StrToFloatOrZero(aValue: String): Double;
 
+  // Convert to specific enum types
+  function StrToAccessionType(const AValue: String): String;
+  function StrToActivityStatus(const AValue: String): TActivityStatus;
+  function StrToAge(const AValue: String): TAge;
+  function StrToBandType(const AValue: String): TMarkType;
+  function StrToBandStatus(const AValue: String): TBandStatus;
+  function StrToBandSource(const AValue: String): TBandSource;
+  function StrToBodySide(const AValue: String): TBodySide;
+  function StrToCaptureType(const AValue: String): TCaptureType;
+  function StrToCoordinatePrecision(const AValue: String): TCoordinatePrecision;
+  function StrToEggPattern(const AValue: String): TEggshellPattern;
+  function StrToEggShape(const AValue: String): TEggShape;
+  function StrToEggTexture(const AValue: String): TEggshellTexture;
+  function StrToFeatherAge(const AValue: String): TFeatherAge;
+  function StrToFeatherSource(const AValue: String): TFeatherDataSource;
+  function StrToFeatherTrait(const AValue: String): TFeatherTrait;
+  function StrToGoalStatus(const AValue: String): TGoalStatus;
+  function StrToLossCause(const AValue: String): TLossCause;
+  function StrToNestFate(const AValue: String): TNestFate;
+  function StrToNestRole(const AValue: String): TNestRole;
+  function StrToNestShape(const AValue: String): String;
+  function StrToNestStage(const AValue: String): TNestStage;
+  function StrToNestStatus(const AValue: String): TNestStatus;
+  function StrToPermitType(const AValue: String): String;
+  function StrToPrecipitation(const AValue: String): TPrecipitation;
+  function StrToSampleMoment(const AValue: String): TWeatherSampleMoment;
+  function StrToSex(const AValue: String): TSex;
+  function StrToSiteRank(const AValue: String): TSiteRank;
+  function StrToSpecimenType(const AValue: String): TSpecimenType;
+  function StrToStratumDistribution(const AValue: String): TStratumDistribution;
+  function StrToSubjectStatus(const AValue: String): TSubjectStatus;
+  function StrToSupportType(const AValue: String): String;
+  function StrToSymmetry(const AValue: String): TSymmetry;
+
 implementation
 
-uses utils_global;
+uses utils_global, utils_locale;
 
 function WildcardWords(aText: String; aWildcard: String): String;
 var
@@ -320,6 +354,774 @@ begin
     Result := Fl
   else
     Result := 0.0;
+end;
+
+{ --------------------------------------------------------- }
+{ Conversion to specific enum types }
+{ --------------------------------------------------------- }
+
+function StrToAccessionType(const AValue: String): String;
+begin
+  if (AValue = rsSampleSkinStandard) then
+    Result := 'NS'
+  else
+  if (AValue = rsSampleSkinShmoo) then
+    Result := 'SS'
+  else
+  if (AValue = rsSampleSkinMounted) then
+    Result := 'MS'
+  else
+  if (AValue = rsSampleOpenedWing) then
+    Result := 'OW'
+  else
+  if (AValue = rsSampleSkeletonWhole) then
+    Result := 'WS'
+  else
+  if (AValue = rsSampleSkeletonPartial) then
+    Result := 'PS'
+  else
+  if (AValue = rsSampleNest) then
+    Result := 'N'
+  else
+  if (AValue = rsSampleEgg) then
+    Result := 'EGG'
+  else
+  if (AValue = rsSampleParasites) then
+    Result := 'P'
+  else
+  if (AValue = rsSampleFeathers) then
+    Result := 'F'
+  else
+  if (AValue = rsSampleBloodDry) then
+    Result := 'BD'
+  else
+  if (AValue = rsSampleBloodWet) then
+    Result := 'BL'
+  else
+  if (AValue = rsSampleBloodSmear) then
+    Result := 'BS'
+  else
+  if (AValue = rsSampleSexing) then
+    Result := 'SX'
+  else
+  if (AValue = rsSampleGeneticSequence) then
+    Result := 'GS'
+  else
+  if (AValue = rsSampleMicrobialCulture) then
+    Result := 'MC'
+  else
+  if (AValue = rsSampleTissues) then
+    Result := 'TS'
+  else
+  if (AValue = rsSampleEyes) then
+    Result := 'EYE'
+  else
+  if (AValue = rsSampleTongue) then
+    Result := 'T'
+  else
+  if (AValue = rsSampleSyrinx) then
+    Result := 'S'
+  else
+  if (AValue = rsSampleGonads) then
+    Result := 'G'
+  else
+  if (AValue = rsSampleStomach) then
+    Result := 'M';
+end;
+
+function StrToActivityStatus(const AValue: String): TActivityStatus;
+begin
+  if (AValue = rsActivityToDo) or (AValue = 'T') then
+    Result := astToDo
+  else
+  if (AValue = rsActivityInProgress) or (AValue = 'P') then
+    Result := astInProgress
+  else
+  if (AValue = rsActivityNeedsReview) or (AValue = 'R') then
+    Result := astNeedsReview
+  else
+  if (AValue = rsActivityBlocked) or (AValue = 'B') then
+    Result := astBlocked
+  else
+  if (AValue = rsActivityDelayed) or (AValue = 'D') then
+    Result := astDelayed
+  else
+  if (AValue = rsActivityCanceled) or (AValue = 'C') then
+    Result := astCanceled
+  else
+  if (AValue = rsActivityDone) or (AValue = 'F') then
+    Result := astDone;
+end;
+
+function StrToAge(const AValue: String): TAge;
+begin
+  if (AValue = rsAgeNestling) or (AValue = 'N') then
+    Result := ageNestling
+  else
+  if (AValue = rsAgeFledgling) or (AValue = 'F') then
+    Result := ageFledgling
+  else
+  if (AValue = rsAgeJuvenile) or (AValue = 'J') then
+    Result := ageJuvenile
+  else
+  if (AValue = rsAgeAdult) or (AValue = 'A') then
+    Result := ageAdult
+  else
+  if (AValue = rsAgeFirstYear) or (AValue = 'Y') then
+    Result := ageFirstYear
+  else
+  if (AValue = rsAgeSecondYear) or (AValue = 'S') then
+    Result := ageSecondYear
+  else
+  if (AValue = rsAgeThirdYear) or (AValue = 'T') then
+    Result := ageThirdYear
+  else
+  if (AValue = rsAgeFourthYear) or (AValue = '4') then
+    Result := ageFourthYear
+  else
+  if (AValue = rsAgeFifthYear) or (AValue = '5') then
+    Result := ageFifthYear
+  else
+    Result := ageUnknown;
+end;
+
+function StrToBandType(const AValue: String): TMarkType;
+begin
+  if (AValue = rsBandOpen) or (AValue = 'A') then
+    Result := mkButtEndBand
+  else
+  if (AValue = rsBandFlag) or (AValue = 'F') then
+    Result := mkFlag
+  else
+  if (AValue = rsBandNeck) or (AValue = 'N') then
+    Result := mkCollar
+  else
+  if (AValue = rsBandWingTag) or (AValue = 'W') then
+    Result := mkWingTag
+  else
+  if (AValue = rsBandTriangular) or (AValue = 'T') then
+    Result := mkTriangularBand
+  else
+  if (AValue = rsBandLockOn) or (AValue = 'L') then
+    Result := mkLockOnBand
+  else
+  if (AValue = rsBandRivet) or (AValue = 'R') then
+    Result := mkRivetBand
+  else
+  if (AValue = rsBandClosed) or (AValue = 'C') then
+    Result := mkClosedBand
+  else
+    Result := mkOther;
+end;
+
+function StrToBandStatus(const AValue: String): TBandStatus;
+begin
+  if (AValue = rsBandAvailable) or (AValue = 'D') then
+    Result := bstAvailable
+  else
+  if (AValue = rsBandUsed) or (AValue = 'U') then
+    Result := bstUsed
+  else
+  if (AValue = rsBandRemoved) or (AValue = 'R') then
+    Result := bstRemoved
+  else
+  if (AValue = rsBandBroken) or (AValue = 'Q') then
+    Result := bstBroken
+  else
+  if (AValue = rsBandLost) or (AValue = 'P') then
+    Result := bstLost
+  else
+  if (AValue = rsBandTransferred) or (AValue = 'T') then
+    Result := bstTransferred;
+end;
+
+function StrToBandSource(const AValue: String): TBandSource;
+begin
+  if (AValue = rsBandAcquiredFromSupplier) or (AValue = 'A') then
+    Result := bscAcquiredFromSupplier
+  else
+  if (AValue = rsBandTransferBetweenBanders) or (AValue = 'T') then
+    Result := bscTransferBetweenBanders
+  else
+  if (AValue = rsBandLivingBirdBandedByOthers) or (AValue = 'L') then
+    Result := bscLivingBirdBandedByOthers
+  else
+  if (AValue = rsBandDeadBirdBandedByOthers) or (AValue = 'D') then
+    Result := bscDeadBirdBandedByOthers
+  else
+  if (AValue = rsBandFoundLoose) or (AValue = 'F') then
+    Result := bscFoundLoose;
+end;
+
+function StrToBodySide(const AValue: String): TBodySide;
+begin
+  if (AValue = rsSideRight) or (AValue = 'R') then
+    Result := bsdRight
+  else
+  if (AValue = rsSideLeft) or (AValue = 'L') then
+    Result := bsdLeft
+  else
+    Result := bsdNotApplicable;
+end;
+
+function StrToCaptureType(const AValue: String): TCaptureType;
+begin
+  if (AValue = rsCaptureNew) or (AValue = 'N') then
+    Result := cptNew
+  else
+  if (AValue = rsCaptureRecapture) or (AValue = 'R') then
+    Result := cptRecapture
+  else
+  if (AValue = rsCaptureSameDay) or (AValue = 'S') then
+    Result := cptSameDay
+  else
+  if (AValue = rsCaptureChangeBand) or (AValue = 'C') then
+    Result := cptChangeBand
+  else
+    Result := cptUnbanded;
+end;
+
+function StrToCoordinatePrecision(const AValue: String): TCoordinatePrecision;
+begin
+  if (AValue = rsExactCoordinate) or (AValue = 'E') then
+    Result := cpExact
+  else
+  if (AValue = rsApproximatedCoordinate) or (AValue = 'A') then
+    Result := cpApproximated
+  else
+  if (AValue = rsReferenceCoordinate) or (AValue = 'R') then
+    Result := cpReference
+  else
+    Result := cpEmpty;
+end;
+
+function StrToEggPattern(const AValue: String): TEggshellPattern;
+begin
+  if (AValue = rsEggSpots) or (AValue = 'P') then
+    Result := espSpots
+  else
+  if (AValue = rsEggBlotches) or (AValue = 'B') then
+    Result := espBlotches
+  else
+  if (AValue = rsEggScrawls) or (AValue = 'W') then
+    Result := espScrawls
+  else
+  if (AValue = rsEggSquiggles) or (AValue = 'S') then
+    Result := espSquiggles
+  else
+  if (AValue = rsEggStreaks) or (AValue = 'T') then
+    Result := espStreaks
+  else
+  if (AValue = rsEggBlotchesSquiggles) or (AValue = 'BS') then
+    Result := espBlotchesSquiggles
+  else
+  if (AValue = rsEggSpotsSquiggles) or (AValue = 'PS') then
+    Result := espSpotsSquiggles
+  else
+    Result := espUnknown;
+end;
+
+function StrToEggShape(const AValue: String): TEggShape;
+begin
+  if (AValue = rsEggSpherical) or (AValue = 'S') then
+    Result := esSpherical
+  else
+  if (AValue = rsEggOval) or (AValue = 'O') then
+    Result := esOval
+  else
+  if (AValue = rsEggElliptical) or (AValue = 'E') then
+    Result := esElliptical
+  else
+  if (AValue = rsEggConical) or (AValue = 'C') then
+    Result := esConical
+  else
+  if (AValue = rsEggBiconical) or (AValue = 'B') then
+    Result := esBiconical
+  else
+  if (AValue = rsEggCylindrical) or (AValue = 'Y') then
+    Result := esCylindrical
+  else
+  if (AValue = rsEggLongitudinal) or (AValue = 'L') then
+    Result := esLongitudinal
+  else
+  if (AValue = rsEggPyriform) or (AValue = 'P') then
+    Result := esPiriform
+  else
+    Result := esUnknown;
+end;
+
+function StrToEggTexture(const AValue: String): TEggshellTexture;
+begin
+  if (AValue = rsEggChalky) or (AValue = 'C') then
+    Result := estChalky
+  else
+  if (AValue = rsEggGlossy) or (AValue = 'G') then
+    Result := estGlossy
+  else
+  if (AValue = rsEggPitted) or (AValue = 'P') then
+    Result := estPitted
+  else
+  if (AValue = rsEggShiny) or (AValue = 'S') then
+    Result := estShiny
+  else
+    Result := estUnknown;
+end;
+
+function StrToFeatherAge(const AValue: String): TFeatherAge;
+begin
+  if (AValue = rsAgeNestling) or (AValue = 'N') then
+    Result := fageNestling
+  else
+  if (AValue = rsAgeFledgling) or (AValue = 'F') then
+    Result := fageFledgling
+  else
+  //if (AValue = rsAgeJuvenile) or (AValue = 'J') then
+  //  Result := fageJuvenile
+  //else
+  if (AValue = rsAgeAdult) or (AValue = 'A') then
+    Result := fageAdult
+  else
+  if (AValue = rsAgeFirstYear) or (AValue = 'Y') then
+    Result := fageFirstYear
+  else
+  if (AValue = rsAgeSecondYear) or (AValue = 'S') then
+    Result := fageSecondYear
+  else
+  if (AValue = rsAgeThirdYear) or (AValue = 'T') then
+    Result := fageThirdYear
+  else
+  if (AValue = rsAgeFourthYear) or (AValue = '4') then
+    Result := fageFourthYear
+  else
+  if (AValue = rsAgeFifthYear) or (AValue = '5') then
+    Result := fageFifthYear
+  else
+    Result := fageUnknown;
+end;
+
+function StrToFeatherSource(const AValue: String): TFeatherDataSource;
+begin
+  if (AValue = rsFeatherCapture) or (AValue = 'C') then
+    Result := fdsCapture
+  else
+  if (AValue = rsFeatherSighting) or (AValue = 'S') then
+    Result := fdsSighting
+  else
+  if (AValue = rsFeatherPhoto) or (AValue = 'P') then
+    Result := fdsPhoto
+  else
+    Result := fdsUnknown;
+end;
+
+function StrToFeatherTrait(const AValue: String): TFeatherTrait;
+begin
+  if (AValue = rsTraitBody) or (AValue = 'B') then
+    Result := ftrBody
+  else
+  if (AValue = rsTraitPrimary) or (AValue = 'P') then
+    Result := ftrPrimary
+  else
+  if (AValue = rsTraitSecondary) or (AValue = 'S') then
+    Result := ftrSecondary
+  else
+  if (AValue = rsTraitRectrix) or (AValue = 'R') then
+    Result := ftrRectrix
+  else
+  if (AValue = rsTraitPrimaryCovert) or (AValue = 'PC') then
+    Result := ftrPrimaryCovert
+  else
+  if (AValue = rsTraitGreatCovert) or (AValue = 'GC') then
+    Result := ftrGreatCovert
+  else
+  if (AValue = rsTraitMedianCovert) or (AValue = 'MC') then
+    Result := ftrMedianCovert
+  else
+  if (AValue = rsTraitLesserCovert) or (AValue = 'LC') then
+    Result := ftrLesserCovert
+  else
+  if (AValue = rsTraitCarpalCovert) or (AValue = 'CC') then
+    Result := ftrCarpalCovert
+  else
+  if (AValue = rsTraitAlula) or (AValue = 'AL') then
+    Result := ftrAlula;
+end;
+
+function StrToGoalStatus(const AValue: String): TGoalStatus;
+begin
+  if (AValue = rsGoalPending) or (AValue = 'P') then
+    Result := gstPending
+  else
+  if (AValue = rsGoalReached) or (AValue = 'R') then
+    Result := gstReached
+  else
+  if (AValue = rsGoalCanceled) or (AValue = 'C') then
+    Result := gstCanceled;
+end;
+
+function StrToLossCause(const AValue: String): TLossCause;
+begin
+  if (AValue = rsLossPredation) or (AValue = 'PRE') then
+    Result := nlcPredation
+  else
+  if (AValue = rsLossParasitism) or (AValue = 'PAR') then
+    Result := nlcParasitism
+  else
+  if (AValue = rsLossDisease) or (AValue = 'DIS') then
+    Result := nlcDisease
+  else
+  if (AValue = rsLossWeather) or (AValue = 'WEA') then
+    Result := nlcWeather
+  else
+  if (AValue = rsLossFire) or (AValue = 'FIR') then
+    Result := nlcFire
+  else
+  if (AValue = rsLossAbandonment) or (AValue = 'ABD') then
+    Result := nlcAbandonment
+  else
+  if (AValue = rsLossPollution) or (AValue = 'POL') then
+    Result := nlcPollution
+  else
+  if (AValue = rsLossHumanDisturbance) or (AValue = 'HDT') then
+    Result := nlcHumanDisturbance
+  else
+  if (AValue = rsLossImproperManagement) or (AValue = 'IMN') then
+    Result := nlcImproperManagement
+  else
+    Result := nlcUnknown;
+end;
+
+function StrToNestFate(const AValue: String): TNestFate;
+begin
+  if (AValue = rsNestLost) or (AValue = 'L') then
+    Result := nfLoss
+  else
+  if (AValue = rsNestSuccess) or (AValue = 'S') then
+    Result := nfSuccess
+  else
+    Result := nfUnknown;
+end;
+
+function StrToNestRole(const AValue: String): TNestRole;
+begin
+  if (AValue = rsNestMale) or (AValue = 'M') then
+    Result := nrlMale
+  else
+  if (AValue = rsNestFemale) or (AValue = 'F') then
+    Result := nrlFemale
+  else
+  if (AValue = rsNestHelper) or (AValue = 'H') then
+    Result := nrlHelper
+  else
+  if (AValue = rsNestOffspring) or (AValue = 'O') then
+    Result := nrlOffspring
+  else
+    Result := nrlUnknown;
+end;
+
+function StrToNestShape(const AValue: String): String;
+begin
+  if (AValue = rsNestShapeScrape) then
+    Result := 'SC'
+  else
+  if (AValue = rsNestShapeCup) then
+    Result := 'CP'
+  else
+  if (AValue = rsNestShapePlate) then
+    Result := 'PT'
+  else
+  if (AValue = rsNestShapeSphere) then
+    Result := 'SP'
+  else
+  if (AValue = rsNestShapePendent) then
+    Result := 'PD'
+  else
+  if (AValue = rsNestShapePlatform) then
+    Result := 'PL'
+  else
+  if (AValue = rsNestShapeMound) then
+    Result := 'MN'
+  else
+  if (AValue = rsNestShapeBurrow) then
+    Result := 'BR'
+  else
+  if (AValue = rsNestShapeCavity) then
+    Result := 'CV';
+end;
+
+function StrToNestStage(const AValue: String): TNestStage;
+begin
+  if (AValue = rsNestBuilding) or (AValue = 'C') then
+    Result := nsgConstruction
+  else
+  if (AValue = rsNestLaying) or (AValue = 'L') then
+    Result := nsgLaying
+  else
+  if (AValue = rsNestIncubating) or (AValue = 'I') then
+    Result := nsgIncubation
+  else
+  if (AValue = rsNestHatching) or (AValue = 'H') then
+    Result := nsgHatching
+  else
+  if (AValue = rsNestNestling) or (AValue = 'N') then
+    Result := nsgNestling
+  else
+  if (AValue = rsNestInactive) or (AValue = 'X') then
+    Result := nsgInactive
+  else
+    Result := nsgUnknown;
+end;
+
+function StrToNestStatus(const AValue: String): TNestStatus;
+begin
+  if (AValue = rsNestInactive) or (AValue = 'I') then
+    Result := nstInactive
+  else
+  if (AValue = rsNestActive) or (AValue = 'A') then
+    Result := nstActive
+  else
+    Result := nstUnknown;
+end;
+
+function StrToPermitType(const AValue: String): String;
+begin
+  if (AValue = rsPermitBanding) then
+    Result := 'B'
+  else
+  if (AValue = rsPermitCollection) then
+    Result := 'C'
+  else
+  if (AValue = rsPermitResearch) then
+    Result := 'R'
+  else
+  if (AValue = rsPermitEntry) then
+    Result := 'E'
+  else
+  if (AValue = rsPermitTransport) then
+    Result := 'T'
+  else
+    Result := 'O';
+end;
+
+function StrToPrecipitation(const AValue: String): TPrecipitation;
+begin
+  if (AValue = rsPrecipitationNone) then
+    Result := wpNone
+  else
+  if (AValue = rsPrecipitationFog) then
+    Result := wpFog
+  else
+  if (AValue = rsPrecipitationMist) then
+    Result := wpMist
+  else
+  if (AValue = rsPrecipitationDrizzle) then
+    Result := wpDrizzle
+  else
+  if (AValue = rsPrecipitationRain) then
+    Result := wpRain
+  else
+    Result := wpEmpty;
+end;
+
+function StrToSampleMoment(const AValue: String): TWeatherSampleMoment;
+begin
+  if (AValue = rsMomentStart) then
+    Result := wmStart
+  else
+  if (AValue = rsMomentMiddle) then
+    Result := wmMiddle
+  else
+  if (AValue = rsMomentEnd) then
+    Result := wmEnd
+  else
+    Result := wmNone;
+end;
+
+function StrToSex(const AValue: String): TSex;
+begin
+  if (AValue = rsSexMale) or (AValue = 'M') then
+    Result := sexMale
+  else
+  if (AValue = rsSexFemale) or (AValue = 'F') then
+    Result := sexFemale
+  else
+    Result := sexUnknown;
+end;
+
+function StrToSiteRank(const AValue: String): TSiteRank;
+begin
+  if (AValue = rsCaptionCountry) or (AValue = 'P') then
+    Result := srCountry
+  else
+  if (AValue = rsCaptionState) or (AValue = 'E') then
+    Result := srState
+  else
+  if (AValue = rsCaptionRegion) or (AValue = 'R') then
+    Result := srRegion
+  else
+  if (AValue = rsCaptionMunicipality) or (AValue = 'M') then
+    Result := srMunicipality
+  else
+  if (AValue = rsCaptionDistrict) or (AValue = 'D') then
+    Result := srDistrict
+  else
+  if (AValue = rsCaptionLocality) or (AValue = 'L') then
+    Result := srLocality
+  else
+    Result := srNone;
+end;
+
+function StrToSpecimenType(const AValue: String): TSpecimenType;
+begin
+  if (AValue = rsSpecimenCarcassWhole) or (AValue = 'WS') then
+    Result := sptWholeCarcass
+  else
+  if (AValue = rsSpecimenCarcassPartial) or (AValue = 'PS') then
+    Result := sptPartialCarcass
+  else
+  if (AValue = rsSpecimenNest) or (AValue = 'N') then
+    Result := sptNest
+  else
+  if (AValue = rsSpecimenBones) or (AValue = 'B') then
+    Result := sptBones
+  else
+  if (AValue = rsSpecimenEgg) or (AValue = 'E') then
+    Result := sptEgg
+  else
+  if (AValue = rsSpecimenParasites) or (AValue = 'P') then
+    Result := sptParasites
+  else
+  if (AValue = rsSpecimenFeathers) or (AValue = 'F') then
+    Result := sptFeathers
+  else
+  if (AValue = rsSpecimenBlood) or (AValue = 'BS') then
+    Result := sptBlood
+  else
+  if (AValue = rsSpecimenClaw) or (AValue = 'C') then
+    Result := sptClaw
+  else
+  if (AValue = rsSpecimenSwab) or (AValue = 'S') then
+    Result := sptSwab
+  else
+  if (AValue = rsSpecimenTissues) or (AValue = 'T') then
+    Result := sptTissues
+  else
+  if (AValue = rsSpecimenFeces) or (AValue = 'D') then
+    Result := sptFeces
+  else
+  if (AValue = rsSpecimenRegurgite) or (AValue = 'R') then
+    Result := sptRegurgite;
+end;
+
+function StrToStratumDistribution(const AValue: String): TStratumDistribution;
+begin
+  if (AValue = rsDistributionNone) or (AValue = '0') then
+    Result := disNone
+  else
+  if (AValue = rsDistributionRare) or (AValue = '1') then
+    Result := disRare
+  else
+  if (AValue = rsDistributionFewSparse) or (AValue = '2') then
+    Result := disFewSparseIndividuals
+  else
+  if (AValue = rsDistributionOnePatch) or (AValue = '3') then
+    Result := disOnePatch
+  else
+  if (AValue = rsDistributionOnePatchFewSparse) or (AValue = '4') then
+    Result := disOnePatchFewSparseIndividuals
+  else
+  if (AValue = rsDistributionManySparse) or (AValue = '5') then
+    Result := disManySparseIndividuals
+  else
+  if (AValue = rsDistributionOnePatchManySparse) or (AValue = '6') then
+    Result := disOnePatchManySparseIndividuals
+  else
+  if (AValue = rsDistributionFewPatches) or (AValue = '7') then
+    Result := disFewPatches
+  else
+  if (AValue = rsDistributionFewPatchesSparse) or (AValue = '8') then
+    Result := disFewPatchesSparseIndividuals
+  else
+  if (AValue = rsDistributionManyPatches) or (AValue = '9') then
+    Result := disManyPatches
+  else
+  if (AValue = rsDistributionManyPatchesSparse) or (AValue = '10') then
+    Result := disManyPatchesSparseIndividuals
+  else
+  if (AValue = rsDistributionEvenHighDensity) or (AValue = '11') then
+    Result := disHighDensityIndividuals
+  else
+  if (AValue = rsDistributionContinuousFewGaps) or (AValue = '12') then
+    Result := disContinuousCoverWithGaps
+  else
+  if (AValue = rsDistributionContinuousDense) or (AValue = '13') then
+    Result := disContinuousDenseCover
+  else
+  if (AValue = rsDistributionContinuousDenseEdge) or (AValue = '14') then
+    Result := disContinuousDenseCoverWithEdge
+  else
+    Result := disNone;
+end;
+
+function StrToSubjectStatus(const AValue: String): TSubjectStatus;
+begin
+  if (AValue = rsStatusNormal) or (AValue = 'N') then
+    Result := sstNormal
+  else
+  if (AValue = rsStatusStressed) or (AValue = 'X') then
+    Result := sstStressed
+  else
+  if (AValue = rsStatusInjured) or (AValue = 'I') then
+    Result := sstInjured
+  else
+  if (AValue = rsStatusWingSprain) or (AValue = 'W') then
+    Result := sstWingSprain
+  else
+  if (AValue = rsStatusDead) or (AValue = 'D') then
+    Result := sstDead;
+end;
+
+function StrToSupportType(const AValue: String): String;
+begin
+  if (AValue = rsSupportGround) then
+    Result := 'G'
+  else
+  if (AValue = rsSupportHerbBush) then
+    Result := 'H'
+  else
+  if (AValue = rsSupportBranchFork) then
+    Result := 'F'
+  else
+  if (AValue = rsSupportLeaves) then
+    Result := 'L'
+  else
+  if (AValue = rsSupportLedge) then
+    Result := 'D'
+  else
+  if (AValue = rsSupportRockCliff) then
+    Result := 'C'
+  else
+  if (AValue = rsSupportRavine) then
+    Result := 'R'
+  else
+  if (AValue = rsSupportNestBox) then
+    Result := 'B'
+  else
+  if (AValue = rsSupportAnthropic) then
+    Result := 'A'
+  else
+  if (AValue = rsSupportOther) then
+    Result := 'O';
+end;
+
+function StrToSymmetry(const AValue: String): TSymmetry;
+begin
+  if (AValue = rsSymmetrical) or (AValue = 'S') then
+    Result := symSymmetrical
+  else
+  if (AValue = rsAsymmetrical) or (AValue = 'A') then
+    Result := symAsymmetrical
+  else
+    Result := symUnknown;
 end;
 
 end.

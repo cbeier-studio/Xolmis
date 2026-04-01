@@ -354,6 +354,8 @@ type
     LookupField: String;
     LookupResultField: String;
     DisplayFieldName: String;
+    SortingField: String;
+    FilterTag: String;
   end;
 
   TValidationRules = record

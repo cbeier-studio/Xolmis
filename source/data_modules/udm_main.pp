@@ -216,7 +216,7 @@ begin
 
   LoadLocaleTablesDict;
 
-  RegisterDatabaseSchema;
+  //RegisterDatabaseSchema;
 end;
 
 procedure TDMM.DataModuleDestroy(Sender: TObject);

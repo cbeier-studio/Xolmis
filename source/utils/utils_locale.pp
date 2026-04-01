@@ -204,6 +204,9 @@ uses
     rsErrorValueExceededMaxLength = 'The value "%s" exceeds the allowed maximum length (%d) for the field "%s".';
     rsErrorValueNotAllowedForField = 'The value "%s" is not allowed for the field "%s". Valid values: %s';
     rsErrorLookupValueNotFoundForField = 'The value "%s" does not match any valid record in the lookup table "%s".';
+    rsErrorLoadingDatabaseSchema = 'The database schema was not loaded.';
+    rsErrorLoadingTableSchema = 'The table schema was not loaded.';
+    rsErrorLoadingFieldSchema = 'The field schema was not loaded.';
 
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
@@ -735,6 +738,7 @@ uses
     rsBackupOff = 'Backup OFF';
     rsBackupInDays = 'Backup in %d day';
     rsBackupInDaysPlural = 'Backup in %d days';
+    rsUnitDays = 'day(s)';
 
     { Files }
     rsFileExtCSV = 'Comma-Separated Values (CSV)';
