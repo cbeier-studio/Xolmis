@@ -31,6 +31,7 @@ type
   TedtSurvey = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     eSampleId: TEdit;
     eEndLatitude: TEditButton;
     eLongitude: TEditButton;
@@ -47,6 +48,8 @@ type
     dsLink: TDataSource;
     eArea: TFloatSpinEdit;
     eDistance: TFloatSpinEdit;
+    lblCoordinatesPrecision: TLabel;
+    pCoordinatesPrecision: TPanel;
     pmnNewExpedition: TMenuItem;
     pmnNewMethod: TMenuItem;
     pmnNewLocality: TMenuItem;
@@ -586,6 +589,13 @@ begin
   pExpedition.Visible := FExpeditionId = 0;
   pmnNewExpedition.Visible := FExpeditionId = 0;
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
@@ -647,6 +657,13 @@ begin
   begin
     eEndLongitude.Text := FloatToStr(FSurvey.EndLongitude);
     eEndLatitude.Text := FloatToStr(FSurvey.EndLatitude);
+  end;
+  case FSurvey.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   eObserversTally.Value := FSurvey.ObserversTally;
   eSampleId.Text := FSurvey.SampleId;
@@ -731,6 +748,13 @@ begin
   FSurvey.StartLatitude  := StrToFloatDef(eLatitude.Text, 0.0);
   FSurvey.EndLongitude   := StrToFloatDef(eEndLongitude.Text, 0.0);
   FSurvey.EndLatitude    := StrToFloatDef(eEndLatitude.Text, 0.0);
+  case cbCoordinatePrecision.ItemIndex of
+    0: FSurvey.CoordinatePrecision := cpExact;
+    1: FSurvey.CoordinatePrecision := cpApproximated;
+    2: FSurvey.CoordinatePrecision := cpReference;
+  else
+    FSurvey.CoordinatePrecision := cpEmpty;
+  end;
   FSurvey.ObserversTally := eObserversTally.Value;
   FSurvey.SampleId       := eSampleId.Text;
   FSurvey.TotalArea      := eArea.Value;

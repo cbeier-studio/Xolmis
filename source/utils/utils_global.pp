@@ -998,7 +998,7 @@ begin
   FRememberCollectionInfo := FConfig.GetValue('/COLLECTION/RememberCollectionInfo', True);
   FAutoFillCoordinates := FConfig.GetValue('/COLLECTION/AutoFillCoordinates', True);
   FLastLocalityId := FConfig.GetValue('/COLLECTION/LastLocalityId', 0);
-  FLastObserverId := FConfig.GetValue('/COLLECTION/LastObserverId', 0)
+  FLastObserverId := FConfig.GetValue('/COLLECTION/LastObserverId', 0);
   FLastMethodId := FConfig.GetValue('/COLLECTION/LastMethodId', 0);
   { Media }
   FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));

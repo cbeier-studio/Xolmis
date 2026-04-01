@@ -124,7 +124,7 @@ object edtSurvey: TedtSurvey
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 940
+      Height = 985
       Top = 0
       Width = 399
       Align = alTop
@@ -132,7 +132,7 @@ object edtSurvey: TedtSurvey
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 940
+      ClientHeight = 985
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
@@ -301,7 +301,7 @@ object edtSurvey: TedtSurvey
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 796
+        Top = 841
         Width = 399
         Align = alTop
         AutoSize = True
@@ -315,7 +315,7 @@ object edtSurvey: TedtSurvey
         ClientHeight = 112
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 15
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -677,7 +677,7 @@ object edtSurvey: TedtSurvey
       object pAreaDistance: TPanel
         Left = 0
         Height = 45
-        Top = 507
+        Top = 552
         Width = 399
         Align = alTop
         AutoSize = True
@@ -692,7 +692,7 @@ object edtSurvey: TedtSurvey
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 11
         object lblArea: TLabel
           Left = 16
           Height = 15
@@ -739,7 +739,7 @@ object edtSurvey: TedtSurvey
       object pNetsTotalEffort: TPanel
         Left = 0
         Height = 45
-        Top = 552
+        Top = 597
         Width = 399
         Align = alTop
         AutoSize = True
@@ -754,7 +754,7 @@ object edtSurvey: TedtSurvey
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 12
         object lblNetsTotal: TLabel
           Left = 16
           Height = 15
@@ -797,7 +797,7 @@ object edtSurvey: TedtSurvey
       object pObserversSampleId: TPanel
         Left = 0
         Height = 45
-        Top = 462
+        Top = 507
         Width = 399
         Align = alTop
         AutoSize = True
@@ -813,7 +813,7 @@ object edtSurvey: TedtSurvey
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblObserversTally: TLabel
           Left = 16
           Height = 15
@@ -857,7 +857,7 @@ object edtSurvey: TedtSurvey
       object pHabitat: TPanel
         Left = 0
         Height = 80
-        Top = 610
+        Top = 655
         Width = 399
         Align = alTop
         AutoSize = True
@@ -871,7 +871,7 @@ object edtSurvey: TedtSurvey
         ClientHeight = 80
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 13
         object lblHabitat: TLabel
           Left = 16
           Height = 15
@@ -899,7 +899,7 @@ object edtSurvey: TedtSurvey
       object pNetRounds: TPanel
         Left = 0
         Height = 80
-        Top = 703
+        Top = 748
         Width = 399
         Align = alTop
         AutoSize = True
@@ -913,7 +913,7 @@ object edtSurvey: TedtSurvey
         ClientHeight = 80
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 14
         object lblNetRounds: TLabel
           Left = 16
           Height = 15
@@ -1018,6 +1018,46 @@ object edtSurvey: TedtSurvey
           OnButtonClick = eExpeditionButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eExpeditionKeyPress
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 449
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 9
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

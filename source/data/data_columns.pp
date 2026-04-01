@@ -1295,6 +1295,7 @@ begin
         'municipality_name':      Fields[i].DisplayLabel := rscMunicipality;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'area_shape':             Fields[i].DisplayLabel := rscAreaShape;
         'description':            Fields[i].DisplayLabel := rscDescription;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
@@ -1324,6 +1325,7 @@ begin
         'net_number':             Fields[i].DisplayLabel := rscMistnetNr;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'permanent_net_id':       Fields[i].DisplayLabel := rscId;
@@ -1405,6 +1407,7 @@ begin
         'start_latitude':         Fields[i].DisplayLabel := rscLatitude;
         'end_longitude':          Fields[i].DisplayLabel := rscEndLongitude;
         'end_latitude':           Fields[i].DisplayLabel := rscEndLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'observers_tally':        Fields[i].DisplayLabel := rscObservers;
         'area_total':             Fields[i].DisplayLabel := rscAreaHa;
         'distance_total':         Fields[i].DisplayLabel := rscDistanceKm;
@@ -1513,6 +1516,7 @@ begin
         'net_number':             Fields[i].DisplayLabel := rscMistnetNr;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'sample_date':            Fields[i].DisplayLabel := rscDate;
         'net_open_1':             Fields[i].DisplayLabel := rscOpenTime1;
         'net_close_1':            Fields[i].DisplayLabel := rscCloseTime1;
@@ -1586,6 +1590,7 @@ begin
         'breeding_status':        Fields[i].DisplayLabel := rscBreedingCode;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
         'individual_name':        Fields[i].DisplayLabel := rscIndividual;
         'not_surveying':          Fields[i].DisplayLabel := rscOutOfSample;
@@ -1790,6 +1795,7 @@ begin
         'left_leg_above':         Fields[i].DisplayLabel := rscLeftTibia;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'cloacal_protuberance':   Fields[i].DisplayLabel := rscCloacalProtuberance;
         'brood_patch':            Fields[i].DisplayLabel := rscBroodPatch;
         'fat':                    Fields[i].DisplayLabel := rscFat;
@@ -1940,6 +1946,7 @@ begin
         'locality_name':          Fields[i].DisplayLabel := rscLocality;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'observer_id':            Fields[i].DisplayLabel := rscObserverID;
         'observer_name':          Fields[i].DisplayLabel := rscObserver;
         'nest_shape':             Fields[i].DisplayLabel := rscShape;
@@ -2129,6 +2136,7 @@ begin
         'locality_name':          Fields[i].DisplayLabel := rscLocality;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
         'individual_name':        Fields[i].DisplayLabel := rscIndividual;
         'nest_id':                Fields[i].DisplayLabel := rscNestID;
@@ -2263,6 +2271,7 @@ begin
         'sample_time':            Fields[i].DisplayLabel := rscTime;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'observer_id':            Fields[i].DisplayLabel := rscObserverID;
         'observer_name':          Fields[i].DisplayLabel := rscObserver;
         'herbs_proportion':       Fields[i].DisplayLabel := rscProportionOfHerbs;
@@ -2442,6 +2451,13 @@ begin
         Add('SELECT flight_direction AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
+      'coordinate_precision':
+      begin
+        Add('SELECT coordinate_precision AS type, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY type');
         Add('ORDER BY tally DESC');
       end;
 
@@ -2758,6 +2774,13 @@ begin
         Add('GROUP BY type');
         Add('ORDER BY tally DESC');
       end;
+      'coordinate_precision':
+      begin
+        Add('SELECT coordinate_precision AS type, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY type');
+        Add('ORDER BY tally DESC');
+      end;
       'molt_limits', 'skull_ossification', 'cycle_code', 'subject_age', 'how_aged', 'subject_sex', 'how_sexed',
         'subject_status', 'camera_name', 'right_leg_below', 'left_leg_below', 'right_leg_above', 'left_leg_above':
       begin
@@ -2916,6 +2939,13 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
         MacroByName('AFIELD').Value := aFieldName;
+      end;
+      'coordinate_precision':
+      begin
+        Add('SELECT coordinate_precision AS type, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY type');
+        Add('ORDER BY tally DESC');
       end;
 
       'height_above_ground', 'internal_max_diameter', 'internal_min_diameter', 'external_max_diameter',
@@ -3167,6 +3197,14 @@ begin
         MacroByName('AFIELD').Value := aFieldName;
       end;
 
+      'coordinate_precision':
+      begin
+        Add('SELECT coordinate_precision AS type, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY type');
+        Add('ORDER BY tally DESC');
+      end;
+
       'marked_status':
       begin
         Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
@@ -3285,6 +3323,14 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY mean DESC');
         MacroByName('AFIELD').Value := aFieldName;
+      end;
+
+      'coordinate_precision':
+      begin
+        Add('SELECT coordinate_precision AS type, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY type');
+        Add('ORDER BY tally DESC');
       end;
 
       'marked_status':
@@ -4242,6 +4288,14 @@ begin
         MacroByName('AFIELD').Value := aFieldName;
       end;
 
+      'coordinate_precision':
+      begin
+        Add('SELECT coordinate_precision AS type, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY type');
+        Add('ORDER BY tally DESC');
+      end;
+
       'area_shape':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
@@ -4338,6 +4392,7 @@ begin
     begin
       case Fields[i].FieldName of
         'name':          Fields[i].DisplayLabel := rscValue;
+        'type':          Fields[i].DisplayLabel := rscType;
         'number':        Fields[i].DisplayLabel := rscNumber;
         'tally':         Fields[i].DisplayLabel := rscTally;
         'mean':          Fields[i].DisplayLabel := rscMean;

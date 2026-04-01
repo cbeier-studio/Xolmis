@@ -132,6 +132,7 @@ type
     FNetId: Integer;
     FLongitude: Extended;
     FLatitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FBanderId: Integer;
     FAnnotatorId: Integer;
     FSubjectStatus: TSubjectStatus;
@@ -225,6 +226,7 @@ type
     property NetId: Integer read FNetId write FNetId;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property BanderId: Integer read FBanderId write FBanderId;
     property AnnotatorId: Integer read FAnnotatorId write FAnnotatorId;
     property SubjectStatus: TSubjectStatus read FSubjectStatus write FSubjectStatus;
@@ -1291,6 +1293,7 @@ begin
     FNetId := TCapture(Source).NetId;
     FLatitude := TCapture(Source).Latitude;
     FLongitude := TCapture(Source).Longitude;
+    FCoordinatePrecision := TCapture(Source).CoordinatePrecision;
     FBanderId := TCapture(Source).BanderId;
     FAnnotatorId := TCapture(Source).AnnotatorId;
     FSubjectStatus := TCapture(Source).SubjectStatus;
@@ -1373,6 +1376,7 @@ begin
   FNetId := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FBanderId := 0;
   FAnnotatorId := 0;
   FSubjectStatus := sstNormal;
@@ -1478,6 +1482,8 @@ begin
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscBanderID, aOld.BanderId, FBanderId, R) then
     Changes.Add(R);
@@ -1639,6 +1645,13 @@ begin
     FNetId        := Obj.Get('net_id', 0);
     FLongitude    := Obj.Get('longitude', 0.0);
     FLatitude     := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FBanderId     := Obj.Get('bander_id', 0);
     FAnnotatorId  := Obj.Get('annotator_id', 0);
     case Obj.Get('subject_status', '') of
@@ -1727,6 +1740,7 @@ begin
     JSONObject.Add('net_id', FNetId);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('bander_id', FBanderId);
     JSONObject.Add('annotator_id', FAnnotatorId);
     JSONObject.Add('subject_status', SUBJECT_STATUSES[FSubjectStatus]);
@@ -1785,7 +1799,7 @@ end;
 function TCapture.ToString: String;
 begin
   Result := Format('Capture(Id=%d, FullName=%s, SurveyId=%d, TaxonId=%d, IndividualId=%d, CaptureDate=%s, ' +
-    'CaptureTime=%s, LocalityId=%d, NetStationId=%d, NetId=%d, Longitude=%f, Latitude=%f, BanderId=%d, ' +
+    'CaptureTime=%s, LocalityId=%d, NetStationId=%d, NetId=%d, Longitude=%f, Latitude=%f, CoordinatePrecision=%s, BanderId=%d, ' +
     'AnnotatorId=%d, SubjectStatus=%s, CaptureType=%s, Sex=%s, HowSexed=%s, BandId=%d, Weight=%f, ' +
     'TarsusLength=%f, TarsusDiameter=%f, ExposedCulmen=%f, BillWidth=%f, BillHeight=%f, NostrilBillTip=%f, ' +
     'SkullLength=%f, RightWingChord=%f, FirstSecondaryChord=%f, TailLength=%f, Fat=%s, BroodPatch=%s, ' +
@@ -1796,7 +1810,7 @@ begin
     'RightTibia=%s, LeftTibia=%s, Escaped=%s, NeedsReview=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FSurveyId, FTaxonId, FIndividualId, DateToStr(FCaptureDate), TimeToStr(FCaptureTime),
-    FLocalityId, FNetStationId, FNetId, FLongitude, FLatitude, FBanderId, FAnnotatorId, SUBJECT_STATUSES[FSubjectStatus],
+    FLocalityId, FNetStationId, FNetId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FBanderId, FAnnotatorId, SUBJECT_STATUSES[FSubjectStatus],
     CAPTURE_TYPES[FCaptureType], SEXES[FSubjectSex], FHowSexed, FBandId, FWeight, FTarsusLength, FTarsusDiameter,
     FExposedCulmen, FBillWidth, FBillHeight, FNostrilBillTip, FSkullLength, FRightWingChord, FFirstSecondaryChord,
     FTailLength, FFat, FBroodPatch, FCloacalProtuberance, FBodyMolt, FFlightFeathersMolt, FFlightFeathersWear,
@@ -1923,6 +1937,7 @@ begin
       'net_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'bander_id, ' +
       'annotator_id, ' +
       'subject_status, ' +
@@ -2067,6 +2082,7 @@ begin
       'net_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'bander_id, ' +
       'annotator_id, ' +
       'subject_status, ' +
@@ -2177,6 +2193,13 @@ begin
     R.NetId := FieldByName('net_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.BanderId := FieldByName('bander_id').AsInteger;
     R.AnnotatorId := FieldByName('annotator_id').AsInteger;
     case FieldByName('subject_status').AsString of
@@ -2323,6 +2346,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('bander_id') >= 0 then
     R.BanderId := StrToIntDef(ARow.Values['bander_id'], 0);
   if ARow.IndexOfName('annotator_id') >= 0 then
@@ -2516,6 +2549,7 @@ begin
       'net_id, ' +
       'latitude, ' +
       'longitude, ' +
+      'coordinate_precision, ' +
       'bander_id, ' +
       'annotator_id, ' +
       'subject_status, ' +
@@ -2576,6 +2610,7 @@ begin
       ':net_id, ' +
       ':latitude, ' +
       ':longitude, ' +
+      ':coordinate_precision, ' +
       ':bander_id, ' +
       ':annotator_id, ' +
       ':subject_status, ' +
@@ -2637,6 +2672,7 @@ begin
     SetForeignParam(ParamByName('net_station_id'), R.NetStationId);
     SetForeignParam(ParamByName('net_id'), R.NetId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('bander_id'), R.BanderId);
     SetForeignParam(ParamByName('annotator_id'), R.AnnotatorId);
     SetStrParam(ParamByName('subject_status'), SUBJECT_STATUSES[R.SubjectStatus]);
@@ -2734,6 +2770,7 @@ begin
       'net_id = :net_id, ' +
       'latitude = :latitude, ' +
       'longitude = :longitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'bander_id = :bander_id, ' +
       'annotator_id = :annotator_id, ' +
       'subject_status = :subject_status, ' +
@@ -2817,6 +2854,7 @@ begin
     SetForeignParam(ParamByName('net_station_id'), R.NetStationId);
     SetForeignParam(ParamByName('net_id'), R.NetId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('bander_id'), R.BanderId);
     SetForeignParam(ParamByName('annotator_id'), R.AnnotatorId);
     SetStrParam(ParamByName('subject_status'), SUBJECT_STATUSES[R.SubjectStatus]);

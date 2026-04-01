@@ -188,6 +188,7 @@ object edtCapture: TedtCapture
           Top = 4
           Width = 174
           BorderSpacing.Top = 4
+          Caption = 'Coordinates precision:'
           ParentColor = False
           ParentFont = False
         end
@@ -222,6 +223,16 @@ object edtCapture: TedtCapture
           TabOrder = 2
           OnKeyDown = FormKeyDown
           OnKeyPress = cbStatusKeyPress
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 585
+          Height = 23
+          Top = 23
+          Width = 174
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 3
+          OnKeyDown = FormKeyDown
         end
       end
       object pSamples: TPanel

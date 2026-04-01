@@ -33,6 +33,7 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbCamera: TComboBox;
+    cbCoordinatePrecision: TComboBox;
     ckEscaped: TCheckBox;
     ckBloodSample: TCheckBox;
     ckFeathers: TCheckBox;
@@ -1078,6 +1079,12 @@ end;
 
 procedure TedtCapture.FormCreate(Sender: TObject);
 begin
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
   GetCameras;
   cbAge.Items.CommaText := rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
     rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
@@ -1286,6 +1293,13 @@ begin
   begin
     eLongitude.Text := FloatToStr(FCapture.Longitude);
     eLatitude.Text := FloatToStr(FCapture.Latitude);
+  end;
+  case FCapture.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FCapture.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
@@ -1591,6 +1605,13 @@ begin
     FCapture.Latitude   := StrToFloat(eLatitude.Text)
   else
     FCapture.Latitude := 0;
+  case cbCoordinatePrecision.ItemIndex of
+    0: FCapture.CoordinatePrecision := cpExact;
+    1: FCapture.CoordinatePrecision := cpApproximated;
+    2: FCapture.CoordinatePrecision := cpReference;
+  else
+    FCapture.CoordinatePrecision := cpEmpty;
+  end;
   FCapture.TaxonId       := FTaxonId;
   FCapture.BandId        := FBandId;
   FCapture.RemovedBandId := FRemovedBandId;

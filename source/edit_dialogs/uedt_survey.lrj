@@ -39,6 +39,7 @@
 {"hash":98335322,"name":"tedtsurvey.lblnetrounds.caption","sourcebytes":[77,105,115,116,110,101,116,115,32,99,104,101,99,107,105,110,103,32,116,105,109,101,115,58],"value":"Mistnets checking times:"},
 {"hash":189142186,"name":"tedtsurvey.lblexpedition.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,58],"value":"Expedition:"},
 {"hash":265694782,"name":"tedtsurvey.eexpedition.buttonhint","sourcebytes":[70,105,110,100,32,101,120,112,101,100,105,116,105,111,110],"value":"Find expedition"},
+{"hash":250770538,"name":"tedtsurvey.lblcoordinatesprecision.caption","sourcebytes":[67,111,111,114,100,105,110,97,116,101,115,32,112,114,101,99,105,115,105,111,110,58],"value":"Coordinates precision:"},
 {"hash":122054270,"name":"tedtsurvey.pmnnewexpedition.caption","sourcebytes":[78,101,119,32,101,120,112,101,100,105,116,105,111,110],"value":"New expedition"},
 {"hash":121234372,"name":"tedtsurvey.pmnnewmethod.caption","sourcebytes":[78,101,119,32,109,101,116,104,111,100],"value":"New method"},
 {"hash":14469001,"name":"tedtsurvey.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"},

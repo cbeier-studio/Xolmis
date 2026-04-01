@@ -337,6 +337,7 @@ type
     FAuthorId: Integer;
     FLongitude: Double;
     FLatitude: Double;
+    FCoordinatePrecision: TCoordinatePrecision;
     FLocalityId: Integer;
     FTaxonId: Integer;
     FIndividualId: Integer;
@@ -376,6 +377,7 @@ type
     property AuthorId: Integer read FAuthorId write FAuthorId;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
@@ -3069,6 +3071,7 @@ begin
     FAuthorId := TVideoData(Source).AuthorId;
     FLongitude := TVideoData(Source).Longitude;
     FLatitude := TVideoData(Source).Latitude;
+    FCoordinatePrecision := TVideoData(Source).CoordinatePrecision;
     FLocalityId := TVideoData(Source).LocalityId;
     FTaxonId := TVideoData(Source).TaxonId;
     FIndividualId := TVideoData(Source).IndividualId;
@@ -3102,6 +3105,7 @@ begin
   FAuthorId := 0;
   FLongitude := 0.0;
   FLatitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FLocalityId := 0;
   FTaxonId := 0;
   FIndividualId := 0;
@@ -3156,6 +3160,8 @@ begin
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     Changes.Add(R);
@@ -3218,6 +3224,13 @@ begin
     FLocalityId     := Obj.Get('locality_id', 0);
     FLongitude      := Obj.Get('longitude', 0.0);
     FLatitude       := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FTaxonId        := Obj.Get('taxon_id', 0);
     FIndividualId   := Obj.Get('individual_id', 0);
     FCaptureId      := Obj.Get('capture_id', 0);
@@ -3256,6 +3269,7 @@ begin
     JSONObject.Add('locality_id', FLocalityId);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('taxon_id', FTaxonId);
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('capture_id', FCaptureId);
@@ -3283,14 +3297,14 @@ end;
 function TVideoData.ToString: String;
 begin
   Result := Format('VideoData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, VideoType=%s, Filename=%s, Subtitle=%s, ' +
-    'AuthorId=%d, LocalityId=%d, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
+    'AuthorId=%d, LocalityId=%d, Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
     'SightingId=%d, NestId=%d, NestRevisionId=%d, SurveyId=%d, ' +
     'Distance=%f, Context=%s, Habitat=%s, CameraModel=%s, ' +
     'LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), FVideoType, FFilename, FSubtitle,
-    FAuthorId, FLocalityId, FLongitude, FLatitude, FTaxonId, FIndividualId, FCaptureId,
+    FAuthorId, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FTaxonId, FIndividualId, FCaptureId,
     FSightingId, FNestId, FNestRevisionId, FSurveyId,
     FDistance, FContext, FHabitat,
     FCameraModel, FLicenseType, FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
@@ -3416,6 +3430,7 @@ begin
         'recording_time, ' +
         'longitude, ' +
         'latitude, ' +
+        'coordinate_precision, ' +
         'recording_context, ' +
         'habitat, ' +
         'camera_model, ' +
@@ -3480,6 +3495,7 @@ begin
         'recording_time, ' +
         'longitude, ' +
         'latitude, ' +
+        'coordinate_precision, ' +
         'recording_context, ' +
         'habitat, ' +
         'camera_model, ' +
@@ -3541,13 +3557,13 @@ begin
     R.NestId := FieldByName('nest_id').AsInteger;
     R.NestRevisionId := FieldByName('nest_revision_id').AsInteger;
     R.LocalityId := FieldByName('locality_id').AsInteger;
-    //case FieldByName('coordinate_precision').AsString of
-    //  'E': R.CoordinatePrecision := cpExact;
-    //  'A': R.CoordinatePrecision := cpApproximated;
-    //  'R': R.CoordinatePrecision := cpReference;
-    //else
-    //  R.CoordinatePrecision := cpEmpty;
-    //end;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.Longitude := FieldByName('longitude').AsFloat;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Distance := FieldByName('distance').AsFloat;
@@ -3601,6 +3617,7 @@ begin
       'recording_time, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'recording_context, ' +
       'habitat, ' +
       'camera_model, ' +
@@ -3631,6 +3648,7 @@ begin
       'time(:recording_time), ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       ':recording_context, ' +
       ':habitat, ' +
       ':camera_model, ' +
@@ -3654,7 +3672,7 @@ begin
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
-    //ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
@@ -3725,6 +3743,7 @@ begin
       'recording_time = time(:recording_time), ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'recording_context = :recording_context, ' +
       'habitat = :habitat, ' +
       'camera_model = :camera_model, ' +
@@ -3749,7 +3768,7 @@ begin
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
-    //ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);

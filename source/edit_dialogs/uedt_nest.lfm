@@ -123,7 +123,7 @@ object edtNest: TedtNest
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1308
+      Height = 1353
       Top = 0
       Width = 399
       Align = alTop
@@ -131,7 +131,7 @@ object edtNest: TedtNest
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1308
+      ClientHeight = 1353
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
@@ -302,7 +302,7 @@ object edtNest: TedtNest
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 1164
+        Top = 1209
         Width = 399
         Align = alTop
         AutoSize = True
@@ -315,7 +315,7 @@ object edtNest: TedtNest
         ClientHeight = 112
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 23
+        TabOrder = 24
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -593,7 +593,7 @@ object edtNest: TedtNest
       object pTypeHeight: TPanel
         Left = 0
         Height = 45
-        Top = 540
+        Top = 585
         Width = 399
         Align = alTop
         AutoSize = True
@@ -609,7 +609,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 11
         object lblSupportType: TLabel
           Left = 16
           Height = 15
@@ -669,7 +669,7 @@ object edtNest: TedtNest
       object pPlantHeightDbh: TPanel
         Left = 0
         Height = 45
-        Top = 720
+        Top = 765
         Width = 399
         Align = alTop
         AutoSize = True
@@ -684,7 +684,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 15
         object lblPlantHeight: TLabel
           Left = 16
           Height = 15
@@ -731,7 +731,7 @@ object edtNest: TedtNest
       object pPlantDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 765
+        Top = 810
         Width = 399
         Align = alTop
         AutoSize = True
@@ -746,7 +746,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 16
         object lblPlantMaxDiameter: TLabel
           Left = 16
           Height = 15
@@ -793,7 +793,7 @@ object edtNest: TedtNest
       object pProductivity: TPanel
         Left = 0
         Height = 45
-        Top = 437
+        Top = 482
         Width = 399
         Align = alTop
         AutoSize = True
@@ -809,7 +809,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblProductivity: TLabel
           Left = 16
           Height = 15
@@ -866,7 +866,7 @@ object edtNest: TedtNest
       object pDescription: TPanel
         Left = 0
         Height = 80
-        Top = 344
+        Top = 389
         Width = 399
         Align = alTop
         AutoSize = True
@@ -879,7 +879,7 @@ object edtNest: TedtNest
         ClientHeight = 80
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblDescription: TLabel
           Left = 16
           Height = 15
@@ -907,7 +907,7 @@ object edtNest: TedtNest
       object pSupportPlant1: TPanel
         Left = 0
         Height = 45
-        Top = 585
+        Top = 630
         Width = 399
         Align = alTop
         AutoSize = True
@@ -922,7 +922,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 12
         object lblSupportPlant1: TLabel
           Left = 16
           Height = 15
@@ -955,7 +955,7 @@ object edtNest: TedtNest
       object pOtherSupport: TPanel
         Left = 0
         Height = 45
-        Top = 675
+        Top = 720
         Width = 399
         Align = alTop
         AutoSize = True
@@ -970,7 +970,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 14
         Visible = False
         object lblOtherSupport: TLabel
           Left = 16
@@ -995,7 +995,7 @@ object edtNest: TedtNest
       object pSupportPlant2: TPanel
         Left = 0
         Height = 45
-        Top = 630
+        Top = 675
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1010,7 +1010,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 13
         object lblSupportPlant2: TLabel
           Left = 16
           Height = 15
@@ -1043,7 +1043,7 @@ object edtNest: TedtNest
       object pConstructionIncubationDays: TPanel
         Left = 0
         Height = 45
-        Top = 823
+        Top = 868
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1059,7 +1059,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 16
+        TabOrder = 17
         object lblConstructionDays: TLabel
           Left = 16
           Height = 15
@@ -1106,7 +1106,7 @@ object edtNest: TedtNest
       object pNestlingActiveDays: TPanel
         Left = 0
         Height = 45
-        Top = 868
+        Top = 913
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1121,7 +1121,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 17
+        TabOrder = 18
         object lblNestlingDays: TLabel
           Left = 16
           Height = 15
@@ -1168,7 +1168,7 @@ object edtNest: TedtNest
       object pInternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 926
+        Top = 971
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1184,7 +1184,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 18
+        TabOrder = 19
         object lblInternalMinDiameter: TLabel
           Left = 16
           Height = 15
@@ -1229,7 +1229,7 @@ object edtNest: TedtNest
       object pEdgeCenterDistance: TPanel
         Left = 0
         Height = 45
-        Top = 1061
+        Top = 1106
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1244,7 +1244,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 21
+        TabOrder = 22
         object lblEdgeDistance: TLabel
           Left = 16
           Height = 15
@@ -1291,7 +1291,7 @@ object edtNest: TedtNest
       object pInternalExternalHeight: TPanel
         Left = 0
         Height = 45
-        Top = 1016
+        Top = 1061
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1306,7 +1306,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 20
+        TabOrder = 21
         object lblInternalHeight: TLabel
           Left = 16
           Height = 15
@@ -1351,7 +1351,7 @@ object edtNest: TedtNest
       object pNestCover: TPanel
         Left = 0
         Height = 45
-        Top = 1106
+        Top = 1151
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1366,7 +1366,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 22
+        TabOrder = 23
         object lblNestCover: TLabel
           Left = 16
           Height = 15
@@ -1401,7 +1401,7 @@ object edtNest: TedtNest
       object pExternalDiameter: TPanel
         Left = 0
         Height = 45
-        Top = 971
+        Top = 1016
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1416,7 +1416,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 19
+        TabOrder = 20
         object lblExternalMinDiameter: TLabel
           Left = 16
           Height = 15
@@ -1461,7 +1461,7 @@ object edtNest: TedtNest
       object pLossCause: TPanel
         Left = 0
         Height = 45
-        Top = 482
+        Top = 527
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1476,7 +1476,7 @@ object edtNest: TedtNest
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblLossCause: TLabel
           Left = 16
           Height = 15
@@ -1497,6 +1497,46 @@ object edtNest: TedtNest
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 331
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 7
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

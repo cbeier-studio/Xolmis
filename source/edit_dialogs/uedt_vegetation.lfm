@@ -11,14 +11,14 @@ object edtVegetation: TedtVegetation
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 671
+    Top = 714
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -28,7 +28,7 @@ object edtVegetation: TedtVegetation
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 673
+    Top = 714
     Width = 416
     Align = alTop
     AutoSize = True
@@ -94,34 +94,34 @@ object edtVegetation: TedtVegetation
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 671
+    Height = 716
     Top = 0
     Width = 416
     HorzScrollBar.Page = 397
-    VertScrollBar.Page = 671
+    VertScrollBar.Page = 716
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 671
+    ClientHeight = 716
     ClientWidth = 416
     Constraints.MinWidth = 176
     TabOrder = 0
     object pContent: TPanel
       Left = 0
-      Height = 671
+      Height = 716
       Top = 0
       Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 8
-      ClientHeight = 671
+      ClientHeight = 716
       ClientWidth = 416
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 543
+        Top = 588
         Width = 416
         Align = alTop
         AutoSize = True
@@ -135,7 +135,7 @@ object edtVegetation: TedtVegetation
         ClientHeight = 112
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 12
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -235,7 +235,7 @@ object edtVegetation: TedtVegetation
       object pHerbsDIstribution: TPanel
         Left = 0
         Height = 45
-        Top = 152
+        Top = 197
         Width = 416
         Align = alTop
         AutoSize = True
@@ -250,7 +250,7 @@ object edtVegetation: TedtVegetation
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 4
         object lblSampleMoment: TLabel
           Left = 16
           Height = 15
@@ -278,7 +278,7 @@ object edtVegetation: TedtVegetation
       object pHerbsProportionHeight: TPanel
         Left = 0
         Height = 45
-        Top = 197
+        Top = 242
         Width = 416
         Align = alTop
         AutoSize = True
@@ -293,7 +293,7 @@ object edtVegetation: TedtVegetation
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 5
         object lblCloudCover: TLabel
           Left = 16
           Height = 15
@@ -422,7 +422,7 @@ object edtVegetation: TedtVegetation
       object pTitleHerbs: TPanel
         Left = 0
         Height = 38
-        Top = 114
+        Top = 159
         Width = 416
         Align = alTop
         Alignment = taLeftJustify
@@ -436,7 +436,7 @@ object edtVegetation: TedtVegetation
         Font.Height = -20
         ParentBackground = False
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 3
         object lblTitleHerbs: TLabel
           Left = 16
           Height = 28
@@ -454,7 +454,7 @@ object edtVegetation: TedtVegetation
       object pTitleShrubs: TPanel
         Left = 0
         Height = 38
-        Top = 258
+        Top = 303
         Width = 416
         Align = alTop
         Alignment = taLeftJustify
@@ -468,7 +468,7 @@ object edtVegetation: TedtVegetation
         Font.Height = -20
         ParentBackground = False
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 6
         object lblTitleShrubs: TLabel
           Left = 16
           Height = 28
@@ -486,7 +486,7 @@ object edtVegetation: TedtVegetation
       object pShrubsDistribution: TPanel
         Left = 0
         Height = 45
-        Top = 296
+        Top = 341
         Width = 416
         Align = alTop
         AutoSize = True
@@ -501,7 +501,7 @@ object edtVegetation: TedtVegetation
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 7
         object lblSampleMoment1: TLabel
           Left = 16
           Height = 15
@@ -529,7 +529,7 @@ object edtVegetation: TedtVegetation
       object pShrubsProportionHeight: TPanel
         Left = 0
         Height = 45
-        Top = 341
+        Top = 386
         Width = 416
         Align = alTop
         AutoSize = True
@@ -544,7 +544,7 @@ object edtVegetation: TedtVegetation
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblCloudCover1: TLabel
           Left = 16
           Height = 15
@@ -591,7 +591,7 @@ object edtVegetation: TedtVegetation
       object pTitleTrees: TPanel
         Left = 0
         Height = 38
-        Top = 402
+        Top = 447
         Width = 416
         Align = alTop
         Alignment = taLeftJustify
@@ -605,7 +605,7 @@ object edtVegetation: TedtVegetation
         Font.Height = -20
         ParentBackground = False
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 9
         object lblTitleTrees: TLabel
           Left = 16
           Height = 28
@@ -623,7 +623,7 @@ object edtVegetation: TedtVegetation
       object pTreesDistribution: TPanel
         Left = 0
         Height = 45
-        Top = 440
+        Top = 485
         Width = 416
         Align = alTop
         AutoSize = True
@@ -638,7 +638,7 @@ object edtVegetation: TedtVegetation
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblSampleMoment2: TLabel
           Left = 16
           Height = 15
@@ -665,7 +665,7 @@ object edtVegetation: TedtVegetation
       object pTreesProportionHeight: TPanel
         Left = 0
         Height = 45
-        Top = 485
+        Top = 530
         Width = 416
         Align = alTop
         AutoSize = True
@@ -680,7 +680,7 @@ object edtVegetation: TedtVegetation
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 11
         object lblCloudCover2: TLabel
           Left = 16
           Height = 15
@@ -722,6 +722,46 @@ object edtVegetation: TedtVegetation
           TabOrder = 1
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 98
+        Width = 416
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 416
+        ParentBackground = False
+        TabOrder = 2
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 384
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 384
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

@@ -15,6 +15,7 @@ type
   TedtVideoInfo = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     cbVideoType: TComboBox;
     cbLicenseType: TComboBox;
     dsLink: TDataSource;
@@ -34,6 +35,7 @@ type
     eRecordingDate: TEditButton;
     eRecordingTime: TEdit;
     eTaxon: TEditButton;
+    lblCoordinatesPrecision: TLabel;
     lblVideoFile: TLabel;
     lblVideoType: TLabel;
     lblAuthor: TLabel;
@@ -56,6 +58,7 @@ type
     lblTaxon: TLabel;
     lineBottom: TShapeLineBGRA;
     mSubtitle: TMemo;
+    pCoordinatesPrecision: TPanel;
     pVideoFile: TPanel;
     pVideoType: TPanel;
     pAuthor: TPanel;
@@ -426,6 +429,13 @@ begin
 
   { #todo : Recording types combobox list }
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   if not FIsNew then
     GetRecord;
 end;
@@ -443,6 +453,13 @@ begin
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FVideo.Longitude);
   eLatitude.Text := FloatToStr(FVideo.Latitude);
+  case FVideo.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
+  end;
   FTaxonId := FVideo.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FVideo.IndividualId;
@@ -503,6 +520,13 @@ begin
   FVideo.LocalityId     := FLocalityId;
   FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);
   FVideo.Latitude       := StrToFloatOrZero(eLatitude.Text);
+  case cbCoordinatePrecision.ItemIndex of
+    0: FVideo.CoordinatePrecision := cpExact;
+    1: FVideo.CoordinatePrecision := cpApproximated;
+    2: FVideo.CoordinatePrecision := cpReference;
+  else
+    FVideo.CoordinatePrecision := cpEmpty;
+  end;
   FVideo.TaxonId        := FTaxonId;
   FVideo.IndividualId   := FIndividualId;
   FVideo.CaptureId      := FCaptureId;

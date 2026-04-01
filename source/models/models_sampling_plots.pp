@@ -33,6 +33,7 @@ type
     FAbbreviation: String;
     FLongitude: Extended;
     FLatitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FAreaShape: String;
     FLocalityId: Integer;
     FDescription: String;
@@ -53,6 +54,7 @@ type
     property Abbreviation: String read FAbbreviation write FAbbreviation;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property AreaShape: String read FAreaShape write FAreaShape;
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property Description: String read FDescription write FDescription;
@@ -86,6 +88,7 @@ type
     FNetNumber: Integer;
     FLongitude: Extended;
     FLatitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -104,6 +107,7 @@ type
     property NetNumber: Integer read FNetNumber write FNetNumber;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -147,6 +151,7 @@ begin
     FAbbreviation := TSamplingPlot(Source).Abbreviation;
     FLongitude := TSamplingPlot(Source).Longitude;
     FLatitude := TSamplingPlot(Source).Latitude;
+    FCoordinatePrecision := TSamplingPlot(Source).CoordinatePrecision;
     FAreaShape := TSamplingPlot(Source).AreaShape;
     FLocalityId := TSamplingPlot(Source).LocalityId;
     FDescription := TSamplingPlot(Source).Description;
@@ -161,6 +166,7 @@ begin
   FAbbreviation := EmptyStr;
   FLongitude := 0.0;
   FLatitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FAreaShape := EmptyStr;
   FLocalityId := 0;
   FDescription := EmptyStr;
@@ -191,6 +197,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscAreaShape, aOld.AreaShape, FAreaShape, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
@@ -215,10 +223,17 @@ begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
     FFullName     := Obj.Get('full_name', '');
-    FAbbreviation      := Obj.Get('abbreviation', '');
+    FAbbreviation := Obj.Get('abbreviation', '');
     FAreaShape    := Obj.Get('area_shape', '');
     FLongitude    := Obj.Get('longitude', 0.0);
     FLatitude     := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FLocalityId   := Obj.Get('locality_id', 0);
     FDescription  := Obj.Get('description', '');
     FNotes        := Obj.Get('notes', '');
@@ -238,6 +253,7 @@ begin
     JSONObject.Add('area_shape', FAreaShape);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('locality_id', FLocalityId);
     JSONObject.Add('description', FDescription);
     JSONObject.Add('notes', FNotes);
@@ -251,9 +267,10 @@ end;
 function TSamplingPlot.ToString: String;
 begin
   Result := Format('SamplingPlot(Id=%d, FullName=%s, Abbreviation=%s, AreaShape=%s, Longitude=%f, Latitude=%f, ' +
-    'LocalityId=%d, Description=%s, Notes=%s, ' +
+    'CoordinatePrecision=%s, LocalityId=%d, Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FAbbreviation, FAreaShape, FLongitude, FLatitude, FLocalityId, FDescription, FNotes,
+    [FId, FFullName, FAbbreviation, FAreaShape, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
+    FLocalityId, FDescription, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -374,6 +391,7 @@ begin
       'acronym, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'area_shape, ' +
       'locality_id, ' +
       'description, ' +
@@ -419,6 +437,7 @@ begin
       'acronym, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'area_shape, ' +
       'locality_id, ' +
       'description, ' +
@@ -461,6 +480,13 @@ begin
     R.Abbreviation := FieldByName('acronym').AsString;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.AreaShape := FieldByName('area_shape').AsString;
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Description := FieldByName('description').AsString;
@@ -495,6 +521,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('area_shape') >= 0 then
     R.AreaShape := ARow.Values['area_shape'];
   if ARow.IndexOfName('locality_id') >= 0 then
@@ -523,6 +559,7 @@ begin
         'acronym, ' +
         'longitude, ' +
         'latitude, ' +
+        'coordinate_precision, ' +
         'area_shape, ' +
         'locality_id, ' +
         'description, ' +
@@ -534,6 +571,7 @@ begin
         ':acronym, ' +
         ':longitude, ' +
         ':latitude, ' +
+        ':coordinate_precision, ' +
         ':area_shape, ' +
         ':locality_id, ' +
         ':description, ' +
@@ -543,6 +581,7 @@ begin
       ParamByName('full_name').AsString := R.FullName;
       ParamByName('acronym').AsString := R.Abbreviation;
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+      SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
       SetStrParam(ParamByName('area_shape'), R.AreaShape);
       SetForeignParam(ParamByName('locality_id'), R.LocalityId);
       SetStrParam(ParamByName('description'), R.Description);
@@ -588,6 +627,7 @@ begin
         'acronym = :acronym, ' +
         'longitude = :longitude, ' +
         'latitude = :latitude, ' +
+        'coordinate_precision = :coordinate_precision, ' +
         'area_shape = :area_shape, ' +
         'locality_id = :locality_id, ' +
         'description = :description, ' +
@@ -600,6 +640,7 @@ begin
       ParamByName('full_name').AsString := R.FullName;
       ParamByName('acronym').AsString := R.Abbreviation;
       SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+      SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
       SetStrParam(ParamByName('area_shape'), R.AreaShape);
       SetForeignParam(ParamByName('locality_id'), R.LocalityId);
       SetStrParam(ParamByName('description'), R.Description);
@@ -634,6 +675,7 @@ begin
     FNetNumber := TPermanentNet(Source).NetNumber;
     FLatitude := TPermanentNet(Source).Latitude;
     FLongitude := TPermanentNet(Source).Longitude;
+    FCoordinatePrecision := TPermanentNet(Source).CoordinatePrecision;
     FNotes := TPermanentNet(Source).Notes;
   end;
 end;
@@ -646,6 +688,7 @@ begin
   FNetNumber := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FNotes := EmptyStr;
 end;
 
@@ -671,6 +714,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
 
@@ -693,6 +738,13 @@ begin
     FNetNumber      := Obj.Get('net_number', 0);
     FLongitude      := Obj.Get('longitude', 0.0);
     FLatitude       := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FNotes          := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -710,6 +762,7 @@ begin
     JSONObject.Add('net_number', FNetNumber);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -721,9 +774,9 @@ end;
 function TPermanentNet.ToString: String;
 begin
   Result := Format('PermanentNet(Id=%d, FullName=%s, SamplingPlotId=%d, NetNumber=%d, Longitude=%f, ' +
-    'Latitude=%f, Notes=%s, ' +
+    'Latitude=%f, CoordinatePrecision=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FSamplingPlotId, FNetNumber, FLongitude, FLatitude, FNotes,
+    [FId, FFullName, FSamplingPlotId, FNetNumber, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -839,6 +892,7 @@ begin
       'net_number, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'notes, ' +
       'full_name, ' +
       'user_inserted, ' +
@@ -882,6 +936,7 @@ begin
       'net_number, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'notes, ' +
       'full_name, ' +
       'user_inserted, ' +
@@ -923,6 +978,13 @@ begin
     R.NetNumber := FieldByName('net_number').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.Notes := FieldByName('notes').AsString;
     R.UserInserted := FieldByName('user_inserted').AsInteger;
     R.UserUpdated := FieldByName('user_updated').AsInteger;
@@ -956,6 +1018,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -978,6 +1050,7 @@ begin
       'net_number, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'notes, ' +
       'full_name, ' +
       'user_inserted, ' +
@@ -987,6 +1060,7 @@ begin
       ':net_number, ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       ':notes, ' +
       ':full_name, ' +
       ':user_inserted, ' +
@@ -995,6 +1069,7 @@ begin
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('net_number').AsInteger := R.NetNumber;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
@@ -1037,6 +1112,7 @@ begin
       'net_number = :net_number, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'notes = :notes, ' +
       'full_name = :full_name, ' +
       'user_updated = :user_updated, ' +
@@ -1048,6 +1124,7 @@ begin
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('net_number').AsInteger := R.NetNumber;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('marked_status').AsBoolean := R.Marked;

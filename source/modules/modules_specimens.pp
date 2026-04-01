@@ -143,6 +143,12 @@ begin
       //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
     end;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
     if DataSource.DataSet.FieldByName(COL_SAMPLE_TYPE).Visible then
       with ColumnByFieldName(COL_SAMPLE_TYPE).PickList do
       begin
@@ -295,6 +301,12 @@ begin
       //ColumnByFieldname('specimen_id').Footer.Alignment := taCenter;
     end;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
     if DataSource.DataSet.FieldByName(COL_SAMPLE_TYPE).Visible then
       with ColumnByFieldName(COL_SAMPLE_TYPE).PickList do
       begin

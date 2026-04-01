@@ -9,6 +9,7 @@ object edtVideoInfo: TedtVideoInfo
   ClientWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -123,14 +124,14 @@ object edtVideoInfo: TedtVideoInfo
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 847
+      Height = 892
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 847
+      ClientHeight = 892
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
@@ -469,7 +470,7 @@ object edtVideoInfo: TedtVideoInfo
       object pTaxon: TPanel
         Left = 0
         Height = 45
-        Top = 400
+        Top = 445
         Width = 399
         Align = alTop
         AutoSize = True
@@ -485,7 +486,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblTaxon: TLabel
           Left = 16
           Height = 15
@@ -571,7 +572,7 @@ object edtVideoInfo: TedtVideoInfo
       object pCameraModel: TPanel
         Left = 0
         Height = 45
-        Top = 458
+        Top = 503
         Width = 399
         Align = alTop
         AutoSize = True
@@ -587,7 +588,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblCameraModel: TLabel
           Left = 16
           Height = 15
@@ -611,7 +612,7 @@ object edtVideoInfo: TedtVideoInfo
       object pDistance: TPanel
         Left = 0
         Height = 45
-        Top = 548
+        Top = 593
         Width = 399
         Align = alTop
         AutoSize = True
@@ -626,7 +627,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 11
         object lblDistance: TLabel
           Left = 16
           Height = 15
@@ -660,7 +661,7 @@ object edtVideoInfo: TedtVideoInfo
       object pRecordingContext: TPanel
         Left = 0
         Height = 45
-        Top = 503
+        Top = 548
         Width = 399
         Align = alTop
         AutoSize = True
@@ -675,7 +676,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblRecordingContext: TLabel
           Left = 16
           Height = 15
@@ -699,7 +700,7 @@ object edtVideoInfo: TedtVideoInfo
       object pHabitat: TPanel
         Left = 0
         Height = 45
-        Top = 593
+        Top = 638
         Width = 399
         Align = alTop
         AutoSize = True
@@ -714,7 +715,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 12
         object lblHabitat: TLabel
           Left = 16
           Height = 15
@@ -738,7 +739,7 @@ object edtVideoInfo: TedtVideoInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 651
+        Top = 696
         Width = 399
         Align = alTop
         AutoSize = True
@@ -754,7 +755,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 13
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
@@ -800,7 +801,7 @@ object edtVideoInfo: TedtVideoInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 696
+        Top = 741
         Width = 399
         Align = alTop
         AutoSize = True
@@ -815,7 +816,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 14
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
@@ -839,7 +840,7 @@ object edtVideoInfo: TedtVideoInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 741
+        Top = 786
         Width = 399
         Align = alTop
         AutoSize = True
@@ -854,7 +855,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 15
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
@@ -878,7 +879,7 @@ object edtVideoInfo: TedtVideoInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 786
+        Top = 831
         Width = 399
         Align = alTop
         AutoSize = True
@@ -893,7 +894,7 @@ object edtVideoInfo: TedtVideoInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 16
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
@@ -912,6 +913,46 @@ object edtVideoInfo: TedtVideoInfo
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 387
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 7
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

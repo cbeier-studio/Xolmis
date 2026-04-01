@@ -332,6 +332,13 @@ begin
       ColumnByFieldname(COL_END_LATITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
       ColumnByFieldname(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
+
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
   end;
 end;
 
@@ -464,6 +471,13 @@ begin
       ColumnByFieldname(COL_END_LATITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
       ColumnByFieldname(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
+
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
   end;
 end;
 
@@ -517,7 +531,18 @@ end;
 
 procedure TNetsEffortSubmoduleController.ConfigureColumns;
 begin
+  with FGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName(COL_NET_ID).Visible then
+      ColumnByFieldName(COL_NET_ID).ReadOnly := True;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
+  end;
 end;
 
 procedure TNetsEffortSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
@@ -601,6 +626,12 @@ begin
     if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
       ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
     if DataSource.DataSet.FieldByName(COL_HERBS_DISTRIBUTION).Visible then
       with ColumnByFieldname(COL_HERBS_DISTRIBUTION).PickList do
       begin

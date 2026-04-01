@@ -35,6 +35,7 @@ type
     FLocalityId: Integer;
     FLatitude: Extended;
     FLongitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FObserverId: Integer;
     FTaxonId: Integer;
     FIndividualId: Integer;
@@ -81,6 +82,7 @@ type
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property ObserverId: Integer read FObserverId write FObserverId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
@@ -155,6 +157,7 @@ begin
     FLocalityId := TSighting(Source).LocalityId;
     FLatitude := TSighting(Source).Latitude;
     FLongitude := TSighting(Source).Longitude;
+    FCoordinatePrecision := TSighting(Source).CoordinatePrecision;
     FObserverId := TSighting(Source).ObserverId;
     FTaxonId := TSighting(Source).TaxonId;
     FIndividualId := TSighting(Source).IndividualId;
@@ -195,6 +198,7 @@ begin
   FLocalityId := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FObserverId := 0;
   FTaxonId := 0;
   FIndividualId := 0;
@@ -246,6 +250,14 @@ begin
   if FieldValuesDiff(rscDate, aOld.SightingDate, FSightingDate, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscTime, aOld.SightingTime, FSightingTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
     Changes.Add(R);
@@ -320,6 +332,13 @@ begin
     FLocalityId           := Obj.Get('locality_id', 0);
     FLongitude            := Obj.Get('longitude', 0.0);
     FLatitude             := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FObserverId           := Obj.Get('observer_id', 0);
     FTaxonId              := Obj.Get('taxon_id', 0);
     FIndividualId         := Obj.Get('individual_id', 0);
@@ -365,6 +384,7 @@ begin
     JSONObject.Add('locality_id', FLocalityId);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('observer_id', FObserverId);
     JSONObject.Add('taxon_id', FTaxonId);
     JSONObject.Add('individual_id', FIndividualId);
@@ -403,14 +423,14 @@ end;
 function TSighting.ToString: String;
 begin
   Result := Format('Sighting(Id=%d, SurveyId=%d, SightingDate=%s, SightingTime=%s, LocalityId=%d, ' +
-    'Longitude=%f, Latitude=%f, ObserverId=%d, TaxonId=%d, IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, ' +
+    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, ObserverId=%d, TaxonId=%d, IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, ' +
     'FlightHeight=%f, FlightDirection=%s, ' +
     'MethodId=%d, MackinnonListNumber=%d, Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
     'MalesTally=%s, FemalesTally=%s, NotSexedTally=%s, AdultsTally=%s, ImmaturesTally=%s, NotAgedTally=%s, ' +
     'NewCapturesTally=%d, RecapturesTally=%d, UnbandedTally=%d, DetectionType=%s, BreedingStatus=%s, ' +
     'NotSurveying=%s, IsOnEbird=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude,
+    [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
     FObserverId, FTaxonId, FIndividualId, FSubjectTally, FSubjectDistance,
     FFlightHeight, FFlightDirection, FMethodId, FMackinnonListNumber,
     BoolToStr(FSubjectCaptured, 'True', 'False'), BoolToStr(FSubjectSeen, 'True', 'False'),
@@ -531,6 +551,7 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'method_id, ' +
       'mackinnon_list_num, ' +
       'observer_id, ' +
@@ -631,6 +652,7 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'method_id, ' +
       'mackinnon_list_num, ' +
       'observer_id, ' +
@@ -699,6 +721,13 @@ begin
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -761,6 +790,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('observer_id') >= 0 then
     R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('taxon_id') >= 0 then
@@ -840,6 +879,7 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'method_id, ' +
       'mackinnon_list_num, ' +
       'observer_id, ' +
@@ -879,6 +919,7 @@ begin
       ':locality_id, ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       ':method_id, ' +
       ':mackinnon_list_num, ' +
       ':observer_id, ' +
@@ -917,6 +958,7 @@ begin
     SetTimeParam(ParamByName('sighting_time'), R.SightingTime);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('method_id'), R.MethodId);
     SetIntParam(ParamByName('mackinnon_list_num'), R.MackinnonListNumber);
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
@@ -988,6 +1030,7 @@ begin
       'locality_id = :locality_id, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'method_id = :method_id, ' +
       'mackinnon_list_num = :mackinnon_list_num, ' +
       'observer_id = :observer_id, ' +
@@ -1029,6 +1072,7 @@ begin
     SetTimeParam(ParamByName('sighting_time'), R.SightingTime);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('method_id'), R.MethodId);
     SetIntParam(ParamByName('mackinnon_list_num'), R.MackinnonListNumber);
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);

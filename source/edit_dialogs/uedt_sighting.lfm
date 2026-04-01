@@ -124,7 +124,7 @@ object edtSighting: TedtSighting
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1083
+      Height = 1128
       Top = 0
       Width = 436
       Align = alTop
@@ -134,13 +134,13 @@ object edtSighting: TedtSighting
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.EnlargeHorizontal = crsSameSize
       ChildSizing.ShrinkHorizontal = crsSameSize
-      ClientHeight = 1083
+      ClientHeight = 1128
       ClientWidth = 436
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 113
-        Top = 938
+        Top = 983
         Width = 436
         Align = alTop
         AutoSize = True
@@ -154,7 +154,7 @@ object edtSighting: TedtSighting
         ClientHeight = 113
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 17
+        TabOrder = 18
         object lblNotes: TLabel
           Left = 16
           Height = 16
@@ -263,7 +263,7 @@ object edtSighting: TedtSighting
       object pDateTime: TPanel
         Left = 0
         Height = 45
-        Top = 268
+        Top = 313
         Width = 436
         Align = alTop
         AutoSize = True
@@ -278,7 +278,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 6
         object lblDate: TLabel
           Left = 16
           Height = 15
@@ -335,7 +335,7 @@ object edtSighting: TedtSighting
       object pQuantityDistance: TPanel
         Left = 0
         Height = 45
-        Top = 416
+        Top = 461
         Width = 436
         Align = alTop
         AutoSize = True
@@ -350,7 +350,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblQuantity: TLabel
           Left = 16
           Height = 15
@@ -396,7 +396,7 @@ object edtSighting: TedtSighting
       object pMackinnonListNumber: TPanel
         Left = 0
         Height = 45
-        Top = 551
+        Top = 596
         Width = 436
         Align = alTop
         AutoSize = True
@@ -411,7 +411,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 12
         object lblMackinnonListNumber: TLabel
           Left = 16
           Height = 15
@@ -446,7 +446,7 @@ object edtSighting: TedtSighting
       object pDetectionBreeding: TPanel
         Left = 0
         Height = 45
-        Top = 506
+        Top = 551
         Width = 436
         Align = alTop
         AutoSize = True
@@ -461,7 +461,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 11
         object lblDetectionType: TLabel
           Left = 16
           Height = 15
@@ -524,7 +524,7 @@ object edtSighting: TedtSighting
       object pCapturesRecapturesUnbanded: TPanel
         Left = 0
         Height = 45
-        Top = 709
+        Top = 754
         Width = 436
         Align = alTop
         AutoSize = True
@@ -540,7 +540,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 14
         object lblNewCapturesTally: TLabel
           Left = 16
           Height = 15
@@ -757,7 +757,7 @@ object edtSighting: TedtSighting
       object pTaxon: TPanel
         Left = 0
         Height = 45
-        Top = 326
+        Top = 371
         Width = 436
         Align = alTop
         AutoSize = True
@@ -773,7 +773,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 7
         object lblTaxon: TLabel
           Left = 16
           Height = 15
@@ -809,7 +809,7 @@ object edtSighting: TedtSighting
       object pIndividual: TPanel
         Left = 0
         Height = 45
-        Top = 371
+        Top = 416
         Width = 436
         Align = alTop
         AutoSize = True
@@ -824,7 +824,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblIndividual: TLabel
           Left = 16
           Height = 15
@@ -860,7 +860,7 @@ object edtSighting: TedtSighting
       object pHowWasRecorded: TPanel
         Left = 0
         Height = 87
-        Top = 609
+        Top = 654
         Width = 436
         Align = alTop
         AutoSize = True
@@ -876,7 +876,7 @@ object edtSighting: TedtSighting
         ClientHeight = 87
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 13
         object lblHowWasRecorded: TLabel
           Left = 16
           Height = 15
@@ -952,7 +952,7 @@ object edtSighting: TedtSighting
       object pMalesFemalesNotSexed: TPanel
         Left = 0
         Height = 45
-        Top = 767
+        Top = 812
         Width = 436
         Align = alTop
         AutoSize = True
@@ -968,7 +968,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 15
         object lblMalesTally: TLabel
           Left = 16
           Height = 15
@@ -1030,7 +1030,7 @@ object edtSighting: TedtSighting
       object pAdultsImmaturesNotAged: TPanel
         Left = 0
         Height = 45
-        Top = 825
+        Top = 870
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1046,7 +1046,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 16
         object lblAdultsTally: TLabel
           Left = 16
           Height = 15
@@ -1108,7 +1108,7 @@ object edtSighting: TedtSighting
       object pInEbirdNotSurveying: TPanel
         Left = 0
         Height = 42
-        Top = 883
+        Top = 928
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1122,7 +1122,7 @@ object edtSighting: TedtSighting
         ClientHeight = 42
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 16
+        TabOrder = 17
         object ckIsInEbird: TCheckBox
           Left = 16
           Height = 19
@@ -1229,7 +1229,7 @@ object edtSighting: TedtSighting
       object pFlightHeightDirection: TPanel
         Left = 0
         Height = 45
-        Top = 461
+        Top = 506
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1244,7 +1244,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblFlightHeight: TLabel
           Left = 16
           Height = 15
@@ -1303,6 +1303,46 @@ object edtSighting: TedtSighting
           )
           Style = csDropDownList
           TabOrder = 1
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 268
+        Width = 436
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 436
+        ParentBackground = False
+        TabOrder = 5
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 404
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 404
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

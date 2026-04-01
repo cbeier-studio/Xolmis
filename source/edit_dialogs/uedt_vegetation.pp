@@ -14,6 +14,7 @@ type
 
   TedtVegetation = class(TForm)
     btnHelp: TSpeedButton;
+    cbCoordinatePrecision: TComboBox;
     cbShrubsDistribution: TComboBox;
     cbTreesDistribution: TComboBox;
     cbHerbsDistribution: TComboBox;
@@ -29,6 +30,7 @@ type
     lblCloudCover: TLabel;
     lblCloudCover1: TLabel;
     lblCloudCover2: TLabel;
+    lblCoordinatesPrecision: TLabel;
     lblLatitude: TLabel;
     lblLongitude: TLabel;
     lblNotes: TLabel;
@@ -46,6 +48,7 @@ type
     lineBottom: TShapeLineBGRA;
     mNotes: TMemo;
     pBottom: TPanel;
+    pCoordinatesPrecision: TPanel;
     pHerbsProportionHeight: TPanel;
     pShrubsProportionHeight: TPanel;
     pTreesProportionHeight: TPanel;
@@ -276,6 +279,13 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   cbHerbsDistribution.Items.Add(rsDistributionNone);
   cbHerbsDistribution.Items.Add(rsDistributionRare);
   cbHerbsDistribution.Items.Add(rsDistributionFewSparse);
@@ -323,6 +333,13 @@ begin
     eLongitude.Text := FloatToStr(FVegetation.Longitude);
     eLatitude.Text := FloatToStr(FVegetation.Latitude);
   end;
+  case FVegetation.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
+  end;
   cbHerbsDistribution.ItemIndex := Ord(FVegetation.HerbsDistribution);
   eHerbsProportion.Value := FVegetation.HerbsProportion;
   eHerbsAvgHeight.Value := FVegetation.HerbsAvgHeight;
@@ -367,6 +384,13 @@ begin
     FVegetation.Longitude          := StrToFloat(eLongitude.Text);
   if eLatitude.Text <> EmptyStr then
     FVegetation.Latitude           := StrToFloat(eLatitude.Text);
+  case cbCoordinatePrecision.ItemIndex of
+    0: FVegetation.CoordinatePrecision := cpExact;
+    1: FVegetation.CoordinatePrecision := cpApproximated;
+    2: FVegetation.CoordinatePrecision := cpReference;
+  else
+    FVegetation.CoordinatePrecision := cpEmpty;
+  end;
   FVegetation.HerbsDistribution  := TStratumDistribution(cbHerbsDistribution.ItemIndex);
   FVegetation.HerbsProportion    := eHerbsProportion.Value;
   FVegetation.HerbsAvgHeight     := eHerbsAvgHeight.Value;

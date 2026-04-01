@@ -31,6 +31,7 @@ type
   TedtSamplingPlot = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     eName: TEdit;
     eAbbreviation: TEdit;
     eLocality: TEditButton;
@@ -39,6 +40,7 @@ type
     dsLink: TDataSource;
     lblAcronym: TLabel;
     lblAcronym1: TLabel;
+    lblCoordinatesPrecision: TLabel;
     lblLongitude: TLabel;
     lblLatitude: TLabel;
     lblNotes: TLabel;
@@ -47,6 +49,7 @@ type
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
     mDescription: TMemo;
+    pCoordinatesPrecision: TPanel;
     pmnNewLocality: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
@@ -313,6 +316,13 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSamplingPlot)]);
@@ -342,6 +352,13 @@ begin
   begin
     eLongitude.Text := FloatToStr(FSamplingPlot.Longitude);
     eLatitude.Text := FloatToStr(FSamplingPlot.Latitude);
+  end;
+  case FSamplingPlot.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   mDescription.Text := FSamplingPlot.Description;
   mNotes.Text := FSamplingPlot.Notes;
@@ -389,6 +406,13 @@ begin
     FSamplingPlot.Latitude := StrToFloat(eLatitude.Text)
   else
     FSamplingPlot.Latitude := 0;
+  case cbCoordinatePrecision.ItemIndex of
+    0: FSamplingPlot.CoordinatePrecision := cpExact;
+    1: FSamplingPlot.CoordinatePrecision := cpApproximated;
+    2: FSamplingPlot.CoordinatePrecision := cpReference;
+  else
+    FSamplingPlot.CoordinatePrecision := cpEmpty;
+  end;
   FSamplingPlot.Description := mDescription.Text;
   FSamplingPlot.Notes := mNotes.Text;
 end;

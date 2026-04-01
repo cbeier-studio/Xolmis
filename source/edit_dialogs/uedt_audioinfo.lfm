@@ -9,6 +9,7 @@ object edtAudioInfo: TedtAudioInfo
   ClientWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -121,14 +122,14 @@ object edtAudioInfo: TedtAudioInfo
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 1072
+      Height = 1117
       Top = 0
       Width = 399
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 1072
+      ClientHeight = 1117
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
@@ -468,7 +469,7 @@ object edtAudioInfo: TedtAudioInfo
       object pTaxon: TPanel
         Left = 0
         Height = 45
-        Top = 400
+        Top = 445
         Width = 399
         Align = alTop
         AutoSize = True
@@ -484,7 +485,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblTaxon: TLabel
           Left = 16
           Height = 15
@@ -570,7 +571,7 @@ object edtAudioInfo: TedtAudioInfo
       object pRecorderModel: TPanel
         Left = 0
         Height = 45
-        Top = 458
+        Top = 503
         Width = 399
         Align = alTop
         AutoSize = True
@@ -586,7 +587,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblRecorderModel: TLabel
           Left = 16
           Height = 15
@@ -610,7 +611,7 @@ object edtAudioInfo: TedtAudioInfo
       object pMicModel: TPanel
         Left = 0
         Height = 45
-        Top = 503
+        Top = 548
         Width = 399
         Align = alTop
         AutoSize = True
@@ -625,7 +626,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblMicModel: TLabel
           Left = 16
           Height = 15
@@ -649,7 +650,7 @@ object edtAudioInfo: TedtAudioInfo
       object pFilterModel: TPanel
         Left = 0
         Height = 45
-        Top = 548
+        Top = 593
         Width = 399
         Align = alTop
         AutoSize = True
@@ -664,7 +665,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 11
         object lblFilterModel: TLabel
           Left = 16
           Height = 15
@@ -688,7 +689,7 @@ object edtAudioInfo: TedtAudioInfo
       object pSubjectsTallyDistance: TPanel
         Left = 0
         Height = 45
-        Top = 638
+        Top = 683
         Width = 399
         Align = alTop
         AutoSize = True
@@ -703,7 +704,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 13
         object lblSubjectsTally: TLabel
           Left = 16
           Height = 15
@@ -747,7 +748,7 @@ object edtAudioInfo: TedtAudioInfo
       object pHumidityPlayback: TPanel
         Left = 0
         Height = 45
-        Top = 773
+        Top = 818
         Width = 399
         Align = alTop
         AutoSize = True
@@ -762,7 +763,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 16
         object lblRelativeHumidity: TLabel
           Left = 16
           Height = 15
@@ -807,7 +808,7 @@ object edtAudioInfo: TedtAudioInfo
       object pPrecipitationWindSpeed: TPanel
         Left = 0
         Height = 45
-        Top = 728
+        Top = 773
         Width = 399
         Align = alTop
         AutoSize = True
@@ -822,7 +823,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 15
         object lblPrecipitation: TLabel
           Left = 16
           Height = 15
@@ -868,7 +869,7 @@ object edtAudioInfo: TedtAudioInfo
       object pTemperatureCloudCover: TPanel
         Left = 0
         Height = 45
-        Top = 683
+        Top = 728
         Width = 399
         Align = alTop
         AutoSize = True
@@ -883,7 +884,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 14
         object lblTemperature: TLabel
           Left = 16
           Height = 15
@@ -928,7 +929,7 @@ object edtAudioInfo: TedtAudioInfo
       object pRecordingContext: TPanel
         Left = 0
         Height = 45
-        Top = 593
+        Top = 638
         Width = 399
         Align = alTop
         AutoSize = True
@@ -943,7 +944,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 12
         object lblRecordingContext: TLabel
           Left = 16
           Height = 15
@@ -967,7 +968,7 @@ object edtAudioInfo: TedtAudioInfo
       object pHabitat: TPanel
         Left = 0
         Height = 45
-        Top = 818
+        Top = 863
         Width = 399
         Align = alTop
         AutoSize = True
@@ -982,7 +983,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 16
+        TabOrder = 17
         object lblHabitat: TLabel
           Left = 16
           Height = 15
@@ -1006,7 +1007,7 @@ object edtAudioInfo: TedtAudioInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 876
+        Top = 921
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1022,7 +1023,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 17
+        TabOrder = 18
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
@@ -1068,7 +1069,7 @@ object edtAudioInfo: TedtAudioInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 921
+        Top = 966
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1083,7 +1084,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 18
+        TabOrder = 19
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
@@ -1107,7 +1108,7 @@ object edtAudioInfo: TedtAudioInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 966
+        Top = 1011
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1122,7 +1123,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 19
+        TabOrder = 20
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
@@ -1146,7 +1147,7 @@ object edtAudioInfo: TedtAudioInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 1011
+        Top = 1056
         Width = 399
         Align = alTop
         AutoSize = True
@@ -1161,7 +1162,7 @@ object edtAudioInfo: TedtAudioInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 20
+        TabOrder = 21
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
@@ -1180,6 +1181,46 @@ object edtAudioInfo: TedtAudioInfo
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 387
+        Width = 399
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 399
+        ParentBackground = False
+        TabOrder = 7
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 367
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 367
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

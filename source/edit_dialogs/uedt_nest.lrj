@@ -52,6 +52,7 @@
 {"hash":138933770,"name":"tedtnest.lblexternalmindiameter.caption","sourcebytes":[76,101,115,115,101,114,32,101,120,116,101,114,110,97,108,32,100,105,97,109,101,116,101,114,58],"value":"Lesser external diameter:"},
 {"hash":238404250,"name":"tedtnest.lblexternalmaxdiameter.caption","sourcebytes":[71,114,101,97,116,101,114,32,101,120,116,101,114,110,97,108,32,100,105,97,109,101,116,101,114,58],"value":"Greater external diameter:"},
 {"hash":12327338,"name":"tedtnest.lbllosscause.caption","sourcebytes":[67,97,117,115,101,32,111,102,32,108,111,115,115,58],"value":"Cause of loss:"},
+{"hash":250770538,"name":"tedtnest.lblcoordinatesprecision.caption","sourcebytes":[67,111,111,114,100,105,110,97,116,101,115,32,112,114,101,99,105,115,105,111,110,58],"value":"Coordinates precision:"},
 {"hash":132301524,"name":"tedtnest.pmnnewproject.caption","sourcebytes":[78,101,119,32,112,114,111,106,101,99,116],"value":"New project"},
 {"hash":214961042,"name":"tedtnest.pmnnewperson.caption","sourcebytes":[78,101,119,32,111,98,115,101,114,118,101,114],"value":"New observer"},
 {"hash":14469001,"name":"tedtnest.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"},

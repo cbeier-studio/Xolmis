@@ -1,22 +1,23 @@
 object edtPermanentNet: TedtPermanentNet
   Left = 352
-  Height = 301
+  Height = 361
   Top = 33
   Width = 397
   AutoSize = True
   Caption = 'New permanent mistnet'
-  ClientHeight = 301
+  ClientHeight = 361
   ClientWidth = 397
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 258
+    Top = 303
     Width = 397
     Align = alTop
     LineColor = 9276813
@@ -26,7 +27,7 @@ object edtPermanentNet: TedtPermanentNet
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 260
+    Top = 305
     Width = 397
     Align = alTop
     AutoSize = True
@@ -92,20 +93,20 @@ object edtPermanentNet: TedtPermanentNet
   end
   object pClient: TPanel
     Left = 0
-    Height = 258
+    Height = 303
     Top = 0
     Width = 397
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 258
+    ClientHeight = 303
     ClientWidth = 397
     TabOrder = 0
     object pNotes: TPanel
       Left = 0
       Height = 118
-      Top = 124
+      Top = 169
       Width = 397
       Align = alTop
       AutoSize = True
@@ -118,7 +119,7 @@ object edtPermanentNet: TedtPermanentNet
       ClientHeight = 118
       ClientWidth = 397
       ParentBackground = False
-      TabOrder = 2
+      TabOrder = 3
       object lblNotes: TLabel
         Left = 16
         Height = 20
@@ -275,6 +276,46 @@ object edtPermanentNet: TedtPermanentNet
         OnEditingDone = eNetNumberEditingDone
         OnKeyDown = FormKeyDown
         OnKeyPress = eLongitudeKeyPress
+      end
+    end
+    object pCoordinatesPrecision: TPanel
+      Left = 0
+      Height = 45
+      Top = 108
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      ClientHeight = 45
+      ClientWidth = 397
+      ParentBackground = False
+      TabOrder = 2
+      object lblCoordinatesPrecision: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 365
+        BorderSpacing.Top = 3
+        Caption = 'Coordinates precision:'
+        ParentColor = False
+        ParentFont = False
+      end
+      object cbCoordinatePrecision: TComboBox
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 365
+        ItemHeight = 15
+        Style = csDropDownList
+        TabOrder = 0
+        OnKeyDown = FormKeyDown
       end
     end
   end

@@ -35,6 +35,7 @@ type
     FLocalityId: Integer;
     FLatitude: Extended;
     FLongitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FTaxonId: Integer;
     FNestShape: String;
     FSupportType: String;
@@ -85,6 +86,7 @@ type
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property ProjectId: Integer read FProjectId write FProjectId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property NestShape: String read FNestShape write FNestShape;
@@ -1824,6 +1826,7 @@ begin
     FLocalityId := TNest(Source).LocalityId;
     FLatitude := TNest(Source).Latitude;
     FLongitude := TNest(Source).Longitude;
+    FCoordinatePrecision := TNest(Source).CoordinatePrecision;
     FTaxonId := TNest(Source).TaxonId;
     FNestShape := TNest(Source).NestShape;
     FSupportType := TNest(Source).SupportType;
@@ -1867,6 +1870,7 @@ begin
   FLocalityId := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FTaxonId := 0;
   FNestShape := EmptyStr;
   FSupportType := EmptyStr;
@@ -1928,6 +1932,8 @@ begin
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     Changes.Add(R);
@@ -2015,6 +2021,13 @@ begin
     FLocalityId           := Obj.Get('locality_id', 0);
     FLongitude            := Obj.Get('longitude', 0.0);
     FLatitude             := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FTaxonId              := Obj.Get('taxon_id', 0);
     FNestShape            := Obj.Get('nest_shape', '');
     FSupportType          := Obj.Get('support_type', '');
@@ -2081,6 +2094,7 @@ begin
     JSONObject.Add('locality_id', FLocalityId);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('taxon_id', FTaxonId);
     JSONObject.Add('nest_shape', FNestShape);
     JSONObject.Add('support_type', FSupportType);
@@ -2122,14 +2136,14 @@ end;
 function TNest.ToString: String;
 begin
   Result := Format('Nest(Id=%d, FullName=%s, FieldNumber=%s, ObserverId=%d, ProjectId=%d, LocalityId=%d, ' +
-    'Longitude=%f, Latitude=%f, TaxonId=%d, NestShape=%s, SupportType=%s, SupportPlant1Id=%d, SupportPlant2Id=%d, ' +
+    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, NestShape=%s, SupportType=%s, SupportPlant1Id=%d, SupportPlant2Id=%d, ' +
     'OtherSupport=%s, HeightAboveGround=%f, InternalMaxDiameter=%f, InternalMinDiameter=%f, ExternalMaxDiameter=%f, ' +
     'ExternalMinDiameter=%f, InternalHeight=%f, ExternalHeight=%f, EdgeDistance=%f, CenterDistance=%f, ' +
     'NestCover=%d, PlantMaxDiameter=%f, PlantMinDiameter=%f, PlantHeight=%f, PlantDbh=%f, ConstructionDays=%f, ' +
     'IncubationDays=%f, NestlingDays=%f, ActiveDays=%f, NestFate=%s, LossCause=%s, NestProductivity=%d, FoundDate=%s, ' +
     'LastDate=%s, Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FFieldNumber, FObserverId, FProjectId, FLocalityId, FLongitude, FLatitude, FTaxonId,
+    [FId, FFullName, FFieldNumber, FObserverId, FProjectId, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FTaxonId,
     FNestShape, FSupportType, FSupportPlant1Id, FSupportPlant2Id, FOtherSupport, FHeightAboveGround,
     FInternalMaxDiameter, FInternalMinDiameter, FExternalMaxDiameter, FExternalMinDiameter,
     FInternalHeight, FExternalHeight, FEdgeDistance, FCenterDistance, FNestCover, FPlantMaxDiameter,
@@ -2248,6 +2262,7 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'taxon_id, ' +
       'nest_shape, ' +
       'support_type, ' +
@@ -2351,6 +2366,7 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'taxon_id, ' +
       'nest_shape, ' +
       'support_type, ' +
@@ -2423,6 +2439,13 @@ begin
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.NestShape := FieldByName('nest_shape').AsString;
     R.SupportType := FieldByName('support_type').AsString;
@@ -2506,6 +2529,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
   if ARow.IndexOfName('nest_shape') >= 0 then
@@ -2613,6 +2646,7 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'taxon_id, ' +
       'nest_shape, ' +
       'support_type, ' +
@@ -2654,6 +2688,7 @@ begin
       ':locality_id, ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       ':taxon_id, ' +
       ':nest_shape, ' +
       ':support_type, ' +
@@ -2694,6 +2729,7 @@ begin
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetStrParam(ParamByName('nest_shape'), R.NestShape);
     SetStrParam(ParamByName('support_type'), R.SupportType);
@@ -2773,6 +2809,7 @@ begin
     Add('  locality_id = :locality_id,');
     Add('  longitude = :longitude,');
     Add('  latitude = :latitude,');
+    Add('  coordinate_precision = :coordinate_precision,');
     Add('  taxon_id = :taxon_id,');
     Add('  nest_shape = :nest_shape,');
     Add('  support_type = :support_type,');
@@ -2814,6 +2851,7 @@ begin
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetStrParam(ParamByName('nest_shape'), R.NestShape);
     SetStrParam(ParamByName('support_type'), R.SupportType);

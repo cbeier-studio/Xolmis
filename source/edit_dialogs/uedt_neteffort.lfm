@@ -11,14 +11,14 @@ object edtNetEffort: TedtNetEffort
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 660
+    Top = 703
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -27,34 +27,34 @@ object edtNetEffort: TedtNetEffort
   end
   object sBox: TScrollBox
     Left = 0
-    Height = 660
+    Height = 705
     Top = 0
     Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 660
+    VertScrollBar.Page = 705
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 660
+    ClientHeight = 705
     ClientWidth = 416
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 660
+      Height = 705
       Top = 0
       Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 660
+      ClientHeight = 705
       ClientWidth = 416
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 532
+        Top = 577
         Width = 416
         Align = alTop
         AutoSize = True
@@ -67,7 +67,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 112
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 11
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -246,7 +246,7 @@ object edtNetEffort: TedtNetEffort
       object pNetLengthHeight: TPanel
         Left = 0
         Height = 45
-        Top = 191
+        Top = 236
         Width = 416
         Align = alTop
         AutoSize = True
@@ -262,7 +262,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 4
         object lblNetLength: TLabel
           Left = 16
           Height = 15
@@ -311,7 +311,7 @@ object edtNetEffort: TedtNetEffort
       object pNetMeshArea: TPanel
         Left = 0
         Height = 45
-        Top = 236
+        Top = 281
         Width = 416
         Align = alTop
         AutoSize = True
@@ -326,7 +326,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 5
         object lblNetMesh: TLabel
           Left = 16
           Height = 15
@@ -372,7 +372,7 @@ object edtNetEffort: TedtNetEffort
       object pDateTotalTime: TPanel
         Left = 0
         Height = 45
-        Top = 294
+        Top = 339
         Width = 416
         Align = alTop
         AutoSize = True
@@ -388,7 +388,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 6
         object lblDate: TLabel
           Left = 16
           Height = 15
@@ -446,7 +446,7 @@ object edtNetEffort: TedtNetEffort
       object pNetOpenClose1: TPanel
         Left = 0
         Height = 45
-        Top = 339
+        Top = 384
         Width = 416
         Align = alTop
         AutoSize = True
@@ -461,7 +461,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 7
         object lblNetOpen1: TLabel
           Left = 16
           Height = 15
@@ -508,7 +508,7 @@ object edtNetEffort: TedtNetEffort
       object pNetOpenClose2: TPanel
         Left = 0
         Height = 45
-        Top = 384
+        Top = 429
         Width = 416
         Align = alTop
         AutoSize = True
@@ -523,7 +523,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblNetOpen2: TLabel
           Left = 16
           Height = 15
@@ -570,7 +570,7 @@ object edtNetEffort: TedtNetEffort
       object pNetOpenClose3: TPanel
         Left = 0
         Height = 45
-        Top = 429
+        Top = 474
         Width = 416
         Align = alTop
         AutoSize = True
@@ -585,7 +585,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblNetOpen3: TLabel
           Left = 16
           Height = 15
@@ -715,7 +715,7 @@ object edtNetEffort: TedtNetEffort
       object pNetOpenClose4: TPanel
         Left = 0
         Height = 45
-        Top = 474
+        Top = 519
         Width = 416
         Align = alTop
         AutoSize = True
@@ -730,7 +730,7 @@ object edtNetEffort: TedtNetEffort
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblNetOpen4: TLabel
           Left = 16
           Height = 15
@@ -774,12 +774,52 @@ object edtNetEffort: TedtNetEffort
           OnKeyPress = eNetNumberKeyPress
         end
       end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 178
+        Width = 416
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 416
+        ParentBackground = False
+        TabOrder = 3
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 384
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 384
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
+        end
+      end
     end
   end
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 662
+    Top = 703
     Width = 416
     Align = alTop
     AutoSize = True

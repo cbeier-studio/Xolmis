@@ -32,6 +32,7 @@ type
   TedtSpecimen = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     cbSampleType: TComboBox;
     dsLink: TDataSource;
     eCollectionYear: TEdit;
@@ -48,6 +49,7 @@ type
     lblBandStatus4: TLabel;
     lblBandStatus9: TLabel;
     lblCollectionDate1: TLabel;
+    lblCoordinatesPrecision: TLabel;
     lblNotes: TLabel;
     lblFieldNumber: TLabel;
     lblCollectionDate: TLabel;
@@ -58,6 +60,7 @@ type
     lblSampleType: TLabel;
     lblTaxon: TLabel;
     lineBottom: TShapeLineBGRA;
+    pCoordinatesPrecision: TPanel;
     pmnNewLocality: TMenuItem;
     pmnNewIndividual: TMenuItem;
     pmnNewNest: TMenuItem;
@@ -490,6 +493,13 @@ begin
   cbSampleType.Items.Add(rsSpecimenFeces);
   cbSampleType.Items.Add(rsSpecimenRegurgite);
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)]);
@@ -558,6 +568,13 @@ begin
   begin
     eLongitude.Text := FloatToStr(FSpecimen.Longitude);
     eLatitude.Text := FloatToStr(FSpecimen.Latitude);
+  end;
+  case FSpecimen.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FSpecimen.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
@@ -653,6 +670,13 @@ begin
     FSpecimen.Latitude := StrToFloat(eLatitude.Text)
   else
     FSpecimen.Latitude := 0;
+  case cbCoordinatePrecision.ItemIndex of
+    0: FSpecimen.CoordinatePrecision := cpExact;
+    1: FSpecimen.CoordinatePrecision := cpApproximated;
+    2: FSpecimen.CoordinatePrecision := cpReference;
+  else
+    FSpecimen.CoordinatePrecision := cpEmpty;
+  end;
   FSpecimen.TaxonId := FTaxonId;
   FSpecimen.IndividualId := FIndividualId;
   FSpecimen.NestId := FNestId;

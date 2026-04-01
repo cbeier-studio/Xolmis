@@ -43,6 +43,7 @@ type
     FLocalityId: Integer;
     FLatitude: Extended;
     FLongitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -70,6 +71,7 @@ type
     property LocalityId: Integer read FLocalityId write FLocalityId;
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -763,6 +765,7 @@ begin
     FLocalityId := TSpecimen(Source).LocalityId;
     FLatitude := TSpecimen(Source).Latitude;
     FLongitude := TSpecimen(Source).Longitude;
+    FCoordinatePrecision := TSpecimen(Source).CoordinatePrecision;
     FNotes := TSpecimen(Source).Notes;
   end;
 end;
@@ -784,6 +787,7 @@ begin
   FLocalityId := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FNotes := EmptyStr;
 end;
 
@@ -822,6 +826,8 @@ begin
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscCollectionDay, aOld.CollectionDay, FCollectionDay, R) then
     Changes.Add(R);
@@ -875,6 +881,13 @@ begin
     FLocalityId       := Obj.Get('locality_id', 0);
     FLongitude        := Obj.Get('longitude', 0.0);
     FLatitude         := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FNotes            := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -900,6 +913,7 @@ begin
     JSONObject.Add('locality_id', FLocalityId);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -912,10 +926,10 @@ function TSpecimen.ToString: String;
 begin
   Result := Format('Specimen(Id=%d, FieldNumber=%s, SampleType=%s, FullName=%s, TaxonId=%d, IndividualId=%d, ' +
     'NestId=%d, EggId=%d, CollectionDay=%d, CollectionMonth=%d, CollectionYear=%d, LocalityId=%d, Longitude=%f, ' +
-    'Latitude=%f, Notes=%s, ' +
+    'Latitude=%f, CoordinatePrecision=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFieldNumber, SPECIMEN_TYPES[Ord(FSampleType)], FFullName, FTaxonId, FIndividualId, FNestId, FEggId,
-    FCollectionDay, FCollectionMonth, FCollectionYear, FLocalityId, FLongitude, FLatitude, FNotes,
+    FCollectionDay, FCollectionMonth, FCollectionYear, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -1041,6 +1055,7 @@ begin
         'locality_id, ' +
         'longitude, ' +
         'latitude, ' +
+        'coordinate_precision, ' +
         'notes, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -1126,6 +1141,7 @@ begin
         'locality_id, ' +
         'longitude, ' +
         'latitude, ' +
+        'coordinate_precision, ' +
         'notes, ' +
         'user_inserted, ' +
         'user_updated, ' +
@@ -1190,6 +1206,13 @@ begin
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -1257,6 +1280,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -1288,6 +1321,7 @@ begin
       'locality_id, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'notes, ' +
       'user_inserted, ' +
       'insert_date) ');
@@ -1305,6 +1339,7 @@ begin
       ':locality_id, ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))');
@@ -1319,6 +1354,7 @@ begin
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetStrParam(ParamByName('notes'), R.Notes);
     R.FullName := GetSpecimenFullName(R.FieldNumber, R.SampleType, R.TaxonId, R.LocalityId);
@@ -1373,6 +1409,7 @@ begin
       'locality_id = :locality_id, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec''), ' +
@@ -1390,6 +1427,7 @@ begin
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetStrParam(ParamByName('notes'), R.Notes);
     R.FullName := GetSpecimenFullName(R.FieldNumber, R.SampleType, R.TaxonId, R.LocalityId);

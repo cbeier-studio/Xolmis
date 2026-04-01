@@ -30,10 +30,12 @@ type
 
   TedtPermanentNet = class(TForm)
     btnHelp: TSpeedButton;
+    cbCoordinatePrecision: TComboBox;
     eLongitude: TEditButton;
     eLatitude: TEditButton;
     eNetNumber: TEdit;
     dsLink: TDataSource;
+    lblCoordinatesPrecision: TLabel;
     lblNetNumber: TLabel;
     lblLatitude: TLabel;
     lblNetNumber1: TLabel;
@@ -43,6 +45,7 @@ type
     mNotes: TMemo;
     pBottom: TPanel;
     pClient: TPanel;
+    pCoordinatesPrecision: TPanel;
     pNetNumber: TPanel;
     pLongitudeLatitude: TPanel;
     pNotes: TPanel;
@@ -82,7 +85,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_gis, utils_validations, utils_fullnames,
-  data_types, data_consts, data_columns,
+  data_types, data_consts, data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -249,6 +252,13 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionPermanentNet)]);
@@ -273,6 +283,13 @@ begin
   begin
     eLongitude.Text := FloatToStr(FNet.Longitude);
     eLatitude.Text := FloatToStr(FNet.Latitude);
+  end;
+  case FNet.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   mNotes.Text := FNet.Notes;
 end;
@@ -319,6 +336,13 @@ begin
   begin
     FNet.Longitude := 0;
     FNet.Latitude := 0;
+  end;
+  case cbCoordinatePrecision.ItemIndex of
+    0: FNet.CoordinatePrecision := cpExact;
+    1: FNet.CoordinatePrecision := cpApproximated;
+    2: FNet.CoordinatePrecision := cpReference;
+  else
+    FNet.CoordinatePrecision := cpEmpty;
   end;
   FNet.Notes := mNotes.Text;
 

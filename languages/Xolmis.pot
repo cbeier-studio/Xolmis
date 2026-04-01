@@ -3306,6 +3306,10 @@ msgstr ""
 msgid "Audio files location"
 msgstr ""
 
+#: tcfgoptions.lblautofillcoordinates.caption
+msgid "Auto fill blank coordinates with gazetteer coordinates, if available"
+msgstr ""
+
 #: tcfgoptions.lblautosizecolumns.caption
 msgid "Auto size columns to fit the content"
 msgstr ""
@@ -3344,6 +3348,10 @@ msgstr ""
 
 #: tcfgoptions.lblprivacyterms.caption
 msgid "Privacy terms"
+msgstr ""
+
+#: tcfgoptions.lblremembercollectioninfo.caption
+msgid "Remember and pre-fill locality, observer and method when editing a new record"
 msgstr ""
 
 #: tcfgoptions.lblrememberconnection.caption
@@ -5766,6 +5774,11 @@ msgctxt "tedtaudioinfo.lblcloudcover.caption"
 msgid "Cloud cover (%):"
 msgstr ""
 
+#: tedtaudioinfo.lblcoordinatesprecision.caption
+msgctxt "tedtaudioinfo.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr ""
+
 #: tedtaudioinfo.lbldistance.caption
 msgctxt "tedtaudioinfo.lbldistance.caption"
 msgid "Distance (m):"
@@ -6193,6 +6206,11 @@ msgstr ""
 #: tedtcapture.etaxon.buttonhint
 msgctxt "tedtcapture.etaxon.buttonhint"
 msgid "Find taxon"
+msgstr ""
+
+#: tedtcapture.label10.caption
+msgctxt "tedtcapture.label10.caption"
+msgid "Coordinates precision:"
 msgstr ""
 
 #: tedtcapture.label44.caption
@@ -7612,6 +7630,11 @@ msgctxt "tedtnest.lblconstructiondays.caption"
 msgid "Days building:"
 msgstr ""
 
+#: tedtnest.lblcoordinatesprecision.caption
+msgctxt "tedtnest.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr ""
+
 #: tedtnest.lbldescription.caption
 msgctxt "tedtnest.lbldescription.caption"
 msgid "Nest description:"
@@ -8021,6 +8044,11 @@ msgctxt "tedtneteffort.esurvey.buttonhint"
 msgid "Find survey"
 msgstr ""
 
+#: tedtneteffort.lblcoordinatesprecision.caption
+msgctxt "tedtneteffort.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr ""
+
 #: tedtneteffort.lbldate.caption
 msgctxt "tedtneteffort.lbldate.caption"
 msgid "Survey date: *"
@@ -8144,6 +8172,11 @@ msgstr ""
 #: tedtpermanentnet.elongitude.buttonhint
 msgctxt "tedtpermanentnet.elongitude.buttonhint"
 msgid "Edit/import coordinate"
+msgstr ""
+
+#: tedtpermanentnet.lblcoordinatesprecision.caption
+msgctxt "tedtpermanentnet.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
 msgstr ""
 
 #: tedtpermanentnet.lbllatitude.caption
@@ -8926,6 +8959,11 @@ msgctxt "tedtsamplingplot.lblacronym.caption"
 msgid "Abbreviation: *"
 msgstr ""
 
+#: tedtsamplingplot.lblcoordinatesprecision.caption
+msgctxt "tedtsamplingplot.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr ""
+
 #: tedtsamplingplot.lbldescription.caption
 msgctxt "tedtsamplingplot.lbldescription.caption"
 msgid "Description:"
@@ -9059,6 +9097,11 @@ msgstr ""
 #: tedtsighting.lblbreedingstatus.caption
 msgctxt "tedtsighting.lblbreedingstatus.caption"
 msgid "Breeding/behavior code:"
+msgstr ""
+
+#: tedtsighting.lblcoordinatesprecision.caption
+msgctxt "tedtsighting.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
 msgstr ""
 
 #: tedtsighting.lbldate.caption
@@ -9362,6 +9405,11 @@ msgctxt "tedtspecimen.lblcollectiondate.caption"
 msgid "Collection date: *"
 msgstr ""
 
+#: tedtspecimen.lblcoordinatesprecision.caption
+msgctxt "tedtspecimen.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr ""
+
 #: tedtspecimen.lblegg.caption
 msgctxt "tedtspecimen.lblegg.caption"
 msgid "Egg:"
@@ -9504,6 +9552,11 @@ msgstr ""
 #: tedtsurvey.lblarea.caption
 msgctxt "tedtsurvey.lblarea.caption"
 msgid "Area (ha):"
+msgstr ""
+
+#: tedtsurvey.lblcoordinatesprecision.caption
+msgctxt "tedtsurvey.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
 msgstr ""
 
 #: tedtsurvey.lbldistance.caption
@@ -9768,6 +9821,11 @@ msgctxt "tedtvegetation.lblcloudcover2.caption"
 msgid "Proportion (%):"
 msgstr ""
 
+#: tedtvegetation.lblcoordinatesprecision.caption
+msgctxt "tedtvegetation.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr ""
+
 #: tedtvegetation.lbllatitude.caption
 msgctxt "tedtvegetation.lbllatitude.caption"
 msgid "Latitude:"
@@ -9906,6 +9964,11 @@ msgstr ""
 
 #: tedtvideoinfo.lblcameramodel.caption
 msgid "Camera model:"
+msgstr ""
+
+#: tedtvideoinfo.lblcoordinatesprecision.caption
+msgctxt "tedtvideoinfo.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
 msgstr ""
 
 #: tedtvideoinfo.lbldistance.caption
@@ -15249,10 +15312,22 @@ msgstr ""
 msgid "Value \"%s\" is not a valid time for the field %s."
 msgstr ""
 
+#: utils_locale.rserrorloadingdatabaseschema
+msgid "The database schema was not loaded."
+msgstr ""
+
 #: utils_locale.rserrorloadingdatafromjsonfile
 #, object-pascal-format
 msgctxt "utils_locale.rserrorloadingdatafromjsonfile"
 msgid "Error loading data from the JSON file: %s"
+msgstr ""
+
+#: utils_locale.rserrorloadingfieldschema
+msgid "The field schema was not loaded."
+msgstr ""
+
+#: utils_locale.rserrorloadingtableschema
+msgid "The table schema was not loaded."
 msgstr ""
 
 #: utils_locale.rserrorlookupvaluenotfoundforfield
@@ -18668,6 +18743,10 @@ msgstr ""
 #: utils_locale.rsunexpectedcolumnfound
 #, object-pascal-format
 msgid "Unexpected column \"%s\" found in CSV header."
+msgstr ""
+
+#: utils_locale.rsunitdays
+msgid "day(s)"
 msgstr ""
 
 #: utils_locale.rsunresolved

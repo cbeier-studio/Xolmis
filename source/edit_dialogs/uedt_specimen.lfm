@@ -19,7 +19,7 @@ object edtSpecimen: TedtSpecimen
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 530
+    Top = 573
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -29,7 +29,7 @@ object edtSpecimen: TedtSpecimen
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 532
+    Top = 573
     Width = 416
     Align = alTop
     AutoSize = True
@@ -112,34 +112,34 @@ object edtSpecimen: TedtSpecimen
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 530
+    Height = 575
     Top = 0
     Width = 416
     HorzScrollBar.Page = 397
-    VertScrollBar.Page = 530
+    VertScrollBar.Page = 575
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 530
+    ClientHeight = 575
     ClientWidth = 416
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 530
+      Height = 575
       Top = 0
       Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 530
+      ClientHeight = 575
       ClientWidth = 416
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 402
+        Top = 447
         Width = 416
         Align = alTop
         AutoSize = True
@@ -153,7 +153,7 @@ object edtSpecimen: TedtSpecimen
         ClientHeight = 112
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 9
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -258,7 +258,7 @@ object edtSpecimen: TedtSpecimen
       object pIndividual: TPanel
         Left = 0
         Height = 45
-        Top = 254
+        Top = 299
         Width = 416
         Align = alTop
         AutoSize = True
@@ -273,7 +273,7 @@ object edtSpecimen: TedtSpecimen
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 6
         object lblIndividual: TLabel
           Left = 16
           Height = 15
@@ -405,7 +405,7 @@ object edtSpecimen: TedtSpecimen
       object pTaxon: TPanel
         Left = 0
         Height = 45
-        Top = 196
+        Top = 241
         Width = 416
         Align = alTop
         AutoSize = True
@@ -419,7 +419,7 @@ object edtSpecimen: TedtSpecimen
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 5
         object lblTaxon: TLabel
           Left = 16
           Height = 15
@@ -455,7 +455,7 @@ object edtSpecimen: TedtSpecimen
       object pNest: TPanel
         Left = 0
         Height = 45
-        Top = 299
+        Top = 344
         Width = 416
         Align = alTop
         AutoSize = True
@@ -469,7 +469,7 @@ object edtSpecimen: TedtSpecimen
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 7
         object lblNest: TLabel
           Left = 16
           Height = 15
@@ -504,7 +504,7 @@ object edtSpecimen: TedtSpecimen
       object pEgg: TPanel
         Left = 0
         Height = 45
-        Top = 344
+        Top = 389
         Width = 416
         Align = alTop
         AutoSize = True
@@ -518,7 +518,7 @@ object edtSpecimen: TedtSpecimen
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblEgg: TLabel
           Left = 16
           Height = 15
@@ -678,6 +678,46 @@ object edtSpecimen: TedtSpecimen
           OnButtonClick = eLongitudeButtonClick
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 196
+        Width = 416
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 416
+        ParentBackground = False
+        TabOrder = 4
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 384
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 384
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

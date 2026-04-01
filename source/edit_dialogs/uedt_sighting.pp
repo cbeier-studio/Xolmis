@@ -32,6 +32,7 @@ type
   TedtSighting = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     ckCaptured: TCheckBox;
     ckSeen: TCheckBox;
     ckHeard: TCheckBox;
@@ -62,6 +63,7 @@ type
     eSurvey: TEditButton;
     dsLink: TDataSource;
     eDistance: TFloatSpinEdit;
+    lblCoordinatesPrecision: TLabel;
     lblDistance: TLabel;
     lblDistance1: TLabel;
     lblLatitude: TLabel;
@@ -93,6 +95,7 @@ type
     lblHowWasRecorded: TLabel;
     lblUseDate1: TLabel;
     lineBottom: TShapeLineBGRA;
+    pCoordinatesPrecision: TPanel;
     pmnNewSurvey: TMenuItem;
     pmnNewPerson: TMenuItem;
     pmnNewMethod: TMenuItem;
@@ -667,6 +670,13 @@ begin
   pSurvey.Visible := FSurveyId = 0;
   pIndividual.Visible := FIndividualId = 0;
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)]);
@@ -731,6 +741,13 @@ begin
   begin
     eLongitude.Text := FloatToStr(FSighting.Longitude);
     eLatitude.Text := FloatToStr(FSighting.Latitude);
+  end;
+  case FSighting.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   if not DateIsNull(FSighting.SightingDate) then
     eDate.Text := DateToStr(FSighting.SightingDate);
@@ -822,6 +839,13 @@ begin
   FSighting.LocalityId          := FLocalityId;
   FSighting.Longitude           := StrToFloatDef(eLongitude.Text, 0.0);
   FSighting.Latitude            := StrToFloatDef(eLatitude.Text, 0.0);
+  case cbCoordinatePrecision.ItemIndex of
+    0: FSighting.CoordinatePrecision := cpExact;
+    1: FSighting.CoordinatePrecision := cpApproximated;
+    2: FSighting.CoordinatePrecision := cpReference;
+  else
+    FSighting.CoordinatePrecision := cpEmpty;
+  end;
   FSighting.SightingDate        := StrToDateDef(eDate.Text, NullDate);
   FSighting.SightingTime        := StrToTimeDef(eTime.Text, NullTime);
   FSighting.TaxonId             := FTaxonId;

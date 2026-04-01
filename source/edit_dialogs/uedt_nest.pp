@@ -32,6 +32,7 @@ type
   TedtNest = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     cbNestFate: TComboBox;
     cbNestShape: TComboBox;
     cbLossCause: TComboBox;
@@ -67,6 +68,7 @@ type
     eNestlingDays: TFloatSpinEdit;
     eActiveDays: TFloatSpinEdit;
     lblBandStatus1: TLabel;
+    lblCoordinatesPrecision: TLabel;
     lblExternalMinDiameter: TLabel;
     lblExternalMaxDiameter: TLabel;
     lblHeightAboveGround: TLabel;
@@ -106,6 +108,7 @@ type
     lblSupplier1: TLabel;
     lineBottom: TShapeLineBGRA;
     mDescription: TMemo;
+    pCoordinatesPrecision: TPanel;
     pmnNewProject: TMenuItem;
     pmnNewPerson: TMenuItem;
     pmnNewLocality: TMenuItem;
@@ -577,6 +580,13 @@ end;
 
 procedure TedtNest.FormCreate(Sender: TObject);
 begin
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   cbNestFate.Items.CommaText := '"' + rsNestLost + '","' + rsNestSuccess + '","' + rsNestUnknown + '"';
   cbSupportType.Items.CommaText := '"' + rsSupportGround + '","' +
     rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
@@ -680,6 +690,13 @@ begin
   begin
     eLongitude.Text := FloatToStr(FNest.Longitude);
     eLatitude.Text := FloatToStr(FNest.Latitude);
+  end;
+  case FNest.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   mDescription.Text := FNest.Description;
   eProductivity.Value := FNest.NestProductivity;
@@ -827,6 +844,13 @@ begin
     FNest.Longitude         := StrToFloat(eLongitude.Text);
   if eLatitude.Text <> EmptyStr then
     FNest.Latitude          := StrToFloat(eLatitude.Text);
+  case cbCoordinatePrecision.ItemIndex of
+    0: FNest.CoordinatePrecision := cpExact;
+    1: FNest.CoordinatePrecision := cpApproximated;
+    2: FNest.CoordinatePrecision := cpReference;
+  else
+    FNest.CoordinatePrecision := cpEmpty;
+  end;
   FNest.Description       := mDescription.Text;
   FNest.NestProductivity  := eProductivity.Value;
   case cbNestShape.ItemIndex of

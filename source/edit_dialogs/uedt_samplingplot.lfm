@@ -1,11 +1,11 @@
 object edtSamplingPlot: TedtSamplingPlot
   Left = 352
-  Height = 477
+  Height = 535
   Top = 33
   Width = 416
   AutoSize = True
   Caption = 'New sampling plot'
-  ClientHeight = 477
+  ClientHeight = 535
   ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
@@ -18,7 +18,7 @@ object edtSamplingPlot: TedtSamplingPlot
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 434
+    Top = 479
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -28,7 +28,7 @@ object edtSamplingPlot: TedtSamplingPlot
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 436
+    Top = 481
     Width = 416
     Align = alTop
     AutoSize = True
@@ -110,29 +110,29 @@ object edtSamplingPlot: TedtSamplingPlot
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 434
+    Height = 479
     Top = 0
     Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 434
+    VertScrollBar.Page = 479
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 434
+    ClientHeight = 479
     ClientWidth = 416
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 434
+      Height = 479
       Top = 0
       Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 434
+      ClientHeight = 479
       ClientWidth = 416
       TabOrder = 0
       object pLocality: TPanel
@@ -189,7 +189,7 @@ object edtSamplingPlot: TedtSamplingPlot
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 306
+        Top = 351
         Width = 416
         Align = alTop
         AutoSize = True
@@ -203,7 +203,7 @@ object edtSamplingPlot: TedtSamplingPlot
         ClientHeight = 112
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 6
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -401,7 +401,7 @@ object edtSamplingPlot: TedtSamplingPlot
       object pDescription: TPanel
         Left = 0
         Height = 89
-        Top = 209
+        Top = 254
         Width = 416
         Align = alTop
         AutoSize = True
@@ -414,7 +414,7 @@ object edtSamplingPlot: TedtSamplingPlot
         ClientHeight = 89
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 5
         object lblDescription: TLabel
           Left = 16
           Height = 16
@@ -437,6 +437,46 @@ object edtSamplingPlot: TedtSamplingPlot
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
+        end
+      end
+      object pCoordinatesPrecision: TPanel
+        Left = 0
+        Height = 45
+        Top = 196
+        Width = 416
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 416
+        ParentBackground = False
+        TabOrder = 4
+        object lblCoordinatesPrecision: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 384
+          BorderSpacing.Top = 3
+          Caption = 'Coordinates precision:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbCoordinatePrecision: TComboBox
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 384
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 0
+          OnKeyDown = FormKeyDown
         end
       end
     end

@@ -3283,6 +3283,10 @@ msgstr "Local dos documentos"
 msgid "Audio files location"
 msgstr "Local dos arquivos de áudio"
 
+#: tcfgoptions.lblautofillcoordinates.caption
+msgid "Auto fill blank coordinates with gazetteer coordinates, if available"
+msgstr "Preencher automaticamente coordenadas em branco com as coordenadas do gazetteer, se disponíveis"
+
 #: tcfgoptions.lblautosizecolumns.caption
 msgid "Auto size columns to fit the content"
 msgstr "Ajustar largura das colunas ao conteúdo automaticamente"
@@ -3322,6 +3326,10 @@ msgstr "Abrir arquivos após exportar"
 #: tcfgoptions.lblprivacyterms.caption
 msgid "Privacy terms"
 msgstr "Termos de privacidade"
+
+#: tcfgoptions.lblremembercollectioninfo.caption
+msgid "Remember and pre-fill locality, observer and method when editing a new record"
+msgstr "Lembrar e pré-preencher localidade, observador e método quando editar um novo registro"
 
 #: tcfgoptions.lblrememberconnection.caption
 msgid "Remember connection from last session"
@@ -5751,6 +5759,11 @@ msgctxt "tedtaudioinfo.lblcloudcover.caption"
 msgid "Cloud cover (%):"
 msgstr "Cobertura de nuvens (%):"
 
+#: tedtaudioinfo.lblcoordinatesprecision.caption
+msgctxt "tedtaudioinfo.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
 #: tedtaudioinfo.lbldistance.caption
 msgctxt "tedtaudioinfo.lbldistance.caption"
 msgid "Distance (m):"
@@ -6179,6 +6192,11 @@ msgstr "Procurar amostragem"
 msgctxt "tedtcapture.etaxon.buttonhint"
 msgid "Find taxon"
 msgstr "Buscar táxon"
+
+#: tedtcapture.label10.caption
+msgctxt "tedtcapture.label10.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
 
 #: tedtcapture.label44.caption
 msgid "Skull length (mm):"
@@ -7597,6 +7615,11 @@ msgctxt "tedtnest.lblconstructiondays.caption"
 msgid "Days building:"
 msgstr "Dias de construção:"
 
+#: tedtnest.lblcoordinatesprecision.caption
+msgctxt "tedtnest.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
 #: tedtnest.lbldescription.caption
 msgctxt "tedtnest.lbldescription.caption"
 msgid "Nest description:"
@@ -8006,6 +8029,11 @@ msgctxt "tedtneteffort.esurvey.buttonhint"
 msgid "Find survey"
 msgstr "Procurar amostragem"
 
+#: tedtneteffort.lblcoordinatesprecision.caption
+msgctxt "tedtneteffort.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
 #: tedtneteffort.lbldate.caption
 msgctxt "tedtneteffort.lbldate.caption"
 msgid "Survey date: *"
@@ -8130,6 +8158,11 @@ msgstr "Editar/importar coordenada"
 msgctxt "tedtpermanentnet.elongitude.buttonhint"
 msgid "Edit/import coordinate"
 msgstr "Editar/importar coordenada"
+
+#: tedtpermanentnet.lblcoordinatesprecision.caption
+msgctxt "tedtpermanentnet.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
 
 #: tedtpermanentnet.lbllatitude.caption
 msgctxt "tedtpermanentnet.lbllatitude.caption"
@@ -8910,6 +8943,11 @@ msgctxt "tedtsamplingplot.lblacronym.caption"
 msgid "Abbreviation: *"
 msgstr "Abreviatura: *"
 
+#: tedtsamplingplot.lblcoordinatesprecision.caption
+msgctxt "tedtsamplingplot.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
 #: tedtsamplingplot.lbldescription.caption
 msgctxt "tedtsamplingplot.lbldescription.caption"
 msgid "Description:"
@@ -9044,6 +9082,11 @@ msgstr "Nº de adultos:"
 msgctxt "tedtsighting.lblbreedingstatus.caption"
 msgid "Breeding/behavior code:"
 msgstr "Código de reprodução/comportamento:"
+
+#: tedtsighting.lblcoordinatesprecision.caption
+msgctxt "tedtsighting.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
 
 #: tedtsighting.lbldate.caption
 msgctxt "tedtsighting.lbldate.caption"
@@ -9346,6 +9389,11 @@ msgctxt "tedtspecimen.lblcollectiondate.caption"
 msgid "Collection date: *"
 msgstr "Data da coleta: *"
 
+#: tedtspecimen.lblcoordinatesprecision.caption
+msgctxt "tedtspecimen.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
 #: tedtspecimen.lblegg.caption
 msgctxt "tedtspecimen.lblegg.caption"
 msgid "Egg:"
@@ -9489,6 +9537,11 @@ msgstr "HH:MM"
 msgctxt "tedtsurvey.lblarea.caption"
 msgid "Area (ha):"
 msgstr "Área (ha):"
+
+#: tedtsurvey.lblcoordinatesprecision.caption
+msgctxt "tedtsurvey.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
 
 #: tedtsurvey.lbldistance.caption
 msgctxt "tedtsurvey.lbldistance.caption"
@@ -9752,6 +9805,11 @@ msgctxt "tedtvegetation.lblcloudcover2.caption"
 msgid "Proportion (%):"
 msgstr "Proporção (%):"
 
+#: tedtvegetation.lblcoordinatesprecision.caption
+msgctxt "tedtvegetation.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
 #: tedtvegetation.lbllatitude.caption
 msgctxt "tedtvegetation.lbllatitude.caption"
 msgid "Latitude:"
@@ -9891,6 +9949,11 @@ msgstr "Autor:"
 #: tedtvideoinfo.lblcameramodel.caption
 msgid "Camera model:"
 msgstr "Modelo da câmera:"
+
+#: tedtvideoinfo.lblcoordinatesprecision.caption
+msgctxt "tedtvideoinfo.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
 
 #: tedtvideoinfo.lbldistance.caption
 msgctxt "tedtvideoinfo.lbldistance.caption"
@@ -15234,11 +15297,23 @@ msgstr "O valor \"%s\" não é um número válido para o campo %s."
 msgid "Value \"%s\" is not a valid time for the field %s."
 msgstr "O valor \"%s\" não é um horário válido para o campo %s."
 
+#: utils_locale.rserrorloadingdatabaseschema
+msgid "The database schema was not loaded."
+msgstr "O esquema do banco de dados não foi carregado."
+
 #: utils_locale.rserrorloadingdatafromjsonfile
 #, object-pascal-format
 msgctxt "utils_locale.rserrorloadingdatafromjsonfile"
 msgid "Error loading data from the JSON file: %s"
 msgstr "Erro carregando dados do arquivo JSON: %s"
+
+#: utils_locale.rserrorloadingfieldschema
+msgid "The field schema was not loaded."
+msgstr "O esquema do campo não foi carregado."
+
+#: utils_locale.rserrorloadingtableschema
+msgid "The table schema was not loaded."
+msgstr "O esquema da tabela não foi carregado."
 
 #: utils_locale.rserrorlookupvaluenotfoundforfield
 #, object-pascal-format
@@ -18817,6 +18892,10 @@ msgstr "Sr.,Sir,Sra.,Srta.,Sra.,Madame,Bel./BS.,M./MSc.,Dr./PhD."
 #, object-pascal-format
 msgid "Unexpected column \"%s\" found in CSV header."
 msgstr "Coluna inesperada \"%s\" encontrada no cabeçalho do arquivo CSV."
+
+#: utils_locale.rsunitdays
+msgid "day(s)"
+msgstr "dia(s)"
 
 #: utils_locale.rsunresolved
 msgctxt "utils_locale.rsunresolved"

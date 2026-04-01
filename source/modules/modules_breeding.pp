@@ -206,6 +206,12 @@ begin
     if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
       ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
     if DataSource.DataSet.FieldByName(COL_NEST_SHAPE).Visible then
     begin
       ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeScrape);
@@ -417,6 +423,12 @@ begin
     if DataSource.DataSet.FieldByName(COL_PROJECT_NAME).Visible then
       ColumnByFieldName(COL_PROJECT_NAME).ButtonStyle := cbsEllipsis;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
     if DataSource.DataSet.FieldByName(COL_NEST_SHAPE).Visible then
     begin
       ColumnByFieldname(COL_NEST_SHAPE).PickList.Add(rsNestShapeScrape);

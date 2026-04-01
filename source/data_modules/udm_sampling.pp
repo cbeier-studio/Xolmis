@@ -55,6 +55,7 @@ type
     qCapturescapture_type: TStringField;
     qCapturesclaw_sample: TBooleanField;
     qCapturescloacal_protuberance: TStringField;
+    qCapturescoordinate_precision: TStringField;
     qCapturescountry_id: TLongintField;
     qCapturesculmen_length: TFloatField;
     qCapturescycle_code: TStringField;
@@ -186,6 +187,7 @@ type
     qImagesuser_updated: TLongintField;
     qNetsEffort: TSQLQuery;
     qNetsEffortactive_status: TBooleanField;
+    qNetsEffortcoordinate_precision: TStringField;
     qNetsEffortexported_status: TBooleanField;
     qNetsEffortfull_name: TStringField;
     qNetsEffortinsert_date: TDateTimeField;
@@ -221,6 +223,7 @@ type
     qSightingsactive_status: TBooleanField;
     qSightingsadults_tally: TStringField;
     qSightingsbreeding_status: TStringField;
+    qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
     qSightingsdetection_type: TStringField;
     qSightingsebird_available: TBooleanField;
@@ -315,6 +318,7 @@ type
     qSurveys: TSQLQuery;
     qSurveysactive_status: TBooleanField;
     qSurveysarea_total: TFloatField;
+    qSurveyscoordinate_precision: TStringField;
     qSurveyscountry_id: TLongintField;
     qSurveyscountry_name: TStringField;
     qSurveysdistance_total: TFloatField;
@@ -371,6 +375,7 @@ type
     qSurveyTeamuser_updated: TLongintField;
     qSurveyTeamvisitor: TBooleanField;
     qVegetationactive_status: TBooleanField;
+    qVegetationcoordinate_precision: TStringField;
     qVegetationexported_status: TBooleanField;
     qVegetationherbs_avg_height: TLongintField;
     qVegetationherbs_distribution: TLongintField;
@@ -429,6 +434,8 @@ type
     procedure qCapturesBeforePost(DataSet: TDataSet);
     procedure qCapturescapture_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qCapturescapture_typeSetText(Sender: TField; const aText: string);
+    procedure qCapturescoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qCapturescoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qCapturessubject_ageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qCapturessubject_ageSetText(Sender: TField; const aText: string);
     procedure qCapturessubject_sexGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -446,13 +453,19 @@ type
     procedure qNetsEffortAfterPost(DataSet: TDataSet);
     procedure qNetsEffortBeforeEdit(DataSet: TDataSet);
     procedure qNetsEffortBeforePost(DataSet: TDataSet);
+    procedure qNetsEffortcoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qNetsEffortcoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSightingsAfterCancel(DataSet: TDataSet);
     procedure qSightingsAfterInsert(DataSet: TDataSet);
     procedure qSightingsAfterPost(DataSet: TDataSet);
     procedure qSightingsBeforeEdit(DataSet: TDataSet);
     procedure qSightingsBeforePost(DataSet: TDataSet);
+    procedure qSightingscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSightingscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSurveysAfterInsert(DataSet: TDataSet);
     procedure qSurveysBeforePost(DataSet: TDataSet);
+    procedure qSurveyscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSurveyscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSurveyTeamAfterCancel(DataSet: TDataSet);
     procedure qSurveyTeamAfterInsert(DataSet: TDataSet);
     procedure qSurveyTeamAfterPost(DataSet: TDataSet);
@@ -462,6 +475,8 @@ type
     procedure qVegetationAfterPost(DataSet: TDataSet);
     procedure qVegetationBeforeEdit(DataSet: TDataSet);
     procedure qVegetationBeforePost(DataSet: TDataSet);
+    procedure qVegetationcoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qVegetationcoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qVegetationherbs_distributionGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qVegetationherbs_distributionSetText(Sender: TField;
@@ -622,6 +637,35 @@ begin
   else
   if aText = rsCaptureUnbanded then
     Sender.AsString := 'U';
+end;
+
+procedure TDMS.qCapturescoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qCapturescoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
 end;
 
 procedure TDMS.qCapturessubject_ageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -998,6 +1042,35 @@ begin
   SetRecordDateUser(DataSet);
 end;
 
+procedure TDMS.qNetsEffortcoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qNetsEffortcoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
+end;
+
 procedure TDMS.qSightingsAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldSighting) then
@@ -1076,6 +1149,35 @@ begin
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
+procedure TDMS.qSightingscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qSightingscoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
+end;
+
 procedure TDMS.qSurveysAfterInsert(DataSet: TDataSet);
 begin
   with DataSet do
@@ -1094,6 +1196,35 @@ begin
   { Load hierarchies }
   if not DataSet.FieldByName('locality_id').IsNull then
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
+procedure TDMS.qSurveyscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qSurveyscoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
 end;
 
 procedure TDMS.qSurveyTeamAfterCancel(DataSet: TDataSet);
@@ -1199,6 +1330,35 @@ end;
 procedure TDMS.qVegetationBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TDMS.qVegetationcoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qVegetationcoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
 end;
 
 procedure TDMS.qVegetationherbs_distributionGetText(Sender: TField;

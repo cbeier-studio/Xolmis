@@ -7,5 +7,6 @@
 {"hash":244105770,"name":"tedtpermanentnet.lbllongitude.caption","sourcebytes":[76,111,110,103,105,116,117,100,101,58,32,42],"value":"Longitude: *"},
 {"hash":199755562,"name":"tedtpermanentnet.lbllatitude.caption","sourcebytes":[76,97,116,105,116,117,100,101,58,32,42],"value":"Latitude: *"},
 {"hash":110507173,"name":"tedtpermanentnet.elongitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
-{"hash":110507173,"name":"tedtpermanentnet.elatitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"}
+{"hash":110507173,"name":"tedtpermanentnet.elatitude.buttonhint","sourcebytes":[69,100,105,116,47,105,109,112,111,114,116,32,99,111,111,114,100,105,110,97,116,101],"value":"Edit/import coordinate"},
+{"hash":250770538,"name":"tedtpermanentnet.lblcoordinatesprecision.caption","sourcebytes":[67,111,111,114,100,105,110,97,116,101,115,32,112,114,101,99,105,115,105,111,110,58],"value":"Coordinates precision:"}
 ]}

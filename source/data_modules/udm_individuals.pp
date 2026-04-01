@@ -54,6 +54,7 @@ type
     qCapturescapture_type: TStringField;
     qCapturesclaw_sample: TBooleanField;
     qCapturescloacal_protuberance: TStringField;
+    qCapturescoordinate_precision: TStringField;
     qCapturescountry_id: TLongintField;
     qCapturesculmen_length: TFloatField;
     qCapturescycle_code: TStringField;
@@ -306,6 +307,7 @@ type
     qNestsactive_status: TBooleanField;
     qNestscenter_distance: TFloatField;
     qNestsconstruction_days: TFloatField;
+    qNestscoordinate_precision: TStringField;
     qNestscountry_id: TLongintField;
     qNestsdescription: TMemoField;
     qNestsedge_distance: TFloatField;
@@ -329,6 +331,7 @@ type
     qNestslocality_id: TLongintField;
     qNestslocality_name: TStringField;
     qNestslongitude: TFloatField;
+    qNestsloss_cause: TStringField;
     qNestsmarked_status: TBooleanField;
     qNestsmunicipality_id: TLongintField;
     qNestsnestling_days: TFloatField;
@@ -365,6 +368,7 @@ type
     qSightingsactive_status: TBooleanField;
     qSightingsadults_tally: TStringField;
     qSightingsbreeding_status: TStringField;
+    qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
     qSightingsdetection_type: TStringField;
     qSightingsebird_available: TBooleanField;
@@ -435,6 +439,7 @@ type
     qSpecimenscollector_6: TLongintField;
     qSpecimenscollector_7: TLongintField;
     qSpecimenscollector_8: TLongintField;
+    qSpecimenscoordinate_precision: TStringField;
     qSpecimenscountry_id: TLongintField;
     qSpecimenscountry_id1: TLongintField;
     qSpecimensegg_id: TLongintField;
@@ -505,6 +510,8 @@ type
     procedure qCapturescapture_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean
       );
     procedure qCapturescapture_typeSetText(Sender: TField; const aText: string);
+    procedure qCapturescoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qCapturescoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qCapturessubject_ageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qCapturessubject_ageSetText(Sender: TField; const aText: string);
     procedure qCapturessubject_sexGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -539,6 +546,8 @@ type
     procedure qNestsAfterPost(DataSet: TDataSet);
     procedure qNestsBeforeEdit(DataSet: TDataSet);
     procedure qNestsBeforePost(DataSet: TDataSet);
+    procedure qNestscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qNestscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qNestsnest_fateGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qNestsnest_fateSetText(Sender: TField; const aText: string);
@@ -553,11 +562,15 @@ type
     procedure qSightingsAfterPost(DataSet: TDataSet);
     procedure qSightingsBeforeEdit(DataSet: TDataSet);
     procedure qSightingsBeforePost(DataSet: TDataSet);
+    procedure qSightingscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSightingscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSpecimensAfterCancel(DataSet: TDataSet);
     procedure qSpecimensAfterInsert(DataSet: TDataSet);
     procedure qSpecimensAfterPost(DataSet: TDataSet);
     procedure qSpecimensBeforeEdit(DataSet: TDataSet);
     procedure qSpecimensBeforePost(DataSet: TDataSet);
+    procedure qSpecimenscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSpecimenscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSpecimenssample_typeGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qSpecimenssample_typeSetText(Sender: TField; const aText: string);
@@ -710,6 +723,35 @@ begin
   else
   if aText = rsCaptureUnbanded then
     Sender.AsString := 'U';
+end;
+
+procedure TDMI.qCapturescoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qCapturescoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
 end;
 
 procedure TDMI.qCapturessubject_ageGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -1299,6 +1341,35 @@ begin
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
+procedure TDMI.qNestscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qNestscoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
+end;
+
 procedure TDMI.qNestsnest_fateGetText(Sender: TField;
   var aText: string; DisplayText: Boolean);
 begin
@@ -1518,6 +1589,35 @@ begin
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
+procedure TDMI.qSightingscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qSightingscoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
+end;
+
 procedure TDMI.qSpecimensAfterCancel(DataSet: TDataSet);
 begin
   if Assigned(OldSpecimen) then
@@ -1585,6 +1685,35 @@ begin
 
   if not DataSet.FieldByName('locality_id').IsNull then
     GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
+end;
+
+procedure TDMI.qSpecimenscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qSpecimenscoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
 end;
 
 procedure TDMI.qSpecimenssample_typeGetText(Sender: TField;

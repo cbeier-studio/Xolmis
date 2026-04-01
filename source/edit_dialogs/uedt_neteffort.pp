@@ -32,6 +32,7 @@ type
   TedtNetEffort = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     eNetClose2: TEdit;
     eNetClose3: TEdit;
     eNetClose4: TEdit;
@@ -48,6 +49,8 @@ type
     eDate: TEditButton;
     eNetLength: TFloatSpinEdit;
     eNetHeight: TFloatSpinEdit;
+    lblCoordinatesPrecision: TLabel;
+    pCoordinatesPrecision: TPanel;
     pmnNewSurvey: TMenuItem;
     pmNew: TPopupMenu;
     eNetMesh: TSpinEdit;
@@ -135,7 +138,7 @@ implementation
 
 uses
   utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, data_getvalue,
-  utils_fullnames, data_columns, utils_themes, data_consts, utils_editdialogs,
+  utils_fullnames, data_columns, utils_themes, data_consts, utils_editdialogs, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -435,6 +438,13 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionMistnet)]);
@@ -469,6 +479,13 @@ begin
   begin
     eLongitude.Text := FloatToStr(FNetEffort.Longitude);
     eLatitude.Text := FloatToStr(FNetEffort.Latitude);
+  end;
+  case FNetEffort.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
   end;
   eNetLength.Value := FNetEffort.NetLength;
   eNetHeight.Value := FNetEffort.NetHeight;
@@ -549,6 +566,13 @@ begin
     FNetEffort.Latitude     := StrToFloat(eLatitude.Text)
   else
     FNetEffort.Latitude    := 0;
+  case cbCoordinatePrecision.ItemIndex of
+    0: FNetEffort.CoordinatePrecision := cpExact;
+    1: FNetEffort.CoordinatePrecision := cpApproximated;
+    2: FNetEffort.CoordinatePrecision := cpReference;
+  else
+    FNetEffort.CoordinatePrecision := cpEmpty;
+  end;
   FNetEffort.NetLength      := eNetLength.Value;
   FNetEffort.NetHeight      := eNetHeight.Value;
   FNetEffort.NetMesh        := eNetMesh.Value;

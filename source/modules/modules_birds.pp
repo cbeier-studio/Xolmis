@@ -645,6 +645,12 @@ begin
     if DataSource.DataSet.FieldByName(COL_PHOTOGRAPHER_2_NAME).Visible then
       ColumnByFieldname(COL_PHOTOGRAPHER_2_NAME).ButtonStyle := cbsEllipsis;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
     if DataSource.DataSet.FieldByName(COL_CLOACAL_PROTUBERANCE).Visible then
       ColumnByFieldName(COL_CLOACAL_PROTUBERANCE).PickList.AddCommaText('U,N,S,M,L');
     if DataSource.DataSet.FieldByName(COL_BROOD_PATCH).Visible then
@@ -1256,6 +1262,12 @@ begin
     if DataSource.DataSet.FieldByName(COL_PHOTOGRAPHER_2_NAME).Visible then
       ColumnByFieldname(COL_PHOTOGRAPHER_2_NAME).ButtonStyle := cbsEllipsis;
 
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
     if DataSource.DataSet.FieldByName(COL_CLOACAL_PROTUBERANCE).Visible then
       ColumnByFieldName(COL_CLOACAL_PROTUBERANCE).PickList.AddCommaText('U,N,S,M,L');
     if DataSource.DataSet.FieldByName(COL_BROOD_PATCH).Visible then

@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 5;
+  SCHEMA_VERSION: Integer = 6;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -752,6 +752,7 @@ begin
 
   OldVersion := StrToIntDef(ReadDatabaseMetadata(DMM.sqlCon, 'version'), 1);
 
+  // Do not forget to update the SCHEMA_VERSION const value
   if OldVersion = SCHEMA_VERSION then
     Exit;
 
@@ -801,6 +802,25 @@ begin
         LogDebug('Upgrading database schema to version 5');
 
         DMM.sqlCon.ExecuteDirect('ALTER TABLE feathers ADD COLUMN full_name VARCHAR (200);');
+
+        Result := True;
+      end;
+
+      if OldVersion < 6 then
+      begin
+        LogDebug('Upgrading database schema to version 6');
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sampling_plots ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE permanent_nets ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE specimens ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nests ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE surveys ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nets_effort ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE poi_library ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE vegetation ADD COLUMN coordinate_precision VARCHAR (3);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE videos ADD COLUMN coordinate_precision VARCHAR (3);');
 
         Result := True;
       end;
@@ -1386,6 +1406,7 @@ begin
     'acronym          VARCHAR (10)  NOT NULL UNIQUE,' +
     'longitude        REAL,' +
     'latitude         REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'area_shape       VARCHAR (5),' +
     'locality_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'description      TEXT,' +
@@ -1409,6 +1430,7 @@ begin
     'net_number       INTEGER       NOT NULL,' +
     'longitude        REAL,' +
     'latitude         REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'notes            VARCHAR (150),' +
     'full_name        VARCHAR (50),' +
     'user_inserted    INTEGER,' +
@@ -1619,6 +1641,7 @@ begin
     'start_longitude          REAL,' +
     'end_latitude             REAL,' +
     'end_longitude            REAL,' +
+    'coordinate_precision     VARCHAR (3),' +
     'observers_tally          INTEGER,' +
     'area_total               REAL,' +
     'distance_total           REAL,' +
@@ -1674,6 +1697,7 @@ begin
     'net_number       INTEGER,' +
     'longitude        REAL,' +
     'latitude         REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'sample_date      DATE,' +
     'net_open_1       TIME,' +
     'net_close_1      TIME,' +
@@ -1745,6 +1769,7 @@ begin
     'sample_time         TIME,' +
     'longitude           REAL,' +
     'latitude            REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'observer_id         INTEGER,' +
     'herbs_proportion    INTEGER,' +
     'herbs_distribution  INTEGER,' +
@@ -1904,6 +1929,7 @@ begin
     'locality_id          INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'longitude            REAL,' +
     'latitude             REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'method_id            INTEGER       REFERENCES methods (method_id) ON UPDATE CASCADE,' +
     'mackinnon_list_num   INTEGER,' +
     'observer_id          INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
@@ -1971,6 +1997,7 @@ begin
     'net_id                 INTEGER       REFERENCES nets_effort (net_id) ON UPDATE CASCADE,' +
     'longitude              REAL,' +
     'latitude               REAL,' +
+    'coordinate_precision   VARCHAR (3),' +
     'bander_id              INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
     'annotator_id           INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
     'subject_status         CHAR (5),' +
@@ -2196,6 +2223,7 @@ begin
     'locality_id           INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
     'longitude             REAL,' +
     'latitude              REAL,' +
+    'coordinate_precision  VARCHAR (3),' +
     'taxon_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
     'nest_shape            VARCHAR (5),' +
     'support_type          VARCHAR (10),' +
@@ -2345,6 +2373,7 @@ begin
     'locality_id      INTEGER,' +
     'longitude        REAL,' +
     'latitude         REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'notes            TEXT,' +
     'user_inserted    INTEGER,' +
     'user_updated     INTEGER,' +
@@ -2428,6 +2457,7 @@ begin
     'longitude       REAL,' +
     'latitude        REAL,' +
     'altitude        REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'observer_id     INTEGER      REFERENCES people (person_id),' +
     'taxon_id        INTEGER      REFERENCES zoo_taxa (taxon_id),' +
     'individual_id   INTEGER      REFERENCES individuals (individual_id) ON DELETE CASCADE,' +
@@ -2539,6 +2569,7 @@ begin
     'recording_time    TIME,' +
     'longitude         REAL,' +
     'latitude          REAL,' +
+    'coordinate_precision CHAR (1),' +
     'temperature       REAL,' +
     'cloud_cover       INTEGER,' +
     'precipitation     CHAR (1),' +
@@ -2590,6 +2621,7 @@ begin
     'recorder_id       INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
     'longitude         REAL,' +
     'latitude          REAL,' +
+    'coordinate_precision VARCHAR (3),' +
     'recording_context VARCHAR (60),' +
     'habitat           VARCHAR (60),' +
     'camera_model      VARCHAR (60),' +

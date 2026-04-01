@@ -15,6 +15,7 @@ type
   TedtAudioInfo = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
+    cbCoordinatePrecision: TComboBox;
     ckPlaybackUsed: TCheckBox;
     cbLicenseType: TComboBox;
     cbPrecipitation: TComboBox;
@@ -40,6 +41,7 @@ type
     eRelativeHumidity: TFloatSpinEdit;
     eTemperature: TFloatSpinEdit;
     eDistance: TFloatSpinEdit;
+    lblCoordinatesPrecision: TLabel;
     lblHabitat: TLabel;
     lblLatitude: TLabel;
     lblDistance: TLabel;
@@ -69,6 +71,7 @@ type
     lblFilterModel: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
+    pCoordinatesPrecision: TPanel;
     pmnNewPerson: TMenuItem;
     pmnNewLocality: TMenuItem;
     mSubtitle: TMemo;
@@ -453,6 +456,13 @@ begin
 
   { #todo : Recording types combobox list }
 
+  with cbCoordinatePrecision.Items do
+  begin
+    Add(rsExactCoordinate);
+    Add(rsApproximatedCoordinate);
+    Add(rsReferenceCoordinate);
+  end;
+
   cbPrecipitation.Items.Clear;
   cbPrecipitation.Items.Add(rsPrecipitationNone);
   cbPrecipitation.Items.Add(rsPrecipitationFog);
@@ -477,6 +487,13 @@ begin
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FAudio.Longitude);
   eLatitude.Text := FloatToStr(FAudio.Latitude);
+  case FAudio.CoordinatePrecision of
+    cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
+    cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
+    cpReference:    cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsReferenceCoordinate);
+  else
+    cbCoordinatePrecision.ItemIndex := -1;
+  end;
   FTaxonId := FAudio.TaxonId;
   eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FAudio.IndividualId;
@@ -557,6 +574,13 @@ begin
   FAudio.LocalityId    := FLocalityId;
   FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
   FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);
+  case cbCoordinatePrecision.ItemIndex of
+    0: FAudio.CoordinatePrecision := cpExact;
+    1: FAudio.CoordinatePrecision := cpApproximated;
+    2: FAudio.CoordinatePrecision := cpReference;
+  else
+    FAudio.CoordinatePrecision := cpEmpty;
+  end;
   FAudio.TaxonId       := FTaxonId;
   FAudio.IndividualId  := FIndividualId;
   FAudio.SightingId    := FSightingId;

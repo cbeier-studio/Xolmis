@@ -89,6 +89,7 @@ type
     FStartLongitude: Extended;
     FEndLatitude: Extended;
     FEndLongitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FObserversTally: Integer;
     FTotalArea: Double;
     FTotalDistance: Double;
@@ -123,6 +124,7 @@ type
     property StartLongitude: Extended read FStartLongitude write FStartLongitude;
     property EndLatitude: Extended read FEndLatitude write FEndLatitude;
     property EndLongitude: Extended read FEndLongitude write FEndLongitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property ObserversTally: Integer read FObserversTally write FObserversTally;
     property TotalArea: Double read FTotalArea write FTotalArea;
     property TotalDistance: Double read FTotalDistance write FTotalDistance;
@@ -273,6 +275,7 @@ type
     FNetNumber: Integer;
     FLatitude: Extended;
     FLongitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FSampleDate: TDate;
     FNetOpen1: TTime;
     FNetClose1: TTime;
@@ -307,6 +310,7 @@ type
     property NetNumber: Integer read FNetNumber write FNetNumber;
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property SampleDate: TDate read FSampleDate write FSampleDate;
     property NetOpen1: TTime read FNetOpen1 write FNetOpen1;
     property NetClose1: TTime read FNetClose1 write FNetClose1;
@@ -353,6 +357,7 @@ type
     FNotes: String;
     FLongitude: Extended;
     FLatitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FObserverId: Integer;
     FHerbsProportion: Integer;
     FHerbsDistribution: TStratumDistribution;
@@ -380,6 +385,7 @@ type
     property SampleTime: TTime read FSampleTime write FSampleTime;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property ObserverId: Integer read FObserverId write FObserverId;
     property HerbsProportion: Integer read FHerbsProportion write FHerbsProportion;
     property HerbsDistribution: TStratumDistribution read FHerbsDistribution write FHerbsDistribution;
@@ -929,6 +935,7 @@ begin
     FNetNumber := TNetEffort(Source).NetNumber;
     FLatitude := TNetEffort(Source).Latitude;
     FLongitude := TNetEffort(Source).Longitude;
+    FCoordinatePrecision := TNetEffort(Source).CoordinatePrecision;
     FSampleDate := TNetEffort(Source).SampleDate;
     FNetOpen1 := TNetEffort(Source).NetOpen1;
     FNetClose1 := TNetEffort(Source).NetClose1;
@@ -957,6 +964,7 @@ begin
   FNetNumber := 0;
   FLatitude := 0.0;
   FLongitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FSampleDate := StrToDate('30/12/1500');
   FNetOpen1 := StrToTime('00:00:00');
   FNetClose1 := StrToTime('00:00:00');
@@ -1001,6 +1009,8 @@ begin
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscDate, aOld.SampleDate, FSampleDate, R) then
     Changes.Add(R);
@@ -1050,6 +1060,13 @@ begin
     FNetNumber      := Obj.Get('net_number', 0);
     FLongitude      := Obj.Get('longitude', 0.0);
     FLatitude       := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FSampleDate     := Obj.Get('sample_date', NullDate);
     FNetOpen1       := Obj.Get('open_time_1', NullTime);
     FNetClose1      := Obj.Get('close_time_1', NullTime);
@@ -1083,6 +1100,7 @@ begin
     JSONObject.Add('net_number', FNetNumber);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('sample_date', FSampleDate);
     JSONObject.Add('open_time_1', FNetOpen1);
     JSONObject.Add('close_time_1', FNetClose1);
@@ -1108,11 +1126,11 @@ end;
 function TNetEffort.ToString: String;
 begin
   Result := Format('NetEffort(Id=%d, FullName=%s, SurveyId=%d, NetStationId=%d, PermanentNetId=%d, NetNumber=%d, ' +
-    'Longitude=%f, Latitude=%f, SampleDate=%s, NetOpen1=%s, NetClose1=%s, NetOpen2=%s, NetClose2=%s, ' +
+    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, SampleDate=%s, NetOpen1=%s, NetClose1=%s, NetOpen2=%s, NetClose2=%s, ' +
     'NetOpen3=%s, NetClose3=%s, NetOpen4=%s, NetClose4=%s, TotalOpenTime=%f, NetLength=%f, NetHeight=%f, ' +
     'NetArea=%f, NetMesh=%d, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FSurveyId, FNetStationId, FPermanentNetId, FNetNumber, FLongitude, FLatitude,
+    [FId, FFullName, FSurveyId, FNetStationId, FPermanentNetId, FNetNumber, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
     DateToStr(FSampleDate), TimeToStr(FNetOpen1), TimeToStr(FNetClose1), TimeToStr(FNetOpen2), TimeToStr(FNetClose2),
     TimeToStr(FNetOpen3), TimeToStr(FNetClose3), TimeToStr(FNetOpen4), TimeToStr(FNetClose4),
     FTotalOpenTime, FNetLength, FNetHeight, FNetArea, FNetMesh, FNotes,
@@ -1233,6 +1251,7 @@ begin
         'net_number, ' +
         'longitude, ' +
         'latitude, ' +
+        'coordinate_precision, ' +
         'sample_date, ' +
         'net_open_1, ' +
         'net_close_1, ' +
@@ -1316,6 +1335,7 @@ begin
         'net_number, ' +
         'longitude, ' +
         'latitude, ' +
+        'coordinate_precision, ' +
         'sample_date, ' +
         'net_open_1, ' +
         'net_close_1, ' +
@@ -1373,6 +1393,13 @@ begin
     R.NetNumber := FieldByName('net_number').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.SampleDate := FieldByName('sample_date').AsDateTime;
     R.NetOpen1 := FieldByName('net_open_1').AsDateTime;
     R.NetClose1 := FieldByName('net_close_1').AsDateTime;
@@ -1424,6 +1451,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('sample_date') >= 0 then
     R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
   if ARow.IndexOfName('net_open_1') >= 0 then
@@ -1472,6 +1509,7 @@ begin
       'net_number, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'sample_date, ' +
       'net_open_1, ' +
       'net_close_1, ' +
@@ -1495,6 +1533,7 @@ begin
       ':net_number, ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       'date(:sample_date), ' +
       'time(:net_open_1), ' +
       'time(:net_close_1), ' +
@@ -1519,6 +1558,7 @@ begin
     SetForeignParam(ParamByName('permanent_net_id'), R.PermanentNetId);
     ParamByName('full_name').AsString := GetNetEffortFullname(R.SampleDate, R.NetStationId, R.NetNumber);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetFloatParam(ParamByName('net_length'), R.NetLength);
     SetFloatParam(ParamByName('net_height'), R.NetHeight);
     SetIntParam(ParamByName('net_mesh'), R.NetMesh);
@@ -1576,6 +1616,7 @@ begin
       'net_number = :net_number, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'sample_date = :sample_date, ' +
       'net_open_1 = :net_open_1, ' +
       'net_close_1 = :net_close_1, ' +
@@ -1603,6 +1644,7 @@ begin
     SetForeignParam(ParamByName('permanent_net_id'), R.PermanentNetId);
     ParamByName('full_name').AsString := GetNetEffortFullname(R.SampleDate, R.NetStationId, R.NetNumber);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetFloatParam(ParamByName('net_length'), R.NetLength);
     SetFloatParam(ParamByName('net_height'), R.NetHeight);
     SetIntParam(ParamByName('net_mesh'), R.NetMesh);
@@ -1648,6 +1690,7 @@ begin
     FNotes := TVegetation(Source).Notes;
     FLongitude := TVegetation(Source).Longitude;
     FLatitude := TVegetation(Source).Latitude;
+    FCoordinatePrecision := TVegetation(Source).CoordinatePrecision;
     FObserverId := TVegetation(Source).ObserverId;
     FHerbsProportion := TVegetation(Source).HerbsProportion;
     FHerbsDistribution := TVegetation(Source).HerbsDistribution;
@@ -1670,6 +1713,7 @@ begin
   FNotes := EmptyStr;
   FLongitude := 0.0;
   FLatitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FObserverId := 0;
   FHerbsProportion := 0;
   FHerbsDistribution := disNone;
@@ -1705,6 +1749,8 @@ begin
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
     Changes.Add(R);
@@ -1748,6 +1794,13 @@ begin
     FSampleTime         := Obj.Get('sample_time', NullTime);
     FLongitude          := Obj.Get('longitude', 0.0);
     FLatitude           := Obj.Get('latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FObserverId         := Obj.Get('observer_id', 0);
     FHerbsProportion    := Obj.Get('herbs_proportion', 0);
     FHerbsDistribution  := TStratumDistribution(Obj.Get('herbs_distribution', 0));
@@ -1775,6 +1828,7 @@ begin
     JSONObject.Add('sample_time', FSampleTime);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('observer_id', FObserverId);
     JSONObject.Add('herbs_distribution', Ord(FHerbsDistribution));
     JSONObject.Add('herbs_proportion', FHerbsProportion);
@@ -1795,12 +1849,12 @@ end;
 
 function TVegetation.ToString: String;
 begin
-  Result := Format('Vegetation(Id=%d, SurveyId=%d, SampleDate=%s, SampleTime=%s, Longitude=%f, Latitude=%f, ' +
+  Result := Format('Vegetation(Id=%d, SurveyId=%d, SampleDate=%s, SampleTime=%s, Longitude=%f, Latitude=%f, CoordinatePrecision=%s, ' +
     'ObserverId=%d, HerbsProportion=%d, HerbsDistribution=%d, HerbsAvgHeight=%d, ShrubsProportion=%d, ' +
     'ShrubsDistribution=%d, ShrubsAvgHeight=%d, TreesProportion=%d, TreesDistribution=%d, TreesAvgHeight=%d, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FSurveyId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FLongitude, FLatitude, FObserverId,
+    [FId, FSurveyId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FObserverId,
     FHerbsProportion, Ord(FHerbsDistribution), FHerbsAvgHeight, FShrubsProportion, Ord(FShrubsDistribution),
     FShrubsAvgHeight, FTreesProportion, Ord(FTreesDistribution), FTreesAvgHeight, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -1919,6 +1973,7 @@ begin
       'sample_time, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'observer_id, ' +
       'herbs_proportion, ' +
       'herbs_distribution, ' +
@@ -2005,6 +2060,7 @@ begin
       'sample_time, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'observer_id, ' +
       'herbs_proportion, ' +
       'herbs_distribution, ' +
@@ -2056,6 +2112,13 @@ begin
     R.Notes := FieldByName('notes').AsString;
     R.Longitude := FieldByName('longitude').AsFloat;
     R.Latitude := FieldByName('latitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.HerbsProportion := FieldByName('herbs_proportion').AsInteger;
     R.HerbsDistribution := TStratumDistribution(FieldByName('herbs_distribution').AsInteger);
@@ -2098,6 +2161,16 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('observer_id') >= 0 then
     R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('herbs_distribution') >= 0 then
@@ -2141,6 +2214,7 @@ begin
       'sample_time, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'observer_id, ' +
       'herbs_proportion, ' +
       'herbs_distribution, ' +
@@ -2160,6 +2234,7 @@ begin
       'time(:sample_time), ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       ':observer_id, ' +
       ':herbs_proportion, ' +
       ':herbs_distribution, ' +
@@ -2178,6 +2253,7 @@ begin
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
     ParamByName('survey_id').AsInteger := R.SurveyId;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetStrParam(ParamByName('notes'), R.Notes);
 
@@ -2233,6 +2309,7 @@ begin
       'sample_time = time(:sample_time), ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'observer_id = :observer_id, ' +
       'herbs_proportion = :herbs_proportion, ' +
       'herbs_distribution = :herbs_distribution, ' +
@@ -2254,6 +2331,7 @@ begin
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
     ParamByName('survey_id').AsInteger := R.SurveyId;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetStrParam(ParamByName('notes'), R.Notes);
 
@@ -2732,6 +2810,7 @@ begin
     FStartLongitude := TSurvey(Source).StartLongitude;
     FEndLatitude := TSurvey(Source).EndLatitude;
     FEndLongitude := TSurvey(Source).EndLongitude;
+    FCoordinatePrecision := TSurvey(Source).CoordinatePrecision;
     FObserversTally := TSurvey(Source).ObserversTally;
     FTotalArea := TSurvey(Source).TotalArea;
     FTotalDistance := TSurvey(Source).TotalDistance;
@@ -2760,6 +2839,7 @@ begin
   FStartLongitude := 0.0;
   FEndLatitude := 0.0;
   FEndLongitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FObserversTally := 0;
   FTotalArea := 0.0;
   FTotalDistance := 0.0;
@@ -2814,6 +2894,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscEndLongitude, aOld.EndLongitude, FEndLongitude, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscObservers, aOld.ObserversTally, FObserversTally, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscAreaHa, aOld.TotalArea, FTotalArea, R) then
@@ -2859,6 +2941,13 @@ begin
     FStartLatitude  := Obj.Get('start_latitude', 0.0);
     FEndLongitude   := Obj.Get('end_longitude', 0.0);
     FEndLatitude    := Obj.Get('end_latitude', 0.0);
+    case Obj.Get('coordinate_precision', '') of
+      'E': FCoordinatePrecision := cpExact;
+      'A': FCoordinatePrecision := cpApproximated;
+      'R': FCoordinatePrecision := cpReference;
+    else
+      FCoordinatePrecision := cpEmpty;
+    end;
     FObserversTally := Obj.Get('observers_tally', 0);
     FTotalArea      := Obj.Get('total_area', 0.0);
     FTotalDistance  := Obj.Get('total_distance', 0.0);
@@ -2892,6 +2981,7 @@ begin
     JSONObject.Add('start_latitude', FStartLatitude);
     JSONObject.Add('end_longitude', FEndLongitude);
     JSONObject.Add('end_latitude', FEndLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('observers_tally', FObserversTally);
     JSONObject.Add('total_area', FTotalArea);
     JSONObject.Add('total_distance', FTotalDistance);
@@ -2911,12 +3001,12 @@ function TSurvey.ToString: String;
 begin
   Result := Format('Survey(Id=%d, SurveyDate=%s, StartTime=%s, EndTime=%s, Duration=%d, MethodId=%d, NetStationId=%d, ' +
     'ExpeditionId=%d, LocalityId=%d, ProjectId=%d, SampleId=%s, StartLongitude=%f, StartLatitude=%f, ' +
-    'EndLongitude=%f, EndLatitude=%f, ObserversTally=%d, TotalArea=%f, TotalDistance=%f, TotalNets=%d, Habitat=%s, ' +
+    'EndLongitude=%f, EndLatitude=%f, CoordinatePrecision=%s, ObserversTally=%d, TotalArea=%f, TotalDistance=%f, TotalNets=%d, Habitat=%s, ' +
     'NetRounds=%s, FullName=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, DateToStr(FSurveyDate), TimeToStr(FStartTime), TimeToStr(FEndTime), FDuration, FMethodId, FNetStationId,
     FExpeditionId, FLocalityId, FProjectId, FSampleId, FStartLongitude, FStartLatitude, FEndLongitude,
-    FEndLatitude, FObserversTally, FTotalArea, FTotalDistance, FTotalNets, FHabitat, FNetRounds, FNotes,
+    FEndLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FObserversTally, FTotalArea, FTotalDistance, FTotalNets, FHabitat, FNetRounds, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -3042,6 +3132,7 @@ begin
         'start_longitude, ' +
         'end_latitude, ' +
         'end_longitude, ' +
+        'coordinate_precision, ' +
         'observers_tally, ' +
         'area_total, ' +
         'distance_total, ' +
@@ -3136,6 +3227,7 @@ begin
         'start_longitude, ' +
         'end_latitude, ' +
         'end_longitude, ' +
+        'coordinate_precision, ' +
         'observers_tally, ' +
         'area_total, ' +
         'distance_total, ' +
@@ -3192,6 +3284,13 @@ begin
     R.StartLongitude := FieldByName('start_longitude').AsFloat;
     R.EndLatitude := FieldByName('end_latitude').AsFloat;
     R.EndLongitude := FieldByName('end_longitude').AsFloat;
+    case FieldByName('coordinate_precision').AsString of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
     R.ObserversTally := FieldByName('observers_tally').AsInteger;
     R.TotalArea := FieldByName('area_total').AsFloat;
     R.TotalDistance := FieldByName('distance_total').AsFloat;
@@ -3250,6 +3349,16 @@ begin
     R.EndLongitude := StrToFloatDef(ARow.Values['end_longitude'], 0);
   if ARow.IndexOfName('end_latitude') >= 0 then
     R.EndLatitude := StrToFloatDef(ARow.Values['end_latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+  begin
+    case ARow.Values['coordinate_precision'] of
+      'E': R.CoordinatePrecision := cpExact;
+      'A': R.CoordinatePrecision := cpApproximated;
+      'R': R.CoordinatePrecision := cpReference;
+    else
+      R.CoordinatePrecision := cpEmpty;
+    end;
+  end;
   if ARow.IndexOfName('observers_tally') >= 0 then
     R.ObserversTally := StrToIntDef(ARow.Values['observers_tally'], 0);
   if ARow.IndexOfName('area_total') >= 0 then
@@ -3296,6 +3405,7 @@ begin
         'start_longitude, ' +
         'end_latitude, ' +
         'end_longitude, ' +
+        'coordinate_precision, ' +
         'observers_tally, ' +
         'area_total, ' +
         'distance_total, ' +
@@ -3321,6 +3431,7 @@ begin
         ':start_longitude, ' +
         ':end_latitude, ' +
         ':end_longitude, ' +
+        ':coordinate_precision, ' +
         ':observers_tally, ' +
         ':area_total, ' +
         ':distance_total, ' +
@@ -3343,6 +3454,7 @@ begin
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetCoordinateParam(ParamByName('start_longitude'), ParamByName('start_latitude'), R.StartLongitude, R.StartLatitude);
     SetCoordinateParam(ParamByName('end_longitude'), ParamByName('end_latitude'), R.EndLongitude, R.EndLatitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetStrParam(ParamByName('sample_id'), R.SampleId);
     SetIntParam(ParamByName('observers_tally'), R.ObserversTally);
     SetIntParam(ParamByName('nets_total'), R.TotalNets);
@@ -3403,6 +3515,7 @@ begin
       'start_longitude = :start_longitude, ' +
       'end_latitude = :end_latitude, ' +
       'end_longitude = :end_longitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'observers_tally = :observers_tally, ' +
       'area_total = :area_total, ' +
       'distance_total = :distance_total, ' +
@@ -3429,6 +3542,7 @@ begin
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetCoordinateParam(ParamByName('start_longitude'), ParamByName('start_latitude'), R.StartLongitude, R.StartLatitude);
     SetCoordinateParam(ParamByName('end_longitude'), ParamByName('end_latitude'), R.EndLongitude, R.EndLatitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetStrParam(ParamByName('sample_id'), R.SampleId);
     SetIntParam(ParamByName('observers_tally'), R.ObserversTally);
     SetIntParam(ParamByName('nets_total'), R.TotalNets);

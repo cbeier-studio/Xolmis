@@ -356,6 +356,7 @@ const
   // Nets effort columns
 const
   COL_NET_ID = 'net_id';
+  COL_PERMANENT_NET_NAME = 'permanent_net_name';
   COL_NET_OPEN_1 = 'net_open_1';
   COL_NET_OPEN_2 = 'net_open_2';
   COL_NET_OPEN_3 = 'net_open_3';

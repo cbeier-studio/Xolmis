@@ -88,6 +88,13 @@ begin
       ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
       ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
   end;
 end;
 
@@ -180,6 +187,13 @@ begin
       ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
       ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+
+    if DataSource.DataSet.FieldByName(COL_COORDINATE_PRECISION).Visible then
+    begin
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsExactCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsApproximatedCoordinate);
+      ColumnByFieldName(COL_COORDINATE_PRECISION).PickList.Add(rsReferenceCoordinate);
+    end;
   end;
 end;
 
