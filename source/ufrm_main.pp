@@ -969,10 +969,15 @@ begin
   isClosing := True;
   TimerScreen.Enabled := False;
 
-  CloseAllTabs(True);
-
   lblLoading.Caption := rsClosing;
+  pSplash.Top := 0;
+  pSplash.Left := 0;
+  pSplash.Height := Self.ClientHeight;
+  pSplash.Width := Self.ClientWidth;
   pSplash.Visible := True;
+  Application.ProcessMessages;
+
+  CloseAllTabs(True);
 
   { Clear deleted records }
   if xSettings.ClearDeletedPeriod > 0 then
