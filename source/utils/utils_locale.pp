@@ -221,6 +221,7 @@ uses
     rsProgressFinishing = 'Finishing...';
     rsProgressNewBandsBatch = 'Inserting new bands...';
     rsProgressTransferingBands = 'Transfering bands...';
+    rsProgressReceivingBands = 'Receiving bands...';
     rsProgressNewFeathersBatch = 'Inserting new feathers...';
     rsProgressRewritingHierarchy = 'Rewriting %s...';
     rsProgressLoadingCSVFile = 'Loading CSV file... %d%%';
@@ -259,6 +260,7 @@ uses
     rsSuccessfulImportCoordinates = 'Coordinates imported successfully!';
     rsSuccessfulNewBatch = 'New batch inserted successfully!';
     rsSuccessfulTransferBands = 'Bands transfered successfully!';
+    rsSuccessfulReceiveBands = 'Bands received successfully!';
     rsSuccessfulRecreateThumbnails = 'Image thumbnails recreated successfully!';
     rsSuccessfulConnectionTest = 'Connection to database was successful!';
     rsSuccessfulDatabaseCreation = 'The database file was created successfully!';
@@ -480,8 +482,10 @@ uses
     rsRequesterAndSenderMustBeDifferent = 'The requester and the sender of the band %s must be different.';
     rsBandNotAvailable = 'The band %s is not available.';
     rsBandNotFound = 'The band %s was not found.';
+    rsBandNotOrdered = 'The band %s was not ordered.';
     rsBandAlreadyExists = 'The band %s already exists.';
     rsBandsTransferedWithErrors = 'The transfer of bands was finished, but some bands have problems and were not transfered.';
+    rsBandsReceivedWithErrors = 'The receiving of bands was finished, but some bands have problems and were not received.';
     rsRepositoryConnectionCannotBeNil = 'Repository Connection cannot be nil.';
     rsFieldNotAllowedInFindBy = 'Field "%s" not allowed in FindBy.';
     rsExceededMaxLength = '%s exceeded the maximum length (%d of %d).';
@@ -926,13 +930,14 @@ uses
     rsTeam = 'Team';
 
     { Bands }
+    rsBandOrdered = 'Ordered';
     rsBandAvailable = 'Available';
     rsBandUsed = 'Used';
     rsBandRemoved = 'Removed';
     rsBandBroken = 'Broken';
     rsBandLost = 'Lost';
     rsBandTransferred = 'Transferred';
-    rsBandStatusList = 'Available,Used,Removed,Transfered,Broken,Lost';
+    rsBandStatusList = 'Ordered,Available,Used,Removed,Transfered,Broken,Lost';
     rsBandOpen = 'Butt-end';
     rsBandClosed = 'Closed';
     rsBandTriangular = 'Triangular';

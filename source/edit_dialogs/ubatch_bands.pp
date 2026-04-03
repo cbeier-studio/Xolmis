@@ -130,6 +130,7 @@ var
   FHistory: TBandHistory;
   FBandType: TMarkType;
   FBandSource: TBandSource;
+  FBandStatus: TBandStatus;
   FEvent: TBandEvent;
   Ini, Fim: Integer;
   i: Integer;
@@ -175,6 +176,19 @@ begin
     3: FEvent := bevRetrieve;
     4: FEvent := bevRetrieve;
   end;
+  case FBandSource of
+    bscAcquiredFromSupplier:
+      begin
+        if (Trim(eReceiptDate.Text) <> '') then
+          FBandStatus := bstAvailable
+        else
+          FBandStatus := bstOrdered;
+      end;
+    bscTransferBetweenBanders:    FBandStatus := bstAvailable;
+    bscLivingBirdBandedByOthers:  FBandStatus := bstUsed;
+    bscDeadBirdBandedByOthers:    FBandStatus := bstUsed;
+    bscFoundLoose:                FBandStatus := bstLost;
+  end;
 
   // Progress dialog
   //dlgProgress := TdlgProgress.Create(nil);
@@ -208,6 +222,7 @@ begin
           FRecord.Number := i;
           FRecord.SupplierId := FSupplierId;
           FRecord.Source := FBandSource;
+          FRecord.Status := FBandStatus;
           FRecord.ProjectId := FProjectId;
           FRecord.RequesterId := FRequesterId;
           if FCarrierId > 0 then

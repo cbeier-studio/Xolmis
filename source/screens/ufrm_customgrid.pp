@@ -57,6 +57,7 @@ type
     lblCategoryFilter: TLabel;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmpReceiveBands: TMenuItem;
     pCategoryFilter: TBCPanel;
     pmpAddCountriesAndStates: TMenuItem;
     pmpAddMunicipalities: TMenuItem;
@@ -1052,6 +1053,7 @@ type
     procedure pmpAddMunicipalitiesClick(Sender: TObject);
     procedure pmpBandHistoryClick(Sender: TObject);
     procedure pmpBandsBalanceClick(Sender: TObject);
+    procedure pmpReceiveBandsClick(Sender: TObject);
     procedure pmPrintBandsByCarrierClick(Sender: TObject);
     procedure pmPrintBandsByStatusClick(Sender: TObject);
     procedure pmPrintBandsClick(Sender: TObject);
@@ -1355,7 +1357,7 @@ uses
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory, udlg_gazetteerautofill, udlg_attachmedia,
-  ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer;
+  ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer, ubatch_bandsreceive;
 
 {$R *.lfm}
 
@@ -5666,6 +5668,41 @@ begin
   AbreForm(TdlgBandsBalance, dlgBandsBalance);
 end;
 
+procedure TfrmCustomGrid.pmpReceiveBandsClick(Sender: TObject);
+var
+  needsRefresh: Boolean;
+begin
+  if isWorking then
+    Exit;
+
+  isWorking := True;
+  //if xSettings.FirstTransferBands then
+  //begin
+  //  ShowOnboardingBig(obtTransferBands);
+  //  xSettings.FirstTransferBands := False;
+  //  xSettings.SaveOnboarding('/ONBOARDING/FirstTransferBands', False);
+  //end;
+
+  try
+    batchBandsReceive := TbatchBandsReceive.Create(nil);
+    with batchBandsReceive do
+    try
+      needsRefresh := ShowModal = mrOK;
+    finally
+      FreeAndNil(batchBandsReceive);
+    end;
+
+    if needsRefresh then
+    begin
+      UpdateButtons(dsLink.DataSet);
+      UpdateFilterPanels;
+      UpdateChildRightPanel;
+    end;
+  finally
+    isWorking := False;
+  end;
+end;
+
 procedure TfrmCustomGrid.pmPrintBandsByCarrierClick(Sender: TObject);
 begin
   DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
@@ -7859,6 +7896,7 @@ begin
   begin
     pmpAddCountriesAndStates.Visible := (gufShowAddCountries in FModule.UiFlags);
     pmpAddMunicipalities.Visible := (gufShowAddMunicipalities in FModule.UiFlags);
+    pmpReceiveBands.Visible := (gufShowReceiveBands in FModule.UiFlags);
     pmpTransferBandsTo.Visible := (gufShowTransferBands in FModule.UiFlags);
     pmpBandHistory.Visible := (gufShowBandHistory in FModule.UiFlags);
     pmgBandHistory.Visible := (gufShowBandHistory in FModule.UiFlags);

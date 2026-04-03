@@ -2623,6 +2623,50 @@ msgctxt "tbatchbands.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tbatchbandsreceive.caption
+msgctxt "tbatchbandsreceive.caption"
+msgid "Receive ordered bands"
+msgstr ""
+
+#: tbatchbandsreceive.ereceiptdate.buttonhint
+msgctxt "tbatchbandsreceive.ereceiptdate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tbatchbandsreceive.ereceiptdate.texthint
+msgctxt "tbatchbandsreceive.ereceiptdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tbatchbandsreceive.lblbandsize.caption
+msgctxt "tbatchbandsreceive.lblbandsize.caption"
+msgid "Size: *"
+msgstr ""
+
+#: tbatchbandsreceive.lblendnumber.caption
+msgctxt "tbatchbandsreceive.lblendnumber.caption"
+msgid "Final number: *"
+msgstr ""
+
+#: tbatchbandsreceive.lblreceiptdate.caption
+msgid "Receipt date: *"
+msgstr ""
+
+#: tbatchbandsreceive.lblstartnumber.caption
+msgctxt "tbatchbandsreceive.lblstartnumber.caption"
+msgid "Start number: *"
+msgstr ""
+
+#: tbatchbandsreceive.sbcancel.caption
+msgctxt "tbatchbandsreceive.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tbatchbandsreceive.sbsave.caption
+msgctxt "tbatchbandsreceive.sbsave.caption"
+msgid "Save"
+msgstr ""
+
 #: tbatchbandstransfer.btnnew.caption
 msgctxt "tbatchbandstransfer.btnnew.caption"
 msgid "New"
@@ -11159,6 +11203,11 @@ msgctxt "tfrmcustomgrid.pmpbandsbalance.caption"
 msgid "Bands balance"
 msgstr ""
 
+#: tfrmcustomgrid.pmpreceivebands.caption
+msgctxt "tfrmcustomgrid.pmpreceivebands.caption"
+msgid "Receive ordered bands"
+msgstr ""
+
 #: tfrmcustomgrid.pmprintbands.caption
 msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
@@ -13733,9 +13782,18 @@ msgctxt "utils_locale.rsbandnotfound"
 msgid "The band %s was not found."
 msgstr ""
 
+#: utils_locale.rsbandnotordered
+#, object-pascal-format
+msgid "The band %s was not ordered."
+msgstr ""
+
 #: utils_locale.rsbandopen
 msgctxt "utils_locale.rsbandopen"
 msgid "Butt-end"
+msgstr ""
+
+#: utils_locale.rsbandordered
+msgid "Ordered"
 msgstr ""
 
 #: utils_locale.rsbandother
@@ -13763,9 +13821,13 @@ msgctxt "utils_locale.rsbandrunningoutnotification"
 msgid "Band running out"
 msgstr ""
 
+#: utils_locale.rsbandsreceivedwitherrors
+msgid "The receiving of bands was finished, but some bands have problems and were not received."
+msgstr ""
+
 #: utils_locale.rsbandstatuslist
 msgctxt "utils_locale.rsbandstatuslist"
-msgid "Available,Used,Removed,Transfered,Broken,Lost"
+msgid "Ordered,Available,Used,Removed,Transfered,Broken,Lost"
 msgstr ""
 
 #: utils_locale.rsbandstransferedwitherrors
@@ -17372,6 +17434,10 @@ msgctxt "utils_locale.rsprogresspreparing"
 msgid "Preparing..."
 msgstr ""
 
+#: utils_locale.rsprogressreceivingbands
+msgid "Receiving bands..."
+msgstr ""
+
 #: utils_locale.rsprogressrecords
 #, object-pascal-format
 msgctxt "utils_locale.rsprogressrecords"
@@ -18047,6 +18113,10 @@ msgstr ""
 #: utils_locale.rssuccessfulnewbatch
 msgctxt "utils_locale.rssuccessfulnewbatch"
 msgid "New batch inserted successfully!"
+msgstr ""
+
+#: utils_locale.rssuccessfulreceivebands
+msgid "Bands received successfully!"
 msgstr ""
 
 #: utils_locale.rssuccessfulrecreatethumbnails

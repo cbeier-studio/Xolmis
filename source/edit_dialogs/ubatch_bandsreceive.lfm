@@ -1,0 +1,270 @@
+object batchBandsReceive: TbatchBandsReceive
+  Left = 370
+  Height = 207
+  Top = 250
+  Width = 424
+  AutoSize = True
+  BorderStyle = bsDialog
+  Caption = 'Receive ordered bands'
+  ClientHeight = 207
+  ClientWidth = 424
+  Constraints.MinWidth = 416
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  LCLVersion = '4.4.0.0'
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  object pEdit: TPanel
+    Left = 0
+    Height = 114
+    Top = 0
+    Width = 424
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 114
+    ClientWidth = 424
+    ParentBackground = False
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 0
+    object pDateSize: TPanel
+      Left = 0
+      Height = 45
+      Top = 8
+      Width = 424
+      Align = alTop
+      AutoSize = True
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 45
+      ClientWidth = 424
+      ParentBackground = False
+      TabOrder = 0
+      object lblReceiptDate: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 188
+        BorderSpacing.Top = 3
+        Caption = 'Receipt date: *'
+        ParentFont = False
+      end
+      object lblBandSize: TLabel
+        Left = 220
+        Height = 15
+        Top = 3
+        Width = 188
+        BorderSpacing.Top = 3
+        Caption = 'Size: *'
+        ParentFont = False
+      end
+      object eReceiptDate: TEditButton
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 188
+        ButtonHint = 'Open calendar'
+        ButtonWidth = 23
+        Images = DMM.iEdits
+        ImageIndex = 1
+        MaxLength = 0
+        NumGlyphs = 1
+        ParentShowHint = False
+        PasswordChar = #0
+        ShowHint = True
+        Spacing = 0
+        TabOrder = 0
+        TextHint = 'DD/MM/YYYY'
+        OnButtonClick = eReceiptDateButtonClick
+        OnEditingDone = eReceiptDateEditingDone
+        OnKeyPress = eReceiptDateKeyPress
+        OnKeyUp = FormKeyDown
+      end
+      object cbBandSize: TComboBox
+        Left = 220
+        Height = 23
+        Top = 22
+        Width = 188
+        Constraints.MinWidth = 176
+        DropDownCount = 12
+        ItemHeight = 15
+        Items.Strings = (
+          'A'
+          'C'
+          'D'
+          'E'
+          'F'
+          'G'
+          'H'
+          'J'
+          'L'
+          'M'
+          'N'
+          'P'
+          'R'
+          'S'
+          'T'
+          'U'
+          'V'
+          'X'
+          'Z'
+        )
+        Style = csDropDownList
+        TabOrder = 1
+        OnKeyPress = eReceiptDateKeyPress
+        OnKeyUp = FormKeyDown
+      end
+    end
+    object pFromToNumber: TPanel
+      Left = 0
+      Height = 45
+      Top = 53
+      Width = 424
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 16
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.HorizontalSpacing = 16
+      ChildSizing.VerticalSpacing = 4
+      ChildSizing.EnlargeHorizontal = crsSameSize
+      ChildSizing.ShrinkHorizontal = crsSameSize
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 2
+      ClientHeight = 45
+      ClientWidth = 424
+      ParentBackground = False
+      TabOrder = 1
+      object lblStartNumber: TLabel
+        Left = 16
+        Height = 15
+        Top = 3
+        Width = 188
+        BorderSpacing.Top = 3
+        Caption = 'Start number: *'
+        ParentFont = False
+      end
+      object lblEndNumber: TLabel
+        Left = 220
+        Height = 15
+        Top = 3
+        Width = 188
+        BorderSpacing.Top = 3
+        Caption = 'Final number: *'
+        ParentFont = False
+      end
+      object eStartNumber: TSpinEdit
+        Left = 16
+        Height = 23
+        Top = 22
+        Width = 188
+        Constraints.MinWidth = 176
+        MaxValue = 999999
+        MinValue = 1
+        TabOrder = 0
+        Value = 1
+        OnKeyPress = eReceiptDateKeyPress
+        OnKeyUp = FormKeyDown
+      end
+      object eEndNumber: TSpinEdit
+        Left = 220
+        Height = 23
+        Top = 22
+        Width = 188
+        Constraints.MinWidth = 176
+        MaxValue = 999999
+        MinValue = 1
+        TabOrder = 1
+        Value = 1
+        OnKeyPress = eReceiptDateKeyPress
+        OnKeyUp = FormKeyDown
+      end
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    Left = 0
+    Height = 2
+    Top = 114
+    Width = 424
+    Align = alTop
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    Left = 0
+    Height = 42
+    Top = 116
+    Width = 424
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 42
+    ClientWidth = 424
+    TabOrder = 1
+    object sbSave: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 160
+      Height = 25
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Caption = 'Save'
+      Constraints.MinWidth = 120
+      Enabled = False
+      TabOrder = 0
+      OnClick = sbSaveClick
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object sbCancel: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 288
+      Height = 25
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Caption = 'Cancel'
+      Constraints.MinWidth = 120
+      ModalResult = 2
+      TabOrder = 1
+      OnKeyDown = FormKeyDown
+      OnKeyPress = FormKeyPress
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+      OnClick = btnHelpClick
+    end
+  end
+end

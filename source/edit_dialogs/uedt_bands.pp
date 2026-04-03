@@ -456,12 +456,13 @@ begin
   end;
   cbBandColor.ItemIndex := cbBandColor.Items.IndexOf(FBand.BandColor);
   case FBand.Status of
+    bstOrdered:     cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandOrdered);
     bstAvailable:   cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandAvailable);
     bstUsed:        cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandUsed);
     bstRemoved:     cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandRemoved);
     bstBroken:      cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandBroken);
     bstLost:        cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandLost);
-    bstTransferred:  cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandTransferred);
+    bstTransferred: cbBandStatus.ItemIndex := cbBandStatus.Items.IndexOf(rsBandTransferred);
   end;
   ckReported.Checked := FBand.Reported;
   case FBand.Source of
@@ -547,12 +548,13 @@ begin
   end;
   FBand.BandColor := cbBandColor.Text;
   case cbBandStatus.ItemIndex of
-    0: FBand.Status := bstAvailable;
-    1: FBand.Status := bstUsed;
-    2: FBand.Status := bstRemoved;
-    3: FBand.Status := bstTransferred;
-    4: FBand.Status := bstBroken;
-    5: FBand.Status := bstLost;
+    0: FBand.Status := bstOrdered;
+    1: FBand.Status := bstAvailable;
+    2: FBand.Status := bstUsed;
+    3: FBand.Status := bstRemoved;
+    4: FBand.Status := bstTransferred;
+    5: FBand.Status := bstBroken;
+    6: FBand.Status := bstLost;
   end;
   FBand.Reported := ckReported.Checked;
   case cbBandSource.ItemIndex of

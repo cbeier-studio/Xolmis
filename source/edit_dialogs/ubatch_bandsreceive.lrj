@@ -1,0 +1,11 @@
+{"version":1,"strings":[
+{"hash":153236451,"name":"tbatchbandsreceive.caption","sourcebytes":[82,101,99,101,105,118,101,32,111,114,100,101,114,101,100,32,98,97,110,100,115],"value":"Receive ordered bands"},
+{"hash":55223034,"name":"tbatchbandsreceive.lblreceiptdate.caption","sourcebytes":[82,101,99,101,105,112,116,32,100,97,116,101,58,32,42],"value":"Receipt date: *"},
+{"hash":168856698,"name":"tbatchbandsreceive.lblbandsize.caption","sourcebytes":[83,105,122,101,58,32,42],"value":"Size: *"},
+{"hash":38292546,"name":"tbatchbandsreceive.ereceiptdate.buttonhint","sourcebytes":[79,112,101,110,32,99,97,108,101,110,100,97,114],"value":"Open calendar"},
+{"hash":33581481,"name":"tbatchbandsreceive.ereceiptdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":186258186,"name":"tbatchbandsreceive.lblstartnumber.caption","sourcebytes":[83,116,97,114,116,32,110,117,109,98,101,114,58,32,42],"value":"Start number: *"},
+{"hash":133326058,"name":"tbatchbandsreceive.lblendnumber.caption","sourcebytes":[70,105,110,97,108,32,110,117,109,98,101,114,58,32,42],"value":"Final number: *"},
+{"hash":366789,"name":"tbatchbandsreceive.sbsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tbatchbandsreceive.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

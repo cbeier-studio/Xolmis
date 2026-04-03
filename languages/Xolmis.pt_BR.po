@@ -2625,6 +2625,50 @@ msgctxt "tbatchbands.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tbatchbandsreceive.caption
+msgctxt "tbatchbandsreceive.caption"
+msgid "Receive ordered bands"
+msgstr "Receber pedido de anilhas"
+
+#: tbatchbandsreceive.ereceiptdate.buttonhint
+msgctxt "tbatchbandsreceive.ereceiptdate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tbatchbandsreceive.ereceiptdate.texthint
+msgctxt "tbatchbandsreceive.ereceiptdate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tbatchbandsreceive.lblbandsize.caption
+msgctxt "tbatchbandsreceive.lblbandsize.caption"
+msgid "Size: *"
+msgstr "Tamanho: *"
+
+#: tbatchbandsreceive.lblendnumber.caption
+msgctxt "tbatchbandsreceive.lblendnumber.caption"
+msgid "Final number: *"
+msgstr "Número final: *"
+
+#: tbatchbandsreceive.lblreceiptdate.caption
+msgid "Receipt date: *"
+msgstr "Data recebida: *"
+
+#: tbatchbandsreceive.lblstartnumber.caption
+msgctxt "tbatchbandsreceive.lblstartnumber.caption"
+msgid "Start number: *"
+msgstr "Número inicial: *"
+
+#: tbatchbandsreceive.sbcancel.caption
+msgctxt "tbatchbandsreceive.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tbatchbandsreceive.sbsave.caption
+msgctxt "tbatchbandsreceive.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
 #: tbatchbandstransfer.btnnew.caption
 msgctxt "tbatchbandstransfer.btnnew.caption"
 msgid "New"
@@ -11141,6 +11185,11 @@ msgctxt "tfrmcustomgrid.pmpbandsbalance.caption"
 msgid "Bands balance"
 msgstr "Saldo de anilhas"
 
+#: tfrmcustomgrid.pmpreceivebands.caption
+msgctxt "tfrmcustomgrid.pmpreceivebands.caption"
+msgid "Receive ordered bands"
+msgstr "Receber pedido de anilhas"
+
 #: tfrmcustomgrid.pmprintbands.caption
 msgctxt "tfrmcustomgrid.pmprintbands.caption"
 msgid "Bands"
@@ -13714,10 +13763,19 @@ msgctxt "utils_locale.rsbandnotfound"
 msgid "The band %s was not found."
 msgstr "A anilha %s não foi encontrada."
 
+#: utils_locale.rsbandnotordered
+#, object-pascal-format
+msgid "The band %s was not ordered."
+msgstr "A anilha %s não foi encomendada."
+
 #: utils_locale.rsbandopen
 msgctxt "utils_locale.rsbandopen"
 msgid "Butt-end"
 msgstr "Aberta"
+
+#: utils_locale.rsbandordered
+msgid "Ordered"
+msgstr "Encomendada"
 
 #: utils_locale.rsbandother
 msgctxt "utils_locale.rsbandother"
@@ -13744,10 +13802,14 @@ msgctxt "utils_locale.rsbandrunningoutnotification"
 msgid "Band running out"
 msgstr "Anilha acabando"
 
+#: utils_locale.rsbandsreceivedwitherrors
+msgid "The receiving of bands was finished, but some bands have problems and were not received."
+msgstr "O recebimento de anilhas foi finalizado, mas algumas anilhas têm problemas e não foram recebidas."
+
 #: utils_locale.rsbandstatuslist
 msgctxt "utils_locale.rsbandstatuslist"
-msgid "Available,Used,Removed,Transfered,Broken,Lost"
-msgstr "Disponível,Usada,Removida,Transferida,Quebrada,Perdida"
+msgid "Ordered,Available,Used,Removed,Transfered,Broken,Lost"
+msgstr "Encomendada,Disponível,Usada,Removida,Transferida,Quebrada,Perdida"
 
 #: utils_locale.rsbandstransferedwitherrors
 msgctxt "utils_locale.rsbandstransferedwitherrors"
@@ -17514,6 +17576,10 @@ msgctxt "utils_locale.rsprogresspreparing"
 msgid "Preparing..."
 msgstr "Preparando..."
 
+#: utils_locale.rsprogressreceivingbands
+msgid "Receiving bands..."
+msgstr "Recebendo anilhas..."
+
 #: utils_locale.rsprogressrecords
 #, object-pascal-format
 msgctxt "utils_locale.rsprogressrecords"
@@ -18196,6 +18262,10 @@ msgstr "Ninhos importados com sucesso!"
 msgctxt "utils_locale.rssuccessfulnewbatch"
 msgid "New batch inserted successfully!"
 msgstr "Novo lote inserido com sucesso!"
+
+#: utils_locale.rssuccessfulreceivebands
+msgid "Bands received successfully!"
+msgstr "Anilhas recebidas com sucesso!"
 
 #: utils_locale.rssuccessfulrecreatethumbnails
 msgctxt "utils_locale.rssuccessfulrecreatethumbnails"

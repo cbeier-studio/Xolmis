@@ -28598,6 +28598,12 @@ object frmCustomGrid: TfrmCustomGrid
     Images = iButtons
     Left = 48
     Top = 179
+    object pmpReceiveBands: TMenuItem
+      Caption = 'Receive ordered bands'
+      ImageIndex = 108
+      Visible = False
+      OnClick = pmpReceiveBandsClick
+    end
     object pmpTransferBandsTo: TMenuItem
       Caption = 'Transfer bands to...'
       ImageIndex = 110

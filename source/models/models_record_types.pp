@@ -162,7 +162,7 @@ type
   TBodyPart = (bpRightTibia, bpLeftTibia, bpRightTarsus, bpLeftTarsus, bpRightWing, bpLeftWing, bpNeck);
   TMarkType = (mkButtEndBand, mkFlag, mkCollar, mkWingTag, mkTriangularBand, mkLockOnBand, mkRivetBand,
     mkClosedBand, mkOther);
-  TBandStatus = (bstAvailable, bstUsed, bstRemoved, bstBroken, bstLost, bstTransferred);
+  TBandStatus = (bstOrdered, bstAvailable, bstUsed, bstRemoved, bstBroken, bstLost, bstTransferred);
   TBandSource = (bscAcquiredFromSupplier, bscTransferBetweenBanders, bscLivingBirdBandedByOthers,
     bscDeadBirdBandedByOthers, bscFoundLoose);
   TBandEvent = (bevOrder, bevReceive, bevTransfer, bevRetrieve, bevReport, bevUse, bevDischarge);
@@ -399,7 +399,7 @@ const
     ('G', '$00008000'), ('L', '$0000FF00'), ('U', '$00004080'), ('W', '$00FFFFFF'),
     ('S', '$00808080'), ('N', '$00000000'));
   CEMAVE_BAND_SIZES: array[1..19] of Char = ('A','C','D','E','F','G','H','J','L','M','N','P','R','S','T','U','V','X','Z');
-  BAND_STATUSES: array[TBandStatus] of Char = ('D', 'U', 'R', 'Q', 'P', 'T');
+  BAND_STATUSES: array[TBandStatus] of Char = ('O', 'A', 'U', 'R', 'B', 'L', 'T');
   MARK_TYPES: array[TMarkType] of Char = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
   BAND_SOURCES: array[TBandSource] of Char = ('A', 'T', 'L', 'D', 'F');
   BAND_EVENTS: array[TBandEvent] of Char = ('O', 'C', 'T', 'R', 'P', 'U', 'D');

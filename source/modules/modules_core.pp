@@ -22,6 +22,7 @@ type
     gufShowQuickAdd,           // module has quick add field
     gufShowAddCountries,
     gufShowAddMunicipalities,
+    gufShowReceiveBands,
     gufShowTransferBands,
     gufShowBandsBalance,
     gufShowBandHistory

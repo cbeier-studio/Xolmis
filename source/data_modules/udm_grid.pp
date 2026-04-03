@@ -1764,11 +1764,12 @@ begin
     Exit;
 
   case Sender.AsString of
-    'D': aText := rsBandAvailable;
+    'O': aText := rsBandOrdered;
+    'A': aText := rsBandAvailable;
     'U': aText := rsBandUsed;
     'R': aText := rsBandRemoved;
-    'Q': aText := rsBandBroken;
-    'P': aText := rsBandLost;
+    'B': aText := rsBandBroken;
+    'L': aText := rsBandLost;
     'T': aText := rsBandTransferred;
   end;
 
@@ -1780,8 +1781,11 @@ begin
   if aText = EmptyStr then
     Exit;
 
+  if aText = rsBandOrdered then
+    Sender.AsString := 'O'
+  else
   if aText = rsBandAvailable then
-    Sender.AsString := 'D'
+    Sender.AsString := 'A'
   else
   if aText = rsBandUsed then
     Sender.AsString := 'U'
@@ -1790,10 +1794,10 @@ begin
     Sender.AsString := 'R'
   else
   if aText = rsBandBroken then
-    Sender.AsString := 'Q'
+    Sender.AsString := 'B'
   else
   if aText = rsBandLost then
-    Sender.AsString := 'P'
+    Sender.AsString := 'L'
   else
   if aText = rsBandTransferred then
     Sender.AsString := 'T';

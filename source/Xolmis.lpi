@@ -145,7 +145,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="497"/>
+      <BuildNr Value="498"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1555,6 +1555,12 @@
       <Unit>
         <Filename Value="modules\modules_sampling.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\ubatch_bandsreceive.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="batchBandsReceive"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
     <Debugger>

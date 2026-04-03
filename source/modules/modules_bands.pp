@@ -40,7 +40,7 @@ begin
   FDataSet := DMG.qBands;
   FSupportedMedia := [];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowInsertBatch, gufShowMoreOptions,
-    gufShowTransferBands, gufShowBandsBalance, gufShowBandHistory];
+    gufShowReceiveBands, gufShowTransferBands, gufShowBandsBalance, gufShowBandHistory];
   FPrintUiFlags := [pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory];
   FFilterUiFlags := [fufMarked, fufBandSize, fufBandStatus, fufBandType, fufBandSource, fufBandReported,
     fufPerson, fufInstitution, fufProject];
@@ -51,7 +51,7 @@ end;
 
 procedure TBandsModuleController.ApplyFilters;
 const
-  BandStatus: array of String = ('D', 'U', 'R', 'T', 'Q', 'P');
+  BandStatus: array of String = ('O', 'A', 'U', 'R', 'T', 'B', 'L');
   BandTypes: array of String = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
   BandSources: array of String = ('A', 'T', 'L', 'D', 'F');
 var
@@ -235,6 +235,19 @@ begin
         begin
           TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Light;
           TDBGrid(Sender).Canvas.Font.Color := clVioletFG2Light;
+        end;
+      end;
+      'O': // Ordered
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemAttentionBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemAttentionFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemAttentionBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemAttentionFGLight;
         end;
       end;
     end;

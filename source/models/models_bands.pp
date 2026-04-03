@@ -284,11 +284,12 @@ begin
     FSize         := Obj.Get('band_size', '');
     FNumber       := Obj.Get('band_number', 0);
     case Obj.Get('band_status', '') of
-      'D': FStatus := bstAvailable;
+      'O': FStatus := bstOrdered;
+      'A': FStatus := bstAvailable;
       'U': FStatus := bstUsed;
       'R': FStatus := bstRemoved;
-      'Q': FStatus := bstBroken;
-      'P': FStatus := bstLost;
+      'B': FStatus := bstBroken;
+      'L': FStatus := bstLost;
       'T': FStatus := bstTransferred;
     end;
     case Obj.Get('band_source', '') of
@@ -603,11 +604,12 @@ begin
     R.Size := FieldByName('band_size').AsString;
     R.Number := FieldByName('band_number').AsInteger;
     case FieldByName('band_status').AsString of
-      'D': R.Status := bstAvailable;
+      'O': R.Status := bstOrdered;
+      'A': R.Status := bstAvailable;
       'U': R.Status := bstUsed;
       'R': R.Status := bstRemoved;
-      'Q': R.Status := bstBroken;
-      'P': R.Status := bstLost;
+      'B': R.Status := bstBroken;
+      'L': R.Status := bstLost;
       'T': R.Status := bstTransferred;
     end;
     case FieldByName('band_source').AsString of
@@ -669,11 +671,12 @@ begin
   if ARow.IndexOfName('band_status') >= 0 then
   begin
     case ARow.Values['band_status'] of
-      'D': R.Status := bstAvailable;
+      'O': R.Status := bstOrdered;
+      'A': R.Status := bstAvailable;
       'U': R.Status := bstUsed;
       'R': R.Status := bstRemoved;
-      'Q': R.Status := bstBroken;
-      'P': R.Status := bstLost;
+      'B': R.Status := bstBroken;
+      'L': R.Status := bstLost;
       'T': R.Status := bstTransferred;
     end;
   end;
