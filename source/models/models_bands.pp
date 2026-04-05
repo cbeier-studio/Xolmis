@@ -291,6 +291,7 @@ begin
       'B': FStatus := bstBroken;
       'L': FStatus := bstLost;
       'T': FStatus := bstTransferred;
+      'X': FStatus := bstReturned;
     end;
     case Obj.Get('band_source', '') of
       'A': FSource := bscAcquiredFromSupplier;
@@ -611,6 +612,7 @@ begin
       'B': R.Status := bstBroken;
       'L': R.Status := bstLost;
       'T': R.Status := bstTransferred;
+      'X': R.Status := bstReturned;
     end;
     case FieldByName('band_source').AsString of
       'A': R.Source := bscAcquiredFromSupplier;
@@ -678,6 +680,7 @@ begin
       'B': R.Status := bstBroken;
       'L': R.Status := bstLost;
       'T': R.Status := bstTransferred;
+      'X': R.Status := bstReturned;
     end;
   end;
   if ARow.IndexOfName('band_source') >= 0 then
@@ -965,6 +968,7 @@ begin
       'P': FEventType := bevReport;
       'U': FEventType := bevUse;
       'D': FEventType := bevDischarge;
+      'X': FEventType := bevReturn;
     end;
     FSupplierId   := Obj.Get('supplier_id', 0);
     FOrderNumber  := Obj.Get('order_number', 0);
@@ -1207,6 +1211,7 @@ begin
       'P': R.EventType := bevReport;
       'U': R.EventType := bevUse;
       'D': R.EventType := bevDischarge;
+      'X': R.EventType := bevReturn;
     end;
     R.SupplierId := FieldByName('supplier_id').AsInteger;
     R.RequesterId := FieldByName('requester_id').AsInteger;
@@ -1250,6 +1255,7 @@ begin
       'P': R.EventType := bevReport;
       'U': R.EventType := bevUse;
       'D': R.EventType := bevDischarge;
+      'X': R.EventType := bevReturn;
     end;
   end;
   if ARow.IndexOfName('supplier_id') >= 0 then

@@ -13725,6 +13725,10 @@ msgctxt "utils_locale.rsbandeventretrieve"
 msgid "Retrieve"
 msgstr ""
 
+#: utils_locale.rsbandeventreturn
+msgid "Return"
+msgstr ""
+
 #: utils_locale.rsbandeventtransfer
 msgctxt "utils_locale.rsbandeventtransfer"
 msgid "Transfer"
@@ -13732,7 +13736,7 @@ msgstr ""
 
 #: utils_locale.rsbandeventtypelist
 msgctxt "utils_locale.rsbandeventtypelist"
-msgid "Order,Receive,Transfer,Retrieve,Report,Use,Discharge"
+msgid "Order,Receive,Transfer,Retrieve,Report,Use,Discharge,Return"
 msgstr ""
 
 #: utils_locale.rsbandeventuse
@@ -13806,6 +13810,10 @@ msgctxt "utils_locale.rsbandremoved"
 msgid "Removed"
 msgstr ""
 
+#: utils_locale.rsbandreturned
+msgid "Returned"
+msgstr ""
+
 #: utils_locale.rsbandrivet
 msgctxt "utils_locale.rsbandrivet"
 msgid "Rivet"
@@ -13827,7 +13835,7 @@ msgstr ""
 
 #: utils_locale.rsbandstatuslist
 msgctxt "utils_locale.rsbandstatuslist"
-msgid "Ordered,Available,Used,Removed,Transfered,Broken,Lost"
+msgid "Ordered,Available,Used,Removed,Transferred,Broken,Lost,Returned"
 msgstr ""
 
 #: utils_locale.rsbandstransferedwitherrors
@@ -16086,6 +16094,11 @@ msgstr ""
 #: utils_locale.rsintegritycheckreturnederrors
 msgctxt "utils_locale.rsintegritycheckreturnederrors"
 msgid "The database integrity check returned some errors."
+msgstr ""
+
+#: utils_locale.rsinvalidbandstatustransition
+#, object-pascal-format
+msgid "Invalid band status transition: %s -> %s"
 msgstr ""
 
 #: utils_locale.rsinvalidbooleanforfield

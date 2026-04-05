@@ -1560,7 +1560,12 @@
         <Filename Value="edit_dialogs\ubatch_bandsreceive.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="batchBandsReceive"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="data\data_services.pp"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
     <Debugger>

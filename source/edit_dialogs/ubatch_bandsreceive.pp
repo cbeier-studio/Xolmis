@@ -53,7 +53,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_validations, utils_conversions,
-  data_types, models_record_types, models_bands,
+  data_types, data_services, models_record_types, models_bands,
   uDarkStyleParams,
   udm_main, udlg_loading;
 
@@ -145,6 +145,7 @@ var
   HistoryRepo: TBandHistoryRepository;
   FRecord, FOldBand: TBand;
   FHistory: TBandHistory;
+  FMoveBand: TBandMovementService;
   Ini, Fim, i: Integer;
   lstDiff, Msgs: TStrings;
   D: String;
@@ -160,6 +161,7 @@ begin
   HistoryRepo := TBandHistoryRepository.Create(DMM.sqlCon);
   FRecord := TBand.Create();
   FHistory := TBandHistory.Create();
+  FMoveBand := TBandMovementService.Create(BandRepo);
   Ini := eStartNumber.Value;
   Fim := eEndNumber.Value;
   Msgs := TStringList.Create;
@@ -177,44 +179,45 @@ begin
         FHistory.Clear;
 
         BandRepo.FindByNumber(cbBandSize.Text, i, FRecord);
-        if not (FRecord= nil) then
+        if (FRecord.Id > 0) then
         begin
           // if the band exists
           if (FRecord.Status = bstOrdered) then
           begin
-            FOldBand := TBand.Create(FRecord.Id);
-            try
-              FRecord.Status := bstAvailable;
-              FRecord.CarrierId := FRecord.RequesterId;
-
-              BandRepo.Update(FRecord);
-
-              // write the record history
-              lstDiff := TStringList.Create;
-              try
-                if FRecord.Diff(FOldBand, lstDiff) then
-                begin
-                  for D in lstDiff do
-                    WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-                      ExtractDelimited(1, D, [';']),
-                      ExtractDelimited(2, D, [';']),
-                      ExtractDelimited(3, D, [';']), rsEditedByBatch);
-                end;
-              finally
-                FreeAndNil(lstDiff);
-              end;
-            finally
-              FreeAndNil(FOldBand);
-            end;
-
-            { Write the band history }
-            FHistory.BandId := FRecord.Id;
-            FHistory.EventType := bevReceive;
-            FHistory.EventDate := TextToDate(eReceiptDate.Text);
-            FHistory.SupplierId := FRecord.SupplierId;
-            FHistory.RequesterId := FRecord.RequesterId;
-
-            HistoryRepo.Insert(FHistory);
+            FMoveBand.ReceiveFromSupplier(FRecord, FRecord.SupplierId, FRecord.RequesterId, TextToDate(eReceiptDate.Text));
+            //FOldBand := TBand.Create(FRecord.Id);
+            //try
+            //  FRecord.Status := bstAvailable;
+            //  FRecord.CarrierId := FRecord.RequesterId;
+            //
+            //  BandRepo.Update(FRecord);
+            //
+            //  // write the record history
+            //  lstDiff := TStringList.Create;
+            //  try
+            //    if FRecord.Diff(FOldBand, lstDiff) then
+            //    begin
+            //      for D in lstDiff do
+            //        WriteRecHistory(tbBands, haEdited, FOldBand.Id,
+            //          ExtractDelimited(1, D, [';']),
+            //          ExtractDelimited(2, D, [';']),
+            //          ExtractDelimited(3, D, [';']), rsEditedByBatch);
+            //    end;
+            //  finally
+            //    FreeAndNil(lstDiff);
+            //  end;
+            //finally
+            //  FreeAndNil(FOldBand);
+            //end;
+            //
+            //{ Write the band history }
+            //FHistory.BandId := FRecord.Id;
+            //FHistory.EventType := bevReceive;
+            //FHistory.EventDate := TextToDate(eReceiptDate.Text);
+            //FHistory.SupplierId := FRecord.SupplierId;
+            //FHistory.RequesterId := FRecord.RequesterId;
+            //
+            //HistoryRepo.Insert(FHistory);
           end
           else
             Msgs.Add(Format(rsBandNotOrdered, [FRecord.Size+IntToStr(FRecord.Number)]));
@@ -248,6 +251,7 @@ begin
     end;
 
   finally
+    FMoveBand.Free;
     FHistory.Free;
     FRecord.Free;
     HistoryRepo.Free;

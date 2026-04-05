@@ -189,7 +189,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_system,
-  data_types, data_management, data_getvalue, data_consts,
+  data_types, data_management, data_getvalue, data_consts, data_services,
   models_users, models_taxonomy, models_birds, models_geo, models_bands,
   models_sampling_plots, io_csv,
   udm_main, udlg_progress;
@@ -230,6 +230,7 @@ var
   strDate, strTime: String;
   CodAnilha, aMethod: Integer;
   NetLat, NetLong: Extended;
+  MoveBand: TBandMovementService;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -296,6 +297,7 @@ begin
           SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
           SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
           NetRepo := TNetEffortRepository.Create(DMM.sqlCon);
+          MoveBand := TBandMovementService.Create(BandRepo);
 
           try
             Taxon := TTaxon.Create();
@@ -516,25 +518,27 @@ begin
             // Update band status
             if (Trim(Reg.RemovedBand) <> '') then
             begin
-              UpdateBand(RemovedBand.Id, Individuo.Id, 'R', Reg.CaptureDate);
+              MoveBand.RemoveFromIndividual(RemovedBand, Individuo.Id, Reg.CaptureDate);
+              //UpdateBand(RemovedBand.Id, Individuo.Id, 'R', Reg.CaptureDate);
               LogInfo(Format('Band ID=%d status updated to removed', [RemovedBand.Id]));
             end;
-            UpdateBand(Band.Id, Individuo.Id, 'U', Reg.CaptureDate);
+            MoveBand.UseInCapture(Band, Individuo.Id, Reg.CaptureDate);
+            //UpdateBand(Band.Id, Individuo.Id, 'U', Reg.CaptureDate);
             LogInfo(Format('Band ID=%d status updated to used', [Band.Id]));
 
             // Update individual band
-            if Reg.CaptureType = 'N' then
-            begin
-              UpdateIndividual(Individuo.Id, Reg.CaptureDate);
-              LogInfo(Format('Individual ID=%d banding date updated', [Individuo.Id]));
-            end;
-            if Reg.CaptureType = 'C' then
-            begin
-              ChangeIndividualBand(Individuo.Id, Band.Id, RemovedBand.Id, Reg.CaptureDate,
-                Reg.RemovedBand);
-              LogInfo(Format('Individual ID=%d band updated with ID=%d (removed band ID=%d)',
-                [Individuo.Id, Band.Id, RemovedBand.Id]));
-            end;
+            //if Reg.CaptureType = 'N' then
+            //begin
+            //  UpdateIndividual(Individuo.Id, Reg.CaptureDate);
+            //  LogInfo(Format('Individual ID=%d banding date updated', [Individuo.Id]));
+            //end;
+            //if Reg.CaptureType = 'C' then
+            //begin
+            //  ChangeIndividualBand(Individuo.Id, Band.Id, RemovedBand.Id, Reg.CaptureDate,
+            //    Reg.RemovedBand);
+            //  LogInfo(Format('Individual ID=%d band updated with ID=%d (removed band ID=%d)',
+            //    [Individuo.Id, Band.Id, RemovedBand.Id]));
+            //end;
           finally
             FreeAndNil(Taxon);
             FreeAndNil(NetStation);
@@ -545,6 +549,7 @@ begin
             FreeAndNil(RemovedBand);
             FreeAndNil(Individuo);
             FreeAndNil(Captura);
+            MoveBand.Free;
             BandRepo.Free;
             SiteRepo.Free;
             SPlotRepo.Free;
@@ -559,6 +564,7 @@ begin
         // If it is a band record
         begin
           BandRepo := TBandRepository.Create(DMM.sqlCon);
+          MoveBand := TBandMovementService.Create(BandRepo);
           Band := TBand.Create;
           try
             // Get band
@@ -583,17 +589,20 @@ begin
             // Update band status
             if (Reg.CaptureType = 'L') then    // Lost band
             begin
-              UpdateBand(Band.Id, 0, 'L', Reg.CaptureDate);
+              MoveBand.MarkAsLost(Band, Reg.CaptureDate);
+              //UpdateBand(Band.Id, 0, 'L', Reg.CaptureDate);
               LogInfo(Format('Band ID=%d status updated to lost', [Band.Id]));
             end
             else
             if (Reg.CaptureType = 'Q') then    // Broken band
             begin
-              UpdateBand(Band.Id, 0, 'Q', Reg.CaptureDate);
+              MoveBand.MarkAsBroken(Band, Reg.CaptureDate);
+              //UpdateBand(Band.Id, 0, 'Q', Reg.CaptureDate);
               LogInfo(Format('Band ID=%d status updated to broken', [Band.Id]));
             end;
           finally
             FreeAndNil(Band);
+            MoveBand.Free;
             BandRepo.Free;
           end;
         end;

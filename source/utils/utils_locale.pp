@@ -458,6 +458,7 @@ uses
     rsInvalidFloatForField = 'Invalid float value "%s" for field %s';
     rsInvalidBooleanForField = 'Invalid boolean value "%s" for field %s';
     rsInvalidDateTimeForField = 'Invalid date/time "%s" for field %s';
+    rsInvalidBandStatusTransition = 'Invalid band status transition: %s -> %s';
     rsMustBeAValidInteger = '%s must be a valid integer.';
     rsMustBeAValidNumber = '%s must be a valid number.';
     rsMustBeAValidDate = '%s must have a valid date.';
@@ -937,7 +938,8 @@ uses
     rsBandBroken = 'Broken';
     rsBandLost = 'Lost';
     rsBandTransferred = 'Transferred';
-    rsBandStatusList = 'Ordered,Available,Used,Removed,Transfered,Broken,Lost';
+    rsBandReturned = 'Returned';
+    rsBandStatusList = 'Ordered,Available,Used,Removed,Transferred,Broken,Lost,Returned';
     rsBandOpen = 'Butt-end';
     rsBandClosed = 'Closed';
     rsBandTriangular = 'Triangular';
@@ -960,7 +962,8 @@ uses
     rsBandEventReport = 'Report';
     rsBandEventUse = 'Use';
     rsBandEventDischarge = 'Discharge';
-    rsBandEventTypeList = 'Order,Receive,Transfer,Retrieve,Report,Use,Discharge';
+    rsBandEventReturn = 'Return';
+    rsBandEventTypeList = 'Order,Receive,Transfer,Retrieve,Report,Use,Discharge,Return';
 
     rsBandColorList = '"yellow","orange","red","carmine","pink","violet","pale blue","blue","green",' +
       '"lime green","umber","white","gray","black","other"';

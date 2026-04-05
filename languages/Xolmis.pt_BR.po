@@ -13706,6 +13706,10 @@ msgctxt "utils_locale.rsbandeventretrieve"
 msgid "Retrieve"
 msgstr "Recuperada"
 
+#: utils_locale.rsbandeventreturn
+msgid "Return"
+msgstr "Devolver"
+
 #: utils_locale.rsbandeventtransfer
 msgctxt "utils_locale.rsbandeventtransfer"
 msgid "Transfer"
@@ -13713,8 +13717,8 @@ msgstr "Transferida"
 
 #: utils_locale.rsbandeventtypelist
 msgctxt "utils_locale.rsbandeventtypelist"
-msgid "Order,Receive,Transfer,Retrieve,Report,Use,Discharge"
-msgstr "Pedido,Recebida,Transferida,Recuperada,Reportada,Usada,Descartada"
+msgid "Order,Receive,Transfer,Retrieve,Report,Use,Discharge,Return"
+msgstr "Pedido,Receber,Transferir,Recuperar,Reportar,Usar,Descartar,Devolver"
 
 #: utils_locale.rsbandeventuse
 msgctxt "utils_locale.rsbandeventuse"
@@ -13787,6 +13791,10 @@ msgctxt "utils_locale.rsbandremoved"
 msgid "Removed"
 msgstr "Removida"
 
+#: utils_locale.rsbandreturned
+msgid "Returned"
+msgstr "Devolvida"
+
 #: utils_locale.rsbandrivet
 msgctxt "utils_locale.rsbandrivet"
 msgid "Rivet"
@@ -13808,8 +13816,8 @@ msgstr "O recebimento de anilhas foi finalizado, mas algumas anilhas têm proble
 
 #: utils_locale.rsbandstatuslist
 msgctxt "utils_locale.rsbandstatuslist"
-msgid "Ordered,Available,Used,Removed,Transfered,Broken,Lost"
-msgstr "Encomendada,Disponível,Usada,Removida,Transferida,Quebrada,Perdida"
+msgid "Ordered,Available,Used,Removed,Transferred,Broken,Lost,Returned"
+msgstr "Encomendada,Disponível,Usada,Removida,Transferida,Quebrada,Perdida,Devolvida"
 
 #: utils_locale.rsbandstransferedwitherrors
 msgctxt "utils_locale.rsbandstransferedwitherrors"
@@ -16072,6 +16080,11 @@ msgstr "Inserindo topônimos no Gazetteer..."
 msgctxt "utils_locale.rsintegritycheckreturnederrors"
 msgid "The database integrity check returned some errors."
 msgstr "A verificação de integridade do banco de dados retornou alguns erros."
+
+#: utils_locale.rsinvalidbandstatustransition
+#, object-pascal-format
+msgid "Invalid band status transition: %s -> %s"
+msgstr "Transição inválida de status da anilha: %s -> %s"
 
 #: utils_locale.rsinvalidbooleanforfield
 #, object-pascal-format

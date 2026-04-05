@@ -3336,7 +3336,7 @@ begin
     Clear;
     Add('SELECT * FROM individuals');
     Add('WHERE (taxon_id = :taxon_id)');
-    Add('AND (band_id = :band_id)');
+    Add('AND ((band_id = :band_id) OR (removed_band_id = :band_id))');
     if (aRightLeg <> EmptyStr) then
     begin
       Add('AND (right_leg_below = :right_tarsus)');
