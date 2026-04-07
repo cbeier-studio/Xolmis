@@ -21,55 +21,55 @@ unit utils_editdialogs;
 interface
 
 uses
-  Classes, SysUtils, Forms, DB, SQLDB, StrUtils, System.UITypes, Variants, data_types;
+  Classes, SysUtils, Forms, DB, SQLDB, System.UITypes, Variants, data_types;
 
   function EditConnection(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditUser(IsNew: Boolean = False): Boolean;
+  function ChangeUserPassword(IsNew: Boolean = False): Boolean;
 
-  function EditMethod(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditSite(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boolean = False): Boolean;
-  function EditInstitution(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditPerson(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditProject(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditProjectMember(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditProjectGoal(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditProjectActivity(aDataSet: TDataSet; aProject: Integer = 0; aGoal: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditProjectRubric(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditProjectExpense(aDataSet: TDataSet; aProject: Integer = 0; aRubric: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditPermit(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
   function EditBand(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
-  function EditIndividual(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditCapture(aDataSet: TDataSet; aIndividual: Integer = 0; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditCollector(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
+  function EditEgg(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditExpedition(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditFeather(aDataSet: TDataSet; aIndividual: Integer = 0; aCapture: Integer = 0;
     aSighting: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
+  function EditIndividual(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditInstitution(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditMethod(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditNest(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNestOwner(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditNestRevision(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditEgg(aDataSet: TDataSet; aNest: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditExpedition(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boolean = False): Boolean;
+  function EditPermit(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditPerson(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditProject(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditProjectActivity(aDataSet: TDataSet; aProject: Integer = 0; aGoal: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectExpense(aDataSet: TDataSet; aProject: Integer = 0; aRubric: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectGoal(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectMember(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditProjectRubric(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditSighting(aDataSet: TDataSet; aSurvey: Integer = 0; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
+  function EditSite(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditSpecimen(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSurvey(aDataSet: TDataSet; aExpedition: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditSurveyMember(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditVegetation(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditSighting(aDataSet: TDataSet; aSurvey: Integer = 0; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditSpecimen(aDataSet: TDataSet; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditCollector(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer = 0; IsNew: Boolean = False): Boolean;
-  function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
-  function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
-  function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
   function EditVideoInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
-  function EditUser(IsNew: Boolean = False): Boolean;
-  function ChangeUserPassword(IsNew: Boolean = False): Boolean;
+  function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
 
 implementation
 
 uses
   utils_locale, utils_global, utils_permissions, utils_dialogs,
-  data_getvalue, data_consts,
+  data_getvalue, data_consts, data_services,
   models_record_types, models_geo, models_sampling, models_botany, models_breeding, models_birds, models_projects,
   models_media, models_bands, models_sightings, models_institutions, models_people, models_permits,
   models_specimens, models_sampling_plots, models_methods,
