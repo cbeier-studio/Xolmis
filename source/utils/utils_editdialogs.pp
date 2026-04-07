@@ -101,8 +101,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TMethod.Create(aDataSet.FieldByName('method_id').AsInteger);
-      FRecord := TMethod.Create(aDataSet.FieldByName('method_id').AsInteger);
+      FOldRecord := TMethod.Create();
+      FRecord := TMethod.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -136,7 +136,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('method_id', Method.Id, []);
+        aDataSet.Locate(COL_METHOD_ID, Method.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -171,8 +171,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSite.Create(aDataSet.FieldByName('site_id').AsInteger);
-      FRecord := TSite.Create(aDataSet.FieldByName('site_id').AsInteger);
+      FOldRecord := TSite.Create();
+      FRecord := TSite.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -206,7 +206,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('site_id', Site.Id, []);
+        aDataSet.Locate(COL_SITE_ID, Site.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -241,8 +241,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
-      FRecord := TSamplingPlot.Create(aDataSet.FieldByName('sampling_plot_id').AsInteger);
+      FOldRecord := TSamplingPlot.Create();
+      FRecord := TSamplingPlot.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -276,7 +276,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('sampling_plot_id', SamplingPlot.Id, []);
+        aDataSet.Locate(COL_SAMPLING_PLOT_ID, SamplingPlot.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -311,8 +311,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
-      FRecord := TPermanentNet.Create(aDataSet.FieldByName('permanent_net_id').AsInteger);
+      FOldRecord := TPermanentNet.Create();
+      FRecord := TPermanentNet.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -347,7 +347,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('permanent_net_id', PermanentNet.Id, []);
+        aDataSet.Locate(COL_PERMANENT_NET_ID, PermanentNet.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -381,8 +381,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
-      FRecord := TInstitution.Create(aDataSet.FieldByName('institution_id').AsInteger);
+      FOldRecord := TInstitution.Create();
+      FRecord := TInstitution.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -416,7 +416,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('institution_id', Institution.Id, []);
+        aDataSet.Locate(COL_INSTITUTION_ID, Institution.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -450,8 +450,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
-      FRecord := TPerson.Create(aDataSet.FieldByName('person_id').AsInteger);
+      FOldRecord := TPerson.Create();
+      FRecord := TPerson.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -485,7 +485,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('person_id', Person.Id, []);
+        aDataSet.Locate(COL_PERSON_ID, Person.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -519,8 +519,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
-      FRecord := TProject.Create(aDataSet.FieldByName('project_id').AsInteger);
+      FOldRecord := TProject.Create();
+      FRecord := TProject.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -554,7 +554,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('project_id', Project.Id, []);
+        aDataSet.Locate(COL_PROJECT_ID, Project.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -588,8 +588,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TProjectMember.Create(aDataSet.FieldByName('project_member_id').AsInteger);
-      FRecord := TProjectMember.Create(aDataSet.FieldByName('project_member_id').AsInteger);
+      FOldRecord := TProjectMember.Create();
+      FRecord := TProjectMember.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -624,7 +624,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('project_member_id', ProjectMember.Id, []);
+        aDataSet.Locate(COL_PROJECT_MEMBER_ID, ProjectMember.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -659,8 +659,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TProjectGoal.Create(aDataSet.FieldByName('goal_id').AsInteger);
-      FRecord := TProjectGoal.Create(aDataSet.FieldByName('goal_id').AsInteger);
+      FOldRecord := TProjectGoal.Create();
+      FRecord := TProjectGoal.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -695,7 +695,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('goal_id', ProjectGoal.Id, []);
+        aDataSet.Locate(COL_GOAL_ID, ProjectGoal.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -730,8 +730,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TProjectActivity.Create(aDataSet.FieldByName('chronogram_id').AsInteger);
-      FRecord := TProjectActivity.Create(aDataSet.FieldByName('chronogram_id').AsInteger);
+      FOldRecord := TProjectActivity.Create();
+      FRecord := TProjectActivity.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -768,7 +768,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('chronogram_id', ProjectActivity.Id, []);
+        aDataSet.Locate(COL_CHRONOGRAM_ID, ProjectActivity.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -803,8 +803,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TProjectRubric.Create(aDataSet.FieldByName('budget_id').AsInteger);
-      FRecord := TProjectRubric.Create(aDataSet.FieldByName('budget_id').AsInteger);
+      FOldRecord := TProjectRubric.Create();
+      FRecord := TProjectRubric.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -839,7 +839,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('budget_id', ProjectRubric.Id, []);
+        aDataSet.Locate(COL_BUDGET_ID, ProjectRubric.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -874,8 +874,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TProjectExpense.Create(aDataSet.FieldByName('expense_id').AsInteger);
-      FRecord := TProjectExpense.Create(aDataSet.FieldByName('expense_id').AsInteger);
+      FOldRecord := TProjectExpense.Create();
+      FRecord := TProjectExpense.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -912,7 +912,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('expense_id', ProjectExpense.Id, []);
+        aDataSet.Locate(COL_EXPENSE_ID, ProjectExpense.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -947,8 +947,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
-      FRecord := TPermit.Create(aDataSet.FieldByName('permit_id').AsInteger);
+      FOldRecord := TPermit.Create();
+      FRecord := TPermit.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -983,7 +983,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('permit_id', Permit.Id, []);
+        aDataSet.Locate(COL_PERMIT_ID, Permit.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1017,8 +1017,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
-      FRecord := TBotanicalTaxon.Create(aDataSet.FieldByName('taxon_id').AsInteger);
+      FOldRecord := TBotanicalTaxon.Create();
+      FRecord := TBotanicalTaxon.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1052,7 +1052,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('taxon_id', Taxon.Id, []);
+        aDataSet.Locate(COL_TAXON_ID, Taxon.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1086,8 +1086,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
-      FRecord := TBand.Create(aDataSet.FieldByName('band_id').AsInteger);
+      FOldRecord := TBand.Create();
+      FRecord := TBand.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1121,7 +1121,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('band_id', Band.Id, []);
+        aDataSet.Locate(COL_BAND_ID, Band.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1155,8 +1155,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
-      FRecord := TIndividual.Create(aDataSet.FieldByName('individual_id').AsInteger);
+      FOldRecord := TIndividual.Create();
+      FRecord := TIndividual.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1190,7 +1190,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('individual_id', Individual.Id, []);
+        aDataSet.Locate(COL_INDIVIDUAL_ID, Individual.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1223,21 +1223,21 @@ begin
       FRecord := TCapture.Create();
       if aSurvey > 0 then
       begin
-        FRecord.CaptureDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
-        FRecord.LocalityId := GetFieldValue('surveys', 'locality_id', 'survey_id', aSurvey);
+        FRecord.CaptureDate := VarToDateTime(GetFieldValue(TBL_SURVEYS, COL_SURVEY_DATE, COL_SURVEY_ID, aSurvey));
+        FRecord.LocalityId := GetFieldValue(TBL_SURVEYS, COL_LOCALITY_ID, COL_SURVEY_ID, aSurvey);
         FRecord.SurveyId := aSurvey;
       end;
       if aIndividual > 0 then
       begin
-        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
-        FRecord.BandId := GetFieldValue('individuals', 'band_id', 'individual_id', aIndividual);
+        FRecord.TaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, aIndividual);
+        FRecord.BandId := GetFieldValue(TBL_INDIVIDUALS, COL_BAND_ID, COL_INDIVIDUAL_ID, aIndividual);
         FRecord.IndividualId := aIndividual;
       end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
-      FRecord := TCapture.Create(aDataSet.FieldByName('capture_id').AsInteger);
+      FOldRecord := TCapture.Create();
+      FRecord := TCapture.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1274,7 +1274,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('capture_id', Capture.Id, []);
+        aDataSet.Locate(COL_CAPTURE_ID, Capture.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1310,13 +1310,13 @@ begin
       FRecord := TNest.Create();
       if aIndividual > 0 then
       begin
-        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+        FRecord.TaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, aIndividual);
       end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
-      FRecord := TNest.Create(aDataSet.FieldByName('nest_id').AsInteger);
+      FOldRecord := TNest.Create();
+      FRecord := TNest.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1362,7 +1362,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('nest_id', Nest.Id, []);
+        aDataSet.Locate(COL_NEST_ID, Nest.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1397,8 +1397,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
-      FRecord := TNestOwner.Create(aDataSet.FieldByName('nest_owner_id').AsInteger);
+      FOldRecord := TNestOwner.Create();
+      FRecord := TNestOwner.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1433,7 +1433,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('nest_owner_id', NestOwner.Id, []);
+        aDataSet.Locate(COL_NEST_OWNER_ID, NestOwner.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1467,8 +1467,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
-      FRecord := TNestRevision.Create(aDataSet.FieldByName('nest_revision_id').AsInteger);
+      FOldRecord := TNestRevision.Create();
+      FRecord := TNestRevision.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1503,7 +1503,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('nest_revision_id', NestRevision.Id, []);
+        aDataSet.Locate(COL_NEST_REVISION_ID, NestRevision.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1536,13 +1536,13 @@ begin
       FRecord := TEgg.Create();
       if aNest > 0 then
       begin
-        FRecord.TaxonId := GetFieldValue('nests', 'taxon_id', 'nest_id', aNest);
+        FRecord.TaxonId := GetFieldValue(TBL_NESTS, COL_TAXON_ID, COL_NEST_ID, aNest);
       end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
-      FRecord := TEgg.Create(aDataSet.FieldByName('egg_id').AsInteger);
+      FOldRecord := TEgg.Create();
+      FRecord := TEgg.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1577,7 +1577,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('egg_id', Egg.Id, []);
+        aDataSet.Locate(COL_EGG_ID, Egg.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1613,8 +1613,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
-      FRecord := TExpedition.Create(aDataSet.FieldByName('expedition_id').AsInteger);
+      FOldRecord := TExpedition.Create();
+      FRecord := TExpedition.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1648,7 +1648,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('expedition_id', Expedition.Id, []);
+        aDataSet.Locate(COL_EXPEDITION_ID, Expedition.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1682,8 +1682,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
-      FRecord := TSurvey.Create(aDataSet.FieldByName('survey_id').AsInteger);
+      FOldRecord := TSurvey.Create();
+      FRecord := TSurvey.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1718,7 +1718,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('survey_id', Survey.Id, []);
+        aDataSet.Locate(COL_SURVEY_ID, Survey.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1752,8 +1752,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
-      FRecord := TSurveyMember.Create(aDataSet.FieldByName('survey_member_id').AsInteger);
+      FOldRecord := TSurveyMember.Create();
+      FRecord := TSurveyMember.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1788,7 +1788,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('survey_member_id', SurveyMember.Id, []);
+        aDataSet.Locate(COL_SURVEY_MEMBER_ID, SurveyMember.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1821,12 +1821,12 @@ begin
     begin
       FRecord := TNetEffort.Create();
       if aSurvey > 0 then
-        FRecord.SampleDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
+        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_SURVEYS, COL_SURVEY_DATE, COL_SURVEY_ID, aSurvey));
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
-      FRecord := TNetEffort.Create(aDataSet.FieldByName('net_id').AsInteger);
+      FOldRecord := TNetEffort.Create();
+      FRecord := TNetEffort.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1861,7 +1861,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('net_id', NetEffort.Id, []);
+        aDataSet.Locate(COL_NET_ID, NetEffort.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1893,12 +1893,12 @@ begin
     begin
       FRecord := TWeatherLog.Create();
       if aSurvey > 0 then
-        FRecord.SampleDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
+        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_SURVEYS, COL_SURVEY_DATE, COL_SURVEY_ID, aSurvey));
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
-      FRecord := TWeatherLog.Create(aDataSet.FieldByName('weather_id').AsInteger);
+      FOldRecord := TWeatherLog.Create();
+      FRecord := TWeatherLog.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -1933,7 +1933,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('weather_id', WeatherLog.Id, []);
+        aDataSet.Locate(COL_WEATHER_ID, WeatherLog.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -1968,19 +1968,19 @@ begin
       FRecord := TSighting.Create();
       if aSurvey > 0 then
       begin
-        FRecord.SightingDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
-        FRecord.MethodId := GetFieldValue('surveys', 'method_id', 'survey_id', aSurvey);
-        FRecord.LocalityId := GetFieldValue('surveys', 'locality_id', 'survey_id', aSurvey);
+        FRecord.SightingDate := VarToDateTime(GetFieldValue(TBL_SURVEYS, COL_SURVEY_DATE, COL_SURVEY_ID, aSurvey));
+        FRecord.MethodId := GetFieldValue(TBL_SURVEYS, COL_METHOD_ID, COL_SURVEY_ID, aSurvey);
+        FRecord.LocalityId := GetFieldValue(TBL_SURVEYS, COL_LOCALITY_ID, COL_SURVEY_ID, aSurvey);
       end;
       if aIndividual > 0 then
       begin
-        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+        FRecord.TaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, aIndividual);
       end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
-      FRecord := TSighting.Create(aDataSet.FieldByName('sighting_id').AsInteger);
+      FOldRecord := TSighting.Create();
+      FRecord := TSighting.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2016,7 +2016,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('sighting_id', Sighting.Id, []);
+        aDataSet.Locate(COL_SIGHTING_ID, Sighting.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2050,13 +2050,13 @@ begin
       if aIndividual > 0 then
       begin
         FRecord.IndividualId := aIndividual;
-        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+        FRecord.TaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, aIndividual);
       end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
-      FRecord := TSpecimen.Create(aDataSet.FieldByName('specimen_id').AsInteger);
+      FOldRecord := TSpecimen.Create();
+      FRecord := TSpecimen.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2091,7 +2091,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('specimen_id', Specimen.Id, []);
+        aDataSet.Locate(COL_SPECIMEN_ID, Specimen.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2125,8 +2125,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSpecimenCollector.Create(aDataSet.FieldByName('collector_id').AsInteger);
-      FRecord := TSpecimenCollector.Create(aDataSet.FieldByName('collector_id').AsInteger);
+      FOldRecord := TSpecimenCollector.Create();
+      FRecord := TSpecimenCollector.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2161,7 +2161,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('collector_id', SpecimenCollector.Id, []);
+        aDataSet.Locate(COL_COLLECTOR_ID, SpecimenCollector.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2196,8 +2196,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
-      FRecord := TSamplePrep.Create(aDataSet.FieldByName('sample_prep_id').AsInteger);
+      FOldRecord := TSamplePrep.Create();
+      FRecord := TSamplePrep.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2232,7 +2232,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('sample_prep_id', SamplePrep.Id, []);
+        aDataSet.Locate(COL_SAMPLE_PREP_ID, SamplePrep.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2301,7 +2301,7 @@ begin
     Result := ShowModal = mrOk;
     if Result then
     begin
-      DMM.qUsers.FieldByName('user_password').AsString := Pass;
+      DMM.qUsers.FieldByName(COL_USER_PASSWORD).AsString := Pass;
       if not IsNew then
         DMM.qUsers.Post;
       LogDebug('Password changed');
@@ -2335,8 +2335,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
-      FRecord := TImageData.Create(aDataSet.FieldByName('image_id').AsInteger);
+      FOldRecord := TImageData.Create();
+      FRecord := TImageData.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2347,57 +2347,57 @@ begin
       //tbPeople: ;
       tbIndividuals:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
       end;
       tbCaptures:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        CaptureId := aMaster.FieldByName('capture_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        CaptureId := aMaster.FieldByName(COL_CAPTURE_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
       end;
       //tbMolts: ;
       tbNests:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        NestId := aMaster.FieldByName('nest_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        NestId := aMaster.FieldByName(COL_NEST_ID).AsInteger;
       end;
       tbNestRevisions:
       begin
-        NestId := aMaster.FieldByName('nest_id').AsInteger;
-        NestRevisionId := aMaster.FieldByName('nest_revision_id').AsInteger;
+        NestId := aMaster.FieldByName(COL_NEST_ID).AsInteger;
+        NestRevisionId := aMaster.FieldByName(COL_NEST_REVISION_ID).AsInteger;
       end;
       tbEggs:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        NestId := aMaster.FieldByName('nest_id').AsInteger;
-        EggId := aMaster.FieldByName('egg_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        NestId := aMaster.FieldByName(COL_NEST_ID).AsInteger;
+        EggId := aMaster.FieldByName(COL_EGG_ID).AsInteger;
       end;
       //tbMethods: ;
       //tbExpeditions: ;
       tbSurveys:
       begin
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
       end;
       tbSightings:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
-        SightingId := aMaster.FieldByName('sighting_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
+        SightingId := aMaster.FieldByName(COL_SIGHTING_ID).AsInteger;
       end;
       tbSpecimens:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SpecimenId := aMaster.FieldByName('specimen_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SpecimenId := aMaster.FieldByName(COL_SPECIMEN_ID).AsInteger;
       end;
     end;
     Result := ShowModal = mrOk;
@@ -2428,7 +2428,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('image_id', Image.Id, []);
+        aDataSet.Locate(COL_IMAGE_ID, Image.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2462,8 +2462,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
-      FRecord := TAudioData.Create(aDataSet.FieldByName('audio_id').AsInteger);
+      FOldRecord := TAudioData.Create();
+      FRecord := TAudioData.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2472,8 +2472,8 @@ begin
     case aMasterType of
       tbIndividuals:
       begin
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
       end;
       //tbCaptures: ;
       //tbNests: ;
@@ -2481,23 +2481,23 @@ begin
       //tbExpeditions: ;
       tbSurveys:
       begin
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
       end;
       tbSightings:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
-        SightingId := aMaster.FieldByName('sighting_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
+        SightingId := aMaster.FieldByName(COL_SIGHTING_ID).AsInteger;
       end;
       tbSpecimens:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SpecimenId := aMaster.FieldByName('specimen_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SpecimenId := aMaster.FieldByName(COL_SPECIMEN_ID).AsInteger;
       end;
       //tbSamplePreps: ;
     end;
@@ -2529,7 +2529,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('audio_id', AudioRecording.Id, []);
+        aDataSet.Locate(COL_AUDIO_ID, AudioRecording.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2563,8 +2563,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
-      FRecord := TDocumentData.Create(aDataSet.FieldByName('document_id').AsInteger);
+      FOldRecord := TDocumentData.Create();
+      FRecord := TDocumentData.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2573,59 +2573,59 @@ begin
     case aMasterType of
       tbSamplingPlots:
       begin
-        SamplingPlotId := aMaster.FieldByName('sampling_plot_id').AsInteger;
+        SamplingPlotId := aMaster.FieldByName(COL_SAMPLING_PLOT_ID).AsInteger;
       end;
       //tbInstitutions: ;
       tbPeople:
       begin
-        PersonId := aMaster.FieldByName('person_id').AsInteger;
+        PersonId := aMaster.FieldByName(COL_PERSON_ID).AsInteger;
       end;
       tbProjects:
       begin
-        ProjectId := aMaster.FieldByName('project_id').AsInteger;
+        ProjectId := aMaster.FieldByName(COL_PROJECT_ID).AsInteger;
       end;
       tbPermits:
       begin
-        PermitId := aMaster.FieldByName('permit_id').AsInteger;
+        PermitId := aMaster.FieldByName(COL_PERMIT_ID).AsInteger;
       end;
       //tbBandHistory: ;
       tbIndividuals:
       begin
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
       end;
       tbCaptures:
       begin
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
-        CaptureId := aMaster.FieldByName('capture_id').AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
+        CaptureId := aMaster.FieldByName(COL_CAPTURE_ID).AsInteger;
       end;
       tbNests:
       begin
-        NestId := aMaster.FieldByName('nest_id').AsInteger;
+        NestId := aMaster.FieldByName(COL_NEST_ID).AsInteger;
       end;
       tbMethods:
       begin
-        MethodId := aMaster.FieldByName('method_id').AsInteger;
+        MethodId := aMaster.FieldByName(COL_METHOD_ID).AsInteger;
       end;
       tbExpeditions:
       begin
-        ExpeditionId := aMaster.FieldByName('expedition_id').AsInteger;
+        ExpeditionId := aMaster.FieldByName(COL_EXPEDITION_ID).AsInteger;
       end;
       tbSurveys:
       begin
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
-        ExpeditionId := aMaster.FieldByName('expedition_id').AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
+        ExpeditionId := aMaster.FieldByName(COL_EXPEDITION_ID).AsInteger;
       end;
       tbSightings:
       begin
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
-        SightingId := aMaster.FieldByName('sighting_id').AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
+        SightingId := aMaster.FieldByName(COL_SIGHTING_ID).AsInteger;
       end;
       tbSpecimens:
       begin
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        SpecimenId := aMaster.FieldByName('specimen_id').AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        SpecimenId := aMaster.FieldByName(COL_SPECIMEN_ID).AsInteger;
       end;
     end;
     Result := ShowModal = mrOk;
@@ -2656,7 +2656,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('document_id', Document.Id, []);
+        aDataSet.Locate(COL_DOCUMENT_ID, Document.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2688,12 +2688,12 @@ begin
     begin
       FRecord := TVegetation.Create();
       if aSurvey > 0 then
-        FRecord.SampleDate := VarToDateTime(GetFieldValue('surveys', 'survey_date', 'survey_id', aSurvey));
+        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_SURVEYS, COL_SURVEY_DATE, COL_SURVEY_ID, aSurvey));
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
-      FRecord := TVegetation.Create(aDataSet.FieldByName('vegetation_id').AsInteger);
+      FOldRecord := TVegetation.Create();
+      FRecord := TVegetation.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2728,7 +2728,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('vegetation_id', Vegetation.Id, []);
+        aDataSet.Locate(COL_VEGETATION_ID, Vegetation.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2802,32 +2802,32 @@ begin
     begin
       FRecord := TFeather.Create();
       if aIndividual > 0 then
-        FRecord.TaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', aIndividual);
+        FRecord.TaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, aIndividual);
       if aCapture > 0 then
       begin
-        FRecord.TaxonId := GetFieldValue('captures', 'taxon_id', 'capture_id', aCapture);
-        FRecord.SampleDate := VarToDateTime(GetFieldValue('captures', 'capture_date', 'capture_id', aCapture));
-        aTime := GetFieldValue('captures', 'capture_time', 'capture_id', aCapture);
+        FRecord.TaxonId := GetFieldValue(TBL_CAPTURES, COL_TAXON_ID, COL_CAPTURE_ID, aCapture);
+        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_CAPTURES, COL_CAPTURE_DATE, COL_CAPTURE_ID, aCapture));
+        aTime := GetFieldValue(TBL_CAPTURES, COL_CAPTURE_TIME, COL_CAPTURE_ID, aCapture);
         if aTime <> Null then
           FRecord.SampleTime := VarToDateTime(aTime);
-        FRecord.LocalityId := GetFieldValue('captures', 'locality_id', 'capture_id', aCapture);
-        FRecord.ObserverId := GetFieldValue('captures', 'bander_id', 'capture_id', aCapture);
+        FRecord.LocalityId := GetFieldValue(TBL_CAPTURES, COL_LOCALITY_ID, COL_CAPTURE_ID, aCapture);
+        FRecord.ObserverId := GetFieldValue(TBL_CAPTURES, COL_BANDER_ID, COL_CAPTURE_ID, aCapture);
       end;
       if aSighting > 0 then
       begin
-        FRecord.TaxonId := GetFieldValue('sightings', 'taxon_id', 'sighting_id', aSighting);
-        FRecord.SampleDate := VarToDateTime(GetFieldValue('sightings', 'sighting_date', 'sighting_id', aSighting));
-        aTime := GetFieldValue('sightings', 'sighting_time', 'sighting_id', aSighting);
+        FRecord.TaxonId := GetFieldValue(TBL_SIGHTINGS, COL_TAXON_ID, COL_SIGHTING_ID, aSighting);
+        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_DATE, COL_SIGHTING_ID, aSighting));
+        aTime := GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_TIME, COL_SIGHTING_ID, aSighting);
         if aTime <> Null then
           FRecord.SampleTime := VarToDateTime(aTime);
-        FRecord.LocalityId := GetFieldValue('sightings', 'locality_id', 'sighting_id', aSighting);
-        FRecord.ObserverId := GetFieldValue('sightings', 'observer_id', 'sighting_id', aSighting);
+        FRecord.LocalityId := GetFieldValue(TBL_SIGHTINGS, COL_LOCALITY_ID, COL_SIGHTING_ID, aSighting);
+        FRecord.ObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, aSighting);
       end;
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TFeather.Create(aDataSet.FieldByName('feather_id').AsInteger);
-      FRecord := TFeather.Create(aDataSet.FieldByName('feather_id').AsInteger);
+      FOldRecord := TFeather.Create();
+      FRecord := TFeather.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2864,7 +2864,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('feather_id', Feather.Id, []);
+        aDataSet.Locate(COL_FEATHER_ID, Feather.Id, []);
       finally
         aDataSet.EnableControls;
       end;
@@ -2898,8 +2898,8 @@ begin
       EditSourceStr := rsInsertedByForm;
     end else
     begin
-      FOldRecord := TVideoData.Create(aDataSet.FieldByName('video_id').AsInteger);
-      FRecord := TVideoData.Create(aDataSet.FieldByName('video_id').AsInteger);
+      FOldRecord := TVideoData.Create();
+      FRecord := TVideoData.Create();
       FRepo.Hydrate(aDataSet, FOldRecord);
       FRecord.Assign(FOldRecord);
       EditSourceStr := rsEditedByForm;
@@ -2908,42 +2908,42 @@ begin
     case aMasterType of
       tbIndividuals:
       begin
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
       end;
       tbCaptures:
       begin
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
-        CaptureId := aMaster.FieldByName('capture_id').AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
+        CaptureId := aMaster.FieldByName(COL_CAPTURE_ID).AsInteger;
       end;
       tbSurveys:
       begin
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
       end;
       tbSightings:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        IndividualId := aMaster.FieldByName('individual_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        SurveyId := aMaster.FieldByName('survey_id').AsInteger;
-        SightingId := aMaster.FieldByName('sighting_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        IndividualId := aMaster.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        SurveyId := aMaster.FieldByName(COL_SURVEY_ID).AsInteger;
+        SightingId := aMaster.FieldByName(COL_SIGHTING_ID).AsInteger;
       end;
       tbNests:
       begin
-        TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
-        LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        NestId := aMaster.FieldByName('nest_id').AsInteger;
+        TaxonId := aMaster.FieldByName(COL_TAXON_ID).AsInteger;
+        LocalityId := aMaster.FieldByName(COL_LOCALITY_ID).AsInteger;
+        NestId := aMaster.FieldByName(COL_NEST_ID).AsInteger;
       end;
       tbNestRevisions:
       begin
         //TaxonId := aMaster.FieldByName('taxon_id').AsInteger;
         //LocalityId := aMaster.FieldByName('locality_id').AsInteger;
-        NestId := aMaster.FieldByName('nest_id').AsInteger;
-        NestRevisionId := aMaster.FieldByName('nest_revision_id').AsInteger;
+        NestId := aMaster.FieldByName(COL_NEST_ID).AsInteger;
+        NestRevisionId := aMaster.FieldByName(COL_NEST_REVISION_ID).AsInteger;
       end;
     end;
     Result := ShowModal = mrOk;
@@ -2974,7 +2974,7 @@ begin
       aDataSet.DisableControls;
       try
         aDataSet.Refresh;
-        aDataSet.Locate('video_id', Video.Id, []);
+        aDataSet.Locate(COL_VIDEO_ID, Video.Id, []);
       finally
         aDataSet.EnableControls;
       end;
