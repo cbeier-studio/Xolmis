@@ -556,10 +556,10 @@ begin
     eBandChangeDate.Text := EmptyStr
   else
     eBandChangeDate.Text := DateToStr(FIndividual.BandChangeDate);
-  eRightTarsus.Text := FIndividual.RightLegBelow;
-  eLeftTarsus.Text := FIndividual.LeftLegBelow;
-  eRightTibia.Text := FIndividual.RightLegAbove;
-  eLeftTibia.Text := FIndividual.LeftLegAbove;
+  eRightTarsus.Text := FIndividual.RightTarsus;
+  eLeftTarsus.Text := FIndividual.LeftTarsus;
+  eRightTibia.Text := FIndividual.RightTibia;
+  eLeftTibia.Text := FIndividual.LeftTibia;
   if (FIndividual.BirthYear > 0) then
   begin
     eBirthYear.Text := IntToStr(FIndividual.BirthYear);
@@ -649,10 +649,10 @@ begin
     FIndividual.BandChangeDate    := NullDate
   else
     FIndividual.BandChangeDate := StrToDate(eBandChangeDate.Text);
-  FIndividual.RightLegBelow  := eRightTarsus.Text;
-  FIndividual.LeftLegBelow   := eLeftTarsus.Text;
-  FIndividual.RightLegAbove  := eRightTibia.Text;
-  FIndividual.LeftLegAbove   := eLeftTibia.Text;
+  FIndividual.RightTarsus  := eRightTarsus.Text;
+  FIndividual.LeftTarsus   := eLeftTarsus.Text;
+  FIndividual.RightTibia  := eRightTibia.Text;
+  FIndividual.LeftTibia   := eLeftTibia.Text;
   if eBirthYear.Text = EmptyStr then
     FIndividual.BirthYear := 0
   else

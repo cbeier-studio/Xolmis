@@ -44,6 +44,22 @@ type
       const ANotes: String = '');
   end;
 
+  { TIndividualUpdateService }
+
+  TIndividualUpdateService = class
+  private
+    FIndRepo: TIndividualRepository;
+  public
+    constructor Create(ARepo: TIndividualRepository);
+    destructor Destroy; override;
+
+    procedure ApplyCaptureToIndividual(Capture: TCapture);
+    procedure ApplyBanding(Capture: TCapture);
+    procedure ApplyBandRemoval(Capture: TCapture);
+    procedure ApplyBandChange(OldCapture, NewCapture: TCapture);
+  end;
+
+
 implementation
 
 uses
@@ -76,7 +92,7 @@ begin
     bstUsed:
       Result := ANewStatus in [bstRemoved];
     bstTransferred, bstReturned, bstOrdered:
-      Result := ANewStatus in [bstAvailable];
+      Result := ANewStatus in [bstAvailable, bstUsed];
     bstBroken, bstLost, bstRemoved:
       Result := False;
   else
@@ -262,8 +278,6 @@ procedure TBandMovementService.RemoveFromIndividual(ABand: TBand; AIndividualId:
   const ANotes: String);
 var
   FOldBand: TBand;
-  FIndividual, FOldIndividual: TIndividual;
-  FIndividualRepo: TIndividualRepository;
   lstDiff: TStrings;
   D: String;
 begin
@@ -289,37 +303,6 @@ begin
     end;
   finally
     FreeAndNil(FOldBand);
-  end;
-
-  FIndividualRepo := TIndividualRepository.Create(DMM.sqlCon);
-  FIndividual := TIndividual.Create();
-  FOldIndividual := TIndividual.Create();
-  try
-    FIndividualRepo.GetById(AIndividualId, FIndividual);
-    FOldIndividual.Assign(FIndividual);
-    if (FIndividual.Id > 0) then
-    begin
-      FIndividual.RemovedBandId := ABand.Id;
-      FIndividual.BandChangeDate := ADate;
-    end;
-
-    // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if FIndividual.Diff(FOldIndividual, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbIndividuals, haEdited, FOldIndividual.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
-  finally
-    FreeAndNil(FIndividual);
-    FIndividualRepo.Free;
   end;
 
   // write the band history
@@ -406,8 +389,6 @@ end;
 procedure TBandMovementService.UseInCapture(ABand: TBand; AIndividualId: Integer; ADate: TDate;
   const ANotes: String);
 var
-  FIndividual, FOldIndividual: TIndividual;
-  FIndividualRepo: TIndividualRepository;
   FOldBand: TBand;
   lstDiff: TStrings;
   D: String;
@@ -437,18 +418,86 @@ begin
     FreeAndNil(FOldBand);
   end;
 
-  FIndividualRepo := TIndividualRepository.Create(DMM.sqlCon);
-  FIndividual := TIndividual.Create();
+  // write the band history
+  LogEvent(ABand, bevUse, ADate, 0, 0, 0, 0, ANotes);
+end;
+
+{ TIndividualUpdateService }
+
+constructor TIndividualUpdateService.Create(ARepo: TIndividualRepository);
+begin
+  inherited Create;
+  FIndRepo := ARepo;
+end;
+
+procedure TIndividualUpdateService.ApplyBandChange(OldCapture, NewCapture: TCapture);
+var
+  Ind: TIndividual;
+begin
+  if (NewCapture.IndividualId <= 0) then
+    Exit;
+
+  Ind := TIndividual.Create;
+  try
+    FIndRepo.GetById(NewCapture.IndividualId, Ind);
+
+    // Band change
+    if (OldCapture.BandId <> NewCapture.BandId) and (NewCapture.BandId > 0) then
+    begin
+      Ind.BandChangeDate := NewCapture.CaptureDate;
+      Ind.BandId := NewCapture.BandId;
+      FIndRepo.Update(Ind);
+    end;
+
+  finally
+    Ind.Free;
+  end;
+end;
+
+procedure TIndividualUpdateService.ApplyBanding(Capture: TCapture);
+var
+  Ind: TIndividual;
+begin
+  if (Capture.IndividualId <= 0) or (Capture.BandId <= 0) then
+    Exit;
+
+  Ind := TIndividual.Create;
+  try
+    FIndRepo.GetById(Capture.IndividualId, Ind);
+
+    if Ind.BandingDate = NullDate then
+    begin
+      Ind.BandId := Capture.BandId;
+      Ind.BandingDate := Capture.CaptureDate;
+      FIndRepo.Update(Ind);
+    end;
+
+  finally
+    Ind.Free;
+  end;
+end;
+
+procedure TIndividualUpdateService.ApplyBandRemoval(Capture: TCapture);
+var
+  FIndividual, FOldIndividual: TIndividual;
+  lstDiff: TStrings;
+  D: String;
+begin
+  if (Capture.IndividualId <= 0) or (Capture.RemovedBandId <= 0) then
+    Exit;
+
+  FIndividual := TIndividual.Create;
   FOldIndividual := TIndividual.Create();
   try
-    FIndividualRepo.GetById(AIndividualId, FIndividual);
+    FIndRepo.GetById(Capture.IndividualId, FIndividual);
     FOldIndividual.Assign(FIndividual);
-    if (FIndividual.Id > 0) then
+
+    if FIndividual.BandId = Capture.RemovedBandId then
     begin
-      if FIndividual.BandChangeDate <> NullDate then
-        FIndividual.BandingDate := ADate;
-      FIndividual.BandId := ABand.Id;
-      FIndividual.BandName := ABand.Size + ' ' + IntToStr(ABand.Number);
+      FIndividual.RemovedBandId := Capture.RemovedBandId;
+      FIndividual.BandId := Capture.BandId;
+      FIndividual.BandChangeDate := Capture.CaptureDate;
+      FIndRepo.Update(FIndividual);
     end;
 
     // write the record history
@@ -466,13 +515,82 @@ begin
       FreeAndNil(lstDiff);
     end;
   finally
-    FreeAndNil(FOldIndividual);
-    FreeAndNil(FIndividual);
-    FIndividualRepo.Free;
+    FOldIndividual.Free;
+    FIndividual.Free;
   end;
+end;
 
-  // write the band history
-  LogEvent(ABand, bevUse, ADate, 0, 0, 0, 0, ANotes);
+procedure TIndividualUpdateService.ApplyCaptureToIndividual(Capture: TCapture);
+var
+  FIndividual, FOldIndividual: TIndividual;
+  lstDiff: TStrings;
+  D: String;
+begin
+  if Capture.IndividualId <= 0 then
+    Exit;
+
+  FIndividual := TIndividual.Create;
+  FOldIndividual := TIndividual.Create();
+  try
+    FIndRepo.GetById(Capture.IndividualId, FIndividual);
+    FOldIndividual.Assign(FIndividual);
+
+    // 1. Update the main band
+    if (Capture.BandId > 0) and (FIndividual.BandId <> Capture.BandId) then
+    begin
+      // If it did not has band → initial banding
+      if FIndividual.BandId = 0 then
+        FIndividual.BandingDate := Capture.CaptureDate
+      else
+        FIndividual.BandChangeDate := Capture.CaptureDate;
+
+      FIndividual.BandId := Capture.BandId;
+      //FIndividual.BandName := ;
+    end;
+
+    // 2. Update double band
+    //if (Capture.DoubleBandId > 0) and (FIndividual.DoubleBandId <> Capture.DoubleBandId) then
+    //  FIndividual.DoubleBandId := Capture.DoubleBandId;
+
+    // 3. Update removed band
+    if (Capture.RemovedBandId > 0) and (FIndividual.RemovedBandId <> Capture.RemovedBandId) then
+    begin
+      FIndividual.RemovedBandId := Capture.RemovedBandId;
+      FIndividual.BandChangeDate := Capture.CaptureDate;
+    end;
+
+    // 4. Update colored bands
+    FIndividual.RightTarsus := Capture.RightTarsus;
+    FIndividual.LeftTarsus := Capture.LeftTarsus;
+    FIndividual.RightTibia := Capture.RightTibia;
+    FIndividual.LeftTibia := Capture.LeftTibia;
+
+    // 5. Save
+    FIndRepo.Update(FIndividual);
+
+    // write the record history
+    lstDiff := TStringList.Create;
+    try
+      if FIndividual.Diff(FOldIndividual, lstDiff) then
+      begin
+        for D in lstDiff do
+          WriteRecHistory(tbIndividuals, haEdited, FOldIndividual.Id,
+            ExtractDelimited(1, D, [';']),
+            ExtractDelimited(2, D, [';']),
+            ExtractDelimited(3, D, [';']));
+      end;
+    finally
+      FreeAndNil(lstDiff);
+    end;
+  finally
+    FOldIndividual.Free;
+    FIndividual.Free;
+  end;
+end;
+
+destructor TIndividualUpdateService.Destroy;
+begin
+  inherited Destroy;
 end;
 
 end.

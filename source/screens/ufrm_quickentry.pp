@@ -565,8 +565,8 @@ begin
         Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.BandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_BAND_NAME, r));
         Obj.RemovedBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_REMOVED_BAND_NAME, r));
-        Obj.RightLegBelow := CellValue(COL_RIGHT_TARSUS, r);
-        Obj.LeftLegBelow := CellValue(COL_LEFT_TARSUS, r);
+        Obj.RightTarsus := CellValue(COL_RIGHT_TARSUS, r);
+        Obj.LeftTarsus := CellValue(COL_LEFT_TARSUS, r);
         Obj.SubjectAge := StrToAge(CellValue(COL_SUBJECT_AGE, r));
         Obj.Escaped := CellValue(COL_ESCAPED, r) = '1';
         Obj.SubjectStatus := StrToSubjectStatus(CellValue(COL_SUBJECT_STATUS, r));
@@ -822,8 +822,8 @@ begin
         Obj.DoubleBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_DOUBLE_BAND_NAME, r));
         Obj.RemovedBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_REMOVED_BAND_NAME, r));
         Obj.BandChangeDate := StrToDateDef(CellValue(COL_BAND_CHANGE_DATE, r), NullDate);
-        Obj.RightLegBelow := CellValue(COL_RIGHT_TARSUS, r);
-        Obj.LeftLegBelow := CellValue(COL_LEFT_TARSUS, r);
+        Obj.RightTarsus := CellValue(COL_RIGHT_TARSUS, r);
+        Obj.LeftTarsus := CellValue(COL_LEFT_TARSUS, r);
         Obj.Sex := StrToSex(CellValue(COL_INDIVIDUAL_SEX, r));
         Obj.Age := StrToAge(CellValue(COL_INDIVIDUAL_AGE, r));
         Obj.BirthYear := StrToIntDef(CellValue(COL_BIRTH_YEAR, r), 0);

@@ -787,6 +787,7 @@ object edtCapture: TedtCapture
         ClientWidth = 775
         ParentBackground = False
         TabOrder = 5
+        OnResize = pTaxonBandResize
         object lblTaxon: TLabel
           Left = 16
           Height = 15

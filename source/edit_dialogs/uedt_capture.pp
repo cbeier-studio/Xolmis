@@ -267,6 +267,7 @@ type
     procedure pmnNewLocalityClick(Sender: TObject);
     procedure pmnNewPersonClick(Sender: TObject);
     procedure pmnNewSurveyClick(Sender: TObject);
+    procedure pTaxonBandResize(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -1232,8 +1233,8 @@ begin
     eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
     FBandId := FIndividual.BandId;
     eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
-    eRightTarsus.Text := FIndividual.RightLegBelow;
-    eLeftTarsus.Text := FIndividual.LeftLegBelow;
+    eRightTarsus.Text := FIndividual.RightTarsus;
+    eLeftTarsus.Text := FIndividual.LeftTarsus;
     FCapture.SubjectAge := FIndividual.Age;
     case FCapture.SubjectAge of
       ageUnknown:     cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeUnknown);
@@ -1307,8 +1308,8 @@ begin
   eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
   FRemovedBandId := FCapture.RemovedBandId;
   eRemovedBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FRemovedBandId);
-  eRightTarsus.Text := FCapture.RightLegBelow;
-  eLeftTarsus.Text := FCapture.LeftLegBelow;
+  eRightTarsus.Text := FCapture.RightTarsus;
+  eLeftTarsus.Text := FCapture.LeftTarsus;
   case FCapture.SubjectAge of
     ageUnknown:     cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeUnknown);
     ageNestling:    cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeNestling);
@@ -1561,6 +1562,11 @@ begin
   EditSurvey(DMG.qSurveys, 0, True);
 end;
 
+procedure TedtCapture.pTaxonBandResize(Sender: TObject);
+begin
+  eTaxon.Constraints.MinWidth := eSurvey.Width;
+end;
+
 procedure TedtCapture.sbSaveClick(Sender: TObject);
 begin
   if not ValidateFields then
@@ -1615,8 +1621,8 @@ begin
   FCapture.TaxonId       := FTaxonId;
   FCapture.BandId        := FBandId;
   FCapture.RemovedBandId := FRemovedBandId;
-  FCapture.RightLegBelow := eRightTarsus.Text;
-  FCapture.LeftLegBelow  := eLeftTarsus.Text;
+  FCapture.RightTarsus := eRightTarsus.Text;
+  FCapture.LeftTarsus  := eLeftTarsus.Text;
   case cbAge.ItemIndex of
     0: FCapture.SubjectAge := ageUnknown;
     1: FCapture.SubjectAge := ageAdult;

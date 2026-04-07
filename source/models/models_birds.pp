@@ -44,10 +44,10 @@ type
     FBandName: String;
     FDoubleBandId: Integer;
     FRemovedBandId: Integer;
-    FRightLegBelow: String;
-    FLeftLegBelow: String;
-    FRightLegAbove: String;
-    FLeftLegAbove: String;
+    FRightTarsus: String;
+    FLeftTarsus: String;
+    FRightTibia: String;
+    FLeftTibia: String;
     FFatherId: Integer;
     FMotherId: Integer;
     FDeathDate: String;
@@ -83,10 +83,10 @@ type
     property BandName: String read FBandName write FBandName;
     property DoubleBandId: Integer read FDoubleBandId write FDoubleBandId;
     property RemovedBandId: Integer read FRemovedBandId write FRemovedBandId;
-    property RightLegBelow: String read FRightLegBelow write FRightLegBelow;
-    property LeftLegBelow: String read FLeftLegBelow write FLeftLegBelow;
-    property RightLegAbove: String read FRightLegAbove write FRightLegAbove;
-    property LeftLegAbove: String read FLeftLegAbove write FLeftLegAbove;
+    property RightTarsus: String read FRightTarsus write FRightTarsus;
+    property LeftTarsus: String read FLeftTarsus write FLeftTarsus;
+    property RightTibia: String read FRightTibia write FRightTibia;
+    property LeftTibia: String read FLeftTibia write FLeftTibia;
     property FatherId: Integer read FFatherId write FFatherId;
     property MotherId: Integer read FMotherId write FMotherId;
     property DeathDate: String read FDeathDate write FDeathDate;
@@ -141,10 +141,10 @@ type
     FHowSexed: String;
     FBandId: Integer;
     FRemovedBandId: Integer;
-    FRightLegBelow: String;
-    FLeftLegBelow: String;
-    FRightLegAbove: String;
-    FLeftLegAbove: String;
+    FRightTarsus: String;
+    FLeftTarsus: String;
+    FRightTibia: String;
+    FLeftTibia: String;
     FWeight: Double;
     FTarsusLength: Double;
     FTarsusDiameter: Double;
@@ -235,10 +235,10 @@ type
     property HowSexed: String read FHowSexed write FHowSexed;
     property BandId: Integer read FBandId write FBandId;
     property RemovedBandId: Integer read FRemovedBandId write FRemovedBandId;
-    property RightLegBelow: String read FRightLegBelow write FRightLegBelow;
-    property LeftLegBelow: String read FLeftLegBelow write FLeftLegBelow;
-    property RightLegAbove: String read FRightLegAbove write FRightLegAbove;
-    property LeftLegAbove: String read FLeftLegAbove write FLeftLegAbove;
+    property RightTarsus: String read FRightTarsus write FRightTarsus;
+    property LeftTarsus: String read FLeftTarsus write FLeftTarsus;
+    property RightTibia: String read FRightTibia write FRightTibia;
+    property LeftTibia: String read FLeftTibia write FLeftTibia;
     property Weight: Double read FWeight write FWeight;
     property TarsusLength: Double read FTarsusLength write FTarsusLength;
     property TarsusDiameter: Double read FTarsusDiameter write FTarsusDiameter;
@@ -1302,10 +1302,10 @@ begin
     FHowSexed := TCapture(Source).HowSexed;
     FBandId := TCapture(Source).BandId;
     FRemovedBandId := TCapture(Source).RemovedBandId;
-    FRightLegBelow := TCapture(Source).RightLegBelow;
-    FLeftLegBelow := TCapture(Source).LeftLegBelow;
-    FRightLegAbove := TCapture(Source).RightLegAbove;
-    FLeftLegAbove := TCapture(Source).LeftLegAbove;
+    FRightTarsus := TCapture(Source).RightTarsus;
+    FLeftTarsus := TCapture(Source).LeftTarsus;
+    FRightTibia := TCapture(Source).RightTibia;
+    FLeftTibia := TCapture(Source).LeftTibia;
     FWeight := TCapture(Source).Weight;
     FTarsusLength := TCapture(Source).TarsusLength;
     FTarsusDiameter := TCapture(Source).TarsusDiameter;
@@ -1385,10 +1385,10 @@ begin
   FHowSexed := EmptyStr;
   FBandId := 0;
   FRemovedBandId := 0;
-  FRightLegBelow := EmptyStr;
-  FLeftLegBelow := EmptyStr;
-  FRightLegAbove := EmptyStr;
-  FLeftLegAbove := EmptyStr;
+  FRightTarsus := EmptyStr;
+  FLeftTarsus := EmptyStr;
+  FRightTibia := EmptyStr;
+  FLeftTibia := EmptyStr;
   FWeight := 0.0;
   FTarsusLength := 0.0;
   FTarsusDiameter := 0.0;
@@ -1501,9 +1501,9 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscRemovedBandID, aOld.RemovedBandId, FRemovedBandId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscRightTarsus, aOld.RightLegBelow, FRightLegBelow, R) then
+  if FieldValuesDiff(rscRightTarsus, aOld.RightTarsus, FRightTarsus, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscLeftTarsus, aOld.LeftLegBelow, FLeftLegBelow, R) then
+  if FieldValuesDiff(rscLeftTarsus, aOld.LeftTarsus, FLeftTarsus, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscWeight, aOld.Weight, FWeight, R) then
     Changes.Add(R);
@@ -1711,10 +1711,10 @@ begin
     FEndPhotoNumber       := Obj.Get('end_photo_number', '');
     FCameraName           := Obj.Get('camera_name', '');
     FRemovedBandId        := Obj.Get('removed_band_id', 0);
-    FRightLegBelow        := Obj.Get('right_tarsus', '');
-    FLeftLegBelow         := Obj.Get('left_tarsus', '');
-    FRightLegAbove        := Obj.Get('right_tibia', '');
-    FLeftLegAbove         := Obj.Get('left_tibia', '');
+    FRightTarsus        := Obj.Get('right_tarsus', '');
+    FLeftTarsus         := Obj.Get('left_tarsus', '');
+    FRightTibia        := Obj.Get('right_tibia', '');
+    FLeftTibia         := Obj.Get('left_tibia', '');
     FEscaped              := Obj.Get('escaped', False);
     FNeedsReview          := Obj.Get('needs_review', False);
     FNotes                := Obj.Get('notes', '');
@@ -1782,10 +1782,10 @@ begin
     JSONObject.Add('end_photo_number', FEndPhotoNumber);
     JSONObject.Add('camera_name', FCameraName);
     JSONObject.Add('removed_band_id', FRemovedBandId);
-    JSONObject.Add('right_tarsus', FRightLegBelow);
-    JSONObject.Add('left_tarsus', FLeftLegBelow);
-    JSONObject.Add('right_tibia', FRightLegAbove);
-    JSONObject.Add('left_tibia', FLeftLegAbove);
+    JSONObject.Add('right_tarsus', FRightTarsus);
+    JSONObject.Add('left_tarsus', FLeftTarsus);
+    JSONObject.Add('right_tibia', FRightTibia);
+    JSONObject.Add('left_tibia', FLeftTibia);
     JSONObject.Add('escaped', FEscaped);
     JSONObject.Add('needs_review', FNeedsReview);
     JSONObject.Add('notes', FNotes);
@@ -1817,7 +1817,7 @@ begin
     FMoltLimits, FCycleCode, FHowAged, FSkullOssification, FKippsIndex, FGlucose, FHemoglobin, FHematocrit,
     BoolToStr(FBloodSample, 'True', 'False'), BoolToStr(FFeatherSample, 'True', 'False'),
     BoolToStr(FSubjectPhotographed, 'True', 'False'), FPhotographer1Id, FPhotographer2Id, FStartPhotoNumber,
-    FEndPhotoNumber, FCameraName, FRemovedBandId, FRightLegBelow, FLeftLegBelow, FRightLegAbove, FLeftLegAbove,
+    FEndPhotoNumber, FCameraName, FRemovedBandId, FRightTarsus, FLeftTarsus, FRightTibia, FLeftTibia,
     BoolToStr(FEscaped, 'True', 'False'), BoolToStr(FNeedsReview, 'True', 'False'), FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -2226,10 +2226,10 @@ begin
     R.HowSexed := FieldByName('how_sexed').AsString;
     R.BandId := FieldByName('band_id').AsInteger;
     R.RemovedBandId := FieldByName('removed_band_id').AsInteger;
-    R.RightLegBelow := FieldByName('right_leg_below').AsString;
-    R.LeftLegBelow := FieldByName('left_leg_below').AsString;
-    R.RightLegAbove := FieldByName('right_leg_above').AsString;
-    R.LeftLegAbove := FieldByName('left_leg_above').AsString;
+    R.RightTarsus := FieldByName('right_leg_below').AsString;
+    R.LeftTarsus := FieldByName('left_leg_below').AsString;
+    R.RightTibia := FieldByName('right_leg_above').AsString;
+    R.LeftTibia := FieldByName('left_leg_above').AsString;
     R.Weight := FieldByName('weight').AsFloat;
     R.TarsusLength := FieldByName('tarsus_length').AsFloat;
     R.TarsusDiameter := FieldByName('tarsus_diameter').AsFloat;
@@ -2397,13 +2397,13 @@ begin
   if ARow.IndexOfName('removed_band_id') >= 0 then
     R.RemovedBandId := StrToIntDef(ARow.Values['removed_band_id'], 0);
   if ARow.IndexOfName('right_leg_below') >= 0 then
-    R.RightLegBelow := ARow.Values['right_leg_below'];
+    R.RightTarsus := ARow.Values['right_leg_below'];
   if ARow.IndexOfName('left_leg_below') >= 0 then
-    R.LeftLegBelow := ARow.Values['left_leg_below'];
+    R.LeftTarsus := ARow.Values['left_leg_below'];
   if ARow.IndexOfName('right_leg_above') >= 0 then
-    R.RightLegAbove := ARow.Values['right_leg_above'];
+    R.RightTibia := ARow.Values['right_leg_above'];
   if ARow.IndexOfName('left_leg_above') >= 0 then
-    R.LeftLegAbove := ARow.Values['left_leg_above'];
+    R.LeftTibia := ARow.Values['left_leg_above'];
   if ARow.IndexOfName('weight') >= 0 then
     R.Weight := StrToFloatDef(ARow.Values['weight'], 0);
   if ARow.IndexOfName('tarsus_length') >= 0 then
@@ -2717,8 +2717,8 @@ begin
     SetStrParam(ParamByName('end_photo_number'), R.EndPhotoNumber);
     SetStrParam(ParamByName('camera_name'), R.CameraName);
     SetForeignParam(ParamByName('removed_band_id'), R.RemovedBandId);
-    SetStrParam(ParamByName('right_leg_below'), R.RightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftLegBelow);
+    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
+    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
     ParamByName('escaped').AsBoolean := R.Escaped;
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
@@ -2899,8 +2899,8 @@ begin
     SetStrParam(ParamByName('end_photo_number'), R.EndPhotoNumber);
     SetStrParam(ParamByName('camera_name'), R.CameraName);
     SetForeignParam(ParamByName('removed_band_id'), R.RemovedBandId);
-    SetStrParam(ParamByName('right_leg_below'), R.RightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftLegBelow);
+    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
+    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
     ParamByName('escaped').AsBoolean := R.Escaped;
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('marked_status').AsBoolean := R.Marked;
@@ -2942,10 +2942,10 @@ begin
     FBandId := TIndividual(Source).BandId;
     FDoubleBandId := TIndividual(Source).DoubleBandId;
     FRemovedBandId := TIndividual(Source).RemovedBandId;
-    FRightLegBelow := TIndividual(Source).RightLegBelow;
-    FLeftLegBelow := TIndividual(Source).LeftLegBelow;
-    FRightLegAbove := TIndividual(Source).RightLegAbove;
-    FLeftLegAbove := TIndividual(Source).LeftLegAbove;
+    FRightTarsus := TIndividual(Source).RightTarsus;
+    FLeftTarsus := TIndividual(Source).LeftTarsus;
+    FRightTibia := TIndividual(Source).RightTibia;
+    FLeftTibia := TIndividual(Source).LeftTibia;
     FFatherId := TIndividual(Source).FatherId;
     FMotherId := TIndividual(Source).MotherId;
     FDeathDate := TIndividual(Source).DeathDate;
@@ -2974,10 +2974,10 @@ begin
   FBandId := 0;
   FDoubleBandId := 0;
   FRemovedBandId := 0;
-  FRightLegBelow := EmptyStr;
-  FLeftLegBelow := EmptyStr;
-  FRightLegAbove := EmptyStr;
-  FLeftLegAbove := EmptyStr;
+  FRightTarsus := EmptyStr;
+  FLeftTarsus := EmptyStr;
+  FRightTibia := EmptyStr;
+  FLeftTibia := EmptyStr;
   FFatherId := 0;
   FMotherId := 0;
   FDeathDate := EmptyStr;
@@ -3032,13 +3032,13 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscRemovedBandID, aOld.RemovedBandId, FRemovedBandId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscRightTarsus, aOld.RightLegBelow, FRightLegBelow, R) then
+  if FieldValuesDiff(rscRightTarsus, aOld.RightTarsus, FRightTarsus, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscLeftTarsus, aOld.LeftLegBelow, FLeftLegBelow, R) then
+  if FieldValuesDiff(rscLeftTarsus, aOld.LeftTarsus, FLeftTarsus, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscRightTibia, aOld.RightLegAbove, FRightLegAbove, R) then
+  if FieldValuesDiff(rscRightTibia, aOld.RightTibia, FRightTibia, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscLeftTibia, aOld.LeftLegAbove, FLeftLegAbove, R) then
+  if FieldValuesDiff(rscLeftTibia, aOld.LeftTibia, FLeftTibia, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFatherID, aOld.FatherId, FFatherId, R) then
     Changes.Add(R);
@@ -3103,10 +3103,10 @@ begin
     FBandId         := Obj.Get('band_id', 0);
     FDoubleBandId   := Obj.Get('double_band_id', 0);
     FRemovedBandId  := Obj.Get('removed_band_id', 0);
-    FRightLegBelow  := Obj.Get('right_tarsus', '');
-    FLeftLegBelow   := Obj.Get('left_tarsus', '');
-    FRightLegAbove  := Obj.Get('right_tibia', '');
-    FLeftLegAbove   := Obj.Get('left_tibia', '');
+    FRightTarsus  := Obj.Get('right_tarsus', '');
+    FLeftTarsus   := Obj.Get('left_tarsus', '');
+    FRightTibia  := Obj.Get('right_tibia', '');
+    FLeftTibia   := Obj.Get('left_tibia', '');
     FFatherId       := Obj.Get('father_id', 0);
     FMotherId       := Obj.Get('mother_id', 0);
     FDeathYear      := Obj.Get('death_year', 0);
@@ -3138,10 +3138,10 @@ begin
     JSONObject.Add('band_id', FBandId);
     JSONObject.Add('double_band_id', FDoubleBandId);
     JSONObject.Add('removed_band_id', FRemovedBandId);
-    JSONObject.Add('right_tarsus', FRightLegBelow);
-    JSONObject.Add('left_tarsus', FLeftLegBelow);
-    JSONObject.Add('right_tibia', FRightLegAbove);
-    JSONObject.Add('left_tibia', FLeftLegAbove);
+    JSONObject.Add('right_tarsus', FRightTarsus);
+    JSONObject.Add('left_tarsus', FLeftTarsus);
+    JSONObject.Add('right_tibia', FRightTibia);
+    JSONObject.Add('left_tibia', FLeftTibia);
     JSONObject.Add('father_id', FFatherId);
     JSONObject.Add('mother_id', FMotherId);
     JSONObject.Add('death_year', FDeathYear);
@@ -3165,7 +3165,7 @@ begin
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FTaxonId, SEXES[FSex], AGES[FAge], FNestId, FBirthYear, FBirthMonth, FBirthDay,
     DateToStr(FBandingDate), DateToStr(FBandChangeDate), FBandId, FDoubleBandId, FRemovedBandId,
-    FRightLegBelow, FLeftLegBelow, FRightLegAbove, FLeftLegAbove, FFatherId, FMotherId, FDeathYear,
+    FRightTarsus, FLeftTarsus, FRightTibia, FLeftTibia, FFatherId, FMotherId, FDeathYear,
     FDeathMonth, FDeathDay, FRecognizableMarkings, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -3472,10 +3472,10 @@ begin
     R.BandId := FieldByName('band_id').AsInteger;
     R.DoubleBandId := FieldByName('double_band_id').AsInteger;
     R.RemovedBandId := FieldByName('removed_band_id').AsInteger;
-    R.RightLegBelow := FieldByName('right_leg_below').AsString;
-    R.LeftLegBelow := FieldByName('left_leg_below').AsString;
-    R.RightLegAbove := FieldByName('right_leg_above').AsString;
-    R.LeftLegAbove := FieldByName('left_leg_above').AsString;
+    R.RightTarsus := FieldByName('right_leg_below').AsString;
+    R.LeftTarsus := FieldByName('left_leg_below').AsString;
+    R.RightTibia := FieldByName('right_leg_above').AsString;
+    R.LeftTibia := FieldByName('left_leg_above').AsString;
     R.FatherId := FieldByName('father_id').AsInteger;
     R.MotherId := FieldByName('mother_id').AsInteger;
     R.DeathDate := FieldByName('death_date').AsString;
@@ -3554,13 +3554,13 @@ begin
   if ARow.IndexOfName('removed_band_id') >= 0 then
     R.RemovedBandId := StrToIntDef(ARow.Values['removed_band_id'], 0);
   if ARow.IndexOfName('right_leg_below') >= 0 then
-    R.RightLegBelow := ARow.Values['right_leg_below'];
+    R.RightTarsus := ARow.Values['right_leg_below'];
   if ARow.IndexOfName('left_leg_below') >= 0 then
-    R.LeftLegBelow := ARow.Values['left_leg_below'];
+    R.LeftTarsus := ARow.Values['left_leg_below'];
   if ARow.IndexOfName('right_leg_above') >= 0 then
-    R.RightLegAbove := ARow.Values['right_leg_above'];
+    R.RightTibia := ARow.Values['right_leg_above'];
   if ARow.IndexOfName('left_leg_above') >= 0 then
-    R.LeftLegAbove := ARow.Values['left_leg_above'];
+    R.LeftTibia := ARow.Values['left_leg_above'];
   if ARow.IndexOfName('father_id') >= 0 then
     R.FatherId := StrToIntDef(ARow.Values['father_id'], 0);
   if ARow.IndexOfName('mother_id') >= 0 then
@@ -3695,13 +3695,13 @@ begin
       ParamByName('death_day').Clear;
       ParamByName('death_date').Clear;
     end;
-    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(R.TaxonId, R.BandId, R.RightLegBelow, R.LeftLegBelow, SEXES[R.Sex], True));
-    R.FullName := GetIndividualFullname(R.TaxonId, R.BandId, R.RightLegBelow, R.LeftLegBelow, SEXES[R.Sex], False);
+    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], True));
+    R.FullName := GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], False);
     SetStrParam(ParamByName('full_name'), R.FullName);
-    SetStrParam(ParamByName('right_leg_below'), R.RightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftLegBelow);
-    SetStrParam(ParamByName('right_leg_above'), R.RightLegAbove);
-    SetStrParam(ParamByName('left_leg_above'), R.LeftLegAbove);
+    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
+    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_leg_above'), R.RightTibia);
+    SetStrParam(ParamByName('left_leg_above'), R.LeftTibia);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -3816,13 +3816,13 @@ begin
       ParamByName('death_day').Clear;
       ParamByName('death_date').Clear;
     end;
-    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(R.TaxonId, R.BandId, R.RightLegBelow, R.LeftLegBelow, SEXES[R.Sex], True));
-    R.FullName := GetIndividualFullname(R.TaxonId, R.BandId, R.RightLegBelow, R.LeftLegBelow, SEXES[R.Sex], False);
+    SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], True));
+    R.FullName := GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], False);
     SetStrParam(ParamByName('full_name'), R.FullName);
-    SetStrParam(ParamByName('right_leg_below'), R.RightLegBelow);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftLegBelow);
-    SetStrParam(ParamByName('right_leg_above'), R.RightLegAbove);
-    SetStrParam(ParamByName('left_leg_above'), R.LeftLegAbove);
+    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
+    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_leg_above'), R.RightTibia);
+    SetStrParam(ParamByName('left_leg_above'), R.LeftTibia);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('individual_id').AsInteger := R.Id;
 

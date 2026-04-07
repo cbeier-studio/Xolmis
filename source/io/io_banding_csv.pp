@@ -396,8 +396,8 @@ begin
                 Individuo.BandName := Reg.RemovedBand
               else
                 Individuo.BandName := Format('%s %d', [Reg.BandSize, Reg.BandNumber]);
-              Individuo.RightLegBelow := Reg.RightLeg;
-              Individuo.LeftLegBelow := Reg.LeftLeg;
+              Individuo.RightTarsus := Reg.RightLeg;
+              Individuo.LeftTarsus := Reg.LeftLeg;
               Individuo.UserInserted := ActiveUser.Id;
 
               IndividualRepo.Insert(Individuo);
@@ -489,8 +489,8 @@ begin
               Captura.EndPhotoNumber := IntToStr(Reg.EndPhotoNumber);
               Captura.CameraName := Reg.CameraName;
               Captura.RemovedBandId := RemovedBand.Id;
-              Captura.RightLegBelow := Reg.RightLeg;
-              Captura.LeftLegBelow := Reg.LeftLeg;
+              Captura.RightTarsus := Reg.RightLeg;
+              Captura.LeftTarsus := Reg.LeftLeg;
               Captura.Escaped := Reg.Escaped;
               Captura.Notes := Reg.Notes;
               Captura.UserInserted := ActiveUser.Id;
