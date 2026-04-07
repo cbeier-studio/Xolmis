@@ -383,6 +383,13 @@ begin
       FIndividual.RemovedBandId := Capture.RemovedBandId;
       FIndividual.BandId := Capture.BandId;
       FIndividual.BandChangeDate := Capture.CaptureDate;
+
+      // Update colored bands
+      FIndividual.RightTarsus := Capture.RightTarsus;
+      FIndividual.LeftTarsus := Capture.LeftTarsus;
+      FIndividual.RightTibia := Capture.RightTibia;
+      FIndividual.LeftTibia := Capture.LeftTibia;
+
       FIndRepo.Update(FIndividual);
     end;
 
@@ -412,9 +419,7 @@ begin
     begin
       // If it did not has band → initial banding
       if FIndividual.BandId = 0 then
-        FIndividual.BandingDate := Capture.CaptureDate
-      else
-        FIndividual.BandChangeDate := Capture.CaptureDate;
+        FIndividual.BandingDate := Capture.CaptureDate;
 
       FIndividual.BandId := Capture.BandId;
       //FIndividual.BandName := ;

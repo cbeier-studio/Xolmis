@@ -140,7 +140,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations, utils_conversions,
-  data_consts, data_columns, data_getvalue,
+  data_consts, data_columns, data_getvalue, data_services,
   models_record_types, models_taxonomy, models_bands, models_botany, models_birds, models_breeding,
   models_geo, models_sampling, models_institutions, models_methods, models_sampling_plots, models_permits,
   models_projects, models_people, models_specimens, models_sightings,
@@ -215,22 +215,12 @@ end;
 
 procedure TfrmQuickEntry.FormCreate(Sender: TObject);
 begin
-  //FColFieldNames := TStringList.Create;
-  //SetDateCols;
-  //SetIntegerCols;
-  //SetNumericCols;
   //SetSearchableCols;
-  //SetTimeCols;
 end;
 
 procedure TfrmQuickEntry.FormDestroy(Sender: TObject);
 begin
-  //FreeAndNil(FDateCols);
-  //FreeAndNil(FIntegerCols);
-  //FreeAndNil(FNumericCols);
   //FreeAndNil(FSearchableCols);
-  //FreeAndNil(FTimeCols);
-  //FreeAndNil(FColFieldNames);
 end;
 
 procedure TfrmQuickEntry.FormShow(Sender: TObject);
@@ -539,6 +529,12 @@ procedure TfrmQuickEntry.ImportDataCaptures;
 var
   Obj: TCapture;
   Repo: TCaptureRepository;
+  FBand: TBand;
+  FIndividual: TIndividual;
+  BandRepo: TBandRepository;
+  IndividualRepo: TIndividualRepository;
+  MoveBand: TBandMovementService;
+  UpdInd: TIndividualUpdateService;
   r: Integer;
 begin
   if not DMM.sqlTrans.Active then
@@ -546,6 +542,12 @@ begin
   try
     Obj := TCapture.Create();
     Repo := TCaptureRepository.Create(DMM.sqlCon);
+    BandRepo := TBandRepository.Create(DMM.sqlCon);
+    IndividualRepo := TIndividualRepository.Create(DMM.sqlCon);
+    MoveBand := TBandMovementService.Create(BandRepo);
+    UpdInd := TIndividualUpdateService.Create(IndividualRepo);
+    FBand := TBand.Create();
+    FIndividual := TIndividual.Create();
     try
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
@@ -617,8 +619,41 @@ begin
         Obj.Glucose := StrToFloatDef(CellValue(COL_GLUCOSE, r), 0.0);
 
         Repo.Insert(Obj);
+
+        // Update individual and bands
+        // >> Remove old band and put a new one
+        if Obj.CaptureType = cptChangeBand then
+        begin
+          BandRepo.GetById(Obj.RemovedBandId, FBand);
+          if (FBand.Id > 0) then
+            MoveBand.RemoveFromIndividual(FBand, Obj.IndividualId, Obj.CaptureDate);
+          FBand.Clear;
+          BandRepo.GetById(Obj.BandId, FBand);
+          if (FBand.Id > 0) then
+            MoveBand.UseInCapture(FBand, Obj.IndividualId, Obj.CaptureDate);
+
+          IndividualRepo.GetById(Obj.IndividualId, FIndividual);
+          UpdInd.ApplyBandRemoval(Obj);
+        end
+        else
+        // >> Use band
+        if Obj.CaptureType = cptNew then
+        begin
+          BandRepo.GetById(Obj.BandId, FBand);
+          if (FBand.Id > 0) then
+            MoveBand.UseInCapture(FBand, Obj.IndividualId, Obj.CaptureDate);
+
+          IndividualRepo.GetById(Obj.IndividualId, FIndividual);
+          UpdInd.ApplyCaptureToIndividual(Obj);
+        end;
       end;
     finally
+      FreeAndNil(FIndividual);
+      FreeAndNil(FBand);
+      UpdInd.Free;
+      MoveBand.Free;
+      IndividualRepo.Free;
+      BandRepo.Free;
       Repo.Free;
       FreeAndNil(Obj);
     end;
@@ -805,6 +840,9 @@ procedure TfrmQuickEntry.ImportDataIndividuals;
 var
   Obj: TIndividual;
   Repo: TIndividualRepository;
+  BandRepo: TBandRepository;
+  FBand: TBand;
+  MoveBand: TBandMovementService;
   r: Integer;
 begin
   if not DMM.sqlTrans.Active then
@@ -812,6 +850,9 @@ begin
   try
     Obj := TIndividual.Create();
     Repo := TIndividualRepository.Create(DMM.sqlCon);
+    BandRepo := TBandRepository.Create(DMM.sqlCon);
+    MoveBand := TBandMovementService.Create(BandRepo);
+    FBand := TBand.Create();
     try
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
@@ -839,8 +880,28 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Update bands
+        // >> Remove old band
+        if Obj.RemovedBandId > 0 then
+        begin
+          BandRepo.GetById(Obj.RemovedBandId, FBand);
+          if (FBand.Id > 0) then
+            MoveBand.RemoveFromIndividual(FBand, Obj.Id, Obj.BandChangeDate);
+        end;
+        FBand.Clear;
+        // >> Use band
+        if Obj.BandId > 0 then
+        begin
+          BandRepo.GetById(Obj.BandId, FBand);
+          if (FBand.Id > 0) then
+            MoveBand.UseInCapture(FBand, Obj.Id, Obj.BandingDate);
+        end;
       end;
     finally
+      FreeAndNil(FBand);
+      MoveBand.Free;
+      BandRepo.Free;
       Repo.Free;
       FreeAndNil(Obj);
     end;

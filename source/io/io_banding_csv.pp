@@ -231,6 +231,7 @@ var
   CodAnilha, aMethod: Integer;
   NetLat, NetLong: Extended;
   MoveBand: TBandMovementService;
+  UpdInd: TIndividualUpdateService;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -298,6 +299,7 @@ begin
           SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
           NetRepo := TNetEffortRepository.Create(DMM.sqlCon);
           MoveBand := TBandMovementService.Create(BandRepo);
+          UpdInd := TIndividualUpdateService.Create(IndividualRepo);
 
           try
             Taxon := TTaxon.Create();
@@ -527,18 +529,20 @@ begin
             LogInfo(Format('Band ID=%d status updated to used', [Band.Id]));
 
             // Update individual band
-            //if Reg.CaptureType = 'N' then
-            //begin
-            //  UpdateIndividual(Individuo.Id, Reg.CaptureDate);
-            //  LogInfo(Format('Individual ID=%d banding date updated', [Individuo.Id]));
-            //end;
-            //if Reg.CaptureType = 'C' then
-            //begin
-            //  ChangeIndividualBand(Individuo.Id, Band.Id, RemovedBand.Id, Reg.CaptureDate,
-            //    Reg.RemovedBand);
-            //  LogInfo(Format('Individual ID=%d band updated with ID=%d (removed band ID=%d)',
-            //    [Individuo.Id, Band.Id, RemovedBand.Id]));
-            //end;
+            if Reg.CaptureType = 'N' then
+            begin
+              UpdInd.ApplyCaptureToIndividual(Captura);
+              //UpdateIndividual(Individuo.Id, Reg.CaptureDate);
+              LogInfo(Format('Individual ID=%d banding date updated', [Individuo.Id]));
+            end;
+            if Reg.CaptureType = 'C' then
+            begin
+              UpdInd.ApplyBandRemoval(Captura);
+              //ChangeIndividualBand(Individuo.Id, Band.Id, RemovedBand.Id, Reg.CaptureDate,
+              //  Reg.RemovedBand);
+              LogInfo(Format('Individual ID=%d band updated with ID=%d (removed band ID=%d)',
+                [Individuo.Id, Band.Id, RemovedBand.Id]));
+            end;
           finally
             FreeAndNil(Taxon);
             FreeAndNil(NetStation);
@@ -549,6 +553,7 @@ begin
             FreeAndNil(RemovedBand);
             FreeAndNil(Individuo);
             FreeAndNil(Captura);
+            UpdInd.Free;
             MoveBand.Free;
             BandRepo.Free;
             SiteRepo.Free;
