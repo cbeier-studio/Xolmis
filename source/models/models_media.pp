@@ -83,7 +83,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TImageData; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TImageData): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -176,7 +176,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TAudioData; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TAudioData): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -267,7 +267,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TDocumentData; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TDocumentData): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -362,7 +362,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TVideoData; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TVideoData): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -496,11 +496,18 @@ begin
   Result := TImageData(inherited Clone);
 end;
 
-function TImageData.Diff(const aOld: TImageData; var Changes: TStrings): Boolean;
+function TImageData.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TImageData;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TImageData) then
+    Exit(False);
+
+  aOld := TImageData(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1299,11 +1306,18 @@ begin
   Result := TAudioData(inherited Clone);
 end;
 
-function TAudioData.Diff(const aOld: TAudioData; var Changes: TStrings): Boolean;
+function TAudioData.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TAudioData;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TAudioData) then
+    Exit(False);
+
+  aOld := TAudioData(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -2148,11 +2162,18 @@ begin
   Result := TDocumentData(inherited Clone);
 end;
 
-function TDocumentData.Diff(const aOld: TDocumentData; var Changes: TStrings): Boolean;
+function TDocumentData.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TDocumentData;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TDocumentData) then
+    Exit(False);
+
+  aOld := TDocumentData(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -3132,11 +3153,18 @@ begin
   Result := TVideoData(inherited Clone);
 end;
 
-function TVideoData.Diff(const aOld: TVideoData; var Changes: TStrings): Boolean;
+function TVideoData.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TVideoData;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TVideoData) then
+    Exit(False);
+
+  aOld := TVideoData(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

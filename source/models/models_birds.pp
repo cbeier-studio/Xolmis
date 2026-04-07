@@ -61,7 +61,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TIndividual; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TIndividual): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -207,7 +207,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TCapture; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TCapture): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -349,7 +349,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TFeather; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TFeather): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -476,11 +476,18 @@ begin
   Result := TFeather(inherited Clone);
 end;
 
-function TFeather.Diff(const aOld: TFeather; var Changes: TStrings): Boolean;
+function TFeather.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TFeather;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TFeather) then
+    Exit(False);
+
+  aOld := TFeather(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1448,11 +1455,18 @@ begin
   Result := TCapture(inherited Clone);
 end;
 
-function TCapture.Diff(const aOld: TCapture; var Changes: TStrings): Boolean;
+function TCapture.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TCapture;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TCapture) then
+    Exit(False);
+
+  aOld := TCapture(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -2993,11 +3007,18 @@ begin
   Result := TIndividual(inherited Clone);
 end;
 
-function TIndividual.Diff(const aOld: TIndividual; var Changes: TStrings): Boolean;
+function TIndividual.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TIndividual;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TIndividual) then
+    Exit(False);
+
+  aOld := TIndividual(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

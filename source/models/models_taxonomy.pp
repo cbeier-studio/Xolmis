@@ -44,7 +44,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TRank; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TRank): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -114,7 +114,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TTaxon; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TTaxon): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -258,11 +258,18 @@ begin
   Result := TTaxon(inherited Clone);
 end;
 
-function TTaxon.Diff(const aOld: TTaxon; var Changes: TStrings): Boolean;
+function TTaxon.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TTaxon;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TTaxon) then
+    Exit(False);
+
+  aOld := TTaxon(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1172,11 +1179,18 @@ begin
   Result := TRank(inherited Clone);
 end;
 
-function TRank.Diff(const aOld: TRank; var Changes: TStrings): Boolean;
+function TRank.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TRank;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TRank) then
+    Exit(False);
+
+  aOld := TRank(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

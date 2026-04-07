@@ -51,7 +51,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSite; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TSite): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
@@ -112,7 +112,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TPoi; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TPoi): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -263,7 +263,7 @@ begin
   Result := TSite(inherited Clone);
 end;
 
-function TSite.Diff(const aOld: TSite; var Changes: TStrings): Boolean;
+function TSite.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 //var
 //  PropList: PPropList;
 //  PropCount, I: Integer;
@@ -295,9 +295,16 @@ function TSite.Diff(const aOld: TSite; var Changes: TStrings): Boolean;
 //    FreeMem(PropList);
 //  end;
 var
+  aOld: TSite;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TSite) then
+    Exit(False);
+
+  aOld := TSite(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -981,11 +988,18 @@ begin
   Result := TPoi(inherited Clone);
 end;
 
-function TPoi.Diff(const aOld: TPoi; var Changes: TStrings): Boolean;
+function TPoi.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TPoi;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TPoi) then
+    Exit(False);
+
+  aOld := TPoi(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

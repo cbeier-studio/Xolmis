@@ -46,7 +46,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const Old: TBotanicalTaxon; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TBotanicalTaxon): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
@@ -367,36 +367,43 @@ begin
   Result := TBotanicalTaxon(inherited Clone);
 end;
 
-function TBotanicalTaxon.Diff(const Old: TBotanicalTaxon; var Changes: TStrings): Boolean;
+function TBotanicalTaxon.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TBotanicalTaxon;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TBotanicalTaxon) then
+    Exit(False);
+
+  aOld := TBotanicalTaxon(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
-  if Old = nil then
+  if aOld = nil then
     Exit(False);
 
-  if FieldValuesDiff(rscScientificName, Old.FullName, FFullName, R) then
+  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscParentTaxonID, Old.ParentTaxonId, FParentTaxonId, R) then
+  if FieldValuesDiff(rscParentTaxonID, aOld.ParentTaxonId, FParentTaxonId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscTaxonomicRankID, Old.RankId, FRankId, R) then
+  if FieldValuesDiff(rscTaxonomicRankID, aOld.RankId, FRankId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscAuthorship, Old.Authorship, FAuthorship, R) then
+  if FieldValuesDiff(rscAuthorship, aOld.Authorship, FAuthorship, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscVernacularNameS, Old.VernacularName, FVernacularName, R) then
+  if FieldValuesDiff(rscVernacularNameS, aOld.VernacularName, FVernacularName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscValidNameID, Old.ValidId, FValidId, R) then
+  if FieldValuesDiff(rscValidNameID, aOld.ValidId, FValidId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscOrderID, Old.OrderId, FOrderId, R) then
+  if FieldValuesDiff(rscOrderID, aOld.OrderId, FOrderId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscFamilyID, Old.FamilyId, FFamilyId, R) then
+  if FieldValuesDiff(rscFamilyID, aOld.FamilyId, FFamilyId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscGenusID, Old.GenusId, FGenusId, R) then
+  if FieldValuesDiff(rscGenusID, aOld.GenusId, FGenusId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscSpeciesID, Old.SpeciesId, FSpeciesId, R) then
+  if FieldValuesDiff(rscSpeciesID, aOld.SpeciesId, FSpeciesId, R) then
     Changes.Add(R);
 
   Result := Changes.Count > 0;

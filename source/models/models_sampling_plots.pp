@@ -43,7 +43,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSamplingPlot; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TSamplingPlot): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -95,7 +95,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TPermanentNet; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TPermanentNet): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -178,11 +178,18 @@ begin
   Result := TSamplingPlot(inherited Clone);
 end;
 
-function TSamplingPlot.Diff(const aOld: TSamplingPlot; var Changes: TStrings): Boolean;
+function TSamplingPlot.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TSamplingPlot;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TSamplingPlot) then
+    Exit(False);
+
+  aOld := TSamplingPlot(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -697,11 +704,18 @@ begin
   Result := TPermanentNet(inherited Clone);
 end;
 
-function TPermanentNet.Diff(const aOld: TPermanentNet; var Changes: TStrings): Boolean;
+function TPermanentNet.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TPermanentNet;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TPermanentNet) then
+    Exit(False);
+
+  aOld := TPermanentNet(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

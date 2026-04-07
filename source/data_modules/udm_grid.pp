@@ -1515,39 +1515,6 @@ uses
 
 { TDMG }
 
-procedure TDMG.qBandsAfterInsert(DataSet: TDataSet);
-begin
-  DataSet.FieldByName('band_type').AsString := 'A';
-  DataSet.FieldByName('supplier_id').AsInteger := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
-  DataSet.FieldByName('band_status').AsString := 'D';
-  DataSet.FieldByName('band_source').AsString := 'A';
-  DataSet.FieldByName('band_reported').AsBoolean := False;
-end;
-
-procedure TDMG.qBandHistoryevent_typeGetText(Sender: TField; var aText: string;
-  DisplayText: Boolean);
-begin
-  if Sender.AsString = EmptyStr then
-    Exit;
-
-  case Sender.AsString of
-    'O': aText := rsBandEventOrder;
-    'C': aText := rsBandEventReceive;
-    'T': aText := rsBandEventTransfer;
-    'R': aText := rsBandEventRetrieve;
-    'P': aText := rsBandEventReport;
-    'U': aText := rsBandEventUse;
-    'D': aText := rsBandEventDischarge;
-  end;
-
-  DisplayText := True;
-end;
-
-procedure TDMG.qBandHistoryBeforePost(DataSet: TDataSet);
-begin
-  SetRecordDateUser(DataSet);
-end;
-
 procedure TDMG.DataModuleCreate(Sender: TObject);
 begin
   TranslateMethods(qMethods);
@@ -1583,6 +1550,39 @@ begin
   TranslateZooTaxa(qTaxa);
 end;
 
+procedure TDMG.qBandsAfterInsert(DataSet: TDataSet);
+begin
+  DataSet.FieldByName('band_type').AsString := 'A';
+  DataSet.FieldByName('supplier_id').AsInteger := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
+  DataSet.FieldByName('band_status').AsString := 'D';
+  DataSet.FieldByName('band_source').AsString := 'A';
+  DataSet.FieldByName('band_reported').AsBoolean := False;
+end;
+
+procedure TDMG.qBandHistoryevent_typeGetText(Sender: TField; var aText: string;
+  DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'O': aText := rsBandEventOrder;
+    'C': aText := rsBandEventReceive;
+    'T': aText := rsBandEventTransfer;
+    'R': aText := rsBandEventRetrieve;
+    'P': aText := rsBandEventReport;
+    'U': aText := rsBandEventUse;
+    'D': aText := rsBandEventDischarge;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qBandHistoryBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
 procedure TDMG.qAudioBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
@@ -1596,28 +1596,21 @@ end;
 
 procedure TDMG.qBandHistoryAfterPost(DataSet: TDataSet);
 var
+  Repo: TBandHistoryRepository;
   NewBandHistory: TBandHistory;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldBandHistory) then
   begin
-    NewBandHistory := TBandHistory.Create(OldBandHistory.Id);
-    lstDiff := TStringList.Create;
+    Repo := TBandHistoryRepository.Create(DMM.sqlCon);
+    NewBandHistory := TBandHistory.Create();
+    Repo.Hydrate(DataSet, NewBandHistory);
     try
-      if NewBandHistory.Diff(OldBandHistory, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBandHistory, haEdited, OldBandHistory.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbBandHistory, OldBandHistory, NewBandHistory, EditSourceStr);
     finally
       FreeAndNil(NewBandHistory);
       FreeAndNil(OldBandHistory);
-      FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else
@@ -1625,8 +1618,16 @@ begin
 end;
 
 procedure TDMG.qBandHistoryBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TBandHistoryRepository;
 begin
-  OldBandHistory := TBandHistory.Create(DataSet.FieldByName('event_id').AsInteger);
+  Repo := TBandHistoryRepository.Create(DMM.sqlCon);
+  try
+    OldBandHistory := TBandHistory.Create();
+    Repo.Hydrate(DataSet, OldBandHistory);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qBandHistoryevent_typeSetText(Sender: TField; const aText: string);
@@ -1664,29 +1665,21 @@ end;
 
 procedure TDMG.qBandsAfterPost(DataSet: TDataSet);
 var
+  Repo: TBandRepository;
   NewBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldBand) then
   begin
+    Repo := TBandRepository.Create(DMM.sqlCon);
     NewBand := TBand.Create;
-    //NewBand.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
+    Repo.Hydrate(DataSet, NewBand);
     try
-      if NewBand.Diff(OldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, OldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbBands, OldBand, NewBand, EditSourceStr);
     finally
       FreeAndNil(NewBand);
       FreeAndNil(OldBand);
-      FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else
@@ -1857,8 +1850,16 @@ begin
 end;
 
 procedure TDMG.qBandsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TBandRepository;
 begin
-  OldBand := TBand.Create(DataSet.FieldByName('band_id').AsInteger);
+  Repo := TBandRepository.Create(DMM.sqlCon);
+  try
+    OldBand := TBand.Create();
+    Repo.Hydrate(DataSet, OldBand);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qBandsBeforePost(DataSet: TDataSet);
@@ -1880,29 +1881,21 @@ end;
 
 procedure TDMG.qBotanyAfterPost(DataSet: TDataSet);
 var
+  Repo: TBotanicalTaxonRepository;
   NewBotany: TBotanicalTaxon;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldBotany) then
   begin
+    Repo := TBotanicalTaxonRepository.Create(DMM.sqlCon);
     NewBotany := TBotanicalTaxon.Create;
-    //NewBotany.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
+    Repo.Hydrate(DataSet, NewBotany);
     try
-      if NewBotany.Diff(OldBotany, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBotanicTaxa, haEdited, OldBotany.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbBotanicTaxa, OldBotany, NewBotany, EditSourceStr);
     finally
       FreeAndNil(NewBotany);
       FreeAndNil(OldBotany);
-      FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else
@@ -1910,8 +1903,16 @@ begin
 end;
 
 procedure TDMG.qBotanyBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TBotanicalTaxonRepository;
 begin
-  OldBotany := TBotanicalTaxon.Create(DataSet.FieldByName('taxon_id').AsInteger);
+  Repo := TBotanicalTaxonRepository.Create(DMM.sqlCon);
+  try
+    OldBotany := TBotanicalTaxon.Create();
+    Repo.Hydrate(DataSet, OldBotany);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qBotanyBeforeOpen(DataSet: TDataSet);
@@ -1953,8 +1954,6 @@ procedure TDMG.qCapturesAfterPost(DataSet: TDataSet);
 var
   Repo: TCaptureRepository;
   NewCapture: TCapture;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
@@ -1962,21 +1961,12 @@ begin
     Repo := TCaptureRepository.Create(DMM.sqlCon);
     NewCapture := TCapture.Create;
     Repo.Hydrate(DataSet, NewCapture);
-    lstDiff := TStringList.Create;
     try
-      if NewCapture.Diff(OldCapture, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbCaptures, haEdited, OldCapture.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbCaptures, OldCapture, NewCapture, EditSourceStr);
     finally
       FreeAndNil(NewCapture);
       FreeAndNil(OldCapture);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1984,8 +1974,16 @@ begin
 end;
 
 procedure TDMG.qCapturesBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TCaptureRepository;
 begin
-  OldCapture := TCapture.Create(DataSet.FieldByName('capture_id').AsInteger);
+  Repo := TCaptureRepository.Create(DMM.sqlCon);
+  try
+    OldCapture := TCapture.Create();
+    Repo.Hydrate(DataSet, OldCapture);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qCapturesBeforePost(DataSet: TDataSet);
@@ -2338,31 +2336,20 @@ end;
 procedure TDMG.qEggsAfterPost(DataSet: TDataSet);
 var
   NewEgg: TEgg;
-  FRepo: TEggRepository;
-  lstDiff: TStrings;
-  D: String;
+  Repo: TEggRepository;
 begin
   { Save changes to the record history }
   if Assigned(OldEgg) then
   begin
-    FRepo := TEggRepository.Create(DMM.sqlCon);
+    Repo := TEggRepository.Create(DMM.sqlCon);
     NewEgg := TEgg.Create;
-    FRepo.Hydrate(DataSet, NewEgg);
-    lstDiff := TStringList.Create;
+    Repo.Hydrate(DataSet, NewEgg);
     try
-      if NewEgg.Diff(OldEgg, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbEggs, haEdited, OldEgg.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbEggs, OldEgg, NewEgg, EditSourceStr);
     finally
       FreeAndNil(NewEgg);
       FreeAndNil(OldEgg);
-      FRepo.Free;
-      FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else
@@ -2370,8 +2357,16 @@ begin
 end;
 
 procedure TDMG.qEggsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TEggRepository;
 begin
-  OldEgg := TEgg.Create(DataSet.FieldByName('egg_id').AsInteger);
+  Repo := TEggRepository.Create(DMM.sqlCon);
+  try
+    OldEgg := TEgg.Create();
+    Repo.Hydrate(DataSet, OldEgg);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qEggsBeforePost(DataSet: TDataSet);
@@ -2534,8 +2529,6 @@ procedure TDMG.qExpeditionsAfterPost(DataSet: TDataSet);
 var
   Repo: TExpeditionRepository;
   NewExpedition: TExpedition;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldExpedition) then
@@ -2543,21 +2536,12 @@ begin
     Repo := TExpeditionRepository.Create(DMM.sqlCon);
     NewExpedition := TExpedition.Create;
     Repo.Hydrate(DataSet, NewExpedition);
-    lstDiff := TStringList.Create;
     try
-      if NewExpedition.Diff(OldExpedition, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbExpeditions, haEdited, OldExpedition.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbExpeditions, OldExpedition, NewExpedition, EditSourceStr);
     finally
       FreeAndNil(NewExpedition);
       FreeAndNil(OldExpedition);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -2565,8 +2549,16 @@ begin
 end;
 
 procedure TDMG.qExpeditionsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TExpeditionRepository;
 begin
-  OldExpedition := TExpedition.Create(DataSet.FieldByName('expedition_id').AsInteger);
+  Repo := TExpeditionRepository.Create(DMM.sqlCon);
+  try
+    OldExpedition := TExpedition.Create();
+    Repo.Hydrate(DataSet, OldExpedition);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qExpeditionsBeforePost(DataSet: TDataSet);
@@ -2597,8 +2589,6 @@ procedure TDMG.qFeathersAfterPost(DataSet: TDataSet);
 var
   Repo: TFeatherRepository;
   NewFeather: TFeather;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldFeather) then
@@ -2606,21 +2596,12 @@ begin
     Repo := TFeatherRepository.Create(DMM.sqlCon);
     NewFeather := TFeather.Create;
     Repo.Hydrate(DataSet, NewFeather);
-    lstDiff := TStringList.Create;
     try
-      if NewFeather.Diff(OldFeather, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbFeathers, haEdited, OldFeather.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbFeathers, OldFeather, NewFeather, EditSourceStr);
     finally
       FreeAndNil(NewFeather);
       FreeAndNil(OldFeather);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -2628,8 +2609,16 @@ begin
 end;
 
 procedure TDMG.qFeathersBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TFeatherRepository;
 begin
-  OldFeather := TFeather.Create(DataSet.FieldByName('feather_id').AsInteger);
+  Repo := TFeatherRepository.Create(DMM.sqlCon);
+  try
+    OldFeather := TFeather.Create();
+    Repo.Hydrate(DataSet, OldFeather);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qFeathersBeforePost(DataSet: TDataSet);
@@ -2860,29 +2849,21 @@ end;
 
 procedure TDMG.qGazetteerAfterPost(DataSet: TDataSet);
 var
+  Repo: TSiteRepository;
   NewSite: TSite;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSite) then
   begin
+    Repo := TSiteRepository.Create(DMM.sqlCon);
     NewSite := TSite.Create;
-    //NewSite.LoadFromDataSet(DataSet);
-    lstDiff := TStringList.Create;
+    Repo.Hydrate(DataSet, NewSite);
     try
-      if NewSite.Diff(OldSite, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbGazetteer, haEdited, OldSite.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbGazetteer, OldSite, NewSite, EditSourceStr);
     finally
       FreeAndNil(NewSite);
       FreeAndNil(OldSite);
-      FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else
@@ -2890,8 +2871,16 @@ begin
 end;
 
 procedure TDMG.qGazetteerBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSiteRepository;
 begin
-  OldSite := TSite.Create(DataSet.FieldByName('site_id').AsInteger);
+  Repo := TSiteRepository.Create(DMM.sqlCon);
+  try
+    OldSite := TSite.Create();
+    Repo.Hydrate(DataSet, OldSite);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qGazetteerBeforePost(DataSet: TDataSet);
@@ -3142,8 +3131,6 @@ procedure TDMG.qIndividualsAfterPost(DataSet: TDataSet);
 var
   Repo: TIndividualRepository;
   NewIndividual: TIndividual;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldIndividual) then
@@ -3151,21 +3138,12 @@ begin
     Repo := TIndividualRepository.Create(DMM.sqlCon);
     NewIndividual := TIndividual.Create;
     Repo.Hydrate(DataSet, NewIndividual);
-    lstDiff := TStringList.Create;
     try
-      if NewIndividual.Diff(OldIndividual, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbIndividuals, haEdited, OldIndividual.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbIndividuals, OldIndividual, NewIndividual, EditSourceStr);
     finally
       FreeAndNil(NewIndividual);
       FreeAndNil(OldIndividual);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -3201,8 +3179,16 @@ begin
 end;
 
 procedure TDMG.qIndividualsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TIndividualRepository;
 begin
-  OldIndividual := TIndividual.Create(DataSet.FieldByName('individual_id').AsInteger);
+  Repo := TIndividualRepository.Create(DMM.sqlCon);
+  try
+    OldIndividual := TIndividual.Create();
+    Repo.Hydrate(DataSet, OldIndividual);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qIndividualsBeforePost(DataSet: TDataSet);
@@ -3338,8 +3324,6 @@ procedure TDMG.qInstitutionsAfterPost(DataSet: TDataSet);
 var
   Repo: TInstitutionRepository;
   NewInstitution: TInstitution;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldInstitution) then
@@ -3347,20 +3331,11 @@ begin
     Repo := TInstitutionRepository.Create(DMM.sqlCon);
     NewInstitution := TInstitution.Create;
     Repo.Hydrate(DataSet, NewInstitution);
-    lstDiff := TStringList.Create;
     try
-      if NewInstitution.Diff(OldInstitution, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbInstitutions, haEdited, OldInstitution.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbInstitutions, OldInstitution, NewInstitution, EditSourceStr);
     finally
       FreeAndNil(NewInstitution);
       FreeAndNil(OldInstitution);
-      FreeAndNil(lstDiff);
       Repo.Free;
     end;
   end
@@ -3369,8 +3344,16 @@ begin
 end;
 
 procedure TDMG.qInstitutionsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TInstitutionRepository;
 begin
-  OldInstitution := TInstitution.Create(DataSet.FieldByName('institution_id').AsInteger);
+  Repo := TInstitutionRepository.Create(DMM.sqlCon);
+  try
+    OldInstitution := TInstitution.Create();
+    Repo.Hydrate(DataSet, OldInstitution);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qInstitutionsBeforePost(DataSet: TDataSet);
@@ -3388,8 +3371,6 @@ procedure TDMG.qMethodsAfterPost(DataSet: TDataSet);
 var
   Repo: TMethodRepository;
   NewMethod: TMethod;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldMethod) then
@@ -3397,21 +3378,12 @@ begin
     Repo := TMethodRepository.Create(DMM.sqlCon);
     NewMethod := TMethod.Create;
     Repo.Hydrate(DataSet, NewMethod);
-    lstDiff := TStringList.Create;
     try
-      if NewMethod.Diff(OldMethod, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbMethods, haEdited, OldMethod.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbMethods, OldMethod, NewMethod, EditSourceStr);
     finally
       FreeAndNil(NewMethod);
       FreeAndNil(OldMethod);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -3419,8 +3391,16 @@ begin
 end;
 
 procedure TDMG.qMethodsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TMethodRepository;
 begin
-  OldMethod := TMethod.Create(DataSet.FieldByName('method_id').AsInteger);
+  Repo := TMethodRepository.Create(DMM.sqlCon);
+  try
+    OldMethod := TMethod.Create();
+    Repo.Hydrate(DataSet, OldMethod);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qMethodsBeforePost(DataSet: TDataSet);
@@ -3437,31 +3417,20 @@ end;
 procedure TDMG.qNestRevisionsAfterPost(DataSet: TDataSet);
 var
   NewNestRevision: TNestRevision;
-  FRepo: TNestRevisionRepository;
-  lstDiff: TStrings;
-  D: String;
+  Repo: TNestRevisionRepository;
 begin
   { Save changes to the record history }
   if Assigned(OldNestRevision) then
   begin
-    FRepo := TNestRevisionRepository.Create(DMM.sqlCon);
+    Repo := TNestRevisionRepository.Create(DMM.sqlCon);
     NewNestRevision := TNestRevision.Create;
-    FRepo.Hydrate(DataSet, NewNestRevision);
-    lstDiff := TStringList.Create;
+    Repo.Hydrate(DataSet, NewNestRevision);
     try
-      if NewNestRevision.Diff(OldNestRevision, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbNestRevisions, haEdited, OldNestRevision.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbNestRevisions, OldNestRevision, NewNestRevision, EditSourceStr);
     finally
       FreeAndNil(NewNestRevision);
       FreeAndNil(OldNestRevision);
-      FRepo.Free;
-      FreeAndNil(lstDiff);
+      Repo.Free;
     end;
   end
   else
@@ -3469,8 +3438,16 @@ begin
 end;
 
 procedure TDMG.qNestRevisionsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TNestRevisionRepository;
 begin
-  OldNestRevision := TNestRevision.Create(DataSet.FieldByName('nest_revision_id').AsInteger);
+  Repo := TNestRevisionRepository.Create(DMM.sqlCon);
+  try
+    OldNestRevision := TNestRevision.Create();
+    Repo.Hydrate(DataSet, OldNestRevision);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qNestRevisionsBeforePost(DataSet: TDataSet);
@@ -3570,8 +3547,6 @@ procedure TDMG.qNestsAfterPost(DataSet: TDataSet);
 var
   NewNest: TNest;
   FRepo: TNestRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldNest) then
@@ -3579,21 +3554,12 @@ begin
     FRepo := TNestRepository.Create(DMM.sqlCon);
     NewNest := TNest.Create;
     FRepo.Hydrate(DataSet, NewNest);
-    lstDiff := TStringList.Create;
     try
-      if NewNest.Diff(OldNest, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbNests, haEdited, OldNest.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbNests, OldNest, NewNest, EditSourceStr);
     finally
       FreeAndNil(NewNest);
       FreeAndNil(OldNest);
       FRepo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -3601,8 +3567,16 @@ begin
 end;
 
 procedure TDMG.qNestsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TNestRepository;
 begin
-  OldNest := TNest.Create(DataSet.FieldByName('nest_id').AsInteger);
+  Repo := TNestRepository.Create(DMM.sqlCon);
+  try
+    OldNest := TNest.Create();
+    Repo.Hydrate(DataSet, OldNest);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qNestsBeforePost(DataSet: TDataSet);
@@ -3833,31 +3807,20 @@ end;
 procedure TDMG.qSamplingPlotsAfterPost(DataSet: TDataSet);
 var
   Repo: TSamplingPlotRepository;
-  NewNetStation: TSamplingPlot;
-  lstDiff: TStrings;
-  D: String;
+  NewSamplingPlot: TSamplingPlot;
 begin
   { Save changes to the record history }
   if Assigned(OldSamplingPlot) then
   begin
     Repo := TSamplingPlotRepository.Create(DMM.sqlCon);
-    NewNetStation := TSamplingPlot.Create;
-    Repo.Hydrate(DataSet, NewNetStation);
-    lstDiff := TStringList.Create;
+    NewSamplingPlot := TSamplingPlot.Create;
+    Repo.Hydrate(DataSet, NewSamplingPlot);
     try
-      if NewNetStation.Diff(OldSamplingPlot, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSamplingPlots, haEdited, OldSamplingPlot.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSamplingPlots, OldSamplingPlot, NewSamplingPlot, EditSourceStr);
     finally
-      FreeAndNil(NewNetStation);
+      FreeAndNil(NewSamplingPlot);
       FreeAndNil(OldSamplingPlot);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -3865,8 +3828,16 @@ begin
 end;
 
 procedure TDMG.qSamplingPlotsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSamplingPlotRepository;
 begin
-  OldSamplingPlot := TSamplingPlot.Create(DataSet.FieldByName('sampling_plot_id').AsInteger);
+  Repo := TSamplingPlotRepository.Create(DMM.sqlCon);
+  try
+    OldSamplingPlot := TSamplingPlot.Create();
+    Repo.Hydrate(DataSet, OldSamplingPlot);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qSamplingPlotsBeforePost(DataSet: TDataSet);
@@ -3923,8 +3894,6 @@ procedure TDMG.qPeopleAfterPost(DataSet: TDataSet);
 var
   Repo: TPersonRepository;
   NewPerson: TPerson;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldPerson) then
@@ -3932,21 +3901,12 @@ begin
     Repo := TPersonRepository.Create(DMM.sqlCon);
     NewPerson := TPerson.Create;
     Repo.Hydrate(DataSet, NewPerson);
-    lstDiff := TStringList.Create;
     try
-      if NewPerson.Diff(OldPerson, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbPeople, haEdited, OldPerson.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbPeople, OldPerson, NewPerson, EditSourceStr);
     finally
       FreeAndNil(NewPerson);
       FreeAndNil(OldPerson);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -3954,8 +3914,16 @@ begin
 end;
 
 procedure TDMG.qPeopleBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TPersonRepository;
 begin
-  OldPerson := TPerson.Create(DataSet.FieldByName('person_id').AsInteger);
+  Repo := TPersonRepository.Create(DMM.sqlCon);
+  try
+    OldPerson := TPerson.Create();
+    Repo.Hydrate(DataSet, OldPerson);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qPeopleBeforePost(DataSet: TDataSet);
@@ -3985,8 +3953,6 @@ procedure TDMG.qPermanentNetsAfterPost(DataSet: TDataSet);
 var
   Repo: TPermanentNetRepository;
   NewPermanentNet: TPermanentNet;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldPermanentNet) then
@@ -3994,21 +3960,12 @@ begin
     Repo := TPermanentNetRepository.Create(DMM.sqlCon);
     NewPermanentNet := TPermanentNet.Create;
     Repo.Hydrate(DataSet, NewPermanentNet);
-    lstDiff := TStringList.Create;
     try
-      if NewPermanentNet.Diff(OldPermanentNet, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbPermanentNets, haEdited, OldPermanentNet.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbPermanentNets, OldPermanentNet, NewPermanentNet, EditSourceStr);
     finally
       FreeAndNil(NewPermanentNet);
       FreeAndNil(OldPermanentNet);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4016,8 +3973,16 @@ begin
 end;
 
 procedure TDMG.qPermanentNetsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TPermanentNetRepository;
 begin
-  OldPermanentNet := TPermanentNet.Create(DataSet.FieldByName('permanent_net_id').AsInteger);
+  Repo := TPermanentNetRepository.Create(DMM.sqlCon);
+  try
+    OldPermanentNet := TPermanentNet.Create();
+    Repo.Hydrate(DataSet, OldPermanentNet);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qPermanentNetsBeforePost(DataSet: TDataSet);
@@ -4065,8 +4030,6 @@ procedure TDMG.qPermitsAfterPost(DataSet: TDataSet);
 var
   Repo: TPermitRepository;
   NewPermit: TPermit;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldPermit) then
@@ -4074,21 +4037,12 @@ begin
     Repo := TPermitRepository.Create(DMM.sqlCon);
     NewPermit := TPermit.Create;
     Repo.Hydrate(DataSet, NewPermit);
-    lstDiff := TStringList.Create;
     try
-      if NewPermit.Diff(OldPermit, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbPermits, haEdited, OldPermit.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbPermits, OldPermit, NewPermit, EditSourceStr);
     finally
       FreeAndNil(NewPermit);
       FreeAndNil(OldPermit);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4096,8 +4050,16 @@ begin
 end;
 
 procedure TDMG.qPermitsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TPermitRepository;
 begin
-  OldPermit := TPermit.Create(DataSet.FieldByName('permit_id').AsInteger);
+  Repo := TPermitRepository.Create(DMM.sqlCon);
+  try
+    OldPermit := TPermit.Create();
+    Repo.Hydrate(DataSet, OldPermit);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qPermitsBeforePost(DataSet: TDataSet);
@@ -4249,8 +4211,6 @@ procedure TDMG.qProjectsAfterPost(DataSet: TDataSet);
 var
   Repo: TProjectRepository;
   NewProject: TProject;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldProject) then
@@ -4258,21 +4218,12 @@ begin
     Repo := TProjectRepository.Create(DMM.sqlCon);
     NewProject := TProject.Create;
     Repo.Hydrate(DataSet, NewProject);
-    lstDiff := TStringList.Create;
     try
-      if NewProject.Diff(OldProject, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbProjects, haEdited, OldProject.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbProjects, OldProject, NewProject, EditSourceStr);
     finally
       FreeAndNil(NewProject);
       FreeAndNil(OldProject);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4280,8 +4231,16 @@ begin
 end;
 
 procedure TDMG.qProjectsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TProjectRepository;
 begin
-  OldProject := TProject.Create(DataSet.FieldByName('project_id').AsInteger);
+  Repo := TProjectRepository.Create(DMM.sqlCon);
+  try
+    OldProject := TProject.Create();
+    Repo.Hydrate(DataSet, OldProject);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qProjectsBeforePost(DataSet: TDataSet);
@@ -4308,8 +4267,6 @@ procedure TDMG.qProjectTeamAfterPost(DataSet: TDataSet);
 var
   Repo: TProjectMemberRepository;
   NewProjectMember: TProjectMember;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldProjectMember) then
@@ -4317,21 +4274,12 @@ begin
     Repo := TProjectMemberRepository.Create(DMM.sqlCon);
     NewProjectMember := TProjectMember.Create;
     Repo.Hydrate(DataSet, NewProjectMember);
-    lstDiff := TStringList.Create;
     try
-      if NewProjectMember.Diff(OldProjectMember, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbProjectTeams, haEdited, OldProjectMember.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbProjectTeams, OldProjectMember, NewProjectMember, EditSourceStr);
     finally
       FreeAndNil(NewProjectMember);
       FreeAndNil(OldProjectMember);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4339,8 +4287,16 @@ begin
 end;
 
 procedure TDMG.qProjectTeamBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TProjectMemberRepository;
 begin
-  OldProjectMember := TProjectMember.Create(DataSet.FieldByName('project_member_id').AsInteger);
+  Repo := TProjectMemberRepository.Create(DMM.sqlCon);
+  try
+    OldProjectMember := TProjectMember.Create();
+    Repo.Hydrate(DataSet, OldProjectMember);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qProjectTeamBeforePost(DataSet: TDataSet);
@@ -4358,8 +4314,6 @@ procedure TDMG.qSampleCollectorsAfterPost(DataSet: TDataSet);
 var
   Repo: TSpecimenCollectorRepository;
   NewCollector: TSpecimenCollector;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldCollector) then
@@ -4367,21 +4321,12 @@ begin
     Repo := TSpecimenCollectorRepository.Create(DMM.sqlCon);
     NewCollector := TSpecimenCollector.Create;
     Repo.Hydrate(DataSet, NewCollector);
-    lstDiff := TStringList.Create;
     try
-      if NewCollector.Diff(OldCollector, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSpecimenCollectors, haEdited, OldCollector.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSpecimenCollectors, OldCollector, NewCollector, EditSourceStr);
     finally
       FreeAndNil(NewCollector);
       FreeAndNil(OldCollector);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4389,8 +4334,16 @@ begin
 end;
 
 procedure TDMG.qSampleCollectorsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSpecimenCollectorRepository;
 begin
-  OldCollector := TSpecimenCollector.Create(DataSet.FieldByName('collector_id').AsInteger);
+  Repo := TSpecimenCollectorRepository.Create(DMM.sqlCon);
+  try
+    OldCollector := TSpecimenCollector.Create();
+    Repo.Hydrate(DataSet, OldCollector);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qSampleCollectorsBeforePost(DataSet: TDataSet);
@@ -4553,32 +4506,21 @@ end;
 
 procedure TDMG.qSamplePrepsAfterPost(DataSet: TDataSet);
 var
-  Repo: TSamplingPlotRepository;
+  Repo: TSamplePrepRepository;
   NewSamplePrep: TSamplePrep;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSamplePrep) then
   begin
-    Repo := TSamplingPlotRepository.Create(DMM.sqlCon);
+    Repo := TSamplePrepRepository.Create(DMM.sqlCon);
     NewSamplePrep := TSamplePrep.Create;
     Repo.Hydrate(DataSet, NewSamplePrep);
-    lstDiff := TStringList.Create;
     try
-      if NewSamplePrep.Diff(OldSamplePrep, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSamplePreps, haEdited, OldSamplePrep.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSamplePreps, OldSamplePrep, NewSamplePrep, EditSourceStr);
     finally
       FreeAndNil(NewSamplePrep);
       FreeAndNil(OldSamplePrep);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4586,8 +4528,16 @@ begin
 end;
 
 procedure TDMG.qSamplePrepsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSamplePrepRepository;
 begin
-  OldSamplePrep := TSamplePrep.Create(DataSet.FieldByName('sample_prep_id').AsInteger);
+  Repo := TSamplePrepRepository.Create(DMM.sqlCon);
+  try
+    OldSamplePrep := TSamplePrep.Create();
+    Repo.Hydrate(DataSet, OldSamplePrep);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qSamplePrepsBeforePost(DataSet: TDataSet);
@@ -4623,8 +4573,6 @@ procedure TDMG.qSightingsAfterPost(DataSet: TDataSet);
 var
   Repo: TSightingRepository;
   NewSighting: TSighting;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
@@ -4632,21 +4580,12 @@ begin
     Repo := TSightingRepository.Create(DMM.sqlCon);
     NewSighting := TSighting.Create;
     Repo.Hydrate(DataSet, NewSighting);
-    lstDiff := TStringList.Create;
     try
-      if NewSighting.Diff(OldSighting, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSightings, haEdited, OldSighting.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSightings, OldSighting, NewSighting, EditSourceStr);
     finally
       FreeAndNil(NewSighting);
       FreeAndNil(OldSighting);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4654,8 +4593,16 @@ begin
 end;
 
 procedure TDMG.qSightingsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSightingRepository;
 begin
-  OldSighting := TSighting.Create(DataSet.FieldByName('sighting_id').AsInteger);
+  Repo := TSightingRepository.Create(DMM.sqlCon);
+  try
+    OldSighting := TSighting.Create();
+    Repo.Hydrate(DataSet, OldSighting);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qSightingsBeforePost(DataSet: TDataSet);
@@ -4715,8 +4662,6 @@ procedure TDMG.qSpecimensAfterPost(DataSet: TDataSet);
 var
   Repo: TSpecimenRepository;
   NewSpecimen: TSpecimen;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSpecimen) then
@@ -4724,21 +4669,12 @@ begin
     Repo := TSpecimenRepository.Create(DMM.sqlCon);
     NewSpecimen := TSpecimen.Create;
     Repo.Hydrate(DataSet, NewSpecimen);
-    lstDiff := TStringList.Create;
     try
-      if NewSpecimen.Diff(OldSpecimen, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSpecimens, haEdited, OldSpecimen.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSpecimens, OldSpecimen, NewSpecimen, EditSourceStr);
     finally
       FreeAndNil(NewSpecimen);
       FreeAndNil(OldSpecimen);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4746,8 +4682,16 @@ begin
 end;
 
 procedure TDMG.qSpecimensBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSpecimenRepository;
 begin
-  OldSpecimen := TSpecimen.Create(DataSet.FieldByName('specimen_id').AsInteger);
+  Repo := TSpecimenRepository.Create(DMM.sqlCon);
+  try
+    OldSpecimen := TSpecimen.Create();
+    Repo.Hydrate(DataSet, OldSpecimen);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qSpecimensBeforePost(DataSet: TDataSet);
@@ -4906,8 +4850,6 @@ procedure TDMG.qSurveysAfterPost(DataSet: TDataSet);
 var
   Repo: TSurveyRepository;
   NewSurvey: TSurvey;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSurvey) then
@@ -4915,21 +4857,12 @@ begin
     Repo := TSurveyRepository.Create(DMM.sqlCon);
     NewSurvey := TSurvey.Create;
     Repo.Hydrate(DataSet, NewSurvey);
-    lstDiff := TStringList.Create;
     try
-      if NewSurvey.Diff(OldSurvey, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSurveys, haEdited, OldSurvey.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSurveys, OldSurvey, NewSurvey, EditSourceStr);
     finally
       FreeAndNil(NewSurvey);
       FreeAndNil(OldSurvey);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -4937,8 +4870,16 @@ begin
 end;
 
 procedure TDMG.qSurveysBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSurveyRepository;
 begin
-  OldSurvey := TSurvey.Create(DataSet.FieldByName('survey_id').AsInteger);
+  Repo := TSurveyRepository.Create(DMM.sqlCon);
+  try
+    OldSurvey := TSurvey.Create();
+    Repo.Hydrate(DataSet, OldSurvey);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMG.qSurveysBeforePost(DataSet: TDataSet);

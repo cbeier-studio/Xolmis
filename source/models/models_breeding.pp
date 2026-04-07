@@ -73,7 +73,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TNest; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TNest): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -152,7 +152,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TNestOwner; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TNestOwner): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -212,7 +212,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TEgg; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TEgg): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -285,7 +285,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TNestRevision; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TNestRevision): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -390,11 +390,18 @@ begin
   Result := TNestRevision(inherited Clone);
 end;
 
-function TNestRevision.Diff(const aOld: TNestRevision; var Changes: TStrings): Boolean;
+function TNestRevision.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TNestRevision;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TNestRevision) then
+    Exit(False);
+
+  aOld := TNestRevision(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1070,11 +1077,18 @@ begin
   Result := TEgg(inherited Clone);
 end;
 
-function TEgg.Diff(const aOld: TEgg; var Changes: TStrings): Boolean;
+function TEgg.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TEgg;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TEgg) then
+    Exit(False);
+
+  aOld := TEgg(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1910,11 +1924,18 @@ begin
   Result := TNest(inherited Clone);
 end;
 
-function TNest.Diff(const aOld: TNest; var Changes: TStrings): Boolean;
+function TNest.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TNest;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TNest) then
+    Exit(False);
+
+  aOld := TNest(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -2930,11 +2951,18 @@ begin
   Result := TNestOwner(inherited Clone);
 end;
 
-function TNestOwner.Diff(const aOld: TNestOwner; var Changes: TStrings): Boolean;
+function TNestOwner.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TNestOwner;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TNestOwner) then
+    Exit(False);
+
+  aOld := TNestOwner(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

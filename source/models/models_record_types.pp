@@ -21,7 +21,7 @@ unit models_record_types;
 interface
 
 uses
-  Classes, SysUtils, fgl, DB, SQLDB, io_core;
+  Classes, SysUtils, fgl, DB, SQLDB, io_core, data_types;
 
 type
   TTaxonHierarchy = record
@@ -60,6 +60,7 @@ type
     procedure Clear; virtual;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; virtual;
     function IsNew: Boolean; inline;
   published
     property Id: Integer read FId write FId;
@@ -618,6 +619,11 @@ begin
   C := ClassType;
   Result := TXolmisRecordClass(C).Create;
   Result.Assign(Self);
+end;
+
+function TXolmisRecord.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
+begin
+  Result := False;
 end;
 
 function TXolmisRecord.IsNew: Boolean;

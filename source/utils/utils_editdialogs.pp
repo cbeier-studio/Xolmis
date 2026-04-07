@@ -86,8 +86,6 @@ function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TMethodRepository;
   FRecord, FOldRecord: TMethod;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Method edit dialog');
   Application.CreateForm(TedtMethod, edtMethod);
@@ -121,19 +119,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Method.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbMethods, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbMethods, FOldRecord, Method, EditSourceStr);
         end
         else
           WriteRecHistory(tbMethods, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -170,8 +156,6 @@ function EditSite(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TSiteRepository;
   FRecord, FOldRecord: TSite;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Gazetteer edit dialog');
   Application.CreateForm(TedtSite, edtSite);
@@ -205,19 +189,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Site.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbGazetteer, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbGazetteer, FOldRecord, Site, EditSourceStr);
         end
         else
           WriteRecHistory(tbGazetteer, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -254,8 +226,6 @@ function EditSamplingPlot(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TSamplingPlotRepository;
   FRecord, FOldRecord: TSamplingPlot;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Sampling plot edit dialog');
   Application.CreateForm(TedtSamplingPlot, edtSamplingPlot);
@@ -289,19 +259,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if SamplingPlot.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbSamplingPlots, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbSamplingPlots, FOldRecord, SamplingPlot, EditSourceStr);
         end
         else
           WriteRecHistory(tbSamplingPlots, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -338,8 +296,6 @@ function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boole
 var
   FRepo: TPermanentNetRepository;
   FRecord, FOldRecord: TPermanentNet;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Permanent net edit dialog');
   Application.CreateForm(TedtPermanentNet, edtPermanentNet);
@@ -374,19 +330,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if PermanentNet.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbPermanentNets, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbPermanentNets, FOldRecord, PermanentNet, EditSourceStr);
         end
         else
           WriteRecHistory(tbPermanentNets, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -422,8 +366,6 @@ function EditInstitution(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TInstitutionRepository;
   FRecord, FOldRecord: TInstitution;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Institution edit dialog');
   Application.CreateForm(TedtInstitution, edtInstitution);
@@ -457,19 +399,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Institution.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbInstitutions, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbInstitutions, FOldRecord, Institution, EditSourceStr);
         end
         else
           WriteRecHistory(tbInstitutions, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -505,8 +435,6 @@ function EditPerson(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TPersonRepository;
   FRecord, FOldRecord: TPerson;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Person edit dialog');
   Application.CreateForm(TedtPerson, edtPerson);
@@ -540,19 +468,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Person.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbPeople, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbPeople, FOldRecord, Person, EditSourceStr);
         end
         else
           WriteRecHistory(tbPeople, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -588,8 +504,6 @@ function EditProject(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TProjectRepository;
   FRecord, FOldRecord: TProject;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Project edit dialog');
   Application.CreateForm(TedtProject, edtProject);
@@ -623,19 +537,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Project.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbProjects, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbProjects, FOldRecord, Project, EditSourceStr);
         end
         else
           WriteRecHistory(tbProjects, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -671,8 +573,6 @@ function EditProjectMember(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean
 var
   FRepo: TProjectMemberRepository;
   FRecord, FOldRecord: TProjectMember;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Project member edit dialog');
   Application.CreateForm(TedtProjectMember, edtProjectMember);
@@ -707,19 +607,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if ProjectMember.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbProjectTeams, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbProjectTeams, FOldRecord, ProjectMember, EditSourceStr);
         end
         else
           WriteRecHistory(tbProjectTeams, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -756,8 +644,6 @@ function EditProjectGoal(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boole
 var
   FRepo: TProjectGoalRepository;
   FRecord, FOldRecord: TProjectGoal;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Project goal edit dialog');
   Application.CreateForm(TedtProjectGoal, edtProjectGoal);
@@ -792,19 +678,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if ProjectGoal.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbProjectGoals, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbProjectGoals, FOldRecord, ProjectGoal, EditSourceStr);
         end
         else
           WriteRecHistory(tbProjectGoals, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -841,8 +715,6 @@ function EditProjectActivity(aDataSet: TDataSet; aProject: Integer = 0; aGoal: I
 var
   FRepo: TProjectActivityRepository;
   FRecord, FOldRecord: TProjectActivity;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Project activity edit dialog');
   Application.CreateForm(TedtProjectActivity, edtProjectActivity);
@@ -879,19 +751,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if ProjectActivity.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbProjectChronograms, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbProjectChronograms, FOldRecord, ProjectActivity, EditSourceStr);
         end
         else
           WriteRecHistory(tbProjectChronograms, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -928,8 +788,6 @@ function EditProjectRubric(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boo
 var
   FRepo: TProjectRubricRepository;
   FRecord, FOldRecord: TProjectRubric;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Project rubric edit dialog');
   Application.CreateForm(TedtProjectRubric, edtProjectRubric);
@@ -964,19 +822,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if ProjectRubric.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbProjectBudgets, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbProjectBudgets, FOldRecord, ProjectRubric, EditSourceStr);
         end
         else
           WriteRecHistory(tbProjectBudgets, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1013,8 +859,6 @@ function EditProjectExpense(aDataSet: TDataSet; aProject: Integer = 0; aRubric: 
 var
   FRepo: TProjectExpenseRepository;
   FRecord, FOldRecord: TProjectExpense;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Project expense edit dialog');
   Application.CreateForm(TedtProjectExpense, edtProjectExpense);
@@ -1051,19 +895,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if ProjectExpense.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbProjectExpenses, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbProjectExpenses, FOldRecord, ProjectExpense, EditSourceStr);
         end
         else
           WriteRecHistory(tbProjectExpenses, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1100,8 +932,6 @@ function EditPermit(aDataSet: TDataSet; aProject: Integer; IsNew: Boolean): Bool
 var
   FRepo: TPermitRepository;
   FRecord, FOldRecord: TPermit;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Permit edit dialog');
   Application.CreateForm(TedtPermit, edtPermit);
@@ -1136,19 +966,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Permit.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbPermits, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbPermits, FOldRecord, Permit, EditSourceStr);
         end
         else
           WriteRecHistory(tbPermits, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1184,8 +1002,6 @@ function EditBotanicTaxon(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TBotanicalTaxonRepository;
   FRecord, FOldRecord: TBotanicalTaxon;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Botanical taxon edit dialog');
   Application.CreateForm(TedtBotanicTaxon, edtBotanicTaxon);
@@ -1219,19 +1035,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Taxon.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbBotanicTaxa, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbBotanicTaxa, FOldRecord, Taxon, EditSourceStr);
         end
         else
           WriteRecHistory(tbBotanicTaxa, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1267,8 +1071,6 @@ function EditBand(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TBandRepository;
   FRecord, FOldRecord: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Band edit dialog');
   Application.CreateForm(TedtBands, edtBands);
@@ -1302,19 +1104,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Band.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbBands, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbBands, FOldRecord, Band, EditSourceStr);
         end
         else
           WriteRecHistory(tbBands, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1350,8 +1140,6 @@ function EditIndividual(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TIndividual;
   FRepo: TIndividualRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Individual edit dialog');
   Application.CreateForm(TedtIndividual, edtIndividual);
@@ -1385,19 +1173,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Individual.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbIndividuals, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbIndividuals, FOldRecord, Individual, EditSourceStr);
         end
         else
           WriteRecHistory(tbIndividuals, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1433,8 +1209,6 @@ function EditCapture(aDataSet: TDataSet; aIndividual: Integer; aSurvey: Integer;
 var
   FRecord, FOldRecord: TCapture;
   FRepo: TCaptureRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Capture edit dialog');
   edtCapture := TedtCapture.Create(nil);
@@ -1483,19 +1257,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Capture.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbCaptures, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbCaptures, FOldRecord, Capture, EditSourceStr);
         end
         else
           WriteRecHistory(tbCaptures, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1533,8 +1295,6 @@ var
   FRepo: TNestRepository;
   FOwner: TNestOwner;
   FRepoOwner: TNestOwnerRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Nest edit dialog');
   Application.CreateForm(TedtNest, edtNest);
@@ -1573,19 +1333,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Nest.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbNests, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbNests, FOldRecord, Nest, EditSourceStr);
         end
         else
           WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1634,8 +1382,6 @@ function EditNestOwner(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Bool
 var
   FRecord, FOldRecord: TNestOwner;
   FRepo: TNestOwnerRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Nest owner edit dialog');
   Application.CreateForm(TedtNestOwner, edtNestOwner);
@@ -1670,19 +1416,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if NestOwner.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbNestOwners, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbNestOwners, FOldRecord, NestOwner, EditSourceStr);
         end
         else
           WriteRecHistory(tbNestOwners, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1718,8 +1452,6 @@ function EditNestRevision(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): B
 var
   FRecord, FOldRecord: TNestRevision;
   FRepo: TNestRevisionRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Nest revision edit dialog');
   Application.CreateForm(TedtNestRevision, edtNestRevision);
@@ -1754,19 +1486,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if NestRevision.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbNestRevisions, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbNestRevisions, FOldRecord, NestRevision, EditSourceStr);
         end
         else
           WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1802,8 +1522,6 @@ function EditEgg(aDataSet: TDataSet; aNest: Integer; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TEgg;
   FRepo: TEggRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Egg edit dialog');
   Application.CreateForm(TedtEgg, edtEgg);
@@ -1842,19 +1560,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Egg.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbEggs, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbEggs, FOldRecord, Egg, EditSourceStr);
         end
         else
           WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1890,8 +1596,6 @@ function EditExpedition(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRepo: TExpeditionRepository;
   FRecord, FOldRecord: TExpedition;
-  lstDiff: TStrings;
-  D: String;
 begin
   Result := False;
 
@@ -1927,19 +1631,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Expedition.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbExpeditions, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbExpeditions, FOldRecord, Expedition, EditSourceStr);
         end
         else
           WriteRecHistory(tbExpeditions, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -1975,8 +1667,6 @@ function EditSurvey(aDataSet: TDataSet; aExpedition: Integer; IsNew: Boolean): B
 var
   FRepo: TSurveyRepository;
   FRecord, FOldRecord: TSurvey;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Survey edit dialog');
   Application.CreateForm(TedtSurvey, edtSurvey);
@@ -2011,19 +1701,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Survey.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbSurveys, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbSurveys, FOldRecord, Survey, EditSourceStr);
         end
         else
           WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2059,8 +1737,6 @@ function EditSurveyMember(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean):
 var
   FRepo: TSurveyMemberRepository;
   FRecord, FOldRecord: TSurveyMember;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Survey member edit dialog');
   Application.CreateForm(TedtSurveyMember, edtSurveyMember);
@@ -2095,19 +1771,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if SurveyMember.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbSurveyTeams, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbSurveyTeams, FOldRecord, SurveyMember, EditSourceStr);
         end
         else
           WriteRecHistory(tbSurveyTeams, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2144,8 +1808,6 @@ function EditNetEffort(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): Bo
 var
   FRepo: TNetEffortRepository;
   FRecord, FOldRecord: TNetEffort;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Net effort edit dialog');
   Application.CreateForm(TedtNetEffort, edtNetEffort);
@@ -2182,19 +1844,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if NetEffort.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbNetsEffort, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbNetsEffort, FOldRecord, NetEffort, EditSourceStr);
         end
         else
           WriteRecHistory(tbNetsEffort, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2230,8 +1880,6 @@ function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): B
 var
   FRepo: TWeatherLogRepository;
   FRecord, FOldRecord: TWeatherLog;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Weather log edit dialog');
   Application.CreateForm(TedtWeatherLog, edtWeatherLog);
@@ -2268,19 +1916,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if WeatherLog.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbWeatherLogs, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbWeatherLogs, FOldRecord, WeatherLog, EditSourceStr);
         end
         else
           WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2316,8 +1952,6 @@ function EditSighting(aDataSet: TDataSet; aSurvey: Integer; aIndividual: Integer
 var
   FRepo: TSightingRepository;
   FRecord, FOldRecord: TSighting;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Sighting edit dialog');
   Application.CreateForm(TedtSighting, edtSighting);
@@ -2365,19 +1999,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Sighting.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbSightings, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbSightings, FOldRecord, Sighting, EditSourceStr);
         end
         else
           WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2413,8 +2035,6 @@ function EditSpecimen(aDataSet: TDataSet; aIndividual: Integer; IsNew: Boolean):
 var
   FRepo: TSpecimenRepository;
   FRecord, FOldRecord: TSpecimen;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Specimen edit dialog');
   Application.CreateForm(TedtSpecimen, edtSpecimen);
@@ -2454,19 +2074,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Specimen.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbSpecimens, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbSpecimens, FOldRecord, Specimen, EditSourceStr);
         end
         else
           WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2502,8 +2110,6 @@ function EditCollector(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean): 
 var
   FRepo: TSpecimenCollectorRepository;
   FRecord, FOldRecord: TSpecimenCollector;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Specimen collector edit dialog');
   Application.CreateForm(TedtCollector, edtCollector);
@@ -2538,19 +2144,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if SpecimenCollector.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbSpecimenCollectors, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbSpecimenCollectors, FOldRecord, SpecimenCollector, EditSourceStr);
         end
         else
           WriteRecHistory(tbSpecimenCollectors, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2587,8 +2181,6 @@ function EditSamplePrep(aDataSet: TDataSet; aSpecimen: Integer; IsNew: Boolean):
 var
   FRepo: TSamplePrepRepository;
   FRecord, FOldRecord: TSamplePrep;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Sample prep edit dialog');
   Application.CreateForm(TedtSamplePrep, edtSamplePrep);
@@ -2623,19 +2215,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if SamplePrep.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbSamplePreps, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbSamplePreps, FOldRecord, SamplePrep, EditSourceStr);
         end
         else
           WriteRecHistory(tbSamplePreps, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2740,8 +2320,6 @@ function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsN
 var
   FRepo: TImageRepository;
   FRecord, FOldRecord: TImageData;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Image edit dialog');
   Application.CreateForm(TedtImageInfo, edtImageInfo);
@@ -2833,19 +2411,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Image.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbImages, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbImages, FOldRecord, Image, EditSourceStr);
         end
         else
           WriteRecHistory(tbImages, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2881,8 +2447,6 @@ function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsN
 var
   FRepo: TAudioRepository;
   FRecord, FOldRecord: TAudioData;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Audio edit dialog');
   Application.CreateForm(TedtAudioInfo, edtAudioInfo);
@@ -2948,19 +2512,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if AudioRecording.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbAudioLibrary, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbAudioLibrary, FOldRecord, AudioRecording, EditSourceStr);
         end
         else
           WriteRecHistory(tbAudioLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -2996,8 +2548,6 @@ function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew
 var
   FRepo: TDocumentRepository;
   FRecord, FOldRecord: TDocumentData;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Document edit dialog');
   Application.CreateForm(TedtDocumentInfo, edtDocumentInfo);
@@ -3089,19 +2639,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Document.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbDocuments, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbDocuments, FOldRecord, Document, EditSourceStr);
         end
         else
           WriteRecHistory(tbDocuments, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -3137,8 +2675,6 @@ function EditVegetation(aDataSet: TDataSet; aSurvey: Integer; IsNew: Boolean): B
 var
   FRepo: TVegetationRepository;
   FRecord, FOldRecord: TVegetation;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Vegetation edit dialog');
   Application.CreateForm(TedtVegetation, edtVegetation);
@@ -3175,19 +2711,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Vegetation.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbVegetation, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbVegetation, FOldRecord, Vegetation, EditSourceStr);
         end
         else
           WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -3264,8 +2788,6 @@ function EditFeather(aDataSet: TDataSet; aIndividual: Integer; aCapture: Integer
 var
   FRecord, FOldRecord: TFeather;
   FRepo: TFeatherRepository;
-  lstDiff: TStrings;
-  D: String;
   aTime: Variant;
 begin
   LogEvent(leaOpen, 'Feather edit dialog');
@@ -3325,19 +2847,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Feather.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbFeathers, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbFeathers, FOldRecord, Feather, EditSourceStr);
         end
         else
           WriteRecHistory(tbFeathers, haCreated, 0, '', '', '', rsInsertedByForm);
@@ -3373,8 +2883,6 @@ function EditVideoInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsN
 var
   FRepo: TVideoRepository;
   FRecord, FOldRecord: TVideoData;
-  lstDiff: TStrings;
-  D: String;
 begin
   LogEvent(leaOpen, 'Video edit dialog');
   Application.CreateForm(TedtVideoInfo, edtVideoInfo);
@@ -3449,19 +2957,7 @@ begin
         { Save changes to the record history }
         if Assigned(FOldRecord) then
         begin
-          lstDiff := TStringList.Create;
-          try
-            if Video.Diff(FOldRecord, lstDiff) then
-            begin
-              for D in lstDiff do
-                WriteRecHistory(tbVideos, haEdited, FOldRecord.Id,
-                  ExtractDelimited(1, D, [';']),
-                  ExtractDelimited(2, D, [';']),
-                  ExtractDelimited(3, D, [';']), EditSourceStr);
-            end;
-          finally
-            FreeAndNil(lstDiff);
-          end;
+          WriteDiff(tbVideos, FOldRecord, Video, EditSourceStr);
         end
         else
           WriteRecHistory(tbVideos, haCreated, 0, '', '', '', rsInsertedByForm);

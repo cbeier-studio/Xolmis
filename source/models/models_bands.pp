@@ -62,7 +62,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TBand; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TBand): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -123,7 +123,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TBandHistory; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TBandHistory): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -222,11 +222,18 @@ begin
   Result := TBand(inherited Clone);
 end;
 
-function TBand.Diff(const aOld: TBand; var Changes: TStrings): Boolean;
+function TBand.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TBand;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TBand) then
+    Exit(False);
+
+  aOld := TBand(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -918,11 +925,18 @@ begin
   Result := TBandHistory(inherited Clone);
 end;
 
-function TBandHistory.Diff(const aOld: TBandHistory; var Changes: TStrings): Boolean;
+function TBandHistory.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TBandHistory;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TBandHistory) then
+    Exit(False);
+
+  aOld := TBandHistory(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

@@ -772,8 +772,6 @@ var
   Egg: TMobileEgg;
   aDate: TDate;
   aObserverId: Integer;
-  lstDiff: TStrings;
-  D: String;
 begin
   if Nest.FEggList.Count > 0 then
   begin
@@ -796,19 +794,7 @@ begin
             Egg.ToEgg(aEgg);
             Repo.Update(aEgg);
             // write record history
-            lstDiff := TStringList.Create;
-            try
-              if aEgg.Diff(aOldEgg, lstDiff) then
-              begin
-                for D in lstDiff do
-                  WriteRecHistory(tbEggs, haEdited, aOldEgg.Id,
-                    ExtractDelimited(1, D, [';']),
-                    ExtractDelimited(2, D, [';']),
-                    ExtractDelimited(3, D, [';']), rsEditedByImport);
-              end;
-            finally
-              FreeAndNil(lstDiff);
-            end;
+            WriteDiff(tbEggs, aOldEgg, aEgg, rsEditedByImport);
           finally
             FreeAndNil(aOldEgg);
           end;
@@ -839,8 +825,7 @@ var
   aSighting: TSighting;
   p, j, aSurveyKey, aObserverKey: Integer;
   Inventory: TMobileInventory;
-  lstDiff: TStrings;
-  aObserver, D: String;
+  aObserver: String;
 begin
   nbPages.PageIndex := 2;
 
@@ -880,19 +865,7 @@ begin
               aSurvey.ExpeditionId := FExpeditionId;
               SurveyRepo.Update(aSurvey);
               // write record history
-              lstDiff := TStringList.Create;
-              try
-                if aSurvey.Diff(aOldSurvey, lstDiff) then
-                begin
-                  for D in lstDiff do
-                    WriteRecHistory(tbSurveys, haEdited, aOldSurvey.Id,
-                      ExtractDelimited(1, D, [';']),
-                      ExtractDelimited(2, D, [';']),
-                      ExtractDelimited(3, D, [';']), rsEditedByImport);
-                end;
-              finally
-                FreeAndNil(lstDiff);
-              end;
+              WriteDiff(tbSurveys, aOldSurvey, aSurvey, rsEditedByImport);
             finally
               FreeAndNil(aOldSurvey);
             end;
@@ -989,8 +962,6 @@ var
   aNest, aOldNest: TNest;
   Repo: TNestRepository;
   Nest: TMobileNest;
-  lstDiff: TStrings;
-  D: String;
 begin
   nbPages.PageIndex := 2;
 
@@ -1029,19 +1000,7 @@ begin
               Nest.ToNest(aNest);
               Repo.Update(aNest);
               // write record history
-              lstDiff := TStringList.Create;
-              try
-                if aNest.Diff(aOldNest, lstDiff) then
-                begin
-                  for D in lstDiff do
-                    WriteRecHistory(tbNests, haEdited, aOldNest.Id,
-                      ExtractDelimited(1, D, [';']),
-                      ExtractDelimited(2, D, [';']),
-                      ExtractDelimited(3, D, [';']), rsEditedByImport);
-                end;
-              finally
-                FreeAndNil(lstDiff);
-              end;
+              WriteDiff(tbNests, aOldNest, aNest, rsEditedByImport);
             finally
               FreeAndNil(aOldNest);
             end;
@@ -1128,8 +1087,6 @@ var
   aPoi, aOldPoi: TPoi;
   aTaxonId, aObserverId: Integer;
   Poi: TMobilePoi;
-  lstDiff: TStrings;
-  D: String;
 begin
   if Species.FPoiList.Count > 0 then
   begin
@@ -1163,19 +1120,7 @@ begin
               aPoi.SampleTime := Inventory.FStartTime;
             aRepo.Update(aPoi);
             // write record history
-            lstDiff := TStringList.Create;
-            try
-              if aPoi.Diff(aOldPoi, lstDiff) then
-              begin
-                for D in lstDiff do
-                  WriteRecHistory(tbPoiLibrary, haEdited, aOldPoi.Id,
-                    ExtractDelimited(1, D, [';']),
-                    ExtractDelimited(2, D, [';']),
-                    ExtractDelimited(3, D, [';']), rsEditedByImport);
-              end;
-            finally
-              FreeAndNil(lstDiff);
-            end;
+            WriteDiff(tbPoiLibrary, aOldPoi, aPoi, rsEditedByImport);
           finally
             FreeAndNil(aOldPoi);
           end;
@@ -1213,8 +1158,6 @@ var
   aObserverId: Integer;
   aDate: TDate;
   aTime: TTime;
-  lstDiff: TStrings;
-  D: String;
 begin
   if Nest.FRevisionList.Count > 0 then
   begin
@@ -1238,19 +1181,7 @@ begin
             Revision.ToNestRevision(aRevision);
             Repo.Update(aRevision);
             // write record history
-            lstDiff := TStringList.Create;
-            try
-              if aRevision.Diff(aOldRevision, lstDiff) then
-              begin
-                for D in lstDiff do
-                  WriteRecHistory(tbNestRevisions, haEdited, aOldRevision.Id,
-                    ExtractDelimited(1, D, [';']),
-                    ExtractDelimited(2, D, [';']),
-                    ExtractDelimited(3, D, [';']), rsEditedByImport);
-              end;
-            finally
-              FreeAndNil(lstDiff);
-            end;
+            WriteDiff(tbNestRevisions, aOldRevision, aRevision, rsEditedByImport);
           finally
             FreeAndNil(aOldRevision);
           end;
@@ -1279,8 +1210,6 @@ var
   aRepo: TSightingRepository;
   aSighting, aOldSighting: TSighting;
   aTaxonId, aObserverId: Integer;
-  lstDiff: TStrings;
-  D: String;
 begin
   if Inventory.FSpeciesList.Count > 0 then
   begin
@@ -1308,19 +1237,7 @@ begin
               aSighting.SightingDate := Inventory.FStartTime;
             aRepo.Update(aSighting);
             // write record history
-            lstDiff := TStringList.Create;
-            try
-              if aSighting.Diff(aOldSighting, lstDiff) then
-              begin
-                for D in lstDiff do
-                  WriteRecHistory(tbSightings, haEdited, aOldSighting.Id,
-                    ExtractDelimited(1, D, [';']),
-                    ExtractDelimited(2, D, [';']),
-                    ExtractDelimited(3, D, [';']), rsEditedByImport);
-              end;
-            finally
-              FreeAndNil(lstDiff);
-            end;
+            WriteDiff(tbSightings, aOldSighting, aSighting, rsEditedByImport);
           finally
             FreeAndNil(aOldSighting);
           end;
@@ -1355,8 +1272,6 @@ var
   Repo: TSpecimenRepository;
   aSpecimen, aOldSpecimen: TSpecimen;
   Specimen: TMobileSpecimen;
-  lstDiff: TStrings;
-  D: String;
 begin
   nbPages.PageIndex := 2;
 
@@ -1394,19 +1309,7 @@ begin
             try
               Repo.Update(aSpecimen);
               // write record history
-              lstDiff := TStringList.Create;
-              try
-                if aSpecimen.Diff(aOldSpecimen, lstDiff) then
-                begin
-                  for D in lstDiff do
-                    WriteRecHistory(tbSpecimens, haEdited, aOldSpecimen.Id,
-                      ExtractDelimited(1, D, [';']),
-                      ExtractDelimited(2, D, [';']),
-                      ExtractDelimited(3, D, [';']), rsEditedByImport);
-                end;
-              finally
-                FreeAndNil(lstDiff);
-              end;
+              WriteDiff(tbSpecimens, aOldSpecimen, aSpecimen, rsEditedByImport);
             finally
               FreeAndNil(aOldSpecimen);
             end;
@@ -1510,8 +1413,6 @@ var
   aDate: TDate;
   aTime: TTime;
   aObserverId: Integer;
-  lstDiff: TStrings;
-  D: String;
 begin
   if Inventory.FVegetationList.Count > 0 then
   begin
@@ -1535,19 +1436,7 @@ begin
             Vegetation.ToVegetation(aVegetation);
             Repo.Update(aVegetation);
             // write record history
-            lstDiff := TStringList.Create;
-            try
-              if aVegetation.Diff(aOldVegetation, lstDiff) then
-              begin
-                for D in lstDiff do
-                  WriteRecHistory(tbVegetation, haEdited, aOldVegetation.Id,
-                    ExtractDelimited(1, D, [';']),
-                    ExtractDelimited(2, D, [';']),
-                    ExtractDelimited(3, D, [';']), rsEditedByImport);
-              end;
-            finally
-              FreeAndNil(lstDiff);
-            end;
+            WriteDiff(tbVegetation, aOldVegetation, aVegetation, rsEditedByImport);
           finally
             FreeAndNil(aOldVegetation);
           end;
@@ -1578,8 +1467,6 @@ var
   aDate: TDate;
   aTime: TTime;
   aObserverId: Integer;
-  lstDiff: TStrings;
-  D: String;
 begin
   if Inventory.FWeatherList.Count > 0 then
   begin
@@ -1603,19 +1490,7 @@ begin
             Weather.ToWeatherLog(aWeather);
             Repo.Update(aWeather);
             // write record history
-            lstDiff := TStringList.Create;
-            try
-              if aWeather.Diff(aOldWeather, lstDiff) then
-              begin
-                for D in lstDiff do
-                  WriteRecHistory(tbWeatherLogs, haEdited, aOldWeather.Id,
-                    ExtractDelimited(1, D, [';']),
-                    ExtractDelimited(2, D, [';']),
-                    ExtractDelimited(3, D, [';']), rsEditedByImport);
-              end;
-            finally
-              FreeAndNil(lstDiff);
-            end;
+            WriteDiff(tbWeatherLogs, aOldWeather, aWeather, rsEditedByImport);
           finally
             FreeAndNil(aOldWeather);
           end;

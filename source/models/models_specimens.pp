@@ -50,7 +50,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSpecimen; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TSpecimen): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -104,7 +104,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSpecimenCollector; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TSpecimenCollector): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -155,7 +155,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSamplePrep; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TSamplePrep): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -249,11 +249,18 @@ begin
   Result := TSamplePrep(inherited Clone);
 end;
 
-function TSamplePrep.Diff(const aOld: TSamplePrep; var Changes: TStrings): Boolean;
+function TSamplePrep.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TSamplePrep;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TSamplePrep) then
+    Exit(False);
+
+  aOld := TSamplePrep(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -796,11 +803,18 @@ begin
   Result := TSpecimen(inherited Clone);
 end;
 
-function TSpecimen.Diff(const aOld: TSpecimen; var Changes: TStrings): Boolean;
+function TSpecimen.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TSpecimen;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TSpecimen) then
+    Exit(False);
+
+  aOld := TSpecimen(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1476,11 +1490,18 @@ begin
   Result := TSpecimenCollector(inherited Clone);
 end;
 
-function TSpecimenCollector.Diff(const aOld: TSpecimenCollector; var Changes: TStrings): Boolean;
+function TSpecimenCollector.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TSpecimenCollector;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TSpecimenCollector) then
+    Exit(False);
+
+  aOld := TSpecimenCollector(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

@@ -556,8 +556,6 @@ procedure TDMS.qCapturesAfterPost(DataSet: TDataSet);
 var
   Repo: TCaptureRepository;
   NewCapture: TCapture;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
@@ -565,21 +563,12 @@ begin
     Repo := TCaptureRepository.Create(DMM.sqlCon);
     NewCapture := TCapture.Create;
     Repo.Hydrate(DataSet, NewCapture);
-    lstDiff := TStringList.Create;
     try
-      if NewCapture.Diff(OldCapture, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbCaptures, haEdited, OldCapture.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbCaptures, OldCapture, NewCapture, EditSourceStr);
     finally
       FreeAndNil(NewCapture);
       FreeAndNil(OldCapture);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -587,8 +576,16 @@ begin
 end;
 
 procedure TDMS.qCapturesBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TCaptureRepository;
 begin
-  OldCapture := TCapture.Create(DataSet.FieldByName('capture_id').AsInteger);
+  Repo := TCaptureRepository.Create(DMM.sqlCon);
+  try
+    OldCapture := TCapture.Create();
+    Repo.Hydrate(DataSet, OldCapture);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMS.qCapturesBeforePost(DataSet: TDataSet);
@@ -1002,8 +999,6 @@ procedure TDMS.qNetsEffortAfterPost(DataSet: TDataSet);
 var
   Repo: TNetEffortRepository;
   NewNetEffort: TNetEffort;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldNetEffort) then
@@ -1011,21 +1006,12 @@ begin
     Repo := TNetEffortRepository.Create(DMM.sqlCon);
     NewNetEffort := TNetEffort.Create;
     Repo.Hydrate(DataSet, NewNetEffort);
-    lstDiff := TStringList.Create;
     try
-      if NewNetEffort.Diff(OldNetEffort, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbNetsEffort, haEdited, OldNetEffort.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbNetsEffort, OldNetEffort, NewNetEffort, EditSourceStr);
     finally
       FreeAndNil(NewNetEffort);
       FreeAndNil(OldNetEffort);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1033,8 +1019,16 @@ begin
 end;
 
 procedure TDMS.qNetsEffortBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TNetEffortRepository;
 begin
-  OldNetEffort := TNetEffort.Create(DataSet.FieldByName('net_id').AsInteger);
+  Repo := TNetEffortRepository.Create(DMM.sqlCon);
+  try
+    OldNetEffort := TNetEffort.Create();
+    Repo.Hydrate(DataSet, OldNetEffort);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMS.qNetsEffortBeforePost(DataSet: TDataSet);
@@ -1102,8 +1096,6 @@ procedure TDMS.qSightingsAfterPost(DataSet: TDataSet);
 var
   Repo: TSightingRepository;
   NewSighting: TSighting;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
@@ -1111,21 +1103,12 @@ begin
     Repo := TSightingRepository.Create(DMM.sqlCon);
     NewSighting := TSighting.Create;
     Repo.Hydrate(DataSet, NewSighting);
-    lstDiff := TStringList.Create;
     try
-      if NewSighting.Diff(OldSighting, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSightings, haEdited, OldSighting.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSightings, OldSighting, NewSighting, EditSourceStr);
     finally
       FreeAndNil(NewSighting);
       FreeAndNil(OldSighting);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1133,8 +1116,16 @@ begin
 end;
 
 procedure TDMS.qSightingsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSightingRepository;
 begin
-  OldSighting := TSighting.Create(DataSet.FieldByName('sighting_id').AsInteger);
+  Repo := TSightingRepository.Create(DMM.sqlCon);
+  try
+    OldSighting := TSighting.Create();
+    Repo.Hydrate(DataSet, OldSighting);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMS.qSightingsBeforePost(DataSet: TDataSet);
@@ -1242,8 +1233,6 @@ procedure TDMS.qSurveyTeamAfterPost(DataSet: TDataSet);
 var
   Repo: TSurveyMemberRepository;
   NewSurveyMember: TSurveyMember;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSurveyMember) then
@@ -1251,21 +1240,12 @@ begin
     Repo := TSurveyMemberRepository.Create(DMM.sqlCon);
     NewSurveyMember := TSurveyMember.Create;
     Repo.Hydrate(DataSet, NewSurveyMember);
-    lstDiff := TStringList.Create;
     try
-      if NewSurveyMember.Diff(OldSurveyMember, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSurveyTeams, haEdited, OldSurveyMember.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSurveyTeams, OldSurveyMember, NewSurveyMember, EditSourceStr);
     finally
       FreeAndNil(NewSurveyMember);
       FreeAndNil(OldSurveyMember);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1273,8 +1253,16 @@ begin
 end;
 
 procedure TDMS.qSurveyTeamBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSurveyMemberRepository;
 begin
-  OldSurveyMember := TSurveyMember.Create(DataSet.FieldByName('survey_member_id').AsInteger);
+  Repo := TSurveyMemberRepository.Create(DMM.sqlCon);
+  try
+    OldSurveyMember := TSurveyMember.Create();
+    Repo.Hydrate(DataSet, OldSurveyMember);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMS.qSurveyTeamBeforePost(DataSet: TDataSet);
@@ -1292,8 +1280,6 @@ procedure TDMS.qVegetationAfterPost(DataSet: TDataSet);
 var
   Repo: TVegetationRepository;
   NewVegetation: TVegetation;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldVegetation) then
@@ -1301,21 +1287,12 @@ begin
     Repo := TVegetationRepository.Create(DMM.sqlCon);
     NewVegetation := TVegetation.Create;
     Repo.Hydrate(DataSet, NewVegetation);
-    lstDiff := TStringList.Create;
     try
-      if NewVegetation.Diff(OldVegetation, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbVegetation, haEdited, OldVegetation.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbVegetation, OldVegetation, NewVegetation, EditSourceStr);
     finally
       FreeAndNil(NewVegetation);
       FreeAndNil(OldVegetation);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1323,8 +1300,16 @@ begin
 end;
 
 procedure TDMS.qVegetationBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TVegetationRepository;
 begin
-  OldVegetation := TVegetation.Create(DataSet.FieldByName('vegetation_id').AsInteger);
+  Repo := TVegetationRepository.Create(DMM.sqlCon);
+  try
+    OldVegetation := TVegetation.Create();
+    Repo.Hydrate(DataSet, OldVegetation);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMS.qVegetationBeforePost(DataSet: TDataSet);
@@ -1450,8 +1435,6 @@ procedure TDMS.qWeatherLogsAfterPost(DataSet: TDataSet);
 var
   Repo: TWeatherLogRepository;
   NewWeatherLog: TWeatherLog;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldWeatherLog) then
@@ -1459,21 +1442,12 @@ begin
     Repo := TWeatherLogRepository.Create(DMM.sqlCon);
     NewWeatherLog := TWeatherLog.Create;
     Repo.Hydrate(DataSet, NewWeatherLog);
-    lstDiff := TStringList.Create;
     try
-      if NewWeatherLog.Diff(OldWeatherLog, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbWeatherLogs, haEdited, OldWeatherLog.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbWeatherLogs, OldWeatherLog, NewWeatherLog, EditSourceStr);
     finally
       FreeAndNil(NewWeatherLog);
       FreeAndNil(OldWeatherLog);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1481,8 +1455,16 @@ begin
 end;
 
 procedure TDMS.qWeatherLogsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TWeatherLogRepository;
 begin
-  OldWeatherLog := TWeatherLog.Create(DataSet.FieldByName('weather_id').AsInteger);
+  Repo := TWeatherLogRepository.Create(DMM.sqlCon);
+  try
+    OldWeatherLog := TWeatherLog.Create();
+    Repo.Hydrate(DataSet, OldWeatherLog);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMS.qWeatherLogsBeforePost(DataSet: TDataSet);

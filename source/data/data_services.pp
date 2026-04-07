@@ -132,8 +132,6 @@ end;
 procedure TBandMovementService.MarkAsBroken(ABand: TBand; ADate: TDate; const ANotes: String);
 var
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -142,19 +140,7 @@ begin
     ApplyStatusChange(ABand, bstBroken);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -166,8 +152,6 @@ end;
 procedure TBandMovementService.MarkAsLost(ABand: TBand; ADate: TDate; const ANotes: String);
 var
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -176,19 +160,7 @@ begin
     ApplyStatusChange(ABand, bstLost);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -201,8 +173,6 @@ procedure TBandMovementService.ReceiveFromSupplier(ABand: TBand; ASupplierId, AR
   ADate: TDate; const AOrderNumber: Integer; const ANotes: String);
 var
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -214,19 +184,7 @@ begin
     ApplyStatusChange(ABand, bstAvailable);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -240,8 +198,6 @@ procedure TBandMovementService.ReceiveTransfer(ABand: TBand; ASenderId, ACarrier
   const ANotes: String);
 var
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -252,19 +208,7 @@ begin
     ApplyStatusChange(ABand, bstAvailable);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -278,8 +222,6 @@ procedure TBandMovementService.RemoveFromIndividual(ABand: TBand; AIndividualId:
   const ANotes: String);
 var
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -288,19 +230,7 @@ begin
     ApplyStatusChange(ABand, bstRemoved);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -313,8 +243,6 @@ procedure TBandMovementService.ReturnToSupplier(ABand: TBand; ASupplierId: Integ
   const ANotes: String);
 var
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -325,19 +253,7 @@ begin
     ApplyStatusChange(ABand, bstReturned);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -351,8 +267,6 @@ procedure TBandMovementService.TransferToAnotherPerson(ABand: TBand; ANewCarrier
 var
   OldCarrier: Integer;
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -364,19 +278,7 @@ begin
     ApplyStatusChange(ABand, bstTransferred);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -390,8 +292,6 @@ procedure TBandMovementService.UseInCapture(ABand: TBand; AIndividualId: Integer
   const ANotes: String);
 var
   FOldBand: TBand;
-  lstDiff: TStrings;
-  D: String;
 begin
   FOldBand := TBand.Create();
   try
@@ -401,19 +301,7 @@ begin
     ApplyStatusChange(ABand, bstUsed);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if ABand.Diff(FOldBand, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbBands, haEdited, FOldBand.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbBands, FOldBand, ABand);
   finally
     FreeAndNil(FOldBand);
   end;
@@ -480,8 +368,6 @@ end;
 procedure TIndividualUpdateService.ApplyBandRemoval(Capture: TCapture);
 var
   FIndividual, FOldIndividual: TIndividual;
-  lstDiff: TStrings;
-  D: String;
 begin
   if (Capture.IndividualId <= 0) or (Capture.RemovedBandId <= 0) then
     Exit;
@@ -501,19 +387,7 @@ begin
     end;
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if FIndividual.Diff(FOldIndividual, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbIndividuals, haEdited, FOldIndividual.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbIndividuals, FOldIndividual, FIndividual);
   finally
     FOldIndividual.Free;
     FIndividual.Free;
@@ -523,8 +397,6 @@ end;
 procedure TIndividualUpdateService.ApplyCaptureToIndividual(Capture: TCapture);
 var
   FIndividual, FOldIndividual: TIndividual;
-  lstDiff: TStrings;
-  D: String;
 begin
   if Capture.IndividualId <= 0 then
     Exit;
@@ -569,19 +441,7 @@ begin
     FIndRepo.Update(FIndividual);
 
     // write the record history
-    lstDiff := TStringList.Create;
-    try
-      if FIndividual.Diff(FOldIndividual, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbIndividuals, haEdited, FOldIndividual.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']));
-      end;
-    finally
-      FreeAndNil(lstDiff);
-    end;
+    WriteDiff(tbIndividuals, FOldIndividual, FIndividual);
   finally
     FOldIndividual.Free;
     FIndividual.Free;

@@ -39,7 +39,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TExpedition; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TExpedition): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -103,7 +103,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSurvey; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TSurvey): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -178,7 +178,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TWeatherLog; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TWeatherLog): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -233,7 +233,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TSurveyMember; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TSurveyMember): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -296,7 +296,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TNetEffort; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TNetEffort): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -373,7 +373,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TVegetation; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TVegetation): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -512,11 +512,18 @@ begin
   Result := TExpedition(inherited Clone);
 end;
 
-function TExpedition.Diff(const aOld: TExpedition; var Changes: TStrings): Boolean;
+function TExpedition.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TExpedition;
   R: string;
 begin
   Result := False;
+
+  if not (OldRec is TExpedition) then
+    Exit(False);
+
+  aOld := TExpedition(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -987,11 +994,18 @@ begin
   Result := TNetEffort(inherited Clone);
 end;
 
-function TNetEffort.Diff(const aOld: TNetEffort; var Changes: TStrings): Boolean;
+function TNetEffort.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TNetEffort;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TNetEffort) then
+    Exit(False);
+
+  aOld := TNetEffort(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1731,11 +1745,18 @@ begin
   Result := TVegetation(inherited Clone);
 end;
 
-function TVegetation.Diff(const aOld: TVegetation; var Changes: TStrings): Boolean;
+function TVegetation.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TVegetation;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TVegetation) then
+    Exit(False);
+
+  aOld := TVegetation(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -2389,11 +2410,18 @@ begin
   Result := TSurveyMember(inherited Clone);
 end;
 
-function TSurveyMember.Diff(const aOld: TSurveyMember; var Changes: TStrings): Boolean;
+function TSurveyMember.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TSurveyMember;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TSurveyMember) then
+    Exit(False);
+
+  aOld := TSurveyMember(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -2855,11 +2883,18 @@ begin
   Result := TSurvey(inherited Clone);
 end;
 
-function TSurvey.Diff(const aOld: TSurvey; var Changes: TStrings): Boolean;
+function TSurvey.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TSurvey;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TSurvey) then
+    Exit(False);
+
+  aOld := TSurvey(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -3619,11 +3654,18 @@ begin
   Result := TWeatherLog(inherited Clone);
 end;
 
-function TWeatherLog.Diff(const aOld: TWeatherLog; var Changes: TStrings): Boolean;
+function TWeatherLog.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TWeatherLog;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TWeatherLog) then
+    Exit(False);
+
+  aOld := TWeatherLog(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

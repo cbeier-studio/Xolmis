@@ -21,9 +21,9 @@ unit utils_global;
 interface
 
 uses
-  Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf, fgl,
+  Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf, fgl, StrUtils,
   Forms, Controls, Dialogs, Menus, Buttons, Graphics, DB, SQLDB, URIParser,
-  utils_system, data_types,
+  utils_system, data_types, models_record_types,
   udm_main, ucfg_database;
 
 const
@@ -382,6 +382,7 @@ var
   function CheckLogsFull: Boolean;
   procedure WriteRecHistory(aTable: TTableType; aAction: THistoryAction; aCodigo: Integer = 0;
     aField: String = ''; aOldValue: String = ''; aNewValue: String = ''; aNote: String = '');
+  procedure WriteDiff(const TableType: TTableType; OldRec, NewRec: TXolmisRecord; aNote: String = '');
   procedure GravaStat(const aModule, aControl, aEvent: String);
 
   { System variables }
@@ -551,6 +552,39 @@ begin
     LogDebug(Format('Record history written for Table=%s, ID=%d', [TABLE_NAMES[aTable], aCodigo]));
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure WriteDiff(const TableType: TTableType; OldRec, NewRec: TXolmisRecord; aNote: String);
+var
+  lstDiff: TStrings;
+  D: String;
+begin
+  if (OldRec = nil) or (NewRec = nil) then
+    Exit;
+
+  if OldRec.ClassType <> NewRec.ClassType then
+    raise Exception.Create('Record types do not match for Diff operation.');
+
+  lstDiff := TStringList.Create;
+  try
+    if NewRec.Diff(OldRec, lstDiff) then
+    begin
+      for D in lstDiff do
+      begin
+        WriteRecHistory(
+          TableType,
+          haEdited,
+          OldRec.Id,
+          ExtractDelimited(1, D, [';']),
+          ExtractDelimited(2, D, [';']),
+          ExtractDelimited(3, D, [';']),
+          aNote
+        );
+      end;
+    end;
+  finally
+    lstDiff.Free;
   end;
 end;
 

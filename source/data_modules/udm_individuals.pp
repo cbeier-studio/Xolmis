@@ -595,6 +595,15 @@ uses
 
 { TDMI }
 
+procedure TDMI.DataModuleCreate(Sender: TObject);
+begin
+  TranslateCaptures(qCaptures);
+  TranslateSightings(qSightings);
+  TranslateFeathers(qFeathers);
+  TranslateNests(qNests);
+  TranslateSpecimens(qSpecimens);
+end;
+
 procedure TDMI.qCapturescapture_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
   if Sender.AsString = EmptyStr then
@@ -609,15 +618,6 @@ begin
   end;
 
   DisplayText := True;
-end;
-
-procedure TDMI.DataModuleCreate(Sender: TObject);
-begin
-  TranslateCaptures(qCaptures);
-  TranslateSightings(qSightings);
-  TranslateFeathers(qFeathers);
-  TranslateNests(qNests);
-  TranslateSpecimens(qSpecimens);
 end;
 
 procedure TDMI.qCapturesAfterCancel(DataSet: TDataSet);
@@ -658,8 +658,6 @@ procedure TDMI.qCapturesAfterPost(DataSet: TDataSet);
 var
   Repo: TCaptureRepository;
   NewCapture: TCapture;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldCapture) then
@@ -667,21 +665,12 @@ begin
     Repo := TCaptureRepository.Create(DMM.sqlCon);
     NewCapture := TCapture.Create;
     Repo.Hydrate(DataSet, NewCapture);
-    lstDiff := TStringList.Create;
     try
-      if NewCapture.Diff(OldCapture, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbCaptures, haEdited, OldCapture.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbCaptures, OldCapture, NewCapture, EditSourceStr);
     finally
       FreeAndNil(NewCapture);
       FreeAndNil(OldCapture);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -689,8 +678,16 @@ begin
 end;
 
 procedure TDMI.qCapturesBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TCaptureRepository;
 begin
-  OldCapture := TCapture.Create(DataSet.FieldByName('capture_id').AsInteger);
+  Repo := TCaptureRepository.Create(DMM.sqlCon);
+  try
+    OldCapture := TCapture.Create();
+    Repo.Hydrate(DataSet, OldCapture);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMI.qCapturesBeforePost(DataSet: TDataSet);
@@ -1294,8 +1291,6 @@ procedure TDMI.qNestsAfterPost(DataSet: TDataSet);
 var
   NewNest: TNest;
   FRepo: TNestRepository;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldNest) then
@@ -1303,21 +1298,12 @@ begin
     FRepo := TNestRepository.Create(DMM.sqlCon);
     NewNest := TNest.Create;
     FRepo.Hydrate(DataSet, NewNest);
-    lstDiff := TStringList.Create;
     try
-      if NewNest.Diff(OldNest, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbNests, haEdited, OldNest.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbNests, OldNest, NewNest, EditSourceStr);
     finally
       FreeAndNil(NewNest);
       FreeAndNil(OldNest);
       FRepo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1325,8 +1311,16 @@ begin
 end;
 
 procedure TDMI.qNestsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TNestRepository;
 begin
-  OldNest := TNest.Create(DataSet.FieldByName('nest_id').AsInteger);
+  Repo := TNestRepository.Create(DMM.sqlCon);
+  try
+    OldNest := TNest.Create();
+    Repo.Hydrate(DataSet, OldNest);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMI.qNestsBeforePost(DataSet: TDataSet);
@@ -1542,8 +1536,6 @@ procedure TDMI.qSightingsAfterPost(DataSet: TDataSet);
 var
   Repo: TSightingRepository;
   NewSighting: TSighting;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSighting) then
@@ -1551,21 +1543,12 @@ begin
     Repo := TSightingRepository.Create(DMM.sqlCon);
     NewSighting := TSighting.Create;
     Repo.Hydrate(DataSet, NewSighting);
-    lstDiff := TStringList.Create;
     try
-      if NewSighting.Diff(OldSighting, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSightings, haEdited, OldSighting.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSightings, OldSighting, NewSighting, EditSourceStr);
     finally
       FreeAndNil(NewSighting);
       FreeAndNil(OldSighting);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1573,8 +1556,16 @@ begin
 end;
 
 procedure TDMI.qSightingsBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSightingRepository;
 begin
-  OldSighting := TSighting.Create(DataSet.FieldByName('sighting_id').AsInteger);
+  Repo := TSightingRepository.Create(DMM.sqlCon);
+  try
+    OldSighting := TSighting.Create();
+    Repo.Hydrate(DataSet, OldSighting);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMI.qSightingsBeforePost(DataSet: TDataSet);
@@ -1640,8 +1631,6 @@ procedure TDMI.qSpecimensAfterPost(DataSet: TDataSet);
 var
   Repo: TSpecimenRepository;
   NewSpecimen: TSpecimen;
-  lstDiff: TStrings;
-  D: String;
 begin
   { Save changes to the record history }
   if Assigned(OldSpecimen) then
@@ -1649,21 +1638,12 @@ begin
     Repo := TSpecimenRepository.Create(DMM.sqlCon);
     NewSpecimen := TSpecimen.Create;
     Repo.Hydrate(DataSet, NewSpecimen);
-    lstDiff := TStringList.Create;
     try
-      if NewSpecimen.Diff(OldSpecimen, lstDiff) then
-      begin
-        for D in lstDiff do
-          WriteRecHistory(tbSpecimens, haEdited, OldSpecimen.Id,
-            ExtractDelimited(1, D, [';']),
-            ExtractDelimited(2, D, [';']),
-            ExtractDelimited(3, D, [';']), EditSourceStr);
-      end;
+      WriteDiff(tbSpecimens, OldSpecimen, NewSpecimen, EditSourceStr);
     finally
       FreeAndNil(NewSpecimen);
       FreeAndNil(OldSpecimen);
       Repo.Free;
-      FreeAndNil(lstDiff);
     end;
   end
   else
@@ -1671,8 +1651,16 @@ begin
 end;
 
 procedure TDMI.qSpecimensBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TSpecimenRepository;
 begin
-  OldSpecimen := TSpecimen.Create(DataSet.FieldByName('specimen_id').AsInteger);
+  Repo := TSpecimenRepository.Create(DMM.sqlCon);
+  try
+    OldSpecimen := TSpecimen.Create();
+    Repo.Hydrate(DataSet, OldSpecimen);
+  finally
+    Repo.Free;
+  end;
 end;
 
 procedure TDMI.qSpecimensBeforePost(DataSet: TDataSet);

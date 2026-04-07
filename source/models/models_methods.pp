@@ -42,7 +42,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TMethod; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TMethod): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -124,11 +124,18 @@ begin
   Result := TMethod(inherited Clone);
 end;
 
-function TMethod.Diff(const aOld: TMethod; var Changes: TStrings): Boolean;
+function TMethod.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TMethod;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TMethod) then
+    Exit(False);
+
+  aOld := TMethod(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

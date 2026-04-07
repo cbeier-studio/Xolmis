@@ -323,10 +323,8 @@ end;
 
 procedure TDMM.qUsersAfterPost(DataSet: TDataSet);
 var
-  lstDiff: TStrings;
   Repo: TUserRepository;
   NewUser: TUser;
-  i: Integer;
 begin
   { Save changes to the record history }
   if Assigned(OldUser) then
@@ -334,22 +332,11 @@ begin
     Repo := TUserRepository.Create(DMM.sqlCon);
     NewUser := TUser.Create;
     Repo.Hydrate(DataSet, NewUser);
-    lstDiff := TStringList.Create;
     try
-      if NewUser.Diff(OldUser, lstDiff) then
-      begin
-        for i := 0 to lstDiff.Count - 1 do
-        begin
-          WriteRecHistory(tbUsers, haEdited, OldUser.Id,
-            ExtractDelimited(1, lstDiff[i], [';']),
-            ExtractDelimited(2, lstDiff[i], [';']),
-            ExtractDelimited(3, lstDiff[i], [';']), rsEditedByForm);
-        end;
-      end;
+      WriteDiff(tbUsers, OldUser, NewUser, rsEditedByForm);
     finally
       FreeAndNil(NewUser);
       FreeAndNil(OldUser);
-      FreeAndNil(lstDiff);
       Repo.Free;
     end;
   end

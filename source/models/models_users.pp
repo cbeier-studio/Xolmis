@@ -42,7 +42,7 @@ type
     function Clone: TXolmisRecord; reintroduce;
     function IsAdmin: Boolean;
     function IsVisitor: Boolean;
-    function Diff(const aOld: TUser; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TUser): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String; virtual;
@@ -122,11 +122,18 @@ begin
   Result := TUser(inherited Clone);
 end;
 
-function TUser.Diff(const aOld: TUser; var Changes: TStrings): Boolean;
+function TUser.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TUser;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TUser) then
+    Exit(False);
+
+  aOld := TUser(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;

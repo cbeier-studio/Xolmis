@@ -49,7 +49,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TProject; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TProject): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -101,7 +101,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TProjectMember; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TProjectMember): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -144,7 +144,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TProjectGoal; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TProjectGoal): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -190,7 +190,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TProjectActivity; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TProjectActivity): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -236,7 +236,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TProjectRubric; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TProjectRubric): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -280,7 +280,7 @@ type
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
-    function Diff(const aOld: TProjectExpense; var Changes: TStrings): Boolean; virtual;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TProjectExpense): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
     function ToJSON: String;
@@ -391,11 +391,18 @@ begin
   Result := TProject(inherited Clone);
 end;
 
-function TProject.Diff(const aOld: TProject; var Changes: TStrings): Boolean;
+function TProject.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TProject;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TProject) then
+    Exit(False);
+
+  aOld := TProject(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -922,11 +929,18 @@ begin
   Result := TProjectMember(inherited Clone);
 end;
 
-function TProjectMember.Diff(const aOld: TProjectMember; var Changes: TStrings): Boolean;
+function TProjectMember.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TProjectMember;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TProjectMember) then
+    Exit(False);
+
+  aOld := TProjectMember(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1327,11 +1341,18 @@ begin
   Result := TProjectGoal(inherited Clone);
 end;
 
-function TProjectGoal.Diff(const aOld: TProjectGoal; var Changes: TStrings): Boolean;
+function TProjectGoal.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TProjectGoal;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TProjectGoal) then
+    Exit(False);
+
+  aOld := TProjectGoal(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -1750,14 +1771,21 @@ begin
   Result := TProjectActivity(inherited Clone);
 end;
 
-function TProjectActivity.Diff(const aOld: TProjectActivity; var Changes: TStrings): Boolean;
+function TProjectActivity.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TProjectActivity;
   PropList: PPropList;
   PropCount, I: Integer;
   PropInfo: PPropInfo;
   OldValue, NewValue, FriendlyName: string;
 begin
   Result := False;
+
+  if not (OldRec is TProjectActivity) then
+    Exit(False);
+
+  aOld := TProjectActivity(OldRec);
+
   if Assigned(Changes) then
     Changes.Clear;
   if aOld = nil then
@@ -2260,11 +2288,18 @@ begin
   Result := TProjectRubric(inherited Clone);
 end;
 
-function TProjectRubric.Diff(const aOld: TProjectRubric; var Changes: TStrings): Boolean;
+function TProjectRubric.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TProjectRubric;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TProjectRubric) then
+    Exit(False);
+
+  aOld := TProjectRubric(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
@@ -2683,11 +2718,18 @@ begin
   Result := TProjectExpense(inherited Clone);
 end;
 
-function TProjectExpense.Diff(const aOld: TProjectExpense; var Changes: TStrings): Boolean;
+function TProjectExpense.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
+  aOld: TProjectExpense;
   R: String;
 begin
   Result := False;
+
+  if not (OldRec is TProjectExpense) then
+    Exit(False);
+
+  aOld := TProjectExpense(OldRec);
+
   R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
