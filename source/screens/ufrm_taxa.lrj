@@ -39,6 +39,8 @@
 {"hash":48,"name":"tfrmtaxa.txtnestproductivity.caption","sourcebytes":[48],"value":"0"},
 {"hash":230456041,"name":"tfrmtaxa.lblmeannestproductivity.caption","sourcebytes":[109,101,97,110,32,110,101,115,116,32,112,114,111,100,117,99,116,105,118,105,116,121],"value":"mean nest productivity"},
 {"hash":73584121,"name":"tfrmtaxa.lblemptyquery.caption","sourcebytes":[82,101,115,117,108,116,32,113,117,101,114,121,32,105,115,32,101,109,112,116,121],"value":"Result query is empty"},
+{"hash":149793139,"name":"tfrmtaxa.sbemptyclearall.caption","sourcebytes":[67,108,101,97,114,32,97,108,108,32,102,105,108,116,101,114,115],"value":"Clear all filters"},
+{"hash":127328680,"name":"tfrmtaxa.sbemptygotosearch.caption","sourcebytes":[71,111,32,116,111,32,116,104,101,32,115,101,97,114,99,104,32,98,111,120],"value":"Go to the search box"},
 {"hash":370913,"name":"tfrmtaxa.pmprinttaxa.caption","sourcebytes":[84,97,120,97],"value":"Taxa"},
 {"hash":228404697,"name":"tfrmtaxa.pmprinttaxahierarchical.caption","sourcebytes":[84,97,120,97,32,40,104,105,101,114,97,114,99,104,105,99,97,108,41],"value":"Taxa (hierarchical)"},
 {"hash":19447140,"name":"tfrmtaxa.pmprinttaxarecorded.caption","sourcebytes":[84,97,120,97,32,114,101,99,111,114,100,101,100],"value":"Taxa recorded"},

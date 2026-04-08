@@ -228,6 +228,7 @@ type
     FShowSynonyms: Boolean;
     FRememberCollectionInfo, FAutoFillCoordinates: Boolean;
     FLastLocalityId, FLastObserverId, FLastMethodId: Integer;
+    FDefaultBandSupplier: Integer;
     { Media }
     FImagesFolder, FAudiosFolder, FVideosFolder, FDocumentsFolder: String;
     FOpenAfterExport: Boolean;
@@ -299,6 +300,7 @@ type
     property LastLocalityId: Integer read FLastLocalityId write FLastLocalityId;
     property LastObserverId: Integer read FLastObserverId write FLastObserverId;
     property LastMethodId: Integer read FLastMethodId write FLastMethodId;
+    property DefaultBandSupplier: Integer read FDefaultBandSupplier write FDefaultBandSupplier;
     { Media }
     property ImagesFolder: String read FImagesFolder write SetImagesFolder;
     property AudiosFolder: String read FAudiosFolder write SetAudiosFolder;
@@ -1034,6 +1036,7 @@ begin
   FLastLocalityId := FConfig.GetValue('/COLLECTION/LastLocalityId', 0);
   FLastObserverId := FConfig.GetValue('/COLLECTION/LastObserverId', 0);
   FLastMethodId := FConfig.GetValue('/COLLECTION/LastMethodId', 0);
+  FDefaultBandSupplier := FConfig.GetValue('/COLLECTION/DefaultBandSupplier', 0);
   { Media }
   FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
   FAudiosFolder := FConfig.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
@@ -1120,6 +1123,7 @@ begin
   FConfig.SetValue('/COLLECTION/LastLocalityId', FLastLocalityId);
   FConfig.SetValue('/COLLECTION/LastObserverId', FLastObserverId);
   FConfig.SetValue('/COLLECTION/LastMethodId', FLastMethodId);
+  FConfig.SetValue('/COLLECTION/DefaultBandSupplier', FDefaultBandSupplier);
   { Media }
   FConfig.SetValue('/MEDIA/ImagesFolder', FImagesFolder);
   FConfig.SetValue('/MEDIA/AudiosFolder', FAudiosFolder);

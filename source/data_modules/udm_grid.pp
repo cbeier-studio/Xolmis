@@ -1553,7 +1553,7 @@ end;
 procedure TDMG.qBandsAfterInsert(DataSet: TDataSet);
 begin
   DataSet.FieldByName('band_type').AsString := 'A';
-  DataSet.FieldByName('supplier_id').AsInteger := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
+  DataSet.FieldByName('supplier_id').AsInteger := xSettings.DefaultBandSupplier;
   DataSet.FieldByName('band_status').AsString := 'D';
   DataSet.FieldByName('band_source').AsString := 'A';
   DataSet.FieldByName('band_reported').AsBoolean := False;

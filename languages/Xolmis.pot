@@ -3326,12 +3326,21 @@ msgctxt "tcfgdelimiters.sbok.caption"
 msgid "Apply"
 msgstr ""
 
+#: tcfgoptions.btnclearbandsupplier.caption
+msgctxt "tcfgoptions.btnclearbandsupplier.caption"
+msgid "Clear"
+msgstr ""
+
 #: tcfgoptions.btndefaultrowheight.caption
 msgid "Set default"
 msgstr ""
 
 #: tcfgoptions.caption
 msgid "Settings"
+msgstr ""
+
+#: tcfgoptions.ebandsupplier.buttonhint
+msgid "Find band supplier"
 msgstr ""
 
 #: tcfgoptions.lblallowusagedata.caption
@@ -3360,6 +3369,14 @@ msgstr ""
 
 #: tcfgoptions.lblbackuppath.caption
 msgid "Backup files folder"
+msgstr ""
+
+#: tcfgoptions.lblbandsupplier.caption
+msgid "Default band supplier"
+msgstr ""
+
+#: tcfgoptions.lblbandsupplierinfo.caption
+msgid "When importing data, if a band (ring) does not exist in the database, Xolmis will try to create it using the default band supplier. In Brazil, the CEMAVE is the band supplier."
 msgstr ""
 
 #: tcfgoptions.lblcheckupdates.caption
@@ -13334,6 +13351,15 @@ msgstr ""
 
 #: tfrmtaxa.sbebird.hint
 msgid "eBird"
+msgstr ""
+
+#: tfrmtaxa.sbemptyclearall.caption
+msgctxt "tfrmtaxa.sbemptyclearall.caption"
+msgid "Clear all filters"
+msgstr ""
+
+#: tfrmtaxa.sbemptygotosearch.caption
+msgid "Go to the search box"
 msgstr ""
 
 #: tfrmtaxa.sbgbif.hint

@@ -898,6 +898,7 @@ object edtIndividual: TedtIndividual
         ClientWidth = 411
         ParentBackground = False
         TabOrder = 2
+        Visible = False
         object lblDoubleBand: TLabel
           Left = 16
           Height = 15

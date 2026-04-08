@@ -269,7 +269,9 @@ begin
       dlgProgress.Position := 0;
       dlgProgress.Max := CSV.RecordCount;
     end;
-    DMM.sqlTrans.StartTransaction;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
     try
       CSV.First;
       repeat
@@ -320,7 +322,7 @@ begin
 
             // Get net station and locality
             SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
-            if NetStation.Id > 0 then
+            if not NetStation.IsNew then
             begin
               SiteRepo.GetById(NetStation.LocalityId, Toponimo);
             end;
@@ -332,7 +334,7 @@ begin
             if (Reg.NetSiteName <> EmptyStr) then
             begin
               NetRepo.FindBySurvey(Survey.Id, Reg.NetSiteName, NetSite);
-              if (NetSite.Id > 0) then
+              if not (NetSite.IsNew) then
               begin
                 NetLat := NetSite.Latitude;
                 NetLong := NetSite.Longitude;
@@ -343,13 +345,13 @@ begin
             if (Reg.BandNumber > 0) then
             begin
               BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber, Band);
-              if (Band = nil) then
+              if (Band.IsNew) then
               begin
                 // If does not exist, insert the new band
                 Band.Size := Reg.BandSize;
                 Band.Number := Reg.BandNumber;
                 Band.Status := bstAvailable;
-                Band.SupplierId := GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, 'CEMAVE');
+                Band.SupplierId := xSettings.DefaultBandSupplier;
                 Band.BandType := mkButtEndBand;
                 Band.UserInserted := ActiveUser.Id;
 
@@ -365,14 +367,13 @@ begin
               begin
                 BandRepo.FindByNumber(ExtractWord(1, Reg.RemovedBand, [' ']),
                   StrToInt(ExtractWord(2, Reg.RemovedBand, [' '])), RemovedBand);
-                if (RemovedBand = nil) then
+                if (RemovedBand.IsNew) then
                 begin
                   // If does not exist, insert the removed band
                   RemovedBand.Size := ExtractWord(1, Reg.RemovedBand, [' ']);
                   RemovedBand.Number := StrToInt(ExtractWord(2, Reg.RemovedBand, [' ']));
                   RemovedBand.Status := bstAvailable;
-                  RemovedBand.SupplierId :=
-                    GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, 'CEMAVE');
+                  RemovedBand.SupplierId := xSettings.DefaultBandSupplier;
                   RemovedBand.BandType := mkButtEndBand;
                   RemovedBand.UserInserted := ActiveUser.Id;
 
@@ -389,7 +390,7 @@ begin
               CodAnilha := Band.Id;
 
             IndividualRepo.FindByBand(Taxon.Id, CodAnilha, Reg.RightLeg, Reg.LeftLeg, Individuo);
-            if (Individuo.Id = 0) then
+            if (Individuo.IsNew) then
             begin
               // If does not exist, insert the individual
               Individuo.TaxonId := Taxon.Id;
@@ -408,7 +409,7 @@ begin
 
             // Check if the capture record exists
             CaptureRepo.FindByBand(Taxon.Id, CodAnilha, Reg.CaptureType, strDate, strTime, Captura);
-            if (Captura.Id = 0) then
+            if (Captura.IsNew) then
             begin
               // If does not exist, insert the record
               Captura.SurveyId := Survey.Id;
@@ -576,13 +577,13 @@ begin
             if (Reg.BandNumber > 0) then
             begin
               BandRepo.FindByNumber(Reg.BandSize, Reg.BandNumber, Band);
-              if (Band = nil) then
+              if (Band.IsNew) then
               begin
                 // If does not exist, insert the new band
                 Band.Size := Reg.BandSize;
                 Band.Number := Reg.BandNumber;
                 Band.Status := bstAvailable;
-                Band.SupplierId := GetKey('institutions', COL_INSTITUTION_ID, COL_ABBREVIATION, 'CEMAVE');
+                Band.SupplierId := xSettings.DefaultBandSupplier;
                 Band.BandType := mkButtEndBand;
                 Band.UserInserted := ActiveUser.Id;
 
@@ -754,7 +755,7 @@ begin
   LogEvent(leaStart, Format('Import banding journal: %s', [aCSVFile]));
   stopProcess := False;
 
-  // inicializa progress bar ou diálogo
+  // initialize progress bar or dialog
   if not Assigned(aProgressBar) then
   begin
     dlgProgress := TdlgProgress.Create(nil);
@@ -769,7 +770,7 @@ begin
   CSV := TSdfDataSet.Create(nil);
 
   try
-    // Configuração do CSV
+    // CSV settings
     CSV.Delimiter := ';';
     CSV.FirstLineAsSchema := True;
     CSV.CodePage := 'Windows-1252';
@@ -798,9 +799,9 @@ begin
             SiteRepo.GetById(NetStation.LocalityId, Toponimo);
 
           SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id, Survey);
-          if Survey.Id = 0 then
+          if Survey.IsNew then
           begin
-            // preencher Survey
+            // fill Survey data
             Survey.SurveyDate := Reg.SamplingDate;
             Survey.StartTime := Reg.StartTime;
             Survey.EndTime := Reg.EndTime;
@@ -814,12 +815,12 @@ begin
             SurveyRepo.Insert(Survey);
             LogInfo(Format('Survey record inserted with ID=%d', [Survey.Id]));
 
-            if Survey.IsNew then
+            if not Survey.IsNew then
             begin
               WriteRecHistory(tbSurveys, haCreated, Survey.Id, '', '', '', rsInsertedByImport);
               InsertSurveyTeam(Reg.Team, Survey.Id);
 
-              // inserir condições climáticas
+              // insert weather logs
               InsertWeatherLog(Reg.Weather1, Survey.Id, Reg.SamplingDate);
               InsertWeatherLog(Reg.Weather2, Survey.Id, Reg.SamplingDate);
               InsertWeatherLog(Reg.Weather3, Survey.Id, Reg.SamplingDate);
@@ -962,11 +963,11 @@ begin
 
           // Check if the survey exists
           SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id, Survey);
-          if (Survey.Id > 0) then
+          if not (Survey.IsNew) then
           begin
             // Check if the net site exists
             NetRepo.FindBySurvey(Survey.Id, IntToStr(Reg.NetNumber), NetSite);
-            if (NetSite.Id = 0) then
+            if (NetSite.IsNew) then
             begin
               // Insert the net effort
               NetSite.SurveyId := Survey.Id;

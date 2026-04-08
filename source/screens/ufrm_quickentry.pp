@@ -307,7 +307,7 @@ begin
   begin
     if (FTableType = tbIndividuals) and (FColField.Name = 'band') then
     begin
-      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue + ' CEMAVE');
+      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue);
       if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
       begin
         Result := Format(rsActiveRecordDuplicated, [FColField.DisplayName, FCellValue]);
@@ -2405,7 +2405,7 @@ begin
   begin
     if (FTableType = tbIndividuals) and (FColField.Name = 'band') then
     begin
-      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue + ' CEMAVE');
+      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue);
       if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
       begin
         Result := False;
@@ -2524,7 +2524,7 @@ begin
     begin
       if (FTableType = tbIndividuals) and (FColField.Name = 'band') then
       begin
-        cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue + ' CEMAVE');
+        cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue);
         if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
         begin
           Result := False;

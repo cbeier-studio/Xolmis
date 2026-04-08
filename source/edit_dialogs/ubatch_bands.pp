@@ -115,7 +115,8 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs,
   utils_conversions, utils_fullnames, utils_validations,
-  data_types, data_getvalue, data_columns, models_record_types, models_bands,
+  data_types, data_getvalue, data_columns, data_consts,
+  models_record_types, models_bands,
   udm_main, udm_grid, udlg_progress, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
@@ -544,9 +545,9 @@ begin
     ApplyDarkMode;
 
   { Load default values }
-  // Supplier initial value: CEMAVE
-  FSupplierId := GetKey('institutions', 'institution_id', 'acronym', 'CEMAVE');
-  eSupplier.Text := 'CEMAVE';
+  // Supplier initial value
+  FSupplierId := xSettings.DefaultBandSupplier;
+  eSupplier.Text := GetName(TBL_INSTITUTIONS, COL_ABBREVIATION, COL_INSTITUTION_ID, FSupplierId);
   // Type initial value: Butt-end
   cbBandType.Items.CommaText := rsBandTypeList;
   cbBandType.ItemIndex := 0;

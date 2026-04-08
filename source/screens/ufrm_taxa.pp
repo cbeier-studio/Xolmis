@@ -16,6 +16,10 @@ type
   { TfrmTaxa }
 
   TfrmTaxa = class(TForm)
+    lblEmptyQuery: TLabel;
+    pEmptyQueryOptions: TBCPanel;
+    sbEmptyClearAll: TSpeedButton;
+    sbEmptyGotoSearch: TSpeedButton;
     txtNestProductivity: TLabel;
     lblMeanNestProductivity: TLabel;
     pNestProductivity: TBCPanel;
@@ -33,14 +37,12 @@ type
     dsSynonyms: TDataSource;
     dsChilds: TDataSource;
     eSearch: TEdit;
-    imgEmptyQuery: TImage;
     lblLinkCaptures: TLabel;
     lblLinkEggs: TLabel;
     lblLinkNests: TLabel;
     lblLinkSpecimens: TLabel;
     lblLinkSightings: TLabel;
     lblLinkIndividuals: TLabel;
-    lblEmptyQuery: TLabel;
     mapView: TMapView;
     MvBGRA: TMvBGRADrawingEngine;
     pEmptyQuery: TPanel;
@@ -133,6 +135,8 @@ type
     procedure sbBirdsOfTheWorldClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbEbirdClick(Sender: TObject);
+    procedure sbEmptyClearAllClick(Sender: TObject);
+    procedure sbEmptyGotoSearchClick(Sender: TObject);
     procedure sbGBIFClick(Sender: TObject);
     procedure sbGoogleImagesClick(Sender: TObject);
     procedure sbGoogleScholarClick(Sender: TObject);
@@ -193,7 +197,12 @@ uses
 procedure TfrmTaxa.ApplyDarkMode;
 begin
   pEmptyQuery.Color := Color;
-  imgEmptyQuery.Images := iButtonsDark;
+  sbEmptyGotoSearch.Images := iButtonsDark;
+  sbEmptyClearAll.Images := iButtonsDark;
+
+  pEmptyQueryOptions.Background.Color := clSolidBGSecondaryDark;
+  pEmptyQueryOptions.Border.Color := clSystemSolidNeutralFGDark;
+  pEmptyQueryOptions.Color := pEmptyQuery.Color;
 
   pSearch.Background.Color := clCardBGDefaultDark;
   pSearch.Border.Color := clSolidBGSecondaryDark;
@@ -274,6 +283,7 @@ begin
   TimerFind.Enabled := True;
 
   sbClearSearch.Visible := Length(eSearch.Text) > 0;
+  sbEmptyClearAll.Visible := sbClearSearch.Visible;
 end;
 
 procedure TfrmTaxa.eSearchEnter(Sender: TObject);
@@ -1155,6 +1165,18 @@ var
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
   OpenUrl('https://ebird.org/species/' + FUrlSearch);
+end;
+
+procedure TfrmTaxa.sbEmptyClearAllClick(Sender: TObject);
+begin
+  if sbClearSearch.Visible then
+    sbClearSearchClick(nil);
+end;
+
+procedure TfrmTaxa.sbEmptyGotoSearchClick(Sender: TObject);
+begin
+  if eSearch.CanSetFocus then
+    eSearch.SetFocus;
 end;
 
 procedure TfrmTaxa.sbGBIFClick(Sender: TObject);

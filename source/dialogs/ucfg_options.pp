@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls, lclintf,
-  ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider;
+  ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider, Character;
 
 type
 
@@ -30,15 +30,20 @@ type
 
   TcfgOptions = class(TForm)
     btnHelp: TSpeedButton;
+    btnClearBandSupplier: TButton;
+    eBandSupplier: TEditButton;
     eVideosPath: TDirectoryEdit;
     icoAutoSizeColumns: TImage;
     icoAutoFillCoordinates: TImage;
     icoRememberCollectionInfo: TImage;
+    icoBandSupplier: TImage;
     icoWriteDetailedLogs: TImage;
     icoVideosPath: TImage;
     lblAutoSizeColumns: TLabel;
     lblAutoFillCoordinates: TLabel;
+    lblBandSupplierInfo: TLabel;
     lblRememberCollectionInfo: TLabel;
+    lblBandSupplier: TLabel;
     lblWriteDetailedLogs: TLabel;
     lblTitleAppearance: TLabel;
     lblTitleBackup: TLabel;
@@ -50,6 +55,7 @@ type
     pAutoSizeColumns: TBCPanel;
     pAutoFillCoordinates: TBCPanel;
     pRememberCollectionInfo: TBCPanel;
+    pBandSupplier: TBCPanel;
     pWriteDetailedLogs: TBCPanel;
     pVideosPath: TBCPanel;
     sliderRowHeight: TBCFluentSlider;
@@ -178,6 +184,7 @@ type
     tsEnterAsTab: TToggleSwitch;
     tsConfirmCancel: TToggleSwitch;
     tvMenu: TTreeView;
+    procedure btnClearBandSupplierClick(Sender: TObject);
     procedure btnDefaultRowHeightClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
     procedure cbCheckUpdatesChange(Sender: TObject);
@@ -189,6 +196,8 @@ type
     procedure eAttachmentsPathChange(Sender: TObject);
     procedure eAudiosPathChange(Sender: TObject);
     procedure eBackupPathChange(Sender: TObject);
+    procedure eBandSupplierButtonClick(Sender: TObject);
+    procedure eBandSupplierKeyPress(Sender: TObject; var Key: char);
     procedure eImagesPathChange(Sender: TObject);
     procedure eVideosPathChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -228,6 +237,8 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_backup, utils_autoupdate, utils_system, utils_themes,
+  utils_finddialogs,
+  data_getvalue, data_types, data_consts,
   models_users, udm_main,
   uDarkStyleParams;
 
@@ -251,6 +262,7 @@ begin
   icoVernacularNames.Images := iIconsDark;
   //icoMainTaxonomy.Images := iIconsDark;
   icoShowSynonyms.Images := iIconsDark;
+  icoBandSupplier.Images := iIconsDark;
   icoRememberCollectionInfo.Images := iIconsDark;
   icoAutoFillCoordinates.Images := iIconsDark;
   icoImagesPath.Images := iIconsDark;
@@ -293,6 +305,8 @@ begin
   //pMainTaxonomy.Border.Color := clSystemSolidNeutralFGDark;
   pShowSynonyms.Background.Color := clSolidBGSecondaryDark;
   pShowSynonyms.Border.Color := clSystemSolidNeutralFGDark;
+  pBandSupplier.Background.Color := clSolidBGSecondaryDark;
+  pBandSupplier.Border.Color := clSystemSolidNeutralFGDark;
   pRememberCollectionInfo.Background.Color := clSolidBGSecondaryDark;
   pRememberCollectionInfo.Border.Color := clSystemSolidNeutralFGDark;
   pAutoFillCoordinates.Background.Color := clSolidBGSecondaryDark;
@@ -348,11 +362,18 @@ begin
   tsWriteDetailedLogs.Color := pConfirmCancel.Background.Color;
   tsAllowUsageData.Color := pConfirmCancel.Background.Color;
 
+  eBandSupplier.Images := DMM.iEditsDark;
   eImagesPath.Images := DMM.iEditsDark;
   eAudiosPath.Images := DMM.iEditsDark;
   eVideosPath.Images := DMM.iEditsDark;
   eAttachmentsPath.Images := DMM.iEditsDark;
   eBackupPath.Images := DMM.iEditsDark;
+end;
+
+procedure TcfgOptions.btnClearBandSupplierClick(Sender: TObject);
+begin
+  xSettings.DefaultBandSupplier := 0;
+  eBandSupplier.Clear;
 end;
 
 procedure TcfgOptions.btnDefaultRowHeightClick(Sender: TObject);
@@ -412,6 +433,47 @@ end;
 procedure TcfgOptions.eBackupPathChange(Sender: TObject);
 begin
   xSettings.BackupFolder := eBackupPath.Text;
+end;
+
+procedure TcfgOptions.eBandSupplierButtonClick(Sender: TObject);
+var
+  FSupplierId: Integer;
+begin
+  FSupplierId := xSettings.DefaultBandSupplier;
+  FindDlg(tbInstitutions, eBandSupplier, FSupplierId, '', COL_ABBREVIATION);
+  xSettings.DefaultBandSupplier := FSupplierId;
+end;
+
+procedure TcfgOptions.eBandSupplierKeyPress(Sender: TObject; var Key: char);
+var
+  FSupplierId: Integer;
+begin
+  //FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FSupplierId := xSettings.DefaultBandSupplier;
+    FindDlg(tbInstitutions, eBandSupplier, FSupplierId, Key, COL_ABBREVIATION);
+    xSettings.DefaultBandSupplier := FSupplierId;
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    xSettings.DefaultBandSupplier := 0;
+    eBandSupplier.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> key }
+  //if (Key = #13) and (xSettings.UseEnterAsTab) then
+  //begin
+  //  if (Sender is TEditButton) then
+  //    Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+  //  else
+  //    SelectNext(Sender as TWinControl, True, True);
+  //  Key := #0;
+  //end;
 end;
 
 procedure TcfgOptions.eImagesPathChange(Sender: TObject);
@@ -515,6 +577,10 @@ begin
   cbVernacularNames.ItemIndex := xSettings.VernacularNamesLanguage;
   //cbMainTaxonomy.ItemIndex := xSettings.Taxonomy;
   tsShowSynonyms.Checked := xSettings.ShowSynonyms;
+  if xSettings.DefaultBandSupplier > 0 then
+    eBandSupplier.Text := GetName(TBL_INSTITUTIONS, COL_ABBREVIATION, COL_INSTITUTION_ID, xSettings.DefaultBandSupplier);
+  tsRememberCollectionInfo.Checked := xSettings.RememberCollectionInfo;
+  tsAutoFillCoordinates.Checked := xSettings.AutoFillCoordinates;
 
   { MEDIA }
   eImagesPath.Text := xSettings.ImagesFolder;

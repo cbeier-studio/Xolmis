@@ -535,6 +535,11 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionIndividual)]);
     GetRecord;
+    // Disable read-only fields
+    eBand.Enabled := False;
+    eBandingDate.Enabled := False;
+    eRemovedBand.Enabled := False;
+    eBandChangeDate.Enabled := False;
   end;
 end;
 

@@ -3303,6 +3303,11 @@ msgctxt "tcfgdelimiters.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
 
+#: tcfgoptions.btnclearbandsupplier.caption
+msgctxt "tcfgoptions.btnclearbandsupplier.caption"
+msgid "Clear"
+msgstr "Limpar"
+
 #: tcfgoptions.btndefaultrowheight.caption
 msgid "Set default"
 msgstr "Usar padrão"
@@ -3310,6 +3315,10 @@ msgstr "Usar padrão"
 #: tcfgoptions.caption
 msgid "Settings"
 msgstr "Opções"
+
+#: tcfgoptions.ebandsupplier.buttonhint
+msgid "Find band supplier"
+msgstr "Buscar fornecedor de anilhas"
 
 #: tcfgoptions.lblallowusagedata.caption
 msgid "Allow Xolmis to collect anonymous usage data"
@@ -3338,6 +3347,14 @@ msgstr "Ajustar largura das colunas ao conteúdo automaticamente"
 #: tcfgoptions.lblbackuppath.caption
 msgid "Backup files folder"
 msgstr "Pasta dos arquivos de backup"
+
+#: tcfgoptions.lblbandsupplier.caption
+msgid "Default band supplier"
+msgstr "Fornecedor de anilhas padrão"
+
+#: tcfgoptions.lblbandsupplierinfo.caption
+msgid "When importing data, if a band (ring) does not exist in the database, Xolmis will try to create it using the default band supplier. In Brazil, the CEMAVE is the band supplier."
+msgstr "Ao importar dados, se a anilha não existir no banco de dados, o Xolmis tentará criá-la usando o fornecedor de anilhas padrão. No Brasil, o CEMAVE é o fornecedor de anilhas."
 
 #: tcfgoptions.lblcheckupdates.caption
 msgid "Check for Xolmis updates"
@@ -13316,6 +13333,15 @@ msgstr "Limpar busca"
 #: tfrmtaxa.sbebird.hint
 msgid "eBird"
 msgstr "eBird"
+
+#: tfrmtaxa.sbemptyclearall.caption
+msgctxt "tfrmtaxa.sbemptyclearall.caption"
+msgid "Clear all filters"
+msgstr "Limpar todos os filtros"
+
+#: tfrmtaxa.sbemptygotosearch.caption
+msgid "Go to the search box"
+msgstr "Ir para o campo de busca"
 
 #: tfrmtaxa.sbgbif.hint
 msgid "GBIF"
