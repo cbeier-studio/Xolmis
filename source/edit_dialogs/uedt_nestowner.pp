@@ -80,7 +80,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs, utils_conversions,
   data_types, data_getvalue, data_consts, data_columns, models_record_types, models_taxonomy,
   udm_breeding, udm_main, udm_grid, uDarkStyleParams;
 
@@ -253,13 +253,7 @@ end;
 procedure TedtNestOwner.SetRecord;
 begin
   FNestOwner.NestId := FNestId;
-  case cbRole.ItemIndex of
-    0: FNestOwner.Role := nrlMale;
-    1: FNestOwner.Role := nrlFemale;
-    2: FNestOwner.Role := nrlHelper;
-    3: FNestOwner.Role := nrlOffspring;
-    4: FNestOwner.Role := nrlUnknown;
-  end;
+  FNestOwner.Role := StrToNestRole(cbRole.Text);
   FNestOwner.IndividualId := FIndividualId;
 end;
 

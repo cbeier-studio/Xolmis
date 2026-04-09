@@ -95,7 +95,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs, utils_conversions,
   data_types, data_getvalue, data_consts, data_columns,
   udm_main, udm_grid,
   uDarkStyleParams;
@@ -336,30 +336,7 @@ begin
     FSamplePrep.AccessionSeq := StrToInt(eAccessionSeq.Text)
   else
     FSamplePrep.AccessionSeq := 0;
-  case cbSampleType.ItemIndex of
-    0: FSamplePrep.AccessionType := 'NS';
-    1: FSamplePrep.AccessionType := 'SS';
-    2: FSamplePrep.AccessionType := 'MS';
-    3: FSamplePrep.AccessionType := 'OW';
-    4: FSamplePrep.AccessionType := 'WS';
-    5: FSamplePrep.AccessionType := 'PS';
-    6: FSamplePrep.AccessionType := 'N';
-    7: FSamplePrep.AccessionType := 'EGG';
-    8: FSamplePrep.AccessionType := 'P';
-    9: FSamplePrep.AccessionType := 'F';
-   10: FSamplePrep.AccessionType := 'BD';
-   11: FSamplePrep.AccessionType := 'BL';
-   12: FSamplePrep.AccessionType := 'BS';
-   13: FSamplePrep.AccessionType := 'SX';
-   14: FSamplePrep.AccessionType := 'GS';
-   15: FSamplePrep.AccessionType := 'MC';
-   16: FSamplePrep.AccessionType := 'TS';
-   17: FSamplePrep.AccessionType := 'EYE';
-   18: FSamplePrep.AccessionType := 'T';
-   19: FSamplePrep.AccessionType := 'S';
-   20: FSamplePrep.AccessionType := 'G';
-   21: FSamplePrep.AccessionType := 'M';
-  end;
+  FSamplePrep.AccessionType := StrToAccessionType(cbSampleType.Text);
   if (ePreparationDate.Text <> EmptyStr) then
     FSamplePrep.PreparationDate := StrToDate(ePreparationDate.Text);
   FSamplePrep.PreparerId := FPreparerId;

@@ -104,7 +104,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_validations,
+  utils_locale, utils_global, utils_dialogs, utils_validations, utils_conversions,
   data_columns, data_consts, models_record_types,
   udm_main, uDarkStyleParams;
 
@@ -265,24 +265,10 @@ begin
   FWeather.SurveyId := FSurveyId;
   FWeather.SampleDate := StrToDate(eSampleDate.Text);
   FWeather.SampleTime := StrToTime(eSampleTime.Text);
-  case cbSampleMoment.ItemIndex of
-    0: FWeather.SampleMoment := wmStart;
-    1: FWeather.SampleMoment := wmMiddle;
-    2: FWeather.SampleMoment := wmEnd;
-  else
-    FWeather.SampleMoment := wmNone;
-  end;
+  FWeather.SampleMoment := StrToSampleMoment(cbSampleMoment.Text);
   FWeather.CloudCover  := eCloudCover.Value;
   FWeather.Temperature := eTemperature.Value;
-  case cbPrecipitation.ItemIndex of
-    0: FWeather.Precipitation := wpNone;
-    1: FWeather.Precipitation := wpFog;
-    2: FWeather.Precipitation := wpMist;
-    3: FWeather.Precipitation := wpDrizzle;
-    4: FWeather.Precipitation := wpRain;
-  else
-    FWeather.Precipitation := wpEmpty;
-  end;
+  FWeather.Precipitation := StrToPrecipitation(cbPrecipitation.Text);
   FWeather.Rainfall            := eRainfall.Value;
   FWeather.WindSpeedBft        := eWindSpeedBft.Value;
   FWeather.WindSpeedKmH        := eWindSpeedKmh.Value;

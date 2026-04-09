@@ -512,41 +512,17 @@ begin
   FFeather.SampleDate := TextToDate(eDate.Text);
   if eTime.Text <> EmptyStr then
     FFeather.SampleTime := TextToTime(eTime.Text);
-  FFeather.TaxonId      := FTaxonId;
-  FFeather.LocalityId   := FLocalityId;
-  FFeather.ObserverId   := FObserverId;
-  FFeather.IndividualId := FIndividualId;
-  FFeather.CaptureId    := FCaptureId;
-  FFeather.SightingId   := FSightingId;
-  case cbSource.ItemIndex of
-    0: FFeather.SourceType := fdsUnknown;
-    1: FFeather.SourceType := fdsCapture;
-    2: FFeather.SourceType := fdsSighting;
-    3: FFeather.SourceType := fdsPhoto;
-  end;
-  case cbSymmetry.ItemIndex of
-    0: FFeather.Symmetrical := symUnknown;
-    1: FFeather.Symmetrical := symSymmetrical;
-    2: FFeather.Symmetrical := symAsymmetrical;
-  end;
-  case cbFeatherTrait.ItemIndex of
-    0: FFeather.FeatherTrait := ftrBody;
-    1: FFeather.FeatherTrait := ftrPrimary;
-    2: FFeather.FeatherTrait := ftrSecondary;
-    3: FFeather.FeatherTrait := ftrRectrix;
-    4: FFeather.FeatherTrait := ftrPrimaryCovert;
-    5: FFeather.FeatherTrait := ftrGreatCovert;
-    6: FFeather.FeatherTrait := ftrMedianCovert;
-    7: FFeather.FeatherTrait := ftrLesserCovert;
-    8: FFeather.FeatherTrait := ftrCarpalCovert;
-    9: FFeather.FeatherTrait := ftrAlula;
-  end;
-  FFeather.FeatherNumber := eFeatherNumber.Value;
-  case cbBodySide.ItemIndex of
-    0: FFeather.BodySide := bsdNotApplicable;
-    1: FFeather.BodySide := bsdRight;
-    2: FFeather.BodySide := bsdLeft;
-  end;
+  FFeather.TaxonId        := FTaxonId;
+  FFeather.LocalityId     := FLocalityId;
+  FFeather.ObserverId     := FObserverId;
+  FFeather.IndividualId   := FIndividualId;
+  FFeather.CaptureId      := FCaptureId;
+  FFeather.SightingId     := FSightingId;
+  FFeather.SourceType     := StrToFeatherSource(cbSource.Text);
+  FFeather.Symmetrical    := StrToSymmetry(cbSymmetry.Text);
+  FFeather.FeatherTrait   := StrToFeatherTrait(cbFeatherTrait.Text);
+  FFeather.FeatherNumber  := eFeatherNumber.Value;
+  FFeather.BodySide       := StrToBodySide(cbBodySide.Text);
   FFeather.PercentGrown   := ePercentGrown.Value;
   FFeather.FeatherLength  := eLength.Value;
   FFeather.FeatherArea    := eArea.Value;
@@ -554,17 +530,7 @@ begin
   FFeather.RachisWidth    := eRachisWidth.Value;
   FFeather.GrowthBarWidth := eGrowthBarWidth.Value;
   FFeather.BarbDensity    := eBarbDensity.Value;
-  case cbFeatherAge.ItemIndex of
-    0: FFeather.FeatherAge := fageUnknown;
-    1: FFeather.FeatherAge := fageNestling;
-    2: FFeather.FeatherAge := fageFledgling;
-    3: FFeather.FeatherAge := fageAdult;
-    4: FFeather.FeatherAge := fageFirstYear;
-    5: FFeather.FeatherAge := fageSecondYear;
-    6: FFeather.FeatherAge := fageThirdYear;
-    7: FFeather.FeatherAge := fageFourthYear;
-    8: FFeather.FeatherAge := fageFifthYear;
-  end;
+  FFeather.FeatherAge     := StrToFeatherAge(cbFeatherAge.Text);
 end;
 
 function TedtFeather.ValidateFields: Boolean;

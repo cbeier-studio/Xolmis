@@ -195,8 +195,10 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, data_columns, data_consts, utils_fullnames,
-  data_setparam, data_getvalue, udm_main;
+  utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
+  data_columns, data_consts, data_setparam, data_getvalue,
+  models_users,
+  udm_main;
 
 { TSamplePrep }
 
@@ -866,24 +868,8 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFieldNumber := Obj.Get('field_number', '');
-    case Obj.Get('sample_type', '') of
-     'WS': FSampleType := sptWholeCarcass;
-     'PS': FSampleType := sptPartialCarcass;
-      'N': FSampleType := sptNest;
-      'B': FSampleType := sptBones;
-      'E': FSampleType := sptEgg;
-      'P': FSampleType := sptParasites;
-      'F': FSampleType := sptFeathers;
-     'BS': FSampleType := sptBlood;
-      'C': FSampleType := sptClaw;
-      'S': FSampleType := sptSwab;
-      'T': FSampleType := sptTissues;
-      'D': FSampleType := sptFeces;
-      'R': FSampleType := sptRegurgite;
-    else
-      FSampleType := sptEmpty;
-    end;
+    FFieldNumber      := Obj.Get('field_number', '');
+    FSampleType       := StrToSpecimenType(Obj.Get('sample_type', ''));
     FFullName         := Obj.Get('full_name', '');
     FTaxonId          := Obj.Get('taxon_id', 0);
     FIndividualId     := Obj.Get('individual_id', 0);
@@ -895,13 +881,7 @@ begin
     FLocalityId       := Obj.Get('locality_id', 0);
     FLongitude        := Obj.Get('longitude', 0.0);
     FLatitude         := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FNotes            := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -1192,23 +1172,7 @@ begin
   begin
     R.Id := FieldByName('specimen_id').AsInteger;
     R.FieldNumber := FieldByName('field_number').AsString;
-    case FieldByName('sample_type').AsString of
-      'WS': R.SampleType := sptWholeCarcass;
-      'PS': R.SampleType := sptPartialCarcass;
-      'N':  R.SampleType := sptNest;
-      'B':  R.SampleType := sptBones;
-      'E':  R.SampleType := sptEgg;
-      'P':  R.SampleType := sptParasites;
-      'F':  R.SampleType := sptFeathers;
-      'BS': R.SampleType := sptBlood;
-      'C':  R.SampleType := sptClaw;
-      'S':  R.SampleType := sptSwab;
-      'T':  R.SampleType := sptTissues;
-      'D':  R.SampleType := sptFeces;
-      'R':  R.SampleType := sptRegurgite;
-    else
-      R.SampleType := sptEmpty;
-    end;
+    R.SampleType := StrToSpecimenType(FieldByName('sample_type').AsString);
     R.FullName := FieldByName('full_name').AsString;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -1220,13 +1184,7 @@ begin
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -1253,25 +1211,7 @@ begin
   if ARow.IndexOfName('field_number') >= 0 then
     R.FieldNumber := ARow.Values['field_number'];
   if ARow.IndexOfName('sample_type') >= 0 then
-  begin
-    case ARow.Values['sample_type'] of
-      'WS': R.SampleType := sptWholeCarcass;
-      'PS': R.SampleType := sptPartialCarcass;
-      'N':  R.SampleType := sptNest;
-      'B':  R.SampleType := sptBones;
-      'E':  R.SampleType := sptEgg;
-      'P':  R.SampleType := sptParasites;
-      'F':  R.SampleType := sptFeathers;
-      'BS': R.SampleType := sptBlood;
-      'C':  R.SampleType := sptClaw;
-      'S':  R.SampleType := sptSwab;
-      'T':  R.SampleType := sptTissues;
-      'D':  R.SampleType := sptFeces;
-      'R':  R.SampleType := sptRegurgite;
-    else
-      R.SampleType := sptEmpty;
-    end;
-  end;
+    R.SampleType := StrToSpecimenType(ARow.Values['sample_type']);
   if ARow.IndexOfName('full_name') >= 0 then
     R.FullName := ARow.Values['full_name'];
   if ARow.IndexOfName('taxon_id') >= 0 then
@@ -1295,15 +1235,7 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;

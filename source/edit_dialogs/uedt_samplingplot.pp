@@ -100,6 +100,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs, utils_gis,
+  utils_conversions,
   data_types, data_getvalue, data_consts, data_columns, models_record_types,
   udm_main, udm_grid,
   uDarkStyleParams;
@@ -406,13 +407,7 @@ begin
     FSamplingPlot.Latitude := StrToFloat(eLatitude.Text)
   else
     FSamplingPlot.Latitude := 0;
-  case cbCoordinatePrecision.ItemIndex of
-    0: FSamplingPlot.CoordinatePrecision := cpExact;
-    1: FSamplingPlot.CoordinatePrecision := cpApproximated;
-    2: FSamplingPlot.CoordinatePrecision := cpReference;
-  else
-    FSamplingPlot.CoordinatePrecision := cpEmpty;
-  end;
+  FSamplingPlot.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FSamplingPlot.Description := mDescription.Text;
   FSamplingPlot.Notes := mNotes.Text;
 end;

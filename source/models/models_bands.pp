@@ -159,7 +159,7 @@ type
 implementation
 
 uses
-  utils_system, utils_global, models_users, utils_validations, utils_fullnames,
+  utils_system, utils_global, models_users, utils_validations, utils_fullnames, utils_conversions,
   data_consts, data_columns, data_setparam, data_getvalue,
   utils_locale, udm_main;
 
@@ -202,8 +202,8 @@ begin
   FFullName := EmptyStr;
   FSize := EmptyStr;
   FNumber := 0;
-  FStatus := bstAvailable;
-  FSource := bscAcquiredFromSupplier;
+  FStatus := bstNone;
+  FSource := bscNone;
   FPrefix := EmptyStr;
   FSuffix := EmptyStr;
   FSupplierId := 0;
@@ -290,37 +290,12 @@ begin
     FFullName     := Obj.Get('full_name', '');
     FSize         := Obj.Get('band_size', '');
     FNumber       := Obj.Get('band_number', 0);
-    case Obj.Get('band_status', '') of
-      'O': FStatus := bstOrdered;
-      'A': FStatus := bstAvailable;
-      'U': FStatus := bstUsed;
-      'R': FStatus := bstRemoved;
-      'B': FStatus := bstBroken;
-      'L': FStatus := bstLost;
-      'T': FStatus := bstTransferred;
-      'X': FStatus := bstReturned;
-    end;
-    case Obj.Get('band_source', '') of
-      'A': FSource := bscAcquiredFromSupplier;
-      'T': FSource := bscTransferBetweenBanders;
-      'L': FSource := bscLivingBirdBandedByOthers;
-      'D': FSource := bscDeadBirdBandedByOthers;
-      'F': FSource := bscFoundLoose;
-    end;
+    FStatus       := StrToBandStatus(Obj.Get('band_status', ''));
+    FSource       := StrToBandSource(Obj.Get('band_source', ''));
     FPrefix       := Obj.Get('prefix', '');
     FSuffix       := Obj.Get('suffix', '');
     FBandColor    := Obj.Get('band_color', '');
-    case Obj.Get('band_type', '') of
-      'A': FBandType := mkButtEndBand;
-      'F': FBandType := mkFlag;
-      'N': FBandType := mkCollar;
-      'W': FBandType := mkWingTag;
-      'T': FBandType := mkTriangularBand;
-      'L': FBandType := mkLockOnBand;
-      'R': FBandType := mkRivetBand;
-      'C': FBandType := mkClosedBand;
-      'O': FBandType := mkOther;
-    end;
+    FBandType     := StrToBandType(Obj.Get('band_type', ''));
     FSupplierId   := Obj.Get('supplier_id', 0);
     FRequesterId  := Obj.Get('requester_id', 0);
     FCarrierId    := Obj.Get('carrier_id', 0);
@@ -611,38 +586,13 @@ begin
     R.FullName := FieldByName('full_name').AsString;
     R.Size := FieldByName('band_size').AsString;
     R.Number := FieldByName('band_number').AsInteger;
-    case FieldByName('band_status').AsString of
-      'O': R.Status := bstOrdered;
-      'A': R.Status := bstAvailable;
-      'U': R.Status := bstUsed;
-      'R': R.Status := bstRemoved;
-      'B': R.Status := bstBroken;
-      'L': R.Status := bstLost;
-      'T': R.Status := bstTransferred;
-      'X': R.Status := bstReturned;
-    end;
-    case FieldByName('band_source').AsString of
-      'A': R.Source := bscAcquiredFromSupplier;
-      'T': R.Source := bscTransferBetweenBanders;
-      'L': R.Source := bscLivingBirdBandedByOthers;
-      'D': R.Source := bscDeadBirdBandedByOthers;
-      'F': R.Source := bscFoundLoose;
-    end;
+    R.Status := StrToBandStatus(FieldByName('band_status').AsString);
+    R.Source := StrToBandSource(FieldByName('band_source').AsString);
     R.Prefix := FieldByName('band_prefix').AsString;
     R.Suffix := FieldByName('band_suffix').AsString;
     R.SupplierId := FieldByName('supplier_id').AsInteger;
     R.BandColor := FieldByName('band_color').AsString;
-    case FieldByName('band_type').AsString of
-      'A': R.BandType := mkButtEndBand;
-      'F': R.BandType := mkFlag;
-      'N': R.BandType := mkCollar;
-      'W': R.BandType := mkWingTag;
-      'T': R.BandType := mkTriangularBand;
-      'L': R.BandType := mkLockOnBand;
-      'R': R.BandType := mkRivetBand;
-      'C': R.BandType := mkClosedBand;
-      'O': R.BandType := mkOther;
-    end;
+    R.BandType := StrToBandType(FieldByName('band_type').AsString);
     R.RequesterId := FieldByName('requester_id').AsInteger;
     R.CarrierId := FieldByName('carrier_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -678,28 +628,9 @@ begin
   if ARow.IndexOfName('band_number') >= 0 then
     R.Number := StrToIntDef(ARow.Values['band_number'], 0);
   if ARow.IndexOfName('band_status') >= 0 then
-  begin
-    case ARow.Values['band_status'] of
-      'O': R.Status := bstOrdered;
-      'A': R.Status := bstAvailable;
-      'U': R.Status := bstUsed;
-      'R': R.Status := bstRemoved;
-      'B': R.Status := bstBroken;
-      'L': R.Status := bstLost;
-      'T': R.Status := bstTransferred;
-      'X': R.Status := bstReturned;
-    end;
-  end;
+    R.Status := StrToBandStatus(ARow.Values['band_status']);
   if ARow.IndexOfName('band_source') >= 0 then
-  begin
-    case ARow.Values['band_source'] of
-      'A': R.Source := bscAcquiredFromSupplier;
-      'T': R.Source := bscTransferBetweenBanders;
-      'L': R.Source := bscLivingBirdBandedByOthers;
-      'D': R.Source := bscDeadBirdBandedByOthers;
-      'F': R.Source := bscFoundLoose;
-    end;
-  end;
+    R.Source := StrToBandSource(ARow.Values['band_source']);
   if ARow.IndexOfName('band_prefix') >= 0 then
     R.Prefix := ARow.Values['band_prefix'];
   if ARow.IndexOfName('band_suffix') >= 0 then
@@ -709,19 +640,7 @@ begin
   if ARow.IndexOfName('band_color') >= 0 then
     R.BandColor := ARow.Values['band_color'];
   if ARow.IndexOfName('band_type') >= 0 then
-  begin
-    case ARow.Values['band_type'] of
-      'A': R.BandType := mkButtEndBand;
-      'F': R.BandType := mkFlag;
-      'N': R.BandType := mkCollar;
-      'W': R.BandType := mkWingTag;
-      'T': R.BandType := mkTriangularBand;
-      'L': R.BandType := mkLockOnBand;
-      'R': R.BandType := mkRivetBand;
-      'C': R.BandType := mkClosedBand;
-      'O': R.BandType := mkOther;
-    end;
-  end;
+    R.BandType := StrToBandType(ARow.Values['band_type']);
   if ARow.IndexOfName('requester_id') >= 0 then
     R.RequesterId := StrToIntDef(ARow.Values['requester_id'], 0);
   if ARow.IndexOfName('carrier_id') >= 0 then

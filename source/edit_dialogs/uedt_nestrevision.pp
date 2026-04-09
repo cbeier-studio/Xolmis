@@ -123,6 +123,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations, utils_editdialogs,
+  utils_conversions,
   data_types, data_getvalue, data_consts, data_columns, models_record_types, models_taxonomy,
   udm_breeding, udm_main, udm_grid, uDarkStyleParams;
 
@@ -473,20 +474,8 @@ begin
   FRevision.RevisionTime := StrToTime(eRevisionTime.Text);
   FRevision.Observer1Id  := FObserver1Id;
   FRevision.Observer2Id  := FObserver2Id;
-  case cbNestStage.ItemIndex of
-    0: FRevision.NestStage := nsgConstruction;
-    1: FRevision.NestStage := nsgLaying;
-    2: FRevision.NestStage := nsgIncubation;
-    3: FRevision.NestStage := nsgHatching;
-    4: FRevision.NestStage := nsgNestling;
-    5: FRevision.NestStage := nsgInactive;
-    6: FRevision.NestStage := nsgUnknown;
-  end;
-  case cbNestStatus.ItemIndex of
-    0: FRevision.NestStatus := nstActive;
-    1: FRevision.NestStatus := nstInactive;
-    2: FRevision.NestStatus := nstUnknown;
-  end;
+  FRevision.NestStage := StrToNestStage(cbNestStage.Text);
+  FRevision.NestStatus := StrToNestStatus(cbNestStatus.Text);
   FRevision.HostEggsTally              := eHostEggsTally.Value;
   FRevision.HostNestlingsTally         := eHostNestlingsTally.Value;
   FRevision.NidoparasiteId             := FNidoparasiteId;

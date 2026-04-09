@@ -417,8 +417,10 @@ type
 implementation
 
 uses
-  utils_locale, utils_validations, data_columns, data_setparam, models_users, data_consts,
-  data_getvalue, udm_main;
+  utils_locale, utils_validations, utils_conversions,
+  data_columns, data_setparam, data_consts, data_getvalue,
+  models_users,
+  udm_main;
 
 { TImageData }
 
@@ -579,53 +581,14 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FImageDate := Obj.Get('image_date', NullDate);
-    FImageTime := Obj.Get('image_time', NullTime);
-    case Obj.Get('image_type', '') of
-      'flank': FImageType := itBirdInHandFlank;
-      'belly': FImageType := itBirdInHandBelly;
-      'back':  FImageType := itBirdInHandBack;
-      'wing':  FImageType := itBirdInHandWing;
-      'tail':  FImageType := itBirdInHandTail;
-      'head':  FImageType := itBirdInHandHead;
-      'feet':  FImageType := itBirdInHandFeet;
-      'stand': FImageType := itFreeBirdStanding;
-      'fly':   FImageType := itFreeBirdFlying;
-      'swim':  FImageType := itFreeBirdSwimming;
-      'forr':  FImageType := itFreeBirdForraging;
-      'copul': FImageType := itFreeBirdCopulating;
-      'build': FImageType := itFreeBirdBuildingNest;
-      'disp':  FImageType := itFreeBirdDisplaying;
-      'incub': FImageType := itFreeBirdIncubating;
-      'vocal': FImageType := itFreeBirdVocalizing;
-      'agon':  FImageType := itFreeBirdAgonistic;
-      'dead':  FImageType := itDeadBird;
-      'flock': FImageType := itBirdFlock;
-      'nest':  FImageType := itBirdNest;
-      'egg':   FImageType := itBirdEgg;
-      'nstln': FImageType := itBirdNestling;
-      'paras': FImageType := itEctoparasite;
-      'fprnt': FImageType := itFootprint;
-      'feath': FImageType := itFeather;
-      'feces': FImageType := itFeces;
-      'food':  FImageType := itFood;
-      'envir': FImageType := itEnvironment;
-      'fwork': FImageType := itFieldwork;
-      'team':  FImageType := itTeam;
-    else
-      FImageType := itEmpty;
-    end;
-    FFilename   := Obj.Get('filename', '');
-    FSubtitle   := Obj.Get('subtitle', '');
-    FAuthorId   := Obj.Get('author_id', 0);
-    FLocalityId := Obj.Get('locality_id', 0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FImageDate      := Obj.Get('image_date', NullDate);
+    FImageTime      := Obj.Get('image_time', NullTime);
+    FImageType      := StrtoImageType(Obj.Get('image_type', ''));
+    FFilename       := Obj.Get('filename', '');
+    FSubtitle       := Obj.Get('subtitle', '');
+    FAuthorId       := Obj.Get('author_id', 0);
+    FLocalityId     := Obj.Get('locality_id', 0);
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FLongitude      := Obj.Get('longitude', 0.0);
     FLatitude       := Obj.Get('latitude', 0.0);
     FTaxonId        := Obj.Get('taxon_id', 0);
@@ -928,40 +891,7 @@ begin
     R.Id := FieldByName('image_id').AsInteger;
     R.ImageDate := FieldByName('image_date').AsDateTime;
     R.ImageTime := FieldByName('image_time').AsDateTime;
-    case FieldByName('image_type').AsString of
-      'flank': R.ImageType := itBirdInHandFlank;
-      'belly': R.ImageType := itBirdInHandBelly;
-      'back':  R.ImageType := itBirdInHandBack;
-      'wing':  R.ImageType := itBirdInHandWing;
-      'tail':  R.ImageType := itBirdInHandTail;
-      'head':  R.ImageType := itBirdInHandHead;
-      'feet':  R.ImageType := itBirdInHandFeet;
-      'stand': R.ImageType := itFreeBirdStanding;
-      'fly':   R.ImageType := itFreeBirdFlying;
-      'swim':  R.ImageType := itFreeBirdSwimming;
-      'forr':  R.ImageType := itFreeBirdForraging;
-      'copul': R.ImageType := itFreeBirdCopulating;
-      'build': R.ImageType := itFreeBirdBuildingNest;
-      'disp':  R.ImageType := itFreeBirdDisplaying;
-      'incub': R.ImageType := itFreeBirdIncubating;
-      'vocal': R.ImageType := itFreeBirdVocalizing;
-      'agon':  R.ImageType := itFreeBirdAgonistic;
-      'dead':  R.ImageType := itDeadBird;
-      'flock': R.ImageType := itBirdFlock;
-      'nest':  R.ImageType := itBirdNest;
-      'egg':   R.ImageType := itBirdEgg;
-      'nstln': R.ImageType := itBirdNestling;
-      'paras': R.ImageType := itEctoparasite;
-      'fprnt': R.ImageType := itFootprint;
-      'feath': R.ImageType := itFeather;
-      'feces': R.ImageType := itFeces;
-      'food':  R.ImageType := itFood;
-      'envir': R.ImageType := itEnvironment;
-      'fwork': R.ImageType := itFieldwork;
-      'team':  R.ImageType := itTeam;
-    else
-      R.ImageType := itEmpty;
-    end;
+    R.ImageType := StrtoImageType(FieldByName('image_type').AsString);
     R.Filename := FieldByName('image_filename').AsString;
     R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
@@ -975,13 +905,7 @@ begin
     R.EggId := FieldByName('egg_id').AsInteger;
     R.SpecimenId := FieldByName('specimen_id').AsInteger;
     R.LocalityId := FieldByName('locality_id').AsInteger;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.Longitude := FieldByName('longitude').AsFloat;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.LicenseType := FieldByName('license_type').AsString;
@@ -1409,39 +1333,25 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName       := Obj.Get('full_name', '');
-    FRecordingDate  := Obj.Get('recording_date', NullDate);
-    FRecordingTime  := Obj.Get('recording_time', NullTime);
-    FAudioType      := Obj.Get('audio_type', '');
-    FFilename       := Obj.Get('filename', '');
-    FSubtitle       := Obj.Get('subtitle', '');
-    FAuthorId       := Obj.Get('author_id', 0);
-    FLocalityId     := Obj.Get('locality_id', 0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
-    FLongitude    := Obj.Get('longitude', 0.0);
-    FLatitude     := Obj.Get('latitude', 0.0);
-    FTaxonId      := Obj.Get('taxon_id', 0);
-    FIndividualId := Obj.Get('individual_id', 0);
-    FSightingId   := Obj.Get('sighting_id', 0);
-    FSpecimenId   := Obj.Get('specimen_id', 0);
-    FSurveyId     := Obj.Get('survey_id', 0);
-    FTemperature  := Obj.Get('temperature', 0.0);
-    FCloudCover   := Obj.Get('cloud_cover', 0);
-    case Obj.Get('precipitation', '') of
-      'N': FPrecipitation := wpNone;
-      'F': FPrecipitation := wpFog;
-      'M': FPrecipitation := wpMist;
-      'D': FPrecipitation := wpDrizzle;
-      'R': FPrecipitation := wpRain;
-    else
-      FPrecipitation := wpEmpty;
-    end;
+    FFullName         := Obj.Get('full_name', '');
+    FRecordingDate    := Obj.Get('recording_date', NullDate);
+    FRecordingTime    := Obj.Get('recording_time', NullTime);
+    FAudioType        := Obj.Get('audio_type', '');
+    FFilename         := Obj.Get('filename', '');
+    FSubtitle         := Obj.Get('subtitle', '');
+    FAuthorId         := Obj.Get('author_id', 0);
+    FLocalityId       := Obj.Get('locality_id', 0);
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
+    FLongitude        := Obj.Get('longitude', 0.0);
+    FLatitude         := Obj.Get('latitude', 0.0);
+    FTaxonId          := Obj.Get('taxon_id', 0);
+    FIndividualId     := Obj.Get('individual_id', 0);
+    FSightingId       := Obj.Get('sighting_id', 0);
+    FSpecimenId       := Obj.Get('specimen_id', 0);
+    FSurveyId         := Obj.Get('survey_id', 0);
+    FTemperature      := Obj.Get('temperature', 0.0);
+    FCloudCover       := Obj.Get('cloud_cover', 0);
+    FPrecipitation    := StrToPrecipitation(Obj.Get('precipitation', ''));
     FRelativeHumidity := Obj.Get('relative_humidity', 0.0);
     FWindSpeedBft     := Obj.Get('wind_speed', 0);
     FSubjectsTally    := Obj.Get('individuals_tally', 0);
@@ -1786,26 +1696,12 @@ begin
     R.SightingId := FieldByName('sighting_id').AsInteger;
     R.SpecimenId := FieldByName('specimen_id').AsInteger;
     R.LocalityId := FieldByName('locality_id').AsInteger;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.Longitude := FieldByName('longitude').AsFloat;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Temperature := FieldByName('temperature').AsFloat;
     R.CloudCover := FieldByName('cloud_cover').AsInteger;
-    case FieldByName('precipitation').AsString of
-      'N': R.Precipitation := wpNone;
-      'F': R.Precipitation := wpFog;
-      'M': R.Precipitation := wpMist;
-      'D': R.Precipitation := wpDrizzle;
-      'R': R.Precipitation := wpRain;
-    else
-      R.Precipitation := wpEmpty;
-    end;
+    R.Precipitation := StrToPrecipitation(FieldByName('precipitation').AsString);
     R.RelativeHumidity := FieldByName('relative_humidity').AsInteger;
     R.WindSpeedBft := FieldByName('wind_speed').AsInteger;
     R.SubjectsTally := FieldByName('subjects_tally').AsInteger;
@@ -1939,15 +1835,7 @@ begin
     //SetForeignParam(ParamByName('survey_id'), R.SurveyId);
     ParamByName('temperature').AsFloat := R.Temperature;
     ParamByName('cloud_cover').AsInteger := R.CloudCover;
-    case R.Precipitation of
-      wpNone:     ParamByName('precipitation').AsString := 'N';
-      wpFog:      ParamByName('precipitation').AsString := 'F';
-      wpMist:     ParamByName('precipitation').AsString := 'M';
-      wpDrizzle:  ParamByName('precipitation').AsString := 'D';
-      wpRain:     ParamByName('precipitation').AsString := 'R';
-    else
-      ParamByName('precipitation').Clear;
-    end;
+    SetStrParam(ParamByName('precipitation'), PRECIPITATION_VALUES[R.Precipitation]);
     ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
     ParamByName('wind_speed').AsInteger := R.WindSpeedBft;
     SetIntParam(ParamByName('subjects_tally'), R.SubjectsTally);
@@ -2055,15 +1943,7 @@ begin
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
     ParamByName('temperature').AsFloat := R.Temperature;
     ParamByName('cloud_cover').AsInteger := R.CloudCover;
-    case R.Precipitation of
-      wpNone:     ParamByName('precipitation').AsString := 'N';
-      wpFog:      ParamByName('precipitation').AsString := 'F';
-      wpMist:     ParamByName('precipitation').AsString := 'M';
-      wpDrizzle:  ParamByName('precipitation').AsString := 'D';
-      wpRain:     ParamByName('precipitation').AsString := 'R';
-    else
-      ParamByName('precipitation').Clear;
-    end;
+    SetStrParam(ParamByName('precipitation'), PRECIPITATION_VALUES[R.Precipitation]);
     ParamByName('relative_humidity').AsFloat := R.RelativeHumidity;
     ParamByName('wind_speed').AsInteger := R.WindSpeedBft;
     SetIntParam(ParamByName('subjects_tally'), R.SubjectsTally);
@@ -2244,32 +2124,7 @@ begin
     FDocumentDate   := Obj.Get('document_date', NullDate);
     FDocumentTime   := Obj.Get('document_time', NullTime);
     FName           := Obj.Get('name', '');
-    case Obj.Get('document_type', '') of
-      'url': FDocumentType := fcUrl;
-      'doc': FDocumentType := fcText;
-      'spr': FDocumentType := fcSpreadsheet;
-      'prs': FDocumentType := fcPresentation;
-      'pdf': FDocumentType := fcPdf;
-      'img': FDocumentType := fcImage;
-      'aud': FDocumentType := fcAudio;
-      'vid': FDocumentType := fcVideo;
-      'cod': FDocumentType := fcSourceCode;
-      'db':  FDocumentType := fcDatabase;
-      'gis': FDocumentType := fcGis;
-      'scr': FDocumentType := fcScript;
-      'web': FDocumentType := fcWebpage;
-      'ds':  FDocumentType := fcDataset;
-      'sta': FDocumentType := fcStatistic;
-      'vec': FDocumentType := fcVectorial;
-      'arc': FDocumentType := fcArchive;
-      'bib': FDocumentType := fcBibliography;
-      'met': FDocumentType := fcMetadata;
-      'gen': FDocumentType := fcBioinformatic;
-      'ebk': FDocumentType := fcEbook;
-      'not': FDocumentType := fcNote;
-    else
-      FDocumentType := fcOther;
-    end;
+    FDocumentType   := StrToDocumentType(Obj.Get('document_type', ''));
     FFilename       := Obj.Get('filename', '');
     FPermitId       := Obj.Get('permit_id', 0);
     FProjectId      := Obj.Get('project_id', 0);
@@ -2833,32 +2688,7 @@ begin
     R.Name := FieldByName('document_name').AsString;
     R.DocumentDate := FieldByName('document_date').AsDateTime;
     R.DocumentTime := FieldByName('document_time').AsDateTime;
-    case FieldByName('document_type').AsString of
-      'url': R.DocumentType := fcUrl;
-      'doc': R.DocumentType := fcText;
-      'spr': R.DocumentType := fcSpreadsheet;
-      'prs': R.DocumentType := fcPresentation;
-      'pdf': R.DocumentType := fcPdf;
-      'img': R.DocumentType := fcImage;
-      'aud': R.DocumentType := fcAudio;
-      'vid': R.DocumentType := fcVideo;
-      'cod': R.DocumentType := fcSourceCode;
-      'db':  R.DocumentType := fcDatabase;
-      'gis': R.DocumentType := fcGis;
-      'scr': R.DocumentType := fcScript;
-      'web': R.DocumentType := fcWebpage;
-      'ds':  R.DocumentType := fcDataset;
-      'sta': R.DocumentType := fcStatistic;
-      'vec': R.DocumentType := fcVectorial;
-      'arc': R.DocumentType := fcArchive;
-      'bib': R.DocumentType := fcBibliography;
-      'met': R.DocumentType := fcMetadata;
-      'gen': R.DocumentType := fcBioinformatic;
-      'ebk': R.DocumentType := fcEbook;
-      'not': R.DocumentType := fcNote;
-    else
-      R.DocumentType := fcOther;
-    end;
+    R.DocumentType := StrToDocumentType(FieldByName('document_type').AsString);
     R.Filename := FieldByName('document_path').AsString;
     //R.AuthorId := FieldByName('author_id').AsInteger;
     R.PermitId := FieldByName('permit_id').AsInteger;
@@ -3245,6 +3075,7 @@ begin
     FFullName       := Obj.Get('full_name', '');
     FRecordingDate  := Obj.Get('recording_date', NullDate);
     FRecordingTime  := Obj.Get('recording_time', NullTime);
+    { #todo : enum video types }
     FVideoType      := Obj.Get('video_type', '');
     FFilename       := Obj.Get('filename', '');
     FSubtitle       := Obj.Get('subtitle', '');
@@ -3252,13 +3083,7 @@ begin
     FLocalityId     := Obj.Get('locality_id', 0);
     FLongitude      := Obj.Get('longitude', 0.0);
     FLatitude       := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FTaxonId        := Obj.Get('taxon_id', 0);
     FIndividualId   := Obj.Get('individual_id', 0);
     FCaptureId      := Obj.Get('capture_id', 0);
@@ -3585,13 +3410,7 @@ begin
     R.NestId := FieldByName('nest_id').AsInteger;
     R.NestRevisionId := FieldByName('nest_revision_id').AsInteger;
     R.LocalityId := FieldByName('locality_id').AsInteger;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.Longitude := FieldByName('longitude').AsFloat;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Distance := FieldByName('distance').AsFloat;

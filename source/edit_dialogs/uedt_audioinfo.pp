@@ -590,13 +590,7 @@ begin
   FAudio.LocalityId    := FLocalityId;
   FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
   FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);
-  case cbCoordinatePrecision.ItemIndex of
-    0: FAudio.CoordinatePrecision := cpExact;
-    1: FAudio.CoordinatePrecision := cpApproximated;
-    2: FAudio.CoordinatePrecision := cpReference;
-  else
-    FAudio.CoordinatePrecision := cpEmpty;
-  end;
+  FAudio.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FAudio.TaxonId       := FTaxonId;
   FAudio.IndividualId  := FIndividualId;
   FAudio.SightingId    := FSightingId;
@@ -609,15 +603,7 @@ begin
   FAudio.Distance      := eDistance.Value;
   FAudio.Temperature   := eTemperature.Value;
   FAudio.CloudCover    := eCloudCover.Value;
-  case cbPrecipitation.ItemIndex of
-    0: FAudio.Precipitation := wpNone;
-    1: FAudio.Precipitation := wpFog;
-    2: FAudio.Precipitation := wpMist;
-    3: FAudio.Precipitation := wpDrizzle;
-    4: FAudio.Precipitation := wpRain;
-  else
-    FAudio.Precipitation := wpNone;
-  end;
+  FAudio.Precipitation := StrToPrecipitation(cbPrecipitation.Text);
   FAudio.WindSpeedBft     := eWindSpeed.Value;
   FAudio.RelativeHumidity := eRelativeHumidity.Value;
   FAudio.PlaybackUsed     := ckPlaybackUsed.Checked;

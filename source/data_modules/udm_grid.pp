@@ -2038,6 +2038,9 @@ end;
 
 procedure TDMG.qCapturescapture_dateValidate(Sender: TField);
 begin
+  if (Sender.IsNull) then
+    Exit;
+
   if IsFutureDate(Sender.AsDateTime, Today, rsDateCapture, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateCapture, DateToStr(Sender.AsDateTime)]);
 end;
@@ -2980,6 +2983,9 @@ end;
 
 procedure TDMG.qImagesimage_dateValidate(Sender: TField);
 begin
+  if (Sender.IsNull) then
+    Exit;
+
   if IsFutureDate(Sender.AsDateTime, Today, rsDateImage, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateImage, DateToStr(Sender.AsDateTime)]);
 end;
@@ -3933,12 +3939,18 @@ end;
 
 procedure TDMG.qPeoplebirth_dateValidate(Sender: TField);
 begin
+  if (Sender.IsNull) then
+    Exit;
+
   if IsFutureDate(Sender.AsDateTime, Today, rsDateBirth, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateBirth, DateToStr(Sender.AsDateTime)]);
 end;
 
 procedure TDMG.qPeopledeath_dateValidate(Sender: TField);
 begin
+  if (Sender.IsNull) then
+    Exit;
+
   if IsFutureDate(Sender.AsDateTime, Today, rsDateDeath, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateDeath, DateToStr(Sender.AsDateTime)]);
 end;
@@ -4069,6 +4081,9 @@ end;
 
 procedure TDMG.qPermitsdispatch_dateValidate(Sender: TField);
 begin
+  if Sender.IsNull then
+    Exit;
+
   if IsFutureDate(Sender.AsDateTime, Today, rsDateDispatch, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateDispatch, DateToStr(Sender.AsDateTime)]);
 end;

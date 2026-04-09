@@ -79,7 +79,9 @@ var
 
 implementation
 
-uses utils_global, utils_validations, utils_locale, data_consts, data_columns, data_getvalue, udm_main;
+uses
+  utils_global, utils_validations, utils_locale, utils_conversions,
+  data_consts, data_columns, data_getvalue, udm_main;
 
 { TUser }
 
@@ -169,14 +171,10 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName := Obj.Get('full_name', '');
-    FUserName := Obj.Get('user_name', '');
-    FGuid     := Obj.Get('guid', '');
-    case Obj.Get('rank', '') of
-      'A': FRank := urAdministrator;
-      'S': FRank := urStandard;
-      'V': FRank := urVisitor;
-    end;
+    FFullName               := Obj.Get('full_name', '');
+    FUserName               := Obj.Get('user_name', '');
+    FGuid                   := Obj.Get('guid', '');
+    FRank                   := StrToUserRank(Obj.Get('rank', ''));
     FAllowManageCollection  := Obj.Get('allow_manage_collection', False);
     FAllowPrint             := Obj.Get('allow_print', False);
     FAllowExport            := Obj.Get('allow_export', False);
@@ -423,11 +421,7 @@ begin
     R.Guid := FieldByName('uuid').AsString;
     R.FullName := FieldByName('full_name').AsString;
     R.UserName := FieldByName('user_name').AsString;
-    case FieldByName('user_rank').AsString of
-      'A': R.Rank := urAdministrator;
-      'S': R.Rank := urStandard;
-      'V': R.Rank := urVisitor;
-    end;
+    R.Rank := StrToUserRank(FieldByName('user_rank').AsString);
     R.AllowManageCollection := FieldByName('allow_collection_edit').AsBoolean;
     R.AllowPrint := FieldByName('allow_print').AsBoolean;
     R.AllowExport := FieldByName('allow_export').AsBoolean;
@@ -461,13 +455,7 @@ begin
   if ARow.IndexOfName('user_name') >= 0 then
     R.UserName := ARow.Values['user_name'];
   if ARow.IndexOfName('user_rank') >= 0 then
-  begin
-    case ARow.Values['user_rank'] of
-      'A': R.Rank := urAdministrator;
-      'S': R.Rank := urStandard;
-      'V': R.Rank := urVisitor;
-    end;
-  end;
+    R.Rank := StrToUserRank(ARow.Values['user_rank']);
   if ARow.IndexOfName('allow_collection_edit') >= 0 then
     R.AllowManageCollection := StrToBoolDef(ARow.Values['allow_collection_edit'], True);
   if ARow.IndexOfName('allow_print') >= 0 then

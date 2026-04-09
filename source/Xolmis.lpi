@@ -1462,6 +1462,7 @@
         <Filename Value="edit_dialogs\uedt_videoinfo.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtVideoInfo"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>

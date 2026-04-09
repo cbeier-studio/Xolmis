@@ -536,13 +536,7 @@ begin
   FVideo.LocalityId     := FLocalityId;
   FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);
   FVideo.Latitude       := StrToFloatOrZero(eLatitude.Text);
-  case cbCoordinatePrecision.ItemIndex of
-    0: FVideo.CoordinatePrecision := cpExact;
-    1: FVideo.CoordinatePrecision := cpApproximated;
-    2: FVideo.CoordinatePrecision := cpReference;
-  else
-    FVideo.CoordinatePrecision := cpEmpty;
-  end;
+  FVideo.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FVideo.TaxonId        := FTaxonId;
   FVideo.IndividualId   := FIndividualId;
   FVideo.CaptureId      := FCaptureId;

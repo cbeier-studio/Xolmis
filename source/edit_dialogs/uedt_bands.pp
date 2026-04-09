@@ -127,6 +127,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs, utils_validations,
+  utils_conversions,
   data_types, data_consts, data_getvalue, data_columns, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -536,36 +537,39 @@ begin
   FBand.Number := StrToInt(eBandNumber.Text);
   FBand.Prefix := ePrefix.Text;
   FBand.Suffix := eSuffix.Text;
-  case cbBandType.ItemIndex of
-    0: FBand.BandType := mkButtEndBand;
-    1: FBand.BandType := mkFlag;
-    2: FBand.BandType := mkCollar;
-    3: FBand.BandType := mkWingTag;
-    4: FBand.BandType := mkTriangularBand;
-    5: FBand.BandType := mkLockOnBand;
-    6: FBand.BandType := mkRivetBand;
-    7: FBand.BandType := mkClosedBand;
-    8: FBand.BandType := mkOther;
-  end;
+  FBand.BandType := StrToBandType(cbBandType.Text);
+  //case cbBandType.ItemIndex of
+  //  0: FBand.BandType := mkButtEndBand;
+  //  1: FBand.BandType := mkFlag;
+  //  2: FBand.BandType := mkCollar;
+  //  3: FBand.BandType := mkWingTag;
+  //  4: FBand.BandType := mkTriangularBand;
+  //  5: FBand.BandType := mkLockOnBand;
+  //  6: FBand.BandType := mkRivetBand;
+  //  7: FBand.BandType := mkClosedBand;
+  //  8: FBand.BandType := mkOther;
+  //end;
   FBand.BandColor := cbBandColor.Text;
-  case cbBandStatus.ItemIndex of
-    0: FBand.Status := bstOrdered;
-    1: FBand.Status := bstAvailable;
-    2: FBand.Status := bstUsed;
-    3: FBand.Status := bstRemoved;
-    4: FBand.Status := bstTransferred;
-    5: FBand.Status := bstBroken;
-    6: FBand.Status := bstLost;
-    7: FBand.Status := bstReturned;
-  end;
+  FBand.Status := StrToBandStatus(cbBandStatus.Text);
+  //case cbBandStatus.ItemIndex of
+  //  0: FBand.Status := bstOrdered;
+  //  1: FBand.Status := bstAvailable;
+  //  2: FBand.Status := bstUsed;
+  //  3: FBand.Status := bstRemoved;
+  //  4: FBand.Status := bstTransferred;
+  //  5: FBand.Status := bstBroken;
+  //  6: FBand.Status := bstLost;
+  //  7: FBand.Status := bstReturned;
+  //end;
   FBand.Reported := ckReported.Checked;
-  case cbBandSource.ItemIndex of
-    0: FBand.Source := bscAcquiredFromSupplier;
-    1: FBand.Source := bscTransferBetweenBanders;
-    2: FBand.Source := bscLivingBirdBandedByOthers;
-    3: FBand.Source := bscDeadBirdBandedByOthers;
-    4: FBand.Source := bscFoundLoose;
-  end;
+  FBand.Source := StrToBandSource(cbBandSource.Text);
+  //case cbBandSource.ItemIndex of
+  //  0: FBand.Source := bscAcquiredFromSupplier;
+  //  1: FBand.Source := bscTransferBetweenBanders;
+  //  2: FBand.Source := bscLivingBirdBandedByOthers;
+  //  3: FBand.Source := bscDeadBirdBandedByOthers;
+  //  4: FBand.Source := bscFoundLoose;
+  //end;
   FBand.SupplierId  := FSupplierId;
   FBand.RequesterId := FRequesterId;
   FBand.CarrierId   := FCarrierId;

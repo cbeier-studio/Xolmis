@@ -130,8 +130,10 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns, data_consts,
-  data_setparam, data_getvalue, udm_main;
+  utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
+  data_columns, data_consts, data_setparam, data_getvalue,
+  models_users,
+  udm_main;
 
 { TSamplingPlot }
 
@@ -234,13 +236,7 @@ begin
     FAreaShape    := Obj.Get('area_shape', '');
     FLongitude    := Obj.Get('longitude', 0.0);
     FLatitude     := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FLocalityId   := Obj.Get('locality_id', 0);
     FDescription  := Obj.Get('description', '');
     FNotes        := Obj.Get('notes', '');
@@ -487,13 +483,7 @@ begin
     R.Abbreviation := FieldByName('acronym').AsString;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.AreaShape := FieldByName('area_shape').AsString;
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Description := FieldByName('description').AsString;
@@ -529,15 +519,7 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('area_shape') >= 0 then
     R.AreaShape := ARow.Values['area_shape'];
   if ARow.IndexOfName('locality_id') >= 0 then
@@ -752,13 +734,7 @@ begin
     FNetNumber      := Obj.Get('net_number', 0);
     FLongitude      := Obj.Get('longitude', 0.0);
     FLatitude       := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FNotes          := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -992,13 +968,7 @@ begin
     R.NetNumber := FieldByName('net_number').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.Notes := FieldByName('notes').AsString;
     R.UserInserted := FieldByName('user_inserted').AsInteger;
     R.UserUpdated := FieldByName('user_updated').AsInteger;
@@ -1033,15 +1003,7 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;

@@ -400,7 +400,7 @@ type
 implementation
 
 uses
-  utils_system, utils_global, models_users, utils_validations, utils_fullnames,
+  utils_system, utils_global, models_users, utils_validations, utils_fullnames, utils_conversions,
   data_columns, data_setparam, data_getvalue, data_consts,
   utils_locale, udm_main;
 
@@ -563,41 +563,11 @@ begin
     FCaptureId    := Obj.Get('capture_id', 0);
     FSightingId   := Obj.Get('sighting_id', 0);
     FObserverId   := Obj.Get('observer_id', 0);
-    case Obj.Get('feather_source', '') of
-      'U': FSourceType := fdsUnknown;
-      'C': FSourceType := fdsCapture;
-      'S': FSourceType := fdsSighting;
-      'P': FSourceType := fdsPhoto;
-    else
-      FSourceType := fdsUnknown;
-    end;
-    case Obj.Get('symmetry', '') of
-      'U': FSymmetrical := symUnknown;
-      'S': FSymmetrical := symSymmetrical;
-      'A': FSymmetrical := symAsymmetrical;
-    else
-      FSymmetrical := symUnknown;
-    end;
-    case Obj.Get('feather_trait', '') of
-      'B':  FFeatherTrait := ftrBody;
-      'P':  FFeatherTrait := ftrPrimary;
-      'S':  FFeatherTrait := ftrSecondary;
-      'R':  FFeatherTrait := ftrRectrix;
-      'PC': FFeatherTrait := ftrPrimaryCovert;
-      'GC': FFeatherTrait := ftrGreatCovert;
-      'MC': FFeatherTrait := ftrMedianCovert;
-      'LC': FFeatherTrait := ftrLesserCovert;
-      'CC': FFeatherTrait := ftrCarpalCovert;
-      'AL': FFeatherTrait := ftrAlula;
-    end;
-    FFeatherNumber       := Obj.Get('feather_number', 0);
-    case Obj.Get('body_side', '') of
-      'NA': FBodySide := bsdNotApplicable;
-      'R':  FBodySide := bsdRight;
-      'L':  FBodySide := bsdLeft;
-    else
-      FBodySide := bsdNotApplicable;
-    end;
+    FSourceType   := StrToFeatherSource(Obj.Get('feather_source', ''));
+    FSymmetrical  := StrToSymmetry(Obj.Get('symmetry', ''));
+    FFeatherTrait := StrToFeatherTrait(Obj.Get('feather_trait', ''));
+    FFeatherNumber := Obj.Get('feather_number', 0);
+    FBodySide      := StrToBodySide(Obj.Get('body_side', ''));
     FPercentGrown   := Obj.Get('percent_grown', 0.0);
     FFeatherLength  := Obj.Get('feather_length', 0.0);
     FFeatherArea    := Obj.Get('feather_area', 0.0);
@@ -605,19 +575,7 @@ begin
     FRachisWidth    := Obj.Get('rachis_width', 0.0);
     FGrowthBarWidth := Obj.Get('growth_bar_width', 0.0);
     FBarbDensity    := Obj.Get('barb_density', 0.0);
-    case Obj.Get('feather_age', '') of
-      'U': FFeatherAge := fageUnknown;
-      'N': FFeatherAge := fageNestling;
-      'F': FFeatherAge := fageFledgling;
-      'A': FFeatherAge := fageAdult;
-      'Y': FFeatherAge := fageFirstYear;
-      'S': FFeatherAge := fageSecondYear;
-      'T': FFeatherAge := fageThirdYear;
-      '4': FFeatherAge := fageFourthYear;
-      '5': FFeatherAge := fageFifthYear;
-    else
-      FFeatherAge := fageUnknown;
-    end;
+    FFeatherAge     := StrToFeatherAge(Obj.Get('feather_age', ''));
     FFullName     := Obj.Get('full_name', '');
     FNotes        := Obj.Get('notes', '');
   finally
@@ -903,41 +861,11 @@ begin
     R.CaptureId := FieldByName('capture_id').AsInteger;
     R.SightingId := FieldByName('sighting_id').AsInteger;
     R.ObserverId := FieldByName('observer_id').AsInteger;
-    case FieldByName('source_type').AsString of
-      'U': R.SourceType := fdsUnknown;
-      'C': R.SourceType := fdsCapture;
-      'S': R.SourceType := fdsSighting;
-      'P': R.SourceType := fdsPhoto;
-    else
-      R.SourceType := fdsUnknown;
-    end;
-    case FieldByName('symmetrical').AsString of
-      'U': R.Symmetrical := symUnknown;
-      'S': R.Symmetrical := symSymmetrical;
-      'A': R.Symmetrical := symAsymmetrical;
-    else
-      R.Symmetrical := symUnknown;
-    end;
-    case FieldByName('feather_trait').AsString of
-      'B': R.FeatherTrait := ftrBody;
-      'P': R.FeatherTrait := ftrPrimary;
-      'S': R.FeatherTrait := ftrSecondary;
-      'R': R.FeatherTrait := ftrRectrix;
-      'PC': R.FeatherTrait := ftrPrimaryCovert;
-      'GC': R.FeatherTrait := ftrGreatCovert;
-      'MC': R.FeatherTrait := ftrMedianCovert;
-      'LC': R.FeatherTrait := ftrLesserCovert;
-      'CC': R.FeatherTrait := ftrCarpalCovert;
-      'AL': R.FeatherTrait := ftrAlula;
-    end;
+    R.SourceType := StrToFeatherSource(FieldByName('source_type').AsString);
+    R.Symmetrical := StrToSymmetry(FieldByName('symmetrical').AsString);
+    R.FeatherTrait := StrToFeatherTrait(FieldByName('feather_trait').AsString);
     R.FeatherNumber := FieldByName('feather_number').AsInteger;
-    case FieldByName('body_side').AsString of
-      'NA': R.BodySide := bsdNotApplicable;
-      'R': R.BodySide := bsdRight;
-      'L': R.BodySide := bsdLeft;
-    else
-      R.BodySide := bsdNotApplicable;
-    end;
+    R.BodySide := StrToBodySide(FieldByName('body_side').AsString);
     R.PercentGrown := FieldByName('grown_percent').AsFloat;
     R.FeatherLength := FieldByName('feather_length').AsFloat;
     R.FeatherArea := FieldByName('feather_area').AsFloat;
@@ -945,19 +873,7 @@ begin
     R.RachisWidth := FieldByName('rachis_width').AsFloat;
     R.GrowthBarWidth := FieldByName('growth_bar_width').AsFloat;
     R.BarbDensity := FieldByName('barb_density').AsFloat;
-    case FieldByName('feather_age').AsString of
-      'U': R.FeatherAge := fageUnknown;
-      'N': R.FeatherAge := fageNestling;
-      'F': R.FeatherAge := fageFledgling;
-      'A': R.FeatherAge := fageAdult;
-      'Y': R.FeatherAge := fageFirstYear;
-      'S': R.FeatherAge := fageSecondYear;
-      'T': R.FeatherAge := fageThirdYear;
-      '4': R.FeatherAge := fageFourthYear;
-      '5': R.FeatherAge := fageFifthYear;
-    else
-      R.FeatherAge := fageUnknown;
-    end;
+    R.FeatherAge := StrToFeatherAge(FieldByName('feather_age').AsString);
     R.FullName := FieldByName('full_name').AsString;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -999,53 +915,15 @@ begin
   if ARow.IndexOfName('observer_id') >= 0 then
     R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('source_type') >= 0 then
-  begin
-    case ARow.Values['source_type'] of
-      'U': R.SourceType := fdsUnknown;
-      'C': R.SourceType := fdsCapture;
-      'S': R.SourceType := fdsSighting;
-      'P': R.SourceType := fdsPhoto;
-    else
-      R.SourceType := fdsUnknown;
-    end;
-  end;
+    R.SourceType := StrToFeatherSource(ARow.Values['source_type']);
   if ARow.IndexOfName('symmetrical') >= 0 then
-  begin
-    case ARow.Values['symmetrical'] of
-      'U': R.Symmetrical := symUnknown;
-      'S': R.Symmetrical := symSymmetrical;
-      'A': R.Symmetrical := symAsymmetrical;
-    else
-      R.Symmetrical := symUnknown;
-    end;
-  end;
+    R.Symmetrical := StrToSymmetry(ARow.Values['symmetrical']);
   if ARow.IndexOfName('feather_trait') >= 0 then
-  begin
-    case ARow.Values['feather_trait'] of
-      'B': R.FeatherTrait := ftrBody;
-      'P': R.FeatherTrait := ftrPrimary;
-      'S': R.FeatherTrait := ftrSecondary;
-      'R': R.FeatherTrait := ftrRectrix;
-      'PC': R.FeatherTrait := ftrPrimaryCovert;
-      'GC': R.FeatherTrait := ftrGreatCovert;
-      'MC': R.FeatherTrait := ftrMedianCovert;
-      'LC': R.FeatherTrait := ftrLesserCovert;
-      'CC': R.FeatherTrait := ftrCarpalCovert;
-      'AL': R.FeatherTrait := ftrAlula;
-    end;
-  end;
+    R.FeatherTrait := StrToFeatherTrait(ARow.Values['feather_trait']);
   if ARow.IndexOfName('feather_number') >= 0 then
     R.FeatherNumber := StrToIntDef(ARow.Values['feather_number'], 0);
   if ARow.IndexOfName('body_side') >= 0 then
-  begin
-    case ARow.Values['body_side'] of
-      'NA': R.BodySide := bsdNotApplicable;
-      'R': R.BodySide := bsdRight;
-      'L': R.BodySide := bsdLeft;
-    else
-      R.BodySide := bsdNotApplicable;
-    end;
-  end;
+    R.BodySide := StrToBodySide(ARow.Values['body_side']);
   if ARow.IndexOfName('grown_percent') >= 0 then
     R.PercentGrown := StrToFloatDef(ARow.Values['grown_percent'], 0);
   if ARow.IndexOfName('feather_length') >= 0 then
@@ -1061,21 +939,7 @@ begin
   if ARow.IndexOfName('barb_density') >= 0 then
     R.BarbDensity := StrToFloatDef(ARow.Values['barb_density'], 0);
   if ARow.IndexOfName('feather_age') >= 0 then
-  begin
-    case ARow.Values['feather_age'] of
-      'U': R.FeatherAge := fageUnknown;
-      'N': R.FeatherAge := fageNestling;
-      'F': R.FeatherAge := fageFledgling;
-      'A': R.FeatherAge := fageAdult;
-      'Y': R.FeatherAge := fageFirstYear;
-      'S': R.FeatherAge := fageSecondYear;
-      'T': R.FeatherAge := fageThirdYear;
-      '4': R.FeatherAge := fageFourthYear;
-      '5': R.FeatherAge := fageFifthYear;
-    else
-      R.FeatherAge := fageUnknown;
-    end;
-  end;
+    R.FeatherAge := StrToFeatherAge(ARow.Values['feather_age']);
   if ARow.IndexOfName('full_name') >= 0 then
     R.FullName := ARow.Values['full_name'];
   if ARow.IndexOfName('notes') >= 0 then
@@ -1537,22 +1401,22 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscSkullLength, aOld.SkullLength, FSkullLength, R) then
     Changes.Add(R);
-  //if FieldValuesDiff(rscHaluxLengthTotal, aOld.HaluxLengthTotal, FHaluxLengthTotal, R) then
-  //  Changes.Add(R);
-  //if FieldValuesDiff(rscHaluxLengthFinger, aOld.HaluxLengthFinger, FHaluxLengthFinger, R) then
-  //  Changes.Add(R);
-  //if FieldValuesDiff(rscHaluxLengthClaw, aOld.HaluxLengthClaw, FHaluxLengthClaw, R) then
-  //  Changes.Add(R);
+  if FieldValuesDiff(rscHaluxLengthTotal, aOld.HaluxLengthTotal, FHaluxLengthTotal, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHaluxLengthFinger, aOld.HaluxLengthFinger, FHaluxLengthFinger, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHaluxLengthClaw, aOld.HaluxLengthClaw, FHaluxLengthClaw, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscRightWingChord, aOld.RightWingChord, FRightWingChord, R) then
     Changes.Add(R);
   if FieldValuesDiff(rsc1stSecondaryChord, aOld.FirstSecondaryChord, FFirstSecondaryChord, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscTailLength, aOld.TailLength, FTailLength, R) then
     Changes.Add(R);
-  //if FieldValuesDiff(rscCentralRetrixLength, aOld.CentralRetrixLength, FCentralRetrixLength, R) then
-  //  Changes.Add(R);
-  //if FieldValuesDiff(rscExternalRetrixLength, aOld.ExternalRetrixLength, FExternalRetrixLength, R) then
-  //  Changes.Add(R);
+  if FieldValuesDiff(rscCentralRetrixLength, aOld.CentralRetrixLength, FCentralRetrixLength, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscExternalRetrixLength, aOld.ExternalRetrixLength, FExternalRetrixLength, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscTotalLength, aOld.TotalLength, FTotalLength, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFeatherMites, aOld.FeatherMites, FFeatherMites, R) then
@@ -1648,47 +1512,23 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName     := Obj.Get('full_name', '');
-    FSurveyId     := Obj.Get('survey_id', 0);
-    FTaxonId      := Obj.Get('taxon_id', 0);
-    FIndividualId := Obj.Get('individual_id', 0);
-    FCaptureDate  := Obj.Get('capture_date', NullDate);
-    FCaptureTime  := Obj.Get('capture_time', NullTime);
-    FLocalityId   := Obj.Get('locality_id', 0);
-    FNetStationId := Obj.Get('net_station_id', 0);
-    FNetId        := Obj.Get('net_id', 0);
-    FLongitude    := Obj.Get('longitude', 0.0);
-    FLatitude     := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
-    FBanderId     := Obj.Get('bander_id', 0);
-    FAnnotatorId  := Obj.Get('annotator_id', 0);
-    case Obj.Get('subject_status', '') of
-      'N': FSubjectStatus := sstNormal;
-      'I': FSubjectStatus := sstInjured;
-      'W': FSubjectStatus := sstWingSprain;
-      'X': FSubjectStatus := sstStressed;
-      'D': FSubjectStatus := sstDead;
-    end;
-    case Obj.Get('capture_type', '') of
-      'N': FCaptureType := cptNew;
-      'R': FCaptureType := cptRecapture;
-      'S': FCaptureType := cptSameDay;
-      'C': FCaptureType := cptChangeBand;
-      'U': FCaptureType := cptUnbanded;
-    end;
-    case Obj.Get('sex', '') of
-      'U': FSubjectSex := sexUnknown;
-      'F': FSubjectSex := sexFemale;
-      'M': FSubjectSex := sexMale;
-    else
-      FSubjectSex := sexUnknown;
-    end;
+    FFullName             := Obj.Get('full_name', '');
+    FSurveyId             := Obj.Get('survey_id', 0);
+    FTaxonId              := Obj.Get('taxon_id', 0);
+    FIndividualId         := Obj.Get('individual_id', 0);
+    FCaptureDate          := Obj.Get('capture_date', NullDate);
+    FCaptureTime          := Obj.Get('capture_time', NullTime);
+    FLocalityId           := Obj.Get('locality_id', 0);
+    FNetStationId         := Obj.Get('net_station_id', 0);
+    FNetId                := Obj.Get('net_id', 0);
+    FLongitude            := Obj.Get('longitude', 0.0);
+    FLatitude             := Obj.Get('latitude', 0.0);
+    FCoordinatePrecision  := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
+    FBanderId             := Obj.Get('bander_id', 0);
+    FAnnotatorId          := Obj.Get('annotator_id', 0);
+    FSubjectStatus        := StrToSubjectStatus(Obj.Get('subject_status', ''));
+    FCaptureType          := StrToCaptureType(Obj.Get('capture_type', ''));
+    FSubjectSex           := StrToSex(Obj.Get('sex', ''));
     FHowSexed             := Obj.Get('how_was_sexed', '');
     FBandId               := Obj.Get('band_id', 0);
     FWeight               := Obj.Get('weight', 0.0);
@@ -1710,6 +1550,7 @@ begin
     FFlightFeathersWear   := Obj.Get('flight_feathers_wear', '');
     FMoltLimits           := Obj.Get('molt_limits', '');
     FCycleCode            := Obj.Get('cycle_code', '');
+    FSubjectAge           := StrToAge(Obj.Get('age', ''));
     FHowAged              := Obj.Get('how_was_aged', '');
     FSkullOssification    := Obj.Get('skull_ossification', '');
     FKippsIndex           := Obj.Get('kipps_index', 0.0);
@@ -1725,10 +1566,10 @@ begin
     FEndPhotoNumber       := Obj.Get('end_photo_number', '');
     FCameraName           := Obj.Get('camera_name', '');
     FRemovedBandId        := Obj.Get('removed_band_id', 0);
-    FRightTarsus        := Obj.Get('right_tarsus', '');
-    FLeftTarsus         := Obj.Get('left_tarsus', '');
-    FRightTibia        := Obj.Get('right_tibia', '');
-    FLeftTibia         := Obj.Get('left_tibia', '');
+    FRightTarsus          := Obj.Get('right_tarsus', '');
+    FLeftTarsus           := Obj.Get('left_tarsus', '');
+    FRightTibia           := Obj.Get('right_tibia', '');
+    FLeftTibia            := Obj.Get('left_tibia', '');
     FEscaped              := Obj.Get('escaped', False);
     FNeedsReview          := Obj.Get('needs_review', False);
     FNotes                := Obj.Get('notes', '');
@@ -2207,36 +2048,12 @@ begin
     R.NetId := FieldByName('net_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.BanderId := FieldByName('bander_id').AsInteger;
     R.AnnotatorId := FieldByName('annotator_id').AsInteger;
-    case FieldByName('subject_status').AsString of
-      'N': R.SubjectStatus := sstNormal;
-      'I': R.SubjectStatus := sstInjured;
-      'W': R.SubjectStatus := sstWingSprain;
-      'X': R.SubjectStatus := sstStressed;
-      'D': R.SubjectStatus := sstDead;
-    end;
-    case FieldByName('capture_type').AsString of
-      'N': R.CaptureType := cptNew;
-      'R': R.CaptureType := cptRecapture;
-      'S': R.CaptureType := cptSameDay;
-      'C': R.CaptureType := cptChangeBand;
-    else
-      R.CaptureType := cptUnbanded;
-    end;
-    case FieldByName('subject_sex').AsString of
-      'M': R.SubjectSex := sexMale;
-      'F': R.SubjectSex := sexFemale;
-    else
-      R.SubjectSex := sexUnknown;
-    end;
+    R.SubjectStatus := StrToSubjectStatus(FieldByName('subject_status').AsString);
+    R.CaptureType := StrToCaptureType(FieldByName('capture_type').AsString);
+    R.SubjectSex := StrToSex(FieldByName('subject_sex').AsString);
     R.HowSexed := FieldByName('how_sexed').AsString;
     R.BandId := FieldByName('band_id').AsInteger;
     R.RemovedBandId := FieldByName('removed_band_id').AsInteger;
@@ -2277,19 +2094,7 @@ begin
     R.FlightFeathersWear := FieldByName('flight_feathers_wear').AsString;
     R.MoltLimits := FieldByName('molt_limits').AsString;
     R.CycleCode := FieldByName('cycle_code').AsString;
-    case FieldByName('subject_age').AsString of
-      'N': R.SubjectAge := ageNestling;
-      'F': R.SubjectAge := ageFledgling;
-      'J': R.SubjectAge := ageJuvenile;
-      'A': R.SubjectAge := ageAdult;
-      'Y': R.SubjectAge := ageFirstYear;
-      'S': R.SubjectAge := ageSecondYear;
-      'T': R.SubjectAge := ageThirdYear;
-      '4': R.SubjectAge := ageFourthYear;
-      '5': R.SubjectAge := ageFifthYear;
-    else
-      R.SubjectAge := ageUnknown;
-    end;
+    R.SubjectAge := StrToAge(FieldByName('subject_age').AsString);
     R.HowAged := FieldByName('how_aged').AsString;
     R.SkullOssification := FieldByName('skull_ossification').AsString;
     R.KippsIndex := FieldByName('kipps_index').AsFloat;
@@ -2361,49 +2166,17 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('bander_id') >= 0 then
     R.BanderId := StrToIntDef(ARow.Values['bander_id'], 0);
   if ARow.IndexOfName('annotator_id') >= 0 then
     R.AnnotatorId := StrToIntDef(ARow.Values['annotator_id'], 0);
   if ARow.IndexOfName('subject_status') >= 0 then
-  begin
-    case ARow.Values['subject_status'] of
-      'N': R.SubjectStatus := sstNormal;
-      'I': R.SubjectStatus := sstInjured;
-      'W': R.SubjectStatus := sstWingSprain;
-      'X': R.SubjectStatus := sstStressed;
-      'D': R.SubjectStatus := sstDead;
-    end;
-  end;
+    R.SubjectStatus := StrToSubjectStatus(ARow.Values['subject_status']);
   if ARow.IndexOfName('capture_type') >= 0 then
-  begin
-    case ARow.Values['capture_type'] of
-      'N': R.CaptureType := cptNew;
-      'R': R.CaptureType := cptRecapture;
-      'S': R.CaptureType := cptSameDay;
-      'C': R.CaptureType := cptChangeBand;
-    else
-      R.CaptureType := cptUnbanded;
-    end;
-  end;
+    R.CaptureType := StrToCaptureType(ARow.Values['capture_type']);
   if ARow.IndexOfName('subject_sex') >= 0 then
-  begin
-    case ARow.Values['subject_sex'] of
-      'M': R.SubjectSex := sexMale;
-      'F': R.SubjectSex := sexFemale;
-    else
-      R.SubjectSex := sexUnknown;
-    end;
-  end;
+    R.SubjectSex := StrToSex(ARow.Values['subject_sex']);
   if ARow.IndexOfName('how_sexed') >= 0 then
     R.HowSexed := ARow.Values['how_sexed'];
   if ARow.IndexOfName('band_id') >= 0 then
@@ -2473,21 +2246,7 @@ begin
   if ARow.IndexOfName('cycle_code') >= 0 then
     R.CycleCode := ARow.Values['cycle_code'];
   if ARow.IndexOfName('subject_age') >= 0 then
-  begin
-    case ARow.Values['subject_age'] of
-      'N': R.SubjectAge := ageNestling;
-      'F': R.SubjectAge := ageFledgling;
-      'J': R.SubjectAge := ageJuvenile;
-      'A': R.SubjectAge := ageAdult;
-      'Y': R.SubjectAge := ageFirstYear;
-      'S': R.SubjectAge := ageSecondYear;
-      'T': R.SubjectAge := ageThirdYear;
-      '4': R.SubjectAge := ageFourthYear;
-      '5': R.SubjectAge := ageFifthYear;
-    else
-      R.SubjectAge := ageUnknown;
-    end;
-  end;
+    R.SubjectAge := StrToAge(ARow.Values['subject_age']);
   if ARow.IndexOfName('how_aged') >= 0 then
     R.HowAged := ARow.Values['how_aged'];
   if ARow.IndexOfName('skull_ossification') >= 0 then
@@ -3092,29 +2851,10 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName     := Obj.Get('full_name', '');
-    FTaxonId      := Obj.Get('taxon_id', 0);
-    case Obj.Get('sex', '') of
-      'U': FSex := sexUnknown;
-      'F': FSex := sexFemale;
-      'M': FSex := sexMale;
-    else
-      FSex := sexUnknown;
-    end;
-    case Obj.Get('age', '') of
-      'U': FAge := ageUnknown;
-      'N': FAge := ageNestling;
-      'F': FAge := ageFledgling;
-      'J': FAge := ageJuvenile;
-      'A': FAge := ageAdult;
-      'Y': FAge := ageFirstYear;
-      'S': FAge := ageSecondYear;
-      'T': FAge := ageThirdYear;
-      '4': FAge := ageFourthYear;
-      '5': FAge := ageFifthYear;
-    else
-      FAge := ageUnknown;
-    end;
+    FFullName       := Obj.Get('full_name', '');
+    FTaxonId        := Obj.Get('taxon_id', 0);
+    FSex            := StrToSex(Obj.Get('sex', ''));
+    FAge            := StrToAge(Obj.Get('age', ''));
     FNestId         := Obj.Get('nest_id', 0);
     FBirthYear      := Obj.Get('birth_year', 0);
     FBirthMonth     := Obj.Get('birth_month', 0);
@@ -3124,10 +2864,10 @@ begin
     FBandId         := Obj.Get('band_id', 0);
     FDoubleBandId   := Obj.Get('double_band_id', 0);
     FRemovedBandId  := Obj.Get('removed_band_id', 0);
-    FRightTarsus  := Obj.Get('right_tarsus', '');
-    FLeftTarsus   := Obj.Get('left_tarsus', '');
-    FRightTibia  := Obj.Get('right_tibia', '');
-    FLeftTibia   := Obj.Get('left_tibia', '');
+    FRightTarsus    := Obj.Get('right_tarsus', '');
+    FLeftTarsus     := Obj.Get('left_tarsus', '');
+    FRightTibia     := Obj.Get('right_tibia', '');
+    FLeftTibia      := Obj.Get('left_tibia', '');
     FFatherId       := Obj.Get('father_id', 0);
     FMotherId       := Obj.Get('mother_id', 0);
     FDeathYear      := Obj.Get('death_year', 0);
@@ -3458,25 +3198,8 @@ begin
     R.Id := FieldByName('individual_id').AsInteger;
     R.FullName := FieldByName('full_name').AsString;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
-    case FieldByName('individual_sex').AsString of
-      'M': R.Sex := sexMale;
-      'F': R.Sex := sexFemale;
-    else
-      R.Sex := sexUnknown;
-    end;
-    case FieldByName('individual_age').AsString of
-      'N': R.Age := ageNestling;
-      'F': R.Age := ageFledgling;
-      'J': R.Age := ageJuvenile;
-      'A': R.Age := ageAdult;
-      'Y': R.Age := ageFirstYear;
-      'S': R.Age := ageSecondYear;
-      'T': R.Age := ageThirdYear;
-      '4': R.Age := ageFourthYear;
-      '5': R.Age := ageFifthYear;
-    else
-      R.Age := ageUnknown;
-    end;
+    R.Sex := StrToSex(FieldByName('individual_sex').AsString);
+    R.Age := StrToAge(FieldByName('individual_age').AsString);
     R.NestId := FieldByName('nest_id').AsInteger;
     R.BirthDate := FieldByName('birth_date').AsString;
     R.BirthDay := FieldByName('birth_day').AsInteger;
@@ -3532,30 +3255,9 @@ begin
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
   if ARow.IndexOfName('individual_sex') >= 0 then
-  begin
-    case ARow.Values['individual_sex'] of
-      'M': R.Sex := sexMale;
-      'F': R.Sex := sexFemale;
-    else
-      R.Sex := sexUnknown;
-    end;
-  end;
+    R.Sex := StrToSex(ARow.Values['individual_sex']);
   if ARow.IndexOfName('individual_age') >= 0 then
-  begin
-    case ARow.Values['individual_age'] of
-      'N': R.Age := ageNestling;
-      'F': R.Age := ageFledgling;
-      'J': R.Age := ageJuvenile;
-      'A': R.Age := ageAdult;
-      'Y': R.Age := ageFirstYear;
-      'S': R.Age := ageSecondYear;
-      'T': R.Age := ageThirdYear;
-      '4': R.Age := ageFourthYear;
-      '5': R.Age := ageFifthYear;
-    else
-      R.Age := ageUnknown;
-    end;
-  end;
+    R.Age := StrToAge(ARow.Values['individual_age']);
   if ARow.IndexOfName('nest_id') >= 0 then
     R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
   if ARow.IndexOfName('birth_day') >= 0 then

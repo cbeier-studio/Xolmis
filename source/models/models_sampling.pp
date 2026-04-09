@@ -422,8 +422,10 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns, data_consts,
-  data_setparam, data_getvalue, udm_main;
+  utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
+  data_columns, data_consts, data_setparam, data_getvalue,
+  models_users,
+  udm_main;
 
 function AuthorListToString(aAuthors: TAuthors): String;
 var
@@ -1074,13 +1076,7 @@ begin
     FNetNumber      := Obj.Get('net_number', 0);
     FLongitude      := Obj.Get('longitude', 0.0);
     FLatitude       := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FSampleDate     := Obj.Get('sample_date', NullDate);
     FNetOpen1       := Obj.Get('open_time_1', NullTime);
     FNetClose1      := Obj.Get('close_time_1', NullTime);
@@ -1407,13 +1403,7 @@ begin
     R.NetNumber := FieldByName('net_number').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.SampleDate := FieldByName('sample_date').AsDateTime;
     R.NetOpen1 := FieldByName('net_open_1').AsDateTime;
     R.NetClose1 := FieldByName('net_close_1').AsDateTime;
@@ -1466,15 +1456,7 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('sample_date') >= 0 then
     R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
   if ARow.IndexOfName('net_open_1') >= 0 then
@@ -1815,13 +1797,7 @@ begin
     FSampleTime         := Obj.Get('sample_time', NullTime);
     FLongitude          := Obj.Get('longitude', 0.0);
     FLatitude           := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FObserverId         := Obj.Get('observer_id', 0);
     FHerbsProportion    := Obj.Get('herbs_proportion', 0);
     FHerbsDistribution  := TStratumDistribution(Obj.Get('herbs_distribution', 0));
@@ -2133,13 +2109,7 @@ begin
     R.Notes := FieldByName('notes').AsString;
     R.Longitude := FieldByName('longitude').AsFloat;
     R.Latitude := FieldByName('latitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.HerbsProportion := FieldByName('herbs_proportion').AsInteger;
     R.HerbsDistribution := TStratumDistribution(FieldByName('herbs_distribution').AsInteger);
@@ -2183,15 +2153,7 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('observer_id') >= 0 then
     R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('herbs_distribution') >= 0 then
@@ -2976,13 +2938,7 @@ begin
     FStartLatitude  := Obj.Get('start_latitude', 0.0);
     FEndLongitude   := Obj.Get('end_longitude', 0.0);
     FEndLatitude    := Obj.Get('end_latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FObserversTally := Obj.Get('observers_tally', 0);
     FTotalArea      := Obj.Get('total_area', 0.0);
     FTotalDistance  := Obj.Get('total_distance', 0.0);
@@ -3319,13 +3275,7 @@ begin
     R.StartLongitude := FieldByName('start_longitude').AsFloat;
     R.EndLatitude := FieldByName('end_latitude').AsFloat;
     R.EndLongitude := FieldByName('end_longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.ObserversTally := FieldByName('observers_tally').AsInteger;
     R.TotalArea := FieldByName('area_total').AsFloat;
     R.TotalDistance := FieldByName('distance_total').AsFloat;
@@ -3385,15 +3335,7 @@ begin
   if ARow.IndexOfName('end_latitude') >= 0 then
     R.EndLatitude := StrToFloatDef(ARow.Values['end_latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('observers_tally') >= 0 then
     R.ObserversTally := StrToIntDef(ARow.Values['observers_tally'], 0);
   if ARow.IndexOfName('area_total') >= 0 then
@@ -3715,35 +3657,21 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FSampleDate := Obj.Get('sample_date', NullDate);
-    FSampleTime := Obj.Get('sample_time', NullTime);
-    case Obj.Get('sample_moment', '') of
-      'S': FSampleMoment := wmStart;
-      'M': FSampleMoment := wmMiddle;
-      'E': FSampleMoment := wmEnd;
-    else
-      FSampleMoment := wmNone;
-    end;
+    FSampleDate           := Obj.Get('sample_date', NullDate);
+    FSampleTime           := Obj.Get('sample_time', NullTime);
+    FSampleMoment         := StrToSampleMoment(Obj.Get('sample_moment', ''));
     FSurveyId             := Obj.Get('survey_id', 0);
     FObserverId           := Obj.Get('observer_id', 0);
     FAtmosphericPressure  := Obj.Get('atmospheric_pressure', 0.0);
-    case Obj.Get('precipitation', '') of
-      'N': FPrecipitation := wpNone;
-      'F': FPrecipitation := wpFog;
-      'M': FPrecipitation := wpMist;
-      'D': FPrecipitation := wpDrizzle;
-      'R': FPrecipitation := wpRain;
-    else
-      FPrecipitation := wpEmpty;
-    end;
-    FCloudCover       := Obj.Get('cloud_cover', 0);
-    FRainfall         := Obj.Get('rainfall', 0);
-    FRelativeHumidity := Obj.Get('relative_humidity', 0.0);
-    FTemperature      := Obj.Get('temperature', 0.0);
-    FWindSpeedBft     := Obj.Get('wind_speed_bft', 0);
-    FWindSpeedKmH     := Obj.Get('wind_speed_kmh', 0.0);
-    FWindDirection    := Obj.Get('wind_direction', '');
-    FNotes            := Obj.Get('notes', '');
+    FPrecipitation        := StrToPrecipitation(Obj.Get('precipitation', ''));
+    FCloudCover           := Obj.Get('cloud_cover', 0);
+    FRainfall             := Obj.Get('rainfall', 0);
+    FRelativeHumidity     := Obj.Get('relative_humidity', 0.0);
+    FTemperature          := Obj.Get('temperature', 0.0);
+    FWindSpeedBft         := Obj.Get('wind_speed_bft', 0);
+    FWindSpeedKmH         := Obj.Get('wind_speed_kmh', 0.0);
+    FWindDirection        := Obj.Get('wind_direction', '');
+    FNotes                := Obj.Get('notes', '');
   finally
     Obj.Free;
   end;
@@ -4031,25 +3959,11 @@ begin
     R.AtmosphericPressure := FieldByName('atmospheric_pressure').AsFloat;
     R.CloudCover := FieldByName('cloud_cover').AsInteger;
     R.Notes := FieldByName('notes').AsString;
-    case FieldByName('precipitation').AsString of
-      'N': R.Precipitation := wpNone;
-      'F': R.Precipitation := wpFog;
-      'M': R.Precipitation := wpMist;
-      'D': R.Precipitation := wpDrizzle;
-      'R': R.Precipitation := wpRain;
-    else
-      R.Precipitation := wpEmpty;
-    end;
+    R.Precipitation := StrToPrecipitation(FieldByName('precipitation').AsString);
     R.Rainfall := FieldByName('rainfall').AsInteger;
     R.RelativeHumidity := FieldByName('relative_humidity').AsFloat;
     R.SampleDate := FieldByName('sample_date').AsDateTime;
-    case FieldByName('sample_moment').AsString of
-      'S': R.SampleMoment := wmStart;
-      'M': R.SampleMoment := wmMiddle;
-      'E': R.SampleMoment := wmEnd;
-    else
-      R.SampleMoment := wmNone;
-    end;
+    R.SampleMoment := StrToSampleMoment(FieldByName('sample_moment').AsString);
     R.SampleTime := FieldByName('sample_time').AsDateTime;
     R.Temperature := FieldByName('temperature').AsFloat;
     R.ObserverId := FieldByName('observer_id').AsInteger;
@@ -4085,31 +3999,13 @@ begin
   if ARow.IndexOfName('sample_time') >= 0 then
     R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
   if ARow.IndexOfName('sample_moment') >= 0 then
-  begin
-    case ARow.Values['sample_moment'] of
-      'S': R.SampleMoment := wmStart;
-      'M': R.SampleMoment := wmMiddle;
-      'E': R.SampleMoment := wmEnd;
-    else
-      R.SampleMoment := wmNone;
-    end;
-  end;
+    R.SampleMoment := StrToSampleMoment(ARow.Values['sample_moment']);
   if ARow.IndexOfName('atmospheric_pressure') >= 0 then
     R.AtmosphericPressure := StrToFloatDef(ARow.Values['atmospheric_pressure'], 0);
   if ARow.IndexOfName('cloud_cover') >= 0 then
     R.CloudCover := StrToIntDef(ARow.Values['cloud_cover'], 0);
   if ARow.IndexOfName('precipitation') >= 0 then
-  begin
-    case ARow.Values['precipitation'] of
-      'N': R.Precipitation := wpNone;
-      'F': R.Precipitation := wpFog;
-      'M': R.Precipitation := wpMist;
-      'D': R.Precipitation := wpDrizzle;
-      'R': R.Precipitation := wpRain;
-    else
-      R.Precipitation := wpEmpty;
-    end;
-  end;
+    R.Precipitation := StrToPrecipitation(ARow.Values['precipitation']);
   if ARow.IndexOfName('rainfall') >= 0 then
     R.Rainfall := StrToIntDef(ARow.Values['rainfall'], 0);
   if ARow.IndexOfName('relative_humidity') >= 0 then

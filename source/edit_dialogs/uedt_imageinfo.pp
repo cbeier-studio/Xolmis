@@ -580,49 +580,10 @@ begin
   FImage.AuthorId  := FAuthorId;
   FImage.ImageDate := TextToDate(eImageDate.Text);
   FImage.ImageTime := TextToTime(eImageTime.Text);
-  case cbImageType.ItemIndex of
-    0: FImage.ImageType := itBirdInHandFlank;
-    1: FImage.ImageType := itBirdInHandBelly;
-    2: FImage.ImageType := itBirdInHandBack;
-    3: FImage.ImageType := itBirdInHandWing;
-    4: FImage.ImageType := itBirdInHandTail;
-    5: FImage.ImageType := itBirdInHandHead;
-    6: FImage.ImageType := itBirdInHandFeet;
-    7: FImage.ImageType := itFreeBirdStanding;
-    8: FImage.ImageType := itFreeBirdFlying;
-    9: FImage.ImageType := itFreeBirdSwimming;
-   10: FImage.ImageType := itFreeBirdForraging;
-   11: FImage.ImageType := itFreeBirdCopulating;
-   12: FImage.ImageType := itFreeBirdBuildingNest;
-   13: FImage.ImageType := itFreeBirdDisplaying;
-   14: FImage.ImageType := itFreeBirdIncubating;
-   15: FImage.ImageType := itFreeBirdVocalizing;
-   16: FImage.ImageType := itFreeBirdAgonistic;
-   17: FImage.ImageType := itDeadBird;
-   18: FImage.ImageType := itBirdFlock;
-   19: FImage.ImageType := itBirdNest;
-   20: FImage.ImageType := itBirdEgg;
-   21: FImage.ImageType := itBirdNestling;
-   22: FImage.ImageType := itEctoparasite;
-   23: FImage.ImageType := itFootprint;
-   24: FImage.ImageType := itFeather;
-   25: FImage.ImageType := itFeces;
-   26: FImage.ImageType := itFood;
-   27: FImage.ImageType := itEnvironment;
-   28: FImage.ImageType := itFieldwork;
-   29: FImage.ImageType := itTeam;
-  else
-    FImage.ImageType := itEmpty;
-  end;
+  FImage.ImageType := StrToImageType(cbImageType.Text);
   FImage.Filename   := eImageFilename.Text;
   FImage.LocalityId := FLocalityId;
-  case cbCoordinatePrecision.ItemIndex of
-    0: FImage.CoordinatePrecision := cpExact;
-    1: FImage.CoordinatePrecision := cpApproximated;
-    2: FImage.CoordinatePrecision := cpReference;
-  else
-    FImage.CoordinatePrecision := cpEmpty;
-  end;
+  FImage.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FImage.Longitude := StrToFloatOrZero(eLongitude.Text);
   FImage.Latitude  := StrToFloatOrZero(eLatitude.Text);
   FImage.TaxonId   := FTaxonId;

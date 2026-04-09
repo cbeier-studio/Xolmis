@@ -131,7 +131,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_dialogs, utils_finddialogs, utils_validations,
-  utils_editdialogs, utils_gis,
+  utils_editdialogs, utils_gis, utils_conversions,
   data_types, data_consts, data_getvalue, data_columns, models_record_types, models_geo, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -637,21 +637,7 @@ end;
 procedure TedtSpecimen.SetRecord;
 begin
   FSpecimen.FieldNumber := eFieldNumber.Text;
-  case cbSampleType.ItemIndex of
-    0: FSpecimen.SampleType := sptWholeCarcass;
-    1: FSpecimen.SampleType := sptPartialCarcass;
-    2: FSpecimen.SampleType := sptNest;
-    3: FSpecimen.SampleType := sptBones;
-    4: FSpecimen.SampleType := sptEgg;
-    5: FSpecimen.SampleType := sptParasites;
-    6: FSpecimen.SampleType := sptFeathers;
-    7: FSpecimen.SampleType := sptBlood;
-    8: FSpecimen.SampleType := sptClaw;
-    9: FSpecimen.SampleType := sptSwab;
-   10: FSpecimen.SampleType := sptTissues;
-   11: FSpecimen.SampleType := sptFeces;
-   12: FSpecimen.SampleType := sptRegurgite;
-  end;
+  FSpecimen.SampleType := StrToSpecimenType(cbSampleType.Text);
   FSpecimen.CollectionYear := StrToInt(eCollectionYear.Text);
   if eCollectionMonth.Text <> EmptyStr then
     FSpecimen.CollectionMonth := StrToInt(eCollectionMonth.Text)
@@ -670,13 +656,7 @@ begin
     FSpecimen.Latitude := StrToFloat(eLatitude.Text)
   else
     FSpecimen.Latitude := 0;
-  case cbCoordinatePrecision.ItemIndex of
-    0: FSpecimen.CoordinatePrecision := cpExact;
-    1: FSpecimen.CoordinatePrecision := cpApproximated;
-    2: FSpecimen.CoordinatePrecision := cpReference;
-  else
-    FSpecimen.CoordinatePrecision := cpEmpty;
-  end;
+  FSpecimen.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FSpecimen.TaxonId := FTaxonId;
   FSpecimen.IndividualId := FIndividualId;
   FSpecimen.NestId := FNestId;

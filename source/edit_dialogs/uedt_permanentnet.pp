@@ -84,7 +84,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_gis, utils_validations, utils_fullnames,
+  utils_locale, utils_global, utils_dialogs, utils_gis, utils_validations, utils_fullnames, utils_conversions,
   data_types, data_consts, data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
@@ -337,13 +337,7 @@ begin
     FNet.Longitude := 0;
     FNet.Latitude := 0;
   end;
-  case cbCoordinatePrecision.ItemIndex of
-    0: FNet.CoordinatePrecision := cpExact;
-    1: FNet.CoordinatePrecision := cpApproximated;
-    2: FNet.CoordinatePrecision := cpReference;
-  else
-    FNet.CoordinatePrecision := cpEmpty;
-  end;
+  FNet.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FNet.Notes := mNotes.Text;
 
   GetFullName;

@@ -152,43 +152,55 @@ begin
   Ini := eStartNumber.Value;
   Fim := eEndNumber.Value;
 
-  case cbBandType.ItemIndex of
-    0: FBandType := mkButtEndBand;
-    1: FBandType := mkFlag;
-    2: FBandType := mkCollar;
-    3: FBandType := mkWingTag;
-    4: FBandType := mkTriangularBand;
-    5: FBandType := mkLockOnBand;
-    6: FBandType := mkRivetBand;
-    7: FBandType := mkClosedBand;
-    8: FBandType := mkOther;
-  end;
-  case cbBandSource.ItemIndex of
-    0: FBandSource := bscAcquiredFromSupplier;
-    1: FBandSource := bscTransferBetweenBanders;
-    2: FBandSource := bscLivingBirdBandedByOthers;
-    3: FBandSource := bscDeadBirdBandedByOthers;
-    4: FBandSource := bscFoundLoose;
-  end;
-  case cbBandSource.ItemIndex of
-    0: FEvent := bevOrder;
-    1: FEvent := bevTransfer;
-    2: FEvent := bevRetrieve;
-    3: FEvent := bevRetrieve;
-    4: FEvent := bevRetrieve;
-  end;
+  FBandType := StrToBandType(cbBandType.Text);
+  //case cbBandType.ItemIndex of
+  //  0: FBandType := mkButtEndBand;
+  //  1: FBandType := mkFlag;
+  //  2: FBandType := mkCollar;
+  //  3: FBandType := mkWingTag;
+  //  4: FBandType := mkTriangularBand;
+  //  5: FBandType := mkLockOnBand;
+  //  6: FBandType := mkRivetBand;
+  //  7: FBandType := mkClosedBand;
+  //  8: FBandType := mkOther;
+  //end;
+  FBandSource := StrToBandSource(cbBandSource.Text);
+  //case cbBandSource.ItemIndex of
+  //  0: FBandSource := bscAcquiredFromSupplier;
+  //  1: FBandSource := bscTransferBetweenBanders;
+  //  2: FBandSource := bscLivingBirdBandedByOthers;
+  //  3: FBandSource := bscDeadBirdBandedByOthers;
+  //  4: FBandSource := bscFoundLoose;
+  //end;
   case FBandSource of
     bscAcquiredFromSupplier:
-      begin
-        if (Trim(eReceiptDate.Text) <> '') then
-          FBandStatus := bstAvailable
-        else
-          FBandStatus := bstOrdered;
-      end;
-    bscTransferBetweenBanders:    FBandStatus := bstAvailable;
-    bscLivingBirdBandedByOthers:  FBandStatus := bstUsed;
-    bscDeadBirdBandedByOthers:    FBandStatus := bstUsed;
-    bscFoundLoose:                FBandStatus := bstLost;
+    begin
+      FEvent := bevOrder;
+      if (Trim(eReceiptDate.Text) <> '') then
+        FBandStatus := bstAvailable
+      else
+        FBandStatus := bstOrdered;
+    end;
+    bscTransferBetweenBanders:
+    begin
+      FEvent := bevTransfer;
+      FBandStatus := bstAvailable;
+    end;
+    bscLivingBirdBandedByOthers:
+    begin
+      FEvent := bevRetrieve;
+      FBandStatus := bstUsed;
+    end;
+    bscDeadBirdBandedByOthers:
+    begin
+      FEvent := bevRetrieve;
+      FBandStatus := bstUsed;
+    end;
+    bscFoundLoose:
+    begin
+      FEvent := bevRetrieve;
+      FBandStatus := bstLost;
+    end;
   end;
 
   // Progress dialog

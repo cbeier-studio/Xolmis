@@ -160,8 +160,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, data_consts, data_columns, data_setparam,
-  data_getvalue,
+  utils_locale, utils_global, utils_validations, utils_conversions,
+  data_consts, data_columns, data_setparam, data_getvalue,
+  models_users,
   udm_main;
 
 procedure InitSitePropsDict;
@@ -358,16 +359,7 @@ begin
   try
     FName           := Obj.Get('site_name', '');
     FAbbreviation   := Obj.Get('abbreviation', '');
-    case Obj.Get('rank', '') of
-      'P': FRank := srCountry;
-      'E': FRank := srState;
-      'R': FRank := srRegion;
-      'M': FRank := srMunicipality;
-      'D': FRank := srDistrict;
-      'L': FRank := srLocality;
-    else
-      FRank := srNone;
-    end;
+    FRank           := StrToSiteRank(Obj.Get('rank', ''));
     FParentSiteId   := Obj.Get('parent_site_id', 0);
     FMunicipalityId := Obj.Get('municipality_id', 0);
     FStateId        := Obj.Get('state_id', 0);
@@ -640,16 +632,7 @@ begin
     R.Id := FieldByName('site_id').AsInteger;
     R.Name := FieldByName('site_name').AsString;
     R.Abbreviation := FieldByName('site_acronym').AsString;
-    case FieldByName('site_rank').AsString of
-      'P': R.Rank := srCountry;
-      'E': R.Rank := srState;
-      'R': R.Rank := srRegion;
-      'M': R.Rank := srMunicipality;
-      'D': R.Rank := srDistrict;
-      'L': R.Rank := srLocality;
-    else
-      R.Rank := srNone;
-    end;
+    R.Rank := StrToSiteRank(FieldByName('site_rank').AsString);
     R.ParentSiteId := FieldByName('parent_site_id').AsInteger;
     R.MunicipalityId := FieldByName('municipality_id').AsInteger;
     R.StateId := FieldByName('state_id').AsInteger;
@@ -689,19 +672,7 @@ begin
   if ARow.IndexOfName('site_acronym') >= 0 then
     R.Abbreviation := ARow.Values['site_acronym'];
   if ARow.IndexOfName('site_rank') >= 0 then
-  begin
-    { #todo : Translate site rank also from rank names and numbers }
-    case ARow.Values['site_rank'] of
-      'P': R.Rank := srCountry;
-      'E': R.Rank := srState;
-      'R': R.Rank := srRegion;
-      'M': R.Rank := srMunicipality;
-      'D': R.Rank := srDistrict;
-      'L': R.Rank := srLocality;
-    else
-      R.Rank := srNone;
-    end;
-  end;
+    R.Rank := StrToSiteRank(ARow.Values['site_rank']);
   if ARow.IndexOfName('parent_site_id') >= 0 then
     R.ParentSiteId := StrToIntDef(ARow.Values['parent_site_id'], 0);
   if ARow.IndexOfName('municipality_id') >= 0 then

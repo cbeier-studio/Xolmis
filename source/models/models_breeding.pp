@@ -329,8 +329,9 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, models_users, data_columns, utils_validations, data_setparam, utils_fullnames,
-  data_consts, data_getvalue,
+  utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
+  data_columns, data_consts, data_getvalue, data_setparam,
+  models_users,
   udm_main;
 
 { TNestRevision }
@@ -453,28 +454,14 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName     := Obj.Get('full_name', '');
-    FNestId       := Obj.Get('nest_id', 0);
-    FRevisionDate := Obj.Get('revision_date', NullDate);
-    FRevisionTime := Obj.Get('revision_time', NullTime);
-    FObserver1Id  := Obj.Get('observer_1_id', 0);
-    FObserver2Id  := Obj.Get('observer_2_id', 0);
-    case Obj.Get('nest_status', '') of
-      'I': FNestStatus := nstInactive;
-      'A': FNestStatus := nstActive;
-    else
-      FNestStatus := nstUnknown;
-    end;
-    case Obj.Get('nest_stage', '') of
-      'X': FNestStage := nsgInactive;
-      'C': FNestStage := nsgConstruction;
-      'L': FNestStage := nsgLaying;
-      'I': FNestStage := nsgIncubation;
-      'H': FNestStage := nsgHatching;
-      'N': FNestStage := nsgNestling;
-    else
-      FNestStage := nsgUnknown;
-    end;
+    FFullName                   := Obj.Get('full_name', '');
+    FNestId                     := Obj.Get('nest_id', 0);
+    FRevisionDate               := Obj.Get('revision_date', NullDate);
+    FRevisionTime               := Obj.Get('revision_time', NullTime);
+    FObserver1Id                := Obj.Get('observer_1_id', 0);
+    FObserver2Id                := Obj.Get('observer_2_id', 0);
+    FNestStatus                 := StrToNestStatus(Obj.Get('nest_status', ''));
+    FNestStage                  := StrToNestStage(Obj.Get('nest_stage', ''));
     FHostEggsTally              := Obj.Get('host_eggs', 0);
     FHostNestlingsTally         := Obj.Get('host_nestlings', 0);
     FNidoparasiteEggsTally      := Obj.Get('nidoparasite_eggs', 0);
@@ -767,28 +754,14 @@ begin
     R.RevisionTime := FieldByName('revision_time').AsDateTime;
     R.Observer1Id := FieldByName('observer_1_id').AsInteger;
     R.Observer2Id := FieldByName('observer_2_id').AsInteger;
-    case FieldByName('nest_status').AsString of
-      'I': R.NestStatus := nstInactive;
-      'A': R.NestStatus := nstActive;
-    else
-      R.NestStatus := nstUnknown;
-    end;
+    R.FNestStatus := StrToNestStatus(FieldByName('nest_status').AsString);
     R.HostEggsTally := FieldByName('host_eggs_tally').AsInteger;
     R.HostNestlingsTally := FieldByName('host_nestlings_tally').AsInteger;
     R.NidoparasiteEggsTally := FieldByName('nidoparasite_eggs_tally').AsInteger;
     R.NidoparasiteNestlingsTally := FieldByName('nidoparasite_nestlings_tally').AsInteger;
     R.NidoparasiteId := FieldByName('nidoparasite_id').AsInteger;
     R.HavePhilornisLarvae := FieldByName('have_philornis_larvae').AsBoolean;
-    case FieldByName('nest_stage').AsString of
-      'X': R.NestStage := nsgInactive;
-      'C': R.NestStage := nsgConstruction;
-      'L': R.NestStage := nsgLaying;
-      'I': R.NestStage := nsgIncubation;
-      'H': R.NestStage := nsgHatching;
-      'N': R.NestStage := nsgNestling;
-    else
-      R.NestStage := nsgUnknown;
-    end;
+    R.FNestStage := StrToNestStage(FieldByName('nest_stage').AsString);
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -825,14 +798,7 @@ begin
   if ARow.IndexOfName('observer_2_id') >= 0 then
     R.Observer2Id := StrToIntDef(ARow.Values['observer_2_id'], 0);
   if ARow.IndexOfName('nest_status') >= 0 then
-  begin
-    case ARow.Values['nest_status'] of
-      'I': R.NestStatus := nstInactive;
-      'A': R.NestStatus := nstActive;
-    else
-      R.NestStatus := nstUnknown;
-    end;
-  end;
+    R.NestStatus := StrToNestStatus(ARow.Values['nest_status']);
   if ARow.IndexOfName('host_eggs_tally') >= 0 then
     R.HostEggsTally := StrToIntDef(ARow.Values['host_eggs_tally'], 0);
   if ARow.IndexOfName('host_nestlings_tally') >= 0 then
@@ -846,18 +812,7 @@ begin
   if ARow.IndexOfName('have_philornis_larvae') >= 0 then
     R.HavePhilornisLarvae := StrToBoolDef(ARow.Values['have_philornis_larvae'], False);
   if ARow.IndexOfName('nest_stage') >= 0 then
-  begin
-    case ARow.Values['nest_stage'] of
-      'X': R.NestStage := nsgInactive;
-      'C': R.NestStage := nsgConstruction;
-      'L': R.NestStage := nsgLaying;
-      'I': R.NestStage := nsgIncubation;
-      'H': R.NestStage := nsgHatching;
-      'N': R.NestStage := nsgNestling;
-    else
-      R.NestStage := nsgUnknown;
-    end;
-  end;
+    R.NestStage := StrToNestStage(ARow.Values['nest_stage']);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -1152,55 +1107,27 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFieldNumber  := Obj.Get('field_number', '');
-    FFullName     := Obj.Get('full_name', '');
-    FEggSeq       := Obj.Get('egg_number', 0);
-    FNestId       := Obj.Get('nest_id', 0);
-    case Obj.Get('egg_shape', '') of
-      'S': FEggShape := esSpherical;
-      'E': FEggShape := esElliptical;
-      'O': FEggShape := esOval;
-      'P': FEggShape := esPiriform;
-      'C': FEggShape := esConical;
-      'B': FEggShape := esBiconical;
-      'Y': FEggShape := esCylindrical;
-      'L': FEggShape := esLongitudinal;
-    else
-      FEggShape := esUnknown;
-    end;
-    FWidth          := Obj.Get('width', 0.0);
-    FLength         := Obj.Get('length', 0.0);
-    FMass           := Obj.Get('mass', 0.0);
-    FVolume         := Obj.Get('volume', 0.0);
-    FEggStage       := Obj.Get('stage', '');
-    FTaxonId        := Obj.Get('taxon_id', 0);
-    FEggshellColor  := Obj.Get('color', '');
-    case Obj.Get('pattern', '') of
-      'P':  FEggshellPattern := espSpots;
-      'B':  FEggshellPattern := espBlotches;
-      'S':  FEggshellPattern := espSquiggles;
-      'T':  FEggshellPattern := espStreaks;
-      'W':  FEggshellPattern := espScrawls;
-      'PS': FEggshellPattern := espSpotsSquiggles;
-      'BS': FEggshellPattern := espBlotchesSquiggles;
-    else
-      FEggshellPattern := espUnknown;
-    end;
-    case Obj.Get('texture', '') of
-      'C': FEggshellTexture := estChalky;
-      'S': FEggshellTexture := estShiny;
-      'G': FEggshellTexture := estGlossy;
-      'P': FEggshellTexture := estPitted;
-    else
-      FEggshellTexture := estUnknown;
-    end;
-    FEggHatched   := Obj.Get('hatched', False);
-    FIndividualId := Obj.Get('individual_id', 0);
-    FResearcherId := Obj.Get('researcher_id', 0);
-    FMeasureDate  := Obj.Get('measure_date', NullDate);
-    FHostEgg      := Obj.Get('host_egg', True);
-    FDescription  := Obj.Get('description', '');
-    FNotes        := Obj.Get('notes', '');
+    FFieldNumber      := Obj.Get('field_number', '');
+    FFullName         := Obj.Get('full_name', '');
+    FEggSeq           := Obj.Get('egg_number', 0);
+    FNestId           := Obj.Get('nest_id', 0);
+    FEggShape         := StrToEggShape(Obj.Get('egg_shape', ''));
+    FWidth            := Obj.Get('width', 0.0);
+    FLength           := Obj.Get('length', 0.0);
+    FMass             := Obj.Get('mass', 0.0);
+    FVolume           := Obj.Get('volume', 0.0);
+    FEggStage         := Obj.Get('stage', '');
+    FTaxonId          := Obj.Get('taxon_id', 0);
+    FEggshellColor    := Obj.Get('color', '');
+    FEggshellPattern  := StrToEggPattern(Obj.Get('pattern', ''));
+    FEggshellTexture  := StrToEggTexture(Obj.Get('texture', ''));
+    FEggHatched       := Obj.Get('hatched', False);
+    FIndividualId     := Obj.Get('individual_id', 0);
+    FResearcherId     := Obj.Get('researcher_id', 0);
+    FMeasureDate      := Obj.Get('measure_date', NullDate);
+    FHostEgg          := Obj.Get('host_egg', True);
+    FDescription      := Obj.Get('description', '');
+    FNotes            := Obj.Get('notes', '');
   finally
     Obj.Free;
   end;
@@ -1502,43 +1429,15 @@ begin
     R.FieldNumber := FieldByName('field_number').AsString;
     R.EggSeq := FieldByName('egg_seq').AsInteger;
     R.NestId := FieldByName('nest_id').AsInteger;
-    case FieldByName('egg_shape').AsString of
-      'S': R.EggShape := esSpherical;
-      'E': R.EggShape := esElliptical;
-      'O': R.EggShape := esOval;
-      'P': R.EggShape := esPiriform;
-      'C': R.EggShape := esConical;
-      'B': R.EggShape := esBiconical;
-      'Y': R.EggShape := esCylindrical;
-      'L': R.EggShape := esLongitudinal;
-    else
-      R.EggShape := esUnknown;
-    end;
+    R.EggShape := StrToEggShape(FieldByName('egg_shape').AsString);
     R.Width := FieldByName('egg_width').AsFloat;
     R.Length := FieldByName('egg_length').AsFloat;
     R.Mass := FieldByName('egg_mass').AsFloat;
     R.Volume := FieldByName('egg_volume').AsFloat;
     R.EggStage := FieldByName('egg_stage').AsString;
     R.EggshellColor := FieldByName('eggshell_color').AsString;
-    case FieldByName('eggshell_pattern').AsString of
-      'P':  R.EggshellPattern := espSpots;
-      'B':  R.EggshellPattern := espBlotches;
-      'S':  R.EggshellPattern := espSquiggles;
-      'T':  R.EggshellPattern := espStreaks;
-      'W':  R.EggshellPattern := espScrawls;
-      'PS': R.EggshellPattern := espSpotsSquiggles;
-      'BS': R.EggshellPattern := espBlotchesSquiggles;
-    else
-      R.EggshellPattern := espUnknown;
-    end;
-    case FieldByName('eggshell_texture').AsString of
-      'C': R.EggshellTexture := estChalky;
-      'S': R.EggshellTexture := estShiny;
-      'G': R.EggshellTexture := estGlossy;
-      'P': R.EggshellTexture := estPitted;
-    else
-      R.EggshellTexture := estUnknown;
-    end;
+    R.EggshellPattern := StrToEggPattern(FieldByName('eggshell_pattern').AsString);
+    R.EggshellTexture := StrToEggTexture(FieldByName('eggshell_texture').AsString);
     R.EggHatched := FieldByName('egg_hatched').AsBoolean;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.ResearcherId := FieldByName('researcher_id').AsInteger;
@@ -1578,20 +1477,7 @@ begin
   if ARow.IndexOfName('nest_id') >= 0 then
     R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
   if ARow.IndexOfName('egg_shape') >= 0 then
-  begin
-    case ARow.Values['egg_shape'] of
-      'S': R.EggShape := esSpherical;
-      'E': R.EggShape := esElliptical;
-      'O': R.EggShape := esOval;
-      'P': R.EggShape := esPiriform;
-      'C': R.EggShape := esConical;
-      'B': R.EggShape := esBiconical;
-      'Y': R.EggShape := esCylindrical;
-      'L': R.EggShape := esLongitudinal;
-    else
-      R.EggShape := esUnknown;
-    end;
-  end;
+    R.EggShape := StrToEggShape(ARow.Values['egg_shape']);
   if ARow.IndexOfName('egg_width') >= 0 then
     R.Width := StrToFloatDef(ARow.Values['egg_width'], 0);
   if ARow.IndexOfName('egg_length') >= 0 then
@@ -1603,30 +1489,9 @@ begin
   if ARow.IndexOfName('eggshell_color') >= 0 then
     R.EggshellColor := ARow.Values['eggshell_color'];
   if ARow.IndexOfName('eggshell_pattern') >= 0 then
-  begin
-    case ARow.Values['eggshell_pattern'] of
-      'P':  R.EggshellPattern := espSpots;
-      'B':  R.EggshellPattern := espBlotches;
-      'S':  R.EggshellPattern := espSquiggles;
-      'T':  R.EggshellPattern := espStreaks;
-      'W':  R.EggshellPattern := espScrawls;
-      'PS': R.EggshellPattern := espSpotsSquiggles;
-      'BS': R.EggshellPattern := espBlotchesSquiggles;
-    else
-      R.EggshellPattern := espUnknown;
-    end;
-  end;
+    R.EggshellPattern := StrToEggPattern(ARow.Values['eggshell_pattern']);
   if ARow.IndexOfName('eggshell_texture') >= 0 then
-  begin
-    case ARow.Values['eggshell_texture'] of
-      'C': R.EggshellTexture := estChalky;
-      'S': R.EggshellTexture := estShiny;
-      'G': R.EggshellTexture := estGlossy;
-      'P': R.EggshellTexture := estPitted;
-    else
-      R.EggshellTexture := estUnknown;
-    end;
-  end;
+    R.EggshellTexture := StrToEggTexture(ARow.Values['eggshell_texture']);
   if ARow.IndexOfName('egg_hatched') >= 0 then
     R.EggHatched := StrToBoolDef(ARow.Values['egg_hatched'], False);
   if ARow.IndexOfName('individual_id') >= 0 then
@@ -2042,13 +1907,7 @@ begin
     FLocalityId           := Obj.Get('locality_id', 0);
     FLongitude            := Obj.Get('longitude', 0.0);
     FLatitude             := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision  := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FTaxonId              := Obj.Get('taxon_id', 0);
     FNestShape            := Obj.Get('nest_shape', '');
     FSupportType          := Obj.Get('support_type', '');
@@ -2073,30 +1932,13 @@ begin
     FIncubationDays       := Obj.Get('incubation_days', 0.0);
     FNestlingDays         := Obj.Get('nestling_days', 0.0);
     FActiveDays           := Obj.Get('active_days', 0.0);
-    case Obj.Get('nest_fate', '') of
-      'L': FNestFate := nfLoss;
-      'S': FNestFate := nfSuccess;
-    else
-      FNestFate := nfUnknown;
-    end;
-    case Obj.Get('loss_cause', '') of
-      'PRE': FLossCause := nlcPredation;
-      'PAR': FLossCause := nlcParasitism;
-      'DIS': FLossCause := nlcDisease;
-      'WEA': FLossCause := nlcWeather;
-      'FIR': FLossCause := nlcFire;
-      'ABD': FLossCause := nlcAbandonment;
-      'POL': FLossCause := nlcPollution;
-      'HDT': FLossCause := nlcHumanDisturbance;
-      'IMN': FLossCause := nlcImproperManagement;
-    else
-      FLossCause := nlcUnknown;
-    end;
-    FNestProductivity := Obj.Get('nest_productivity', 0);
-    FFoundDate        := Obj.Get('found_date', NullDate);
-    FLastDate         := Obj.Get('last_date_active', NullDate);
-    FDescription      := Obj.Get('description', '');
-    FNotes            := Obj.Get('notes', '');
+    FNestFate             := StrToNestFate(Obj.Get('nest_fate', ''));
+    FLossCause            := StrToLossCause(Obj.Get('loss_cause', ''));
+    FNestProductivity     := Obj.Get('nest_productivity', 0);
+    FFoundDate            := Obj.Get('found_date', NullDate);
+    FLastDate             := Obj.Get('last_date_active', NullDate);
+    FDescription          := Obj.Get('description', '');
+    FNotes                := Obj.Get('notes', '');
   finally
     Obj.Free;
   end;
@@ -2460,13 +2302,7 @@ begin
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.NestShape := FieldByName('nest_shape').AsString;
     R.SupportType := FieldByName('support_type').AsString;
@@ -2492,25 +2328,8 @@ begin
     R.IncubationDays := FieldByName('incubation_days').AsFloat;
     R.NestlingDays := FieldByName('nestling_days').AsFloat;
     R.ActiveDays := FieldByName('active_days').AsFloat;
-    case FieldByName('nest_fate').AsString of
-      'L': R.NestFate := nfLoss;
-      'S': R.NestFate := nfSuccess;
-    else
-      R.NestFate := nfUnknown;
-    end;
-    case FieldByName('loss_cause').AsString of
-      'PRE': R.LossCause := nlcPredation;
-      'PAR': R.LossCause := nlcParasitism;
-      'DIS': R.LossCause := nlcDisease;
-      'WEA': R.LossCause := nlcWeather;
-      'FIR': R.LossCause := nlcFire;
-      'ABD': R.LossCause := nlcAbandonment;
-      'POL': R.LossCause := nlcPollution;
-      'HDT': R.LossCause := nlcHumanDisturbance;
-      'IMN': R.LossCause := nlcImproperManagement;
-    else
-      R.LossCause := nlcUnknown;
-    end;
+    R.NestFate := StrToNestFate(FieldByName('nest_fate').AsString);
+    R.LossCause := StrToLossCause(FieldByName('loss_cause').AsString);
     R.NestProductivity := FieldByName('nest_productivity').AsInteger;
     R.FoundDate := FieldByName('found_date').AsDateTime;
     R.LastDate := FieldByName('last_date').AsDateTime;
@@ -2551,15 +2370,7 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
   if ARow.IndexOfName('nest_shape') >= 0 then
@@ -2611,30 +2422,9 @@ begin
   if ARow.IndexOfName('active_days') >= 0 then
     R.ActiveDays := StrToFloatDef(ARow.Values['active_days'], 0);
   if ARow.IndexOfName('nest_fate') >= 0 then
-  begin
-    case ARow.Values['nest_fate'] of
-      'L': R.NestFate := nfLoss;
-      'S': R.NestFate := nfSuccess;
-    else
-      R.NestFate := nfUnknown;
-    end;
-  end;
+    R.NestFate := StrToNestFate(ARow.Values['nest_fate']);
   if ARow.IndexOfName('loss_cause') >= 0 then
-  begin
-    case ARow.Values['loss_cause'] of
-      'PRE': R.LossCause := nlcPredation;
-      'PAR': R.LossCause := nlcParasitism;
-      'DIS': R.LossCause := nlcDisease;
-      'WEA': R.LossCause := nlcWeather;
-      'FIR': R.LossCause := nlcFire;
-      'ABD': R.LossCause := nlcAbandonment;
-      'POL': R.LossCause := nlcPollution;
-      'HDT': R.LossCause := nlcHumanDisturbance;
-      'IMN': R.LossCause := nlcImproperManagement;
-    else
-      R.LossCause := nlcUnknown;
-    end;
-  end;
+    R.LossCause := StrToLossCause(ARow.Values['loss_cause']);
   if ARow.IndexOfName('nest_productivity') >= 0 then
     R.NestProductivity := StrToIntDef(ARow.Values['nest_productivity'], 0);
   if ARow.IndexOfName('found_date') >= 0 then
@@ -2988,15 +2778,8 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FNestId     := Obj.Get('nest_id', 0);
-    case Obj.Get('role', '') of
-      'M': FRole := nrlMale;
-      'F': FRole := nrlFemale;
-      'H': FRole := nrlHelper;
-      'O': FRole := nrlOffspring;
-    else
-      FRole := nrlUnknown;
-    end;
+    FNestId       := Obj.Get('nest_id', 0);
+    FRole         := StrToNestRole(Obj.Get('role', ''));
     FIndividualId := Obj.Get('individual_id', 0);
   finally
     Obj.Free;
@@ -3213,14 +2996,7 @@ begin
   begin
     R.Id := FieldByName('nest_owner_id').AsInteger;
     R.NestId := FieldByName('nest_id').AsInteger;
-    case FieldByName('role').AsString of
-      'M': R.Role := nrlMale;
-      'F': R.Role := nrlFemale;
-      'H': R.Role := nrlHelper;
-      'O': R.Role := nrlOffspring;
-    else
-      R.Role := nrlUnknown;
-    end;
+    R.Role := StrToNestRole(FieldByName('role').AsString);
     R.IndividualId := FieldByName('individual_id').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -3247,16 +3023,7 @@ begin
   if ARow.IndexOfName('nest_id') >= 0 then
     R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
   if ARow.IndexOfName('role') >= 0 then
-  begin
-    case ARow.Values['role'] of
-      'M': R.Role := nrlMale;
-      'F': R.Role := nrlFemale;
-      'H': R.Role := nrlHelper;
-      'O': R.Role := nrlOffspring;
-    else
-      R.Role := nrlUnknown;
-    end;
-  end;
+    R.Role := StrToNestRole(ARow.Values['role']);
   if ARow.IndexOfName('individual_id') >= 0 then
     R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
 end;

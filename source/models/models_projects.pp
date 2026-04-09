@@ -320,7 +320,7 @@ var
 implementation
 
 uses
-  utils_locale, models_users, utils_global, utils_validations,
+  utils_locale, models_users, utils_global, utils_validations, utils_conversions,
   data_columns, data_setparam, data_consts, data_getvalue;
 
 procedure InitProjectActivityPropsDict;
@@ -1380,11 +1380,7 @@ begin
   try
     FProjectId    := Obj.Get('project_id', 0);
     FDescription  := Obj.Get('description', '');
-    case Obj.Get('status', '') of
-      'P': FStatus := gstPending;
-      'R': FStatus := gstReached;
-      'C': FStatus := gstCanceled;
-    end;
+    FStatus       := StrToGoalStatus(Obj.Get('status', ''));
   finally
     Obj.Free;
   end;
@@ -1596,11 +1592,7 @@ begin
     R.Id := FieldByName('goal_id').AsInteger;
     R.ProjectId := FieldByName('project_id').AsInteger;
     R.Description := FieldByName('goal_description').AsString;
-    case FieldByName('goal_status').AsString of
-      'P': R.Status := gstPending;
-      'R': R.Status := gstReached;
-      'C': R.Status := gstCanceled;
-    end;
+    R.Status := StrToGoalStatus(FieldByName('goal_status').AsString);
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
     GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
@@ -1628,13 +1620,7 @@ begin
   if ARow.IndexOfName('goal_description') >= 0 then
     R.Description := ARow.Values['goal_description'];
   if ARow.IndexOfName('goal_status') >= 0 then
-  begin
-    case ARow.Values['goal_status'] of
-      'P': R.Status := gstPending;
-      'R': R.Status := gstReached;
-      'C': R.Status := gstCanceled;
-    end;
-  end;
+    R.Status := StrToGoalStatus(ARow.Values['goal_status']);
 end;
 
 procedure TProjectGoalRepository.Insert(E: TXolmisRecord);
@@ -1665,11 +1651,7 @@ begin
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     ParamByName('goal_description').AsString := R.Description;
-    case R.Status of
-      gstPending:   ParamByName('goal_status').AsString := 'P';
-      gstReached:   ParamByName('goal_status').AsString := 'R';
-      gstCanceled:  ParamByName('goal_status').AsString := 'C';
-    end;
+    ParamByName('goal_status').AsString := GOAL_STATUSES[R.Status];
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -1716,11 +1698,7 @@ begin
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     ParamByName('goal_description').AsString := R.Description;
-    case R.Status of
-      gstPending:   ParamByName('goal_status').AsString := 'P';
-      gstReached:   ParamByName('goal_status').AsString := 'R';
-      gstCanceled:  ParamByName('goal_status').AsString := 'C';
-    end;
+    ParamByName('goal_status').AsString := GOAL_STATUSES[R.Status];
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('goal_id').AsInteger := R.Id;
 
@@ -1832,15 +1810,7 @@ begin
     FTargetDate   := Obj.Get('target_date', NullDate);
     FEndDate      := Obj.Get('end_date', NullDate);
     FGoalId       := Obj.Get('goal_id', 0);
-    case Obj.Get('status', '') of
-      'T': FStatus := astToDo;
-      'P': FStatus := astInProgress;
-      'F': FStatus := astDone;
-      'C': FStatus := astCanceled;
-      'D': FStatus := astDelayed;
-      'R': FStatus := astNeedsReview;
-      'B': FStatus := astBlocked;
-    end;
+    FStatus       := StrToActivityStatus(Obj.Get('status', ''));
   finally
     Obj.Free;
   end;
@@ -2073,15 +2043,7 @@ begin
     if not FieldByName('end_date').IsNull then
       R.EndDate := FieldByName('end_date').AsDateTime;
     R.GoalId := FieldByName('goal_id').AsInteger;
-    case FieldByName('progress_status').AsString of
-      'T': R.Status := astToDo;
-      'P': R.Status := astInProgress;
-      'F': R.Status := astDone;
-      'C': R.Status := astCanceled;
-      'D': R.Status := astDelayed;
-      'R': R.Status := astNeedsReview;
-      'B': R.Status := astBlocked;
-    end;
+    R.Status := StrToActivityStatus(FieldByName('progress_status').AsString);
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
     GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
@@ -2117,17 +2079,7 @@ begin
   if ARow.IndexOfName('goal_id') >= 0 then
     R.GoalId := StrToIntDef(ARow.Values['goal_id'], 0);
   if ARow.IndexOfName('progress_status') >= 0 then
-  begin
-    case ARow.Values['progress_status'] of
-      'T': R.Status := astToDo;
-      'P': R.Status := astInProgress;
-      'F': R.Status := astDone;
-      'C': R.Status := astCanceled;
-      'D': R.Status := astDelayed;
-      'R': R.Status := astNeedsReview;
-      'B': R.Status := astBlocked;
-    end;
-  end;
+    R.Status := StrToActivityStatus(ARow.Values['progress_status']);
 end;
 
 procedure TProjectActivityRepository.Insert(E: TXolmisRecord);
@@ -2170,15 +2122,7 @@ begin
     SetDateParam(ParamByName('target_date'), R.TargetDate);
     SetDateParam(ParamByName('end_date'), R.EndDate);
     SetForeignParam(ParamByName('goal_id'), R.GoalId);
-    case R.Status of
-      astToDo:        ParamByName('progress_status').AsString := 'T';
-      astInProgress:  ParamByName('progress_status').AsString := 'P';
-      astDone:        ParamByName('progress_status').AsString := 'F';
-      astCanceled:    ParamByName('progress_status').AsString := 'C';
-      astDelayed:     ParamByName('progress_status').AsString := 'D';
-      astNeedsReview: ParamByName('progress_status').AsString := 'R';
-      astBlocked:     ParamByName('progress_status').AsString := 'B';
-    end;
+    ParamByName('progress_status').AsString := ACTIVITY_STATUSES[R.Status];
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -2233,15 +2177,7 @@ begin
     SetDateParam(ParamByName('target_date'), R.TargetDate);
     SetDateParam(ParamByName('end_date'), R.EndDate);
     SetForeignParam(ParamByName('goal_id'), R.GoalId);
-    case R.Status of
-      astToDo:        ParamByName('progress_status').AsString := 'T';
-      astInProgress:  ParamByName('progress_status').AsString := 'P';
-      astDone:        ParamByName('progress_status').AsString := 'F';
-      astCanceled:    ParamByName('progress_status').AsString := 'C';
-      astDelayed:     ParamByName('progress_status').AsString := 'D';
-      astNeedsReview: ParamByName('progress_status').AsString := 'R';
-      astBlocked:     ParamByName('progress_status').AsString := 'B';
-    end;
+    ParamByName('progress_status').AsString := ACTIVITY_STATUSES[R.Status];
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('chronogram_id').AsInteger := R.Id;
 

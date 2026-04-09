@@ -133,7 +133,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_system, utils_global, utils_validations, models_users,
+  utils_locale, utils_system, utils_global, utils_validations, utils_conversions, models_users,
   data_consts, data_columns, data_setparam, data_getvalue,
   udm_main;
 
@@ -339,13 +339,7 @@ begin
     FLocalityId           := Obj.Get('locality_id', 0);
     FLongitude            := Obj.Get('longitude', 0.0);
     FLatitude             := Obj.Get('latitude', 0.0);
-    case Obj.Get('coordinate_precision', '') of
-      'E': FCoordinatePrecision := cpExact;
-      'A': FCoordinatePrecision := cpApproximated;
-      'R': FCoordinatePrecision := cpReference;
-    else
-      FCoordinatePrecision := cpEmpty;
-    end;
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FObserverId           := Obj.Get('observer_id', 0);
     FTaxonId              := Obj.Get('taxon_id', 0);
     FIndividualId         := Obj.Get('individual_id', 0);
@@ -728,13 +722,7 @@ begin
     R.LocalityId := FieldByName('locality_id').AsInteger;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
-    case FieldByName('coordinate_precision').AsString of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -798,15 +786,7 @@ begin
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
-  begin
-    case ARow.Values['coordinate_precision'] of
-      'E': R.CoordinatePrecision := cpExact;
-      'A': R.CoordinatePrecision := cpApproximated;
-      'R': R.CoordinatePrecision := cpReference;
-    else
-      R.CoordinatePrecision := cpEmpty;
-    end;
-  end;
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('observer_id') >= 0 then
     R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('taxon_id') >= 0 then

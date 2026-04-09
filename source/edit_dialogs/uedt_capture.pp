@@ -297,7 +297,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, utils_conversions,
   utils_editdialogs, utils_themes, data_types, data_consts, data_getvalue, data_columns, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -1595,13 +1595,7 @@ begin
     FCapture.CaptureTime := NullTime;
   FCapture.BanderId    := FBanderId;
   FCapture.AnnotatorId := FAnnotatorId;
-  case cbCaptureType.ItemIndex of
-    0: FCapture.CaptureType := cptNew;
-    1: FCapture.CaptureType := cptRecapture;
-    2: FCapture.CaptureType := cptSameDay;
-    3: FCapture.CaptureType := cptChangeBand;
-    4: FCapture.CaptureType := cptUnbanded;
-  end;
+  FCapture.CaptureType := StrToCaptureType(cbCaptureType.Text);
   FCapture.NetId         := FNetId;
   if (Length(eLongitude.Text) > 0) then
     FCapture.Longitude   := StrToFloat(eLongitude.Text)
@@ -1611,40 +1605,15 @@ begin
     FCapture.Latitude   := StrToFloat(eLatitude.Text)
   else
     FCapture.Latitude := 0;
-  case cbCoordinatePrecision.ItemIndex of
-    0: FCapture.CoordinatePrecision := cpExact;
-    1: FCapture.CoordinatePrecision := cpApproximated;
-    2: FCapture.CoordinatePrecision := cpReference;
-  else
-    FCapture.CoordinatePrecision := cpEmpty;
-  end;
-  FCapture.TaxonId       := FTaxonId;
-  FCapture.BandId        := FBandId;
-  FCapture.RemovedBandId := FRemovedBandId;
-  FCapture.RightTarsus := eRightTarsus.Text;
-  FCapture.LeftTarsus  := eLeftTarsus.Text;
-  case cbAge.ItemIndex of
-    0: FCapture.SubjectAge := ageUnknown;
-    1: FCapture.SubjectAge := ageAdult;
-    2: FCapture.SubjectAge := ageJuvenile;
-    3: FCapture.SubjectAge := ageFledgling;
-    4: FCapture.SubjectAge := ageNestling;
-    5: FCapture.SubjectAge := ageFirstYear;
-    6: FCapture.SubjectAge := ageSecondYear;
-    7: FCapture.SubjectAge := ageThirdYear;
-    8: FCapture.SubjectAge := ageFourthYear;
-    9: FCapture.SubjectAge := ageFifthYear;
-  else
-    FCapture.SubjectAge := ageUnknown;
-  end;
-  FCapture.Escaped := ckEscaped.Checked;
-  case cbStatus.ItemIndex of
-    0: FCapture.SubjectStatus := sstNormal;
-    1: FCapture.SubjectStatus := sstInjured;
-    2: FCapture.SubjectStatus := sstWingSprain;
-    3: FCapture.SubjectStatus := sstStressed;
-    4: FCapture.SubjectStatus := sstDead;
-  end;
+  FCapture.CoordinatePrecision  := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
+  FCapture.TaxonId              := FTaxonId;
+  FCapture.BandId               := FBandId;
+  FCapture.RemovedBandId        := FRemovedBandId;
+  FCapture.RightTarsus          := eRightTarsus.Text;
+  FCapture.LeftTarsus           := eLeftTarsus.Text;
+  FCapture.SubjectAge           := StrToAge(cbAge.Text);
+  FCapture.Escaped              := ckEscaped.Checked;
+  FCapture.SubjectStatus        := StrToSubjectStatus(cbStatus.Text);
   FCapture.CloacalProtuberance  := cbCloacalProtuberance.Text;
   FCapture.BroodPatch           := cbBroodPatch.Text;
   FCapture.Fat                  := cbFat.Text;
@@ -1670,32 +1639,26 @@ begin
   FCapture.SkullOssification    := cbSkullOssification.Text;
   FCapture.CycleCode            := eCycleCode.Text;
   FCapture.HowAged              := eHowAged.Text;
-  case cbSex.ItemIndex of
-    0: FCapture.SubjectSex := sexMale;
-    1: FCapture.SubjectSex := sexFemale;
-    2: FCapture.SubjectSex := sexUnknown;
-  else
-    FCapture.SubjectSex := sexUnknown;
-  end;
-  FCapture.HowSexed            := eHowSexed.Text;
-  FCapture.Notes               := mNotes.Text;
-  FCapture.BloodSample         := ckBloodSample.Checked;
-  FCapture.FeatherSample       := ckFeathers.Checked;
-  FCapture.FecesSample         := ckFeces.Checked;
-  FCapture.ParasiteSample      := ckParasites.Checked;
-  FCapture.SubjectRecorded     := ckAudioRecordings.Checked;
-  FCapture.SubjectPhotographed := ckPhotos.Checked;
-  FCapture.ClawSample          := ckClaw.Checked;
-  FCapture.SubjectCollected    := ckWholeSpecimen.Checked;
-  FCapture.Photographer1Id     := FPhotographer1Id;
-  FCapture.Photographer2Id     := FPhotographer2Id;
-  FCapture.CameraName          := cbCamera.Text;
-  FCapture.StartPhotoNumber    := eStartPhoto.Text;
-  FCapture.EndPhotoNumber      := eEndPhoto.Text;
-  FCapture.FieldNumber         := eFieldNumber.Text;
-  FCapture.Hemoglobin          := eHemoglobin.Value;
-  FCapture.Hematocrit          := eHematocrit.Value;
-  FCapture.Glucose             := eGlucose.Value;
+  FCapture.SubjectSex           := StrToSex(cbSex.Text);
+  FCapture.HowSexed             := eHowSexed.Text;
+  FCapture.Notes                := mNotes.Text;
+  FCapture.BloodSample          := ckBloodSample.Checked;
+  FCapture.FeatherSample        := ckFeathers.Checked;
+  FCapture.FecesSample          := ckFeces.Checked;
+  FCapture.ParasiteSample       := ckParasites.Checked;
+  FCapture.SubjectRecorded      := ckAudioRecordings.Checked;
+  FCapture.SubjectPhotographed  := ckPhotos.Checked;
+  FCapture.ClawSample           := ckClaw.Checked;
+  FCapture.SubjectCollected     := ckWholeSpecimen.Checked;
+  FCapture.Photographer1Id      := FPhotographer1Id;
+  FCapture.Photographer2Id      := FPhotographer2Id;
+  FCapture.CameraName           := cbCamera.Text;
+  FCapture.StartPhotoNumber     := eStartPhoto.Text;
+  FCapture.EndPhotoNumber       := eEndPhoto.Text;
+  FCapture.FieldNumber          := eFieldNumber.Text;
+  FCapture.Hemoglobin           := eHemoglobin.Value;
+  FCapture.Hematocrit           := eHematocrit.Value;
+  FCapture.Glucose              := eGlucose.Value;
 end;
 
 function TedtCapture.ValidateFields: Boolean;

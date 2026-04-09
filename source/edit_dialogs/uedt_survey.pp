@@ -161,7 +161,8 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, utils_themes,
-  utils_fullnames, utils_editdialogs, data_types, data_getvalue, data_consts, data_columns,
+  utils_fullnames, utils_editdialogs, utils_conversions,
+  data_types, data_getvalue, data_consts, data_columns,
   models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -748,13 +749,7 @@ begin
   FSurvey.StartLatitude  := StrToFloatDef(eLatitude.Text, 0.0);
   FSurvey.EndLongitude   := StrToFloatDef(eEndLongitude.Text, 0.0);
   FSurvey.EndLatitude    := StrToFloatDef(eEndLatitude.Text, 0.0);
-  case cbCoordinatePrecision.ItemIndex of
-    0: FSurvey.CoordinatePrecision := cpExact;
-    1: FSurvey.CoordinatePrecision := cpApproximated;
-    2: FSurvey.CoordinatePrecision := cpReference;
-  else
-    FSurvey.CoordinatePrecision := cpEmpty;
-  end;
+  FSurvey.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FSurvey.ObserversTally := eObserversTally.Value;
   FSurvey.SampleId       := eSampleId.Text;
   FSurvey.TotalArea      := eArea.Value;

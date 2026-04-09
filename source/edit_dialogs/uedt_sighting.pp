@@ -187,7 +187,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs, utils_gis,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
+  utils_gis, utils_conversions,
   data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -839,13 +840,7 @@ begin
   FSighting.LocalityId          := FLocalityId;
   FSighting.Longitude           := StrToFloatDef(eLongitude.Text, 0.0);
   FSighting.Latitude            := StrToFloatDef(eLatitude.Text, 0.0);
-  case cbCoordinatePrecision.ItemIndex of
-    0: FSighting.CoordinatePrecision := cpExact;
-    1: FSighting.CoordinatePrecision := cpApproximated;
-    2: FSighting.CoordinatePrecision := cpReference;
-  else
-    FSighting.CoordinatePrecision := cpEmpty;
-  end;
+  FSighting.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FSighting.SightingDate        := StrToDateDef(eDate.Text, NullDate);
   FSighting.SightingTime        := StrToTimeDef(eTime.Text, NullTime);
   FSighting.TaxonId             := FTaxonId;

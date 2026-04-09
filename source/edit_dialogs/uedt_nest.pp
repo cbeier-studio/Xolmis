@@ -200,6 +200,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs, utils_gis,
+  utils_conversions,
   data_types, data_consts, data_getvalue, data_columns, models_taxonomy, models_geo, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -828,11 +829,7 @@ procedure TedtNest.SetRecord;
 begin
   FNest.TaxonId     := FTaxonId;
   FNest.FieldNumber := eFieldNumber.Text;
-  case cbNestFate.ItemIndex of
-    0: FNest.NestFate := nfLoss;
-    1: FNest.NestFate := nfSuccess;
-    2: FNest.NestFate := nfUnknown;
-  end;
+  FNest.NestFate := StrToNestFate(cbNestFate.Text);
   if eFoundDate.Text <> EmptyStr then
     FNest.FoundDate         := StrToDate(eFoundDate.Text);
   if eLastDate.Text <> EmptyStr then
@@ -844,50 +841,12 @@ begin
     FNest.Longitude         := StrToFloat(eLongitude.Text);
   if eLatitude.Text <> EmptyStr then
     FNest.Latitude          := StrToFloat(eLatitude.Text);
-  case cbCoordinatePrecision.ItemIndex of
-    0: FNest.CoordinatePrecision := cpExact;
-    1: FNest.CoordinatePrecision := cpApproximated;
-    2: FNest.CoordinatePrecision := cpReference;
-  else
-    FNest.CoordinatePrecision := cpEmpty;
-  end;
+  FNest.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FNest.Description       := mDescription.Text;
   FNest.NestProductivity  := eProductivity.Value;
-  case cbNestShape.ItemIndex of
-    0: FNest.NestShape := 'SC';
-    1: FNest.NestShape := 'CP';
-    2: FNest.NestShape := 'PT';
-    3: FNest.NestShape := 'SP';
-    4: FNest.NestShape := 'PD';
-    5: FNest.NestShape := 'PL';
-    6: FNest.NestShape := 'MN';
-    7: FNest.NestShape := 'BR';
-    8: FNest.NestShape := 'CV';
-  end;
-  case cbLossCause.ItemIndex of
-    0: FNest.LossCause := nlcUnknown;
-    1: FNest.LossCause := nlcPredation;
-    2: FNest.LossCause := nlcParasitism;
-    3: FNest.LossCause := nlcDisease;
-    4: FNest.LossCause := nlcWeather;
-    5: FNest.LossCause := nlcFire;
-    6: FNest.LossCause := nlcAbandonment;
-    7: FNest.LossCause := nlcPollution;
-    8: FNest.LossCause := nlcHumanDisturbance;
-    9: FNest.LossCause := nlcImproperManagement;
-  end;
-  case cbSupportType.ItemIndex of
-    0: FNest.SupportType := 'G';
-    1: FNest.SupportType := 'H';
-    2: FNest.SupportType := 'F';
-    3: FNest.SupportType := 'L';
-    4: FNest.SupportType := 'D';
-    5: FNest.SupportType := 'C';
-    6: FNest.SupportType := 'R';
-    7: FNest.SupportType := 'B';
-    8: FNest.SupportType := 'A';
-    9: FNest.SupportType := 'O';
-  end;
+  FNest.NestShape := StrToNestShape(cbNestShape.Text);
+  FNest.LossCause := StrToLossCause(cbLossCause.Text);
+  FNest.SupportType := StrToSupportType(cbSupportType.Text);
   FNest.HeightAboveGround   := eHeightAboveGround.Value;
   FNest.SupportPlant1Id     := FSupportPlant1Id;
   FNest.SupportPlant2Id     := FSupportPlant2Id;

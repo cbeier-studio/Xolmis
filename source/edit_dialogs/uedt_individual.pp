@@ -154,6 +154,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs,
+  utils_conversions,
   data_types, data_getvalue, data_consts, data_columns, models_taxonomy, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -682,27 +683,8 @@ begin
     FIndividual.DeathDay := 0
   else
     FIndividual.DeathDay       := StrToInt(eDeathDay.Text);
-  case cbSex.ItemIndex of
-    0: FIndividual.Sex := sexMale;
-    1: FIndividual.Sex := sexFemale;
-    2: FIndividual.Sex := sexUnknown;
-  else
-    FIndividual.Sex := sexUnknown;
-  end;
-  case cbAge.ItemIndex of
-    0: FIndividual.Age := ageUnknown;
-    1: FIndividual.Age := ageAdult;
-    2: FIndividual.Age := ageJuvenile;
-    3: FIndividual.Age := ageFledgling;
-    4: FIndividual.Age := ageNestling;
-    5: FIndividual.Age := ageFirstYear;
-    6: FIndividual.Age := ageSecondYear;
-    7: FIndividual.Age := ageThirdYear;
-    8: FIndividual.Age := ageFourthYear;
-    9: FIndividual.Age := ageFifthYear;
-  else
-    FIndividual.Age := ageUnknown;
-  end;
+  FIndividual.Sex := StrToSex(cbSex.Text);
+  FIndividual.Age := StrToAge(cbAge.Text);
   FIndividual.NestId               := FNestId;
   FIndividual.FatherId             := FFatherId;
   FIndividual.MotherId             := FMotherId;

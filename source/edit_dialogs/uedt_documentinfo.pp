@@ -111,7 +111,8 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_conversions, utils_validations,
-  data_types, data_consts, data_getvalue, data_columns, models_taxonomy, models_geo,
+  data_types, data_consts, data_getvalue, data_columns,
+  models_record_types, models_taxonomy, models_geo,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -297,73 +298,7 @@ end;
 
 procedure TedtDocumentInfo.SetRecord;
 begin
-  if cbDocumentType.Text = rsDocUrl then
-    FDocument.DocumentType := fcUrl
-  else
-  if cbDocumentType.Text = rsDocDocument then
-    FDocument.DocumentType := fcText
-  else
-  if cbDocumentType.Text = rsDocSpreadsheet then
-    FDocument.DocumentType := fcSpreadsheet
-  else
-  if cbDocumentType.Text = rsDocPresentation then
-    FDocument.DocumentType := fcPresentation
-  else
-  if cbDocumentType.Text = rsDocPdf then
-    FDocument.DocumentType := fcPdf
-  else
-  if cbDocumentType.Text = rsDocWebpage then
-    FDocument.DocumentType := fcWebpage
-  else
-  if cbDocumentType.Text = rsDocScript then
-    FDocument.DocumentType := fcScript
-  else
-  if cbDocumentType.Text = rsDocCode then
-    FDocument.DocumentType := fcSourceCode
-  else
-  if cbDocumentType.Text = rsDocDataset then
-    FDocument.DocumentType := fcDataset
-  else
-  if cbDocumentType.Text = rsDocDatabase then
-    FDocument.DocumentType := fcDatabase
-  else
-  if cbDocumentType.Text = rsDocGis then
-    FDocument.DocumentType := fcGis
-  else
-  if cbDocumentType.Text = rsDocArchive then
-    FDocument.DocumentType := fcArchive
-  else
-  if cbDocumentType.Text = rsDocImage then
-    FDocument.DocumentType := fcImage
-  else
-  if cbDocumentType.Text = rsDocVectorial then
-    FDocument.DocumentType := fcVectorial
-  else
-  if cbDocumentType.Text = rsDocAudio then
-    FDocument.DocumentType := fcAudio
-  else
-  if cbDocumentType.Text = rsDocVideo then
-    FDocument.DocumentType := fcVideo
-  else
-  if cbDocumentType.Text = rsDocBibliography then
-    FDocument.DocumentType := fcBibliography
-  else
-  if cbDocumentType.Text = rsDocStatistic then
-    FDocument.DocumentType := fcStatistic
-  else
-  if cbDocumentType.Text = rsDocBioinformatic then
-    FDocument.DocumentType := fcBioinformatic
-  else
-  if cbDocumentType.Text = rsDocEbook then
-    FDocument.DocumentType := fcEbook
-  else
-  if cbDocumentType.Text = rsDocNote then
-    FDocument.DocumentType := fcNote
-  else
-  if cbDocumentType.Text = rsDocMetadata then
-    FDocument.DocumentType := fcMetadata
-  else
-    FDocument.DocumentType := fcOther;
+  FDocument.DocumentType := StrToDocumentType(cbDocumentType.Text);
   FDocument.Name         := eDocumentTitle.Text;
   FDocument.DocumentDate := TextToDate(eDocumentDate.Text);
   FDocument.DocumentTime := TextToTime(eDocumentTime.Text);

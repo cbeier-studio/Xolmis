@@ -116,7 +116,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_validations, utils_gis,
+  utils_locale, utils_global, utils_dialogs, utils_validations, utils_gis, utils_conversions,
   data_columns, data_consts, models_record_types, models_geo,
   udm_main, uDarkStyleParams;
 
@@ -400,13 +400,7 @@ begin
     FVegetation.Longitude          := StrToFloat(eLongitude.Text);
   if eLatitude.Text <> EmptyStr then
     FVegetation.Latitude           := StrToFloat(eLatitude.Text);
-  case cbCoordinatePrecision.ItemIndex of
-    0: FVegetation.CoordinatePrecision := cpExact;
-    1: FVegetation.CoordinatePrecision := cpApproximated;
-    2: FVegetation.CoordinatePrecision := cpReference;
-  else
-    FVegetation.CoordinatePrecision := cpEmpty;
-  end;
+  FVegetation.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FVegetation.HerbsDistribution  := TStratumDistribution(cbHerbsDistribution.ItemIndex);
   FVegetation.HerbsProportion    := eHerbsProportion.Value;
   FVegetation.HerbsAvgHeight     := eHerbsAvgHeight.Value;

@@ -58,6 +58,7 @@ uses
   function StrToBodySide(const AValue: String): TBodySide;
   function StrToCaptureType(const AValue: String): TCaptureType;
   function StrToCoordinatePrecision(const AValue: String): TCoordinatePrecision;
+  function StrToDocumentType(const AValue: String): TFileCategory;
   function StrToEggPattern(const AValue: String): TEggshellPattern;
   function StrToEggShape(const AValue: String): TEggShape;
   function StrToEggTexture(const AValue: String): TEggshellTexture;
@@ -65,6 +66,7 @@ uses
   function StrToFeatherSource(const AValue: String): TFeatherDataSource;
   function StrToFeatherTrait(const AValue: String): TFeatherTrait;
   function StrToGoalStatus(const AValue: String): TGoalStatus;
+  function StrToImageType(const AValue: String): TImageType;
   function StrToLossCause(const AValue: String): TLossCause;
   function StrToNestFate(const AValue: String): TNestFate;
   function StrToNestRole(const AValue: String): TNestRole;
@@ -81,6 +83,7 @@ uses
   function StrToSubjectStatus(const AValue: String): TSubjectStatus;
   function StrToSupportType(const AValue: String): String;
   function StrToSymmetry(const AValue: String): TSymmetry;
+  function StrToUserRank(const AValue: String): TUserRank;
 
 implementation
 
@@ -516,7 +519,10 @@ end;
 
 function StrToBandStatus(const AValue: String): TBandStatus;
 begin
-  if (AValue = rsBandAvailable) or (AValue = 'D') then
+  if (AValue = rsBandOrdered) or (AValue = 'O') then
+    Result := bstOrdered
+  else
+  if (AValue = rsBandAvailable) or (AValue = 'A') then
     Result := bstAvailable
   else
   if (AValue = rsBandUsed) or (AValue = 'U') then
@@ -525,14 +531,19 @@ begin
   if (AValue = rsBandRemoved) or (AValue = 'R') then
     Result := bstRemoved
   else
-  if (AValue = rsBandBroken) or (AValue = 'Q') then
+  if (AValue = rsBandBroken) or (AValue = 'B') then
     Result := bstBroken
   else
-  if (AValue = rsBandLost) or (AValue = 'P') then
+  if (AValue = rsBandLost) or (AValue = 'L') then
     Result := bstLost
   else
+  if (AValue = rsBandReturned) or (AValue = 'X') then
+    Result := bstReturned
+  else
   if (AValue = rsBandTransferred) or (AValue = 'T') then
-    Result := bstTransferred;
+    Result := bstTransferred
+  else
+    Result := bstNone;
 end;
 
 function StrToBandSource(const AValue: String): TBandSource;
@@ -550,7 +561,9 @@ begin
     Result := bscDeadBirdBandedByOthers
   else
   if (AValue = rsBandFoundLoose) or (AValue = 'F') then
-    Result := bscFoundLoose;
+    Result := bscFoundLoose
+  else
+    Result := bscNone;
 end;
 
 function StrToBodySide(const AValue: String): TBodySide;
@@ -593,6 +606,77 @@ begin
     Result := cpReference
   else
     Result := cpEmpty;
+end;
+
+function StrToDocumentType(const AValue: String): TFileCategory;
+begin
+  if (AValue = rsDocUrl) or (AValue = 'url') then
+    Result := fcUrl
+  else
+  if (AValue = rsDocDocument) or (AValue = 'doc') then
+    Result := fcText
+  else
+  if (AValue = rsDocSpreadsheet) or (AValue = 'spr') then
+    Result := fcSpreadsheet
+  else
+  if (AValue = rsDocPresentation) or (AValue = 'prs') then
+    Result := fcPresentation
+  else
+  if (AValue = rsDocPdf) or (AValue = 'pdf') then
+    Result := fcPdf
+  else
+  if (AValue = rsDocImage) or (AValue = 'img') then
+    Result := fcImage
+  else
+  if (AValue = rsDocAudio) or (AValue = 'aud') then
+    Result := fcAudio
+  else
+  if (AValue = rsDocVideo) or (AValue = 'vid') then
+    Result := fcVideo
+  else
+  if (AValue = rsDocCode) or (AValue = 'cod') then
+    Result := fcSourceCode
+  else
+  if (AValue = rsDocDatabase) or (AValue = 'db') then
+    Result := fcDatabase
+  else
+  if (AValue = rsDocGis) or (AValue = 'gis') then
+    Result := fcGis
+  else
+  if (AValue = rsDocScript) or (AValue = 'scr') then
+    Result := fcScript
+  else
+  if (AValue = rsDocWebpage) or (AValue = 'web') then
+    Result := fcWebpage
+  else
+  if (AValue = rsDocDataset) or (AValue = 'ds') then
+    Result := fcDataset
+  else
+  if (AValue = rsDocStatistic) or (AValue = 'sta') then
+    Result := fcStatistic
+  else
+  if (AValue = rsDocVectorial) or (AValue = 'vec') then
+    Result := fcVectorial
+  else
+  if (AValue = rsDocArchive) or (AValue = 'arc') then
+    Result := fcArchive
+  else
+  if (AValue = rsDocBibliography) or (AValue = 'bib') then
+    Result := fcBibliography
+  else
+  if (AValue = rsDocMetadata) or (AValue = 'met') then
+    Result := fcMetadata
+  else
+  if (AValue = rsDocBioinformatic) or (AValue = 'gen') then
+    Result := fcBioinformatic
+  else
+  if (AValue = rsDocEbook) or (AValue = 'ebk') then
+    Result := fcEbook
+  else
+  if (AValue = rsDocNote) or (AValue = 'not') then
+    Result := fcNote
+  else
+    Result := fcOther;
 end;
 
 function StrToEggPattern(const AValue: String): TEggshellPattern;
@@ -756,6 +840,101 @@ begin
   else
   if (AValue = rsGoalCanceled) or (AValue = 'C') then
     Result := gstCanceled;
+end;
+
+function StrToImageType(const AValue: String): TImageType;
+begin
+  if (AValue = rsBirdInHandFlank) or (AValue = 'flank') then
+    Result := itBirdInHandFlank
+  else
+  if (AValue = rsBirdInHandBelly) or (AValue = 'belly') then
+    Result := itBirdInHandBelly
+  else
+  if (AValue = rsBirdInHandBack) or (AValue = 'back') then
+    Result := itBirdInHandBack
+  else
+  if (AValue = rsBirdInHandWing) or (AValue = 'wing') then
+    Result := itBirdInHandWing
+  else
+  if (AValue = rsBirdInHandTail) or (AValue = 'tail') then
+    Result := itBirdInHandTail
+  else
+  if (AValue = rsBirdInHandHead) or (AValue = 'head') then
+    Result := itBirdInHandHead
+  else
+  if (AValue = rsBirdInHandFeet) or (AValue = 'feet') then
+    Result := itBirdInHandFeet
+  else
+  if (AValue = rsFreeBirdStanding) or (AValue = 'stand') then
+    Result := itFreeBirdStanding
+  else
+  if (AValue = rsFreeBirdFlying) or (AValue = 'fly') then
+    Result := itFreeBirdFlying
+  else
+  if (AValue = rsFreeBirdSwimming) or (AValue = 'swim') then
+    Result := itFreeBirdSwimming
+  else
+  if (AValue = rsFreeBirdForraging) or (AValue = 'forr') then
+    Result := itFreeBirdForraging
+  else
+  if (AValue = rsFreeBirdCopulating) or (AValue = 'copul') then
+    Result := itFreeBirdCopulating
+  else
+  if (AValue = rsFreeBirdBuildingNest) or (AValue = 'build') then
+    Result := itFreeBirdBuildingNest
+  else
+  if (AValue = rsFreeBirdDisplaying) or (AValue = 'disp') then
+    Result := itFreeBirdDisplaying
+  else
+  if (AValue = rsFreeBirdIncubating) or (AValue = 'incub') then
+    Result := itFreeBirdIncubating
+  else
+  if (AValue = rsFreeBirdVocalizing) or (AValue = 'vocal') then
+    Result := itFreeBirdVocalizing
+  else
+  if (AValue = rsFreeBirdAgonistic) or (AValue = 'agon') then
+    Result := itFreeBirdAgonistic
+  else
+  if (AValue = rsDeadBird) or (AValue = 'dead') then
+    Result := itDeadBird
+  else
+  if (AValue = rsBirdFlock) or (AValue = 'flock') then
+    Result := itBirdFlock
+  else
+  if (AValue = rsBirdNest) or (AValue = 'nest') then
+    Result := itBirdNest
+  else
+  if (AValue = rsBirdEgg) or (AValue = 'egg') then
+    Result := itBirdEgg
+  else
+  if (AValue = rsBirdNestling) or (AValue = 'nstln') then
+    Result := itBirdNestling
+  else
+  if (AValue = rsEctoparasite) or (AValue = 'paras') then
+    Result := itEctoparasite
+  else
+  if (AValue = rsFootprint) or (AValue = 'fprnt') then
+    Result := itFootprint
+  else
+  if (AValue = rsFeather) or (AValue = 'feath') then
+    Result := itFeather
+  else
+  if (AValue = rsFeces) or (AValue = 'feces') then
+    Result := itFeces
+  else
+  if (AValue = rsFood) or (AValue = 'food') then
+    Result := itFood
+  else
+  if (AValue = rsEnvironment) or (AValue = 'envir') then
+    Result := itEnvironment
+  else
+  if (AValue = rsFieldwork) or (AValue = 'fwork') then
+    Result := itFieldwork
+  else
+  if (AValue = rsTeam) or (AValue = 'team') then
+    Result := itTeam
+  else
+    Result := itEmpty;
 end;
 
 function StrToLossCause(const AValue: String): TLossCause;
@@ -949,6 +1128,7 @@ end;
 
 function StrToSiteRank(const AValue: String): TSiteRank;
 begin
+  { #todo : Translate site rank also from numbers }
   if (AValue = rsCaptionCountry) or (AValue = 'P') then
     Result := srCountry
   else
@@ -1122,6 +1302,17 @@ begin
     Result := symAsymmetrical
   else
     Result := symUnknown;
+end;
+
+function StrToUserRank(const AValue: String): TUserRank;
+begin
+  if (AValue = rsAdminUser) or (AValue = 'A') then
+    Result := urAdministrator
+  else
+  if (AValue = rsGuestUser) or (AValue = 'V') then
+    Result := urVisitor
+  else
+    Result := urStandard;
 end;
 
 end.

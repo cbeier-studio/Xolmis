@@ -98,7 +98,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_gis,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_gis, utils_conversions,
   data_types, data_getvalue, data_consts, data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
@@ -402,14 +402,7 @@ procedure TedtSite.SetRecord;
 begin
   FSite.Name := eName.Text;
   FSite.Abbreviation := eAbbreviation.Text;
-  case cbRank.ItemIndex of
-    0: FSite.Rank := srCountry;
-    1: FSite.Rank := srState;
-    2: FSite.Rank := srRegion;
-    3: FSite.Rank := srMunicipality;
-    4: FSite.Rank := srDistrict;
-    5: FSite.Rank := srLocality;
-  end;
+  FSite.Rank := StrToSiteRank(cbRank.Text);
   if (eLongitude.Text <> EmptyStr) then
     FSite.Longitude := StrToFloat(eLongitude.Text)
   else

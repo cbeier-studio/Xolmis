@@ -101,6 +101,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
+  utils_conversions,
   data_types, data_getvalue, data_consts, data_columns,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -321,14 +322,7 @@ begin
   FPermit.ProjectId := FProjectId;
   FPermit.Name      := eName.Text;
   FPermit.Number    := ePermitNumber.Text;
-  case cbPermitType.ItemIndex of
-    0: FPermit.PermitType := 'B';
-    1: FPermit.PermitType := 'C';
-    2: FPermit.PermitType := 'R';
-    3: FPermit.PermitType := 'E';
-    4: FPermit.PermitType := 'T';
-    5: FPermit.PermitType := 'O';
-  end;
+  FPermit.PermitType := StrToPermitType(cbPermitType.Text);
   FPermit.Dispatcher   := eDispatcher.Text;
   FPermit.DispatchDate := StrToDate(eDispatchDate.Text);
   FPermit.ExpireDate   := StrToDate(eExpireDate.Text);

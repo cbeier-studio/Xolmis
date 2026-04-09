@@ -163,8 +163,8 @@ type
   TBodyPart = (bpRightTibia, bpLeftTibia, bpRightTarsus, bpLeftTarsus, bpRightWing, bpLeftWing, bpNeck);
   TMarkType = (mkButtEndBand, mkFlag, mkCollar, mkWingTag, mkTriangularBand, mkLockOnBand, mkRivetBand,
     mkClosedBand, mkOther);
-  TBandStatus = (bstOrdered, bstAvailable, bstUsed, bstRemoved, bstBroken, bstLost, bstTransferred, bstReturned);
-  TBandSource = (bscAcquiredFromSupplier, bscTransferBetweenBanders, bscLivingBirdBandedByOthers,
+  TBandStatus = (bstNone, bstOrdered, bstAvailable, bstUsed, bstRemoved, bstBroken, bstLost, bstTransferred, bstReturned);
+  TBandSource = (bscNone, bscAcquiredFromSupplier, bscTransferBetweenBanders, bscLivingBirdBandedByOthers,
     bscDeadBirdBandedByOthers, bscFoundLoose);
   TBandEvent = (bevOrder, bevReceive, bevTransfer, bevRetrieve, bevReport, bevUse, bevDischarge, bevReturn);
 
@@ -359,6 +359,11 @@ type
     itTeam
   );
 
+  // Documents and links
+  TFileCategory = (fcOther, fcUrl, fcText, fcSpreadsheet, fcPresentation, fcPdf, fcWebpage, fcScript, fcSourceCode,
+    fcDataset, fcDatabase, fcGis, fcArchive, fcImage, fcAudio, fcVideo, fcVectorial, fcBibliography, fcStatistic,
+    fcBioinformatic, fcEbook, fcNote, fcMetadata);
+
   // Xolmis Mobile
   TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
   TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invQualitativeInterval, invMackinnonList,
@@ -400,9 +405,9 @@ const
     ('G', '$00008000'), ('L', '$0000FF00'), ('U', '$00004080'), ('W', '$00FFFFFF'),
     ('S', '$00808080'), ('N', '$00000000'));
   CEMAVE_BAND_SIZES: array[1..19] of Char = ('A','C','D','E','F','G','H','J','L','M','N','P','R','S','T','U','V','X','Z');
-  BAND_STATUSES: array[TBandStatus] of Char = ('O', 'A', 'U', 'R', 'B', 'L', 'T', 'X');
+  BAND_STATUSES: array[TBandStatus] of Char = (' ', 'O', 'A', 'U', 'R', 'B', 'L', 'T', 'X');
   MARK_TYPES: array[TMarkType] of Char = ('A', 'F', 'N', 'W', 'T', 'L', 'R', 'C', 'O');
-  BAND_SOURCES: array[TBandSource] of Char = ('A', 'T', 'L', 'D', 'F');
+  BAND_SOURCES: array[TBandSource] of Char = (' ', 'A', 'T', 'L', 'D', 'F');
   BAND_EVENTS: array[TBandEvent] of Char = ('O', 'C', 'T', 'R', 'P', 'U', 'D', 'X');
 
   // Botanical taxonomy
@@ -486,6 +491,10 @@ const
     'fwork',
     'team'
   );
+
+  // Documents and links
+  FILE_CATEGORIES: array [TFileCategory] of String = ('oth','url','doc','spr','prs','pdf','web','scr','cod','ds',
+    'db','gis','arc','img','aud','vid','vec','bib','sta','gen','ebk','not','met');
 
 implementation
 

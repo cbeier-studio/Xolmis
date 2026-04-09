@@ -180,7 +180,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_finddialogs, utils_dialogs, utils_editdialogs, utils_validations,
+  utils_locale, utils_global, utils_finddialogs, utils_dialogs, utils_editdialogs, utils_validations, utils_conversions,
   data_types, data_getvalue, data_columns, models_record_types, models_birds, models_geo, models_taxonomy,
   udlg_loading, udlg_progress, udm_main, udm_grid, uDarkStyleParams;
 
@@ -214,17 +214,8 @@ begin
     FFeather.TaxonId := FTaxonId;
     FFeather.LocalityId := FLocalityId;
     FFeather.ObserverId := FObserverId;
-    case cbSource.ItemIndex of
-      0: FFeather.SourceType := fdsUnknown;
-      1: FFeather.SourceType := fdsCapture;
-      2: FFeather.SourceType := fdsSighting;
-      3: FFeather.SourceType := fdsPhoto;
-    end;
-    case cbSymmetry.ItemIndex of
-      0: FFeather.Symmetrical := symUnknown;
-      1: FFeather.Symmetrical := symSymmetrical;
-      2: FFeather.Symmetrical := symAsymmetrical;
-    end;
+    FFeather.SourceType := StrToFeatherSource(cbSource.Text);
+    FFeather.Symmetrical := StrToSymmetry(cbSymmetry.Text);
     FFeather.BodySide := bsdRight;
     FFeather.FeatherAge := fageAdult;
     // Primaries

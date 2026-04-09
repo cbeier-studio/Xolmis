@@ -187,16 +187,11 @@ const
     '.afphoto','.j2k','.jp2','.jxr','.wdp','.hdp','.jxl','.tga');
 
 type
-  TFileCategory = (fcOther, fcUrl, fcText, fcSpreadsheet, fcPresentation, fcPdf, fcWebpage, fcScript, fcSourceCode,
-    fcDataset, fcDatabase, fcGis, fcArchive, fcImage, fcAudio, fcVideo, fcVectorial, fcBibliography, fcStatistic,
-    fcBioinformatic, fcEbook, fcNote, fcMetadata);
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);
   TLogEventAction = (leaStarting, leaEnd, leaStart, leaFinish, leaOpen, leaClose, leaActiveTab,
     leaExecute, leaCommit, leaRollback);
 
 const
-  FILE_CATEGORIES: array [TFileCategory] of String = ('oth','url','doc','spr','prs','pdf','web','scr','cod','ds',
-    'db','gis','arc','img','aud','vid','vec','bib','sta','gen','ebk','not','met');
   HISTORY_ACTIONS: array [THistoryAction] of String = ('I', 'U', 'D', 'R');
   LOG_EVENT_ACTIONS: array[TLogEventAction] of String = ('STARTING', 'END', 'START', 'FINISH', 'OPEN', 'CLOSE',
     'ACTIVE TAB', 'EXECUTE', 'COMMIT', 'ROLLBACK');

@@ -137,8 +137,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, data_getvalue,
-  utils_fullnames, data_columns, utils_themes, data_consts, utils_editdialogs, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, utils_editdialogs,
+  utils_conversions, utils_fullnames, utils_themes,
+  data_types, data_columns, data_getvalue, data_consts, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -566,13 +567,7 @@ begin
     FNetEffort.Latitude     := StrToFloat(eLatitude.Text)
   else
     FNetEffort.Latitude    := 0;
-  case cbCoordinatePrecision.ItemIndex of
-    0: FNetEffort.CoordinatePrecision := cpExact;
-    1: FNetEffort.CoordinatePrecision := cpApproximated;
-    2: FNetEffort.CoordinatePrecision := cpReference;
-  else
-    FNetEffort.CoordinatePrecision := cpEmpty;
-  end;
+  FNetEffort.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FNetEffort.NetLength      := eNetLength.Value;
   FNetEffort.NetHeight      := eNetHeight.Value;
   FNetEffort.NetMesh        := eNetMesh.Value;

@@ -73,7 +73,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs,
+  utils_locale, utils_global, utils_dialogs, utils_conversions,
   data_types, data_consts, data_getvalue, data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
@@ -206,11 +206,7 @@ procedure TedtProjectGoal.SetRecord;
 begin
   FGoal.ProjectId := FProjectId;
   FGoal.Description := mDescription.Text;
-  case cbStatus.ItemIndex of
-    0: FGoal.Status := gstPending;
-    1: FGoal.Status := gstReached;
-    2: FGoal.Status := gstCanceled;
-  end;
+  FGoal.Status := StrToGoalStatus(cbStatus.Text);
 end;
 
 function TedtProjectGoal.ValidateFields: Boolean;

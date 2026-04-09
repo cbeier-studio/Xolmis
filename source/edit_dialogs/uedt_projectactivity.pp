@@ -315,15 +315,7 @@ procedure TedtProjectActivity.SetRecord;
 begin
   FActivity.ProjectId := FProjectId;
   FActivity.Description := mDescription.Text;
-  case cbStatus.ItemIndex of
-    0: FActivity.Status := astToDo;
-    1: FActivity.Status := astInProgress;
-    2: FActivity.Status := astDone;
-    3: FActivity.Status := astCanceled;
-    4: FActivity.Status := astDelayed;
-    5: FActivity.Status := astNeedsReview;
-    6: FActivity.Status := astBlocked;
-  end;
+  FActivity.Status := StrToActivityStatus(cbStatus.Text);
   FActivity.StartDate  := TextToDate(eStartDate.Text);
   FActivity.TargetDate := TextToDate(eTargetDate.Text);
   FActivity.EndDate    := TextToDate(eEndDate.Text);

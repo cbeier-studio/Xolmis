@@ -139,6 +139,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
+  utils_conversions,
   data_types, data_getvalue, data_consts, data_columns,
   models_taxonomy, models_record_types,
   udm_main, udm_grid, udm_breeding, uDarkStyleParams;
@@ -551,42 +552,17 @@ end;
 
 procedure TedtEgg.SetRecord;
 begin
-  FEgg.NestId       := FNestId;
-  FEgg.FieldNumber  := eFieldNumber.Text;
-  FEgg.EggSeq       := eEggSeq.Value;
-  FEgg.MeasureDate  := StrToDate(eMeasureDate.Text);
-  FEgg.TaxonId      := FTaxonId;
-  FEgg.ResearcherId := FObserverId;
-  case cbShape.ItemIndex of
-    0: FEgg.EggShape := esSpherical;
-    1: FEgg.EggShape := esElliptical;
-    2: FEgg.EggShape := esOval;
-    3: FEgg.EggShape := esPiriform;
-    4: FEgg.EggShape := esConical;
-    5: FEgg.EggShape := esBiconical;
-    6: FEgg.EggShape := esCylindrical;
-    7: FEgg.EggShape := esLongitudinal;
-    8: FEgg.EggShape := esUnknown;
-  end;
-  FEgg.EggStage      := eStage.Text;
-  FEgg.EggshellColor := eShellColor.Text;
-  case cbShellPattern.ItemIndex of
-    0: FEgg.EggshellPattern := espSpots;
-    1: FEgg.EggshellPattern := espBlotches;
-    2: FEgg.EggshellPattern := espSquiggles;
-    3: FEgg.EggshellPattern := espStreaks;
-    4: FEgg.EggshellPattern := espScrawls;
-    5: FEgg.EggshellPattern := espSpotsSquiggles;
-    6: FEgg.EggshellPattern := espBlotchesSquiggles;
-    7: FEgg.EggshellPattern := espUnknown;
-  end;
-  case cbShellTexture.ItemIndex of
-    0: FEgg.EggshellTexture := estChalky;
-    1: FEgg.EggshellTexture := estShiny;
-    2: FEgg.EggshellTexture := estGlossy;
-    3: FEgg.EggshellTexture := estPitted;
-    4: FEgg.EggshellTexture := estUnknown;
-  end;
+  FEgg.NestId         := FNestId;
+  FEgg.FieldNumber    := eFieldNumber.Text;
+  FEgg.EggSeq         := eEggSeq.Value;
+  FEgg.MeasureDate    := StrToDate(eMeasureDate.Text);
+  FEgg.TaxonId        := FTaxonId;
+  FEgg.ResearcherId   := FObserverId;
+  FEgg.EggShape       := StrToEggShape(cbShape.Text);
+  FEgg.EggStage       := eStage.Text;
+  FEgg.EggshellColor  := eShellColor.Text;
+  FEgg.EggshellPattern := StrToEggPattern(cbShellPattern.Text);
+  FEgg.EggshellTexture := StrToEggTexture(cbShellTexture.Text);
   FEgg.Width        := eWidth.Value;
   FEgg.Length       := eLength.Value;
   FEgg.Mass         := eMass.Value;
