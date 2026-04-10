@@ -23,6 +23,7 @@ When creating or editing a survey record, the following fields are available:
 | **Latitude (initial)** |  | Initial latitude coordinate |
 | **End longitude** |  | Ending longitude coordinate |
 | **End latitude** |  | Ending latitude coordinate |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Number of observers** |  | Number of observers or banders participating |
 | **Sample identifier** |  | Identifier for point, transect, list, etc. |
 | **Area** |  | Total area sampled, in hectares |
@@ -52,6 +53,7 @@ Mist nets used during surveys can be recorded with detailed information:
 | **Mist net number** | Yes | Identifier of the mist net |
 | **Longitude** |  | Longitude coordinate of the net |
 | **Latitude** |  | Latitude coordinate of the net |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Mist net length** |  | Length of the net, in meters |
 | **Mist net height** |  | Height of the net, in meters |
 | **Mesh size** |  | Mesh size, in millimeters |
@@ -117,6 +119,7 @@ Recording vegetation data helps contextualize survey results.
 | **Time** |  | Time of vegetation sampling |
 | **Longitude** |  | Longitude coordinate |
 | **Latitude** |  | Latitude coordinate |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Distribution (herbs)** | Yes | Distribution type of herbaceous stratum (see below) |
 | **Proportion (herbs)** |  | Proportion of herbaceous stratum |
 | **Average height (herbs)** |  | Average height in centimeters |

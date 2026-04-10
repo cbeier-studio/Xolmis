@@ -28,6 +28,7 @@ Esta seção controla os aspectos visuais do Xolmis.
 | Configuração | Descrição | Padrão |
 | --- | --- | --- |
 | **Tema** | Escolha entre tema claro ou escuro. A opção *Auto* adapta-se ao tema do sistema operacional. | Auto |
+| **Ajustar largura das colunas ao conteúdo automaticamente** | Colunas das grades de dados sempre ajustarão a largura ao conteúdo. | Habilitado |
 | **Altura das linhas da grade** | Define a altura das linhas nas grades de dados. | 25 pixels |
 | **Usar formatação condicional nas grades** | Destaca valores nas grades para indicar erros ou agrupamentos. | Habilitado |
 | **Destacar medições discrepantes em capturas** | Se a formatação condicional estiver habilitada, destaca possíveis outliers nas medições de capturas. | Habilitado |
@@ -40,6 +41,9 @@ Esta seção gerencia como os dados coletados são exibidos e curados.
 | --- | --- | --- |
 | **Idioma dos nomes vernáculos** | Define o idioma dos nomes comuns exibidos nos resultados de busca de táxons. | Inglês |
 | **Mostrar sinônimos nos resultados de busca** | Se habilitado, sinônimos são exibidos nos resultados, mas o Xolmis sempre usa o nome aceito. | Desabilitado |
+| **Fornecedor de anilhas padrão** | Se uma anilha não existir no banco de dados quando importar dados de capturas, a anilha será criada usando o fornecedor de anilhas padrão. | |
+| **Lembrar e pré-preencher localidade, observador e método quando editar um novo registro** | Ao inserir um novo registro, alguns campos virão pré-preenchidos com os últimos valores usados em cada campo. | Habilitado |
+| **Preencher automaticamente coordenadas em branco do gazetteer, se disponíveis** | Preenche coordenadas com as coordenadas aproximadas do gazetteer se estiverem em branco. | Habilitado |
 
 ## Mídia
 
@@ -67,6 +71,7 @@ Esta seção contém configurações relacionadas ao login e ao suporte técnico
 | **Lembrar conexão da última sessão** | Carrega a última conexão usada no diálogo de login. | Habilitado |
 | **Lembrar usuário da última sessão** | Carrega o último nome de usuário usado no diálogo de login. | Habilitado |
 | **Permitir que o Xolmis registre eventos para suporte técnico** | Cria um arquivo de log de atividades para ajudar a investigar problemas. | Desabilitado |
+| **Habilitar log de comandos detalhados** | Alguns comandos internos são logados para resolução de problemas. | Desabilitado |
 
 !!! tip
     Se você enfrentar erros ou falhas, habilite **Permitir que o Xolmis registre eventos para suporte técnico**. Isso registrará detalhes técnicos que podem ser enviados ao suporte. **Nenhum dado pessoal ou sensível é registrado ou transmitido.** Se o Xolmis estiver funcionando normalmente, mantenha essa configuração desabilitada.

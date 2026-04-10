@@ -470,7 +470,22 @@ begin
   FSightingId := 0;
   FSpecimenId := 0;
 
-  { #todo : Recording types combobox list }
+  with cbAudioType.Items do
+  begin
+    Clear;
+    Add(rsAudioUnknown);
+    Add(rsAudioSong);
+    Add(rsAudioCall);
+    Add(rsAudioAlarm);
+    Add(rsAudioTerritorial);
+    Add(rsAudioCourtship);
+    Add(rsAudioAggression);
+    Add(rsAudioContact);
+    Add(rsAudioFlock);
+    Add(rsAudioFlight);
+    Add(rsAUdioNestling);
+    Add(rsAudioNonVocal);
+  end;
 
   with cbCoordinatePrecision.Items do
   begin
@@ -497,7 +512,22 @@ begin
   eAuthor.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eRecordingDate.Text := DateToStr(FAudio.RecordingDate);
   eRecordingTime.Text := TimeToStr(FAudio.RecordingTime);
-  cbAudioType.Text := FAudio.AudioType;
+  case FAudio.AudioType of
+    atUnknown:      cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioUnknown);
+    atSong:         cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioSong);
+    atCall:         cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioCall);
+    atAlarm:        cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioAlarm);
+    atTerritorial:  cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioTerritorial);
+    atCourtship:    cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioCourtship);
+    atAggression:   cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioAggression);
+    atContact:      cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioContact);
+    atFlock:        cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioFlock);
+    atFlight:       cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioFlight);
+    atNestling:     cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAUdioNestling);
+    atNonVocal:     cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioNonVocal);
+  else
+    cbAudioType.ItemIndex := -1;
+  end;
   eAudioFile.Text := FAudio.Filename;
   FLocalityId := FAudio.LocalityId;
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
@@ -585,7 +615,7 @@ begin
   FAudio.AuthorId      := FAuthorId;
   FAudio.RecordingDate := TextToDate(eRecordingDate.Text);
   FAudio.RecordingTime := TextToTime(eRecordingTime.Text);
-  FAudio.AudioType     := cbAudioType.Text;
+  FAudio.AudioType     := StrToAudioType(cbAudioType.Text);
   FAudio.Filename      := eAudioFile.Text;
   FAudio.LocalityId    := FLocalityId;
   FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);

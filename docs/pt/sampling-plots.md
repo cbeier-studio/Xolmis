@@ -23,6 +23,7 @@ Ao criar ou editar um registro de parcela amostral, os seguintes campos estão d
 | **Localidade** | Sim | Localidade (topônimo) onde a parcela está situada |
 | **Longitude** |  | Coordenada de longitude da parcela |
 | **Latitude** |  | Coordenada de latitude da parcela |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Descrição** |  | Breve descrição da parcela (ex.: tipo de habitat, acessibilidade) |
 | **Notas** |  | Qualquer informação adicional sobre a parcela |
 
@@ -35,6 +36,7 @@ Se a parcela amostral for uma **estação de redes de neblina**, ela pode inclui
 | **Número da rede de neblina** | Sim | Número ou código de identificação da rede |
 | **Longitude** | Sim | Coordenada de longitude da rede |
 | **Latitude** | Sim | Coordenada de latitude da rede |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Notas** |  | Qualquer informação adicional sobre a rede (ex.: descrição do habitat, notas de manutenção) |
 
 ## Boas práticas

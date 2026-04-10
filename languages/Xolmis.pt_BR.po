@@ -3338,7 +3338,7 @@ msgstr "Local dos arquivos de áudio"
 
 #: tcfgoptions.lblautofillcoordinates.caption
 msgid "Auto fill blank coordinates with gazetteer coordinates, if available"
-msgstr "Preencher automaticamente coordenadas em branco com as coordenadas do gazetteer, se disponíveis"
+msgstr "Preencher automaticamente coordenadas em branco com as do gazetteer, se disponíveis"
 
 #: tcfgoptions.lblautosizecolumns.caption
 msgid "Auto size columns to fit the content"
@@ -13626,10 +13626,60 @@ msgstr "Assimétrica"
 msgid "At least one item must be selected to proceed."
 msgstr "Ao menos um item deve ser selecionado para prosseguir."
 
+#: utils_locale.rsaudioaggression
+msgid "Aggression"
+msgstr "Agressão"
+
+#: utils_locale.rsaudioalarm
+msgid "Alarm/stress"
+msgstr "Alarme/estresse"
+
+#: utils_locale.rsaudiocall
+msgid "Call"
+msgstr "Chamado"
+
+#: utils_locale.rsaudiocontact
+msgid "Contact"
+msgstr "Contato"
+
+#: utils_locale.rsaudiocourtship
+msgid "Courtship"
+msgstr "Corte"
+
+#: utils_locale.rsaudioflight
+msgid "Flight call/song"
+msgstr "Chamado/canto em voo"
+
+#: utils_locale.rsaudioflock
+msgctxt "utils_locale.rsaudioflock"
+msgid "Flock"
+msgstr "Bando"
+
+#: utils_locale.rsaudionestling
+msgid "Nestling/fledgling"
+msgstr "Ninhego/filhote"
+
+#: utils_locale.rsaudiononvocal
+msgid "Non vocal/mechanical"
+msgstr "Não vocal/mecânico"
+
 #: utils_locale.rsaudiorecorded
 msgctxt "utils_locale.rsaudiorecorded"
 msgid "Audio recorded"
 msgstr "Áudio gravado"
+
+#: utils_locale.rsaudiosong
+msgid "Song"
+msgstr "Canto"
+
+#: utils_locale.rsaudioterritorial
+msgid "Territorial"
+msgstr "Territorial"
+
+#: utils_locale.rsaudiounknown
+msgctxt "utils_locale.rsaudiounknown"
+msgid "Unknown"
+msgstr "Desconhecido"
 
 #: utils_locale.rsauthorship
 msgctxt "utils_locale.rsauthorship"
@@ -16373,6 +16423,7 @@ msgid "Pollution/garbage"
 msgstr "Poluição/lixo"
 
 #: utils_locale.rslosspredation
+msgctxt "utils_locale.rslosspredation"
 msgid "Predation"
 msgstr "Predação"
 
@@ -19070,6 +19121,73 @@ msgstr "Versão %s (%s)"
 msgctxt "utils_locale.rsversionstr"
 msgid "Version %s"
 msgstr "Versão %s"
+
+#: utils_locale.rsvideoaggression
+msgid "Aggression/territoriality"
+msgstr "Agressão/territorialidade"
+
+#: utils_locale.rsvideocourtship
+msgid "Courtship/display"
+msgstr "Corte/exibição"
+
+#: utils_locale.rsvideoflight
+msgid "Flight"
+msgstr "Voo"
+
+#: utils_locale.rsvideoforaging
+msgid "Foraging/feeding"
+msgstr "Forrageamento/alimentação"
+
+#: utils_locale.rsvideogeneral
+msgid "General behavior"
+msgstr "Comportamento geral"
+
+#: utils_locale.rsvideohygiene
+msgid "Preening/bath/hygiene"
+msgstr "Preening/banho/higiene"
+
+#: utils_locale.rsvideoincubation
+msgid "Incubation"
+msgstr "Incubação"
+
+#: utils_locale.rsvideolocomotion
+msgid "Locomotion"
+msgstr "Locomoção"
+
+#: utils_locale.rsvideomortality
+msgctxt "utils_locale.rsvideomortality"
+msgid "Dead bird"
+msgstr "Ave morta"
+
+#: utils_locale.rsvideonestbuilding
+msgid "Nest building"
+msgstr "Construção de ninho"
+
+#: utils_locale.rsvideonestlings
+msgid "Nestlings"
+msgstr "Ninhegos"
+
+#: utils_locale.rsvideoparentalcare
+msgid "Parental care"
+msgstr "Cuidado parental"
+
+#: utils_locale.rsvideopredation
+msgctxt "utils_locale.rsvideopredation"
+msgid "Predation"
+msgstr "Predação"
+
+#: utils_locale.rsvideosocial
+msgid "Social interaction"
+msgstr "Interação social"
+
+#: utils_locale.rsvideounknown
+msgctxt "utils_locale.rsvideounknown"
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: utils_locale.rsvideovocalizing
+msgid "Vocalizing"
+msgstr "Vocalizando"
 
 #: utils_locale.rsviewalertaction
 msgctxt "utils_locale.rsviewalertaction"

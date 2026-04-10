@@ -76,7 +76,7 @@ Initial release of Xolmis.
 ### Technical updates
 
 - Updated **Lazarus** to v4.4 (development environment).  
-- Updated **SQLite** to v3.50.4 (database engine).
+- Updated **SQLite** to v3.51.3 (database engine).
 
 ## What's next
 

@@ -58,6 +58,7 @@ To edit video information:
 | **Locality** |  | Site where the recording was made |
 | **Longitude** |  | Longitude coordinate of the recording |
 | **Latitude** |  | Latitude coordinate of the recording |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Taxon** |  | Taxon represented in the recording |
 | **Camera model** |  | Model of the camera used |
 | **Context of the recording** |  | Behavior or activity of the individuals recorded |

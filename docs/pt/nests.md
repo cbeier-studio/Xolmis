@@ -20,6 +20,7 @@ Ao criar ou editar um registro de ninho, os seguintes campos estão disponíveis
 | **Localidade** | Sim | Local onde o ninho está situado (vinculado ao Gazetteer) |
 | **Longitude** |  | Coordenada de longitude do ninho |
 | **Latitude** |  | Coordenada de latitude do ninho |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Descrição do ninho** |  | Breve descrição do ninho (materiais, posição etc.) |
 | **Produtividade** |  | Número de filhotes que deixaram o ninho com sucesso |
 | **Forma do ninho** |  | Forma do ninho (ver detalhes abaixo) |

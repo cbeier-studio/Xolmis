@@ -27,6 +27,7 @@ Para editar um espécime:
 | **Localidade** | Sim | Local onde a amostra foi coletada |
 | **Longitude** |  | Coordenada de longitude do local de coleta |
 | **Latitude** |  | Coordenada de latitude do local de coleta |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Táxon** | Sim | Táxon ao qual a amostra pertence |
 | **Indivíduo** |  | Ave individual vinculada à amostra |
 | **Ninho** |  | Ninho vinculado à amostra |

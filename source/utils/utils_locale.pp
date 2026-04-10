@@ -1236,6 +1236,38 @@ uses
     rsDocNote = 'Note';
     rsDocOther = 'Other';
 
+    { Audio recordings }
+    rsAudioUnknown = 'Unknown';
+    rsAudioSong = 'Song';
+    rsAudioCall = 'Call';
+    rsAudioAlarm = 'Alarm/stress';
+    rsAudioTerritorial = 'Territorial';
+    rsAudioCourtship = 'Courtship';
+    rsAudioAggression = 'Aggression';
+    rsAudioContact = 'Contact';
+    rsAudioFlock = 'Flock';
+    rsAudioFlight = 'Flight call/song';
+    rsAUdioNestling = 'Nestling/fledgling';
+    rsAudioNonVocal = 'Non vocal/mechanical';
+
+    { Videos }
+    rsVideoUnknown = 'Unknown';
+    rsVideoGeneral = 'General behavior';
+    rsVideoForaging = 'Foraging/feeding';
+    rsVideoVocalizing = 'Vocalizing';
+    rsVideoCourtship = 'Courtship/display';
+    rsVideoAggression = 'Aggression/territoriality';
+    rsVideoSocial = 'Social interaction';
+    rsVideoParentalCare = 'Parental care';
+    rsVideoNestBuilding = 'Nest building';
+    rsVideoIncubation = 'Incubation';
+    rsVideoNestlings = 'Nestlings';
+    rsVideoFlight = 'Flight';
+    rsVideoLocomotion = 'Locomotion';
+    rsVideoHygiene = 'Preening/bath/hygiene';
+    rsVideoPredation = 'Predation';
+    rsVideoMortality = 'Dead bird';
+
     { Import/export options }
     rsDelimiterSemicolon = 'Semicolon';
     rsDelimiterColon = 'Colon';

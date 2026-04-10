@@ -28,6 +28,7 @@ This section controls the visual aspects of Xolmis.
 | Setting | Description | Default |
 | --- | --- | --- |
 | **Theme** | Choose between light or dark themes. The *Auto* option adapts to the operating system theme. | Auto |
+| **Auto size columns to fit the content** | Data grid columns will always adjust their width to fit the content. | Enabled |
 | **Grid row height** | Defines the row height in data grids. | 25 pixels |
 | **Use conditional formatting in grids** | Highlights values in grids to indicate errors or groupings. | Enabled |
 | **Highlight outlier measurements in captures** | If conditional formatting is enabled, highlights potential outliers in capture measurements. | Enabled |
@@ -40,6 +41,9 @@ This section manages how collected data is displayed and curated.
 | --- | --- | --- |
 | **Language of vernacular names** | Sets the language of common names displayed in taxon search results. | English |
 | **Show synonyms in search results** | If enabled, synonyms are shown in search results, but Xolmis always uses the accepted name. | Disabled |
+| **Default band supplier** | If a band does not exist in the database when importing captures data, the band will be created using the default band supplier. | |
+| **Remember and pre-fill locality, observer and method when editing a new record** | When inserting a new record, some fields will come pre-filled with the last values used for each field. | Enabled |
+| **Auto fill blank coordinates with gazetteer coordinates, if available** | Fill coordinates with approximate coordinates from gazetteer if blank. | Enabled |
 
 ## Media
 
@@ -67,6 +71,7 @@ This section contains settings related to login and technical support.
 | **Remember connection from last session** | Loads the last used connection in the login dialog. | Enabled |
 | **Remember user from last session** | Loads the last used username in the login dialog. | Enabled |
 | **Allow Xolmis to log events for technical support** | Creates a log file of activities to help investigate problems. | Disabled |
+| **Enable detailed commands logging** | Some internal commands are logged for troubleshooting. | Disabled |
 
 !!! tip
     If you experience errors or crashes, enable **Allow Xolmis to log events for technical support**. This will record technical details that can be sent to support. **No personal or sensitive data is recorded or transmitted.** If Xolmis is running smoothly, keep this setting disabled.

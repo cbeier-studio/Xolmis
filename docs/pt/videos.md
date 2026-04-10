@@ -58,6 +58,7 @@ Para editar informações de um vídeo:
 | **Localidade** |  | Local onde a gravação foi feita |
 | **Longitude** |  | Coordenada de longitude da gravação |
 | **Latitude** |  | Coordenada de latitude da gravação |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Táxon** |  | Táxon representado na gravação |
 | **Modelo da câmera** |  | Modelo da câmera utilizada |
 | **Contexto da gravação** |  | Comportamento ou atividade dos indivíduos gravados |

@@ -29,6 +29,7 @@ When creating or editing a capture record, the following fields are available:
 | **Age** |  | Age category of the bird (see below) |
 | **Escaped** |  | Check if the bird escaped before completing measurements |
 | **Status** |  | Status of the bird when released (see below) |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Cloacal protuberance** |  | Code for cloacal protuberance (see below) |
 | **Brood patch** |  | Code for brood patch (see below) |
 | **Subcutaneous fat** |  | Code for subcutaneous fat (see below) |

@@ -76,7 +76,7 @@ Primeiro lançamento do Xolmis.
 ### Atualizações técnicas
 
 - Atualizado **Lazarus** para v4.4 (ambiente de desenvolvimento).  
-- Atualizado **SQLite** para v3.50.4 (motor de banco de dados).
+- Atualizado **SQLite** para v3.51.3 (motor de banco de dados).
 
 ## O que vem a seguir
 

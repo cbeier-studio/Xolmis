@@ -20,6 +20,7 @@ When creating or editing a nest record, the following fields are available:
 | **Locality** | Yes | Site where the nest is located (linked to Gazetteer) |
 | **Longitude** |  | Longitude coordinate of the nest |
 | **Latitude** |  | Latitude coordinate of the nest |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Nest description** |  | Brief description of the nest (materials, placement, etc.) |
 | **Productivity** |  | Number of fledglings that successfully left the nest |
 | **Nest shape** |  | Shape of the nest (see details below) |

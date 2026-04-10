@@ -58,6 +58,7 @@ Para editar informações de uma gravação:
 | **Localidade** |  | Local onde a gravação foi feita |
 | **Longitude** |  | Coordenada de longitude da gravação |
 | **Latitude** |  | Coordenada de latitude da gravação |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Táxon** |  | Táxon representado na gravação |
 | **Modelo do gravador** |  | Modelo do dispositivo de gravação |
 | **Modelo do microfone** |  | Modelo do microfone utilizado |

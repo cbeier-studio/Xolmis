@@ -153,25 +153,7 @@ begin
   Fim := eEndNumber.Value;
 
   FBandType := StrToBandType(cbBandType.Text);
-  //case cbBandType.ItemIndex of
-  //  0: FBandType := mkButtEndBand;
-  //  1: FBandType := mkFlag;
-  //  2: FBandType := mkCollar;
-  //  3: FBandType := mkWingTag;
-  //  4: FBandType := mkTriangularBand;
-  //  5: FBandType := mkLockOnBand;
-  //  6: FBandType := mkRivetBand;
-  //  7: FBandType := mkClosedBand;
-  //  8: FBandType := mkOther;
-  //end;
   FBandSource := StrToBandSource(cbBandSource.Text);
-  //case cbBandSource.ItemIndex of
-  //  0: FBandSource := bscAcquiredFromSupplier;
-  //  1: FBandSource := bscTransferBetweenBanders;
-  //  2: FBandSource := bscLivingBirdBandedByOthers;
-  //  3: FBandSource := bscDeadBirdBandedByOthers;
-  //  4: FBandSource := bscFoundLoose;
-  //end;
   case FBandSource of
     bscAcquiredFromSupplier:
     begin

@@ -23,6 +23,7 @@ Ao criar ou editar um registro de amostragem, os seguintes campos estão dispon�
 | **Latitude inicial** |  | Coordenada de latitude inicial |
 | **Longitude final** |  | Coordenada de longitude final |
 | **Latitude final** |  | Coordenada de latitude final |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Número de observadores** |  | Número de observadores ou anilhadores participantes |
 | **Identificador da amostra** |  | Identificador para ponto, transecto, lista etc. |
 | **Área** |  | Área total amostrada, em hectares |
@@ -52,6 +53,7 @@ As redes de neblina usadas durante as amostragens podem ser registradas com info
 | **Número da rede** | Sim | Identificador da rede de neblina |
 | **Longitude** |  | Coordenada de longitude da rede |
 | **Latitude** |  | Coordenada de latitude da rede |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Comprimento da rede** |  | Comprimento da rede, em metros |
 | **Altura da rede** |  | Altura da rede, em metros |
 | **Tamanho da malha** |  | Tamanho da malha, em milímetros |
@@ -117,6 +119,7 @@ Registrar dados de vegetação ajuda a contextualizar os resultados dos levantam
 | **Hora** |  | Hora da amostragem da vegetação |
 | **Longitude** |  | Coordenada de longitude |
 | **Latitude** |  | Coordenada de latitude |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Distribuição (herbáceas)** | Sim | Tipo de distribuição do estrato herbáceo (ver abaixo) |
 | **Proporção (herbáceas)** |  | Proporção do estrato herbáceo |
 | **Altura média (herbáceas)** |  | Altura média em centímetros |

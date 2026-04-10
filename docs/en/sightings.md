@@ -16,6 +16,7 @@ When creating or editing a sighting record, the following fields are available:
 | **Locality** | Yes | Site where the bird was sighted (linked to Gazetteer) |
 | **Longitude** |  | Longitude coordinate of the sighting |
 | **Latitude** |  | Latitude coordinate of the sighting |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Date** | Yes | Date of the sighting |
 | **Time** |  | Time when the bird was sighted |
 | **Taxon** | Yes | Taxon observed (species, subspecies, etc.) |

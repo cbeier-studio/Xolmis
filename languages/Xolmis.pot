@@ -13645,9 +13645,59 @@ msgstr ""
 msgid "At least one item must be selected to proceed."
 msgstr ""
 
+#: utils_locale.rsaudioaggression
+msgid "Aggression"
+msgstr ""
+
+#: utils_locale.rsaudioalarm
+msgid "Alarm/stress"
+msgstr ""
+
+#: utils_locale.rsaudiocall
+msgid "Call"
+msgstr ""
+
+#: utils_locale.rsaudiocontact
+msgid "Contact"
+msgstr ""
+
+#: utils_locale.rsaudiocourtship
+msgid "Courtship"
+msgstr ""
+
+#: utils_locale.rsaudioflight
+msgid "Flight call/song"
+msgstr ""
+
+#: utils_locale.rsaudioflock
+msgctxt "utils_locale.rsaudioflock"
+msgid "Flock"
+msgstr ""
+
+#: utils_locale.rsaudionestling
+msgid "Nestling/fledgling"
+msgstr ""
+
+#: utils_locale.rsaudiononvocal
+msgid "Non vocal/mechanical"
+msgstr ""
+
 #: utils_locale.rsaudiorecorded
 msgctxt "utils_locale.rsaudiorecorded"
 msgid "Audio recorded"
+msgstr ""
+
+#: utils_locale.rsaudiosong
+msgid "Song"
+msgstr ""
+
+#: utils_locale.rsaudioterritorial
+msgid "Territorial"
+msgstr ""
+
+#: utils_locale.rsaudiounknown
+msgctxt "utils_locale.rsaudiounknown"
+msgid "Unknown"
 msgstr ""
 
 #: utils_locale.rsauthorship
@@ -16388,6 +16438,7 @@ msgid "Pollution/garbage"
 msgstr ""
 
 #: utils_locale.rslosspredation
+msgctxt "utils_locale.rslosspredation"
 msgid "Predation"
 msgstr ""
 
@@ -18921,6 +18972,73 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsversionstr"
 msgid "Version %s"
+msgstr ""
+
+#: utils_locale.rsvideoaggression
+msgid "Aggression/territoriality"
+msgstr ""
+
+#: utils_locale.rsvideocourtship
+msgid "Courtship/display"
+msgstr ""
+
+#: utils_locale.rsvideoflight
+msgid "Flight"
+msgstr ""
+
+#: utils_locale.rsvideoforaging
+msgid "Foraging/feeding"
+msgstr ""
+
+#: utils_locale.rsvideogeneral
+msgid "General behavior"
+msgstr ""
+
+#: utils_locale.rsvideohygiene
+msgid "Preening/bath/hygiene"
+msgstr ""
+
+#: utils_locale.rsvideoincubation
+msgid "Incubation"
+msgstr ""
+
+#: utils_locale.rsvideolocomotion
+msgid "Locomotion"
+msgstr ""
+
+#: utils_locale.rsvideomortality
+msgctxt "utils_locale.rsvideomortality"
+msgid "Dead bird"
+msgstr ""
+
+#: utils_locale.rsvideonestbuilding
+msgid "Nest building"
+msgstr ""
+
+#: utils_locale.rsvideonestlings
+msgid "Nestlings"
+msgstr ""
+
+#: utils_locale.rsvideoparentalcare
+msgid "Parental care"
+msgstr ""
+
+#: utils_locale.rsvideopredation
+msgctxt "utils_locale.rsvideopredation"
+msgid "Predation"
+msgstr ""
+
+#: utils_locale.rsvideosocial
+msgid "Social interaction"
+msgstr ""
+
+#: utils_locale.rsvideounknown
+msgctxt "utils_locale.rsvideounknown"
+msgid "Unknown"
+msgstr ""
+
+#: utils_locale.rsvideovocalizing
+msgid "Vocalizing"
 msgstr ""
 
 #: utils_locale.rsviewalertaction

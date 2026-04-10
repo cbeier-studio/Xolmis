@@ -359,10 +359,46 @@ type
     itTeam
   );
 
+  // Audio recordings
+  TAudioType = (
+    atUnknown,      // "UNK" - Não identificado
+    atSong,         // "SON" - Canto
+    atCall,         // "CAL" - Chamada
+    atAlarm,        // "ALM" - Alarme / Estresse
+    atTerritorial,  // "TER" - Territorial
+    atCourtship,    // "CRT" - Corte / Acasalamento
+    atAggression,   // "AGR" - Agressão
+    atContact,      // "CNT" - Contato
+    atFlock,        // "FLK" - Vocalização de bando
+    atFlight,       // "FLT" - Vocalização de voo
+    atNestling,     // "NST" - Filhote / ninhego
+    atNonVocal      // "NVL" - Sons não vocais (asas, bico, tamborilar)
+  );
+
   // Documents and links
   TFileCategory = (fcOther, fcUrl, fcText, fcSpreadsheet, fcPresentation, fcPdf, fcWebpage, fcScript, fcSourceCode,
     fcDataset, fcDatabase, fcGis, fcArchive, fcImage, fcAudio, fcVideo, fcVectorial, fcBibliography, fcStatistic,
     fcBioinformatic, fcEbook, fcNote, fcMetadata);
+
+  // Videos
+  TVideoType = (
+    vtUnknown,        // "UNK" - Não identificado
+    vtGeneral,        // "GEN" - Comportamento geral
+    vtForaging,       // "FOR" - Alimentação / Forrageamento
+    vtVocalizing,     // "VOC" - Canto / Vocalização
+    vtCourtship,      // "CRT" - Corte / Exibição
+    vtAggression,     // "AGR" - Agressão / Territorialidade
+    vtSocial,         // "SOC" - Interação social
+    vtParentalCare,   // "PAR" - Cuidado parental
+    vtNestBuilding,   // "NBU" - Construção de ninho
+    vtIncubation,     // "INC" - Incubação
+    vtNestlings,      // "NLG" - Filhotes no ninho
+    vtFlight,         // "FLT" - Voo
+    vtLocomotion,     // "LOC" - Locomoção no solo/vegetação
+    vtHygiene,        // "HYG" - Banho / Preening / Higiene
+    vtPredation,      // "PRD" - Predação (como predador ou presa)
+    vtMortality       // "MOR" - Ave morta / comportamento anômalo
+  );
 
   // Xolmis Mobile
   TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
@@ -492,9 +528,45 @@ const
     'team'
   );
 
+  // Audio recordings
+  AUDIO_TYPES: array[TAudioType] of string = (
+    'UNK',  // atUnknown
+    'SON',  // atSong
+    'CAL',  // atCall
+    'ALM',  // atAlarm
+    'TER',  // atTerritorial
+    'CRT',  // atCourtship
+    'AGR',  // atAggression
+    'CNT',  // atContact
+    'FLK',  // atFlock
+    'FLT',  // atFlight
+    'NST',  // atNestling
+    'NVL'   // atNonVocal
+  );
+
   // Documents and links
   FILE_CATEGORIES: array [TFileCategory] of String = ('oth','url','doc','spr','prs','pdf','web','scr','cod','ds',
     'db','gis','arc','img','aud','vid','vec','bib','sta','gen','ebk','not','met');
+
+  // Videos
+  VIDEO_TYPES: array[TVideoType] of string = (
+    'UNK',  // vtUnknown
+    'GEN',  // vtGeneral
+    'FOR',  // vtForaging
+    'VOC',  // vtVocalizing
+    'CRT',  // vtCourtship
+    'AGR',  // vtAggression
+    'SOC',  // vtSocial
+    'PAR',  // vtParentalCare
+    'NBU',  // vtNestBuilding
+    'INC',  // vtIncubation
+    'NLG',  // vtNestlings
+    'FLT',  // vtFlight
+    'LOC',  // vtLocomotion
+    'HYG',  // vtHygiene
+    'PRD',  // vtPredation
+    'MOR'   // vtMortality
+  );
 
 implementation
 

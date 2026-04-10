@@ -16,6 +16,7 @@ Ao criar ou editar um registro de observação, os seguintes campos estão dispo
 | **Localidade** | Sim | Local onde a ave foi observada (vinculado ao Gazetteer) |
 | **Longitude** |  | Coordenada de longitude da observação |
 | **Latitude** |  | Coordenada de latitude da observação |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Data** | Sim | Data da observação |
 | **Hora** |  | Hora em que a ave foi observada |
 | **Táxon** | Sim | Táxon observado (espécie, subespécie etc.) |

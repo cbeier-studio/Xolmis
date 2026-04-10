@@ -27,6 +27,7 @@ To edit a specimen:
 | **Locality** | Yes | Site where the sample was collected |
 | **Longitude** |  | Longitude coordinate of the collection site |
 | **Latitude** |  | Latitude coordinate of the collection site |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Taxon** | Yes | Taxon to which the sample pertains |
 | **Individual** |  | Individual bird linked to the sample |
 | **Nest** |  | Nest linked to the sample |

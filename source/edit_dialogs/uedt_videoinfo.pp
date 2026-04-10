@@ -443,7 +443,26 @@ begin
   FNestId := 0;
   FNestRevisionId := 0;
 
-  { #todo : Recording types combobox list }
+  with cbVideoType.Items do
+  begin
+    Clear;
+    Add(rsVideoUnknown);
+    Add(rsVideoGeneral);
+    Add(rsVideoForaging);
+    Add(rsVideoVocalizing);
+    Add(rsVideoCourtship);
+    Add(rsVideoAggression);
+    Add(rsVideoSocial);
+    Add(rsVideoParentalCare);
+    Add(rsVideoNestBuilding);
+    Add(rsVideoIncubation);
+    Add(rsVideoNestlings);
+    Add(rsVideoFlight);
+    Add(rsVideoLocomotion);
+    Add(rsVideoHygiene);
+    Add(rsVideoPredation);
+    Add(rsVideoMortality);
+  end;
 
   with cbCoordinatePrecision.Items do
   begin
@@ -463,7 +482,26 @@ begin
   eAuthor.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eRecordingDate.Text := DateToStr(FVideo.RecordingDate);
   eRecordingTime.Text := TimeToStr(FVideo.RecordingTime);
-  cbVideoType.Text := FVideo.VideoType;
+  case FVideo.VideoType of
+    vtUnknown:      cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoUnknown);
+    vtGeneral:      cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoGeneral);
+    vtForaging:     cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoForaging);
+    vtVocalizing:   cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoVocalizing);
+    vtCourtship:    cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoCourtship);
+    vtAggression:   cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoAggression);
+    vtSocial:       cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoSocial);
+    vtParentalCare: cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoParentalCare);
+    vtNestBuilding: cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoNestBuilding);
+    vtIncubation:   cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoIncubation);
+    vtNestlings:    cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoNestlings);
+    vtFlight:       cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoFlight);
+    vtLocomotion:   cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoLocomotion);
+    vtHygiene:      cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoHygiene);
+    vtPredation:    cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoPredation);
+    vtMortality:    cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoMortality);
+  else
+    cbVideoType.ItemIndex := -1;
+  end;
   eVideoFile.Text := FVideo.Filename;
   FLocalityId := FVideo.LocalityId;
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
@@ -531,7 +569,7 @@ begin
   FVideo.AuthorId       := FAuthorId;
   FVideo.RecordingDate  := TextToDate(eRecordingDate.Text);
   FVideo.RecordingTime  := TextToTime(eRecordingTime.Text);
-  FVideo.VideoType      := cbVideoType.Text;
+  FVideo.VideoType      := StrToVideoType(cbVideoType.Text);
   FVideo.Filename       := eVideoFile.Text;
   FVideo.LocalityId     := FLocalityId;
   FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);

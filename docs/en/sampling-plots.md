@@ -23,6 +23,7 @@ When creating or editing a sampling plot record, the following fields are availa
 | **Locality** | Yes | Locality (toponym) where the sampling plot is located |
 | **Longitude** |  | Longitude coordinate of the sampling plot |
 | **Latitude** |  | Latitude coordinate of the sampling plot |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Description** |  | Brief description of the sampling plot (e.g., habitat type, accessibility) |
 | **Notes** |  | Any additional information about the sampling plot |
 
@@ -35,6 +36,7 @@ If the sampling plot is a **mist net station**, it can include **permanent nets*
 | **Mistnet number** | Yes | Mist net ID number or code |
 | **Longitude** | Yes | Longitude coordinate of the mist net |
 | **Latitude** | Yes | Latitude coordinate of the mist net |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Notes** |  | Any additional information about the mist net (e.g., habitat description, maintenance notes) |
 
 ## Best practices

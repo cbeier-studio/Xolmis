@@ -58,6 +58,7 @@ To edit the information of an audio recording:
 | **Locality** |  | Site where the recording was made |
 | **Longitude** |  | Longitude coordinate of the recording |
 | **Latitude** |  | Latitude coordinate of the recording |
+| **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Taxon** |  | Taxon represented in the recording |
 | **Recorder model** |  | Model of the recording device |
 | **Microphone model** |  | Model of the microphone used |

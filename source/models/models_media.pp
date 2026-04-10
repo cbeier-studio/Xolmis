@@ -138,7 +138,7 @@ type
   protected
     FRecordingDate: TDate;
     FRecordingTime: TTime;
-    FAudioType: String;
+    FAudioType: TAudioType;
     FFilename: String;
     FSubtitle: String;
     FAuthorId: Integer;
@@ -185,7 +185,7 @@ type
   published
     property RecordingDate: TDate read FRecordingDate write FRecordingDate;
     property RecordingTime: TTime read FRecordingTime write FRecordingTime;
-    property AudioType: String read FAudioType write FAudioType;
+    property AudioType: TAudioType read FAudioType write FAudioType;
     property Filename: String read FFilename write FFilename;
     property Subtitle: String read FSubtitle write FSubtitle;
     property AuthorId: Integer read FAuthorId write FAuthorId;
@@ -331,7 +331,7 @@ type
   protected
     FRecordingDate: TDate;
     FRecordingTime: TTime;
-    FVideoType: String;
+    FVideoType: TVideoType;
     FFilename: String;
     FSubtitle: String;
     FAuthorId: Integer;
@@ -371,7 +371,7 @@ type
   published
     property RecordingDate: TDate read FRecordingDate write FRecordingDate;
     property RecordingTime: TTime read FRecordingTime write FRecordingTime;
-    property VideoType: String read FVideoType write FVideoType;
+    property VideoType: TVideoType read FVideoType write FVideoType;
     property Filename: String read FFilename write FFilename;
     property Subtitle: String read FSubtitle write FSubtitle;
     property AuthorId: Integer read FAuthorId write FAuthorId;
@@ -1190,7 +1190,7 @@ begin
   inherited Clear;
   FRecordingDate := NullDate;
   FRecordingTime := NullTime;
-  FAudioType := EmptyStr;
+  FAudioType := atUnknown;
   FFilename := EmptyStr;
   FSubtitle := EmptyStr;
   FAuthorId := 0;
@@ -1336,7 +1336,7 @@ begin
     FFullName         := Obj.Get('full_name', '');
     FRecordingDate    := Obj.Get('recording_date', NullDate);
     FRecordingTime    := Obj.Get('recording_time', NullTime);
-    FAudioType        := Obj.Get('audio_type', '');
+    FAudioType        := StrToAudioType(Obj.Get('audio_type', ''));
     FFilename         := Obj.Get('filename', '');
     FSubtitle         := Obj.Get('subtitle', '');
     FAuthorId         := Obj.Get('author_id', 0);
@@ -1382,7 +1382,7 @@ begin
     JSONObject.Add('full_name', FFullName);
     JSONObject.Add('recording_date', FRecordingDate);
     JSONObject.Add('recording_time', FRecordingTime);
-    JSONObject.Add('audio_type', FAudioType);
+    JSONObject.Add('audio_type', AUDIO_TYPES[FAudioType]);
     JSONObject.Add('filename', FFilename);
     JSONObject.Add('subtitle', FSubtitle);
     JSONObject.Add('author_id', FAuthorId);
@@ -1430,7 +1430,7 @@ begin
     'MicModel=%s, FilterModel=%s, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), FAudioType, FFilename, FSubtitle,
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), AUDIO_TYPES[FAudioType], FFilename, FSubtitle,
     FAuthorId, FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
     FSightingId, FSpecimenId, FSurveyId, FTemperature, FCloudCover, PRECIPITATION_VALUES[FPrecipitation],
     FRelativeHumidity, FWindSpeedBft, FSubjectsTally, FDistance, FContext, FHabitat, BoolToStr(FPlaybackUsed, 'True', 'False'),
@@ -1686,7 +1686,7 @@ begin
     R.FullName := FieldByName('full_name').AsString;
     R.RecordingDate := FieldByName('recording_date').AsDateTime;
     R.RecordingTime := FieldByName('recording_time').AsDateTime;
-    R.AudioType := FieldByName('audio_type').AsString;
+    R.AudioType := StrToAudioType(FieldByName('audio_type').AsString);
     R.Subtitle := FieldByName('subtitle').AsString;
     R.Filename := FieldByName('audio_file').AsString;
     R.AuthorId := FieldByName('recorder_id').AsInteger;
@@ -1820,7 +1820,7 @@ begin
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
-    ParamByName('audio_type').AsString := R.AudioType;
+    ParamByName('audio_type').AsString := AUDIO_TYPES[R.AudioType];
 
     ParamByName('audio_file').AsString := R.Filename;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
@@ -1928,7 +1928,7 @@ begin
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
-    ParamByName('audio_type').AsString := R.AudioType;
+    ParamByName('audio_type').AsString := AUDIO_TYPES[R.AudioType];
 
     ParamByName('audio_file').AsString := R.Filename;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
@@ -2950,7 +2950,7 @@ begin
   inherited Clear;
   FRecordingDate := NullDate;
   FRecordingTime := NullTime;
-  FVideoType := EmptyStr;
+  FVideoType := vtUnknown;
   FFilename := EmptyStr;
   FSubtitle := EmptyStr;
   FAuthorId := 0;
@@ -3075,8 +3075,7 @@ begin
     FFullName       := Obj.Get('full_name', '');
     FRecordingDate  := Obj.Get('recording_date', NullDate);
     FRecordingTime  := Obj.Get('recording_time', NullTime);
-    { #todo : enum video types }
-    FVideoType      := Obj.Get('video_type', '');
+    FVideoType      := StrToVideoType(Obj.Get('video_type', ''));
     FFilename       := Obj.Get('filename', '');
     FSubtitle       := Obj.Get('subtitle', '');
     FAuthorId       := Obj.Get('author_id', 0);
@@ -3115,7 +3114,7 @@ begin
     JSONObject.Add('full_name', FFullName);
     JSONObject.Add('recording_date', FRecordingDate);
     JSONObject.Add('recording_time', FRecordingTime);
-    JSONObject.Add('video_type', FVideoType);
+    JSONObject.Add('video_type', VIDEO_TYPES[FVideoType]);
     JSONObject.Add('filename', FFilename);
     JSONObject.Add('subtitle', FSubtitle);
     JSONObject.Add('author_id', FAuthorId);
@@ -3156,7 +3155,7 @@ begin
     'LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), FVideoType, FFilename, FSubtitle,
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), VIDEO_TYPES[FVideoType], FFilename, FSubtitle,
     FAuthorId, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FTaxonId, FIndividualId, FCaptureId,
     FSightingId, FNestId, FNestRevisionId, FSurveyId,
     FDistance, FContext, FHabitat,
@@ -3398,7 +3397,7 @@ begin
     R.FullName := FieldByName('full_name').AsString;
     R.RecordingDate := FieldByName('recording_date').AsDateTime;
     R.RecordingTime := FieldByName('recording_time').AsDateTime;
-    R.VideoType := FieldByName('video_type').AsString;
+    R.VideoType := StrToVideoType(FieldByName('video_type').AsString);
     R.Subtitle := FieldByName('subtitle').AsString;
     R.Filename := FieldByName('file_path').AsString;
     R.AuthorId := FieldByName('recorder_id').AsInteger;
@@ -3513,7 +3512,7 @@ begin
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
-    ParamByName('video_type').AsString := R.VideoType;
+    ParamByName('video_type').AsString := VIDEO_TYPES[R.VideoType];
 
     ParamByName('file_path').AsString := R.Filename;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
@@ -3609,7 +3608,7 @@ begin
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
-    ParamByName('video_type').AsString := R.VideoType;
+    ParamByName('video_type').AsString := VIDEO_TYPES[R.VideoType];
 
     ParamByName('file_path').AsString := R.Filename;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);

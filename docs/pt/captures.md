@@ -29,6 +29,7 @@ Ao criar ou editar um registro de captura, os seguintes campos estão disponíve
 | **Idade** |  | Categoria de idade da ave (ver abaixo) |
 | **Escapou** |  | Marque se a ave escapou antes de completar as medições |
 | **Status** |  | Status da ave ao ser solta (ver abaixo) |
+| **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Protuberância cloacal** |  | Código para protuberância cloacal (ver abaixo) |
 | **Placa de incubação** |  | Código para placa de incubação (ver abaixo) |
 | **Gordura subcutânea** |  | Código para gordura subcutânea (ver abaixo) |

@@ -52,6 +52,7 @@ uses
   function StrToAccessionType(const AValue: String): String;
   function StrToActivityStatus(const AValue: String): TActivityStatus;
   function StrToAge(const AValue: String): TAge;
+  function StrToAudioType(const AValue: String): TAudioType;
   function StrToBandType(const AValue: String): TMarkType;
   function StrToBandStatus(const AValue: String): TBandStatus;
   function StrToBandSource(const AValue: String): TBandSource;
@@ -84,6 +85,7 @@ uses
   function StrToSupportType(const AValue: String): String;
   function StrToSymmetry(const AValue: String): TSymmetry;
   function StrToUserRank(const AValue: String): TUserRank;
+  function StrToVideoType(const AValue: String): TVideoType;
 
 implementation
 
@@ -486,6 +488,44 @@ begin
     Result := ageFifthYear
   else
     Result := ageUnknown;
+end;
+
+function StrToAudioType(const AValue: String): TAudioType;
+begin
+  if (AValue = rsAudioSong) or (AValue = 'SON') then
+    Result := atSong
+  else
+  if (AValue = rsAudioCall) or (AValue = 'CAL') then
+    Result := atCall
+  else
+  if (AValue = rsAudioAlarm) or (AValue = 'ALM') then
+    Result := atAlarm
+  else
+  if (AValue = rsAudioTerritorial) or (AValue = 'TER') then
+    Result := atTerritorial
+  else
+  if (AValue = rsAudioCourtship) or (AValue = 'CRT') then
+    Result := atCourtship
+  else
+  if (AValue = rsAudioAggression) or (AValue = 'AGR') then
+    Result := atAggression
+  else
+  if (AValue = rsAudioContact) or (AValue = 'CNT') then
+    Result := atContact
+  else
+  if (AValue = rsAudioFlock) or (AValue = 'FLK') then
+    Result := atFlock
+  else
+  if (AValue = rsAudioFlight) or (AValue = 'FLT') then
+    Result := atFlight
+  else
+  if (AValue = rsAUdioNestling) or (AValue = 'NST') then
+    Result := atNestling
+  else
+  if (AValue = rsAudioNonVocal) or (AValue = 'NVL') then
+    Result := atNonVocal
+  else
+    Result := atUnknown;
 end;
 
 function StrToBandType(const AValue: String): TMarkType;
@@ -1313,6 +1353,56 @@ begin
     Result := urVisitor
   else
     Result := urStandard;
+end;
+
+function StrToVideoType(const AValue: String): TVideoType;
+begin
+  if (AValue = rsVideoGeneral) or (AValue = 'GEN') then
+    Result := vtGeneral
+  else
+  if (AValue = rsVideoForaging) or (AValue = 'FOR') then
+    Result := vtForaging
+  else
+  if (AValue = rsVideoVocalizing) or (AValue = 'VOC') then
+    Result := vtVocalizing
+  else
+  if (AValue = rsVideoCourtship) or (AValue = 'CRT') then
+    Result := vtCourtship
+  else
+  if (AValue = rsVideoAggression) or (AValue = 'AGR') then
+    Result := vtAggression
+  else
+  if (AValue = rsVideoSocial) or (AValue = 'SOC') then
+    Result := vtSocial
+  else
+  if (AValue = rsVideoParentalCare) or (AValue = 'PAR') then
+    Result := vtParentalCare
+  else
+  if (AValue = rsVideoNestBuilding) or (AValue = 'NBU') then
+    Result := vtNestBuilding
+  else
+  if (AValue = rsVideoIncubation) or (AValue = 'INC') then
+    Result := vtIncubation
+  else
+  if (AValue = rsVideoNestlings) or (AValue = 'NLG') then
+    Result := vtNestlings
+  else
+  if (AValue = rsVideoFlight) or (AValue = 'FLT') then
+    Result := vtFlight
+  else
+  if (AValue = rsVideoLocomotion) or (AValue = 'LOC') then
+    Result := vtLocomotion
+  else
+  if (AValue = rsVideoHygiene) or (AValue = 'HYG') then
+    Result := vtHygiene
+  else
+  if (AValue = rsVideoPredation) or (AValue = 'PRD') then
+    Result := vtPredation
+  else
+  if (AValue = rsVideoMortality) or (AValue = 'MOR') then
+    Result := vtMortality
+  else
+    Result := vtUnknown;
 end;
 
 end.
