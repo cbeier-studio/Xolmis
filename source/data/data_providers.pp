@@ -77,6 +77,7 @@ type
 
   IConnectionsSQL = interface ['{12B1F797-8D34-4715-B75E-B4F0A2D6C71A}']
     function CreateTable: String;
+    function CreateIndexConnectionName: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;

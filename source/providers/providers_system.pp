@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexConnectionName: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -98,6 +99,13 @@ constructor TConnectionsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TConnectionsSQL.CreateIndexConnectionName: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX idx_connection_name ON connections ( ' +
+      'connection_name COLLATE NOCASE );'
 end;
 
 function TConnectionsSQL.CreateTable: String;

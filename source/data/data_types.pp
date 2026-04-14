@@ -266,7 +266,7 @@ type
     FDisplayName: String;
   public
     constructor Create(aFieldName, aDisplayName: String; aDataType: TSearchDataType = sdtText;
-      aCriteria: TCriteriaType = crLike; IsLookup: Boolean = False;
+      aCriteria: TCriteriaType = crLike; UseTablePrefix: Boolean = False;
       aValue1: String = ''; aValue2: String = '');
   published
     property FieldName: String read FFieldName write FFieldName;
@@ -619,13 +619,13 @@ end;
 { TSearchField }
 
 constructor TSearchField.Create(aFieldName, aDisplayName: String; aDataType: TSearchDataType;
-  aCriteria: TCriteriaType; IsLookup: Boolean; aValue1: String; aValue2: String);
+  aCriteria: TCriteriaType; UseTablePrefix: Boolean; aValue1: String; aValue2: String);
 begin
   FFieldName := aFieldName;
   FDisplayName := aDisplayName;
   FDataType := aDataType;
   FCriteria := aCriteria;
-  FLookup := IsLookup;
+  FLookup := UseTablePrefix;
   FValue1 := aValue1;
   FValue2 := aValue2;
 end;

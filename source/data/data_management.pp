@@ -36,8 +36,8 @@ const
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
   procedure CreateConnectionsTable;
-  procedure CreateTablesMappingTable;
-  procedure CreateFieldsMappingTable;
+  procedure CreateTablesMappingTable; deprecated;
+  procedure CreateFieldsMappingTable; deprecated;
   procedure CreateUsageDataTable;
 
   { User database }
@@ -78,7 +78,7 @@ const
   procedure CreateSightingsTable(Connection: TSQLConnector);
   procedure CreateCapturesTable(Connection: TSQLConnector);
   procedure CreateFeathersTable(connection: TSQLConnector);
-  procedure CreateMoltsTable(Connection: TSQLConnector);
+  procedure CreateMoltsTable(Connection: TSQLConnector); deprecated;
   procedure CreateNestsTable(Connection: TSQLConnector);
   procedure CreateNestOwnersTable(Connection: TSQLConnector);
   procedure CreateNestRevisionsTable(Connection: TSQLConnector);
@@ -133,10 +133,10 @@ const
     aWhere: TStrings; ackMarcados: TCheckBox); overload;
   procedure QueueRecord(aTableName, aFieldName: String; aKeyValue: Integer);
   procedure UnqueueRecord(aTableName, aFieldName: String; aKeyValue: Integer);
-  procedure UpdateBand(aBand, aIndividual: Integer; aStatus: String; aDate: TDate);
-  procedure UpdateIndividual(aIndividual: Integer; aDate: TDate);
+  procedure UpdateBand(aBand, aIndividual: Integer; aStatus: String; aDate: TDate); deprecated;
+  procedure UpdateIndividual(aIndividual: Integer; aDate: TDate); deprecated;
   procedure ChangeIndividualBand(aIndividual: Integer; aNewBand, aRemovedBand: Integer; aDate: TDate;
-    aName: String);
+    aName: String); deprecated;
   procedure SetRecordDateUser(aDataSet: TDataSet);
   procedure CancelRecord(aDataSet: TDataSet; aFocusControl: TWinControl);
 
@@ -144,7 +144,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_debug,
-  data_consts, models_users,
+  data_consts, data_schema, models_users,
   udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
 
   {
@@ -203,22 +203,10 @@ end;
 procedure CreateConnectionsTable;
 begin
   { Create table "connections" }
-  DMM.sysCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS connections ( ' +
-              'connection_id    INTEGER       PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, ' +
-              'connection_name  VARCHAR (40)  NOT NULL, ' +
-              'database_type    INTEGER       NOT NULL, ' +
-              'database_server  VARCHAR (30), ' +
-              'database_port    INTEGER, ' +
-              'database_name    VARCHAR (200) NOT NULL, ' +
-              'user_name        VARCHAR (20), ' +
-              'user_password    TEXT, ' +
-              'last_backup      DATETIME,' +
-              'insert_date      DATETIME, ' +
-              'update_date      DATETIME );');
+  DMM.sysCon.ExecuteDirect(xProvider.Connections.CreateTable);
 
   { Create index based upon "connection_name" in the "connections" table }
-  DMM.sysCon.ExecuteDirect('CREATE UNIQUE INDEX idx_connection_name ON connections ( ' +
-              'connection_name COLLATE NOCASE );');
+  DMM.sysCon.ExecuteDirect(xProvider.Connections.CreateIndexConnectionName);
 end;
 
 procedure CreateTablesMappingTable;
@@ -918,41 +906,13 @@ procedure CreateDBMetadataTable(Connection: TSQLConnector);
 begin
   { Create table "db_metadata" }
   LogDebug('Creating db_metadata table');
-  //case databaseConnection.Backend of
-  //  dbSqlite, dbPostgre, dbMaria:
-  //  begin
-      Connection.ExecuteDirect(xProvider.DBMetadata.CreateTable);
-      //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS db_metadata (' +
-      //  'property_name  VARCHAR (40)  PRIMARY KEY UNIQUE NOT NULL, ' +
-      //  'property_value VARCHAR (150) );');
-  //  end;
-  //  dbFirebird: ;
-  //end;
+  Connection.ExecuteDirect(xProvider.DBMetadata.CreateTable);
 end;
 
 procedure CreateUsersTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating users table');
   Connection.ExecuteDirect(xProvider.Users.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS users (' +
-  //  'user_id               INTEGER      PRIMARY KEY AUTOINCREMENT,' +
-  //  'full_name             VARCHAR (60) NOT NULL,' +
-  //  'user_name             VARCHAR (30) UNIQUE NOT NULL,' +
-  //  'user_password         TEXT,' +
-  //  'user_rank             VARCHAR (5),' +
-  //  'allow_collection_edit BOOLEAN      DEFAULT (1),' +
-  //  'allow_print           BOOLEAN      DEFAULT (1),' +
-  //  'allow_export          BOOLEAN      DEFAULT (1),' +
-  //  'allow_import          BOOLEAN      DEFAULT (1),' +
-  //  'uuid                  VARCHAR (40),' +
-  //  'user_inserted         INTEGER,' +
-  //  'user_updated          INTEGER,' +
-  //  'insert_date           DATETIME,' +
-  //  'update_date           DATETIME,' +
-  //  'exported_status       BOOLEAN      DEFAULT (0),' +
-  //  'marked_status         BOOLEAN      DEFAULT (0),' +
-  //  'active_status         BOOLEAN      DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_user_fullname ON users (' +
     'full_name COLLATE NOCASE' +
@@ -963,20 +923,6 @@ procedure CreateRecordHistoryTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating record_history table');
   Connection.ExecuteDirect(xProvider.RecordHistory.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_history (' +
-  //  'event_id     INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'event_date   DATETIME,' +
-  //  'user_id      INTEGER,' +
-  //  'event_action VARCHAR (30),' +
-  //  'event_table  VARCHAR (40),' +
-  //  'record_id    INTEGER,' +
-  //  'event_field  VARCHAR (60),' +
-  //  'old_value    TEXT,' +
-  //  'new_value    TEXT,' +
-  //  'notes        TEXT,' +
-  //  'FOREIGN KEY (user_id)' +
-  //    'REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_history_table_record ON record_history (' +
     'event_table,' +
@@ -992,40 +938,12 @@ procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating record_verifications table');
   Connection.ExecuteDirect(xProvider.RecordVerifications.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS record_verifications (' +
-  //  'verification_id     INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'table_name          VARCHAR (40) NOT NULL,' +
-  //  'record_id           INTEGER      NOT NULL,' +
-  //  'verification_date   DATETIME,' +
-  //  'verification_status VARCHAR (5)  NOT NULL,' +
-  //  'person_id           INTEGER,' +
-  //  'notes               TEXT' +
-  //');');
 end;
 
 procedure CreateTaxonRanksTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating taxon_ranks table');
   Connection.ExecuteDirect(xProvider.TaxonRanks.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS taxon_ranks (' +
-  //  'rank_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'rank_seq        INTEGER      NOT NULL,' +
-  //  'rank_name       VARCHAR (30) NOT NULL UNIQUE,' +
-  //  'rank_acronym    VARCHAR (15),' +
-  //  'main_rank       BOOLEAN      DEFAULT (1),' +
-  //  'subrank         BOOLEAN      DEFAULT (0),' +
-  //  'infrarank       BOOLEAN      DEFAULT (0),' +
-  //  'infraspecific   BOOLEAN      DEFAULT (0),' +
-  //  'iczn            BOOLEAN      DEFAULT (1),' +
-  //  'icbn            BOOLEAN      DEFAULT (1),' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN      DEFAULT (0),' +
-  //  'marked_status   BOOLEAN      DEFAULT (0),' +
-  //  'active_status   BOOLEAN      DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_seq ON taxon_ranks (' +
     'rank_seq COLLATE BINARY' +
@@ -1040,50 +958,6 @@ procedure CreateZooTaxaTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating zoo_taxa table');
   Connection.ExecuteDirect(xProvider.ZooTaxa.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS zoo_taxa (' +
-  //  'taxon_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'full_name              VARCHAR (100) NOT NULL UNIQUE,' +
-  //  'authorship             VARCHAR (150),' +
-  //  'formatted_name         VARCHAR (250),' +
-  //  'english_name           VARCHAR (100),' +
-  //  'portuguese_name        VARCHAR (100),' +
-  //  'spanish_name           VARCHAR (100),' +
-  //  'quick_code             VARCHAR (10),' +
-  //  'rank_id                INTEGER       NOT NULL REFERENCES taxon_ranks (rank_id) ON UPDATE CASCADE,' +
-  //  'parent_taxon_id        INTEGER,' +
-  //  'valid_id               INTEGER,' +
-  //  'iucn_status            VARCHAR (5),' +
-  //  'extinct                BOOLEAN       DEFAULT (0),' +
-  //  'extinction_year        VARCHAR (25),' +
-  //  'sort_num               REAL,' +
-  //  'group_name             VARCHAR (40),' +
-  //  'order_id               INTEGER,' +
-  //  'family_id              INTEGER,' +
-  //  'subfamily_id           INTEGER,' +
-  //  'genus_id               INTEGER,' +
-  //  'species_id             INTEGER,' +
-  //  'subspecies_group_id    INTEGER,' +
-  //  'incertae_sedis         INTEGER,' +
-  //  'ebird_code             VARCHAR (20),' +
-  //  'clements_taxonomy      BOOLEAN       DEFAULT (0),' +
-  //  'ioc_taxonomy           BOOLEAN       DEFAULT (0),' +
-  //  'ioc_rank_id            INTEGER       REFERENCES taxon_ranks (rank_id) ON UPDATE CASCADE,' +
-  //  'ioc_parent_taxon_id    INTEGER,' +
-  //  'ioc_valid_id           INTEGER,' +
-  //  'ioc_sort_num           REAL,' +
-  //  'ioc_english_name       VARCHAR (100),' +
-  //  'cbro_taxonomy          BOOLEAN       DEFAULT (0),' +
-  //  'other_portuguese_names VARCHAR (150),' +
-  //  'user_inserted          INTEGER,' +
-  //  'user_updated           INTEGER,' +
-  //  'insert_date            DATETIME,' +
-  //  'update_date            DATETIME,' +
-  //  'exported_status        BOOLEAN       DEFAULT (0),' +
-  //  'marked_status          BOOLEAN       DEFAULT (0),' +
-  //  'active_status          BOOLEAN       DEFAULT (1),' +
-  //  'distribution           TEXT,' +
-  //  'ioc_distribution       TEXT' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_authorship ON zoo_taxa (' +
     'authorship COLLATE NOCASE' +
@@ -1166,27 +1040,6 @@ procedure CreateBotanicTaxaTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating botanic_taxa table');
   Connection.ExecuteDirect(xProvider.BotanicalTaxa.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS botanic_taxa (' +
-  //  'taxon_id        INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'taxon_name      VARCHAR (100) NOT NULL UNIQUE,' +
-  //  'authorship      VARCHAR (100),' +
-  //  'formatted_name  VARCHAR (180),' +
-  //  'vernacular_name VARCHAR (100),' +
-  //  'rank_id         INTEGER       NOT NULL REFERENCES taxon_ranks (rank_id) ON UPDATE CASCADE,' +
-  //  'parent_taxon_id INTEGER,' +
-  //  'valid_id        INTEGER,' +
-  //  'order_id        INTEGER,' +
-  //  'family_id       INTEGER,' +
-  //  'genus_id        INTEGER,' +
-  //  'species_id      INTEGER,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN       DEFAULT (0),' +
-  //  'marked_status   BOOLEAN       DEFAULT (0),' +
-  //  'active_status   BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_parent_taxon ON botanic_taxa (' +
     'parent_taxon_id COLLATE BINARY' +
@@ -1225,24 +1078,6 @@ procedure CreateMethodsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating methods table');
   Connection.ExecuteDirect(xProvider.Methods.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS methods (' +
-  //  'method_id        INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'method_name      VARCHAR (100) UNIQUE NOT NULL,' +
-  //  'abbreviation     VARCHAR (20),' +
-  //  'ebird_name       VARCHAR (60),' +
-  //  'category         VARCHAR (30),' +
-  //  'description      TEXT,' +
-  //  'recommended_uses TEXT,' +
-  //  'notes            TEXT,' +
-  //  'can_delete       BOOLEAN       DEFAULT (1),' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN       DEFAULT (0),' +
-  //  'marked_status    BOOLEAN       DEFAULT (0),' +
-  //  'active_status    BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_abbreviation ON methods (' +
     'abbreviation COLLATE BINARY' +
@@ -1257,31 +1092,6 @@ procedure CreateGazetteerTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating gazetteer table');
   Connection.ExecuteDirect(xProvider.Gazetteer.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS gazetteer (' +
-  //  'site_id         INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'site_name       VARCHAR (60)  NOT NULL,' +
-  //  'site_acronym    VARCHAR (10),' +
-  //  'longitude       REAL,' +
-  //  'latitude        REAL,' +
-  //  'altitude        REAL,' +
-  //  'site_rank       CHAR (1),' +
-  //  'parent_site_id  INTEGER,' +
-  //  'country_id      INTEGER,' +
-  //  'state_id        INTEGER,' +
-  //  'municipality_id INTEGER,' +
-  //  'full_name       VARCHAR (180),' +
-  //  'ebird_name      VARCHAR (150),' +
-  //  'language        VARCHAR (10),' +
-  //  'description     TEXT,' +
-  //  'notes           TEXT,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN       DEFAULT (0),' +
-  //  'marked_status   BOOLEAN       DEFAULT (0),' +
-  //  'active_status   BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_site_name ON gazetteer (' +
     'site_name COLLATE NOCASE' +
@@ -1321,29 +1131,6 @@ procedure CreateInstitutionsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating institutions table');
   Connection.ExecuteDirect(xProvider.Institutions.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS institutions (' +
-  //  'institution_id  INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'full_name       VARCHAR (100) NOT NULL UNIQUE,' +
-  //  'acronym         VARCHAR (15),' +
-  //  'address_1       VARCHAR (100),' +
-  //  'address_2       VARCHAR (40),' +
-  //  'neighborhood    VARCHAR (60),' +
-  //  'zip_code        VARCHAR (15),' +
-  //  'municipality_id INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'state_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'country_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'manager_name    VARCHAR (100),' +
-  //  'email_addr      VARCHAR (60),' +
-  //  'phone_num       VARCHAR (20),' +
-  //  'notes           TEXT,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN       DEFAULT (0),' +
-  //  'marked_status   BOOLEAN       DEFAULT (0),' +
-  //  'active_status   BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_institutions_acronym ON institutions (' +
     'acronym COLLATE NOCASE' +
@@ -1354,46 +1141,6 @@ procedure CreatePeopleTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating people table');
   Connection.ExecuteDirect(xProvider.People.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS people (' +
-  //  'person_id              INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'full_name              VARCHAR (100) NOT NULL,' +
-  //  'acronym                VARCHAR (10)  UNIQUE NOT NULL,' +
-  //  'citation               VARCHAR (100),' +
-  //  'title_treatment        VARCHAR (10),' +
-  //  'national_id_card       VARCHAR (15),' +
-  //  'social_security_number VARCHAR (15),' +
-  //  'gender                 VARCHAR (5),' +
-  //  'birth_date             DATE,' +
-  //  'death_date             DATE,' +
-  //  'email_addr             VARCHAR (60),' +
-  //  'phone_1                VARCHAR (20),' +
-  //  'phone_2                VARCHAR (20),' +
-  //  'address_1              VARCHAR (100),' +
-  //  'address_2              VARCHAR (60),' +
-  //  'neighborhood           VARCHAR (60),' +
-  //  'zip_code               VARCHAR (15),' +
-  //  'country_id             INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'state_id               INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'municipality_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'institution_id         INTEGER       REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
-  //  'department             VARCHAR (100),' +
-  //  'job_role               VARCHAR (100),' +
-  //  'lattes_uri             VARCHAR (30),' +
-  //  'orcid_uri              VARCHAR (30),' +
-  //  'twitter_uri            VARCHAR (50),' +
-  //  'instagram_uri          VARCHAR (50),' +
-  //  'website_uri            VARCHAR (100),' +
-  //  'profile_color          VARCHAR (30),' +
-  //  'notes                  TEXT,' +
-  //  'profile_image          BLOB,' +
-  //  'user_inserted          INTEGER,' +
-  //  'user_updated           INTEGER,' +
-  //  'insert_date            DATETIME,' +
-  //  'update_date            DATETIME,' +
-  //  'exported_status        BOOLEAN       DEFAULT (0),' +
-  //  'marked_status          BOOLEAN       DEFAULT (0),' +
-  //  'active_status          BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_fullname ON people (' +
     'full_name COLLATE NOCASE' +
@@ -1412,101 +1159,24 @@ procedure CreateSamplingPlotsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating sampling_plots table');
   Connection.ExecuteDirect(xProvider.SamplingPlots.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sampling_plots (' +
-  //  'sampling_plot_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'full_name        VARCHAR (100) NOT NULL UNIQUE,' +
-  //  'acronym          VARCHAR (10)  NOT NULL UNIQUE,' +
-  //  'longitude        REAL,' +
-  //  'latitude         REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'area_shape       VARCHAR (5),' +
-  //  'locality_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'description      TEXT,' +
-  //  'notes            TEXT,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN       DEFAULT (0),' +
-  //  'marked_status    BOOLEAN       DEFAULT (0),' +
-  //  'active_status    BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreatePermanentNetsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating permanent_nets table');
   Connection.ExecuteDirect(xProvider.PermanentNets.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS permanent_nets (' +
-  //  'permanent_net_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'net_station_id   INTEGER       NOT NULL REFERENCES sampling_plots (sampling_plot_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'net_number       INTEGER       NOT NULL,' +
-  //  'longitude        REAL,' +
-  //  'latitude         REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'notes            VARCHAR (150),' +
-  //  'full_name        VARCHAR (50),' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN       DEFAULT (0),' +
-  //  'marked_status    BOOLEAN       DEFAULT (0),' +
-  //  'active_status    BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreatePermitsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating legal table');
   Connection.ExecuteDirect(xProvider.Permits.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS legal (' +
-  //  'permit_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'project_id      INTEGER       REFERENCES projects (project_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'permit_name     VARCHAR (150),' +
-  //  'permit_number   VARCHAR (30),' +
-  //  'permit_type     VARCHAR (5),' +
-  //  'dispatcher_name VARCHAR (100) NOT NULL,' +
-  //  'dispatch_date   DATE,' +
-  //  'expire_date     DATE,' +
-  //  'notes           TEXT,' +
-  //  'permit_filename VARCHAR (200),' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN       DEFAULT (0),' +
-  //  'marked_status   BOOLEAN       DEFAULT (0),' +
-  //  'active_status   BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateProjectsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating projects table');
   Connection.ExecuteDirect(xProvider.Projects.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS projects (' +
-  //  'project_id       INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'project_title    VARCHAR (150) NOT NULL UNIQUE,' +
-  //  'short_title      VARCHAR (60),' +
-  //  'start_date       DATE,' +
-  //  'end_date         DATE,' +
-  //  'website_uri      VARCHAR (200),' +
-  //  'email_addr       VARCHAR (100),' +
-  //  'contact_name     VARCHAR (100),' +
-  //  'protocol_number  VARCHAR (30),' +
-  //  'main_goal        TEXT,' +
-  //  'risks            TEXT,' +
-  //  'project_abstract TEXT,' +
-  //  'notes            TEXT,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN       DEFAULT (0),' +
-  //  'marked_status    BOOLEAN       DEFAULT (0),' +
-  //  'active_status    BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_short_title ON projects (' +
     'short_title COLLATE NOCASE' +
@@ -1517,126 +1187,36 @@ procedure CreateProjectTeamTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating project_team table');
   Connection.ExecuteDirect(xProvider.ProjectTeams.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_team (' +
-  //  'project_member_id INTEGER  UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'project_id        INTEGER  REFERENCES projects (project_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'person_id         INTEGER  NOT NULL REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'project_manager   BOOLEAN  DEFAULT (0),' +
-  //  'institution_id    INTEGER  REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
-  //  'user_inserted     INTEGER,' +
-  //  'user_updated      INTEGER,' +
-  //  'insert_date       DATETIME,' +
-  //  'update_date       DATETIME,' +
-  //  'exported_status   BOOLEAN  DEFAULT (0),' +
-  //  'marked_status     BOOLEAN  DEFAULT (0),' +
-  //  'active_status     BOOLEAN  DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateProjectGoalsTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_goals table');
   Connection.ExecuteDirect(xProvider.ProjectGoals.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_goals (' +
-  //  'goal_id          INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'project_id       INTEGER     REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'goal_description TEXT,' +
-  //  'goal_status      VARCHAR (5),' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN     DEFAULT (0),' +
-  //  'marked_status    BOOLEAN     DEFAULT (0),' +
-  //  'active_status    BOOLEAN     DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateProjectChronogramsTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_chronograms table');
   Connection.ExecuteDirect(xProvider.ProjectChronograms.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_chronograms (' +
-  //  'chronogram_id   INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'project_id      INTEGER     REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'description     TEXT,' +
-  //  'start_date      DATE,' +
-  //  'target_date     DATE,' +
-  //  'end_date        DATE,' +
-  //  'goal_id         INTEGER     REFERENCES project_goals (goal_id) ON UPDATE CASCADE,' +
-  //  'progress_status VARCHAR (5),' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN     DEFAULT (0),' +
-  //  'marked_status   BOOLEAN     DEFAULT (0),' +
-  //  'active_status   BOOLEAN     DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateProjectBudgetsTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_budgets table');
   Connection.ExecuteDirect(xProvider.ProjectBudgets.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_budgets (' +
-  //  'budget_id       INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'project_id      INTEGER      REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'funding_source  VARCHAR (60),' +
-  //  'rubric          VARCHAR (60) NOT NULL,' +
-  //  'item_name       VARCHAR (60),' +
-  //  'amount          REAL,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN      DEFAULT (0),' +
-  //  'marked_status   BOOLEAN      DEFAULT (0),' +
-  //  'active_status   BOOLEAN      DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateProjectExpensesTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_expenses table');
   Connection.ExecuteDirect(xProvider.ProjectExpenses.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS project_expenses (' +
-  //  'expense_id       INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'project_id       INTEGER      REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'budget_id        INTEGER      REFERENCES project_budgets (budget_id) ON UPDATE CASCADE,' +
-  //  'item_description VARCHAR (60) NOT NULL,' +
-  //  'expense_date     DATE,' +
-  //  'amount           REAL,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN      DEFAULT (0),' +
-  //  'marked_status    BOOLEAN      DEFAULT (0),' +
-  //  'active_status    BOOLEAN      DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateExpeditionsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating expeditions table');
   Connection.ExecuteDirect(xProvider.Expeditions.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS expeditions (' +
-  //  'expedition_id   INTEGER       PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'expedition_name VARCHAR (150) NOT NULL,' +
-  //  'start_date      DATE,' +
-  //  'end_date        DATE,' +
-  //  'duration        INTEGER       AS ( (strftime(''%j'', end_date) - strftime(''%j'', start_date) ) + 1) VIRTUAL,' +
-  //  'project_id      INTEGER       REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'description     TEXT,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN       DEFAULT (0),' +
-  //  'marked_status   BOOLEAN       DEFAULT (0),' +
-  //  'active_status   BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_expeditions_name ON expeditions (' +
     'expedition_name COLLATE NOCASE' +
@@ -1647,39 +1227,6 @@ procedure CreateSurveysTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating surveys table');
   Connection.ExecuteDirect(xProvider.Surveys.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS surveys (' +
-  //  'survey_id                INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'survey_date              DATE          NOT NULL,' +
-  //  'start_time               TIME,' +
-  //  'end_time                 TIME,' +
-  //  'duration                 INTEGER,' +
-  //  'method_id                INTEGER       REFERENCES methods (method_id) ON UPDATE CASCADE,' +
-  //  'net_station_id           INTEGER       REFERENCES sampling_plots (sampling_plot_id) ON UPDATE CASCADE,' +
-  //  'expedition_id            INTEGER       REFERENCES expeditions (expedition_id) ON UPDATE CASCADE,' +
-  //  'project_id               INTEGER       REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'locality_id              INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'sample_id                VARCHAR (30),' +
-  //  'start_latitude           REAL,' +
-  //  'start_longitude          REAL,' +
-  //  'end_latitude             REAL,' +
-  //  'end_longitude            REAL,' +
-  //  'coordinate_precision     VARCHAR (3),' +
-  //  'observers_tally          INTEGER,' +
-  //  'area_total               REAL,' +
-  //  'distance_total           REAL,' +
-  //  'nets_total               INTEGER,' +
-  //  'habitat                  TEXT,' +
-  //  'net_rounds               TEXT,' +
-  //  'full_name                VARCHAR (100),' +
-  //  'notes                    TEXT,' +
-  //  'user_inserted            INTEGER,' +
-  //  'user_updated             INTEGER,' +
-  //  'insert_date              DATETIME,' +
-  //  'update_date              DATETIME,' +
-  //  'exported_status          BOOLEAN       DEFAULT (0),' +
-  //  'marked_status            BOOLEAN       DEFAULT (0),' +
-  //  'active_status            BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_surveys_date ON surveys (' +
     'survey_date COLLATE BINARY' +
@@ -1694,58 +1241,12 @@ procedure CreateSurveyTeamTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating survey_team table');
   Connection.ExecuteDirect(xProvider.SurveyTeams.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS survey_team (' +
-  //  'survey_member_id INTEGER  UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'survey_id        INTEGER,' +
-  //  'person_id        INTEGER  NOT NULL REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'visitor          BOOLEAN  DEFAULT (0),' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN  DEFAULT (0),' +
-  //  'marked_status    BOOLEAN  DEFAULT (0),' +
-  //  'active_status    BOOLEAN  DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateNetsEffortTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating nets_effort table');
   Connection.ExecuteDirect(xProvider.NetsEffort.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nets_effort (' +
-  //  'net_id           INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'survey_id        INTEGER,' +
-  //  'net_station_id   INTEGER      REFERENCES sampling_plots (sampling_plot_id) ON UPDATE CASCADE,' +
-  //  'permanent_net_id INTEGER      REFERENCES permanent_nets (permanent_net_id) ON UPDATE CASCADE,' +
-  //  'net_number       INTEGER,' +
-  //  'longitude        REAL,' +
-  //  'latitude         REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'sample_date      DATE,' +
-  //  'net_open_1       TIME,' +
-  //  'net_close_1      TIME,' +
-  //  'net_open_2       TIME,' +
-  //  'net_close_2      TIME,' +
-  //  'net_open_3       TIME,' +
-  //  'net_close_3      TIME,' +
-  //  'net_open_4       TIME,' +
-  //  'net_close_4      TIME,' +
-  //  'open_time_total  REAL         AS (CAST ( (strftime(''%s'', ifnull(net_close_1, 0) ) - strftime(''%s'', ifnull(net_open_1, 0) ) ) AS REAL) / 60 / 60 + CAST ( (strftime(''%s'', ifnull(net_close_2, 0) ) - strftime(''%s'', ifnull(net_open_2, 0) ) ) AS REAL) / 60 / 60 + CAST ( (strftime(''%s'', ifnull(net_close_3, 0) ) - strftime(''%s'', ifnull(net_open_3, 0) ) ) AS REAL) / 60 / 60 + CAST ( (strftime(''%s'', ifnull(net_close_4, 0) ) - strftime(''%s'', ifnull(net_open_4, 0) ) ) AS REAL) / 60 / 60) STORED,' +
-  //  'net_length       REAL,' +
-  //  'net_height       REAL,' +
-  //  'net_area         REAL         AS (ifnull(net_length, 0) * ifnull(net_height, 0) ) STORED,' +
-  //  'net_mesh         INTEGER,' +
-  //  'full_name        VARCHAR (40),' +
-  //  'notes            TEXT,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN      DEFAULT (0),' +
-  //  'marked_status    BOOLEAN      DEFAULT (0),' +
-  //  'active_status    BOOLEAN      DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nets_effort_survey_netnumber ON nets_effort (' +
     'survey_id,' +
@@ -1757,96 +1258,18 @@ procedure CreateWeatherLogsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating weather_logs table');
   Connection.ExecuteDirect(xProvider.WeatherLogs.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS weather_logs (' +
-  //  'weather_id           INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'survey_id            INTEGER,' +
-  //  'sample_date          DATE     NOT NULL,' +
-  //  'sample_time          TIME,' +
-  //  'sample_moment        CHAR (1),' +
-  //  'observer_id          INTEGER,' +
-  //  'cloud_cover          INTEGER,' +
-  //  'precipitation        CHAR (1),' +
-  //  'rainfall             INTEGER,' +
-  //  'temperature          REAL,' +
-  //  'wind_speed_bft       INTEGER,' +
-  //  'wind_speed_kmh       REAL,' +
-  //  'wind_direction       VARCHAR (5),' +
-  //  'relative_humidity    REAL,' +
-  //  'atmospheric_pressure REAL,' +
-  //  'notes                TEXT,' +
-  //  'user_inserted        INTEGER,' +
-  //  'user_updated         INTEGER,' +
-  //  'insert_date          DATETIME,' +
-  //  'update_date          DATETIME,' +
-  //  'exported_status      BOOLEAN  DEFAULT (0),' +
-  //  'marked_status        BOOLEAN  DEFAULT (0),' +
-  //  'active_status        BOOLEAN  DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateVegetationTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating vegetation table');
   Connection.ExecuteDirect(xProvider.Vegetations.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS vegetation (' +
-  //  'vegetation_id       INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
-  //  'survey_id           INTEGER,' +
-  //  'sample_date         DATE     NOT NULL,' +
-  //  'sample_time         TIME,' +
-  //  'longitude           REAL,' +
-  //  'latitude            REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'observer_id         INTEGER,' +
-  //  'herbs_proportion    INTEGER,' +
-  //  'herbs_distribution  INTEGER,' +
-  //  'herbs_avg_height    INTEGER,' +
-  //  'shrubs_proportion   INTEGER,' +
-  //  'shrubs_distribution INTEGER,' +
-  //  'shrubs_avg_height   INTEGER,' +
-  //  'trees_proportion    INTEGER,' +
-  //  'trees_distribution  INTEGER,' +
-  //  'trees_avg_height    INTEGER,' +
-  //  'notes               TEXT,' +
-  //  'user_inserted       INTEGER,' +
-  //  'user_updated        INTEGER,' +
-  //  'insert_date         DATETIME,' +
-  //  'update_date         DATETIME,' +
-  //  'exported_status     BOOLEAN  DEFAULT (0),' +
-  //  'marked_status       BOOLEAN  DEFAULT (0),' +
-  //  'active_status       BOOLEAN  DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateBandsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating bands table');
   Connection.ExecuteDirect(xProvider.Bands.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS bands (' +
-  //  'band_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'band_size       VARCHAR (5),' +
-  //  'band_number     INTEGER,' +
-  //  'band_status     VARCHAR (5),' +
-  //  'band_type       VARCHAR (5),' +
-  //  'band_prefix     VARCHAR (10),' +
-  //  'band_suffix     VARCHAR (10),' +
-  //  'band_color      VARCHAR (10),' +
-  //  'band_source     VARCHAR (5),' +
-  //  'supplier_id     INTEGER      REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
-  //  'requester_id    INTEGER      REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'carrier_id      INTEGER      REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'individual_id   INTEGER      REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
-  //  'project_id      INTEGER,' +
-  //  'band_reported   BOOLEAN      DEFAULT (0),' +
-  //  'notes           TEXT,' +
-  //  'full_name       VARCHAR (40),' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN      DEFAULT (0),' +
-  //  'marked_status   BOOLEAN      DEFAULT (0),' +
-  //  'active_status   BOOLEAN      DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_fullname ON bands (' +
     'full_name COLLATE NOCASE' +
@@ -1870,24 +1293,6 @@ procedure CreateBandHistoryTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating band_history table');
   Connection.ExecuteDirect(xProvider.BandHistory.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS band_history (' +
-  //  'event_id        INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'band_id         INTEGER  REFERENCES bands (band_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'event_type      CHAR (5) NOT NULL,' +
-  //  'event_date      DATE,' +
-  //  'order_number    INTEGER,' +
-  //  'supplier_id     INTEGER  REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
-  //  'sender_id       INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'requester_id    INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'notes           TEXT,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN  DEFAULT (0),' +
-  //  'marked_status   BOOLEAN  DEFAULT (0),' +
-  //  'active_status   BOOLEAN  DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_history_date ON band_history (' +
     'event_date COLLATE BINARY ASC' +
@@ -1898,44 +1303,6 @@ procedure CreateIndividualsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating individuals table');
   Connection.ExecuteDirect(xProvider.Individuals.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS individuals (' +
-  //  'individual_id         INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'formatted_name        VARCHAR (150),' +
-  //  'full_name             VARCHAR (120),' +
-  //  'taxon_id              INTEGER       NOT NULL REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'individual_sex        CHAR (1),' +
-  //  'individual_age        CHAR (1),' +
-  //  'nest_id               INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
-  //  'birth_date            VARCHAR (15),' +
-  //  'birth_day             INTEGER,' +
-  //  'birth_month           INTEGER,' +
-  //  'birth_year            INTEGER,' +
-  //  'banding_date          DATE,' +
-  //  'band_change_date      DATE,' +
-  //  'band_id               INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-  //  'double_band_id        INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-  //  'removed_band_id       INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-  //  'right_leg_below       VARCHAR (10),' +
-  //  'left_leg_below        VARCHAR (10),' +
-  //  'right_leg_above       VARCHAR (10),' +
-  //  'left_leg_above        VARCHAR (10),' +
-  //  'father_id             INTEGER,' +
-  //  'mother_id             INTEGER,' +
-  //  'death_date            VARCHAR (15),' +
-  //  'death_day             INTEGER,' +
-  //  'death_month           INTEGER,' +
-  //  'death_year            INTEGER,' +
-  //  'recognizable_markings TEXT,' +
-  //  'notes                 TEXT,' +
-  //  'user_inserted         INTEGER,' +
-  //  'user_updated          INTEGER,' +
-  //  'insert_date           DATETIME,' +
-  //  'update_date           DATETIME,' +
-  //  'exported_status       BOOLEAN       DEFAULT (0),' +
-  //  'queued_status         BOOLEAN       DEFAULT (0),' +
-  //  'marked_status         BOOLEAN       DEFAULT (0),' +
-  //  'active_status         BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_individuals_fullname ON individuals (' +
     'full_name COLLATE NOCASE' +
@@ -1950,52 +1317,6 @@ procedure CreateSightingsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating sightings table');
   Connection.ExecuteDirect(xProvider.Sightings.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sightings (' +
-  //  'sighting_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'survey_id            INTEGER,' +
-  //  'individual_id        INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
-  //  'sighting_date        DATE,' +
-  //  'sighting_time        TIME,' +
-  //  'locality_id          INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'longitude            REAL,' +
-  //  'latitude             REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'method_id            INTEGER       REFERENCES methods (method_id) ON UPDATE CASCADE,' +
-  //  'mackinnon_list_num   INTEGER,' +
-  //  'observer_id          INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'taxon_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'subjects_tally       INTEGER,' +
-  //  'subject_distance     REAL,' +
-  //  'flight_height        REAL,' +
-  //  'flight_direction     VARCHAR (5),' +
-  //  'subject_seen         BOOLEAN       DEFAULT (0),' +
-  //  'subject_heard        BOOLEAN       DEFAULT (0),' +
-  //  'subject_photographed BOOLEAN       DEFAULT (0),' +
-  //  'subject_recorded     BOOLEAN       DEFAULT (0),' +
-  //  'subject_captured     BOOLEAN       DEFAULT (0),' +
-  //  'males_tally          VARCHAR (10),' +
-  //  'females_tally        VARCHAR (10),' +
-  //  'not_sexed_tally      VARCHAR (10),' +
-  //  'adults_tally         VARCHAR (10),' +
-  //  'immatures_tally      VARCHAR (10),' +
-  //  'not_aged_tally       VARCHAR (10),' +
-  //  'new_captures_tally   INTEGER,' +
-  //  'recaptures_tally     INTEGER,' +
-  //  'unbanded_tally       INTEGER,' +
-  //  'detection_type       VARCHAR (30),' +
-  //  'breeding_status      VARCHAR (30),' +
-  //  'not_surveying        BOOLEAN       DEFAULT (0),' +
-  //  'ebird_available      BOOLEAN       DEFAULT (0),' +
-  //  'full_name            VARCHAR (100),' +
-  //  'notes                TEXT,' +
-  //  'user_inserted        INTEGER,' +
-  //  'user_updated         INTEGER,' +
-  //  'insert_date          DATETIME,' +
-  //  'update_date          DATETIME,' +
-  //  'exported_status      BOOLEAN       DEFAULT (0),' +
-  //  'marked_status        BOOLEAN       DEFAULT (0),' +
-  //  'active_status        BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_fullname ON sightings (' +
     'full_name COLLATE NOCASE' +
@@ -2014,98 +1335,6 @@ procedure CreateCapturesTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating captures table');
   Connection.ExecuteDirect(xProvider.Captures.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS captures (' +
-  //  'capture_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'survey_id              INTEGER,' +
-  //  'individual_id          INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
-  //  'taxon_id               INTEGER       NOT NULL REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'full_name              VARCHAR (120),' +
-  //  'project_id             INTEGER       REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'capture_date           DATE          NOT NULL,' +
-  //  'capture_time           TIME,' +
-  //  'locality_id            INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'net_station_id         INTEGER       REFERENCES sampling_plots (sampling_plot_id) ON UPDATE CASCADE,' +
-  //  'net_id                 INTEGER       REFERENCES nets_effort (net_id) ON UPDATE CASCADE,' +
-  //  'longitude              REAL,' +
-  //  'latitude               REAL,' +
-  //  'coordinate_precision   VARCHAR (3),' +
-  //  'bander_id              INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'annotator_id           INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'subject_status         CHAR (5),' +
-  //  'capture_type           CHAR (5)      NOT NULL,' +
-  //  'subject_sex            CHAR (5),' +
-  //  'how_sexed              VARCHAR (10),' +
-  //  'band_id                INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-  //  'removed_band_id        INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-  //  'right_leg_below        VARCHAR (10),' +
-  //  'left_leg_below         VARCHAR (10),' +
-  //  'right_leg_above        VARCHAR (10),' +
-  //  'left_leg_above         VARCHAR (10),' +
-  //  'weight                 REAL,' +
-  //  'tarsus_length          REAL,' +
-  //  'tarsus_diameter        REAL,' +
-  //  'culmen_length          REAL,' +
-  //  'exposed_culmen         REAL,' +
-  //  'bill_width             REAL,' +
-  //  'bill_height            REAL,' +
-  //  'nostril_bill_tip       REAL,' +
-  //  'skull_length           REAL,' +
-  //  'halux_length_total     REAL,' +
-  //  'halux_length_finger    REAL,' +
-  //  'halux_length_claw      REAL,' +
-  //  'right_wing_chord       REAL,' +
-  //  'first_secondary_chord  REAL,' +
-  //  'tail_length            REAL,' +
-  //  'central_retrix_length  REAL,' +
-  //  'external_retrix_length REAL,' +
-  //  'total_length           REAL,' +
-  //  'feather_mites          VARCHAR (15),' +
-  //  'fat                    CHAR (5),' +
-  //  'brood_patch            CHAR (5),' +
-  //  'cloacal_protuberance   CHAR (5),' +
-  //  //'old_molt               CHAR (5),' +
-  //  //'old_primaries_molt     VARCHAR (20),' +
-  //  //'old_secondaries_molt   VARCHAR (40),' +
-  //  //'old_retrices_molt      VARCHAR (20),' +
-  //  //'old_body_molt          VARCHAR (20),' +
-  //  'body_molt              CHAR (5),' +
-  //  'flight_feathers_molt   CHAR (5),' +
-  //  'flight_feathers_wear   CHAR (5),' +
-  //  'molt_limits            VARCHAR (20),' +
-  //  'cycle_code             CHAR (10),' +
-  //  'subject_age            CHAR (5),' +
-  //  'how_aged               CHAR (10),' +
-  //  'skull_ossification     CHAR (5),' +
-  //  'kipps_index            REAL,' +
-  //  'glucose                REAL,' +
-  //  'hemoglobin             REAL,' +
-  //  'hematocrit             REAL,' +
-  //  'philornis_larvae_tally INTEGER,' +
-  //  'blood_sample           BOOLEAN       DEFAULT (0),' +
-  //  'feather_sample         BOOLEAN       DEFAULT (0),' +
-  //  'claw_sample            BOOLEAN       DEFAULT (0),' +
-  //  'feces_sample           BOOLEAN       DEFAULT (0),' +
-  //  'parasite_sample        BOOLEAN       DEFAULT (0),' +
-  //  'subject_collected      BOOLEAN       DEFAULT (0),' +
-  //  'subject_recorded       BOOLEAN       DEFAULT (0),' +
-  //  'subject_photographed   BOOLEAN       DEFAULT (0),' +
-  //  'field_number           VARCHAR (10),' +
-  //  'photographer_1_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'photographer_2_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'start_photo_number     VARCHAR (20),' +
-  //  'end_photo_number       VARCHAR (20),' +
-  //  'camera_name            VARCHAR (50),' +
-  //  'escaped                BOOLEAN       DEFAULT (0),' +
-  //  'needs_review           BOOLEAN       DEFAULT (0),' +
-  //  'notes                  TEXT,' +
-  //  'user_inserted          INTEGER,' +
-  //  'user_updated           INTEGER,' +
-  //  'insert_date            DATETIME,' +
-  //  'update_date            DATETIME,' +
-  //  'exported_status        BOOLEAN       DEFAULT (0),' +
-  //  'marked_status          BOOLEAN       DEFAULT (0),' +
-  //  'active_status          BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_fullname ON captures (' +
     'full_name COLLATE NOCASE' +
@@ -2133,39 +1362,6 @@ procedure CreateFeathersTable(connection: TSQLConnector);
 begin
   LogDebug('Creating feathers table');
   connection.ExecuteDirect(xProvider.Feathers.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS feathers (' +
-  //  'feather_id       INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'sample_date      DATE        NOT NULL,' +
-  //  'sample_time      TIME,' +
-  //  'taxon_id         INTEGER     REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE NOT NULL,' +
-  //  'locality_id      INTEGER     REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'individual_id    INTEGER     REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
-  //  'capture_id       INTEGER     REFERENCES captures (capture_id) ON UPDATE CASCADE,' +
-  //  'sighting_id      INTEGER     REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
-  //  'observer_id      INTEGER     REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'source_type      VARCHAR (5),' +
-  //  'symmetrical      VARCHAR (5),' +
-  //  'feather_trait    VARCHAR (5),' +
-  //  'feather_number   INTEGER,' +
-  //  'body_side        VARCHAR (5),' +
-  //  'grown_percent    REAL,' +
-  //  'feather_length   REAL,' +
-  //  'feather_area     REAL,' +
-  //  'feather_mass     REAL,' +
-  //  'rachis_width     REAL,' +
-  //  'growth_bar_width REAL,' +
-  //  'barb_density     REAL,' +
-  //  'feather_age      VARCHAR (5),' +
-  //  'full_name        VARCHAR (200),' +
-  //  'notes            TEXT,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN     DEFAULT (0),' +
-  //  'marked_status    BOOLEAN     DEFAULT (0),' +
-  //  'active_status    BOOLEAN     DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateMoltsTable(Connection: TSQLConnector);
@@ -2248,55 +1444,6 @@ procedure CreateNestsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating nests table');
   Connection.ExecuteDirect(xProvider.Nests.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nests (' +
-  //  'nest_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'field_number          VARCHAR (20)  UNIQUE NOT NULL,' +
-  //  'observer_id           INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'project_id            INTEGER       REFERENCES projects (project_id) ON UPDATE CASCADE,' +
-  //  'locality_id           INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'longitude             REAL,' +
-  //  'latitude              REAL,' +
-  //  'coordinate_precision  VARCHAR (3),' +
-  //  'taxon_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'nest_shape            VARCHAR (5),' +
-  //  'support_type          VARCHAR (10),' +
-  //  'support_plant_1_id    INTEGER       REFERENCES botanic_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'support_plant_2_id    INTEGER       REFERENCES botanic_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'other_support         VARCHAR (60),' +
-  //  'height_above_ground   REAL,' +
-  //  'internal_max_diameter REAL,' +
-  //  'internal_min_diameter REAL,' +
-  //  'external_max_diameter REAL,' +
-  //  'external_min_diameter REAL,' +
-  //  'internal_height       REAL,' +
-  //  'external_height       REAL,' +
-  //  'edge_distance         REAL,' +
-  //  'center_distance       REAL,' +
-  //  'nest_cover            INTEGER,' +
-  //  'plant_max_diameter    REAL,' +
-  //  'plant_min_diameter    REAL,' +
-  //  'plant_height          REAL,' +
-  //  'plant_dbh             REAL,' +
-  //  'construction_days     REAL,' +
-  //  'incubation_days       REAL,' +
-  //  'nestling_days         REAL,' +
-  //  'active_days           REAL,' +
-  //  'nest_fate             CHAR (1),' +
-  //  'loss_cause            VARCHAR (5),' +
-  //  'nest_productivity     INTEGER,' +
-  //  'found_date            DATE,' +
-  //  'last_date             DATE,' +
-  //  'full_name             VARCHAR (100),' +
-  //  'description           TEXT,' +
-  //  'notes                 TEXT,' +
-  //  'user_inserted         INTEGER,' +
-  //  'user_updated          INTEGER,' +
-  //  'insert_date           DATETIME,' +
-  //  'update_date           DATETIME,' +
-  //  'exported_status       BOOLEAN       DEFAULT (0),' +
-  //  'marked_status         BOOLEAN       DEFAULT (0),' +
-  //  'active_status         BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nests_fullname ON nests (' +
     'full_name COLLATE NOCASE' +
@@ -2307,119 +1454,24 @@ procedure CreateNestOwnersTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating nest_owners table');
   Connection.ExecuteDirect(xProvider.NestOwners.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_owners (' +
-  //  'nest_owner_id   INTEGER     PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'nest_id         INTEGER     REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'role            VARCHAR (5),' +
-  //  'individual_id   INTEGER,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN     DEFAULT (0),' +
-  //  'marked_status   BOOLEAN     DEFAULT (0),' +
-  //  'active_status   BOOLEAN     DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateNestRevisionsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating nest_revisions table');
   Connection.ExecuteDirect(xProvider.NestRevisions.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS nest_revisions (' +
-  //  'nest_revision_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'nest_id                      INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'full_name                    VARCHAR (100),' +
-  //  'revision_date                DATE,' +
-  //  'revision_time                TIME,' +
-  //  'observer_1_id                INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'observer_2_id                INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'nest_status                  CHAR (1),' +
-  //  'host_eggs_tally              INTEGER,' +
-  //  'host_nestlings_tally         INTEGER,' +
-  //  'nidoparasite_eggs_tally      INTEGER,' +
-  //  'nidoparasite_nestlings_tally INTEGER,' +
-  //  'nidoparasite_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'have_philornis_larvae        BOOLEAN       DEFAULT (0),' +
-  //  'nest_stage                   CHAR (1),' +
-  //  'notes                        TEXT,' +
-  //  'user_inserted                INTEGER,' +
-  //  'user_updated                 INTEGER,' +
-  //  'insert_date                  DATETIME,' +
-  //  'update_date                  DATETIME,' +
-  //  'exported_status              BOOLEAN       DEFAULT (0),' +
-  //  'marked_status                BOOLEAN       DEFAULT (0),' +
-  //  'active_status                BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateEggsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating eggs table');
   Connection.ExecuteDirect(xProvider.Eggs.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS eggs (' +
-  //  'egg_id           INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'nest_id          INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'egg_seq          INTEGER,' +
-  //  'field_number     VARCHAR (20),' +
-  //  'taxon_id         INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'eggshell_color   VARCHAR (40),' +
-  //  'eggshell_pattern CHAR (5),' +
-  //  'eggshell_texture CHAR (5),' +
-  //  'egg_shape        CHAR (5),' +
-  //  'egg_width        REAL,' +
-  //  'egg_length       REAL,' +
-  //  'egg_mass         REAL,' +
-  //  'egg_volume       REAL,' +
-  //  'egg_stage        CHAR (5),' +
-  //  'egg_hatched      BOOLEAN       DEFAULT (1),' +
-  //  'measure_date     DATE,' +
-  //  'researcher_id    INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'individual_id    INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
-  //  'host_egg         BOOLEAN       DEFAULT (1),' +
-  //  'description      TEXT,' +
-  //  'full_name        VARCHAR (100),' +
-  //  'notes            TEXT,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN       DEFAULT (0),' +
-  //  'marked_status    BOOLEAN       DEFAULT (0),' +
-  //  'active_status    BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateSpecimensTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating specimens table');
   Connection.ExecuteDirect(xProvider.Specimens.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimens (' +
-  //  'specimen_id      INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'field_number     VARCHAR (20),' +
-  //  'full_name        VARCHAR (100),' +
-  //  'sample_type      CHAR (5),' +
-  //  'taxon_id         INTEGER,' +
-  //  'individual_id    INTEGER,' +
-  //  'nest_id          INTEGER,' +
-  //  'egg_id           INTEGER,' +
-  //  'collection_date  DATE,' +
-  //  'collection_day   INTEGER,' +
-  //  'collection_month INTEGER,' +
-  //  'collection_year  INTEGER,' +
-  //  'locality_id      INTEGER,' +
-  //  'longitude        REAL,' +
-  //  'latitude         REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'notes            TEXT,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN       DEFAULT (0),' +
-  //  'marked_status    BOOLEAN       DEFAULT (0),' +
-  //  'active_status    BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_fullname ON specimens (' +
     'full_name COLLATE NOCASE' +
@@ -2438,47 +1490,12 @@ procedure CreateSpecimenCollectorsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating specimen_collectors table');
   Connection.ExecuteDirect(xProvider.SpecimenCollectors.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS specimen_collectors (' +
-  //  'collector_id    INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'specimen_id     INTEGER,' +
-  //  'person_id       INTEGER,' +
-  //  'collector_seq   INTEGER,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN  DEFAULT (0),' +
-  //  'marked_status   BOOLEAN  DEFAULT (0),' +
-  //  'active_status   BOOLEAN  DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateSamplePrepsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating sample_preps table');
   Connection.ExecuteDirect(xProvider.SamplePreps.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS sample_preps (' +
-  //  'sample_prep_id   INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'specimen_id      INTEGER       REFERENCES specimens ON DELETE CASCADE ON UPDATE CASCADE,' +
-  //  'accession_num    VARCHAR (20),' +
-  //  'full_name        VARCHAR (100),' +
-  //  'accession_type   CHAR (5),' +
-  //  'accession_seq    INTEGER,' +
-  //  'taxon_id         INTEGER,' +
-  //  'individual_id    INTEGER,' +
-  //  'nest_id          INTEGER,' +
-  //  'egg_id           INTEGER,' +
-  //  'preparation_date DATE,' +
-  //  'preparer_id      INTEGER,' +
-  //  'notes            TEXT,' +
-  //  'user_inserted    INTEGER,' +
-  //  'user_updated     INTEGER,' +
-  //  'insert_date      DATETIME,' +
-  //  'update_date      DATETIME,' +
-  //  'exported_status  BOOLEAN       DEFAULT (0),' +
-  //  'marked_status    BOOLEAN       DEFAULT (0),' +
-  //  'active_status    BOOLEAN       DEFAULT (1)' +
-  //');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_preparation_date ON sample_preps (' +
     'preparation_date COLLATE BINARY' +
@@ -2489,203 +1506,30 @@ procedure CreatePoiLibraryTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating poi_library table');
   Connection.ExecuteDirect(xProvider.PoiLibrary.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS poi_library (' +
-  //  'poi_id          INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-  //  'sample_date     DATE         NOT NULL,' +
-  //  'sample_time     TIME,' +
-  //  'poi_name        VARCHAR (60),' +
-  //  'longitude       REAL,' +
-  //  'latitude        REAL,' +
-  //  'altitude        REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'observer_id     INTEGER      REFERENCES people (person_id),' +
-  //  'taxon_id        INTEGER      REFERENCES zoo_taxa (taxon_id),' +
-  //  'individual_id   INTEGER      REFERENCES individuals (individual_id) ON DELETE CASCADE,' +
-  //  'sighting_id     INTEGER,' +
-  //  'survey_id       INTEGER      REFERENCES surveys (survey_id),' +
-  //  'notes           TEXT,' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN      DEFAULT (0),' +
-  //  'marked_status   BOOLEAN      DEFAULT (0),' +
-  //  'active_status   BOOLEAN      DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateImagesTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating images table');
   Connection.ExecuteDirect(xProvider.Images.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS images (' +
-  //  'image_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'image_date           DATE,' +
-  //  'image_time           TIME,' +
-  //  'image_type           CHAR (5),' +
-  //  'taxon_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'individual_id        INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
-  //  'capture_id           INTEGER       REFERENCES captures (capture_id) ON UPDATE CASCADE,' +
-  //  'feather_id           INTEGER       REFERENCES feathers (feather_id) ON UPDATE CASCADE,' +
-  //  'locality_id          INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'author_id            INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'survey_id            INTEGER,' +
-  //  'sighting_id          INTEGER       REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
-  //  'nest_id              INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
-  //  'nest_revision_id     INTEGER       REFERENCES nest_revisions (nest_revision_id) ON UPDATE CASCADE,' +
-  //  'egg_id               INTEGER       REFERENCES eggs (egg_id) ON UPDATE CASCADE,' +
-  //  'specimen_id          INTEGER       REFERENCES specimens (specimen_id) ON UPDATE CASCADE,' +
-  //  'image_filename       VARCHAR (300),' +
-  //  'coordinate_precision CHAR (1),' +
-  //  'longitude            REAL,' +
-  //  'latitude             REAL,' +
-  //  'license_type         VARCHAR (20),' +
-  //  'license_year         INTEGER,' +
-  //  'license_uri          VARCHAR (200),' +
-  //  'license_notes        VARCHAR (100),' +
-  //  'license_owner        VARCHAR (150),' +
-  //  'subtitle             TEXT,' +
-  //  'image_thumbnail      BLOB,' +
-  //  'user_inserted        INTEGER,' +
-  //  'user_updated         INTEGER,' +
-  //  'insert_date          DATETIME,' +
-  //  'update_date          DATETIME,' +
-  //  'exported_status      BOOLEAN       DEFAULT (0),' +
-  //  'marked_status        BOOLEAN       DEFAULT (0),' +
-  //  'active_status        BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateDocumentsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating documents table');
   Connection.ExecuteDirect(xProvider.Documents.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS documents (' +
-  //  'document_id     INTEGER       PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
-  //  'permit_id       INTEGER       REFERENCES legal (permit_id) ON DELETE CASCADE,' +
-  //  'project_id      INTEGER       REFERENCES projects (project_id) ON DELETE CASCADE,' +
-  //  'person_id       INTEGER       REFERENCES people (person_id) ON DELETE CASCADE,' +
-  //  'individual_id   INTEGER       REFERENCES individuals (individual_id) ON DELETE CASCADE,' +
-  //  'capture_id      INTEGER       REFERENCES captures (capture_id) ON DELETE CASCADE,' +
-  //  'sighting_id     INTEGER       REFERENCES sightings (sighting_id) ON DELETE CASCADE,' +
-  //  'specimen_id     INTEGER       REFERENCES specimens (specimen_id) ON DELETE CASCADE,' +
-  //  'expedition_id   INTEGER       REFERENCES expeditions (expedition_id) ON DELETE CASCADE,' +
-  //  'survey_id       INTEGER       REFERENCES surveys (survey_id) ON DELETE CASCADE,' +
-  //  'nest_id         INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE,' +
-  //  'net_station_id  INTEGER       REFERENCES sampling_plots (sampling_plot_id) ON DELETE CASCADE,' +
-  //  'method_id       INTEGER       REFERENCES methods (method_id) ON DELETE CASCADE,' +
-  //  'document_type   CHAR (5)      NOT NULL,' +
-  //  'document_name   VARCHAR (120),' +
-  //  'document_path   VARCHAR (250) NOT NULL,' +
-  //  'document_date   DATE,' +
-  //  'document_time   TIME,' +
-  //  'license_type    VARCHAR (20),' +
-  //  'license_year    INTEGER,' +
-  //  'license_uri     VARCHAR (200),' +
-  //  'license_notes   VARCHAR (100),' +
-  //  'license_owner   VARCHAR (150),' +
-  //  'user_inserted   INTEGER,' +
-  //  'user_updated    INTEGER,' +
-  //  'insert_date     DATETIME,' +
-  //  'update_date     DATETIME,' +
-  //  'exported_status BOOLEAN       DEFAULT (0),' +
-  //  'marked_status   BOOLEAN       DEFAULT (0),' +
-  //  'active_status   BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateAudioLibraryTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating audio_library table');
   Connection.ExecuteDirect(xProvider.Audios.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS audio_library (' +
-  //  'audio_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'full_name         VARCHAR (100),' +
-  //  'taxon_id          INTEGER,' +
-  //  'individual_id     INTEGER,' +
-  //  'specimen_id       INTEGER,' +
-  //  'sighting_id       INTEGER,' +
-  //  'audio_type        VARCHAR (15),' +
-  //  'locality_id       INTEGER,' +
-  //  'recording_date    DATE,' +
-  //  'recorder_id       INTEGER,' +
-  //  'recording_time    TIME,' +
-  //  'longitude         REAL,' +
-  //  'latitude          REAL,' +
-  //  'coordinate_precision CHAR (1),' +
-  //  'temperature       REAL,' +
-  //  'cloud_cover       INTEGER,' +
-  //  'precipitation     CHAR (1),' +
-  //  'relative_humidity INTEGER,' +
-  //  'wind_speed        INTEGER,' +
-  //  'recording_context VARCHAR (60),' +
-  //  'playback_used     BOOLEAN       DEFAULT (0),' +
-  //  'subjects_tally    INTEGER,' +
-  //  'habitat           VARCHAR (60),' +
-  //  'recorder_model    VARCHAR (60),' +
-  //  'mic_model         VARCHAR (60),' +
-  //  'filter_model      VARCHAR (60),' +
-  //  'distance          REAL,' +
-  //  'license_type      VARCHAR (20),' +
-  //  'license_year      INTEGER,' +
-  //  'license_uri       VARCHAR (200),' +
-  //  'license_notes     VARCHAR (100),' +
-  //  'license_owner     VARCHAR (150),' +
-  //  'audio_file        VARCHAR (250),' +
-  //  'subtitle          TEXT,' +
-  //  'notes             TEXT,' +
-  //  'user_inserted     INTEGER,' +
-  //  'user_updated      INTEGER,' +
-  //  'insert_date       DATETIME,' +
-  //  'update_date       DATETIME,' +
-  //  'exported_status   BOOLEAN       DEFAULT (0),' +
-  //  'marked_status     BOOLEAN       DEFAULT (0),' +
-  //  'active_status     BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateVideosTable(connection: TSQLConnector);
 begin
   LogDebug('Creating videos table');
   connection.ExecuteDirect(xProvider.Videos.CreateTable);
-  //Connection.ExecuteDirect('CREATE TABLE IF NOT EXISTS videos (' +
-  //  'video_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-  //  'full_name         VARCHAR (100),' +
-  //  'taxon_id          INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
-  //  'individual_id     INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
-  //  'capture_id        INTEGER       REFERENCES captures (capture_id) ON UPDATE CASCADE,' +
-  //  'survey_id         INTEGER       REFERENCES surveys (survey_id) ON UPDATE CASCADE,' +
-  //  'sighting_id       INTEGER       REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
-  //  'nest_id           INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
-  //  'nest_revision_id  INTEGER       REFERENCES nest_revisions (nest_revision_id) ON UPDATE CASCADE,' +
-  //  'video_type        VARCHAR (15),' +
-  //  'locality_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
-  //  'recording_date    DATE,' +
-  //  'recording_time    TIME,' +
-  //  'recorder_id       INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-  //  'longitude         REAL,' +
-  //  'latitude          REAL,' +
-  //  'coordinate_precision VARCHAR (3),' +
-  //  'recording_context VARCHAR (60),' +
-  //  'habitat           VARCHAR (60),' +
-  //  'camera_model      VARCHAR (60),' +
-  //  'distance          REAL,' +
-  //  'license_type      VARCHAR (20),' +
-  //  'license_year      INTEGER,' +
-  //  'license_uri       VARCHAR (200),' +
-  //  'license_notes     VARCHAR (100),' +
-  //  'license_owner     VARCHAR (150),' +
-  //  'file_path         VARCHAR (250),' +
-  //  'subtitle          TEXT,' +
-  //  'notes             TEXT,' +
-  //  'user_inserted     INTEGER,' +
-  //  'user_updated      INTEGER,' +
-  //  'insert_date       DATETIME,' +
-  //  'update_date       DATETIME,' +
-  //  'exported_status   BOOLEAN       DEFAULT (0),' +
-  //  'marked_status     BOOLEAN       DEFAULT (0),' +
-  //  'active_status     BOOLEAN       DEFAULT (1)' +
-  //');');
 end;
 
 procedure CreateNextBirthdaysView(Connection: TSQLConnector);
@@ -2921,92 +1765,8 @@ begin
 
     Qry.SQLConnection := Connection;
     Qry.SQLTransaction := Connection.Transaction;
-    Qry.SQL.Text := 'INSERT INTO zoo_taxa (' +
-        'taxon_id,' +
-        'full_name,' +
-        'authorship,' +
-        'formatted_name,' +
-        'english_name,' +
-        'portuguese_name,' +
-        'spanish_name,' +
-        'quick_code,' +
-        'rank_id,' +
-        'parent_taxon_id,' +
-        'valid_id,' +
-        'iucn_status,' +
-        'extinct,' +
-        'extinction_year,' +
-        'sort_num,' +
-        'group_name,' +
-        'order_id,' +
-        'family_id,' +
-        'subfamily_id,' +
-        'genus_id,' +
-        'species_id,' +
-        'subspecies_group_id,' +
-        'incertae_sedis,' +
-        'ebird_code,' +
-        'clements_taxonomy,' +
-        'ioc_taxonomy,' +
-        'ioc_rank_id,' +
-        'ioc_parent_taxon_id,' +
-        'ioc_valid_id,' +
-        'ioc_sort_num,' +
-        'ioc_english_name,' +
-        'cbro_taxonomy,' +
-        'other_portuguese_names,' +
-        'user_inserted,' +
-        'user_updated,' +
-        'insert_date,' +
-        'update_date,' +
-        'exported_status,' +
-        'marked_status,' +
-        'active_status,' +
-        'distribution,' +
-        'ioc_distribution) ' +
-      'VALUES (' +
-        ':taxon_id,' +
-        ':full_name,' +
-        ':authorship,' +
-        ':formatted_name,' +
-        ':english_name,' +
-        ':portuguese_name,' +
-        ':spanish_name,' +
-        ':quick_code,' +
-        ':rank_id,' +
-        ':parent_taxon_id,' +
-        ':valid_id,' +
-        ':iucn_status,' +
-        ':extinct,' +
-        ':extinction_year,' +
-        ':sort_num,' +
-        ':group_name,' +
-        ':order_id,' +
-        ':family_id,' +
-        ':subfamily_id,' +
-        ':genus_id,' +
-        ':species_id,' +
-        ':subspecies_group_id,' +
-        ':incertae_sedis,' +
-        ':ebird_code,' +
-        ':clements_taxonomy,' +
-        ':ioc_taxonomy,' +
-        ':ioc_rank_id,' +
-        ':ioc_parent_taxon_id,' +
-        ':ioc_valid_id,' +
-        ':ioc_sort_num,' +
-        ':ioc_english_name,' +
-        ':cbro_taxonomy,' +
-        ':other_portuguese_names,' +
-        ':user_inserted,' +
-        ':user_updated,' +
-        'datetime(:insert_date),' +
-        'datetime(:update_date),' +
-        ':exported_status,' +
-        ':marked_status,' +
-        ':active_status,' +
-        ':distribution,' +
-        ':ioc_distribution)';
+
+    Qry.SQL.Text := xProvider.ZooTaxa.Insert;
     try
       while not EOF do
       begin
@@ -3135,24 +1895,15 @@ end;
 
 function GetFieldDisplayName(const aTableType: TTableType; aFieldName: String): String;
 var
-  Qry: TSQLQuery;
+  FTable: TTableSchema;
+  FField: TFieldSchema;
 begin
   Result := EmptyStr;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
-  with Qry, SQL do
-  try
-    Database := DMM.sqlCon;
-    Add('SELECT display_name FROM fields_mapping WHERE (table_name = :tabela) AND (field_name = :campo)');
-    ParamByName('TABELA').AsString := TABLE_NAMES[aTableType];
-    ParamByName('CAMPO').AsString := aFieldName;
-    Open;
-    if RecordCount > 0 then
-      Result := Fields[0].AsString;
-    Close;
-  finally
-    FreeAndNil(Qry);
-  end;
+  FTable := DBSchema.GetTable(aTableType);
+  FField := FTable.GetField(aFieldName);
+
+  Result := FField.DisplayName;
 end;
 
 function GetPrimaryKey(const aTable: TTableType): String;
