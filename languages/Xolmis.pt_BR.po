@@ -12231,8 +12231,9 @@ msgid "Swap values"
 msgstr "Inverter valores"
 
 #: tfrmgeoconverter.pmtaddtogeobank.caption
-msgid "Add to Coordinates Editor"
-msgstr "Adicionar ao Editor de Coordenadas"
+msgctxt "tfrmgeoconverter.pmtaddtogeobank.caption"
+msgid "Add to GeoAssist"
+msgstr "Adicionar ao GeoAssist"
 
 #: tfrmgeoconverter.pmtclear.caption
 msgctxt "tfrmgeoconverter.pmtclear.caption"
@@ -12257,6 +12258,7 @@ msgid "South"
 msgstr "Sul"
 
 #: tfrmgeoconverter.sbaddtogeoeditor.caption
+msgctxt "tfrmgeoconverter.sbaddtogeoeditor.caption"
 msgid "Add to GeoAssist"
 msgstr "Adicionar ao GeoAssist"
 

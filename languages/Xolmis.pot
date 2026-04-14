@@ -12249,7 +12249,8 @@ msgid "Swap values"
 msgstr ""
 
 #: tfrmgeoconverter.pmtaddtogeobank.caption
-msgid "Add to Coordinates Editor"
+msgctxt "tfrmgeoconverter.pmtaddtogeobank.caption"
+msgid "Add to GeoAssist"
 msgstr ""
 
 #: tfrmgeoconverter.pmtclear.caption
@@ -12275,6 +12276,7 @@ msgid "South"
 msgstr ""
 
 #: tfrmgeoconverter.sbaddtogeoeditor.caption
+msgctxt "tfrmgeoconverter.sbaddtogeoeditor.caption"
 msgid "Add to GeoAssist"
 msgstr ""
 

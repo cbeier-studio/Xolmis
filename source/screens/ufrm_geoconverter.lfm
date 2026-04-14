@@ -1979,7 +1979,7 @@ object frmGeoConverter: TfrmGeoConverter
       ImageIndex = 10
     end
     object pmtAddToGeoBank: TMenuItem
-      Caption = 'Add to Coordinates Editor'
+      Caption = 'Add to GeoAssist'
       ImageIndex = 12
     end
     object Separator2: TMenuItem

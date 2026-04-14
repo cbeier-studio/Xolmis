@@ -293,6 +293,18 @@ begin
       'FROM gazetteer' +
     ') ';
 
+  if (aTableFilter = tbGazetteer) then
+    Result := Result +
+      'SELECT g.municipality_id, g.state_id, g.country_id, ' +
+        'm.site_name AS municipality_name, ' +
+        's.site_name AS state_name, ' +
+        'p.site_name AS country_name ' +
+      'FROM gazetteer AS g ' +
+      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'WHERE (g.active_status = 1) ';
+
   if (aTableFilter = tbSurveys) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT sv.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
@@ -401,6 +413,20 @@ begin
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (sp.active_status = 1) ';
+  if (aTableFilter = tbNone) then
+    Result := Result + 'UNION ';
+  if (aTableFilter = tbSamplingPlots) or (aTableFilter = tbNone) then
+    Result := Result +
+      'SELECT pl.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+        'm.site_name AS municipality_name, ' +
+        's.site_name AS state_name, ' +
+        'p.site_name AS country_name ' +
+      'FROM sampling_plots AS pl ' +
+      'JOIN SiteDetails AS g ON pl.locality_id = g.site_id ' +
+      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'WHERE (pl.active_status = 1) ';
 
   if (aTableFilter = tbInstitutions) then
     Result := Result + 'GROUP BY it.country_id, it.state_id, it.municipality_id '

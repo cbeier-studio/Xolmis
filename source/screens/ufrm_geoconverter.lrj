@@ -27,6 +27,6 @@
 {"hash":4860802,"name":"tfrmgeoconverter.pmfclear.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
 {"hash":209098661,"name":"tfrmgeoconverter.pmtsavefile.caption","sourcebytes":[83,97,118,101,32,102,105,108,101],"value":"Save file"},
 {"hash":304761,"name":"tfrmgeoconverter.pmtcopy.caption","sourcebytes":[67,111,112,121],"value":"Copy"},
-{"hash":163034818,"name":"tfrmgeoconverter.pmtaddtogeobank.caption","sourcebytes":[65,100,100,32,116,111,32,67,111,111,114,100,105,110,97,116,101,115,32,69,100,105,116,111,114],"value":"Add to Coordinates Editor"},
+{"hash":71284548,"name":"tfrmgeoconverter.pmtaddtogeobank.caption","sourcebytes":[65,100,100,32,116,111,32,71,101,111,65,115,115,105,115,116],"value":"Add to GeoAssist"},
 {"hash":4860802,"name":"tfrmgeoconverter.pmtclear.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"}
 ]}
