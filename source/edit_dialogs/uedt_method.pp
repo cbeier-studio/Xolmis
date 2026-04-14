@@ -179,10 +179,11 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
     Clear;
-    Add('SELECT category');
-    Add('FROM methods');
-    Add('WHERE (active_status = 1)');
-    Add('GROUP BY category');
+    Add(xProvider.Methods.DistinctCategories);
+    //Add('SELECT category');
+    //Add('FROM methods');
+    //Add('WHERE (active_status = 1)');
+    //Add('GROUP BY category');
     //GravaLogSQL(SQL);
     Open;
     First;

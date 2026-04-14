@@ -123,8 +123,10 @@ type
 implementation
 
 uses
-  utils_locale, models_users, utils_global, utils_validations, data_consts, data_columns, data_setparam,
-  data_getvalue, udm_main;
+  utils_locale, utils_global, utils_validations,
+  data_consts, data_columns, data_setparam, data_getvalue, data_providers,
+  models_users,
+  udm_main;
 
 { TPerson }
 
@@ -504,49 +506,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'p.person_id, ' +
-      'p.full_name, ' +
-      'p.acronym, ' +
-      'p.citation, ' +
-      'p.title_treatment, ' +
-      'p.national_id_card, ' +
-      'p.social_security_number, ' +
-      'p.gender, ' +
-      'p.birth_date, ' +
-      'p.death_date, ' +
-      'p.email_addr, ' +
-      'p.phone_1, ' +
-      'p.phone_2, ' +
-      'p.address_1, ' +
-      'p.address_2, ' +
-      'p.neighborhood, ' +
-      'p.zip_code, ' +
-      'p.country_id, ' +
-      'p.state_id, ' +
-      'p.municipality_id, ' +
-      'p.institution_id, ' +
-      'i.full_name AS institution_name' +
-      'p.department, ' +
-      'p.job_role, ' +
-      'p.lattes_uri, ' +
-      'p.orcid_uri, ' +
-      'p.twitter_uri, ' +
-      'p.instagram_uri, ' +
-      'p.website_uri, ' +
-      'p.profile_color, ' +
-      'p.notes, ' +
-      'p.profile_image, ' +
-      'p.user_inserted, ' +
-      'p.user_updated, ' +
-      'datetime(p.insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(p.update_date, ''localtime'') AS update_date, ' +
-      'p.exported_status, ' +
-      'p.marked_status, ' +
-      'p.active_status ' +
-      'FROM people AS p');
-    Add('LEFT JOIN institutions AS i ON p.institution_id = i.institution_id');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.People.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -573,49 +534,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'p.person_id, ' +
-      'p.full_name, ' +
-      'p.acronym, ' +
-      'p.citation, ' +
-      'p.title_treatment, ' +
-      'p.national_id_card, ' +
-      'p.social_security_number, ' +
-      'p.gender, ' +
-      'p.birth_date, ' +
-      'p.death_date, ' +
-      'p.email_addr, ' +
-      'p.phone_1, ' +
-      'p.phone_2, ' +
-      'p.address_1, ' +
-      'p.address_2, ' +
-      'p.neighborhood, ' +
-      'p.zip_code, ' +
-      'p.country_id, ' +
-      'p.state_id, ' +
-      'p.municipality_id, ' +
-      'p.institution_id, ' +
-      'i.full_name AS institution_name' +
-      'p.department, ' +
-      'p.job_role, ' +
-      'p.lattes_uri, ' +
-      'p.orcid_uri, ' +
-      'p.twitter_uri, ' +
-      'p.instagram_uri, ' +
-      'p.website_uri, ' +
-      'p.profile_color, ' +
-      'p.notes, ' +
-      'p.profile_image, ' +
-      'p.user_inserted, ' +
-      'p.user_updated, ' +
-      'datetime(p.insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(p.update_date, ''localtime'') AS update_date, ' +
-      'p.exported_status, ' +
-      'p.marked_status, ' +
-      'p.active_status ' +
-      'FROM people AS p');
-    Add('LEFT JOIN institutions AS i ON p.institution_id = i.institution_id');
-    Add('WHERE p.person_id = :cod');
+    Add(xProvider.People.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -770,70 +690,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO people (' +
-      'full_name, ' +
-      'acronym, ' +
-      'citation, ' +
-      'title_treatment, ' +
-      'national_id_card, ' +
-      'social_security_number, ' +
-      'gender, ' +
-      'birth_date, ' +
-      'death_date, ' +
-      'email_addr, ' +
-      'phone_1, ' +
-      'phone_2, ' +
-      'address_1, ' +
-      'address_2, ' +
-      'neighborhood, ' +
-      'zip_code, ' +
-      'country_id, ' +
-      'state_id, ' +
-      'municipality_id, ' +
-      'institution_id, ' +
-      'department, ' +
-      'job_role, ' +
-      'lattes_uri, ' +
-      'orcid_uri, ' +
-      'twitter_uri, ' +
-      'instagram_uri, ' +
-      'website_uri, ' +
-      'profile_color, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':acronym, ' +
-      ':citation, ' +
-      ':title_treatment, ' +
-      ':national_id_card, ' +
-      ':social_security_number, ' +
-      ':gender, ' +
-      'date(:birth_date), ' +
-      'date(:death_date), ' +
-      ':email_addr, ' +
-      ':phone_1, ' +
-      ':phone_2, ' +
-      ':address_1, ' +
-      ':address_2, ' +
-      ':neighborhood, ' +
-      ':zip_code, ' +
-      ':country_id, ' +
-      ':state_id, ' +
-      ':municipality_id, ' +
-      ':institution_id, ' +
-      ':department, ' +
-      ':job_role, ' +
-      ':lattes_uri, ' +
-      ':orcid_uri, ' +
-      ':twitter_uri, ' +
-      ':instagram_uri, ' +
-      ':website_uri, ' +
-      ':profile_color, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.People.Insert);
 
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('acronym').AsString := R.Abbreviation;
@@ -900,39 +757,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE people SET ' +
-        'full_name = :full_name, ' +
-        'acronym = :acronym, ' +
-        'citation = :citation, ' +
-        'title_treatment = :title_treatment, ' +
-        'national_id_card = :national_id_card, ' +
-        'social_security_number = :social_security_number, ' +
-        'gender = :gender, ' +
-        'birth_date = date(:birth_date), ' +
-        'death_date = date(:death_date), ' +
-        'email_addr = :email_addr, ' +
-        'phone_1 = :phone_1, ' +
-        'phone_2 = :phone_2, ' +
-        'address_1 = :address_1, ' +
-        'address_2 = :address_2, ' +
-        'neighborhood = :neighborhood, ' +
-        'zip_code = :zip_code, ' +
-        'country_id = :country_id, ' +
-        'state_id = :state_id, ' +
-        'municipality_id = :municipality_id, ' +
-        'institution_id = :institution_id, ' +
-        'department = :department, ' +
-        'job_role = :job_role, ' +
-        'lattes_uri = :lattes_uri, ' +
-        'orcid_uri = :orcid_uri, ' +
-        'twitter_uri = :twitter_uri, ' +
-        'instagram_uri = :instagram_uri, ' +
-        'website_uri = :website_uri, ' +
-        'profile_color = :profile_color, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (person_id = :person_id)');
+    Add(xProvider.People.Update);
 
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('acronym').AsString := R.Abbreviation;

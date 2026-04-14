@@ -57,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated **[Clements taxonomy](https://www.birds.cornell.edu/clementschecklist/)** to v2025, ensuring alignment with the latest ornithological classification.
 - Updated **Lazarus** to v4.4 (development environment).  
-- Updated **SQLite** to v3.52.0 (database engine).
+- Updated **SQLite** to v3.51.3 (database engine).
 
 ### Removed
 

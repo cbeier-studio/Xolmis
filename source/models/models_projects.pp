@@ -320,8 +320,9 @@ var
 implementation
 
 uses
-  utils_locale, models_users, utils_global, utils_validations, utils_conversions,
-  data_columns, data_setparam, data_consts, data_getvalue;
+  utils_locale, utils_global, utils_validations, utils_conversions,
+  data_columns, data_setparam, data_consts, data_getvalue, data_providers,
+  models_users;
 
 procedure InitProjectActivityPropsDict;
 begin
@@ -601,29 +602,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'project_id, ' +
-      'project_title, ' +
-      'short_title, ' +
-      'start_date, ' +
-      'end_date, ' +
-      'website_uri, ' +
-      'email_addr, ' +
-      'contact_name, ' +
-      'protocol_number, ' +
-      'main_goal, ' +
-      'risks, ' +
-      'project_abstract, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM projects');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Projects.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -650,29 +630,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'project_id, ' +
-      'project_title, ' +
-      'short_title, ' +
-      'start_date, ' +
-      'end_date, ' +
-      'website_uri, ' +
-      'email_addr, ' +
-      'contact_name, ' +
-      'protocol_number, ' +
-      'main_goal, ' +
-      'risks, ' +
-      'project_abstract, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM projects');
-    Add('WHERE project_id = :cod');
+    Add(xProvider.Projects.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -777,36 +736,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO projects (' +
-      'project_title, ' +
-      'short_title, ' +
-      'start_date, ' +
-      'end_date, ' +
-      'website_uri, ' +
-      'email_addr, ' +
-      'contact_name, ' +
-      'protocol_number, ' +
-      'main_goal, ' +
-      'risks, ' +
-      'project_abstract, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':project_title, ' +
-      ':short_title, ' +
-      'date(:start_date), ' +
-      'date(:end_date), ' +
-      ':website_uri, ' +
-      ':email_addr, ' +
-      ':contact_name, ' +
-      ':protocol_number, ' +
-      ':main_goal, ' +
-      ':risks, ' +
-      ':project_abstract, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Projects.Insert);
 
     ParamByName('project_title').AsString := R.Title;
     ParamByName('short_title').AsString := R.ShortTitle;
@@ -856,22 +786,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE projects SET ' +
-      'project_title = :project_title, ' +
-      'short_title = :short_title, ' +
-      'start_date = date(:start_date), ' +
-      'end_date = date(:end_date), ' +
-      'website_uri = :website_uri, ' +
-      'email_addr = :email_addr, ' +
-      'contact_name = :contact_name, ' +
-      'protocol_number = :protocol_number, ' +
-      'main_goal = :main_goal, ' +
-      'risks = :risks, ' +
-      'project_abstract = :project_abstract, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (project_id = :project_id)');
+    Add(xProvider.Projects.Update);
 
     ParamByName('project_title').AsString := R.Title;
     ParamByName('short_title').AsString := R.ShortTitle;
@@ -1101,21 +1016,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'project_member_id, ' +
-      'project_id, ' +
-      'person_id, ' +
-      'project_manager, ' +
-      'institution_id, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_team');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.ProjectTeams.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1142,21 +1044,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'project_member_id, ' +
-      'project_id, ' +
-      'person_id, ' +
-      'project_manager, ' +
-      'institution_id, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_team');
-    Add('WHERE project_member_id = :cod');
+    Add(xProvider.ProjectTeams.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1231,20 +1120,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO project_team (' +
-      'project_id, ' +
-      'person_id, ' +
-      'project_manager, ' +
-      'institution_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':project_id, ' +
-      ':person_id, ' +
-      ':project_manager, ' +
-      ':institution_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.ProjectTeams.Insert);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     ParamByName('person_id').AsInteger := R.PersonId;
@@ -1286,14 +1162,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE project_team SET ' +
-      'project_id = :project_id, ' +
-      'person_id = :person_id, ' +
-      'project_manager = :project_manager, ' +
-      'institution_id = :institution_id, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (project_member_id = :project_member_id)');
+    Add(xProvider.ProjectTeams.Update);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     ParamByName('person_id').AsInteger := R.PersonId;
@@ -1511,20 +1380,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'goal_id, ' +
-      'project_id, ' +
-      'goal_description, ' +
-      'goal_status, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_goals');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.ProjectGoals.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1551,20 +1408,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'goal_id, ' +
-      'project_id, ' +
-      'goal_description, ' +
-      'goal_status, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_goals');
-    Add('WHERE goal_id = :cod');
+    Add(xProvider.ProjectGoals.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1636,18 +1481,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO project_goals (' +
-      'project_id, ' +
-      'goal_description, ' +
-      'goal_status, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':project_id, ' +
-      ':goal_description, ' +
-      ':goal_status, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.ProjectGoals.Insert);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     ParamByName('goal_description').AsString := R.Description;
@@ -1688,13 +1522,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE project_goals SET ' +
-      'project_id = :project_id, ' +
-      'goal_description = :goal_description, ' +
-      'goal_status = :goal_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (goal_id = :goal_id)');
+    Add(xProvider.ProjectGoals.Update);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     ParamByName('goal_description').AsString := R.Description;
@@ -1947,24 +1775,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'chronogram_id, ' +
-      'project_id, ' +
-      'description, ' +
-      'date(start_date), ' +
-      'date(target_date), ' +
-      'date(end_date), ' +
-      'goal_id, ' +
-      'progress_status, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_chronograms');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.ProjectChronograms.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1991,24 +1803,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'chronogram_id, ' +
-      'project_id, ' +
-      'description, ' +
-      'date(start_date), ' +
-      'date(target_date), ' +
-      'date(end_date), ' +
-      'goal_id, ' +
-      'progress_status, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_chronograms');
-    Add('WHERE chronogram_id = :cod');
+    Add(xProvider.ProjectChronograms.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2095,26 +1891,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO project_chronograms (' +
-      'project_id, ' +
-      'description, ' +
-      'start_date, ' +
-      'target_date, ' +
-      'end_date, ' +
-      'goal_id, ' +
-      'progress_status, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':project_id, ' +
-      ':description, ' +
-      'date(:start_date), ' +
-      'date(:target_date), ' +
-      'date(:end_date), ' +
-      ':goal_id, ' +
-      ':progress_status, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.ProjectChronograms.Insert);
 
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
     ParamByName('description').AsString := R.Description;
@@ -2159,17 +1936,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE project_chronograms SET ' +
-        'project_id = :project_id, ' +
-        'description = :description, ' +
-        'start_date = date(:start_date), ' +
-        'target_date = date(:target_date), ' +
-        'end_date = date(:end_date), ' +
-        'goal_id = :goal_id, ' +
-        'progress_status = :progress_status, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (chronogram_id = :chronogram_id)');
+    Add(xProvider.ProjectChronograms.Update);
 
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
     ParamByName('description').AsString := R.Description;
@@ -2402,22 +2169,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'budget_id, ' +
-      'project_id, ' +
-      'funding_source, ' +
-      'rubric, ' +
-      'item_name, ' +
-      'amount, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_budgets');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.ProjectBudgets.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -2444,22 +2197,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'budget_id, ' +
-      'project_id, ' +
-      'funding_source, ' +
-      'rubric, ' +
-      'item_name, ' +
-      'amount, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_budgets');
-    Add('WHERE budget_id = :cod');
+    Add(xProvider.ProjectBudgets.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2535,22 +2274,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO project_budgets (' +
-      'project_id, ' +
-      'funding_source, ' +
-      'rubric, ' +
-      'item_name, ' +
-      'amount, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':project_id, ' +
-      ':funding_source, ' +
-      ':rubric, ' +
-      ':item_name, ' +
-      ':amount, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.ProjectBudgets.Insert);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     SetStrParam(ParamByName('funding_source'), R.FundingSource);
@@ -2593,15 +2317,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE project_budgets SET ' +
-      'project_id = :project_id, ' +
-      'funding_source = :funding_source, ' +
-      'rubric = :rubric, ' +
-      'item_name = :item_name, ' +
-      'amount = :amount, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (budget_id = :budget_id)');
+    Add(xProvider.ProjectBudgets.Update);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     SetStrParam(ParamByName('funding_source'), R.FundingSource);
@@ -2837,22 +2553,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'expense_id, ' +
-      'project_id, ' +
-      'budget_id, ' +
-      'item_description, ' +
-      'date(expense_date), ' +
-      'amount, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_expenses');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.ProjectExpenses.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -2879,22 +2581,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'expense_id, ' +
-      'project_id, ' +
-      'budget_id, ' +
-      'item_description, ' +
-      'date(expense_date), ' +
-      'amount, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM project_expenses');
-    Add('WHERE expense_id = :cod');
+    Add(xProvider.ProjectExpenses.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2973,22 +2661,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO project_expenses (' +
-      'project_id, ' +
-      'budget_id, ' +
-      'item_description, ' +
-      'expense_date, ' +
-      'amount, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':project_id, ' +
-      ':budget_id, ' +
-      ':item_description, ' +
-      'date(:expense_date), ' +
-      ':amount, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.ProjectExpenses.Insert);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     SetForeignParam(ParamByName('budget_id'), R.BudgetId);
@@ -3031,15 +2704,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE project_expenses SET ' +
-      'project_id = :project_id, ' +
-      'budget_id = :budget_id, ' +
-      'item_description = :item_description, ' +
-      'expense_date = date(:expense_date), ' +
-      'amount = :amount, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (expense_id = :expense_id)');
+    Add(xProvider.ProjectExpenses.Update);
 
     ParamByName('project_id').AsInteger := R.ProjectId;
     SetForeignParam(ParamByName('budget_id'), R.BudgetId);

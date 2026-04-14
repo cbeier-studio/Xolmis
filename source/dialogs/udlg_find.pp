@@ -119,7 +119,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_conversions, data_getvalue, utils_dialogs, utils_themes, uDarkStyleParams;
+  utils_locale, utils_global, utils_conversions, utils_dialogs, utils_themes,
+  data_getvalue, data_providers,
+  uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -174,23 +176,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT band_id, full_name FROM bands ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Bands.Find(swcNone, aCriteria, pmfShowBandsAvailable.Checked));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          if pmfShowBandsAvailable.Checked then
-            Add('AND (band_status = ''D'') ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Bands.Find(swcFindText, aCriteria, pmfShowBandsAvailable.Checked));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Bands.Find(swcActiveAll, aCriteria, pmfShowBandsAvailable.Checked));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Bands.Find(swcActiveMarked, aCriteria, pmfShowBandsAvailable.Checked));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Bands.Find(swcInactive, aCriteria, pmfShowBandsAvailable.Checked));
     end;
   end;
 end;
@@ -204,70 +200,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT taxon_id, taxon_name, formatted_name FROM botanic_taxa ');
     case aFilter of
       fvNone:
-        { nothing } ;
+        Add(xProvider.BotanicalTaxa.Find(swcNone, aCriteria, FTaxonFilter));
       fvReset:
-        begin
-          Add('WHERE (taxon_name ' + Operador + ' :VALPARAM) ');
-          if not (tfAll in FTaxonFilter) then
-          begin
-            if (tfMain in FTaxonFilter) then
-            begin
-              Add('AND (botanic_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-              Add('WHERE taxon_ranks.main_rank = 1)) ');
-            end
-            else
-            begin
-              for F in FTaxonFilter do
-              begin
-                case F of
-                  // tfKingdoms: Add('AND ((NIV_CODIGO = 1) or (NIV_CODIGO = 12)) ');
-                  // tfPhyla: Add('AND ((NIV_CODIGO = 2) or (NIV_CODIGO = 13)) ');
-                  // tfClasses: Add('AND ((NIV_CODIGO = 3) or (NIV_CODIGO = 14)) ');
-                  tfOrders:
-                  begin
-                    Add('AND (botanic_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%ord.'')) ');
-                  end;
-                  tfFamilies:
-                  begin
-                    Add('AND (botanic_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%fam.'')) ');
-                  end;
-                  tfTribes:
-                  begin
-                    Add('AND (botanic_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%tr.'')) ');
-                  end;
-                  tfGenera:
-                  begin
-                    Add('AND (botanic_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%g.'')) ');
-                  end;
-                  tfSpecies:
-                  begin
-                    Add('AND (botanic_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE (taxon_ranks.rank_acronym = ''supersp.'') OR (taxon_ranks.rank_acronym = ''sp.''))) ');
-                  end;
-                  tfSubspecies:
-                  begin
-                    Add('AND (botanic_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE (taxon_ranks.rank_acronym = ''ssp.''))) ');
-                  end;
-                end;
-              end;
-            end;
-          end;
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.BotanicalTaxa.Find(swcFindText, aCriteria, FTaxonFilter));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.BotanicalTaxa.Find(swcActiveAll, aCriteria, FTaxonFilter));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.BotanicalTaxa.Find(swcActiveMarked, aCriteria, FTaxonFilter));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.BotanicalTaxa.Find(swcInactive, aCriteria, FTaxonFilter));
     end;
   end;
 end;
@@ -280,21 +223,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT capture_id, full_name FROM captures ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Captures.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Captures.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Captures.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Captures.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Captures.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -307,21 +246,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT egg_id, full_name FROM eggs ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Eggs.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Eggs.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Eggs.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Eggs.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Eggs.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -334,21 +269,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT expedition_id, expedition_name FROM expeditions ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Expeditions.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (expedition_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Expeditions.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Expeditions.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Expeditions.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Expeditions.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -361,21 +292,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT feather_id, full_name FROM feathers ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Feathers.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Feathers.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Feathers.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Feathers.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Feathers.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -390,50 +317,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT site_id, full_name, site_name, site_acronym FROM gazetteer ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Gazetteer.Find(swcNone, aCriteria, FSiteFilter));
       fvReset:
-        begin
-          Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (site_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (site_acronym ' + Operador + ' :VALPARAM)) ');
-          if not (gfAll in FSiteFilter) then
-          begin
-            //if PopCnt(DWord(FSiteFilter)) > 1 then
-            //  strOr := 'OR ';
-            Add('AND (');
-            for F in FSiteFilter do
-            begin
-              case F of
-                gfAll: ; // do nothing
-                gfCountries:
-                  strFiltro := strOr + '(site_rank = ''P'')';
-                gfStates:
-                  strFiltro := strOr + '(site_rank = ''E'')';
-                gfRegions:
-                  strFiltro := strOr + '(site_rank = ''R'')';
-                gfCities:
-                  strFiltro := strOr + '(site_rank = ''M'')';
-                gfDistricts:
-                  strFiltro := strOr + '(site_rank = ''D'')';
-                gfLocalities:
-                  strFiltro := strOr + '(site_rank = ''L'')';
-              end;
-              Add(strFiltro);
-              strOr := 'OR ';
-            end;
-            Add(')');
-          end;
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Gazetteer.Find(swcFindText, aCriteria, FSiteFilter));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Gazetteer.Find(swcActiveAll, aCriteria, FSiteFilter));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Gazetteer.Find(swcActiveMarked, aCriteria, FSiteFilter));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Gazetteer.Find(swcInactive, aCriteria, FSiteFilter));
     end;
   end;
 end;
@@ -446,21 +340,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT individual_id, full_name FROM individuals ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Individuals.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Individuals.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Individuals.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Individuals.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Individuals.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -473,22 +363,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT institution_id, full_name, acronym FROM institutions ');
     case aFilter of
       fvNone:
-        { nothing } ;
+        Add(xProvider.Institutions.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (acronym ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Institutions.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Institutions.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Institutions.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Institutions.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -501,22 +386,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT method_id, method_name, abbreviation FROM methods ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Methods.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE ((method_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (abbreviation ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Methods.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Methods.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Methods.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Methods.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -529,21 +409,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT nest_revision_id, full_name FROM nest_revisions ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.NestRevisions.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.NestRevisions.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.NestRevisions.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.NestRevisions.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.NestRevisions.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -556,21 +432,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT nest_id, full_name FROM nests ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Nests.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Nests.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Nests.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Nests.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Nests.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -583,21 +455,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT net_id, full_name, net_number FROM nets_effort ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.NetsEffort.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.NetsEffort.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.NetsEffort.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.NetsEffort.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.NetsEffort.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -610,22 +478,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT sampling_plot_id, full_name, acronym FROM sampling_plots ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.SamplingPlots.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (acronym ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.SamplingPlots.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.SamplingPlots.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.SamplingPlots.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.SamplingPlots.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -638,23 +501,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT person_id, full_name, citation, acronym FROM people ');
     case aFilter of
       fvNone:
-        { nothing } ;
+        Add(xProvider.People.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (citation ' + Operador + ' :VALPARAM) ');
-          Add('OR (acronym ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.People.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.People.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.People.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.People.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -667,21 +524,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT permanent_net_id, full_name FROM permanent_nets ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.PermanentNets.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.PermanentNets.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.PermanentNets.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.PermanentNets.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.PermanentNets.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -694,21 +547,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT permit_id, permit_name FROM permits ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Permits.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (permit_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Permits.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Permits.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Permits.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Permits.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -721,21 +570,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT goal_id, goal_description FROM project_goals ');
     case aFilter of
       fvNone:
-        { nothing } ;
+        Add(xProvider.ProjectGoals.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (goal_description ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.ProjectGoals.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.ProjectGoals.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.ProjectGoals.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.ProjectGoals.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -748,26 +593,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT budget_id, ');
-    Add('CASE');
-    Add('   WHEN TRIM(COALESCE(item_name, '''')) = '''' THEN rubric');
-    Add('   ELSE rubric || '': '' || item_name');
-    Add('END AS rubric_item');
-    Add('FROM project_budgets ');
     case aFilter of
       fvNone:
-        { nothing } ;
+        Add(xProvider.ProjectBudgets.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (rubric_item ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.ProjectBudgets.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.ProjectBudgets.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.ProjectBudgets.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.ProjectBudgets.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -780,22 +616,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT project_id, project_title, short_title FROM projects ');
     case aFilter of
       fvNone:
-        { nothing } ;
+        Add(xProvider.Projects.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE ((project_title ' + Operador + ' :VALPARAM) ');
-          Add('OR (short_title ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Projects.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Projects.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Projects.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Projects.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -808,21 +639,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT sample_prep_id, full_name FROM sample_preps ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.SamplePreps.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.SamplePreps.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.SamplePreps.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.SamplePreps.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.SamplePreps.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -835,21 +662,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT sighting_id, full_name FROM sightings ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Sightings.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Sightings.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Sightings.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Sightings.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Sightings.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -862,21 +685,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT specimen_id, full_name FROM specimens ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Specimens.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Specimens.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Specimens.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Specimens.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Specimens.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -889,21 +708,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT survey_id, full_name FROM surveys ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Surveys.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Surveys.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Surveys.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Surveys.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Surveys.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -917,108 +732,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT taxon_id, full_name, formatted_name, valid_id FROM zoo_taxa ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.ZooTaxa.Find(swcNone, aCriteria, FTaxonFilter));
       fvReset:
-        begin
-          Add('WHERE (full_name ' + Operador + ' :VALPARAM) ');
-          if not (tfAll in FTaxonFilter) then
-          begin
-            if (tfMain in FTaxonFilter) then
-            begin
-              Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-              Add('WHERE taxon_ranks.main_rank = 1)) ');
-            end
-            else
-            begin
-              for F in FTaxonFilter do
-              begin
-                case F of
-                  // tfKingdoms: Add('AND ((NIV_CODIGO = 1) or (NIV_CODIGO = 12)) ');
-                  // tfPhyla: Add('AND ((NIV_CODIGO = 2) or (NIV_CODIGO = 13)) ');
-                  // tfClasses: Add('AND ((NIV_CODIGO = 3) or (NIV_CODIGO = 14)) ');
-                  tfOrders:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%ord.'')) ');
-                  end;
-                  tfFamilies:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%fam.'')) ');
-                  end;
-                  tfTribes:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%tr.'')) ');
-                  end;
-                  tfGenera:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''%g.'')) ');
-                  end;
-                  tfSpecies:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE (taxon_ranks.rank_acronym = ''supersp.'') OR (taxon_ranks.rank_acronym = ''sp.''))) ');
-                  end;
-                  tfSubspecies:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE (taxon_ranks.rank_acronym = ''ssp.'')');
-                    if not (tfSubspeciesGroups in FTaxonFilter) then
-                      Add('OR (taxon_ranks.rank_acronym = ''grp. (mono)'')');
-                    Add(')) ');
-                  end;
-                  tfSubspeciesGroups:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym LIKE ''grp. %'')) ');
-                  end;
-                  tfSpuhs:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym = ''spuh'')) ');
-                  end;
-                  tfSlashes:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym = ''slash'')) ');
-                  end;
-                  tfForms:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym = ''form'')) ');
-                  end;
-                  tfDomestics:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym = ''domest.'')) ');
-                  end;
-                  tfHybrids:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym = ''hybrid'')) ');
-                  end;
-                  tfIntergrades:
-                  begin
-                    Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-                    Add('WHERE taxon_ranks.rank_acronym = ''intergrade'')) ');
-                  end;
-                end;
-              end;
-            end;
-          end;
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.ZooTaxa.Find(swcFindText, aCriteria, FTaxonFilter));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.ZooTaxa.Find(swcActiveAll, aCriteria, FTaxonFilter));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.ZooTaxa.Find(swcActiveMarked, aCriteria, FTaxonFilter));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.ZooTaxa.Find(swcInactive, aCriteria, FTaxonFilter));
     end;
   end;
 end;
@@ -1031,22 +755,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT rank_id, rank_name, rank_acronym FROM taxon_ranks ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.TaxonRanks.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE ((rank_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (rank_acronym ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.TaxonRanks.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.TaxonRanks.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.TaxonRanks.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.TaxonRanks.Find(swcInactive, aCriteria));
     end;
   end;
 end;
@@ -1059,22 +778,17 @@ begin
 
   with aSQL do
   begin
-    Add('SELECT user_id, user_name, full_name FROM users ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Users.Find(swcNone, aCriteria));
       fvReset:
-        begin
-          Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (user_name ' + Operador + ' :VALPARAM)) ');
-          Add('AND (active_status = 1)');
-        end;
+        Add(xProvider.Users.Find(swcFindText, aCriteria));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Users.Find(swcActiveAll, aCriteria));
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add(xProvider.Users.Find(swcActiveMarked, aCriteria));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Users.Find(swcInactive, aCriteria));
     end;
   end;
 end;

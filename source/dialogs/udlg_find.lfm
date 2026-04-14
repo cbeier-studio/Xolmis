@@ -178,7 +178,7 @@ object dlgFind: TdlgFind
     Columns = <    
       item
         Title.Caption = 'Name'
-        Width = 296
+        Width = 317
       end>
     DataSource = dsFind
     FixedCols = 0

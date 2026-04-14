@@ -361,18 +361,18 @@ type
 
   // Audio recordings
   TAudioType = (
-    atUnknown,      // "UNK" - Não identificado
-    atSong,         // "SON" - Canto
-    atCall,         // "CAL" - Chamada
-    atAlarm,        // "ALM" - Alarme / Estresse
+    atUnknown,      // "UNK" - Unidentified
+    atSong,         // "SON" - Song
+    atCall,         // "CAL" - Call
+    atAlarm,        // "ALM" - Alarm / Stress
     atTerritorial,  // "TER" - Territorial
-    atCourtship,    // "CRT" - Corte / Acasalamento
-    atAggression,   // "AGR" - Agressão
-    atContact,      // "CNT" - Contato
-    atFlock,        // "FLK" - Vocalização de bando
-    atFlight,       // "FLT" - Vocalização de voo
-    atNestling,     // "NST" - Filhote / ninhego
-    atNonVocal      // "NVL" - Sons não vocais (asas, bico, tamborilar)
+    atCourtship,    // "CRT" - Courtship / Display
+    atAggression,   // "AGR" - Aggression
+    atContact,      // "CNT" - Contact
+    atFlock,        // "FLK" - Flock vocalization
+    atFlight,       // "FLT" - Flight vocalization
+    atNestling,     // "NST" - Chick / nestling
+    atNonVocal      // "NVL" - Non vocal sounds (wings, beak, drumming)
   );
 
   // Documents and links
@@ -382,22 +382,22 @@ type
 
   // Videos
   TVideoType = (
-    vtUnknown,        // "UNK" - Não identificado
-    vtGeneral,        // "GEN" - Comportamento geral
-    vtForaging,       // "FOR" - Alimentação / Forrageamento
-    vtVocalizing,     // "VOC" - Canto / Vocalização
-    vtCourtship,      // "CRT" - Corte / Exibição
-    vtAggression,     // "AGR" - Agressão / Territorialidade
-    vtSocial,         // "SOC" - Interação social
-    vtParentalCare,   // "PAR" - Cuidado parental
-    vtNestBuilding,   // "NBU" - Construção de ninho
-    vtIncubation,     // "INC" - Incubação
-    vtNestlings,      // "NLG" - Filhotes no ninho
-    vtFlight,         // "FLT" - Voo
-    vtLocomotion,     // "LOC" - Locomoção no solo/vegetação
-    vtHygiene,        // "HYG" - Banho / Preening / Higiene
-    vtPredation,      // "PRD" - Predação (como predador ou presa)
-    vtMortality       // "MOR" - Ave morta / comportamento anômalo
+    vtUnknown,        // "UNK" - Unidentified
+    vtGeneral,        // "GEN" - General behavior
+    vtForaging,       // "FOR" - Feeding / Foraging
+    vtVocalizing,     // "VOC" - Song / Vocalization
+    vtCourtship,      // "CRT" - Courtship / Display
+    vtAggression,     // "AGR" - Aggression / Territoriality
+    vtSocial,         // "SOC" - Social interaction
+    vtParentalCare,   // "PAR" - Parental care
+    vtNestBuilding,   // "NBU" - Nest building
+    vtIncubation,     // "INC" - Incubation
+    vtNestlings,      // "NLG" - Nestlings
+    vtFlight,         // "FLT" - Flight
+    vtLocomotion,     // "LOC" - Locomotion in the ground/vegetation
+    vtHygiene,        // "HYG" - Bath / Preening / Hygiene
+    vtPredation,      // "PRD" - Predation (as predator or prey)
+    vtMortality       // "MOR" - Dead bird / anomalous behavior
   );
 
   // Xolmis Mobile

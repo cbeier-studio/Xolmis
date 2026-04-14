@@ -23,11 +23,6 @@ interface
 uses
   Classes, SysUtils, SQLDB, RegExpr, StrUtils, data_types;
 
-  { Search records (deprecated) }
-  //function TableSearch(aQuery: TSQLQuery; aTable: TTableType; aSearch: TSearch;
-  //  aQuickFilter: TStrings; aModifier: TRecordStatus; aSorting: TSortedFields;
-  //  aWhere: TStrings): Boolean;
-
   { SQL Select and filtering }
   function GetModifier(aModifier: String): TFilterValue;
 
@@ -84,165 +79,7 @@ uses
 
 implementation
 
-uses utils_global;
-
-{ ----------------------------------------------------------------------------------------- }
-{ Search records }
-{ ----------------------------------------------------------------------------------------- }
-
-//function TableSearch(aQuery: TSQLQuery; aTable: TTableType; aSearch: TSearch;
-//  aQuickFilter: TStrings; aModifier: TRecordStatus; aSorting: TSortedFields;
-//  aWhere: TStrings): Boolean;
-//var
-//  AndWhere, aAlias, aSort, aDir: String;
-//  i: Integer;
-//  SF: TSortedField;
-//begin
-//  aAlias := EmptyStr;
-//  AndWhere := 'WHERE ';
-//  aWhere.Clear;
-//  Result := False;
-//
-//  with aQuery, SQL do
-//  begin
-//    Close;
-//    Clear;
-//    SetSelectSQL(SQL, aTable, aAlias);
-//
-//    // Value typed in the Search field
-//    if not aSearch.IsEmpty then
-//    begin
-//      //aQuery.FilterOptions := [foCaseInsensitive];
-//      //aQuery.Filter := aSearch.FilterString;
-//      //aQuery.Filtered := True;
-//      Add(aSearch.SQLString);
-//      aWhere.Add(aSearch.SQLString);
-//      AndWhere := 'AND ';
-//    end;
-//    //else
-//    //  aQuery.Filtered := False;
-//
-//    // Quick filters applied
-//    if aQuickFilter.Count > 0 then
-//    begin
-//      for i := 0 to aQuickFilter.Count - 1 do
-//      begin
-//        Add(AndWhere + aQuickFilter[i]);
-//        aWhere.Add(AndWhere + aQuickFilter[i]);
-//        AndWhere := 'AND ';
-//      end;
-//    end;
-//
-//    // Record active or not
-//    case aModifier.Status of
-//      rsAll:
-//        ;
-//      rsActive:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'active_status = 1)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = 1)');
-//          AndWhere := 'AND ';
-//        end;
-//      rsInactive:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'active_status = 0)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = 0)');
-//          AndWhere := 'AND ';
-//        end;
-//      rsNone:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'active_status = -1)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'active_status = -1)');
-//          AndWhere := 'AND ';
-//        end;
-//    end;
-//    // Record marked or not
-//    case aModifier.Mark of
-//      rmAll:
-//        ;
-//      rmMarked:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'marked_status = 1)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'marked_status = 1)');
-//          AndWhere := 'AND ';
-//        end;
-//      rmUnmarked:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'marked_status = 0)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'marked_status = 0)');
-//          AndWhere := 'AND ';
-//        end;
-//    end;
-//    // Record queued or not
-//    case aModifier.Queue of
-//      rqAll:
-//        ;
-//      rqQueued:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'queued_status = 1)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'queued_status = 1)');
-//          AndWhere := 'AND ';
-//        end;
-//      rqUnqueued:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'queued_status = 0)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'queued_status = 0)');
-//          AndWhere := 'AND ';
-//        end;
-//    end;
-//    // Record already exported or not
-//    case aModifier.Share of
-//      rxAll:
-//        ;
-//      rxExported:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'exported_status = 1)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'exported_status = 1)');
-//          AndWhere := 'AND ';
-//        end;
-//      rxNotExported:
-//        begin
-//          Add(AndWhere + '(' + aAlias + 'exported_status = 0)');
-//          aWhere.Add(AndWhere + '(' + aAlias + 'exported_status = 0)');
-//          AndWhere := 'AND ';
-//        end;
-//    end;
-//
-//    // Record sorting
-//    if aSorting.Count > 0 then
-//    begin
-//      aSort := '';
-//      aDir := '';
-//      for i := 0 to (aSorting.Count - 1) do
-//      begin
-//        SF := aSorting.Items[i];
-//        aDir := SORT_DIRECTIONS[SF.Direction];
-//        //case SF^.Direction of
-//        //  sdNone:
-//        //    ;
-//        //  sdAscending:
-//        //    aDir := 'ASC';
-//        //  sdDescending:
-//        //    aDir := 'DESC';
-//        //end;
-//        if (ExecRegExpr('.*\_name$', SF.FieldName)) and (SF.FieldName <> 'full_name') then
-//          aSort := aSort + SF.FieldName + ' ' +{' COLLATE pt_BR ' +} aDir
-//        else
-//          aSort := aSort + aAlias + SF.FieldName + ' ' +{' COLLATE pt_BR ' +} aDir;
-//        if i < (aSorting.Count - 1) then
-//          aSort := aSort + ', ';
-//      end;
-//      Add('ORDER BY ' + aSort);
-//    end;
-//
-//    {$IFDEF DEBUG}
-//    LogSQL(SQL);
-//    {$ENDIF}
-//    Open;
-//  end;
-//
-//  Result := not aQuery.IsEmpty;
-//end;
+uses utils_global, data_providers;
 
 {
  ----------------------------------------------------------------------------
@@ -409,18 +246,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT * FROM methods');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Methods.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Methods.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Methods.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (active_status = 1) AND (marked_status = 1)');
+        Add(xProvider.Methods.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Methods.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -441,36 +277,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT sp.*,');
-    Add('  z.full_name AS taxon_name,');
-    Add('  z.order_id AS order_id,');
-    Add('  z.family_id AS family_id,');
-    Add('  z.genus_id AS genus_id,');
-    Add('  z.species_id AS species_id,');
-    Add('  g.site_name AS locality_name,');
-    Add('  g.country_id AS country_id,');
-    Add('  g.state_id AS state_id,');
-    Add('  g.municipality_id AS municipality_id,');
-    Add('  i.full_name AS individual_name,');
-    Add('  n.full_name AS nest_name,');
-    Add('  e.full_name AS egg_name');
-    Add('FROM specimens AS sp');
-    Add('LEFT JOIN zoo_taxa AS z ON sp.taxon_id = z.taxon_id');
-    Add('LEFT JOIN gazetteer AS g ON sp.locality_id = g.site_id');
-    Add('LEFT JOIN individuals AS i ON sp.individual_id = i.individual_id');
-    Add('LEFT JOIN nests AS n ON sp.nest_id = n.nest_id');
-    Add('LEFT JOIN eggs AS e ON sp.egg_id = e.egg_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Specimens.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (sp.specimen_id = -1) AND (sp.active_status = 1)');
+        Add(xProvider.Specimens.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (sp.active_status = 1)');
+        Add(xProvider.Specimens.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (sp.active_status = 1) AND (sp.marked_status = 1)');
+        Add(xProvider.Specimens.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (sp.active_status = 0)');
+        Add(xProvider.Specimens.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -491,48 +308,18 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT sv.*,');
-    Add('  x.expedition_name AS expedition_name,');
-    Add('  gl.full_name AS locality_name,');
-    Add('  gl.country_id AS country_id,');
-    Add('  gl.state_id AS state_id,');
-    Add('  gl.municipality_id AS municipality_id,');
-    Add('  gm.site_name AS municipality_name,');
-    Add('  gs.site_name AS state_name,');
-    Add('  gc.site_name AS country_name,');
-    Add('  pl.full_name AS net_station_name,');
-    Add('  mt.method_name AS method_name,');
-    Add('  pj.short_title AS project_name,');
-    Add('  CAST(COALESCE(ne.net_effort, 0) AS REAL) AS net_effort');
-    Add('FROM surveys AS sv');
-    Add('LEFT JOIN expeditions AS x ON sv.expedition_id = x.expedition_id');
-    Add('LEFT JOIN gazetteer AS gl ON sv.locality_id = gl.site_id');
-    Add('LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id');
-    Add('LEFT JOIN sampling_plots AS pl ON sv.net_station_id = pl.sampling_plot_id');
-    Add('LEFT JOIN methods AS mt ON sv.method_id = mt.method_id');
-    Add('LEFT JOIN projects AS pj ON sv.project_id = pj.project_id');
-    Add('LEFT JOIN (');
-    Add('  SELECT ef.survey_id, SUM(ef.net_area * ef.open_time_total) AS net_effort');
-    Add('  FROM nets_effort AS ef');
-    Add('  WHERE ef.active_status = 1');
-    Add('  GROUP BY ef.survey_id');
-    Add(') AS ne ON sv.survey_id = ne.survey_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Surveys.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (sv.survey_id = -1) AND (sv.active_status = 1)');
+        Add(xProvider.Surveys.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (sv.active_status = 1)');
+        Add(xProvider.Surveys.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (sv.active_status = 1) AND (sv.marked_status = 1)');
+        Add(xProvider.Surveys.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (sv.active_status = 0)');
+        Add(xProvider.Surveys.SelectAll(swcInactive));
     end;
-    // if ActiveCollection.Codigo > 0 then
-    // Add('and (a.reg_collection = '+IntToStr(ActiveCollection.Codigo)+')');
     if Trim(aSorting) <> '' then
     begin
       if aDirection = '' then
@@ -552,24 +339,18 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT x.*,');
-    Add('  pj.short_title AS project_name');
-    Add('FROM expeditions AS x');
-    Add('LEFT JOIN projects AS pj ON x.project_id = pj.project_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Expeditions.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (x.expedition_id = -1) AND (x.active_status = 1)');
+        Add(xProvider.Expeditions.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (x.active_status = 1)');
+        Add(xProvider.Expeditions.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (x.active_status = 1) AND (x.marked_status = 1)');
+        Add(xProvider.Expeditions.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (x.active_status = 0)');
+        Add(xProvider.Expeditions.SelectAll(swcInactive));
     end;
-    // if ActiveCollection.Codigo > 0 then
-    // Add('and (a.reg_collection = '+IntToStr(ActiveCollection.Codigo)+')');
     if Trim(aSorting) <> '' then
     begin
       if aDirection = '' then
@@ -589,39 +370,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT s.*,');
-    Add('  z.full_name AS taxon_name,');
-    Add('  z.formatted_name AS taxon_formatted_name,');
-    Add('  z.order_id AS order_id,');
-    Add('  z.family_id AS family_id,');
-    Add('  z.genus_id AS genus_id,');
-    Add('  z.species_id AS species_id,');
-    Add('  i.full_name AS individual_name,');
-    Add('  p.full_name AS observer_name,');
-    Add('  sv.full_name AS survey_name,');
-    Add('  mt.method_name AS method_name,');
-    Add('  g.full_name AS locality_name,');
-    Add('  g.country_id AS country_id,');
-    Add('  g.state_id AS state_id,');
-    Add('  g.municipality_id AS municipality_id');
-    Add('FROM sightings AS s');
-    Add('LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id');
-    Add('LEFT JOIN individuals AS i ON s.individual_id = i.individual_id');
-    Add('LEFT JOIN people AS p ON s.observer_id = p.person_id');
-    Add('LEFT JOIN surveys AS sv ON s.survey_id = sv.survey_id');
-    Add('LEFT JOIN methods AS mt ON s.method_id = mt.method_id');
-    Add('LEFT JOIN gazetteer AS g ON s.locality_id = g.site_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Sightings.SelectAll(swcNone, tbNone));
       fvReset:
-        Add('WHERE (s.sighting_id = -1) AND (s.active_status = 1)');
+        Add(xProvider.Sightings.SelectAll(swcActiveEmpty, tbNone));
       fvAll:
-        Add('WHERE (s.active_status = 1)');
+        Add(xProvider.Sightings.SelectAll(swcActiveAll, tbNone));
       fvMarked:
-        Add('WHERE (s.active_status = 1) AND (s.marked_status = 1)');
+        Add(xProvider.Sightings.SelectAll(swcActiveMarked, tbNone));
       fvDeleted:
-        Add('WHERE (s.active_status = 0)');
+        Add(xProvider.Sightings.SelectAll(swcInactive, tbNone));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -641,31 +400,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT st.*,');
-    Add('  p.acronym AS person_acronym,');
-    Add('  p.full_name AS person_name,');
-    Add('  p.profile_color AS person_color');
-    Add('FROM survey_team AS st');
-    Add('LEFT JOIN people AS p ON st.person_id = p.person_id');
+
     if aSurvey > 0 then
+    begin
+      Add(xProvider.SurveyTeams.SelectAll(swcNone));
       Add('WHERE (st.active_status = 1) AND (st.survey_id = ' + IntToStr(aSurvey) + ')')
+    end
     else
-      Add('WHERE (st.active_status = 1) AND (st.survey_id = :survey_id)');
-    // case aFilter of
-    // fvNone: ; // do nothing
-    // fvReset: Add('WHERE (a.reg_num_interno = -1) and (a.active_status = 1)');
-    // fvAll: Add('WHERE (a.active_status = 1)');
-    // fvMarked: Add('WHERE (a.active_status = 1) and (a.marked_status = 1)');
-    // fvDeleted: Add('WHERE (a.active_status = 0)');
-    // end;
-    // if Trim(aOrder) <> '' then
-    // begin
-    // if aDirection = '' then
-    // AD:= 'ASC'
-    // else AD:= aDirection;
+      Add(xProvider.SurveyTeams.SelectAll(swcActiveParent));
+
     AD := 'ASC';
     Add('ORDER BY st.visitor ASC, person_name ' {COLLATE pt_BR '} + AD);
-    // end;
   end;
 end;
 
@@ -677,23 +422,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT bt.*,');
-    Add('  btp.taxon_name AS parent_taxon_name,');
-    Add('  btv.taxon_name AS valid_name');
-    Add('FROM botanic_taxa AS bt');
-    Add('LEFT JOIN botanic_taxa AS btp ON bt.parent_taxon_id = btp.taxon_id');
-    Add('LEFT JOIN botanic_taxa AS btv ON bt.valid_id = btv.taxon_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.BotanicalTaxa.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (bt.taxon_id = -1) AND (bt.active_status=1)');
+        Add(xProvider.BotanicalTaxa.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (bt.active_status = 1)');
+        Add(xProvider.BotanicalTaxa.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (bt.active_status = 1) AND (bt.marked_status = 1)');
+        Add(xProvider.BotanicalTaxa.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (bt.active_status = 0)');
+        Add(xProvider.BotanicalTaxa.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -714,27 +453,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT g.*,');
-    Add('   gp.site_name AS parent_site_name,');
-    Add('   gm.site_name AS municipality_name,');
-    Add('   gs.site_name AS state_name,');
-    Add('   gc.site_name AS country_name');
-    Add('FROM gazetteer AS g');
-    Add('LEFT JOIN gazetteer AS gp ON g.parent_site_id = gp.site_id');
-    Add('LEFT JOIN gazetteer AS gm ON g.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON g.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON g.country_id = gc.site_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Gazetteer.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (g.site_id = -1) AND (g.active_status = 1)');
+        Add(xProvider.Gazetteer.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (g.active_status = 1)');
+        Add(xProvider.Gazetteer.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (g.active_status = 1) AND (g.marked_status = 1)');
+        Add(xProvider.Gazetteer.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (g.active_status = 0)');
+        Add(xProvider.Gazetteer.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -755,30 +484,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT pl.*,');
-    Add('  gl.site_name AS locality_name,');
-    Add('  gl.country_id AS country_id,');
-    Add('  gl.state_id AS state_id,');
-    Add('  gl.municipality_id AS municipality_id,');
-    Add('  gm.site_name AS municipality_name,');
-    Add('  gs.site_name AS state_name,');
-    Add('  gc.site_name AS country_name');
-    Add('FROM sampling_plots AS pl');
-    Add('LEFT JOIN gazetteer AS gl ON pl.locality_id = gl.site_id');
-    Add('LEFT JOIN gazetteer AS gm ON gl.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON gl.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON gl.country_id = gc.site_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.SamplingPlots.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (pl.sampling_plot_id = -1) AND (pl.active_status = 1)');
+        Add(xProvider.SamplingPlots.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (pl.active_status = 1)');
+        Add(xProvider.SamplingPlots.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (pl.active_status = 1) AND (pl.marked_status = 1)');
+        Add(xProvider.SamplingPlots.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (pl.active_status = 0)');
+        Add(xProvider.SamplingPlots.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -799,25 +515,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT it.*,');
-    Add('   gm.site_name AS municipality_name,');
-    Add('   gs.site_name AS state_name,');
-    Add('   gc.site_name AS country_name');
-    Add('FROM institutions AS it');
-    Add('LEFT JOIN gazetteer AS gm ON it.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON it.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON it.country_id = gc.site_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Institutions.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (it.institution_id = -1) AND (it.active_status = 1)');
+        Add(xProvider.Institutions.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (it.active_status = 1)');
+        Add(xProvider.Institutions.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (it.active_status = 1) AND (it.marked_status = 1)');
+        Add(xProvider.Institutions.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (it.active_status = 0)');
+        Add(xProvider.Institutions.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -838,39 +546,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT n.*,');
-    Add('  p.full_name AS observer_name,');
-    Add('  pj.project_title AS project_name,');
-    Add('  g.site_name AS locality_name,');
-    Add('  g.country_id AS country_id,');
-    Add('  g.state_id AS state_id,');
-    Add('  g.municipality_id AS municipality_id,');
-    Add('  z.full_name AS taxon_name,');
-    Add('  z.formatted_name AS taxon_formatted_name,');
-    Add('  z.order_id AS order_id,');
-    Add('  z.family_id AS family_id,');
-    Add('  z.genus_id AS genus_id,');
-    Add('  z.species_id AS species_id,');
-    Add('  bt1.taxon_name AS support_plant_1_name,');
-    Add('  bt2.taxon_name AS support_plant_2_name');
-    Add('FROM nests AS n');
-    Add('LEFT JOIN people AS p ON n.observer_id = p.person_id');
-    Add('LEFT JOIN projects AS pj ON n.project_id = pj.project_id');
-    Add('LEFT JOIN gazetteer AS g ON n.locality_id = g.site_id');
-    Add('LEFT JOIN zoo_taxa AS z ON n.taxon_id = z.taxon_id');
-    Add('LEFT JOIN botanic_taxa AS bt1 ON n.support_plant_1_id = bt1.taxon_id');
-    Add('LEFT JOIN botanic_taxa AS bt2 ON n.support_plant_2_id = bt2.taxon_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Nests.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (n.nest_id = -1) AND (n.active_status = 1)');
+        Add(xProvider.Nests.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (n.active_status = 1)');
+        Add(xProvider.Nests.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (n.active_status = 1) AND (n.marked_status = 1)');
+        Add(xProvider.Nests.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (n.active_status = 0)');
+        Add(xProvider.Nests.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -890,25 +576,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT nr.*,');
-    Add('  p1.acronym AS observer_1_name,');
-    Add('  p2.acronym AS observer_2_name,');
-    Add('  z.full_name AS nidoparasite_name');
-    Add('FROM nest_revisions AS nr');
-    Add('LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id');
-    Add('LEFT JOIN people AS p2 ON nr.observer_2_id = p2.person_id');
-    Add('LEFT JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.NestRevisions.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (nr.nest_revision_id = -1) AND (nr.active_status = 1)');
+        Add(xProvider.NestRevisions.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (nr.active_status = 1)');
+        Add(xProvider.NestRevisions.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (nr.active_status = 1) AND (nr.marked_status = 1)');
+        Add(xProvider.NestRevisions.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (nr.active_status = 0)');
+        Add(xProvider.NestRevisions.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -928,29 +606,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT e.*,');
-    Add('  p.acronym AS researcher_name,');
-    Add('  i.full_name AS individual_name,');
-    Add('  z.full_name AS taxon_name,');
-    Add('  z.order_id AS order_id,');
-    Add('  z.family_id AS family_id,');
-    Add('  z.genus_id AS genus_id,');
-    Add('  z.species_id AS species_id');
-    Add('FROM eggs AS e');
-    Add('LEFT JOIN people AS p ON e.researcher_id = p.person_id');
-    Add('LEFT JOIN individuals AS i ON e.individual_id = i.individual_id');
-    Add('LEFT JOIN zoo_taxa AS z ON e.taxon_id = z.taxon_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Eggs.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (e.nest_id = -1) AND (e.active_status = 1)');
+        Add(xProvider.Eggs.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (e.active_status = 1)');
+        Add(xProvider.Eggs.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (e.active_status = 1) AND (e.marked_status = 1)');
+        Add(xProvider.Eggs.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (e.active_status = 0)');
+        Add(xProvider.Eggs.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -971,39 +637,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT i.*,');
-    Add('  z.full_name AS taxon_name,');
-    Add('  z.order_id AS order_id,');
-    Add('  z.family_id AS family_id,');
-    Add('  z.genus_id AS genus_id,');
-    Add('  z.species_id AS species_id,');
-    Add('  n.full_name AS nest_name,');
-    Add('  (b1.band_size||'' ''||b1.band_number) AS band_name,');
-    Add('  (b2.band_size||'' ''||b2.band_number) AS double_band_name,');
-    Add('  (b3.band_size||'' ''||b3.band_number) AS removed_band_name,');
-    Add('  fi.full_name AS father_name,');
-    Add('  mi.full_name AS mother_name,');
-    Add('  (SELECT CAST(SUM(c.active_status) AS INTEGER) FROM captures AS c');
-    Add('    WHERE c.individual_id = i.individual_id) AS captures_tally');
-    Add('FROM individuals AS i');
-    Add('LEFT JOIN zoo_taxa AS z ON i.taxon_id = z.taxon_id');
-    Add('LEFT JOIN nests AS n ON i.nest_id = n.nest_id');
-    Add('LEFT JOIN bands AS b1 ON i.band_id = b1.band_id');
-    Add('LEFT JOIN bands AS b2 ON i.double_band_id = b2.band_id');
-    Add('LEFT JOIN bands AS b3 ON i.removed_band_id = b3.band_id');
-    Add('LEFT JOIN individuals AS fi ON i.father_id = fi.individual_id');
-    Add('LEFT JOIN individuals AS mi ON i.mother_id = mi.individual_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Individuals.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (i.individual_id = -1) AND (i.active_status = 1)');
+        Add(xProvider.Individuals.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (i.active_status = 1)');
+        Add(xProvider.Individuals.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (i.active_status = 1) AND (i.marked_status = 1)');
+        Add(xProvider.Individuals.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (i.active_status = 0)');
+        Add(xProvider.Individuals.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1024,49 +668,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT c.*,');
-    Add('   z.full_name AS taxon_name,');
-    Add('   z.formatted_name AS taxon_formatted_name,');
-    Add('   z.order_id AS order_id,');
-    Add('   z.family_id AS family_id,');
-    Add('   z.genus_id AS genus_id,');
-    Add('   z.species_id AS species_id,');
-    Add('   sv.full_name AS survey_name,');
-    Add('   pl.full_name AS net_station_name,');
-    Add('   ef.net_number AS net_number,');
-    Add('   g.site_name AS locality_name,');
-    Add('   g.country_id AS country_id,');
-    Add('   g.state_id AS state_id,');
-    Add('   g.municipality_id AS municipality_id,');
-    Add('   p1.acronym AS bander_name,');
-    Add('   p2.acronym AS annotator_name,');
-    Add('   (b1.band_size||'' ''||b1.band_number) AS band_name,');
-    Add('   (b2.band_size||'' ''||b2.band_number) AS removed_band_name,');
-    Add('   f1.acronym AS photographer_1_name,');
-    Add('   f2.acronym AS photographer_2_name');
-    Add('FROM captures AS c');
-    Add('LEFT JOIN zoo_taxa AS z ON c.taxon_id = z.taxon_id');
-    Add('LEFT JOIN surveys AS sv ON c.survey_id = sv.survey_id');
-    Add('LEFT JOIN sampling_plots AS pl ON c.net_station_id = pl.sampling_plot_id');
-    Add('LEFT JOIN nets_effort AS ef ON c.net_id = ef.net_id');
-    Add('LEFT JOIN gazetteer AS g ON c.locality_id = g.site_id');
-    Add('LEFT JOIN people AS p1 ON c.bander_id = p1.person_id');
-    Add('LEFT JOIN people AS p2 ON c.annotator_id = p2.person_id');
-    Add('LEFT JOIN people AS f1 ON c.photographer_1_id = f1.person_id');
-    Add('LEFT JOIN people AS f2 ON c.photographer_2_id = f2.person_id');
-    Add('LEFT JOIN bands AS b1 ON c.band_id = b1.band_id');
-    Add('LEFT JOIN bands AS b2 ON c.removed_band_id = b2.band_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Captures.SelectAll(swcNone, tbNone));
       fvReset:
-        Add('WHERE (c.capture_id = -1) AND (c.active_status = 1)');
+        Add(xProvider.Captures.SelectAll(swcActiveEmpty, tbNone));
       fvAll:
-        Add('WHERE (c.active_status = 1)');
+        Add(xProvider.Captures.SelectAll(swcActiveAll, tbNone));
       fvMarked:
-        Add('WHERE (c.active_status = 1) AND (c.marked_status = 1)');
+        Add(xProvider.Captures.SelectAll(swcActiveMarked, tbNone));
       fvDeleted:
-        Add('WHERE (c.active_status = 0)');
+        Add(xProvider.Captures.SelectAll(swcInactive, tbNone));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1087,18 +699,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT * FROM taxon_ranks');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.TaxonRanks.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.TaxonRanks.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.TaxonRanks.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (active_status = 1) AND (marked_status = 1)');
+        Add(xProvider.TaxonRanks.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.TaxonRanks.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1119,27 +730,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT p.*,');
-    Add('  gm.site_name AS municipality_name,');
-    Add('  gs.site_name AS state_name,');
-    Add('  gc.site_name AS country_name,');
-    Add('  it.full_name AS institution_name');
-    Add('FROM people AS p');
-    Add('LEFT JOIN gazetteer AS gm ON p.municipality_id = gm.site_id');
-    Add('LEFT JOIN gazetteer AS gs ON p.state_id = gs.site_id');
-    Add('LEFT JOIN gazetteer AS gc ON p.country_id = gc.site_id');
-    Add('LEFT JOIN institutions AS it ON p.institution_id = it.institution_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.People.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (p.person_id = -1) AND (p.active_status = 1)');
+        Add(xProvider.People.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (p.active_status = 1)');
+        Add(xProvider.People.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (p.active_status = 1) AND (p.marked_status = 1)');
+        Add(xProvider.People.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (p.active_status = 0)');
+        Add(xProvider.People.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1160,18 +761,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT * FROM projects');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Projects.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (project_id = -1) AND (active_status = 1)');
+        Add(xProvider.Projects.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Projects.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (active_status = 1) AND (marked_status = 1)');
+        Add(xProvider.Projects.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Projects.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1191,31 +791,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT pt.*,');
-    Add('  p.acronym AS person_acronym,');
-    Add('  p.full_name AS person_name,');
-    Add('  p.profile_color AS person_color');
-    Add('FROM project_team AS pt');
-    Add('LEFT JOIN people AS p ON pt.person_id = p.person_id');
+
     if aProject > 0 then
+    begin
+      Add(xProvider.ProjectTeams.SelectAll(swcNone));
       Add('WHERE (pt.active_status = 1) AND (pt.project_id = ' + IntToStr(aProject) + ')')
+    end
     else
-      Add('WHERE (pt.active_status = 1) AND (pt.project_id = :project_id)');
-    // case aFilter of
-    // fvNone: ; // do nothing
-    // fvReset: Add('WHERE (a.reg_num_interno = -1) and (a.active_status = 1)');
-    // fvAll: Add('WHERE (a.active_status = 1)');
-    // fvMarked: Add('WHERE (a.active_status = 1) and (a.marked_status = 1)');
-    // fvDeleted: Add('WHERE (a.active_status = 0)');
-    // end;
-    // if Trim(aOrder) <> '' then
-    // begin
-    // if aDirection = '' then
-    // AD:= 'ASC'
-    // else AD:= aDirection;
+      Add(xProvider.ProjectTeams.SelectAll(swcActiveParent));
+
     AD := 'ASC';
     Add('ORDER BY pt.project_manager ASC, person_name ' {COLLATE pt_BR '} + AD);
-    // end;
   end;
 end;
 
@@ -1226,21 +812,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT l.*,');
-    Add('  pj.short_title AS project_name');
-    Add('FROM legal AS l');
-    Add('LEFT JOIN projects AS pj ON l.project_id = pj.project_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Permits.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (l.permit_id = -1) AND (l.active_status = 1)');
+        Add(xProvider.Permits.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (l.active_status = 1)');
+        Add(xProvider.Permits.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (l.active_status = 1) AND (l.marked_status = 1)');
+        Add(xProvider.Permits.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (l.active_status = 0)');
+        Add(xProvider.Permits.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1261,41 +843,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT z.*,');
-    Add('    r.rank_name AS rank_name,');
-    Add('    u.full_name AS parent_taxon_name,');
-    Add('    v.full_name AS valid_name,');
-    Add('    ui.full_name AS ioc_parent_name,');
-    Add('    vi.full_name AS ioc_valid_name,');
-    Add('    o.full_name AS order_name,');
-    Add('    f.full_name AS family_name,');
-    Add('    s.full_name AS subfamily_name,');
-    Add('    n.full_name AS genero_name,');
-    Add('    e.full_name AS species_name,');
-    Add('    g.full_name AS subspecies_group_name');
-    Add('FROM zoo_taxa AS z');
-    Add('LEFT JOIN taxon_ranks AS r ON z.rank_id = r.rank_id');
-    Add('LEFT JOIN zoo_taxa AS u ON z.parent_taxon_id = u.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS v ON z.valid_id = v.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS ui ON z.ioc_parent_taxon_id = ui.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS vi ON z.ioc_valid_id = vi.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS o ON z.order_id = o.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS f ON z.family_id = f.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS s ON z.subfamily_id = s.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS n ON z.genus_id = n.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS e ON z.species_id = e.taxon_id');
-    Add('LEFT JOIN zoo_taxa AS g ON z.subspecies_group_id = g.taxon_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.ZooTaxa.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (z.taxon_id = -1) AND (z.active_status = 1)');
+        Add(xProvider.ZooTaxa.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (z.active_status = 1)');
+        Add(xProvider.ZooTaxa.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (z.active_status = 1) AND (z.marked_status = 1)');
+        Add(xProvider.ZooTaxa.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (z.active_status = 0)');
+        Add(xProvider.ZooTaxa.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1316,29 +874,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT b.*,');
-    Add('  it.acronym AS supplier_name,');
-    Add('  p1.full_name AS requester_name,');
-    Add('  p2.full_name AS carrier_name,');
-    Add('  i.full_name AS individual_name,');
-    Add('  pj.short_title AS project_name');
-    Add('FROM bands AS b');
-    Add('LEFT JOIN institutions AS it ON b.supplier_id = it.institution_id');
-    Add('LEFT JOIN people AS p1 ON b.requester_id = p1.person_id');
-    Add('LEFT JOIN people AS p2 ON b.carrier_id = p2.person_id');
-    Add('LEFT JOIN individuals AS i ON b.individual_id = i.individual_id');
-    Add('LEFT JOIN projects AS pj ON b.project_id = pj.project_id');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Bands.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (b.band_id = -1) AND (b.active_status = 1)');
+        Add(xProvider.Bands.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (b.active_status = 1)');
+        Add(xProvider.Bands.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (b.active_status = 1) AND (b.marked_status = 1)');
+        Add(xProvider.Bands.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (b.active_status = 0)');
+        Add(xProvider.Bands.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1358,18 +904,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT * FROM users');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Users.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (user_id = -1) AND (active_status = 1)');
+        Add(xProvider.Users.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Users.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (active_status = 1) AND (marked_status = 1)');
+        Add(xProvider.Users.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Users.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1391,38 +936,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT ft.*,');
-    Add('  z.full_name AS taxon_name,');
-    Add('  z.order_id AS order_id,');
-    Add('  z.family_id AS family_id,');
-    Add('  z.genus_id AS genus_id,');
-    Add('  z.species_id AS species_id,');
-    Add('  i.full_name AS individual_name,');
-    Add('  p.acronym AS observer_name,');
-    Add('  c.full_name AS capture_name,');
-    Add('  st.full_name AS sighting_name,');
-    Add('  g.country_id AS country_id,');
-    Add('  g.state_id AS state_id,');
-    Add('  g.municipality_id AS municipality_id,');
-    Add('  g.site_name AS locality_name');
-    Add('FROM feathers AS ft');
-    Add('LEFT JOIN zoo_taxa AS z ON ft.taxon_id = z.taxon_id');
-    Add('LEFT JOIN individuals AS i ON ft.individual_id = i.individual_id');
-    Add('LEFT JOIN people AS p ON ft.observer_id = p.person_id');
-    Add('LEFT JOIN captures AS c ON ft.capture_id = c.capture_id');
-    Add('LEFT JOIN sightings AS st ON ft.sighting_id = st.sighting_id');
-    Add('LEFT JOIN gazetteer AS g ON ft.locality_id = g.site_id ');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Feathers.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (ft.feather_id = -1) AND (ft.active_status = 1)');
+        Add(xProvider.Feathers.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (ft.active_status = 1)');
+        Add(xProvider.Feathers.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (ft.active_status = 1) AND (ft.marked_status = 1)');
+        Add(xProvider.Feathers.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (ft.active_status = 0)');
+        Add(xProvider.Feathers.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin
@@ -1442,18 +966,17 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT * FROM connections');
     case aFilter of
       fvNone:
-        ; // do nothing
+        Add(xProvider.Connections.SelectAll(swcNone));
       fvReset:
-        Add('WHERE (connection_id = -1) AND (active_status = 1)');
+        Add(xProvider.Connections.SelectAll(swcActiveEmpty));
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add(xProvider.Connections.SelectAll(swcActiveAll));
       fvMarked:
-        Add('WHERE (active_status = 1) AND (marked_status = 1)');
+        Add(xProvider.Connections.SelectAll(swcActiveMarked));
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add(xProvider.Connections.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin

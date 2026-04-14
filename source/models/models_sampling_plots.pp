@@ -131,7 +131,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
-  data_columns, data_consts, data_setparam, data_getvalue,
+  data_columns, data_consts, data_setparam, data_getvalue, data_providers,
   models_users,
   udm_main;
 
@@ -388,26 +388,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'sampling_plot_id, ' +
-      'full_name, ' +
-      'acronym, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'area_shape, ' +
-      'locality_id, ' +
-      'description, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM sampling_plots');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.SamplingPlots.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -434,26 +416,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'sampling_plot_id, ' +
-      'full_name, ' +
-      'acronym, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'area_shape, ' +
-      'locality_id, ' +
-      'description, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM sampling_plots');
-    Add('WHERE sampling_plot_id = :cod');
+    Add(xProvider.SamplingPlots.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -543,38 +507,16 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO sampling_plots (' +
-        'full_name, ' +
-        'acronym, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'coordinate_precision, ' +
-        'area_shape, ' +
-        'locality_id, ' +
-        'description, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-      Add('VALUES (' +
-        ':full_name, ' +
-        ':acronym, ' +
-        ':longitude, ' +
-        ':latitude, ' +
-        ':coordinate_precision, ' +
-        ':area_shape, ' +
-        ':locality_id, ' +
-        ':description, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''))');
-      ParamByName('full_name').AsString := R.FullName;
-      ParamByName('acronym').AsString := R.Abbreviation;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
-      SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
-      SetStrParam(ParamByName('area_shape'), R.AreaShape);
-      SetForeignParam(ParamByName('locality_id'), R.LocalityId);
-      SetStrParam(ParamByName('description'), R.Description);
-      SetStrParam(ParamByName('notes'), R.Notes);
+    Add(xProvider.SamplingPlots.Insert);
+
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('acronym').AsString := R.Abbreviation;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
+    SetStrParam(ParamByName('area_shape'), R.AreaShape);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetStrParam(ParamByName('description'), R.Description);
+    SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -611,33 +553,20 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE sampling_plots SET ' +
-        'full_name = :full_name, ' +
-        'acronym = :acronym, ' +
-        'longitude = :longitude, ' +
-        'latitude = :latitude, ' +
-        'coordinate_precision = :coordinate_precision, ' +
-        'area_shape = :area_shape, ' +
-        'locality_id = :locality_id, ' +
-        'description = :description, ' +
-        'notes = :notes, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (sampling_plot_id = :sampling_plot_id)');
-      ParamByName('full_name').AsString := R.FullName;
-      ParamByName('acronym').AsString := R.Abbreviation;
-      SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
-      SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
-      SetStrParam(ParamByName('area_shape'), R.AreaShape);
-      SetForeignParam(ParamByName('locality_id'), R.LocalityId);
-      SetStrParam(ParamByName('description'), R.Description);
-      SetStrParam(ParamByName('notes'), R.Notes);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('marked_status').AsBoolean := R.Marked;
-      ParamByName('active_status').AsBoolean := R.Active;
-      ParamByName('sampling_plot_id').AsInteger := R.Id;
+    Add(xProvider.SamplingPlots.Update);
+
+    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('acronym').AsString := R.Abbreviation;
+    SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
+    SetStrParam(ParamByName('area_shape'), R.AreaShape);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
+    SetStrParam(ParamByName('description'), R.Description);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('sampling_plot_id').AsInteger := R.Id;
 
     ExecSQL;
   finally
@@ -876,24 +805,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'permanent_net_id, ' +
-      'sampling_plot_id, ' +
-      'net_number, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM permanent_nets');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.PermanentNets.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -920,24 +833,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'permanent_net_id, ' +
-      'sampling_plot_id, ' +
-      'net_number, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM permanent_nets');
-    Add('WHERE permanent_net_id = :cod');
+    Add(xProvider.PermanentNets.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1021,26 +918,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO permanent_nets (' +
-      'sampling_plot_id, ' +
-      'net_number, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':sampling_plot_id, ' +
-      ':net_number, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':coordinate_precision, ' +
-      ':notes, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.PermanentNets.Insert);
+
     ParamByName('sampling_plot_id').AsInteger := R.SamplingPlotId;
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('net_number').AsInteger := R.NetNumber;
@@ -1083,19 +962,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE permanent_nets SET ' +
-      'sampling_plot_id = :sampling_plot_id, ' +
-      'net_number = :net_number, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'notes = :notes, ' +
-      'full_name = :full_name, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (permanent_net_id = :permanent_net_id)');
+    Add(xProvider.PermanentNets.Update);
+
     ParamByName('sampling_plot_id').AsInteger := R.SamplingPlotId;
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('net_number').AsInteger := R.NetNumber;

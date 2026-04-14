@@ -101,7 +101,7 @@ end;
 
 procedure TedtDatabase.cbDBManagerSelect(Sender: TObject);
 begin
-  case TDBManager(cbDBManager.ItemIndex) of
+  case TDatabaseBackend(cbDBManager.ItemIndex) of
     dbSqlite: { SQLite }
       begin
         ckRemoteDB.Checked := False;
@@ -178,7 +178,7 @@ begin
   begin
     eDBServer.Enabled := True;
     if DMM.qsConn.FieldByName('database_port').IsNull then
-      case TDBManager(cbDBManager.ItemIndex) of
+      case TDatabaseBackend(cbDBManager.ItemIndex) of
         dbSqlite:
           DMM.qsConn.FieldByName('database_port').Clear;
         dbFirebird:

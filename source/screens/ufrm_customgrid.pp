@@ -1204,7 +1204,6 @@ type
     FPersonKeyFilter, FInstitutionKeyFilter, FSurveyKeyFilter, FMethodKeyFilter: Integer;
     FProjectKeyFilter, FNestKeyFilter, FIndividualKeyFilter, FExpeditionKeyFilter: Integer;
     FPlantKeyFilter, FSamplingPlotKeyFilter, FEggKeyFilter: Integer;
-    FSupportedMediaTypes: TAttachMediaTypes;
     FCanToggle: Boolean;
     FIsResizing: Boolean;
     FIsMoving: Boolean;
@@ -2223,6 +2222,8 @@ begin
   pMaterialFilter.Border.Color := clSystemSolidNeutralFGDark;
   pMethodFilter.Background.Color := clCardBGDefaultDark;
   pMethodFilter.Border.Color := clSystemSolidNeutralFGDark;
+  pCategoryFilter.Background.Color := clCardBGDefaultDark;
+  pCategoryFilter.Border.Color := clSystemSolidNeutralFGDark;
   pBandSizeFilter.Background.Color := clCardBGDefaultDark;
   pBandSizeFilter.Border.Color := clSystemSolidNeutralFGDark;
   pWithRecapturesFilter.Background.Color := clCardBGDefaultDark;
@@ -2377,6 +2378,7 @@ begin
   icoTaxonRanksFilter.Images := iIconsDark;
   icoMaterialFilter.Images := iIconsDark;
   icoMethodFilter.Images := iIconsDark;
+  icoCategoryFilter.Images := iIconsDark;
   icoBandSizeFilter.Images := iIconsDark;
   icoWithRecapturesFilter.Images := iIconsDark;
   icoFatFilter.Images := iIconsDark;

@@ -25,13 +25,13 @@ uses
   Classes, SysUtils, Dialogs, DB, SQLDB, RegExpr, StrUtils, fgl;
 
 type
-  TDBManager = (dbSqlite, dbFirebird, dbPostgre, dbMaria);
+  TDatabaseBackend = (dbSqlite, dbFirebird, dbPostgre, dbMaria);
 
   { TDBParams }
 
   TDBParams = record
     Name: String;
-    Manager: TDBManager;
+    Backend: TDatabaseBackend;
     VendorLib: String;
     IsLocal: Boolean;
     Database: String;
@@ -1337,7 +1337,7 @@ end;
 procedure TDBParams.Clear;
 begin
   Name := EmptyStr;
-  Manager := dbSqlite;
+  Backend := dbSqlite;
   VendorLib := 'sqlite3.dll';
   IsLocal := True;
   Database := EmptyStr;
@@ -1432,7 +1432,7 @@ begin
 
   if C.Locate('connection_name', Name, [loCaseInsensitive]) then
   begin
-    Manager := TDBManager(C.FieldByName('database_type').AsInteger);
+    Backend := TDatabaseBackend(C.FieldByName('database_type').AsInteger);
     Database := C.FieldByName('database_name').AsString;
     Server := C.FieldByName('database_server').AsString;
     Port := C.FieldByName('database_port').AsInteger;
@@ -1444,7 +1444,7 @@ begin
     end;
     LastBackup := C.FieldByName('last_backup').AsDateTime;
     IsLocal := Server = 'localhost';
-    case Manager of
+    case Backend of
       dbSqlite:
         begin
           VendorLib := 'sqlite3.dll';

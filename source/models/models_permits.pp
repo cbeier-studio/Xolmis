@@ -81,8 +81,10 @@ type
 implementation
 
 uses
-  utils_locale, models_users, utils_global, utils_validations, data_consts, data_columns, data_setparam,
-  data_getvalue, udm_main;
+  utils_locale, utils_global, utils_validations,
+  data_consts, data_columns, data_setparam, data_getvalue, data_providers,
+  models_users,
+  udm_main;
 
 { TPermit }
 
@@ -330,26 +332,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'permit_id, ' +
-      'project_id, ' +
-      'permit_name, ' +
-      'permit_number, ' +
-      'permit_type, ' +
-      'dispatcher_name, ' +
-      'dispatch_date, ' +
-      'expire_date, ' +
-      'notes, ' +
-      'permit_filename, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM legal');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Permits.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -376,26 +360,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'permit_id, ' +
-      'project_id, ' +
-      'permit_name, ' +
-      'permit_number, ' +
-      'permit_type, ' +
-      'dispatcher_name, ' +
-      'dispatch_date, ' +
-      'expire_date, ' +
-      'notes, ' +
-      'permit_filename, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM legal');
-    Add('WHERE permit_id = :cod');
+    Add(xProvider.Permits.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -487,30 +453,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO legal (' +
-      'project_id, ' +
-      'permit_name, ' +
-      'permit_number, ' +
-      'permit_type, ' +
-      'dispatcher_name, ' +
-      'dispatch_date, ' +
-      'expire_date, ' +
-      'notes, ' +
-      'permit_filename, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':project_id, ' +
-      ':permit_name, ' +
-      ':permit_number, ' +
-      ':permit_type, ' +
-      ':dispatcher_name, ' +
-      'date(:dispatch_date), ' +
-      'date(:expire_date), ' +
-      ':notes, ' +
-      ':permit_filename, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Permits.Insert);
 
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
     SetStrParam(ParamByName('permit_name'), R.Name);
@@ -557,31 +500,19 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE legal SET ' +
-        'project_id = :project_id, ' +
-        'permit_name = :permit_name, ' +
-        'permit_number = :permit_number, ' +
-        'permit_type = :permit_type, ' +
-        'dispatcher_name = :dispatcher_name, ' +
-        'dispatch_date = date(:dispatch_date), ' +
-        'expire_date = date(:expire_date), ' +
-        'notes = :notes, ' +
-        'permit_filename = :permit_filename, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'',''subsec'') ');
-      Add('WHERE (permit_id = :permit_id)');
+    Add(xProvider.Permits.Update);
 
-      SetForeignParam(ParamByName('project_id'), R.ProjectId);
-      SetStrParam(ParamByName('permit_name'), R.Name);
-      SetStrParam(ParamByName('permit_number'), R.Number);
-      SetStrParam(ParamByName('permit_type'), R.PermitType);
-      SetStrParam(ParamByName('dispatcher_name'), R.Dispatcher);
-      SetDateParam(ParamByName('dispatch_date'), R.DispatchDate);
-      SetDateParam(ParamByName('expire_date'), R.ExpireDate);
-      SetStrParam(ParamByName('notes'), R.Notes);
-      SetStrParam(ParamByName('permit_filename'), R.FileName);
-      ParamByName('user_updated').AsInteger := ActiveUser.Id;
-      ParamByName('permit_id').AsInteger := R.Id;
+    SetForeignParam(ParamByName('project_id'), R.ProjectId);
+    SetStrParam(ParamByName('permit_name'), R.Name);
+    SetStrParam(ParamByName('permit_number'), R.Number);
+    SetStrParam(ParamByName('permit_type'), R.PermitType);
+    SetStrParam(ParamByName('dispatcher_name'), R.Dispatcher);
+    SetDateParam(ParamByName('dispatch_date'), R.DispatchDate);
+    SetDateParam(ParamByName('expire_date'), R.ExpireDate);
+    SetStrParam(ParamByName('notes'), R.Notes);
+    SetStrParam(ParamByName('permit_filename'), R.FileName);
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('permit_id').AsInteger := R.Id;
 
     ExecSQL;
   finally

@@ -1871,11 +1871,11 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
           True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, rscObserver, sdtText, Crit,
-          False, aValue));
+          True, aValue));
       end;
     end;
   end;

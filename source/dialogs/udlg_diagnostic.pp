@@ -147,7 +147,7 @@ begin
 
   // User Database info
   vlResult.Values['USER DATABASE'] := '';
-  case databaseConnection.Manager of
+  case databaseConnection.Backend of
     dbSqlite:
     begin
       vlResult.Values['Database type'] := 'SQLite';

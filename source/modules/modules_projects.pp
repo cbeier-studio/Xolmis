@@ -191,7 +191,7 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       if TryStrToDate(aValue, dt) then
@@ -199,9 +199,9 @@ begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
@@ -211,27 +211,27 @@ begin
         y := ExtractDelimited(2, aValue, ['/']);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, y + '-' + m));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, y + '-' + m));
       end
       else
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROJECT_TITLE, rscTitle, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SHORT_TITLE, rscShortTitle, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROTOCOL_NUMBER, rscProtocolNr, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CONTACT_NAME, rscContactPerson, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_MAIN_GOAL, rscMainGoal, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_RISKS, rscRisks, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_ABSTRACT, rscAbstract, sdtText, Crit,
-          False, aValue));
+          True, aValue));
       end;
     end;
   end;

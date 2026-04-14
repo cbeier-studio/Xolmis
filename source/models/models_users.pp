@@ -81,7 +81,8 @@ implementation
 
 uses
   utils_global, utils_validations, utils_locale, utils_conversions,
-  data_consts, data_columns, data_getvalue, udm_main;
+  data_consts, data_columns, data_getvalue, data_providers,
+  udm_main;
 
 { TUser }
 
@@ -327,26 +328,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'user_id, ' +
-      'full_name, ' +
-      'user_name, ' +
-      'user_password, ' +
-      'user_rank, ' +
-      'allow_collection_edit, ' +
-      'allow_print, ' +
-      'allow_export, ' +
-      'allow_import, ' +
-      'uuid, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM users');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Users.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -373,26 +356,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'user_id, ' +
-      'full_name, ' +
-      'user_name, ' +
-      'user_password, ' +
-      'user_rank, ' +
-      'allow_collection_edit, ' +
-      'allow_print, ' +
-      'allow_export, ' +
-      'allow_import, ' +
-      'uuid, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM users');
-    Add('WHERE user_id = :cod');
+    Add(xProvider.Users.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -479,30 +444,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO users (' +
-      'full_name, ' +
-      'user_name, ' +
-      //'user_password, ' +
-      'user_rank, ' +
-      'allow_collection_edit, ' +
-      'allow_print, ' +
-      'allow_export, ' +
-      'allow_import, ' +
-      'uuid, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':user_name, ' +
-      //':user_password, ' +
-      ':user_rank, ' +
-      ':allow_collection_edit, ' +
-      ':allow_print, ' +
-      ':allow_export, ' +
-      ':allow_import, ' +
-      ':uuid, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.Users.Insert);
+
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('user_name').AsString := R.UserName;
     ParamByName('uuid').AsString := R.Guid;
@@ -547,21 +490,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE users SET ' +
-      'full_name = :full_name, ' +
-      'user_name = :user_name, ' +
-      //'user_password = :user_password, ' +
-      'user_rank = :user_rank, ' +
-      'allow_collection_edit = :allow_collection_edit, ' +
-      'allow_print = :allow_print, ' +
-      'allow_export = :allow_export, ' +
-      'allow_import = :allow_import, ' +
-      'uuid = :uuid, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_inserted = :user_inserted, ' +
-      'insert_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (user_id = :user_id)');
+    Add(xProvider.Users.Update);
+
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('user_name').AsString := R.UserName;
     ParamByName('uuid').AsString := R.Guid;
@@ -572,7 +502,7 @@ begin
     ParamByName('allow_import').AsBoolean := R.AllowImport;
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;
-    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('user_id').AsInteger := R.Id;
 
     ExecSQL;

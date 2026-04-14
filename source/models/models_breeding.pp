@@ -330,7 +330,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
-  data_columns, data_consts, data_getvalue, data_setparam,
+  data_columns, data_consts, data_getvalue, data_setparam, data_providers,
   models_users,
   udm_main;
 
@@ -616,32 +616,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'nest_revision_id, ' +
-      'nest_id, ' +
-      'full_name, ' +
-      'revision_date, ' +
-      'revision_time, ' +
-      'observer_1_id, ' +
-      'observer_2_id, ' +
-      'nest_status, ' +
-      'host_eggs_tally, ' +
-      'host_nestlings_tally, ' +
-      'nidoparasite_eggs_tally, ' +
-      'nidoparasite_nestlings_tally, ' +
-      'nidoparasite_id, ' +
-      'have_philornis_larvae, ' +
-      'nest_stage, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM nest_revisions');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.NestRevisions.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -666,11 +642,12 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM nest_revisions');
+    Add(xProvider.NestRevisions.SelectTable(swcNone));
     Add('WHERE (nest_id = :anest)');
     Add('AND (date(sample_date) = date(:adate))');
     Add('AND (time(sample_time) = time(:atime))');
     Add('AND (observer_1_id = :aobserver)');
+
     ParamByName('ANEST').AsInteger := aNest;
     ParamByName('AOBSERVER').AsInteger := aObserver;
     ParamByName('ADATE').AsString := aDate;
@@ -697,32 +674,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'nest_revision_id, ' +
-      'nest_id, ' +
-      'full_name, ' +
-      'revision_date, ' +
-      'revision_time, ' +
-      'observer_1_id, ' +
-      'observer_2_id, ' +
-      'nest_status, ' +
-      'host_eggs_tally, ' +
-      'host_nestlings_tally, ' +
-      'nidoparasite_eggs_tally, ' +
-      'nidoparasite_nestlings_tally, ' +
-      'nidoparasite_id, ' +
-      'have_philornis_larvae, ' +
-      'nest_stage, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM nest_revisions');
-    Add('WHERE nest_revision_id = :cod');
+    Add(xProvider.NestRevisions.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -830,42 +783,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO nest_revisions (' +
-      'nest_id, ' +
-      'full_name, ' +
-      'revision_date, ' +
-      'revision_time, ' +
-      'observer_1_id, ' +
-      'observer_2_id, ' +
-      'nest_status, ' +
-      'host_eggs_tally, ' +
-      'host_nestlings_tally, ' +
-      'nidoparasite_eggs_tally, ' +
-      'nidoparasite_nestlings_tally, ' +
-      'nidoparasite_id, ' +
-      'have_philornis_larvae, ' +
-      'nest_stage, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':nest_id, ' +
-      ':full_name, ' +
-      'date(:revision_date), ' +
-      'time(:revision_time), ' +
-      ':observer_1_id, ' +
-      ':observer_2_id, ' +
-      ':nest_status, ' +
-      ':host_eggs_tally, ' +
-      ':host_nestlings_tally, ' +
-      ':nidoparasite_eggs_tally, ' +
-      ':nidoparasite_nestlings_tally, ' +
-      ':nidoparasite_id, ' +
-      ':have_philornis_larvae, ' +
-      ':nest_stage, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.NestRevisions.Insert);
+
     ParamByName('nest_id').AsInteger := R.NestId;
     R.FullName := GetNestRevisionFullName(R.RevisionDate, R.NestId, NEST_STAGES[R.NestStage], NEST_STATUSES[R.NestStatus]);
     SetStrParam(ParamByName('full_name'), R.Fullname);
@@ -918,25 +837,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE nest_revisions SET');
-    Add('  nest_id = :nest_id,');
-    Add('  full_name = :full_name,');
-    Add('  revision_date = date(:revision_date),');
-    Add('  revision_time = time(:revision_time),');
-    Add('  observer_1_id = :observer_1_id,');
-    Add('  observer_2_id = :observer_2_id,');
-    Add('  nest_status = :nest_status,');
-    Add('  host_eggs_tally = :host_eggs_tally,');
-    Add('  host_nestlings_tally = :host_nestlings_tally,');
-    Add('  nidoparasite_eggs_tally = :nidoparasite_eggs_tally,');
-    Add('  nidoparasite_nestlings_tally = :nidoparasite_nestlings_tally,');
-    Add('  nidoparasite_id = :nidoparasite_id,');
-    Add('  have_philornis_larvae = :have_philornis_larvae,');
-    Add('  nest_stage = :nest_stage,');
-    Add('  notes = :notes,');
-    Add('  user_updated = :user_updated,');
-    Add('  update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (nest_revision_id = :nest_revision_id);');
+    Add(xProvider.NestRevisions.Update);
 
     ParamByName('nest_id').AsInteger := R.NestId;
     R.FullName := GetNestRevisionFullName(R.RevisionDate, R.NestId, NEST_STAGES[R.NestStage], NEST_STATUSES[R.NestStatus]);
@@ -1281,38 +1182,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'egg_id, ' +
-      'nest_id, ' +
-      'egg_seq, ' +
-      'field_number, ' +
-      'taxon_id, ' +
-      'eggshell_color, ' +
-      'eggshell_pattern, ' +
-      'eggshell_texture, ' +
-      'egg_shape, ' +
-      'egg_width, ' +
-      'egg_length, ' +
-      'egg_mass, ' +
-      'egg_volume, ' +
-      'egg_stage, ' +
-      'egg_hatched, ' +
-      'measure_date, ' +
-      'researcher_id, ' +
-      'individual_id, ' +
-      'host_egg, ' +
-      'description, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM eggs');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Eggs.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1337,11 +1208,12 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM eggs');
+    Add(xProvider.Eggs.SelectTable(swcNone));
     Add('WHERE (nest_id = :anest)');
     Add('AND (date(measure_date) = date(:adate))');
     Add('AND (field_number = :afieldnumber)');
     Add('AND (researcher_id = :aobserver)');
+
     ParamByName('ANEST').AsInteger := aNest;
     ParamByName('AOBSERVER').AsInteger := aObserver;
     ParamByName('ADATE').AsString := aDate;
@@ -1368,38 +1240,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'egg_id, ' +
-      'nest_id, ' +
-      'egg_seq, ' +
-      'field_number, ' +
-      'taxon_id, ' +
-      'eggshell_color, ' +
-      'eggshell_pattern, ' +
-      'eggshell_texture, ' +
-      'egg_shape, ' +
-      'egg_width, ' +
-      'egg_length, ' +
-      'egg_mass, ' +
-      'egg_volume, ' +
-      'egg_stage, ' +
-      'egg_hatched, ' +
-      'measure_date, ' +
-      'researcher_id, ' +
-      'individual_id, ' +
-      'host_egg, ' +
-      'description, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM eggs');
-    Add('WHERE egg_id = :cod');
+    Add(xProvider.Eggs.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1523,54 +1365,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO eggs (' +
-      'field_number, ' +
-      'nest_id, ' +
-      'egg_seq, ' +
-      'egg_shape, ' +
-      'egg_width, ' +
-      'egg_length, ' +
-      'egg_mass, ' +
-      'egg_volume, ' +
-      'egg_stage, ' +
-      'eggshell_color, ' +
-      'eggshell_pattern, ' +
-      'eggshell_texture, ' +
-      'egg_hatched, ' +
-      'researcher_id, ' +
-      'individual_id, ' +
-      'measure_date, ' +
-      'taxon_id, ' +
-      'host_egg, ' +
-      'description, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':field_number, ' +
-      ':nest_id, ' +
-      ':egg_seq, ' +
-      ':egg_shape, ' +
-      ':egg_width, ' +
-      ':egg_length, ' +
-      ':egg_mass, ' +
-      ':egg_volume, ' +
-      ':egg_stage, ' +
-      ':eggshell_color, ' +
-      ':eggshell_pattern, ' +
-      ':eggshell_texture, ' +
-      ':egg_hatched, ' +
-      ':researcher_id, ' +
-      ':individual_id, ' +
-      'date(:measure_date), ' +
-      ':taxon_id, ' +
-      ':host_egg, ' +
-      ':description, ' +
-      ':notes, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
+    Add(xProvider.Eggs.Insert);
 
     ParamByName('field_number').AsString := R.FieldNumber;
     ParamByName('egg_seq').AsInteger := R.EggSeq;
@@ -1629,31 +1424,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE eggs SET');
-    Add('  field_number = :field_number,');
-    Add('  egg_seq = :egg_seq,');
-    Add('  nest_id = :nest_id,');
-    Add('  egg_shape = :egg_shape,');
-    Add('  egg_width = :egg_width,');
-    Add('  egg_length = :egg_length,');
-    Add('  egg_mass = :egg_mass,');
-    Add('  egg_volume = :egg_volume,');
-    Add('  egg_stage = :egg_stage,');
-    Add('  eggshell_color = :eggshell_color,');
-    Add('  eggshell_pattern = :eggshell_pattern,');
-    Add('  eggshell_texture = :eggshell_texture,');
-    Add('  egg_hatched = :egg_hatched,');
-    Add('  researcher_id = :researcher_id,');
-    Add('  individual_id = :individual_id,');
-    Add('  measure_date = date(:measure_date),');
-    Add('  taxon_id = :taxon_id,');
-    Add('  host_egg = :host_egg,');
-    Add('  description = :description,');
-    Add('  notes = :notes,');
-    Add('  full_name = :full_name,');
-    Add('  user_updated = :user_updated,');
-    Add('  update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (egg_id = :egg_id);');
+    Add(xProvider.Eggs.Update);
 
     ParamByName('field_number').AsString := R.FieldNumber;
     ParamByName('egg_seq').AsInteger := R.EggSeq;
@@ -2117,56 +1888,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'nest_id, ' +
-      'field_number, ' +
-      'observer_id, ' +
-      'project_id, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'taxon_id, ' +
-      'nest_shape, ' +
-      'support_type, ' +
-      'support_plant_1_id, ' +
-      'support_plant_2_id, ' +
-      'other_support, ' +
-      'height_above_ground, ' +
-      'internal_max_diameter, ' +
-      'internal_min_diameter, ' +
-      'external_max_diameter, ' +
-      'external_min_diameter, ' +
-      'internal_height, ' +
-      'external_height, ' +
-      'edge_distance, ' +
-      'center_distance, ' +
-      'nest_cover, ' +
-      'plant_max_diameter, ' +
-      'plant_min_diameter, ' +
-      'plant_height, ' +
-      'plant_dbh, ' +
-      'construction_days, ' +
-      'incubation_days, ' +
-      'nestling_days, ' +
-      'active_days, ' +
-      'nest_fate, ' +
-      'loss_cause, ' +
-      'nest_productivity, ' +
-      'found_date, ' +
-      'last_date, ' +
-      'full_name, ' +
-      'description, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM nests');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Nests.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -2190,11 +1913,12 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM nests');
+    Add(xProvider.Nests.SelectTable(swcNone));
     Add('WHERE (field_number = :afieldnumber)');
     Add('AND (taxon_id = :ataxon)');
     Add('AND (locality_id = :asite)');
     Add('AND (found_date = :adate)');
+
     ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
     ParamByName('ATAXON').AsInteger := aTaxon;
     ParamByName('ASITE').AsInteger := aSite;
@@ -2221,56 +1945,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'nest_id, ' +
-      'field_number, ' +
-      'observer_id, ' +
-      'project_id, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'taxon_id, ' +
-      'nest_shape, ' +
-      'support_type, ' +
-      'support_plant_1_id, ' +
-      'support_plant_2_id, ' +
-      'other_support, ' +
-      'height_above_ground, ' +
-      'internal_max_diameter, ' +
-      'internal_min_diameter, ' +
-      'external_max_diameter, ' +
-      'external_min_diameter, ' +
-      'internal_height, ' +
-      'external_height, ' +
-      'edge_distance, ' +
-      'center_distance, ' +
-      'nest_cover, ' +
-      'plant_max_diameter, ' +
-      'plant_min_diameter, ' +
-      'plant_height, ' +
-      'plant_dbh, ' +
-      'construction_days, ' +
-      'incubation_days, ' +
-      'nestling_days, ' +
-      'active_days, ' +
-      'nest_fate, ' +
-      'loss_cause, ' +
-      'nest_productivity, ' +
-      'found_date, ' +
-      'last_date, ' +
-      'full_name, ' +
-      'description, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM nests');
-    Add('WHERE nest_id = :cod');
+    Add(xProvider.Nests.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2450,90 +2126,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO nests (' +
-      'field_number, ' +
-      'observer_id, ' +
-      'project_id, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'taxon_id, ' +
-      'nest_shape, ' +
-      'support_type, ' +
-      'support_plant_1_id, ' +
-      'support_plant_2_id, ' +
-      'other_support, ' +
-      'height_above_ground, ' +
-      'internal_max_diameter, ' +
-      'internal_min_diameter, ' +
-      'external_max_diameter, ' +
-      'external_min_diameter, ' +
-      'internal_height, ' +
-      'external_height, ' +
-      'edge_distance, ' +
-      'center_distance, ' +
-      'nest_cover, ' +
-      'plant_max_diameter, ' +
-      'plant_min_diameter, ' +
-      'plant_height, ' +
-      'plant_dbh, ' +
-      'nest_fate, ' +
-      'loss_cause, ' +
-      'nest_productivity, ' +
-      'found_date, ' +
-      'last_date, ' +
-      'full_name, ' +
-      'description, ' +
-      'notes, ' +
-      'construction_days, ' +
-      'incubation_days, ' +
-      'nestling_days, ' +
-      'active_days, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':field_number, ' +
-      ':observer_id, ' +
-      ':project_id, ' +
-      ':locality_id, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':coordinate_precision, ' +
-      ':taxon_id, ' +
-      ':nest_shape, ' +
-      ':support_type, ' +
-      ':support_plant_1_id, ' +
-      ':support_plant_2_id, ' +
-      ':other_support, ' +
-      ':height_above_ground, ' +
-      ':internal_max_diameter, ' +
-      ':internal_min_diameter, ' +
-      ':external_max_diameter, ' +
-      ':external_min_diameter, ' +
-      ':internal_height, ' +
-      ':external_height, ' +
-      ':edge_distance, ' +
-      ':center_distance, ' +
-      ':nest_cover, ' +
-      ':plant_max_diameter, ' +
-      ':plant_min_diameter, ' +
-      ':plant_height, ' +
-      ':plant_dbh, ' +
-      ':nest_fate, ' +
-      ':loss_cause, ' +
-      ':nest_productivity, ' +
-      'date(:found_date), ' +
-      'date(:last_date), ' +
-      ':full_name, ' +
-      ':description, ' +
-      ':notes, ' +
-      ':construction_days, ' +
-      ':incubation_days, ' +
-      ':nestling_days, ' +
-      ':active_days, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
+    Add(xProvider.Nests.Insert);
 
     ParamByName('field_number').AsString := R.FieldNumber;
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
@@ -2613,49 +2206,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE nests SET');
-    Add('  field_number = :field_number,');
-    Add('  observer_id = :observer_id,');
-    Add('  project_id = :project_id,');
-    Add('  locality_id = :locality_id,');
-    Add('  longitude = :longitude,');
-    Add('  latitude = :latitude,');
-    Add('  coordinate_precision = :coordinate_precision,');
-    Add('  taxon_id = :taxon_id,');
-    Add('  nest_shape = :nest_shape,');
-    Add('  support_type = :support_type,');
-    Add('  support_plant_1_id = :support_plant_1_id,');
-    Add('  support_plant_2_id = :support_plant_2_id,');
-    Add('  other_support = :other_support,');
-    Add('  height_above_ground = :height_above_ground,');
-    Add('  internal_max_diameter = :internal_max_diameter,');
-    Add('  internal_min_diameter = :internal_min_diameter,');
-    Add('  external_max_diameter = :external_max_diameter,');
-    Add('  external_min_diameter = :external_min_diameter,');
-    Add('  internal_height = :internal_height,');
-    Add('  external_height = :external_height,');
-    Add('  edge_distance = :edge_distance,');
-    Add('  center_distance = :center_distance,');
-    Add('  nest_cover = :nest_cover,');
-    Add('  plant_max_diameter = :plant_max_diameter,');
-    Add('  plant_min_diameter = :plant_min_diameter,');
-    Add('  plant_height = :plant_height,');
-    Add('  plant_dbh = :plant_dbh,');
-    Add('  nest_fate = :nest_fate,');
-    Add('  loss_cause = :loss_cause,');
-    Add('  nest_productivity = :nest_productivity,');
-    Add('  found_date = date(:found_date),');
-    Add('  last_date = date(:last_date),');
-    Add('  full_name = :full_name,');
-    Add('  description = :description,');
-    Add('  notes = :notes,');
-    Add('  construction_days = :construction_days,');
-    Add('  incubation_days = :incubation_days,');
-    Add('  nestling_days = :nestling_days,');
-    Add('  active_days = :active_days,');
-    Add('  user_updated = :user_updated,');
-    Add('  update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (nest_id = :nest_id);');
+    Add(xProvider.Nests.Update);
 
     ParamByName('field_number').AsString := R.FieldNumber;
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
@@ -2916,20 +2467,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'nest_owner_id, ' +
-      'nest_id, ' +
-      'role, ' +
-      'individual_id, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM nest_owners');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.NestOwners.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -2956,20 +2495,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'nest_owner_id, ' +
-      'nest_id, ' +
-      'role, ' +
-      'individual_id, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM nest_owners');
-    Add('WHERE nest_owner_id = :cod');
+    Add(xProvider.NestOwners.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -3041,18 +2568,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO nest_owners (' +
-      'nest_id, ' +
-      'role, ' +
-      'individual_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':nest_id, ' +
-      ':role, ' +
-      ':individual_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.NestOwners.Insert);
 
     ParamByName('nest_id').AsInteger := R.NestId;
     ParamByName('role').AsString := NEST_ROLES[R.Role];
@@ -3093,13 +2609,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE nest_owners SET ' +
-      'nest_id = :nest_id, ' +
-      'role = :role, ' +
-      'individual_id = :individual_id, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (nest_owner_id = :nest_owner_id)');
+    Add(xProvider.NestOwners.Update);
 
     ParamByName('nest_id').AsInteger := R.NestId;
     ParamByName('role').AsString := NEST_ROLES[R.Role];

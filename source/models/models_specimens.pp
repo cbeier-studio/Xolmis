@@ -196,7 +196,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
-  data_columns, data_consts, data_setparam, data_getvalue,
+  data_columns, data_consts, data_setparam, data_getvalue, data_providers,
   models_users,
   udm_main;
 
@@ -460,29 +460,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'sample_prep_id, ' +
-        'specimen_id, ' +
-        'accession_num, ' +
-        'full_name, ' +
-        'accession_type, ' +
-        'accession_seq, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'nest_id, ' +
-        'egg_id, ' +
-        'preparation_date, ' +
-        'preparer_id, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM sample_preps');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.SamplePreps.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -509,29 +488,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'sample_prep_id, ' +
-        'specimen_id, ' +
-        'accession_num, ' +
-        'full_name, ' +
-        'accession_type, ' +
-        'accession_seq, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'nest_id, ' +
-        'egg_id, ' +
-        'preparation_date, ' +
-        'preparer_id, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM sample_preps');
-    Add('WHERE sample_prep_id = :cod');
+    Add(xProvider.SamplePreps.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -630,36 +588,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO sample_preps (' +
-      'specimen_id, ' +
-      'accession_num, ' +
-      'full_name, ' +
-      'accession_type, ' +
-      'accession_seq, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'nest_id, ' +
-      'egg_id, ' +
-      'preparation_date, ' +
-      'preparer_id, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':specimen_id, ' +
-      ':accession_num, ' +
-      ':full_name, ' +
-      ':accession_type, ' +
-      ':accession_seq, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':nest_id, ' +
-      ':egg_id, ' +
-      'date(:preparation_date), ' +
-      ':preparer_id, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.SamplePreps.Insert);
 
     ParamByName('specimen_id').AsInteger := R.SpecimenId;
     SetStrParam(ParamByName('accession_num'), R.AccessionNum);
@@ -709,22 +638,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE sample_preps SET ' +
-      'specimen_id = :specimen_id, ' +
-      'accession_num = :accession_num, ' +
-      'full_name = :full_name, ' +
-      'accession_type = :accession_type, ' +
-      'accession_seq = :accession_seq, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'nest_id = :nest_id, ' +
-      'egg_id = :egg_id, ' +
-      'preparation_date = date(:preparation_date), ' +
-      'preparer_id = :preparer_id, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec'') ');
-    Add('WHERE (sample_prep_id = :sample_prep_id)');
+    Add(xProvider.SamplePreps.Update);
 
     ParamByName('specimen_id').AsInteger := R.SpecimenId;
     SetStrParam(ParamByName('accession_num'), R.AccessionNum);
@@ -1033,33 +947,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'specimen_id, ' +
-        'field_number, ' +
-        'full_name, ' +
-        'sample_type, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'nest_id, ' +
-        'egg_id, ' +
-        'collection_date, ' +
-        'collection_day, ' +
-        'collection_month, ' +
-        'collection_year, ' +
-        'locality_id, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'coordinate_precision, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM specimens');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Specimens.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1084,13 +973,14 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM specimens');
+    Add(xProvider.Specimens.SelectTable(swcNone));
     Add('WHERE (field_number = :afieldnumber)');
     Add('AND (collection_year = :ayear)');
     Add('AND (collection_month = :amonth)');
     Add('AND (collection_day = :aday)');
     Add('AND (taxon_id = :ataxon)');
     Add('AND (locality_id = :alocality)');
+
     ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
     ParamByName('ALOCALITY').AsInteger := aLocality;
     ParamByName('AYEAR').AsInteger := aYear;
@@ -1119,33 +1009,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'specimen_id, ' +
-        'field_number, ' +
-        'full_name, ' +
-        'sample_type, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'nest_id, ' +
-        'egg_id, ' +
-        'collection_date, ' +
-        'collection_day, ' +
-        'collection_month, ' +
-        'collection_year, ' +
-        'locality_id, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'coordinate_precision, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM specimens');
-    Add('WHERE specimen_id = :cod');
+    Add(xProvider.Specimens.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1253,42 +1118,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO specimens (' +
-      'field_number, ' +
-      'full_name, ' +
-      'sample_type, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'nest_id, ' +
-      'egg_id, ' +
-      'collection_day, ' +
-      'collection_month, ' +
-      'collection_year, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':field_number, ' +
-      ':full_name, ' +
-      ':sample_type, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':nest_id, ' +
-      ':egg_id, ' +
-      ':collection_day, ' +
-      ':collection_month, ' +
-      ':collection_year, ' +
-      ':locality_id, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':coordinate_precision, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.Specimens.Insert);
 
     ParamByName('field_number').AsString := R.FieldNumber;
     ParamByName('sample_type').AsString := SPECIMEN_TYPES[Ord(R.SampleType)];
@@ -1341,27 +1171,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE specimens SET ' +
-      'field_number = :field_number, ' +
-      'full_name = :full_name, ' +
-      'sample_type = :sample_type, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'nest_id = :nest_id, ' +
-      'egg_id = :egg_id, ' +
-      'collection_day = :collection_day, ' +
-      'collection_month = :collection_month, ' +
-      'collection_year = :collection_year, ' +
-      'locality_id = :locality_id, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (specimen_id = :specimen_id)');
+    Add(xProvider.Specimens.Update);
 
     ParamByName('field_number').AsString := R.FieldNumber;
     ParamByName('sample_type').AsString := SPECIMEN_TYPES[Ord(R.SampleType)];
@@ -1597,20 +1407,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'collector_id, ' +
-        'specimen_id, ' +
-        'person_id, ' +
-        'collector_seq, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM specimen_collectors');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.SpecimenCollectors.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1637,20 +1435,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'collector_id, ' +
-        'specimen_id, ' +
-        'person_id, ' +
-        'collector_seq, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM specimen_collectors');
-    Add('WHERE collector_id = :cod');
+    Add(xProvider.SpecimenCollectors.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1722,16 +1508,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO specimen_collectors (' +
-      'specimen_id, ' +
-      'person_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':specimen_id, ' +
-      ':person_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.SpecimenCollectors.Insert);
 
     ParamByName('specimen_id').AsInteger := R.SpecimenId;
     SetForeignParam(ParamByName('person_id'), R.PersonId);
@@ -1771,14 +1548,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE specimen_collectors SET ' +
-      'specimen_id = :specimen_id, ' +
-      'person_id = :person_id, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (collector_id = :collector_id)');
+    Add(xProvider.SpecimenCollectors.Update);
 
     ParamByName('specimen_id').AsInteger := R.SpecimenId;
     SetForeignParam(ParamByName('person_id'), R.PersonId);

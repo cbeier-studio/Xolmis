@@ -1195,11 +1195,12 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
     Clear;
-    Add('SELECT camera_name');
-    Add('FROM captures');
-    Add('WHERE (active_status = 1) AND (camera_name NOT NULL) AND (camera_name <> '''')');
-    Add('GROUP BY camera_name');
-    Add('ORDER BY camera_name ASC');
+    Add(xProvider.Captures.DistinctCameras);
+    //Add('SELECT camera_name');
+    //Add('FROM captures');
+    //Add('WHERE (active_status = 1) AND (camera_name NOT NULL) AND (camera_name <> '''')');
+    //Add('GROUP BY camera_name');
+    //Add('ORDER BY camera_name ASC');
     //GravaLogSQL(SQL);
     Open;
     First;

@@ -160,7 +160,7 @@ implementation
 
 uses
   utils_system, utils_global, models_users, utils_validations, utils_fullnames, utils_conversions,
-  data_consts, data_columns, data_setparam, data_getvalue,
+  data_consts, data_columns, data_setparam, data_getvalue, data_providers,
   utils_locale, udm_main;
 
 { TBand }
@@ -453,34 +453,8 @@ begin
   with Qry, SQL do
   try
     MacroCheck := True;
+    Add(xProvider.Bands.SelectTable(swcFieldValue));
 
-    Add('SELECT ' +
-      'band_id, ' +
-      'band_size, ' +
-      'band_number, ' +
-      'band_status, ' +
-      'band_type, ' +
-      'band_prefix, ' +
-      'band_suffix, ' +
-      'band_color, ' +
-      'band_source, ' +
-      'supplier_id, ' +
-      'requester_id, ' +
-      'carrier_id, ' +
-      'individual_id, ' +
-      'project_id, ' +
-      'band_reported, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM bands');
-    Add('WHERE %afield = :avalue');
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -504,9 +478,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM bands');
+    Add(xProvider.Bands.SelectTable(swcNone));
     Add('WHERE (band_size = :asize)');
     Add('AND (band_number = :anumber)');
+
     ParamByName('ASIZE').AsString := aSize;
     ParamByName('ANUMBER').AsInteger := aNumber;
     Open;
@@ -531,33 +506,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'band_id, ' +
-      'band_size, ' +
-      'band_number, ' +
-      'band_status, ' +
-      'band_type, ' +
-      'band_prefix, ' +
-      'band_suffix, ' +
-      'band_color, ' +
-      'band_source, ' +
-      'supplier_id, ' +
-      'requester_id, ' +
-      'carrier_id, ' +
-      'individual_id, ' +
-      'project_id, ' +
-      'band_reported, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM bands');
-    Add('WHERE band_id = :cod');
+    Add(xProvider.Bands.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -668,40 +618,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO bands (' +
-      'band_size, ' +
-      'band_number, ' +
-      'band_status, ' +
-      'band_type, ' +
-      'band_prefix, ' +
-      'band_suffix, ' +
-      'band_color, ' +
-      'band_source, ' +
-      'supplier_id, ' +
-      'requester_id, ' +
-      'carrier_id, ' +
-      'project_id, ' +
-      'notes, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':band_size, ' +
-      ':band_number, ' +
-      ':band_status, ' +
-      ':band_type, ' +
-      ':band_prefix, ' +
-      ':band_suffix, ' +
-      ':band_color, ' +
-      ':band_source, ' +
-      ':supplier_id, ' +
-      ':requester_id, ' +
-      ':carrier_id, ' +
-      ':project_id, ' +
-      ':notes, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
+    Add(xProvider.Bands.Insert);
 
     SetStrParam(ParamByName('band_size'), R.Size);
     SetIntParam(ParamByName('band_number'), R.Number);
@@ -754,26 +671,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE bands SET ' +
-      'band_size = :band_size, ' +
-      'band_number = :band_number, ' +
-      'band_status = :band_status, ' +
-      'band_type = :band_type, ' +
-      'band_prefix = :band_prefix, ' +
-      'band_suffix = :band_suffix, ' +
-      'band_color = :band_color, ' +
-      'band_source = :band_source, ' +
-      'supplier_id = :supplier_id, ' +
-      'requester_id = :requester_id, ' +
-      'carrier_id = :carrier_id, ' +
-      'project_id = :project_id, ' +
-      'notes = :notes, ' +
-      'full_name = :full_name, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (band_id = :band_id)');
+    Add(xProvider.Bands.Update);
 
     SetStrParam(ParamByName('band_size'), R.Size);
     SetIntParam(ParamByName('band_number'), R.Number);
@@ -1044,25 +942,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'event_id, ' +
-      'band_id, ' +
-      'event_type, ' +
-      'event_date, ' +
-      'order_number, ' +
-      'supplier_id, ' +
-      'sender_id, ' +
-      'requester_id, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM band_history');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.BandHistory.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1089,25 +970,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'event_id, ' +
-      'band_id, ' +
-      'event_type, ' +
-      'event_date, ' +
-      'order_number, ' +
-      'supplier_id, ' +
-      'sender_id, ' +
-      'requester_id, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM band_history');
-    Add('WHERE event_id = :cod');
+    Add(xProvider.BandHistory.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1214,28 +1078,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO band_history (' +
-      'band_id, ' +
-      'event_date, ' +
-      'notes, ' +
-      'event_type, ' +
-      'supplier_id, ' +
-      'order_number, ' +
-      'requester_id, ' +
-      'sender_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':band_id, ' +
-      'date(:event_date), ' +
-      ':notes, ' +
-      ':event_type, ' +
-      ':supplier_id, ' +
-      ':order_number, ' +
-      ':requester_id, ' +
-      ':sender_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.BandHistory.Insert);
+
     ParamByName('band_id').AsInteger := R.BandId;
     SetDateParam(ParamByName('event_date'), R.EventDate);
     SetStrParam(ParamByName('notes'), R.Notes);
@@ -1280,18 +1124,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE band_history SET ' +
-      'band_id = :band_id, ' +
-      'event_date = date(:event_date), ' +
-      'notes = :notes, ' +
-      'event_type = :event_type, ' +
-      'supplier_id = :supplier_id, ' +
-      'order_number = :order_number, ' +
-      'requester_id = :requester_id, ' +
-      'sender_id = :sender_id, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (event_id = :event_id)');
+    Add(xProvider.BandHistory.Update);
+
     ParamByName('band_id').AsInteger := R.BandId;
     SetDateParam(ParamByName('event_date'), R.EventDate);
     SetStrParam(ParamByName('notes'), R.Notes);

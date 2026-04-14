@@ -401,7 +401,7 @@ implementation
 
 uses
   utils_system, utils_global, models_users, utils_validations, utils_fullnames, utils_conversions,
-  data_columns, data_setparam, data_getvalue, data_consts,
+  data_types, data_columns, data_setparam, data_getvalue, data_consts, data_providers,
   utils_locale, udm_main;
 
 { TFeather }
@@ -734,40 +734,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'feather_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'taxon_id, ' +
-      'locality_id, ' +
-      'individual_id, ' +
-      'capture_id, ' +
-      'sighting_id, ' +
-      'observer_id, ' +
-      'source_type, ' +
-      'symmetrical, ' +
-      'feather_trait, ' +
-      'feather_number, ' +
-      'body_side, ' +
-      'grown_percent, ' +
-      'feather_length, ' +
-      'feather_area, ' +
-      'feather_mass, ' +
-      'rachis_width, ' +
-      'growth_bar_width, ' +
-      'barb_density, ' +
-      'feather_age, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM feathers');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Feathers.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -794,40 +762,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'feather_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'taxon_id, ' +
-      'locality_id, ' +
-      'individual_id, ' +
-      'capture_id, ' +
-      'sighting_id, ' +
-      'observer_id, ' +
-      'source_type, ' +
-      'symmetrical, ' +
-      'feather_trait, ' +
-      'feather_number, ' +
-      'body_side, ' +
-      'grown_percent, ' +
-      'feather_length, ' +
-      'feather_area, ' +
-      'feather_mass, ' +
-      'rachis_width, ' +
-      'growth_bar_width, ' +
-      'barb_density, ' +
-      'feather_age, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM feathers');
-    Add('WHERE feather_id = :cod');
+    Add(xProvider.Feathers.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -959,58 +895,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO feathers (' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'taxon_id, ' +
-      'locality_id, ' +
-      'individual_id, ' +
-      'capture_id, ' +
-      'sighting_id, ' +
-      'observer_id, ' +
-      'source_type, ' +
-      'symmetrical, ' +
-      'feather_trait, ' +
-      'feather_number, ' +
-      'body_side, ' +
-      'grown_percent, ' +
-      'feather_length, ' +
-      'feather_area, ' +
-      'feather_mass, ' +
-      'rachis_width, ' +
-      'growth_bar_width, ' +
-      'barb_density, ' +
-      'feather_age, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      'date(:sample_date), ' +
-      'time(:sample_time), ' +
-      ':taxon_id, ' +
-      ':locality_id, ' +
-      ':individual_id, ' +
-      ':capture_id, ' +
-      ':sighting_id, ' +
-      ':observer_id, ' +
-      ':source_type, ' +
-      ':symmetrical, ' +
-      ':feather_trait, ' +
-      ':feather_number, ' +
-      ':body_side, ' +
-      ':grown_percent, ' +
-      ':feather_length, ' +
-      ':feather_area, ' +
-      ':feather_mass, ' +
-      ':rachis_width, ' +
-      ':growth_bar_width, ' +
-      ':barb_density, ' +
-      ':feather_age, ' +
-      ':full_name, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Feathers.Insert);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
@@ -1072,36 +957,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE feathers SET ' +
-      'sample_date = date(:sample_date), ' +
-      'sample_time = time(:sample_time), ' +
-      'taxon_id = :taxon_id, ' +
-      'locality_id = :locality_id, ' +
-      'individual_id = :individual_id, ' +
-      'capture_id = :capture_id, ' +
-      'sighting_id = :sighting_id, ' +
-      'observer_id = :observer_id, ' +
-      'source_type = :source_type, ' +
-      'symmetrical = :symmetrical, ' +
-      'feather_trait = :feather_trait, ' +
-      'feather_number = :feather_number, ' +
-      'body_side = :body_side, ' +
-      'grown_percent = :grown_percent, ' +
-      'feather_length = :feather_length, ' +
-      'feather_area = :feather_area, ' +
-      'feather_mass = :feather_mass, ' +
-      'rachis_width = :rachis_width, ' +
-      'growth_bar_width = :growth_bar_width, ' +
-      'barb_density = :barb_density, ' +
-      'feather_age = :feather_age, ' +
-      'full_name = :full_name, ' +
-      'notes = :notes, ' +
-      'exported_status = :exported_status, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (feather_id = :feather_id)');
+    Add(xProvider.Feathers.Update);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
@@ -1778,94 +1634,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'capture_id, ' +
-      'survey_id, ' +
-      'individual_id, ' +
-      'taxon_id, ' +
-      'full_name, ' +
-      'project_id, ' +
-      'capture_date, ' +
-      'capture_time, ' +
-      'locality_id, ' +
-      'net_station_id, ' +
-      'net_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'bander_id, ' +
-      'annotator_id, ' +
-      'subject_status, ' +
-      'capture_type, ' +
-      'subject_sex, ' +
-      'how_sexed, ' +
-      'band_id, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
-      'weight, ' +
-      'tarsus_length, ' +
-      'tarsus_diameter, ' +
-      'culmen_length, ' +
-      'exposed_culmen, ' +
-      'bill_width, ' +
-      'bill_height, ' +
-      'nostril_bill_tip, ' +
-      'skull_length, ' +
-      'halux_length_total, ' +
-      'halux_length_finger, ' +
-      'halux_length_claw, ' +
-      'right_wing_chord, ' +
-      'first_secondary_chord, ' +
-      'tail_length, ' +
-      'central_retrix_length, ' +
-      'external_retrix_length, ' +
-      'total_length, ' +
-      'feather_mites, ' +
-      'fat, ' +
-      'brood_patch, ' +
-      'cloacal_protuberance, ' +
-      'body_molt, ' +
-      'flight_feathers_molt, ' +
-      'flight_feathers_wear, ' +
-      'molt_limits, ' +
-      'cycle_code, ' +
-      'subject_age, ' +
-      'how_aged, ' +
-      'skull_ossification, ' +
-      'kipps_index, ' +
-      'glucose, ' +
-      'hemoglobin, ' +
-      'hematocrit, ' +
-      'philornis_larvae_tally, ' +
-      'blood_sample, ' +
-      'feather_sample, ' +
-      'claw_sample, ' +
-      'feces_sample, ' +
-      'parasite_sample, ' +
-      'subject_collected, ' +
-      'subject_recorded, ' +
-      'subject_photographed, ' +
-      'field_number, ' +
-      'photographer_1_id, ' +
-      'photographer_2_id, ' +
-      'start_photo_number, ' +
-      'end_photo_number, ' +
-      'camera_name, ' +
-      'escaped, ' +
-      'needs_review, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM captures');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Captures.SelectTable(swcFieldValue, tbNone));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1890,12 +1660,13 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM captures');
+    Add(xProvider.Captures.SelectTable(swcNone, tbNone));
     Add('WHERE (taxon_id = :ataxon)');
     Add('AND (band_id = :aband)');
     Add('AND (capture_type = :anature)');
     Add('AND (date(capture_date) = date(:adate))');
     Add('AND (time(capture_time) = time(:atime))');
+
     ParamByName('ATAXON').AsInteger := aTaxon;
     ParamByName('ABAND').AsInteger := aBand;
     ParamByName('ANATURE').AsString := aCaptureType;
@@ -1923,94 +1694,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'capture_id, ' +
-      'survey_id, ' +
-      'individual_id, ' +
-      'taxon_id, ' +
-      'full_name, ' +
-      'project_id, ' +
-      'capture_date, ' +
-      'capture_time, ' +
-      'locality_id, ' +
-      'net_station_id, ' +
-      'net_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'bander_id, ' +
-      'annotator_id, ' +
-      'subject_status, ' +
-      'capture_type, ' +
-      'subject_sex, ' +
-      'how_sexed, ' +
-      'band_id, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
-      'weight, ' +
-      'tarsus_length, ' +
-      'tarsus_diameter, ' +
-      'culmen_length, ' +
-      'exposed_culmen, ' +
-      'bill_width, ' +
-      'bill_height, ' +
-      'nostril_bill_tip, ' +
-      'skull_length, ' +
-      'halux_length_total, ' +
-      'halux_length_finger, ' +
-      'halux_length_claw, ' +
-      'right_wing_chord, ' +
-      'first_secondary_chord, ' +
-      'tail_length, ' +
-      'central_retrix_length, ' +
-      'external_retrix_length, ' +
-      'total_length, ' +
-      'feather_mites, ' +
-      'fat, ' +
-      'brood_patch, ' +
-      'cloacal_protuberance, ' +
-      'body_molt, ' +
-      'flight_feathers_molt, ' +
-      'flight_feathers_wear, ' +
-      'molt_limits, ' +
-      'cycle_code, ' +
-      'subject_age, ' +
-      'how_aged, ' +
-      'skull_ossification, ' +
-      'kipps_index, ' +
-      'glucose, ' +
-      'hemoglobin, ' +
-      'hematocrit, ' +
-      'philornis_larvae_tally, ' +
-      'blood_sample, ' +
-      'feather_sample, ' +
-      'claw_sample, ' +
-      'feces_sample, ' +
-      'parasite_sample, ' +
-      'subject_collected, ' +
-      'subject_recorded, ' +
-      'subject_photographed, ' +
-      'field_number, ' +
-      'photographer_1_id, ' +
-      'photographer_2_id, ' +
-      'start_photo_number, ' +
-      'end_photo_number, ' +
-      'camera_name, ' +
-      'escaped, ' +
-      'needs_review, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM captures');
-    Add('WHERE capture_id = :cod');
+    Add(xProvider.Captures.SelectTable(swcId, tbNone));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2310,128 +1995,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO captures (' +
-      'survey_id, ' +
-      'full_name, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'capture_date, ' +
-      'capture_time, ' +
-      'locality_id, ' +
-      'net_station_id, ' +
-      'net_id, ' +
-      'latitude, ' +
-      'longitude, ' +
-      'coordinate_precision, ' +
-      'bander_id, ' +
-      'annotator_id, ' +
-      'subject_status, ' +
-      'capture_type, ' +
-      'subject_sex, ' +
-      'how_sexed, ' +
-      'band_id, ' +
-      'weight, ' +
-      'tarsus_length, ' +
-      'tarsus_diameter, ' +
-      'exposed_culmen, ' +
-      'bill_width, ' +
-      'bill_height, ' +
-      'nostril_bill_tip, ' +
-      'skull_length, ' +
-      'right_wing_chord, ' +
-      'first_secondary_chord, ' +
-      'tail_length, ' +
-      'fat, ' +
-      'brood_patch, ' +
-      'cloacal_protuberance, ' +
-      'body_molt, ' +
-      'flight_feathers_molt, ' +
-      'flight_feathers_wear, ' +
-      'molt_limits, ' +
-      'cycle_code, ' +
-      'subject_age, ' +
-      'how_aged, ' +
-      'skull_ossification, ' +
-      'kipps_index, ' +
-      'glucose, ' +
-      'hemoglobin, ' +
-      'hematocrit, ' +
-      'blood_sample, ' +
-      'feather_sample, ' +
-      'subject_photographed, ' +
-      'photographer_1_id, ' +
-      'photographer_2_id, ' +
-      'start_photo_number, ' +
-      'end_photo_number, ' +
-      'camera_name, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'escaped, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date)');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':full_name, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      'date(:capture_date), ' +
-      'time(:capture_time), ' +
-      ':locality_id, ' +
-      ':net_station_id, ' +
-      ':net_id, ' +
-      ':latitude, ' +
-      ':longitude, ' +
-      ':coordinate_precision, ' +
-      ':bander_id, ' +
-      ':annotator_id, ' +
-      ':subject_status, ' +
-      ':capture_type, ' +
-      ':subject_sex, ' +
-      ':how_sexed, ' +
-      ':band_id, ' +
-      ':weight, ' +
-      ':tarsus_length, ' +
-      ':tarsus_diameter, ' +
-      ':exposed_culmen, ' +
-      ':bill_width, ' +
-      ':bill_height, ' +
-      ':nostril_bill_tip, ' +
-      ':skull_length, ' +
-      ':right_wing_chord, ' +
-      ':first_secondary_chord, ' +
-      ':tail_length, ' +
-      ':fat, ' +
-      ':brood_patch, ' +
-      ':cloacal_protuberance, ' +
-      ':body_molt, ' +
-      ':flight_feathers_molt, ' +
-      ':flight_feathers_wear, ' +
-      ':molt_limits, ' +
-      ':cycle_code, ' +
-      ':subject_age, ' +
-      ':how_aged, ' +
-      ':skull_ossification, ' +
-      ':kipps_index, ' +
-      ':glucose, ' +
-      ':hemoglobin, ' +
-      ':hematocrit, ' +
-      ':blood_sample, ' +
-      ':feather_sample, ' +
-      ':subject_photographed, ' +
-      ':photographer_1_id, ' +
-      ':photographer_2_id, ' +
-      ':start_photo_number, ' +
-      ':end_photo_number, ' +
-      ':camera_name, ' +
-      ':removed_band_id, ' +
-      ':right_leg_below, ' +
-      ':left_leg_below, ' +
-      ':escaped, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.Captures.Insert);
 
     R.FullName := GetCaptureFullname(R.CaptureDate, R.TaxonId, R.BandId, SEXES[R.SubjectSex],
       CAPTURE_TYPES[R.CaptureType], R.CycleCode, False);
@@ -2530,90 +2094,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE captures SET ' +
-      'survey_id = :survey_id, ' +
-      'full_name = :full_name, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'project_id = :project_id, ' +
-      'capture_date = date(:capture_date), ' +
-      'capture_time = time(:capture_time), ' +
-      'locality_id = :locality_id, ' +
-      'net_station_id = :net_station_id, ' +
-      'net_id = :net_id, ' +
-      'latitude = :latitude, ' +
-      'longitude = :longitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'bander_id = :bander_id, ' +
-      'annotator_id = :annotator_id, ' +
-      'subject_status = :subject_status, ' +
-      'capture_type = :capture_type, ' +
-      'subject_sex = :subject_sex, ' +
-      'how_sexed = :how_sexed, ' +
-      'band_id = :band_id, ' +
-      'weight = :weight, ' +
-      'tarsus_length = :tarsus_length, ' +
-      'tarsus_diameter = :tarsus_diameter, ' +
-      'culmen_length = :culmen_length, ' +
-      'exposed_culmen = :exposed_culmen, ' +
-      'bill_width = :bill_width, ' +
-      'bill_height = :bill_height, ' +
-      'nostril_bill_tip = :nostril_bill_tip, ' +
-      'skull_length = :skull_length, ' +
-      'right_wing_chord = :right_wing_chord, ' +
-      'first_secondary_chord = :first_secondary_chord, ' +
-      'tail_length = :tail_length, ' +
-      'fat = :fat, ' +
-      'brood_patch = :brood_patch, ' +
-      'cloacal_protuberance = :cloacal_protuberance, ' +
-      'body_molt = :body_molt, ' +
-      'flight_feathers_molt = :flight_feathers_molt, ' +
-      'flight_feathers_wear = :flight_feathers_wear, ' +
-      'molt_limits = :molt_limits, ' +
-      'cycle_code = :cycle_code, ' +
-      'subject_age = :subject_age, ' +
-      'how_aged = :how_aged, ' +
-      'skull_ossification = :skull_ossification, ' +
-      'halux_length_total = :halux_length_total, ' +
-      'halux_length_finger = :halux_length_finger, ' +
-      'halux_length_claw = :halux_length_claw, ' +
-      'central_retrix_length = :central_retrix_length, ' +
-      'external_retrix_length = :external_retrix_length, ' +
-      'total_length = :total_length, ' +
-      'feather_mites = :feather_mites, ' +
-      'philornis_larvae_tally = :philornis_larvae_tally, ' +
-      'kipps_index = :kipps_index, ' +
-      'glucose = :glucose, ' +
-      'hemoglobin = :hemoglobin, ' +
-      'hematocrit = :hematocrit, ' +
-      'field_number = :field_number, ' +
-      'blood_sample = :blood_sample, ' +
-      'feather_sample = :feather_sample, ' +
-      'claw_sample = :claw_sample, ' +
-      'feces_sample = :feces_sample, ' +
-      'parasite_sample = :parasite_sample, ' +
-      'subject_collected = :subject_collected, ' +
-      'subject_recorded = :subject_recorded, ' +
-      'subject_photographed = :subject_photographed, ' +
-      'photographer_1_id = :photographer_1_id, ' +
-      'photographer_2_id = :photographer_2_id, ' +
-      'start_photo_number = :start_photo_number, ' +
-      'end_photo_number = :end_photo_number, ' +
-      'camera_name = :camera_name, ' +
-      'removed_band_id = :removed_band_id, ' +
-      'right_leg_below = :right_leg_below, ' +
-      'left_leg_below = :left_leg_below, ' +
-      'right_leg_above = :right_leg_above, ' +
-      'left_leg_above = :left_leg_above, ' +
-      'escaped = :escaped, ' +
-      'needs_review = :needs_review, ' +
-      'notes = :notes, ' +
-      'exported_status = :exported_status, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (capture_id = :capture_id)');
+    Add(xProvider.Captures.Update);
 
     R.FullName := GetCaptureFullname(R.CaptureDate, R.TaxonId, R.BandId, SEXES[R.SubjectSex],
       CAPTURE_TYPES[R.CaptureType], R.CycleCode, False);
@@ -3032,45 +2513,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'individual_id, ' +
-      'formatted_name, ' +
-      'full_name, ' +
-      'taxon_id, ' +
-      'individual_sex, ' +
-      'individual_age, ' +
-      'nest_id, ' +
-      'birth_date, ' +
-      'birth_day, ' +
-      'birth_month, ' +
-      'birth_year, ' +
-      'banding_date, ' +
-      'band_change_date, ' +
-      'band_id, ' +
-      'double_band_id, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
-      'father_id, ' +
-      'mother_id, ' +
-      'death_date, ' +
-      'death_day, ' +
-      'death_month, ' +
-      'death_year, ' +
-      'recognizable_markings, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'queued_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM individuals');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Individuals.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -3095,7 +2539,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM individuals');
+    Add(xProvider.Individuals.SelectTable(swcNone));
     Add('WHERE (taxon_id = :taxon_id)');
     Add('AND ((band_id = :band_id) OR (removed_band_id = :band_id))');
     if (aRightLeg <> EmptyStr) then
@@ -3132,45 +2576,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'individual_id, ' +
-      'formatted_name, ' +
-      'full_name, ' +
-      'taxon_id, ' +
-      'individual_sex, ' +
-      'individual_age, ' +
-      'nest_id, ' +
-      'birth_date, ' +
-      'birth_day, ' +
-      'birth_month, ' +
-      'birth_year, ' +
-      'banding_date, ' +
-      'band_change_date, ' +
-      'band_id, ' +
-      'double_band_id, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
-      'father_id, ' +
-      'mother_id, ' +
-      'death_date, ' +
-      'death_day, ' +
-      'death_month, ' +
-      'death_year, ' +
-      'recognizable_markings, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'queued_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM individuals');
-    Add('WHERE individual_id = :cod');
+    Add(xProvider.Individuals.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -3314,66 +2721,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO individuals (' +
-      'taxon_id, ' +
-      'individual_sex, ' +
-      'individual_age, ' +
-      'nest_id, ' +
-      'birth_date, ' +
-      'birth_day, ' +
-      'birth_month, ' +
-      'birth_year, ' +
-      'banding_date, ' +
-      'band_change_date, ' +
-      'band_id, ' +
-      'double_band_id, ' +
-      'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
-      'father_id, ' +
-      'mother_id, ' +
-      'death_date, ' +
-      'death_day, ' +
-      'death_month, ' +
-      'death_year, ' +
-      'recognizable_markings, ' +
-      'notes, ' +
-      'formatted_name, ' +
-      'full_name, ' +
-      'user_inserted, ' +
-      'insert_date)');
-    Add('VALUES (' +
-      ':taxon_id, ' +
-      ':individual_sex, ' +
-      ':individual_age, ' +
-      ':nest_id, ' +
-      ':birth_date, ' +
-      ':birth_day, ' +
-      ':birth_month, ' +
-      ':birth_year, ' +
-      'date(:banding_date), ' +
-      'date(:band_change_date), ' +
-      ':band_id, ' +
-      ':double_band_id, ' +
-      ':removed_band_id, ' +
-      ':right_leg_below, ' +
-      ':left_leg_below, ' +
-      ':right_leg_above, ' +
-      ':left_leg_above, ' +
-      ':father_id, ' +
-      ':mother_id, ' +
-      ':death_date, ' +
-      ':death_day, ' +
-      ':death_month, ' +
-      ':death_year, ' +
-      ':recognizable_markings, ' +
-      ':notes, ' +
-      ':formatted_name, ' +
-      ':full_name, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.Individuals.Insert);
 
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetStrParam(ParamByName('individual_sex'), SEXES[R.Sex]);
@@ -3462,39 +2810,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE individuals SET ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_sex = :individual_sex, ' +
-      'individual_age = :individual_age, ' +
-      'nest_id = :nest_id, ' +
-      'birth_date = :birth_date, ' +
-      'birth_day = :birth_day, ' +
-      'birth_month = :birth_month, ' +
-      'birth_year = :birth_year, ' +
-      'banding_date = date(:banding_date), ' +
-      'band_change_date = date(:band_change_date), ' +
-      'band_id = :band_id, ' +
-      'double_band_id = :double_band_id, ' +
-      'removed_band_id = :removed_band_id, ' +
-      'right_leg_below = :right_leg_below, ' +
-      'left_leg_below = :left_leg_below, ' +
-      'right_leg_above = :right_leg_above, ' +
-      'left_leg_above = :left_leg_above, ' +
-      'father_id = :father_id, ' +
-      'mother_id = :mother_id, ' +
-      'death_date = :death_date, ' +
-      'death_day = :death_day, ' +
-      'death_month = :death_month, ' +
-      'death_year = :death_year, ' +
-      'recognizable_markings = :recognizable_markings, ' +
-      'notes = :notes, ' +
-      'formatted_name = :formatted_name, ' +
-      'full_name = :full_name, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'')');
-    Add('WHERE (individual_id = :individual_id)');
+    Add(xProvider.Individuals.Update);
 
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetStrParam(ParamByName('individual_sex'), SEXES[R.Sex]);

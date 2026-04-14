@@ -78,8 +78,10 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, models_users, utils_validations, utils_fullnames, data_columns, data_getvalue,
-  data_consts, data_setparam, udm_main;
+  utils_locale, utils_global, utils_validations, utils_fullnames,
+  data_columns, data_getvalue, data_consts, data_setparam, data_providers,
+  models_users,
+  udm_main;
 
 { TMethod }
 
@@ -319,25 +321,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'method_id, ' +
-        'method_name, ' +
-        'abbreviation, ' +
-        'ebird_name, ' +
-        'category, ' +
-        'description, ' +
-        'recommended_uses, ' +
-        'notes, ' +
-        'can_delete, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM methods');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Methods.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -364,25 +349,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'method_id, ' +
-        'method_name, ' +
-        'abbreviation, ' +
-        'ebird_name, ' +
-        'category, ' +
-        'description, ' +
-        'recommended_uses, ' +
-        'notes, ' +
-        'can_delete, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM methods');
-    Add('WHERE method_id = :cod');
+    Add(xProvider.Methods.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -469,26 +437,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO methods (' +
-      'method_name, ' +
-      'abbreviation, ' +
-      'category, ' +
-      'ebird_name, ' +
-      'description, ' +
-      'recommended_uses, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':method_name, ' +
-      ':abbreviation, ' +
-      ':category, ' +
-      ':ebird_name, ' +
-      ':description, ' +
-      ':recommended_uses, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Methods.Insert);
 
     ParamByName('method_name').AsString := R.Name;
     ParamByName('abbreviation').AsString := R.Abbreviation;
@@ -533,19 +482,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE methods SET ' +
-      'method_name = :method_name, ' +
-      'abbreviation = :abbreviation, ' +
-      'category = :category, ' +
-      'ebird_name = :ebird_name, ' +
-      'description = :description, ' +
-      'recommended_uses = :recommended_uses, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (method_id = :method_id)');
+    Add(xProvider.Methods.Update);
 
     ParamByName('method_name').AsString := R.Name;
     ParamByName('abbreviation').AsString := R.Abbreviation;

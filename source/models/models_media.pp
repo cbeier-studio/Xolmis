@@ -418,7 +418,7 @@ implementation
 
 uses
   utils_locale, utils_validations, utils_conversions,
-  data_columns, data_setparam, data_consts, data_getvalue,
+  data_columns, data_setparam, data_consts, data_getvalue, data_providers,
   models_users,
   udm_main;
 
@@ -764,43 +764,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'image_id, ' +
-        'image_date, ' +
-        'image_time, ' +
-        'image_type, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'feather_id, ' +
-        'locality_id, ' +
-        'author_id, ' +
-        'survey_id, ' +
-        'sighting_id, ' +
-        'nest_id, ' +
-        'nest_revision_id, ' +
-        'egg_id, ' +
-        'specimen_id, ' +
-        'image_filename, ' +
-        'coordinate_precision, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'subtitle, ' +
-        'image_thumbnail, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM images');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Images.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -827,43 +792,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'image_id, ' +
-        'image_date, ' +
-        'image_time, ' +
-        'image_type, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'feather_id, ' +
-        'locality_id, ' +
-        'author_id, ' +
-        'survey_id, ' +
-        'sighting_id, ' +
-        'nest_id, ' +
-        'nest_revision_id, ' +
-        'egg_id, ' +
-        'specimen_id, ' +
-        'image_filename, ' +
-        'coordinate_precision, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'subtitle, ' +
-        'image_thumbnail, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM images');
-    Add('WHERE image_id = :cod');
+    Add(xProvider.Images.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -938,64 +868,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO images (' +
-      'image_date, ' +
-      'image_time, ' +
-      'image_type, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'capture_id, ' +
-      'feather_id, ' +
-      'locality_id, ' +
-      'author_id, ' +
-      'survey_id, ' +
-      'sighting_id, ' +
-      'nest_id, ' +
-      'nest_revision_id, ' +
-      'egg_id, ' +
-      'specimen_id, ' +
-      'image_filename, ' +
-      'coordinate_precision, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'license_type, ' +
-      'license_year, ' +
-      'license_uri, ' +
-      'license_notes, ' +
-      'license_owner, ' +
-      'subtitle, ' +
-      'image_thumbnail, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      'date(:image_date), ' +
-      'time(:image_time), ' +
-      ':image_type, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':capture_id, ' +
-      ':feather_id, ' +
-      ':locality_id, ' +
-      ':author_id, ' +
-      ':survey_id, ' +
-      ':sighting_id, ' +
-      ':nest_id, ' +
-      ':nest_revision_id, ' +
-      ':egg_id, ' +
-      ':specimen_id, ' +
-      ':image_filename, ' +
-      ':coordinate_precision, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':license_type, ' +
-      ':license_year, ' +
-      ':license_uri, ' +
-      ':license_notes, ' +
-      ':license_owner, ' +
-      ':subtitle, ' +
-      ':image_thumbnail, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Images.Insert);
 
     SetDateParam(ParamByName('image_date'), R.ImageDate);
     SetTimeParam(ParamByName('image_time'), R.ImageTime);
@@ -1063,36 +936,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE images SET ' +
-      'image_date = date(:image_date), ' +
-      'image_time = time(:image_time), ' +
-      'image_type = :image_type, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'capture_id = :capture_id, ' +
-      'feather_id = :feather_id, ' +
-      'locality_id = :locality_id, ' +
-      'author_id = :author_id, ' +
-      'survey_id = :survey_id, ' +
-      'sighting_id = :sighting_id, ' +
-      'nest_id = :nest_id, ' +
-      'nest_revision_id = :nest_revision_id, ' +
-      'egg_id = :egg_id, ' +
-      'specimen_id = :specimen_id, ' +
-      'image_filename = :image_filename, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'license_type = :license_type, ' +
-      'license_year = :license_year, ' +
-      'license_uri = :license_uri, ' +
-      'license_notes = :license_notes, ' +
-      'license_owner = :license_owner, ' +
-      'subtitle = :subtitle, ' +
-      'image_thumbnail = :image_thumbnail, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec'') ');
-    Add('WHERE (image_id = :image_id)');
+    Add(xProvider.Images.Update);
 
     SetDateParam(ParamByName('image_date'), R.ImageDate);
     SetTimeParam(ParamByName('image_time'), R.ImageTime);
@@ -1540,52 +1384,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'audio_id, ' +
-        'full_name, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'specimen_id, ' +
-        //'survey_id, ' +
-        'sighting_id, ' +
-        'audio_type, ' +
-        'locality_id, ' +
-        'recording_date, ' +
-        'recorder_id, ' +
-        'recording_time, ' +
-        'coordinate_precision, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'temperature, ' +
-        'cloud_cover, ' +
-        'precipitation, ' +
-        'relative_humidity, ' +
-        'wind_speed, ' +
-        'recording_context, ' +
-        'playback_used, ' +
-        'subjects_tally, ' +
-        'habitat, ' +
-        'recorder_model, ' +
-        'mic_model, ' +
-        'filter_model, ' +
-        'distance, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'audio_file, ' +
-        'subtitle, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM audio_library');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Audios.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1612,52 +1412,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'audio_id, ' +
-        'full_name, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'specimen_id, ' +
-        //'survey_id' +
-        'sighting_id, ' +
-        'audio_type, ' +
-        'locality_id, ' +
-        'recording_date, ' +
-        'recorder_id, ' +
-        'recording_time, ' +
-        'coordinate_precision, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'temperature, ' +
-        'cloud_cover, ' +
-        'precipitation, ' +
-        'relative_humidity, ' +
-        'wind_speed, ' +
-        'recording_context, ' +
-        'playback_used, ' +
-        'subjects_tally, ' +
-        'habitat, ' +
-        'recorder_model, ' +
-        'mic_model, ' +
-        'filter_model, ' +
-        'distance, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'audio_file, ' +
-        'subtitle, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM audio_library');
-    Add('WHERE audio_id = :cod');
+    Add(xProvider.Audios.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1743,80 +1499,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO audio_library (' +
-      'full_name, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'specimen_id, ' +
-      'sighting_id, ' +
-      'audio_type, ' +
-      'locality_id, ' +
-      'recording_date, ' +
-      'recorder_id, ' +
-      'recording_time, ' +
-      'coordinate_precision, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'temperature, ' +
-      'cloud_cover, ' +
-      'precipitation, ' +
-      'relative_humidity, ' +
-      'wind_speed, ' +
-      'recording_context, ' +
-      'playback_used, ' +
-      'subjects_tally, ' +
-      'habitat, ' +
-      'recorder_model, ' +
-      'mic_model, ' +
-      'filter_model, ' +
-      'distance, ' +
-      'license_type, ' +
-      'license_year, ' +
-      'license_uri, ' +
-      'license_notes, ' +
-      'license_owner, ' +
-      'audio_file, ' +
-      'subtitle, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':specimen_id, ' +
-      ':sighting_id, ' +
-      ':audio_type, ' +
-      ':locality_id, ' +
-      'date(:recording_date), ' +
-      ':recorder_id, ' +
-      'time(:recording_time), ' +
-      ':coordinate_precision, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':temperature, ' +
-      ':cloud_cover, ' +
-      ':precipitation, ' +
-      ':relative_humidity, ' +
-      ':wind_speed, ' +
-      ':recording_context, ' +
-      ':playback_used, ' +
-      ':subjects_tally, ' +
-      ':habitat, ' +
-      ':recorder_model, ' +
-      ':mic_model, ' +
-      ':filter_model, ' +
-      ':distance, ' +
-      ':license_type, ' +
-      ':license_year, ' +
-      ':license_uri, ' +
-      ':license_notes, ' +
-      ':license_owner, ' +
-      ':audio_file, ' +
-      ':subtitle, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Audios.Insert);
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
@@ -1888,43 +1571,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE audio_library SET ' +
-      'full_name = :full_name, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'specimen_id = :specimen_id, ' +
-      'sighting_id = :sighting_id, ' +
-      'audio_type = :audio_type, ' +
-      'locality_id = :locality_id, ' +
-      'recording_date = date(:recording_date), ' +
-      'recorder_id = :recorder_id, ' +
-      'recording_time = time(:recording_time), ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'temperature = :temperature, ' +
-      'cloud_cover = :cloud_cover, ' +
-      'precipitation = :precipitation, ' +
-      'relative_humidity = :relative_humidity, ' +
-      'wind_speed = :wind_speed, ' +
-      'recording_context = :recording_context, ' +
-      'playback_used = :playback_used, ' +
-      'subjects_tally = :subjects_tally, ' +
-      'habitat = :habitat, ' +
-      'recorder_model = :recorder_model, ' +
-      'mic_model = :mic_model, ' +
-      'filter_model = :filter_model, ' +
-      'distance = :distance, ' +
-      'license_type = :license_type, ' +
-      'license_year = :license_year, ' +
-      'license_uri = :license_uri, ' +
-      'license_notes = :license_notes, ' +
-      'license_owner = :license_owner, ' +
-      'audio_file = :audio_file, ' +
-      'subtitle = :subtitle, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec'') ');
-    Add('WHERE (audio_id = :audio_id)');
+    Add(xProvider.Audios.Update);
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
@@ -2297,39 +1944,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'document_id, ' +
-        'permit_id, ' +
-        'project_id, ' +
-        'person_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'sighting_id, ' +
-        'specimen_id, ' +
-        'expedition_id, ' +
-        'survey_id, ' +
-        'nest_id, ' +
-        'net_station_id, ' +
-        'method_id, ' +
-        'document_type, ' +
-        'document_name, ' +
-        'document_path, ' +
-        'document_date, ' +
-        'document_time, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM documents');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Documents.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -2354,9 +1970,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (capture_id = :capture_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('capture_id').AsInteger := aCaptureId;
     Open;
@@ -2379,9 +1996,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (expedition_id = :expedition_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('expedition_id').AsInteger := aExpeditionId;
     Open;
@@ -2404,9 +2022,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (individual_id = :individual_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('individual_id').AsInteger := aIndividualId;
     Open;
@@ -2428,9 +2047,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (method_id = :method_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('method_id').AsInteger := aMethodId;
     Open;
@@ -2452,9 +2072,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (nest_id = :nest_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('nest_id').AsInteger := aNestId;
     Open;
@@ -2476,9 +2097,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (permit_id = :permit_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('permit_id').AsInteger := aPermitId;
     Open;
@@ -2501,9 +2123,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (project_id = :project_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('project_id').AsInteger := aProjectId;
     Open;
@@ -2526,9 +2149,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (net_station_id = :net_station_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('net_station_id').AsInteger := aSamplingPlotId;
     Open;
@@ -2551,9 +2175,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (sighting_id = :sighting_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('sighting_id').AsInteger := aSightingId;
     Open;
@@ -2576,9 +2201,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (specimen_id = :specimen_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('specimen_id').AsInteger := aSpecimenId;
     Open;
@@ -2600,9 +2226,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM documents');
+    Add(xProvider.Documents.SelectTable(swcNone));
     Add('WHERE (document_path = :document_path)');
     Add('AND (survey_id = :survey_id)');
+
     ParamByName('document_path').AsString := aFilePath;
     ParamByName('survey_id').AsInteger := aSurveyId;
     Open;
@@ -2627,39 +2254,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'document_id, ' +
-        'permit_id, ' +
-        'project_id, ' +
-        'person_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'sighting_id, ' +
-        'specimen_id, ' +
-        'expedition_id, ' +
-        'survey_id, ' +
-        'nest_id, ' +
-        'net_station_id, ' +
-        'method_id, ' +
-        'document_type, ' +
-        'document_name, ' +
-        'document_path, ' +
-        'document_date, ' +
-        'document_time, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM documents');
-    Add('WHERE document_id = :cod');
+    Add(xProvider.Documents.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2733,56 +2329,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO documents (' +
-      'permit_id, ' +
-      'project_id, ' +
-      'person_id, ' +
-      'individual_id, ' +
-      'capture_id, ' +
-      'sighting_id, ' +
-      'specimen_id, ' +
-      'expedition_id, ' +
-      'survey_id, ' +
-      'nest_id, ' +
-      'net_station_id, ' +
-      'method_id, ' +
-      'document_type, ' +
-      'document_name, ' +
-      'document_path, ' +
-      'document_date, ' +
-      'document_time, ' +
-      'license_type, ' +
-      'license_year, ' +
-      'license_uri, ' +
-      'license_notes, ' +
-      'license_owner, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':permit_id, ' +
-      ':project_id, ' +
-      ':person_id, ' +
-      ':individual_id, ' +
-      ':capture_id, ' +
-      ':sighting_id, ' +
-      ':specimen_id, ' +
-      ':expedition_id, ' +
-      ':survey_id, ' +
-      ':nest_id, ' +
-      ':net_station_id, ' +
-      ':method_id, ' +
-      ':document_type, ' +
-      ':document_name, ' +
-      ':document_path, ' +
-      'date(:document_date), ' +
-      'time(:document_time), ' +
-      ':license_type, ' +
-      ':license_year, ' +
-      ':license_uri, ' +
-      ':license_notes, ' +
-      ':license_owner, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Documents.Insert);
 
     SetDateParam(ParamByName('document_date'), R.DocumentDate);
     SetTimeParam(ParamByName('document_time'), R.DocumentTime);
@@ -2842,32 +2389,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE documents SET ' +
-      'permit_id = :permit_id, ' +
-      'project_id = :project_id, ' +
-      'person_id = :person_id, ' +
-      'individual_id = :individual_id, ' +
-      'capture_id = :capture_id, ' +
-      'sighting_id = :sighting_id, ' +
-      'specimen_id = :specimen_id, ' +
-      'expedition_id = :expedition_id, ' +
-      'survey_id = :survey_id, ' +
-      'nest_id = :nest_id, ' +
-      'net_station_id = :net_station_id, ' +
-      'method_id = :method_id, ' +
-      'document_type = :document_type, ' +
-      'document_name = :document_name, ' +
-      'document_path = :document_path, ' +
-      'document_date = date(:document_date), ' +
-      'document_time = time(:document_time), ' +
-      'license_type = :license_type, ' +
-      'license_year = :license_year, ' +
-      'license_uri = :license_uri, ' +
-      'license_notes = :license_notes, ' +
-      'license_owner = :license_owner, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec'')');
-    Add('WHERE (document_id = :document_id)');
+    Add(xProvider.Documents.Update);
 
     SetDateParam(ParamByName('document_date'), R.DocumentDate);
     SetTimeParam(ParamByName('document_time'), R.DocumentTime);
@@ -3265,45 +2787,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'video_id, ' +
-        'full_name, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'nest_id, ' +
-        'nest_revision_id, ' +
-        'survey_id, ' +
-        'sighting_id, ' +
-        'video_type, ' +
-        'locality_id, ' +
-        'recording_date, ' +
-        'recorder_id, ' +
-        'recording_time, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'coordinate_precision, ' +
-        'recording_context, ' +
-        'habitat, ' +
-        'camera_model, ' +
-        'distance, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'file_path, ' +
-        'subtitle, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM videos');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Videos.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -3330,45 +2815,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'video_id, ' +
-        'full_name, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'capture_id, ' +
-        'nest_id, ' +
-        'nest_revision_id, ' +
-        'survey_id, ' +
-        'sighting_id, ' +
-        'video_type, ' +
-        'locality_id, ' +
-        'recording_date, ' +
-        'recorder_id, ' +
-        'recording_time, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'coordinate_precision, ' +
-        'recording_context, ' +
-        'habitat, ' +
-        'camera_model, ' +
-        'distance, ' +
-        'license_type, ' +
-        'license_year, ' +
-        'license_uri, ' +
-        'license_notes, ' +
-        'license_owner, ' +
-        'file_path, ' +
-        'subtitle, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM videos');
-    Add('WHERE video_id = :cod');
+    Add(xProvider.Videos.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -3447,68 +2895,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO videos (' +
-      'full_name, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'capture_id, ' +
-      'nest_id, ' +
-      'nest_revision_id, ' +
-      'survey_id, ' +
-      'sighting_id, ' +
-      'video_type, ' +
-      'locality_id, ' +
-      'recording_date, ' +
-      'recorder_id, ' +
-      'recording_time, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'recording_context, ' +
-      'habitat, ' +
-      'camera_model, ' +
-      'distance, ' +
-      'license_type, ' +
-      'license_year, ' +
-      'license_uri, ' +
-      'license_notes, ' +
-      'license_owner, ' +
-      'file_path, ' +
-      'subtitle, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':capture_id, ' +
-      ':nest_id, ' +
-      ':nest_revision_id, ' +
-      ':survey_id, ' +
-      ':sighting_id, ' +
-      ':video_type, ' +
-      ':locality_id, ' +
-      'date(:recording_date), ' +
-      ':recorder_id, ' +
-      'time(:recording_time), ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':coordinate_precision, ' +
-      ':recording_context, ' +
-      ':habitat, ' +
-      ':camera_model, ' +
-      ':distance, ' +
-      ':license_type, ' +
-      ':license_year, ' +
-      ':license_uri, ' +
-      ':license_notes, ' +
-      ':license_owner, ' +
-      ':file_path, ' +
-      ':subtitle, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Videos.Insert);
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
@@ -3573,38 +2960,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE videos SET ' +
-      'full_name = :full_name, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'capture_id = :capture_id, ' +
-      'nest_id = :nest_id, ' +
-      'nest_revision_id = :nest_revision_id, ' +
-      'survey_id = :survey_id, ' +
-      'sighting_id = :sighting_id, ' +
-      'video_type = :video_type, ' +
-      'locality_id = :locality_id, ' +
-      'recording_date = date(:recording_date), ' +
-      'recorder_id = :recorder_id, ' +
-      'recording_time = time(:recording_time), ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'recording_context = :recording_context, ' +
-      'habitat = :habitat, ' +
-      'camera_model = :camera_model, ' +
-      'distance = :distance, ' +
-      'license_type = :license_type, ' +
-      'license_year = :license_year, ' +
-      'license_uri = :license_uri, ' +
-      'license_notes = :license_notes, ' +
-      'license_owner = :license_owner, ' +
-      'file_path = :file_path, ' +
-      'subtitle = :subtitle, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec'') ');
-    Add('WHERE (video_id = :video_id)');
+    Add(xProvider.Videos.Update);
 
     SetDateParam(ParamByName('recording_date'), R.RecordingDate);
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);

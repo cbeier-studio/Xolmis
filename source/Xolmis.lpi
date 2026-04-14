@@ -160,7 +160,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules;providers"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -211,7 +211,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules;providers"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -265,7 +265,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -307,7 +307,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -355,7 +355,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -403,7 +403,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -1568,6 +1568,78 @@
         <Filename Value="data\data_services.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="data\data_providers.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_birds.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_bands.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_botany.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_breeding.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_geo.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_institutions.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_media.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_methods.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_people.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_system.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_permits.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_projects.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_sampling.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_sampling_plots.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_sightings.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_specimens.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="providers\providers_taxonomy.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
     <Debugger>
       <StoreDebuggerClassConfInSession Value="True"/>
@@ -1582,7 +1654,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src"/>
+      <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
       <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

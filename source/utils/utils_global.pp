@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf, fgl, StrUtils,
   Forms, Controls, Dialogs, Menus, Buttons, Graphics, DB, SQLDB, URIParser,
-  utils_system, data_types, models_record_types,
+  utils_system, data_types, data_providers, models_record_types,
   udm_main, ucfg_database;
 
 const
@@ -356,6 +356,7 @@ type
 var
   wasSafelyTerminated: Boolean;
   databaseConnection: TDBParams;
+  xProvider: ISQLProvider;
   xSettings: TXolmisSettings;
   xNotifications: TNotificationList;
 
@@ -697,7 +698,7 @@ begin
   databaseConnection.Name := aConnectionName;
   databaseConnection.LoadParams;
 
-  case databaseConnection.Manager of
+  case databaseConnection.Backend of
     dbSqlite:
       begin
         //aConnector.ConnectionDefName := databaseConnection.Name;
@@ -759,7 +760,7 @@ begin
       end;
 
       if DMM.sqlCon.Connected then
-        UpgradeDatabaseSchema(databaseConnection.Manager);
+        UpgradeDatabaseSchema(databaseConnection.Backend);
     end;
   finally
     FreeAndNil(dlgConnect);

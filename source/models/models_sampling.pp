@@ -423,7 +423,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
-  data_columns, data_consts, data_setparam, data_getvalue,
+  data_columns, data_consts, data_setparam, data_getvalue, data_providers,
   models_users,
   udm_main;
 
@@ -694,23 +694,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'expedition_id, ' +
-        'expedition_name, ' +
-        'start_date, ' +
-        'end_date, ' +
-        'duration, ' +
-        'project_id, ' +
-        'description, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM expeditions');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Expeditions.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -737,23 +722,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'expedition_id, ' +
-        'expedition_name, ' +
-        'start_date, ' +
-        'end_date, ' +
-        'duration, ' +
-        'project_id, ' +
-        'description, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM expeditions');
-    Add('WHERE expedition_id = :cod');
+    Add(xProvider.Expeditions.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -837,22 +807,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO expeditions (' +
-      'expedition_name, ' +
-      'start_date, ' +
-      'end_date, ' +
-      'project_id, ' +
-      'description, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':expedition_name, ' +
-      'date(:start_date), ' +
-      'date(:end_date), ' +
-      ':project_id, ' +
-      ':description, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.Expeditions.Insert);
 
     ParamByName('expedition_name').AsString := R.Name;
     SetDateParam(ParamByName('start_date'), R.StartDate);
@@ -895,17 +850,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE expeditions SET ' +
-        'expedition_name = :expedition_name, ' +
-        'start_date = date(:start_date), ' +
-        'end_date = date(:end_date), ' +
-        'project_id = :project_id, ' +
-        'description = :description, ' +
-        'user_updated = :user_updated, ' +
-        'update_date = datetime(''now'', ''subsec''), ' +
-        'marked_status = :marked_status, ' +
-        'active_status = :active_status');
-      Add('WHERE (expedition_id = :expedition_id)');
+    Add(xProvider.Expeditions.Update);
 
     ParamByName('expedition_name').AsString := R.Name;
     SetDateParam(ParamByName('start_date'), R.StartDate);
@@ -1253,40 +1198,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'net_id, ' +
-        'survey_id, ' +
-        'net_station_id, ' +
-        'permanent_net_id, ' +
-        'net_number, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'coordinate_precision, ' +
-        'sample_date, ' +
-        'net_open_1, ' +
-        'net_close_1, ' +
-        'net_open_2, ' +
-        'net_close_2, ' +
-        'net_open_3, ' +
-        'net_close_3, ' +
-        'net_open_4, ' +
-        'net_close_4, ' +
-        'open_time_total, ' +
-        'net_length, ' +
-        'net_height, ' +
-        'net_area, ' +
-        'net_mesh, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM nets_effort');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.NetsEffort.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1310,9 +1223,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM nets_effort');
+    Add(xProvider.NetsEffort.SelectTable(swcNone));
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (net_number = :anet)');
+
     ParamByName('ASURVEY').AsInteger := aSurvey;
     ParamByName('ANET').AsInteger := StrToInt(aNetNumber);
     Open;
@@ -1337,40 +1251,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'net_id, ' +
-        'survey_id, ' +
-        'net_station_id, ' +
-        'permanent_net_id, ' +
-        'net_number, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'coordinate_precision, ' +
-        'sample_date, ' +
-        'net_open_1, ' +
-        'net_close_1, ' +
-        'net_open_2, ' +
-        'net_close_2, ' +
-        'net_open_3, ' +
-        'net_close_3, ' +
-        'net_open_4, ' +
-        'net_close_4, ' +
-        'open_time_total, ' +
-        'net_length, ' +
-        'net_height, ' +
-        'net_area, ' +
-        'net_mesh, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM nets_effort');
-    Add('WHERE net_id = :cod');
+    Add(xProvider.NetsEffort.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1498,54 +1380,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO nets_effort (' +
-      'survey_id, ' +
-      'net_station_id, ' +
-      'permanent_net_id, ' +
-      'net_number, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'sample_date, ' +
-      'net_open_1, ' +
-      'net_close_1, ' +
-      'net_open_2, ' +
-      'net_close_2, ' +
-      'net_open_3, ' +
-      'net_close_3, ' +
-      'net_open_4, ' +
-      'net_close_4, ' +
-      'net_length, ' +
-      'net_height, ' +
-      'net_mesh, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':net_station_id, ' +
-      ':permanent_net_id, ' +
-      ':net_number, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':coordinate_precision, ' +
-      'date(:sample_date), ' +
-      'time(:net_open_1), ' +
-      'time(:net_close_1), ' +
-      'time(:net_open_2), ' +
-      'time(:net_close_2), ' +
-      'time(:net_open_3), ' +
-      'time(:net_close_3), ' +
-      'time(:net_open_4), ' +
-      'time(:net_close_4), ' +
-      ':net_length, ' +
-      ':net_height, ' +
-      ':net_mesh, ' +
-      ':full_name, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''));');
+    Add(xProvider.NetsEffort.Insert);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     ParamByName('net_number').AsInteger := R.NetNumber;
@@ -1605,33 +1440,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE nets_effort SET ' +
-      'survey_id = :survey_id, ' +
-      'net_station_id = :net_station_id, ' +
-      'permanent_net_id = :permanent_net_id, ' +
-      'net_number = :net_number, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'sample_date = :sample_date, ' +
-      'net_open_1 = :net_open_1, ' +
-      'net_close_1 = :net_close_1, ' +
-      'net_open_2 = :net_open_2, ' +
-      'net_close_2 = :net_close_2, ' +
-      'net_open_3 = :net_open_3, ' +
-      'net_close_3 = :net_close_3, ' +
-      'net_open_4 = :net_open_4, ' +
-      'net_close_4 = :net_close_4, ' +
-      'net_length = :net_length, ' +
-      'net_height = :net_height, ' +
-      'net_mesh = :net_mesh, ' +
-      'full_name = :full_name, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (net_id = :net_id)');
+    Add(xProvider.NetsEffort.Update);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     ParamByName('net_number').AsInteger := R.NetNumber;
@@ -1963,34 +1772,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'vegetation_id, ' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'observer_id, ' +
-      'herbs_proportion, ' +
-      'herbs_distribution, ' +
-      'herbs_avg_height, ' +
-      'shrubs_proportion, ' +
-      'shrubs_distribution, ' +
-      'shrubs_avg_height, ' +
-      'trees_proportion, ' +
-      'trees_distribution, ' +
-      'trees_avg_height, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM vegetation');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Vegetations.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -2015,13 +1798,14 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM vegetation');
+    Add(xProvider.Vegetations.SelectTable(swcNone));
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (date(sample_date) = date(:adate))');
     Add('AND (time(sample_time) = time(:atime))');
     Add('AND (longitude = :alongitude)');
     Add('AND (latitude = :alatitude)');
     Add('AND (observer_id = :aobserver)');
+
     ParamByName('ASURVEY').AsInteger := aSurvey;
     ParamByName('AOBSERVER').AsInteger := aObserver;
     ParamByName('ADATE').AsString := aDate;
@@ -2050,34 +1834,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'vegetation_id, ' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'observer_id, ' +
-      'herbs_proportion, ' +
-      'herbs_distribution, ' +
-      'herbs_avg_height, ' +
-      'shrubs_proportion, ' +
-      'shrubs_distribution, ' +
-      'shrubs_avg_height, ' +
-      'trees_proportion, ' +
-      'trees_distribution, ' +
-      'trees_avg_height, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM vegetation');
-    Add('WHERE vegetation_id = :cod');
+    Add(xProvider.Vegetations.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2191,46 +1949,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO vegetation (' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'observer_id, ' +
-      'herbs_proportion, ' +
-      'herbs_distribution, ' +
-      'herbs_avg_height, ' +
-      'shrubs_proportion, ' +
-      'shrubs_distribution, ' +
-      'shrubs_avg_height, ' +
-      'trees_proportion, ' +
-      'trees_distribution, ' +
-      'trees_avg_height, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      'date(:sample_date), ' +
-      'time(:sample_time), ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':coordinate_precision, ' +
-      ':observer_id, ' +
-      ':herbs_proportion, ' +
-      ':herbs_distribution, ' +
-      ':herbs_avg_height, ' +
-      ':shrubs_proportion, ' +
-      ':shrubs_distribution, ' +
-      ':shrubs_avg_height, ' +
-      ':trees_proportion, ' +
-      ':trees_distribution, ' +
-      ':trees_avg_height, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.Vegetations.Insert);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
@@ -2286,29 +2005,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE vegetation SET ' +
-      'survey_id = :survey_id, ' +
-      'sample_date = date(:sample_date), ' +
-      'sample_time = time(:sample_time), ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'observer_id = :observer_id, ' +
-      'herbs_proportion = :herbs_proportion, ' +
-      'herbs_distribution = :herbs_distribution, ' +
-      'herbs_avg_height = :herbs_avg_height, ' +
-      'shrubs_proportion = :shrubs_proportion, ' +
-      'shrubs_distribution = :shrubs_distribution, ' +
-      'shrubs_avg_height = :shrubs_avg_height, ' +
-      'trees_proportion = :trees_proportion, ' +
-      'trees_distribution = :trees_distribution, ' +
-      'trees_avg_height = :trees_avg_height, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (vegetation_id = :vegetation_id)');
+    Add(xProvider.Vegetations.Update);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
@@ -2547,20 +2244,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'survey_member_id, ' +
-        'survey_id, ' +
-        'person_id, ' +
-        'visitor, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM survey_team');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.SurveyTeams.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -2584,9 +2269,10 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM survey_team');
+    Add(xProvider.SurveyTeams.SelectTable(swcNone));
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (person_id = :aperson)');
+
     ParamByName('asurvey').AsInteger := aSurveyKey;
     ParamByName('aperson').AsInteger := aPersonKey;
     Open;
@@ -2611,20 +2297,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'survey_member_id, ' +
-        'survey_id, ' +
-        'person_id, ' +
-        'visitor, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM survey_team');
-    Add('WHERE survey_member_id = :cod');
+    Add(xProvider.SurveyTeams.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -2696,18 +2370,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO survey_team (' +
-      'survey_id, ' +
-      'person_id, ' +
-      'visitor, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':person_id, ' +
-      ':visitor, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.SurveyTeams.Insert);
 
     ParamByName('survey_id').AsInteger := R.SurveyId;
     ParamByName('person_id').AsInteger := R.PersonId;
@@ -2748,15 +2411,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE survey_team SET ' +
-      'survey_id = :survey_id, ' +
-      'person_id = :person_id, ' +
-      'visitor = :visitor, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec''),' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (survey_member_id = :survey_member_id)');
+    Add(xProvider.SurveyTeams.Update);
 
     ParamByName('survey_id').AsInteger := R.SurveyId;
     ParamByName('person_id').AsInteger := R.PersonId;
@@ -3107,40 +2762,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'survey_id, ' +
-        'survey_date, ' +
-        'start_time, ' +
-        'end_time, ' +
-        'duration, ' +
-        'method_id, ' +
-        'net_station_id, ' +
-        'expedition_id, ' +
-        'project_id, ' +
-        'locality_id, ' +
-        'sample_id, ' +
-        'start_latitude, ' +
-        'start_longitude, ' +
-        'end_latitude, ' +
-        'end_longitude, ' +
-        'coordinate_precision, ' +
-        'observers_tally, ' +
-        'area_total, ' +
-        'distance_total, ' +
-        'nets_total, ' +
-        'habitat, ' +
-        'net_rounds, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM surveys');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Surveys.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -3165,7 +2788,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM surveys');
+    Add(xProvider.Surveys.SelectTable(swcNone));
     Add('WHERE (locality_id = :alocal)');
     Add('AND (method_id = :amethod)');
     if aSampleId <> EmptyStr then
@@ -3202,40 +2825,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'survey_id, ' +
-        'survey_date, ' +
-        'start_time, ' +
-        'end_time, ' +
-        'duration, ' +
-        'method_id, ' +
-        'net_station_id, ' +
-        'expedition_id, ' +
-        'project_id, ' +
-        'locality_id, ' +
-        'sample_id, ' +
-        'start_latitude, ' +
-        'start_longitude, ' +
-        'end_latitude, ' +
-        'end_longitude, ' +
-        'coordinate_precision, ' +
-        'observers_tally, ' +
-        'area_total, ' +
-        'distance_total, ' +
-        'nets_total, ' +
-        'habitat, ' +
-        'net_rounds, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM surveys');
-    Add('WHERE survey_id = :cod');
+    Add(xProvider.Surveys.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -3367,58 +2958,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO surveys (' +
-        'survey_date, ' +
-        'start_time, ' +
-        'end_time, ' +
-        'duration, ' +
-        'method_id, ' +
-        'net_station_id, ' +
-        'expedition_id, ' +
-        'project_id, ' +
-        'locality_id, ' +
-        'sample_id, ' +
-        'start_latitude, ' +
-        'start_longitude, ' +
-        'end_latitude, ' +
-        'end_longitude, ' +
-        'coordinate_precision, ' +
-        'observers_tally, ' +
-        'area_total, ' +
-        'distance_total, ' +
-        'nets_total, ' +
-        'habitat, ' +
-        'net_rounds, ' +
-        'full_name, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'insert_date) ');
-    Add('VALUES (' +
-        'date(:survey_date), ' +
-        'time(:start_time), ' +
-        'time(:end_time), ' +
-        ':duration, ' +
-        ':method_id, ' +
-        ':net_station_id, ' +
-        ':expedition_id, ' +
-        ':project_id, ' +
-        ':locality_id, ' +
-        ':sample_id, ' +
-        ':start_latitude, ' +
-        ':start_longitude, ' +
-        ':end_latitude, ' +
-        ':end_longitude, ' +
-        ':coordinate_precision, ' +
-        ':observers_tally, ' +
-        ':area_total, ' +
-        ':distance_total, ' +
-        ':nets_total, ' +
-        ':habitat, ' +
-        ':net_rounds, ' +
-        ':full_name, ' +
-        ':notes, ' +
-        ':user_inserted, ' +
-        'datetime(''now'',''subsec''));');
+    Add(xProvider.Surveys.Insert);
 
     SetDateParam(ParamByName('survey_date'), R.SurveyDate);
     SetTimeParam(ParamByName('start_time'), R.StartTime);
@@ -3477,36 +3017,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE surveys SET ' +
-      'survey_date = date(:survey_date), ' +
-      'start_time = time(:start_time), ' +
-      'end_time = time(:end_time), ' +
-      'duration = :duration, ' +
-      'method_id = :method_id, ' +
-      'net_station_id = :net_station_id, ' +
-      'expedition_id = :expedition_id, ' +
-      'project_id = :project_id, ' +
-      'locality_id = :locality_id, ' +
-      'sample_id = :sample_id, ' +
-      'start_latitude = :start_latitude, ' +
-      'start_longitude = :start_longitude, ' +
-      'end_latitude = :end_latitude, ' +
-      'end_longitude = :end_longitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'observers_tally = :observers_tally, ' +
-      'area_total = :area_total, ' +
-      'distance_total = :distance_total, ' +
-      'nets_total = :nets_total, ' +
-      'habitat = :habitat, ' +
-      'net_rounds = :net_rounds, ' +
-      'full_name = :full_name, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'exported_status = :exported_status, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (survey_id = :survey_id)');
+    Add(xProvider.Surveys.Update);
 
     SetDateParam(ParamByName('survey_date'), R.SurveyDate);
     SetTimeParam(ParamByName('start_time'), R.StartTime);
@@ -3823,32 +3334,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'weather_id, ' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'sample_moment, ' +
-      'observer_id, ' +
-      'cloud_cover, ' +
-      'precipitation, ' +
-      'rainfall, ' +
-      'temperature, ' +
-      'wind_speed_bft, ' +
-      'wind_speed_kmh, ' +
-      'wind_direction, ' +
-      'relative_humidity, ' +
-      'atmospheric_pressure, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM weather_logs');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.WeatherLogs.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -3873,11 +3360,12 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM weather_logs');
+    Add(xProvider.WeatherLogs.SelectTable(swcNone));
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (date(sample_date) = date(:adate))');
     Add('AND (time(sample_time) = time(:atime))');
     Add('AND (observer_id = :aobserver)');
+
     ParamByName('ASURVEY').AsInteger := aSurvey;
     ParamByName('AOBSERVER').AsInteger := aObserver;
     ParamByName('ADATE').AsString := aDate;
@@ -3904,32 +3392,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'weather_id, ' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'sample_moment, ' +
-      'observer_id, ' +
-      'cloud_cover, ' +
-      'precipitation, ' +
-      'rainfall, ' +
-      'temperature, ' +
-      'wind_speed_bft, ' +
-      'wind_speed_kmh, ' +
-      'wind_direction, ' +
-      'relative_humidity, ' +
-      'atmospheric_pressure, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'insert_date, ' +
-      'update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM weather_logs');
-    Add('WHERE weather_id = :cod');
+    Add(xProvider.WeatherLogs.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -4037,42 +3501,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO weather_logs (' +
-      'survey_id, ' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'sample_moment, ' +
-      'observer_id, ' +
-      'cloud_cover, ' +
-      'precipitation, ' +
-      'rainfall, ' +
-      'temperature, ' +
-      'wind_speed_bft, ' +
-      'wind_speed_kmh, ' +
-      'wind_direction, ' +
-      'relative_humidity, ' +
-      'atmospheric_pressure, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      'date(:sample_date), ' +
-      'time(:sample_time), ' +
-      ':sample_moment, ' +
-      ':observer_id, ' +
-      ':cloud_cover, ' +
-      ':precipitation, ' +
-      ':rainfall, ' +
-      ':temperature, ' +
-      ':wind_speed_bft, ' +
-      ':wind_speed_kmh, ' +
-      ':wind_direction, ' +
-      ':relative_humidity, ' +
-      ':atmospheric_pressure, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.WeatherLogs.Insert);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
@@ -4125,27 +3554,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE weather_logs SET ' +
-      'survey_id = :survey_id, ' +
-      'sample_date = date(:sample_date), ' +
-      'sample_time = time(:sample_time), ' +
-      'sample_moment = :sample_moment, ' +
-      'observer_id = :observer_id, ' +
-      'cloud_cover = :cloud_cover, ' +
-      'precipitation = :precipitation, ' +
-      'rainfall = :rainfall, ' +
-      'temperature = :temperature, ' +
-      'wind_speed_bft = :wind_speed_bft, ' +
-      'wind_speed_kmh = :wind_speed_kmh, ' +
-      'wind_direction = :wind_direction, ' +
-      'relative_humidity = :relative_humidity, ' +
-      'atmospheric_pressure = :atmospheric_pressure, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (weather_id = :weather_id)');
+    Add(xProvider.WeatherLogs.Update);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);

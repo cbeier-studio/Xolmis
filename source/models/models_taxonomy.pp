@@ -167,8 +167,8 @@ type
 implementation
 
 uses
-  utils_locale, utils_validations, utils_taxonomy,
-  data_consts, data_columns, data_getvalue, data_setparam,
+  utils_locale, utils_global, utils_validations, utils_taxonomy,
+  data_consts, data_columns, data_getvalue, data_setparam, data_providers,
   models_users,
   udm_main;
 
@@ -566,51 +566,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'taxon_id, ' +
-      'full_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'english_name, ' +
-      'portuguese_name, ' +
-      'spanish_name, ' +
-      'quick_code, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'iucn_status, ' +
-      'extinct, ' +
-      'extinction_year, ' +
-      'sort_num, ' +
-      'group_name, ' +
-      'order_id, ' +
-      'family_id, ' +
-      'subfamily_id, ' +
-      'genus_id, ' +
-      'species_id, ' +
-      'subspecies_group_id, ' +
-      'incertae_sedis, ' +
-      'ebird_code, ' +
-      'clements_taxonomy, ' +
-      'ioc_taxonomy, ' +
-      'ioc_rank_id, ' +
-      'ioc_parent_taxon_id, ' +
-      'ioc_valid_id, ' +
-      'ioc_sort_num, ' +
-      'ioc_english_name, ' +
-      'cbro_taxonomy, ' +
-      'other_portuguese_names, ' +
-      'distribution, ' +
-      'ioc_distribution, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM zoo_taxa');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.ZooTaxa.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -637,51 +594,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'taxon_id, ' +
-      'full_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'english_name, ' +
-      'portuguese_name, ' +
-      'spanish_name, ' +
-      'quick_code, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'iucn_status, ' +
-      'extinct, ' +
-      'extinction_year, ' +
-      'sort_num, ' +
-      'group_name, ' +
-      'order_id, ' +
-      'family_id, ' +
-      'subfamily_id, ' +
-      'genus_id, ' +
-      'species_id, ' +
-      'subspecies_group_id, ' +
-      'incertae_sedis, ' +
-      'ebird_code, ' +
-      'clements_taxonomy, ' +
-      'ioc_taxonomy, ' +
-      'ioc_rank_id, ' +
-      'ioc_parent_taxon_id, ' +
-      'ioc_valid_id, ' +
-      'ioc_sort_num, ' +
-      'ioc_english_name, ' +
-      'cbro_taxonomy, ' +
-      'other_portuguese_names, ' +
-      'distribution, ' +
-      'ioc_distribution, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM zoo_taxa');
-    Add('WHERE taxon_id = :cod');
+    Add(xProvider.ZooTaxa.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -845,68 +759,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO zoo_taxa (' +
-      'full_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'english_name, ' +
-      'portuguese_name, ' +
-      'spanish_name, ' +
-      'quick_code, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'iucn_status, ' +
-      'extinct, ' +
-      'extinction_year, ' +
-      'sort_num, ' +
-      'group_name, ' +
-      'incertae_sedis, ' +
-      'ebird_code, ' +
-      'clements_taxonomy, ' +
-      'ioc_taxonomy, ' +
-      'ioc_rank_id, ' +
-      'ioc_parent_taxon_id, ' +
-      'ioc_valid_id, ' +
-      'ioc_sort_num, ' +
-      'ioc_english_name, ' +
-      'cbro_taxonomy, ' +
-      'other_portuguese_names, ' +
-      'distribution, ' +
-      'ioc_distribution, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':authorship, ' +
-      ':formatted_name, ' +
-      ':english_name, ' +
-      ':portuguese_name, ' +
-      ':spanish_name, ' +
-      ':quick_code, ' +
-      ':rank_id, ' +
-      ':parent_taxon_id, ' +
-      ':valid_id, ' +
-      ':iucn_status, ' +
-      ':extinct, ' +
-      ':extinction_year, ' +
-      ':sort_num, ' +
-      ':group_name, ' +
-      ':incertae_sedis, ' +
-      ':ebird_code, ' +
-      ':clements_taxonomy, ' +
-      ':ioc_taxonomy, ' +
-      ':ioc_rank_id, ' +
-      ':ioc_parent_taxon_id, ' +
-      ':ioc_valid_id, ' +
-      ':ioc_sort_num, ' +
-      ':ioc_english_name, ' +
-      ':cbro_taxonomy, ' +
-      ':other_portuguese_names, ' +
-      ':distribution, ' +
-      ':ioc_distribution, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.ZooTaxa.Insert);
 
     ParamByName('full_name').AsString := R.FullName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
@@ -951,8 +804,8 @@ begin
     if (R.ParentTaxonId > 0) then
     begin
       Clear;
-      Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id, subspecies_group_id FROM zoo_taxa');
-      Add('WHERE taxon_id = :ataxon');
+      Add(xProvider.ZooTaxa.SelectHierarchy);
+
       ParamByName('ataxon').AsInteger := R.ParentTaxonId;
       Open;
       R.OrderId := FieldByName('order_id').AsInteger;
@@ -974,14 +827,8 @@ begin
     end;
     // Save the taxon hierarchy
     Clear;
-    Add('UPDATE zoo_taxa SET');
-    Add('  order_id = :order_id,');
-    Add('  family_id = :family_id,');
-    Add('  subfamily_id = :subfamily_id,');
-    Add('  genus_id = :genus_id,');
-    Add('  species_id = :species_id,');
-    Add('  subspecies_group_id = :subspecies_group_id');
-    Add('WHERE taxon_id = :aid');
+    Add(xProvider.ZooTaxa.UpdateHierarchy);
+
     SetForeignParam(ParamByName('order_id'), R.OrderId);
     SetForeignParam(ParamByName('family_id'), R.FamilyId);
     SetForeignParam(ParamByName('subfamily_id'), R.SubfamilyId);
@@ -1016,40 +863,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE zoo_taxa SET ' +
-      'full_name = :full_name, ' +
-      'authorship = :authorship, ' +
-      'formatted_name = :formatted_name, ' +
-      'english_name = :english_name, ' +
-      'portuguese_name = :portuguese_name, ' +
-      'spanish_name = :spanish_name, ' +
-      'quick_code = :quick_code, ' +
-      'rank_id = :rank_id, ' +
-      'parent_taxon_id = :parent_taxon_id, ' +
-      'valid_id = :valid_id, ' +
-      'iucn_status = :iucn_status, ' +
-      'extinct = :extinct, ' +
-      'extinction_year = :extinction_year, ' +
-      'sort_num = :sort_num, ' +
-      'group_name = :group_name, ' +
-      'incertae_sedis = :incertae_sedis, ' +
-      'ebird_code = :ebird_code, ' +
-      'clements_taxonomy = :clements_taxonomy, ' +
-      'ioc_taxonomy = :ioc_taxonomy, ' +
-      'ioc_rank_id = :ioc_rank_id, ' +
-      'ioc_parent_taxon_id = :ioc_parent_taxon_id, ' +
-      'ioc_valid_id = :ioc_valid_id, ' +
-      'ioc_sort_num = :ioc_sort_num, ' +
-      'ioc_english_name = :ioc_english_name, ' +
-      'cbro_taxonomy = :cbro_taxonomy, ' +
-      'other_portuguese_names = :other_portuguese_names, ' +
-      'distribution = :distribution, ' +
-      'ioc_distribution = :ioc_distribution, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (taxon_id = :taxon_id)');
+    Add(xProvider.ZooTaxa.Update);
 
     ParamByName('full_name').AsString := R.FullName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
@@ -1090,8 +904,8 @@ begin
     if (R.ParentTaxonId > 0) then
     begin
       Clear;
-      Add('SELECT order_id, family_id, subfamily_id, genus_id, species_id, subspecies_group_id FROM zoo_taxa');
-      Add('WHERE taxon_id = :ataxon');
+      Add(xProvider.ZooTaxa.SelectHierarchy);
+
       ParamByName('ataxon').AsInteger := R.ParentTaxonId;
       Open;
       R.OrderId := FieldByName('order_id').AsInteger;
@@ -1113,14 +927,8 @@ begin
     end;
     // Save the taxon hierarchy
     Clear;
-    Add('UPDATE zoo_taxa SET');
-    Add('  order_id = :order_id,');
-    Add('  family_id = :family_id,');
-    Add('  subfamily_id = :subfamily_id,');
-    Add('  genus_id = :genus_id,');
-    Add('  species_id = :species_id,');
-    Add('  subspecies_group_id = :subspecies_group_id');
-    Add('WHERE taxon_id = :aid');
+    Add(xProvider.ZooTaxa.UpdateHierarchy);
+
     SetForeignParam(ParamByName('order_id'), R.OrderId);
     SetForeignParam(ParamByName('family_id'), R.FamilyId);
     SetForeignParam(ParamByName('subfamily_id'), R.SubfamilyId);
@@ -1343,8 +1151,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT * FROM taxon_ranks');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.TaxonRanks.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1371,8 +1179,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT * FROM taxon_ranks');
-    Add('WHERE band_id = :cod');
+    Add(xProvider.TaxonRanks.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then

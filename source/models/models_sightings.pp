@@ -133,8 +133,9 @@ type
 implementation
 
 uses
-  utils_locale, utils_system, utils_global, utils_validations, utils_conversions, models_users,
-  data_consts, data_columns, data_setparam, data_getvalue,
+  utils_locale, utils_system, utils_global, utils_validations, utils_conversions,
+  data_types, data_consts, data_columns, data_setparam, data_getvalue, data_providers,
+  models_users,
   udm_main;
 
 { TSighting }
@@ -543,53 +544,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'sighting_id, ' +
-      'survey_id, ' +
-      'individual_id, ' +
-      'sighting_date, ' +
-      'sighting_time, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'method_id, ' +
-      'mackinnon_list_num, ' +
-      'observer_id, ' +
-      'taxon_id, ' +
-      'subjects_tally, ' +
-      'subject_distance, ' +
-      'flight_height, ' +
-      'flight_direction, ' +
-      'subject_seen, ' +
-      'subject_heard, ' +
-      'subject_photographed, ' +
-      'subject_recorded, ' +
-      'subject_captured, ' +
-      'males_tally, ' +
-      'females_tally, ' +
-      'not_sexed_tally, ' +
-      'adults_tally, ' +
-      'immatures_tally, ' +
-      'not_aged_tally, ' +
-      'new_captures_tally, ' +
-      'recaptures_tally, ' +
-      'unbanded_tally, ' +
-      'detection_type, ' +
-      'breeding_status, ' +
-      'not_surveying, ' +
-      'ebird_available, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM sightings');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Sightings.SelectTable(swcFieldValue, tbNone));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -613,11 +569,12 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT sighting_id FROM sightings');
+    Add(xProvider.Sightings.SelectTable(swcNone, tbNone));
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (taxon_id = :ataxon)');
     if aObserver > 0 then
       Add('AND (observer_id = :aobserver)');
+
     ParamByName('ASURVEY').AsInteger := aSurvey;
     ParamByName('ATAXON').AsInteger := aTaxon;
     if aObserver > 0 then
@@ -644,53 +601,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'sighting_id, ' +
-      'survey_id, ' +
-      'individual_id, ' +
-      'sighting_date, ' +
-      'sighting_time, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'method_id, ' +
-      'mackinnon_list_num, ' +
-      'observer_id, ' +
-      'taxon_id, ' +
-      'subjects_tally, ' +
-      'subject_distance, ' +
-      'flight_height, ' +
-      'flight_direction, ' +
-      'subject_seen, ' +
-      'subject_heard, ' +
-      'subject_photographed, ' +
-      'subject_recorded, ' +
-      'subject_captured, ' +
-      'males_tally, ' +
-      'females_tally, ' +
-      'not_sexed_tally, ' +
-      'adults_tally, ' +
-      'immatures_tally, ' +
-      'not_aged_tally, ' +
-      'new_captures_tally, ' +
-      'recaptures_tally, ' +
-      'unbanded_tally, ' +
-      'detection_type, ' +
-      'breeding_status, ' +
-      'not_surveying, ' +
-      'ebird_available, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM sightings');
-    Add('WHERE sighting_id = :cod');
+    Add(xProvider.Sightings.SelectTable(swcId, tbNone));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -858,85 +770,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO sightings (' +
-      'survey_id, ' +
-      'individual_id, ' +
-      'sighting_date, ' +
-      'sighting_time, ' +
-      'locality_id, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'coordinate_precision, ' +
-      'method_id, ' +
-      'mackinnon_list_num, ' +
-      'observer_id, ' +
-      'taxon_id, ' +
-      'subjects_tally, ' +
-      'subject_distance, ' +
-      'flight_height, ' +
-      'flight_direction, ' +
-      'subject_seen, ' +
-      'subject_heard, ' +
-      'subject_photographed, ' +
-      'subject_recorded, ' +
-      'subject_captured, ' +
-      'males_tally, ' +
-      'females_tally, ' +
-      'not_sexed_tally, ' +
-      'adults_tally, ' +
-      'immatures_tally, ' +
-      'not_aged_tally, ' +
-      'new_captures_tally, ' +
-      'recaptures_tally, ' +
-      'unbanded_tally, ' +
-      'detection_type, ' +
-      'breeding_status, ' +
-      'not_surveying, ' +
-      'ebird_available, ' +
-      'full_name, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':survey_id, ' +
-      ':individual_id, ' +
-      'date(:sighting_date), ' +
-      //'(CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
-      'time(:sighting_time), ' +
-      ':locality_id, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':coordinate_precision, ' +
-      ':method_id, ' +
-      ':mackinnon_list_num, ' +
-      ':observer_id, ' +
-      ':taxon_id, ' +
-      ':subjects_tally, ' +
-      ':subject_distance, ' +
-      ':flight_height, ' +
-      ':flight_direction, ' +
-      ':subject_seen, ' +
-      ':subject_heard, ' +
-      ':subject_photographed, ' +
-      ':subject_recorded, ' +
-      ':subject_captured, ' +
-      ':males_tally, ' +
-      ':females_tally, ' +
-      ':not_sexed_tally, ' +
-      ':adults_tally, ' +
-      ':immatures_tally, ' +
-      ':not_aged_tally, ' +
-      ':new_captures_tally, ' +
-      ':recaptures_tally, ' +
-      ':unbanded_tally, ' +
-      ':detection_type, ' +
-      ':breeding_status, ' +
-      ':not_surveying, ' +
-      ':ebird_available, ' +
-      ':full_name, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'',''subsec''))');
+    Add(xProvider.Sightings.Insert);
 
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
@@ -1008,49 +842,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE sightings SET ' +
-      'survey_id = :survey_id, ' +
-      'individual_id = :individual_id, ' +
-      'sighting_date = date(:sighting_date), ' +
-      //'sighting_time = (CASE WHEN :sighting_time IS NULL THEN NULL ELSE time(:sighting_time) END),' +
-      'sighting_time = time(:sighting_time), ' +
-      'locality_id = :locality_id, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'coordinate_precision = :coordinate_precision, ' +
-      'method_id = :method_id, ' +
-      'mackinnon_list_num = :mackinnon_list_num, ' +
-      'observer_id = :observer_id, ' +
-      'taxon_id = :taxon_id, ' +
-      'subjects_tally = :subjects_tally, ' +
-      'subject_distance = :subject_distance, ' +
-      'flight_height = :flight_height, ' +
-      'flight_direction = :flight_direction, ' +
-      'subject_seen = :subject_seen, ' +
-      'subject_heard = :subject_heard, ' +
-      'subject_photographed = :subject_photographed, ' +
-      'subject_recorded = :subject_recorded, ' +
-      'subject_captured = :subject_captured, ' +
-      'males_tally = :males_tally, ' +
-      'females_tally = :females_tally, ' +
-      'not_sexed_tally = :not_sexed_tally, ' +
-      'adults_tally = :adults_tally, ' +
-      'immatures_tally = :immatures_tally, ' +
-      'not_aged_tally = :not_aged_tally, ' +
-      'new_captures_tally = :new_captures_tally, ' +
-      'recaptures_tally = :recaptures_tally, ' +
-      'unbanded_tally = :unbanded_tally, ' +
-      'detection_type = :detection_type, ' +
-      'breeding_status = :breeding_status, ' +
-      'not_surveying = :not_surveying, ' +
-      'ebird_available = :ebird_available, ' +
-      'full_name = :full_name, ' +
-      'notes = :notes, ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (sighting_id = :sighting_id)');
+    Add(xProvider.Sightings.Update);
 
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);

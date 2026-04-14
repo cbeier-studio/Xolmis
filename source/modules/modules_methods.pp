@@ -129,17 +129,17 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_METHOD_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_METHOD_NAME, rscName, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_METHOD_ABBREVIATION, rscAbbreviation, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EBIRD_NAME, rscEBirdName, sdtText, Crit,
-          False, aValue));
+          True, aValue));
       end;
     end;
   end;

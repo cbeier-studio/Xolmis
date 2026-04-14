@@ -84,7 +84,9 @@ var
 implementation
 
 uses
-  utils_locale, models_users, data_consts, data_getvalue, utils_validations, data_columns, data_setparam,
+  utils_locale, utils_global, utils_validations,
+  data_consts, data_getvalue, data_columns, data_setparam, data_providers,
+  models_users,
   udm_main;
 
 function IsInfraspecific(aTaxonRank: Integer): Boolean;
@@ -575,32 +577,10 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //SQLConnection := DMM.sqlCon;
-    //SQLTransaction := DMM.sqlTrans;
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'taxon_id, ' +
-      'taxon_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'vernacular_name, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'order_id, ' +
-      'family_id, ' +
-      'genus_id, ' +
-      'species_id, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM botanic_taxa');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.BotanicalTaxa.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -626,30 +606,9 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT ' +
-      'taxon_id, ' +
-      'taxon_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'vernacular_name, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'order_id, ' +
-      'family_id, ' +
-      'genus_id, ' +
-      'species_id, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM botanic_taxa');
-    Add('WHERE taxon_id = :cod');
+    Add(xProvider.BotanicalTaxa.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -750,30 +709,8 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    //DataBase := DMM.sqlCon;
-    //Transaction := DMM.sqlTrans;
-
     Clear;
-    Add('INSERT INTO botanic_taxa (' +
-      'taxon_name, ' +
-      'authorship, ' +
-      'formatted_name, ' +
-      'vernacular_name, ' +
-      'rank_id, ' +
-      'parent_taxon_id, ' +
-      'valid_id, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':taxon_name, ' +
-      ':authorship, ' +
-      ':formatted_name, ' +
-      ':vernacular_name, ' +
-      ':rank_id, ' +
-      ':parent_taxon_id, ' +
-      ':valid_id, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.BotanicalTaxa.Insert);
 
     ParamByName('taxon_name').AsString := R.FullName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
@@ -797,8 +734,8 @@ begin
     if (R.ParentTaxonId > 0) then
     begin
       Clear;
-      Add('SELECT order_id, family_id, genus_id, species_id FROM botanic_taxa');
-      Add('WHERE taxon_id = :ataxon');
+      Add(xProvider.BotanicalTaxa.SelectHierarchy);
+
       ParamByName('ataxon').AsInteger := R.ParentTaxonId;
       Open;
       R.OrderId := FieldByName('order_id').AsInteger;
@@ -815,12 +752,8 @@ begin
     end;
     // Save the taxon hierarchy
     Clear;
-    Add('UPDATE botanic_taxa SET');
-    Add('  order_id = :order_id,');
-    Add('  family_id = :family_id,');
-    Add('  genus_id = :genus_id,');
-    Add('  species_id = :species_id');
-    Add('WHERE taxon_id = :aid');
+    Add(xProvider.BotanicalTaxa.UpdateHierarchy);
+
     SetForeignParam(ParamByName('order_id'), R.OrderId);
     SetForeignParam(ParamByName('family_id'), R.FamilyId);
     SetForeignParam(ParamByName('genus_id'), R.GenusId);
@@ -853,17 +786,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE botanic_taxa SET ' +
-      'taxon_name = :taxon_name, ' +
-      'authorship = :authorship, ' +
-      'formatted_name = :formatted_name, ' +
-      'vernacular_name = :vernacular_name, ' +
-      'rank_id = :rank_id, ' +
-      'parent_taxon_id = :parent_taxon_id, ' +
-      'valid_id = :valid_id, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (taxon_id = :taxon_id)');
+    Add(xProvider.BotanicalTaxa.Update);
 
     ParamByName('taxon_name').AsString := R.FullName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
@@ -881,8 +804,8 @@ begin
     if (R.ParentTaxonId > 0) then
     begin
       Clear;
-      Add('SELECT order_id, family_id, genus_id, species_id FROM botanic_taxa');
-      Add('WHERE taxon_id = :ataxon');
+      Add(xProvider.BotanicalTaxa.SelectHierarchy);
+
       ParamByName('ataxon').AsInteger := R.ParentTaxonId;
       Open;
       R.OrderId := FieldByName('order_id').AsInteger;
@@ -899,12 +822,8 @@ begin
     end;
     // Save the taxon hierarchy
     Clear;
-    Add('UPDATE botanic_taxa SET');
-    Add('  order_id = :order_id,');
-    Add('  family_id = :family_id,');
-    Add('  genus_id = :genus_id,');
-    Add('  species_id = :species_id');
-    Add('WHERE taxon_id = :aid');
+    Add(xProvider.BotanicalTaxa.UpdateHierarchy);
+
     SetForeignParam(ParamByName('order_id'), R.OrderId);
     SetForeignParam(ParamByName('family_id'), R.FamilyId);
     SetForeignParam(ParamByName('genus_id'), R.GenusId);

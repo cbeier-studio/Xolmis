@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Xolmis"><module name="data_providers"><element name="TSQLWhereClause"><short>Modifier for SQL script to add a common WHERE clause filter</short>
+      </element><element name="IAudiosSQL.CreateTable"><short>Returns the SQL statement to create the <var>audio_library</var> table.</short>
+      </element><element name="IAudiosSQL"><short>Interface for <var>audio_library</var> table SQL scripts</short>
+      </element><element name="IAudiosSQL.SelectAll"><short>Returns a <var>SELECT</var> statement for table‑view queries.</short><descr><p>The <var>WHERE</var> clause is dynamically appended based on the <var>TSQLWhereClause</var> parameter, allowing filtering by ID, active status, marked status, or arbitrary field/value pairs.</p>
+        </descr>
+      </element><element name="IAudiosSQL.SelectTable"><short>Returns a <var>SELECT</var> statement for internal table queries.</short><descr><p>The <var>WHERE</var> clause is dynamically appended based on the <var>TSQLWhereClause</var> parameter, allowing filtering by ID, active status, marked status, or arbitrary field/value pairs.</p>
+        </descr>
+      </element><element name="IAudiosSQL.Insert"><short>Returns an <var>INSERT</var> statement for adding a new audio record.</short>
+      </element><element name="IAudiosSQL.Update"><short>Returns an <var>UPDATE</var> statement for modifying an audio record.</short>
+      </element><element name="IAudiosSQL.Delete"><short>Returns a <var>DELETE</var> statement for removing an audio record.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

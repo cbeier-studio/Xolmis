@@ -161,7 +161,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_validations, utils_conversions,
-  data_consts, data_columns, data_setparam, data_getvalue,
+  data_consts, data_columns, data_setparam, data_getvalue, data_providers,
   models_users,
   udm_main;
 
@@ -527,32 +527,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'site_id, ' +
-        'site_name, ' +
-        'site_acronym, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'altitude, ' +
-        'site_rank, ' +
-        'parent_site_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
-        'full_name, ' +
-        'ebird_name, ' +
-        'language, ' +
-        'description, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM gazetteer');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Gazetteer.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -579,32 +555,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'site_id, ' +
-        'site_name, ' +
-        'site_acronym, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'altitude, ' +
-        'site_rank, ' +
-        'parent_site_id, ' +
-        'country_id, ' +
-        'state_id, ' +
-        'municipality_id, ' +
-        'full_name, ' +
-        'ebird_name, ' +
-        'language, ' +
-        'description, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM gazetteer');
-    Add('WHERE site_id = :cod');
+    Add(xProvider.Gazetteer.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -712,42 +664,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO gazetteer (' +
-      'site_name, ' +
-      'site_acronym, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'altitude, ' +
-      'site_rank, ' +
-      'parent_site_id, ' +
-      'country_id, ' +
-      'state_id, ' +
-      'municipality_id, ' +
-      'full_name, ' +
-      'ebird_name, ' +
-      'language, ' +
-      'description, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':site_name, ' +
-      ':site_acronym, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':altitude, ' +
-      ':site_rank, ' +
-      ':parent_site_id, ' +
-      ':country_id, ' +
-      ':state_id, ' +
-      ':municipality_id, ' +
-      ':full_name, ' +
-      ':ebird_name, ' +
-      ':language, ' +
-      ':description, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Gazetteer.Insert);
 
     ParamByName('site_name').AsString := R.Name;
     SetStrParam(ParamByName('site_acronym'), R.Abbreviation);
@@ -778,8 +695,8 @@ begin
     if (R.ParentSiteId > 0) then
     begin
       Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
+      Add(xProvider.Gazetteer.SelectHierarchy);
+
       ParamByName('ASITE').AsInteger := R.ParentSiteId;
       Open;
       R.CountryId := FieldByName('country_id').AsInteger;
@@ -794,11 +711,8 @@ begin
     end;
     // Save the site hierarchy
     Clear;
-    Add('UPDATE gazetteer SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE site_id = :aid');
+    Add(xProvider.Gazetteer.UpdateHierarchy);
+
     ParamByName('country_id').AsInteger := R.CountryId;
     SetForeignParam(ParamByName('state_id'), R.StateId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
@@ -830,27 +744,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE gazetteer SET ' +
-      'site_name = :site_name, ' +
-      'site_acronym = :site_acronym, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'altitude = :altitude, ' +
-      'site_rank = :site_rank, ' +
-      'parent_site_id = :parent_site_id, ' +
-      'country_id = :country_id, ' +
-      'state_id = :state_id, ' +
-      'municipality_id = :municipality_id, ' +
-      'full_name = :full_name, ' +
-      'ebird_name = :ebird_name, ' +
-      'language = :language, ' +
-      'description = :description, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (site_id = :site_id)');
+    Add(xProvider.Gazetteer.Update);
 
     ParamByName('site_name').AsString := R.Name;
     SetStrParam(ParamByName('site_acronym'), R.Abbreviation);
@@ -877,8 +771,8 @@ begin
     if (R.ParentSiteId > 0) then
     begin
       Clear;
-      Add('SELECT country_id, state_id, municipality_id FROM gazetteer');
-      Add('WHERE site_id = :asite');
+      Add(xProvider.Gazetteer.SelectHierarchy);
+
       ParamByName('ASITE').AsInteger := R.ParentSiteId;
       Open;
       R.CountryId := FieldByName('country_id').AsInteger;
@@ -893,11 +787,8 @@ begin
     end;
     // Save the site hierarchy
     Clear;
-    Add('UPDATE gazetteer SET');
-    Add('  country_id = :country_id,');
-    Add('  state_id = :state_id,');
-    Add('  municipality_id = :municipality_id');
-    Add('WHERE site_id = :aid');
+    Add(xProvider.Gazetteer.UpdateHierarchy);
+
     ParamByName('country_id').AsInteger := R.CountryId;
     SetForeignParam(ParamByName('state_id'), R.StateId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
@@ -1169,29 +1060,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-        'poi_id, ' +
-        'sample_date, ' +
-        'sample_time, ' +
-        'poi_name, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'altitude, ' +
-        'observer_id, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'sighting_id, ' +
-        'survey_id, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM poi_library');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.PoiLibrary.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -1218,29 +1088,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-        'poi_id, ' +
-        'sample_date, ' +
-        'sample_time, ' +
-        'poi_name, ' +
-        'longitude, ' +
-        'latitude, ' +
-        'altitude, ' +
-        'observer_id, ' +
-        'taxon_id, ' +
-        'individual_id, ' +
-        'sighting_id, ' +
-        'survey_id, ' +
-        'notes, ' +
-        'user_inserted, ' +
-        'user_updated, ' +
-        'datetime(insert_date, ''localtime'') AS insert_date, ' +
-        'datetime(update_date, ''localtime'') AS update_date, ' +
-        'exported_status, ' +
-        'marked_status, ' +
-        'active_status ' +
-      'FROM poi_library');
-    Add('WHERE poi_id = :cod');
+    Add(xProvider.PoiLibrary.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -1339,36 +1188,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO poi_library (' +
-      'sample_date, ' +
-      'sample_time, ' +
-      'poi_name, ' +
-      'longitude, ' +
-      'latitude, ' +
-      'altitude, ' +
-      'observer_id, ' +
-      'taxon_id, ' +
-      'individual_id, ' +
-      'sighting_id, ' +
-      'survey_id, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      'date(:sample_date), ' +
-      'time(:sample_time), ' +
-      ':poi_name, ' +
-      ':longitude, ' +
-      ':latitude, ' +
-      ':altitude, ' +
-      ':observer_id, ' +
-      ':taxon_id, ' +
-      ':individual_id, ' +
-      ':sighting_id, ' +
-      ':survey_id, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.PoiLibrary.Insert);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
@@ -1417,24 +1237,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE poi_library SET ' +
-      'sample_date = date(:sample_date), ' +
-      'sample_time = time(:sample_time), ' +
-      'poi_name = :poi_name, ' +
-      'longitude = :longitude, ' +
-      'latitude = :latitude, ' +
-      'altitude = :altitude, ' +
-      'observer_id = :observer_id, ' +
-      'taxon_id = :taxon_id, ' +
-      'individual_id = :individual_id, ' +
-      'sighting_id = :sighting_id, ' +
-      'survey_id = :survey_id, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'', ''subsec''), ' +
-      'marked_status = :marked_status, ' +
-      'active_status = :active_status');
-    Add('WHERE (poi_id = :poi_id)');
+    Add(xProvider.PoiLibrary.Update);
 
     SetDateParam(ParamByName('sample_date'), R.SampleDate);
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);

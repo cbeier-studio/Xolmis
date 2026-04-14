@@ -162,7 +162,9 @@ var
 
 implementation
 
-uses utils_locale, utils_global, data_types, data_management, data_columns, data_schema, utils_dialogs;
+uses
+  utils_locale, utils_global, utils_dialogs,
+  data_types, data_management, data_columns, data_schema, data_providers;
 
 {$R *.lfm}
 
@@ -175,6 +177,9 @@ begin
   FWaitingConnection := False;
   sysCon.DatabaseName := EmptyStr;
   sqlCon.DatabaseName := EmptyStr;
+
+  { >> Create SQL provider }
+  xProvider := TSQLProvider.Create(dbSqlite);
 
   { >> Create active user and settings objects }
   ActiveUser := TUser.Create();
@@ -240,6 +245,8 @@ begin
 
   //if Assigned(ActiveUser) then
     FreeAndNil(ActiveUser);
+
+  //xProvider.Free;
 end;
 
 procedure TDMM.iCheckboxGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;

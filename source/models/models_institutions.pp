@@ -89,7 +89,10 @@ type
 implementation
 
 uses
-  utils_locale, models_users, utils_validations, data_consts, data_columns, data_setparam, data_getvalue, udm_main;
+  utils_locale, utils_global, utils_validations,
+  data_consts, data_columns, data_setparam, data_getvalue, data_providers,
+  models_users,
+  udm_main;
 
 { TInstitution }
 
@@ -360,30 +363,8 @@ begin
   try
     MacroCheck := True;
 
-    Add('SELECT ' +
-      'institution_id, ' +
-      'full_name, ' +
-      'acronym, ' +
-      'address_1, ' +
-      'address_2, ' +
-      'neighborhood, ' +
-      'zip_code, ' +
-      'municipality_id, ' +
-      'state_id, ' +
-      'country_id, ' +
-      'manager_name, ' +
-      'email_addr, ' +
-      'phone_num, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM institutions');
-    Add('WHERE %afield = :avalue');
+    Add(xProvider.Institutions.SelectTable(swcFieldValue));
+
     MacroByName('afield').Value := FieldName;
     ParamByName('avalue').Value := Value;
     Open;
@@ -410,30 +391,8 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('SELECT ' +
-      'institution_id, ' +
-      'full_name, ' +
-      'acronym, ' +
-      'address_1, ' +
-      'address_2, ' +
-      'neighborhood, ' +
-      'zip_code, ' +
-      'municipality_id, ' +
-      'state_id, ' +
-      'country_id, ' +
-      'manager_name, ' +
-      'email_addr, ' +
-      'phone_num, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'user_updated, ' +
-      'datetime(insert_date, ''localtime'') AS insert_date, ' +
-      'datetime(update_date, ''localtime'') AS update_date, ' +
-      'exported_status, ' +
-      'marked_status, ' +
-      'active_status ' +
-      'FROM institutions');
-    Add('WHERE institution_id = :cod');
+    Add(xProvider.Institutions.SelectTable(swcId));
+
     ParamByName('COD').AsInteger := Id;
     Open;
     if not EOF then
@@ -535,38 +494,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('INSERT INTO institutions (' +
-      'full_name, ' +
-      'acronym, ' +
-      'address_1, ' +
-      'address_2, ' +
-      'neighborhood, ' +
-      'zip_code, ' +
-      'municipality_id, ' +
-      'state_id, ' +
-      'country_id, ' +
-      'manager_name, ' +
-      'email_addr, ' +
-      'phone_num, ' +
-      'notes, ' +
-      'user_inserted, ' +
-      'insert_date) ');
-    Add('VALUES (' +
-      ':full_name, ' +
-      ':acronym, ' +
-      ':address_1, ' +
-      ':address_2, ' +
-      ':neighborhood, ' +
-      ':zip_code, ' +
-      ':municipality_id, ' +
-      ':state_id, ' +
-      ':country_id, ' +
-      ':manager_name, ' +
-      ':email_addr, ' +
-      ':phone_num, ' +
-      ':notes, ' +
-      ':user_inserted, ' +
-      'datetime(''now'', ''subsec''))');
+    Add(xProvider.Institutions.Insert);
 
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('acronym').AsString := R.Abbreviation;
@@ -617,23 +545,7 @@ begin
   with Qry, SQL do
   try
     Clear;
-    Add('UPDATE institutions SET ' +
-      'full_name = :full_name, ' +
-      'acronym = :acronym, ' +
-      'address_1 = :address_1, ' +
-      'address_2 = :address_2, ' +
-      'neighborhood = :neighborhood, ' +
-      'zip_code = :zip_code, ' +
-      'municipality_id = :municipality_id, ' +
-      'state_id = :state_id, ' +
-      'country_id = :country_id, ' +
-      'manager_name = :manager_name, ' +
-      'email_addr = :email_addr, ' +
-      'phone_num = :phone_num, ' +
-      'notes = :notes, ' +
-      'user_updated = :user_updated, ' +
-      'update_date = datetime(''now'',''subsec'') ');
-    Add('WHERE (institution_id = :institution_id)');
+    Add(xProvider.Institutions.Update);
 
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('acronym').AsString := R.Abbreviation;
