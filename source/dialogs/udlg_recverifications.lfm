@@ -212,17 +212,17 @@ object dlgRecVerifications: TdlgRecVerifications
       end    
       item
         Title.Caption = 'Status'
-        Width = 217
+        Width = 216
         FieldName = 'verification_status'
       end    
       item
         Title.Caption = 'Researcher'
-        Width = 217
+        Width = 216
         FieldName = 'person_name'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 217
+        Width = 215
         FieldName = 'notes'
       end>
     DataSource = dsHistory
@@ -236,6 +236,7 @@ object dlgRecVerifications: TdlgRecVerifications
     TabOrder = 2
     TitleFont.Color = 6579300
     TitleStyle = tsNative
+    OnPrepareCanvas = dbgHistoryPrepareCanvas
   end
   object dsHistory: TDataSource
     AutoEdit = False

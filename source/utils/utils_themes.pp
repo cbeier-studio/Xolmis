@@ -114,6 +114,38 @@ const
   clAccentDark2  = TColor($00923D00); // rgb(0, 61, 146)
   clAccentDark3  = TColor($00681900); // rgb(0, 25, 104)
 
+  // Tag colors
+  clTagBlueBGLight = TColor($00FDF2E3);
+  clTagBlueFGLight = TColor($00A1470D);
+  clTagLeafGreenBGLight = TColor($00E9F5E8);
+  clTagLeafGreenFGLight = TColor($00205E1B);
+  clTagGoldBGLight = TColor($00E1F8FF);
+  clTagGoldFGLight = TColor($00006E8D);
+  clTagBurntOrangeBGLight = TColor($00E7E9FB);
+  clTagBurntOrangeFGLight = TColor($000C36BF);
+  clTagRedBGLight = TColor($00EEEBFF);
+  clTagRedFGLight = TColor($001C1CB7);
+  clTagVioletBGLight = TColor($00F5E5F3);
+  clTagVioletFGLight = TColor($008C144A);
+  clTagCyanBGLight = TColor($00FAF7E0);
+  clTagCyanFGLight = TColor($00646000);
+  clTagWaterGreenBGLight = TColor($00F1F2E0);
+  clTagWaterGreenFGLight = TColor($00404D00);
+  clTagGreyBGLight = TColor($00F5F5F5);
+  clTagGreyFGLight = TColor($00424242);
+  clTagTerracotaBGLight = TColor($00E9EBEF);
+  clTagTerracotaFGLight = TColor($002E344E);
+  clTagNavyBlueBGLight = TColor($00FEF5E1);
+  clTagNavyBlueFGLight = TColor($009B5701);
+  clTagMossGreenBGLight = TColor($00E9F8F1);
+  clTagMossGreenFGLight = TColor($001E6933);
+  clTagPinkBGLight = TColor($00ECE4FC);
+  clTagPinkFGLight = TColor($004F0E88);
+  clTagBrightOrangeBGLight = TColor($00E0F3FF);
+  clTagBrightOrangeFGLight = TColor($000051E6);
+  clTagTealBGLight = TColor($00F1EFEC);
+  clTagTealFGLight = TColor($00383226);
+
 const
   { Dark mode }
   clSolidBGBaseDark       = TColor($00202020); // rgb(32, 32, 32)
@@ -221,6 +253,38 @@ const
   clLightLimeGreenChart   = TColor($0070F0AF); // rgb(175, 240, 112)
   clPeachChart            = TColor($005A8CFF); // rgb(255, 140, 90)
   clLightPeachChart       = TColor($00A5BFFF); // rgb(255, 191, 165)
+
+  // Tag colors
+  clTagBlueBGDark = TColor($00A1470D);
+  clTagBlueFGDark = TColor($00FDF2E3);
+  clTagLeafGreenBGDark = TColor($00205E1B);
+  clTagLeafGreenFGDark = TColor($00E9F5E8);
+  clTagGoldBGDark = TColor($00006E8D);
+  clTagGoldFGDark = TColor($00E1F8FF);
+  clTagBurntOrangeBGDark = TColor($000C36BF);
+  clTagBurntOrangeFGDark = TColor($00E7E9FB);
+  clTagRedBGDark = TColor($001C1CB7);
+  clTagRedFGDark = TColor($00EEEBFF);
+  clTagVioletBGDark = TColor($008C144A);
+  clTagVioletFGDark = TColor($00F5E5F3);
+  clTagCyanBGDark = TColor($00646000);
+  clTagCyanFGDark = TColor($00FAF7E0);
+  clTagWaterGreenBGDark = TColor($00404D00);
+  clTagWaterGreenFGDark = TColor($00F1F2E0);
+  clTagGreyBGDark = TColor($00424242);
+  clTagGreyFGDark = TColor($00F5F5F5);
+  clTagTerracotaBGDark = TColor($002E344E);
+  clTagTerracotaFGDark = TColor($00E9EBEF);
+  clTagNavyBlueBGDark = TColor($009B5701);
+  clTagNavyBlueFGDark = TColor($00FEF5E1);
+  clTagMossGreenBGDark = TColor($001E6933);
+  clTagMossGreenFGDark = TColor($00E9F8F1);
+  clTagPinkBGDark = TColor($004F0E88);
+  clTagPinkFGDark = TColor($00ECE4FC);
+  clTagBrightOrangeBGDark = TColor($000051E6);
+  clTagBrightOrangeFGDark = TColor($00E0F3FF);
+  clTagTealBGDark = TColor($00383226);
+  clTagTealFGDark = TColor($00F1EFEC);
 
 type
   TBackgroundColors = record

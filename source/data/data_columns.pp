@@ -779,7 +779,7 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'rank_name':              Fields[i].DisplayLabel := rscName;
-        'rank_acronym':           Fields[i].DisplayLabel := rscAcronym;
+        'rank_acronym':           Fields[i].DisplayLabel := rscAbbreviation;
         'rank_seq':               Fields[i].DisplayLabel := rscSequence;
         'main_rank':              Fields[i].DisplayLabel := rscMainRank;
         'subrank':                Fields[i].DisplayLabel := rscSubRank;
@@ -944,7 +944,7 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
-        'acronym':                Fields[i].DisplayLabel := rscAcronym;
+        'acronym':                Fields[i].DisplayLabel := rscAbbreviation;
         'zip_code':               Fields[i].DisplayLabel := rscPostalCode;
         'address_1':              Fields[i].DisplayLabel := rscAddress1;
         'address_2':              Fields[i].DisplayLabel := rscAddress2;
@@ -1076,7 +1076,7 @@ begin
         'project_id':             Fields[i].DisplayLabel := rscProjectID;
         'person_id':              Fields[i].DisplayLabel := rscPersonID;
         'person_name':            Fields[i].DisplayLabel := rscPerson;
-        'person_acronym':         Fields[i].DisplayLabel := rscAcronym;
+        'person_acronym':         Fields[i].DisplayLabel := rscAbbreviation;
         'project_manager':        Fields[i].DisplayLabel := rscManager;
         'institution_id':         Fields[i].DisplayLabel := rscInstitutionID;
         'institution_name':       Fields[i].DisplayLabel := rscInstitution;
@@ -1284,7 +1284,7 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
-        'acronym':                Fields[i].DisplayLabel := rscAcronym;
+        'acronym':                Fields[i].DisplayLabel := rscAbbreviation;
         'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
         'locality_name':          Fields[i].DisplayLabel := rscLocality;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
@@ -1444,7 +1444,7 @@ begin
         'survey_id':              Fields[i].DisplayLabel := rscSurveyID;
         'person_id':              Fields[i].DisplayLabel := rscPersonID;
         'person_name':            Fields[i].DisplayLabel := rscPerson;
-        'person_acronym':         Fields[i].DisplayLabel := rscAcronym;
+        'person_acronym':         Fields[i].DisplayLabel := rscAbbreviation;
         'visitor':                Fields[i].DisplayLabel := rscVisitor;
         'person_color':           Fields[i].DisplayLabel := rscProfileColor;
         'survey_member_id':       Fields[i].DisplayLabel := rscId;

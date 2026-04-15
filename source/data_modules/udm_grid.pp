@@ -637,6 +637,7 @@ type
     qNestRevisionsinsert_date: TDateTimeField;
     qNestRevisionsmarked_status: TBooleanField;
     qNestRevisionsnest_id: TLongintField;
+    qNestRevisionsnest_name: TStringField;
     qNestRevisionsnest_revision_id: TAutoIncField;
     qNestRevisionsnest_stage: TStringField;
     qNestRevisionsnest_status: TStringField;

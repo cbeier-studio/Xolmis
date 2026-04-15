@@ -43,7 +43,7 @@ object frmCustomGrid: TfrmCustomGrid
       Height = 614
       Top = 0
       Width = 464
-      PageIndex = 0
+      PageIndex = 6
       Align = alClient
       TabOrder = 0
       object cardViewRecord: TPage
@@ -7455,7 +7455,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Field'
-              Width = 278
+              Width = 274
             end>
           MouseWheelOption = mwGrid
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
@@ -7469,7 +7469,7 @@ object frmCustomGrid: TfrmCustomGrid
             100
             70
             0
-            278
+            274
           )
           Cells = (
             1
@@ -10311,14 +10311,6 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pmgRowHeight: TMenuItem
       Caption = 'R&ow height'
-      object pmgDefaultRowHeight: TMenuItem
-        Caption = 'De&fault'
-        ImageIndex = 66
-        OnClick = sbRowHeightDefaultClick
-      end
-      object Separator17: TMenuItem
-        Caption = '-'
-      end
       object pmgIncreaseRowHeight: TMenuItem
         Caption = '&Increase'
         ImageIndex = 62
@@ -10331,9 +10323,17 @@ object frmCustomGrid: TfrmCustomGrid
         ShortCut = 16573
         OnClick = sbRowHeightDecreaseClick
       end
+      object Separator17: TMenuItem
+        Caption = '-'
+      end
+      object pmgDefaultRowHeight: TMenuItem
+        Caption = 'De&fault'
+        ImageIndex = 66
+        OnClick = sbRowHeightDefaultClick
+      end
     end
     object pmgAutoSizeColumns: TMenuItem
-      Caption = 'Adjust columns'' &width to content'
+      Caption = 'Auto adjust columns &width'
       ImageIndex = 68
       OnClick = sbColumnWidthAutoAdjustClick
     end
@@ -10668,6 +10668,14 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '&Delete'
       ImageIndex = 4
       OnClick = sbDelChildClick
+    end
+    object Separator21: TMenuItem
+      Caption = '-'
+    end
+    object pmcAutoSizeColumns: TMenuItem
+      Caption = 'Auto adjust columns width'
+      ImageIndex = 68
+      OnClick = pmcAutoSizeColumnsClick
     end
   end
   object dsRecycle: TDataSource
@@ -25730,12 +25738,12 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 129
     Top = 120
     object pmcColumnSortAsc: TMenuItem
-      Caption = 'Sort column &ascending'
+      Caption = 'Sort &ascending'
       ImageIndex = 91
       OnClick = pmcColumnSortAscClick
     end
     object pmcColumnSortDesc: TMenuItem
-      Caption = 'Sort column &descending'
+      Caption = 'Sort &descending'
       ImageIndex = 92
       OnClick = pmcColumnSortDescClick
     end
@@ -25743,12 +25751,12 @@ object frmCustomGrid: TfrmCustomGrid
       Caption = '-'
     end
     object pmcColumnAutoAdjustWidth: TMenuItem
-      Caption = 'Adjust column''s width to content'
+      Caption = 'Adjust column width'
       ImageIndex = 68
       OnClick = pmcColumnAutoAdjustWidthClick
     end
     object pmcAllColumnsAutoAdjustWidth: TMenuItem
-      Caption = 'Adjust all columns'' &width to content'
+      Caption = 'Auto adjust all columns &width'
       ImageIndex = 68
       OnClick = sbColumnWidthAutoAdjustClick
     end

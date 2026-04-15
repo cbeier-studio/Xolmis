@@ -1580,10 +1580,7 @@ end;
 function TProjectActivity.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
 var
   aOld: TProjectActivity;
-  PropList: PPropList;
-  PropCount, I: Integer;
-  PropInfo: PPropInfo;
-  OldValue, NewValue, FriendlyName: string;
+  R: String;
 begin
   Result := False;
 
@@ -1592,33 +1589,26 @@ begin
 
   aOld := TProjectActivity(OldRec);
 
+  R := EmptyStr;
   if Assigned(Changes) then
     Changes.Clear;
   if aOld = nil then
     Exit(False);
 
-  InitProjectActivityPropsDict;
+  if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStartDate, aOld.StartDate, FStartDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTargetDate, aOld.TargetDate, FTargetDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEndDate, aOld.EndDate, FEndDate, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscGoalID, aOld.GoalId, FGoalId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscStatus, aOld.Status, FStatus, R) then
+    Changes.Add(R);
 
-  PropCount := GetPropList(Self.ClassInfo, tkProperties, @PropList);
-  try
-    for I := 0 to PropCount - 1 do
-    begin
-      PropInfo := PropList^[I];
-      OldValue := GetPropValue(aOld, PropInfo, True);
-      NewValue := GetPropValue(Self, PropInfo, True);
-      if OldValue <> NewValue then
-      begin
-        if not ProjectActivityPropsDict.TryGetData(PropInfo^.Name, FriendlyName) then
-          FriendlyName := PropInfo^.Name;
-        Changes.Add(Format('%s;%s;%s', [FriendlyName, OldValue, NewValue]));
-        Result := True;
-      end;
-    end;
-  finally
-    if Assigned(ProjectActivityPropsDict) then
-      ProjectActivityPropsDict.Free;
-    FreeMem(PropList);
-  end;
+  Result := Changes.Count > 0;
 end;
 
 function TProjectActivity.EqualsTo(const Other: TProjectActivity): Boolean;

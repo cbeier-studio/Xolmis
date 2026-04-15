@@ -10901,20 +10901,24 @@ msgid "&Refresh"
 msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmcallcolumnsautoadjustwidth.caption
-msgid "Adjust all columns' &width to content"
-msgstr "Ajustar largura de todas colunas ao conteúdo"
+msgid "Auto adjust all columns &width"
+msgstr "Auto ajuste da largura de todas colunas"
+
+#: tfrmcustomgrid.pmcautosizecolumns.caption
+msgid "Auto adjust columns width"
+msgstr "Auto ajuste da largura das colunas"
 
 #: tfrmcustomgrid.pmccolumnautoadjustwidth.caption
-msgid "Adjust column's width to content"
-msgstr "Ajustar largura da coluna ao conteúdo"
+msgid "Adjust column width"
+msgstr "Ajustar largura da coluna"
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption
-msgid "Sort column &ascending"
-msgstr "Ordenar coluna crescente"
+msgid "Sort &ascending"
+msgstr "Ordenar crescente"
 
 #: tfrmcustomgrid.pmccolumnsortdesc.caption
-msgid "Sort column &descending"
-msgstr "Ordenar coluna decrescente"
+msgid "Sort &descending"
+msgstr "Ordenar decrescente"
 
 #: tfrmcustomgrid.pmcdel.caption
 msgctxt "tfrmcustomgrid.pmcdel.caption"
@@ -11084,8 +11088,8 @@ msgstr "Atuali&zar"
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
 msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
-msgid "Adjust columns' &width to content"
-msgstr "Ajustar co&lunas ao conteúdo"
+msgid "Auto adjust columns &width"
+msgstr "Auto ajuste da largura das colunas"
 
 #: tfrmcustomgrid.pmgbandhistory.caption
 msgctxt "tfrmcustomgrid.pmgbandhistory.caption"

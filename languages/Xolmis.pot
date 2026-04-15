@@ -10917,19 +10917,23 @@ msgid "&Refresh"
 msgstr ""
 
 #: tfrmcustomgrid.pmcallcolumnsautoadjustwidth.caption
-msgid "Adjust all columns' &width to content"
+msgid "Auto adjust all columns &width"
+msgstr ""
+
+#: tfrmcustomgrid.pmcautosizecolumns.caption
+msgid "Auto adjust columns width"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnautoadjustwidth.caption
-msgid "Adjust column's width to content"
+msgid "Adjust column width"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsortasc.caption
-msgid "Sort column &ascending"
+msgid "Sort &ascending"
 msgstr ""
 
 #: tfrmcustomgrid.pmccolumnsortdesc.caption
-msgid "Sort column &descending"
+msgid "Sort &descending"
 msgstr ""
 
 #: tfrmcustomgrid.pmcdel.caption
@@ -11102,7 +11106,7 @@ msgstr ""
 
 #: tfrmcustomgrid.pmgautosizecolumns.caption
 msgctxt "tfrmcustomgrid.pmgautosizecolumns.caption"
-msgid "Adjust columns' &width to content"
+msgid "Auto adjust columns &width"
 msgstr ""
 
 #: tfrmcustomgrid.pmgbandhistory.caption

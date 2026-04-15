@@ -21,7 +21,7 @@ unit modules_permits;
 interface
 
 uses
-  Classes, SysUtils, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  Classes, SysUtils, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils, DateUtils,
   data_types, modules_core;
 
 type
@@ -42,8 +42,9 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
-  udm_main, udm_grid, ufrm_customgrid;
+  utils_locale, utils_graphics, utils_themes,
+  data_consts, data_columns, data_filters, models_media,
+  udm_main, udm_grid, ufrm_customgrid, uDarkStyleParams;
 
 { TPermitsModuleController }
 
@@ -127,6 +128,22 @@ begin
     (Column.FieldName = COL_PERMIT_NUMBER) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
+  end;
+  if (Column.FieldName = COL_EXPIRE_DATE) then
+  begin
+    if (Column.Field.AsDateTime < Today) then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+      end;
+    end;
   end;
 end;
 

@@ -739,8 +739,8 @@ begin
   FSurvey.ExpeditionId   := FExpeditionId;
   FSurvey.SurveyDate     := StrToDate(eDate.Text);
   FSurvey.Duration       := eDuration.Value;
-  FSurvey.StartTime      := StrToTime(eStartTime.Text);
-  FSurvey.EndTime        := StrToTime(eEndTime.Text);
+  FSurvey.StartTime      := StrToTimeDef(eStartTime.Text, NullTime);
+  FSurvey.EndTime        := StrToTimeDef(eEndTime.Text, NullTime);
   FSurvey.MethodId       := FMethodId;
   FSurvey.LocalityId     := FLocalityId;
   FSurvey.NetStationId   := FSamplingPlotId;
@@ -777,6 +777,8 @@ begin
   Result := True;
   Msg := EmptyStr;
   Msgs := TStringList.Create;
+  st1 := False;
+  et1 := False;
 
   // Required fields
   if (eDate.Text = EmptyStr) then

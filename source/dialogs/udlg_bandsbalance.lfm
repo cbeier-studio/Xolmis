@@ -9,7 +9,7 @@ object dlgBandsBalance: TdlgBandsBalance
   ClientWidth = 320
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.4.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel
@@ -87,7 +87,6 @@ object dlgBandsBalance: TdlgBandsBalance
     ReadOnly = True
     Scrollbars = ssAutoBoth
     TabOrder = 1
-    TitleFont.Color = 6579300
     TitleStyle = tsNative
     OnPrepareCanvas = dbgSaldoPrepareCanvas
   end

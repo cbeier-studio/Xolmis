@@ -21,7 +21,7 @@ unit uedt_projectexpense;
 interface
 
 uses
-  atshapelinebgra, Classes, DB, EditBtn, StdCtrls, ExtCtrls, SysUtils, Forms, Controls, Spin, Character,
+  atshapelinebgra, Classes, DB, EditBtn, StdCtrls, ExtCtrls, SysUtils, Forms, Controls, Spin, Character, DateUtils,
   Graphics, Dialogs, Buttons, Menus, models_projects;
 
 type
@@ -215,6 +215,7 @@ begin
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProjectExpense)]);
+    eDate.Text := DateToStr(Today);
     if FRubricId > 0 then
       eRubric.Text := GetName('project_budgets', COL_RUBRIC, COL_BUDGET_ID, FRubricId);
   end

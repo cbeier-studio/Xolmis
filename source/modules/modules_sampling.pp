@@ -21,7 +21,7 @@ unit modules_sampling;
 interface
 
 uses
-  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils, DateUtils,
   data_types, modules_core;
 
 type
@@ -171,9 +171,26 @@ end;
 
 procedure TExpeditionsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if Column.FieldName = COL_START_DATE then
+  //if Column.FieldName = COL_START_DATE then
+  //begin
+  //  SetBoldFont(TDBGrid(Sender).Canvas.Font);
+  //end;
+  if (Column.FieldName = COL_START_DATE) or
+    (Column.FieldName = COL_END_DATE) then
   begin
-    SetBoldFont(TDBGrid(Sender).Canvas.Font);
+    if (Column.Field.AsDateTime > Today) then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+      end;
+    end;
   end;
 end;
 
@@ -363,6 +380,19 @@ begin
   if Column.FieldName = COL_SURVEY_DATE then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
+    if (Column.Field.AsDateTime > Today) then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+      end;
+    end;
   end;
 end;
 
@@ -502,6 +532,19 @@ begin
   if Column.FieldName = COL_SURVEY_DATE then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
+    if (Column.Field.AsDateTime > Today) then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+      end;
+    end;
   end;
 end;
 

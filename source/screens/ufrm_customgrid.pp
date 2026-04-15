@@ -57,6 +57,7 @@ type
     lblCategoryFilter: TLabel;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmcAutoSizeColumns: TMenuItem;
     pmpReceiveBands: TMenuItem;
     pCategoryFilter: TBCPanel;
     pmpAddCountriesAndStates: TMenuItem;
@@ -128,6 +129,7 @@ type
     sbEmptyImport: TSpeedButton;
     sbEmptyClearAll: TSpeedButton;
     sbShowVideos: TSpeedButton;
+    Separator21: TMenuItem;
     Separator35: TShapeLineBGRA;
     Separator36: TMenuItem;
     Separator37: TMenuItem;
@@ -1014,6 +1016,7 @@ type
     procedure pmAddDocumentClick(Sender: TObject);
     procedure pmAddLinkClick(Sender: TObject);
     procedure pmaRefreshAudiosClick(Sender: TObject);
+    procedure pmcAutoSizeColumnsClick(Sender: TObject);
     procedure pmcColumnAutoAdjustWidthClick(Sender: TObject);
     procedure pmcColumnSortAscClick(Sender: TObject);
     procedure pmcColumnSortDescClick(Sender: TObject);
@@ -1893,6 +1896,9 @@ begin
       end;
 
     SetGridColumns(aTable, aGrid);
+
+    if xSettings.AutoAdjustColumns then
+      DBG.AutoAdjustColumns;
   finally
     //aGrid.Columns.LinkFields;
     aGrid.EndUpdate;
@@ -5258,6 +5264,18 @@ begin
   qAudios.Refresh;
 end;
 
+procedure TfrmCustomGrid.pmcAutoSizeColumnsClick(Sender: TObject);
+begin
+  case nbChilds.PageIndex of
+    0: gridChild1.AutoAdjustColumns;
+    1: gridChild2.AutoAdjustColumns;
+    2: gridChild3.AutoAdjustColumns;
+    3: gridChild4.AutoAdjustColumns;
+    4: gridChild5.AutoAdjustColumns;
+    5: gridChild6.AutoAdjustColumns;
+  end;
+end;
+
 procedure TfrmCustomGrid.pmcColumnAutoAdjustWidthClick(Sender: TObject);
 begin
   if DBG.SelectedIndex > -1 then
@@ -7455,6 +7473,15 @@ begin
       DS.Open;
     DS.Refresh;
     UpdateChildButtons(DS);
+    if xSettings.AutoAdjustColumns then
+    begin
+      gridChild1.AutoAdjustColumns;
+      gridChild2.AutoAdjustColumns;
+      gridChild3.AutoAdjustColumns;
+      gridChild4.AutoAdjustColumns;
+      gridChild5.AutoAdjustColumns;
+      gridChild6.AutoAdjustColumns;
+    end;
   finally
     isWorking := False;
   end;
@@ -7471,6 +7498,8 @@ begin
       dsLink.DataSet.Open;
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+    if xSettings.AutoAdjustColumns then
+      DBG.AutoAdjustColumns;
   finally
     isWorking := False;
   end;
@@ -8893,19 +8922,44 @@ end;
 procedure TfrmCustomGrid.UpdateChildRightPanel;
 var
   aProjectId, aRubricId: Integer;
+  ProjectBalance, RubricBalance: Double;
 begin
+  ProjectBalance := 0;
+  RubricBalance := 0;
+
   if FChildTable <> tbProjectBudgets then
     Exit;
 
   aProjectId := dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger;
   aRubricId := dsLink4.DataSet.FieldByName(COL_BUDGET_ID).AsInteger;
 
+  ProjectBalance := GetProjectBalance(aProjectId);
+  RubricBalance := GetRubricBalance(aRubricId);
+
   if FTableType = tbProjects then
   begin
-    txtProjectBalance.Caption := Format('%s / %s', [FormatFloat(MASK_TWO_DECIMAL, GetProjectBalance(aProjectId)),
+    txtProjectBalance.Caption := Format('%s / %s', [FormatFloat(MASK_TWO_DECIMAL, ProjectBalance),
       FormatFloat(MASK_TWO_DECIMAL, GetProjectTotalBudget(aProjectId))]);
-    txtRubricBalance.Caption := Format('%s / %s', [FormatFloat(MASK_TWO_DECIMAL, GetRubricBalance(aRubricId)),
+    if ProjectBalance < 0 then
+    begin
+      if IsDarkModeEnabled then
+        txtProjectBalance.Font.Color := clSystemCriticalFGDark
+      else
+        txtProjectBalance.Font.Color := clSystemCriticalFGLight;
+    end
+    else
+      txtProjectBalance.Font.Color := clDefault;
+    txtRubricBalance.Caption := Format('%s / %s', [FormatFloat(MASK_TWO_DECIMAL, RubricBalance),
       FormatFloat(MASK_TWO_DECIMAL, dsLink4.DataSet.FieldByName(COL_AMOUNT).AsFloat)]);
+    if RubricBalance < 0 then
+    begin
+      if IsDarkModeEnabled then
+        txtRubricBalance.Font.Color := clSystemCriticalFGDark
+      else
+        txtRubricBalance.Font.Color := clSystemCriticalFGLight;
+    end
+    else
+      txtRubricBalance.Font.Color := clDefault;
   end;
 end;
 

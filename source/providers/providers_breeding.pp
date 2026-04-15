@@ -694,10 +694,12 @@ function TNestRevisionsSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT nr.*, ' +
+      'n.full_name AS nest_name, ' +
       'p1.acronym AS observer_1_name, ' +
       'p2.acronym AS observer_2_name, ' +
       'z.full_name AS nidoparasite_name ' +
     'FROM nest_revisions AS nr ' +
+    'LEFT JOIN nests AS n ON nr.nest_id = n.nest_id ' +
     'LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id ' +
     'LEFT JOIN people AS p2 ON nr.observer_2_id = p2.person_id ' +
     'LEFT JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id ';

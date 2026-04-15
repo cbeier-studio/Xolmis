@@ -6,7 +6,7 @@ object edtSurvey: TedtSurvey
   AutoSize = True
   Caption = 'New survey'
   ClientHeight = 691
-  ClientWidth = 413
+  ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
@@ -1057,7 +1057,9 @@ object edtSurvey: TedtSurvey
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEditingDone = eDateEditingDone
           OnKeyDown = FormKeyDown
+          OnKeyPress = eDurationKeyPress
         end
       end
     end

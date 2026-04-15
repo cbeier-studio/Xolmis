@@ -52,8 +52,8 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
-  udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid;
+  utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
+  udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid, uDarkStyleParams;
 
 { TSightingsModuleController }
 
@@ -180,6 +180,19 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_NOT_SURVEYING).Field.AsBoolean = True) then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+      end;
+    end;
   end;
 end;
 
@@ -333,6 +346,19 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_NOT_SURVEYING).Field.AsBoolean = True) then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+      end;
+    end;
   end;
 end;
 

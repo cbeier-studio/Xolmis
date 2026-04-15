@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBGrids, DBCtrls, StdCtrls,
-  Buttons, Menus, data_types;
+  Buttons, Menus, data_types, Grids;
 
 type
 
@@ -58,6 +58,8 @@ type
     qHistoryverification_status: TStringField;
     sbClose: TBitBtn;
     procedure btnHelpClick(Sender: TObject);
+    procedure dbgHistoryPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState
+      );
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -83,7 +85,9 @@ var
 implementation
 
 uses
-  utils_locale, data_columns, data_management, utils_global, utils_system, utils_themes, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_system, utils_themes,
+  data_columns, data_management, data_consts,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -103,6 +107,55 @@ end;
 procedure TdlgRecVerifications.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_RECORD_VERIFICATIONS);
+end;
+
+procedure TdlgRecVerifications.dbgHistoryPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
+  AState: TGridDrawState);
+begin
+  if (Column.FieldName = COL_VERIFICATION_STATUS) then
+  begin
+    case Column.Field.AsString of
+      'OK':     // Record OK
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+      end;
+      'WT', 'WL', 'WC', 'WM', 'WV':  // Wrong value
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      end;
+      'MD':     // Missing data
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+        end;
+      end;
+    end;
+  end;
 end;
 
 procedure TdlgRecVerifications.FormClose(Sender: TObject; var CloseAction: TCloseAction);

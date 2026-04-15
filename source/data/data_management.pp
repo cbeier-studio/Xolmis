@@ -1618,7 +1618,7 @@ begin
       'SELECT band_size, ' +
         'COUNT( * ) AS used_bands ' +
       'FROM bands ' +
-      'WHERE (band_status != ''D'') ' +
+      'WHERE (band_status != ''A'') ' +
       'GROUP BY band_size ' +
     '), ' +
     'DailyAverage AS ( ' +
@@ -1691,7 +1691,7 @@ begin
       'SELECT b.band_size, ' +
         'COUNT(b2.band_number) AS remaining_bands ' +
       'FROM bands AS b ' +
-      'LEFT JOIN bands AS b2 ON b.band_size = b2.band_size AND b2.band_status = ''D'' ' +
+      'LEFT JOIN bands AS b2 ON b.band_size = b2.band_size AND b2.band_status = ''A'' ' +
       'GROUP BY b.band_size ' +
     ') ' +
     'SELECT b1.band_size, ' +

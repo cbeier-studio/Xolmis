@@ -21,7 +21,7 @@ unit modules_projects;
 interface
 
 uses
-  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils, DateUtils,
   data_types, modules_core;
 
 type
@@ -152,10 +152,27 @@ end;
 
 procedure TProjectsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if (Column.FieldName = COL_START_DATE) or
-    (Column.FieldName = COL_PROTOCOL_NUMBER) then
+  if (Column.FieldName = COL_PROTOCOL_NUMBER) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
+  end
+  else
+  if (Column.FieldName = COL_END_DATE) then
+  begin
+    if not (Column.Field.IsNull) and (Column.Field.AsDateTime < Today) then
+      //(TDBGrid(Sender).Columns.ColumnByFieldname(COL_PROJECT_STATUS).Field.AsString = 'R') then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+      end;
+    end;
   end;
 end;
 
@@ -308,12 +325,139 @@ end;
 
 procedure TProjectChronogramsSubmoduleController.ConfigureColumns;
 begin
+  with FGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName(COL_CHRONOGRAM_ID).Visible then
+      ColumnByFieldname(COL_CHRONOGRAM_ID).ReadOnly := True;
 
+    if DataSource.DataSet.FieldByName(COL_START_DATE).Visible then
+      ColumnByFieldName(COL_START_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_TARGET_DATE).Visible then
+      ColumnByFieldName(COL_TARGET_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_END_DATE).Visible then
+      ColumnByFieldName(COL_END_DATE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_GOAL_DESCRIPTION).Visible then
+      ColumnByFieldName(COL_GOAL_DESCRIPTION).ButtonStyle := cbsEllipsis;
+  end;
 end;
 
 procedure TProjectChronogramsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-
+  if (Column.FieldName = COL_TARGET_DATE) then
+  begin
+    if not (Column.Field.IsNull) and (Column.Field.AsDateTime < Today) and
+      not ((TDBGrid(Sender).Columns.ColumnByFieldname(COL_PROGRESS_STATUS).Field.AsString = 'C') or
+      (TDBGrid(Sender).Columns.ColumnByFieldname(COL_PROGRESS_STATUS).Field.AsString = 'F')) then
+    begin
+      if IsDarkModeEnabled then
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+      end
+      else
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+      end;
+    end;
+  end
+  else
+  if (Column.FieldName = COL_PROGRESS_STATUS) then
+  begin
+    case Column.Field.AsString of
+      'T':     // To do
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryLight;
+        end;
+      end;
+      'P':     // In progress
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+        end;
+      end;
+      'R':     // Needs review
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+        end;
+      end;
+      'B':    // Blocked
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      end;
+      'D':    // Delayed
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clTagBrightOrangeBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clTagBrightOrangeFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clTagBrightOrangeBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clTagBrightOrangeFGLight;
+        end;
+      end;
+      'C':    // Cancelled
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
+        end;
+      end;
+      'F':   // Done
+      begin
+        if IsDarkModeEnabled then
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clTagVioletBGDark;
+          TDBGrid(Sender).Canvas.Font.Color := clTagVioletFGDark;
+        end
+        else
+        begin
+          TDBGrid(Sender).Canvas.Brush.Color := clTagVioletBGLight;
+          TDBGrid(Sender).Canvas.Font.Color := clTagVioletFGLight;
+        end;
+      end;
+    end;
+  end;
 end;
 
 { TProjectBudgetsSubmoduleController }
