@@ -5209,7 +5209,6 @@ object DMS: TDMS
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
       Size = 180
     end
     object qSurveyscountry_id: TLongintField

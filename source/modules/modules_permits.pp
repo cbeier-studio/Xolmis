@@ -124,13 +124,14 @@ end;
 
 procedure TPermitsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if (Column.FieldName = COL_EXPIRE_DATE) or
-    (Column.FieldName = COL_PERMIT_NUMBER) then
+  if (Column.FieldName = COL_PERMIT_NUMBER) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
-  end;
+  end
+  else
   if (Column.FieldName = COL_EXPIRE_DATE) then
   begin
+    SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (Column.Field.AsDateTime < Today) then
     begin
       if IsDarkModeEnabled then

@@ -108,7 +108,8 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
+  utils_locale, utils_global, utils_graphics, utils_themes,
+  data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, udm_breeding, udm_individuals, ufrm_customgrid;
 
@@ -266,7 +267,8 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
   end
   else
-  if Column.FieldName = COL_NEST_FATE then
+  if (Column.FieldName = COL_NEST_FATE) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
@@ -483,7 +485,8 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
   end
   else
-  if Column.FieldName = COL_NEST_FATE then
+  if (Column.FieldName = COL_NEST_FATE) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
@@ -625,12 +628,13 @@ end;
 
 procedure TNestRevisionsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if Column.FieldName = COL_NIDOPARASITE_NAME then
+  if (Column.FieldName = COL_NIDOPARASITE_NAME) then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
   end
   else
-  if Column.FieldName = COL_NEST_STATUS then
+  if (Column.FieldName = COL_NEST_STATUS) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
@@ -780,12 +784,13 @@ end;
 
 procedure TNestRevisionsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if Column.FieldName = COL_NIDOPARASITE_NAME then
+  if (Column.FieldName = COL_NIDOPARASITE_NAME) then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
   end
   else
-  if Column.FieldName = COL_NEST_STATUS then
+  if (Column.FieldName = COL_NEST_STATUS) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of

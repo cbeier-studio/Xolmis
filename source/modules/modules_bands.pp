@@ -42,7 +42,8 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
+  utils_locale, utils_global, utils_graphics, utils_themes,
+  data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, ufrm_customgrid;
 
@@ -166,12 +167,13 @@ end;
 
 procedure TBandsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if Column.FieldName = COL_BAND_SIZE then
+  if (Column.FieldName = COL_BAND_SIZE) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
   end
   else
-  if Column.FieldName = COL_BAND_STATUS then
+  if (Column.FieldName = COL_BAND_STATUS) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of

@@ -272,7 +272,8 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
   end
   else
-  if (Column.FieldName = COL_INDIVIDUAL_SEX) then
+  if (Column.FieldName = COL_INDIVIDUAL_SEX) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     case Column.Field.AsString of
@@ -722,7 +723,8 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
   end
   else
-  if (Column.FieldName = COL_CAPTURE_TYPE) then
+  if (Column.FieldName = COL_CAPTURE_TYPE) and
+    (xSettings.UseConditionalFormatting) then
   begin
     case Column.Field.AsString of
       'N':
@@ -780,7 +782,8 @@ begin
     end;
   end
   else
-  if (Column.FieldName = COL_BAND_NAME) then
+  if (Column.FieldName = COL_BAND_NAME) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
@@ -803,7 +806,8 @@ begin
     end;
   end
   else
-  if (Column.FieldName = COL_REMOVED_BAND_NAME) then
+  if (Column.FieldName = COL_REMOVED_BAND_NAME) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
@@ -1339,7 +1343,8 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
   end
   else
-  if (Column.FieldName = COL_CAPTURE_TYPE) then
+  if (Column.FieldName = COL_CAPTURE_TYPE) and
+    (xSettings.UseConditionalFormatting) then
   begin
     case Column.Field.AsString of
       'N':
@@ -1397,7 +1402,8 @@ begin
     end;
   end
   else
-  if (Column.FieldName = COL_BAND_NAME) then
+  if (Column.FieldName = COL_BAND_NAME) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
@@ -1420,7 +1426,8 @@ begin
     end;
   end
   else
-  if (Column.FieldName = COL_REMOVED_BAND_NAME) then
+  if (Column.FieldName = COL_REMOVED_BAND_NAME) and
+    (xSettings.UseConditionalFormatting) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then

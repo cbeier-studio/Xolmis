@@ -92,7 +92,8 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
+  utils_locale, utils_global, utils_graphics, utils_themes,
+  data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, ufrm_customgrid;
 
@@ -362,7 +363,8 @@ begin
     end;
   end
   else
-  if (Column.FieldName = COL_PROGRESS_STATUS) then
+  if (Column.FieldName = COL_PROGRESS_STATUS) and
+    (xSettings.UseConditionalFormatting) then
   begin
     case Column.Field.AsString of
       'T':     // To do
