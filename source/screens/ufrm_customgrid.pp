@@ -1008,6 +1008,8 @@ type
     procedure gridDocsDblClick(Sender: TObject);
     procedure gridDocsDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure gridRecordDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+    procedure gridRecordPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
     procedure gridVideosDblClick(Sender: TObject);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
@@ -1896,6 +1898,9 @@ begin
       end;
 
     SetGridColumns(aTable, aGrid);
+
+    LoadRecordColumns;
+    LoadRecordRow;
 
     if xSettings.AutoAdjustColumns then
       DBG.AutoAdjustColumns;
@@ -4848,6 +4853,61 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.gridRecordDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect;
+  aState: TGridDrawState);
+var
+  Txt: String;
+  R, FDrawRect: TRect;
+  Flags: Longint;
+  Padding, NeededHeight: Integer;
+begin
+  if (ACol = 1) and (DBG.Columns[aRow].Field.DataType = ftMemo) then
+  begin
+    Padding := 2;
+    Txt := gridRecord.Cells[ACol, ARow];
+
+    // Line break settings
+    Flags := DT_WORDBREAK or DT_LEFT or DT_NOPREFIX;
+
+    // Calculate height
+    R := ARect;
+    InflateRect(R, -Padding, -Padding);
+    DrawText(gridRecord.Canvas.Handle, PChar(Txt), Length(Txt), R,
+      Flags or DT_CALCRECT);
+    NeededHeight := (R.Bottom - R.Top) + Padding * 2;
+
+    // Adjust row height
+    if gridRecord.RowHeights[ARow] < (R.Bottom - R.Top + 8) then
+      gridRecord.RowHeights[ARow] := R.Bottom - R.Top + 8;
+
+    // Draw wrapped text
+    gridRecord.Canvas.FillRect(ARect);
+    FDrawRect := ARect;
+    InflateRect(FDrawRect, -Padding, -Padding);
+    DrawText(gridRecord.Canvas.Handle, PChar(Txt), Length(Txt), FDrawRect, Flags);
+
+    Exit;
+  end;
+
+  // Draw regular cells
+  gridRecord.DefaultDrawCell(ACol, ARow, ARect, AState);
+end;
+
+procedure TfrmCustomGrid.gridRecordPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
+var
+  colValue: String;
+begin
+  colValue := gridRecord.Cells[0, ARow];
+
+  if ACol = 1 then
+  begin
+    if colValue = rscTaxon then
+    begin
+      gridRecord.Canvas.Font.Style := gridRecord.Canvas.Font.Style + [fsItalic];
+    end;
+  end;
+end;
+
 procedure TfrmCustomGrid.gridVideosDblClick(Sender: TObject);
 begin
   if sbPlayVideo.Enabled then
@@ -4943,7 +5003,9 @@ begin
 
       if (DBG.Columns.Items[i].Field.DataType = ftMemo) or
         (DBG.Columns.Items[i].Field.DataType = ftBlob) then
+      begin
         gridRecord.RowHeights[i] := gridRecord.DefaultRowHeight * 4;
+      end;
 
     end;
   end;
@@ -4960,7 +5022,10 @@ begin
   begin
     if DBG.Columns[i].Visible then
     begin
-      gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.AsString;
+      if (DBG.Columns.Items[i].Field.DataType = ftMemo) then
+        gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.AsString
+      else
+        gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.DisplayText;
     end;
   end;
 end;
