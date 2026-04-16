@@ -6212,6 +6212,7 @@ object DMR: TDMR
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qSightingstaxon_id: TLongintField
       DisplayLabel = 'Taxon (ID)'

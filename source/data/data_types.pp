@@ -828,18 +828,12 @@ var
           end;
         end;
       sdtBoolean: ;
-      sdtDate: ;
-      sdtTime: ;
-      sdtDateTime: ;
-      sdtYear: ;
-      sdtMonthYear:
+      sdtDate, sdtTime, sdtDateTime, sdtYear, sdtMonthYear:
         begin
-          //aValue1 := ExtractDelimited(2, aValue1, ['/']) + '-' + ExtractDelimited(1, aValue1, ['/']);
           aValue1 := QuotedStr(aValue1);
 
           if aCriteriaType = crBetween then
           begin
-            //aValue2 := ExtractDelimited(2, aValue2, ['/']) + '-' + ExtractDelimited(1, aValue2, ['/']);
             aValue2 := QuotedStr(aValue2);
           end;
         end;

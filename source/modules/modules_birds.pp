@@ -358,13 +358,23 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_ID, rscId, sdtInteger, crEqual,
           False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtYear, crEqual,
+          False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtYear, crEqual,
+          False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BIRTH_YEAR, rscBirthYear, sdtInteger, crEqual,
+          False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DEATH_YEAR, rscDeathYear, sdtInteger, crEqual,
+          False, aValue));
       end
       else
+      // Date
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
@@ -376,6 +386,7 @@ begin
         { #todo : PartialDate fields: birth_date and death_date }
       end
       else
+      // Month/year
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
       begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
@@ -388,6 +399,7 @@ begin
           False, y + '-' + m));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
@@ -1135,6 +1147,7 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
@@ -1144,6 +1157,7 @@ begin
           False, aValue));
       end
       else
+      // Date
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
@@ -1152,13 +1166,16 @@ begin
           False, aValue));
       end
       else
+      // Time
       if TryStrToTime(aValue, dt) then
       begin
+        aValue := FormatDateTime('hh:nn:ss', dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscDate, sdtTime, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_TIME, rscTime, sdtTime, crEqual,
           False, aValue));
       end
       else
+      // Year interval
       if ExecRegExpr('^\d{4}[-‒]{1}\d{4}$', aValue) then
       begin
         Crit := crBetween;
@@ -1171,6 +1188,7 @@ begin
           False, V1, V2));
       end
       else
+      // Month and year
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
       begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
@@ -1181,6 +1199,7 @@ begin
           False, y + '-' + m));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
@@ -1850,13 +1869,17 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FEATHER_ID, rscId, sdtInteger, crEqual,
           False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtYear, crEqual,
+          False, aValue));
       end
       else
+      // Date
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
@@ -1865,6 +1888,7 @@ begin
           False, aValue));
       end
       else
+      // Month/year
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
       begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
@@ -1875,6 +1899,7 @@ begin
           False, y + '-' + m));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,

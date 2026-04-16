@@ -224,13 +224,17 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SIGHTING_ID, rscSightingID, sdtInteger, crEqual,
           False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtYear, crEqual,
+          False, aValue));
       end
       else
+      // Date
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
@@ -239,13 +243,16 @@ begin
           False, aValue));
       end
       else
+      // Time
       if TryStrToTime(aValue, dt) then
       begin
+        aValue := FormatDateTime('hh:nn:ss', dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SIGHTING_TIME, rscTime, sdtTime, crEqual,
           False, aValue));
       end
       else
+      // Month/year
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
       begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
@@ -256,6 +263,7 @@ begin
           False, y + '-' + m));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,

@@ -21,7 +21,7 @@ unit modules_specimens;
 interface
 
 uses
-  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils, DateUtils,
   data_types, modules_core;
 
 type
@@ -221,6 +221,7 @@ var
   dt: TDateTime;
   Crit: TCriteriaType;
   m, y: String;
+  dia, mes, ano: Word;
 begin
   Result := False;
 
@@ -243,45 +244,50 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SPECIMEN_ID, rscId, sdtInteger, crEqual,
           False, aValue));
-      end
-      else
-      if TryStrToDate(aValue, dt) then
-      begin
-        aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtDate, crEqual,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionYear, sdtInteger, crEqual,
           False, aValue));
       end
       else
+      // Date
+      if TryStrToDate(aValue, dt) then
+      begin
+        DecodeDate(dt, ano, mes, dia);
+        //aValue := FormatDateTime('yyyy-mm-dd', dt);
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create(aoAnd));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionYear, sdtInteger, crEqual,
+          False, IntToStr(ano)));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_MONTH, rscCollectionMonth, sdtInteger, crEqual,
+          False, IntToStr(mes)));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DAY, rscCollectionDay, sdtInteger, crEqual,
+          False, IntToStr(dia)));
+      end
+      else
+      // Month/year
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
       begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
         m := ExtractDelimited(1, aValue, ['/']);
         y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DATE, rscCollectionDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create(aoAnd));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionYear, sdtInteger, crEqual,
+          False, y));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_MONTH, rscCollectionMonth, sdtInteger, crEqual,
+          False, m));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
           True, aValue));
-        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('collectors', 'Collectors', sdtText, Crit,
-        //  False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
           True, aValue));
-        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('municipality_name', 'Municipality', sdtText, Crit,
-        //  True, aValue));
-        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('state_name', 'State', sdtText, Crit,
-        //  True, aValue));
-        //SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('country_name', 'Country', sdtText, Crit,
-        //  True, aValue));
       end;
     end;
   end;

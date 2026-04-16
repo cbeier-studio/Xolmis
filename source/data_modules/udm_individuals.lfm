@@ -2593,6 +2593,7 @@ object DMI: TDMI
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qSightingslocality_id: TLongintField
       DisplayLabel = 'Locality (ID)'

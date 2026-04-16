@@ -537,6 +537,7 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qSightingslocality_id: TLongintField
       DisplayLabel = 'Locality (ID)'
@@ -4387,6 +4388,7 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qWeatherLogssample_moment: TStringField
       DisplayLabel = 'Moment'
@@ -5835,6 +5837,7 @@ object DMS: TDMS
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qVegetationlongitude: TFloatField
       DisplayLabel = 'Longitude'

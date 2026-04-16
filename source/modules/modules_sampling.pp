@@ -218,6 +218,7 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
@@ -225,6 +226,7 @@ begin
           False, aValue));
       end
       else
+      // Date
       if TryStrToDate(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
@@ -235,6 +237,7 @@ begin
           False, aValue));
       end
       else
+      // Month/year
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
       begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
@@ -247,6 +250,7 @@ begin
           False, y + '-' + m));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EXPEDITION_NAME, rscName, sdtText, Crit,
@@ -420,15 +424,17 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SURVEY_ID, rscId, sdtInteger, crEqual,
           False, aValue));
-        // if i > 999 then
-        // Add('or (strftime(''%Y'',AMO_DATA) = '+QuotedStr(aValor)+'))');
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtYear, crEqual,
+          False, aValue));
       end
       else
+      // Date
       if TryStrToDate(aValue, Dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', Dt);
@@ -437,8 +443,10 @@ begin
           False, aValue));
       end
       else
+      // Time
       if TryStrToTime(aValue, Dt) then
       begin
+        aValue := FormatDateTime('hh:nn:ss', dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_TIME, rscStartTime, sdtTime, crEqual,
           False, aValue));
@@ -446,6 +454,7 @@ begin
           False, aValue));
       end
       else
+      // Month/year
       if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
       begin
         aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
@@ -456,6 +465,7 @@ begin
           False, y + '-' + m));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,

@@ -6263,6 +6263,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qSightingstaxon_id: TLongintField
       DisplayLabel = 'Taxon (ID)'
@@ -9628,6 +9629,7 @@ object DMG: TDMG
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      DisplayFormat = 'hh:nn'
     end
     object qNestRevisionsobserver_1_id: TLongintField
       DisplayLabel = 'Observer 1 (ID)'
