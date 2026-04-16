@@ -1005,6 +1005,7 @@ type
     procedure gridChild1ContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure gridChild1DblClick(Sender: TObject);
     procedure gridColumnsCheckboxToggled(Sender: TObject; aCol, aRow: Integer; aState: TCheckboxState);
+    procedure gridColumnsColRowMoved(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
     procedure gridDocsDblClick(Sender: TObject);
     procedure gridDocsDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
@@ -4785,6 +4786,19 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.gridColumnsColRowMoved(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
+begin
+  // Moving row
+  if not IsColumn then
+  begin
+    dsLink.DataSet.Close;
+    dsLink.DataSet.Fields[sIndex-1].Index := tIndex - 1;
+    dsLink.DataSet.Open;
+
+    AddGridColumns(FTableType, DBG);
+  end;
+end;
+
 procedure TfrmCustomGrid.gridDocsDblClick(Sender: TObject);
 begin
   if sbOpenDoc.Enabled then
@@ -4861,9 +4875,9 @@ var
   Flags: Longint;
   Padding, NeededHeight: Integer;
 begin
-  if (ACol = 1) and (DBG.Columns[aRow].Field.DataType = ftMemo) then
+  if (ACol = 1) and (dsLink.DataSet.RecordCount > 0) and (DBG.Columns[aRow].Field.DataType = ftMemo) then
   begin
-    Padding := 2;
+    Padding := Round(2 * Self.GetCanvasScaleFactor);
     Txt := gridRecord.Cells[ACol, ARow];
 
     // Line break settings
@@ -4877,8 +4891,8 @@ begin
     NeededHeight := (R.Bottom - R.Top) + Padding * 2;
 
     // Adjust row height
-    if gridRecord.RowHeights[ARow] < (R.Bottom - R.Top + 8) then
-      gridRecord.RowHeights[ARow] := R.Bottom - R.Top + 8;
+    if gridRecord.RowHeights[ARow] < NeededHeight then
+      gridRecord.RowHeights[ARow] := NeededHeight;
 
     // Draw wrapped text
     gridRecord.Canvas.FillRect(ARect);
@@ -4895,15 +4909,95 @@ end;
 
 procedure TfrmCustomGrid.gridRecordPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
 var
-  colValue: String;
+  colField: String;
 begin
-  colValue := gridRecord.Cells[0, ARow];
+  colField := gridRecord.Cells[0, ARow];
 
   if ACol = 1 then
   begin
-    if colValue = rscTaxon then
+    if (gridRecord.Cells[1, aRow] = 'True') then
+    begin
+      if IsDarkModeEnabled then
+        gridRecord.Canvas.Font.Color := clSystemCriticalFGDark
+      else
+        gridRecord.Canvas.Font.Color := clSystemCriticalFGLight;
+    end;
+
+    if (colField = rscTaxon) then
     begin
       gridRecord.Canvas.Font.Style := gridRecord.Canvas.Font.Style + [fsItalic];
+    end
+    else
+    if (colField = rscDate) then
+    begin
+      if (FTableType = tbSurveys) and (gridRecord.Cells[1, aRow] <> EmptyStr) and
+        (StrToDate(gridRecord.Cells[1, aRow]) > Today) then
+      begin
+        if IsDarkModeEnabled then
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemNeutralBGDark;
+          gridRecord.Canvas.Font.Color := clSystemNeutralFGDark;
+        end
+        else
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemNeutralBGLight;
+          gridRecord.Canvas.Font.Color := clSystemNeutralFGLight;
+        end;
+      end;
+    end
+    else
+    if (FTableType = tbExpeditions) and ((colField = rscStartDate) or (colField = rscEndDate))  then
+    begin
+      if (gridRecord.Cells[1, aRow] <> EmptyStr) and
+        (StrToDate(gridRecord.Cells[1, aRow]) > Today) then
+      begin
+        if IsDarkModeEnabled then
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemNeutralBGDark;
+          gridRecord.Canvas.Font.Color := clSystemNeutralFGDark;
+        end
+        else
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemNeutralBGLight;
+          gridRecord.Canvas.Font.Color := clSystemNeutralFGLight;
+        end;
+      end;
+    end
+    else
+    if (FTableType = tbProjects) and (colField = rscEndDate)  then
+    begin
+      if (gridRecord.Cells[1, aRow] <> EmptyStr) and
+        (StrToDate(gridRecord.Cells[1, aRow]) < Today) then
+      begin
+        if IsDarkModeEnabled then
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemCriticalBGDark;
+          gridRecord.Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemCriticalBGLight;
+          gridRecord.Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      end;
+    end
+    else
+    if (FTableType = tbPermits) and (colField = rscExpireDate)  then
+    begin
+      if (gridRecord.Cells[1, aRow] <> EmptyStr) and
+        (StrToDate(gridRecord.Cells[1, aRow]) < Today) then
+      begin
+        if IsDarkModeEnabled then
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemCriticalBGDark;
+          gridRecord.Canvas.Font.Color := clSystemCriticalFGDark;
+        end
+        else
+        begin
+          gridRecord.Canvas.Brush.Color := clSystemCriticalBGLight;
+          gridRecord.Canvas.Font.Color := clSystemCriticalFGLight;
+        end;
+      end;
     end;
   end;
 end;
@@ -4993,21 +5087,26 @@ begin
 //  gRecord.AddRow(DBG.Columns.VisibleCount);
   gridRecord.ColWidths[0] := Round(gridRecord.Width * 0.3);
 
-  for i := 0 to (DBG.Columns.Count - 1) do
-  begin
-    if DBG.Columns.Items[i].Visible then
+  gridRecord.BeginUpdate;
+  try
+    for i := 0 to (DBG.Columns.Count - 1) do
     begin
-      gridRecord.RowCount := gridRecord.RowCount + 1;
-      gridRecord.Cells[0, DBG.Columns.VisibleIndex(i)] := DBG.Columns.Items[i].Title.Caption;
-      //gridRecord.BestFitRow(DBG.Columns.Item[i].VisibleIndex, 0);
-
-      if (DBG.Columns.Items[i].Field.DataType = ftMemo) or
-        (DBG.Columns.Items[i].Field.DataType = ftBlob) then
+      if DBG.Columns.Items[i].Visible then
       begin
-        gridRecord.RowHeights[i] := gridRecord.DefaultRowHeight * 4;
-      end;
+        gridRecord.RowCount := gridRecord.RowCount + 1;
+        gridRecord.Cells[0, DBG.Columns.VisibleIndex(i)] := DBG.Columns.Items[i].Title.Caption;
+        //gridRecord.BestFitRow(DBG.Columns.Item[i].VisibleIndex, 0);
 
+        if (DBG.Columns.Items[i].Field.DataType = ftMemo) or
+          (DBG.Columns.Items[i].Field.DataType = ftBlob) then
+        begin
+          gridRecord.RowHeights[i] := gridRecord.DefaultRowHeight * 4;
+        end;
+
+      end;
     end;
+  finally
+    gridRecord.EndUpdate;
   end;
 end;
 
@@ -5015,18 +5114,23 @@ procedure TfrmCustomGrid.LoadRecordRow;
 var
   i: Integer;
 begin
-  if isWorking then
-    Exit;
+  //if isWorking then
+  //  Exit;
 
-  for i := 0 to (DBG.Columns.Count - 1) do
-  begin
-    if DBG.Columns[i].Visible then
+  gridRecord.BeginUpdate;
+  try
+    for i := 0 to (DBG.Columns.Count - 1) do
     begin
-      if (DBG.Columns.Items[i].Field.DataType = ftMemo) then
-        gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.AsString
-      else
-        gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.DisplayText;
+      if DBG.Columns[i].Visible then
+      begin
+        if (dsLink.DataSet.RecordCount > 0) and (DBG.Columns[i].Field.DataType = ftMemo) then
+          gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.AsString
+        else
+          gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.DisplayText;
+      end;
     end;
+  finally
+    gridRecord.EndUpdate;
   end;
 end;
 
@@ -7785,6 +7889,7 @@ begin
 
     Result := FModule.Search(aValue);
 
+    LoadRecordRow;
     UpdateButtons(dsLink.DataSet);
   finally
     isFiltered := FSearch.QuickFilters.Count > 0;
@@ -8483,32 +8588,6 @@ begin
   Data := Sender.GetNodeData(Node);
   Data^.Checked := Node^.CheckState = csCheckedNormal;
 
-  if Sender.GetNodeLevel(Node) = 2 then
-  begin
-    if Sender.CheckState[Node] = csCheckedNormal then
-    begin
-      Sender.CheckState[Sender.NodeParent[Node]] := csMixedNormal;
-      Sender.CheckState[Sender.NodeParent[Sender.NodeParent[Node]]] := csMixedNormal;
-    end
-    else
-    begin
-      Sender.CheckState[Sender.NodeParent[Node]] := csUncheckedNormal;
-      Sender.CheckState[Sender.NodeParent[Sender.NodeParent[Node]]] := csUncheckedNormal;
-    end;
-  end
-  else
-  if Sender.GetNodeLevel(Node) = 1 then
-  begin
-    if Sender.CheckState[Node] = csCheckedNormal then
-    begin
-      Sender.CheckState[Sender.NodeParent[Node]] := csMixedNormal;
-    end
-    else
-    begin
-      Sender.CheckState[Sender.NodeParent[Node]] := csUncheckedNormal;
-    end;
-  end;
-
   if Sender.CheckedCount = 1 then
     lblCountDateFilter.Caption := Format(rsOneSelectedFemale, [Sender.CheckedCount])
   else
@@ -8548,7 +8627,7 @@ end;
 procedure TfrmCustomGrid.tvDateFilterInitNode(Sender: TBaseVirtualTree; ParentNode,
   Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
 begin
-  Node^.CheckType := ctCheckBox;
+  Node^.CheckType := ctTriStateCheckBox;
 end;
 
 procedure TfrmCustomGrid.tvSiteFilterChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
