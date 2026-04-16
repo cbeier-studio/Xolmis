@@ -1015,10 +1015,10 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Criterio := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with qFind do

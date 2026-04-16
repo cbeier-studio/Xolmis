@@ -88,7 +88,6 @@ type
   procedure FilterNestDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
   procedure FilterSightingDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
   procedure FilterCaptureDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-  procedure FilterBandDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
   procedure FilterIndividualDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
   procedure FilterProjectDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
   procedure FilterPeopleDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
@@ -240,166 +239,66 @@ end;
 procedure LoadSpecimenDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Specimens.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', sp.collection_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', sp.collection_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', sp.collection_date) AS dia');
-  //aSQL.Add('FROM specimens AS sp WHERE (sp.active_status = 1)');
 end;
 
 procedure LoadNestDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Nests.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', n.found_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', n.found_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', n.found_date) AS dia');
-  //aSQL.Add('FROM nests AS n WHERE (n.active_status = 1) UNION');
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', n.last_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', n.last_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', n.last_date) AS dia');
-  //aSQL.Add('FROM nests AS n WHERE (n.active_status = 1)');
 end;
 
 procedure LoadNestRevisionDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.NestRevisions.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', nr.revision_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', nr.revision_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', nr.revision_date) AS dia');
-  //aSQL.Add('FROM nest_revisions AS nr WHERE (nr.active_status = 1)');
 end;
 
 procedure LoadEggDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Eggs.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', e.measure_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', e.measure_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', e.measure_date) AS dia');
-  //aSQL.Add('FROM eggs AS e WHERE (e.active_status = 1)');
 end;
 
 procedure LoadSightingDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Sightings.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', s.sighting_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', s.sighting_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', s.sighting_date) AS dia');
-  //aSQL.Add('FROM sightings AS s WHERE (s.active_status = 1)');
 end;
 
 procedure LoadCaptureDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Captures.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', c.capture_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', c.capture_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', c.capture_date) AS dia');
-  //aSQL.Add('FROM captures AS c WHERE (c.active_status = 1)');
 end;
 
 procedure LoadFeatherDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Feathers.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', ft.sample_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', ft.sample_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', ft.sample_date) AS dia');
-  //aSQL.Add('FROM feathers AS ft WHERE (ft.active_status = 1)');
 end;
 
 procedure LoadExpeditionDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Expeditions.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', x.start_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', x.start_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', x.start_date) AS dia');
-  //aSQL.Add('FROM expeditions AS x WHERE (x.active_status = 1) UNION');
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', x.end_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', x.end_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', x.end_date) AS dia');
-  //aSQL.Add('FROM expeditions AS x WHERE (x.active_status = 1)');
 end;
 
 procedure LoadSurveyDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Surveys.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', sv.survey_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', sv.survey_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', sv.survey_date) AS dia');
-  //aSQL.Add('FROM surveys AS sv WHERE (sv.active_status = 1)');
 end;
 
 procedure LoadIndividualDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Individuals.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('i.birth_year AS ano,');
-  //aSQL.Add('i.birth_month AS mes,');
-  //aSQL.Add('i.birth_day AS dia');
-  //aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('CAST(strftime(''%Y'', i.banding_date) AS INTEGER) AS ano,');
-  //aSQL.Add('CAST(strftime(''%m'', i.banding_date) AS INTEGER) AS mes,');
-  //aSQL.Add('CAST(strftime(''%d'', i.banding_date) AS INTEGER) AS dia');
-  //aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('CAST(strftime(''%Y'', i.band_change_date) AS INTEGER) AS ano,');
-  //aSQL.Add('CAST(strftime(''%m'', i.band_change_date) AS INTEGER) AS mes,');
-  //aSQL.Add('CAST(strftime(''%d'', i.band_change_date) AS INTEGER) AS dia');
-  //aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1) UNION');
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('i.death_year AS ano,');
-  //aSQL.Add('i.death_month AS mes,');
-  //aSQL.Add('i.death_day AS dia');
-  //aSQL.Add('FROM individuals AS i WHERE (i.active_status = 1)');
 end;
 
 procedure LoadProjectDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Projects.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', pj.start_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', pj.start_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', pj.start_date) AS dia');
-  //aSQL.Add('FROM projects AS pj WHERE (pj.active_status = 1) UNION');
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', pj.end_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', pj.end_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', pj.end_date) AS dia');
-  //aSQL.Add('FROM projects AS pj WHERE (pj.active_status = 1)');
 end;
 
 procedure LoadPermitDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.Permits.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', l.dispatch_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', l.dispatch_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', l.dispatch_date) AS dia');
-  //aSQL.Add('FROM legal AS l WHERE (l.active_status = 1) UNION');
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', l.expire_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', l.expire_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', l.expire_date) AS dia');
-  //aSQL.Add('FROM legal AS l WHERE (l.active_status = 1)');
 end;
 
 procedure LoadPeopleDateTree(aSQL: TStrings);
 begin
   aSQL.Add(xProvider.People.SelectDateTree(False));
-  //aSQL.Add('SELECT ');
-  //aSQL.Add('strftime(''%Y'', p.birth_date) AS ano,');
-  //aSQL.Add('strftime(''%m'', p.birth_date) AS mes,');
-  //aSQL.Add('strftime(''%d'', p.birth_date) AS dia');
-  //aSQL.Add('FROM people AS p WHERE (p.active_status = 1)');
 end;
 
 procedure LoadDateTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
@@ -687,345 +586,251 @@ end;
 { ------------------------------------------------------------------------------------------ }
 
 procedure FilterSurveyDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', sv.survey_date)', 'Survey date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', sv.survey_date)', 'Survey date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', sv.survey_date)', 'Survey date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterExpeditionDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', x.start_date)', 'Start date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', x.end_date)', 'End date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', x.start_date)', 'Start date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', x.end_date)', 'End date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', x.start_date)', 'Start date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', x.end_date)', 'End date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterSpecimenDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', sp.collection_date)', 'Collection date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', sp.collection_date)', 'Collection date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', sp.collection_date)', 'Collection date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterNestDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', n.found_date)', 'Found date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', n.last_date)', 'Last date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', n.found_date)', 'Found date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', n.last_date)', 'Last date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', n.found_date)', 'Found date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', n.last_date)', 'Last date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterSightingDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', s.sighting_date)', 'Sighting date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', s.sighting_date)', 'Sighting date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', s.sighting_date)', 'Sighting date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterCaptureDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', c.capture_date)', 'Capture date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', c.capture_date)', 'Capture date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', c.capture_date)', 'Capture date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
-    end;
-  end;
-end;
-
-procedure FilterBandDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
-begin
-  if aMonth <= 0 then
-  begin
-    //Result := '((strftime(''%Y'', a.order_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') OR ' +
-    //  '(strftime(''%Y'', a.receipt_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') OR ' +
-    //  '(strftime(''%Y'', a.use_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') OR ' +
-    //  '(strftime(''%Y'', a.discharge_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') OR ' +
-    //  '(strftime(''%Y'', a.report_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + '))';
-  end
-  else
-  begin
-    if aDay <= 0 then
-    begin
-      //Result := '(((strftime(''%Y'', a.order_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.order_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.receipt_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.receipt_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.use_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.use_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.discharge_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.discharge_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.report_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.report_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ')))';
-    end
-    else
-    { Dia > 0 }
-    begin
-      //Result := '(((strftime(''%Y'', a.order_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.order_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ') AND ' +
-      //  '(strftime(''%d'', a.order_date) = ' + QuotedStr(Format('%2.2d', [aDay])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.receipt_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.receipt_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ') AND ' +
-      //  '(strftime(''%d'', a.receipt_date) = ' + QuotedStr(Format('%2.2d', [aDay])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.use_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.use_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ') AND ' +
-      //  '(strftime(''%d'', a.use_date) = ' + QuotedStr(Format('%2.2d', [aDay])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.discharge_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.discharge_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ') AND ' +
-      //  '(strftime(''%d'', a.discharge_date) = ' + QuotedStr(Format('%2.2d', [aDay])) + ')) OR ' +
-      //  '((strftime(''%Y'', a.report_date) = ' + QuotedStr(Format('%4.4d', [aYear])) + ') AND ' +
-      //  '(strftime(''%m'', a.report_date) = ' + QuotedStr(Format('%2.2d', [aMonth])) + ') AND ' +
-      //  '(strftime(''%d'', a.report_date) = ' + QuotedStr(Format('%2.2d', [aDay])) + ')))';
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterIndividualDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
 
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('(i.birth_year)', 'Birth date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', i.banding_date)', 'Banding date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', i.band_change_date)', 'Band change date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
     aSearchGroup.Fields.Add(TSearchField.Create('(i.death_year)', 'Death date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('(i.birth_year||''-''||i.birth_month)', 'Birth date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', i.banding_date)', 'Banding date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', i.band_change_date)', 'Band change date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
       aSearchGroup.Fields.Add(TSearchField.Create('(i.birth_year||''-''||i.birth_month)', 'Death date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('(i.birth_year||''-''||i.birth_month||''-''||i.birth_day)', 'Birth date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', i.banding_date)', 'Banding date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', i.band_change_date)', 'Band change date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
       aSearchGroup.Fields.Add(TSearchField.Create('(i.birth_year||''-''||i.birth_month||''-''||i.birth_day)', 'Death date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterProjectDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', start_date)', 'Start date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', end_date)', 'End date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', start_date)', 'Start date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', end_date)', 'End date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', start_date)', 'Start date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', end_date)', 'End date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
 
 procedure FilterPeopleDates(aYear, aMonth, aDay: Integer; aSearchGroup: TSearchGroup);
-//var
-//  sf: Integer;
 begin
   if aMonth <= 0 then
   begin
-    //sf := aSearchGroup.Add(TSearchGroup.Create);
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', p.birth_date)', 'Birth date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
     aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y'', p.death_date)', 'Death date', sdtText,
-      crEqual, True, Format('%4.4d', [aYear])));
+      crEqual, False, Format('%4.4d', [aYear])));
   end
   else
   begin
     if aDay <= 0 then
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', p.birth_date)', 'Birth date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m'', p.death_date)', 'Death date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d', [aYear, aMonth])));
+        crEqual, False, Format('%4.4d-%2.2d', [aYear, aMonth])));
     end
     else
     { Day > 0 }
     begin
-      //sf := aSearchGroup.Add(TSearchGroup.Create);
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', p.birth_date)', 'Birth date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
       aSearchGroup.Fields.Add(TSearchField.Create('strftime(''%Y-%m-%d'', p.death_date)', 'Death date', sdtText,
-        crEqual, True, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
+        crEqual, False, Format('%4.4d-%2.2d-%2.2d', [aYear, aMonth, aDay])));
     end;
   end;
 end;
@@ -1043,7 +848,7 @@ begin
     Exit; // no filter selected
 
   sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
-  aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtBoolean, crEqual, False, Value));
+  aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtBoolean, crEqual, True, Value));
 end;
 
 procedure AddExactTextFilter(aSearch: TCustomSearch; const FieldName, Caption: String; aText: String);
@@ -1052,7 +857,7 @@ var
 begin
   sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
   aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtText,
-        crEqual, False, aText));
+        crEqual, True, aText));
 end;
 
 procedure AddLookupFilter(aSearch: TCustomSearch; const FieldNames, Captions: array of String; LookupId: Integer);
@@ -1094,10 +899,10 @@ begin
     Exit; // no filter selected
 
   sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
-  aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtInteger, Crit, False, Value));
+  aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtInteger, Crit, True, Value));
   if NoChecked then
   begin
-    aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtInteger, crNull, False));
+    aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtInteger, crNull, True));
   end;
 end;
 
@@ -1114,14 +919,14 @@ begin
   begin
     // exact time
     aSearch.QuickFilters[sf].Fields.Add(
-      TSearchField.Create(FieldName, Caption, sdtTime, crEqual, False, QuotedStr(TimeStart)));
+      TSearchField.Create(FieldName, Caption, sdtTime, crEqual, True, QuotedStr(TimeStart)));
   end
   else
   if (TimeStart <> '') and (TimeEnd <> '') then
   begin
     // interval
     aSearch.QuickFilters[sf].Fields.Add(
-      TSearchField.Create(FieldName, Caption, sdtTime, crBetween, False, QuotedStr(TimeStart), QuotedStr(TimeEnd)));
+      TSearchField.Create(FieldName, Caption, sdtTime, crBetween, True, QuotedStr(TimeStart), QuotedStr(TimeEnd)));
   end;
 end;
 
@@ -1139,19 +944,19 @@ begin
     // time within interval
     // reg.start_time <= filter_end
     aSearch.QuickFilters[sf].Fields.Add(
-      TSearchField.Create(FieldStart, rscStartTime, sdtTime, crLessThan, False, QuotedStr(TimeEnd)));
+      TSearchField.Create(FieldStart, rscStartTime, sdtTime, crLessThan, True, QuotedStr(TimeEnd)));
     // reg.end_time >= filter_start
     aSearch.QuickFilters[sf].Fields.Add(
-      TSearchField.Create(FieldEnd, rscEndTime, sdtTime, crMoreThan, False, QuotedStr(TimeStart)));
+      TSearchField.Create(FieldEnd, rscEndTime, sdtTime, crMoreThan, True, QuotedStr(TimeStart)));
   end
   else
   if (TimeStart <> '') and (TimeEnd = '') then
   begin
     // exact time
     aSearch.QuickFilters[sf].Fields.Add(
-      TSearchField.Create(FieldStart, rscStartTime, sdtTime, crEqual, False, QuotedStr(TimeStart)));
+      TSearchField.Create(FieldStart, rscStartTime, sdtTime, crEqual, True, QuotedStr(TimeStart)));
     aSearch.QuickFilters[sf].Fields.Add(
-      TSearchField.Create(FieldEnd, rscEndTime, sdtTime, crEqual, False, QuotedStr(TimeStart)));
+      TSearchField.Create(FieldEnd, rscEndTime, sdtTime, crEqual, True, QuotedStr(TimeStart)));
   end
 end;
 
@@ -1208,14 +1013,14 @@ begin
       Data := aVirtualTree.GetNodeData(Node);
       case Data^.Rank of
         trOrder:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_ORDER_ID, 'Order', sdtInteger,
-            crEqual, True, IntToStr(Data^.Id)));
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_ORDER_ID, rscOrderID, sdtInteger,
+            crEqual, False, IntToStr(Data^.Id)));
         trFamily:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_FAMILY_ID, 'Family', sdtInteger,
-            crEqual, True, IntToStr(Data^.Id)));
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_FAMILY_ID, rscFamilyID, sdtInteger,
+            crEqual, False, IntToStr(Data^.Id)));
         trSpecies:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_SPECIES_ID, 'Species', sdtInteger,
-            crEqual, True, IntToStr(Data^.Id)));
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_SPECIES_ID, rscSpeciesID, sdtInteger,
+            crEqual, False, IntToStr(Data^.Id)));
       end;
 
       Node := aVirtualTree.GetNextChecked(Node);
@@ -1278,14 +1083,14 @@ begin
       Data := aVirtualTree.GetNodeData(Node);
       case Data^.Rank of
         srCountry:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_COUNTRY_ID, 'Country', sdtInteger,
-            crEqual, True, IntToStr(Data^.Id)));
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_COUNTRY_ID, rscCountryID, sdtInteger,
+            crEqual, False, IntToStr(Data^.Id)));
         srState:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_STATE_ID, 'State', sdtInteger,
-            crEqual, True, IntToStr(Data^.Id)));
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_STATE_ID, rscStateID, sdtInteger,
+            crEqual, False, IntToStr(Data^.Id)));
         srMunicipality:
-          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_MUNICIPALITY_ID, 'Municipality', sdtInteger,
-            crEqual, True, IntToStr(Data^.Id)));
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_MUNICIPALITY_ID, rscMunicipalityID, sdtInteger,
+            crEqual, False, IntToStr(Data^.Id)));
       end;
 
       Node := aVirtualTree.GetNextChecked(Node);
@@ -1333,7 +1138,6 @@ var
       tbSurveys:       FilterSurveyDates(aYear, aMonth, aDay, aSearchGroup);
       tbSightings:     FilterSightingDates(aYear, aMonth, aDay, aSearchGroup);
       tbSpecimens:     FilterSpecimenDates(aYear, aMonth, aDay, aSearchGroup);
-      //tbBands:         FilterBandDates(aYear, aMonth, aDay, aSearchGroup);
       tbIndividuals:   FilterIndividualDates(aYear, aMonth, aDay, aSearchGroup);
       tbCaptures:      FilterCaptureDates(aYear, aMonth, aDay, aSearchGroup);
     end;

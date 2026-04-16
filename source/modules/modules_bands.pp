@@ -42,7 +42,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_graphics, utils_themes,
+  utils_locale, utils_global, utils_graphics, utils_themes, utils_validations,
   data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, ufrm_customgrid;
@@ -274,7 +274,7 @@ end;
 
 function TBandsModuleController.Search(AValue: String): Boolean;
 var
-  i, g: Integer;
+  i, i1, i2, g: Integer;
   V1, V2: String;
   Crit: TCriteriaType;
 begin
@@ -293,47 +293,47 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Band number interval
+      if TryParseIntegerInterval(aValue, i1, i2) then
+      begin
+        V1 := IntToStr(i1);
+        V2 := IntToStr(i2);
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtInteger, crBetween,
+          True, V1, V2));
+      end
+      else
+      // ID and band number
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtText, Crit,
-          False, aValue));
+          True, aValue));
       end
       else
-      if ExecRegExpr('^\d+[-‒]{1}\d+$', aValue) then
-      begin
-        Crit := crBetween;
-        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-        { split strings: unicode characters #$002D e #$2012 }
-        V1 := ExtractDelimited(1, aValue, ['-', #$2012]);
-        V2 := ExtractDelimited(2, aValue, ['-', #$2012]);
-        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BAND_NUMBER, rscNumber, sdtInteger, Crit,
-          False, V1, V2));
-      end
-      else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CARRIER_NAME, rscCarrier, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SUPPLIER_NAME, rscSupplier, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROJECT_NAME, rscProject, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_INDIVIDUAL_NAME, rscIndividual, sdtText, Crit,
-          True, aValue));
+          False, aValue));
       end;
     end;
   end;

@@ -60,6 +60,16 @@ type
   function IsFuturePartialDate(aDate, aReferenceDate: TPartialDate; aDisplayName: String = '';
     aReferenceName: String = ''; aMessageList: TStrings = nil): Boolean;
   function ValidTime(aTimeStr: String; aDisplayName: String = ''; aMessageList: TStrings = nil): Boolean;
+  function IsLikelyYear(const AValue: Integer): Boolean;
+  function TryParseDateFlexible(const AValue: String; out ADate: TDateTime): Boolean;
+  function TryParseTimeFlexible(const AValue: String; out ATime: TDateTime): Boolean;
+  function TryParseRangeText(const AValue: String; out AStartValue, AEndValue: String): Boolean;
+  function TryParseIntegerInterval(const AValue: String; out AOut1, AOut2: Integer): Boolean;
+  function TryParseYearInterval(const AValue: String; out AYear1, AYear2: Integer): Boolean;
+  function TryParseMonthYearFlexible(const AValue: String; out AYear, AMonth: Integer): Boolean;
+  function TryParseMonthYearInterval(const AValue: String; out AYear1, AMonth1, AYear2, AMonth2: Integer): Boolean;
+  function TryParseDateIntervalFlexible(const AValue: String; out ADate1, ADate2: TDateTime): Boolean;
+  function TryParseTimeIntervalFlexible(const AValue: String; out ATime1, ATime2: TDateTime): Boolean;
 
   { Database validations }
   function FieldValuesDiff(aFieldName: String; OldValue, NewValue: Variant; out OutputStr: String): Boolean;
@@ -533,6 +543,337 @@ begin
     else
       MsgDlg('', m, mtInformation);
   end;
+end;
+
+function IsLikelyYear(const AValue: Integer): Boolean;
+begin
+  Result := (AValue >= 1500) and (AValue <= YearOf(Date) + 10);
+end;
+
+function TryParseDateFlexible(const AValue: String; out ADate: TDateTime): Boolean;
+var
+  S: String;
+  FS: TFormatSettings;
+
+  function TryWithFormat(const AFormat: String): Boolean;
+  begin
+    FS := DefaultFormatSettings;
+    FS.ShortDateFormat := AFormat;
+    Result := TryStrToDate(S, ADate, FS);
+  end;
+
+begin
+  Result := False;
+  S := Trim(AValue);
+  if S = EmptyStr then
+    Exit;
+
+  // ISO primeiro: evita ambiguidade
+  if TryISO8601ToDate(S, ADate, False) then
+    Exit(True);
+
+  // Normaliza separadores para reduzir combinações
+  S := StringReplace(S, '.', '/', [rfReplaceAll]);
+  S := StringReplace(S, '-', '/', [rfReplaceAll]);
+
+  Result :=
+    TryWithFormat('yyyy/mm/dd') or
+    TryWithFormat('dd/mm/yyyy') or
+    TryWithFormat('d/m/yyyy') or
+    TryWithFormat('dd/m/yyyy') or
+    TryWithFormat('d/mm/yyyy');
+end;
+
+function TryParseTimeFlexible(const AValue: String; out ATime: TDateTime): Boolean;
+var
+  S: String;
+  HourValue, MinuteValue: Integer;
+  HasPM, HasAM: Boolean;
+  FS: TFormatSettings;
+
+  function BuildTime: Boolean;
+  begin
+    Result := IsValidTime(HourValue, MinuteValue, 0, 0);
+    if Result then
+      ATime := EncodeTime(HourValue, MinuteValue, 0, 0);
+  end;
+
+begin
+  Result := False;
+  ATime := NullTime;
+  S := LowerCase(Trim(AValue));
+  if S = EmptyStr then
+    Exit;
+
+  S := StringReplace(S, ' ', '', [rfReplaceAll]);
+
+  HasAM := EndsText('am', S);
+  HasPM := EndsText('pm', S);
+
+  if HasAM or HasPM then
+  begin
+    Delete(S, Length(S) - 1, 2);
+
+    if Pos(':', S) > 0 then
+    begin
+      HourValue := StrToIntDef(ExtractDelimited(1, S, [':']), -1);
+      MinuteValue := StrToIntDef(ExtractDelimited(2, S, [':']), -1);
+    end
+    else
+    begin
+      HourValue := StrToIntDef(S, -1);
+      MinuteValue := 0;
+    end;
+
+    if not ((HourValue >= 1) and (HourValue <= 12) and (MinuteValue >= 0) and (MinuteValue <= 59)) then
+      Exit;
+
+    if HasAM then
+    begin
+      if HourValue = 12 then
+        HourValue := 0;
+    end
+    else
+    begin
+      if HourValue < 12 then
+        HourValue := HourValue + 12;
+    end;
+
+    Exit(BuildTime);
+  end;
+
+  if EndsText('h', S) then
+  begin
+    Delete(S, Length(S), 1);
+
+    if Pos('h', S) > 0 then
+    begin
+      HourValue := StrToIntDef(ExtractDelimited(1, S, ['h']), -1);
+      MinuteValue := StrToIntDef(ExtractDelimited(2, S, ['h']), -1);
+    end
+    else
+    begin
+      HourValue := StrToIntDef(S, -1);
+      MinuteValue := 0;
+    end;
+
+    Exit(BuildTime);
+  end;
+
+  if Pos('h', S) > 0 then
+  begin
+    HourValue := StrToIntDef(ExtractDelimited(1, S, ['h']), -1);
+    MinuteValue := StrToIntDef(ExtractDelimited(2, S, ['h']), -1);
+    Exit(BuildTime);
+  end;
+
+  FS := DefaultFormatSettings;
+  FS.TimeSeparator := ':';
+
+  Result :=
+    TryStrToTime(S, ATime, FS) or
+    TryStrToTime(S + ':00', ATime, FS);
+end;
+
+function TryParseRangeText(const AValue: String; out AStartValue, AEndValue: String): Boolean;
+var
+  S: String;
+  P: SizeInt;
+begin
+  Result := False;
+  AStartValue := EmptyStr;
+  AEndValue := EmptyStr;
+
+  S := Trim(AValue);
+  if S = EmptyStr then
+    Exit;
+
+  P := Pos('..', S);
+  if P <= 0 then
+    Exit;
+
+  if PosEx('..', S, P + 2) > 0 then
+    Exit;
+
+  AStartValue := Trim(Copy(S, 1, P - 1));
+  AEndValue := Trim(Copy(S, P + 2, Length(S)));
+
+  Result := (AStartValue <> EmptyStr) and (AEndValue <> EmptyStr);
+end;
+
+function TryParseIntegerInterval(const AValue: String; out AOut1, AOut2: Integer): Boolean;
+var
+  V1, V2: String;
+  T: Integer;
+begin
+  Result := False;
+  AOut1 := 0;
+  AOut2 := 0;
+
+  if not TryParseRangeText(AValue, V1, V2) then
+    Exit;
+  if not TryStrToInt(V1, AOut1) then
+    Exit;
+  if not TryStrToInt(V2, AOut2) then
+    Exit;
+
+  if AOut1 > AOut2 then
+  begin
+    T := AOut1;
+    AOut1 := AOut2;
+    AOut2 := T;
+  end;
+
+  Result := True;
+end;
+
+function TryParseYearInterval(const AValue: String; out AYear1, AYear2: Integer): Boolean;
+var
+  V1, V2: String;
+  T: Integer;
+begin
+  Result := False;
+  AYear1 := 0;
+  AYear2 := 0;
+
+  if not TryParseRangeText(AValue, V1, V2) then
+    Exit;
+  if not TryStrToInt(V1, AYear1) then
+    Exit;
+  if not TryStrToInt(V2, AYear2) then
+    Exit;
+  if not IsLikelyYear(AYear1) then
+    Exit;
+  if not IsLikelyYear(AYear2) then
+    Exit;
+
+  if AYear1 > AYear2 then
+  begin
+    T := AYear1;
+    AYear1 := AYear2;
+    AYear2 := T;
+  end;
+
+  Result := True;
+end;
+
+function TryParseMonthYearFlexible(const AValue: String; out AYear, AMonth: Integer): Boolean;
+var
+  S, MStr, YStr: String;
+begin
+  Result := False;
+  AYear := 0;
+  AMonth := 0;
+
+  S := Trim(AValue);
+  if S = EmptyStr then
+    Exit;
+
+  S := StringReplace(S, ' ', '', [rfReplaceAll]);
+  S := StringReplace(S, '-', '/', [rfReplaceAll]);
+  S := StringReplace(S, '.', '/', [rfReplaceAll]);
+
+  if not ExecRegExpr('^(\d{1,2}/\d{4}|\d{4}/\d{1,2})$', S) then
+    Exit;
+
+  if Length(ExtractDelimited(1, S, ['/'])) = 4 then
+  begin
+    YStr := ExtractDelimited(1, S, ['/']);
+    MStr := ExtractDelimited(2, S, ['/']);
+  end
+  else
+  begin
+    MStr := ExtractDelimited(1, S, ['/']);
+    YStr := ExtractDelimited(2, S, ['/']);
+  end;
+
+  AYear := StrToIntDef(YStr, 0);
+  AMonth := StrToIntDef(MStr, 0);
+
+  Result := IsLikelyYear(AYear) and (AMonth in [1..12]);
+end;
+
+function TryParseMonthYearInterval(const AValue: String; out AYear1, AMonth1, AYear2, AMonth2: Integer): Boolean;
+var
+  V1, V2: String;
+  K1, K2: Integer;
+  T: Integer;
+begin
+  Result := False;
+  AYear1 := 0;
+  AMonth1 := 0;
+  AYear2 := 0;
+  AMonth2 := 0;
+
+  if not TryParseRangeText(AValue, V1, V2) then
+    Exit;
+  if not TryParseMonthYearFlexible(V1, AYear1, AMonth1) then
+    Exit;
+  if not TryParseMonthYearFlexible(V2, AYear2, AMonth2) then
+    Exit;
+
+  K1 := (AYear1 * 100) + AMonth1;
+  K2 := (AYear2 * 100) + AMonth2;
+
+  if K1 > K2 then
+  begin
+    T := AYear1; AYear1 := AYear2; AYear2 := T;
+    T := AMonth1; AMonth1 := AMonth2; AMonth2 := T;
+  end;
+
+  Result := True;
+end;
+
+function TryParseDateIntervalFlexible(const AValue: String; out ADate1, ADate2: TDateTime): Boolean;
+var
+  V1, V2: String;
+  T: TDateTime;
+begin
+  Result := False;
+  ADate1 := NullDate;
+  ADate2 := NullDate;
+
+  if not TryParseRangeText(AValue, V1, V2) then
+    Exit;
+  if not TryParseDateFlexible(V1, ADate1) then
+    Exit;
+  if not TryParseDateFlexible(V2, ADate2) then
+    Exit;
+
+  if CompareDate(ADate1, ADate2) > 0 then
+  begin
+    T := ADate1;
+    ADate1 := ADate2;
+    ADate2 := T;
+  end;
+
+  Result := True;
+end;
+
+function TryParseTimeIntervalFlexible(const AValue: String; out ATime1, ATime2: TDateTime): Boolean;
+var
+  V1, V2: String;
+  T: TDateTime;
+begin
+  Result := False;
+  ATime1 := NullTime;
+  ATime2 := NullTime;
+
+  if not TryParseRangeText(AValue, V1, V2) then
+    Exit;
+  if not TryParseTimeFlexible(V1, ATime1) then
+    Exit;
+  if not TryParseTimeFlexible(V2, ATime2) then
+    Exit;
+
+  if CompareTime(ATime1, ATime2) > 0 then
+  begin
+    T := ATime1;
+    ATime1 := ATime2;
+    ATime2 := T;
+  end;
+
+  Result := True;
 end;
 
 function FieldValuesDiff(aFieldName: String; OldValue, NewValue: Variant; out OutputStr: String): Boolean;

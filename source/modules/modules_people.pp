@@ -42,7 +42,8 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
+  utils_locale, utils_graphics, utils_validations,
+  data_consts, data_columns, data_filters, models_media,
   udm_main, udm_grid, ufrm_customgrid;
 
 { TPeopleModuleController }
@@ -128,10 +129,9 @@ end;
 
 function TPeopleModuleController.Search(AValue: String): Boolean;
 var
-  i, g: Integer;
+  i, g, m, y: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
-  m, y: String;
 begin
   Result := False;
 
@@ -146,51 +146,60 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PERSON_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
+          True, aValue));
+        if IsLikelyYear(i) then
+        begin
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, rscDate, sdtYear, crEqual,
+            False, aValue));
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, rscDate, sdtYear, crEqual,
+            False, aValue));
+        end;
       end
       else
-      if TryStrToDate(aValue, dt) then
+      // Date
+      if TryParseDateFlexible(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, rscBirthDate, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, rscDeathDate, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
-      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      // Month/year
+      if TryParseMonthYearFlexible(aValue, y, m) then
       begin
-        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-        m := ExtractDelimited(1, aValue, ['/']);
-        y := ExtractDelimited(2, aValue, ['/']);
+        aValue := Format('%.4d-%.2d', [y, m]);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_BIRTH_DATE, rscBirthDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_DEATH_DATE, rscDeathDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, aValue));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_ABBREVIATION, rscAbbreviation, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CITATION, rscCitation, sdtText, Crit,
-          False, aValue));
+          True, aValue));
       end;
     end;
   end;

@@ -72,7 +72,8 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, utils_themes, data_consts, data_columns, data_filters, models_media,
+  utils_locale, utils_graphics, utils_themes, utils_validations,
+  data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, ufrm_customgrid;
 
@@ -217,10 +218,9 @@ end;
 
 function TSpecimensModuleController.Search(AValue: String): Boolean;
 var
-  i, g: Longint;
+  i, g, m, y: Longint;
   dt: TDateTime;
   Crit: TCriteriaType;
-  m, y: String;
   dia, mes, ano: Word;
 begin
   Result := False;
@@ -236,10 +236,10 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
@@ -249,45 +249,38 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SPECIMEN_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionYear, sdtInteger, crEqual,
-          False, aValue));
+          True, aValue));
+        if IsLikelyYear(i) then
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionYear, sdtSplitDate, crEqual,
+            True, aValue));
       end
       else
       // Date
-      if TryStrToDate(aValue, dt) then
+      if TryParseDateFlexible(aValue, dt) then
       begin
         DecodeDate(dt, ano, mes, dia);
         //aValue := FormatDateTime('yyyy-mm-dd', dt);
-        g := SearchConfig.TextFilters.Add(TSearchGroup.Create(aoAnd));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionYear, sdtInteger, crEqual,
-          False, IntToStr(ano)));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_MONTH, rscCollectionMonth, sdtInteger, crEqual,
-          False, IntToStr(mes)));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_DAY, rscCollectionDay, sdtInteger, crEqual,
-          False, IntToStr(dia)));
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionDate, sdtSplitDate, crEqual,
+          True, IntToStr(ano), IntToStr(mes), IntToStr(dia), COL_COLLECTION_MONTH, COL_COLLECTION_DAY));
       end
       else
       // Month/year
-      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      if TryParseMonthYearFlexible(aValue, y, m) then
       begin
-        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-        m := ExtractDelimited(1, aValue, ['/']);
-        y := ExtractDelimited(2, aValue, ['/']);
-        g := SearchConfig.TextFilters.Add(TSearchGroup.Create(aoAnd));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_YEAR, rscCollectionYear, sdtInteger, crEqual,
-          False, y));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLLECTION_MONTH, rscCollectionMonth, sdtInteger, crEqual,
-          False, m));
+        //aValue := Format('%.4d-%.2d', [y, m]);
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_COLlECTION_YEAR, rscCollectionDate, sdtSplitDate, crEqual,
+          True, IntToStr(y), IntToStr(m), '', COL_COLLECTION_MONTH));
       end
       else
       // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
-          True, aValue));
+          False, aValue));
       end;
     end;
   end;

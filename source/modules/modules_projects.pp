@@ -92,7 +92,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_graphics, utils_themes,
+  utils_locale, utils_global, utils_graphics, utils_themes, utils_validations,
   data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, ufrm_customgrid;
@@ -179,10 +179,9 @@ end;
 
 function TProjectsModuleController.Search(AValue: String): Boolean;
 var
-  i, g: Integer;
+  i, g, m, y: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
-  m, y: String;
 begin
   Result := False;
 
@@ -197,59 +196,60 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROJECT_ID, rscId, sdtInteger, crEqual,
-          True, aValue));
+          False, aValue));
+        if IsLikelyYear(i) then
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscDate, sdtYear, crIntersect,
+            False, aValue, '', '', COL_END_DATE));
       end
       else
-      if TryStrToDate(aValue, dt) then
+      // Date
+      if TryParseDateFlexible(aValue, dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtDate, crEqual,
-          True, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtDate, crEqual,
-          True, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscDate, sdtDate, crIntersect,
+          False, aValue, '', '', COL_END_DATE));
       end
       else
-      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      // Month/year
+      if TryParseMonthYearFlexible(aValue, y, m) then
       begin
-        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-        m := ExtractDelimited(1, aValue, ['/']);
-        y := ExtractDelimited(2, aValue, ['/']);
+        aValue := Format('%.4d-%.2d', [y, m]);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscStartDate, sdtMonthYear, crEqual,
-          True, y + '-' + m));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_END_DATE, rscEndDate, sdtMonthYear, crEqual,
-          True, y + '-' + m));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscDate, sdtMonthYear, crIntersect,
+          False, aValue, '', '', COL_END_DATE));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROJECT_TITLE, rscTitle, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SHORT_TITLE, rscShortTitle, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_PROTOCOL_NUMBER, rscProtocolNr, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CONTACT_NAME, rscContactPerson, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_MAIN_GOAL, rscMainGoal, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_RISKS, rscRisks, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_ABSTRACT, rscAbstract, sdtText, Crit,
-          True, aValue));
+          False, aValue));
       end;
     end;
   end;

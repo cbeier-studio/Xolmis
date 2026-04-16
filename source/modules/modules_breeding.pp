@@ -108,7 +108,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_graphics, utils_themes,
+  utils_locale, utils_global, utils_graphics, utils_themes, utils_validations,
   data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, udm_breeding, udm_individuals, ufrm_customgrid;
@@ -317,10 +317,9 @@ end;
 
 function TNestsModuleController.Search(AValue: String): Boolean;
 var
-  i, g: Longint;
+  i, g, m, y: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
-  m, y: String;
 begin
   Result := False;
 
@@ -335,10 +334,10 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
@@ -348,55 +347,55 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_NEST_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FOUND_DATE, rscDate, sdtYear, crEqual,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LAST_DATE, rscDate, sdtYear, crEqual,
-          False, aValue));
+          True, aValue));
+        if IsLikelyYear(i) then
+        begin
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FOUND_DATE, rscFoundDate, sdtYear, crEqual,
+            True, aValue));
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LAST_DATE, rscLastDateActive, sdtYear, crEqual,
+            True, aValue));
+        end;
       end
       else
       // Date
-      if TryStrToDate(aValue, Dt) then
+      if TryParseDateFlexible(aValue, Dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', Dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FOUND_DATE, rscFoundDate, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LAST_DATE, rscLastDateActive, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       // Month/year
-      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      if TryParseMonthYearFlexible(aValue, y, m) then
       begin
-        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-        m := ExtractDelimited(1, aValue, ['/']);
-        y := ExtractDelimited(2, aValue, ['/']);
+        aValue := Format('%.4d-%.2d', [y, m]);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FOUND_DATE, rscFoundDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LAST_DATE, rscLastDateActive, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, aValue));
       end
       else
       // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FIELD_NUMBER, rscFieldNumber, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
-          True, aValue));
-        { #todo : Check field name }
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create('z.full_name', rscTaxon, sdtText, Crit,
-          True, aValue));
+          False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_OBSERVER_NAME, rscObserver, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SUPPORT_PLANT_1_NAME, rscSupportPlant1, sdtText, Crit,
-          True, aValue));
+          False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SUPPORT_PLANT_2_NAME, rscSupportPlant2, sdtText, Crit,
-          True, aValue));
+          False, aValue));
       end;
     end;
   end;
@@ -691,10 +690,9 @@ end;
 
 function TNestRevisionsModuleController.Search(AValue: String): Boolean;
 var
-  i, g: Longint;
+  i, g, m, y: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
-  m, y: String;
 begin
   Result := False;
 
@@ -709,10 +707,10 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
@@ -722,47 +720,46 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_NEST_REVISION_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_REVISION_DATE, rscDate, sdtYear, crEqual,
-          False, aValue));
+          True, aValue));
+        if IsLikelyYear(i) then
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_REVISION_DATE, rscDate, sdtYear, crEqual,
+            True, aValue));
       end
       else
       // Date
-      if TryStrToDate(aValue, Dt) then
+      if TryParseDateFlexible(aValue, Dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', Dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_REVISION_DATE, rscDate, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       // Time
-      if TryStrToTime(aValue, dt) then
+      if TryParseTimeFlexible(aValue, dt) then
       begin
         aValue := FormatDateTime('hh:nn:ss', dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_REVISION_TIME, rscTime, sdtTime, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       // Month/year
-      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      if TryParseMonthYearFlexible(aValue, y, m) then
       begin
-        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-        m := ExtractDelimited(1, aValue, ['/']);
-        y := ExtractDelimited(2, aValue, ['/']);
+        aValue := Format('%.4d-%.2d', [y, m]);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_REVISION_DATE, rscDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, aValue));
       end
       else
       // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME, rscFullName, sdtText, Crit,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_NIDOPARASITE_NAME, rscNidoparasite, sdtText, Crit,
           True, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_NIDOPARASITE_NAME, rscNidoparasite, sdtText, Crit,
+          False, aValue));
       end;
     end;
   end;
@@ -1008,10 +1005,9 @@ end;
 
 function TEggsModuleController.Search(AValue: String): Boolean;
 var
-  i, g: Longint;
+  i, g, m, y: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
-  m, y: String;
 begin
   Result := False;
 
@@ -1026,10 +1022,10 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
@@ -1039,40 +1035,39 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_EGG_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_MEASURE_DATE, rscDate, sdtYear, crEqual,
-          False, aValue));
+          True, aValue));
+        if IsLikelyYear(i) then
+          SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_MEASURE_DATE, rscDate, sdtYear, crEqual,
+            True, aValue));
       end
       else
       // Date
-      if TryStrToDate(aValue, Dt) then
+      if TryParseDateFlexible(aValue, Dt) then
       begin
         aValue := FormatDateTime('yyyy-mm-dd', Dt);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_MEASURE_DATE, rscDate, sdtDate, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       // Month/year
-      if ExecRegExpr('^\d{2}[/]{1}\d{4}$', aValue) then
+      if TryParseMonthYearFlexible(aValue, y, m) then
       begin
-        aValue := StringReplace(aValue, ' ', '', [rfReplaceAll]);
-        m := ExtractDelimited(1, aValue, ['/']);
-        y := ExtractDelimited(2, aValue, ['/']);
+        aValue := Format('%.4d-%.2d', [y, m]);
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_MEASURE_DATE, rscDate, sdtMonthYear, crEqual,
-          False, y + '-' + m));
+          True, aValue));
       end
       else
       // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FULL_NAME,rscFullName, sdtText, Crit,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FIELD_NUMBER, rscFieldNumber, sdtText, Crit,
-          False, aValue));
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
           True, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_FIELD_NUMBER, rscFieldNumber, sdtText, Crit,
+          True, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscTaxon, sdtText, Crit,
+          False, aValue));
       end;
     end;
   end;

@@ -78,33 +78,33 @@ begin
       for i := 0 to clbTaxonRanksFilter.Count - 1 do
         if clbTaxonRanksFilter.Checked[i] then
           SearchConfig.QuickFilters.Items[sf].Fields.Add(TSearchField.Create(COL_RANK_ID, rscTaxonomicRank, sdtInteger,
-            crEqual, False, IntToStr(GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_NAME, clbTaxonRanksFilter.Items[i]))));
+            crEqual, True, IntToStr(GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_NAME, clbTaxonRanksFilter.Items[i]))));
     end;
     // Is synonym
     if rbIsSynonymYes.Checked then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_VALID_ID, rscValidName, sdtInteger,
-        crNotEqual, False, '0'));
+        crNotEqual, True, '0'));
     end;
     if rbIsSynonymNo.Checked then
     begin
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_VALID_ID, rscValidName, sdtInteger,
-        crEqual, False, '0'));
+        crEqual, True, '0'));
     end;
     // Has synonyms
     //if rbHasSynonymsYes.Checked then
     //begin
     //  sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
     //  SearchConfig.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-    //    crMoreThan, False, '1'));
+    //    crMoreThan, True, '1'));
     //end;
     //if rbHasSynonymsNo.Checked then
     //begin
     //  sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
     //  SearchConfig.QuickFilters.Items[sf].Fields.Add(TSearchField.Create('valid_id', 'Valid name', sdtInteger,
-    //    crEqual, False, '0'));
+    //    crEqual, True, '0'));
     //end;
   end;
 end;
@@ -158,29 +158,31 @@ begin
       aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValue) then
+    if ExecRegExpr('^\$.+$', aValue) then
     begin
       Crit := crStartLike;
-      aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+      aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
     end;
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // ID
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_ID, rscId, sdtInteger, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
+      // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscScientificName, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_VERNACULAR_NAME, rscVernacularNameS, sdtText, Crit,
-          False, aValue));
+          True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_AUTHORSHIP, rscAuthorship, sdtText, Crit,
-          False, aValue));
+          True, aValue));
       end;
     end;
   end;

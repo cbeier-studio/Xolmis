@@ -127,7 +127,7 @@ type
     destructor Destroy; override;
 
     procedure AddDefaultSort(const AFieldName: String; ADirection: TSortDirection;
-      const ACollation: String = ''; AIsAlias: Boolean = False); virtual;
+      const ACollation: String = ''; AUseTablePrefix: Boolean = True); virtual;
   published
     property TableType: TTableType read FTableType write FTableType;
     property CaptionText: String read FCaptionText write FCaptionText;
@@ -222,7 +222,7 @@ begin
 end;
 
 procedure TBaseController.AddDefaultSort(const AFieldName: String; ADirection: TSortDirection;
-  const ACollation: String; AIsAlias: Boolean);
+  const ACollation: String; AUseTablePrefix: Boolean);
 var
   p, idx: Integer;
 begin
@@ -259,7 +259,7 @@ begin
     end;
   FDefaultSort[p].Direction := aDirection;
   FDefaultSort[p].Collation := aCollation;
-  FDefaultSort[p].Lookup    := AIsAlias;
+  FDefaultSort[p].UseTablePrefix    := AUseTablePrefix;
 end;
 
 destructor TBaseController.Destroy;

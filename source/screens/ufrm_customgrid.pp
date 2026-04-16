@@ -1231,7 +1231,7 @@ type
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
-      isAnAlias: Boolean = False);
+      aUseTablePrefix: Boolean = False);
     procedure AddVideo(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
 
     procedure ApplyDarkMode;
@@ -1962,7 +1962,7 @@ begin
 end;
 
 procedure TfrmCustomGrid.AddSortedField(aFieldName: String; aDirection: TSortDirection;
-  aCollation: String = ''; isAnAlias: Boolean = False);
+  aCollation: String = ''; aUseTablePrefix: Boolean = False);
 var
   p, idx: Integer;
 begin
@@ -1999,7 +1999,7 @@ begin
     end;
   FSearch.SortFields[p].Direction := aDirection;
   FSearch.SortFields[p].Collation := aCollation;
-  FSearch.SortFields[p].Lookup    := isAnAlias;
+  FSearch.SortFields[p].UseTablePrefix := aUseTablePrefix;
 
   UpdateGridTitles(DBG, FSearch);
 end;
@@ -3543,9 +3543,9 @@ begin
       FSearch.SortFields.Clear;
 
     if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
-      AddSortedField(Column.FieldName, Direction, '', True)
+      AddSortedField(Column.FieldName, Direction)
     else
-      AddSortedField(Column.FieldName, Direction);
+      AddSortedField(Column.FieldName, Direction, '', True);
     Search(FSearchString);
   end;
 end;
@@ -5466,9 +5466,9 @@ begin
 
   FSearch.SortFields.Clear;
   if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
-    AddSortedField(Column.FieldName, Direction, '', True)
+    AddSortedField(Column.FieldName, Direction)
   else
-    AddSortedField(Column.FieldName, Direction);
+    AddSortedField(Column.FieldName, Direction, '', True);
   Search(FSearchString);
 end;
 
@@ -5487,9 +5487,9 @@ begin
 
   FSearch.SortFields.Clear;
   if not (pfInUpdate in Grid.DataSource.DataSet.FieldByName(Column.FieldName).ProviderFlags) then
-    AddSortedField(Column.FieldName, Direction, '', True)
+    AddSortedField(Column.FieldName, Direction)
   else
-    AddSortedField(Column.FieldName, Direction);
+    AddSortedField(Column.FieldName, Direction, '', True);
   Search(FSearchString);
 end;
 
@@ -8078,7 +8078,7 @@ begin
   for i := 0 to FModule.DefaultSort.Count - 1 do
   begin
     AddSortedField(FModule.DefaultSort[i].FieldName, FModule.DefaultSort[i].Direction,
-      FModule.DefaultSort[i].Collation, FModule.DefaultSort[i].Lookup);
+      FModule.DefaultSort[i].Collation, FModule.DefaultSort[i].UseTablePrefix);
   end;
 
   // Set visible buttons

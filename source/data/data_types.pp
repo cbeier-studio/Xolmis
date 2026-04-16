@@ -204,11 +204,11 @@ type
   TCriteriaType = (crNone,
     crLike, crStartLike, crEqual, crNotEqual,
     crBetween, crMoreThan, crLessThan,
-    crNull, crNotNull, crIn
+    crNull, crNotNull, crIn, crIntersect
   );
   TTableFieldType = (ctString, ctInteger, ctFloat, ctDate, ctTime, ctDateTime, ctBoolean);
   TSearchDataType = (sdtText, sdtInteger, sdtFloat, sdtDate, sdtTime, sdtDateTime, sdtBoolean, sdtList,
-    sdtLookup, sdtYear, sdtMonthYear);
+    sdtLookup, sdtYear, sdtMonthYear, sdtSplitDate);
   TFilterValue = (fvNone, fvReset, fvAll, fvMarked, fvUnmarked, fvDeleted, fvQueued);
   TSeparator = (spNone, spSemicolon, spComma, spColon, spPeriod, spPipe, spSlash, spHyphen, spUnderline);
   TSQLAndOr = (aoNone, aoAnd, aoOr);
@@ -218,12 +218,12 @@ const
   CRITERIA_OPERATORS: array[TCriteriaType] of String = ('',
     'LIKE', 'LIKE', '=', '!=',
     'BETWEEN', '>=', '<=',
-    'ISNULL', 'NOTNULL', 'IN');
+    'ISNULL', 'NOTNULL', 'IN', '');
   AND_OR_STR: array[TSQLAndOr] of String = ('', 'AND', 'OR');
   TiposCampo: array[TTableFieldType] of String = ('String', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean');
   SEARCH_DATA_TYPES: array[TSearchDataType] of String = ('Text', 'Integer', 'Float', 'Date', 'Time',
-    'DateTime', 'Boolean', 'List', 'Lookup', 'Year', 'MonthYear');
+    'DateTime', 'Boolean', 'List', 'Lookup', 'Year', 'MonthYear', 'SplitDate');
   SEPARATORS: array [TSeparator] of Char = (#0, ';', ',', ':', '.', '|', '/', '-', '_');
   COORDINATES_SEPARATORS: set of Char = [';', ',', ':', '|', '/'];
 
@@ -247,7 +247,8 @@ type
     FCriteria: TCriteriaType;
     FValue1: String;
     FValue2: String;
-    FLookup: Boolean;
+    FValue3: String;
+    FUseTablePrefix: Boolean;
   public
 
   published
@@ -255,7 +256,8 @@ type
     property Criteria: TCriteriaType read FCriteria write FCriteria default crLike;
     property Value1: String read FValue1 write FValue1;
     property Value2: String read FValue2 write FValue2;
-    property Lookup: Boolean read FLookup write FLookup default False;
+    property Value3: String read FValue3 write FValue3;
+    property UseTablePrefix: Boolean read FUseTablePrefix write FUseTablePrefix default False;
   end;
 
   { TSearchField }
@@ -264,13 +266,18 @@ type
   private
     FFieldName: String;
     FDisplayName: String;
+    FAuxField1: String;
+    FAuxField2: String;
   public
     constructor Create(aFieldName, aDisplayName: String; aDataType: TSearchDataType = sdtText;
-      aCriteria: TCriteriaType = crLike; UseTablePrefix: Boolean = False;
-      aValue1: String = ''; aValue2: String = '');
+      aCriteria: TCriteriaType = crLike; aUseTablePrefix: Boolean = False;
+      aValue1: String = ''; aValue2: String = ''; aValue3: String = '';
+      aAuxField1: String = ''; aAuxField2: String = '');
   published
     property FieldName: String read FFieldName write FFieldName;
     property DisplayName: String read FDisplayName write FDisplayName;
+    property AuxiliaryField1: String read FAuxField1 write FAuxField1;
+    property AuxiliaryField2: String read FAuxField2 write FAuxField2;
   end;
 
   TSearchFields = specialize TFPGObjectList<TSearchField>;
@@ -284,7 +291,7 @@ type
     SortType: TSortType;
     Direction: TSortDirection;
     Collation: String;
-    Lookup: Boolean;
+    UseTablePrefix: Boolean;
   end;
 
   TSortedFields = specialize TFPGObjectList<TSortedField>;
@@ -619,15 +626,19 @@ end;
 { TSearchField }
 
 constructor TSearchField.Create(aFieldName, aDisplayName: String; aDataType: TSearchDataType;
-  aCriteria: TCriteriaType; UseTablePrefix: Boolean; aValue1: String; aValue2: String);
+  aCriteria: TCriteriaType; aUseTablePrefix: Boolean; aValue1: String; aValue2: String; aValue3: String;
+  aAuxField1: String; aAuxField2: String);
 begin
   FFieldName := aFieldName;
   FDisplayName := aDisplayName;
   FDataType := aDataType;
   FCriteria := aCriteria;
-  FLookup := UseTablePrefix;
+  FUseTablePrefix := aUseTablePrefix;
   FValue1 := aValue1;
   FValue2 := aValue2;
+  FValue3 := aValue3;
+  FAuxField1 := aAuxField1;
+  FAuxField2 := aAuxField2;
 end;
 
 { TSearchGroup }
@@ -722,20 +733,31 @@ const
   MaskYearV2: String = '(strftime(''%%Y'', %s) %s %s AND %s)';
   MaskMonthYearV1: String = '(strftime(''%%Y-%%m'', %s) %s %s)';
   MaskMonthYearV2: String = '(strftime(''%%Y-%%m'', %s) %s %s AND %s)';
+  MaskIntersect: String = '(%s <= %s AND %s >= %s)';
+  MaskDateIntersect: String = '(date(%s) <= date(%s) AND date(%s) >= date(%s))';
+  MaskTimeIntersect: String = '(time(%s) <= time(%s) AND time(%s) >= time(%s))';
+  MaskDateTimeIntersect: String = '(datetime(%s) <= datetime(%s) AND datetime(%s) >= datetime(%s))';
+  MaskMonthYearIntersect: String =
+    '(date(%s) <= date(%s || ''-01'', ''+1 month'', ''-1 day'') AND date(%s) >= date(%s || ''-01''))';
+  MaskYearIntersect: String =
+    '(date(%s) <= date(%s || ''-12-31'') AND date(%s) >= date(%s || ''-01-01''))';
   MaskIn: String = '(%s IN (%s))';
+  MaskSplitDateV1: String = '(%s = %s)';
+  MaskSplitDateV2: String = '(%s = %s AND %s = %s)';
+  MaskSplitDateV3: String = '(%s = %s AND %s = %s AND %s = %s)';
 var
   i, f: Integer;
   S, AndOrWhere, Msk, aSort: String;
   V1, V2: String;
 
   // Select mask using criteria and data type
-  function GetValueMask(aCriteriaType: TCriteriaType; aDataType: TSearchDataType): String;
+  function GetValueMask(aCriteriaType: TCriteriaType; aDataType: TSearchDataType; aValue2, aValue3: String): String;
   begin
     Result := MaskV1;
 
     case aCriteriaType of
       crNone: ;
-      crLike, crStartLike, crEqual, crNotEqual, crBetween, crMoreThan, crLessThan:
+      crLike, crStartLike, crEqual, crNotEqual, crBetween, crMoreThan, crLessThan, crIntersect:
       begin
         case aDataType of
           sdtText, sdtList, sdtLookup:
@@ -744,6 +766,9 @@ var
             Result := MaskV1;
           sdtInteger, sdtFloat:
             begin
+              if aCriteriaType = crIntersect then
+                Result := MaskIntersect
+              else
               if aCriteriaType = crBetween then
                 Result := MaskV2
               else
@@ -751,6 +776,9 @@ var
             end;
           sdtDate:
             begin
+              if aCriteriaType = crIntersect then
+                Result := MaskDateIntersect
+              else
               if aCriteriaType = crBetween then
                 Result := MaskDateV2
               else
@@ -758,6 +786,9 @@ var
             end;
           sdtTime:
             begin
+              if aCriteriaType = crIntersect then
+                Result := MaskTimeIntersect
+              else
               if aCriteriaType = crBetween then
                 Result := MaskTimeV2
               else
@@ -765,6 +796,9 @@ var
             end;
           sdtDateTime:
             begin
+              if aCriteriaType = crIntersect then
+                Result := MaskDateTimeIntersect
+              else
               if aCriteriaType = crBetween then
                 Result := MaskDateTimeV2
               else
@@ -772,6 +806,9 @@ var
             end;
           sdtYear:
             begin
+              if aCriteriaType = crIntersect then
+                Result := MaskYearIntersect
+              else
               if aCriteriaType = crBetween then
                 Result := MaskYearV2
               else
@@ -779,10 +816,23 @@ var
             end;
           sdtMonthYear:
             begin
+              if aCriteriaType = crIntersect then
+                Result := MaskMonthYearIntersect
+              else
               if aCriteriaType = crBetween then
                 Result := MaskMonthYearV2
               else
                 Result := MaskMonthYearV1;
+            end;
+          sdtSplitDate:
+            begin
+              if aValue3 <> '' then
+                Result := MaskSplitDateV3
+              else
+              if aValue2 <> '' then
+                Result := MaskSplitDateV2
+              else
+                Result := MaskSplitDateV1;
             end;
         end;
       end;
@@ -832,11 +882,12 @@ var
         begin
           aValue1 := QuotedStr(aValue1);
 
-          if aCriteriaType = crBetween then
+          if (aCriteriaType in [crBetween, crIntersect]) and (aValue2 <> EmptyStr) then
           begin
             aValue2 := QuotedStr(aValue2);
           end;
         end;
+      sdtSplitDate: ;
     end;
   end;
 
@@ -875,37 +926,81 @@ begin
             V1 := FValue1;
             V2 := FValue2;
             PrepareValues(FCriteria, FDataType, V1, V2);
-            Msk := GetValueMask(FCriteria, FDataType);
+            Msk := GetValueMask(FCriteria, FDataType, V2, FValue3);
 
             // Fieldname, criteria, and values
             case FCriteria of
               crLike, crStartLike, crEqual, crNotEqual, crMoreThan, crLessThan:
               begin
-                if FQuickFilters[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1])
+                if not UseTablePrefix then
+                begin
+                  if FDataType = sdtSplitDate then
+                  begin
+                    if (FAuxField2 <> '') and (FValue3 <> '') then
+                      S := S + Format(Msk, [FFieldName, V1, FAuxField1, V2, FAuxField2, FValue3])
+                    else
+                    if (FAuxField1 <> '') and (V2 <> '') then
+                      S := S + Format(Msk, [FFieldName, V1, FAuxField1, V2])
+                    else
+                      S := S + Format(Msk, [FFieldName, V1]);
+                  end
+                  else
+                    S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1]);
+                end
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1]);
+                begin
+                  if FDataType = sdtSplitDate then
+                  begin
+                    if (FAuxField2 <> '') and (FValue3 <> '') then
+                      S := S + Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V2,
+                        FTableAlias+'.'+FAuxField2, FValue3])
+                    else
+                    if (FAuxField1 <> '') and (V2 <> '') then
+                      S := S + Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V2])
+                    else
+                      S := S + Format(Msk, [FTableAlias+'.'+FFieldName, V1]);
+                  end
+                  else
+                    S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1]);
+                end;
               end;
               crBetween:
               begin
-                if FQuickFilters[i].Fields[f].Lookup then
+                if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2]);
               end;
               crNull, crNotNull:
               begin
-                if FQuickFilters[i].Fields[f].Lookup then
+                if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria]])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria]]);
               end;
               crIn:
               begin
-                if FQuickFilters[i].Fields[f].Lookup then
+                if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, FValue1])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, FValue1]);
+              end;
+              crIntersect:
+              begin
+                if V2 = '' then
+                begin
+                  if not UseTablePrefix then
+                    S := Format(Msk, [FFieldName, V1, FAuxField1, V1])
+                  else
+                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V1]);
+                end
+                else
+                begin
+                  if not UseTablePrefix then
+                    S := Format(Msk, [FFieldName, V2, FAuxField1, V1])
+                  else
+                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V2, FTableAlias+'.'+FAuxField1, V1]);
+                end;
               end;
             end;
           end;
@@ -957,37 +1052,81 @@ begin
             V1 := FValue1;
             V2 := FValue2;
             PrepareValues(FCriteria, FDataType, V1, V2);
-            Msk := GetValueMask(FCriteria, FDataType);
+            Msk := GetValueMask(FCriteria, FDataType, V2, FValue3);
 
             // Fieldname, criteria, and values
             case Criteria of
               crLike, crStartLike, crEqual, crNotEqual, crMoreThan, crLessThan:
               begin
-                if FTextFilters[i].Fields[f].Lookup then
-                  S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1])
+                if not UseTablePrefix then
+                begin
+                  if FDataType = sdtSplitDate then
+                  begin
+                    if (FAuxField2 <> '') and (FValue3 <> '') then
+                      S := S + Format(Msk, [FFieldName, V1, FAuxField1, V2, FAuxField2, FValue3])
+                    else
+                    if (FAuxField1 <> '') and (V2 <> '') then
+                      S := S + Format(Msk, [FFieldName, V1, FAuxField1, V2])
+                    else
+                      S := S + Format(Msk, [FFieldName, V1]);
+                  end
+                  else
+                    S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1]);
+                end
                 else
-                  S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1]);
+                begin
+                  if FDataType = sdtSplitDate then
+                  begin
+                    if (FAuxField2 <> '') and (FValue3 <> '') then
+                      S := S + Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V2,
+                        FTableAlias+'.'+FAuxField2, FValue3])
+                    else
+                    if (FAuxField1 <> '') and (V2 <> '') then
+                      S := S + Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V2])
+                    else
+                      S := S + Format(Msk, [FTableAlias+'.'+FFieldName, V1]);
+                  end
+                  else
+                    S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1]);
+                end;
               end;
               crBetween:
               begin
-                if FTextFilters[i].Fields[f].Lookup then
+                if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2]);
               end;
               crNull, crNotNull:
               begin
-                if FTextFilters[i].Fields[f].Lookup then
+                if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria]])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, CRITERIA_OPERATORS[FCriteria]]);
               end;
               crIn:
               begin
-                if FTextFilters[i].Fields[f].Lookup then
+                if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, FValue1])
                 else
                   S := S + Format(Msk, [FTableAlias+'.'+FFieldName, FValue1]);
+              end;
+              crIntersect:
+              begin
+                if V2 = '' then
+                begin
+                  if not UseTablePrefix then
+                    S := Format(Msk, [FFieldName, V1, FAuxField1, V1])
+                  else
+                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V1]);
+                end
+                else
+                begin
+                  if not UseTablePrefix then
+                    S := Format(Msk, [FFieldName, V2, FAuxField1, V1])
+                  else
+                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V2, FTableAlias+'.'+FAuxField1, V1]);
+                end;
               end;
             end;
 
@@ -1040,14 +1179,14 @@ begin
       // Field name
       if (FSortFields[i].SortType = stDateTime) then
       begin
-        if (FSortFields[i].Lookup) or (FTableAlias = EmptyStr) then
+        if not (FSortFields[i].UseTablePrefix) or (FTableAlias = EmptyStr) then
           aSort := aSort + 'datetime(' + FSortFields[i].FieldName + ')'
         else
           aSort := aSort + 'datetime(' + FTableAlias + '.' + FSortFields[i].FieldName + ')';
       end
       else
       begin
-        if (FSortFields[i].Lookup) or (FTableAlias = EmptyStr) then
+        if not (FSortFields[i].UseTablePrefix) or (FTableAlias = EmptyStr) then
           aSort := aSort + FSortFields[i].FieldName
         else
           aSort := aSort + FTableAlias + '.' + FSortFields[i].FieldName;

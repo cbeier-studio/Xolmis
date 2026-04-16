@@ -1302,12 +1302,13 @@ begin
         aValue := StringReplace(aValue, '=', '', [rfReplaceAll]);
       end
       else
-      if ExecRegExpr('^:.+$', aValue) then
+      if ExecRegExpr('^\$.+$', aValue) then
       begin
         Crit := crStartLike;
-        aValue := StringReplace(aValue, ':', '', [rfReplaceAll]);
+        aValue := StringReplace(aValue, '$', '', [rfReplaceAll]);
       end;
 
+      // ID
       if TryStrToInt(aValue, i) then
       begin
         g := FSearch.TextFilters.Add(TSearchGroup.Create);
@@ -1315,6 +1316,7 @@ begin
           False, aValue));
       end
       else
+      // Text
       begin
         g := FSearch.TextFilters.Add(TSearchGroup.Create);
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('full_name', 'Scientific name', sdtText, Crit,

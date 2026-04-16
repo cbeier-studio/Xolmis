@@ -319,10 +319,10 @@ begin
       aValor := StringReplace(aValor, '=', '', [rfReplaceAll]);
     end
     else
-    if ExecRegExpr('^:.+$', aValor) then
+    if ExecRegExpr('^\$.+$', aValor) then
     begin
       Criterio := crStartLike;
-      aValor := StringReplace(aValor, ':', '', [rfReplaceAll]);
+      aValor := StringReplace(aValor, '$', '', [rfReplaceAll]);
     end;
 
     with qFind do
