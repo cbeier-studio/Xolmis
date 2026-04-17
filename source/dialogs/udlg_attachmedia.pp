@@ -891,7 +891,7 @@ begin
   if FLocalityId > 0 then
     eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
   if FTaxonId > 0 then
-    eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
   if FIndividualId > 0 then
     eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
   if FCaptureId > 0 then
@@ -913,7 +913,7 @@ begin
   if FProjectId > 0 then
     eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
   if FPermitId > 0 then
-    ePermit.Text := GetName('legal', 'permit_name', 'permit_id', FPermitId);
+    ePermit.Text := GetName('permits', 'permit_name', 'permit_id', FPermitId);
   if FSamplingPlotId > 0 then
     eSamplingPlot.Text := GetName('sampling_plots', 'full_name', 'sampling_plot_id', FSamplingPlotId);
   if FMethodId > 0 then

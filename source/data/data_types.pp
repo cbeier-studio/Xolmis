@@ -122,7 +122,7 @@ const
     'people',
     'projects',
     'project_team',
-    'legal',
+    'permits',
     'taxon_ranks',
     'zoo_taxa',
     'botanic_taxa',

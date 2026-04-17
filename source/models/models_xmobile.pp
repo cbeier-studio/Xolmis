@@ -389,8 +389,8 @@ end;
 
 procedure TMobileSpecies.ToSighting(aSighting: TSighting);
 begin
-  aSighting.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
-  aSighting.NotSurveying := FIsOutOfInventory;
+  aSighting.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
+  aSighting.OutOfSample := FIsOutOfInventory;
   aSighting.SubjectTally := FCount;
   aSighting.Notes := FNotes;
   aSighting.SightingDate := FSampleTime;
@@ -733,7 +733,7 @@ begin
   aEgg.Width := FWidth;
   aEgg.Length := FLength;
   aEgg.Mass := FMass;
-  aEgg.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
+  aEgg.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
 end;
 
 { TMobileNestRevision }
@@ -904,11 +904,11 @@ end;
 procedure TMobileNest.ToNest(aNest: TNest);
 begin
   aNest.FieldNumber := FFieldNumber;
-  aNest.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
+  aNest.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
   aNest.LocalityId := GetSiteKey(FLocalityName);
   aNest.Longitude := FLongitude;
   aNest.Latitude := FLatitude;
-  aNest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_TAXON_NAME, FSupport);
+  aNest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSupport);
   aNest.HeightAboveGround := FHeightAboveGround;
   aNest.FoundDate := FFoundTime;
   aNest.LastDate := FLastTime;
@@ -981,7 +981,7 @@ begin
   aSpecimen.SampleType := FType;
   aSpecimen.Longitude := FLongitude;
   aSpecimen.Latitude := FLatitude;
-  aSpecimen.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, FSpeciesName);
+  aSpecimen.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
   aSpecimen.LocalityId := GetSiteKey(FLocality);
   aSpecimen.Notes := FNotes;
 end;

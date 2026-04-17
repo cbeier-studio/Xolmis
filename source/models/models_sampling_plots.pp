@@ -200,7 +200,7 @@ begin
 
   if FieldValuesDiff(rscName, aOld.FullName, FFullName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+  if FieldValuesDiff(rscAbbreviation, aOld.Abbreviation, FAbbreviation, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscLatitude, aOld.Latitude, FLatitude, R) then
     Changes.Add(R);
@@ -444,7 +444,7 @@ begin
   begin
     R.Id := FieldByName('sampling_plot_id').AsInteger;
     R.FullName := FieldByName('full_name').AsString;
-    R.Abbreviation := FieldByName('acronym').AsString;
+    R.Abbreviation := FieldByName('abbreviation').AsString;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
     R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
@@ -476,8 +476,8 @@ begin
   R := TSamplingPlot(E);
   if ARow.IndexOfName('full_name') >= 0 then
     R.FullName := ARow.Values['full_name'];
-  if ARow.IndexOfName('acronym') >= 0 then
-    R.Abbreviation := ARow.Values['acronym'];
+  if ARow.IndexOfName('abbreviation') >= 0 then
+    R.Abbreviation := ARow.Values['abbreviation'];
   if ARow.IndexOfName('longitude') >= 0 then
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
@@ -510,7 +510,7 @@ begin
     Add(xProvider.SamplingPlots.Insert);
 
     ParamByName('full_name').AsString := R.FullName;
-    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('abbreviation').AsString := R.Abbreviation;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetStrParam(ParamByName('area_shape'), R.AreaShape);
@@ -556,7 +556,7 @@ begin
     Add(xProvider.SamplingPlots.Update);
 
     ParamByName('full_name').AsString := R.FullName;
-    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('abbreviation').AsString := R.Abbreviation;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetStrParam(ParamByName('area_shape'), R.AreaShape);

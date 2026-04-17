@@ -1,12 +1,12 @@
 object edtDocumentInfo: TedtDocumentInfo
   Left = 361
-  Height = 448
+  Height = 504
   Top = 250
   Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Document info'
-  ClientHeight = 448
+  ClientHeight = 504
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
@@ -17,7 +17,7 @@ object edtDocumentInfo: TedtDocumentInfo
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 405
+    Top = 450
     Width = 397
     Align = alTop
     LineColor = 9276813
@@ -27,7 +27,7 @@ object edtDocumentInfo: TedtDocumentInfo
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 407
+    Top = 452
     Width = 397
     Align = alTop
     AutoSize = True
@@ -93,35 +93,35 @@ object edtDocumentInfo: TedtDocumentInfo
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 405
+    Height = 450
     Top = 0
     Width = 397
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 405
+    VertScrollBar.Page = 450
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 405
+    ClientHeight = 450
     ClientWidth = 397
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 405
+      Height = 450
       Top = 0
       Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 405
+      ClientHeight = 450
       ClientWidth = 397
       TabOrder = 0
       object pDateTime: TPanel
         Left = 0
         Height = 45
-        Top = 106
+        Top = 151
         Width = 397
         Align = alTop
         AutoSize = True
@@ -136,7 +136,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 3
         object lblDocumentDate: TLabel
           Left = 16
           Height = 15
@@ -234,7 +234,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pDocumentPath: TPanel
         Left = 0
         Height = 45
-        Top = 151
+        Top = 196
         Width = 397
         Align = alTop
         AutoSize = True
@@ -249,7 +249,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 4
         object lblDocumentPath: TLabel
           Left = 16
           Height = 15
@@ -325,7 +325,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 254
+        Top = 299
         Width = 397
         Align = alTop
         AutoSize = True
@@ -340,7 +340,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 6
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
@@ -364,7 +364,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 299
+        Top = 344
         Width = 397
         Align = alTop
         AutoSize = True
@@ -379,7 +379,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 7
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
@@ -403,7 +403,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 209
+        Top = 254
         Width = 397
         Align = alTop
         AutoSize = True
@@ -419,7 +419,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 5
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
@@ -465,7 +465,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 344
+        Top = 389
         Width = 397
         Align = alTop
         AutoSize = True
@@ -480,7 +480,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 8
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
@@ -499,6 +499,56 @@ object edtDocumentInfo: TedtDocumentInfo
           TabOrder = 0
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress
+        end
+      end
+      object pAuthor: TPanel
+        Left = 0
+        Height = 45
+        Top = 106
+        Width = 397
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 397
+        ParentBackground = False
+        TabOrder = 2
+        object lblAuthor: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 365
+          BorderSpacing.Top = 3
+          Caption = 'Author:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eAuthor: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 365
+          ButtonHint = 'Find author'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eAuthorButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eAuthorKeyPress
         end
       end
     end

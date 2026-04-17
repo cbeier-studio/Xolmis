@@ -59,7 +59,7 @@ begin
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowInsertBatch, gufShowMoreOptions,
     gufShowReceiveBands, gufShowTransferBands, gufShowBandsBalance, gufShowBandHistory];
   FPrintUiFlags := [pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory];
-  FFilterUiFlags := [fufMarked, fufBandSize, fufBandStatus, fufBandType, fufBandSource, fufBandReported,
+  FFilterUiFlags := [fufMarked, fufBandSize, fufBandStatus, fufBandType, fufBandSource,
     fufPerson, fufInstitution, fufProject];
 
   AddDefaultSort(COL_BAND_SIZE, sdAscending);
@@ -97,7 +97,7 @@ begin
       AddExactTextFilter(SearchConfig, COL_BAND_SOURCE, rscSource, BandSources[cbBandSourceFilter.ItemIndex - 1]);
     end;
     // Band reported
-    AddBooleanFilter(SearchConfig, COL_BAND_REPORTED, rscReported, rbReportedYes.Checked, rbReportedNo.Checked);
+    //AddBooleanFilter(SearchConfig, COL_BAND_REPORTED, rscReported, rbReportedYes.Checked, rbReportedNo.Checked);
     // Person
     AddLookupFilter(SearchConfig, [COL_CARRIER_ID], [rscCarrier], PersonIdFilter);
     // Institution
@@ -117,7 +117,7 @@ begin
     cbBandTypeFilter.ItemIndex := 0;
     cbBandSourceFilter.ItemIndex := 0;
 
-    rbReportedAll.Checked := True;
+    //rbReportedAll.Checked := True;
 
     ePersonFilter.Clear;
     PersonIdFilter := 0;

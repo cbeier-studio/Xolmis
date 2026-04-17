@@ -314,7 +314,7 @@ begin
 
   if FieldValuesDiff(rscSiteName, aOld.Name, FName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+  if FieldValuesDiff(rscAbbreviation, aOld.Abbreviation, FAbbreviation, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscType, aOld.Rank, FRank, R) then
     Changes.Add(R);
@@ -583,7 +583,7 @@ begin
   begin
     R.Id := FieldByName('site_id').AsInteger;
     R.Name := FieldByName('site_name').AsString;
-    R.Abbreviation := FieldByName('site_acronym').AsString;
+    R.Abbreviation := FieldByName('abbreviation').AsString;
     R.Rank := StrToSiteRank(FieldByName('site_rank').AsString);
     R.ParentSiteId := FieldByName('parent_site_id').AsInteger;
     R.MunicipalityId := FieldByName('municipality_id').AsInteger;
@@ -621,8 +621,8 @@ begin
   R := TSite(E);
   if ARow.IndexOfName('site_name') >= 0 then
     R.Name := ARow.Values['site_name'];
-  if ARow.IndexOfName('site_acronym') >= 0 then
-    R.Abbreviation := ARow.Values['site_acronym'];
+  if ARow.IndexOfName('abbreviation') >= 0 then
+    R.Abbreviation := ARow.Values['abbreviation'];
   if ARow.IndexOfName('site_rank') >= 0 then
     R.Rank := StrToSiteRank(ARow.Values['site_rank']);
   if ARow.IndexOfName('parent_site_id') >= 0 then
@@ -667,7 +667,7 @@ begin
     Add(xProvider.Gazetteer.Insert);
 
     ParamByName('site_name').AsString := R.Name;
-    SetStrParam(ParamByName('site_acronym'), R.Abbreviation);
+    SetStrParam(ParamByName('abbreviation'), R.Abbreviation);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetFloatParam(ParamByName('altitude'), R.Altitude);
     ParamByName('site_rank').AsString := SITE_RANKS[R.Rank];
@@ -747,7 +747,7 @@ begin
     Add(xProvider.Gazetteer.Update);
 
     ParamByName('site_name').AsString := R.Name;
-    SetStrParam(ParamByName('site_acronym'), R.Abbreviation);
+    SetStrParam(ParamByName('abbreviation'), R.Abbreviation);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetFloatParam(ParamByName('altitude'), R.Altitude);
     ParamByName('site_rank').AsString := SITE_RANKS[R.Rank];

@@ -517,6 +517,9 @@ resourcestring
   rscCategory = 'Category';
   rscRecommendedUses = 'Recommended uses';
   rscCanDelete = 'Can delete';
+  rscProjectStatus = 'Project status';
+  rscPermitStatus = 'Permit status';
+  rscReportDate = 'Report date';
 
   rscValue = 'Value';
   rscTally = 'Count';
@@ -779,7 +782,7 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'rank_name':              Fields[i].DisplayLabel := rscName;
-        'rank_acronym':           Fields[i].DisplayLabel := rscAbbreviation;
+        'abbreviation':           Fields[i].DisplayLabel := rscAbbreviation;
         'rank_seq':               Fields[i].DisplayLabel := rscSequence;
         'main_rank':              Fields[i].DisplayLabel := rscMainRank;
         'subrank':                Fields[i].DisplayLabel := rscSubRank;
@@ -831,7 +834,7 @@ begin
     begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
-        'taxon_name':             Fields[i].DisplayLabel := rscScientificName;
+        'scientific_name':        Fields[i].DisplayLabel := rscScientificName;
         'authorship':             Fields[i].DisplayLabel := rscAuthorship;
         'rank_id':                Fields[i].DisplayLabel := rscTaxonomicRankID;
         'rank_name':              Fields[i].DisplayLabel := rscTaxonomicRank;
@@ -867,7 +870,7 @@ begin
     begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
-        'full_name':              Fields[i].DisplayLabel := rscScientificName;
+        'scientific_name':        Fields[i].DisplayLabel := rscScientificName;
         'authorship':             Fields[i].DisplayLabel := rscAuthorship;
         'formatted_name':         Fields[i].DisplayLabel := rscScientificName;
         'english_name':           Fields[i].DisplayLabel := rscEnglishName;
@@ -944,8 +947,8 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
-        'acronym':                Fields[i].DisplayLabel := rscAbbreviation;
-        'zip_code':               Fields[i].DisplayLabel := rscPostalCode;
+        'abbreviation':                Fields[i].DisplayLabel := rscAbbreviation;
+        'postal_code':               Fields[i].DisplayLabel := rscPostalCode;
         'address_1':              Fields[i].DisplayLabel := rscAddress1;
         'address_2':              Fields[i].DisplayLabel := rscAddress2;
         'neighborhood':           Fields[i].DisplayLabel := rscNeighborhood;
@@ -983,14 +986,14 @@ begin
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'citation':               Fields[i].DisplayLabel := rscCitation;
-        'acronym':                Fields[i].DisplayLabel := rscAbbreviation;
+        'abbreviation':                Fields[i].DisplayLabel := rscAbbreviation;
         'title_treatment':        Fields[i].DisplayLabel := rscTreatment;
         'gender':                 Fields[i].DisplayLabel := rscGender;
-        'national_id_card':       Fields[i].DisplayLabel := rscRG;
-        'social_security_number': Fields[i].DisplayLabel := rscCPF;
+        'id_document_1':       Fields[i].DisplayLabel := rscRG;
+        'id_document_2': Fields[i].DisplayLabel := rscCPF;
         'birth_date':             Fields[i].DisplayLabel := rscBirthDate;
         'death_date':             Fields[i].DisplayLabel := rscDeathDate;
-        'zip_code':               Fields[i].DisplayLabel := rscPostalCode;
+        'postal_code':               Fields[i].DisplayLabel := rscPostalCode;
         'address_1':              Fields[i].DisplayLabel := rscAddress1;
         'address_2':              Fields[i].DisplayLabel := rscAddress2;
         'neighborhood':           Fields[i].DisplayLabel := rscNeighborhood;
@@ -1044,8 +1047,7 @@ begin
         'website_uri':            Fields[i].DisplayLabel := rscWebsite;
         'email_addr':             Fields[i].DisplayLabel := rscEmail;
         'contact_name':           Fields[i].DisplayLabel := rscContactPerson;
-        'project_file':           Fields[i].DisplayLabel := rscProjectFile;
-        'contract_file':          Fields[i].DisplayLabel := rscContractFile;
+        'project_status':           Fields[i].DisplayLabel := rscProjectStatus;
         'protocol_number':        Fields[i].DisplayLabel := rscProtocolNr;
         'main_goal':              Fields[i].DisplayLabel := rscMainGoal;
         'risks':                  Fields[i].DisplayLabel := rscRisks;
@@ -1076,7 +1078,7 @@ begin
         'project_id':             Fields[i].DisplayLabel := rscProjectID;
         'person_id':              Fields[i].DisplayLabel := rscPersonID;
         'person_name':            Fields[i].DisplayLabel := rscPerson;
-        'person_acronym':         Fields[i].DisplayLabel := rscAbbreviation;
+        'person_abbrev':         Fields[i].DisplayLabel := rscAbbreviation;
         'project_manager':        Fields[i].DisplayLabel := rscManager;
         'institution_id':         Fields[i].DisplayLabel := rscInstitutionID;
         'institution_name':       Fields[i].DisplayLabel := rscInstitution;
@@ -1220,8 +1222,7 @@ begin
         'expire_date':            Fields[i].DisplayLabel := rscExpireDate;
         'project_id':             Fields[i].DisplayLabel := rscProjectID;
         'project_name':           Fields[i].DisplayLabel := rscProject;
-        'permit_filename':        Fields[i].DisplayLabel := rscFileName;
-        'permit_file':            Fields[i].DisplayLabel := rscFile;
+        'permit_status':        Fields[i].DisplayLabel := rscPermitStatus;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'permit_id':              Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
@@ -1246,7 +1247,7 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'site_name':              Fields[i].DisplayLabel := rscSiteName;
-        'site_acronym':           Fields[i].DisplayLabel := rscAbbreviation;
+        'abbreviation':           Fields[i].DisplayLabel := rscAbbreviation;
         'site_rank':              Fields[i].DisplayLabel := rscType;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
@@ -1284,7 +1285,7 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
-        'acronym':                Fields[i].DisplayLabel := rscAbbreviation;
+        'abbreviation':                Fields[i].DisplayLabel := rscAbbreviation;
         'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
         'locality_name':          Fields[i].DisplayLabel := rscLocality;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
@@ -1444,7 +1445,7 @@ begin
         'survey_id':              Fields[i].DisplayLabel := rscSurveyID;
         'person_id':              Fields[i].DisplayLabel := rscPersonID;
         'person_name':            Fields[i].DisplayLabel := rscPerson;
-        'person_acronym':         Fields[i].DisplayLabel := rscAbbreviation;
+        'person_abbrev':         Fields[i].DisplayLabel := rscAbbreviation;
         'visitor':                Fields[i].DisplayLabel := rscVisitor;
         'person_color':           Fields[i].DisplayLabel := rscProfileColor;
         'survey_member_id':       Fields[i].DisplayLabel := rscId;
@@ -1593,7 +1594,7 @@ begin
         'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
         'individual_name':        Fields[i].DisplayLabel := rscIndividual;
-        'not_surveying':          Fields[i].DisplayLabel := rscOutOfSample;
+        'out_of_sample':          Fields[i].DisplayLabel := rscOutOfSample;
         'ebird_available':        Fields[i].DisplayLabel := rscIsInEBird;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
@@ -1644,7 +1645,6 @@ begin
         'project_name':           Fields[i].DisplayLabel := rscProject;
         'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
         'individual_name':        Fields[i].DisplayLabel := rscIndividual;
-        'band_reported':          Fields[i].DisplayLabel := rscReported;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'band_id':                Fields[i].DisplayLabel := rscId;
@@ -1679,6 +1679,10 @@ begin
         'sender_name':            Fields[i].DisplayLabel := rscSender;
         'requester_id':           Fields[i].DisplayLabel := rscRequesterID;
         'requester_name':         Fields[i].DisplayLabel := rscRequester;
+        'individual_id':              Fields[i].DisplayLabel := rscIndividualID;
+        'capture_id':              Fields[i].DisplayLabel := rscCaptureID;
+        'reported':              Fields[i].DisplayLabel := rscReported;
+        'report_date':              Fields[i].DisplayLabel := rscReportDate;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'event_id':               Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
@@ -1718,10 +1722,10 @@ begin
         'double_band_name':       Fields[i].DisplayLabel := rscDoubleBand;
         'removed_band_id':        Fields[i].DisplayLabel := rscRemovedBandID;
         'removed_band_name':      Fields[i].DisplayLabel := rscRemovedBand;
-        'right_leg_below':        Fields[i].DisplayLabel := rscRightTarsus;
-        'left_leg_below':         Fields[i].DisplayLabel := rscLeftTarsus;
-        'right_leg_above':        Fields[i].DisplayLabel := rscRightTibia;
-        'left_leg_above':         Fields[i].DisplayLabel := rscLeftTibia;
+        'right_tarsus':        Fields[i].DisplayLabel := rscRightTarsus;
+        'left_tarsus':         Fields[i].DisplayLabel := rscLeftTarsus;
+        'right_tibia':        Fields[i].DisplayLabel := rscRightTibia;
+        'left_tibia':         Fields[i].DisplayLabel := rscLeftTibia;
         'nest_id':                Fields[i].DisplayLabel := rscNestID;
         'nest_name':              Fields[i].DisplayLabel := rscNest;
         'father_id':              Fields[i].DisplayLabel := rscFatherID;
@@ -1789,10 +1793,10 @@ begin
         'band_name':              Fields[i].DisplayLabel := rscBand;
         'removed_band_id':        Fields[i].DisplayLabel := rscRemovedBandID;
         'removed_band_name':      Fields[i].DisplayLabel := rscRemovedBand;
-        'right_leg_below':        Fields[i].DisplayLabel := rscRightTarsus;
-        'left_leg_below':         Fields[i].DisplayLabel := rscLeftTarsus;
-        'right_leg_above':        Fields[i].DisplayLabel := rscRightTibia;
-        'left_leg_above':         Fields[i].DisplayLabel := rscLeftTibia;
+        'right_tarsus':        Fields[i].DisplayLabel := rscRightTarsus;
+        'left_tarsus':         Fields[i].DisplayLabel := rscLeftTarsus;
+        'right_tibia':        Fields[i].DisplayLabel := rscRightTibia;
+        'left_tibia':         Fields[i].DisplayLabel := rscLeftTibia;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
         'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
@@ -1804,7 +1808,7 @@ begin
         'flight_feathers_wear':   Fields[i].DisplayLabel := rscFlightFeathersWear;
         'right_wing_chord':       Fields[i].DisplayLabel := rscRightWingChord;
         'first_secondary_chord':  Fields[i].DisplayLabel := rsc1stSecondaryChord;
-        'kipps_index':            Fields[i].DisplayLabel := rscKippSDistance;
+        'kipps_distance':            Fields[i].DisplayLabel := rscKippSDistance;
         'tail_length':            Fields[i].DisplayLabel := rscTailLength;
         'tarsus_length':          Fields[i].DisplayLabel := rscTarsusLength;
         'tarsus_diameter':        Fields[i].DisplayLabel := rscTarsusDiameter;
@@ -1848,8 +1852,8 @@ begin
         'photographer_2_id':      Fields[i].DisplayLabel := rscPhotographer2ID;
         'photographer_2_name':    Fields[i].DisplayLabel := rscPhotographer2;
         'camera_name':            Fields[i].DisplayLabel := rscCamera;
-        'start_photo_number':     Fields[i].DisplayLabel := rscInitialPhotoNr;
-        'end_photo_number':       Fields[i].DisplayLabel := rscFinalPhotoNr;
+        'initial_photo_number':     Fields[i].DisplayLabel := rscInitialPhotoNr;
+        'final_photo_number':       Fields[i].DisplayLabel := rscFinalPhotoNr;
         'escaped':                Fields[i].DisplayLabel := rscEscaped;
         'needs_review':           Fields[i].DisplayLabel := rscNeedsReview;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
@@ -1970,7 +1974,7 @@ begin
         'plant_min_diameter':     Fields[i].DisplayLabel := rscMinPlantDiameter;
         'plant_height':           Fields[i].DisplayLabel := rscPlantHeight;
         'plant_dbh':              Fields[i].DisplayLabel := rscPlantDBH;
-        'construction_days':      Fields[i].DisplayLabel := rscBuildingDays;
+        'building_days':      Fields[i].DisplayLabel := rscBuildingDays;
         'incubation_days':        Fields[i].DisplayLabel := rscIncubationDays;
         'nestling_days':          Fields[i].DisplayLabel := rscNestlingDays;
         'active_days':            Fields[i].DisplayLabel := rscActiveDays;
@@ -2096,8 +2100,8 @@ begin
         'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
         'individual_name':        Fields[i].DisplayLabel := rscIndividual;
         'measure_date':           Fields[i].DisplayLabel := rscDate;
-        'researcher_id':          Fields[i].DisplayLabel := rscResearcherID;
-        'researcher_name':        Fields[i].DisplayLabel := rscResearcher;
+        'observer_id':          Fields[i].DisplayLabel := rscObserverID;
+        'observer_name':        Fields[i].DisplayLabel := rscObserver;
         'host_egg':               Fields[i].DisplayLabel := rscHostEgg;
         'description':            Fields[i].DisplayLabel := rscDescription;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
@@ -2143,6 +2147,8 @@ begin
         'nest_name':              Fields[i].DisplayLabel := rscNest;
         'egg_id':                 Fields[i].DisplayLabel := rscEggID;
         'egg_name':               Fields[i].DisplayLabel := rscEgg;
+        'institution_id':          Fields[i].DisplayLabel := rscInstitutionID;
+        'institution_name':        Fields[i].DisplayLabel := rscInstitution;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'order_id':               Fields[i].DisplayLabel := rscOrderID;
         'family_id':              Fields[i].DisplayLabel := rscFamilyID;
@@ -2212,6 +2218,8 @@ begin
         'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
         'nest_id':                Fields[i].DisplayLabel := rscNestID;
         'egg_id':                 Fields[i].DisplayLabel := rscEggID;
+        'institution_id':          Fields[i].DisplayLabel := rscInstitutionID;
+        'institution_name':        Fields[i].DisplayLabel := rscInstitution;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'order_id':               Fields[i].DisplayLabel := rscOrderID;
         'family_id':              Fields[i].DisplayLabel := rscFamilyID;
@@ -2396,9 +2404,9 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
       end;
-      'not_surveying':
+      'out_of_sample':
       begin
-        Add('SELECT ' + QuotedStr(rscOutOfSample) + ' AS name, SUM(not_surveying) AS tally');
+        Add('SELECT ' + QuotedStr(rscOutOfSample) + ' AS name, SUM(out_of_sample) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
@@ -2533,7 +2541,7 @@ begin
 
       'order_id', 'family_id', 'genus_id', 'species_id':
       begin
-        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('SELECT z.scientific_name AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('JOIN zoo_taxa AS z ON %afield = z.taxon_id');
         Add('GROUP BY name');
@@ -2571,7 +2579,7 @@ begin
 
     case aFieldName of
       'full_name', 'capture_id', 'longitude', 'latitude', 'active_status', 'insert_date', 'update_date',
-      'user_inserted', 'user_updated', 'start_photo_number', 'end_photo_number', 'field_number':
+      'user_inserted', 'user_updated', 'initial_photo_number', 'final_photo_number', 'field_number':
       begin
         Clear;
       end;
@@ -2782,7 +2790,7 @@ begin
         Add('ORDER BY tally DESC');
       end;
       'molt_limits', 'skull_ossification', 'cycle_code', 'subject_age', 'how_aged', 'subject_sex', 'how_sexed',
-        'subject_status', 'camera_name', 'right_leg_below', 'left_leg_below', 'right_leg_above', 'left_leg_above':
+        'subject_status', 'camera_name', 'right_tarsus', 'left_tarsus', 'right_tibia', 'left_tibia':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
@@ -2801,7 +2809,7 @@ begin
         MacroByName('AFIELD').Value := aFieldName;
       end;
 
-      'right_wing_chord', 'first_secondary_chord', 'kipps_index', 'tail_length', 'tarsus_length',
+      'right_wing_chord', 'first_secondary_chord', 'kipps_distance', 'tail_length', 'tarsus_length',
         'tarsus_diameter', 'weight', 'skull_length', 'exposed_culmen', 'culmen_length', 'nostril_bill_tip',
         'bill_width', 'bill_height', 'total_length', 'central_retrix_length', 'external_retrix_length',
         'halux_length_total', 'halux_length_finger', 'halux_length_claw', 'glucose', 'hemoglobin', 'hematocrit',
@@ -2824,7 +2832,7 @@ begin
 
       'order_id', 'family_id', 'genus_id', 'species_id':
       begin
-        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('SELECT z.scientific_name AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('JOIN zoo_taxa AS z ON %afield = z.taxon_id');
         Add('GROUP BY name');
@@ -2951,7 +2959,7 @@ begin
       'height_above_ground', 'internal_max_diameter', 'internal_min_diameter', 'external_max_diameter',
         'external_min_diameter', 'internal_height', 'external_height', 'edge_distance', 'center_distance',
         'nest_cover', 'plant_max_diameter', 'plant_min_diameter', 'plant_height', 'plant_dbh',
-        'construction_days', 'incubation_days', 'nestling_days', 'active_days', 'nest_productivity':
+        'building_days', 'incubation_days', 'nestling_days', 'active_days', 'nest_productivity':
       begin
         Add('SELECT taxon_name AS name, AVG(%afield) AS mean');
         Add('FROM (' + aWhereText + ')');
@@ -2977,7 +2985,7 @@ begin
 
       'order_id', 'family_id', 'genus_id', 'species_id':
       begin
-        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('SELECT z.scientific_name AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('JOIN zoo_taxa AS z ON %afield = z.taxon_id');
         Add('GROUP BY name');
@@ -3078,13 +3086,6 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
       end;
-      'band_reported':
-      begin
-        Add('SELECT ' + QuotedStr(rscReported) + ' AS name, SUM(band_reported) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
 
       'notes':
       begin
@@ -3168,10 +3169,17 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
       end;
+      'institution_id', 'institution_name':
+      begin
+        Add('SELECT institution_name AS name, COUNT(*) AS tally');
+        Add('FROM (' + aWhereText + ')');
+        Add('GROUP BY name');
+        Add('ORDER BY tally DESC');
+      end;
 
       'order_id', 'family_id', 'subfamily_id', 'genus_id', 'species_id':
       begin
-        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('SELECT z.scientific_name AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('JOIN zoo_taxa AS z ON %afield = z.taxon_id');
         Add('GROUP BY name');
@@ -3381,7 +3389,7 @@ begin
     Clear;
 
     case aFieldName of
-      'taxon_name', 'taxon_id', 'formatted_name', 'active_status', 'insert_date', 'update_date',
+      'scientific_name', 'taxon_id', 'formatted_name', 'active_status', 'insert_date', 'update_date',
       'user_inserted', 'user_updated', 'vernacular_name':
       begin
         Clear;
@@ -3420,7 +3428,7 @@ begin
 
       'order_id', 'family_id', 'genus_id', 'species_id':
       begin
-        Add('SELECT bt.taxon_name AS name, COUNT(*) AS tally');
+        Add('SELECT bt.scientific_name AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('JOIN botanic_taxa AS bt ON %afield = bt.taxon_id');
         Add('GROUP BY name');
@@ -3506,9 +3514,9 @@ begin
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
       end;
-      'researcher_id', 'researcher_name':
+      'observer_id', 'observer_name':
       begin
-        Add('SELECT researcher_name AS name, COUNT(*) AS tally');
+        Add('SELECT observer_name AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('GROUP BY name');
         Add('ORDER BY tally DESC');
@@ -3649,7 +3657,7 @@ begin
     Clear;
 
     case aFieldName of
-      'full_name', 'site_id', 'site_acronym', 'active_status', 'insert_date', 'update_date', 'altitude',
+      'full_name', 'site_id', 'abbreviation', 'active_status', 'insert_date', 'update_date', 'altitude',
       'user_inserted', 'user_updated', 'longitude', 'latitude', 'ebird_name':
       begin
         Clear;
@@ -3754,7 +3762,7 @@ begin
 
       'order_id', 'family_id', 'subfamily_id', 'genus_id', 'species_id':
       begin
-        Add('SELECT z.full_name AS name, COUNT(*) AS tally');
+        Add('SELECT z.scientific_name AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
         Add('JOIN zoo_taxa AS z ON %afield = z.taxon_id');
         Add('GROUP BY name');
@@ -3798,7 +3806,7 @@ begin
         Add('ORDER BY tally DESC');
       end;
 
-      'right_leg_below', 'left_leg_below', 'right_leg_above', 'left_leg_above', 'birth_date', 'death_date',
+      'right_tarsus', 'left_tarsus', 'right_tibia', 'left_tibia', 'birth_date', 'death_date',
       'individual_sex', 'individual_age':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
@@ -3874,13 +3882,13 @@ begin
     Clear;
 
     case aFieldName of
-      'full_name', 'institution_id', 'acronym', 'active_status', 'insert_date', 'update_date', 'email_addr',
+      'full_name', 'institution_id', 'abbreviation', 'active_status', 'insert_date', 'update_date', 'email_addr',
       'user_inserted', 'user_updated', 'address_1', 'address_2', 'manager_name', 'phone_num', 'neighborhood':
       begin
         Clear;
       end;
 
-      'zip_code':
+      'postal_code':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
@@ -3995,7 +4003,7 @@ begin
       'host_eggs_tally', 'host_nestlings_tally', 'nidoparasite_eggs_tally', 'nidoparasite_nestlings_tally':
       begin
         { #todo : summary of number of eggs and nestlings per taxon }
-        Add('SELECT z.full_name AS name, AVG(%afield) AS mean');
+        Add('SELECT z.scientific_name AS name, AVG(%afield) AS mean');
         Add('FROM (' + aWhereText + ')');
         Add('JOIN zoo_taxa AS z ON nidoparasite_id = z.taxon_id');
         Add('GROUP BY name');
@@ -4051,15 +4059,15 @@ begin
     Clear;
 
     case aFieldName of
-      'full_name', 'person_id', 'acronym', 'citation', 'active_status', 'insert_date', 'update_date',
-      'user_inserted', 'user_updated', 'national_id_card', 'social_security_number', 'address_1', 'address_2',
+      'full_name', 'person_id', 'abbreviation', 'citation', 'active_status', 'insert_date', 'update_date',
+      'user_inserted', 'user_updated', 'id_document_1', 'id_document_2', 'address_1', 'address_2',
       'neighborhood', 'departament', 'job_role', 'email_addr', 'phone_1', 'phone_2', 'lattes_uri', 'orcid_uri',
       'twitter_uri', 'instagram_uri', 'website_uri', 'profile_image', 'profile_color':
       begin
         Clear;
       end;
 
-      'title_treatment', 'gender', 'birth_date', 'death_date', 'zip_code':
+      'title_treatment', 'gender', 'birth_date', 'death_date', 'postal_code':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
@@ -4141,7 +4149,7 @@ begin
         Clear;
       end;
 
-      'permit_type', 'dispatcher_name', 'dispatch_date', 'expire_date':
+      'permit_type', 'dispatcher_name', 'dispatch_date', 'expire_date', 'permit_status':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
@@ -4206,7 +4214,7 @@ begin
         Clear;
       end;
 
-      'start_date', 'end_date':
+      'start_date', 'end_date', 'project_status':
       begin
         Add('SELECT %afield AS name, COUNT(*) AS tally');
         Add('FROM (' + aWhereText + ')');
@@ -4256,7 +4264,7 @@ begin
     Clear;
 
     case aFieldName of
-      'full_name', 'sampling_plot_id', 'acronym', 'active_status', 'insert_date', 'update_date',
+      'full_name', 'sampling_plot_id', 'abbreviation', 'active_status', 'insert_date', 'update_date',
       'user_inserted', 'user_updated', 'longitude', 'latitude':
       begin
         Clear;

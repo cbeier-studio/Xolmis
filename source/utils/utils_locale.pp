@@ -1169,6 +1169,12 @@ uses
     rsTreatmentList = 'Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD.';
 
     { Project }
+    rsProjectPlanned = 'Planned';
+    rsProjectActive = 'Active';
+    rsProjectPaused = 'Paused';
+    rsProjectFinished = 'Finished';
+    rsProjectCancelled = 'Cancelled';
+
     rsGoalPending = 'Pending';
     rsGoalReached = 'Reached';
     rsGoalCanceled = 'Canceled';
@@ -1200,6 +1206,10 @@ uses
     rsPermitEntry = 'Entry Permit';
     rsPermitTransport = 'Transport Permit';
     rsPermitOther = 'Other Permit';
+    rsPermitActive = 'Active';
+    rsPermitReplaced = 'Replaced';
+    rsPermitArchived = 'Archived';
+    rsPermitCancelled = 'Cancelled';
 
     { Record verifications }
     rsRecordOK = 'Record OK';

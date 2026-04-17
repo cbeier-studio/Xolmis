@@ -466,7 +466,7 @@ begin
         Obj.Number := StrToInt(CellValue(COL_BAND_NUMBER, r));
         Obj.BandType := StrToBandType(CellValue(COL_BAND_TYPE, r));
         Obj.Status := StrToBandStatus(CellValue(COL_BAND_STATUS, r));
-        Obj.Reported := CellValue(COL_BAND_REPORTED, r) = '1';
+        //Obj.Reported := CellValue(COL_BAND_REPORTED, r) = '1';
         Obj.Source := StrToBandSource(CellValue(COL_BAND_SOURCE, r));
         Obj.SupplierId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_ABBREVIATION, CellValue(COL_SUPPLIER_NAME, r));
         Obj.CarrierId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_CARRIER_NAME, r));
@@ -503,13 +503,13 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.FullName := CellValue(COL_TAXON_NAME, r);
+        Obj.ScientificName := CellValue(COL_SCIENTIFIC_NAME, r);
         Obj.Authorship := CellValue(COL_AUTHORSHIP, r);
         rankKey := GetKey(TBL_TAXON_RANKS, COL_RANK_ID, COL_RANK_NAME, CellValue(COL_RANK_NAME, r));
-        Obj.RankId := StringToBotanicRank(GetName(TBL_TAXON_RANKS, COL_RANK_ABBREVIATION, COL_RANK_ID, rankKey));
+        Obj.RankId := StringToBotanicRank(GetName(TBL_TAXON_RANKS, COL_ABBREVIATION, COL_RANK_ID, rankKey));
         Obj.VernacularName := CellValue(COL_VERNACULAR_NAME, r);
-        Obj.ParentTaxonId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, CellValue(COL_PARENT_TAXON_NAME, r));
-        Obj.ValidId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, CellValue(COL_VALID_NAME, r));
+        Obj.ParentTaxonId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_PARENT_TAXON_NAME, r));
+        Obj.ValidId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_VALID_NAME, r));
 
         Repo.Insert(Obj);
       end;
@@ -564,7 +564,7 @@ begin
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.BandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_BAND_NAME, r));
         Obj.RemovedBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_REMOVED_BAND_NAME, r));
         Obj.RightTarsus := CellValue(COL_RIGHT_TARSUS, r);
@@ -592,7 +592,7 @@ begin
         Obj.TotalLength := StrToFloatDef(CellValue(COL_TOTAL_LENGTH, r), 0.0);
         Obj.CulmenLength := StrToFloatDef(CellValue(COL_CULMEN_LENGTH, r), 0.0);
         Obj.PhilornisLarvaeTally := StrToIntDef(CellValue(COL_PHILORNIS_LARVAE_TALLY, r), 0);
-        Obj.KippsIndex := StrToFloatDef(CellValue(COL_KIPPS_INDEX, r), 0.0);
+        Obj.KippsDistance := StrToFloatDef(CellValue(COL_KIPPS_DISTANCE, r), 0.0);
         Obj.MoltLimits := CellValue(COL_MOLT_LIMITS, r);
         Obj.SkullOssification := CellValue(COL_SKULL_OSSIFICATION, r);
         Obj.CycleCode := CellValue(COL_CYCLE_CODE, r);
@@ -611,8 +611,8 @@ begin
         Obj.Photographer1Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PHOTOGRAPHER_1_NAME, r));
         Obj.Photographer2Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PHOTOGRAPHER_2_NAME, r));
         Obj.CameraName := CellValue(COL_CAMERA_NAME, r);
-        Obj.StartPhotoNumber := CellValue(COL_START_PHOTO_NUMBER, r);
-        Obj.EndPhotoNumber := CellValue(COL_END_PHOTO_NUMBER, r);
+        Obj.InitialPhotoNumber := CellValue(COL_INITIAL_PHOTO_NUMBER, r);
+        Obj.FinalPhotoNumber := CellValue(COL_FINAL_PHOTO_NUMBER, r);
         Obj.FieldNumber := CellValue(COL_FIELD_NUMBER, r);
         Obj.Hemoglobin := StrToFloatDef(CellValue(COL_HEMOGLOBIN, r), 0.0);
         Obj.Hematocrit := StrToFloatDef(CellValue(COL_HEMATOCRIT, r), 0.0);
@@ -684,9 +684,9 @@ begin
         Obj.FieldNumber := CellValue(COL_FIELD_NUMBER, r);
         Obj.EggSeq := StrToIntDef(CellValue(COL_EGG_SEQUENCE, r), 0);
         Obj.MeasureDate := StrToDateDef(CellValue(COL_MEASURE_DATE, r), NullDate);
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.HostEgg := CellValue(COL_HOST_EGG, r) = '1';
-        Obj.ResearcherId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_RESEARCHER_NAME, r));
+        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_RESEARCHER_NAME, r));
         Obj.EggShape := StrToEggShape(CellValue(COL_EGG_SHAPE, r));
         Obj.EggStage := CellValue(COL_EGG_STAGE, r);
         Obj.EggshellColor := CellValue(COL_EGGSHELL_COLOR, r);
@@ -765,7 +765,7 @@ begin
         Obj.Clear;
         Obj.SampleDate := StrToDateDef(CellValue(COL_SAMPLE_DATE, r), NullDate);
         Obj.SampleTime := StrToTimeDef(CellValue(COL_SAMPLE_TIME, r), NullTime);
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
         Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_OBSERVER_NAME, r));
         Obj.SourceType := StrToFeatherSource(CellValue(COL_SOURCE_TYPE, r));
@@ -857,7 +857,7 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.BandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_BAND_NAME, r));
         Obj.BandingDate := StrToDateDef(CellValue(COL_BANDING_DATE, r), NullDate);
         Obj.DoubleBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_DOUBLE_BAND_NAME, r));
@@ -1048,7 +1048,7 @@ begin
         Obj.NestStatus := StrToNestStatus(CellValue(COL_NEST_STATUS, r));
         Obj.HostEggsTally := StrToIntDef(CellValue(COL_HOST_EGGS_TALLY, r), 0);
         Obj.HostNestlingsTally := StrToIntDef(CellValue(COL_HOST_NESTLINGS_TALLY, r), 0);
-        Obj.NidoparasiteId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_NIDOPARASITE_NAME, r));
+        Obj.NidoparasiteId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_NIDOPARASITE_NAME, r));
         Obj.NidoparasiteEggsTally := StrToIntDef(CellValue(COL_NIDOPARASITE_EGGS_TALLY, r), 0);
         Obj.NidoparasiteNestlingsTally := StrToIntDef(CellValue(COL_NIDOPARASITE_NESTLINGS_TALLY, r), 0);
         Obj.HavePhilornisLarvae := CellValue(COL_HAVE_PHILORNIS_LARVAE, r) = '1';
@@ -1083,7 +1083,7 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.FieldNumber := CellValue(COL_FIELD_NUMBER, r);
         Obj.NestFate := StrToNestFate(CellValue(COL_NEST_FATE, r));
         Obj.LossCause := StrToLossCause(CellValue(COL_LOSS_CAUSE, r));
@@ -1100,14 +1100,14 @@ begin
         Obj.NestShape := StrToNestShape(CellValue(COL_NEST_SHAPE, r));
         Obj.SupportType := StrToSupportType(CellValue(COL_SUPPORT_TYPE, r));
         Obj.HeightAboveGround := StrToFloatDef(CellValue(COL_HEIGHT_ABOVE_GROUND, r), 0.0);
-        Obj.SupportPlant1Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, CellValue(COL_SUPPORT_PLANT_1_NAME, r));
-        Obj.SupportPlant2Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_TAXON_NAME, CellValue(COL_SUPPORT_PLANT_2_NAME, r));
+        Obj.SupportPlant1Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_SUPPORT_PLANT_1_NAME, r));
+        Obj.SupportPlant2Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_SUPPORT_PLANT_2_NAME, r));
         Obj.OtherSupport := CellValue(COL_OTHER_SUPPORT, r);
         Obj.PlantHeight := StrToFloatDef(CellValue(COL_PLANT_HEIGHT, r), 0.0);
         Obj.PlantDbh := StrToFloatDef(CellValue(COL_PLANT_DBH, r), 0.0);
         Obj.PlantMaxDiameter := StrToFloatDef(CellValue(COL_PLANT_MAX_DIAMETER, r), 0.0);
         Obj.PlantMinDiameter := StrToFloatDef(CellValue(COL_PLANT_MIN_DIAMETER, r), 0.0);
-        Obj.ConstructionDays := StrToIntDef(CellValue(COL_BUILDING_DAYS, r), 0);
+        Obj.BuildingDays := StrToIntDef(CellValue(COL_BUILDING_DAYS, r), 0);
         Obj.IncubationDays := StrToIntDef(CellValue(COL_INCUBATION_DAYS, r), 0);
         Obj.NestlingDays := StrToIntDef(CellValue(COL_NESTLING_DAYS, r), 0);
         Obj.ActiveDays := StrToIntDef(CellValue(COL_ACTIVE_DAYS, r), 0);
@@ -1623,7 +1623,7 @@ begin
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
         Obj.SightingDate := StrToDateDef(CellValue(COL_SIGHTING_DATE, r), NullDate);
         Obj.SightingTime := StrToTimeDef(CellValue(COL_SIGHTING_TIME, r), NullTime);
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
         Obj.SubjectTally := StrToIntDef(CellValue(COL_SUBJECTS_TALLY, r), 0);
         Obj.SubjectDistance := StrToFloatDef(CellValue(COL_SUBJECT_DISTANCE, r), 0.0);
@@ -1645,7 +1645,7 @@ begin
         Obj.ImmatureTally := CellValue(COL_IMMATURES_TALLY, r);
         Obj.NotAgedTally := CellValue(COL_NOT_AGED_TALLY, r);
         Obj.IsOnEbird := CellValue(COL_EBIRD_AVAILABLE, r) = '1';
-        Obj.NotSurveying := CellValue(COL_NOT_SURVEYING, r) = '1';
+        Obj.OutOfSample := CellValue(COL_OUT_OF_SAMPLE, r) = '1';
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
@@ -1717,7 +1717,7 @@ begin
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_FULL_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
         Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, CellValue(COL_NEST_NAME, r));
         Obj.EggId := GetKey(TBL_EGGS, COL_EGG_ID, COL_FULL_NAME, CellValue(COL_EGG_NAME, r));

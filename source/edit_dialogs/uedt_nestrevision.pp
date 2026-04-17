@@ -425,7 +425,7 @@ begin
   eHostEggsTally.Value := FRevision.HostEggsTally;
   eHostNestlingsTally.Value := FRevision.HostNestlingsTally;
   FNidoparasiteId := FRevision.NidoparasiteId;
-  eNidoparasite.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FNidoparasiteId);
+  eNidoparasite.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FNidoparasiteId);
   eNidoparasiteEggsTally.Value := FRevision.NidoparasiteEggsTally;
   eNidoparasiteNestlingsTally.Value := FRevision.NidoparasiteNestlingsTally;
   ckHasPhilornisLarvae.Checked := FRevision.HavePhilornisLarvae;

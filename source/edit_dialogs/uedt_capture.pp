@@ -1147,7 +1147,7 @@ begin
     if FCapture.TaxonId > 0 then
     begin
       FTaxonId := FCapture.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FCapture.BandId > 0 then
     begin
@@ -1231,7 +1231,7 @@ begin
   FIndividual := TIndividual.Create(FIndividualId);
   try
     FTaxonId := FIndividual.TaxonId;
-    eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+    eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     FBandId := FIndividual.BandId;
     eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
     eRightTarsus.Text := FIndividual.RightTarsus;
@@ -1304,7 +1304,7 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FCapture.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FBandId := FCapture.BandId;
   eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
   FRemovedBandId := FCapture.RemovedBandId;
@@ -1355,7 +1355,7 @@ begin
   eTotalLength.Value := FCapture.TotalLength;
   eTotalCulmen.Value := FCapture.CulmenLength;
   ePhilornisLarvae.Value := FCapture.PhilornisLarvaeTally;
-  eKippsIndex.Value := FCapture.KippsIndex;
+  eKippsIndex.Value := FCapture.KippsDistance;
   eMoltLimits.Text := FCapture.MoltLimits;
   cbSkullOssification.ItemIndex := cbSkullOssification.Items.IndexOf(FCapture.SkullOssification);
   eCycleCode.Text := FCapture.CycleCode;
@@ -1382,10 +1382,10 @@ begin
   FPhotographer2Id := FCapture.Photographer2Id;
   ePhotographer2.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FPhotographer2Id);
   cbCamera.ItemIndex := cbCamera.Items.IndexOf(FCapture.CameraName);
-  if (FCapture.StartPhotoNumber <> EmptyStr) and (FCapture.StartPhotoNumber <> '0') then
-    eStartPhoto.Text := FCapture.StartPhotoNumber;
-  if (FCapture.EndPhotoNumber <> EmptyStr) and (FCapture.EndPhotoNumber <> '0') then
-    eEndPhoto.Text := FCapture.EndPhotoNumber;
+  if (FCapture.InitialPhotoNumber <> EmptyStr) and (FCapture.InitialPhotoNumber <> '0') then
+    eStartPhoto.Text := FCapture.InitialPhotoNumber;
+  if (FCapture.FinalPhotoNumber <> EmptyStr) and (FCapture.FinalPhotoNumber <> '0') then
+    eEndPhoto.Text := FCapture.FinalPhotoNumber;
   eFieldNumber.Text := FCapture.FieldNumber;
   eHemoglobin.Value := FCapture.Hemoglobin;
   eHematocrit.Value := FCapture.Hematocrit;
@@ -1635,7 +1635,7 @@ begin
   FCapture.TotalLength          := eTotalLength.Value;
   FCapture.CulmenLength         := eTotalCulmen.Value;
   FCapture.PhilornisLarvaeTally := ePhilornisLarvae.Value;
-  FCapture.KippsIndex           := eKippsIndex.Value;
+  FCapture.KippsDistance           := eKippsIndex.Value;
   FCapture.MoltLimits           := eMoltLimits.Text;
   FCapture.SkullOssification    := cbSkullOssification.Text;
   FCapture.CycleCode            := eCycleCode.Text;
@@ -1654,8 +1654,8 @@ begin
   FCapture.Photographer1Id      := FPhotographer1Id;
   FCapture.Photographer2Id      := FPhotographer2Id;
   FCapture.CameraName           := cbCamera.Text;
-  FCapture.StartPhotoNumber     := eStartPhoto.Text;
-  FCapture.EndPhotoNumber       := eEndPhoto.Text;
+  FCapture.InitialPhotoNumber     := eStartPhoto.Text;
+  FCapture.FinalPhotoNumber       := eEndPhoto.Text;
   FCapture.FieldNumber          := eFieldNumber.Text;
   FCapture.Hemoglobin           := eHemoglobin.Value;
   FCapture.Hematocrit           := eHematocrit.Value;

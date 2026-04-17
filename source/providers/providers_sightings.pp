@@ -74,7 +74,7 @@ begin
       'unbanded_tally       INTEGER,' +
       'detection_type       VARCHAR (30),' +
       'breeding_status      VARCHAR (30),' +
-      'not_surveying        BOOLEAN       DEFAULT (0),' +
+      'out_of_sample        BOOLEAN       DEFAULT (0),' +
       'ebird_available      BOOLEAN       DEFAULT (0),' +
       'full_name            VARCHAR (100),' +
       'notes                TEXT,' +
@@ -152,7 +152,7 @@ begin
       'unbanded_tally, ' +
       'detection_type, ' +
       'breeding_status, ' +
-      'not_surveying, ' +
+      'out_of_sample, ' +
       'ebird_available, ' +
       'full_name, ' +
       'notes, ' +
@@ -192,7 +192,7 @@ begin
       ':unbanded_tally, ' +
       ':detection_type, ' +
       ':breeding_status, ' +
-      ':not_surveying, ' +
+      ':out_of_sample, ' +
       ':ebird_available, ' +
       ':full_name, ' +
       ':notes, ' +
@@ -204,7 +204,7 @@ function TSightingsSQL.SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): 
 begin
   Result :=
     'SELECT s.*, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'z.formatted_name AS taxon_formatted_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
@@ -307,7 +307,7 @@ begin
       'unbanded_tally, ' +
       'detection_type, ' +
       'breeding_status, ' +
-      'not_surveying, ' +
+      'out_of_sample, ' +
       'ebird_available, ' +
       'full_name, ' +
       'notes, ' +
@@ -385,7 +385,7 @@ begin
       'unbanded_tally = :unbanded_tally, ' +
       'detection_type = :detection_type, ' +
       'breeding_status = :breeding_status, ' +
-      'not_surveying = :not_surveying, ' +
+      'out_of_sample = :out_of_sample, ' +
       'ebird_available = :ebird_available, ' +
       'full_name = :full_name, ' +
       'notes = :notes, ' +

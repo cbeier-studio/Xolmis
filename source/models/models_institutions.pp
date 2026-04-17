@@ -167,7 +167,7 @@ begin
 
   if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+  if FieldValuesDiff(rscAbbreviation, aOld.Abbreviation, FAbbreviation, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscManager, aOld.ManagerName, FManagerName, R) then
     Changes.Add(R);
@@ -419,12 +419,12 @@ begin
   begin
     R.Id := FieldByName('institution_id').AsInteger;
     R.FullName := FieldByName('full_name').AsString;
-    R.Abbreviation := FieldByName('acronym').AsString;
+    R.Abbreviation := FieldByName('abbreviation').AsString;
     R.ManagerName := FieldByName('manager_name').AsString;
     R.Address1 := FieldByName('address_1').AsString;
     R.Address2 := FieldByName('address_2').AsString;
     R.Neighborhood := FieldByName('neighborhood').AsString;
-    R.PostalCode := FieldByName('zip_code').AsString;
+    R.PostalCode := FieldByName('postal_code').AsString;
     R.MunicipalityId := FieldByName('municipality_id').AsInteger;
     R.StateId := FieldByName('state_id').AsInteger;
     R.CountryId := FieldByName('country_id').AsInteger;
@@ -455,8 +455,8 @@ begin
   R := TInstitution(E);
   if ARow.IndexOfName('full_name') >= 0 then
     R.FullName := ARow.Values['full_name'];
-  if ARow.IndexOfName('acronym') >= 0 then
-    R.Abbreviation := ARow.Values['acronym'];
+  if ARow.IndexOfName('abbreviation') >= 0 then
+    R.Abbreviation := ARow.Values['abbreviation'];
   if ARow.IndexOfName('manager_name') >= 0 then
     R.ManagerName := ARow.Values['manager_name'];
   if ARow.IndexOfName('address_1') >= 0 then
@@ -465,8 +465,8 @@ begin
     R.Address2 := ARow.Values['address_2'];
   if ARow.IndexOfName('neighborhood') >= 0 then
     R.Neighborhood := ARow.Values['neighborhood'];
-  if ARow.IndexOfName('zip_code') >= 0 then
-    R.PostalCode := ARow.Values['zip_code'];
+  if ARow.IndexOfName('postal_code') >= 0 then
+    R.PostalCode := ARow.Values['postal_code'];
   if ARow.IndexOfName('municipality_id') >= 0 then
     R.MunicipalityId := StrToIntDef(ARow.Values['municipality_id'], 0);
   if ARow.IndexOfName('state_id') >= 0 then
@@ -497,11 +497,11 @@ begin
     Add(xProvider.Institutions.Insert);
 
     ParamByName('full_name').AsString := R.FullName;
-    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('abbreviation').AsString := R.Abbreviation;
     SetStrParam(ParamByName('address_1'), R.Address1);
     SetStrParam(ParamByName('address_2'), R.Address2);
     SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
-    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetStrParam(ParamByName('postal_code'), R.PostalCode);
     SetForeignParam(ParamByName('country_id'), R.CountryId);
     SetForeignParam(ParamByName('state_id'), R.StateId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
@@ -548,11 +548,11 @@ begin
     Add(xProvider.Institutions.Update);
 
     ParamByName('full_name').AsString := R.FullName;
-    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('abbreviation').AsString := R.Abbreviation;
     SetStrParam(ParamByName('address_1'), R.Address1);
     SetStrParam(ParamByName('address_2'), R.Address2);
     SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
-    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetStrParam(ParamByName('postal_code'), R.PostalCode);
     SetForeignParam(ParamByName('country_id'), R.CountryId);
     SetForeignParam(ParamByName('state_id'), R.StateId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);

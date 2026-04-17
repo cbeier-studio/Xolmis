@@ -59,7 +59,7 @@ begin
     'CREATE TABLE IF NOT EXISTS sampling_plots (' +
       'sampling_plot_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'full_name        VARCHAR (100) NOT NULL UNIQUE,' +
-      'acronym          VARCHAR (10)  NOT NULL UNIQUE,' +
+      'abbreviation          VARCHAR (10)  NOT NULL UNIQUE,' +
       'longitude        REAL,' +
       'latitude         REAL,' +
       'coordinate_precision VARCHAR (3),' +
@@ -86,7 +86,7 @@ end;
 
 function TSamplingPlotsSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
 begin
-  Result := 'SELECT sampling_plot_id, full_name, acronym FROM sampling_plots ';
+  Result := 'SELECT sampling_plot_id, full_name, abbreviation FROM sampling_plots ';
 
   case aWhere of
     swcNone: ;
@@ -94,7 +94,7 @@ begin
     begin
       Result := Result +
         'WHERE ((full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (acronym ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+            'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -111,7 +111,7 @@ begin
   Result :=
     'INSERT INTO sampling_plots (' +
       'full_name, ' +
-      'acronym, ' +
+      'abbreviation, ' +
       'longitude, ' +
       'latitude, ' +
       'coordinate_precision, ' +
@@ -123,7 +123,7 @@ begin
       'insert_date) ' +
     'VALUES (' +
       ':full_name, ' +
-      ':acronym, ' +
+      ':abbreviation, ' +
       ':longitude, ' +
       ':latitude, ' +
       ':coordinate_precision, ' +
@@ -179,7 +179,7 @@ begin
     'SELECT ' +
       'sampling_plot_id, ' +
       'full_name, ' +
-      'acronym, ' +
+      'abbreviation, ' +
       'longitude, ' +
       'latitude, ' +
       'coordinate_precision, ' +
@@ -222,7 +222,7 @@ begin
   Result :=
     'UPDATE sampling_plots SET ' +
       'full_name = :full_name, ' +
-      'acronym = :acronym, ' +
+      'abbreviation = :abbreviation, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
       'coordinate_precision = :coordinate_precision, ' +

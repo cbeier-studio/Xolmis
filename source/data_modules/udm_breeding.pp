@@ -43,9 +43,9 @@ type
     qEggsmeasure_date: TDateField;
     qEggsnest_id: TLongintField;
     qEggsnotes: TMemoField;
+    qEggsobserver_id: TLongintField;
+    qEggsobserver_name: TStringField;
     qEggsorder_id: TLongintField;
-    qEggsresearcher_id: TLongintField;
-    qEggsresearcher_name: TStringField;
     qEggsspecies_id: TLongintField;
     qEggstaxon_id: TLongintField;
     qEggstaxon_name: TStringField;

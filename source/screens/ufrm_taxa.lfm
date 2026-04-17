@@ -31,7 +31,7 @@ object frmTaxa: TfrmTaxa
       item
         Title.Caption = 'Taxon'
         Width = 308
-        FieldName = 'full_name'
+        FieldName = 'scientific_name'
       end    
       item
         Title.Caption = 'Valid name ID'
@@ -579,7 +579,7 @@ object frmTaxa: TfrmTaxa
         Height = 30
         Top = 8
         Width = 163
-        DataField = 'full_name'
+        DataField = 'scientific_name'
         DataSource = dsLink
         Font.Color = 13066075
         Font.Height = -21

@@ -951,8 +951,8 @@ begin
       ColumnByFieldName(COL_MEASURE_DATE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_RESEARCHER_NAME).Visible then
-      ColumnByFieldName(COL_RESEARCHER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
+      ColumnByFieldName(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
 
     if DataSource.DataSet.FieldByName(COL_EGG_SHAPE).Visible then
     begin
@@ -1105,8 +1105,8 @@ begin
       ColumnByFieldName(COL_MEASURE_DATE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldName(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_RESEARCHER_NAME).Visible then
-      ColumnByFieldName(COL_RESEARCHER_NAME).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
+      ColumnByFieldName(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
 
     if DataSource.DataSet.FieldByName(COL_EGG_SHAPE).Visible then
     begin

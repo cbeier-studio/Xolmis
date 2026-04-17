@@ -251,7 +251,7 @@ begin
 
       Add('SELECT site_id FROM gazetteer');
       Add('WHERE ((site_name = :aname)');
-      Add('   OR (site_acronym = :aname))');
+      Add('   OR (abbreviation = :aname))');
       if aCountryId > 0 then
         Add('  AND (country_id = :country_id)');
       if aStateId > 0 then
@@ -301,7 +301,7 @@ begin
 
       Add('SELECT site_id FROM gazetteer');
       Add('WHERE ((site_name = :aname)');
-      Add('   OR (site_acronym = :aname))');
+      Add('   OR (abbreviation = :aname))');
       Add('  AND (site_rank = :site_rank)');
       ParamByName('ANAME').AsString := S;
       ParamByName('site_rank').AsString := SITE_RANKS[srCountry];
@@ -341,7 +341,7 @@ begin
 
       Add('SELECT site_id FROM gazetteer');
       Add('WHERE ((site_name = :aname)');
-      Add('   OR (site_acronym = :aname))');
+      Add('   OR (abbreviation = :aname))');
       Add('  AND (site_rank = :site_rank)');
       Add('  AND (country_id = :country_id)');
       ParamByName('ANAME').AsString := S;
@@ -383,7 +383,7 @@ begin
 
       Add('SELECT site_id FROM gazetteer');
       Add('WHERE ((site_name = :aname)');
-      Add('   OR (site_acronym = :aname))');
+      Add('   OR (abbreviation = :aname))');
       Add('  AND (site_rank = :site_rank)');
       Add('  AND (country_id = :country_id)');
       Add('  AND (state_id = :state_id)');
@@ -456,7 +456,7 @@ var
   i: Integer;
 begin
   Result := trSpecies;
-  ab := GetName('taxon_ranks', 'rank_id', 'rank_acronym', aKey);
+  ab := GetName('taxon_ranks', 'rank_id', 'abbreviation', aKey);
   Result := StringToZooRank(ab);
   //for i := 0 to (Length(ZOOLOGICAL_RANKS) - 1) do
   //  if (ab = ZOOLOGICAL_RANKS[i]) then

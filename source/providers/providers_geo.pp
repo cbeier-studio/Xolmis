@@ -61,7 +61,7 @@ begin
     'CREATE TABLE IF NOT EXISTS gazetteer (' +
       'site_id         INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'site_name       VARCHAR (60)  NOT NULL,' +
-      'site_acronym    VARCHAR (10),' +
+      'abbreviation    VARCHAR (10),' +
       'longitude       REAL,' +
       'latitude        REAL,' +
       'altitude        REAL,' +
@@ -101,7 +101,7 @@ begin
   strOr := EmptyStr;
   strFiltro := EmptyStr;
 
-  Result := 'SELECT site_id, full_name, site_name, site_acronym FROM gazetteer ';
+  Result := 'SELECT site_id, full_name, site_name, abbreviation FROM gazetteer ';
 
   case aWhere of
     swcNone: ;
@@ -110,7 +110,7 @@ begin
       Result := Result +
         'WHERE ((full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
           'OR (site_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-          'OR (site_acronym ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ';
+          'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ';
       if not (gfAll in aRankFilter) then
       begin
         Result := Result + 'AND (';
@@ -152,7 +152,7 @@ begin
   Result :=
     'INSERT INTO gazetteer (' +
       'site_name, ' +
-      'site_acronym, ' +
+      'abbreviation, ' +
       'longitude, ' +
       'latitude, ' +
       'altitude, ' +
@@ -170,7 +170,7 @@ begin
       'insert_date) ' +
     'VALUES (' +
       ':site_name, ' +
-      ':site_acronym, ' +
+      ':abbreviation, ' +
       ':longitude, ' +
       ':latitude, ' +
       ':altitude, ' +
@@ -236,7 +236,7 @@ begin
     'SELECT ' +
       'site_id, ' +
       'site_name, ' +
-      'site_acronym, ' +
+      'abbreviation, ' +
       'longitude, ' +
       'latitude, ' +
       'altitude, ' +
@@ -445,7 +445,7 @@ begin
   Result :=
     'UPDATE gazetteer SET ' +
       'site_name = :site_name, ' +
-      'site_acronym = :site_acronym, ' +
+      'abbreviation = :abbreviation, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
       'altitude = :altitude, ' +
@@ -559,7 +559,7 @@ begin
   Result :=
     'SELECT poi.*, ' +
       'p.full_name AS observer_name, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'i.full_name AS individual_name, ' +
       's.full_name AS sighting_name, ' +
       'sv.full_name AS survey_name ' +

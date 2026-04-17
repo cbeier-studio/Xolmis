@@ -238,7 +238,7 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  lblName.DataField := 'full_name';
+  lblName.DataField := 'scientific_name';
   Verna := xSettings.VernacularNamesLanguage;
   case Verna of
     0:
@@ -248,7 +248,7 @@ begin
     2:
       lblVernacular.DataField := 'spanish_name';
   end;
-  oOrder := 'full_name';
+  oOrder := 'scientific_name';
   oDirection := 'ASC';
   EP.SetFocus;
   if Length(Init) > 0 then
@@ -437,70 +437,70 @@ begin
         tfOrders:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym LIKE ''%ord.'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%ord.'')) ');
         end;
         tfFamilies:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym LIKE ''%fam.'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%fam.'')) ');
         end;
         tfTribes:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym LIKE ''%tr.'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%tr.'')) ');
         end;
         tfGenera:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym LIKE ''%g.'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%g.'')) ');
         end;
         tfSpecies:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE (taxon_ranks.rank_acronym = ''supersp.'') OR (taxon_ranks.rank_acronym = ''sp.''))) ');
+          aSQL.Add('WHERE (taxon_ranks.abbreviation = ''supersp.'') OR (taxon_ranks.abbreviation = ''sp.''))) ');
         end;
         tfSubspecies:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE (taxon_ranks.rank_acronym = ''ssp.'')');
+          aSQL.Add('WHERE (taxon_ranks.abbreviation = ''ssp.'')');
           //if not (tfSubspeciesGroups in aFilter) then
-          //  aSQL.Add('OR (taxon_ranks.rank_acronym = ''grp. (mono)'')');
+          //  aSQL.Add('OR (taxon_ranks.abbreviation = ''grp. (mono)'')');
           aSQL.Add(')) ');
         end;
         tfSubspeciesGroups:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym LIKE ''grp. %'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''grp. %'')) ');
         end;
         tfSpuhs:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym = ''spuh'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation = ''spuh'')) ');
         end;
         tfSlashes:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym = ''slash'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation = ''slash'')) ');
         end;
         tfForms:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym = ''form'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation = ''form'')) ');
         end;
         tfDomestics:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym = ''domest.'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation = ''domest.'')) ');
         end;
         tfHybrids:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym = ''hybrid'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation = ''hybrid'')) ');
         end;
         tfIntergrades:
         begin
           aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
-          aSQL.Add('WHERE taxon_ranks.rank_acronym = ''intergrade'')) ');
+          aSQL.Add('WHERE taxon_ranks.abbreviation = ''intergrade'')) ');
         end;
       end;
       AndOr := 'OR ';
@@ -521,12 +521,12 @@ begin
     if (UsarValido) and (qFind.FieldByName('valid_id').AsInteger > 0) then
     begin
       Codigo := qFind.FieldByName('valid_id').AsInteger;
-      Nome := GetName('zoo_taxa', 'full_name', 'taxon_id', Codigo);
+      Nome := GetName('zoo_taxa', 'scientific_name', 'taxon_id', Codigo);
     end
     else
     begin
       Codigo := qFind.FieldByName('taxon_id').AsInteger;
-      Nome := qFind.FieldByName('full_name').AsString;
+      Nome := qFind.FieldByName('scientific_name').AsString;
     end;
     CodigoStr := IntToStr(Codigo);
   end;
@@ -545,14 +545,14 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT taxon_id, full_name, formatted_name, valid_id, english_name, portuguese_name, spanish_name');
+    Add('SELECT taxon_id, scientific_name, formatted_name, valid_id, english_name, portuguese_name, spanish_name');
     Add('FROM zoo_taxa ');
     case aFilter of
       fvNone:
         ; // do nothing
       fvReset:
         begin
-          Add('WHERE ((full_name ' + Operador + ' :VALPARAM) ');
+          Add('WHERE ((scientific_name ' + Operador + ' :VALPARAM) ');
           Add('OR (english_name ' + Operador + ' :VALPARAM) ');
           Add('OR (ioc_english_name ' + Operador + ' :VALPARAM) ');
           Add('OR (portuguese_name ' + Operador + ' :VALPARAM) ');

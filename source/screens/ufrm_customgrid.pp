@@ -79,10 +79,19 @@ type
     pmpBandHistory: TMenuItem;
     pmpTransferBandsTo: TMenuItem;
     pmMore: TPopupMenu;
+    qAudiosauthor_id: TLongintField;
+    qAudiosauthor_name: TStringField;
+    qAudioscoordinate_precision: TStringField;
+    qAudiosfile_path: TStringField;
+    qDocsauthor_id: TLongintField;
+    qDocsfile_path: TStringField;
+    qImagesfile_path: TStringField;
     qVideos: TSQLQuery;
     qVideosactive_status: TBooleanField;
+    qVideosauthor_id: TLongintField;
     qVideoscamera_model: TStringField;
     qVideoscapture_id: TLongintField;
+    qVideoscoordinate_precision: TStringField;
     qVideosdistance: TFloatField;
     qVideosexported_status: TBooleanField;
     qVideosfile_path: TStringField;
@@ -102,7 +111,6 @@ type
     qVideosnest_id: TLongintField;
     qVideosnest_revision_id: TLongintField;
     qVideosnotes: TMemoField;
-    qVideosrecorder_id: TLongintField;
     qVideosrecording_context: TStringField;
     qVideosrecording_date: TDateField;
     qVideosrecording_time: TTimeField;
@@ -173,7 +181,6 @@ type
     qDocsdocument_date: TDateField;
     qDocsdocument_id: TLongintField;
     qDocsdocument_name: TStringField;
-    qDocsdocument_path: TStringField;
     qDocsdocument_time: TTimeField;
     qDocsdocument_type: TStringField;
     qDocsexpedition_id: TLongintField;
@@ -649,7 +656,6 @@ type
     pWithColorBandsFilter: TBCPanel;
     pWithRecapturesFilter: TBCPanel;
     qAudiosactive_status: TBooleanField;
-    qAudiosaudio_file: TBlobField;
     qAudiosaudio_id: TLongintField;
     qAudiosaudio_type: TStringField;
     qAudioscloud_cover: TLongintField;
@@ -675,9 +681,7 @@ type
     qAudiosnotes: TMemoField;
     qAudiosplayback_used: TBooleanField;
     qAudiosprecipitation: TStringField;
-    qAudiosrecorder_id: TLongintField;
     qAudiosrecorder_model: TStringField;
-    qAudiosrecorder_name: TStringField;
     qAudiosrecording_context: TStringField;
     qAudiosrecording_date: TDateField;
     qAudiosrecording_time: TTimeField;
@@ -705,7 +709,6 @@ type
     qImagesegg_name: TStringField;
     qImagesexported_status: TBooleanField;
     qImagesimage_date: TDateField;
-    qImagesimage_filename: TStringField;
     qImagesimage_id: TLongintField;
     qImagesimage_thumbnail: TBlobField;
     qImagesimage_time: TTimeField;
@@ -1762,7 +1765,7 @@ begin
     Repo.FindBy(COL_AUDIO_FILE, relPath, Media);
 
     if Media.IsNew then
-      Media.Filename := relPath;
+      Media.FilePath := relPath;
     Media.RecordingDate := CreationDate;
     Media.RecordingTime := CreationDate;
 
@@ -1833,7 +1836,7 @@ begin
     Repo.FindBy(COL_DOCUMENT_PATH, relPath, Media);
 
     if Media.IsNew then
-      Media.FileName := relPath;
+      Media.FilePath := relPath;
     Media.DocumentDate := CreationDate;
     Media.DocumentTime := CreationDate;
     Media.DocumentType := GetFileCategoryFromExt(ExtractFileExt(aFileName));
@@ -2033,7 +2036,7 @@ begin
     Repo.FindBy(COL_FILE_PATH, relPath, Media);
 
     if Media.IsNew then
-      Media.FileName := relPath;
+      Media.FilePath := relPath;
     Media.RecordingDate := CreationDate;
     Media.RecordingTime := CreationDate;
 
@@ -2507,7 +2510,7 @@ begin
         EggId := DMG.qEggs.FieldByName(COL_EGG_ID).AsInteger;
         NestId := DMG.qEggs.FieldByName(COL_NEST_ID).AsInteger;
         TaxonId := DMG.qEggs.FieldByName(COL_TAXON_ID).AsInteger;
-        AuthorId := DMG.qEggs.FieldByName(COL_RESEARCHER_ID).AsInteger;
+        AuthorId := DMG.qEggs.FieldByName(COL_OBSERVER_ID).AsInteger;
         IndividualId := DMG.qEggs.FieldByName(COL_INDIVIDUAL_ID).AsInteger;
       end;
       tbMethods:
@@ -6036,7 +6039,7 @@ begin
     qObservers.SQLTransaction := DMM.sqlTrans;
 
     // Load the list of distinct observers from sightings
-    qObservers.SQL.Text := 'SELECT DISTINCT s.observer_id, p.acronym FROM sightings AS s ' +
+    qObservers.SQL.Text := 'SELECT DISTINCT s.observer_id, p.abbreviation FROM sightings AS s ' +
       'LEFT JOIN people AS p ON s.observer_id = p.person_id ' +
       'WHERE (s.survey_id = :survey_id) and (s.observer_id NOT NULL);';
     qObservers.ParamByName('survey_id').AsInteger := aSurvey;
@@ -6050,12 +6053,12 @@ begin
     end;
 
     // Load the number of sightings per observer
-    Qry.SQL.Add('SELECT z.full_name, ');
+    Qry.SQL.Add('SELECT z.scientific_name, ');
     qObservers.First;
     while not qObservers.EOF do
     begin
       Qry.SQL.Add('MAX(CASE WHEN s.observer_id = ''' + qObservers.FieldByName('observer_id').AsString +
-        ''' THEN ''X'' ELSE '' '' END) AS ' + qObservers.FieldByName('acronym').AsString + ', ');
+        ''' THEN ''X'' ELSE '' '' END) AS ' + qObservers.FieldByName('abbreviation').AsString + ', ');
     end;
     Qry.SQL.Add('COUNT(DISTINCT s.observer_id) AS X_Count');
     Qry.SQL.Add('FROM sightings AS s');
@@ -8276,7 +8279,7 @@ begin
     tbBotanicTaxa:
     begin
       qRecycle.MacroByName('FID').AsString := COL_TAXON_ID;
-      qRecycle.MacroByName('FNAME').AsString := COL_TAXON_NAME;
+      qRecycle.MacroByName('FNAME').AsString := COL_SCIENTIFIC_NAME;
     end;
     tbBands:
     begin

@@ -121,7 +121,7 @@ begin
       'plant_min_diameter    REAL,' +
       'plant_height          REAL,' +
       'plant_dbh             REAL,' +
-      'construction_days     REAL,' +
+      'building_days     REAL,' +
       'incubation_days       REAL,' +
       'nestling_days         REAL,' +
       'active_days           REAL,' +
@@ -210,7 +210,7 @@ begin
       'full_name, ' +
       'description, ' +
       'notes, ' +
-      'construction_days, ' +
+      'building_days, ' +
       'incubation_days, ' +
       'nestling_days, ' +
       'active_days, ' +
@@ -252,7 +252,7 @@ begin
       ':full_name, ' +
       ':description, ' +
       ':notes, ' +
-      ':construction_days, ' +
+      ':building_days, ' +
       ':incubation_days, ' +
       ':nestling_days, ' +
       ':active_days, ' +
@@ -270,14 +270,14 @@ begin
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
       'g.municipality_id AS municipality_id, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'z.formatted_name AS taxon_formatted_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
       'z.genus_id AS genus_id, ' +
       'z.species_id AS species_id, ' +
-      'bt1.taxon_name AS support_plant_1_name, ' +
-      'bt2.taxon_name AS support_plant_2_name ' +
+      'bt1.scientific_name AS support_plant_1_name, ' +
+      'bt2.scientific_name AS support_plant_2_name ' +
     'FROM nests AS n ' +
     'LEFT JOIN people AS p ON n.observer_id = p.person_id ' +
     'LEFT JOIN projects AS pj ON n.project_id = pj.project_id ' +
@@ -362,7 +362,7 @@ begin
       'plant_min_diameter, ' +
       'plant_height, ' +
       'plant_dbh, ' +
-      'construction_days, ' +
+      'building_days, ' +
       'incubation_days, ' +
       'nestling_days, ' +
       'active_days, ' +
@@ -443,7 +443,7 @@ begin
       'full_name = :full_name, ' +
       'description = :description, ' +
       'notes = :notes, ' +
-      'construction_days = :construction_days, ' +
+      'building_days = :building_days, ' +
       'incubation_days = :incubation_days, ' +
       'nestling_days = :nestling_days, ' +
       'active_days = :active_days, ' +
@@ -695,9 +695,9 @@ begin
   Result :=
     'SELECT nr.*, ' +
       'n.full_name AS nest_name, ' +
-      'p1.acronym AS observer_1_name, ' +
-      'p2.acronym AS observer_2_name, ' +
-      'z.full_name AS nidoparasite_name ' +
+      'p1.abbreviation AS observer_1_name, ' +
+      'p2.abbreviation AS observer_2_name, ' +
+      'z.scientific_name AS nidoparasite_name ' +
     'FROM nest_revisions AS nr ' +
     'LEFT JOIN nests AS n ON nr.nest_id = n.nest_id ' +
     'LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id ' +
@@ -845,7 +845,7 @@ begin
       'egg_stage        CHAR (5),' +
       'egg_hatched      BOOLEAN       DEFAULT (1),' +
       'measure_date     DATE,' +
-      'researcher_id    INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      'observer_id    INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'individual_id    INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
       'host_egg         BOOLEAN       DEFAULT (1),' +
       'description      TEXT,' +
@@ -906,7 +906,7 @@ begin
       'eggshell_pattern, ' +
       'eggshell_texture, ' +
       'egg_hatched, ' +
-      'researcher_id, ' +
+      'observer_id, ' +
       'individual_id, ' +
       'measure_date, ' +
       'taxon_id, ' +
@@ -930,7 +930,7 @@ begin
       ':eggshell_pattern, ' +
       ':eggshell_texture, ' +
       ':egg_hatched, ' +
-      ':researcher_id, ' +
+      ':observer_id, ' +
       ':individual_id, ' +
       'date(:measure_date), ' +
       ':taxon_id, ' +
@@ -946,15 +946,15 @@ function TEggsSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT e.*, ' +
-      'p.acronym AS researcher_name, ' +
+      'p.abbreviation AS observer_name, ' +
       'i.full_name AS individual_name, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
       'z.genus_id AS genus_id, ' +
       'z.species_id AS species_id ' +
     'FROM eggs AS e ' +
-    'LEFT JOIN people AS p ON e.researcher_id = p.person_id ' +
+    'LEFT JOIN people AS p ON e.observer_id = p.person_id ' +
     'LEFT JOIN individuals AS i ON e.individual_id = i.individual_id ' +
     'LEFT JOIN zoo_taxa AS z ON e.taxon_id = z.taxon_id ';
 
@@ -1016,7 +1016,7 @@ begin
       'egg_stage, ' +
       'egg_hatched, ' +
       'measure_date, ' +
-      'researcher_id, ' +
+      'observer_id, ' +
       'individual_id, ' +
       'host_egg, ' +
       'description, ' +
@@ -1070,7 +1070,7 @@ begin
       'eggshell_pattern = :eggshell_pattern, ' +
       'eggshell_texture = :eggshell_texture, ' +
       'egg_hatched = :egg_hatched, ' +
-      'researcher_id = :researcher_id, ' +
+      'observer_id = :observer_id, ' +
       'individual_id = :individual_id, ' +
       'measure_date = date(:measure_date), ' +
       'taxon_id = :taxon_id, ' +

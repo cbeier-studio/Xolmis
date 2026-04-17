@@ -40,6 +40,7 @@ type
     FEmailAddress: String;
     FContactName: String;
     FProtocolNumber: String;
+    FProjectStatus: TProjectStatus;
     FMainGoal: String;
     FRisks: String;
     FAbstract: String;
@@ -64,6 +65,7 @@ type
     property EmailAddress: String read FEmailAddress write FEmailAddress;
     property ContactName: String read FContactName write FContactName;
     property ProtocolNumber: String read FProtocolNumber write FProtocolNumber;
+    property ProjectStatus: TProjectStatus read FProjectStatus write FProjectStatus;
     property MainGoal: String read FMainGoal write FMainGoal;
     property Risks: String read FRisks write FRisks;
     property ProjectAbstract: String read FAbstract write FAbstract;
@@ -363,6 +365,7 @@ begin
     FEmailAddress := TProject(Source).EmailAddress;
     FContactName := TProject(Source).ContactName;
     FProtocolNumber := TProject(Source).ProtocolNumber;
+    FProjectStatus := TProject(Source).ProjectStatus;
     FMainGoal := TProject(Source).MainGoal;
     FRisks := TProject(Source).Risks;
     FAbstract := TProject(Source).ProjectAbstract;
@@ -381,6 +384,7 @@ begin
   FEmailAddress := EmptyStr;
   FContactName := EmptyStr;
   FProtocolNumber := EmptyStr;
+  FProjectStatus := prtPlanned;
   FMainGoal := EmptyStr;
   FRisks := EmptyStr;
   FAbstract := EmptyStr;
@@ -426,6 +430,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscProtocolNr, aOld.ProtocolNumber, FProtocolNumber, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscProjectStatus, aOld.ProjectStatus, FProjectStatus, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscMainGoal, aOld.MainGoal, FMainGoal, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscRisks, aOld.Risks, FRisks, R) then
@@ -457,6 +463,7 @@ begin
     FEmailAddress   := Obj.Get('email', '');
     FContactName    := Obj.Get('contact', '');
     FProtocolNumber := Obj.Get('protocol_number', '');
+    FProjectStatus := StrToProjectStatus(Obj.Get('project_status', ''));
     FMainGoal       := Obj.Get('main_goal', '');
     FRisks          := Obj.Get('risks', '');
     FAbstract       := Obj.Get('abstract', '');
@@ -480,6 +487,7 @@ begin
     JSONObject.Add('email', FEmailAddress);
     JSONObject.Add('contact', FContactName);
     JSONObject.Add('protocol_number', FProtocolNumber);
+    JSONObject.Add('project_status', PROJECT_STATUSES[FProjectStatus]);
     JSONObject.Add('main_goal', FMainGoal);
     JSONObject.Add('risks', FRisks);
     JSONObject.Add('abstract', FAbstract);
@@ -494,10 +502,10 @@ end;
 function TProject.ToString: String;
 begin
   Result := Format('Project(Id=%d, Title=%s, ShortTitle=%s, StartDate=%s, EndDate=%s, WebsiteUri=%s, ' +
-    'EmailAddress=%s, ContactName=%s, ProtocolNumber=%s, MainGoal=%s, Risks=%s, Abstract=%s, Notes=%s, ' +
+    'EmailAddress=%s, ContactName=%s, ProtocolNumber=%s, ProjectStatus=%s, MainGoal=%s, Risks=%s, Abstract=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FTitle, FShortTitle, DateToStr(FStartDate), DateToStr(FEndDate), FWebsiteUri, FEmailAddress,
-    FContactName, FProtocolNumber, FMainGoal, FRisks, FAbstract, FNotes,
+    FContactName, FProtocolNumber, PROJECT_STATUSES[FProjectStatus], FMainGoal, FRisks, FAbstract, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -671,6 +679,7 @@ begin
     R.EmailAddress := FieldByName('email_addr').AsString;
     R.ContactName := FieldByName('contact_name').AsString;
     R.ProtocolNumber := FieldByName('protocol_number').AsString;
+    R.ProjectStatus := StrToProjectStatus(FieldByName('project_status').AsString);
     R.MainGoal := FieldByName('main_goal').AsString;
     R.Risks := FieldByName('risks').AsString;
     R.Notes := FieldByName('notes').AsString;
@@ -713,6 +722,8 @@ begin
     R.ContactName := ARow.Values['contact_name'];
   if ARow.IndexOfName('protocol_number') >= 0 then
     R.ProtocolNumber := ARow.Values['protocol_number'];
+  if ARow.IndexOfName('project_status') >= 0 then
+    R.ProjectStatus := StrToProjectStatus(ARow.Values['project_status']);
   if ARow.IndexOfName('main_goal') >= 0 then
     R.MainGoal := ARow.Values['main_goal'];
   if ARow.IndexOfName('risks') >= 0 then
@@ -746,6 +757,7 @@ begin
     SetStrParam(ParamByName('email_addr'), R.EmailAddress);
     SetStrParam(ParamByName('contact_name'), R.ContactName);
     SetStrParam(ParamByName('protocol_number'), R.ProtocolNumber);
+    SetStrParam(ParamByName('project_status'), PROJECT_STATUSES[R.ProjectStatus]);
     SetStrParam(ParamByName('main_goal'), R.MainGoal);
     SetStrParam(ParamByName('risks'), R.Risks);
     SetStrParam(ParamByName('project_abstract'), R.ProjectAbstract);
@@ -796,6 +808,7 @@ begin
     SetStrParam(ParamByName('email_addr'), R.EmailAddress);
     SetStrParam(ParamByName('contact_name'), R.ContactName);
     SetStrParam(ParamByName('protocol_number'), R.ProtocolNumber);
+    SetStrParam(ParamByName('project_status'), PROJECT_STATUSES[R.ProjectStatus]);
     SetStrParam(ParamByName('main_goal'), R.MainGoal);
     SetStrParam(ParamByName('risks'), R.Risks);
     SetStrParam(ParamByName('project_abstract'), R.ProjectAbstract);

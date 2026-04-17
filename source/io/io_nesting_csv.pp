@@ -182,7 +182,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('taxon').AsString), Taxon);
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('taxon').AsString), Taxon);
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
@@ -196,14 +196,14 @@ begin
           begin
             // if not, create a new nest
             Nest.FieldNumber := CSV.FieldByName('field_number').AsString;
-            //Nest.ObserverId := GetKey('people', 'person_id', 'acronym', CSV.FieldByName('observer').AsString);
+            //Nest.ObserverId := GetKey('people', 'person_id', 'abbreviation', CSV.FieldByName('observer').AsString);
             Nest.LocalityId := Toponimo.Id;
             Nest.Latitude := CSV.FieldByName('latitude').AsFloat;
             Nest.Longitude := CSV.FieldByName('longitude').AsFloat;
             Nest.TaxonId := Taxon.Id;
             //Nest.SupportType := CSV.FieldByName('support_type').AsString;
-            Nest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_TAXON_NAME, CSV.FieldByName('support_plant_1').AsString);
-            Nest.SupportPlant2Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_TAXON_NAME, CSV.FieldByName('support_plant_2').AsString);
+            Nest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_1').AsString);
+            Nest.SupportPlant2Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_2').AsString);
             //Nest.OtherSupport := CSV.FieldByName('other_support').AsString;
             Nest.HeightAboveGround := CSV.FieldByName('height_above_ground').AsFloat;
             //Nest.ProjectId := GetKey('projects', 'project_id', 'project_title', CSV.FieldByName('project').AsString);
@@ -220,7 +220,7 @@ begin
             Nest.PlantMinDiameter := CSV.FieldByName('min_plant_diameter').AsFloat;
             Nest.PlantHeight := CSV.FieldByName('plant_height').AsFloat;
             Nest.PlantDbh := CSV.FieldByName('plant_dbh').AsFloat;
-            //Nest.ConstructionDays: Double;
+            //Nest.BuildingDays: Double;
             Nest.IncubationDays := CSV.FieldByName('nest_days_egg').AsFloat;
             Nest.NestlingDays := CSV.FieldByName('nest_days_nestling').AsFloat;
             Nest.ActiveDays := Nest.IncubationDays + Nest.NestlingDays;
@@ -373,7 +373,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
@@ -549,7 +549,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
@@ -601,7 +601,7 @@ begin
             end;
             Egg.EggHatched := CSV.FieldByName('egg_hatched').AsBoolean;
             Egg.IndividualId := CSV.FieldByName('individual_id').AsInteger;
-            Egg.ResearcherId := aObserver;
+            Egg.ObserverId := aObserver;
             Egg.MeasureDate := StrToDate(aDate);
             Egg.TaxonId := Taxon.Id;
             Egg.HostEgg := Nest.TaxonId = Egg.TaxonId;

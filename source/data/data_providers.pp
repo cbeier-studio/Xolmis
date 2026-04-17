@@ -681,6 +681,7 @@ begin
   FSpecimens          := TSpecimensSQL.Create(FBackend);
   FSurveys            := TSurveysSQL.Create(FBackend);
   FSurveyTeams        := TSurveyTeamsSQL.Create(FBackend);
+  FTaxonRanks         := TTaxonRanksSQL.Create(FBackend);
   FUsers              := TUsersSQL.Create(FBackend);
   FVegetations        := TVegetationsSQL.Create(FBackend);
   FWeatherLogs        := TWeatherLogsSQL.Create(FBackend);

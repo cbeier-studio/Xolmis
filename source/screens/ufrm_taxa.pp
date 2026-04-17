@@ -618,7 +618,7 @@ procedure TfrmTaxa.gridTaxaPrepareCanvas(sender: TObject; DataCol: Integer; Colu
 var
   aRank: TZooRank;
 begin
-  if (Column.FieldName = 'full_name') and (Assigned(Column.Field)) then
+  if (Column.FieldName = 'scientific_name') and (Assigned(Column.Field)) then
   begin
     aRank := GetRankType(TDBGrid(Sender).Columns[2].Field.AsInteger);
     if aRank >= trSuperGenus then
@@ -652,37 +652,37 @@ end;
 procedure TfrmTaxa.lblLinkCapturesClick(Sender: TObject);
 begin
   frmMain.actOpenCapturesExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
 end;
 
 procedure TfrmTaxa.lblLinkEggsClick(Sender: TObject);
 begin
   frmMain.actOpenEggsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
 end;
 
 procedure TfrmTaxa.lblLinkIndividualsClick(Sender: TObject);
 begin
   frmMain.actOpenIndividualsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
 end;
 
 procedure TfrmTaxa.lblLinkNestsClick(Sender: TObject);
 begin
   frmMain.actOpenNestsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
 end;
 
 procedure TfrmTaxa.lblLinkSightingsClick(Sender: TObject);
 begin
   frmMain.actOpenSightingsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
 end;
 
 procedure TfrmTaxa.lblLinkSpecimensClick(Sender: TObject);
 begin
   frmMain.actOpenSpecimensExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('full_name').AsString;
+  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
 end;
 
 procedure TfrmTaxa.LoadMonthlyChart;
@@ -1183,7 +1183,7 @@ procedure TfrmTaxa.sbGBIFClick(Sender: TObject);
 var
   FUrlSearch: String;
 begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
   OpenUrl('https://www.gbif.org/search?q=' + FUrlSearch);
 end;
 
@@ -1191,7 +1191,7 @@ procedure TfrmTaxa.sbGoogleImagesClick(Sender: TObject);
 var
   FUrlSearch: String;
 begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
   OpenUrl('https://www.google.com/search?tbm=isch&q="' + FUrlSearch + '"');
 end;
 
@@ -1199,7 +1199,7 @@ procedure TfrmTaxa.sbGoogleScholarClick(Sender: TObject);
 var
   FUrlSearch: String;
 begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
   OpenUrl('https://scholar.google.com/scholar?q="' + FUrlSearch + '"');
 end;
 
@@ -1207,7 +1207,7 @@ procedure TfrmTaxa.sbGoogleSearchClick(Sender: TObject);
 var
   FUrlSearch: String;
 begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
   OpenUrl('https://www.google.com/search?q="' + FUrlSearch + '"');
 end;
 
@@ -1215,7 +1215,7 @@ procedure TfrmTaxa.sbIUCNRedListClick(Sender: TObject);
 var
   FUrlSearch: String;
 begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
   OpenUrl('https://www.iucnredlist.org/search?query=' + FUrlSearch);
 end;
 
@@ -1243,7 +1243,7 @@ begin
   if GetRankType(dsLink.DataSet.FieldByName('rank_id').AsInteger) = trSpecies then
     FUrlSearch := HTTPEncode(RemoveDiacritics(dsLink.DataSet.FieldByName('portuguese_name').AsString))
   else
-    FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('full_name').AsString);
+    FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
   OpenUrl('https://www.wikiaves.com.br/wiki/' + FUrlSearch);
 end;
 
@@ -1313,28 +1313,28 @@ begin
       begin
         g := FSearch.TextFilters.Add(TSearchGroup.Create);
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('taxon_id', 'Taxon (ID)', sdtInteger, crEqual,
-          False, aValue));
+          True, aValue));
       end
       else
       // Text
       begin
         g := FSearch.TextFilters.Add(TSearchGroup.Create);
-        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('full_name', 'Scientific name', sdtText, Crit,
-          False, aValue));
+        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('scientific_name', 'Scientific name', sdtText, Crit,
+          True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('english_name', 'English name', sdtText, Crit,
-          False, aValue));
+          True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('ioc_english_name', 'English name (IOC)', sdtText, Crit,
-          False, aValue));
+          True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('spanish_name', 'Spanish name', sdtText, Crit,
-          False, aValue));
+          True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('portuguese_name', 'Portuguese name', sdtText, Crit,
-          False, aValue));
+          True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('other_portuguese_names', 'Other portuguese names', sdtText, Crit,
-          False, aValue));
+          True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('ebird_code', 'eBird code', sdtText, Crit,
-          False, aValue));
+          True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('quick_code', 'Quick code', sdtText, Crit,
-          False, aValue));
+          True, aValue));
       end;
     end;
 
@@ -1356,7 +1356,7 @@ begin
 
       g := FSearch.TextFilters.Add(TSearchGroup.Create);
       FSearch.TextFilters[g].Fields.Add(TSearchField.Create('taxon_id', 'Taxon ID', sdtInteger, crIn,
-        False, subRecorded));
+        True, subRecorded));
     end;
 
     //GetFilters;
@@ -1426,19 +1426,19 @@ begin
   tvHierarchy.Items.Clear;
   if dsLink.DataSet.FieldByName('order_id').AsInteger > 0 then
   begin
-    nOrder := tvHierarchy.Items.Add(nil, GetName('zoo_taxa', 'full_name', 'taxon_id', dsLink.DataSet.FieldByName('order_id').AsInteger));
+    nOrder := tvHierarchy.Items.Add(nil, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('order_id').AsInteger));
     if dsLink.DataSet.FieldByName('family_id').AsInteger > 0 then
     begin
-      nFamily := tvHierarchy.Items.AddChild(nOrder, GetName('zoo_taxa', 'full_name', 'taxon_id', dsLink.DataSet.FieldByName('family_id').AsInteger));
+      nFamily := tvHierarchy.Items.AddChild(nOrder, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('family_id').AsInteger));
       if dsLink.DataSet.FieldByName('genus_id').AsInteger > 0 then
       begin
-        nGenus := tvHierarchy.Items.AddChild(nFamily, GetName('zoo_taxa', 'full_name', 'taxon_id', dsLink.DataSet.FieldByName('genus_id').AsInteger));
+        nGenus := tvHierarchy.Items.AddChild(nFamily, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('genus_id').AsInteger));
         if dsLink.DataSet.FieldByName('species_id').AsInteger > 0 then
         begin
-          nSpecies := tvHierarchy.Items.AddChild(nGenus, GetName('zoo_taxa', 'full_name', 'taxon_id', dsLink.DataSet.FieldByName('species_id').AsInteger));
+          nSpecies := tvHierarchy.Items.AddChild(nGenus, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('species_id').AsInteger));
           if dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger > 0 then
           begin
-            nGroup := tvHierarchy.Items.AddChild(nSpecies, GetName('zoo_taxa', 'full_name', 'taxon_id', dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger));
+            nGroup := tvHierarchy.Items.AddChild(nSpecies, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger));
           end;
         end;
       end;

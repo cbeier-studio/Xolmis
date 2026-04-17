@@ -184,7 +184,7 @@ object DMS: TDMS
         Size = 30
       end    
       item
-        Name = 'not_surveying'
+        Name = 'out_of_sample'
         DataType = ftBoolean
         Precision = -1
       end    
@@ -325,7 +325,7 @@ object DMS: TDMS
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT s.*,'
-      '  z.full_name AS taxon_name,'
+      '  z.scientific_name AS taxon_name,'
       '  z.formatted_name AS taxon_formatted_name,'
       '  z.order_id AS order_id,'
       '  z.family_id AS family_id,'
@@ -943,11 +943,10 @@ object DMS: TDMS
       Required = False
       Size = 30
     end
-    object qSightingsnot_surveying: TBooleanField
-      Alignment = taCenter
-      DisplayLabel = 'Out of the sampling'
+    object qSightingsout_of_sample: TBooleanField
+      DisplayLabel = 'Out of sample'
       FieldKind = fkData
-      FieldName = 'not_surveying'
+      FieldName = 'out_of_sample'
       Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -1272,25 +1271,25 @@ object DMS: TDMS
         Precision = -1
       end    
       item
-        Name = 'right_leg_below'
+        Name = 'right_tarsus'
         DataType = ftString
         Precision = -1
         Size = 10
       end    
       item
-        Name = 'left_leg_below'
+        Name = 'left_tarsus'
         DataType = ftString
         Precision = -1
         Size = 10
       end    
       item
-        Name = 'right_leg_above'
+        Name = 'right_tibia'
         DataType = ftString
         Precision = -1
         Size = 10
       end    
       item
-        Name = 'left_leg_above'
+        Name = 'left_tibia'
         DataType = ftString
         Precision = -1
         Size = 10
@@ -1488,7 +1487,7 @@ object DMS: TDMS
         Size = 5
       end    
       item
-        Name = 'kipps_index'
+        Name = 'kipps_distance'
         DataType = ftFloat
         Precision = -1
       end    
@@ -1569,13 +1568,13 @@ object DMS: TDMS
         Precision = -1
       end    
       item
-        Name = 'start_photo_number'
+        Name = 'initial_photo_number'
         DataType = ftString
         Precision = -1
         Size = 20
       end    
       item
-        Name = 'end_photo_number'
+        Name = 'final_photo_number'
         DataType = ftString
         Precision = -1
         Size = 20
@@ -1751,7 +1750,7 @@ object DMS: TDMS
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT c.*,'
-      '    z.full_name AS taxon_name,'
+      '    z.scientific_name AS taxon_name,'
       '    z.formatted_name AS taxon_formatted_name,'
       '    z.order_id AS order_id,'
       '    z.family_id AS family_id,'
@@ -1764,12 +1763,12 @@ object DMS: TDMS
       '    g.country_id AS country_id,'
       '    g.state_id AS state_id,'
       '    g.municipality_id AS municipality_id,'
-      '    p1.acronym AS bander_name,'
-      '    p2.acronym AS annotator_name,'
+      '    p1.abbreviation AS bander_name,'
+      '    p2.abbreviation AS annotator_name,'
       '    (b1.band_size||'' ''||b1.band_number) AS band_name,'
       '    (b2.band_size||'' ''||b2.band_number) AS removed_band_name,'
-      '    f1.acronym AS photographer_1_name,'
-      '    f2.acronym AS photographer_2_name'
+      '    f1.abbreviation AS photographer_1_name,'
+      '    f2.abbreviation AS photographer_2_name'
       'FROM captures AS c'
       'LEFT JOIN zoo_taxa AS z ON c.taxon_id = z.taxon_id'
       'LEFT JOIN surveys AS sv ON c.survey_id = sv.survey_id'
@@ -2354,12 +2353,9 @@ object DMS: TDMS
       Required = False
       Size = 15
     end
-    object qCapturesright_leg_below: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Right tarsus'
-      DisplayWidth = 12
+    object qCapturesright_tarsus: TStringField
       FieldKind = fkData
-      FieldName = 'right_leg_below'
+      FieldName = 'right_tarsus'
       Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -2367,12 +2363,9 @@ object DMS: TDMS
       Required = False
       Size = 10
     end
-    object qCapturesleft_leg_below: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Left tarsus'
-      DisplayWidth = 12
+    object qCapturesleft_tarsus: TStringField
       FieldKind = fkData
-      FieldName = 'left_leg_below'
+      FieldName = 'left_tarsus'
       Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -2380,32 +2373,24 @@ object DMS: TDMS
       Required = False
       Size = 10
     end
-    object qCapturesright_leg_above: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Right tibia'
-      DisplayWidth = 12
+    object qCapturesright_tibia: TStringField
       FieldKind = fkData
-      FieldName = 'right_leg_above'
+      FieldName = 'right_tibia'
       Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
       Size = 10
     end
-    object qCapturesleft_leg_above: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Left tibia'
-      DisplayWidth = 12
+    object qCapturesleft_tibia: TStringField
       FieldKind = fkData
-      FieldName = 'left_leg_above'
+      FieldName = 'left_tibia'
       Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
       Size = 10
     end
     object qCaptureslongitude: TFloatField
@@ -2544,11 +2529,10 @@ object DMS: TDMS
       Required = False
       Precision = -1
     end
-    object qCaptureskipps_index: TFloatField
+    object qCaptureskipps_distance: TFloatField
       DisplayLabel = 'Kipp''s distance'
-      DisplayWidth = 10
       FieldKind = fkData
-      FieldName = 'kipps_index'
+      FieldName = 'kipps_distance'
       Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -2991,22 +2975,18 @@ object DMS: TDMS
       Required = False
       Size = 50
     end
-    object qCapturesstart_photo_number: TStringField
-      DisplayLabel = 'Initial photo nr.'
-      DisplayWidth = 10
+    object qCapturesinitial_photo_number: TStringField
       FieldKind = fkData
-      FieldName = 'start_photo_number'
+      FieldName = 'initial_photo_number'
       Index = 78
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
     end
-    object qCapturesend_photo_number: TStringField
-      DisplayLabel = 'Final photo nr.'
-      DisplayWidth = 10
+    object qCapturesfinal_photo_number: TStringField
       FieldKind = fkData
-      FieldName = 'end_photo_number'
+      FieldName = 'final_photo_number'
       Index = 79
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -3227,7 +3207,7 @@ object DMS: TDMS
     FieldDefs = <    
       item
         Name = 'survey_member_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -3239,12 +3219,6 @@ object DMS: TDMS
         Name = 'person_id'
         DataType = ftInteger
         Precision = -1
-      end    
-      item
-        Name = 'person_acronym'
-        DataType = ftString
-        Precision = -1
-        Size = 10
       end    
       item
         Name = 'visitor'
@@ -3287,6 +3261,18 @@ object DMS: TDMS
         Precision = -1
       end    
       item
+        Name = 'person_abbrev'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'person_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
         Name = 'person_color'
         DataType = ftString
         Precision = -1
@@ -3301,7 +3287,7 @@ object DMS: TDMS
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT st.*,'
-      '  p.acronym AS person_acronym,'
+      '  p.abbreviation AS person_abbrev,'
       '  p.full_name AS person_name,'
       '  p.profile_color AS person_color'
       'FROM survey_team AS st'
@@ -3394,16 +3380,14 @@ object DMS: TDMS
       Required = False
       Size = 100
     end
-    object qSurveyTeamperson_acronym: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Abbreviation'
+    object qSurveyTeamperson_abbrev: TStringField
       FieldKind = fkData
-      FieldName = 'person_acronym'
+      FieldName = 'person_abbrev'
       Index = 4
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
-      Required = True
+      Required = False
       Size = 10
     end
     object qSurveyTeamvisitor: TBooleanField
@@ -4329,7 +4313,7 @@ object DMS: TDMS
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT wl.*, p.acronym AS observer_name'
+      'SELECT wl.*, p.abbreviation AS observer_name'
       'FROM weather_logs AS wl'
       'LEFT JOIN people AS p ON wl.observer_id = p.person_id'
       'WHERE (wl.survey_id = :survey_id)'
@@ -5723,7 +5707,7 @@ object DMS: TDMS
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT veg.*, p.acronym AS observer_name'
+      'SELECT veg.*, p.abbreviation AS observer_name'
       'FROM vegetation AS veg'
       'LEFT JOIN people AS p ON veg.observer_id = p.person_id'
       'WHERE (veg.survey_id = :survey_id)'

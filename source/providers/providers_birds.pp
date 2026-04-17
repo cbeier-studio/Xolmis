@@ -94,10 +94,10 @@ begin
       'band_id               INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
       'double_band_id        INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
       'removed_band_id       INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-      'right_leg_below       VARCHAR (10),' +
-      'left_leg_below        VARCHAR (10),' +
-      'right_leg_above       VARCHAR (10),' +
-      'left_leg_above        VARCHAR (10),' +
+      'right_tarsus          VARCHAR (10),' +
+      'left_tarsus           VARCHAR (10),' +
+      'right_tibia           VARCHAR (10),' +
+      'left_tibia            VARCHAR (10),' +
       'father_id             INTEGER,' +
       'mother_id             INTEGER,' +
       'death_date            VARCHAR (15),' +
@@ -170,10 +170,10 @@ begin
       'band_id, ' +
       'double_band_id, ' +
       'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
+      'right_tarsus, ' +
+      'left_tarsus, ' +
+      'right_tibia, ' +
+      'left_tibia, ' +
       'father_id, ' +
       'mother_id, ' +
       'death_date, ' +
@@ -200,10 +200,10 @@ begin
       ':band_id, ' +
       ':double_band_id, ' +
       ':removed_band_id, ' +
-      ':right_leg_below, ' +
-      ':left_leg_below, ' +
-      ':right_leg_above, ' +
-      ':left_leg_above, ' +
+      ':right_tarsus, ' +
+      ':left_tarsus, ' +
+      ':right_tibia, ' +
+      ':left_tibia, ' +
       ':father_id, ' +
       ':mother_id, ' +
       ':death_date, ' +
@@ -241,10 +241,10 @@ begin
       'band_id, ' +
       'double_band_id, ' +
       'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
+      'right_tarsus, ' +
+      'left_tarsus, ' +
+      'right_tibia, ' +
+      'left_tibia, ' +
       'father_id, ' +
       'mother_id, ' +
       'death_date, ' +
@@ -301,7 +301,7 @@ begin
   //  dbSQLite:
   Result :=
     'SELECT i.*, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
       'z.genus_id AS genus_id, ' +
@@ -413,10 +413,10 @@ begin
       'band_id = :band_id, ' +
       'double_band_id = :double_band_id, ' +
       'removed_band_id = :removed_band_id, ' +
-      'right_leg_below = :right_leg_below, ' +
-      'left_leg_below = :left_leg_below, ' +
-      'right_leg_above = :right_leg_above, ' +
-      'left_leg_above = :left_leg_above, ' +
+      'right_tarsus = :right_tarsus, ' +
+      'left_tarsus = :left_tarsus, ' +
+      'right_tibia = :right_tibia, ' +
+      'left_tibia = :left_tibia, ' +
       'father_id = :father_id, ' +
       'mother_id = :mother_id, ' +
       'death_date = :death_date, ' +
@@ -469,10 +469,10 @@ begin
       'how_sexed              VARCHAR (10),' +
       'band_id                INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
       'removed_band_id        INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-      'right_leg_below        VARCHAR (10),' +
-      'left_leg_below         VARCHAR (10),' +
-      'right_leg_above        VARCHAR (10),' +
-      'left_leg_above         VARCHAR (10),' +
+      'right_tarsus        VARCHAR (10),' +
+      'left_tarsus         VARCHAR (10),' +
+      'right_tibia        VARCHAR (10),' +
+      'left_tibia         VARCHAR (10),' +
       'weight                 REAL,' +
       'tarsus_length          REAL,' +
       'tarsus_diameter        REAL,' +
@@ -508,7 +508,7 @@ begin
       'subject_age            CHAR (5),' +
       'how_aged               CHAR (10),' +
       'skull_ossification     CHAR (5),' +
-      'kipps_index            REAL,' +
+      'kipps_distance            REAL,' +
       'glucose                REAL,' +
       'hemoglobin             REAL,' +
       'hematocrit             REAL,' +
@@ -524,8 +524,8 @@ begin
       'field_number           VARCHAR (10),' +
       'photographer_1_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'photographer_2_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-      'start_photo_number     VARCHAR (20),' +
-      'end_photo_number       VARCHAR (20),' +
+      'initial_photo_number     VARCHAR (20),' +
+      'final_photo_number       VARCHAR (20),' +
       'camera_name            VARCHAR (50),' +
       'escaped                BOOLEAN       DEFAULT (0),' +
       'needs_review           BOOLEAN       DEFAULT (0),' +
@@ -623,7 +623,7 @@ begin
       'subject_age, ' +
       'how_aged, ' +
       'skull_ossification, ' +
-      'kipps_index, ' +
+      'kipps_distance, ' +
       'glucose, ' +
       'hemoglobin, ' +
       'hematocrit, ' +
@@ -632,12 +632,14 @@ begin
       'subject_photographed, ' +
       'photographer_1_id, ' +
       'photographer_2_id, ' +
-      'start_photo_number, ' +
-      'end_photo_number, ' +
+      'initial_photo_number, ' +
+      'final_photo_number, ' +
       'camera_name, ' +
       'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
+      'right_tarsus, ' +
+      'left_tarsus, ' +
+      'right_tibia, ' +
+      'left_tibia, ' +
       'escaped, ' +
       'notes, ' +
       'user_inserted, ' +
@@ -684,7 +686,7 @@ begin
       ':subject_age, ' +
       ':how_aged, ' +
       ':skull_ossification, ' +
-      ':kipps_index, ' +
+      ':kipps_distance, ' +
       ':glucose, ' +
       ':hemoglobin, ' +
       ':hematocrit, ' +
@@ -693,12 +695,14 @@ begin
       ':subject_photographed, ' +
       ':photographer_1_id, ' +
       ':photographer_2_id, ' +
-      ':start_photo_number, ' +
-      ':end_photo_number, ' +
+      ':initial_photo_number, ' +
+      ':final_photo_number, ' +
       ':camera_name, ' +
       ':removed_band_id, ' +
-      ':right_leg_below, ' +
-      ':left_leg_below, ' +
+      ':right_tarsus, ' +
+      ':left_tarsus, ' +
+      ':right_tibia, ' +
+      ':left_tibia, ' +
       ':escaped, ' +
       ':notes, ' +
       ':user_inserted, ' +
@@ -709,7 +713,7 @@ function TCapturesSQL.SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): S
 begin
   Result :=
     'SELECT c.*, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'z.formatted_name AS taxon_formatted_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
@@ -722,12 +726,12 @@ begin
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
       'g.municipality_id AS municipality_id, ' +
-      'p1.acronym AS bander_name, ' +
-      'p2.acronym AS annotator_name, ' +
+      'p1.abbreviation AS bander_name, ' +
+      'p2.abbreviation AS annotator_name, ' +
       '(b1.band_size||'' ''||b1.band_number) AS band_name, ' +
       '(b2.band_size||'' ''||b2.band_number) AS removed_band_name, ' +
-      'f1.acronym AS photographer_1_name, ' +
-      'f2.acronym AS photographer_2_name ' +
+      'f1.abbreviation AS photographer_1_name, ' +
+      'f2.abbreviation AS photographer_2_name ' +
     'FROM captures AS c ' +
     'LEFT JOIN zoo_taxa AS z ON c.taxon_id = z.taxon_id ' +
     'LEFT JOIN surveys AS sv ON c.survey_id = sv.survey_id ' +
@@ -811,10 +815,10 @@ begin
       'how_sexed, ' +
       'band_id, ' +
       'removed_band_id, ' +
-      'right_leg_below, ' +
-      'left_leg_below, ' +
-      'right_leg_above, ' +
-      'left_leg_above, ' +
+      'right_tarsus, ' +
+      'left_tarsus, ' +
+      'right_tibia, ' +
+      'left_tibia, ' +
       'weight, ' +
       'tarsus_length, ' +
       'tarsus_diameter, ' +
@@ -845,7 +849,7 @@ begin
       'subject_age, ' +
       'how_aged, ' +
       'skull_ossification, ' +
-      'kipps_index, ' +
+      'kipps_distance, ' +
       'glucose, ' +
       'hemoglobin, ' +
       'hematocrit, ' +
@@ -861,8 +865,8 @@ begin
       'field_number, ' +
       'photographer_1_id, ' +
       'photographer_2_id, ' +
-      'start_photo_number, ' +
-      'end_photo_number, ' +
+      'initial_photo_number, ' +
+      'final_photo_number, ' +
       'camera_name, ' +
       'escaped, ' +
       'needs_review, ' +
@@ -959,7 +963,7 @@ begin
       'total_length = :total_length, ' +
       'feather_mites = :feather_mites, ' +
       'philornis_larvae_tally = :philornis_larvae_tally, ' +
-      'kipps_index = :kipps_index, ' +
+      'kipps_distance = :kipps_distance, ' +
       'glucose = :glucose, ' +
       'hemoglobin = :hemoglobin, ' +
       'hematocrit = :hematocrit, ' +
@@ -974,14 +978,14 @@ begin
       'subject_photographed = :subject_photographed, ' +
       'photographer_1_id = :photographer_1_id, ' +
       'photographer_2_id = :photographer_2_id, ' +
-      'start_photo_number = :start_photo_number, ' +
-      'end_photo_number = :end_photo_number, ' +
+      'initial_photo_number = :initial_photo_number, ' +
+      'final_photo_number = :final_photo_number, ' +
       'camera_name = :camera_name, ' +
       'removed_band_id = :removed_band_id, ' +
-      'right_leg_below = :right_leg_below, ' +
-      'left_leg_below = :left_leg_below, ' +
-      'right_leg_above = :right_leg_above, ' +
-      'left_leg_above = :left_leg_above, ' +
+      'right_tarsus = :right_tarsus, ' +
+      'left_tarsus = :left_tarsus, ' +
+      'right_tibia = :right_tibia, ' +
+      'left_tibia = :left_tibia, ' +
       'escaped = :escaped, ' +
       'needs_review = :needs_review, ' +
       'notes = :notes, ' +
@@ -1128,13 +1132,13 @@ function TFeathersSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT ft.*, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
       'z.genus_id AS genus_id, ' +
       'z.species_id AS species_id, ' +
       'i.full_name AS individual_name, ' +
-      'p.acronym AS observer_name, ' +
+      'p.abbreviation AS observer_name, ' +
       'c.full_name AS capture_name, ' +
       'st.full_name AS sighting_name, ' +
       'g.country_id AS country_id, ' +

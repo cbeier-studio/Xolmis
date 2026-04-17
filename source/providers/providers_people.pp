@@ -43,11 +43,11 @@ begin
     'CREATE TABLE IF NOT EXISTS people (' +
       'person_id              INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'full_name              VARCHAR (100) NOT NULL,' +
-      'acronym                VARCHAR (10)  UNIQUE NOT NULL,' +
+      'abbreviation                VARCHAR (10)  UNIQUE NOT NULL,' +
       'citation               VARCHAR (100),' +
       'title_treatment        VARCHAR (10),' +
-      'national_id_card       VARCHAR (15),' +
-      'social_security_number VARCHAR (15),' +
+      'id_document_1       VARCHAR (15),' +
+      'id_document_2       VARCHAR (15),' +
       'gender                 VARCHAR (5),' +
       'birth_date             DATE,' +
       'death_date             DATE,' +
@@ -57,7 +57,7 @@ begin
       'address_1              VARCHAR (100),' +
       'address_2              VARCHAR (60),' +
       'neighborhood           VARCHAR (60),' +
-      'zip_code               VARCHAR (15),' +
+      'postal_code               VARCHAR (15),' +
       'country_id             INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'state_id               INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'municipality_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
@@ -91,7 +91,7 @@ end;
 
 function TPeopleSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
 begin
-  Result := 'SELECT person_id, full_name, citation, acronym FROM people ';
+  Result := 'SELECT person_id, full_name, citation, abbreviation FROM people ';
 
   case aWhere of
     swcNone: ;
@@ -100,7 +100,7 @@ begin
       Result := Result +
         'WHERE ((full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
             'OR (citation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (acronym ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+            'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -117,11 +117,11 @@ begin
   Result :=
     'INSERT INTO people (' +
       'full_name, ' +
-      'acronym, ' +
+      'abbreviation, ' +
       'citation, ' +
       'title_treatment, ' +
-      'national_id_card, ' +
-      'social_security_number, ' +
+      'id_document_1, ' +
+      'id_document_2, ' +
       'gender, ' +
       'birth_date, ' +
       'death_date, ' +
@@ -131,7 +131,7 @@ begin
       'address_1, ' +
       'address_2, ' +
       'neighborhood, ' +
-      'zip_code, ' +
+      'postal_code, ' +
       'country_id, ' +
       'state_id, ' +
       'municipality_id, ' +
@@ -149,11 +149,11 @@ begin
       'insert_date) ' +
     'VALUES (' +
       ':full_name, ' +
-      ':acronym, ' +
+      ':abbreviation, ' +
       ':citation, ' +
       ':title_treatment, ' +
-      ':national_id_card, ' +
-      ':social_security_number, ' +
+      ':id_document_1, ' +
+      ':id_document_2, ' +
       ':gender, ' +
       'date(:birth_date), ' +
       'date(:death_date), ' +
@@ -163,7 +163,7 @@ begin
       ':address_1, ' +
       ':address_2, ' +
       ':neighborhood, ' +
-      ':zip_code, ' +
+      ':postal_code, ' +
       ':country_id, ' +
       ':state_id, ' +
       ':municipality_id, ' +
@@ -238,11 +238,11 @@ begin
     'SELECT ' +
       'p.person_id, ' +
       'p.full_name, ' +
-      'p.acronym, ' +
+      'p.abbreviation, ' +
       'p.citation, ' +
       'p.title_treatment, ' +
-      'p.national_id_card, ' +
-      'p.social_security_number, ' +
+      'p.id_document_1, ' +
+      'p.id_document_2, ' +
       'p.gender, ' +
       'p.birth_date, ' +
       'p.death_date, ' +
@@ -252,7 +252,7 @@ begin
       'p.address_1, ' +
       'p.address_2, ' +
       'p.neighborhood, ' +
-      'p.zip_code, ' +
+      'p.postal_code, ' +
       'p.country_id, ' +
       'p.state_id, ' +
       'p.municipality_id, ' +
@@ -304,11 +304,11 @@ begin
   Result :=
     'UPDATE people SET ' +
       'full_name = :full_name, ' +
-      'acronym = :acronym, ' +
+      'abbreviation = :abbreviation, ' +
       'citation = :citation, ' +
       'title_treatment = :title_treatment, ' +
-      'national_id_card = :national_id_card, ' +
-      'social_security_number = :social_security_number, ' +
+      'id_document_1 = :id_document_1, ' +
+      'id_document_2 = :id_document_2, ' +
       'gender = :gender, ' +
       'birth_date = date(:birth_date), ' +
       'death_date = date(:death_date), ' +
@@ -318,7 +318,7 @@ begin
       'address_1 = :address_1, ' +
       'address_2 = :address_2, ' +
       'neighborhood = :neighborhood, ' +
-      'zip_code = :zip_code, ' +
+      'postal_code = :postal_code, ' +
       'country_id = :country_id, ' +
       'state_id = :state_id, ' +
       'municipality_id = :municipality_id, ' +

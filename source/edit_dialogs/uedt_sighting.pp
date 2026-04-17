@@ -698,7 +698,7 @@ begin
     if FSighting.TaxonId > 0 then
     begin
       FTaxonId := FSighting.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
 
     if (FSighting.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
@@ -755,7 +755,7 @@ begin
   if (FSighting.SightingTime <> NullTime) then
     eTime.Text := FormatDateTime('hh:nn', FSighting.SightingTime);
   FTaxonId := FSighting.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FSighting.IndividualId;
   eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   eQuantity.Value := FSighting.SubjectTally;
@@ -781,7 +781,7 @@ begin
   eFemalesTally.Text := FSighting.FemalesTally;
   eNotSexedTally.Text := FSighting.NotSexedTally;
   ckIsInEbird.Checked := FSighting.IsOnEbird;
-  ckNotSurveying.Checked := FSighting.NotSurveying;
+  ckNotSurveying.Checked := FSighting.OutOfSample;
   mNotes.Text := FSighting.Notes;
 end;
 
@@ -867,7 +867,7 @@ begin
   FSighting.FemalesTally        := eFemalesTally.Text;
   FSighting.NotSexedTally       := eNotSexedTally.Text;
   FSighting.IsOnEbird           := ckIsInEbird.Checked;
-  FSighting.NotSurveying        := ckNotSurveying.Checked;
+  FSighting.OutOfSample        := ckNotSurveying.Checked;
   FSighting.Notes               := mNotes.Text;
 end;
 

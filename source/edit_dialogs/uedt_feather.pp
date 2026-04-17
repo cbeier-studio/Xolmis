@@ -373,7 +373,7 @@ begin
     if FFeather.TaxonId > 0 then
     begin
       FTaxonId := FFeather.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FFeather.LocalityId > 0 then
     begin
@@ -413,7 +413,7 @@ begin
   if not TimeIsNull(FFeather.SampleTime) then
     eTime.Text := TimeToStr(FFeather.SampleTime);
   FTaxonId := FFeather.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FLocalityId := FFeather.LocalityId;
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   FObserverId := FFeather.ObserverId;

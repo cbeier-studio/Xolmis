@@ -235,7 +235,7 @@ begin
 
   if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscAcronym, aOld.Abbreviation, FAbbreviation, R) then
+  if FieldValuesDiff(rscAbbreviation, aOld.Abbreviation, FAbbreviation, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscCitation, aOld.Citation, FCitation, R) then
     Changes.Add(R);
@@ -313,8 +313,8 @@ begin
     FGender           := Obj.Get('gender', '');
     FBirthDate        := StrToDate(Obj.Get('birth_date', NULL_DATE_STR));
     FDeathDate        := StrToDate(Obj.Get('death_date', NULL_DATE_STR));
-    FIdDocument1      := Obj.Get('document_number_1', '');
-    FIdDocument2      := Obj.Get('document_number_2', '');
+    FIdDocument1      := Obj.Get('id_document_1', '');
+    FIdDocument2      := Obj.Get('id_document_2', '');
     FEmail            := Obj.Get('email', '');
     FPhone1           := Obj.Get('phone_1', '');
     FPhone2           := Obj.Get('phone_2', '');
@@ -354,8 +354,8 @@ begin
     JSONObject.Add('gender', FGender);
     JSONObject.Add('birth_date', FBirthDate);
     JSONObject.Add('death_date', FDeathDate);
-    JSONObject.Add('document_number_1', FIdDocument1);
-    JSONObject.Add('document_number_2', FIdDocument2);
+    JSONObject.Add('id_document_1', FIdDocument1);
+    JSONObject.Add('id_document_2', FIdDocument2);
     JSONObject.Add('email', FEmail);
     JSONObject.Add('phone_1', FPhone1);
     JSONObject.Add('phone_2', FPhone2);
@@ -562,7 +562,7 @@ begin
   begin
     R.Id := FieldByName('person_id').AsInteger;
     R.FullName := FieldByName('full_name').AsString;
-    R.Abbreviation := FieldByName('acronym').AsString;
+    R.Abbreviation := FieldByName('abbreviation').AsString;
     R.Citation := FieldByName('citation').AsString;
     R.TitleTreatment := FieldByName('title_treatment').AsString;
     R.Gender := FieldByName('gender').AsString;
@@ -574,15 +574,15 @@ begin
       R.DeathDate := NullDate
     else
       R.DeathDate := FieldByName('death_date').AsDateTime;
-    R.IdDocument1 := FieldByName('national_id_card').AsString;
-    R.IdDocument2 := FieldByName('social_security_number').AsString;
+    R.IdDocument1 := FieldByName('id_document_1').AsString;
+    R.IdDocument2 := FieldByName('id_document_2').AsString;
     R.Email := FieldByName('email_addr').AsString;
     R.Phone1 := FieldByName('phone_1').AsString;
     R.Phone2 := FieldByName('phone_2').AsString;
     R.Address1 := FieldByName('address_1').AsString;
     R.Address2 := FieldByName('address_2').AsString;
     R.Neighborhood := FieldByName('neighborhood').AsString;
-    R.PostalCode := FieldByName('zip_code').AsString;
+    R.PostalCode := FieldByName('postal_code').AsString;
     R.MunicipalityId := FieldByName('municipality_id').AsInteger;
     R.StateId := FieldByName('state_id').AsInteger;
     R.CountryId := FieldByName('country_id').AsInteger;
@@ -621,8 +621,8 @@ begin
   R := TPerson(E);
   if ARow.IndexOfName('full_name') >= 0 then
     R.FullName := ARow.Values['full_name'];
-  if ARow.IndexOfName('acronym') >= 0 then
-    R.Abbreviation := ARow.Values['acronym'];
+  if ARow.IndexOfName('abbreviation') >= 0 then
+    R.Abbreviation := ARow.Values['abbreviation'];
   if ARow.IndexOfName('citation') >= 0 then
     R.Citation := ARow.Values['citation'];
   if ARow.IndexOfName('title_treatment') >= 0 then
@@ -633,10 +633,10 @@ begin
     R.BirthDate := StrToDateDef(ARow.Values['birth_date'], NullDate);
   if ARow.IndexOfName('death_date') >= 0 then
     R.DeathDate := StrToDateDef(ARow.Values['death_date'], NullDate);
-  if ARow.IndexOfName('national_id_card') >= 0 then
-    R.IdDocument1 := ARow.Values['national_id_card'];
-  if ARow.IndexOfName('social_security_number') >= 0 then
-    R.IdDocument2 := ARow.Values['social_security_number'];
+  if ARow.IndexOfName('id_document_1') >= 0 then
+    R.IdDocument1 := ARow.Values['id_document_1'];
+  if ARow.IndexOfName('id_document_2') >= 0 then
+    R.IdDocument2 := ARow.Values['id_document_2'];
   if ARow.IndexOfName('email_addr') >= 0 then
     R.Email := ARow.Values['email_addr'];
   if ARow.IndexOfName('phone_1') >= 0 then
@@ -649,8 +649,8 @@ begin
     R.Address2 := ARow.Values['address_2'];
   if ARow.IndexOfName('neighborhood') >= 0 then
     R.Neighborhood := ARow.Values['neighborhood'];
-  if ARow.IndexOfName('zip_code') >= 0 then
-    R.PostalCode := ARow.Values['zip_code'];
+  if ARow.IndexOfName('postal_code') >= 0 then
+    R.PostalCode := ARow.Values['postal_code'];
   if ARow.IndexOfName('municipality_id') >= 0 then
     R.MunicipalityId := StrToIntDef(ARow.Values['municipality_id'], 0);
   if ARow.IndexOfName('state_id') >= 0 then
@@ -693,11 +693,11 @@ begin
     Add(xProvider.People.Insert);
 
     ParamByName('full_name').AsString := R.FullName;
-    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('abbreviation').AsString := R.Abbreviation;
     ParamByName('citation').AsString := R.Citation;
     SetStrParam(ParamByName('title_treatment'), R.TitleTreatment);
-    SetStrParam(ParamByName('national_id_card'), R.IdDocument1);
-    SetStrParam(ParamByName('social_security_number'), R.IdDocument2);
+    SetStrParam(ParamByName('id_document_1'), R.IdDocument1);
+    SetStrParam(ParamByName('id_document_2'), R.IdDocument2);
     SetStrParam(ParamByName('gender'), R.Gender);
     SetDateParam(ParamByName('birth_date'), R.BirthDate);
     SetDateParam(ParamByName('death_date'), R.DeathDate);
@@ -707,7 +707,7 @@ begin
     SetStrParam(ParamByName('address_1'), R.Address1);
     SetStrParam(ParamByName('address_2'), R.Address2);
     SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
-    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetStrParam(ParamByName('postal_code'), R.PostalCode);
     SetForeignParam(ParamByName('country_id'), R.CountryId);
     SetForeignParam(ParamByName('state_id'), R.StateId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
@@ -760,11 +760,11 @@ begin
     Add(xProvider.People.Update);
 
     ParamByName('full_name').AsString := R.FullName;
-    ParamByName('acronym').AsString := R.Abbreviation;
+    ParamByName('abbreviation').AsString := R.Abbreviation;
     ParamByName('citation').AsString := R.Citation;
     SetStrParam(ParamByName('title_treatment'), R.TitleTreatment);
-    SetStrParam(ParamByName('national_id_card'), R.IdDocument1);
-    SetStrParam(ParamByName('social_security_number'), R.IdDocument2);
+    SetStrParam(ParamByName('id_document_1'), R.IdDocument1);
+    SetStrParam(ParamByName('id_document_2'), R.IdDocument2);
     SetStrParam(ParamByName('gender'), R.Gender);
     SetDateParam(ParamByName('birth_date'), R.BirthDate);
     SetDateParam(ParamByName('death_date'), R.DeathDate);
@@ -774,7 +774,7 @@ begin
     SetStrParam(ParamByName('address_1'), R.Address1);
     SetStrParam(ParamByName('address_2'), R.Address2);
     SetStrParam(ParamByName('neighborhood'), R.Neighborhood);
-    SetStrParam(ParamByName('zip_code'), R.PostalCode);
+    SetStrParam(ParamByName('postal_code'), R.PostalCode);
     SetForeignParam(ParamByName('country_id'), R.CountryId);
     SetForeignParam(ParamByName('state_id'), R.StateId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);

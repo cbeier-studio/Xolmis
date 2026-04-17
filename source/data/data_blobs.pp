@@ -103,7 +103,7 @@ begin
     Repo.FindBy(COL_IMAGE_FILENAME, relPath, Media);
 
     if Media.IsNew then
-      Media.FileName := relPath;
+      Media.FilePath := relPath;
     Media.ImageDate := CreationDate;
     Media.ImageTime := CreationDate;
     if (long < 200) and (lat < 200) then
@@ -401,8 +401,8 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
     Qry.Options := Qry.Options + [sqoKeepOpenOnCommit];
-    Add('SELECT image_id, image_filename, image_thumbnail FROM images');
-    Add('WHERE image_filename NOTNULL');
+    Add('SELECT image_id, file_path, image_thumbnail FROM images');
+    Add('WHERE file_path NOTNULL');
     Open;
     {$IFDEF DEBUG}
     Usage := TElapsedTimer.Create(Format('Recreate thumbnails for %d images', [Qry.RecordCount]));
@@ -418,7 +418,7 @@ begin
         dlgProgress.Max := Qry.RecordCount;
         repeat
           dlgProgress.Text := Format(rsProgressImportImages, [Qry.RecNo, Qry.RecordCount]);
-          imgPath := CreateAbsolutePath(Qry.FieldByName(COL_IMAGE_FILENAME).AsString, xSettings.ImagesFolder);
+          imgPath := CreateAbsolutePath(Qry.FieldByName(COL_FILE_PATH).AsString, xSettings.ImagesFolder);
           if (FileExists(imgPath)) then
           begin
             Edit;

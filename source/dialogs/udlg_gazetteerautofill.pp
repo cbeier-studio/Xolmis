@@ -140,7 +140,7 @@ begin
         lblHint.Caption := rsAutofillCities;
         lblState.Caption := FStateName;
         lblState.Visible := True;
-        CountryAbbrev := GetName('gazetteer', 'site_acronym', 'country_id', DMG.qGazetteer.FieldByName('country_id').AsInteger);
+        CountryAbbrev := GetName('gazetteer', 'abbreviation', 'country_id', DMG.qGazetteer.FieldByName('country_id').AsInteger);
         aCountry := LoadCountryFromJSON(CountryAbbrev);
         CountryId := GetCountryKey(aCountry.Name);
         CountryIdPt := GetCountryKey(aCountry.NamePtbr);

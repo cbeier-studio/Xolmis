@@ -55,7 +55,6 @@ type
     FCarrierId: Integer;
     FIndividualId: Integer;
     FProjectId: Integer;
-    FReported: Boolean;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -83,7 +82,6 @@ type
     property CarrierId: Integer read FCarrierId write FCarrierId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property ProjectId: Integer read FProjectId write FProjectId;
-    property Reported: Boolean read FReported write FReported;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -117,6 +115,10 @@ type
     FSupplierId: Integer;
     FSenderId: Integer;
     FRequesterId: Integer;
+    FIndividualId: Integer;
+    FCaptureId: Integer;
+    FReported: Boolean;
+    FReportDate: TDate;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -137,6 +139,10 @@ type
     property SupplierId: Integer read FSupplierId write FSupplierId;
     property SenderId: Integer read FSenderId write FSenderId;
     property RequesterId: Integer read FRequesterId write FRequesterId;
+    property IndividualId: Integer read FIndividualId write FIndividualId;
+    property CaptureId: Integer read FCaptureId write FCaptureId;
+    property Reported: Boolean read FReported write FReported;
+    property ReportDate: TDate read FReportDate write FReportDate;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -191,7 +197,6 @@ begin
     FCarrierId := TBand(Source).CarrierId;
     FIndividualId := TBand(Source).IndividualId;
     FProjectId := TBand(Source).ProjectId;
-    FReported := TBand(Source).Reported;
     FNotes := TBand(Source).Notes;
   end;
 end;
@@ -213,7 +218,6 @@ begin
   FCarrierId := 0;
   FIndividualId := 0;
   FProjectId := 0;
-  FReported := False;
   FNotes := EmptyStr;
 end;
 
@@ -268,8 +272,6 @@ begin
   //  Changes.Add(R);
   if FieldValuesDiff(rscProjectID, aOld.ProjectId, FProjectId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscReported, aOld.Reported, FReported, R) then
-    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
 
@@ -301,7 +303,6 @@ begin
     FCarrierId    := Obj.Get('carrier_id', 0);
     FIndividualId := Obj.Get('individual_id', 0);
     FProjectId    := Obj.Get('project_id', 0);
-    FReported     := Obj.Get('reported', False);
     FNotes        := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -328,7 +329,6 @@ begin
     JSONObject.Add('carrier_id', FCarrierId);
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('project_id', FProjectId);
-    JSONObject.Add('reported', FReported);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -341,10 +341,10 @@ function TBand.ToString: String;
 begin
   Result := Format('Band(Id=%d, FullName=%s, Size=%s, Number=%d, Status=%d, Source=%d, Prefix=%s, Suffix=%s, ' +
     'BandColor=%s, BandType=%d, SupplierId=%d, RequesterId=%d, CarrierId=%d, IndividualId=%d, ProjectId=%d, ' +
-    'Reported=%s, Notes=%s, ' +
+    'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FSize, FNumber, FStatus, FSource, FPrefix, FSuffix, FBandColor, Ord(FBandType), FSupplierId,
-    FRequesterId, FCarrierId, FIndividualId, FProjectId, BoolToStr(FReported, 'True', 'False'), FNotes,
+    FRequesterId, FCarrierId, FIndividualId, FProjectId, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -547,7 +547,6 @@ begin
     R.CarrierId := FieldByName('carrier_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.ProjectId := FieldByName('project_id').AsInteger;
-    R.Reported := FieldByName('band_reported').AsBoolean;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -599,8 +598,6 @@ begin
     R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
   if ARow.IndexOfName('project_id') >= 0 then
     R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
-  if ARow.IndexOfName('band_reported') >= 0 then
-    R.Reported := StrToBoolDef(ARow.Values['band_reported'], False);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -720,6 +717,10 @@ begin
     FSupplierId := TBandHistory(Source).SupplierId;
     FRequesterId := TBandHistory(Source).RequesterId;
     FSenderId := TBandHistory(Source).SenderId;
+    FIndividualId := TBandHistory(Source).IndividualId;
+    FCaptureId := TBandHistory(Source).CaptureId;
+    FReported := TBandHistory(Source).Reported;
+    FReportDate := TBandHistory(Source).ReportDate;
     FNotes := TBandHistory(Source).Notes;
   end;
 end;
@@ -734,6 +735,10 @@ begin
   FSupplierId := 0;
   FRequesterId := 0;
   FSenderId := 0;
+  FIndividualId := 0;
+  FCaptureId := 0;
+  FReported := False;
+  FReportDate := NullDate;
   FNotes := EmptyStr;
 end;
 
@@ -772,6 +777,14 @@ begin
     Changes.Add(R);
   if FieldValuesDiff('Sender ID', aOld.SenderId, FSenderId, R) then
     Changes.Add(R);
+  if FieldValuesDiff('Individual ID', aOld.IndividualId, FIndividualId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff('Capture ID', aOld.CaptureId, FCaptureId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff('Reported', aOld.Reported, FReported, R) then
+    Changes.Add(R);
+  if FieldValuesDiff('Report date', aOld.ReportDate, FReportDate, R) then
+    Changes.Add(R);
   if FieldValuesDiff('Notes', aOld.Notes, FNotes, R) then
     Changes.Add(R);
 
@@ -805,6 +818,10 @@ begin
     FOrderNumber  := Obj.Get('order_number', 0);
     FRequesterId  := Obj.Get('requester_id', 0);
     FSenderId     := Obj.Get('sender_id', 0);
+    FIndividualId  := Obj.Get('individual_id', 0);
+    FCaptureId     := Obj.Get('capture_id', 0);
+    FReported  := Obj.Get('reported', False);
+    FReportDate     := Obj.Get('report_date', NullDate);
     FNotes        := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -824,6 +841,10 @@ begin
     JSONObject.Add('order_number', FOrderNumber);
     JSONObject.Add('requester_id', FRequesterId);
     JSONObject.Add('sender_id', FSenderId);
+    JSONObject.Add('individual_id', FIndividualId);
+    JSONObject.Add('capture_id', FCaptureId);
+    JSONObject.Add('reported', FReported);
+    JSONObject.Add('report_date', FReportDate);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -835,9 +856,10 @@ end;
 function TBandHistory.ToString: String;
 begin
   Result := Format('BandHistory(Id=%d, EventDate=%s, EventType=%s, SupplierId=%d, OrderNumber=%d, ' +
-    'RequesterId=%d, SenderId=%d, Notes=%s, ' +
+    'RequesterId=%d, SenderId=%d, IndividualId=%d, CaptureId=%d, Reported=%s, ReportDate=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, DateToStr(FEventDate), BAND_EVENTS[FEventType], FSupplierId, FOrderNumber, FRequesterId, FSenderId,
+    FIndividualId, FCaptureId, BoolToStr(FReported, 'True', 'False'), DateToStr(FReportDate),
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -1013,6 +1035,10 @@ begin
     R.SupplierId := FieldByName('supplier_id').AsInteger;
     R.RequesterId := FieldByName('requester_id').AsInteger;
     R.SenderId := FieldByName('sender_id').AsInteger;
+    R.IndividualId := FieldByName('individual_id').AsInteger;
+    R.CaptureId := FieldByName('capture_id').AsInteger;
+    R.Reported := FieldByName('reported').AsBoolean;
+    R.ReportDate := FieldByName('report_date').AsDateTime;
     R.Notes := FieldByName('notes').AsString;
     R.UserInserted := FieldByName('user_inserted').AsInteger;
     R.UserUpdated := FieldByName('user_updated').AsInteger;
@@ -1061,6 +1087,14 @@ begin
     R.RequesterId := StrToIntDef(ARow.Values['requester_id'], 0);
   if ARow.IndexOfName('sender_id') >= 0 then
     R.SenderId := StrToIntDef(ARow.Values['sender_id'], 0);
+  if ARow.IndexOfName('individual_id') >= 0 then
+    R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
+  if ARow.IndexOfName('capture_id') >= 0 then
+    R.CaptureId := StrToIntDef(ARow.Values['capture_id'], 0);
+  if ARow.IndexOfName('reported') >= 0 then
+    R.Reported := StrToBoolDef(ARow.Values['reported'], False);
+  if ARow.IndexOfName('report_date') >= 0 then
+    R.ReportDate := StrToDateDef(ARow.Values['report_date'], NullDate);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -1088,6 +1122,10 @@ begin
     SetIntParam(ParamByName('order_number'), R.OrderNumber);
     SetForeignParam(ParamByName('requester_id'), R.RequesterId);
     SetForeignParam(ParamByName('sender_id'), R.SenderId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    ParamByName('reported').AsBoolean := R.Reported;
+    SetDateParam(ParamByName('report_date'), R.ReportDate);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -1134,6 +1172,10 @@ begin
     SetIntParam(ParamByName('order_number'), R.OrderNumber);
     SetForeignParam(ParamByName('requester_id'), R.RequesterId);
     SetForeignParam(ParamByName('sender_id'), R.SenderId);
+    SetForeignParam(ParamByName('individual_id'), R.IndividualId);
+    SetForeignParam(ParamByName('capture_id'), R.CaptureId);
+    ParamByName('reported').AsBoolean := R.Reported;
+    SetDateParam(ParamByName('report_date'), R.ReportDate);
     //ParamByName('marked_status').AsBoolean := FMarked;
     //ParamByName('active_status').AsBoolean := FActive;
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;

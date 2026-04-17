@@ -151,7 +151,7 @@ begin
         Quant := StrToIntDef(Reg.Count, 0);
 
         Toponimo := TSite.Create(GetKey('gazetteer', COL_SITE_ID, COL_EBIRD_NAME, Reg.LocationName));
-        Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.ScientificName));
+        Taxon := TTaxon.Create(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Reg.ScientificName));
         Survey := TSurvey.Create;
         Sight := TSighting.Create;
         aMethod := GetKey('methods', COL_METHOD_ID, COL_EBIRD_NAME, Reg.Protocol);

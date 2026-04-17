@@ -1684,6 +1684,10 @@ msgctxt "data_columns.rscpermitnumber"
 msgid "Permit number"
 msgstr ""
 
+#: data_columns.rscpermitstatus
+msgid "Permit status"
+msgstr ""
+
 #: data_columns.rscperson
 msgctxt "data_columns.rscperson"
 msgid "Person"
@@ -1818,6 +1822,10 @@ msgctxt "data_columns.rscprojectid"
 msgid "Project ID"
 msgstr ""
 
+#: data_columns.rscprojectstatus
+msgid "Project status"
+msgstr ""
+
 #: data_columns.rscproperty
 msgctxt "data_columns.rscproperty"
 msgid "Property"
@@ -1930,6 +1938,11 @@ msgstr ""
 #: data_columns.rscremovedbandid
 msgctxt "data_columns.rscremovedbandid"
 msgid "Removed band ID"
+msgstr ""
+
+#: data_columns.rscreportdate
+msgctxt "data_columns.rscreportdate"
+msgid "Report date"
 msgstr ""
 
 #: data_columns.rscreported
@@ -5509,6 +5522,7 @@ msgid "Database"
 msgstr ""
 
 #: tdlgonboarding.lbltitlefinished.caption
+msgctxt "tdlgonboarding.lbltitlefinished.caption"
 msgid "Finished"
 msgstr ""
 
@@ -5973,11 +5987,6 @@ msgstr ""
 #: tedtbands.btnnew.caption
 msgctxt "tedtbands.btnnew.caption"
 msgid "New"
-msgstr ""
-
-#: tedtbands.ckreported.caption
-msgctxt "tedtbands.ckreported.caption"
-msgid "Reported"
 msgstr ""
 
 #: tedtbands.lblbandcolor.caption
@@ -6646,6 +6655,11 @@ msgstr ""
 msgid "Document info"
 msgstr ""
 
+#: tedtdocumentinfo.eauthor.buttonhint
+msgctxt "tedtdocumentinfo.eauthor.buttonhint"
+msgid "Find author"
+msgstr ""
+
 #: tedtdocumentinfo.edocumentdate.buttonhint
 msgctxt "tedtdocumentinfo.edocumentdate.buttonhint"
 msgid "Open calendar"
@@ -6664,6 +6678,11 @@ msgstr ""
 #: tedtdocumentinfo.edocumenttime.texthint
 msgctxt "tedtdocumentinfo.edocumenttime.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tedtdocumentinfo.lblauthor.caption
+msgctxt "tedtdocumentinfo.lblauthor.caption"
+msgid "Author:"
 msgstr ""
 
 #: tedtdocumentinfo.lbldocumentdate.caption
@@ -17324,9 +17343,23 @@ msgctxt "utils_locale.rsperiodicreportnotification"
 msgid "Periodic report"
 msgstr ""
 
+#: utils_locale.rspermitactive
+msgctxt "utils_locale.rspermitactive"
+msgid "Active"
+msgstr ""
+
+#: utils_locale.rspermitarchived
+msgid "Archived"
+msgstr ""
+
 #: utils_locale.rspermitbanding
 msgctxt "utils_locale.rspermitbanding"
 msgid "Banding Permit"
+msgstr ""
+
+#: utils_locale.rspermitcancelled
+msgctxt "utils_locale.rspermitcancelled"
+msgid "Cancelled"
 msgstr ""
 
 #: utils_locale.rspermitcollection
@@ -17347,6 +17380,10 @@ msgstr ""
 #: utils_locale.rspermitother
 msgctxt "utils_locale.rspermitother"
 msgid "Other Permit"
+msgstr ""
+
+#: utils_locale.rspermitreplaced
+msgid "Replaced"
 msgstr ""
 
 #: utils_locale.rspermitresearch
@@ -17559,6 +17596,29 @@ msgstr ""
 #: utils_locale.rsprogressunpreparing
 msgctxt "utils_locale.rsprogressunpreparing"
 msgid "Unpreparing..."
+msgstr ""
+
+#: utils_locale.rsprojectactive
+msgctxt "utils_locale.rsprojectactive"
+msgid "Active"
+msgstr ""
+
+#: utils_locale.rsprojectcancelled
+msgctxt "utils_locale.rsprojectcancelled"
+msgid "Cancelled"
+msgstr ""
+
+#: utils_locale.rsprojectfinished
+msgctxt "utils_locale.rsprojectfinished"
+msgid "Finished"
+msgstr ""
+
+#: utils_locale.rsprojectpaused
+msgid "Paused"
+msgstr ""
+
+#: utils_locale.rsprojectplanned
+msgid "Planned"
 msgstr ""
 
 #: utils_locale.rspromptbackupnow

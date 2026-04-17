@@ -517,7 +517,7 @@ begin
   else
     cbImageType.ItemIndex := -1;
   end;
-  eImageFilename.Text := FImage.Filename;
+  eImageFilename.Text := FImage.FilePath;
   FLocalityId := FImage.LocalityId;
   eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   case FImage.CoordinatePrecision of
@@ -530,7 +530,7 @@ begin
   eLongitude.Text := FloatToStr(FImage.Longitude);
   eLatitude.Text := FloatToStr(FImage.Latitude);
   FTaxonId := FImage.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FImage.LicenseType);
   eLicenseYear.Text := IntToStr(FImage.LicenseYear);
   eLicenseOwner.Text := FImage.LicenseOwner;
@@ -581,7 +581,7 @@ begin
   FImage.ImageDate := TextToDate(eImageDate.Text);
   FImage.ImageTime := TextToTime(eImageTime.Text);
   FImage.ImageType := StrToImageType(cbImageType.Text);
-  FImage.Filename   := eImageFilename.Text;
+  FImage.FilePath   := eImageFilename.Text;
   FImage.LocalityId := FLocalityId;
   FImage.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FImage.Longitude := StrToFloatOrZero(eLongitude.Text);

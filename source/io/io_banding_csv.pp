@@ -305,7 +305,7 @@ begin
 
           try
             Taxon := TTaxon.Create();
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Reg.SpeciesName), Taxon);
+            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Reg.SpeciesName), Taxon);
             NetStation := TSamplingPlot.Create;
             Toponimo := TSite.Create;
             NetSite := TNetEffort.Create;
@@ -468,7 +468,7 @@ begin
               Captura.CycleCode := Reg.CycleCode;
               Captura.HowAged := Reg.HowAged;
               Captura.SkullOssification := Reg.SkullOssification;
-              Captura.KippsIndex := Reg.KippsIndex;
+              Captura.KippsDistance := Reg.KippsIndex;
               Captura.Glucose := Reg.Glucose;
               Captura.Hemoglobin := Reg.Hemoglobin;
               Captura.Hematocrit := Reg.Hematocrit;
@@ -488,8 +488,8 @@ begin
                 Captura.Photographer1Id := 0;
                 Captura.Photographer2Id := 0;
               end;
-              Captura.StartPhotoNumber := IntToStr(Reg.StartPhotoNumber);
-              Captura.EndPhotoNumber := IntToStr(Reg.EndPhotoNumber);
+              Captura.InitialPhotoNumber := IntToStr(Reg.StartPhotoNumber);
+              Captura.FinalPhotoNumber := IntToStr(Reg.EndPhotoNumber);
               Captura.CameraName := Reg.CameraName;
               Captura.RemovedBandId := RemovedBand.Id;
               Captura.RightTarsus := Reg.RightLeg;

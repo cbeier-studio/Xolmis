@@ -119,14 +119,18 @@ type
     qAudiowind_speed: TLongintField;
     qBandHistoryactive_status: TBooleanField;
     qBandHistoryband_id: TLongintField;
+    qBandHistorycapture_id: TLongintField;
     qBandHistoryevent_date: TDateField;
     qBandHistoryevent_id: TLongintField;
     qBandHistoryevent_type: TStringField;
     qBandHistoryexported_status: TBooleanField;
+    qBandHistoryindividual_id: TLongintField;
     qBandHistoryinsert_date: TDateTimeField;
     qBandHistorymarked_status: TBooleanField;
     qBandHistorynotes: TMemoField;
     qBandHistoryorder_number: TLongintField;
+    qBandHistoryreported: TBooleanField;
+    qBandHistoryreport_date: TDateField;
     qBandHistoryrequester_id: TLongintField;
     qBandHistoryrequester_name: TStringField;
     qBandHistorysender_id: TLongintField;
@@ -142,7 +146,6 @@ type
     qBandsband_id: TAutoIncField;
     qBandsband_number: TLargeintField;
     qBandsband_prefix: TStringField;
-    qBandsband_reported: TBooleanField;
     qBandsband_size: TStringField;
     qBandsband_source: TStringField;
     qBandsband_status: TStringField;
@@ -179,9 +182,9 @@ type
     qBotanyparent_taxon_name: TStringField;
     qBotanyrank_id: TLongintField;
     qBotanyrank_name: TStringField;
+    qBotanyscientific_name: TStringField;
     qBotanyspecies_id: TLongintField;
     qBotanytaxon_id: TAutoIncField;
-    qBotanytaxon_name: TStringField;
     qBotanyupdate_date: TDateTimeField;
     qBotanyuser_inserted: TLongintField;
     qBotanyuser_updated: TLongintField;
@@ -212,7 +215,6 @@ type
     qCapturescountry_id: TLongintField;
     qCapturesculmen_length: TFloatField;
     qCapturescycle_code: TStringField;
-    qCapturesend_photo_number: TStringField;
     qCapturesescaped: TBooleanField;
     qCapturesexported_status: TBooleanField;
     qCapturesexposed_culmen: TFloatField;
@@ -223,6 +225,7 @@ type
     qCapturesfeather_sample: TBooleanField;
     qCapturesfeces_sample: TBooleanField;
     qCapturesfield_number: TStringField;
+    qCapturesfinal_photo_number: TStringField;
     qCapturesfirst_secondary_chord: TFloatField;
     qCapturesflight_feathers_molt: TStringField;
     qCapturesflight_feathers_wear: TStringField;
@@ -237,11 +240,12 @@ type
     qCaptureshow_aged: TStringField;
     qCaptureshow_sexed: TStringField;
     qCapturesindividual_id: TLongintField;
+    qCapturesinitial_photo_number: TStringField;
     qCapturesinsert_date: TDateTimeField;
-    qCaptureskipps_index: TFloatField;
+    qCaptureskipps_distance: TFloatField;
     qCaptureslatitude: TFloatField;
-    qCapturesleft_leg_above: TStringField;
-    qCapturesleft_leg_below: TStringField;
+    qCapturesleft_tarsus: TStringField;
+    qCapturesleft_tibia: TStringField;
     qCaptureslocality_id: TLongintField;
     qCaptureslocality_name: TStringField;
     qCaptureslongitude: TFloatField;
@@ -265,13 +269,12 @@ type
     qCapturesproject_id: TLongintField;
     qCapturesremoved_band_id: TLongintField;
     qCapturesremoved_band_name: TStringField;
-    qCapturesright_leg_above: TStringField;
-    qCapturesright_leg_below: TStringField;
+    qCapturesright_tarsus: TStringField;
+    qCapturesright_tibia: TStringField;
     qCapturesright_wing_chord: TFloatField;
     qCapturesskull_length: TFloatField;
     qCapturesskull_ossification: TStringField;
     qCapturesspecies_id: TLongintField;
-    qCapturesstart_photo_number: TStringField;
     qCapturesstate_id: TLongintField;
     qCapturessubject_age: TStringField;
     qCapturessubject_collected: TBooleanField;
@@ -293,7 +296,7 @@ type
     qCapturesuser_updated: TLongintField;
     qCapturesweight: TFloatField;
     qChildTaxaformatted_name: TStringField;
-    qChildTaxafull_name: TStringField;
+    qChildTaxascientific_name: TStringField;
     qEggsactive_status: TBooleanField;
     qEggsdescription: TMemoField;
     qEggseggshell_color: TStringField;
@@ -321,9 +324,9 @@ type
     qEggsmeasure_date: TDateField;
     qEggsnest_id: TLongintField;
     qEggsnotes: TMemoField;
+    qEggsobserver_id: TLongintField;
+    qEggsobserver_name: TStringField;
     qEggsorder_id: TLongintField;
-    qEggsresearcher_id: TLongintField;
-    qEggsresearcher_name: TStringField;
     qEggsspecies_id: TLongintField;
     qEggstaxon_id: TLongintField;
     qEggstaxon_name: TStringField;
@@ -360,6 +363,7 @@ type
     qFeathersfeather_mass: TFloatField;
     qFeathersfeather_number: TLongintField;
     qFeathersfeather_trait: TStringField;
+    qFeathersfull_name: TStringField;
     qFeathersgenus_id: TLongintField;
     qFeathersgrown_percent: TFloatField;
     qFeathersgrowth_bar_width: TFloatField;
@@ -386,6 +390,7 @@ type
     qFeathersupdate_date: TDateTimeField;
     qFeathersuser_inserted: TLongintField;
     qFeathersuser_updated: TLongintField;
+    qGazetteerabbreviation: TStringField;
     qGazetteeractive_status: TBooleanField;
     qGazetteeraltitude: TFloatField;
     qGazetteercountry_id: TLongintField;
@@ -404,7 +409,6 @@ type
     qGazetteernotes: TMemoField;
     qGazetteerparent_site_id: TLongintField;
     qGazetteerparent_site_name: TStringField;
-    qGazetteersite_acronym: TStringField;
     qGazetteersite_id: TLongintField;
     qGazetteersite_name: TStringField;
     qGazetteersite_rank: TStringField;
@@ -475,8 +479,8 @@ type
     qIndividualsindividual_id: TAutoIncField;
     qIndividualsindividual_sex: TStringField;
     qIndividualsinsert_date: TDateTimeField;
-    qIndividualsleft_leg_above: TStringField;
-    qIndividualsleft_leg_below: TStringField;
+    qIndividualsleft_tarsus: TStringField;
+    qIndividualsleft_tibia: TStringField;
     qIndividualsmarked_status: TBooleanField;
     qIndividualsmother_id: TLongintField;
     qIndividualsmother_name: TStringField;
@@ -488,16 +492,17 @@ type
     qIndividualsrecognizable_markings: TMemoField;
     qIndividualsremoved_band_id: TLongintField;
     qIndividualsremoved_band_name: TStringField;
-    qIndividualsright_leg_above: TStringField;
-    qIndividualsright_leg_below: TStringField;
+    qIndividualsright_tarsus: TStringField;
+    qIndividualsright_tibia: TStringField;
     qIndividualsspecies_id: TLongintField;
     qIndividualstaxon_id: TLongintField;
     qIndividualstaxon_name: TStringField;
     qIndividualsupdate_date: TDateTimeField;
     qIndividualsuser_inserted: TLongintField;
     qIndividualsuser_updated: TLongintField;
+    qInstitutionsabbreviation: TStringField;
+    qInstitutionspostal_code: TStringField;
     qInstitutionsstate_name: TStringField;
-    qInstitutionsacronym: TStringField;
     qInstitutionsactive_status: TBooleanField;
     qInstitutionsaddress_1: TStringField;
     qInstitutionsaddress_2: TStringField;
@@ -519,7 +524,6 @@ type
     qInstitutionsupdate_date: TDateTimeField;
     qInstitutionsuser_inserted: TLongintField;
     qInstitutionsuser_updated: TLongintField;
-    qInstitutionszip_code: TStringField;
     qMethodsabbreviation: TStringField;
     qMethodsactive_status: TBooleanField;
     qMethodscan_delete: TBooleanField;
@@ -656,6 +660,7 @@ type
     qNestRevisionsuser_inserted: TLongintField;
     qNestRevisionsuser_updated: TLongintField;
     qMethods: TSQLQuery;
+    qNestsbuilding_days: TFloatField;
     qNestscoordinate_precision: TStringField;
     qNestsexternal_max_diameter: TFloatField;
     qNestsexternal_min_diameter: TFloatField;
@@ -667,11 +672,16 @@ type
     qNestsorder_id: TLongintField;
     qNestsspecies_id: TLongintField;
     qNeststaxon_formatted_name: TStringField;
+    qPeopleabbreviation: TStringField;
     qPeoplegender: TStringField;
+    qPeopleid_document_1: TStringField;
+    qPeopleid_document_2: TStringField;
+    qPeoplepostal_code: TStringField;
     qPeopletitle_treatment: TStringField;
     qPermanentNetscoordinate_precision: TStringField;
     qPermanentNetssampling_plot_id: TLongintField;
     qPermitsnotes: TMemoField;
+    qPermitspermit_status: TStringField;
     qProjectBudgetactive_status: TBooleanField;
     qProjectBudgetamount: TFloatField;
     qProjectBudgetbudget_id: TLongintField;
@@ -727,10 +737,12 @@ type
     qProjectGoalsuser_inserted: TLongintField;
     qProjectGoalsuser_updated: TLongintField;
     qProjectsmain_goal: TMemoField;
+    qProjectsproject_status: TStringField;
     qProjectsprotocol_number: TStringField;
     qProjectsrisks: TMemoField;
     qProjectTeaminstitution_id: TLongintField;
     qProjectTeaminstitution_name: TStringField;
+    qProjectTeamperson_abbrev: TStringField;
     qSampleCollectors: TSQLQuery;
     qSampleCollectorsactive_status: TBooleanField;
     qSampleCollectorscollector_id: TLongintField;
@@ -744,8 +756,11 @@ type
     qSampleCollectorsupdate_date: TDateTimeField;
     qSampleCollectorsuser_inserted: TLongintField;
     qSampleCollectorsuser_updated: TLongintField;
+    qSamplePrepsduplicate_seq: TLongintField;
+    qSamplePrepsinstitution_id: TLongintField;
+    qSamplePrepsinstitution_name: TStringField;
     qSamplePrepspreparer_name: TStringField;
-    qSamplingPlotsacronym: TStringField;
+    qSamplingPlotsabbreviation: TStringField;
     qSamplingPlotscoordinate_precision: TStringField;
     qSamplingPlotscountry_id: TLongintField;
     qSamplingPlotscountry_name: TStringField;
@@ -767,6 +782,7 @@ type
     qSightingsmunicipality_id: TLongintField;
     qSightingsobserver_name: TStringField;
     qSightingsorder_id: TLongintField;
+    qSightingsout_of_sample: TBooleanField;
     qSightingsspecies_id: TLongintField;
     qSightingsstate_id: TLongintField;
     qSightingssurvey_name: TStringField;
@@ -776,6 +792,8 @@ type
     qSpecimenscountry_id: TLongintField;
     qSpecimensfamily_id: TLongintField;
     qSpecimensgenus_id: TLongintField;
+    qSpecimensinstitution_id: TLongintField;
+    qSpecimensinstitution_name: TStringField;
     qSpecimensmunicipality_id: TLongintField;
     qSpecimensorder_id: TLongintField;
     qSpecimensspecies_id: TLongintField;
@@ -789,6 +807,8 @@ type
     qSurveysnet_effort: TFloatField;
     qSurveysstate_id: TLongintField;
     qSurveysstate_name: TStringField;
+    qSynonymTaxascientific_name: TStringField;
+    qTaxaaccepted_status: TBooleanField;
     qTaxafamily_name: TStringField;
     qTaxagenero_name: TStringField;
     qTaxaioc_parent_name: TStringField;
@@ -797,15 +817,16 @@ type
     qTaxaorder_name: TStringField;
     qTaxaparent_taxon_name: TStringField;
     qTaxarank_name: TStringField;
+    qTaxascientific_name: TStringField;
     qTaxaspecies_name: TStringField;
     qTaxasubfamily_name: TStringField;
     qTaxasubspecies_group_name: TStringField;
+    qTaxataxon_concept_id: TStringField;
     qTaxavalid_name: TStringField;
     qTaxonRanks: TSQLQuery;
     qNestsactive_days: TFloatField;
     qNestsactive_status: TBooleanField;
     qNestscenter_distance: TFloatField;
-    qNestsconstruction_days: TFloatField;
     qNestsdescription: TMemoField;
     qNestsedge_distance: TFloatField;
     qNestsexported_status: TBooleanField;
@@ -892,7 +913,6 @@ type
     qSamplingPlotsupdate_date: TDateTimeField;
     qSamplingPlotsuser_inserted: TLongintField;
     qSamplingPlotsuser_updated: TLongintField;
-    qPeopleacronym: TStringField;
     qPeopleactive_status: TBooleanField;
     qPeopleaddress_1: TStringField;
     qPeopleaddress_2: TStringField;
@@ -914,7 +934,6 @@ type
     qPeoplemarked_status: TBooleanField;
     qPeoplemunicipality_id: TLongintField;
     qPeoplemunicipality_name: TStringField;
-    qPeoplenational_id_card: TStringField;
     qPeopleneighborhood: TStringField;
     qPeoplenotes: TMemoField;
     qPeopleorcid_uri: TStringField;
@@ -923,7 +942,6 @@ type
     qPeoplephone_2: TStringField;
     qPeopleprofile_color: TStringField;
     qPeopleprofile_image: TBlobField;
-    qPeoplesocial_security_number: TStringField;
     qPeoplestate_id: TLongintField;
     qPeoplestate_name: TStringField;
     qPeopletwitter_uri: TStringField;
@@ -931,7 +949,6 @@ type
     qPeopleuser_inserted: TLongintField;
     qPeopleuser_updated: TLongintField;
     qPeoplewebsite_uri: TStringField;
-    qPeoplezip_code: TStringField;
     qPermanentNetsactive_status: TBooleanField;
     qPermanentNetsexported_status: TBooleanField;
     qPermanentNetsfull_name: TStringField;
@@ -952,8 +969,6 @@ type
     qPermitsexported_status: TBooleanField;
     qPermitsinsert_date: TDateTimeField;
     qPermitsmarked_status: TBooleanField;
-    qPermitspermit_file: TBlobField;
-    qPermitspermit_filename: TStringField;
     qPermitspermit_id: TAutoIncField;
     qPermitspermit_name: TStringField;
     qPermitspermit_number: TStringField;
@@ -984,7 +999,6 @@ type
     qProjectTeamexported_status: TBooleanField;
     qProjectTeaminsert_date: TDateTimeField;
     qProjectTeammarked_status: TBooleanField;
-    qProjectTeamperson_acronym: TStringField;
     qProjectTeamperson_color: TStringField;
     qProjectTeamperson_id: TLongintField;
     qProjectTeamperson_name: TStringField;
@@ -995,7 +1009,6 @@ type
     qProjectTeamuser_inserted: TLongintField;
     qProjectTeamuser_updated: TLongintField;
     qSamplePrepsaccession_num: TStringField;
-    qSamplePrepsaccession_seq: TLongintField;
     qSamplePrepsaccession_type: TStringField;
     qSamplePrepsactive_status: TBooleanField;
     qSamplePrepsegg_id: TLongintField;
@@ -1036,7 +1049,6 @@ type
     qSightingsnotes: TMemoField;
     qSightingsnot_aged_tally: TStringField;
     qSightingsnot_sexed_tally: TStringField;
-    qSightingsnot_surveying: TBooleanField;
     qSightingsobserver_id: TLongintField;
     qSightingsrecaptures_tally: TLongintField;
     qSightingssighting_date: TDateField;
@@ -1148,7 +1160,6 @@ type
     qSurveyTeamuser_updated: TLongintField;
     qSurveyTeamvisitor: TBooleanField;
     qSynonymTaxaformatted_name: TStringField;
-    qSynonymTaxafull_name: TStringField;
     qSynonymTaxavalid_id: TLargeintField;
     qTaxa: TSQLQuery;
     qSynonymTaxa: TSQLQuery;
@@ -1167,7 +1178,6 @@ type
     qTaxaextinction_year: TStringField;
     qTaxafamily_id: TLargeintField;
     qTaxaformatted_name: TStringField;
-    qTaxafull_name: TStringField;
     qTaxagenus_id: TLargeintField;
     qTaxagroup_name: TStringField;
     qTaxaincertae_sedis: TLargeintField;
@@ -1197,15 +1207,16 @@ type
     qTaxauser_updated: TLongintField;
     qTaxavalid_id: TLargeintField;
     qBandHistory: TSQLQuery;
+    qTaxonRanksabbreviation: TStringField;
     qTaxonRanksactive_status: TBooleanField;
-    qTaxonRanksbotanical_code: TBooleanField;
     qTaxonRanksexported_status: TBooleanField;
+    qTaxonRanksicbn: TBooleanField;
+    qTaxonRanksiczn: TBooleanField;
     qTaxonRanksinfrarank: TBooleanField;
     qTaxonRanksinfraspecific: TBooleanField;
     qTaxonRanksinsert_date: TDateTimeField;
     qTaxonRanksmain_rank: TBooleanField;
     qTaxonRanksmarked_status: TBooleanField;
-    qTaxonRanksrank_acronym: TStringField;
     qTaxonRanksrank_id: TLongintField;
     qTaxonRanksrank_name: TStringField;
     qTaxonRanksrank_seq: TLongintField;
@@ -1213,7 +1224,6 @@ type
     qTaxonRanksupdate_date: TDateTimeField;
     qTaxonRanksuser_inserted: TLongintField;
     qTaxonRanksuser_updated: TLongintField;
-    qTaxonRankszoological_code: TBooleanField;
     qWeatherLogsactive_status: TBooleanField;
     qWeatherLogsatmospheric_pressure: TFloatField;
     qWeatherLogscloud_cover: TLongintField;
@@ -1387,6 +1397,8 @@ type
     procedure qPermanentNetscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean
       );
     procedure qPermanentNetscoordinate_precisionSetText(Sender: TField; const aText: string);
+    procedure qPermitspermit_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qPermitspermit_statusSetText(Sender: TField; const aText: string);
     procedure qProjectChronogramprogress_statusGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qProjectChronogramprogress_statusSetText(Sender: TField;
@@ -1395,6 +1407,8 @@ type
       var aText: string; DisplayText: Boolean);
     procedure qProjectGoalsgoal_statusSetText(Sender: TField;
       const aText: string);
+    procedure qProjectsproject_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qProjectsproject_statusSetText(Sender: TField; const aText: string);
     procedure qSamplingPlotsAfterCancel(DataSet: TDataSet);
     procedure qSamplingPlotsAfterPost(DataSet: TDataSet);
     procedure qSamplingPlotsBeforeEdit(DataSet: TDataSet);
@@ -1557,7 +1571,6 @@ begin
   DataSet.FieldByName('supplier_id').AsInteger := xSettings.DefaultBandSupplier;
   DataSet.FieldByName('band_status').AsString := 'D';
   DataSet.FieldByName('band_source').AsString := 'A';
-  DataSet.FieldByName('band_reported').AsBoolean := False;
 end;
 
 procedure TDMG.qBandHistoryevent_typeGetText(Sender: TField; var aText: string;
@@ -4098,6 +4111,39 @@ begin
     raise EInvalidDateRange.CreateFmt(rsInvalidDateRange, [rsDateExpire, rsDateDispatch]);
 end;
 
+procedure TDMG.qPermitspermit_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'A': aText := rsPermitActive;
+    'R': aText := rsPermitReplaced;
+    'K': aText := rsPermitArchived;
+    'C': aText := rsPermitCancelled;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qPermitspermit_statusSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsPermitActive then
+    Sender.AsString := 'A'
+  else
+  if aText = rsPermitReplaced then
+    Sender.AsString := 'R'
+  else
+  if aText = rsPermitArchived then
+    Sender.AsString := 'K'
+  else
+  if aText = rsPermitCancelled then
+    Sender.AsString := 'C';
+end;
+
 procedure TDMG.qPermitspermit_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
   if Sender.AsString = EmptyStr then
@@ -4271,6 +4317,43 @@ begin
 
   if Sender.AsDateTime < Sender.DataSet.FieldByName('start_date').AsDateTime then
     raise EInvalidDateRange.CreateFmt(rsInvalidDateRange, [rsDateEnd, rsDateStart]);
+end;
+
+procedure TDMG.qProjectsproject_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'P': aText := rsProjectPlanned;
+    'A': aText := rsProjectActive;
+    'D': aText := rsProjectPaused;
+    'F': aText := rsProjectFinished;
+    'C': aText := rsProjectCancelled;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qProjectsproject_statusSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsProjectPlanned then
+    Sender.AsString := 'P'
+  else
+  if aText = rsProjectActive then
+    Sender.AsString := 'A'
+  else
+  if aText = rsProjectPaused then
+    Sender.AsString := 'D'
+  else
+  if aText = rsProjectFinished then
+    Sender.AsString := 'F'
+  else
+  if aText = rsProjectCancelled then
+    Sender.AsString := 'C';
 end;
 
 procedure TDMG.qProjectTeamAfterCancel(DataSet: TDataSet);
@@ -4576,7 +4659,7 @@ end;
 
 procedure TDMG.qSightingsAfterInsert(DataSet: TDataSet);
 begin
-  DataSet.FieldByName('not_surveying').AsBoolean := False;
+  DataSet.FieldByName('out_of_sample').AsBoolean := False;
   DataSet.FieldByName('ebird_available').AsBoolean := False;
   DataSet.FieldByName('subject_captured').AsBoolean := False;
   DataSet.FieldByName('subject_seen').AsBoolean := False;

@@ -43,7 +43,7 @@ object frmCustomGrid: TfrmCustomGrid
       Height = 614
       Top = 0
       Width = 464
-      PageIndex = 0
+      PageIndex = 9
       Align = alClient
       TabOrder = 0
       object cardViewRecord: TPage
@@ -88,7 +88,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnPrepareCanvas = gridRecordPrepareCanvas
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -106,7 +106,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 447
+          ClientWidth = 464
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
@@ -7114,7 +7114,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 276
+              Width = 255
               FieldName = 'full_name'
             end>
           DataSource = dsAudios
@@ -7313,8 +7313,8 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'File path'
-              Width = 386
-              FieldName = 'document_path'
+              Width = 365
+              FieldName = 'file_path'
             end>
           DataSource = dsDocs
           Options = [dgTitles, dgIndicator, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgDisableDelete, dgTruncCellHints, dgCellEllipsis]
@@ -8295,7 +8295,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Fullname'
-              Width = 276
+              Width = 255
               FieldName = 'full_name'
             end>
           DataSource = dsVideos
@@ -25865,7 +25865,7 @@ object frmCustomGrid: TfrmCustomGrid
         Precision = -1
       end    
       item
-        Name = 'image_filename'
+        Name = 'file_path'
         DataType = ftString
         Precision = -1
         Size = 300
@@ -26031,41 +26031,8 @@ object frmCustomGrid: TfrmCustomGrid
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT'
-      '  img.image_id,'
-      '  img.image_date,'
-      '  img.image_time,'
-      '  img.image_type,'
-      '  img.taxon_id,'
-      '  img.individual_id,'
-      '  img.capture_id,'
-      '  img.feather_id,'
-      '  img.locality_id,'
-      '  img.author_id,'
-      '  img.survey_id,'
-      '  img.sighting_id,'
-      '  img.nest_id,'
-      '  img.nest_revision_id,'
-      '  img.egg_id,'
-      '  img.specimen_id,'
-      '  img.image_filename,'
-      '  img.coordinate_precision,'
-      '  img.longitude,'
-      '  img.latitude,'
-      '  img.license_type,'
-      '  img.license_year,'
-      '  img.license_uri,'
-      '  img.license_notes,'
-      '  img.license_owner,'
-      '  img.subtitle,'
-      '  img.image_thumbnail,'
-      '  img.user_inserted,'
-      '  img.user_updated,'
-      '  img.insert_date,'
-      '  img.update_date,'
-      '  img.exported_status,'
-      '  img.marked_status,'
-      '  img.active_status,'
-      '  z.full_name AS taxon_name,'
+      '  img.*,'
+      '  z.scientific_name AS taxon_name,'
       '  i.full_name AS individual_name,'
       '  c.full_name AS capture_name,'
       '  g.site_name AS locality_name,'
@@ -26106,7 +26073,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  nest_revision_id,'
       '  egg_id,'
       '  specimen_id,'
-      '  image_filename,'
+      '  file_path,'
       '  coordinate_precision,'
       '  longitude,'
       '  latitude,'
@@ -26138,7 +26105,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  :nest_revision_id,'
       '  :egg_id,'
       '  :specimen_id,'
-      '  :image_filename,'
+      '  :file_path,'
       '  :coordinate_precision,'
       '  :longitude,'
       '  :latitude,'
@@ -26172,7 +26139,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  nest_revision_id = :nest_revision_id,'
       '  egg_id = :egg_id,'
       '  specimen_id = :specimen_id,'
-      '  image_filename = :image_filename,'
+      '  file_path = :file_path,'
       '  coordinate_precision = :coordinate_precision,'
       '  longitude = :longitude,'
       '  latitude = :latitude,'
@@ -26455,20 +26422,10 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Size = 100
     end
-    object qImagesimage_filename: TStringField
-      FieldKind = fkData
-      FieldName = 'image_filename'
-      Index = 27
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 300
-    end
     object qImagescoordinate_precision: TStringField
       FieldKind = fkData
       FieldName = 'coordinate_precision'
-      Index = 28
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26478,7 +26435,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslongitude: TFloatField
       FieldKind = fkData
       FieldName = 'longitude'
-      Index = 29
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26488,7 +26445,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslatitude: TFloatField
       FieldKind = fkData
       FieldName = 'latitude'
-      Index = 30
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26498,7 +26455,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_type: TStringField
       FieldKind = fkData
       FieldName = 'license_type'
-      Index = 31
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26507,7 +26464,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_year: TLongintField
       FieldKind = fkData
       FieldName = 'license_year'
-      Index = 32
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26516,7 +26473,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_uri: TStringField
       FieldKind = fkData
       FieldName = 'license_uri'
-      Index = 33
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26526,7 +26483,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_notes: TStringField
       FieldKind = fkData
       FieldName = 'license_notes'
-      Index = 34
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26536,7 +26493,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImageslicense_owner: TStringField
       FieldKind = fkData
       FieldName = 'license_owner'
-      Index = 35
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26546,13 +26503,24 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagessubtitle: TMemoField
       FieldKind = fkData
       FieldName = 'subtitle'
-      Index = 36
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       BlobType = ftMemo
       Transliterate = False
+    end
+    object qImagesfile_path: TStringField
+      DisplayLabel = 'File path'
+      FieldKind = fkData
+      FieldName = 'file_path'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 300
     end
     object qImagesimage_thumbnail: TBlobField
       FieldKind = fkData
@@ -27040,21 +27008,9 @@ object frmCustomGrid: TfrmCustomGrid
         Precision = -1
       end    
       item
-        Name = 'taxon_name'
-        DataType = ftString
-        Precision = -1
-        Size = 100
-      end    
-      item
         Name = 'individual_id'
         DataType = ftInteger
         Precision = -1
-      end    
-      item
-        Name = 'individual_name'
-        DataType = ftString
-        Precision = -1
-        Size = 120
       end    
       item
         Name = 'specimen_id'
@@ -27062,38 +27018,15 @@ object frmCustomGrid: TfrmCustomGrid
         Precision = -1
       end    
       item
-        Name = 'specimen_name'
-        DataType = ftString
-        Precision = -1
-        Size = 100
-      end    
-      item
         Name = 'sighting_id'
         DataType = ftInteger
         Precision = -1
-      end    
-      item
-        Name = 'sighting_name'
-        DataType = ftString
-        Precision = -1
-        Size = 100
       end    
       item
         Name = 'audio_type'
         DataType = ftString
         Precision = -1
         Size = 15
-      end    
-      item
-        Name = 'locality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'locality_name'
-        DataType = ftString
-        Precision = -1
-        Size = 60
       end    
       item
         Name = 'recording_date'
@@ -27106,15 +27039,20 @@ object frmCustomGrid: TfrmCustomGrid
         Precision = -1
       end    
       item
-        Name = 'recorder_id'
+        Name = 'author_id'
         DataType = ftInteger
         Precision = -1
       end    
       item
-        Name = 'recorder_name'
-        DataType = ftString
+        Name = 'locality_id'
+        DataType = ftInteger
         Precision = -1
-        Size = 100
+      end    
+      item
+        Name = 'coordinate_precision'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 1
       end    
       item
         Name = 'longitude'
@@ -27159,6 +27097,12 @@ object frmCustomGrid: TfrmCustomGrid
         Size = 60
       end    
       item
+        Name = 'habitat'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
         Name = 'playback_used'
         DataType = ftBoolean
         Precision = -1
@@ -27169,10 +27113,9 @@ object frmCustomGrid: TfrmCustomGrid
         Precision = -1
       end    
       item
-        Name = 'habitat'
-        DataType = ftString
+        Name = 'distance'
+        DataType = ftFloat
         Precision = -1
-        Size = 60
       end    
       item
         Name = 'recorder_model'
@@ -27191,11 +27134,6 @@ object frmCustomGrid: TfrmCustomGrid
         DataType = ftString
         Precision = -1
         Size = 60
-      end    
-      item
-        Name = 'distance'
-        DataType = ftFloat
-        Precision = -1
       end    
       item
         Name = 'license_type'
@@ -27227,6 +27165,12 @@ object frmCustomGrid: TfrmCustomGrid
         Size = 150
       end    
       item
+        Name = 'file_path'
+        DataType = ftString
+        Precision = -1
+        Size = 250
+      end    
+      item
         Name = 'subtitle'
         DataType = ftMemo
         Precision = -1
@@ -27235,47 +27179,6 @@ object frmCustomGrid: TfrmCustomGrid
         Name = 'notes'
         DataType = ftMemo
         Precision = -1
-      end    
-      item
-        Name = 'order_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'family_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'genus_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'species_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'audio_file'
-        DataType = ftString
-        Precision = -1
-        Size = 250
       end    
       item
         Name = 'user_inserted'
@@ -27311,64 +27214,59 @@ object frmCustomGrid: TfrmCustomGrid
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'specimen_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'sighting_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'locality_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'author_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
       end>
     BeforePost = qAudiosBeforePost
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT'
-      '  snd.audio_id,'
-      '  snd.full_name,'
-      '  snd.taxon_id,'
-      '  z.full_name AS taxon_name,'
-      '  snd.individual_id,'
+      'SELECT snd.*,'
+      '  z.scientific_name AS taxon_name,'
       '  i.full_name AS individual_name,'
-      '  snd.specimen_id,'
       '  sp.full_name AS specimen_name,'
-      '  snd.sighting_id,'
       '  s.full_name AS sighting_name,'
-      '  snd.audio_type,'
-      '  snd.locality_id,'
       '  g.site_name AS locality_name,'
-      '  snd.recording_date,'
-      '  snd.recording_time,'
-      '  snd.recorder_id,'
-      '  p.full_name AS recorder_name,'
-      '  snd.longitude,'
-      '  snd.latitude,'
-      '  snd.temperature,'
-      '  snd.cloud_cover,'
-      '  snd.precipitation,'
-      '  snd.relative_humidity,'
-      '  snd.wind_speed,'
-      '  snd.recording_context,'
-      '  snd.playback_used,'
-      '  snd.subjects_tally,'
-      '  snd.habitat,'
-      '  snd.recorder_model,'
-      '  snd.mic_model,'
-      '  snd.filter_model,'
-      '  snd.distance,'
-      '  snd.license_type,'
-      '  snd.license_year,'
-      '  snd.license_uri,'
-      '  snd.license_notes,'
-      '  snd.license_owner,'
-      '  snd.subtitle,'
-      '  snd.notes,'
-      '  snd.audio_file,'
-      '  snd.user_inserted,'
-      '  snd.user_updated,'
-      '  snd.insert_date,'
-      '  snd.update_date,'
-      '  snd.exported_status,'
-      '  snd.marked_status,'
-      '  snd.active_status'
+      '  p.full_name AS author_name'
       'FROM audio_library AS snd'
       'LEFT JOIN zoo_taxa AS z ON snd.taxon_id = z.taxon_id'
       'LEFT JOIN individuals AS i ON snd.individual_id = i.individual_id'
       'LEFT JOIN gazetteer AS g ON snd.locality_id = g.site_id'
-      'LEFT JOIN people AS p ON snd.recorder_id = p.person_id'
+      'LEFT JOIN people AS p ON snd.author_id = p.person_id'
       'LEFT JOIN specimens AS sp ON snd.specimen_id = sp.specimen_id'
       'LEFT JOIN sightings AS s ON snd.sighting_id = s.sighting_id'
     )
@@ -27383,9 +27281,10 @@ object frmCustomGrid: TfrmCustomGrid
       '  locality_id,'
       '  recording_date,'
       '  recording_time,'
-      '  recorder_id,'
+      '  author_id,'
       '  longitude,'
       '  latitude,'
+      '  coordinate_precision,'
       '  temperature,'
       '  cloud_cover,'
       '  precipitation,'
@@ -27406,7 +27305,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  license_owner,'
       '  subtitle,'
       '  notes,'
-      '  audio_file,'
+      '  file_path,'
       '  user_inserted,'
       '  insert_date,'
       '  exported_status,'
@@ -27422,9 +27321,10 @@ object frmCustomGrid: TfrmCustomGrid
       '  :locality_id,'
       '  :recording_date,'
       '  :recording_time,'
-      '  :recorder_id,'
+      '  :author_id,'
       '  :longitude,'
       '  :latitude,'
+      '  :coordinate_precision,'
       '  :temperature,'
       '  :cloud_cover,'
       '  :precipitation,'
@@ -27445,7 +27345,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  :license_owner,'
       '  :subtitle,'
       '  :notes,'
-      '  :audio_file,'
+      '  :file_path,'
       '  :user_inserted,'
       '  :insert_date,'
       '  :exported_status,'
@@ -27463,9 +27363,10 @@ object frmCustomGrid: TfrmCustomGrid
       '  locality_id = :locality_id,'
       '  recording_date = :recording_date,'
       '  recording_time = :recording_time,'
-      '  recorder_id = :recorder_id,'
+      '  author_id = :author_id,'
       '  longitude = :longitude,'
       '  latitude = :latitude,'
+      '  coordinate_precision = :coordinate_precision,'
       '  temperature = :temperature,'
       '  cloud_cover = :cloud_cover,'
       '  precipitation = :precipitation,'
@@ -27486,7 +27387,7 @@ object frmCustomGrid: TfrmCustomGrid
       '  license_owner = :license_owner,'
       '  subtitle = :subtitle,'
       '  notes = :notes,'
-      '  audio_file = :audio_file,'
+      '  file_path = :file_path,'
       '  user_updated = :user_updated,'
       '  update_date = :update_date,'
       '  exported_status = :exported_status,'
@@ -27665,10 +27566,10 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       DisplayFormat = 'hh:nn'
     end
-    object qAudiosrecorder_id: TLongintField
+    object qAudiosauthor_id: TLongintField
       DisplayLabel = 'Author ID'
       FieldKind = fkData
-      FieldName = 'recorder_id'
+      FieldName = 'author_id'
       Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -27676,15 +27577,15 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Visible = False
     end
-    object qAudiosrecorder_name: TStringField
+    object qAudiosauthor_name: TStringField
       DisplayLabel = 'Author'
       FieldKind = fkData
-      FieldName = 'recorder_name'
+      FieldName = 'author_name'
       Index = 16
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       Size = 100
     end
     object qAudioslongitude: TFloatField
@@ -27709,11 +27610,22 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Precision = -1
     end
+    object qAudioscoordinate_precision: TStringField
+      DisplayLabel = 'Coordinates precision'
+      FieldKind = fkData
+      FieldName = 'coordinate_precision'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 1
+    end
     object qAudiostemperature: TFloatField
       DisplayLabel = 'Temperature'
       FieldKind = fkData
       FieldName = 'temperature'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27724,7 +27636,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Cloud cover'
       FieldKind = fkData
       FieldName = 'cloud_cover'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27734,7 +27646,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Precipitation'
       FieldKind = fkData
       FieldName = 'precipitation'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27747,7 +27659,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Relative humidity'
       FieldKind = fkData
       FieldName = 'relative_humidity'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27757,7 +27669,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Wind speed'
       FieldKind = fkData
       FieldName = 'wind_speed'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27767,7 +27679,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Context'
       FieldKind = fkData
       FieldName = 'recording_context'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27780,7 +27692,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Playback used'
       FieldKind = fkData
       FieldName = 'playback_used'
-      Index = 25
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27791,7 +27703,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = '# individuals'
       FieldKind = fkData
       FieldName = 'subjects_tally'
-      Index = 26
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27801,7 +27713,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Habitat'
       FieldKind = fkData
       FieldName = 'habitat'
-      Index = 27
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27812,7 +27724,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Recorder model'
       FieldKind = fkData
       FieldName = 'recorder_model'
-      Index = 28
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27823,7 +27735,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Microphone model'
       FieldKind = fkData
       FieldName = 'mic_model'
-      Index = 29
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27834,7 +27746,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Filter model'
       FieldKind = fkData
       FieldName = 'filter_model'
-      Index = 30
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27845,7 +27757,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Distance'
       FieldKind = fkData
       FieldName = 'distance'
-      Index = 31
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27856,7 +27768,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License type'
       FieldKind = fkData
       FieldName = 'license_type'
-      Index = 32
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27866,7 +27778,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Year of license'
       FieldKind = fkData
       FieldName = 'license_year'
-      Index = 33
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27876,7 +27788,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License URI'
       FieldKind = fkData
       FieldName = 'license_uri'
-      Index = 34
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27887,7 +27799,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License notes'
       FieldKind = fkData
       FieldName = 'license_notes'
-      Index = 35
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27898,23 +27810,12 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License owner'
       FieldKind = fkData
       FieldName = 'license_owner'
-      Index = 36
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 150
-    end
-    object qAudiosaudio_file: TBlobField
-      DisplayLabel = 'File path'
-      FieldKind = fkData
-      FieldName = 'audio_file'
       Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-      Visible = False
+      Size = 150
     end
     object qAudiossubtitle: TMemoField
       DisplayLabel = 'Subtitle'
@@ -27940,11 +27841,23 @@ object frmCustomGrid: TfrmCustomGrid
       BlobType = ftMemo
       Transliterate = False
     end
+    object qAudiosfile_path: TStringField
+      DisplayLabel = 'File path'
+      FieldKind = fkData
+      FieldName = 'file_path'
+      Index = 40
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 250
+    end
     object qAudiosuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 40
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27955,7 +27868,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 41
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27966,7 +27879,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 42
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27977,7 +27890,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 43
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -27988,7 +27901,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 44
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28000,7 +27913,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 45
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28012,7 +27925,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 46
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28115,7 +28028,7 @@ object frmCustomGrid: TfrmCustomGrid
         Size = 120
       end    
       item
-        Name = 'document_path'
+        Name = 'file_path'
         DataType = ftString
         Precision = -1
         Size = 250
@@ -28192,6 +28105,11 @@ object frmCustomGrid: TfrmCustomGrid
       item
         Name = 'active_status'
         DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'author_id'
+        DataType = ftInteger
         Precision = -1
       end>
     BeforePost = qDocsBeforePost
@@ -28371,10 +28289,10 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Size = 120
     end
-    object qDocsdocument_path: TStringField
+    object qDocsfile_path: TStringField
       DisplayLabel = 'File path'
       FieldKind = fkData
-      FieldName = 'document_path'
+      FieldName = 'file_path'
       Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -28402,11 +28320,21 @@ object frmCustomGrid: TfrmCustomGrid
       ReadOnly = False
       Required = False
     end
+    object qDocsauthor_id: TLongintField
+      DisplayLabel = 'Author ID'
+      FieldKind = fkData
+      FieldName = 'author_id'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
     object qDocslicense_type: TStringField
       DisplayLabel = 'License type'
       FieldKind = fkData
       FieldName = 'license_type'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28416,7 +28344,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License year'
       FieldKind = fkData
       FieldName = 'license_year'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28426,7 +28354,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License URI'
       FieldKind = fkData
       FieldName = 'license_uri'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28437,7 +28365,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License notes'
       FieldKind = fkData
       FieldName = 'license_notes'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28448,7 +28376,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License owner'
       FieldKind = fkData
       FieldName = 'license_owner'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28459,7 +28387,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28470,7 +28398,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28481,7 +28409,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 25
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28492,7 +28420,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 26
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28503,7 +28431,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 27
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28515,7 +28443,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 28
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28526,7 +28454,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 29
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28747,7 +28675,7 @@ object frmCustomGrid: TfrmCustomGrid
         Precision = -1
       end    
       item
-        Name = 'recorder_id'
+        Name = 'author_id'
         DataType = ftInteger
         Precision = -1
       end    
@@ -28760,6 +28688,12 @@ object frmCustomGrid: TfrmCustomGrid
         Name = 'latitude'
         DataType = ftFloat
         Precision = -1
+      end    
+      item
+        Name = 'coordinate_precision'
+        DataType = ftString
+        Precision = -1
+        Size = 3
       end    
       item
         Name = 'recording_context'
@@ -29007,10 +28941,10 @@ object frmCustomGrid: TfrmCustomGrid
       ReadOnly = False
       Required = False
     end
-    object qVideosrecorder_id: TLongintField
+    object qVideosauthor_id: TLongintField
       DisplayLabel = 'Author ID'
       FieldKind = fkData
-      FieldName = 'recorder_id'
+      FieldName = 'author_id'
       Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -29039,11 +28973,22 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Precision = -1
     end
+    object qVideoscoordinate_precision: TStringField
+      DisplayLabel = 'Coordinates precision'
+      FieldKind = fkData
+      FieldName = 'coordinate_precision'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 3
+    end
     object qVideosrecording_context: TStringField
       DisplayLabel = 'Context'
       FieldKind = fkData
       FieldName = 'recording_context'
-      Index = 16
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29054,7 +28999,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Habitat'
       FieldKind = fkData
       FieldName = 'habitat'
-      Index = 17
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29065,7 +29010,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Camera model'
       FieldKind = fkData
       FieldName = 'camera_model'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29076,7 +29021,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Distance (m)'
       FieldKind = fkData
       FieldName = 'distance'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29087,7 +29032,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License type'
       FieldKind = fkData
       FieldName = 'license_type'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29097,7 +29042,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License year'
       FieldKind = fkData
       FieldName = 'license_year'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29107,7 +29052,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License URL'
       FieldKind = fkData
       FieldName = 'license_uri'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29118,7 +29063,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License notes'
       FieldKind = fkData
       FieldName = 'license_notes'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29129,7 +29074,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License owner'
       FieldKind = fkData
       FieldName = 'license_owner'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29140,7 +29085,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'File path'
       FieldKind = fkData
       FieldName = 'file_path'
-      Index = 25
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29151,7 +29096,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Subtitle'
       FieldKind = fkData
       FieldName = 'subtitle'
-      Index = 26
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29163,7 +29108,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Notes'
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 27
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29175,7 +29120,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 28
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29185,7 +29130,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 29
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29195,7 +29140,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 30
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29205,7 +29150,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 31
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29215,7 +29160,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 32
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29226,7 +29171,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 33
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29237,7 +29182,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 34
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

@@ -70,7 +70,7 @@ begin
       'carrier_id      INTEGER      REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'individual_id   INTEGER      REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
       'project_id      INTEGER,' +
-      'band_reported   BOOLEAN      DEFAULT (0),' +
+      //'band_reported   BOOLEAN      DEFAULT (0),' +     // removed v7
       'notes           TEXT,' +
       'full_name       VARCHAR (40),' +
       'user_inserted   INTEGER,' +
@@ -163,7 +163,7 @@ function TBandsSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT b.*, ' +
-      'it.acronym AS supplier_name, ' +
+      'it.abbreviation AS supplier_name, ' +
       'p1.full_name AS requester_name, ' +
       'p2.full_name AS carrier_name, ' +
       'i.full_name AS individual_name, ' +
@@ -214,7 +214,6 @@ begin
       'carrier_id, ' +
       'individual_id, ' +
       'project_id, ' +
-      'band_reported, ' +
       'notes, ' +
       'full_name, ' +
       'user_inserted, ' +
@@ -292,7 +291,11 @@ begin
       'supplier_id     INTEGER  REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
       'sender_id       INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'requester_id    INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      'reported        BOOLEAN  DEFAULT (0),' +
+      'report_date     DATE,' +
       'notes           TEXT,' +
+      'individual_id   INTEGER  REFERENCES individuals(individual_id) ON UPDATE CASCADE,' +
+      'capture_id      INTEGER  REFERENCES captures(capture_id) ON UPDATE CASCADE,' +
       'user_inserted   INTEGER,' +
       'user_updated    INTEGER,' +
       'insert_date     DATETIME,' +
@@ -322,6 +325,10 @@ begin
       'order_number, ' +
       'requester_id, ' +
       'sender_id, ' +
+      'individual_id, ' +
+      'capture_id, ' +
+      'reported, ' +
+      'report_date, ' +
       'user_inserted, ' +
       'insert_date) ' +
     'VALUES (' +
@@ -333,6 +340,10 @@ begin
       ':order_number, ' +
       ':requester_id, ' +
       ':sender_id, ' +
+      ':individual_id, ' +
+      ':capture_id, ' +
+      ':reported, ' +
+      'date(:report_date), ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))';
 end;
@@ -341,7 +352,7 @@ function TBandHistorySQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT bh.*, ' +
-      'it.acronym AS supplier_name, ' +
+      'it.abbreviation AS supplier_name, ' +
       'p1.full_name AS requester_name, ' +
       'p2.full_name AS sender_name ' +
     'FROM band_history AS bh ' +
@@ -383,6 +394,10 @@ begin
       'supplier_id, ' +
       'sender_id, ' +
       'requester_id, ' +
+      'individual_id, ' +
+      'capture_id, ' +
+      'reported, ' +
+      'report_date, ' +
       'notes, ' +
       'user_inserted, ' +
       'user_updated, ' +
@@ -427,6 +442,10 @@ begin
       'order_number = :order_number, ' +
       'requester_id = :requester_id, ' +
       'sender_id = :sender_id, ' +
+      'individual_id = :individual_id, ' +
+      'capture_id = :capture_id, ' +
+      'reported = :reported, ' +
+      'report_date = :report_date, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'',''subsec'') ' +
     'WHERE (event_id = :event_id) ';

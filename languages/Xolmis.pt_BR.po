@@ -1686,6 +1686,10 @@ msgctxt "data_columns.rscpermitnumber"
 msgid "Permit number"
 msgstr "Nº da licença"
 
+#: data_columns.rscpermitstatus
+msgid "Permit status"
+msgstr "Status da licença"
+
 #: data_columns.rscperson
 msgctxt "data_columns.rscperson"
 msgid "Person"
@@ -1820,6 +1824,10 @@ msgctxt "data_columns.rscprojectid"
 msgid "Project ID"
 msgstr "Projeto ID"
 
+#: data_columns.rscprojectstatus
+msgid "Project status"
+msgstr "Status do projeto"
+
 #: data_columns.rscproperty
 msgctxt "data_columns.rscproperty"
 msgid "Property"
@@ -1933,6 +1941,11 @@ msgstr "Anilha removida"
 msgctxt "data_columns.rscremovedbandid"
 msgid "Removed band ID"
 msgstr "Anilha removida ID"
+
+#: data_columns.rscreportdate
+msgctxt "data_columns.rscreportdate"
+msgid "Report date"
+msgstr "Data do relatório"
 
 #: data_columns.rscreported
 msgctxt "data_columns.rscreported"
@@ -5491,6 +5504,7 @@ msgid "Database"
 msgstr "Banco de dados"
 
 #: tdlgonboarding.lbltitlefinished.caption
+msgctxt "tdlgonboarding.lbltitlefinished.caption"
 msgid "Finished"
 msgstr "Concluído"
 
@@ -5959,11 +5973,6 @@ msgstr "Salvar"
 msgctxt "tedtbands.btnnew.caption"
 msgid "New"
 msgstr "Novo"
-
-#: tedtbands.ckreported.caption
-msgctxt "tedtbands.ckreported.caption"
-msgid "Reported"
-msgstr "Relatada"
 
 #: tedtbands.lblbandcolor.caption
 msgctxt "tedtbands.lblbandcolor.caption"
@@ -6631,6 +6640,11 @@ msgstr "Salvar"
 msgid "Document info"
 msgstr "Info do documento"
 
+#: tedtdocumentinfo.eauthor.buttonhint
+msgctxt "tedtdocumentinfo.eauthor.buttonhint"
+msgid "Find author"
+msgstr "Buscar autor"
+
 #: tedtdocumentinfo.edocumentdate.buttonhint
 msgctxt "tedtdocumentinfo.edocumentdate.buttonhint"
 msgid "Open calendar"
@@ -6650,6 +6664,11 @@ msgstr "Selecionar arquivo"
 msgctxt "tedtdocumentinfo.edocumenttime.texthint"
 msgid "HH:MM"
 msgstr "HH:MM"
+
+#: tedtdocumentinfo.lblauthor.caption
+msgctxt "tedtdocumentinfo.lblauthor.caption"
+msgid "Author:"
+msgstr "Autor:"
 
 #: tedtdocumentinfo.lbldocumentdate.caption
 msgid "Document date: *"
@@ -17466,10 +17485,24 @@ msgctxt "utils_locale.rsperiodicreportnotification"
 msgid "Periodic report"
 msgstr "Relatório periódico"
 
+#: utils_locale.rspermitactive
+msgctxt "utils_locale.rspermitactive"
+msgid "Active"
+msgstr "Ativa"
+
+#: utils_locale.rspermitarchived
+msgid "Archived"
+msgstr "Arquivada"
+
 #: utils_locale.rspermitbanding
 msgctxt "utils_locale.rspermitbanding"
 msgid "Banding Permit"
 msgstr "Licença de anilhamento"
+
+#: utils_locale.rspermitcancelled
+msgctxt "utils_locale.rspermitcancelled"
+msgid "Cancelled"
+msgstr "Cancelada"
 
 #: utils_locale.rspermitcollection
 msgctxt "utils_locale.rspermitcollection"
@@ -17490,6 +17523,10 @@ msgstr "Licença de entrada"
 msgctxt "utils_locale.rspermitother"
 msgid "Other Permit"
 msgstr "Outra licença"
+
+#: utils_locale.rspermitreplaced
+msgid "Replaced"
+msgstr "Substituída"
 
 #: utils_locale.rspermitresearch
 msgctxt "utils_locale.rspermitresearch"
@@ -17702,6 +17739,29 @@ msgstr "Transferindo anilhas..."
 msgctxt "utils_locale.rsprogressunpreparing"
 msgid "Unpreparing..."
 msgstr "Despreparando..."
+
+#: utils_locale.rsprojectactive
+msgctxt "utils_locale.rsprojectactive"
+msgid "Active"
+msgstr "Ativo"
+
+#: utils_locale.rsprojectcancelled
+msgctxt "utils_locale.rsprojectcancelled"
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#: utils_locale.rsprojectfinished
+msgctxt "utils_locale.rsprojectfinished"
+msgid "Finished"
+msgstr "Concluído"
+
+#: utils_locale.rsprojectpaused
+msgid "Paused"
+msgstr "Em pausa"
+
+#: utils_locale.rsprojectplanned
+msgid "Planned"
+msgstr "Previsto"
 
 #: utils_locale.rspromptbackupnow
 msgctxt "utils_locale.rspromptbackupnow"

@@ -39,7 +39,7 @@ const
   TBL_BOTANIC_TAXA = 'botanic_taxa';
   TBL_INSTITUTIONS = 'institutions';
   TBL_PEOPLE = 'people';
-  TBL_PERMITS = 'legal';
+  TBL_PERMITS = 'permits';
   TBL_PROJECTS = 'projects';
   TBL_PROJECT_TEAM = 'project_team';
   TBL_PROJECT_GOALS = 'project_goals';
@@ -102,11 +102,11 @@ const
   COL_UUID = 'uuid';
   COL_EBIRD_NAME = 'ebird_name';
   COL_FORMATTED_NAME = 'formatted_name';
-  COL_ABBREVIATION = 'acronym';
+  COL_ABBREVIATION = 'abbreviation';
   COL_ADDRESS_1 = 'address_1';
   COL_ADDRESS_2 = 'address_2';
   COL_NEIGHBORHOOD = 'neighborhood';
-  COL_POSTAL_CODE = 'zip_code';
+  COL_POSTAL_CODE = 'postal_code';
   COL_EMAIL_ADDRESS = 'email_addr';
 
   // Database metadata columns
@@ -134,7 +134,7 @@ const
 const
   COL_SITE_ID = 'site_id';
   COL_SITE_NAME = 'site_name';
-  COL_SITE_ABBREVIATION = 'site_acronym';
+  COL_SITE_ABBREVIATION = 'abbreviation';
   COL_SITE_RANK = 'site_rank';
   COL_PARENT_SITE_ID = 'parent_site_id';
   COL_PARENT_SITE_NAME = 'parent_site_name';
@@ -175,7 +175,7 @@ const
   COL_RANK_SEQUENCE = 'rank_seq';
   COL_RANK_NAME = 'rank_name';
   COL_RANK_NAME_PTBR = 'rank_name_pt_br';
-  COL_RANK_ABBREVIATION = 'rank_acronym';
+  COL_RANK_ABBREVIATION = 'abbreviation';
   COL_MAIN_RANK = 'main_rank';
   COL_SUBRANK = 'subrank';
   COL_INFRARANK = 'infrarank';
@@ -186,6 +186,7 @@ const
   // Taxa columns
 const
   COL_TAXON_ID = 'taxon_id';
+  COL_SCIENTIFIC_NAME = 'scientific_name';
   COL_TAXON_NAME = 'taxon_name';
   COL_AUTHORSHIP = 'authorship';
   COL_ENGLISH_NAME = 'english_name';
@@ -217,8 +218,8 @@ const
   COL_PERSON_ID = 'person_id';
   COL_CITATION = 'citation';
   COL_TITLE_TREATMENT = 'title_treatment';
-  COL_DOCUMENT_NUMBER_1 = 'national_id_card';
-  COL_DOCUMENT_NUMBER_2 = 'social_security_number';
+  COL_DOCUMENT_NUMBER_1 = 'id_document_1';
+  COL_DOCUMENT_NUMBER_2 = 'id_document_2';
   COL_GENDER = 'gender';
   COL_BIRTH_DATE = 'birth_date';
   COL_DEATH_DATE = 'death_date';
@@ -243,6 +244,7 @@ const
   COL_DISPATCHER_NAME = 'dispatcher_name';
   COL_DISPATCH_DATE = 'dispatch_date';
   COL_EXPIRE_DATE = 'expire_date';
+  COL_PERMIT_STATUS = 'permit_status';
 
   // Projects columns
 const
@@ -254,6 +256,7 @@ const
   COL_END_DATE = 'end_date';
   COL_CONTACT_NAME = 'contact_name';
   COL_PROTOCOL_NUMBER = 'protocol_number';
+  COL_PROJECT_STATUS = 'project_status';
   COL_ABSTRACT = 'project_abstract';
   COL_MAIN_GOAL = 'main_goal';
   COL_RISKS = 'risks';
@@ -398,7 +401,7 @@ const
   COL_UNBANDED_TALLY = 'unbanded_tally';
   COL_DETECTION_TYPE = 'detection_type';
   COL_BREEDING_STATUS = 'breeding_status';
-  COL_NOT_SURVEYING = 'not_surveying';
+  COL_OUT_OF_SAMPLE = 'out_of_sample';
   COL_EBIRD_AVAILABLE = 'ebird_available';
 
   // POI library columns
@@ -426,7 +429,7 @@ const
   COL_SAMPLE_PREP_ID = 'sample_prep_id';
   COL_ACCESSION_NUMBER = 'accession_num';
   COL_ACCESSION_TYPE = 'accession_type';
-  COL_ACCESSION_DUPLICATE = 'accession_seq';
+  COL_ACCESSION_DUPLICATE = 'duplicate_seq';
   COL_PREPARATION_DATE = 'preparation_date';
   COL_PREPARER_ID = 'preparer_id';
   COL_PREPARER_NAME = 'preparer_name';
@@ -447,7 +450,7 @@ const
   COL_SUPPLIER_NAME = 'supplier_name';
   COL_CARRIER_ID = 'carrier_id';
   COL_CARRIER_NAME = 'carrier_name';
-  COL_BAND_REPORTED = 'band_reported';
+  //COL_BAND_REPORTED = 'band_reported';
 
   // Band history columns
 const
@@ -458,6 +461,8 @@ const
   COL_SENDER_ID = 'sender_id';
   COL_REQUESTER_ID = 'requester_id';
   COL_REQUESTER_NAME = 'requester_name';
+  COL_REPORTED = 'reported';
+  COL_REPORT_DATE = 'report_date';
 
   // Individuals columns
 const
@@ -477,10 +482,10 @@ const
   COL_DOUBLE_BAND_NAME = 'double_band_name';
   COL_REMOVED_BAND_ID = 'removed_band_id';
   COL_REMOVED_BAND_NAME = 'removed_band_name';
-  COL_RIGHT_TARSUS = 'right_leg_below';
-  COL_LEFT_TARSUS = 'left_leg_below';
-  COL_RIGHT_TIBIA = 'right_leg_above';
-  COL_LEFT_TIBIA = 'left_leg_above';
+  COL_RIGHT_TARSUS = 'right_tarsus';
+  COL_LEFT_TARSUS = 'left_tarsus';
+  COL_RIGHT_TIBIA = 'right_tibia';
+  COL_LEFT_TIBIA = 'left_tibia';
   COL_FATHER_ID = 'father_id';
   COL_FATHER_NAME = 'father_name';
   COL_MOTHER_ID = 'mother_id';
@@ -531,7 +536,7 @@ const
   COL_SUBJECT_AGE = 'subject_age';
   COL_HOW_AGED = 'how_aged';
   COL_SKULL_OSSIFICATION = 'skull_ossification';
-  COL_KIPPS_INDEX = 'kipps_index';
+  COL_KIPPS_DISTANCE = 'kipps_distance';
   COL_GLUCOSE = 'glucose';
   COL_HEMOGLOBIN = 'hemoglobin';
   COL_HEMATOCRIT = 'hematocrit';
@@ -547,8 +552,8 @@ const
   COL_PHOTOGRAPHER_2_ID = 'photographer_2_id';
   COL_PHOTOGRAPHER_1_NAME = 'photographer_1_name';
   COL_PHOTOGRAPHER_2_NAME = 'photographer_2_name';
-  COL_START_PHOTO_NUMBER = 'start_photo_number';
-  COL_END_PHOTO_NUMBER = 'end_photo_number';
+  COL_INITIAL_PHOTO_NUMBER = 'initial_photo_number';
+  COL_FINAL_PHOTO_NUMBER = 'final_photo_number';
   COL_CAMERA_NAME = 'camera_name';
   COL_ESCAPED = 'escaped';
   COL_NEEDS_REVIEW = 'needs_review';
@@ -595,7 +600,7 @@ const
   COL_PLANT_MIN_DIAMETER = 'plant_min_diameter';
   COL_PLANT_HEIGHT = 'plant_height';
   COL_PLANT_DBH = 'plant_dbh';
-  COL_BUILDING_DAYS = 'construction_days';
+  COL_BUILDING_DAYS = 'building_days';
   COL_INCUBATION_DAYS = 'incubation_days';
   COL_NESTLING_DAYS = 'nestling_days';
   COL_ACTIVE_DAYS = 'active_days';
@@ -656,7 +661,7 @@ const
   COL_IMAGE_TIME = 'image_time';
   COL_IMAGE_TYPE = 'image_type';
   COL_AUTHOR_ID = 'author_id';
-  COL_IMAGE_FILENAME = 'image_filename';
+  COL_IMAGE_FILENAME = 'file_path';
   COL_COORDINATE_PRECISION = 'coordinate_precision';
   COL_LICENSE_TYPE = 'license_type';
   COL_LICENSE_YEAR = 'license_year';
@@ -672,7 +677,7 @@ const
   COL_AUDIO_TYPE = 'audio_type';
   COL_RECORDING_DATE = 'recording_date';
   COL_RECORDING_TIME = 'recording_time';
-  COL_RECORDER_ID = 'recorder_id';
+  COL_RECORDER_ID = 'author_id';
   COL_WIND_SPEED = 'wind_speed';
   COL_RECORDING_CONTEXT = 'recording_context';
   COL_PLAYBACK_USED = 'playback_used';
@@ -680,14 +685,14 @@ const
   COL_RECORDER_MODEL = 'recorder_model';
   COL_MIC_MODEL = 'mic_model';
   COL_FILTER_MODEL = 'filter_model';
-  COL_AUDIO_FILE = 'audio_file';
+  COL_AUDIO_FILE = 'file_path';
 
   // Documents columns
 const
   COL_DOCUMENT_ID = 'document_id';
   COL_DOCUMENT_TYPE = 'document_type';
   COL_DOCUMENT_NAME = 'document_name';
-  COL_DOCUMENT_PATH = 'document_path';
+  COL_DOCUMENT_PATH = 'file_path';
   COL_DOCUMENT_DATE = 'document_date';
   COL_DOCUMENT_TIME = 'document_time';
 

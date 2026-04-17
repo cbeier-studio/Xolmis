@@ -58,7 +58,7 @@ begin
   FPrintUiFlags := [pufBotanicalTaxa, pufBotanicalTaxaRecorded];
   FFilterUiFlags := [fufMarked, fufTaxonRanks, fufSynonyms];
 
-  AddDefaultSort(COL_TAXON_NAME, sdAscending);
+  AddDefaultSort(COL_SCIENTIFIC_NAME, sdAscending);
 end;
 
 procedure TBotanicalTaxaModuleController.ApplyFilters;
@@ -177,7 +177,7 @@ begin
       // Text
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_TAXON_NAME, rscScientificName, sdtText, Crit,
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SCIENTIFIC_NAME, rscScientificName, sdtText, Crit,
           True, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_VERNACULAR_NAME, rscVernacularNameS, sdtText, Crit,
           True, aValue));

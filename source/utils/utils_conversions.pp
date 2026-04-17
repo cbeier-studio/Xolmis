@@ -74,8 +74,10 @@ uses
   function StrToNestShape(const AValue: String): String;
   function StrToNestStage(const AValue: String): TNestStage;
   function StrToNestStatus(const AValue: String): TNestStatus;
+  function StrToPermitStatus(const AValue: String): TPermitStatus;
   function StrToPermitType(const AValue: String): String;
   function StrToPrecipitation(const AValue: String): TPrecipitation;
+  function StrToProjectStatus(const AValue: String): TProjectStatus;
   function StrToSampleMoment(const AValue: String): TWeatherSampleMoment;
   function StrToSex(const AValue: String): TSex;
   function StrToSiteRank(const AValue: String): TSiteRank;
@@ -1101,6 +1103,21 @@ begin
     Result := nstUnknown;
 end;
 
+function StrToPermitStatus(const AValue: String): TPermitStatus;
+begin
+  if (AValue = rsPermitActive) or (AValue = 'A') then
+    Result := pstActive
+  else
+  if (AValue = rsPermitReplaced) or (AValue = 'R') then
+    Result := pstReplaced
+  else
+  if (AValue = rsPermitArchived) or (AValue = 'K') then
+    Result := pstArchived
+  else
+  if (AValue = rsPermitCancelled) or (AValue = 'C') then
+    Result := pstCancelled;
+end;
+
 function StrToPermitType(const AValue: String): String;
 begin
   if (AValue = rsPermitBanding) then
@@ -1139,6 +1156,24 @@ begin
     Result := wpRain
   else
     Result := wpEmpty;
+end;
+
+function StrToProjectStatus(const AValue: String): TProjectStatus;
+begin
+  if (AValue = rsProjectPlanned) or (AValue = 'P') then
+    Result := prtPlanned
+  else
+  if (AValue = rsProjectActive) or (AValue = 'A') then
+    Result := prtActive
+  else
+  if (AValue = rsProjectPaused) or (AValue = 'D') then
+    Result := prtPaused
+  else
+  if (AValue = rsProjectFinished) or (AValue = 'F') then
+    Result := prtFinished
+  else
+  if (AValue = rsProjectCancelled) or (AValue = 'C') then
+    Result := prtCancelled;
 end;
 
 function StrToSampleMoment(const AValue: String): TWeatherSampleMoment;

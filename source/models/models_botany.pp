@@ -387,7 +387,7 @@ begin
   if aOld = nil then
     Exit(False);
 
-  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscScientificName, aOld.ScientificName, FScientificName, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscParentTaxonID, aOld.ParentTaxonId, FParentTaxonId, R) then
     Changes.Add(R);
@@ -422,7 +422,7 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName       := Obj.Get('full_name', '');
+    FScientificName       := Obj.Get('scientific_name', '');
     FAuthorship     := Obj.Get('authorship', '');
     FFormattedName  := Obj.Get('formatted_name', '');
     FVernacularName := Obj.Get('vernacular_name', '');
@@ -444,7 +444,7 @@ var
 begin
   JSONObject := TJSONObject.Create;
   try
-    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('scientific_name', FScientificName);
     JSONObject.Add('authorship', FAuthorship);
     JSONObject.Add('formatted_name', FFormattedName);
     JSONObject.Add('vernacular_name', FVernacularName);
@@ -464,10 +464,10 @@ end;
 
 function TBotanicalTaxon.ToString: String;
 begin
-  Result := Format('BotanicalTaxon(Id=%d, FullName=%s, Authorship=%s, FormattedName=%s, VernacularName=%s, ' +
+  Result := Format('BotanicalTaxon(Id=%d, ScientificName=%s, Authorship=%s, FormattedName=%s, VernacularName=%s, ' +
     'ValidId=%d, RankId=%d, ParentTaxonId=%d, OrderId=%d, FamilyId=%d, GenusId=%d, SpeciesId=%d, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FAuthorship, FFormattedName, FVernacularName, FValidId, Ord(FRankId), FParentTaxonId,
+    [FId, FScientificName, FAuthorship, FFormattedName, FVernacularName, FValidId, Ord(FRankId), FParentTaxonId,
     FOrderId, FFamilyId, FGenusId, FSpeciesId,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -475,9 +475,9 @@ end;
 
 function TBotanicalTaxon.Validate(out Msg: string): Boolean;
 begin
-  if FFullName = EmptyStr then
+  if FScientificName = EmptyStr then
   begin
-    Msg := 'FullName required.';
+    Msg := 'ScientificName required.';
     Exit(False);
   end;
   if FRankId = brNone then
@@ -635,12 +635,12 @@ begin
   with aDataSet do
   begin
     R.Id := FieldByName('taxon_id').AsInteger;
-    R.FullName := FieldByName('taxon_name').AsString;
+    R.ScientificName := FieldByName('scientific_name').AsString;
     R.Authorship := FieldByName('authorship').AsString;
     R.FormattedName := FieldByName('formatted_name').AsString;
     R.VernacularName := FieldByName('vernacular_name').AsString;
     R.ValidId := FieldByName('valid_id').AsInteger;
-    FRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('rank_id').AsInteger);
+    FRankAbbrev := GetName('taxon_ranks', 'abbreviation', 'rank_id', FieldByName('rank_id').AsInteger);
     R.RankId := StringToBotanicRank(FRankAbbrev);
     R.ParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
     R.SpeciesId := FieldByName('species_id').AsInteger;
@@ -670,8 +670,8 @@ begin
     raise Exception.Create('HydrateFromRow: Expected TBotanicalTaxon');
 
   R := TBotanicalTaxon(E);
-  if ARow.IndexOfName('taxon_name') >= 0 then
-    R.FullName := ARow.Values['taxon_name'];
+  if ARow.IndexOfName('scientific_name') >= 0 then
+    R.ScientificName := ARow.Values['scientific_name'];
   if ARow.IndexOfName('authorship') >= 0 then
     R.Authorship := ARow.Values['authorship'];
   if ARow.IndexOfName('formatted_name') >= 0 then
@@ -682,7 +682,7 @@ begin
     R.ValidId := StrToIntDef(ARow.Values['valid_id'], 0);
   if ARow.IndexOfName('rank_id') >= 0 then
   begin
-    FRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', StrToIntDef(ARow.Values['rank_id'], 0));
+    FRankAbbrev := GetName('taxon_ranks', 'abbreviation', 'rank_id', StrToIntDef(ARow.Values['rank_id'], 0));
     R.RankId := StringToBotanicRank(FRankAbbrev);
   end;
   if ARow.IndexOfName('parent_taxon_id') >= 0 then
@@ -712,11 +712,11 @@ begin
     Clear;
     Add(xProvider.BotanicalTaxa.Insert);
 
-    ParamByName('taxon_name').AsString := R.FullName;
+    ParamByName('scientific_name').AsString := R.ScientificName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
     SetStrParam(ParamByName('formatted_name'), R.FormattedName);
     SetStrParam(ParamByName('vernacular_name'), R.VernacularName);
-    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BOTANICAL_RANKS[R.RankId]);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', BOTANICAL_RANKS[R.RankId]);
     SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
     SetForeignParam(ParamByName('valid_id'), R.ValidId);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
@@ -788,11 +788,11 @@ begin
     Clear;
     Add(xProvider.BotanicalTaxa.Update);
 
-    ParamByName('taxon_name').AsString := R.FullName;
+    ParamByName('scientific_name').AsString := R.ScientificName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
     SetStrParam(ParamByName('formatted_name'), R.FormattedName);
     SetStrParam(ParamByName('vernacular_name'), R.VernacularName);
-    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', BOTANICAL_RANKS[R.RankId]);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', BOTANICAL_RANKS[R.RankId]);
     SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
     SetForeignParam(ParamByName('valid_id'), R.ValidId);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;

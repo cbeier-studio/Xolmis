@@ -547,7 +547,7 @@ end;
 procedure TedtIndividual.GetRecord;
 begin
   FTaxonId := FIndividual.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FBandId := FIndividual.BandId;
   eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
   if DateIsNull(FIndividual.BandingDate) then

@@ -57,7 +57,7 @@ begin
   Result := EmptyStr;
 
   DecodeDate(aDate, a, m, d);
-  SiteName := GetName('gazetteer', 'site_acronym', 'site_id', aSite);
+  SiteName := GetName('gazetteer', 'abbreviation', 'site_id', aSite);
   if SiteName = '' then
     SiteName := GetName('gazetteer', 'site_name', 'site_id', aSite);
   if aMethod > 0 then
@@ -65,7 +65,7 @@ begin
   else
     MethodName := '';
   if aStation > 0 then
-    StationName := GetName('sampling_plots', 'acronym', 'sampling_plot_id', aStation)
+    StationName := GetName('sampling_plots', 'abbreviation', 'sampling_plot_id', aStation)
   else
     StationName := aID;
 
@@ -83,7 +83,7 @@ begin
   Result := EmptyStr;
 
   DecodeDate(aDate, a, m, d);
-  StationName := GetName('sampling_plots', 'acronym', 'sampling_plot_id', aStation);
+  StationName := GetName('sampling_plots', 'abbreviation', 'sampling_plot_id', aStation);
 
   { [Net station] [Year-Month-Day] [Net number] }
   Result := Format('%s %4.4d-%2.2d-%2.2d %3.3d', [StationName, a, m, d, aNetNumber]);
@@ -117,7 +117,7 @@ begin
   if Formatted then
     TaxonName := GetName('zoo_taxa', 'formatted_name', 'taxon_id', aTaxon)
   else
-    TaxonName := GetName('zoo_taxa', 'full_name', 'taxon_id', aTaxon);
+    TaxonName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aTaxon);
 
   // TaxonName:= StringReplace(TaxonName,' ','',[rfReplaceAll]);
   if (aRightLegBelow <> '') or (aLeftLegBelow <> '') then
@@ -178,7 +178,7 @@ begin
   if Formatted then
     TaxonName := GetName('zoo_taxa', 'formatted_name', 'taxon_id', aTaxon)
   else
-    TaxonName := GetName('zoo_taxa', 'full_name', 'taxon_id', aTaxon);
+    TaxonName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aTaxon);
   // TaxonName:= StringReplace(TaxonName,' ','',[rfReplaceAll]);
   // if aAnilhador > 0 then
   // AnilhadorName:= GetName('AUX_PESQUISADORES','PES_ABREVIATURA','reg_num_interno',aAnilhador)
@@ -203,7 +203,7 @@ begin
   Result := EmptyStr;
 
   if aSupplier > 0 then
-    SupplierName := GetName('institutions', 'acronym', 'institution_id', aSupplier)
+    SupplierName := GetName('institutions', 'abbreviation', 'institution_id', aSupplier)
   else
     SupplierName := EmptyStr;
 
@@ -220,7 +220,7 @@ begin
   Result := EmptyStr;
 
   if aNetStation > 0 then
-    StationName := GetName('sampling_plots', 'acronym', 'sampling_plot_id', aNetStation)
+    StationName := GetName('sampling_plots', 'abbreviation', 'sampling_plot_id', aNetStation)
   else
     StationName := EmptyStr;
 
@@ -234,8 +234,8 @@ var
 begin
   Result := EmptyStr;
 
-  SiteName := GetName('gazetteer', 'site_acronym', 'site_id', aSite);
-  TaxonName := GetName('zoo_taxa', 'full_name', 'taxon_id', aTaxon);
+  SiteName := GetName('gazetteer', 'abbreviation', 'site_id', aSite);
+  TaxonName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aTaxon);
 
   DecodeDate(aDate, aYear, aMonth, aDay);
 
@@ -263,7 +263,7 @@ var
 begin
   Result := EmptyStr;
 
-  TaxonName := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, aTaxonId);
+  TaxonName := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, aTaxonId);
   SiteName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aSiteId);
 
   Result := Trim(Format('%s-%s, %s, %s', [aFieldNumber, SPECIMEN_TYPES[Ord(aSampleType)], TaxonName, SiteName]));
@@ -277,7 +277,7 @@ var
 begin
   Result := EmptyStr;
 
-  TaxonName := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, aTaxonId);
+  TaxonName := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, aTaxonId);
 
   DecodeDate(aDate, aYear, aMonth, aDay);
 

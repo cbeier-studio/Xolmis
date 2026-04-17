@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 6;
+  SCHEMA_VERSION: Integer = 7;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -741,7 +741,7 @@ begin
   OldVersion := StrToIntDef(ReadDatabaseMetadata(DMM.sqlCon, 'version'), 1);
 
   // Do not forget to update the SCHEMA_VERSION const value
-  if OldVersion = SCHEMA_VERSION then
+  if OldVersion >= SCHEMA_VERSION then
     Exit;
 
   dlgLoading.Show;
@@ -798,6 +798,7 @@ begin
       begin
         LogDebug('Upgrading database schema to version 6');
 
+        // Add coordinate_precision column to various tables
         DMM.sqlCon.ExecuteDirect('ALTER TABLE sampling_plots ADD COLUMN coordinate_precision VARCHAR (3);');
         DMM.sqlCon.ExecuteDirect('ALTER TABLE permanent_nets ADD COLUMN coordinate_precision VARCHAR (3);');
         DMM.sqlCon.ExecuteDirect('ALTER TABLE specimens ADD COLUMN coordinate_precision VARCHAR (3);');
@@ -809,6 +810,65 @@ begin
         DMM.sqlCon.ExecuteDirect('ALTER TABLE poi_library ADD COLUMN coordinate_precision VARCHAR (3);');
         DMM.sqlCon.ExecuteDirect('ALTER TABLE vegetation ADD COLUMN coordinate_precision VARCHAR (3);');
         DMM.sqlCon.ExecuteDirect('ALTER TABLE videos ADD COLUMN coordinate_precision VARCHAR (3);');
+
+        Result := True;
+      end;
+
+      if OldVersion < 7 then
+      begin
+        LogDebug('Upgrading database schema to version 7');
+
+        // Rename columns
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE videos RENAME COLUMN recorder_id TO author_id;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE audio_library RENAME COLUMN recorder_id TO author_id;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE audio_library RENAME COLUMN audio_file TO file_path;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE documents RENAME COLUMN document_path TO file_path;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE images RENAME COLUMN image_filename TO file_path;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE botanic_taxa RENAME COLUMN taxon_name TO scientific_name;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE zoo_taxa RENAME COLUMN full_name TO scientific_name;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE taxon_ranks RENAME COLUMN rank_acronym TO abbreviation;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sampling_plots RENAME COLUMN acronym TO abbreviation;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE gazetteer RENAME COLUMN site_acronym TO abbreviation;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE institutions RENAME COLUMN acronym TO abbreviation;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE people RENAME COLUMN acronym TO abbreviation;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE people RENAME COLUMN national_id_card TO id_document_1;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE people RENAME COLUMN social_security_number TO id_document_2;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE people RENAME COLUMN zip_code TO postal_code;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE institutions RENAME COLUMN zip_code TO postal_code;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE eggs RENAME COLUMN researcher_id TO observer_id;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sample_preps RENAME COLUMN accession_seq TO duplicate_seq;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings RENAME COLUMN not_surveying TO out_of_sample;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nests RENAME COLUMN construction_days TO building_days;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE individuals RENAME COLUMN right_leg_below TO right_tarsus;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE individuals RENAME COLUMN left_leg_below TO left_tarsus;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE individuals RENAME COLUMN right_leg_above TO right_tibia;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE individuals RENAME COLUMN left_leg_above TO left_tibia;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN right_leg_below TO right_tarsus;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN left_leg_below TO left_tarsus;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN right_leg_above TO right_tibia;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN left_leg_above TO left_tibia;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN kipps_index TO kipps_distance;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN start_photo_number TO initial_photo_number;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN end_photo_number TO final_photo_number;');
+
+        // Add columns
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE documents ADD COLUMN author_id INTEGER REFERENCES people(person_id) ON UPDATE CASCADE;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE projects ADD COLUMN project_status VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE legal ADD COLUMN permit_status VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE specimens ADD COLUMN institution_id INTEGER REFERENCES institutions(institution_id) ON UPDATE CASCADE;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sample_preps ADD COLUMN institution_id INTEGER REFERENCES institutions(institution_id) ON UPDATE CASCADE;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE band_history ADD COLUMN individual_id INTEGER REFERENCES individuals(individual_id) ON UPDATE CASCADE;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE band_history ADD COLUMN capture_id INTEGER REFERENCES captures(capture_id) ON UPDATE CASCADE;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE band_history ADD COLUMN reported BOOLEAN DEFAULT 0;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE band_history ADD COLUMN report_date DATE;');
+
+        // Remove unnused columns
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE legal DROP COLUMN permit_file;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE legal DROP COLUMN permit_filename;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE bands DROP COLUMN band_reported;');
+
+        // Rename table
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE legal RENAME TO permits;');
 
         Result := True;
       end;
@@ -949,8 +1009,8 @@ begin
     'rank_seq COLLATE BINARY' +
   ');');
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_acronym ON taxon_ranks (' +
-    'rank_acronym COLLATE BINARY' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_abbreviation ON taxon_ranks (' +
+    'abbreviation COLLATE BINARY' +
   ');');
 end;
 
@@ -1132,8 +1192,8 @@ begin
   LogDebug('Creating institutions table');
   Connection.ExecuteDirect(xProvider.Institutions.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_institutions_acronym ON institutions (' +
-    'acronym COLLATE NOCASE' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_institutions_abbreviation ON institutions (' +
+    'abbreviation COLLATE NOCASE' +
   ');');
 end;
 
@@ -1582,7 +1642,7 @@ begin
       'GROUP BY taxon_id ' +
     ') ' +
     'SELECT z.taxon_id AS taxon, ' +
-      'z.full_name AS nome_taxon, ' +
+      'z.scientific_name AS nome_taxon, ' +
       'date(fr.first_date) AS data_registro, ' +
       'fr.tipo ' +
     'FROM zoo_taxa z ' +
@@ -1598,7 +1658,7 @@ begin
     'SELECT permit_name, ' +
       'expire_date, ' +
       'strftime(''%j'', expire_date) - strftime(''%j'', ''now'') AS days_remaining ' +
-      'FROM legal ' +
+      'FROM permits ' +
     'WHERE (days_remaining <= 30) AND ' +
       '(active_status = 1) ' +
     'ORDER BY days_remaining ASC;');
@@ -1780,7 +1840,7 @@ begin
         end;
 
         Qry.ParamByName('taxon_id').AsInteger := FieldByName('taxon_id').AsInteger;
-        Qry.ParamByName('full_name').AsString := FieldByName('full_name').AsString;
+        Qry.ParamByName('scientific_name').AsString := FieldByName('full_name').AsString;
         Qry.ParamByName('authorship').AsString := FieldByName('authorship').AsString;
         Qry.ParamByName('formatted_name').AsString := FieldByName('formatted_name').AsString;
         Qry.ParamByName('english_name').AsString := FieldByName('english_name').AsString;
@@ -2185,7 +2245,7 @@ const
     'vegetation', 'survey_team', 'specimen_collectors', 'sample_preps', 'project_team', 'project_expenses',
     'project_budgets', 'project_chronograms', 'project_goals', 'poi_library', 'nets_effort', 'permanent_nets',
     'nest_owners', 'nest_revisions', 'eggs', 'feathers', 'nests', 'captures', 'sightings', 'surveys',
-    'expeditions', 'specimens', 'bands', 'individuals', 'sampling_plots', 'projects', 'legal', 'people',
+    'expeditions', 'specimens', 'bands', 'individuals', 'sampling_plots', 'projects', 'permits', 'people',
     'institutions', 'gazetteer', 'botanic_taxa', 'methods', 'zoo_taxa', 'taxon_ranks');
 var
   Qry: TSQLQuery;

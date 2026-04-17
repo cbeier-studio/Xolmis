@@ -41,6 +41,7 @@ type
     FCollectionMonth: Integer;
     FCollectionYear: Integer;
     FLocalityId: Integer;
+    FInstitutionId: Integer;
     FLatitude: Extended;
     FLongitude: Extended;
     FCoordinatePrecision: TCoordinatePrecision;
@@ -69,6 +70,7 @@ type
     property CollectionMonth: Integer read FCollectionMonth write FCollectionMonth;
     property CollectionYear: Integer read FCollectionYear write FCollectionYear;
     property LocalityId: Integer read FLocalityId write FLocalityId;
+    property InstitutionId: Integer read FInstitutionId write FInstitutionId;
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
@@ -149,6 +151,7 @@ type
     FEggId: Integer;
     FPreparationDate: TDate;
     FPreparerId: Integer;
+    FInstitutionId: Integer;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -173,6 +176,7 @@ type
     property EggId: Integer read FEggId write FEggId;
     property PreparationDate: TDate read FPreparationDate write FPreparationDate;
     property PreparerId: Integer read FPreparerId write FPreparerId;
+    property InstitutionId: Integer read FInstitutionId write FInstitutionId;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -225,6 +229,7 @@ begin
     FEggId := TSamplePrep(Source).EggId;
     FPreparationDate := TSamplePrep(Source).PreparationDate;
     FPreparerId := TSamplePrep(Source).PreparerId;
+    FInstitutionId := TSamplePrep(Source).InstitutionId;
     FNotes := TSamplePrep(Source).Notes;
   end;
 end;
@@ -243,6 +248,7 @@ begin
   FEggId := 0;
   FPreparationDate := StrToDate('30/12/1500');
   FPreparerId := 0;
+  FInstitutionId := 0;
   FNotes := EmptyStr;
 end;
 
@@ -289,6 +295,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscPreparerID, aOld.PreparerId, FPreparerId, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscInstitutionID, aOld.InstitutionId, FInstitutionId, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
 
@@ -317,6 +325,7 @@ begin
     FEggId            := Obj.Get('egg_id', 0);
     FPreparationDate  := Obj.Get('preparation_date', NullDate);
     FPreparerId       := Obj.Get('preparer_id', 0);
+    FInstitutionId       := Obj.Get('institution_id', 0);
     FNotes            := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -340,6 +349,7 @@ begin
     JSONObject.Add('egg_id', FEggId);
     JSONObject.Add('preparation_date', FPreparationDate);
     JSONObject.Add('preparer_id', FPreparerId);
+    JSONObject.Add('institution_id', FInstitutionId);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -352,10 +362,10 @@ function TSamplePrep.ToString: String;
 begin
   Result := Format('SamplePrep(Id=%d, SpecimenId=%d, FullName=%s, AccessionType=%s, AccessionNum=%s, ' +
     'AccessionSeq=%d, TaxonId=%d, IndividualId=%d, NestId=%d, EggId=%d, PreparationDate=%s, PreparerId=%d, ' +
-    'Notes=%s, ' +
+    'InstitutionId=%d, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FSpecimenId, FFullName, FAccessionType, FAccessionNum, FAccessionSeq, FTaxonId, FIndividualId,
-    FNestId, FEggId, DateToStr(FPreparationDate), FPreparerId, FNotes,
+    FNestId, FEggId, DateToStr(FPreparationDate), FPreparerId, FInstitutionId, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -526,6 +536,7 @@ begin
     R.EggId := FieldByName('egg_id').AsInteger;
     R.PreparationDate := FieldByName('preparation_date').AsDateTime;
     R.PreparerId := FieldByName('preparer_id').AsInteger;
+    R.InstitutionId := FieldByName('institution_id').AsInteger;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -571,6 +582,8 @@ begin
     R.PreparationDate := StrToDateDef(ARow.Values['preparation_date'], NullDate);
   if ARow.IndexOfName('preparer_id') >= 0 then
     R.PreparerId := StrToIntDef(ARow.Values['preparer_id'], 0);
+  if ARow.IndexOfName('institution_id') >= 0 then
+    R.InstitutionId := StrToIntDef(ARow.Values['institution_id'], 0);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -601,6 +614,7 @@ begin
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetDateParam(ParamByName('preparation_date'), R.PreparationDate);
     SetForeignParam(ParamByName('preparer_id'), R.PreparerId);
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
@@ -651,6 +665,7 @@ begin
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetDateParam(ParamByName('preparation_date'), R.PreparationDate);
     SetForeignParam(ParamByName('preparer_id'), R.PreparerId);
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('sample_prep_id').AsInteger := R.Id;
@@ -689,6 +704,7 @@ begin
     FLatitude := TSpecimen(Source).Latitude;
     FLongitude := TSpecimen(Source).Longitude;
     FCoordinatePrecision := TSpecimen(Source).CoordinatePrecision;
+    FInstitutionId := TSpecimen(Source).InstitutionId;
     FNotes := TSpecimen(Source).Notes;
   end;
 end;
@@ -711,6 +727,7 @@ begin
   FLatitude := 0.0;
   FLongitude := 0.0;
   FCoordinatePrecision := cpEmpty;
+  FInstitutionId := 0;
   FNotes := EmptyStr;
 end;
 
@@ -765,6 +782,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscCollectionYear, aOld.CollectionYear, FCollectionYear, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscInstitutionID, aOld.InstitutionId, FInstitutionId, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
 
@@ -796,6 +815,7 @@ begin
     FLongitude        := Obj.Get('longitude', 0.0);
     FLatitude         := Obj.Get('latitude', 0.0);
     FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
+    FInstitutionId            := Obj.Get('institution_id', 0);
     FNotes            := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -822,6 +842,7 @@ begin
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
     JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    JSONObject.Add('institution_id', FInstitutionId);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -834,10 +855,11 @@ function TSpecimen.ToString: String;
 begin
   Result := Format('Specimen(Id=%d, FieldNumber=%s, SampleType=%s, FullName=%s, TaxonId=%d, IndividualId=%d, ' +
     'NestId=%d, EggId=%d, CollectionDay=%d, CollectionMonth=%d, CollectionYear=%d, LocalityId=%d, Longitude=%f, ' +
-    'Latitude=%f, CoordinatePrecision=%s, Notes=%s, ' +
+    'Latitude=%f, CoordinatePrecision=%s, InstitutionId=%d, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFieldNumber, SPECIMEN_TYPES[Ord(FSampleType)], FFullName, FTaxonId, FIndividualId, FNestId, FEggId,
-    FCollectionDay, FCollectionMonth, FCollectionYear, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FNotes,
+    FCollectionDay, FCollectionMonth, FCollectionYear, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
+    FInstitutionId, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -1050,6 +1072,7 @@ begin
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
     R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
+    R.InstitutionId := FieldByName('institution_id').AsInteger;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -1101,6 +1124,8 @@ begin
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
     R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
+  if ARow.IndexOfName('institution_id') >= 0 then
+    R.InstitutionId := StrToIntDef(ARow.Values['institution_id'], 0);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -1129,6 +1154,7 @@ begin
     SetForeignParam(ParamByName('nest_id'), R.NestId);
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -1182,6 +1208,7 @@ begin
     SetForeignParam(ParamByName('nest_id'), R.NestId);
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);

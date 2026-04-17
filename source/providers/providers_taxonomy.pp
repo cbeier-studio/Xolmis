@@ -63,7 +63,7 @@ begin
       'rank_id         INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'rank_seq        INTEGER      NOT NULL,' +
       'rank_name       VARCHAR (30) NOT NULL UNIQUE,' +
-      'rank_acronym    VARCHAR (15),' +
+      'abbreviation    VARCHAR (15),' +
       'main_rank       BOOLEAN      DEFAULT (1),' +
       'subrank         BOOLEAN      DEFAULT (0),' +
       'infrarank       BOOLEAN      DEFAULT (0),' +
@@ -89,7 +89,7 @@ end;
 
 function TTaxonRanksSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
 begin
-  Result := 'SELECT rank_id, rank_name, rank_acronym FROM taxon_ranks ';
+  Result := 'SELECT rank_id, rank_name, abbreviation FROM taxon_ranks ';
 
   case aWhere of
     swcNone: ;
@@ -97,7 +97,7 @@ begin
     begin
       Result := Result +
         'WHERE ((rank_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (rank_acronym ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+            'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -146,7 +146,7 @@ begin
       'rank_id, ' +
       'rank_seq, ' +
       'rank_name, ' +
-      'rank_acronym, ' +
+      'abbreviation, ' +
       'main_rank, ' +
       'subrank, ' +
       'infrarank, ' +
@@ -201,7 +201,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS zoo_taxa (' +
       'taxon_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'full_name              VARCHAR (100) NOT NULL UNIQUE,' +
+      'scientific_name              VARCHAR (100) NOT NULL UNIQUE,' +
       'authorship             VARCHAR (150),' +
       'formatted_name         VARCHAR (250),' +
       'english_name           VARCHAR (100),' +
@@ -257,14 +257,14 @@ function TZooTaxaSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType; aRa
 var
   F: TTaxonFilter;
 begin
-  Result := 'SELECT taxon_id, full_name, formatted_name, valid_id FROM zoo_taxa ';
+  Result := 'SELECT taxon_id, scientific_name, formatted_name, valid_id FROM zoo_taxa ';
 
   case aWhere of
     swcNone: ;
     swcFindText:
     begin
       Result := Result +
-        'WHERE (full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ';
+        'WHERE (scientific_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ';
       if not (tfAll in aRankFilter) then
       begin
         if (tfMain in aRankFilter) then
@@ -285,7 +285,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%ord.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%ord.''' +
                   ')) ';
               end;
               tfFamilies:
@@ -293,7 +293,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%fam.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%fam.''' +
                   ')) ';
               end;
               tfTribes:
@@ -301,7 +301,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%tr.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%tr.''' +
                   ')) ';
               end;
               tfGenera:
@@ -309,7 +309,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%g.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%g.''' +
                   ')) ';
               end;
               tfSpecies:
@@ -317,8 +317,8 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE (taxon_ranks.rank_acronym = ''supersp.'') ' +
-                      'OR (taxon_ranks.rank_acronym = ''sp.'')' +
+                    'WHERE (taxon_ranks.abbreviation = ''supersp.'') ' +
+                      'OR (taxon_ranks.abbreviation = ''sp.'')' +
                   ')) ';
               end;
               tfSubspecies:
@@ -326,9 +326,9 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE (taxon_ranks.rank_acronym = ''ssp.'')';
+                    'WHERE (taxon_ranks.abbreviation = ''ssp.'')';
                 if not (tfSubspeciesGroups in aRankFilter) then
-                  Result := Result + 'OR (taxon_ranks.rank_acronym = ''grp. (mono)'')';
+                  Result := Result + 'OR (taxon_ranks.abbreviation = ''grp. (mono)'')';
                 Result := Result + ')) ';
               end;
               tfSubspeciesGroups:
@@ -336,7 +336,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''grp. %''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''grp. %''' +
                   ')) ';
               end;
               tfSpuhs:
@@ -344,7 +344,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym = ''spuh''' +
+                    'WHERE taxon_ranks.abbreviation = ''spuh''' +
                   ')) ';
               end;
               tfSlashes:
@@ -352,7 +352,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym = ''slash''' +
+                    'WHERE taxon_ranks.abbreviation = ''slash''' +
                   ')) ';
               end;
               tfForms:
@@ -360,7 +360,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym = ''form''' +
+                    'WHERE taxon_ranks.abbreviation = ''form''' +
                   ')) ';
               end;
               tfDomestics:
@@ -368,7 +368,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym = ''domest.''' +
+                    'WHERE taxon_ranks.abbreviation = ''domest.''' +
                   ')) ';
               end;
               tfHybrids:
@@ -376,7 +376,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym = ''hybrid''' +
+                    'WHERE taxon_ranks.abbreviation = ''hybrid''' +
                   ')) ';
               end;
               tfIntergrades:
@@ -384,7 +384,7 @@ begin
                 Result := Result +
                   'AND (zoo_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym = ''intergrade''' +
+                    'WHERE taxon_ranks.abbreviation = ''intergrade''' +
                   ')) ';
               end;
             end;
@@ -406,7 +406,7 @@ function TZooTaxaSQL.Insert: String;
 begin
   Result :=
     'INSERT INTO zoo_taxa (' +
-      'full_name, ' +
+      'scientific_name, ' +
       'authorship, ' +
       'formatted_name, ' +
       'english_name, ' +
@@ -437,7 +437,7 @@ begin
       'user_inserted, ' +
       'insert_date) ' +
     'VALUES (' +
-      ':full_name, ' +
+      ':scientific_name, ' +
       ':authorship, ' +
       ':formatted_name, ' +
       ':english_name, ' +
@@ -474,16 +474,16 @@ begin
   Result :=
     'SELECT z.*, ' +
       'r.rank_name AS rank_name, ' +
-      'u.full_name AS parent_taxon_name, ' +
-      'v.full_name AS valid_name, ' +
-      'ui.full_name AS ioc_parent_name, ' +
-      'vi.full_name AS ioc_valid_name, ' +
-      'o.full_name AS order_name, ' +
-      'f.full_name AS family_name, ' +
-      's.full_name AS subfamily_name, ' +
-      'n.full_name AS genero_name, ' +
-      'e.full_name AS species_name, ' +
-      'g.full_name AS subspecies_group_name ' +
+      'u.scientific_name AS parent_taxon_name, ' +
+      'v.scientific_name AS valid_name, ' +
+      'ui.scientific_name AS ioc_parent_name, ' +
+      'vi.scientific_name AS ioc_valid_name, ' +
+      'o.scientific_name AS order_name, ' +
+      'f.scientific_name AS family_name, ' +
+      's.scientific_name AS subfamily_name, ' +
+      'n.scientific_name AS genero_name, ' +
+      'e.scientific_name AS species_name, ' +
+      'g.scientific_name AS subspecies_group_name ' +
     'FROM zoo_taxa AS z ' +
     'LEFT JOIN taxon_ranks AS r ON z.rank_id = r.rank_id ' +
     'LEFT JOIN zoo_taxa AS u ON z.parent_taxon_id = u.taxon_id ' +
@@ -530,7 +530,7 @@ begin
   Result :=
     'SELECT ' +
       'taxon_id, ' +
-      'full_name, ' +
+      'scientific_name, ' +
       'authorship, ' +
       'formatted_name, ' +
       'english_name, ' +
@@ -600,7 +600,7 @@ begin
     'WITH TaxaDetails AS (' +
       'SELECT ' +
         'taxon_id, ' +
-        'full_name, ' +
+        'scientific_name, ' +
         'sort_num, ' +
         'species_id, ' +
         'family_id, ' +
@@ -611,9 +611,9 @@ begin
   if (aTableFilter = tbIndividuals) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT i.taxon_id, z.species_id, z.family_id, z.order_id, ' +
-        's.full_name AS species_name, ' +
-        'f.full_name AS family_name, ' +
-        'o.full_name AS order_name, ' +
+        's.scientific_name AS species_name, ' +
+        'f.scientific_name AS family_name, ' +
+        'o.scientific_name AS order_name, ' +
         'z.sort_num AS sort_num ' +
       'FROM individuals AS i ' +
       'JOIN TaxaDetails AS z ON i.taxon_id = z.taxon_id ' +
@@ -626,9 +626,9 @@ begin
   if (aTableFilter = tbCaptures) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT c.taxon_id, z.species_id, z.family_id, z.order_id, ' +
-        's.full_name AS species_name, ' +
-        'f.full_name AS family_name, ' +
-        'o.full_name AS order_name, ' +
+        's.scientific_name AS species_name, ' +
+        'f.scientific_name AS family_name, ' +
+        'o.scientific_name AS order_name, ' +
         'z.sort_num AS sort_num ' +
       'FROM captures AS c ' +
       'JOIN TaxaDetails AS z ON c.taxon_id = z.taxon_id ' +
@@ -641,9 +641,9 @@ begin
   if (aTableFilter = tbFeathers) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT ft.taxon_id, z.species_id, z.family_id, z.order_id, ' +
-        's.full_name AS species_name, ' +
-        'f.full_name AS family_name, ' +
-        'o.full_name AS order_name, ' +
+        's.scientific_name AS species_name, ' +
+        'f.scientific_name AS family_name, ' +
+        'o.scientific_name AS order_name, ' +
         'z.sort_num AS sort_num ' +
       'FROM feathers AS ft ' +
       'JOIN TaxaDetails AS z ON ft.taxon_id = z.taxon_id ' +
@@ -656,9 +656,9 @@ begin
   if (aTableFilter = tbSightings) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT st.taxon_id, z.species_id, z.family_id, z.order_id, ' +
-        's.full_name AS species_name, ' +
-        'f.full_name AS family_name, ' +
-        'o.full_name AS order_name, ' +
+        's.scientific_name AS species_name, ' +
+        'f.scientific_name AS family_name, ' +
+        'o.scientific_name AS order_name, ' +
         'z.sort_num AS sort_num ' +
       'FROM sightings AS st ' +
       'JOIN TaxaDetails AS z ON st.taxon_id = z.taxon_id ' +
@@ -671,9 +671,9 @@ begin
   if (aTableFilter = tbNests) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT n.taxon_id, z.species_id, z.family_id, z.order_id, ' +
-        's.full_name AS species_name, ' +
-        'f.full_name AS family_name, ' +
-        'o.full_name AS order_name, ' +
+        's.scientific_name AS species_name, ' +
+        'f.scientific_name AS family_name, ' +
+        'o.scientific_name AS order_name, ' +
         'z.sort_num AS sort_num ' +
       'FROM nests AS n ' +
       'JOIN TaxaDetails AS z ON n.taxon_id = z.taxon_id ' +
@@ -686,9 +686,9 @@ begin
   if (aTableFilter = tbEggs) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT e.taxon_id, z.species_id, z.family_id, z.order_id, ' +
-        's.full_name AS species_name, ' +
-        'f.full_name AS family_name, ' +
-        'o.full_name AS order_name, ' +
+        's.scientific_name AS species_name, ' +
+        'f.scientific_name AS family_name, ' +
+        'o.scientific_name AS order_name, ' +
         'z.sort_num AS sort_num ' +
       'FROM eggs AS e ' +
       'JOIN TaxaDetails AS z ON e.taxon_id = z.taxon_id ' +
@@ -701,9 +701,9 @@ begin
   if (aTableFilter = tbSpecimens) or (aTableFilter = tbNone) then
     Result := Result +
       'SELECT sp.taxon_id, z.species_id, z.family_id, z.order_id, ' +
-        's.full_name AS species_name, ' +
-        'f.full_name AS family_name, ' +
-        'o.full_name AS order_name, ' +
+        's.scientific_name AS species_name, ' +
+        'f.scientific_name AS family_name, ' +
+        'o.scientific_name AS order_name, ' +
         'z.sort_num AS sort_num ' +
       'FROM specimens AS sp ' +
       'JOIN TaxaDetails AS z ON sp.taxon_id = z.taxon_id ' +
@@ -721,7 +721,7 @@ function TZooTaxaSQL.Update: String;
 begin
   Result :=
     'UPDATE zoo_taxa SET ' +
-      'full_name = :full_name, ' +
+      'scientific_name = :scientific_name, ' +
       'authorship = :authorship, ' +
       'formatted_name = :formatted_name, ' +
       'english_name = :english_name, ' +

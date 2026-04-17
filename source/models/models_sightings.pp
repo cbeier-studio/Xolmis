@@ -61,7 +61,7 @@ type
     FUnbandedTally: Integer;
     FDetectionType: String;
     FBreedingStatus: String;
-    FNotSurveying: Boolean;
+    FOutOfSample: Boolean;
     FIsOnEbird: Boolean;
     FNotes: String;
   public
@@ -108,7 +108,7 @@ type
     property UnbandedTally: Integer read FUnbandedTally write FUnbandedTally;
     property DetectionType: String read FDetectionType write FDetectionType;
     property BreedingStatus: String read FBreedingStatus write FBreedingStatus;
-    property NotSurveying: Boolean read FNotSurveying write FNotSurveying;
+    property OutOfSample: Boolean read FOutOfSample write FOutOfSample;
     property IsOnEbird: Boolean read FIsOnEbird write FIsOnEbird;
     property Notes: String read FNotes write FNotes;
   end;
@@ -184,7 +184,7 @@ begin
     FUnbandedTally := TSighting(Source).UnbandedTally;
     FDetectionType := TSighting(Source).DetectionType;
     FBreedingStatus := TSighting(Source).BreedingStatus;
-    FNotSurveying := TSighting(Source).NotSurveying;
+    FOutOfSample := TSighting(Source).OutOfSample;
     FIsOnEbird := TSighting(Source).IsOnEbird;
     FNotes := TSighting(Source).Notes;
   end;
@@ -225,7 +225,7 @@ begin
   FUnbandedTally := 0;
   FDetectionType := EmptyStr;
   FBreedingStatus := EmptyStr;
-  FNotSurveying := False;
+  FOutOfSample := False;
   FIsOnEbird := False;
   FNotes := EmptyStr;
 end;
@@ -313,7 +313,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscBreedingCode, aOld.BreedingStatus, FBreedingStatus, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscOutOfSample, aOld.NotSurveying, FNotSurveying, R) then
+  if FieldValuesDiff(rscOutOfSample, aOld.OutOfSample, FOutOfSample, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscIsInEBird, aOld.IsOnEbird, FIsOnEbird, R) then
     Changes.Add(R);
@@ -366,7 +366,7 @@ begin
     FUnbandedTally        := Obj.Get('unbanded_tally', 0);
     FDetectionType        := Obj.Get('detection_type', '');
     FBreedingStatus       := Obj.Get('breeding_status', '');
-    FNotSurveying         := Obj.Get('not_surveying', False);
+    FOutOfSample         := Obj.Get('out_of_sample', False);
     FIsOnEbird            := Obj.Get('is_on_ebird', False);
     FNotes                := Obj.Get('notes', '');
   finally
@@ -412,7 +412,7 @@ begin
     JSONObject.Add('unbanded_tally', FUnbandedTally);
     JSONObject.Add('detection_type', FDetectionType);
     JSONObject.Add('breeding_status', FBreedingStatus);
-    JSONObject.Add('not_surveying', FNotSurveying);
+    JSONObject.Add('out_of_sample', FOutOfSample);
     JSONObject.Add('is_on_ebird', FIsOnEbird);
     JSONObject.Add('notes', FNotes);
 
@@ -430,7 +430,7 @@ begin
     'MethodId=%d, MackinnonListNumber=%d, Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
     'MalesTally=%s, FemalesTally=%s, NotSexedTally=%s, AdultsTally=%s, ImmaturesTally=%s, NotAgedTally=%s, ' +
     'NewCapturesTally=%d, RecapturesTally=%d, UnbandedTally=%d, DetectionType=%s, BreedingStatus=%s, ' +
-    'NotSurveying=%s, IsOnEbird=%s, Notes=%s, ' +
+    'OutOfSample=%s, IsOnEbird=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
     FObserverId, FTaxonId, FIndividualId, FSubjectTally, FSubjectDistance,
@@ -439,7 +439,7 @@ begin
     BoolToStr(FSubjectHeard, 'True', 'False'), BoolToStr(FSubjectPhotographed, 'True', 'False'),
     BoolToStr(FSubjectRecorded, 'True', 'False'), FMalesTally, FFemalesTally, FNotSexedTally, FAdultsTally,
     FImmatureTally, FNotAgedTally, FNewCapturesTally, FRecapturesTally, FUnbandedTally, FDetectionType,
-    FBreedingStatus, BoolToStr(FNotSurveying, 'True', 'False'), BoolToStr(FIsOnEbird, 'True', 'False'), FNotes,
+    FBreedingStatus, BoolToStr(FOutOfSample, 'True', 'False'), BoolToStr(FIsOnEbird, 'True', 'False'), FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -660,7 +660,7 @@ begin
     R.UnbandedTally := FieldByName('unbanded_tally').AsInteger;
     R.DetectionType := FieldByName('detection_type').AsString;
     R.BreedingStatus := FieldByName('breeding_status').AsString;
-    R.NotSurveying := FieldByName('not_surveying').AsBoolean;
+    R.OutOfSample := FieldByName('out_of_sample').AsBoolean;
     R.IsOnEbird := FieldByName('ebird_available').AsBoolean;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -749,8 +749,8 @@ begin
     R.DetectionType := ARow.Values['detection_type'];
   if ARow.IndexOfName('breeding_status') >= 0 then
     R.BreedingStatus := ARow.Values['breeding_status'];
-  if ARow.IndexOfName('not_surveying') >= 0 then
-    R.NotSurveying := StrToBoolDef(ARow.Values['not_surveying'], False);
+  if ARow.IndexOfName('out_of_sample') >= 0 then
+    R.OutOfSample := StrToBoolDef(ARow.Values['out_of_sample'], False);
   if ARow.IndexOfName('ebird_available') >= 0 then
     R.IsOnEbird := StrToBoolDef(ARow.Values['ebird_available'], False);
   if ARow.IndexOfName('notes') >= 0 then
@@ -803,7 +803,7 @@ begin
     SetIntParam(ParamByName('unbanded_tally'), R.UnbandedTally);
     SetStrParam(ParamByName('detection_type'), R.DetectionType);
     SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
-    ParamByName('not_surveying').AsBoolean := R.NotSurveying;
+    ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
@@ -875,7 +875,7 @@ begin
     SetIntParam(ParamByName('unbanded_tally'), R.UnbandedTally);
     SetStrParam(ParamByName('detection_type'), R.DetectionType);
     SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
-    ParamByName('not_surveying').AsBoolean := R.NotSurveying;
+    ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('marked_status').AsBoolean := R.Marked;

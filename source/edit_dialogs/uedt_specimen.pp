@@ -506,7 +506,7 @@ begin
     if FSpecimen.TaxonId > 0 then
     begin
       FTaxonId := FSpecimen.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FSpecimen.IndividualId > 0 then
     begin
@@ -532,7 +532,7 @@ procedure TedtSpecimen.GetFullName;
 var
   TaxonName, SiteName: String;
 begin
-  TaxonName := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  TaxonName := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   SiteName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
 
   FSpecimen.FullName := Format('%s-%s, %s, %s', [FSpecimen.FieldNumber, FSpecimen.SampleType, TaxonName, SiteName]);
@@ -577,7 +577,7 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FSpecimen.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FSpecimen.IndividualId;
   eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   FNestId := FSpecimen.NestId;

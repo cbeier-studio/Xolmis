@@ -43,7 +43,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS botanic_taxa (' +
       'taxon_id        INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'taxon_name      VARCHAR (100) NOT NULL UNIQUE,' +
+      'scientific_name      VARCHAR (100) NOT NULL UNIQUE,' +
       'authorship      VARCHAR (100),' +
       'formatted_name  VARCHAR (180),' +
       'vernacular_name VARCHAR (100),' +
@@ -76,13 +76,13 @@ function TBotanicalTaxaSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaTyp
 var
   F: TTaxonFilter;
 begin
-  Result := 'SELECT taxon_id, taxon_name, formatted_name FROM botanic_taxa ';
+  Result := 'SELECT taxon_id, scientific_name, formatted_name FROM botanic_taxa ';
 
   case aWhere of
     swcNone: ;
     swcFindText:
     begin
-      Result := Result + 'WHERE (taxon_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ';
+      Result := Result + 'WHERE (scientific_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ';
       if not (tfAll in aRankFilter) then
       begin
         if (tfMain in aRankFilter) then
@@ -101,7 +101,7 @@ begin
                 Result := Result +
                   'AND (botanic_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%ord.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%ord.''' +
                   ')) ';
               end;
               tfFamilies:
@@ -109,7 +109,7 @@ begin
                 Result := Result +
                   'AND (botanic_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%fam.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%fam.''' +
                   ')) ';
               end;
               tfTribes:
@@ -117,7 +117,7 @@ begin
                 Result := Result +
                   'AND (botanic_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%tr.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%tr.''' +
                   ')) ';
               end;
               tfGenera:
@@ -125,7 +125,7 @@ begin
                 Result := Result +
                   'AND (botanic_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE taxon_ranks.rank_acronym LIKE ''%g.''' +
+                    'WHERE taxon_ranks.abbreviation LIKE ''%g.''' +
                   ')) ';
               end;
               tfSpecies:
@@ -133,8 +133,8 @@ begin
                 Result := Result +
                   'AND (botanic_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE (taxon_ranks.rank_acronym = ''supersp.'') ' +
-                      'OR (taxon_ranks.rank_acronym = ''sp.'')' +
+                    'WHERE (taxon_ranks.abbreviation = ''supersp.'') ' +
+                      'OR (taxon_ranks.abbreviation = ''sp.'')' +
                   ')) ';
               end;
               tfSubspecies:
@@ -142,7 +142,7 @@ begin
                 Result := Result +
                   'AND (botanic_taxa.rank_id IN (' +
                     'SELECT taxon_ranks.rank_id FROM taxon_ranks ' +
-                    'WHERE (taxon_ranks.rank_acronym = ''ssp.'')' +
+                    'WHERE (taxon_ranks.abbreviation = ''ssp.'')' +
                   ')) ';
               end;
             end;
@@ -164,7 +164,7 @@ function TBotanicalTaxaSQL.Insert: String;
 begin
   Result :=
     'INSERT INTO botanic_taxa (' +
-      'taxon_name, ' +
+      'scientific_name, ' +
       'authorship, ' +
       'formatted_name, ' +
       'vernacular_name, ' +
@@ -174,7 +174,7 @@ begin
       'user_inserted, ' +
       'insert_date) ' +
     'VALUES (' +
-      ':taxon_name, ' +
+      ':scientific_name, ' +
       ':authorship, ' +
       ':formatted_name, ' +
       ':vernacular_name, ' +
@@ -189,8 +189,8 @@ function TBotanicalTaxaSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT bt.*, ' +
-      'btp.taxon_name AS parent_taxon_name, ' +
-      'btv.taxon_name AS valid_name ' +
+      'btp.scientific_name AS parent_taxon_name, ' +
+      'btv.scientific_name AS valid_name ' +
     'FROM botanic_taxa AS bt ' +
     'LEFT JOIN botanic_taxa AS btp ON bt.parent_taxon_id = btp.taxon_id ' +
     'LEFT JOIN botanic_taxa AS btv ON bt.valid_id = btv.taxon_id ';
@@ -228,7 +228,7 @@ begin
   Result :=
     'SELECT ' +
       'taxon_id, ' +
-      'taxon_name, ' +
+      'scientific_name, ' +
       'authorship, ' +
       'formatted_name, ' +
       'vernacular_name, ' +
@@ -273,7 +273,7 @@ function TBotanicalTaxaSQL.Update: String;
 begin
   Result :=
     'UPDATE botanic_taxa SET ' +
-      'taxon_name = :taxon_name, ' +
+      'scientific_name = :scientific_name, ' +
       'authorship = :authorship, ' +
       'formatted_name = :formatted_name, ' +
       'vernacular_name = :vernacular_name, ' +

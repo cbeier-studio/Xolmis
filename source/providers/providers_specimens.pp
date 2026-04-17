@@ -90,6 +90,7 @@ begin
       'longitude        REAL,' +
       'latitude         REAL,' +
       'coordinate_precision VARCHAR (3),' +
+      'institution_id INTEGER REFERENCES institutions(institution_id) ON UPDATE CASCADE,' +
       'notes            TEXT,' +
       'user_inserted    INTEGER,' +
       'user_updated     INTEGER,' +
@@ -147,6 +148,7 @@ begin
       'longitude, ' +
       'latitude, ' +
       'coordinate_precision, ' +
+      'institution_id, ' +
       'notes, ' +
       'user_inserted, ' +
       'insert_date) ' +
@@ -165,6 +167,7 @@ begin
       ':longitude, ' +
       ':latitude, ' +
       ':coordinate_precision, ' +
+      ':institution_id, ' +
       ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))';
@@ -174,7 +177,7 @@ function TSpecimensSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT sp.*, ' +
-      'z.full_name AS taxon_name, ' +
+      'z.scientific_name AS taxon_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
       'z.genus_id AS genus_id, ' +
@@ -185,13 +188,15 @@ begin
       'g.municipality_id AS municipality_id, ' +
       'i.full_name AS individual_name, ' +
       'n.full_name AS nest_name, ' +
-      'e.full_name AS egg_name ' +
+      'e.full_name AS egg_name, ' +
+      'it.full_name AS institution_name ' +
     'FROM specimens AS sp ' +
     'LEFT JOIN zoo_taxa AS z ON sp.taxon_id = z.taxon_id ' +
     'LEFT JOIN gazetteer AS g ON sp.locality_id = g.site_id ' +
     'LEFT JOIN individuals AS i ON sp.individual_id = i.individual_id ' +
     'LEFT JOIN nests AS n ON sp.nest_id = n.nest_id ' +
-    'LEFT JOIN eggs AS e ON sp.egg_id = e.egg_id ';
+    'LEFT JOIN eggs AS e ON sp.egg_id = e.egg_id ' +
+    'LEFT JOIN institutions AS it ON sp.institution_id = it.institution_id ';
 
   case aWhere of
     swcNone: ;
@@ -250,6 +255,7 @@ begin
       'longitude, ' +
       'latitude, ' +
       'coordinate_precision, ' +
+      'institution_id, ' +
       'notes, ' +
       'user_inserted, ' +
       'user_updated, ' +
@@ -299,6 +305,7 @@ begin
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
       'coordinate_precision = :coordinate_precision, ' +
+      'institution_id = :institution_id, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec''), ' +
@@ -457,6 +464,7 @@ begin
       'egg_id           INTEGER,' +
       'preparation_date DATE,' +
       'preparer_id      INTEGER,' +
+      'institution_id INTEGER REFERENCES institutions(institution_id) ON UPDATE CASCADE,' +
       'notes            TEXT,' +
       'user_inserted    INTEGER,' +
       'user_updated     INTEGER,' +
@@ -511,6 +519,7 @@ begin
       'egg_id, ' +
       'preparation_date, ' +
       'preparer_id, ' +
+      'institution_id, ' +
       'notes, ' +
       'user_inserted, ' +
       'insert_date) ' +
@@ -526,6 +535,7 @@ begin
       ':egg_id, ' +
       'date(:preparation_date), ' +
       ':preparer_id, ' +
+      ':institution_id, ' +
       ':notes, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))';
@@ -573,6 +583,7 @@ begin
       'egg_id, ' +
       'preparation_date, ' +
       'preparer_id, ' +
+      'institution_id, ' +
       'notes, ' +
       'user_inserted, ' +
       'user_updated, ' +
@@ -620,6 +631,7 @@ begin
       'egg_id = :egg_id, ' +
       'preparation_date = date(:preparation_date), ' +
       'preparer_id = :preparer_id, ' +
+      'institution_id = :institution_id, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec'') ' +

@@ -132,6 +132,7 @@ begin
       'email_addr       VARCHAR (100),' +
       'contact_name     VARCHAR (100),' +
       'protocol_number  VARCHAR (30),' +
+      'project_status VARCHAR (5),' +
       'main_goal        TEXT,' +
       'risks            TEXT,' +
       'project_abstract TEXT,' +
@@ -187,6 +188,7 @@ begin
       'email_addr, ' +
       'contact_name, ' +
       'protocol_number, ' +
+      'project_status, ' +
       'main_goal, ' +
       'risks, ' +
       'project_abstract, ' +
@@ -202,6 +204,7 @@ begin
       ':email_addr, ' +
       ':contact_name, ' +
       ':protocol_number, ' +
+      ':project_status, ' +
       ':main_goal, ' +
       ':risks, ' +
       ':project_abstract, ' +
@@ -271,6 +274,7 @@ begin
       'email_addr, ' +
       'contact_name, ' +
       'protocol_number, ' +
+      'project_status, ' +
       'main_goal, ' +
       'risks, ' +
       'project_abstract, ' +
@@ -317,6 +321,7 @@ begin
       'email_addr = :email_addr, ' +
       'contact_name = :contact_name, ' +
       'protocol_number = :protocol_number, ' +
+      'project_status = :project_status, ' +
       'main_goal = :main_goal, ' +
       'risks = :risks, ' +
       'project_abstract = :project_abstract, ' +
@@ -383,11 +388,13 @@ function TProjectTeamsSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT pt.*, ' +
-      'p.acronym AS person_acronym, ' +
+      'p.abbreviation AS person_abbrev, ' +
       'p.full_name AS person_name, ' +
-      'p.profile_color AS person_color ' +
+      'p.profile_color AS person_color, ' +
+      'it.abbreviation AS institution_name ' +
     'FROM project_team AS pt ' +
-    'LEFT JOIN people AS p ON pt.person_id = p.person_id ';
+    'LEFT JOIN people AS p ON pt.person_id = p.person_id ' +
+    'LEFT JOIN institutions AS it ON pt.institition_id = it.institution_id ';
 
   case aWhere of
     swcNone: ;

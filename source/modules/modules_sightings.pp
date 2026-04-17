@@ -100,7 +100,7 @@ begin
     // Is in eBird
     AddBooleanFilter(SearchConfig, COL_EBIRD_AVAILABLE, rscIsInEBird, rbRecordInEbirdYes.Checked, rbRecordInEbirdNo.Checked);
     // Out of sample
-    AddBooleanFilter(SearchConfig, COL_NOT_SURVEYING, rscOutOfSample, rbOutOfSampleYes.Checked, rbOutOfSampleNo.Checked);
+    AddBooleanFilter(SearchConfig, COL_OUT_OF_SAMPLE, rscOutOfSample, rbOutOfSampleYes.Checked, rbOutOfSampleNo.Checked);
   end;
 end;
 
@@ -181,7 +181,7 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_NOT_SURVEYING).Field.AsBoolean = True) then
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
       if IsDarkModeEnabled then
       begin
@@ -353,7 +353,7 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
-    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_NOT_SURVEYING).Field.AsBoolean = True) then
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
       if IsDarkModeEnabled then
       begin

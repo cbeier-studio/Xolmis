@@ -57,7 +57,7 @@ type
     FPlantMinDiameter: Double;
     FPlantHeight: Double;
     FPlantDbh: Double;
-    FConstructionDays: Double;
+    FBuildingDays: Double;
     FIncubationDays: Double;
     FNestlingDays: Double;
     FActiveDays: Double;
@@ -108,7 +108,7 @@ type
     property PlantMinDiameter: Double read FPlantMinDiameter write FPlantMinDiameter;
     property PlantHeight: Double read FPlantHeight write FPlantHeight;
     property PlantDbh: Double read FPlantDbh write FPlantDbh;
-    property ConstructionDays: Double read FConstructionDays write FConstructionDays;
+    property BuildingDays: Double read FBuildingDays write FBuildingDays;
     property IncubationDays: Double read FIncubationDays write FIncubationDays;
     property NestlingDays: Double read FNestlingDays write FNestlingDays;
     property ActiveDays: Double read FActiveDays write FActiveDays;
@@ -201,7 +201,7 @@ type
     FEggshellTexture: TEggshellTexture;
     FEggHatched: Boolean;
     FIndividualId: Integer;
-    FResearcherId: Integer;
+    FObserverId: Integer;
     FMeasureDate: TDate;
     FTaxonId: Integer;
     FHostEgg: Boolean;
@@ -234,7 +234,7 @@ type
     property EggshellTexture: TEggshellTexture read FEggshellTexture write FEggshellTexture;
     property EggHatched: Boolean read FEggHatched write FEggHatched;
     property IndividualId: Integer read FIndividualId write FIndividualId;
-    property ResearcherId: Integer read FResearcherId write FResearcherId;
+    property ObserverId: Integer read FObserverId write FObserverId;
     property MeasureDate: TDate read FMeasureDate write FMeasureDate;
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property HostEgg: Boolean read FHostEgg write FHostEgg;
@@ -893,7 +893,7 @@ begin
     FEggshellTexture := TEgg(Source).EggshellTexture;
     FEggHatched := TEgg(Source).EggHatched;
     FIndividualId := TEgg(Source).IndividualId;
-    FResearcherId := TEgg(Source).ResearcherId;
+    FObserverId := TEgg(Source).ObserverId;
     FMeasureDate := TEgg(Source).MeasureDate;
     FTaxonId := TEgg(Source).TaxonId;
     FHostEgg := TEgg(Source).HostEgg;
@@ -920,7 +920,7 @@ begin
   FEggshellTexture := estUnknown;
   FEggHatched := False;
   FIndividualId := 0;
-  FResearcherId := 0;
+  FObserverId := 0;
   FMeasureDate := NullDate;
   FTaxonId := 0;
   FHostEgg := True;
@@ -981,7 +981,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscResearcherID, aOld.ResearcherId, FResearcherId, R) then
+  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscDate, aOld.MeasureDate, FMeasureDate, R) then
     Changes.Add(R);
@@ -1024,7 +1024,7 @@ begin
     FEggshellTexture  := StrToEggTexture(Obj.Get('texture', ''));
     FEggHatched       := Obj.Get('hatched', False);
     FIndividualId     := Obj.Get('individual_id', 0);
-    FResearcherId     := Obj.Get('researcher_id', 0);
+    FObserverId     := Obj.Get('observer_id', 0);
     FMeasureDate      := Obj.Get('measure_date', NullDate);
     FHostEgg          := Obj.Get('host_egg', True);
     FDescription      := Obj.Get('description', '');
@@ -1056,7 +1056,7 @@ begin
     JSONObject.Add('texture', EGGSHELL_TEXTURES[FEggshellTexture]);
     JSONObject.Add('hatched', FEggHatched);
     JSONObject.Add('individual_id', FIndividualId);
-    JSONObject.Add('researcher_id', FResearcherId);
+    JSONObject.Add('observer_id', FObserverId);
     JSONObject.Add('measure_date', FMeasureDate);
     JSONObject.Add('host_egg', FHostEgg);
     JSONObject.Add('description', FDescription);
@@ -1072,11 +1072,11 @@ function TEgg.ToString: String;
 begin
   Result := Format('Egg(Id=%d, FullName=%s, FieldNumber=%s, EggSeq=%d, NestId=%d, EggShape=%s, Width=%f, Length=%f, ' +
     'Mass=%f, Volume=%f, EggStage=%s, TaxonId=%d, EggshellColor=%s, EggshellPattern=%s, EggshellTexture=%s, ' +
-    'EggHatched=%s, IndividualId=%d, ResearcherId=%d, MeasureDate=%s, HostEgg=%s, Description=%s, Notes=%s, ' +
+    'EggHatched=%s, IndividualId=%d, ObserverId=%d, MeasureDate=%s, HostEgg=%s, Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FFieldNumber, FEggSeq, FNestId, EGG_SHAPES[FEggShape], FWidth, FLength, FMass, FVolume,
     FEggStage, FTaxonId, FEggshellColor, EGGSHELL_PATTERNS[FEggshellPattern], EGGSHELL_TEXTURES[FEggshellTexture],
-    BoolToStr(FEggHatched, 'True', 'False'), FIndividualId, FResearcherId, DateToStr(FMeasureDate),
+    BoolToStr(FEggHatched, 'True', 'False'), FIndividualId, FObserverId, DateToStr(FMeasureDate),
     BoolToStr(FHostEgg, 'True', 'False'), FDescription, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -1212,7 +1212,7 @@ begin
     Add('WHERE (nest_id = :anest)');
     Add('AND (date(measure_date) = date(:adate))');
     Add('AND (field_number = :afieldnumber)');
-    Add('AND (researcher_id = :aobserver)');
+    Add('AND (observer_id = :aobserver)');
 
     ParamByName('ANEST').AsInteger := aNest;
     ParamByName('AOBSERVER').AsInteger := aObserver;
@@ -1282,7 +1282,7 @@ begin
     R.EggshellTexture := StrToEggTexture(FieldByName('eggshell_texture').AsString);
     R.EggHatched := FieldByName('egg_hatched').AsBoolean;
     R.IndividualId := FieldByName('individual_id').AsInteger;
-    R.ResearcherId := FieldByName('researcher_id').AsInteger;
+    R.ObserverId := FieldByName('observer_id').AsInteger;
     R.MeasureDate := FieldByName('measure_date').AsDateTime;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.HostEgg := FieldByName('host_egg').AsBoolean;
@@ -1338,8 +1338,8 @@ begin
     R.EggHatched := StrToBoolDef(ARow.Values['egg_hatched'], False);
   if ARow.IndexOfName('individual_id') >= 0 then
     R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
-  if ARow.IndexOfName('researcher_id') >= 0 then
-    R.ResearcherId := StrToIntDef(ARow.Values['researcher_id'], 0);
+  if ARow.IndexOfName('observer_id') >= 0 then
+    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('measure_date') >= 0 then
     R.MeasureDate := StrToDateDef(ARow.Values['measure_date'], NullDate);
   if ARow.IndexOfName('taxon_id') >= 0 then
@@ -1380,7 +1380,7 @@ begin
     ParamByName('eggshell_pattern').AsString := EGGSHELL_PATTERNS[R.EggshellPattern];
     ParamByName('eggshell_texture').AsString := EGGSHELL_TEXTURES[R.EggshellTexture];
     ParamByName('egg_hatched').AsBoolean := R.EggHatched;
-    SetForeignParam(ParamByName('researcher_id'), R.ResearcherId);
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetDateParam(ParamByName('measure_date'), R.MeasureDate);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
@@ -1439,7 +1439,7 @@ begin
     ParamByName('eggshell_pattern').AsString := EGGSHELL_PATTERNS[R.EggshellPattern];
     ParamByName('eggshell_texture').AsString := EGGSHELL_TEXTURES[R.EggshellTexture];
     ParamByName('egg_hatched').AsBoolean := R.EggHatched;
-    SetForeignParam(ParamByName('researcher_id'), R.ResearcherId);
+    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetDateParam(ParamByName('measure_date'), R.MeasureDate);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
@@ -1498,7 +1498,7 @@ begin
     FPlantMinDiameter := TNest(Source).PlantMinDiameter;
     FPlantHeight := TNest(Source).PlantHeight;
     FPlantDbh := TNest(Source).PlantDbh;
-    FConstructionDays := TNest(Source).ConstructionDays;
+    FBuildingDays := TNest(Source).BuildingDays;
     FIncubationDays := TNest(Source).IncubationDays;
     FNestlingDays := TNest(Source).NestlingDays;
     FActiveDays := TNest(Source).ActiveDays;
@@ -1542,7 +1542,7 @@ begin
   FPlantMinDiameter := 0.0;
   FPlantHeight := 0.0;
   FPlantDbh := 0.0;
-  FConstructionDays := 0.0;
+  FBuildingDays := 0.0;
   FIncubationDays := 0.0;
   FNestlingDays := 0.0;
   FActiveDays := 0.0;
@@ -1634,7 +1634,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscCover, aOld.NestCover, FNestCover, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscBuildingDays, aOld.ConstructionDays, FConstructionDays, R) then
+  if FieldValuesDiff(rscBuildingDays, aOld.BuildingDays, FBuildingDays, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscIncubationDays, aOld.IncubationDays, FIncubationDays, R) then
     Changes.Add(R);
@@ -1699,7 +1699,7 @@ begin
     FPlantMinDiameter     := Obj.Get('min_plant_diameter', 0.0);
     FPlantHeight          := Obj.Get('plant_height', 0.0);
     FPlantDbh             := Obj.Get('plant_dbh', 0.0);
-    FConstructionDays     := Obj.Get('construction_days', 0.0);
+    FBuildingDays     := Obj.Get('building_days', 0.0);
     FIncubationDays       := Obj.Get('incubation_days', 0.0);
     FNestlingDays         := Obj.Get('nestling_days', 0.0);
     FActiveDays           := Obj.Get('active_days', 0.0);
@@ -1749,7 +1749,7 @@ begin
     JSONObject.Add('min_plant_diameter', FPlantMinDiameter);
     JSONObject.Add('plant_height', FPlantHeight);
     JSONObject.Add('plant_dbh', FPlantDbh);
-    JSONObject.Add('construction_days', FConstructionDays);
+    JSONObject.Add('building_days', FBuildingDays);
     JSONObject.Add('incubation_days', FIncubationDays);
     JSONObject.Add('nestling_days', FNestlingDays);
     JSONObject.Add('active_days', FActiveDays);
@@ -1773,7 +1773,7 @@ begin
     'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, NestShape=%s, SupportType=%s, SupportPlant1Id=%d, SupportPlant2Id=%d, ' +
     'OtherSupport=%s, HeightAboveGround=%f, InternalMaxDiameter=%f, InternalMinDiameter=%f, ExternalMaxDiameter=%f, ' +
     'ExternalMinDiameter=%f, InternalHeight=%f, ExternalHeight=%f, EdgeDistance=%f, CenterDistance=%f, ' +
-    'NestCover=%d, PlantMaxDiameter=%f, PlantMinDiameter=%f, PlantHeight=%f, PlantDbh=%f, ConstructionDays=%f, ' +
+    'NestCover=%d, PlantMaxDiameter=%f, PlantMinDiameter=%f, PlantHeight=%f, PlantDbh=%f, BuildingDays=%f, ' +
     'IncubationDays=%f, NestlingDays=%f, ActiveDays=%f, NestFate=%s, LossCause=%s, NestProductivity=%d, FoundDate=%s, ' +
     'LastDate=%s, Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
@@ -1781,7 +1781,7 @@ begin
     FNestShape, FSupportType, FSupportPlant1Id, FSupportPlant2Id, FOtherSupport, FHeightAboveGround,
     FInternalMaxDiameter, FInternalMinDiameter, FExternalMaxDiameter, FExternalMinDiameter,
     FInternalHeight, FExternalHeight, FEdgeDistance, FCenterDistance, FNestCover, FPlantMaxDiameter,
-    FPlantMinDiameter, FPlantHeight, FPlantDbh, FConstructionDays, FIncubationDays, FNestlingDays, FActiveDays,
+    FPlantMinDiameter, FPlantHeight, FPlantDbh, FBuildingDays, FIncubationDays, FNestlingDays, FActiveDays,
     NEST_FATES[FNestFate], LOSS_CAUSES[FLossCause], FNestProductivity, DateToStr(FFoundDate), DateToStr(FLastDate),
     FDescription, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -2000,7 +2000,7 @@ begin
     R.PlantMinDiameter := FieldByName('plant_min_diameter').AsFloat;
     R.PlantHeight := FieldByName('plant_height').AsFloat;
     R.PlantDbh := FieldByName('plant_dbh').AsFloat;
-    R.ConstructionDays := FieldByName('construction_days').AsFloat;
+    R.BuildingDays := FieldByName('building_days').AsFloat;
     R.IncubationDays := FieldByName('incubation_days').AsFloat;
     R.NestlingDays := FieldByName('nestling_days').AsFloat;
     R.ActiveDays := FieldByName('active_days').AsFloat;
@@ -2089,8 +2089,8 @@ begin
     R.PlantHeight := StrToFloatDef(ARow.Values['plant_height'], 0);
   if ARow.IndexOfName('plant_dbh') >= 0 then
     R.PlantDbh := StrToFloatDef(ARow.Values['plant_dbh'], 0);
-  if ARow.IndexOfName('construction_days') >= 0 then
-    R.ConstructionDays := StrToFloatDef(ARow.Values['construction_days'], 0);
+  if ARow.IndexOfName('building_days') >= 0 then
+    R.BuildingDays := StrToFloatDef(ARow.Values['building_days'], 0);
   if ARow.IndexOfName('incubation_days') >= 0 then
     R.IncubationDays := StrToFloatDef(ARow.Values['incubation_days'], 0);
   if ARow.IndexOfName('nestling_days') >= 0 then
@@ -2166,7 +2166,7 @@ begin
     SetStrParam(ParamByName('full_name'), R.FullName);
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('notes'), R.Notes);
-    SetFloatParam(ParamByName('construction_days'), R.ConstructionDays);
+    SetFloatParam(ParamByName('building_days'), R.BuildingDays);
     SetFloatParam(ParamByName('incubation_days'), R.IncubationDays);
     SetFloatParam(ParamByName('nestling_days'), R.NestlingDays);
     SetFloatParam(ParamByName('active_days'), R.ActiveDays);
@@ -2246,7 +2246,7 @@ begin
     SetStrParam(ParamByName('full_name'), R.FullName);
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('notes'), R.Notes);
-    SetFloatParam(ParamByName('construction_days'), R.ConstructionDays);
+    SetFloatParam(ParamByName('building_days'), R.BuildingDays);
     SetFloatParam(ParamByName('incubation_days'), R.IncubationDays);
     SetFloatParam(ParamByName('nestling_days'), R.NestlingDays);
     SetFloatParam(ParamByName('active_days'), R.ActiveDays);

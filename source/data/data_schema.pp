@@ -259,7 +259,7 @@ begin
   T.TableName := TBL_BANDS;
   T.DisplayName := LocaleTablesDict[tbBands];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'band_id', rscId, sdtInteger, True, 0, True);
@@ -379,10 +379,10 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
-  // Reported
-  AddField(T, 'band_reported', rscReported, sdtBoolean);
-  T.Fields.Last.DefaultValue := 0;
-  T.Fields.Last.Alignment := taCenter;
+  // Reported - removed v2
+  //AddField(T, 'band_reported', rscReported, sdtBoolean);
+  //T.Fields.Last.DefaultValue := 0;
+  //T.Fields.Last.Alignment := taCenter;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
@@ -429,7 +429,7 @@ begin
   AddField(T, 'taxon_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
   // Scientific name
-  AddField(T, 'taxon_name', rscScientificName, sdtText, True, 100);
+  AddField(T, 'scientific_name', rscScientificName, sdtText, True, 100);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := SCIENTIFIC_NAME_ALIASES;
   T.Fields.Last.DisplayWidth := 230;
@@ -470,14 +470,14 @@ begin
   T.Fields.Last.Aliases.CommaText := 'parent,parent taxon,táxon pai,upper taxon,táxon superior';
   T.Fields.Last.LookupInfo.LookupField := COL_PARENT_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Parent taxon
   AddField(T, 'parent_taxon_name', rscParentTaxon, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.ExportName := 'parent_taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_PARENT_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -487,13 +487,13 @@ begin
   T.Fields.Last.Aliases.CommaText := 'valid,valid taxon,táxon válido';
   T.Fields.Last.LookupInfo.LookupField := COL_VALID_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Valid taxon
   AddField(T, 'valid_name', rscValidName, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.LookupInfo.LookupField := COL_VALID_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -715,14 +715,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -762,21 +762,17 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
   // Right tarsus
-  AddField(T, 'right_leg_below', rscRightTarsus, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'right_tarsus';
+  AddField(T, 'right_tarsus', rscRightTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TARSUS_ALIASES;
   // Left tarsus
-  AddField(T, 'left_leg_below', rscLeftTarsus, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'left_tarsus';
+  AddField(T, 'left_tarsus', rscLeftTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TARSUS_ALIASES;
   // Right tibia
-  AddField(T, 'right_leg_above', rscRightTibia, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'right_tibia';
+  AddField(T, 'right_tibia', rscRightTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
   // Left tibia
-  AddField(T, 'left_leg_above', rscLeftTibia, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'left_tibia';
+  AddField(T, 'left_tibia', rscLeftTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
   // Age
@@ -926,8 +922,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'philornis larvae,larvas de philornis';
   T.Fields.Last.Alignment := taRightJustify;
   // Kipp's distance
-  AddField(T, 'kipps_index', rscKippSDistance, sdtFloat);
-  T.Fields.Last.ExportName := 'kipps_distance';
+  AddField(T, 'kipps_distance', rscKippSDistance, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'kipps distance,kipp''s distance,kipps index,kipp''s index,distância de kipp,índice de kipp';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
@@ -1076,12 +1071,10 @@ begin
     FreeAndNil(Qry);
   end;
   // Initial photo number
-  AddField(T, 'start_photo_number', rscInitialPhotoNr, sdtText, False, 20);
-  T.Fields.Last.ExportName := 'initial_photo_number';
+  AddField(T, 'initial_photo_number', rscInitialPhotoNr, sdtText, False, 20);
   T.Fields.Last.Aliases.CommaText := 'initial photo number,initial photo nr.,initial photo,número da foto inicial,nº da foto inicial,foto inicial';
   // Final photo number
-  AddField(T, 'end_photo_number', rscFinalPhotoNr, sdtText, False, 20);
-  T.Fields.Last.ExportName := 'final_photo_number';
+  AddField(T, 'final_photo_number', rscFinalPhotoNr, sdtText, False, 20);
   T.Fields.Last.Aliases.CommaText := 'final photo number,final photo nr.,final photo,número da foto final,nº da foto final,foto final';
   // Field number
   AddField(T, 'field_number', rscFieldNumber, sdtText, False, 10);
@@ -1200,14 +1193,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, False, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -1218,16 +1211,16 @@ begin
   T.Fields.Last.Aliases.CommaText := 'host egg,ovo do hospedeiro';
   T.Fields.Last.Alignment := taCenter;
   // Observer ID
-  AddField(T, 'researcher_id', rscResearcherID, sdtInteger, False, 0, False, True, tbPeople);
+  AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
-  T.Fields.Last.LookupInfo.LookupField := COL_RESEARCHER_ID;
+  T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Observer
-  AddField(T, 'researcher_name', rscResearcher, sdtText, False, 0, False, False, tbPeople);
+  AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'observer';
-  T.Fields.Last.LookupInfo.LookupField := COL_RESEARCHER_ID;
+  T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.IsVirtual := True;
@@ -1477,14 +1470,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -1708,8 +1701,7 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
-  AddField(T, 'site_acronym', rscAbbreviation, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'site_abbreviation';
+  AddField(T, 'abbreviation', rscAbbreviation, sdtText, False, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
   // Type
@@ -1851,14 +1843,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
@@ -1922,21 +1914,17 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   // Right tarsus
-  AddField(T, 'right_leg_below', rscRightTarsus, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'right_tarsus';
+  AddField(T, 'right_tarsus', rscRightTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TARSUS_ALIASES;
   // Left tarsus
-  AddField(T, 'left_leg_below', rscLeftTarsus, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'left_tarsus';
+  AddField(T, 'left_tarsus', rscLeftTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TARSUS_ALIASES;
   // Right tibia
-  AddField(T, 'right_leg_above', rscRightTibia, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'right_tibia';
+  AddField(T, 'right_tibia', rscRightTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
   // Left tibia
-  AddField(T, 'left_leg_above', rscLeftTibia, sdtText, False, 10);
-  T.Fields.Last.ExportName := 'left_tibia';
+  AddField(T, 'left_tibia', rscLeftTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
   // Sex
@@ -2091,8 +2079,7 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
-  AddField(T, 'acronym', rscAbbreviation, sdtText, True, 15);
-  T.Fields.Last.ExportName := 'abbreviation';
+  AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 15);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
   // Contact person
@@ -2114,8 +2101,7 @@ begin
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
   // Postal code
-  AddField(T, 'zip_code', rscPostalCode, sdtText, False, 15);
-  T.Fields.Last.ExportName := 'postal_code';
+  AddField(T, 'postal_code', rscPostalCode, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := POSTAL_CODE_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
@@ -2487,14 +2473,14 @@ begin
   T.Fields.Last.Aliases.CommaText := 'nidoparasite,nidoparasita,parasite,parasita,parasita de ninhos';
   T.Fields.Last.LookupInfo.LookupField := COL_NIDOPARASITE_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Nidoparasite
   AddField(T, 'nidoparasite_name', rscNidoparasite, sdtText, False, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'nidoparasite_taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_NIDOPARASITE_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -2562,14 +2548,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -2711,14 +2697,14 @@ begin
   T.Fields.Last.Aliases.CommaText := 'support plant,support plant 1,planta suporte,planta suporte 1';
   T.Fields.Last.LookupInfo.LookupField := COL_SUPPORT_PLANT_1_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Support plant 1
   AddField(T, 'support_plant_1_name', rscSupportPlant1, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.ExportName := 'support_plant_1';
   T.Fields.Last.LookupInfo.LookupField := COL_SUPPORT_PLANT_1_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -2728,14 +2714,14 @@ begin
   T.Fields.Last.Aliases.CommaText := 'support plant 2,planta suporte 2';
   T.Fields.Last.LookupInfo.LookupField := COL_SUPPORT_PLANT_2_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Support plant 2
   AddField(T, 'support_plant_2_name', rscSupportPlant2, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.ExportName := 'support_plant_2';
   T.Fields.Last.LookupInfo.LookupField := COL_SUPPORT_PLANT_2_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_TAXON_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -2769,7 +2755,7 @@ begin
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
   // Days building
-  AddField(T, 'construction_days', rscBuildingDays, sdtFloat);
+  AddField(T, 'building_days', rscBuildingDays, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'building days,dias de construção';
   T.Fields.Last.MeasurementUnit := rsUnitDays;
   T.Fields.Last.Alignment := taRightJustify;
@@ -3077,8 +3063,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
-  AddField(T, 'acronym', rscAbbreviation, sdtText, True, 10);
-  T.Fields.Last.ExportName := 'abbreviation';
+  AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
   // Treatment
@@ -3105,13 +3090,13 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   // RG
-  AddField(T, 'national_id_card', rscCPF, sdtText, False, 15);
+  AddField(T, 'id_document_1', rscCPF, sdtText, False, 15);
   T.Fields.Last.ExportName := 'rg_number';
   T.Fields.Last.Aliases.CommaText := 'national id card,rg';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   // CPF
-  AddField(T, 'social_security_number', rscRG, sdtText, False, 15);
+  AddField(T, 'id_document_2', rscRG, sdtText, False, 15);
   T.Fields.Last.ExportName := 'cpf_number';
   T.Fields.Last.Aliases.CommaText := 'social security number,ssn,cpf';
   T.Fields.Last.DisplayWidth := 120;
@@ -3163,8 +3148,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   // Postal code
-  AddField(T, 'zip_code', rscPostalCode, sdtText, False, 15);
-  T.Fields.Last.ExportName := 'postal_code';
+  AddField(T, 'postal_code', rscPostalCode, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := POSTAL_CODE_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
@@ -3435,11 +3419,20 @@ begin
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
-  // Permit filename
-  AddField(T, 'permit_filename', rscFileName, sdtText, False, 200);
-  T.Fields.Last.Aliases.CommaText := 'filename,nome do arquivo';
-  T.Fields.Last.QuickEntryVisible := False;
-  //AddField('permit_file', sdtText);
+  // Permit status
+  AddField(T, 'permit_status', rscStatus, sdtList, True, 5);
+  T.Fields.Last.Rules.ValueList := 'A,R,K,C';
+  with T.Fields.Last.PickList do
+  begin
+    Clear;
+    Add(rsPermitActive);
+    Add(rsPermitReplaced);
+    Add(rsPermitArchived);
+    Add(rsPermitCancelled);
+  end;
+  T.Fields.Last.Aliases.CommaText := STATUS_ALIASES;
+  T.Fields.Last.DisplayWidth := 170;
+  T.Fields.Last.SizePriority := 0;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -3536,7 +3529,7 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
@@ -3930,6 +3923,21 @@ begin
   T.Fields.Last.Aliases.CommaText := 'contact,contato';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  // Project status
+  AddField(T, 'project_status', rscStatus, sdtList, True, 5);
+  T.Fields.Last.Rules.ValueList := 'P,A,D,F,C';
+  with T.Fields.Last.PickList do
+  begin
+    Clear;
+    Add(rsProjectPlanned);
+    Add(rsProjectActive);
+    Add(rsProjectPaused);
+    Add(rsProjectFinished);
+    Add(rsProjectCancelled);
+  end;
+  T.Fields.Last.Aliases.CommaText := STATUS_ALIASES;
+  T.Fields.Last.DisplayWidth := 170;
+  T.Fields.Last.SizePriority := 0;
   // Main goal
   AddField(T, 'main_goal', rscMainGoal, sdtText);
   T.Fields.Last.Aliases.CommaText := 'main goal,objetivo principal,objetivo geral';
@@ -4010,6 +4018,15 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  // Researcher abbreviation
+  AddField(T, 'person_abbrev', rscPerson, sdtText, True, 0, False, False, tbPeople);
+  T.Fields.Last.LookupInfo.LookupField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_ABBREVIATION;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 120;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
   // Manager
   AddField(T, 'project_manager', rscManager, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
@@ -4020,14 +4037,14 @@ begin
   T.Fields.Last.Aliases.CommaText := INSTITUTION_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_ABBREVIATION;
   T.Fields.Last.QuickEntryVisible := False;
   // Institution
   AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
   T.Fields.Last.ExportName := 'institution';
   T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_ABBREVIATION;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -4119,14 +4136,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Nest ID
   AddField(T, 'nest_id', rscNestID, sdtInteger);
@@ -4157,6 +4174,23 @@ begin
   T.Fields.Last.ExportName := 'preparer';
   T.Fields.Last.LookupInfo.LookupField := COL_PREPARER_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  // Institution ID
+  AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
+  T.Fields.Last.Aliases.CommaText := INSTITUTION_ALIASES;
+  T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.QuickEntryVisible := False;
+  // Institution
+  AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
+  T.Fields.Last.ExportName := 'institution';
+  T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
@@ -4214,8 +4248,7 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
-  AddField(T, 'acronym', rscAbbreviation, sdtText, True, 10);
-  T.Fields.Last.ExportName := 'abbreviation';
+  AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
   // Locality ID
@@ -4423,14 +4456,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -4559,8 +4592,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'ebird,is in ebird,está no ebird';
   T.Fields.Last.Alignment := taCenter;
   // Out of sample
-  AddField(T, 'not_surveying', rscOutOfSample, sdtBoolean);
-  T.Fields.Last.ExportName := 'out_of_sample';
+  AddField(T, 'out_of_sample', rscOutOfSample, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'not surveying,out of sample,fora da amostra';
   T.Fields.Last.Alignment := taCenter;
@@ -4769,14 +4801,14 @@ begin
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
   T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
@@ -4827,6 +4859,23 @@ begin
   T.Fields.Last.ExportName := 'egg';
   T.Fields.Last.LookupInfo.LookupField := COL_EGG_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_EGG_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  // Institution ID
+  AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
+  T.Fields.Last.Aliases.CommaText := INSTITUTION_ALIASES;
+  T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.QuickEntryVisible := False;
+  // Institution
+  AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
+  T.Fields.Last.ExportName := 'institution';
+  T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.DisplayWidth := 230;

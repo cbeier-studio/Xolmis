@@ -897,7 +897,7 @@ begin
     tbEggs:           SetupFields('egg_id', 'full_name');
     tbSamplingPlots:  SetupFields('sampling_plot_id', 'full_name');
     tbTaxonRanks:     SetupFields('rank_id', 'rank_name');
-    tbZooTaxa:        SetupFields('zoo_taxa', 'full_name', 'formatted_name');
+    tbZooTaxa:        SetupFields('zoo_taxa', 'scientific_name', 'formatted_name');
     tbProjects:       SetupFields('project_id', 'project_title');
     tbProjectBudgets: SetupFields('budget_id', 'rubric_item');
     tbProjectGoals:   SetupFields('goal_id', 'goal_description');
@@ -1161,7 +1161,7 @@ begin
     FNameSelected := qFind.FieldByName(aNameField).AsString;
 
   if (FTableType = tbZooTaxa) then
-    FNameSelected := GetName('zoo_taxa', 'full_name', 'taxon_id', FKeySelected);
+    FNameSelected := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FKeySelected);
 end;
 
 procedure TdlgFind.TimerFindTimer(Sender: TObject);

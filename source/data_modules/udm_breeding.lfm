@@ -130,9 +130,9 @@ object DMB: TDMB
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT nr.*,'
-      '  p1.acronym AS observer_1_name,'
-      '  p2.acronym AS observer_2_name,'
-      '  z.full_name AS nidoparasite_name'
+      '  p1.abbreviation AS observer_1_name,'
+      '  p2.abbreviation AS observer_2_name,'
+      '  z.scientific_name AS nidoparasite_name'
       'FROM nest_revisions AS nr'
       'LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id'
       'LEFT JOIN people AS p2 ON nr.observer_2_id = p2.person_id'
@@ -616,7 +616,7 @@ object DMB: TDMB
         Precision = -1
       end    
       item
-        Name = 'researcher_id'
+        Name = 'observer_id'
         DataType = ftInteger
         Precision = -1
       end    
@@ -682,7 +682,7 @@ object DMB: TDMB
         Precision = -1
       end    
       item
-        Name = 'researcher_name'
+        Name = 'observer_name'
         DataType = ftString
         Precision = -1
         Size = 10
@@ -723,15 +723,15 @@ object DMB: TDMB
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT e.*,'
-      '  p.acronym AS researcher_name,'
+      '  p.abbreviation AS observer_name,'
       '  i.full_name AS individual_name,'
-      '  z.full_name AS taxon_name,'
+      '  z.scientific_name AS taxon_name,'
       '  z.order_id AS order_id,'
       '  z.family_id AS family_id,'
       '  z.genus_id AS genus_id,'
       '  z.species_id AS species_id'
       'FROM eggs AS e'
-      'LEFT JOIN people AS p ON e.researcher_id = p.person_id'
+      'LEFT JOIN people AS p ON e.observer_id = p.person_id'
       'LEFT JOIN individuals AS i ON e.individual_id = i.individual_id'
       'LEFT JOIN zoo_taxa AS z ON e.taxon_id = z.taxon_id'
       'WHERE (e.active_status = 1)'
@@ -1045,10 +1045,9 @@ object DMB: TDMB
       ReadOnly = False
       Required = False
     end
-    object qEggsresearcher_id: TLongintField
-      DisplayLabel = 'Researcher (ID)'
+    object qEggsobserver_id: TLongintField
       FieldKind = fkData
-      FieldName = 'researcher_id'
+      FieldName = 'observer_id'
       Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
@@ -1056,16 +1055,14 @@ object DMB: TDMB
       Required = False
       Visible = False
     end
-    object qEggsresearcher_name: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Researcher'
+    object qEggsobserver_name: TStringField
       FieldKind = fkData
-      FieldName = 'researcher_name'
+      FieldName = 'observer_name'
       Index = 19
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
-      Required = False
+      Required = True
       Size = 10
     end
     object qEggsdescription: TMemoField

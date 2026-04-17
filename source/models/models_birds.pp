@@ -180,7 +180,7 @@ type
     FSubjectAge: TAge;
     FHowAged: String;
     FSkullOssification: String;
-    FKippsIndex: Double;
+    FKippsDistance: Double;
     FGlucose: Double;
     FHemoglobin: Double;
     FHematocrit: Double;
@@ -196,8 +196,8 @@ type
     FFieldNumber: String;
     FPhotographer1Id: Integer;
     FPhotographer2Id: Integer;
-    FStartPhotoNumber: String;
-    FEndPhotoNumber: String;
+    FInitialPhotoNumber: String;
+    FFinalPhotoNumber: String;
     FCameraName: String;
     FEscaped: Boolean;
     FNeedsReview: Boolean;
@@ -274,7 +274,7 @@ type
     property SubjectAge: TAge read FSubjectAge write FSubjectAge;
     property HowAged: String read FHowAged write FHowAged;
     property SkullOssification: String read FSkullOssification write FSkullOssification;
-    property KippsIndex: Double read FKippsIndex write FKippsIndex;
+    property KippsDistance: Double read FKippsDistance write FKippsDistance;
     property Glucose: Double read FGlucose write FGlucose;
     property Hemoglobin: Double read FHemoglobin write FHemoglobin;
     property Hematocrit: Double read FHematocrit write FHematocrit;
@@ -290,8 +290,8 @@ type
     property FieldNumber: String read FFieldNumber write FFieldNumber;
     property Photographer1Id: Integer read FPhotographer1Id write FPhotographer1Id;
     property Photographer2Id: Integer read FPhotographer2Id write FPhotographer2Id;
-    property StartPhotoNumber: String read FStartPhotoNumber write FStartPhotoNumber;
-    property EndPhotoNumber: String read FEndPhotoNumber write FEndPhotoNumber;
+    property InitialPhotoNumber: String read FInitialPhotoNumber write FInitialPhotoNumber;
+    property FinalPhotoNumber: String read FFinalPhotoNumber write FFinalPhotoNumber;
     property CameraName: String read FCameraName write FCameraName;
     property Escaped: Boolean read FEscaped write FEscaped;
     property NeedsReview: Boolean read FNeedsReview write FNeedsReview;
@@ -1063,7 +1063,7 @@ begin
     FSubjectAge := TCapture(Source).SubjectAge;
     FHowAged := TCapture(Source).HowAged;
     FSkullOssification := TCapture(Source).SkullOssification;
-    FKippsIndex := TCapture(Source).KippsIndex;
+    FKippsDistance := TCapture(Source).KippsDistance;
     FGlucose := TCapture(Source).Glucose;
     FHemoglobin := TCapture(Source).Hemoglobin;
     FHematocrit := TCapture(Source).Hematocrit;
@@ -1079,8 +1079,8 @@ begin
     FFieldNumber := TCapture(Source).FieldNumber;
     FPhotographer1Id := TCapture(Source).Photographer1Id;
     FPhotographer2Id := TCapture(Source).Photographer2Id;
-    FStartPhotoNumber := TCapture(Source).StartPhotoNumber;
-    FEndPhotoNumber := TCapture(Source).EndPhotoNumber;
+    FInitialPhotoNumber := TCapture(Source).InitialPhotoNumber;
+    FFinalPhotoNumber := TCapture(Source).FinalPhotoNumber;
     FCameraName := TCapture(Source).CameraName;
     FEscaped := TCapture(Source).Escaped;
     FNeedsReview := TCapture(Source).NeedsReview;
@@ -1146,7 +1146,7 @@ begin
   FSubjectAge := ageUnknown;
   FHowAged := EmptyStr;
   FSkullOssification := EmptyStr;
-  FKippsIndex := 0.0;
+  FKippsDistance := 0.0;
   FGlucose := 0.0;
   FHemoglobin := 0.0;
   FHematocrit := 0.0;
@@ -1162,8 +1162,8 @@ begin
   FFieldNumber := EmptyStr;
   FPhotographer1Id := 0;
   FPhotographer2Id := 0;
-  FStartPhotoNumber := EmptyStr;
-  FEndPhotoNumber := EmptyStr;
+  FInitialPhotoNumber := EmptyStr;
+  FFinalPhotoNumber := EmptyStr;
   FCameraName := EmptyStr;
   FEscaped := False;
   FNeedsReview := False;
@@ -1309,7 +1309,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscSkullOssification, aOld.SkullOssification, FSkullOssification, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscKippsDistance, aOld.KippsIndex, FKippsIndex, R) then
+  if FieldValuesDiff(rscKippsDistance, aOld.KippsDistance, FKippsDistance, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscGlucose, aOld.Glucose, FGlucose, R) then
     Changes.Add(R);
@@ -1341,9 +1341,9 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscPhotographer2ID, aOld.Photographer2Id, FPhotographer2Id, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscInitialPhotoNr, aOld.StartPhotoNumber, FStartPhotoNumber, R) then
+  if FieldValuesDiff(rscInitialPhotoNr, aOld.InitialPhotoNumber, FInitialPhotoNumber, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscFinalPhotoNr, aOld.EndPhotoNumber, FEndPhotoNumber, R) then
+  if FieldValuesDiff(rscFinalPhotoNr, aOld.FinalPhotoNumber, FFinalPhotoNumber, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscCamera, aOld.CameraName, FCameraName, R) then
     Changes.Add(R);
@@ -1409,7 +1409,7 @@ begin
     FSubjectAge           := StrToAge(Obj.Get('age', ''));
     FHowAged              := Obj.Get('how_was_aged', '');
     FSkullOssification    := Obj.Get('skull_ossification', '');
-    FKippsIndex           := Obj.Get('kipps_index', 0.0);
+    FKippsDistance           := Obj.Get('kipps_distance', 0.0);
     FGlucose              := Obj.Get('glucose', 0.0);
     FHemoglobin           := Obj.Get('hemoglobin', 0.0);
     FHematocrit           := Obj.Get('hematocrit', 0.0);
@@ -1418,8 +1418,8 @@ begin
     FSubjectPhotographed  := Obj.Get('photographed', False);
     FPhotographer1Id      := Obj.Get('photographer_1_id', 0);
     FPhotographer2Id      := Obj.Get('photographer_2_id', 0);
-    FStartPhotoNumber     := Obj.Get('start_photo_number', '');
-    FEndPhotoNumber       := Obj.Get('end_photo_number', '');
+    FInitialPhotoNumber     := Obj.Get('initial_photo_number', '');
+    FFinalPhotoNumber       := Obj.Get('final_photo_number', '');
     FCameraName           := Obj.Get('camera_name', '');
     FRemovedBandId        := Obj.Get('removed_band_id', 0);
     FRightTarsus          := Obj.Get('right_tarsus', '');
@@ -1480,7 +1480,7 @@ begin
     JSONObject.Add('cycle_code', FCycleCode);
     JSONObject.Add('how_was_aged', FHowAged);
     JSONObject.Add('skull_ossification', FSkullOssification);
-    JSONObject.Add('kipps_index', FKippsIndex);
+    JSONObject.Add('kipps_distance', FKippsDistance);
     JSONObject.Add('glucose', FGlucose);
     JSONObject.Add('hemoglobin', FHemoglobin);
     JSONObject.Add('hematocrit', FHematocrit);
@@ -1489,8 +1489,8 @@ begin
     JSONObject.Add('photographed', FSubjectPhotographed);
     JSONObject.Add('photographer_1_id', FPhotographer1Id);
     JSONObject.Add('photographer_2_id', FPhotographer2Id);
-    JSONObject.Add('start_photo_number', FStartPhotoNumber);
-    JSONObject.Add('end_photo_number', FEndPhotoNumber);
+    JSONObject.Add('initial_photo_number', FInitialPhotoNumber);
+    JSONObject.Add('final_photo_number', FFinalPhotoNumber);
     JSONObject.Add('camera_name', FCameraName);
     JSONObject.Add('removed_band_id', FRemovedBandId);
     JSONObject.Add('right_tarsus', FRightTarsus);
@@ -1515,9 +1515,9 @@ begin
     'TarsusLength=%f, TarsusDiameter=%f, ExposedCulmen=%f, BillWidth=%f, BillHeight=%f, NostrilBillTip=%f, ' +
     'SkullLength=%f, RightWingChord=%f, FirstSecondaryChord=%f, TailLength=%f, Fat=%s, BroodPatch=%s, ' +
     'CloacalProtuberance=%s, BodyMolt=%s, FlightFeathersMolt=%s, FlightFeathersWear=%s, MoltLimits=%s, ' +
-    'CycleCode=%s, HowAged=%s, SkullOssification=%s, KippsIndex=%f, Glucose=%f, Hemoglobin=%f, Hematocrit=%f, ' +
+    'CycleCode=%s, HowAged=%s, SkullOssification=%s, KippsDistance=%f, Glucose=%f, Hemoglobin=%f, Hematocrit=%f, ' +
     'BloodSample=%s, FeatherSample=%s, Photographed=%s, Photographer1Id=%d, Photographer2Id=%d, ' +
-    'StartPhotoNumber=%s, EndPhotoNumber=%s, CameraName=%s, RemovedBandId=%d, RightTarsus=%s, LeftTarsus=%s, ' +
+    'InitialPhotoNumber=%s, FinalPhotoNumber=%s, CameraName=%s, RemovedBandId=%d, RightTarsus=%s, LeftTarsus=%s, ' +
     'RightTibia=%s, LeftTibia=%s, Escaped=%s, NeedsReview=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FSurveyId, FTaxonId, FIndividualId, DateToStr(FCaptureDate), TimeToStr(FCaptureTime),
@@ -1525,10 +1525,10 @@ begin
     CAPTURE_TYPES[FCaptureType], SEXES[FSubjectSex], FHowSexed, FBandId, FWeight, FTarsusLength, FTarsusDiameter,
     FExposedCulmen, FBillWidth, FBillHeight, FNostrilBillTip, FSkullLength, FRightWingChord, FFirstSecondaryChord,
     FTailLength, FFat, FBroodPatch, FCloacalProtuberance, FBodyMolt, FFlightFeathersMolt, FFlightFeathersWear,
-    FMoltLimits, FCycleCode, FHowAged, FSkullOssification, FKippsIndex, FGlucose, FHemoglobin, FHematocrit,
+    FMoltLimits, FCycleCode, FHowAged, FSkullOssification, FKippsDistance, FGlucose, FHemoglobin, FHematocrit,
     BoolToStr(FBloodSample, 'True', 'False'), BoolToStr(FFeatherSample, 'True', 'False'),
-    BoolToStr(FSubjectPhotographed, 'True', 'False'), FPhotographer1Id, FPhotographer2Id, FStartPhotoNumber,
-    FEndPhotoNumber, FCameraName, FRemovedBandId, FRightTarsus, FLeftTarsus, FRightTibia, FLeftTibia,
+    BoolToStr(FSubjectPhotographed, 'True', 'False'), FPhotographer1Id, FPhotographer2Id, FInitialPhotoNumber,
+    FFinalPhotoNumber, FCameraName, FRemovedBandId, FRightTarsus, FLeftTarsus, FRightTibia, FLeftTibia,
     BoolToStr(FEscaped, 'True', 'False'), BoolToStr(FNeedsReview, 'True', 'False'), FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -1742,10 +1742,10 @@ begin
     R.HowSexed := FieldByName('how_sexed').AsString;
     R.BandId := FieldByName('band_id').AsInteger;
     R.RemovedBandId := FieldByName('removed_band_id').AsInteger;
-    R.RightTarsus := FieldByName('right_leg_below').AsString;
-    R.LeftTarsus := FieldByName('left_leg_below').AsString;
-    R.RightTibia := FieldByName('right_leg_above').AsString;
-    R.LeftTibia := FieldByName('left_leg_above').AsString;
+    R.RightTarsus := FieldByName('right_tarsus').AsString;
+    R.LeftTarsus := FieldByName('left_tarsus').AsString;
+    R.RightTibia := FieldByName('right_tibia').AsString;
+    R.LeftTibia := FieldByName('left_tibia').AsString;
     R.Weight := FieldByName('weight').AsFloat;
     R.TarsusLength := FieldByName('tarsus_length').AsFloat;
     R.TarsusDiameter := FieldByName('tarsus_diameter').AsFloat;
@@ -1782,7 +1782,7 @@ begin
     R.SubjectAge := StrToAge(FieldByName('subject_age').AsString);
     R.HowAged := FieldByName('how_aged').AsString;
     R.SkullOssification := FieldByName('skull_ossification').AsString;
-    R.KippsIndex := FieldByName('kipps_index').AsFloat;
+    R.KippsDistance := FieldByName('kipps_distance').AsFloat;
     R.Glucose := FieldByName('glucose').AsFloat;
     R.Hemoglobin := FieldByName('hemoglobin').AsFloat;
     R.Hematocrit := FieldByName('hematocrit').AsFloat;
@@ -1798,8 +1798,8 @@ begin
     R.FieldNumber := FieldByName('field_number').AsString;
     R.Photographer1Id := FieldByName('photographer_1_id').AsInteger;
     R.Photographer2Id := FieldByName('photographer_2_id').AsInteger;
-    R.StartPhotoNumber := FieldByName('start_photo_number').AsString;
-    R.EndPhotoNumber := FieldByName('end_photo_number').AsString;
+    R.InitialPhotoNumber := FieldByName('initial_photo_number').AsString;
+    R.FinalPhotoNumber := FieldByName('final_photo_number').AsString;
     R.CameraName := FieldByName('camera_name').AsString;
     R.Escaped := FieldByName('escaped').AsBoolean;
     R.NeedsReview := FieldByName('needs_review').AsBoolean;
@@ -1868,14 +1868,14 @@ begin
     R.BandId := StrToIntDef(ARow.Values['band_id'], 0);
   if ARow.IndexOfName('removed_band_id') >= 0 then
     R.RemovedBandId := StrToIntDef(ARow.Values['removed_band_id'], 0);
-  if ARow.IndexOfName('right_leg_below') >= 0 then
-    R.RightTarsus := ARow.Values['right_leg_below'];
-  if ARow.IndexOfName('left_leg_below') >= 0 then
-    R.LeftTarsus := ARow.Values['left_leg_below'];
-  if ARow.IndexOfName('right_leg_above') >= 0 then
-    R.RightTibia := ARow.Values['right_leg_above'];
-  if ARow.IndexOfName('left_leg_above') >= 0 then
-    R.LeftTibia := ARow.Values['left_leg_above'];
+  if ARow.IndexOfName('right_tarsus') >= 0 then
+    R.RightTarsus := ARow.Values['right_tarsus'];
+  if ARow.IndexOfName('left_tarsus') >= 0 then
+    R.LeftTarsus := ARow.Values['left_tarsus'];
+  if ARow.IndexOfName('right_tibia') >= 0 then
+    R.RightTibia := ARow.Values['right_tibia'];
+  if ARow.IndexOfName('left_tibia') >= 0 then
+    R.LeftTibia := ARow.Values['left_tibia'];
   if ARow.IndexOfName('weight') >= 0 then
     R.Weight := StrToFloatDef(ARow.Values['weight'], 0);
   if ARow.IndexOfName('tarsus_length') >= 0 then
@@ -1936,8 +1936,8 @@ begin
     R.HowAged := ARow.Values['how_aged'];
   if ARow.IndexOfName('skull_ossification') >= 0 then
     R.SkullOssification := ARow.Values['skull_ossification'];
-  if ARow.IndexOfName('kipps_index') >= 0 then
-    R.KippsIndex := StrToFloatDef(ARow.Values['kipps_index'], 0);
+  if ARow.IndexOfName('kipps_distance') >= 0 then
+    R.KippsDistance := StrToFloatDef(ARow.Values['kipps_distance'], 0);
   if ARow.IndexOfName('glucose') >= 0 then
     R.Glucose := StrToFloatDef(ARow.Values['glucose'], 0);
   if ARow.IndexOfName('hemoglobin') >= 0 then
@@ -1968,10 +1968,10 @@ begin
     R.Photographer1Id := StrToIntDef(ARow.Values['photographer_1_id'], 0);
   if ARow.IndexOfName('photographer_2_id') >= 0 then
     R.Photographer2Id := StrToIntDef(ARow.Values['photographer_2_id'], 0);
-  if ARow.IndexOfName('start_photo_number') >= 0 then
-    R.StartPhotoNumber := ARow.Values['start_photo_number'];
-  if ARow.IndexOfName('end_photo_number') >= 0 then
-    R.EndPhotoNumber := ARow.Values['end_photo_number'];
+  if ARow.IndexOfName('initial_photo_number') >= 0 then
+    R.InitialPhotoNumber := ARow.Values['initial_photo_number'];
+  if ARow.IndexOfName('final_photo_number') >= 0 then
+    R.FinalPhotoNumber := ARow.Values['final_photo_number'];
   if ARow.IndexOfName('camera_name') >= 0 then
     R.CameraName := ARow.Values['camera_name'];
   if ARow.IndexOfName('escaped') >= 0 then
@@ -2039,7 +2039,7 @@ begin
     SetStrParam(ParamByName('subject_age'), AGES[R.SubjectAge]);
     SetStrParam(ParamByName('how_aged'), R.HowAged);
     SetStrParam(ParamByName('skull_ossification'), R.SkullOssification);
-    SetFloatParam(ParamByName('kipps_index'), R.KippsIndex);
+    SetFloatParam(ParamByName('kipps_distance'), R.KippsDistance);
     SetFloatParam(ParamByName('glucose'), R.Glucose);
     SetFloatParam(ParamByName('hemoglobin'), R.Hemoglobin);
     SetFloatParam(ParamByName('hematocrit'), R.Hematocrit);
@@ -2050,12 +2050,14 @@ begin
     if (R.Photographer1Id > 0) then
       R.SubjectPhotographed := True;
     ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
-    SetStrParam(ParamByName('start_photo_number'), R.StartPhotoNumber);
-    SetStrParam(ParamByName('end_photo_number'), R.EndPhotoNumber);
+    SetStrParam(ParamByName('initial_photo_number'), R.InitialPhotoNumber);
+    SetStrParam(ParamByName('final_photo_number'), R.FinalPhotoNumber);
     SetStrParam(ParamByName('camera_name'), R.CameraName);
     SetForeignParam(ParamByName('removed_band_id'), R.RemovedBandId);
-    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_tarsus'), R.RightTarsus);
+    SetStrParam(ParamByName('left_tarsus'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_tibia'), R.RightTibia);
+    SetStrParam(ParamByName('left_tibia'), R.LeftTibia);
     ParamByName('escaped').AsBoolean := R.Escaped;
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
@@ -2138,7 +2140,7 @@ begin
     SetStrParam(ParamByName('subject_age'), AGES[R.SubjectAge]);
     SetStrParam(ParamByName('how_aged'), R.HowAged);
     SetStrParam(ParamByName('skull_ossification'), R.SkullOssification);
-    SetFloatParam(ParamByName('kipps_index'), R.KippsIndex);
+    SetFloatParam(ParamByName('kipps_distance'), R.KippsDistance);
     SetFloatParam(ParamByName('glucose'), R.Glucose);
     SetFloatParam(ParamByName('hemoglobin'), R.Hemoglobin);
     SetFloatParam(ParamByName('hematocrit'), R.Hematocrit);
@@ -2149,12 +2151,14 @@ begin
     if (R.Photographer1Id > 0) then
       R.SubjectPhotographed := True;
     ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
-    SetStrParam(ParamByName('start_photo_number'), R.StartPhotoNumber);
-    SetStrParam(ParamByName('end_photo_number'), R.EndPhotoNumber);
+    SetStrParam(ParamByName('initial_photo_number'), R.InitialPhotoNumber);
+    SetStrParam(ParamByName('final_photo_number'), R.FinalPhotoNumber);
     SetStrParam(ParamByName('camera_name'), R.CameraName);
     SetForeignParam(ParamByName('removed_band_id'), R.RemovedBandId);
-    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_tarsus'), R.RightTarsus);
+    SetStrParam(ParamByName('left_tarsus'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_tibia'), R.RightTibia);
+    SetStrParam(ParamByName('left_tibia'), R.LeftTibia);
     ParamByName('escaped').AsBoolean := R.Escaped;
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('marked_status').AsBoolean := R.Marked;
@@ -2544,12 +2548,12 @@ begin
     Add('AND ((band_id = :band_id) OR (removed_band_id = :band_id))');
     if (aRightLeg <> EmptyStr) then
     begin
-      Add('AND (right_leg_below = :right_tarsus)');
+      Add('AND (right_tarsus = :right_tarsus)');
       ParamByName('right_tarsus').AsString := aRightLeg;
     end;
     if (aLeftLeg <> EmptyStr) then
     begin
-      Add('AND (left_leg_below = :left_tarsus)');
+      Add('AND (left_tarsus = :left_tarsus)');
       ParamByName('left_tarsus').AsString := aLeftLeg;
     end;
     ParamByName('taxon_id').AsInteger := aTaxon;
@@ -2623,10 +2627,10 @@ begin
     R.BandId := FieldByName('band_id').AsInteger;
     R.DoubleBandId := FieldByName('double_band_id').AsInteger;
     R.RemovedBandId := FieldByName('removed_band_id').AsInteger;
-    R.RightTarsus := FieldByName('right_leg_below').AsString;
-    R.LeftTarsus := FieldByName('left_leg_below').AsString;
-    R.RightTibia := FieldByName('right_leg_above').AsString;
-    R.LeftTibia := FieldByName('left_leg_above').AsString;
+    R.RightTarsus := FieldByName('right_tarsus').AsString;
+    R.LeftTarsus := FieldByName('left_tarsus').AsString;
+    R.RightTibia := FieldByName('right_tibia').AsString;
+    R.LeftTibia := FieldByName('left_tibia').AsString;
     R.FatherId := FieldByName('father_id').AsInteger;
     R.MotherId := FieldByName('mother_id').AsInteger;
     R.DeathDate := FieldByName('death_date').AsString;
@@ -2683,14 +2687,14 @@ begin
     R.DoubleBandId := StrToIntDef(ARow.Values['double_band_id'], 0);
   if ARow.IndexOfName('removed_band_id') >= 0 then
     R.RemovedBandId := StrToIntDef(ARow.Values['removed_band_id'], 0);
-  if ARow.IndexOfName('right_leg_below') >= 0 then
-    R.RightTarsus := ARow.Values['right_leg_below'];
-  if ARow.IndexOfName('left_leg_below') >= 0 then
-    R.LeftTarsus := ARow.Values['left_leg_below'];
-  if ARow.IndexOfName('right_leg_above') >= 0 then
-    R.RightTibia := ARow.Values['right_leg_above'];
-  if ARow.IndexOfName('left_leg_above') >= 0 then
-    R.LeftTibia := ARow.Values['left_leg_above'];
+  if ARow.IndexOfName('right_tarsus') >= 0 then
+    R.RightTarsus := ARow.Values['right_tarsus'];
+  if ARow.IndexOfName('left_tarsus') >= 0 then
+    R.LeftTarsus := ARow.Values['left_tarsus'];
+  if ARow.IndexOfName('right_tibia') >= 0 then
+    R.RightTibia := ARow.Values['right_tibia'];
+  if ARow.IndexOfName('left_tibia') >= 0 then
+    R.LeftTibia := ARow.Values['left_tibia'];
   if ARow.IndexOfName('father_id') >= 0 then
     R.FatherId := StrToIntDef(ARow.Values['father_id'], 0);
   if ARow.IndexOfName('mother_id') >= 0 then
@@ -2769,10 +2773,10 @@ begin
     SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], True));
     R.FullName := GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], False);
     SetStrParam(ParamByName('full_name'), R.FullName);
-    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
-    SetStrParam(ParamByName('right_leg_above'), R.RightTibia);
-    SetStrParam(ParamByName('left_leg_above'), R.LeftTibia);
+    SetStrParam(ParamByName('right_tarsus'), R.RightTarsus);
+    SetStrParam(ParamByName('left_tarsus'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_tibia'), R.RightTibia);
+    SetStrParam(ParamByName('left_tibia'), R.LeftTibia);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -2858,10 +2862,10 @@ begin
     SetStrParam(ParamByName('formatted_name'), GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], True));
     R.FullName := GetIndividualFullname(R.TaxonId, R.BandId, R.RightTarsus, R.LeftTarsus, SEXES[R.Sex], False);
     SetStrParam(ParamByName('full_name'), R.FullName);
-    SetStrParam(ParamByName('right_leg_below'), R.RightTarsus);
-    SetStrParam(ParamByName('left_leg_below'), R.LeftTarsus);
-    SetStrParam(ParamByName('right_leg_above'), R.RightTibia);
-    SetStrParam(ParamByName('left_leg_above'), R.LeftTibia);
+    SetStrParam(ParamByName('right_tarsus'), R.RightTarsus);
+    SetStrParam(ParamByName('left_tarsus'), R.LeftTarsus);
+    SetStrParam(ParamByName('right_tibia'), R.RightTibia);
+    SetStrParam(ParamByName('left_tibia'), R.LeftTibia);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('individual_id').AsInteger := R.Id;
 

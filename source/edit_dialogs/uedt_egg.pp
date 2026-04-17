@@ -423,15 +423,15 @@ begin
     if FEgg.TaxonId > 0 then
     begin
       FTaxonId := FEgg.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     eMeasureDate.Text := DateToStr(Today);
     GetVolume;
 
-    if (FEgg.ResearcherId = 0) and (xSettings.RememberCollectionInfo) then
+    if (FEgg.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
     begin
-      FEgg.ResearcherId := xSettings.LastObserverId;
-      FObserverId := FEgg.ResearcherId;
+      FEgg.ObserverId := xSettings.LastObserverId;
+      FObserverId := FEgg.ObserverId;
       eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
   end
@@ -454,8 +454,8 @@ begin
   if not DateIsNull(FEgg.MeasureDate) then
     eMeasureDate.Text := DateToStr(FEgg.MeasureDate);
   FTaxonId := FEgg.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
-  FObserverId := FEgg.ResearcherId;
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  FObserverId := FEgg.ObserverId;
   eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   case FEgg.EggShape of
     esUnknown: cbShape.ItemIndex := cbShape.Items.IndexOf(rsEggUnknown);
@@ -557,7 +557,7 @@ begin
   FEgg.EggSeq         := eEggSeq.Value;
   FEgg.MeasureDate    := StrToDate(eMeasureDate.Text);
   FEgg.TaxonId        := FTaxonId;
-  FEgg.ResearcherId   := FObserverId;
+  FEgg.ObserverId   := FObserverId;
   FEgg.EggShape       := StrToEggShape(cbShape.Text);
   FEgg.EggStage       := eStage.Text;
   FEgg.EggshellColor  := eShellColor.Text;

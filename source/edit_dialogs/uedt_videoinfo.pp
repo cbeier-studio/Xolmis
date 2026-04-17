@@ -502,7 +502,7 @@ begin
   else
     cbVideoType.ItemIndex := -1;
   end;
-  eVideoFile.Text := FVideo.Filename;
+  eVideoFile.Text := FVideo.FilePath;
   FLocalityId := FVideo.LocalityId;
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FVideo.Longitude);
@@ -515,7 +515,7 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FVideo.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FVideo.IndividualId;
   FCaptureId := FVideo.CaptureId;
   FSurveyId := FVideo.SurveyId;
@@ -570,7 +570,7 @@ begin
   FVideo.RecordingDate  := TextToDate(eRecordingDate.Text);
   FVideo.RecordingTime  := TextToTime(eRecordingTime.Text);
   FVideo.VideoType      := StrToVideoType(cbVideoType.Text);
-  FVideo.Filename       := eVideoFile.Text;
+  FVideo.FilePath       := eVideoFile.Text;
   FVideo.LocalityId     := FLocalityId;
   FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);
   FVideo.Latitude       := StrToFloatOrZero(eLatitude.Text);

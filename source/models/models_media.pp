@@ -55,7 +55,7 @@ type
     FImageDate: TDate;
     FImageTime: TTime;
     FImageType: TImageType;
-    FFilename: String;
+    FFilePath: String;
     FSubtitle: String;
     FAuthorId: Integer;
     FCoordinatePrecision: TCoordinatePrecision;
@@ -93,7 +93,7 @@ type
     property ImageDate: TDate read FImageDate write FImageDate;
     property ImageTime: TTime read FImageTime write FImageTime;
     property ImageType: TImageType read FImageType write FImageType;
-    property Filename: String read FFilename write FFilename;
+    property FilePath: String read FFilePath write FFilePath;
     property Subtitle: String read FSubtitle write FSubtitle;
     property AuthorId: Integer read FAuthorId write FAuthorId;
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
@@ -139,7 +139,7 @@ type
     FRecordingDate: TDate;
     FRecordingTime: TTime;
     FAudioType: TAudioType;
-    FFilename: String;
+    FFilePath: String;
     FSubtitle: String;
     FAuthorId: Integer;
     FCoordinatePrecision: TCoordinatePrecision;
@@ -186,7 +186,7 @@ type
     property RecordingDate: TDate read FRecordingDate write FRecordingDate;
     property RecordingTime: TTime read FRecordingTime write FRecordingTime;
     property AudioType: TAudioType read FAudioType write FAudioType;
-    property Filename: String read FFilename write FFilename;
+    property FilePath: String read FFilePath write FFilePath;
     property Subtitle: String read FSubtitle write FSubtitle;
     property AuthorId: Integer read FAuthorId write FAuthorId;
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
@@ -243,7 +243,7 @@ type
     FDocumentDate: TDate;
     FDocumentTime: TTime;
     FDocumentType: TFileCategory;
-    FFilename: String;
+    FFilePath: String;
     FAuthorId: Integer;
     FPermitId: Integer;
     FProjectId: Integer;
@@ -278,7 +278,7 @@ type
     property DocumentDate: TDate read FDocumentDate write FDocumentDate;
     property DocumentTime: TTime read FDocumentTime write FDocumentTime;
     property DocumentType: TFileCategory read FDocumentType write FDocumentType;
-    property FileName: String read FFilename write FFilename;
+    property FilePath: String read FFilePath write FFilePath;
     property AuthorId: Integer read FAuthorId write FAuthorId;
     property PermitId: Integer read FPermitId write FPermitId;
     property ProjectId: Integer read FProjectId write FProjectId;
@@ -332,7 +332,7 @@ type
     FRecordingDate: TDate;
     FRecordingTime: TTime;
     FVideoType: TVideoType;
-    FFilename: String;
+    FFilePath: String;
     FSubtitle: String;
     FAuthorId: Integer;
     FLongitude: Double;
@@ -372,7 +372,7 @@ type
     property RecordingDate: TDate read FRecordingDate write FRecordingDate;
     property RecordingTime: TTime read FRecordingTime write FRecordingTime;
     property VideoType: TVideoType read FVideoType write FVideoType;
-    property Filename: String read FFilename write FFilename;
+    property FilePath: String read FFilePath write FFilePath;
     property Subtitle: String read FSubtitle write FSubtitle;
     property AuthorId: Integer read FAuthorId write FAuthorId;
     property Longitude: Extended read FLongitude write FLongitude;
@@ -439,7 +439,7 @@ begin
     FImageDate := TImageData(Source).ImageDate;
     FImageTime := TImageData(Source).ImageTime;
     FImageType := TImageData(Source).ImageType;
-    FFilename := TImageData(Source).Filename;
+    FFilePath := TImageData(Source).FilePath;
     FSubtitle := TImageData(Source).Subtitle;
     FAuthorId := TImageData(Source).AuthorId;
     FCoordinatePrecision := TImageData(Source).CoordinatePrecision;
@@ -469,7 +469,7 @@ begin
   FImageDate := NullDate;
   FImageTime := NullTime;
   FImageType := itEmpty;
-  FFilename := EmptyStr;
+  FFilePath := EmptyStr;
   FSubtitle := EmptyStr;
   FAuthorId := 0;
   FCoordinatePrecision := cpEmpty;
@@ -522,7 +522,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscType, aOld.ImageType, FImageType, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+  if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
     Changes.Add(R);
@@ -584,7 +584,7 @@ begin
     FImageDate      := Obj.Get('image_date', NullDate);
     FImageTime      := Obj.Get('image_time', NullTime);
     FImageType      := StrtoImageType(Obj.Get('image_type', ''));
-    FFilename       := Obj.Get('filename', '');
+    FFilePath       := Obj.Get('file_path', '');
     FSubtitle       := Obj.Get('subtitle', '');
     FAuthorId       := Obj.Get('author_id', 0);
     FLocalityId     := Obj.Get('locality_id', 0);
@@ -620,7 +620,7 @@ begin
     JSONObject.Add('image_date', FImageDate);
     JSONObject.Add('image_time', FImageTime);
     JSONObject.Add('image_type', IMAGE_TYPES[FImageType]);
-    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('file_path', FFilePath);
     JSONObject.Add('subtitle', FSubtitle);
     JSONObject.Add('author_id', FAuthorId);
     JSONObject.Add('locality_id', FLocalityId);
@@ -651,12 +651,12 @@ end;
 
 function TImageData.ToString: String;
 begin
-  Result := Format('ImageData(Id=%d, ImageDate=%s, ImageTime=%s, ImageType=%s, Filename=%s, Subtitle=%s, AuthorId=%d, ' +
+  Result := Format('ImageData(Id=%d, ImageDate=%s, ImageTime=%s, ImageType=%s, FilePath=%s, Subtitle=%s, AuthorId=%d, ' +
     'LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
     'FeatherId=%d, SightingId=%d, SpecimenId=%d, SurveyId=%d, NestId=%d, NestRevisionId=%d, EggId=%d, LicenseType=%s, ' +
     'LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, DateToStr(FImageDate), TimeToStr(FImageTime), IMAGE_TYPES[FImageType], FFilename, FSubtitle, FAuthorId,
+    [FId, DateToStr(FImageDate), TimeToStr(FImageTime), IMAGE_TYPES[FImageType], FFilePath, FSubtitle, FAuthorId,
     FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
     FCaptureId, FFeatherId, FSightingId, FSpecimenId, FSurveyId, FNestId, FNestRevisionId, FEggId, FLicenseType,
     FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
@@ -666,7 +666,7 @@ end;
 
 function TImageData.Validate(out Msg: string): Boolean;
 begin
-  if FFilename = EmptyStr then
+  if FFilePath = EmptyStr then
   begin
     Msg := 'Filename required.';
     Exit(False);
@@ -822,7 +822,7 @@ begin
     R.ImageDate := FieldByName('image_date').AsDateTime;
     R.ImageTime := FieldByName('image_time').AsDateTime;
     R.ImageType := StrtoImageType(FieldByName('image_type').AsString);
-    R.Filename := FieldByName('image_filename').AsString;
+    R.FilePath := FieldByName('file_path').AsString;
     R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -873,8 +873,8 @@ begin
     SetDateParam(ParamByName('image_date'), R.ImageDate);
     SetTimeParam(ParamByName('image_time'), R.ImageTime);
     ParamByName('image_type').AsString := IMAGE_TYPES[R.ImageType];
-    ParamByName('image_filename').AsString := R.Filename;
-    if R.Filename <> EmptyStr then
+    ParamByName('file_path').AsString := R.FilePath;
+    if R.FilePath <> EmptyStr then
     begin
       { #todo : Insert image thumbnail using Params }
     end
@@ -941,8 +941,8 @@ begin
     SetDateParam(ParamByName('image_date'), R.ImageDate);
     SetTimeParam(ParamByName('image_time'), R.ImageTime);
     ParamByName('image_type').AsString := IMAGE_TYPES[R.ImageType];
-    ParamByName('image_filename').AsString := R.Filename;
-    if R.Filename <> EmptyStr then
+    ParamByName('file_path').AsString := R.FilePath;
+    if R.FilePath <> EmptyStr then
     begin
       { #todo : Insert image thumbnail using Params }
     end
@@ -994,7 +994,7 @@ begin
     FRecordingDate := TAudioData(Source).RecordingDate;
     FRecordingTime := TAudioData(Source).RecordingTime;
     FAudioType := TAudioData(Source).AudioType;
-    FFilename := TAudioData(Source).Filename;
+    FFilePath := TAudioData(Source).FilePath;
     FSubtitle := TAudioData(Source).Subtitle;
     FAuthorId := TAudioData(Source).AuthorId;
     FCoordinatePrecision := TAudioData(Source).CoordinatePrecision;
@@ -1035,7 +1035,7 @@ begin
   FRecordingDate := NullDate;
   FRecordingTime := NullTime;
   FAudioType := atUnknown;
-  FFilename := EmptyStr;
+  FFilePath := EmptyStr;
   FSubtitle := EmptyStr;
   FAuthorId := 0;
   FCoordinatePrecision := cpEmpty;
@@ -1098,7 +1098,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscType, aOld.AudioType, FAudioType, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+  if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
     Changes.Add(R);
@@ -1181,7 +1181,7 @@ begin
     FRecordingDate    := Obj.Get('recording_date', NullDate);
     FRecordingTime    := Obj.Get('recording_time', NullTime);
     FAudioType        := StrToAudioType(Obj.Get('audio_type', ''));
-    FFilename         := Obj.Get('filename', '');
+    FFilePath         := Obj.Get('file_path', '');
     FSubtitle         := Obj.Get('subtitle', '');
     FAuthorId         := Obj.Get('author_id', 0);
     FLocalityId       := Obj.Get('locality_id', 0);
@@ -1227,7 +1227,7 @@ begin
     JSONObject.Add('recording_date', FRecordingDate);
     JSONObject.Add('recording_time', FRecordingTime);
     JSONObject.Add('audio_type', AUDIO_TYPES[FAudioType]);
-    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('file_path', FFilePath);
     JSONObject.Add('subtitle', FSubtitle);
     JSONObject.Add('author_id', FAuthorId);
     JSONObject.Add('locality_id', FLocalityId);
@@ -1267,14 +1267,14 @@ end;
 
 function TAudioData.ToString: String;
 begin
-  Result := Format('AudioData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, AudioType=%s, Filename=%s, Subtitle=%s, ' +
+  Result := Format('AudioData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, AudioType=%s, FilePath=%s, Subtitle=%s, ' +
     'AuthorId=%d, LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, ' +
     'SightingId=%d, SpecimenId=%d, SurveyId=%d, Temperature=%f, CloudCover=%d, Precipitation=%s, RelativeHumidity=%f, ' +
     'WindSpeedBft=%d, SubjectsTally=%d, Distance=%f, Context=%s, Habitat=%s, PlaybackUsed=%s, RecorderModel=%s, ' +
     'MicModel=%s, FilterModel=%s, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), AUDIO_TYPES[FAudioType], FFilename, FSubtitle,
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), AUDIO_TYPES[FAudioType], FFilePath, FSubtitle,
     FAuthorId, FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
     FSightingId, FSpecimenId, FSurveyId, FTemperature, FCloudCover, PRECIPITATION_VALUES[FPrecipitation],
     FRelativeHumidity, FWindSpeedBft, FSubjectsTally, FDistance, FContext, FHabitat, BoolToStr(FPlaybackUsed, 'True', 'False'),
@@ -1286,7 +1286,7 @@ end;
 
 function TAudioData.Validate(out Msg: string): Boolean;
 begin
-  if FFilename = EmptyStr then
+  if FFilePath = EmptyStr then
   begin
     Msg := 'Filename required.';
     Exit(False);
@@ -1444,8 +1444,8 @@ begin
     R.RecordingTime := FieldByName('recording_time').AsDateTime;
     R.AudioType := StrToAudioType(FieldByName('audio_type').AsString);
     R.Subtitle := FieldByName('subtitle').AsString;
-    R.Filename := FieldByName('audio_file').AsString;
-    R.AuthorId := FieldByName('recorder_id').AsInteger;
+    R.FilePath := FieldByName('file_path').AsString;
+    R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.SurveyId := 0;
@@ -1505,9 +1505,9 @@ begin
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
     ParamByName('audio_type').AsString := AUDIO_TYPES[R.AudioType];
 
-    ParamByName('audio_file').AsString := R.Filename;
+    ParamByName('file_path').AsString := R.FilePath;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
-    SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
@@ -1577,9 +1577,9 @@ begin
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
     ParamByName('audio_type').AsString := AUDIO_TYPES[R.AudioType];
 
-    ParamByName('audio_file').AsString := R.Filename;
+    ParamByName('file_path').AsString := R.FilePath;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
-    //SetForeignParam(ParamByName('author_id'), R.AuthorId);
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     ParamByName('coordinate_precision').AsString := COORDINATE_PRECISIONS[R.CoordinatePrecision];
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
@@ -1634,7 +1634,7 @@ begin
     FDocumentDate := TDocumentData(Source).DocumentDate;
     FDocumentTime := TDocumentData(Source).DocumentTime;
     FDocumentType := TDocumentData(Source).DocumentType;
-    FFilename := TDocumentData(Source).FileName;
+    FFilePath := TDocumentData(Source).FilePath;
     FAuthorId := TDocumentData(Source).AuthorId;
     FPermitId := TDocumentData(Source).PermitId;
     FProjectId := TDocumentData(Source).ProjectId;
@@ -1663,7 +1663,7 @@ begin
   FDocumentDate := NullDate;
   FDocumentTime := NullTime;
   FDocumentType := fcOther;
-  FFilename := EmptyStr;
+  FFilePath := EmptyStr;
   FAuthorId := 0;
   FPermitId := 0;
   FProjectId := 0;
@@ -1715,7 +1715,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscType, aOld.DocumentType, FDocumentType, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+  if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
     Changes.Add(R);
@@ -1772,7 +1772,8 @@ begin
     FDocumentTime   := Obj.Get('document_time', NullTime);
     FName           := Obj.Get('name', '');
     FDocumentType   := StrToDocumentType(Obj.Get('document_type', ''));
-    FFilename       := Obj.Get('filename', '');
+    FFilePath       := Obj.Get('file_path', '');
+    FAuthorId       := Obj.Get('author_id', 0);
     FPermitId       := Obj.Get('permit_id', 0);
     FProjectId      := Obj.Get('project_id', 0);
     FPersonId       := Obj.Get('person_id', 0);
@@ -1805,7 +1806,8 @@ begin
     JSONObject.Add('document_time', FDocumentTime);
     JSONObject.Add('name', FName);
     JSONObject.Add('document_type', FILE_CATEGORIES[FDocumentType]);
-    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('file_path', FFilePath);
+    JSONObject.Add('author_id', FAuthorId);
     JSONObject.Add('permit_id', FPermitId);
     JSONObject.Add('project_id', FProjectId);
     JSONObject.Add('person_id', FPersonId);
@@ -1832,12 +1834,12 @@ end;
 
 function TDocumentData.ToString: String;
 begin
-  Result := Format('Band(Id=%d, DocumentDate=%s, DocumentTime=%s, Name=%s, DocumentType=%s, Filename=%s, PermitId=%d, ' +
+  Result := Format('Band(Id=%d, DocumentDate=%s, DocumentTime=%s, Name=%s, DocumentType=%s, FilePath=%s, AuthorId=%d, PermitId=%d, ' +
     'ProjectId=%d, PersonId=%d, IndividualId=%d, CaptureId=%d, SightingId=%d, SpecimenId=%d, ExpeditionId=%d, ' +
     'SurveyId=%d, NestId=%d, SamplingPlotId=%d, MethodId=%d, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, ' +
     'LicenseNotes=%s, LicenseUri=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, DateToStr(FDocumentDate), TimeToStr(FDocumentTime), FName, FILE_CATEGORIES[FDocumentType], FFilename, FPermitId, FProjectId,
+    [FId, DateToStr(FDocumentDate), TimeToStr(FDocumentTime), FName, FILE_CATEGORIES[FDocumentType], FFilePath, FAuthorId, FPermitId, FProjectId,
     FPersonId, FIndividualId, FCaptureId, FSightingId, FSpecimenId, FExpeditionId, FSurveyId, FNestId,
     FSamplingPlotId, FMethodId, FLicenseType, FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -1846,7 +1848,7 @@ end;
 
 function TDocumentData.Validate(out Msg: string): Boolean;
 begin
-  if FFilename = EmptyStr then
+  if FFilePath = EmptyStr then
   begin
     Msg := 'Filename required.';
     Exit(False);
@@ -1971,10 +1973,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (capture_id = :capture_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('capture_id').AsInteger := aCaptureId;
     Open;
     if not EOF then
@@ -1997,10 +1999,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (expedition_id = :expedition_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('expedition_id').AsInteger := aExpeditionId;
     Open;
     if not EOF then
@@ -2023,10 +2025,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (individual_id = :individual_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('individual_id').AsInteger := aIndividualId;
     Open;
     if not EOF then
@@ -2048,10 +2050,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (method_id = :method_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('method_id').AsInteger := aMethodId;
     Open;
     if not EOF then
@@ -2073,10 +2075,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (nest_id = :nest_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('nest_id').AsInteger := aNestId;
     Open;
     if not EOF then
@@ -2098,10 +2100,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (permit_id = :permit_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('permit_id').AsInteger := aPermitId;
     Open;
     if not EOF then
@@ -2124,10 +2126,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (project_id = :project_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('project_id').AsInteger := aProjectId;
     Open;
     if not EOF then
@@ -2150,10 +2152,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (net_station_id = :net_station_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('net_station_id').AsInteger := aSamplingPlotId;
     Open;
     if not EOF then
@@ -2176,10 +2178,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (sighting_id = :sighting_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('sighting_id').AsInteger := aSightingId;
     Open;
     if not EOF then
@@ -2202,10 +2204,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (specimen_id = :specimen_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('specimen_id').AsInteger := aSpecimenId;
     Open;
     if not EOF then
@@ -2227,10 +2229,10 @@ begin
   try
     Clear;
     Add(xProvider.Documents.SelectTable(swcNone));
-    Add('WHERE (document_path = :document_path)');
+    Add('WHERE (file_path = :file_path)');
     Add('AND (survey_id = :survey_id)');
 
-    ParamByName('document_path').AsString := aFilePath;
+    ParamByName('file_path').AsString := aFilePath;
     ParamByName('survey_id').AsInteger := aSurveyId;
     Open;
     if not EOF then
@@ -2285,8 +2287,8 @@ begin
     R.DocumentDate := FieldByName('document_date').AsDateTime;
     R.DocumentTime := FieldByName('document_time').AsDateTime;
     R.DocumentType := StrToDocumentType(FieldByName('document_type').AsString);
-    R.Filename := FieldByName('document_path').AsString;
-    //R.AuthorId := FieldByName('author_id').AsInteger;
+    R.FilePath := FieldByName('file_path').AsString;
+    R.AuthorId := FieldByName('author_id').AsInteger;
     R.PermitId := FieldByName('permit_id').AsInteger;
     R.ProjectId := FieldByName('project_id').AsInteger;
     R.PersonId := FieldByName('person_id').AsInteger;
@@ -2335,7 +2337,8 @@ begin
     SetTimeParam(ParamByName('document_time'), R.DocumentTime);
     ParamByName('document_name').AsString := R.Name;
     ParamByName('document_type').AsString := FILE_CATEGORIES[R.DocumentType];
-    ParamByName('document_path').AsString := R.Filename;
+    ParamByName('file_path').AsString := R.FilePath;
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('permit_id'), R.PermitId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
     SetForeignParam(ParamByName('person_id'), R.PersonId);
@@ -2395,7 +2398,8 @@ begin
     SetTimeParam(ParamByName('document_time'), R.DocumentTime);
     ParamByName('document_name').AsString := R.Name;
     ParamByName('document_type').AsString := FILE_CATEGORIES[R.DocumentType];
-    ParamByName('document_path').AsString := R.Filename;
+    ParamByName('file_path').AsString := R.FilePath;
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('permit_id'), R.PermitId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
     SetForeignParam(ParamByName('person_id'), R.PersonId);
@@ -2439,7 +2443,7 @@ begin
     FRecordingDate := TVideoData(Source).RecordingDate;
     FRecordingTime := TVideoData(Source).RecordingTime;
     FVideoType := TVideoData(Source).VideoType;
-    FFilename := TVideoData(Source).Filename;
+    FFilePath := TVideoData(Source).FilePath;
     FSubtitle := TVideoData(Source).Subtitle;
     FAuthorId := TVideoData(Source).AuthorId;
     FLongitude := TVideoData(Source).Longitude;
@@ -2473,7 +2477,7 @@ begin
   FRecordingDate := NullDate;
   FRecordingTime := NullTime;
   FVideoType := vtUnknown;
-  FFilename := EmptyStr;
+  FFilePath := EmptyStr;
   FSubtitle := EmptyStr;
   FAuthorId := 0;
   FLongitude := 0.0;
@@ -2529,7 +2533,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscType, aOld.VideoType, FVideoType, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscFilename, aOld.FileName, FFilename, R) then
+  if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
     Changes.Add(R);
@@ -2598,7 +2602,7 @@ begin
     FRecordingDate  := Obj.Get('recording_date', NullDate);
     FRecordingTime  := Obj.Get('recording_time', NullTime);
     FVideoType      := StrToVideoType(Obj.Get('video_type', ''));
-    FFilename       := Obj.Get('filename', '');
+    FFilePath       := Obj.Get('file_path', '');
     FSubtitle       := Obj.Get('subtitle', '');
     FAuthorId       := Obj.Get('author_id', 0);
     FLocalityId     := Obj.Get('locality_id', 0);
@@ -2637,7 +2641,7 @@ begin
     JSONObject.Add('recording_date', FRecordingDate);
     JSONObject.Add('recording_time', FRecordingTime);
     JSONObject.Add('video_type', VIDEO_TYPES[FVideoType]);
-    JSONObject.Add('filename', FFilename);
+    JSONObject.Add('file_path', FFilePath);
     JSONObject.Add('subtitle', FSubtitle);
     JSONObject.Add('author_id', FAuthorId);
     JSONObject.Add('locality_id', FLocalityId);
@@ -2670,14 +2674,14 @@ end;
 
 function TVideoData.ToString: String;
 begin
-  Result := Format('VideoData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, VideoType=%s, Filename=%s, Subtitle=%s, ' +
+  Result := Format('VideoData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, VideoType=%s, FilePath=%s, Subtitle=%s, ' +
     'AuthorId=%d, LocalityId=%d, Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
     'SightingId=%d, NestId=%d, NestRevisionId=%d, SurveyId=%d, ' +
     'Distance=%f, Context=%s, Habitat=%s, CameraModel=%s, ' +
     'LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), VIDEO_TYPES[FVideoType], FFilename, FSubtitle,
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), VIDEO_TYPES[FVideoType], FFilePath, FSubtitle,
     FAuthorId, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FTaxonId, FIndividualId, FCaptureId,
     FSightingId, FNestId, FNestRevisionId, FSurveyId,
     FDistance, FContext, FHabitat,
@@ -2689,7 +2693,7 @@ end;
 
 function TVideoData.Validate(out Msg: string): Boolean;
 begin
-  if FFilename = EmptyStr then
+  if FFilePath = EmptyStr then
   begin
     Msg := 'Filename required.';
     Exit(False);
@@ -2847,8 +2851,8 @@ begin
     R.RecordingTime := FieldByName('recording_time').AsDateTime;
     R.VideoType := StrToVideoType(FieldByName('video_type').AsString);
     R.Subtitle := FieldByName('subtitle').AsString;
-    R.Filename := FieldByName('file_path').AsString;
-    R.AuthorId := FieldByName('recorder_id').AsInteger;
+    R.FilePath := FieldByName('file_path').AsString;
+    R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.CaptureId := FieldByName('capture_id').AsInteger;
@@ -2901,9 +2905,9 @@ begin
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
     ParamByName('video_type').AsString := VIDEO_TYPES[R.VideoType];
 
-    ParamByName('file_path').AsString := R.Filename;
+    ParamByName('file_path').AsString := R.FilePath;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
-    SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
@@ -2966,9 +2970,9 @@ begin
     SetTimeParam(ParamByName('recording_time'), R.RecordingTime);
     ParamByName('video_type').AsString := VIDEO_TYPES[R.VideoType];
 
-    ParamByName('file_path').AsString := R.Filename;
+    ParamByName('file_path').AsString := R.FilePath;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
-    SetForeignParam(ParamByName('recorder_id'), R.AuthorId);
+    SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);

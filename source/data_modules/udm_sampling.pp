@@ -59,7 +59,6 @@ type
     qCapturescountry_id: TLongintField;
     qCapturesculmen_length: TFloatField;
     qCapturescycle_code: TStringField;
-    qCapturesend_photo_number: TStringField;
     qCapturesescaped: TBooleanField;
     qCapturesexported_status: TBooleanField;
     qCapturesexposed_culmen: TFloatField;
@@ -68,6 +67,7 @@ type
     qCapturesfeather_sample: TBooleanField;
     qCapturesfeces_sample: TBooleanField;
     qCapturesfield_number: TStringField;
+    qCapturesfinal_photo_number: TStringField;
     qCapturesfirst_secondary_chord: TFloatField;
     qCapturesflight_feathers_molt: TStringField;
     qCapturesflight_feathers_wear: TStringField;
@@ -79,11 +79,12 @@ type
     qCaptureshow_aged: TStringField;
     qCaptureshow_sexed: TStringField;
     qCapturesindividual_id: TLongintField;
+    qCapturesinitial_photo_number: TStringField;
     qCapturesinsert_date: TDateTimeField;
-    qCaptureskipps_index: TFloatField;
+    qCaptureskipps_distance: TFloatField;
     qCaptureslatitude: TFloatField;
-    qCapturesleft_leg_above: TStringField;
-    qCapturesleft_leg_below: TStringField;
+    qCapturesleft_tarsus: TStringField;
+    qCapturesleft_tibia: TStringField;
     qCaptureslocality_id: TLongintField;
     qCaptureslocality_name: TStringField;
     qCaptureslongitude: TFloatField;
@@ -107,13 +108,12 @@ type
     qCapturesproject_id: TLongintField;
     qCapturesremoved_band_id: TLongintField;
     qCapturesremoved_band_name: TStringField;
-    qCapturesright_leg_above: TStringField;
-    qCapturesright_leg_below: TStringField;
+    qCapturesright_tarsus: TStringField;
+    qCapturesright_tibia: TStringField;
     qCapturesright_wing_chord: TFloatField;
     qCapturesskull_length: TFloatField;
     qCapturesskull_ossification: TStringField;
     qCapturesspecies_id: TLongintField;
-    qCapturesstart_photo_number: TStringField;
     qCapturesstate_id: TLongintField;
     qCapturessubject_age: TStringField;
     qCapturessubject_collected: TBooleanField;
@@ -252,10 +252,10 @@ type
     qSightingsnotes: TMemoField;
     qSightingsnot_aged_tally: TStringField;
     qSightingsnot_sexed_tally: TStringField;
-    qSightingsnot_surveying: TBooleanField;
     qSightingsobserver_id: TLongintField;
     qSightingsobserver_name: TStringField;
     qSightingsorder_id: TLongintField;
+    qSightingsout_of_sample: TBooleanField;
     qSightingsrecaptures_tally: TLongintField;
     qSightingssighting_date: TDateField;
     qSightingssighting_id: TAutoIncField;
@@ -364,7 +364,7 @@ type
     qSurveyTeamexported_status: TBooleanField;
     qSurveyTeaminsert_date: TDateTimeField;
     qSurveyTeammarked_status: TBooleanField;
-    qSurveyTeamperson_acronym: TStringField;
+    qSurveyTeamperson_abbrev: TStringField;
     qSurveyTeamperson_color: TStringField;
     qSurveyTeamperson_id: TLongintField;
     qSurveyTeamperson_name: TStringField;

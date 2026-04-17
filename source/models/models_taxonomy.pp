@@ -186,7 +186,7 @@ begin
   inherited Assign(Source);
   if Source is TTaxon then
   begin
-    FFullName := TTaxon(Source).FullName;
+    FScientificName := TTaxon(Source).ScientificName;
     FFormattedName := TTaxon(Source).FormattedName;
     FAuthorship := TTaxon(Source).Authorship;
     FParentTaxonId := TTaxon(Source).ParentTaxonId;
@@ -276,7 +276,7 @@ begin
   if aOld = nil then
     Exit(False);
 
-  if FieldValuesDiff(rscScientificName, aOld.FullName, FFullName, R) then
+  if FieldValuesDiff(rscScientificName, aOld.ScientificName, FScientificName, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscScientificName + ' (HTML)', aOld.FormattedName, FFormattedName, R) then
     Changes.Add(R);
@@ -359,7 +359,7 @@ var
 begin
   Obj := TJSONObject(GetJSON(AJSONString));
   try
-    FFullName               := Obj.Get('full_name', '');
+    FScientificName               := Obj.Get('scientific_name', '');
     FAuthorship             := Obj.Get('authorship', '');
     FFormattedName          := Obj.Get('formatted_name', '');
     FEnglishName            := Obj.Get('english_name', '');
@@ -404,7 +404,7 @@ var
 begin
   JSONObject := TJSONObject.Create;
   try
-    JSONObject.Add('full_name', FFullName);
+    JSONObject.Add('scientific_name', FScientificName);
     JSONObject.Add('authorship', FAuthorship);
     JSONObject.Add('formatted_name', FFormattedName);
     JSONObject.Add('english_name', FEnglishName);
@@ -447,14 +447,14 @@ end;
 
 function TTaxon.ToString: String;
 begin
-  Result := Format('Band(Id=%d, FullName=%s, Authorship=%s, FormattedName=%s, EnglishName=%s, PortugueseName=%s, ' +
+  Result := Format('Band(Id=%d, ScientificName=%s, Authorship=%s, FormattedName=%s, EnglishName=%s, PortugueseName=%s, ' +
     'SpanishName=%s, ValidId=%d, Rank=%s, ParentTaxonId=%d, OrderId=%d, FamilyId=%d, SubfamilyId=%d, GenusId=%d, ' +
     'SpeciesId=%d, SubspeciesGroupId=%d, SubspeciesGroupName=%s, IncertaeSedis=%d, SortNum=%f, QuickCode=%s, ' +
     'IucnStatus=%s, Extinct=%s, ExtinctionYear=%s, Distribution=%s, EbirdCode=%s, ClementsTaxonomy=%s, ' +
     'IocTaxonomy=%s, IocEnglishName=%s, IocParentTaxonId=%d, IocRank=%s, IocValidId=%d, IocDistribution=%s, ' +
     'IocSortNum=%f, CbroTaxonomy=%s, OtherPortugueseNames=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FAuthorship, FFormattedName, FEnglishName, FPortugueseName, FSpanishName, FValidId,
+    [FId, FScientificName, FAuthorship, FFormattedName, FEnglishName, FPortugueseName, FSpanishName, FValidId,
     ZOOLOGICAL_RANKS[FRank], FParentTaxonId, FOrderId, FFamilyId, FSubfamilyId, FGenusId, FSpeciesId,
     FSubspeciesGroupId, FSubspeciesGroupEpithet, FIncertaeSedis, FSortNum, FQuickCode, FIucnStatus,
     BoolToStr(FExtinct, 'True', 'False'), FExtinctionYear, FDistribution, FEbirdCode,
@@ -467,9 +467,9 @@ end;
 
 function TTaxon.Validate(out Msg: string): Boolean;
 begin
-  if FFullName = EmptyStr then
+  if FScientificName = EmptyStr then
   begin
-    Msg := 'Fullname required.';
+    Msg := 'ScientificName required.';
     Exit(False);
   end;
 
@@ -622,12 +622,12 @@ begin
   with aDataSet do
   begin
     R.Id := FieldByName('taxon_id').AsInteger;
-    R.FullName := FieldByName('full_name').AsString;
+    R.ScientificName := FieldByName('scientific_name').AsString;
     R.FormattedName := FieldByName('formatted_name').AsString;
     R.ParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
     if FieldByName('rank_id').AsInteger > 0 then
     begin
-      RankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('rank_id').AsInteger);
+      RankAbbrev := GetName('taxon_ranks', 'abbreviation', 'rank_id', FieldByName('rank_id').AsInteger);
       R.Rank := StringToZooRank(RankAbbrev);
     end;
     R.Authorship := FieldByName('authorship').AsString;
@@ -656,7 +656,7 @@ begin
     R.IocParentTaxonId := FieldByName('ioc_parent_taxon_id').AsInteger;
     if FieldByName('ioc_rank_id').AsInteger > 0 then
     begin
-      IocRankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', FieldByName('ioc_rank_id').AsInteger);
+      IocRankAbbrev := GetName('taxon_ranks', 'abbreviation', 'rank_id', FieldByName('ioc_rank_id').AsInteger);
       R.IocRank := StringToZooRank(IocRankAbbrev);
     end;
     R.IocValidId := FieldByName('ioc_valid_id').AsInteger;
@@ -687,15 +687,15 @@ begin
     raise Exception.Create('HydrateFromRow: Expected TTaxon');
 
   R := TTaxon(E);
-  if ARow.IndexOfName('full_name') >= 0 then
-    R.FullName := ARow.Values['full_name'];
+  if ARow.IndexOfName('scientific_name') >= 0 then
+    R.ScientificName := ARow.Values['full_name'];
   if ARow.IndexOfName('formatted_name') >= 0 then
     R.FormattedName := ARow.Values['formatted_name'];
   if ARow.IndexOfName('parent_taxon_id') >= 0 then
     R.ParentTaxonId := StrToIntDef(ARow.Values['parent_taxon_id'], 0);
   if ARow.IndexOfName('rank_id') >= 0 then
   begin
-    RankAbbrev := GetName('taxon_ranks', 'rank_acronym', 'rank_id', StrToIntDef(ARow.Values['rank_id'], 0));
+    RankAbbrev := GetName('taxon_ranks', 'abbreviation', 'rank_id', StrToIntDef(ARow.Values['rank_id'], 0));
     R.Rank := StringToZooRank(RankAbbrev);
   end;
   if ARow.IndexOfName('authorship') >= 0 then
@@ -761,14 +761,14 @@ begin
     Clear;
     Add(xProvider.ZooTaxa.Insert);
 
-    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('scientific_name').AsString := R.ScientificName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
     SetStrParam(ParamByName('formatted_name'), R.FormattedName);
     SetStrParam(ParamByName('english_name'), R.EnglishName);
     SetStrParam(ParamByName('portuguese_name'), R.PortugueseName);
     SetStrParam(ParamByName('spanish_name'), R.SpanishName);
     SetStrParam(ParamByName('quick_code'), R.QuickCode);
-    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.Rank]);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', ZOOLOGICAL_RANKS[R.Rank]);
     SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
     SetForeignParam(ParamByName('valid_id'), R.ValidId);
     SetStrParam(ParamByName('iucn_status'), R.IucnStatus);
@@ -780,7 +780,7 @@ begin
     SetStrParam(ParamByName('ebird_code'), R.EbirdCode);
     ParamByName('clements_taxonomy').AsBoolean := R.ClementsTaxonomy;
     ParamByName('ioc_taxonomy').AsBoolean := R.IocTaxonomy;
-    SetForeignParam(ParamByName('ioc_rank_id'), GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.IocRank]));
+    SetForeignParam(ParamByName('ioc_rank_id'), GetKey('taxon_ranks', 'rank_id', 'abbreviation', ZOOLOGICAL_RANKS[R.IocRank]));
     SetForeignParam(ParamByName('ioc_parent_taxon_id'), R.IocParentTaxonId);
     SetForeignParam(ParamByName('ioc_valid_id'), R.IocValidId);
     SetFloatParam(ParamByName('ioc_sort_num'), R.IocSortNum);
@@ -865,14 +865,14 @@ begin
     Clear;
     Add(xProvider.ZooTaxa.Update);
 
-    ParamByName('full_name').AsString := R.FullName;
+    ParamByName('scientific_name').AsString := R.ScientificName;
     SetStrParam(ParamByName('authorship'), R.Authorship);
     SetStrParam(ParamByName('formatted_name'), R.FormattedName);
     SetStrParam(ParamByName('english_name'), R.EnglishName);
     SetStrParam(ParamByName('portuguese_name'), R.PortugueseName);
     SetStrParam(ParamByName('spanish_name'), R.SpanishName);
     SetStrParam(ParamByName('quick_code'), R.QuickCode);
-    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.Rank]);
+    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', ZOOLOGICAL_RANKS[R.Rank]);
     SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
     SetForeignParam(ParamByName('valid_id'), R.ValidId);
     SetStrParam(ParamByName('iucn_status'), R.IucnStatus);
@@ -884,7 +884,7 @@ begin
     SetStrParam(ParamByName('ebird_code'), R.EbirdCode);
     ParamByName('clements_taxonomy').AsBoolean := R.ClementsTaxonomy;
     ParamByName('ioc_taxonomy').AsBoolean := R.IocTaxonomy;
-    SetForeignParam(ParamByName('ioc_rank_id'), GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[R.IocRank]));
+    SetForeignParam(ParamByName('ioc_rank_id'), GetKey('taxon_ranks', 'rank_id', 'abbreviation', ZOOLOGICAL_RANKS[R.IocRank]));
     SetForeignParam(ParamByName('ioc_parent_taxon_id'), R.IocParentTaxonId);
     SetForeignParam(ParamByName('ioc_valid_id'), R.IocValidId);
     SetFloatParam(ParamByName('ioc_sort_num'), R.IocSortNum);
@@ -1207,7 +1207,7 @@ begin
   begin
     R.Id := FieldByName('rank_id').AsInteger;
     R.Name := FieldByName('rank_name').AsString;
-    R.Abbreviation := FieldByName('rank_acronym').AsString;
+    R.Abbreviation := FieldByName('abbreviation').AsString;
     R.RankIndex := FieldByName('rank_seq').AsInteger;
     R.MainRank := FieldByName('main_rank').AsBoolean;
     R.Subrank := FieldByName('subrank').AsBoolean;

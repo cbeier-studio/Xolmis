@@ -493,7 +493,7 @@ begin
         eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
     end;
     FTaxonId := GetFieldValue('captures', 'taxon_id', 'capture_id', FCaptureId);
-    eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
     FLocalityId := GetFieldValue('captures', 'locality_id', 'capture_id', FCaptureId);
     eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
     FObserverId := GetFieldValue('captures', 'bander_id', 'capture_id', FCaptureId);
@@ -517,7 +517,7 @@ begin
           eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
       end;
       FTaxonId := GetFieldValue('captures', 'taxon_id', 'capture_id', FCaptureId);
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
       FLocalityId := GetFieldValue('captures', 'locality_id', 'capture_id', FCaptureId);
       eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
       FObserverId := GetFieldValue('captures', 'bander_id', 'capture_id', FCaptureId);
@@ -576,7 +576,7 @@ begin
   if FindDlg(tbIndividuals, eIndividual, FIndividualId) then
   begin
     FTaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', FIndividualId);
-    eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
   end;
 end;
 
@@ -590,7 +590,7 @@ begin
     if FindDlg(tbIndividuals, eIndividual, FIndividualId, Key) then
     begin
       FTaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', FIndividualId);
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
     end;
     Key := #0;
   end;
@@ -692,7 +692,7 @@ begin
         eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
     end;
     FTaxonId := GetFieldValue('sightings', 'taxon_id', 'sighting_id', FSightingId);
-    eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
     FLocalityId := GetFieldValue('sightings', 'locality_id', 'sighting_id', FSightingId);
     eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
     FObserverId := GetFieldValue('sightings', 'observer_id', 'sighting_id', FSightingId);
@@ -716,7 +716,7 @@ begin
           eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
       end;
       FTaxonId := GetFieldValue('sightings', 'taxon_id', 'sighting_id', FSightingId);
-      eTaxon.Text := GetName('zoo_taxa', 'full_name', 'taxon_id', FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
       FLocalityId := GetFieldValue('sightings', 'locality_id', 'sighting_id', FSightingId);
       eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
       FObserverId := GetFieldValue('sightings', 'observer_id', 'sighting_id', FSightingId);

@@ -648,7 +648,7 @@ function TSurveyTeamsSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT st.*, ' +
-      'p.acronym AS person_acronym, ' +
+      'p.abbreviation AS person_abbrev, ' +
       'p.full_name AS person_name, ' +
       'p.profile_color AS person_color ' +
     'FROM survey_team AS st ' +

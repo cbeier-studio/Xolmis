@@ -191,7 +191,7 @@ begin
     aDataSet.FieldByName('found_date').AsDateTime := StrToDate(JSONObject.Get('foundTime', ''));
     aDataSet.FieldByName('last_date').AsDateTime := StrToDate(JSONObject.Get('lastTime', ''));
     aDataSet.FieldByName('field_number').AsString := JSONObject.Get('fieldNumber', '');
-    aDataSet.FieldByName('taxon_id').AsInteger := GetKey('zoo_taxa', 'taxon_id', 'full_name', JSONObject.Get('speciesName', ''));
+    aDataSet.FieldByName('taxon_id').AsInteger := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', JSONObject.Get('speciesName', ''));
     aDataSet.FieldByName('locality_id').AsInteger := GetKey('gazetteer', 'site_id', 'site_name', JSONObject.Get('localityName', ''));
     aDataSet.FieldByName('longitude').AsFloat := JSONObject.Get('longitude', 0.0);
     aDataSet.FieldByName('latitude').AsFloat := JSONObject.Get('latitude', 0.0);
@@ -537,7 +537,7 @@ begin
   Nest := TNest.Create();
   try
     aLocality := GetSiteKey(aNest.FLocalityName);
-    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, aNest.FSpeciesName);
+    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, aNest.FSpeciesName);
 
     Repo.FindByFieldNumber(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime, Nest);
     if (Nest.Id > 0) then
@@ -561,7 +561,7 @@ begin
   Specimen := TSpecimen.Create();
   try
     aLocality := GetSiteKey(aSpecimen.FLocality);
-    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, aSpecimen.FSpeciesName);
+    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, aSpecimen.FSpeciesName);
     DecodeDate(aSpecimen.FSampleTime, y, m, d);
 
     Repo.FindByFieldNumber(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality, Specimen);
@@ -605,7 +605,7 @@ begin
   // Observer
   if gridMap.Col = 2 then
   begin
-    if FindDlg(tbPeople, gridMap, aKey, '', 'acronym') then
+    if FindDlg(tbPeople, gridMap, aKey, '', 'abbreviation') then
     begin
       aObserverName := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, aKey);
       case FContentType of
@@ -804,7 +804,7 @@ begin
           // if egg does not exist, insert it
           Egg.ToEgg(aEgg);
           aEgg.NestId := Nest.FNestKey;
-          aEgg.ResearcherId := aObserverId;
+          aEgg.ObserverId := aObserverId;
           aEgg.EggSeq := StrToInt(ExtractDelimited(2, Egg.FFieldNumber, ['-']));
           Repo.Insert(aEgg);
           // write record history
@@ -1097,7 +1097,7 @@ begin
       for Poi in Species.FPoiList do
       begin
         aPoi.Clear;
-        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Species.FSpeciesName);
+        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Species.FSpeciesName);
         aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
         aRepo.FindBy(COL_POI_NAME, Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]), aPoi);
@@ -1220,7 +1220,7 @@ begin
       for Species in Inventory.FSpeciesList do
       begin
         aSighting.Clear;
-        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME, Species.FSpeciesName);
+        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Species.FSpeciesName);
         aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
 
         aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, aObserverId, aSighting);

@@ -33,6 +33,7 @@ type
     cbDocumentType: TComboBox;
     cbLicenseType: TComboBox;
     dsLink: TDataSource;
+    eAuthor: TEditButton;
     eLicenseYear: TEdit;
     eLicenseUri: TEdit;
     eLicenseOwner: TEdit;
@@ -41,6 +42,7 @@ type
     eDocumentTime: TEdit;
     eDocumentDate: TEditButton;
     eDocumentPath: TEditButton;
+    lblAuthor: TLabel;
     lblDocumentPath: TLabel;
     lblDocumentType: TLabel;
     lblLicenseYear: TLabel;
@@ -52,6 +54,7 @@ type
     lblDocumentTime: TLabel;
     lblLicenseType: TLabel;
     lineBottom: TShapeLineBGRA;
+    pAuthor: TPanel;
     pDocumentPath: TPanel;
     pDocumentType: TPanel;
     pBottom: TPanel;
@@ -68,6 +71,8 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure cbDocumentTypeKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
+    procedure eAuthorButtonClick(Sender: TObject);
+    procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eDocumentDateButtonClick(Sender: TObject);
     procedure eDocumentDateEditingDone(Sender: TObject);
     procedure eDocumentPathButtonClick(Sender: TObject);
@@ -152,6 +157,39 @@ begin
   //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
   //else
   //  sbSave.Enabled := IsRequiredFilled;
+end;
+
+procedure TedtDocumentInfo.eAuthorButtonClick(Sender: TObject);
+begin
+  FindDlg(tbPeople, eAuthor, FAuthorId);
+end;
+
+procedure TedtDocumentInfo.eAuthorKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbPeople, eAuthor, FAuthorId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    FAuthorId := 0;
+    eAuthor.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtDocumentInfo.eDocumentDateButtonClick(Sender: TObject);
@@ -260,9 +298,10 @@ begin
     cbDocumentType.Text := rsDocOther;
   end;
   eDocumentTitle.Text := FDocument.Name;
+  eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FDocument.AuthorId);
   eDocumentDate.Text := DateToStr(FDocument.DocumentDate);
   eDocumentTime.Text := TimeToStr(FDocument.DocumentTime);
-  eDocumentPath.Text := FDocument.FileName;
+  eDocumentPath.Text := FDocument.FilePath;
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FDocument.LicenseType);
   eLicenseYear.Text := IntToStr(FDocument.LicenseYear);
   eLicenseOwner.Text := FDocument.LicenseOwner;
@@ -300,9 +339,10 @@ procedure TedtDocumentInfo.SetRecord;
 begin
   FDocument.DocumentType := StrToDocumentType(cbDocumentType.Text);
   FDocument.Name         := eDocumentTitle.Text;
+  FDocument.AuthorId     := FAuthorId;
   FDocument.DocumentDate := TextToDate(eDocumentDate.Text);
   FDocument.DocumentTime := TextToTime(eDocumentTime.Text);
-  FDocument.FileName     := eDocumentPath.Text;
+  FDocument.FilePath     := eDocumentPath.Text;
   FDocument.LicenseType  := cbLicenseType.Text;
   FDocument.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
   FDocument.LicenseOwner := eLicenseOwner.Text;

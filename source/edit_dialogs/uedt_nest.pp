@@ -638,7 +638,7 @@ begin
     if FNest.TaxonId > 0 then
     begin
       FTaxonId := FNest.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
 
     if (FNest.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
@@ -670,7 +670,7 @@ end;
 procedure TedtNest.GetRecord;
 begin
   FTaxonId := FNest.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   eFieldNumber.Text := FNest.FieldNumber;
   case FNest.NestFate of
     nfLoss:     cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestLost);
@@ -738,15 +738,15 @@ begin
   end;
   eHeightAboveGround.Value := FNest.HeightAboveGround;
   FSupportPlant1Id := FNest.SupportPlant1Id;
-  eSupportPlant1.Text := GetName('botanic_taxa', COL_TAXON_NAME, COL_TAXON_ID, FSupportPlant1Id);
+  eSupportPlant1.Text := GetName('botanic_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FSupportPlant1Id);
   FSupportPlant2Id := FNest.SupportPlant2Id;
-  eSupportPlant2.Text := GetName('botanic_taxa', COL_TAXON_NAME, COL_TAXON_ID, FSupportPlant2Id);
+  eSupportPlant2.Text := GetName('botanic_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FSupportPlant2Id);
   eOtherSupport.Text := FNest.OtherSupport;
   ePlantHeight.Value := FNest.PlantHeight;
   ePlantDbh.Value := FNest.PlantDbh;
   ePlantMaxDiameter.Value := FNest.PlantMaxDiameter;
   ePlantMinDiameter.Value := FNest.PlantMinDiameter;
-  eBuildingDays.Value := FNest.ConstructionDays;
+  eBuildingDays.Value := FNest.BuildingDays;
   eIncubatingDays.Value := FNest.IncubationDays;
   eNestlingDays.Value := FNest.NestlingDays;
   eActiveDays.Value := FNest.ActiveDays;
@@ -855,7 +855,7 @@ begin
   FNest.PlantDbh            := ePlantDbh.Value;
   FNest.PlantMaxDiameter    := ePlantMaxDiameter.Value;
   FNest.PlantMinDiameter    := ePlantMinDiameter.Value;
-  FNest.ConstructionDays    := eBuildingDays.Value;
+  FNest.BuildingDays    := eBuildingDays.Value;
   FNest.IncubationDays      := eIncubatingDays.Value;
   FNest.NestlingDays        := eNestlingDays.Value;
   FNest.ActiveDays          := eActiveDays.Value;

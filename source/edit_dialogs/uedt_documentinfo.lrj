@@ -15,5 +15,7 @@
 {"hash":183169082,"name":"tedtdocumentinfo.lbllicensenotes.caption","sourcebytes":[76,105,99,101,110,115,101,32,110,111,116,101,115,58],"value":"License notes:"},
 {"hash":92521290,"name":"tedtdocumentinfo.lbllicensetype.caption","sourcebytes":[76,105,99,101,110,115,101,32,116,121,112,101,58],"value":"License type:"},
 {"hash":92700058,"name":"tedtdocumentinfo.lbllicenseyear.caption","sourcebytes":[76,105,99,101,110,115,101,32,121,101,97,114,58],"value":"License year:"},
-{"hash":207239850,"name":"tedtdocumentinfo.lbllicenseuri.caption","sourcebytes":[76,105,99,101,110,115,101,32,85,82,76,58],"value":"License URL:"}
+{"hash":207239850,"name":"tedtdocumentinfo.lbllicenseuri.caption","sourcebytes":[76,105,99,101,110,115,101,32,85,82,76,58],"value":"License URL:"},
+{"hash":147519002,"name":"tedtdocumentinfo.lblauthor.caption","sourcebytes":[65,117,116,104,111,114,58],"value":"Author:"},
+{"hash":113355522,"name":"tedtdocumentinfo.eauthor.buttonhint","sourcebytes":[70,105,110,100,32,97,117,116,104,111,114],"value":"Find author"}
 ]}

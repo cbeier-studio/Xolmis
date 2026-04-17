@@ -528,7 +528,7 @@ begin
   else
     cbAudioType.ItemIndex := -1;
   end;
-  eAudioFile.Text := FAudio.Filename;
+  eAudioFile.Text := FAudio.FilePath;
   FLocalityId := FAudio.LocalityId;
   eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FAudio.Longitude);
@@ -541,7 +541,7 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FAudio.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_FULL_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FAudio.IndividualId;
   FSightingId := FAudio.SightingId;
   FSpecimenId := FAudio.SpecimenId;
@@ -616,7 +616,7 @@ begin
   FAudio.RecordingDate := TextToDate(eRecordingDate.Text);
   FAudio.RecordingTime := TextToTime(eRecordingTime.Text);
   FAudio.AudioType     := StrToAudioType(cbAudioType.Text);
-  FAudio.Filename      := eAudioFile.Text;
+  FAudio.FilePath      := eAudioFile.Text;
   FAudio.LocalityId    := FLocalityId;
   FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
   FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);

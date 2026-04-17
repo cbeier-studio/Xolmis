@@ -96,7 +96,7 @@ begin
       'audio_type        VARCHAR (15),' +
       'locality_id       INTEGER,' +
       'recording_date    DATE,' +
-      'recorder_id       INTEGER,' +
+      'author_id       INTEGER,' +
       'recording_time    TIME,' +
       'longitude         REAL,' +
       'latitude          REAL,' +
@@ -119,7 +119,7 @@ begin
       'license_uri       VARCHAR (200),' +
       'license_notes     VARCHAR (100),' +
       'license_owner     VARCHAR (150),' +
-      'audio_file        VARCHAR (250),' +
+      'file_path        VARCHAR (250),' +
       'subtitle          TEXT,' +
       'notes             TEXT,' +
       'user_inserted     INTEGER,' +
@@ -151,7 +151,7 @@ begin
       'audio_type, ' +
       'locality_id, ' +
       'recording_date, ' +
-      'recorder_id, ' +
+      'author_id, ' +
       'recording_time, ' +
       'coordinate_precision, ' +
       'longitude, ' +
@@ -174,7 +174,7 @@ begin
       'license_uri, ' +
       'license_notes, ' +
       'license_owner, ' +
-      'audio_file, ' +
+      'file_path, ' +
       'subtitle, ' +
       'notes, ' +
       'user_inserted, ' +
@@ -188,7 +188,7 @@ begin
       ':audio_type, ' +
       ':locality_id, ' +
       'date(:recording_date), ' +
-      ':recorder_id, ' +
+      ':author_id, ' +
       'time(:recording_time), ' +
       ':coordinate_precision, ' +
       ':longitude, ' +
@@ -211,7 +211,7 @@ begin
       ':license_uri, ' +
       ':license_notes, ' +
       ':license_owner, ' +
-      ':audio_file, ' +
+      ':file_path, ' +
       ':subtitle, ' +
       ':notes, ' +
       ':user_inserted, ' +
@@ -258,7 +258,7 @@ begin
       'audio_type, ' +
       'locality_id, ' +
       'recording_date, ' +
-      'recorder_id, ' +
+      'author_id, ' +
       'recording_time, ' +
       'coordinate_precision, ' +
       'longitude, ' +
@@ -281,7 +281,7 @@ begin
       'license_uri, ' +
       'license_notes, ' +
       'license_owner, ' +
-      'audio_file, ' +
+      'file_path, ' +
       'subtitle, ' +
       'notes, ' +
       'user_inserted, ' +
@@ -326,7 +326,7 @@ begin
       'audio_type = :audio_type, ' +
       'locality_id = :locality_id, ' +
       'recording_date = date(:recording_date), ' +
-      'recorder_id = :recorder_id, ' +
+      'author_id = :author_id, ' +
       'recording_time = time(:recording_time), ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
@@ -348,7 +348,7 @@ begin
       'license_uri = :license_uri, ' +
       'license_notes = :license_notes, ' +
       'license_owner = :license_owner, ' +
-      'audio_file = :audio_file, ' +
+      'file_path = :file_path, ' +
       'subtitle = :subtitle, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +
@@ -381,9 +381,10 @@ begin
       'nest_id         INTEGER       REFERENCES nests (nest_id) ON DELETE CASCADE,' +
       'net_station_id  INTEGER       REFERENCES sampling_plots (sampling_plot_id) ON DELETE CASCADE,' +
       'method_id       INTEGER       REFERENCES methods (method_id) ON DELETE CASCADE,' +
+      'author_id       INTEGER       REFERENCES people(person_id) ON UPDATE CASCADE,'+
       'document_type   CHAR (5)      NOT NULL,' +
       'document_name   VARCHAR (120),' +
-      'document_path   VARCHAR (250) NOT NULL,' +
+      'file_path   VARCHAR (250) NOT NULL,' +
       'document_date   DATE,' +
       'document_time   TIME,' +
       'license_type    VARCHAR (20),' +
@@ -424,9 +425,10 @@ begin
       'nest_id, ' +
       'net_station_id, ' +
       'method_id, ' +
+      'author, ' +
       'document_type, ' +
       'document_name, ' +
-      'document_path, ' +
+      'file_path, ' +
       'document_date, ' +
       'document_time, ' +
       'license_type, ' +
@@ -449,9 +451,10 @@ begin
       ':nest_id, ' +
       ':net_station_id, ' +
       ':method_id, ' +
+      ':author_id, ' +
       ':document_type, ' +
       ':document_name, ' +
-      ':document_path, ' +
+      ':file_path, ' +
       'date(:document_date), ' +
       'time(:document_time), ' +
       ':license_type, ' +
@@ -506,9 +509,10 @@ begin
       'nest_id, ' +
       'net_station_id, ' +
       'method_id, ' +
+      'author_id, ' +
       'document_type, ' +
       'document_name, ' +
-      'document_path, ' +
+      'file_path, ' +
       'document_date, ' +
       'document_time, ' +
       'license_type, ' +
@@ -562,9 +566,10 @@ begin
       'nest_id = :nest_id, ' +
       'net_station_id = :net_station_id, ' +
       'method_id = :method_id, ' +
+      'author_id = :author_id, ' +
       'document_type = :document_type, ' +
       'document_name = :document_name, ' +
-      'document_path = :document_path, ' +
+      'file_path = :file_path, ' +
       'document_date = date(:document_date), ' +
       'document_time = time(:document_time), ' +
       'license_type = :license_type, ' +
@@ -605,7 +610,7 @@ begin
       'nest_revision_id     INTEGER       REFERENCES nest_revisions (nest_revision_id) ON UPDATE CASCADE,' +
       'egg_id               INTEGER       REFERENCES eggs (egg_id) ON UPDATE CASCADE,' +
       'specimen_id          INTEGER       REFERENCES specimens (specimen_id) ON UPDATE CASCADE,' +
-      'image_filename       VARCHAR (300),' +
+      'file_path       VARCHAR (300),' +
       'coordinate_precision CHAR (1),' +
       'longitude            REAL,' +
       'latitude             REAL,' +
@@ -652,7 +657,7 @@ begin
       'nest_revision_id, ' +
       'egg_id, ' +
       'specimen_id, ' +
-      'image_filename, ' +
+      'file_path, ' +
       'coordinate_precision, ' +
       'longitude, ' +
       'latitude, ' +
@@ -681,7 +686,7 @@ begin
       ':nest_revision_id, ' +
       ':egg_id, ' +
       ':specimen_id, ' +
-      ':image_filename, ' +
+      ':file_path, ' +
       ':coordinate_precision, ' +
       ':longitude, ' +
       ':latitude, ' +
@@ -741,7 +746,7 @@ begin
       'nest_revision_id, ' +
       'egg_id, ' +
       'specimen_id, ' +
-      'image_filename, ' +
+      'file_path, ' +
       'coordinate_precision, ' +
       'longitude, ' +
       'latitude, ' +
@@ -801,7 +806,7 @@ begin
       'nest_revision_id = :nest_revision_id, ' +
       'egg_id = :egg_id, ' +
       'specimen_id = :specimen_id, ' +
-      'image_filename = :image_filename, ' +
+      'file_path = :file_path, ' +
       'coordinate_precision = :coordinate_precision, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
@@ -842,7 +847,7 @@ begin
       'locality_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'recording_date    DATE,' +
       'recording_time    TIME,' +
-      'recorder_id       INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      'author_id       INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'longitude         REAL,' +
       'latitude          REAL,' +
       'coordinate_precision VARCHAR (3),' +
@@ -890,7 +895,7 @@ begin
       'video_type, ' +
       'locality_id, ' +
       'recording_date, ' +
-      'recorder_id, ' +
+      'author_id, ' +
       'recording_time, ' +
       'longitude, ' +
       'latitude, ' +
@@ -921,7 +926,7 @@ begin
       ':video_type, ' +
       ':locality_id, ' +
       'date(:recording_date), ' +
-      ':recorder_id, ' +
+      ':author_id, ' +
       'time(:recording_time), ' +
       ':longitude, ' +
       ':latitude, ' +
@@ -983,7 +988,7 @@ begin
       'video_type, ' +
       'locality_id, ' +
       'recording_date, ' +
-      'recorder_id, ' +
+      'author_id, ' +
       'recording_time, ' +
       'longitude, ' +
       'latitude, ' +
@@ -1045,7 +1050,7 @@ begin
       'video_type = :video_type, ' +
       'locality_id = :locality_id, ' +
       'recording_date = date(:recording_date), ' +
-      'recorder_id = :recorder_id, ' +
+      'author_id = :author_id, ' +
       'recording_time = time(:recording_time), ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +

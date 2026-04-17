@@ -439,16 +439,6 @@ object edtBands: TedtBands
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
-        object ckReported: TCheckBox
-          Left = 252
-          Height = 23
-          Top = 23
-          Width = 220
-          Caption = 'Reported'
-          TabOrder = 1
-          OnKeyPress = cbBandSizeKeyPress
-          OnKeyDown = FormKeyDown
-        end
       end
       object pSourceOrderNumber: TPanel
         Left = 0

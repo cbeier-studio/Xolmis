@@ -37,7 +37,7 @@ type
     FDispatcher: String;
     FDispatchDate: TDate;
     FExpireDate: TDate;
-    FFileName: String;
+    FPermitStatus: TPermitStatus;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -58,7 +58,7 @@ type
     property Dispatcher: String read FDispatcher write FDispatcher;
     property DispatchDate: TDate read FDispatchDate write FDispatchDate;
     property ExpireDate: TDate read FExpireDate write FExpireDate;
-    property FileName: String read FFileName write FFileName;
+    property PermitStatus: TPermitStatus read FPermitStatus write FPermitStatus;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -81,7 +81,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_validations,
+  utils_locale, utils_global, utils_validations, utils_conversions,
   data_consts, data_columns, data_setparam, data_getvalue, data_providers,
   models_users,
   udm_main;
@@ -107,7 +107,7 @@ begin
     FDispatcher := TPermit(Source).Dispatcher;
     FDispatchDate := TPermit(Source).DispatchDate;
     FExpireDate := TPermit(Source).ExpireDate;
-    FFileName := TPermit(Source).FileName;
+    FPermitStatus := TPermit(Source).PermitStatus;
     FNotes := TPermit(Source).Notes;
   end;
 end;
@@ -122,7 +122,7 @@ begin
   FDispatcher := EmptyStr;
   FDispatchDate := NullDate;
   FExpireDate := NullDate;
-  FFileName := EmptyStr;
+  FPermitStatus := pstActive;
   FNotes := EmptyStr;
 end;
 
@@ -161,7 +161,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscExpireDate, aOld.ExpireDate, FExpireDate, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscFileName, aOld.FileName, FFileName, R) then
+  if FieldValuesDiff(rscPermitStatus, aOld.PermitStatus, FPermitStatus, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
@@ -187,7 +187,7 @@ begin
     FDispatcher   := Obj.Get('dispatcher', '');
     FDispatchDate := StrToDate(Obj.Get('dispatch_date', NULL_DATE_STR));
     FExpireDate   := StrToDate(Obj.Get('expire_date', NULL_DATE_STR));
-    FFileName     := Obj.Get('filename', '');
+    FPermitStatus     := StrToPermitStatus(Obj.Get('permit_status', ''));
     FNotes        := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -207,7 +207,7 @@ begin
     JSONObject.Add('dispatcher', FDispatcher);
     JSONObject.Add('dispatch_date', FDispatchDate);
     JSONObject.Add('expire_date', FExpireDate);
-    JSONObject.Add('filename', FFileName);
+    JSONObject.Add('permit_status', PERMIT_STATUSES[FPermitStatus]);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -219,10 +219,10 @@ end;
 function TPermit.ToString: String;
 begin
   Result := Format('Permit(Id=%d, Name=%s, Number=%s, PermitType=%s, Dispatcher=%s, DispatchDate=%s, ' +
-    'ExpireDate=%s, ProjectId=%d, FileName=%s, Notes=%s, ' +
+    'ExpireDate=%s, ProjectId=%d, PermitStatus=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FName, FNumber, FPermitType, FDispatcher, DateToStr(FDispatchDate), DateToStr(FExpireDate),
-    FProjectId, FFileName, FNotes,
+    FProjectId, PERMIT_STATUSES[FPermitStatus], FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -396,7 +396,7 @@ begin
       R.DispatchDate := FieldByName('dispatch_date').AsDateTime;
     if not (FieldByName('expire_date').IsNull) then
       R.ExpireDate := FieldByName('expire_date').AsDateTime;
-    R.FileName := FieldByName('permit_filename').AsString;
+    R.PermitStatus := StrToPermitStatus(FieldByName('permit_status').AsString);
     R.Notes := FieldByName('notes').AsString;
     R.UserInserted := FieldByName('user_inserted').AsInteger;
     R.UserUpdated := FieldByName('user_updated').AsInteger;
@@ -434,8 +434,8 @@ begin
     R.DispatchDate := StrToDateDef(ARow.Values['dispatch_date'], NullDate);
   if ARow.IndexOfName('expire_date') >= 0 then
     R.ExpireDate := StrToDateDef(ARow.Values['expire_date'], NullDate);
-  if ARow.IndexOfName('permit_filename') >= 0 then
-    R.FileName := ARow.Values['permit_filename'];
+  if ARow.IndexOfName('permit_status') >= 0 then
+    R.PermitStatus := StrToPermitStatus(ARow.Values['permit_status']);
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -463,7 +463,7 @@ begin
     SetDateParam(ParamByName('dispatch_date'), R.DispatchDate);
     SetDateParam(ParamByName('expire_date'), R.ExpireDate);
     SetStrParam(ParamByName('notes'), R.Notes);
-    SetStrParam(ParamByName('permit_filename'), R.FileName);
+    SetStrParam(ParamByName('permit_status'), PERMIT_STATUSES[R.PermitStatus]);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -510,7 +510,7 @@ begin
     SetDateParam(ParamByName('dispatch_date'), R.DispatchDate);
     SetDateParam(ParamByName('expire_date'), R.ExpireDate);
     SetStrParam(ParamByName('notes'), R.Notes);
-    SetStrParam(ParamByName('permit_filename'), R.FileName);
+    SetStrParam(ParamByName('permit_status'), PERMIT_STATUSES[R.PermitStatus]);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('permit_id').AsInteger := R.Id;
 

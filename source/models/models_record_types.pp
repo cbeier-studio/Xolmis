@@ -82,7 +82,7 @@ type
 
   TCustomTaxon = class(TXolmisRecord)
   protected
-    FFullName: String;
+    FScientificName: String;
     FFormattedName: String;
     FAuthorship: String;
     FParentTaxonId: Integer;
@@ -96,7 +96,7 @@ type
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce; virtual;
   published
-    property FullName: String read FFullName write FFullName;
+    property ScientificName: String read FScientificName write FScientificName;
     property FormattedName: String read FFormattedName write FFormattedName;
     property Authorship: String read FAuthorship write FAuthorship;
     property ParentTaxonId: Integer read FParentTaxonId write FParentTaxonId;
@@ -260,8 +260,12 @@ type
   TCoordinatePrecision = (cpEmpty = -1, cpExact, cpApproximated, cpReference);
 
   // Projects
+  TProjectStatus = (prtPlanned, prtActive, prtPaused, prtFinished, prtCancelled);
   TGoalStatus = (gstPending, gstReached, gstCanceled);
   TActivityStatus = (astToDo, astInProgress, astDone, astCanceled, astDelayed, astNeedsReview, astBlocked);
+
+  // Permits
+  TPermitStatus = (pstActive, pstReplaced, pstArchived, pstCancelled);
 
   // Where is it used?
   TAuthor = record
@@ -473,8 +477,12 @@ const
   COORDINATE_PRECISIONS: array[TCoordinatePrecision] of String = ('', 'E', 'A', 'R');
 
   // Projects
+  PROJECT_STATUSES: array [TProjectStatus] of String = ('P', 'A', 'D', 'F', 'C');
   GOAL_STATUSES: array [TGoalStatus] of String = ('P', 'R', 'C');
   ACTIVITY_STATUSES: array[TActivityStatus] of String = ('T','P','F','C','D','R','B');
+
+  // Permits
+  PERMIT_STATUSES: array [TPermitStatus] of String = ('A', 'R', 'K', 'C');
 
   // Weather
   SAMPLE_MOMENTS: array [TWeatherSampleMoment] of String = ('', 'S', 'M', 'E');
@@ -580,7 +588,7 @@ begin
   inherited Assign(Source);
   if Source is TCustomTaxon then
   begin
-    FullName       := TCustomTaxon(Source).FullName;
+    ScientificName       := TCustomTaxon(Source).ScientificName;
     FormattedName  := TCustomTaxon(Source).FormattedName;
     Authorship     := TCustomTaxon(Source).Authorship;
     ParentTaxonId  := TCustomTaxon(Source).ParentTaxonId;
@@ -595,7 +603,7 @@ end;
 procedure TCustomTaxon.Clear;
 begin
   inherited Clear;
-  FFullName := EmptyStr;
+  FScientificName := EmptyStr;
   FFormattedName := EmptyStr;
   FAuthorship := EmptyStr;
   //FRankId := 0;

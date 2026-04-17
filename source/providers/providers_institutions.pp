@@ -42,11 +42,11 @@ begin
     'CREATE TABLE IF NOT EXISTS institutions (' +
       'institution_id  INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'full_name       VARCHAR (100) NOT NULL UNIQUE,' +
-      'acronym         VARCHAR (15),' +
+      'abbreviation         VARCHAR (15),' +
       'address_1       VARCHAR (100),' +
       'address_2       VARCHAR (40),' +
       'neighborhood    VARCHAR (60),' +
-      'zip_code        VARCHAR (15),' +
+      'postal_code        VARCHAR (15),' +
       'municipality_id INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'state_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'country_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
@@ -73,7 +73,7 @@ end;
 
 function TInstitutionsSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
 begin
-  Result := 'SELECT institution_id, full_name, acronym FROM institutions ';
+  Result := 'SELECT institution_id, full_name, abbreviation FROM institutions ';
 
   case aWhere of
     swcNone: ;
@@ -81,7 +81,7 @@ begin
     begin
       Result := Result +
         'WHERE ((full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (acronym ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+            'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -98,11 +98,11 @@ begin
   Result :=
     'INSERT INTO institutions (' +
       'full_name, ' +
-      'acronym, ' +
+      'abbreviation, ' +
       'address_1, ' +
       'address_2, ' +
       'neighborhood, ' +
-      'zip_code, ' +
+      'postal_code, ' +
       'municipality_id, ' +
       'state_id, ' +
       'country_id, ' +
@@ -114,11 +114,11 @@ begin
       'insert_date) ' +
     'VALUES (' +
       ':full_name, ' +
-      ':acronym, ' +
+      ':abbreviation, ' +
       ':address_1, ' +
       ':address_2, ' +
       ':neighborhood, ' +
-      ':zip_code, ' +
+      ':postal_code, ' +
       ':municipality_id, ' +
       ':state_id, ' +
       ':country_id, ' +
@@ -169,11 +169,11 @@ begin
     'SELECT ' +
       'institution_id, ' +
       'full_name, ' +
-      'acronym, ' +
+      'abbreviation, ' +
       'address_1, ' +
       'address_2, ' +
       'neighborhood, ' +
-      'zip_code, ' +
+      'postal_code, ' +
       'municipality_id, ' +
       'state_id, ' +
       'country_id, ' +
@@ -216,11 +216,11 @@ begin
   Result :=
     'UPDATE institutions SET ' +
       'full_name = :full_name, ' +
-      'acronym = :acronym, ' +
+      'abbreviation = :abbreviation, ' +
       'address_1 = :address_1, ' +
       'address_2 = :address_2, ' +
       'neighborhood = :neighborhood, ' +
-      'zip_code = :zip_code, ' +
+      'postal_code = :postal_code, ' +
       'municipality_id = :municipality_id, ' +
       'state_id = :state_id, ' +
       'country_id = :country_id, ' +

@@ -939,7 +939,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -955,7 +955,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -971,7 +971,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -987,7 +987,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1003,7 +1003,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1019,7 +1019,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1035,7 +1035,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1051,7 +1051,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1067,7 +1067,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1083,7 +1083,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1099,7 +1099,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1111,11 +1111,11 @@ begin
     end;
   end
   else
-  if (Column.FieldName = COL_KIPPS_INDEX) then
+  if (Column.FieldName = COL_KIPPS_DISTANCE) then
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1596,7 +1596,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1612,7 +1612,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1628,7 +1628,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1644,7 +1644,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1660,7 +1660,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1676,7 +1676,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1692,7 +1692,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1708,7 +1708,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1724,7 +1724,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1740,7 +1740,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1756,7 +1756,7 @@ begin
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin
@@ -1768,11 +1768,11 @@ begin
     end;
   end
   else
-  if (Column.FieldName = COL_KIPPS_INDEX) then
+  if (Column.FieldName = COL_KIPPS_DISTANCE) then
   begin
     if (Column.Field.AsFloat <> 0.0) then
     begin
-      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_FULL_NAME,
+      aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME,
                     TDBGrid(Sender).Columns.ColumnByFieldname(COL_TAXON_NAME).Field.AsString);
       if IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
       begin

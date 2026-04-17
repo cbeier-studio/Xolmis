@@ -463,7 +463,7 @@ begin
       with TSQLQuery.Create(DMM.sqlCon) do
       try
         Database := DMM.sqlCon;
-        SQL.Add('SELECT person_id FROM people WHERE acronym = :abrev');
+        SQL.Add('SELECT person_id FROM people WHERE abbreviation = :abrev');
         ParamByName('ABREV').DataType := ftString;
         ParamByName('ABREV').AsString := aLista[i];
         Open;

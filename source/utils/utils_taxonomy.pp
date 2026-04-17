@@ -80,11 +80,14 @@ uses
 
 function GetRankType(aKey: Integer): TZooRank;
 var
+  Repo: TRankRepository;
   aRank: TRank;
   //i: TZooRank;
 begin
   Result := trDomain;
-  aRank := TRank.Create(aKey);
+  Repo := TRankRepository.Create(DMM.sqlCon);
+  aRank := TRank.Create();
+  Repo.GetById(aKey, aRank);
   try
     Result := StringToZooRank(aRank.Abbreviation);
     //for i := Low(ZOOLOGICAL_RANKS) to High(ZOOLOGICAL_RANKS) do
@@ -92,6 +95,7 @@ begin
     //    Result := TZooRank(i);
   finally
     FreeAndNil(aRank);
+    Repo.Free;
   end;
 end;
 
@@ -609,14 +613,14 @@ begin
       MacroCheck := True;
       dlgProgress.PBar.Position := 0;
 
-      iOrder := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'ord.');
-      iFamily := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'fam.');
-      iSubfamily := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'subfam.');
-      iGenus := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'g.');
-      iSpecies := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'sp.');
-      iMonoGroup := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'grp. (mono)');
-      iPoliGroup := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'grp. (poli)');
-      iSubspecies := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'ssp.');
+      iOrder := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ord.');
+      iFamily := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'fam.');
+      iSubfamily := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'subfam.');
+      iGenus := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'g.');
+      iSpecies := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'sp.');
+      iMonoGroup := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'grp. (mono)');
+      iPoliGroup := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'grp. (poli)');
+      iSubspecies := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
 
       DMM.sqlTrans.StartTransaction;
       try
@@ -827,17 +831,17 @@ var
   Ssp: TTaxon;
 begin
   ExistingId := 0;
-  OldName := GetName('zoo_taxa', 'full_name', 'taxon_id', aSubspecies);
+  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSubspecies);
   NewName := ExtractWord(1, OldName, [' ']) + ' ' + ExtractWord(3, OldName, [' ']);
-  SpRank := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'sp.');
-  ParentGenus := GetKey('zoo_taxa', 'taxon_id', 'full_name', ExtractWord(1, OldName, [' ']));
+  SpRank := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'sp.');
+  ParentGenus := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', ExtractWord(1, OldName, [' ']));
   Ssp := TTaxon.Create(aSubspecies);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'full_name', NewName) = True then
+    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'full_name', NewName);
+      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -890,7 +894,7 @@ begin
         if ExecNow then
           SQL.Clear;
         // List fields
-        SQL.Add('INSERT INTO zoo_taxa (full_name, formatted_name, authorship, english_name,');
+        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
         SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id,');
         SQL.Add('subfamily_id, family_id, order_id, subspecies_group_id, genus_name, species_epithet,');
         if (btClements in aTaxonomy) then
@@ -1012,19 +1016,19 @@ var
   Ssp, LumpToSp: TTaxon;
 begin
   ExistingId := 0;
-  OldName := GetName('zoo_taxa', 'full_name', 'taxon_id', aSpecies);
-  LumpToName := GetName('zoo_taxa', 'full_name', 'taxon_id', ToSpecies);
+  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSpecies);
+  LumpToName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', ToSpecies);
   NewName := LumpToName + ' ' + ExtractWord(2, OldName, [' ']);
-  SspRank := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'ssp.');
+  SspRank := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
   ParentSp := ToSpecies;
   Ssp := TTaxon.Create(aSpecies);
   LumpToSp := TTaxon.Create(ToSpecies);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'full_name', NewName) = True then
+    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'full_name', NewName);
+      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -1084,7 +1088,7 @@ begin
         if ExecNow then
           SQL.Clear;
         // List fields
-        SQL.Add('INSERT INTO zoo_taxa (full_name, formatted_name, authorship, english_name,');
+        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
         SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id,');
         SQL.Add('subfamily_id, family_id, order_id, subspecies_group_id, genus_name, species_epithet,');
         if (btClements in aTaxonomy) then
@@ -1214,23 +1218,23 @@ begin
   ExistingId := 0;
   OldRankId := GetRankFromTaxon(aSubspecies);
   OldRank := GetRankType(OldRankId);
-  OldName := GetName('zoo_taxa', 'full_name', 'taxon_id', aSubspecies);
-  MoveToName := GetName('zoo_taxa', 'full_name', 'taxon_id', ToSpecies);
+  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSubspecies);
+  MoveToName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', ToSpecies);
   if OldRank = trPolitypicGroup then
     NewName := MoveToName + ' ' + Trim(ExtractWord(2, OldName, Brackets))
   else
     NewName := MoveToName + ' ' + ExtractWord(3, OldName, [' ']);
   ParentSp := ToSpecies;
   Ssp := TTaxon.Create(aSubspecies);
-  aRankId := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', ZOOLOGICAL_RANKS[Ssp.Rank]);
+  aRankId := GetKey('taxon_ranks', 'rank_id', 'abbreviation', ZOOLOGICAL_RANKS[Ssp.Rank]);
   MoveToSp := TTaxon.Create(ToSpecies);
   //GravaLog('MOVE TO SPECIES', OldName + ' -> ' + MoveToName + ' = ' + NewName);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'full_name', NewName) = True then
+    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'full_name', NewName);
+      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -1318,7 +1322,7 @@ begin
         if ExecNow then
           SQL.Clear;
         // List fields
-        SQL.Add('INSERT INTO zoo_taxa (full_name, formatted_name, authorship, english_name,');
+        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
         SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id, subfamily_id,');
         SQL.Add('family_id, order_id, subspecies_group_id, genus_name, species_epithet, subspecies_epithet,');
         if (btClements in aTaxonomy) then
@@ -1369,7 +1373,7 @@ begin
         end;
         if (btIOC in aTaxonomy) then
         begin
-          ParamByName('ANIVELIOC').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'ssp.');
+          ParamByName('ANIVELIOC').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
           ParamByName('ASUPIOC').AsInteger := ParentSp;
           ParamByName('AENGLISHIOC').AsString := Ssp.IocEnglishName;
           ParamByName('GEODISTIOC').DataType := ftMemo;
@@ -1377,7 +1381,7 @@ begin
         end;
         if (btCBRO in aTaxonomy) then
         begin
-          ParamByName('ANIVELCBRO').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'ssp.');
+          ParamByName('ANIVELCBRO').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
           ParamByName('ASUPCBRO').AsInteger := ParentSp;
         end;
         ParamByName('AUSER').AsInteger := ActiveUser.Id;
@@ -1418,7 +1422,7 @@ begin
       SQL.Add('WHERE taxon_id = :ataxon;');
       if (Params.FindParam('ARANK') <> nil) then
       begin
-        ParamByName('ARANK').AsInteger := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'ssp.');
+        ParamByName('ARANK').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
       end;
       if (Params.FindParam('AVALID') <> nil) then
       begin
@@ -1446,19 +1450,19 @@ var
   Ssp, Gen: TTaxon;
 begin
   ExistingId := 0;
-  OldName := GetName('zoo_taxa', 'full_name', 'taxon_id', aSpecies);
-  MoveToName := GetName('zoo_taxa', 'full_name', 'taxon_id', ToGenus);
+  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSpecies);
+  MoveToName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', ToGenus);
   NewName := MoveToName + ' ' + ExtractWord(2, OldName, [' ']);
-  SpRank := GetKey('taxon_ranks', 'rank_id', 'rank_acronym', 'sp.');
+  SpRank := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'sp.');
   ParentGenus := ToGenus;
   Ssp := TTaxon.Create(aSpecies);
   Gen := TTaxon.Create(ToGenus);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'full_name', NewName) = True then
+    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'full_name', NewName);
+      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -1520,7 +1524,7 @@ begin
         if ExecNow then
           SQL.Clear;
         // List fields
-        SQL.Add('INSERT INTO zoo_taxa (full_name, formatted_name, authorship, english_name,');
+        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
         SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id, subfamily_id,');
         SQL.Add('family_id, order_id, subspecies_group_id, genus_name, species_epithet, subspecies_epithet,');
         if (btClements in aTaxonomy) then
@@ -1560,7 +1564,7 @@ begin
         ParamByName('ASUBFAMILY').AsInteger := Gen.SubfamilyId;
         ParamByName('AFAMILY').AsInteger := Gen.FamilyId;
         ParamByName('AORDER').AsInteger := Gen.OrderId;
-        ParamByName('AGENUSNAME').AsString := Gen.FullName;
+        ParamByName('AGENUSNAME').AsString := Gen.ScientificName;
         ParamByName('AEPITHET').AsString := ExtractWord(2, NewName, [' ']);
         if (btClements in aTaxonomy) then
         begin
@@ -1660,7 +1664,7 @@ begin
   with aDataset, SQL do
   begin
     Clear;
-    Add('UPDATE zoo_taxa SET full_name = :newname, formatted_name = :newhtml WHERE taxon_id = :ataxon;');
+    Add('UPDATE zoo_taxa SET scientific_name = :newname, formatted_name = :newhtml WHERE taxon_id = :ataxon;');
     ParamByName('NEWNAME').AsString := aNewName;
     ParamByName('NEWHTML').AsString := FormattedBirdName(aNewName, RankId);
     ParamByName('ATAXON').AsInteger := aTaxon;
