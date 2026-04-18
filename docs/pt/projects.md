@@ -18,6 +18,7 @@ Ao criar ou editar um projeto, os seguintes campos estão disponíveis:
 | **Website** |  | Endereço do site do projeto |
 | **E-mail** |  | Endereço de e-mail de contato do projeto ou da pessoa responsável |
 | **Pessoa de contato** |  | Pessoa responsável por responder às solicitações |
+| **Status** |  | Status do projeto: Previsto, Ativo, Em pausa, Concluído, Cancelado |
 | **Objetivo principal** |  | Descrição do objetivo principal do projeto |
 | **Riscos** |  | Riscos ou desafios que precisam ser considerados |
 | **Resumo** |  | Resumo ou abstract do projeto |

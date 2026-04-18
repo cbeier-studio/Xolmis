@@ -43,7 +43,6 @@ When creating or editing a band record, the following fields are available:
 | **Type** | Yes | Type of band (metal, plastic, color, etc.) |
 | **Color** |  | Band color (especially for plastic/color bands) |
 | **Status** | Yes | Current status or fate of the band (available, used, lost, destroyed) |
-| **Reported** |  | Check if the band’s fate has already been reported to the national system |
 | **Source** | Yes | How the band was obtained or retrieved |
 | **Supplier** | Yes | Supplier or institution that provided the band |
 | **Requester** | Yes | Person or institution that requested the band |

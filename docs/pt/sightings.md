@@ -41,7 +41,7 @@ Ao criar ou editar um registro de observação, os seguintes campos estão dispo
 | **Nº de imaturos** |  | Número de imaturos ou juvenis observados |
 | **Nº de aves não envelhecidas** |  | Número de aves cuja idade não pôde ser determinada |
 | **Registro está no eBird** |  | Marque se a observação também está registrada no eBird |
-| **Fora da amostragem** |  | Marque se a observação foi feita fora do esforço regular de amostragem |
+| **Fora da amostra** |  | Marque se a observação foi feita fora do esforço regular de amostragem |
 | **Notas** |  | Qualquer informação adicional sobre a observação |
 
 ## Tipos de detecção

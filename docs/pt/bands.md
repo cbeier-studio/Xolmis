@@ -43,7 +43,6 @@ Ao criar ou editar um registro de anilha, os seguintes campos estão disponívei
 | **Tipo** | Sim | Tipo de anilha (metal, plástico, cor etc.) |
 | **Cor** |  | Cor da anilha (especialmente para anilhas plásticas/coloridas) |
 | **Status** | Sim | Status ou destino atual da anilha (disponível, usada, perdida, destruída) |
-| **Reportada** |  | Marque se o destino da anilha já foi reportado ao sistema nacional |
 | **Origem** | Sim | Como a anilha foi obtida ou recebida |
 | **Fornecedor** | Sim | Fornecedor ou instituição que forneceu a anilha |
 | **Solicitante** | Sim | Pessoa ou instituição que solicitou a anilha |

@@ -21,7 +21,7 @@ When creating or editing a researcher record, the following fields are available
 | **RG** |  | RG document number (Brazil) – will soon be deprecated |
 | **CPF** |  | CPF document number (Brazil), equivalent to National ID Card (USA) |
 | **E-mail** |  | Personal or professional email address |
-| **Telephone** |  | Landline phone number |
+| **Phone** |  | Landline phone number |
 | **Mobile phone** |  | Mobile phone number |
 | **Postal code** |  | CEP (Brazil) or ZIP Code (USA) |
 | **Address** |  | Postal address where the person lives |

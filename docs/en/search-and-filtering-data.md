@@ -17,10 +17,10 @@ To search for an exact match, start typing `=` (equal sign) followed by the valu
 
 ### Search value starting with
 
-By default, searches return partial matches regardless of whether the value is at the beginning, middle, or end. To restrict results to values starting with the typed text, use `:` (colon).  
+By default, searches return partial matches regardless of whether the value is at the beginning, middle, or end. To restrict results to values starting with the typed text, use `$` (dollar sign).  
 
 !!! example
-    `:abc` will return only values beginning with "abc".
+    `$abc` will return only values beginning with "abc".
 
 ### Multiple words search
 
@@ -75,7 +75,7 @@ Lookup filters combine a text field with a search button. You can start typing d
 ## Best practices
 
 - **Combine search and filters**: Use both simultaneously for maximum precision.  
-- **Use modifiers wisely**: Exact (`=`), starting (`:`), and syllabic (`+`) searches help refine results.  
+- **Use modifiers wisely**: Exact (`=`), starting (`$`), and syllabic (`+`) searches help refine results.  
 - **Leverage tree filters**: Ideal for hierarchical data such as taxa or localities.  
 - **Document your workflow**: Note which filters were applied when exporting or reporting data.  
 - **Reset filters when needed**: Always check if filters are active to avoid missing records.  
