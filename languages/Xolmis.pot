@@ -8953,6 +8953,11 @@ msgctxt "tedtsampleprep.btnnew.caption"
 msgid "New"
 msgstr ""
 
+#: tedtsampleprep.einstitution.buttonhint
+msgctxt "tedtsampleprep.einstitution.buttonhint"
+msgid "Find institution"
+msgstr ""
+
 #: tedtsampleprep.epreparationdate.buttonhint
 msgctxt "tedtsampleprep.epreparationdate.buttonhint"
 msgid "Open calendar"
@@ -8976,6 +8981,11 @@ msgctxt "tedtsampleprep.lblaccessionseq.caption"
 msgid "Duplicate/part number:"
 msgstr ""
 
+#: tedtsampleprep.lblinstitution.caption
+msgctxt "tedtsampleprep.lblinstitution.caption"
+msgid "Institution:"
+msgstr ""
+
 #: tedtsampleprep.lblnotes.caption
 msgctxt "tedtsampleprep.lblnotes.caption"
 msgid "Notes:"
@@ -8993,6 +9003,11 @@ msgstr ""
 #: tedtsampleprep.lblsampletype.caption
 msgctxt "tedtsampleprep.lblsampletype.caption"
 msgid "Type: *"
+msgstr ""
+
+#: tedtsampleprep.pmnnewinstitution.caption
+msgctxt "tedtsampleprep.pmnnewinstitution.caption"
+msgid "New institution"
 msgstr ""
 
 #: tedtsampleprep.pmnnewperson.caption
@@ -9445,6 +9460,11 @@ msgctxt "tedtspecimen.eindividual.buttonhint"
 msgid "Find individual"
 msgstr ""
 
+#: tedtspecimen.einstitution.buttonhint
+msgctxt "tedtspecimen.einstitution.buttonhint"
+msgid "Find institution"
+msgstr ""
+
 #: tedtspecimen.elatitude.buttonhint
 msgctxt "tedtspecimen.elatitude.buttonhint"
 msgid "Open coordinates editor"
@@ -9505,6 +9525,11 @@ msgctxt "tedtspecimen.lblindividual.caption"
 msgid "Individual:"
 msgstr ""
 
+#: tedtspecimen.lblinstitution.caption
+msgctxt "tedtspecimen.lblinstitution.caption"
+msgid "Institution:"
+msgstr ""
+
 #: tedtspecimen.lbllocality.caption
 msgctxt "tedtspecimen.lbllocality.caption"
 msgid "Locality: *"
@@ -9538,6 +9563,11 @@ msgstr ""
 #: tedtspecimen.pmnnewindividual.caption
 msgctxt "tedtspecimen.pmnnewindividual.caption"
 msgid "New individual"
+msgstr ""
+
+#: tedtspecimen.pmnnewinstitution.caption
+msgctxt "tedtspecimen.pmnnewinstitution.caption"
+msgid "New institution"
 msgstr ""
 
 #: tedtspecimen.pmnnewlocality.caption

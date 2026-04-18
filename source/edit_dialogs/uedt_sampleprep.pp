@@ -36,15 +36,19 @@ type
     dsLink: TDataSource;
     eAccessionNumber: TEdit;
     eAccessionSeq: TEdit;
+    eInstitution: TEditButton;
     ePreparationDate: TEditButton;
     ePreparer: TEditButton;
     lblAccessionSeq: TLabel;
+    lblInstitution: TLabel;
     lblNotes: TLabel;
     lblAccessionNumber: TLabel;
     lblPreparationDate: TLabel;
     lblPreparer: TLabel;
     lblSampleType: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewInstitution: TMenuItem;
+    pInstitution: TPanel;
     pmnNewPerson: TMenuItem;
     mNotes: TMemo;
     pBottom: TPanel;
@@ -64,19 +68,22 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAccessionNumberEditingDone(Sender: TObject);
     procedure eAccessionNumberKeyPress(Sender: TObject; var Key: char);
+    procedure eInstitutionButtonClick(Sender: TObject);
+    procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
     procedure ePreparationDateButtonClick(Sender: TObject);
     procedure ePreparerButtonClick(Sender: TObject);
     procedure ePreparerKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure pmnNewInstitutionClick(Sender: TObject);
     procedure pmnNewPersonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
     FSamplePrep: TSamplePrep;
     FSpecimen: TSpecimen;
-    FSpecimenId, FPreparerId: Integer;
+    FSpecimenId, FPreparerId, FInstitutionId: Integer;
     procedure SetSamplePrep(Value: TSamplePrep);
     procedure GetRecord;
     procedure SetRecord;
@@ -106,6 +113,7 @@ procedure TedtSamplePrep.ApplyDarkMode;
 begin
   ePreparationDate.Images := DMM.iEditsDark;
   ePreparer.Images := DMM.iEditsDark;
+  eInstitution.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
 end;
@@ -138,6 +146,39 @@ procedure TedtSamplePrep.eAccessionNumberKeyPress(Sender: TObject; var Key: char
 begin
   FormKeyPress(Sender, Key);
 
+  { <ENTER/RETURN> key }
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
+
+procedure TedtSamplePrep.eInstitutionButtonClick(Sender: TObject);
+begin
+  FindDlg(tbInstitutions, eInstitution, FInstitutionId);
+end;
+
+procedure TedtSamplePrep.eInstitutionKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbInstitutions, eInstitution, FInstitutionId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    FInstitutionId := 0;
+    eInstitution.Clear;
+    Key := #0;
+  end;
   { <ENTER/RETURN> key }
   if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
@@ -299,7 +340,9 @@ begin
   if not DateIsNull(FSamplePrep.PreparationDate) then
     ePreparationDate.Text := DateToStr(FSamplePrep.PreparationDate);
   FPreparerId := FSamplePrep.PreparerId;
-  ePreparer.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FPreparerId);
+  ePreparer.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FPreparerId);
+  FInstitutionId := FSamplePrep.InstitutionId;
+  eInstitution.Text := GetName(TBL_INSTITUTIONS, COL_FULL_NAME, COL_INSTITUTION_ID, FInstitutionId);
   mNotes.Text := FSamplePrep.Notes;
 end;
 
@@ -312,6 +355,11 @@ begin
   if (eAccessionNumber.Text <> EmptyStr) and
     (eAccessionSeq.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtSamplePrep.pmnNewInstitutionClick(Sender: TObject);
+begin
+  EditInstitution(DMG.qInstitutions, True);
 end;
 
 procedure TedtSamplePrep.pmnNewPersonClick(Sender: TObject);
@@ -340,6 +388,7 @@ begin
   if (ePreparationDate.Text <> EmptyStr) then
     FSamplePrep.PreparationDate := StrToDate(ePreparationDate.Text);
   FSamplePrep.PreparerId := FPreparerId;
+  FSamplePrep.InstitutionId := FInstitutionId;
   FSamplePrep.Notes := mNotes.Text;
 
   if FIsNew then

@@ -1,12 +1,12 @@
 object edtSpecimen: TedtSpecimen
   Left = 373
-  Height = 573
+  Height = 694
   Top = 34
   Width = 416
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New specimen'
-  ClientHeight = 573
+  ClientHeight = 694
   ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
@@ -19,7 +19,7 @@ object edtSpecimen: TedtSpecimen
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 573
+    Top = 633
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -29,7 +29,7 @@ object edtSpecimen: TedtSpecimen
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 573
+    Top = 635
     Width = 416
     Align = alTop
     AutoSize = True
@@ -112,34 +112,34 @@ object edtSpecimen: TedtSpecimen
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 575
+    Height = 633
     Top = 0
     Width = 416
     HorzScrollBar.Page = 397
-    VertScrollBar.Page = 575
+    VertScrollBar.Page = 633
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 575
+    ClientHeight = 633
     ClientWidth = 416
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 575
+      Height = 633
       Top = 0
       Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 575
+      ClientHeight = 633
       ClientWidth = 416
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 112
-        Top = 447
+        Top = 505
         Width = 416
         Align = alTop
         AutoSize = True
@@ -153,7 +153,7 @@ object edtSpecimen: TedtSpecimen
         ClientHeight = 112
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 10
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -720,6 +720,57 @@ object edtSpecimen: TedtSpecimen
           OnKeyDown = FormKeyDown
         end
       end
+      object pInstitution: TPanel
+        Left = 0
+        Height = 45
+        Top = 447
+        Width = 416
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 416
+        ParentBackground = False
+        TabOrder = 9
+        object lblInstitution: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 384
+          BorderSpacing.Top = 3
+          Caption = 'Institution:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eInstitution: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 384
+          ButtonHint = 'Find institution'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eInstitutionButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eInstitutionKeyPress
+        end
+      end
     end
   end
   object dsLink: TDataSource
@@ -746,6 +797,10 @@ object edtSpecimen: TedtSpecimen
     object pmnNewEgg: TMenuItem
       Caption = 'New egg'
       OnClick = pmnNewEggClick
+    end
+    object pmnNewInstitution: TMenuItem
+      Caption = 'New institution'
+      OnClick = pmnNewInstitutionClick
     end
   end
 end

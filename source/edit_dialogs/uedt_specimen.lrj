@@ -25,8 +25,11 @@
 {"hash":203924370,"name":"tedtspecimen.elongitude.buttonhint","sourcebytes":[79,112,101,110,32,99,111,111,114,100,105,110,97,116,101,115,32,101,100,105,116,111,114],"value":"Open coordinates editor"},
 {"hash":203924370,"name":"tedtspecimen.elatitude.buttonhint","sourcebytes":[79,112,101,110,32,99,111,111,114,100,105,110,97,116,101,115,32,101,100,105,116,111,114],"value":"Open coordinates editor"},
 {"hash":250770538,"name":"tedtspecimen.lblcoordinatesprecision.caption","sourcebytes":[67,111,111,114,100,105,110,97,116,101,115,32,112,114,101,99,105,115,105,111,110,58],"value":"Coordinates precision:"},
+{"hash":248475418,"name":"tedtspecimen.lblinstitution.caption","sourcebytes":[73,110,115,116,105,116,117,116,105,111,110,58],"value":"Institution:"},
+{"hash":114304686,"name":"tedtspecimen.einstitution.buttonhint","sourcebytes":[70,105,110,100,32,105,110,115,116,105,116,117,116,105,111,110],"value":"Find institution"},
 {"hash":14469001,"name":"tedtspecimen.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"},
 {"hash":207141516,"name":"tedtspecimen.pmnnewindividual.caption","sourcebytes":[78,101,119,32,105,110,100,105,118,105,100,117,97,108],"value":"New individual"},
 {"hash":211241444,"name":"tedtspecimen.pmnnewnest.caption","sourcebytes":[78,101,119,32,110,101,115,116],"value":"New nest"},
-{"hash":80309127,"name":"tedtspecimen.pmnnewegg.caption","sourcebytes":[78,101,119,32,101,103,103],"value":"New egg"}
+{"hash":80309127,"name":"tedtspecimen.pmnnewegg.caption","sourcebytes":[78,101,119,32,101,103,103],"value":"New egg"},
+{"hash":164405806,"name":"tedtspecimen.pmnnewinstitution.caption","sourcebytes":[78,101,119,32,105,110,115,116,105,116,117,116,105,111,110],"value":"New institution"}
 ]}

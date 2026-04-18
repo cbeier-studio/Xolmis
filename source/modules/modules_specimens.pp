@@ -89,7 +89,8 @@ begin
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowMap, gufShowImages, gufShowAudios, gufShowDocs];
   FPrintUiFlags := [pufSpecimens, pufSpecimensByLocality, pufSpecimensByProject, pufSpecimensByTaxon,
     pufSpecimensByYear];
-  FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufSampleType, fufNest, fufEgg, fufIndividual];
+  FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufSampleType, fufNest, fufEgg, fufIndividual,
+    fufInstitution];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);
 
@@ -122,6 +123,8 @@ begin
     AddLookupFilter(SearchConfig, [COL_EGG_ID], [rscEgg], EggIdFilter);
     // Individual
     AddLookupFilter(SearchConfig, [COL_INDIVIDUAL_ID], [rscIndividual], IndividualIdFilter);
+    // Individual
+    AddLookupFilter(SearchConfig, [COL_INSTITUTION_ID], [rscInstitution], InstitutionIdFilter);
   end;
 end;
 
@@ -146,6 +149,8 @@ begin
     EggIdFilter := 0;
     eIndividualFilter.Clear;
     IndividualIdFilter := 0;
+    eInstitutionFilter.Clear;
+    InstitutionIdFilter := 0;
   end;
 end;
 
@@ -199,6 +204,8 @@ begin
       ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
       ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_INSTITUTION_NAME).Visible then
+      ColumnByFieldName(COL_INSTITUTION_NAME).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -281,6 +288,8 @@ begin
           False, aValue));
         SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_LOCALITY_NAME, rscLocality, sdtText, Crit,
           False, aValue));
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_INSTITUTION_NAME, rscInstitution, sdtText, Crit,
+          False, aValue));
       end;
     end;
   end;
@@ -355,6 +364,8 @@ begin
       ColumnByFieldname(COL_LONGITUDE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LATITUDE).Visible then
       ColumnByFieldname(COL_LATITUDE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_INSTITUTION_NAME).Visible then
+      ColumnByFieldName(COL_INSTITUTION_NAME).ButtonStyle := cbsEllipsis;
   end;
 end;
 
@@ -414,7 +425,11 @@ end;
 
 procedure TSamplePrepsSubmoduleController.ConfigureColumns;
 begin
-
+  with FGrid, Columns do
+  begin
+    if DataSource.DataSet.FieldByName(COL_INSTITUTION_NAME).Visible then
+      ColumnByFieldName(COL_INSTITUTION_NAME).ButtonStyle := cbsEllipsis;
+  end;
 end;
 
 procedure TSamplePrepsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);

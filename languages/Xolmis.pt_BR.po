@@ -8937,6 +8937,11 @@ msgctxt "tedtsampleprep.btnnew.caption"
 msgid "New"
 msgstr "Novo"
 
+#: tedtsampleprep.einstitution.buttonhint
+msgctxt "tedtsampleprep.einstitution.buttonhint"
+msgid "Find institution"
+msgstr "Procurar instituição"
+
 #: tedtsampleprep.epreparationdate.buttonhint
 msgctxt "tedtsampleprep.epreparationdate.buttonhint"
 msgid "Open calendar"
@@ -8960,6 +8965,11 @@ msgctxt "tedtsampleprep.lblaccessionseq.caption"
 msgid "Duplicate/part number:"
 msgstr "Número da duplicata/parte:"
 
+#: tedtsampleprep.lblinstitution.caption
+msgctxt "tedtsampleprep.lblinstitution.caption"
+msgid "Institution:"
+msgstr "Instituição:"
+
 #: tedtsampleprep.lblnotes.caption
 msgctxt "tedtsampleprep.lblnotes.caption"
 msgid "Notes:"
@@ -8978,6 +8988,11 @@ msgstr "Preparador:"
 msgctxt "tedtsampleprep.lblsampletype.caption"
 msgid "Type: *"
 msgstr "Tipo: *"
+
+#: tedtsampleprep.pmnnewinstitution.caption
+msgctxt "tedtsampleprep.pmnnewinstitution.caption"
+msgid "New institution"
+msgstr "Nova instituição"
 
 #: tedtsampleprep.pmnnewperson.caption
 msgid "New preparer"
@@ -9429,6 +9444,11 @@ msgctxt "tedtspecimen.eindividual.buttonhint"
 msgid "Find individual"
 msgstr "Procurar indivíduo"
 
+#: tedtspecimen.einstitution.buttonhint
+msgctxt "tedtspecimen.einstitution.buttonhint"
+msgid "Find institution"
+msgstr "Procurar instituição"
+
 #: tedtspecimen.elatitude.buttonhint
 msgctxt "tedtspecimen.elatitude.buttonhint"
 msgid "Open coordinates editor"
@@ -9489,6 +9509,11 @@ msgctxt "tedtspecimen.lblindividual.caption"
 msgid "Individual:"
 msgstr "Indivíduo:"
 
+#: tedtspecimen.lblinstitution.caption
+msgctxt "tedtspecimen.lblinstitution.caption"
+msgid "Institution:"
+msgstr "Instituição:"
+
 #: tedtspecimen.lbllocality.caption
 msgctxt "tedtspecimen.lbllocality.caption"
 msgid "Locality: *"
@@ -9523,6 +9548,11 @@ msgstr "Novo ovo"
 msgctxt "tedtspecimen.pmnnewindividual.caption"
 msgid "New individual"
 msgstr "Novo indivíduo"
+
+#: tedtspecimen.pmnnewinstitution.caption
+msgctxt "tedtspecimen.pmnnewinstitution.caption"
+msgid "New institution"
+msgstr "Nova instituição"
 
 #: tedtspecimen.pmnnewlocality.caption
 msgctxt "tedtspecimen.pmnnewlocality.caption"

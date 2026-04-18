@@ -1,12 +1,12 @@
 object edtSamplePrep: TedtSamplePrep
   Left = 373
-  Height = 336
+  Height = 413
   Top = 34
   Width = 416
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New sample preparation'
-  ClientHeight = 336
+  ClientHeight = 413
   ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
@@ -19,7 +19,7 @@ object edtSamplePrep: TedtSamplePrep
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 293
+    Top = 351
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -29,7 +29,7 @@ object edtSamplePrep: TedtSamplePrep
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 295
+    Top = 353
     Width = 416
     Align = alTop
     AutoSize = True
@@ -111,36 +111,36 @@ object edtSamplePrep: TedtSamplePrep
   end
   object scrollContent: TScrollBox
     Left = 0
-    Height = 293
+    Height = 351
     Top = 0
     Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 293
+    VertScrollBar.Page = 351
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 293
+    ClientHeight = 351
     ClientWidth = 416
     Constraints.MinWidth = 176
     TabOrder = 1
     object pContent: TPanel
       Left = 0
-      Height = 293
+      Height = 351
       Top = 0
       Width = 416
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 293
+      ClientHeight = 351
       ClientWidth = 416
       ParentBackground = False
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 113
-        Top = 164
+        Top = 222
         Width = 416
         Align = alTop
         AutoSize = True
@@ -153,7 +153,7 @@ object edtSamplePrep: TedtSamplePrep
         ClientHeight = 113
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 6
         object lblNotes: TLabel
           Left = 16
           Height = 16
@@ -197,7 +197,7 @@ object edtSamplePrep: TedtSamplePrep
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 0
+        TabOrder = 1
         object lblAccessionNumber: TLabel
           Left = 16
           Height = 15
@@ -257,7 +257,7 @@ object edtSamplePrep: TedtSamplePrep
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 4
         object lblSampleType: TLabel
           Left = 16
           Height = 15
@@ -349,7 +349,7 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 0
       end
       object pPreparer: TPanel
         Left = 0
@@ -368,7 +368,7 @@ object edtSamplePrep: TedtSamplePrep
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 2
         object lblPreparer: TLabel
           Left = 16
           Height = 15
@@ -415,6 +415,57 @@ object edtSamplePrep: TedtSamplePrep
         ParentBackground = False
         TabOrder = 3
       end
+      object pInstitution: TPanel
+        Left = 0
+        Height = 45
+        Top = 164
+        Width = 416
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Top = 13
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 45
+        ClientWidth = 416
+        ParentBackground = False
+        TabOrder = 5
+        object lblInstitution: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 384
+          BorderSpacing.Top = 3
+          Caption = 'Institution:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eInstitution: TEditButton
+          Left = 16
+          Height = 23
+          Top = 22
+          Width = 384
+          ButtonHint = 'Find institution'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 0
+          OnButtonClick = eInstitutionButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eInstitutionKeyPress
+        end
+      end
     end
   end
   object dsLink: TDataSource
@@ -429,6 +480,10 @@ object edtSamplePrep: TedtSamplePrep
     object pmnNewPerson: TMenuItem
       Caption = 'New preparer'
       OnClick = pmnNewPersonClick
+    end
+    object pmnNewInstitution: TMenuItem
+      Caption = 'New institution'
+      OnClick = pmnNewInstitutionClick
     end
   end
 end

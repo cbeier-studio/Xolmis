@@ -12,5 +12,8 @@
 {"hash":33581481,"name":"tedtsampleprep.epreparationdate.texthint","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
 {"hash":208198618,"name":"tedtsampleprep.lblpreparer.caption","sourcebytes":[80,114,101,112,97,114,101,114,58],"value":"Preparer:"},
 {"hash":96661490,"name":"tedtsampleprep.epreparer.buttonhint","sourcebytes":[70,105,110,100,32,112,114,101,112,97,114,101,114],"value":"Find preparer"},
-{"hash":227155890,"name":"tedtsampleprep.pmnnewperson.caption","sourcebytes":[78,101,119,32,112,114,101,112,97,114,101,114],"value":"New preparer"}
+{"hash":248475418,"name":"tedtsampleprep.lblinstitution.caption","sourcebytes":[73,110,115,116,105,116,117,116,105,111,110,58],"value":"Institution:"},
+{"hash":114304686,"name":"tedtsampleprep.einstitution.buttonhint","sourcebytes":[70,105,110,100,32,105,110,115,116,105,116,117,116,105,111,110],"value":"Find institution"},
+{"hash":227155890,"name":"tedtsampleprep.pmnnewperson.caption","sourcebytes":[78,101,119,32,112,114,101,112,97,114,101,114],"value":"New preparer"},
+{"hash":164405806,"name":"tedtsampleprep.pmnnewinstitution.caption","sourcebytes":[78,101,119,32,105,110,115,116,105,116,117,116,105,111,110],"value":"New institution"}
 ]}

@@ -128,6 +128,7 @@ procedure TedtDocumentInfo.ApplyDarkMode;
 begin
   eDocumentDate.Images := DMM.iEditsDark;
   eDocumentPath.Images := DMM.iEditsDark;
+  eAuthor.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
 end;
 

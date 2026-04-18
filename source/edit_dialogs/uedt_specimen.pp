@@ -38,6 +38,7 @@ type
     eCollectionYear: TEdit;
     eCollectionMonth: TEdit;
     eCollectionDay: TEdit;
+    eInstitution: TEditButton;
     eLocality: TEditButton;
     eLongitude: TEditButton;
     eLatitude: TEditButton;
@@ -50,6 +51,7 @@ type
     lblBandStatus9: TLabel;
     lblCollectionDate1: TLabel;
     lblCoordinatesPrecision: TLabel;
+    lblInstitution: TLabel;
     lblNotes: TLabel;
     lblFieldNumber: TLabel;
     lblCollectionDate: TLabel;
@@ -60,7 +62,9 @@ type
     lblSampleType: TLabel;
     lblTaxon: TLabel;
     lineBottom: TShapeLineBGRA;
+    pmnNewInstitution: TMenuItem;
     pCoordinatesPrecision: TPanel;
+    pInstitution: TPanel;
     pmnNewLocality: TMenuItem;
     pmnNewIndividual: TMenuItem;
     pmnNewNest: TMenuItem;
@@ -91,6 +95,8 @@ type
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
+    procedure eInstitutionButtonClick(Sender: TObject);
+    procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
@@ -104,13 +110,14 @@ type
     procedure FormShow(Sender: TObject);
     procedure pmnNewEggClick(Sender: TObject);
     procedure pmnNewIndividualClick(Sender: TObject);
+    procedure pmnNewInstitutionClick(Sender: TObject);
     procedure pmnNewLocalityClick(Sender: TObject);
     procedure pmnNewNestClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
     FSpecimen: TSpecimen;
-    FLocalityId, FTaxonId, FIndividualId, FNestId, FEggId: Integer;
+    FLocalityId, FTaxonId, FIndividualId, FNestId, FEggId, FInstitutionId: Integer;
     procedure SetSpecimen(Value: TSpecimen);
     procedure GetRecord;
     procedure SetRecord;
@@ -146,6 +153,7 @@ begin
   eIndividual.Images := DMM.iEditsDark;
   eNest.Images := DMM.iEditsDark;
   eEgg.Images := DMM.iEditsDark;
+  eInstitution.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
 end;
@@ -245,6 +253,39 @@ begin
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
+end;
+
+procedure TedtSpecimen.eInstitutionButtonClick(Sender: TObject);
+begin
+  FindDlg(tbInstitutions, eInstitution, FInstitutionId);
+end;
+
+procedure TedtSpecimen.eInstitutionKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
+  begin
+    FindDlg(tbInstitutions, eInstitution, FInstitutionId, Key);
+    Key := #0;
+  end;
+  { CLEAR FIELD VALUE = Backspace }
+  if (Key = #8) then
+  begin
+    FInstitutionId := 0;
+    eInstitution.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> key }
   if (Key = #13) and (xSettings.UseEnterAsTab) then
   begin
     if (Sender is TEditButton) then
@@ -584,6 +625,8 @@ begin
   eNest.Text := GetName('nests', COL_FULL_NAME, COL_NEST_ID, FNestId);
   FEggId := FSpecimen.EggId;
   eEgg.Text := GetName('eggs', COL_FULL_NAME, COL_EGG_ID, FEggId);
+  FInstitutionId := FSpecimen.InstitutionId;
+  eInstitution.Text := GetName(TBL_INSTITUTIONS, COL_FULL_NAME, COL_INSTITUTION_ID, FInstitutionId);
   mNotes.Text := FSpecimen.Notes;
 end;
 
@@ -612,6 +655,11 @@ end;
 procedure TedtSpecimen.pmnNewIndividualClick(Sender: TObject);
 begin
   EditIndividual(DMG.qIndividuals, True);
+end;
+
+procedure TedtSpecimen.pmnNewInstitutionClick(Sender: TObject);
+begin
+  EditInstitution(DMG.qInstitutions, True);
 end;
 
 procedure TedtSpecimen.pmnNewLocalityClick(Sender: TObject);
@@ -661,6 +709,7 @@ begin
   FSpecimen.IndividualId := FIndividualId;
   FSpecimen.NestId := FNestId;
   FSpecimen.EggId := FEggId;
+  FSpecimen.InstitutionId := FInstitutionId;
   FSpecimen.Notes := mNotes.Text;
 
   GetFullName;
