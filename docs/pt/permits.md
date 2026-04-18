@@ -16,6 +16,7 @@ Ao criar ou editar um registro de licença, os seguintes campos estão disponív
 | **Emissor** | Sim | Instituição ou organização que emitiu a licença |
 | **Data de emissão** | Sim | Data em que a licença foi emitida |
 | **Data de validade** |  | Data em que a licença expira (se aplicável) |
+| **Status** |  | Status da licença: Ativa, Substituída, Arquivada, Cancelada |
 | **Notas** |  | Qualquer informação adicional sobre a licença |
 
 ## Boas práticas

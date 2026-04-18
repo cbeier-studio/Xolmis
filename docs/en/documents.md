@@ -56,6 +56,7 @@ To edit document or link information:
 | --- | --- | --- |
 | **Document type** |  | Type of document (see details below) |
 | **Document title** |  | Name or title given to the document |
+| **Author** |  | Person who created the document |
 | **Document date** | Yes | Date of creation of the document |
 | **Document time** |  | Time of creation of the document |
 | **Document file/URL** | Yes | Relative file path of the document or external URL |

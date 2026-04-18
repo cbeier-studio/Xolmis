@@ -17,10 +17,10 @@ Para buscar uma correspondência exata, comece digitando `=` (sinal de igual) se
 
 ### Buscar valor que começa com
 
-Por padrão, as buscas retornam correspondências parciais, independentemente de o valor estar no início, meio ou fim. Para restringir os resultados a valores que começam com o texto digitado, use `:` (dois pontos).
+Por padrão, as buscas retornam correspondências parciais, independentemente de o valor estar no início, meio ou fim. Para restringir os resultados a valores que começam com o texto digitado, use `$` (cifrão).
 
 !!! example
-    `:abc` retornará apenas valores que começam com "abc".
+    `$abc` retornará apenas valores que começam com "abc".
 
 ### Busca com múltiplas palavras
 
@@ -75,7 +75,7 @@ Filtros de pesquisa combinam um campo de texto com um botão de busca. Você pod
 ## Boas práticas
 
 - **Combine busca e filtros**: Use ambos simultaneamente para máxima precisão.  
-- **Use modificadores com sabedoria**: Buscas exatas (`=`), iniciais (`:`) e silábicas (`+`) ajudam a refinar resultados.  
+- **Use modificadores com sabedoria**: Buscas exatas (`=`), iniciais (`$`) e silábicas (`+`) ajudam a refinar resultados.  
 - **Aproveite filtros em árvore**: Ideais para dados hierárquicos como táxons ou localidades.  
 - **Documente seu fluxo de trabalho**: Anote quais filtros foram aplicados ao exportar ou gerar relatórios.  
 - **Redefina filtros quando necessário**: Sempre verifique se filtros estão ativos para não perder registros.  

@@ -56,6 +56,7 @@ Para editar informações do documento ou link:
 | --- | --- | --- |
 | **Tipo de documento** |  | Tipo de documento (ver detalhes abaixo) |
 | **Título do documento** |  | Nome ou título atribuído ao documento |
+| **Autor** |  | Pessoa que criou o documento |
 | **Data do documento** | Sim | Data de criação do documento |
 | **Hora do documento** |  | Hora de criação do documento |
 | **Arquivo/URL do documento** | Sim | Caminho relativo do arquivo ou URL externo |

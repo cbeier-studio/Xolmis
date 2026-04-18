@@ -41,7 +41,7 @@ When creating or editing a sighting record, the following fields are available:
 | **Nr. of immatures** |  | Number of immatures or juveniles observed |
 | **Nr. of birds not aged** |  | Number of birds whose age could not be determined |
 | **Record is on eBird** |  | Check if the sighting is also recorded on eBird |
-| **Outside the sampling** |  | Check if the sighting was made outside regular sampling effort |
+| **Out of sample** |  | Check if the sighting was made outside regular sampling effort |
 | **Notes** |  | Any additional information about the sighting |
 
 ## Detection types

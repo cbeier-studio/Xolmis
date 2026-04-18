@@ -18,6 +18,7 @@ When creating or editing a project, the following fields are available:
 | **Website** |  | Project website address |
 | **E-mail** |  | Contact e-mail address of the project or responsible person |
 | **Contact person** |  | Person responsible for answering inquiries |
+| **Status** |  | Status of project: Planned, Active, Paused, Finished, Cancelled |
 | **Main goal** |  | Description of the main goal of the project |
 | **Risks** |  | Risks or challenges that need to be considered |
 | **Abstract** |  | Project abstract or summary |

@@ -16,6 +16,7 @@ When creating or editing a permit record, the following fields are available:
 | **Dispatcher** | Yes | Institution or organization that issued the permit |
 | **Dispatch date** | Yes | Date when the permit was issued |
 | **Expire date** |  | Date when the permit will expire (if applicable) |
+| **Status** |  | Status of permit: Active, Replaced, Archived, Cancelled |
 | **Notes** |  | Any additional information about the permit |
 
 ## Best practices
