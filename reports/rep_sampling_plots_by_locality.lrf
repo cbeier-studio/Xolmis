@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:29:13"/>
-    <ReportLastChange Value="2025-06-06 08:57:16"/>
+    <ReportLastChange Value="2026-04-18 06:05:45"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -303,7 +303,7 @@
             <Width Value="151"/>
             <Height Value="18"/>
           </Size>
-          <Flags Value="3"/>
+          <Flags Value="1"/>
           <FillColor Value="clNone"/>
           <Frames>
             <FrameColor Value="clBlack"/>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.dsSamplingPlots.&quot;acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.dsSamplingPlots.&quot;abbreviation&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -415,7 +415,7 @@
             <Width Value="212"/>
             <Height Value="18"/>
           </Size>
-          <Flags Value="3"/>
+          <Flags Value="1"/>
           <FillColor Value="clNone"/>
           <Frames>
             <FrameColor Value="clBlack"/>
@@ -595,7 +595,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Acronym&#xD;&#xA;"/>
+            <Memo Value="Abbreviation&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>

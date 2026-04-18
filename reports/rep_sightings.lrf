@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:45:11"/>
-    <ReportLastChange Value="2025-11-29 17:20:47"/>
+    <ReportLastChange Value="2026-04-18 06:06:59"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -2161,7 +2161,7 @@
             <Restrictions Value=""/>
           </Frames>
           <Data>
-            <Script Value="Checked := [DMR.qSightings.&quot;not_surveying&quot;]&#xD;&#xA;"/>
+            <Script Value="Checked := [DMR.qSightings.&quot;out_of_sample&quot;]&#xD;&#xA;"/>
             <GapX Value="0"/>
             <GapY Value="0"/>
             <Checked Value="1"/>

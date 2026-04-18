@@ -1072,6 +1072,8 @@ type
     procedure pmPrintGridClick(Sender: TObject);
     procedure pmPrintInstitutionsClick(Sender: TObject);
     procedure pmPrintMethodsClick(Sender: TObject);
+    procedure pmPrintPermitsByExpirationClick(Sender: TObject);
+    procedure pmPrintPermitsByProjectClick(Sender: TObject);
     procedure pmPrintPermitsClick(Sender: TObject);
     procedure pmPrintProjectsClick(Sender: TObject);
     procedure pmPrintResearchersClick(Sender: TObject);
@@ -5968,6 +5970,30 @@ begin
   DMR.qMethods.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
 
   PrintPreview(METHODS_REPORT_FILE, DMR.dsMethods);
+end;
+
+procedure TfrmCustomGrid.pmPrintPermitsByExpirationClick(Sender: TObject);
+begin
+  DMR.qPermits.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+
+  // Reorder records
+  if Pos('ORDER BY', DMR.qPermits.SQL.Text) > 0 then
+    DMR.qPermits.SQL.Delete(DMR.qPermits.SQL.Count - 1);
+  DMR.qPermits.SQL.Add('ORDER BY l.expire_date ASC, l.permit_name ASC');
+
+  PrintPreview(PERMITS_BY_EXPIRATION_REPORT_FILE, DMR.dsPermits);
+end;
+
+procedure TfrmCustomGrid.pmPrintPermitsByProjectClick(Sender: TObject);
+begin
+  DMR.qPermits.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
+
+  // Reorder records
+  if Pos('ORDER BY', DMR.qPermits.SQL.Text) > 0 then
+    DMR.qPermits.SQL.Delete(DMR.qPermits.SQL.Count - 1);
+  DMR.qPermits.SQL.Add('ORDER BY project_name ASC, l.permit_name ASC');
+
+  PrintPreview(PERMITS_BY_PROJECT_REPORT_FILE, DMR.dsPermits);
 end;
 
 procedure TfrmCustomGrid.pmPrintPermitsClick(Sender: TObject);

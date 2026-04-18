@@ -34,6 +34,8 @@ const
   METHODS_REPORT_FILE: String                     = 'rep_methods.lrf';
   PEOPLE_REPORT_FILE: String                      = 'rep_people.lrf';
   PERMITS_REPORT_FILE: String                     = 'rep_permits.lrf';
+  PERMITS_BY_EXPIRATION_REPORT_FILE: String       = 'rep_permits_by_expiration.lrf';
+  PERMITS_BY_PROJECT_REPORT_FILE: String          = 'rep_permits_by_project.lrf';
   PROJECTS_REPORT_FILE: String                    = 'rep_projects.lrf';
   SAMPLING_PLOTS_REPORT_FILE: String              = 'rep_sampling_plots.lrf';
   SAMPLING_PLOTS_BY_LOCALITY_REPORT_FILE: String  = 'rep_sampling_plots_by_locality.lrf';

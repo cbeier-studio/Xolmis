@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2024-10-02 12:29:13"/>
-    <ReportLastChange Value="2025-11-29 17:30:33"/>
+    <ReportLastChange Value="2026-04-18 06:04:50"/>
     <ReportVersionBuild Value="0"/>
     <ReportVersionMajor Value="1"/>
     <ReportVersionMinor Value="0"/>
@@ -315,7 +315,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[DMR.qSamplingPlots.&quot;acronym&quot;]&#xD;&#xA;"/>
+            <Memo Value="[DMR.qSamplingPlots.&quot;abbreviation&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -651,7 +651,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Acronym&#xD;&#xA;"/>
+            <Memo Value="Abbreviation&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
