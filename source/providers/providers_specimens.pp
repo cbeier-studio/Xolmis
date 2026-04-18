@@ -353,11 +353,13 @@ begin
     'INSERT INTO specimen_collectors (' +
       'specimen_id, ' +
       'person_id, ' +
+      'collector_seq, ' +
       'user_inserted, ' +
       'insert_date) ' +
     'VALUES (' +
       ':specimen_id, ' +
       ':person_id, ' +
+      ':collector_seq, ' +
       ':user_inserted, ' +
       'datetime(''now'',''subsec''))';
 end;

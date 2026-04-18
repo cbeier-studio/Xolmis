@@ -103,15 +103,14 @@ begin
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
     try
-      Add('INSERT INTO record_verifications');
-      Add('  (table_name, record_id, verification_date, verification_status, person_id, notes)');
-      Add('VALUES (:atable, :aid, :adate, :astatus, :aperson, :anote)');
-      ParamByName('ATABLE').AsString := Tabela;
-      ParamByName('AID').AsInteger := FId;
-      ParamByName('ADATE').AsDateTime := Now;
-      ParamByName('ASTATUS').AsString := Tipo;
-      ParamByName('APERSON').AsInteger := FPersonId;
-      ParamByName('ANOTE').AsString := mNotes.Lines.Text;
+      Add(xProvider.RecordVerifications.Insert);
+
+      ParamByName('table_name').AsString := Tabela;
+      ParamByName('record_id').AsInteger := FId;
+      ParamByName('verification_date').AsDateTime := Now;
+      ParamByName('verification_status').AsString := Tipo;
+      ParamByName('person_id').AsInteger := FPersonId;
+      ParamByName('notes').AsString := mNotes.Lines.Text;
       ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;

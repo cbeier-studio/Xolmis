@@ -87,8 +87,8 @@ type
 
   IDBMetadataSQL = interface ['{FBCA059E-FEE1-4076-AEC9-3BCEE7523166}']
     function CreateTable: String;
-    function SelectAll: String;
-    function SelectTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
     function Update: string;
     function Delete: string;
@@ -650,30 +650,38 @@ begin
   FBackend := ABackend;
 
   // Instantiate the modules passing the backend
+  FAudios             := TAudiosSQL.Create(FBackend);
   FBandHistory        := TBandHistorySQL.Create(FBackend);
   FBands              := TBandsSQL.Create(FBackend);
   FBotanicalTaxa      := TBotanicalTaxaSQL.Create(FBackend);
   FCaptures           := TCapturesSQL.Create(FBackend);
   FConnections        := TConnectionsSQL.Create(FBackend);
+  FDBMetadata         := TDBMetadataSQL.Create(FBackend);
+  FDocuments          := TDocumentsSQL.Create(FBackend);
   FEggs               := TEggsSQL.Create(FBackend);
   FExpeditions        := TExpeditionsSQL.Create(FBackend);
   FFeathers           := TFeathersSQL.Create(FBackend);
   FGazetteer          := TGazetteerSQL.Create(FBackend);
+  FImages             := TImagesSQL.Create(FBackend);
   FIndividuals        := TIndividualsSQL.Create(FBackend);
   FInstitutions       := TInstitutionsSQL.Create(FBackend);
   FMethods            := TMethodsSQL.Create(FBackend);
+  FNestOwners         := TNestOwnersSQL.Create(FBackend);
   FNestRevisions      := TNestRevisionsSQL.Create(FBackend);
   FNests              := TNestsSQL.Create(FBackend);
   FNetsEffort         := TNetsEffortSQL.Create(FBackend);
   FPeople             := TPeopleSQL.Create(FBackend);
   FPermanentNets      := TPermanentNetsSQL.Create(FBackend);
   FPermits            := TPermitsSQL.Create(FBackend);
+  FPoiLibrary         := TPoiLibrarySQL.Create(FBackend);
   FProjectBudgets     := TProjectBudgetsSQL.Create(FBackend);
   FProjectChronograms := TProjectChronogramsSQL.Create(FBackend);
   FProjectExpenses    := TProjectExpensesSQL.Create(FBackend);
   FProjectGoals       := TProjectGoalsSQL.Create(FBackend);
   FProjects           := TProjectsSQL.Create(FBackend);
   FProjectTeams       := TProjectTeamsSQL.Create(FBackend);
+  FRecordHistory      := TRecordHistorySQL.Create(FBackend);
+  FRecordVerifications := TRecordVerificationsSQL.Create(FBackend);
   FSamplePreps        := TSamplePrepsSQL.Create(FBackend);
   FSamplingPlots      := TSamplingPlotsSQL.Create(FBackend);
   FSightings          := TSightingsSQL.Create(FBackend);
@@ -684,6 +692,7 @@ begin
   FTaxonRanks         := TTaxonRanksSQL.Create(FBackend);
   FUsers              := TUsersSQL.Create(FBackend);
   FVegetations        := TVegetationsSQL.Create(FBackend);
+  FVideos             := TVideosSQL.Create(FBackend);
   FWeatherLogs        := TWeatherLogsSQL.Create(FBackend);
   FZooTaxa            := TZooTaxaSQL.Create(FBackend);
 end;

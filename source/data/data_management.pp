@@ -144,7 +144,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_debug,
-  data_consts, data_schema, models_users,
+  data_consts, data_schema, data_providers, models_users,
   udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
 
   {
@@ -912,8 +912,8 @@ begin
     SQLConnection := Connection;
     SQLTransaction := Connection.Transaction;
 
-    Add('SELECT * FROM db_metadata');
-    Add('WHERE property_name = :aname');
+    Add(xProvider.DBMetadata.SelectAll(swcId));
+
     ParamByName('aname').AsString := aKey;
 
     Open;
@@ -936,25 +936,10 @@ begin
     SQLConnection := Connection;
     SQLTransaction := Connection.Transaction;
 
-    case databaseConnection.Backend of
-      dbSqlite:
-      begin
-        Add('INSERT OR REPLACE INTO db_metadata (property_name, property_value)');
-        Add('VALUES (:aname, :avalue)');
-      end;
-      dbFirebird: ;
-      dbPostgre:
-      begin
-        Add('INSERT INTO db_metadata (property_name, property_value) ');
-        Add('VALUES (:aname, :avalue) ');
-        Add('ON CONFLICT (property_name) ');
-        Add('DO UPDATE SET property_value = EXCLUDED.property_value');
-      end;
-      dbMaria: ;
-    end;
+    Add(xProvider.DBMetadata.Insert);
 
-    ParamByName('aname').AsString := aKey;
-    ParamByName('avalue').AsString := aValue;
+    ParamByName('property_name').AsString := aKey;
+    ParamByName('property_value').AsString := aValue;
 
     ExecSQL;
   finally
@@ -966,6 +951,7 @@ procedure CreateDBMetadataTable(Connection: TSQLConnector);
 begin
   { Create table "db_metadata" }
   LogDebug('Creating db_metadata table');
+
   Connection.ExecuteDirect(xProvider.DBMetadata.CreateTable);
 end;
 

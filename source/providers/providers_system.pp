@@ -52,8 +52,8 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
-    function SelectTable: String;
-    function SelectAll: String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
     function Update: String;
     function Delete: String;
@@ -477,27 +477,76 @@ end;
 
 function TDBMetadataSQL.Insert: String;
 begin
-  Result :=
-    'INSERT INTO db_metadata (' +
-      'property_name, ' +
-      'property_value) ' +
-    'VALUES (' +
-      ':property_name, ' +
-      ':property_value)';
+  case FBackend of
+    dbSqlite:
+    begin
+      Result :=
+        'INSERT OR REPLACE INTO db_metadata (' +
+          'property_name, ' +
+          'property_value) ' +
+        'VALUES (' +
+          ':property_name, ' +
+          ':property_value)';
+    end;
+    dbFirebird: ;
+    dbPostgre:
+    begin
+      Result :=
+        'INSERT INTO db_metadata (property_name, property_value) ' +
+        'VALUES (:aname, :avalue) ' +
+        'ON CONFLICT (property_name) ' +
+        'DO UPDATE SET property_value = EXCLUDED.property_value';
+    end;
+    dbMaria: ;
+  end;
 end;
 
-function TDBMetadataSQL.SelectAll: String;
+function TDBMetadataSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result := 'SELECT * FROM db_metadata ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (property_name = :aname) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (property_name = :property_name) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (property_name ISNULL) ';
+    swcActiveAll: ;
+    swcActiveMarked: ;
+    swcInactive: ;
+    swcActiveParent: ;
+    swcFindText: ;
+  end;
 end;
 
-function TDBMetadataSQL.SelectTable: String;
+function TDBMetadataSQL.SelectTable(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT ' +
       'property_name, ' +
       'property_value ' +
     'FROM db_metadata ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (property_name = :aname) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (property_name = :property_name) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (property_name ISNULL) ';
+    swcActiveAll: ;
+    swcActiveMarked: ;
+    swcInactive: ;
+    swcActiveParent: ;
+    swcFindText: ;
+  end;
 end;
 
 function TDBMetadataSQL.Update: String;
@@ -575,7 +624,7 @@ begin
       'new_value, ' +
       'notes) ' +
     'VALUES (' +
-      'datetime(:event_date), ' +
+      'datetime(''now'',''localtime''), ' +
       ':user_id, ' +
       ':event_action, ' +
       ':event_table, ' +

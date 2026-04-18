@@ -6448,18 +6448,7 @@ begin
                 SQLTransaction := DMM.sqlTrans;
                 Clear;
 
-                Add('INSERT INTO survey_team (' +
-                  'survey_id, ' +
-                  'person_id, ' +
-                  'visitor, ' +
-                  'user_inserted, ' +
-                  'insert_date)');
-                Add('VALUES (' +
-                  ':survey_id, ' +
-                  ':person_id, ' +
-                  ':visitor, ' +
-                  ':user_inserted, ' +
-                  'datetime(''now'', ''subsec''))');
+                Add(xProvider.SurveyTeams.Insert);
 
                 SetForeignParam(ParamByName('survey_id'), dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger);
                 SetForeignParam(ParamByName('person_id'), aPerson);
@@ -6499,20 +6488,7 @@ begin
                 SQLTransaction := DMM.sqlTrans;
                 Clear;
 
-                Add('INSERT INTO project_team (' +
-                  'project_id, ' +
-                  'person_id, ' +
-                  'project_manager, ' +
-                  'institution_id, ' +
-                  'user_inserted, ' +
-                  'insert_date)');
-                Add('VALUES (' +
-                  ':project_id, ' +
-                  ':person_id, ' +
-                  ':project_manager, ' +
-                  ':institution_id, ' +
-                  ':user_inserted, ' +
-                  'datetime(''now'', ''subsec''))');
+                Add(xProvider.ProjectTeams.Insert);
 
                 SetForeignParam(ParamByName('project_id'), dsLink.DataSet.FieldByName(COL_PROJECT_ID).AsInteger);
                 SetForeignParam(ParamByName('person_id'), aPerson);
@@ -6562,18 +6538,7 @@ begin
                 SQLTransaction := DMM.sqlTrans;
                 Clear;
 
-                Add('INSERT INTO specimen_collectors (' +
-                  'specimen_id, ' +
-                  'person_id, ' +
-                  'collector_seq, ' +
-                  'user_inserted, ' +
-                  'insert_date)');
-                Add('VALUES (' +
-                  ':specimen_id, ' +
-                  ':person_id, ' +
-                  ':collector_seq, ' +
-                  ':user_inserted, ' +
-                  'datetime(''now'', ''subsec''))');
+                Add(xProvider.SpecimenCollectors.Insert);
 
                 SetForeignParam(ParamByName('specimen_id'), dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger);
                 SetForeignParam(ParamByName('person_id'), aPerson);

@@ -528,18 +528,16 @@ begin
 
     { Add record history entry }
     Clear;
-    Add('INSERT INTO record_history (event_date, user_id,');
-    Add('event_action, event_table, event_field, record_id, old_value, new_value, notes)');
-    Add('VALUES (datetime(''now'',''localtime''), :auser, :oper, :tabname, :afield, :keyv, ' +
-      ':oldvalue, :newvalue, :note)');
-    ParamByName('AUSER').AsInteger := ActiveUser.Id;
-    ParamByName('OPER').AsString := HISTORY_ACTIONS[aAction];
-    ParamByName('TABNAME').AsString := TABLE_NAMES[aTable];
-    ParamByName('AFIELD').AsString := aField;
-    ParamByName('KEYV').AsInteger := Cod;
-    ParamByName('OLDVALUE').AsString := aOldValue;
-    ParamByName('NEWVALUE').AsString := aNewValue;
-    ParamByName('NOTE').AsString := aNote;
+    Add(xProvider.RecordHistory.Insert);
+
+    ParamByName('user_id').AsInteger := ActiveUser.Id;
+    ParamByName('event_action').AsString := HISTORY_ACTIONS[aAction];
+    ParamByName('event_table').AsString := TABLE_NAMES[aTable];
+    ParamByName('event_field').AsString := aField;
+    ParamByName('record_id').AsInteger := Cod;
+    ParamByName('old_value').AsString := aOldValue;
+    ParamByName('new_value').AsString := aNewValue;
+    ParamByName('notes').AsString := aNote;
 
     //{$IFDEF DEBUG}
     //LogSQL(SQL);
