@@ -213,6 +213,34 @@ type
   TSeparator = (spNone, spSemicolon, spComma, spColon, spPeriod, spPipe, spSlash, spHyphen, spUnderline);
   TSQLAndOr = (aoNone, aoAnd, aoOr);
   TRecordActiveStatus = (rsAll, rsActive, rsInactive, rsNone);
+  TSummaryKind = (
+      skNone,          // sem resumo
+      skCount,         // contagem simples
+      skDistinctCount, // contagem de valores distintos
+      skSum,           // soma
+      skMean,          // média
+      skStats,         // estatísticas completas (média, sd, mediana…)
+      skCategory,      // categorias + contagem
+      skBoolean,       // contagem de TRUE/FALSE
+      skDate,          // min/max/intervalo
+      skGroupStats     // estatísticas agrupadas por outra coluna
+    );
+
+    TSummaryMetric = (
+      smCount,
+      smDistinct,
+      smMin,
+      smMax,
+      smMean,
+      smMedian,
+      smMode,
+      smStdDev,
+      smStdErr,
+      smSum,
+      smQuartiles
+    );
+
+    TSummaryMetricSet = set of TSummaryMetric;
 
 const
   CRITERIA_OPERATORS: array[TCriteriaType] of String = ('',
@@ -1732,4 +1760,3 @@ begin
 end;
 
 end.
-

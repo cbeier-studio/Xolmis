@@ -47,11 +47,16 @@ type
     CoordinateFormat: TMapCoordinateType;
     DisplayWidth: Integer;
     SizePriority: Integer;
+    DisplayMask: String;
     Visible: Boolean;
     ImportVisible: Boolean;
     QuickEntryVisible: Boolean;
     Alignment: TAlignment;
     MeasurementUnit: String;
+    SummaryEnabled: Boolean;
+    SummaryKind: TSummaryKind;
+    SummaryMetrics: TSummaryMetricSet;
+    GroupingField: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -5886,4 +5891,3 @@ begin
 end;
 
 end.
-
