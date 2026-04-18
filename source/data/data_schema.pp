@@ -380,9 +380,6 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
   // Reported - removed v2
-  //AddField(T, 'band_reported', rscReported, sdtBoolean);
-  //T.Fields.Last.DefaultValue := 0;
-  //T.Fields.Last.Alignment := taCenter;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
@@ -423,12 +420,13 @@ begin
   T.TableName := TBL_BOTANIC_TAXA;
   T.DisplayName := LocaleTablesDict[tbBotanicTaxa];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'taxon_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
   // Scientific name
+  // renamed "taxon_name" -> "scientific_name" - v2
   AddField(T, 'scientific_name', rscScientificName, sdtText, True, 100);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := SCIENTIFIC_NAME_ALIASES;
@@ -546,7 +544,7 @@ begin
   T.TableName := TBL_CAPTURES;
   T.DisplayName := LocaleTablesDict[tbCaptures];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 2;
+  T.QuickEntrySchemaVersion := 3;
 
   // ID
   AddField(T, 'capture_id', rscId, sdtInteger, True, 0, True);
@@ -762,16 +760,20 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
   // Right tarsus
+  // renamed "right_leg_below" -> "right_tarsus" - v3
   AddField(T, 'right_tarsus', rscRightTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TARSUS_ALIASES;
   // Left tarsus
+  // renamed "left_leg_below" -> "left_tarsus" - v3
   AddField(T, 'left_tarsus', rscLeftTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TARSUS_ALIASES;
   // Right tibia
+  // renamed "right_leg_above" -> "right_tibia" - v3
   AddField(T, 'right_tibia', rscRightTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
   // Left tibia
+  // renamed "left_leg_above" -> "left_tibia" - v3
   AddField(T, 'left_tibia', rscLeftTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
@@ -922,6 +924,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'philornis larvae,larvas de philornis';
   T.Fields.Last.Alignment := taRightJustify;
   // Kipp's distance
+  // renamed "kipps_index" -> "kipps_distance" - v3
   AddField(T, 'kipps_distance', rscKippSDistance, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'kipps distance,kipp''s distance,kipps index,kipp''s index,distância de kipp,índice de kipp';
   T.Fields.Last.MeasurementUnit := 'mm';
@@ -1071,9 +1074,11 @@ begin
     FreeAndNil(Qry);
   end;
   // Initial photo number
+  // renamed "start_photo_number" -> "initial_photo_number" - v3
   AddField(T, 'initial_photo_number', rscInitialPhotoNr, sdtText, False, 20);
   T.Fields.Last.Aliases.CommaText := 'initial photo number,initial photo nr.,initial photo,número da foto inicial,nº da foto inicial,foto inicial';
   // Final photo number
+  // renamed "end_photo_number" -> "final_photo_number" - v3
   AddField(T, 'final_photo_number', rscFinalPhotoNr, sdtText, False, 20);
   T.Fields.Last.Aliases.CommaText := 'final photo number,final photo nr.,final photo,número da foto final,nº da foto final,foto final';
   // Field number
@@ -1153,7 +1158,7 @@ begin
   T.TableName := TBL_EGGS;
   T.DisplayName := LocaleTablesDict[tbEggs];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'egg_id', rscId, sdtInteger, True, 0, True);
@@ -1211,6 +1216,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'host egg,ovo do hospedeiro';
   T.Fields.Last.Alignment := taCenter;
   // Observer ID
+  // renamed "researcher_id" -> "observer_id" - v2
   AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
@@ -1218,6 +1224,7 @@ begin
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Observer
+  // renamed "researcher_name" -> "observer_name" - v2
   AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'observer';
   T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
@@ -1690,7 +1697,7 @@ begin
   T.TableName := TBL_GAZETTEER;
   T.DisplayName := LocaleTablesDict[tbGazetteer];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'site_id', rscId, sdtInteger, True, 0, True);
@@ -1701,6 +1708,7 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
+  // renamed "site_acronym" -> "abbreviation" - v2
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, False, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
@@ -1833,7 +1841,7 @@ begin
   T.TableName := TBL_INDIVIDUALS;
   T.DisplayName := LocaleTablesDict[tbIndividuals];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'individual_id', rscId, sdtInteger, True, 0, True);
@@ -1914,16 +1922,20 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   // Right tarsus
+  // renamed "right_leg_below" -> "right_tarsus" - v2
   AddField(T, 'right_tarsus', rscRightTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TARSUS_ALIASES;
   // Left tarsus
+  // renamed "left_leg_below" -> "left_tarsus" - v2
   AddField(T, 'left_tarsus', rscLeftTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TARSUS_ALIASES;
   // Right tibia
+  // renamed "right_leg_above" -> "right_tibia" - v2
   AddField(T, 'right_tibia', rscRightTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
   // Left tibia
+  // renamed "left_leg_above" -> "left_tibia" - v2
   AddField(T, 'left_tibia', rscLeftTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
@@ -2067,7 +2079,7 @@ begin
   T.TableName := TBL_INSTITUTIONS;
   T.DisplayName := LocaleTablesDict[tbInstitutions];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'institution_id', rscId, sdtInteger, True, 0, True);
@@ -2079,6 +2091,7 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
+  // renamed "acronym" -> "abbreviation" - v2
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 15);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
@@ -2101,6 +2114,7 @@ begin
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
   // Postal code
+  // renamed "zip_code" -> "postal_code" - v2
   AddField(T, 'postal_code', rscPostalCode, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := POSTAL_CODE_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
@@ -2538,7 +2552,7 @@ begin
   T.TableName := TBL_NESTS;
   T.DisplayName := LocaleTablesDict[tbNests];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 2;
+  T.QuickEntrySchemaVersion := 3;
 
   // ID
   AddField(T, 'nest_id', rscId, sdtInteger, True, 0, True);
@@ -2755,6 +2769,7 @@ begin
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
   // Days building
+  // renamed "construction_days" -> "building_days" - v3
   AddField(T, 'building_days', rscBuildingDays, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'building days,dias de construção';
   T.Fields.Last.MeasurementUnit := rsUnitDays;
@@ -3047,7 +3062,7 @@ begin
   T.TableName := TBL_PEOPLE;
   T.DisplayName := LocaleTablesDict[tbPeople];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'person_id', rscId, sdtInteger, True, 0, True);
@@ -3063,6 +3078,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
+  // renamed "acronym" -> "abbreviation" - v2
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
@@ -3090,12 +3106,14 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   // RG
+  // renamed "national_id_card" -> "id_document_1" - v2
   AddField(T, 'id_document_1', rscCPF, sdtText, False, 15);
   T.Fields.Last.ExportName := 'rg_number';
   T.Fields.Last.Aliases.CommaText := 'national id card,rg';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   // CPF
+  // renamed "social_security_number" -> "id_document_2" - v2
   AddField(T, 'id_document_2', rscRG, sdtText, False, 15);
   T.Fields.Last.ExportName := 'cpf_number';
   T.Fields.Last.Aliases.CommaText := 'social security number,ssn,cpf';
@@ -3148,6 +3166,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   // Postal code
+  // renamed "zip_code" -> "postal_code" - v2
   AddField(T, 'postal_code', rscPostalCode, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := POSTAL_CODE_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
@@ -3365,7 +3384,7 @@ begin
   T.TableName := TBL_PERMITS;
   T.DisplayName := LocaleTablesDict[tbPermits];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'permit_id', rscId, sdtInteger, True, 0, True);
@@ -3420,6 +3439,7 @@ begin
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
   // Permit status
+  // added in v2
   AddField(T, 'permit_status', rscStatus, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'A,R,K,C';
   with T.Fields.Last.PickList do
@@ -3879,7 +3899,7 @@ begin
   T.TableName := TBL_PROJECTS;
   T.DisplayName := LocaleTablesDict[tbProjects];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'project_id', rscId, sdtInteger, True, 0, True);
@@ -3924,6 +3944,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   // Project status
+  // added in v2
   AddField(T, 'project_status', rscStatus, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'P,A,D,F,C';
   with T.Fields.Last.PickList do
@@ -4080,7 +4101,7 @@ begin
   T.TableName := TBL_SAMPLE_PREPS;
   T.DisplayName := LocaleTablesDict[tbSamplePreps];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'sample_prep_id', rscId, sdtInteger, True, 0, True);
@@ -4096,7 +4117,8 @@ begin
   AddField(T, 'accession_num', rscAccessionNr, sdtText, False, 20);
   T.Fields.Last.Aliases.CommaText := 'accession,accession number,accession nr,tombo,número de tombo,nº de tombo';
   // Duplicate number
-  AddField(T, 'accession_seq', rscDuplicateNr, sdtInteger);
+  // renamed "accession_seq" -> "duplicate_seq" - v2
+  AddField(T, 'duplicate_seq', rscDuplicateNr, sdtInteger);
   T.Fields.Last.ExportName := 'duplicate_number';
   T.Fields.Last.Aliases.CommaText := 'duplicate,duplicata,duplicate number,duplicate nr,número da duplicata,nº da duplicata';
   // Type
@@ -4180,6 +4202,7 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
   // Institution ID
+  // added in v2
   AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
   T.Fields.Last.Aliases.CommaText := INSTITUTION_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
@@ -4187,6 +4210,7 @@ begin
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Institution
+  // added in v2
   AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
   T.Fields.Last.ExportName := 'institution';
   T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
@@ -4236,7 +4260,7 @@ begin
   T.TableName := TBL_SAMPLING_PLOTS;
   T.DisplayName := LocaleTablesDict[tbSamplingPlots];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 2;
+  T.QuickEntrySchemaVersion := 3;
 
   // ID
   AddField(T, 'sampling_plot_id', rscId, sdtInteger, True, 0, True);
@@ -4248,6 +4272,7 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   // Abbreviation
+  // renamed "acronym" -> "abbreviation" - v3
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
@@ -4340,7 +4365,7 @@ begin
   T.TableName := TBL_SIGHTINGS;
   T.DisplayName := LocaleTablesDict[tbSightings];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 2;
+  T.QuickEntrySchemaVersion := 3;
 
   // ID
   AddField(T, 'sighting_id', rscId, sdtInteger, True, 0, True);
@@ -4592,6 +4617,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'ebird,is in ebird,está no ebird';
   T.Fields.Last.Alignment := taCenter;
   // Out of sample
+  // renamed "not_surveying" -> "out_of_sample" - v3
   AddField(T, 'out_of_sample', rscOutOfSample, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'not surveying,out of sample,fora da amostra';
@@ -4700,7 +4726,7 @@ begin
   T.TableName := TBL_SPECIMENS;
   T.DisplayName := LocaleTablesDict[tbSpecimens];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 2;
+  T.QuickEntrySchemaVersion := 3;
 
   // ID
   AddField(T, 'specimen_id', rscId, sdtInteger, True, 0, True);
@@ -4865,6 +4891,7 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
   // Institution ID
+  // added in v3
   AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
   T.Fields.Last.Aliases.CommaText := INSTITUTION_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;
@@ -4872,6 +4899,7 @@ begin
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
   // Institution
+  // added in v3
   AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
   T.Fields.Last.ExportName := 'institution';
   T.Fields.Last.LookupInfo.LookupField := COL_INSTITUTION_ID;

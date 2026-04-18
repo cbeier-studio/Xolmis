@@ -2210,7 +2210,7 @@ begin
         'specimen_id':            Fields[i].DisplayLabel := rscSpecimenID;
         'accession_num':          Fields[i].DisplayLabel := rscAccessionNr;
         'accession_type':         Fields[i].DisplayLabel := rscType;
-        'accession_seq':          Fields[i].DisplayLabel := rscDuplicateNr;
+        'duplicate_seq':          Fields[i].DisplayLabel := rscDuplicateNr;
         'preparation_date':       Fields[i].DisplayLabel := rscPreparationDate;
         'preparer_id':            Fields[i].DisplayLabel := rscPreparerID;
         'preparer_name':          Fields[i].DisplayLabel := rscPreparer;
