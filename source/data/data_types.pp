@@ -748,7 +748,7 @@ const
 var
   i, f: Integer;
   S, AndOrWhere, Msk, aSort: String;
-  V1, V2: String;
+  V1, V2, StartExpr, EndExpr: String;
 
   // Select mask using criteria and data type
   function GetValueMask(aCriteriaType: TCriteriaType; aDataType: TSearchDataType; aValue2, aValue3: String): String;
@@ -987,20 +987,27 @@ begin
               end;
               crIntersect:
               begin
-                if V2 = '' then
+                if not UseTablePrefix then
                 begin
-                  if not UseTablePrefix then
-                    S := Format(Msk, [FFieldName, V1, FAuxField1, V1])
+                  StartExpr := FFieldName;
+                  if FAuxField1 <> EmptyStr then
+                    EndExpr := Format('coalesce(%s, %s)', [FAuxField1, StartExpr])
                   else
-                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V1]);
+                    EndExpr := StartExpr;
                 end
                 else
                 begin
-                  if not UseTablePrefix then
-                    S := Format(Msk, [FFieldName, V2, FAuxField1, V1])
+                  StartExpr := FTableAlias + '.' + FFieldName;
+                  if FAuxField1 <> EmptyStr then
+                    EndExpr := Format('coalesce(%s.%s, %s)', [FTableAlias, FAuxField1, StartExpr])
                   else
-                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V2, FTableAlias+'.'+FAuxField1, V1]);
+                    EndExpr := StartExpr;
                 end;
+
+                if V2 = '' then
+                  S := Format(Msk, [StartExpr, V1, EndExpr, V1])
+                else
+                  S := Format(Msk, [StartExpr, V2, EndExpr, V1]);
               end;
             end;
           end;
@@ -1113,20 +1120,27 @@ begin
               end;
               crIntersect:
               begin
-                if V2 = '' then
+                if not UseTablePrefix then
                 begin
-                  if not UseTablePrefix then
-                    S := Format(Msk, [FFieldName, V1, FAuxField1, V1])
+                  StartExpr := FFieldName;
+                  if FAuxField1 <> EmptyStr then
+                    EndExpr := Format('coalesce(%s, %s)', [FAuxField1, StartExpr])
                   else
-                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V1, FTableAlias+'.'+FAuxField1, V1]);
+                    EndExpr := StartExpr;
                 end
                 else
                 begin
-                  if not UseTablePrefix then
-                    S := Format(Msk, [FFieldName, V2, FAuxField1, V1])
+                  StartExpr := FTableAlias + '.' + FFieldName;
+                  if FAuxField1 <> EmptyStr then
+                    EndExpr := Format('coalesce(%s.%s, %s)', [FTableAlias, FAuxField1, StartExpr])
                   else
-                    S := Format(Msk, [FTableAlias+'.'+FFieldName, V2, FTableAlias+'.'+FAuxField1, V1]);
+                    EndExpr := StartExpr;
                 end;
+
+                if V2 = '' then
+                  S := Format(Msk, [StartExpr, V1, EndExpr, V1])
+                else
+                  S := Format(Msk, [StartExpr, V2, EndExpr, V1]);
               end;
             end;
 

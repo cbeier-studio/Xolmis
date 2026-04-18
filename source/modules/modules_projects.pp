@@ -179,9 +179,10 @@ end;
 
 function TProjectsModuleController.Search(AValue: String): Boolean;
 var
-  i, g, m, y: Integer;
-  dt: TDateTime;
+  i, g, m, y, y1, y2, M1, M2: Integer;
+  dt, Dt1, Dt2: TDateTime;
   Crit: TCriteriaType;
+  V1, V2: String;
 begin
   Result := False;
 
@@ -204,7 +205,39 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
-      // ID
+      // Year interval
+      if TryParseYearInterval(aValue, y1, y2) then
+      begin
+        V1 := IntToStr(y1);
+        V2 := IntToStr(y2);
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscDate, sdtYear, crIntersect,
+          False, V1, V2, '', COL_END_DATE));
+      end
+      else
+      // Date interval
+      if TryParseDateIntervalFlexible(aValue, Dt1, Dt2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_START_DATE, rscDate, sdtDate, crIntersect,
+            False, FormatDateTime('yyyy-mm-dd', Dt1), FormatDateTime('yyyy-mm-dd', Dt2), '', COL_END_DATE)
+        );
+      end
+      else
+      // Month/year interval
+      if TryParseMonthYearInterval(aValue, Y1, M1, Y2, M2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_START_DATE, rscDate, sdtMonthYear, crIntersect,
+            False,
+            Format('%.4d-%.2d', [Y1, M1]),
+            Format('%.4d-%.2d', [Y2, M2]), '', COL_END_DATE)
+        );
+      end
+      else
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);

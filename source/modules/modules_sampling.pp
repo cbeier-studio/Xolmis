@@ -396,8 +396,10 @@ end;
 function TSurveysModuleController.Search(AValue: String): Boolean;
 var
   i, g, m, y: Longint;
-  Dt: TDateTime;
+  Dt, Dt1, Dt2, Tm1, Tm2: TDateTime;
   Crit: TCriteriaType;
+  y1, y2, M1, M2: Integer;
+  V1, V2: String;
 begin
   Result := False;
 
@@ -420,6 +422,48 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Year interval
+      if TryParseYearInterval(aValue, y1, y2) then
+      begin
+        V1 := IntToStr(y1);
+        V2 := IntToStr(y2);
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtYear, crBetween,
+          True, V1, V2));
+      end
+      else
+      // Date interval
+      if TryParseDateIntervalFlexible(aValue, Dt1, Dt2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtDate, crBetween,
+            True, FormatDateTime('yyyy-mm-dd', Dt1), FormatDateTime('yyyy-mm-dd', Dt2))
+        );
+      end
+      else
+      // Time interval
+      if TryParseTimeIntervalFlexible(aValue, Tm1, Tm2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_START_TIME, rscTime, sdtTime, crIntersect,
+            True, FormatDateTime('hh:nn:ss', Tm1), FormatDateTime('hh:nn:ss', Tm2), '', COL_END_TIME)
+        );
+      end
+      else
+      // Month/year interval
+      if TryParseMonthYearInterval(aValue, Y1, M1, Y2, M2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_SURVEY_DATE, rscDate, sdtMonthYear, crBetween,
+            True,
+            Format('%.4d-%.2d', [Y1, M1]),
+            Format('%.4d-%.2d', [Y2, M2]))
+        );
+      end
+      else
       // ID and year
       if TryStrToInt(aValue, i) then
       begin

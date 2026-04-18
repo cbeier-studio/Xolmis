@@ -199,9 +199,11 @@ end;
 
 function TSightingsModuleController.Search(AValue: String): Boolean;
 var
-  i, g, m, y: Longint;
-  dt: TDateTime;
+  i, g, m, y, y1, y2: Longint;
+  dt, Dt1, Dt2, Tm1, Tm2: TDateTime;
   Crit: TCriteriaType;
+  V1, V2: String;
+  M1, M2: Integer;
 begin
   Result := False;
 
@@ -224,6 +226,48 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Year interval
+      if TryParseYearInterval(aValue, y1, y2) then
+      begin
+        V1 := IntToStr(y1);
+        V2 := IntToStr(y2);
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtYear, crBetween,
+          True, V1, V2));
+      end
+      else
+      // Date interval
+      if TryParseDateIntervalFlexible(aValue, Dt1, Dt2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtDate, crBetween,
+            True, FormatDateTime('yyyy-mm-dd', Dt1), FormatDateTime('yyyy-mm-dd', Dt2))
+        );
+      end
+      else
+      // Time interval
+      if TryParseTimeIntervalFlexible(aValue, Tm1, Tm2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_SIGHTING_TIME, rscTime, sdtTime, crBetween,
+            True, FormatDateTime('hh:nn:ss', Tm1), FormatDateTime('hh:nn:ss', Tm2))
+        );
+      end
+      else
+      // Month/year interval
+      if TryParseMonthYearInterval(aValue, Y1, M1, Y2, M2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_SIGHTING_DATE, rscDate, sdtMonthYear, crBetween,
+            True,
+            Format('%.4d-%.2d', [Y1, M1]),
+            Format('%.4d-%.2d', [Y2, M2]))
+        );
+      end
+      else
       // ID and year
       if TryStrToInt(aValue, i) then
       begin

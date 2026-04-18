@@ -641,9 +641,10 @@ uses
         'This ensures your database stays organized while giving you control over how long deleted data is retained.';
     rsOnboardingSearch = 'The Search bar helps you quickly find records in the current module.' + LineEnding + LineEnding +
         'Here are some tips to refine your queries:' + LineEnding +
-        '- Start with ":" to search for terms that begin with the entered text.' + LineEnding +
+        '- Start with "$" to search for terms that begin with the entered text.' + LineEnding +
         '- Start with "=" to search for an exact match.' + LineEnding +
-        '- Separate terms with spaces to search for them in separated words.' + LineEnding + LineEnding +
+        '- Separate terms with spaces to search for them in separated words.' + LineEnding +
+        '- Separate terms with ".." to search a range of dates or times.' + LineEnding + LineEnding +
         'You can also use the Ctrl+F keyboard shortcut to go to the search bar instantly.';
     rsOnboardingFeedback = 'The Feedback option opens the Xolmis GitHub Issues page. ' +
         'There you can report bugs you encounter or suggest new features for future development.' + LineEnding + LineEnding +
