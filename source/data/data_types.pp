@@ -218,6 +218,7 @@ type
       skCount,         // simple count
       skCountNotNull,  // count only not empty values
       skDistinctCount, // count distinct values
+      skGroupCount,    // count grouped by other column
       skSum,           // sum
       skMean,          // mean
       skStats,         // descriptive statistics (mean, sd, median…)

@@ -1189,6 +1189,10 @@ msgctxt "data_columns.rscmass"
 msgid "Mass"
 msgstr ""
 
+#: data_columns.rscmax
+msgid "Maximum"
+msgstr ""
+
 #: data_columns.rscmaxexternaldiameter
 msgctxt "data_columns.rscmaxexternaldiameter"
 msgid "Greater external diameter"
@@ -1227,6 +1231,10 @@ msgstr ""
 #: data_columns.rscmicmodel
 msgctxt "data_columns.rscmicmodel"
 msgid "Microphone model"
+msgstr ""
+
+#: data_columns.rscmin
+msgid "Minimum"
 msgstr ""
 
 #: data_columns.rscminexternaldiameter
@@ -2202,6 +2210,14 @@ msgstr ""
 #: data_columns.rscstatus
 msgctxt "data_columns.rscstatus"
 msgid "Status"
+msgstr ""
+
+#: data_columns.rscstddev
+msgid "Std. dev."
+msgstr ""
+
+#: data_columns.rscstderr
+msgid "Std. error"
 msgstr ""
 
 #: data_columns.rscsubfamilyid
