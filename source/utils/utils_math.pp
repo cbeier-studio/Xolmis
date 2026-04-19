@@ -31,9 +31,76 @@ uses
   function IsOutlier(aTaxon: Integer; aField: String; aValue: Extended; Factor: Double = 1.5): Boolean;
   function IsOutlierZscore(aTaxon: Integer; aField: String; aValue: Extended): Boolean;
 
+  procedure ClearOutlierCache;
+
 implementation
 
 uses udm_main;
+
+type
+  TOutlierBounds = record
+    HasData: Boolean;
+    LowerBound: Extended;
+    UpperBound: Extended;
+  end;
+
+var
+  OutlierBoundsCache: specialize TDictionary<String, TOutlierBounds>;
+
+function BuildOutlierCacheKey(aTaxon: Integer; const aField: String; Factor: Double): String;
+begin
+  Result := IntToStr(aTaxon) + '|' + UpperCase(aField) + '|' + IntToStr(Round(Factor * 1000));
+end;
+
+function QueryOutlierBounds(aTaxon: Integer; const aField: String; Factor: Double): TOutlierBounds;
+var
+  Qry: TSQLQuery;
+  x: array of Extended;
+  IQR, Q1, Q3: Extended;
+  i: Integer;
+begin
+  Result.HasData := False;
+  Result.LowerBound := 0;
+  Result.UpperBound := 0;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    MacroCheck := True;
+    Add('SELECT %measurement FROM captures');
+    Add('WHERE (taxon_id = :ataxon)');
+    Add('AND (%measurement IS NOT NULL)');
+    Add('AND (%measurement <> 0)');
+    Add('ORDER BY %measurement ASC');
+    MacroByName('MEASUREMENT').AsString := aField;
+    ParamByName('ATAXON').AsInteger := aTaxon;
+    Open;
+
+    if RecordCount > 3 then
+    begin
+      SetLength(x, RecordCount);
+      First;
+      for i := Low(x) to High(x) do
+      begin
+        x[i] := FieldByName(aField).AsFloat;
+        Next;
+      end;
+
+      Q1 := x[Length(x) div 4];
+      Q3 := x[3 * Length(x) div 4];
+      IQR := Q3 - Q1;
+
+      Result.LowerBound := Q1 - (Factor * IQR);
+      Result.UpperBound := Q3 + (Factor * IQR);
+      Result.HasData := True;
+    end;
+
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
 
 function Zscore(aTaxon: Integer; aField: String; aValue: Extended): Extended;
 var
@@ -81,49 +148,66 @@ end;
 
 function IsOutlier(aTaxon: Integer; aField: String; aValue: Extended; Factor: Double): Boolean;
 var
-  Qry: TSQLQuery;
-  x: array of Extended;
-  M, IQR, Q1, Q3, ol1, ol3: Extended;
-  i: Integer;
+  //Qry: TSQLQuery;
+  //x: array of Extended;
+  //M, IQR, Q1, Q3, ol1, ol3: Extended;
+  //i: Integer;
+  CacheKey: String;
+  Bounds: TOutlierBounds;
 begin
   Result := False;
 
-  Qry := TSQLQuery.Create(nil);
-  with Qry, SQL do
-  try
-    SQLConnection := DMM.sqlCon;
-    MacroCheck := True;
-    Add('SELECT %measurement FROM captures');
-    Add('WHERE (taxon_id = :ataxon)');
-    Add('AND ((%measurement != 0) OR (%measurement NOTNULL))');
-    Add('ORDER BY %measurement ASC');
-    MacroByName('MEASUREMENT').AsString := aField;
-    ParamByName('ATAXON').AsInteger := aTaxon;
-    Open;
-    if RecordCount > 3 then
-    begin
-      SetLength(x, RecordCount);
-      First;
-      for i := Low(x) to High(x) do
-      begin
-        x[i] := FieldByName(aField).AsFloat;
-        Next;
-      end;
-      //Sort(x);
+  if (aTaxon <= 0) or (aField = EmptyStr) or (aValue = 0.0) then
+    Exit;
 
-      //M := MedianQuartiles(x, Q1, Q3);
-      Q1 := x[Length(x) div 4];
-      Q3 := x[3 * Length(x) div 4];
-      IQR := Q3 - Q1;
-      ol1 := Q1 - (Factor * IQR);
-      ol3 := Q3 + (Factor * IQR);
-
-      Result := (aValue < ol1) or (aValue > ol3);
-    end;
-    Close;
-  finally
-    FreeAndNil(Qry);
+  CacheKey := BuildOutlierCacheKey(aTaxon, aField, Factor);
+  if not OutlierBoundsCache.TryGetValue(CacheKey, Bounds) then
+  begin
+    Bounds := QueryOutlierBounds(aTaxon, aField, Factor);
+    OutlierBoundsCache.AddOrSetValue(CacheKey, Bounds);
   end;
+
+  if not Bounds.HasData then
+    Exit;
+
+  Result := (aValue < Bounds.LowerBound) or (aValue > Bounds.UpperBound);
+
+  //Qry := TSQLQuery.Create(nil);
+  //with Qry, SQL do
+  //try
+  //  SQLConnection := DMM.sqlCon;
+  //  MacroCheck := True;
+  //  Add('SELECT %measurement FROM captures');
+  //  Add('WHERE (taxon_id = :ataxon)');
+  //  Add('AND ((%measurement != 0) OR (%measurement NOTNULL))');
+  //  Add('ORDER BY %measurement ASC');
+  //  MacroByName('MEASUREMENT').AsString := aField;
+  //  ParamByName('ATAXON').AsInteger := aTaxon;
+  //  Open;
+  //  if RecordCount > 3 then
+  //  begin
+  //    SetLength(x, RecordCount);
+  //    First;
+  //    for i := Low(x) to High(x) do
+  //    begin
+  //      x[i] := FieldByName(aField).AsFloat;
+  //      Next;
+  //    end;
+  //    //Sort(x);
+  //
+  //    //M := MedianQuartiles(x, Q1, Q3);
+  //    Q1 := x[Length(x) div 4];
+  //    Q3 := x[3 * Length(x) div 4];
+  //    IQR := Q3 - Q1;
+  //    ol1 := Q1 - (Factor * IQR);
+  //    ol3 := Q3 + (Factor * IQR);
+  //
+  //    Result := (aValue < ol1) or (aValue > ol3);
+  //  end;
+  //  Close;
+  //finally
+  //  FreeAndNil(Qry);
+  //end;
 end;
 
 function Median(Values: array of Extended): Extended;
@@ -247,6 +331,22 @@ const
 begin
   Result := Abs(ModifiedZScore(aTaxon, aField, aValue)) > Threshold;
 end;
+
+procedure ClearOutlierCache;
+begin
+  if Assigned(OutlierBoundsCache) then
+    OutlierBoundsCache.Clear;
+end;
+
+initialization
+  OutlierBoundsCache := specialize TDictionary<String, TOutlierBounds>.Create;
+
+finalization
+  if Assigned(OutlierBoundsCache) then
+  begin
+    OutlierBoundsCache.Clear;
+    FreeAndNil(OutlierBoundsCache);
+  end;
 
 end.
 
