@@ -12,7 +12,7 @@ object dlgImport: TdlgImport
   Constraints.MinWidth = 900
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 5
+    PageIndex = 0
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560

@@ -757,6 +757,13 @@ begin
       Continue;
     end;
 
+    // DateTime (mais específico)
+    if TryStrToDateTime(S, VDateTime) then
+    begin
+      Inc(ColStats[i].DateTimeCount);
+      Continue;
+    end;
+
     // Date
     if TryStrToDate(S, VDate) then
     begin
@@ -768,13 +775,6 @@ begin
     if TryStrToTime(S, VTime) then
     begin
       Inc(ColStats[i].TimeCount);
-      Continue;
-    end;
-
-    // DateTime (mais específico)
-    if TryStrToDateTime(S, VDateTime) then
-    begin
-      Inc(ColStats[i].DateTimeCount);
       Continue;
     end;
 
@@ -948,7 +948,7 @@ begin
 
   if FSourceFile <> EmptyStr then
   begin
-    case ExtractFileExt(FSourceFile) of
+    case LowerCase(ExtractFileExt(FSourceFile)) of
       '.csv':
         begin
           FFileFormat := iftCSV;
@@ -977,6 +977,10 @@ begin
       '.ndjson':
         begin
           FFileFormat := iftNDJSON;
+        end;
+      '.xml':
+        begin
+          FFileFormat := iftXML;
         end;
       '.dbf':
         begin
@@ -1061,6 +1065,7 @@ begin
   cbTextCase.Items.Add(rsTextCaseSentence);
   cbTextCase.Items.Add(rsTextCaseTitle);
   cbScaleOperation.Items.Clear;
+  cbScaleOperation.Items.Add(rsScaleNone);
   cbScaleOperation.Items.Add(rsScaleMultiply);
   cbScaleOperation.Items.Add(rsScaleDivide);
   cbExtractDatePart.Items.Clear;
@@ -1068,6 +1073,7 @@ begin
   cbExtractDatePart.Items.Add(rsDateMonth);
   cbExtractDatePart.Items.Add(rsDateYear);
   cbSourceCoordinatesFormat.Items.Clear;
+  cbSourceCoordinatesFormat.Items.Add(rsCoordinatesDecimal);
   cbSourceCoordinatesFormat.Items.Add(rsCoordinatesDms);
   cbSourceCoordinatesFormat.Items.Add(rsCoordinatesUtm);
 end;
@@ -1148,13 +1154,13 @@ begin
     cbExtractDatePart.ItemIndex := 0;
   end
   else
-  if (vtrExtractDay in FFieldMap.Map[AIndex].Transformations) then
+  if (vtrExtractMonth in FFieldMap.Map[AIndex].Transformations) then
   begin
     tsExtractDatePart.Checked := True;
     cbExtractDatePart.ItemIndex := 1;
   end
   else
-  if (vtrExtractDay in FFieldMap.Map[AIndex].Transformations) then
+  if (vtrExtractYear in FFieldMap.Map[AIndex].Transformations) then
   begin
     tsExtractDatePart.Checked := True;
     cbExtractDatePart.ItemIndex := 2;

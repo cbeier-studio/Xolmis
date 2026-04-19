@@ -63,6 +63,7 @@ type
   function IsLikelyYear(const AValue: Integer): Boolean;
   function TryParseDateFlexible(const AValue: String; out ADate: TDateTime): Boolean;
   function TryParseTimeFlexible(const AValue: String; out ATime: TDateTime): Boolean;
+  function TryParseDateTimeFlexible(const AValue: String; out ADateTime: TDateTime): Boolean;
   function TryParseRangeText(const AValue: String; out AStartValue, AEndValue: String): Boolean;
   function TryParseIntegerInterval(const AValue: String; out AOut1, AOut2: Integer): Boolean;
   function TryParseYearInterval(const AValue: String; out AYear1, AYear2: Integer): Boolean;
@@ -673,6 +674,51 @@ begin
   Result :=
     TryStrToTime(S, ATime, FS) or
     TryStrToTime(S + ':00', ATime, FS);
+end;
+
+function TryParseDateTimeFlexible(const AValue: String; out ADateTime: TDateTime): Boolean;
+var
+  S, DatePart, TimePart: String;
+  P: SizeInt;
+  D, T: TDateTime;
+  FS: TFormatSettings;
+begin
+  Result := False;
+  ADateTime := NullDate;
+
+  S := Trim(AValue);
+  if S = EmptyStr then
+    Exit;
+
+  // 1) ISO 8601 primeiro (mais determinístico)
+  if TryISO8601ToDate(S, ADateTime, False) then
+    Exit(True);
+
+  // 2) Tenta parser padrão de datetime
+  FS := DefaultFormatSettings;
+  if TryStrToDateTime(S, ADateTime, FS) then
+    Exit(True);
+
+  // 3) Tenta quebrar em data + hora e reaproveitar os parsers flexíveis existentes
+  P := Pos('T', S);
+  if P <= 0 then
+    P := LastDelimiter(' ', S);
+
+  if (P > 1) and (P < Length(S)) then
+  begin
+    DatePart := Trim(Copy(S, 1, P - 1));
+    TimePart := Trim(Copy(S, P + 1, MaxInt));
+
+    // remove sufixo Z comum em timestamps
+    if (TimePart <> EmptyStr) and (UpCase(TimePart[Length(TimePart)]) = 'Z') then
+      Delete(TimePart, Length(TimePart), 1);
+
+    if TryParseDateFlexible(DatePart, D) and TryParseTimeFlexible(TimePart, T) then
+    begin
+      ADateTime := Int(D) + Frac(T);
+      Exit(True);
+    end;
+  end;
 end;
 
 function TryParseRangeText(const AValue: String; out AStartValue, AEndValue: String): Boolean;

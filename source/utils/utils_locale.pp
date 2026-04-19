@@ -1302,8 +1302,10 @@ uses
     rsTextCaseUpper = 'Upper case';
     rsTextCaseSentence = 'Sentence case';
     rsTextCaseTitle = 'Title case';
+    rsScaleNone = 'None';
     rsScaleMultiply = 'Multiply';
     rsScaleDivide = 'Divide';
+    rsCoordinatesDecimal = 'Decimal degrees';
     rsCoordinatesDms = 'Degrees, Minutes and Seconds';
     rsCoordinatesUtm = 'UTM';
 

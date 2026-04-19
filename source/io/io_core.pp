@@ -267,7 +267,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_conversions, utils_gis, data_consts, data_schema, data_getvalue;
+  utils_locale, utils_conversions, utils_gis, utils_validations, data_consts, data_schema, data_getvalue;
 
 function ExtractExt(const FileName: string): string;
 begin
@@ -563,6 +563,10 @@ begin
 
     DestValue := SourceValue;
 
+    // Trim
+    if vtrTrim in Mapping.Transformations then
+      DestValue := Trim(DestValue);
+
     // 2. Null handling
     if (DestValue = '') then
     begin
@@ -578,8 +582,7 @@ begin
     end;
 
     // 3. Apply transformations
-    if vtrTrim in Mapping.Transformations then
-      DestValue := Trim(DestValue);
+
     if vtrNormalizeWhitespace in Mapping.Transformations then
       DestValue := NormalizeWhitespace(DestValue, False);
     if vtrReplaceChars in Mapping.Transformations then
@@ -605,7 +608,7 @@ begin
     end;
     if vtrScale in Mapping.Transformations then
     begin
-      if TryStrToFloat(DestValue, scaleValue) then
+      if TryStrToFloat(DestValue, scaleValue, FS) then
       begin
         case Mapping.ScaleOperation of
           sopNone: ;
@@ -616,7 +619,7 @@ begin
     end;
     if vtrRound in Mapping.Transformations then
     begin
-      if TryStrToFloat(DestValue, scaleValue) then
+      if TryStrToFloat(DestValue, scaleValue, FS) then
       begin
         if Mapping.RoundPrecision = 0 then
           DestValue := IntToStr(Round(scaleValue))
@@ -639,6 +642,24 @@ begin
       if TryStrToDate(DestValue, dateValue, FS) then
         DestValue := IntToStr(YearOf(dateValue));
     end;
+
+    // 4. Lookup (if it is set)
+    if (Mapping.LookupTable <> tbNone) then
+    begin
+      DestValue := IntToStr(GetKey(TABLE_NAMES[Mapping.LookupTable], PRIMARY_KEY_FIELDS[Mapping.LookupTable],
+        Mapping.LookupField, DestValue));
+      if DestValue = '0' then
+      begin
+        case Mapping.NullHandling of
+          nhIgnore: ;
+          nhDefaultValue: DestValue := VarToStr(Mapping.DefaultValue);
+          nhUseMean: ;
+          nhUseMedian: ;
+          nhUseMode: ;
+        end;
+      end;
+    end;
+
     if vtrConvertCoordinates in Mapping.Transformations then
     begin
       case Mapping.CoordinatesFormat of
@@ -703,23 +724,6 @@ begin
               DestValue := UtmToDecimal(utmPoint).ToString();
             end;
           end;
-        end;
-      end;
-    end;
-
-    // 4. Lookup (if it is set)
-    if (Mapping.LookupTable <> tbNone) then
-    begin
-      DestValue := IntToStr(GetKey(TABLE_NAMES[Mapping.LookupTable], PRIMARY_KEY_FIELDS[Mapping.LookupTable],
-        Mapping.LookupField, DestValue));
-      if DestValue = '0' then
-      begin
-        case Mapping.NullHandling of
-          nhIgnore: ;
-          nhDefaultValue: DestValue := VarToStr(Mapping.DefaultValue);
-          nhUseMean: ;
-          nhUseMedian: ;
-          nhUseMode: ;
         end;
       end;
     end;
@@ -807,9 +811,40 @@ begin
             end;
           end;
 
-        sdtDateTime, sdtDate, sdtTime:
+        sdtDate:
           begin
-            if not TryStrToDateTime(DestValue, dummyDT, FS) then
+            if not (TryStrToDate(DestValue, dateValue, FS) or
+              TryParseDateFlexible(DestValue, dateValue)) then
+            begin
+              case Mapping.TypeErrorHandling of
+                tehIgnore: ;
+                tehAbort:
+                  raise Exception.CreateFmt(rsInvalidDateTimeForField, [DestValue, Mapping.TargetField]);
+                //tehConvert:
+                //  ConvertedValue := 0;
+              end;
+            end;
+          end;
+
+        sdtTime:
+          begin
+            if not (TryStrToTime(DestValue, dummyDT, FS) or
+              TryParseTimeFlexible(DestValue, dummyDT)) then
+            begin
+              case Mapping.TypeErrorHandling of
+                tehIgnore: ;
+                tehAbort:
+                  raise Exception.CreateFmt(rsInvalidDateTimeForField, [DestValue, Mapping.TargetField]);
+                //tehConvert:
+                //  ConvertedValue := 0;
+              end;
+            end;
+          end;
+
+        sdtDateTime:
+          begin
+            if not (TryStrToDateTime(DestValue, dummyDT, FS) or
+              TryParseDateTimeFlexible(DestValue, dummyDT)) then
             begin
               case Mapping.TypeErrorHandling of
                 tehIgnore: ;
