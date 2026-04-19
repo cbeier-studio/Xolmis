@@ -179,6 +179,7 @@ begin
   sqlCon.DatabaseName := EmptyStr;
 
   { >> Create SQL provider }
+  //RegisterDatabaseSchema;
   xProvider := TSQLProvider.Create(dbSqlite);
 
   { >> Create active user and settings objects }

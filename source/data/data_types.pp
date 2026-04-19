@@ -214,16 +214,17 @@ type
   TSQLAndOr = (aoNone, aoAnd, aoOr);
   TRecordActiveStatus = (rsAll, rsActive, rsInactive, rsNone);
   TSummaryKind = (
-      skNone,          // sem resumo
-      skCount,         // contagem simples
-      skDistinctCount, // contagem de valores distintos
-      skSum,           // soma
-      skMean,          // média
-      skStats,         // estatísticas completas (média, sd, mediana…)
-      skCategory,      // categorias + contagem
-      skBoolean,       // contagem de TRUE/FALSE
-      skDate,          // min/max/intervalo
-      skGroupStats     // estatísticas agrupadas por outra coluna
+      skNone,          // without summary
+      skCount,         // simple count
+      skCountNotNull,  // count only not empty values
+      skDistinctCount, // count distinct values
+      skSum,           // sum
+      skMean,          // mean
+      skStats,         // descriptive statistics (mean, sd, median…)
+      skCategory,      // categories + count
+      skBoolean,       // count of TRUE/FALSE
+      skDate,          // min/max
+      skGroupStats     // stats grouped by other column
     );
 
     TSummaryMetric = (
@@ -237,7 +238,8 @@ type
       smStdDev,
       smStdErr,
       smSum,
-      smQuartiles
+      smQuartiles,
+      smPercent
     );
 
     TSummaryMetricSet = set of TSummaryMetric;

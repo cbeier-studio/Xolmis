@@ -1661,6 +1661,10 @@ msgctxt "data_columns.rscpc9"
 msgid "PC9"
 msgstr "PC9"
 
+#: data_columns.rscpercent
+msgid "%"
+msgstr "%"
+
 #: data_columns.rscpercentgrown
 msgctxt "data_columns.rscpercentgrown"
 msgid "Percent grown"

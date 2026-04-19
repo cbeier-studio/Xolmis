@@ -1218,6 +1218,9 @@ begin
     { Apply the active user settings }
     ApplyFormSettings;
 
+    { Register the database schema }
+    RegisterDatabaseSchema;
+
     { Load data module for the main forms }
     if not Assigned(DMG) then
       DMG := TDMG.Create(Application);
@@ -1228,9 +1231,6 @@ begin
     imgSplash.ImageIndex := 5;
     imgSplash.ImageWidth := 128;
     Application.ProcessMessages;
-
-    { Register the database schema }
-    RegisterDatabaseSchema;
 
     { Load the start page }
     case xSettings.StartPage of

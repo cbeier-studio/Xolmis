@@ -223,6 +223,7 @@ begin
   Result.Alignment := taLeftJustify;
   Result.MeasurementUnit := EmptyStr;
   //Result.DefaultValue := ADefault;
+  Result.SummaryEnabled := True;
   ATableSchema.Fields.Add(Result);
 end;
 
@@ -269,6 +270,7 @@ begin
   // ID
   AddField(T, 'band_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Band size
   AddField(T, 'band_size', rscSize, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'A,C,D,E,F,G,H,J,L,M,N,P,R,S,T,U,V,X,Z';
@@ -276,12 +278,15 @@ begin
   T.Fields.Last.Aliases.CommaText := 'size,tamanho,code,código,band size,band code,ring size,ring code,tamanho da anilha,código da aniha';
   T.Fields.Last.DisplayWidth := 60;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Band number
   AddField(T, 'band_number', rscNumber, sdtInteger, True);
   T.Fields.Last.Aliases.CommaText := 'number,nr.,número,nº,band number,ring number,número da anilha';
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.Rules.MinValue := 1;
   T.Fields.Last.Rules.MaxValue := 999999;
+  T.Fields.Last.SummaryEnabled := False;
   // Type
   AddField(T, 'band_type', rscType, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'A,F,N,W,T,L,R,C,O';
@@ -289,25 +294,35 @@ begin
   T.Fields.Last.Aliases.CommaText := 'type,tipo,band type,ring type,tipo de anilha';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Status
   AddField(T, 'band_status', rscStatus, sdtList, True, 5);
-  T.Fields.Last.Rules.ValueList := 'D,U,R,Q,P,T';
+  T.Fields.Last.Rules.ValueList := 'O,A,U,R,B,L,T,X';
   T.Fields.Last.PickList.CommaText := rsBandStatusList;
   T.Fields.Last.Aliases.CommaText := STATUS_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Prefix
   AddField(T, 'band_prefix', rscPrefix, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'prefix,prefixo';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Suffix
   AddField(T, 'band_suffix', rscSuffix, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'suffix,sufixo';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Color
   AddField(T, 'band_color', rscColor, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := COLOR_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Source
   AddField(T, 'band_source', rscSource, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'A,T,L,D,F';
@@ -319,6 +334,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'source,origem,source type,tipo de origem';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Supplier ID
   AddField(T, 'supplier_id', rscSupplierID, sdtInteger, True, 0, False, True, tbInstitutions);
   T.Fields.Last.Aliases.CommaText := 'supplier,fornecedor';
@@ -326,6 +343,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_ABBREVIATION;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SUPPLIER_NAME;
   // Supplier
   AddField(T, 'supplier_name', rscSupplier, sdtText, True, 0, False, False, tbInstitutions);
   T.Fields.Last.ExportName := 'supplier';
@@ -336,6 +356,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SUPPLIER_NAME;
   // Requester ID
   AddField(T, 'requester_id', rscRequesterID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := 'requester,solicitante';
@@ -343,6 +366,23 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_REQUESTER_NAME;
+  // Carrier
+  AddField(T, 'requester_name', rscRequester, sdtText, False, 0, False, False, tbPeople);
+  T.Fields.Last.ExportName := 'requester';
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.LookupInfo.LookupField := COL_REQUESTER_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_REQUESTER_NAME;
   // Carrier ID
   AddField(T, 'carrier_id', rscCarrierID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := 'carrier,portador';
@@ -350,6 +390,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_CARRIER_NAME;
   // Carrier
   AddField(T, 'carrier_name', rscCarrier, sdtText, False, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'carrier';
@@ -360,6 +403,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_CARRIER_NAME;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -367,6 +413,19 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  // Individual
+  AddField(T, 'individual_name', rscIndividual, sdtText, False, 0, False, False, tbIndividuals);
+  T.Fields.Last.ExportName := 'individual';
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.LookupInfo.LookupField := COL_INDIVIDUAL_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -374,6 +433,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Project
   AddField(T, 'project_name', rscProject, sdtText, False, 0, False, False, tbProjects);
   T.Fields.Last.ExportName := 'project';
@@ -384,34 +446,52 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Reported - removed v2
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 40);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -430,6 +510,7 @@ begin
   // ID
   AddField(T, 'taxon_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Scientific name
   // renamed "taxon_name" -> "scientific_name" - v2
   AddField(T, 'scientific_name', rscScientificName, sdtText, True, 100);
@@ -437,23 +518,32 @@ begin
   T.Fields.Last.Aliases.CommaText := SCIENTIFIC_NAME_ALIASES;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Authorship
   AddField(T, 'authorship', rscAuthorship, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := 'authorship,autoria,author,autor,authors,autores,authority,autoridade';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_AUTHORSHIP;
   // Formatted name
   AddField(T, 'formatted_name', rscFullNameFormatted, sdtText, False, 180);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Vernacular name
   AddField(T, 'vernacular_name', rscVernacularNameS, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := 'vernacular name,popular name,nome vernacular,nome popular';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Rank ID
   AddField(T, 'rank_id', rscTaxonomicRankID, sdtInteger, True, 0, False, True, tbTaxonRanks);
   T.Fields.Last.Aliases.CommaText := 'rank,nível,level,taxonomic rank,taxonomic level,nível taxonômico';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_RANK_ID;
   // Rank
   AddField(T, 'rank_name', rscTaxonomicRank, sdtText, True, 0, False, False, tbTaxonRanks);
   T.Fields.Last.ExportName := 'rank';
@@ -468,6 +558,9 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_RANK_ID;
   // Parent taxon ID
   AddField(T, 'parent_taxon_id', rscParentTaxonID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'parent,parent taxon,táxon pai,upper taxon,táxon superior';
@@ -475,6 +568,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PARENT_TAXON_NAME;
   // Parent taxon
   AddField(T, 'parent_taxon_name', rscParentTaxon, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.ExportName := 'parent_taxon';
@@ -485,6 +581,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PARENT_TAXON_NAME;
   // Valid taxon ID
   AddField(T, 'valid_id', rscValidNameID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'valid,valid taxon,táxon válido';
@@ -492,6 +591,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_VALID_NAME;
   // Valid taxon
   AddField(T, 'valid_name', rscValidName, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.LookupInfo.LookupField := COL_VALID_ID;
@@ -501,40 +603,66 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_VALID_NAME;
   // Order ID
   AddField(T, 'order_id', rscOrderID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'ord,order,ordem';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SCIENTIFIC_NAME;
   // Family ID
   AddField(T, 'family_id', rscFamilyID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'fam,family,família';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SCIENTIFIC_NAME;
   // Genus ID
   AddField(T, 'genus_id', rscGenusID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'g,gen,genus,gênero';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SCIENTIFIC_NAME;
   // Species ID
   AddField(T, 'species_id', rscSpeciesID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'sp,species,espécie';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SCIENTIFIC_NAME;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -5626,6 +5754,20 @@ constructor TFieldSchema.Create;
 begin
   Aliases := TStringList.Create;
   PickList := TStringList.Create;
+
+  DataType := sdtText;
+  SortType := stAlphanumeric;
+  IsPrimaryKey := False;
+  IsForeignKey := False;
+  IsVirtual := False;
+  CoordinateFormat := mcDecimal;
+  DisplayWidth := 170;
+  SizePriority := 1;
+  Visible := True;
+  ImportVisible := True;
+  QuickEntryVisible := True;
+  Alignment := taLeftJustify;
+  SummaryEnabled := True;
 end;
 
 function TFieldSchema.ConvertValue(const S: String): Variant;
