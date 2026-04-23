@@ -750,7 +750,6 @@ begin
     end;
 
     // Float
-
     if TryStrToFloat(S, VFloat, FS) then
     begin
       Inc(ColStats[i].FloatCount);

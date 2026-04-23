@@ -49,6 +49,9 @@ type
 
 implementation
 
+uses
+  utils_global;
+
 procedure AddJSONToRow(const Path: string; AJSON: TJSONData; Row: TXRow);
 var
   i: Integer;
@@ -206,6 +209,8 @@ var
 begin
   Result := TStringList.Create;
 
+  LogEvent(leaStart, 'Get JSON file column names');
+
   // Read bytes from stream
   Stream.Position := 0;
   SetLength(RawText, Stream.Size);
@@ -296,6 +301,7 @@ begin
   finally
     Parser.Free;
     Utf8Stream.Free;
+    LogEvent(leaFinish, 'Get JSON file column names');
   end;
 
 end;
@@ -310,6 +316,8 @@ var
   i, progress: Integer;
 begin
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Import JSON file');
 
   if IsNDJSON(Stream) then
   begin
@@ -354,6 +362,7 @@ begin
       end;
     finally
       Reader.Free;
+      LogEvent(leaFinish, 'Import JSON file');
     end;
   end
   else
@@ -369,6 +378,7 @@ begin
       end;
     finally
       parser.Free;
+      LogEvent(leaFinish, 'Import JSON file');
     end;
   end;
 end;
@@ -384,6 +394,9 @@ var
   i, j, Count: Integer;
 begin
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Preview JSON file');
+
   Parser := TJSONParser.Create(Stream);
   try
     Data := Parser.Parse;
@@ -412,6 +425,7 @@ begin
     end;
   finally
     Parser.Free;
+    LogEvent(leaStart, 'Preview JSON file');
   end;
 end;
 
@@ -455,6 +469,9 @@ var
 begin
   Result := TStringList.Create;
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Get NDJSON file column names');
+
   Reader := TStreamReader.Create(Stream);
   try
     while not Reader.Eof do
@@ -483,6 +500,7 @@ begin
     end;
   finally
     Reader.Free;
+    LogEvent(leaFinish, 'Get NDJSON file column names');
   end;
 end;
 
@@ -496,6 +514,8 @@ var
   Row: TXRow;
   i: Integer;
 begin
+  LogEvent(leaStart, 'Import NDJSON file');
+
   Reader := TStreamReader.Create(Stream);
   try
     while not Reader.Eof do
@@ -526,6 +546,7 @@ begin
     end;
   finally
     Reader.Free;
+    LogEvent(leaFinish, 'Import NDJSON file');
   end;
 end;
 
@@ -541,6 +562,8 @@ var
   i, Count: Integer;
 begin
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Preview NDJSON file');
   Reader := TStreamReader.Create(Stream);
   try
     Count := 0;
@@ -574,6 +597,7 @@ begin
     end;
   finally
     Reader.Free;
+    LogEvent(leaFinish, 'Preview NDJSON file');
   end;
 end;
 

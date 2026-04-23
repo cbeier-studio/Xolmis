@@ -14686,6 +14686,11 @@ msgctxt "utils_locale.rscoordinatesavailabletouse"
 msgid "Coordinates are available at the Coordinates Editor."
 msgstr "Coordenadas estão disponíveis no Editor de Coordenadas."
 
+#: utils_locale.rscoordinatesdecimal
+msgctxt "utils_locale.rscoordinatesdecimal"
+msgid "Decimal degrees"
+msgstr "Graus decimais"
+
 #: utils_locale.rscoordinatesdms
 msgid "Degrees, Minutes and Seconds"
 msgstr "Graus, Minutos e Segundos"
@@ -18173,6 +18178,11 @@ msgstr "Dividir"
 msgid "Multiply"
 msgstr "Multiplicar"
 
+#: utils_locale.rsscalenone
+msgctxt "utils_locale.rsscalenone"
+msgid "None"
+msgstr "Nenhum"
+
 #: utils_locale.rssearch
 msgctxt "utils_locale.rssearch"
 msgid "Search"
@@ -19321,6 +19331,11 @@ msgstr "Ver registros"
 msgctxt "utils_locale.rsviewreportaction"
 msgid "View report"
 msgstr "Ver relatório"
+
+#: utils_locale.rswarningschemaversionmismatch
+#, object-pascal-format
+msgid "Schema version mismatch: file has v%d, expected v%d."
+msgstr "Versão diferente do esquema: arquivo tem v%d, esperada v%d."
 
 #: utils_locale.rswasmisspelled
 msgctxt "utils_locale.rswasmisspelled"

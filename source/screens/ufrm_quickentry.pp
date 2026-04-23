@@ -235,6 +235,7 @@ begin
   if not Assigned(DBSchema) then
     raise Exception.Create(rsErrorLoadingDatabaseSchema);
   FTableSchema := DBSchema.GetTable(FTableType);
+  FSchemaVersion := FTableSchema.QuickEntrySchemaVersion;
   if not Assigned(FTableSchema) then
     raise Exception.Create(rsErrorLoadingTableSchema);
 
@@ -1752,8 +1753,8 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.ExpeditionId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, CellValue(COL_EXPEDITION_NAME, r));
-        Obj.SurveyDate := StrToDateDef(CellValue(COL_NOTES, r), NullDate);
+        Obj.ExpeditionId := GetKey(TBL_EXPEDITIONS, COL_EXPEDITION_ID, COL_EXPEDITION_NAME, CellValue(COL_EXPEDITION_NAME, r));
+        Obj.SurveyDate := StrToDateDef(CellValue(COL_SURVEY_DATE, r), NullDate);
         Obj.Duration := StrToIntDef(CellValue(COL_DURATION, r), 0);
         Obj.StartTime := StrToTimeDef(CellValue(COL_START_TIME, r), NullTime);
         Obj.EndTime := StrToTimeDef(CellValue(COL_END_TIME, r), NullTime);
@@ -1980,6 +1981,12 @@ begin
           Exit;
         end;
 
+        if FileSchema <> FSchemaVersion then
+        begin
+          MsgDlg(rsTitleCaution, rsWarningSchemaVersionMismatch, mtWarning);
+          // Continue loading — or you can use Exit; if you want to block
+        end;
+
         // Rows
         Rows := Obj.Arrays['rows'];
         qeGrid.RowCount := Rows.Count + 1;
@@ -2104,9 +2111,9 @@ begin
         if (Title.Caption = rscProject) then
           FindDlg(tbProjects, Grid, aProjectKey, Key);
         if (Title.Caption = rscGoal) and (FTableType = tbProjectChronograms) then
-          FindDlg(tbProjectChronograms, Grid, aProjectKey, Key);
+          FindDlg(tbProjectGoals, Grid, aProjectKey, Key);
         if (Title.Caption = rscRubric) and (FTableType = tbProjectExpenses) then
-          FindDlg(tbProjectExpenses, Grid, aProjectKey, Key);
+          FindDlg(tbProjectBudgets, Grid, aProjectKey, Key);
 
         if (Title.Caption = rscIndividual) or
           (Title.Caption = rscFather) or
@@ -2139,10 +2146,7 @@ procedure TfrmQuickEntry.qeGridPrepareCanvas(Sender: TObject; aCol, aRow: Intege
 begin
   if GridHasData then
     if not ValidateCell(aCol, aRow) then
-      if IsDarkModeEnabled then
-        qeGrid.Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        qeGrid.Canvas.Brush.Color := clSystemCriticalBGLight;
+      qeGrid.Canvas.Brush.Color := CellErrorColor;
 end;
 
 procedure TfrmQuickEntry.qeGridSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
@@ -2256,6 +2260,9 @@ begin
     Rows := TJSONArray.Create;
     for i := 1 to qeGrid.RowCount - 1 do
     begin
+      if not RowHasData(i) then
+        Continue;
+      
       RowObj := TJSONObject.Create;
       for j := 0 to qeGrid.ColCount - 1 do
       begin
@@ -2358,6 +2365,9 @@ begin
 
   for r := 1 to qeGrid.RowCount - 1 do
   begin
+    // if not RowHasData(r) then
+    //   Continue;
+
     Result := ValidateRow(r);
     if not Result then
       Break;
@@ -2528,6 +2538,7 @@ begin
         if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
         begin
           Result := False;
+          Msg := Format(rsActiveRecordDuplicated, [FColField.DisplayName, FCellValue]);
           Exit;
         end;
       end

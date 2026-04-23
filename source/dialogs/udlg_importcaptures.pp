@@ -137,8 +137,9 @@ begin
   pEffortFile.Border.Color := clSystemSolidNeutralFGDark;
   pCaptureFile.Background.Color := clSolidBGSecondaryDark;
   pCaptureFile.Border.Color := clSystemSolidNeutralFGDark;
-  pGenerateFiles.Background.Color := clSolidBGSecondaryDark;
-  pGenerateFiles.Border.Color := clSystemSolidNeutralFGDark;
+
+  pGenerateFiles.Background.Color := clSystemCautionBGDark;
+  pGenerateFiles.Border.Color := clSystemCautionFGDark;
 
   lblTitleImportFiles.Font.Color := clVioletFG1Dark;
   lblTitleImportFinished.Font.Color := clVioletFG1Dark;

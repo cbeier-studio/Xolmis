@@ -27,7 +27,7 @@ uses
   models_sampling, models_record_types;
 
 const
-  BANDING_JOURNAL_SCHEMA: String = 'LOCALITY;NET STATION;SAMPLING DATE;START TIME;END TIME;LONGITUDE;LATITUDE;' +
+  BANDING_JOURNAL_SCHEMA: String = 'LOCALITY;STATION;DATE;START TIME;END TIME;LONGITUDE;LATITUDE;' +
     'TEAM;NOTES;WEATHER TIME 1;WEATHER MOMENT 1;CLOUD COVER 1;PRECIPITATION 1;TEMPERATURE 1;WIND SPEED 1;HUMIDITY 1;' +
     'WEATHER TIME 2;WEATHER MOMENT 2;CLOUD COVER 2;PRECIPITATION 2;TEMPERATURE 2;WIND SPEED 2;HUMIDITY 2;' +
     'WEATHER TIME 3;WEATHER MOMENT 3;CLOUD COVER 3;PRECIPITATION 3;TEMPERATURE 3;WIND SPEED 3;HUMIDITY 3;' +
@@ -35,7 +35,7 @@ const
 
   WEATHER_LOG_SCHEMA: String = 'TIME;MOMENT;CLOUD COVER;PRECIPITATION;TEMPERATURE;WIND SPEED;HUMIDITY';
 
-  NET_EFFORT_SCHEMA: String = 'LOCALITY;NET STATION;SAMPLING DATE;NET NUMBER;LONGITUDE;LATITUDE;' +
+  NET_EFFORT_SCHEMA: String = 'LOCALITY;STATION;DATE;NET NUMBER;LONGITUDE;LATITUDE;' +
     'OPEN TIME 1;CLOSE TIME 1;OPEN TIME 2;CLOSE TIME 2;OPEN TIME 3;CLOSE TIME 3;OPEN TIME 4;CLOSE TIME 4;NOTES';
 
   BANDING_SCHEMA: String = 'LOCALITY;STATION;DATA;RECORDER;BANDER;CAP TIME;NET SITE NAME;NEW_RECAP;' +
@@ -188,7 +188,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_system,
+  utils_locale, utils_global, utils_dialogs, utils_system, utils_validations,
   data_types, data_management, data_getvalue, data_consts, data_services,
   models_users, models_taxonomy, models_birds, models_geo, models_bands,
   models_sampling_plots, io_csv,
@@ -627,7 +627,8 @@ begin
       begin
         DMM.sqlTrans.Rollback;
         LogWarning('Capture import canceled by user, transaction rolled back.');
-        MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
       begin
@@ -635,7 +636,8 @@ begin
           dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
         LogInfo('Capture import finished successfully, transaction committed.');
-        MsgDlg(rsTitleImportFile, rsSuccessfulImportCaptures, mtInformation);
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportCaptures, mtInformation);
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
@@ -715,7 +717,7 @@ procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
     MemberRepo := TSurveyMemberRepository.Create(DMM.sqlCon);
     Member := TSurveyMember.Create;
     try
-      for i := 0 to WordCount(TeamStr, [',',';']) - 1 do
+      for i := 1 to WordCount(TeamStr, [',',';']) do
       begin
         Member.SurveyId := SurveyId;
         Member.PersonId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION,
@@ -781,8 +783,10 @@ begin
 
     UpdateProgress(0, CSV.RecordCount);
 
-    DMM.sqlTrans.StartTransaction;
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
     try
+      aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, rsMobileBanding);
       CSV.First;
       while not (CSV.Eof or stopProcess) do
       begin
@@ -793,7 +797,6 @@ begin
         Toponimo := TSite.Create;
         Survey := TSurvey.Create;
         try
-          aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
           SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
           if NetStation.Id > 0 then
             SiteRepo.GetById(NetStation.LocalityId, Toponimo);
@@ -805,7 +808,7 @@ begin
             Survey.SurveyDate := Reg.SamplingDate;
             Survey.StartTime := Reg.StartTime;
             Survey.EndTime := Reg.EndTime;
-            Survey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, 'Banding');
+            Survey.MethodId := aMethod;
             Survey.NetStationId := NetStation.Id;
             Survey.LocalityId := Toponimo.Id;
             Survey.StartLongitude := Reg.Longitude;
@@ -842,7 +845,8 @@ begin
       begin
         DMM.sqlTrans.Rollback;
         LogWarning('Banding journal import canceled by user, transaction rolled back.');
-        MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
       begin
@@ -850,7 +854,8 @@ begin
           dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
         LogInfo('Banding journal import finished successfully, transaction committed.');
-        MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingJournal, mtInformation);
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingJournal, mtInformation);
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
@@ -884,7 +889,6 @@ var
   SurveyRepo: TSurveyRepository;
   NetSite: TNetEffort;
   NetRepo: TNetEffortRepository;
-  strDate: String;
   aMethod: Integer;
 begin
   if not FileExists(aCSVFile) then
@@ -935,15 +939,17 @@ begin
       dlgProgress.Position := 0;
       dlgProgress.Max := CSV.RecordCount;
     end;
-    DMM.sqlTrans.StartTransaction;
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
     try
+      aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
       CSV.First;
       repeat
         if Assigned(dlgProgress) then
           dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
         // Reset variables
         Reg.Clear;
-        strDate := '';
 
         Reg.FromCSV(CSV);
 
@@ -952,7 +958,6 @@ begin
           Toponimo := TSite.Create;
           Survey := TSurvey.Create;
           NetSite := TNetEffort.Create;
-          aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
           // Get net station and locality
           SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
@@ -1015,7 +1020,8 @@ begin
       begin
         DMM.sqlTrans.Rollback;
         LogWarning('Banding effort import canceled by user, transaction rolled back.');
-        MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
       end
       else
       begin
@@ -1023,7 +1029,8 @@ begin
           dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
         LogInfo('Banding effort import finished successfully, transaction committed.');
-        MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingEffort, mtInformation);
       end;
     except
       DMM.sqlTrans.RollbackRetaining;
@@ -1073,13 +1080,18 @@ begin
 end;
 
 procedure TBandingEffortHelper.FromCSV(CSV: TSdfDataSet);
+var
+  sDate: TDateTime;
 begin
   { 0 - Locality }
   Locality := CSV.FieldByName('LOCALITY').AsString;
   { 1 - NetStation }
   NetStation := CSV.FieldByName('STATION').AsString;
   { 2 - SamplingDate }
-  SamplingDate := CSV.FieldByName('SAMPLING DATE').AsDateTime;
+  if not TryParseDateFlexible(CSV.FieldByName('DATE').AsString, sDate) then
+    raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('DATE').AsString, 'TBandingEffort.SamplingDate'])
+  else
+    SamplingDate := sDate;
   { 3 - NetNumber }
   NetNumber := CSV.FieldByName('NET NUMBER').AsInteger;
   { 4 - Longitude }
@@ -1148,7 +1160,7 @@ begin
 
   Weather1.SamplingTime := NullTime;
   Weather1.SamplingMoment := wmNone;
-  Weather1.CloudCover := 0;
+  Weather1.CloudCover := -1;
   Weather1.Precipitation := wpEmpty;
   Weather1.Temperature := 0.0;
   Weather1.WindSpeed := 0;
@@ -1156,7 +1168,7 @@ begin
 
   Weather2.SamplingTime := NullTime;
   Weather2.SamplingMoment := wmNone;
-  Weather2.CloudCover := 0;
+  Weather2.CloudCover := -1;
   Weather2.Precipitation := wpEmpty;
   Weather2.Temperature := 0.0;
   Weather2.WindSpeed := 0;
@@ -1164,7 +1176,7 @@ begin
 
   Weather3.SamplingTime := NullTime;
   Weather3.SamplingMoment := wmNone;
-  Weather3.CloudCover := 0;
+  Weather3.CloudCover := -1;
   Weather3.Precipitation := wpEmpty;
   Weather3.Temperature := 0.0;
   Weather3.WindSpeed := 0;
@@ -1172,7 +1184,7 @@ begin
 
   Weather4.SamplingTime := NullTime;
   Weather4.SamplingMoment := wmNone;
-  Weather4.CloudCover := 0;
+  Weather4.CloudCover := -1;
   Weather4.Precipitation := wpEmpty;
   Weather4.Temperature := 0.0;
   Weather4.WindSpeed := 0;
@@ -1180,13 +1192,18 @@ begin
 end;
 
 procedure TBandingJournalHelper.FromCSV(CSV: TSdfDataSet);
+var
+  sDate: TDateTime;
 begin
   { 0 - Locality }
   Locality := CSV.FieldByName('LOCALITY').AsString;
   { 1 - NetStation }
   NetStation := CSV.FieldByName('STATION').AsString;
   { 2 - SamplingDate }
-  SamplingDate := CSV.FieldByName('DATE').AsDateTime;
+  if not TryParseDateFlexible(CSV.FieldByName('DATE').AsString, sDate) then
+    raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('DATE').AsString, 'TBandingJournal.SamplingDate'])
+  else
+    SamplingDate := sDate;
   { 3 - StartTime }
   if (not CSV.FieldByName('START TIME').IsNull) then
     StartTime := CSV.FieldByName('START TIME').AsDateTime;
@@ -1401,11 +1418,16 @@ begin
 end;
 
 procedure TBandingDataHelper.FromCSV(CSV: TSdfDataSet);
+var
+  sDate: TDateTime;
 begin
   Locality := CSV.FieldByName('LOCALITY').AsString;
   NetStation := CSV.FieldByName('STATION').AsString;
   if (not CSV.FieldByName('DATA').IsNull) then
-    CaptureDate := CSV.FieldByName('DATA').AsDateTime;
+    if not TryParseDateFlexible(CSV.FieldByName('DATA').AsString, sDate) then
+      raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('DATA').AsString, 'TBandingData.CaptureDate'])
+    else
+      CaptureDate := sDate;
   Recorder := AnsiUpperCase(CSV.FieldByName('RECORDER').AsString);
   Bander := AnsiUpperCase(CSV.FieldByName('BANDER').AsString);
   if (not CSV.FieldByName('CAP TIME').IsNull) then

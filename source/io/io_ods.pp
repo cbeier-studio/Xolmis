@@ -38,6 +38,9 @@ type
 
 implementation
 
+uses
+  utils_global;
+
 { TODSImporter }
 
 function TODSImporter.CanHandleExtension(const Ext: string): Boolean;
@@ -55,6 +58,8 @@ var
 begin
   Result := TStringList.Create;
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Get ODS file column names');
 
   Workbook := TsWorkbook.Create;
   try
@@ -106,6 +111,7 @@ begin
 
   finally
     Workbook.Free;
+    LogEvent(leaFinish, 'Get ODS file column names');
   end;
 end;
 
@@ -120,6 +126,8 @@ var
   i: Integer;
   fname: string;
 begin
+  LogEvent(leaStart, 'Import ODS file');
+
   // fpspreadsheet lê de arquivo; salve stream para temp
   fname := GetTempFileName;
   tmp := TFileStream.Create(fname, fmCreate);
@@ -171,6 +179,7 @@ begin
   finally
     wb.Free;
     DeleteFile(fname);
+    LogEvent(leaFinish, 'Import ODS file');
   end;
 end;
 
@@ -185,6 +194,8 @@ var
   FieldNames: TStringList;
 begin
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Preview ODS file');
   Workbook := TsWorkbook.Create;
   try
     Workbook.ReadFromStream(Stream, sfidOpenDocument);
@@ -226,6 +237,7 @@ begin
     end;
   finally
     Workbook.Free;
+    LogEvent(leaFinish, 'Preview ODS file');
   end;
 end;
 

@@ -420,13 +420,13 @@ begin
       begin
         //if not Msg.Contains('FROM record_verifications') then
           LogEvent(leaExecute, Msg);
-      end
-      else
-      begin
-        if (Pos('INSERT', UpperCase(Msg)) > 0) or
-           (Pos('UPDATE', UpperCase(Msg)) > 0) or
-           (Pos('DELETE', UpperCase(Msg)) > 0) then
-          LogEvent(leaExecute, Msg);
+      //end
+      //else
+      //begin
+      //  if (Pos('INSERT', UpperCase(Msg)) > 0) or
+      //     (Pos('UPDATE', UpperCase(Msg)) > 0) or
+      //     (Pos('DELETE', UpperCase(Msg)) > 0) then
+      //    LogEvent(leaExecute, Msg);
       end;
     end;
     detFetch: ;

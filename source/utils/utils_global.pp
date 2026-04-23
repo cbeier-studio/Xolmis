@@ -427,7 +427,20 @@ begin
   if not xSettings.AllowWriteLogs then
     Exit;
 
-  DMM.evLog.Debug(LOG_EVENT_ACTIONS[aAction] + ' | ' + Msg);
+  case aAction of
+    leaStarting,
+    leaEnd,
+    leaStart,
+    leaFinish,
+    leaOpen,
+    leaClose,
+    leaActiveTab,
+    leaCommit,
+    leaRollback:
+      DMM.evLog.Info(LOG_EVENT_ACTIONS[aAction] + ' | ' + Msg);
+    leaExecute:
+      DMM.evLog.Debug(LOG_EVENT_ACTIONS[aAction] + ' | ' + Msg);
+  end;
 end;
 
 procedure LogDebug(Msg: String);
@@ -441,6 +454,8 @@ end;
 procedure LogSQL(aSQL: TStrings);
 begin
   if not xSettings.AllowWriteLogs then
+    Exit;
+  if not xSettings.WriteDetailedLogs then
     Exit;
 
   DMM.evLog.Debug(TrimList(aSQL));

@@ -11,7 +11,7 @@ object dlgImportCaptures: TdlgImportCaptures
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -533,7 +533,7 @@ object dlgImportCaptures: TdlgImportCaptures
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 12
           ChildSizing.HorizontalSpacing = 8
-          Background.Color = 16448250
+          Background.Color = 13563135
           Background.Gradient1.StartColor = clWhite
           Background.Gradient1.EndColor = clBlack
           Background.Gradient1.GradientType = gtLinear
@@ -553,7 +553,7 @@ object dlgImportCaptures: TdlgImportCaptures
           BevelInner = bvNone
           BevelOuter = bvNone
           BevelWidth = 1
-          Border.Color = 13750737
+          Border.Color = 23965
           Border.Style = bboSolid
           BorderBCStyle = bpsBorder
           FontEx.Color = clDefault

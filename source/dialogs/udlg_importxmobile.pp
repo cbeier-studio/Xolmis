@@ -285,6 +285,7 @@ begin
   sbSaveLog.Images := iButtonsDark;
 
   eSourceFile.Images := iButtonsDark;
+  eExpedition.Images := iButtonsDark;
 
   lblTitleSource.Font.Color := clVioletFG1Dark;
   lblTitleMap.Font.Color := clVioletFG1Dark;
@@ -365,6 +366,8 @@ end;
 
 procedure TdlgImportXMobile.eSourceFileChange(Sender: TObject);
 begin
+  FContentType := mctEmpty;
+
   if FileExists(eSourceFile.Text) then
   begin
     FSourceFile := eSourceFile.Text;
@@ -408,7 +411,7 @@ begin
 
   lblExpedition.Visible := (FContentType in [mctInventory, mctInventories]);
   eExpedition.Visible := lblExpedition.Visible;
-  sbNext.Enabled := IsRequiredFilledSource;
+  sbNext.Enabled := (FContentType <> mctEmpty) and IsRequiredFilledSource;
 end;
 
 procedure TdlgImportXMobile.FormDestroy(Sender: TObject);
@@ -438,12 +441,14 @@ begin
   if Assigned(SpeciesArray) then
     SpeciesArray.Free;
 
-  if Assigned(JSONObject) then
-    JSONObject.Free;
-  if Assigned(JSONArray) then
-    JSONArray.Free;
-  //if Assigned(JSONData) then
-  //  FreeAndNil(JSONData);
+  // if Assigned(JSONObject) then
+  //   JSONObject.Free;
+  // if Assigned(JSONArray) then
+  //   JSONArray.Free;
+  if Assigned(JSONData) then
+    FreeAndNil(JSONData);
+  JSONObject := nil;
+  JSONArray := nil;
 
   if Assigned(FInventoryList) then
     FInventoryList.Free;
@@ -487,14 +492,17 @@ begin
   case JSONData.JSONType of
     jtArray:
       begin
-        if JSONArray.Objects[0].Find('duration') <> nil then
-          Result := mctInventories
-        else
-        if JSONArray.Objects[0].Find('support') <> nil then
-          Result := mctNests
-        else
-        if (JSONArray.Objects[0].Find('fieldNumber') <> nil) and (JSONArray.Objects[0].Find('type') <> nil) then
-          Result := mctSpecimens;
+        if JSONArray.Count > 0 then
+        begin
+          if JSONArray.Objects[0].Find('duration') <> nil then
+            Result := mctInventories
+          else
+          if JSONArray.Objects[0].Find('support') <> nil then
+            Result := mctNests
+          else
+          if (JSONArray.Objects[0].Find('fieldNumber') <> nil) and (JSONArray.Objects[0].Find('type') <> nil) then
+            Result := mctSpecimens;
+        end;
       end;
     jtObject:
       begin
@@ -605,16 +613,16 @@ begin
   // Observer
   if gridMap.Col = 2 then
   begin
-    if FindDlg(tbPeople, gridMap, aKey, '', 'abbreviation') then
+    if FindDlg(tbPeople, gridMap, aKey, '', COL_ABBREVIATION) then
     begin
-      aObserverName := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, aKey);
+      aObserverName := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, aKey);
       case FContentType of
         mctEmpty: ;
         mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
         mctNest, mctNests:            FNestList[gridMap.Row - 1].FObserver := aObserverName;
         mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
       end;
-      //gridMap.Cells[gridMap.Col, gridMap.Row] := aObserverName;
+      gridMap.Cells[gridMap.Col, gridMap.Row] := aObserverName;
     end;
   end
   else
@@ -623,7 +631,7 @@ begin
   begin
     if FindSiteDlg([gfAll], gridMap, aKey, '', COL_SITE_NAME) then
     begin
-      aLocalityName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aKey);
+      aLocalityName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aKey);
       case FContentType of
         mctEmpty: ;
         mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
@@ -644,7 +652,7 @@ begin
         if FindDlg(tbSurveys, gridMap, aKey) then
         begin
           FInventoryList[gridMap.Row - 1].FSurveyKey := aKey;
-          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aKey);
         end;
       end;
       mctNest, mctNests:
@@ -652,7 +660,7 @@ begin
         if FindDlg(tbNests, gridMap, aKey) then
         begin
           FNestList[gridMap.Row - 1].FNestKey := aKey;
-          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('nests', COL_FULL_NAME, COL_NEST_ID, aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, aKey);
         end;
       end;
       mctSpecimens:
@@ -660,7 +668,7 @@ begin
         if FindDlg(tbSpecimens, gridMap, aKey) then
         begin
           FSpecimenList[gridMap.Row - 1].FSpecimenKey := aKey;
-          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aKey);
+          gridMap.Cells[gridMap.Col, gridMap.Row] := GetName(TBL_SPECIMENS, COL_FULL_NAME, COL_SPECIMEN_ID, aKey);
         end;
       end;
     end;
@@ -680,26 +688,26 @@ begin
     if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
     begin
       // Observer
-      //if gridMap.Col = 2 then
-      //begin
-      //  if FindDlg(tbPeople, gridMap, aObserverKey, Key, 'acronym') then
-      //  begin
-      //    aObserverName := GetName('people', 'acronym', 'person_id', aObserverKey);
-      //    case FContentType of
-      //      mctEmpty: ;
-      //      mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
-      //      mctNest, mctNests:            FNestList[gridMap.Row - 1].FObserver := aObserverName;
-      //      mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
-      //    end;
-      //  end;
-      //end
-      //else
+      if gridMap.Col = 2 then
+      begin
+        if FindDlg(tbPeople, gridMap, aObserverKey, Key, COL_ABBREVIATION) then
+        begin
+          aObserverName := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, aObserverKey);
+          case FContentType of
+            mctEmpty: ;
+            mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
+            mctNest, mctNests:            FNestList[gridMap.Row - 1].FObserver := aObserverName;
+            mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
+          end;
+        end;
+      end
+      else
       // Locality
       if Grid.Col = 4 then
       begin
-        if FindSiteDlg([gfAll], Grid, aLocalityKey, Key, 'site_name') then
+        if FindSiteDlg([gfAll], Grid, aLocalityKey, Key, COL_SITE_NAME) then
         begin
-          aLocalityName := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
+          aLocalityName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
           case FContentType of
             mctEmpty: ;
             mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
@@ -837,7 +845,8 @@ begin
   PBar.Max := FInventoryList.Count;
 
   // commit previous transactions before start other transaction
-  DMM.sqlTrans.CommitRetaining;
+  if DMM.sqlTrans.Active then
+    DMM.sqlTrans.CommitRetaining;
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   LogEvent(leaStart, 'Import inventories from JSON');
@@ -973,7 +982,8 @@ begin
   PBar.Max := FNestList.Count;
 
   // commit previous transactions before start other transaction
-  DMM.sqlTrans.CommitRetaining;
+  if DMM.sqlTrans.Active then
+    DMM.sqlTrans.CommitRetaining;
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   LogEvent(leaStart, 'Import nests from JSON');
@@ -1283,7 +1293,8 @@ begin
   PBar.Max := FSpecimenList.Count;
 
   // commit previous transactions before start other transaction
-  DMM.sqlTrans.CommitRetaining;
+  if DMM.sqlTrans.Active then
+    DMM.sqlTrans.CommitRetaining;
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   LogEvent(leaStart, 'Import specimens from JSON');
@@ -1307,6 +1318,7 @@ begin
             aOldSpecimen := TSpecimen.Create(aSpecimenKey);
             Repo.GetById(aSpecimenKey, aSpecimen);
             try
+              Specimen.ToSpecimen(aSpecimen);
               Repo.Update(aSpecimen);
               // write record history
               WriteDiff(tbSpecimens, aOldSpecimen, aSpecimen, rsEditedByImport);
@@ -1385,6 +1397,9 @@ var
   Repo: TSurveyMemberRepository;
   aSurveyMember: TSurveyMember;
 begin
+  if (aSurvey = 0) or (aObserver = 0) then
+    Exit;
+
   Repo := TSurveyMemberRepository.Create(DMM.sqlCon);
   aSurveyMember := TSurveyMember.Create();
   try
@@ -1830,7 +1845,11 @@ var
 begin
   Result := False;
   if Assigned(JSONData) then
+  begin
     FreeAndNil(JSONData);
+    JSONObject := nil;
+    JSONArray := nil;
+  end;
 
   try
     try

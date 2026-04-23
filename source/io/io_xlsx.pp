@@ -38,6 +38,9 @@ type
 
 implementation
 
+uses
+  utils_global;
+
 { TXLSXImporter }
 
 function TXLSXImporter.CanHandleExtension(const Ext: string): Boolean;
@@ -56,6 +59,7 @@ begin
   Result := TStringList.Create;
   Stream.Position := 0;
 
+  LogEvent(leaStart, 'Get XLSX file column names');
   Workbook := TsWorkbook.Create;
   try
     // XLSX (OOXML)
@@ -107,6 +111,7 @@ begin
 
   finally
     Workbook.Free;
+    LogEvent(leaFinish, 'Get XLSX file column names');
   end;
 end;
 
@@ -121,6 +126,8 @@ var
   i: Integer;
   fname: string;
 begin
+  LogEvent(leaStart, 'Import XLSX file');
+
   // fpspreadsheet lê de arquivo; salve stream para temp
   fname := GetTempFileName;
   tmp := TFileStream.Create(fname, fmCreate);
@@ -172,6 +179,7 @@ begin
   finally
     wb.Free;
     DeleteFile(fname);
+    LogEvent(leaFinish, 'Import XLSX file');
   end;
 end;
 
@@ -186,6 +194,8 @@ var
   FieldNames: TStringList;
 begin
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Preview XLSX file');
   Workbook := TsWorkbook.Create;
   try
     Workbook.ReadFromStream(Stream, sfidOOXML);
@@ -227,6 +237,7 @@ begin
     end;
   finally
     Workbook.Free;
+    LogEvent(leaFinish, 'Preview XLSX file');
   end;
 end;
 

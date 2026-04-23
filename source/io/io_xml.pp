@@ -38,6 +38,9 @@ type
 
 implementation
 
+uses
+  utils_global;
+
 procedure NodeToRow(Node: TDOMNode; const Prefix: string; Row: TXRow);
 var
   i: Integer;
@@ -110,6 +113,8 @@ var
 begin
   Result := TStringList.Create;
 
+  LogEvent(leaStart, 'Get XML file column names');
+
   // Read bytes from stream
   Stream.Position := 0;
   SetLength(RawText, Stream.Size);
@@ -167,6 +172,7 @@ begin
   finally
     Doc.Free;
     Utf8Stream.Free;
+    LogEvent(leaFinish, 'Get XML file column names');
   end;
 end;
 
@@ -178,6 +184,8 @@ var
   Row: TXRow;
   RecNodeName: string;
 begin
+  LogEvent(leaStart, 'Import XML file');
+
   ReadXMLFile(Doc, Stream);
   try
     Root := Doc.DocumentElement;
@@ -224,6 +232,7 @@ begin
     end;
   finally
     Doc.Free;
+    LogEvent(leaFinish, 'Import XML file');
   end;
 end;
 
@@ -237,6 +246,8 @@ var
   i, j, Count: Integer;
 begin
   Stream.Position := 0;
+
+  LogEvent(leaStart, 'Preview XML file');
   ReadXMLFile(Doc, Stream);
   try
     NodeList := Doc.GetElementsByTagName(Options.RecordNodeName);
@@ -258,6 +269,7 @@ begin
     end;
   finally
     Doc.Free;
+    LogEvent(leaFinish, 'Preview XML file');
   end;
 end;
 

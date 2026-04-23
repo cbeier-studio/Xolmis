@@ -40,6 +40,9 @@ type
 
 implementation
 
+uses
+  utils_global;
+
 function GetTempFileName(const Prefix: string): string;
 var
   GUID: TGUID;
@@ -70,6 +73,8 @@ var
   LangID: Byte;
 begin
   Result := TStringList.Create;
+
+  LogEvent(leaStart, 'Get DBF file column names');
 
   // Create temporary file
   TmpFile := GetTempFileName;
@@ -125,6 +130,7 @@ begin
     DeleteFile(TmpFile);
     if FileExists(TmpMemo) then
       DeleteFile(TmpMemo);
+    LogEvent(leaFinish, 'Get DBF file column names');
   end;
 end;
 
@@ -136,6 +142,8 @@ var
   fname: string;
   tmp: TFileStream;
 begin
+  LogEvent(leaStart, 'Import DBF file');
+
   // TDbf precisa de arquivo
   fname := GetTempFileName;
   tmp := TFileStream.Create(fname, fmCreate);
@@ -180,6 +188,7 @@ begin
   finally
     db.Free;
     DeleteFile(fname);
+    LogEvent(leaFinish, 'Import DBF file');
   end;
 end;
 
@@ -191,6 +200,8 @@ var
   i, Count: Integer;
   TmpFile: String;
 begin
+  LogEvent(leaStart, 'Preview DBF file');
+
   TmpFile := GetTempFileName;
   try
     Stream.Position := 0;
@@ -224,6 +235,7 @@ begin
     end;
   finally
     DeleteFile(TmpFile);
+    LogEvent(leaFinish, 'Preview DBF file');
   end;
 end;
 

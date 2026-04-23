@@ -126,6 +126,8 @@ begin
   Result := TStringList.Create;
   RawText := '';
 
+  LogEvent(leaStart, 'Get CSV file column names');
+
   // Read bytes from stream
   Stream.Position := 0;
   SetLength(RawText, Stream.Size);
@@ -185,6 +187,7 @@ begin
   finally
     DS.Free;
     Utf8Stream.Free;
+    LogEvent(leaFinish, 'Get CSV file column names');
   end;
 end;
 
@@ -194,6 +197,7 @@ var
   row, finalRow: TXRow;
   i, total: Integer;
 begin
+  LogEvent(leaStart, 'Import CSV file');
   ds := TSdfDataSet.Create(nil);
   try
     ds.Delimiter := Options.Delimiter;
@@ -239,6 +243,7 @@ begin
     end;
   finally
     ds.Free;
+    LogEvent(leaFinish, 'Import CSV file');
   end;
 end;
 
@@ -249,6 +254,7 @@ var
   Row, Transformed: TXRow;
   i, Count: Integer;
 begin
+  LogEvent(leaStart, 'Preview CSV file');
   DS := TSdfDataSet.Create(nil);
   try
     if Options.Encoding <> '' then
@@ -284,6 +290,7 @@ begin
     end;
   finally
     DS.Free;
+    LogEvent(leaFinish, 'Preview CSV file');
   end;
 end;
 

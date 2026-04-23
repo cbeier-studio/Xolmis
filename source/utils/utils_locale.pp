@@ -208,6 +208,9 @@ uses
     rsErrorLoadingTableSchema = 'The table schema was not loaded.';
     rsErrorLoadingFieldSchema = 'The field schema was not loaded.';
 
+    { Warning messages }
+    rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
+
     { Progress messages }
     rsProgressPreparing = 'Preparing...';
     rsProgressImportFiles = 'Processing %d of %d files...';
