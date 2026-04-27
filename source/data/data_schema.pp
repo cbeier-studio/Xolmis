@@ -1070,7 +1070,7 @@ begin
   AddField(T, 'cloacal_protuberance', rscCloacalProtuberance, sdtText, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,N,S,M,L';
   T.Fields.Last.PickList.CommaText := 'U,N,S,M,L';
-  T.Fields.Last.Aliases.CommaText := 'cloacal protuberance,protuberância cloacal';
+  T.Fields.Last.Aliases.CommaText := 'cloacal protuberance,protuberância cloacal,cp';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.SummaryKind := skGroupCount;
@@ -1080,7 +1080,7 @@ begin
   AddField(T, 'brood_patch', rscBroodPatch, sdtText, False, 5);
   T.Fields.Last.Rules.ValueList := 'F,N,V,W,O';
   T.Fields.Last.PickList.CommaText := 'F,N,V,W,O';
-  T.Fields.Last.Aliases.CommaText := 'brood patch,placa de incubação';
+  T.Fields.Last.Aliases.CommaText := 'brood patch,placa de incubação,bp';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.SummaryKind := skGroupCount;

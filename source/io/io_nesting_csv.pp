@@ -22,86 +22,22 @@ unit io_nesting_csv;
 interface
 
 uses
-  Classes, SysUtils, Forms, Dialogs, StrUtils, ComCtrls, DateUtils, fgl,
-  DB, SQLDB, SdfData, fpjson, jsonparser, fpjsondataset,
-  models_sampling, models_record_types;
+  Classes, SysUtils, Forms, Dialogs, ComCtrls, DateUtils,
+  DB, SQLDB, SdfData, fpjson, jsonparser,
+  models_record_types;
 
 const
-  NEST_SCHEMA: String = 'field_number;taxon;male;female;latitude;longitude;altitude;locality;' +
-    'height_above_ground;support_plant_1;support_plant_2;max_internal_diameter;min_internal_diameter;' +
+  NEST_SCHEMA: String = 'field_number;observer;taxon;male;female;latitude;longitude;altitude;locality;' +
+    'height_above_ground;support_type;support_plant_1;support_plant_2;other_support;max_internal_diameter;min_internal_diameter;' +
     'max_external_diameter;min_external_diameter;internal_height;external_height;plant_center_distance;' +
     'plant_edge_distance;nest_cover;max_plant_diameter;min_plant_diameter;plant_height;plant_dbh;' +
     'productivity;nest_fate;philornis_larvae;found_stage;cause_of_loss;loss_stage;found_day;' +
-    'last_day_active;last_seen;nest_age;nest_days_egg;nest_days_nestling;notes';
+    'last_day_active;last_seen;nest_age;nest_days_building;nest_days_egg;nest_days_nestling;description;notes';
 
-  NEST_REVISION_SCHEMA: String = 'nest;date;observer;status;eggs_tally;nestlings_tally;photos;notes';
+  NEST_REVISION_SCHEMA: String = 'nest;date;time;observer;status;stage;host_eggs_tally;host_nestlings_tally;nidoparasite_eggs_tally;' +
+    'nidoparasite_nestlings_tally;nidoparasite;photos;notes';
 
-  EGG_SCHEMA: String = 'nest;date;egg_num;length;width;mass;shape;color;photos;notes';
-
-type
-  TNestRecord = record
-    FieldNumber: String;
-    Taxon: String;
-    Male: String;
-    Female: String;
-    Latitude: Extended;
-    Longitude: Extended;
-    Altitude: Double;
-    Locality: String;
-    HeightAboveGround: Double;
-    SupportPlant1: String;
-    SupportPlant2: String;
-    MaxInternalDiameter: Double;
-    MinInternalDiameter: Double;
-    MaxExternalDiameter: Double;
-    MinExternalDiameter: Double;
-    InternalHeight: Double;
-    ExternalHeight: Double;
-    PlantCenterDistance: Double;
-    PlantEdgeDistance: Double;
-    NestCover: Double;
-    MaxPlantDiameter: Double;
-    MinPlantDiameter: Double;
-    PlantHeight: Double;
-    PlantDbh: Double;
-    Productivity: Integer;
-    NestFate: String;
-    PhilornisLarvae: Boolean;
-    FoundStage: String;
-    CauseOfLoss: String;
-    LossStage: String;
-    FoundDay: String;
-    LastDayActive: String;
-    LastDaySeen: String;
-    NestAge: Double;
-    NestDaysEgg: Double;
-    NestDaysNestling: Double;
-    Notes: String;
-  end;
-
-  TNestJournal = record
-    Nest: String;
-    Date: TDate;
-    Observer: String;
-    Status: String;
-    EggsTally: Integer;
-    NestlingsTally: Integer;
-    Photos: String;
-    Notes: String;
-  end;
-
-  TEggRecord = record
-    Nest: String;
-    Date: TDate;
-    EggNum: Integer;
-    Length: Double;
-    Width: Double;
-    Mass: Double;
-    Shape: String;
-    Color: String;
-    Photos: String;
-    Notes: String;
-  end;
+  EGG_SCHEMA: String = 'nest;observer;date;egg_num;taxon;length;width;mass;shape;pattern;texture;color;hatched;photos;notes';
 
   procedure LoadNestingFile(const aCSVFile: String; CSV: TSdfDataSet);
   procedure ImportNestDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
@@ -111,7 +47,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_system, utils_fullnames,
+  utils_locale, utils_global, utils_dialogs, utils_system, utils_fullnames, utils_conversions,
   data_types, data_getvalue, data_consts, io_csv,
   models_users, models_taxonomy, models_geo, models_breeding,
   udm_main, udlg_progress;
@@ -119,13 +55,13 @@ uses
 procedure ImportNestDataV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
-  //Reg: TNestRecord;
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
   TaxonRepo: TTaxonRepository;
   Taxon: TTaxon;
   NestRepo: TNestRepository;
   Nest: TNest;
+  FObserverId: Integer;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -182,11 +118,15 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('taxon').AsString), Taxon);
+            TaxonRepo.GetById(GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('taxon').AsString), Taxon);
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
             SiteRepo.GetById(GetSiteKey(CSV.FieldByName('locality').AsString), Toponimo);
+
+          // Get observer
+          if (CSV.FieldByName('observer').AsString <> EmptyStr) then
+            FObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
 
 
           // Check if the nest exists
@@ -196,15 +136,15 @@ begin
           begin
             // if not, create a new nest
             Nest.FieldNumber := CSV.FieldByName('field_number').AsString;
-            //Nest.ObserverId := GetKey('people', 'person_id', 'abbreviation', CSV.FieldByName('observer').AsString);
+            Nest.ObserverId := FObserverId;
             Nest.LocalityId := Toponimo.Id;
             Nest.Latitude := CSV.FieldByName('latitude').AsFloat;
             Nest.Longitude := CSV.FieldByName('longitude').AsFloat;
             Nest.TaxonId := Taxon.Id;
-            //Nest.SupportType := CSV.FieldByName('support_type').AsString;
-            Nest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_1').AsString);
-            Nest.SupportPlant2Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_2').AsString);
-            //Nest.OtherSupport := CSV.FieldByName('other_support').AsString;
+            Nest.SupportType := CSV.FieldByName('support_type').AsString;
+            Nest.SupportPlant1Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_1').AsString);
+            Nest.SupportPlant2Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_2').AsString);
+            Nest.OtherSupport := CSV.FieldByName('other_support').AsString;
             Nest.HeightAboveGround := CSV.FieldByName('height_above_ground').AsFloat;
             //Nest.ProjectId := GetKey('projects', 'project_id', 'project_title', CSV.FieldByName('project').AsString);
             Nest.InternalMaxDiameter := CSV.FieldByName('max_internal_diameter').AsFloat;
@@ -220,20 +160,15 @@ begin
             Nest.PlantMinDiameter := CSV.FieldByName('min_plant_diameter').AsFloat;
             Nest.PlantHeight := CSV.FieldByName('plant_height').AsFloat;
             Nest.PlantDbh := CSV.FieldByName('plant_dbh').AsFloat;
-            //Nest.BuildingDays: Double;
+            Nest.BuildingDays := CSV.FieldByName('nest_days_building').AsFloat;
             Nest.IncubationDays := CSV.FieldByName('nest_days_egg').AsFloat;
             Nest.NestlingDays := CSV.FieldByName('nest_days_nestling').AsFloat;
             Nest.ActiveDays := Nest.IncubationDays + Nest.NestlingDays;
-            case CSV.FieldByName('nest_fate').AsString of
-              'L': Nest.NestFate := nfLoss;
-              'S': Nest.NestFate := nfSuccess;
-            else
-              Nest.NestFate := nfUnknown;
-            end;
+            Nest.NestFate := StrToNestFate(CSV.FieldByName('nest_fate').AsString);
             Nest.NestProductivity := CSV.FieldByName('productivity').AsInteger;
             Nest.FoundDate := StrToDate(CSV.FieldByName('found_day').AsString);
             Nest.LastDate := StrToDate(CSV.FieldByName('last_day_active').AsString);
-            //Nest.Description := CSV.FieldByName('description').AsString;
+            Nest.Description := CSV.FieldByName('description').AsString;
             Nest.FullName := GetNestFullName(Nest.FoundDate, Nest.TaxonId, Nest.LocalityId, Nest.FieldNumber);
             Nest.UserInserted := ActiveUser.Id;
 
@@ -356,12 +291,12 @@ begin
         if Assigned(dlgProgress) then
           dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
         // Reset variables
-        aDate := CSV.FieldByName('revision_date').AsString;
-        aTime := CSV.FieldByName('revision_time').AsString;
+        aDate := CSV.FieldByName('date').AsString;
+        aTime := CSV.FieldByName('time').AsString;
 
-        if CSV.FieldByName('observer').AsString <> EmptyStr then
+        if Trim(CSV.FieldByName('observer').AsString) <> EmptyStr then
         begin
-          aObserver := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
+          aObserver := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
         end
         else
           aObserver := 0;
@@ -373,43 +308,29 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
+            TaxonRepo.GetById(GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
-            NestRepo.GetById(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString), Nest);
+            NestRepo.GetById(GetKey(TBL_NESTS, COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString), Nest);
 
           // Check if the nest revision exists
           RevisionRepo.FindByDate(Nest.Id, aDate, aTime, aObserver, Revision);
           if (Revision.Id = 0) then
           begin
             Revision.NestId := Nest.Id;
-            Revision.RevisionDate := CSV.FieldByName('revision_date').AsDateTime;
-            Revision.RevisionTime := CSV.FieldByName('revision_time').AsDateTime;
+            Revision.RevisionDate := CSV.FieldByName('date').AsDateTime;
+            Revision.RevisionTime := CSV.FieldByName('time').AsDateTime;
             Revision.Observer1Id := aObserver;
             Revision.Observer2Id := 0;
-            case CSV.FieldByName('nest_status').AsString of
-              'I': Revision.NestStatus := nstInactive;
-              'A': Revision.NestStatus := nstActive;
-            else
-              Revision.NestStatus := nstUnknown;
-            end;
+            Revision.NestStatus := StrToNestStatus(CSV.FieldByName('status').AsString);
             Revision.HostEggsTally := CSV.FieldByName('host_eggs_tally').AsInteger;
             Revision.HostNestlingsTally := CSV.FieldByName('host_nestlings_tally').AsInteger;
             Revision.NidoparasiteEggsTally := CSV.FieldByName('nidoparasite_eggs_tally').AsInteger;
             Revision.NidoparasiteNestlingsTally := CSV.FieldByName('nidoparasite_nestlings_tally').AsInteger;
             Revision.NidoparasiteId := Taxon.Id;
             Revision.HavePhilornisLarvae := False;
-            case CSV.FieldByName('nest_stage').AsString of
-              'X': Revision.NestStage := nsgInactive;
-              'C': Revision.NestStage := nsgConstruction;
-              'L': Revision.NestStage := nsgLaying;
-              'I': Revision.NestStage := nsgIncubation;
-              'H': Revision.NestStage := nsgHatching;
-              'N': Revision.NestStage := nsgNestling;
-            else
-              Revision.NestStage := nsgUnknown;
-            end;
+            Revision.NestStage := StrToNestStage(CSV.FieldByName('stage').AsString);
             Revision.Notes := CSV.FieldByName('notes').AsString;
             Revision.FullName := GetNestRevisionFullName(Revision.RevisionDate, Revision.NestId, NEST_STAGES[Revision.NestStage], NEST_STATUSES[Revision.NestStatus]);
             Revision.UserInserted := ActiveUser.Id;
@@ -507,7 +428,7 @@ begin
   end;
   TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
   NestRepo := TNestRepository.Create(DMM.sqlCon);
-  EggRepo := TEggRepository. Create(DMM.sqlCon);
+  EggRepo := TEggRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -533,11 +454,11 @@ begin
         if Assigned(dlgProgress) then
           dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
         // Reset variables
-        aDate := CSV.FieldByName('revision_date').AsString;
+        aDate := CSV.FieldByName('date').AsString;
 
-        if CSV.FieldByName('observer').AsString <> EmptyStr then
+        if Trim(CSV.FieldByName('observer').AsString) <> EmptyStr then
         begin
-          aObserver := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
+          aObserver := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
         end
         else
           aObserver := 0;
@@ -548,58 +469,30 @@ begin
           Egg := TEgg.Create;
 
           // Get taxon
-          if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
+          if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
+            TaxonRepo.GetById(GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
-            NestRepo.GetById(GetKey('nests', COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString), Nest);
+            NestRepo.GetById(GetKey(TBL_NESTS, COL_NEST_ID, COL_FIELD_NUMBER, CSV.FieldByName('nest').AsString), Nest);
 
           // Check if the egg exists
           EggRepo.FindByFieldNumber(Nest.Id, CSV.FieldByName('field_number').AsString, aDate, aObserver, Egg);
           if (Egg.IsNew) then
           begin
             Egg.FieldNumber := CSV.FieldByName('field_number').AsString;
-            Egg.EggSeq := CSV.FieldByName('egg_seq').AsInteger;
+            Egg.EggSeq := CSV.FieldByName('egg_num').AsInteger;
             Egg.NestId := Nest.Id;
-            case CSV.FieldByName('egg_shape').AsString of
-              'S': Egg.EggShape := esSpherical;
-              'E': Egg.EggShape := esElliptical;
-              'O': Egg.EggShape := esOval;
-              'P': Egg.EggShape := esPiriform;
-              'C': Egg.EggShape := esConical;
-              'B': Egg.EggShape := esBiconical;
-              'Y': Egg.EggShape := esCylindrical;
-              'L': Egg.EggShape := esLongitudinal;
-            else
-              Egg.EggShape := esUnknown;
-            end;
-            Egg.Width := CSV.FieldByName('egg_width').AsFloat;
-            Egg.Length := CSV.FieldByName('egg_length').AsFloat;
-            Egg.Mass := CSV.FieldByName('egg_mass').AsFloat;
-            Egg.Volume := CSV.FieldByName('egg_volume').AsFloat;
-            Egg.EggStage := CSV.FieldByName('egg_stage').AsString;
-            Egg.EggshellColor := CSV.FieldByName('eggshell_color').AsString;
-            case CSV.FieldByName('eggshell_pattern').AsString of
-              'P':  Egg.EggshellPattern := espSpots;
-              'B':  Egg.EggshellPattern := espBlotches;
-              'S':  Egg.EggshellPattern := espSquiggles;
-              'T':  Egg.EggshellPattern := espStreaks;
-              'W':  Egg.EggshellPattern := espScrawls;
-              'PS': Egg.EggshellPattern := espSpotsSquiggles;
-              'BS': Egg.EggshellPattern := espBlotchesSquiggles;
-            else
-              Egg.EggshellPattern := espUnknown;
-            end;
-            case CSV.FieldByName('eggshell_texture').AsString of
-              'C': Egg.EggshellTexture := estChalky;
-              'S': Egg.EggshellTexture := estShiny;
-              'G': Egg.EggshellTexture := estGlossy;
-              'P': Egg.EggshellTexture := estPitted;
-            else
-              Egg.EggshellTexture := estUnknown;
-            end;
-            Egg.EggHatched := CSV.FieldByName('egg_hatched').AsBoolean;
+            Egg.EggShape := StrToEggShape(CSV.FieldByName('shape').AsString);
+            Egg.Width := CSV.FieldByName('width').AsFloat;
+            Egg.Length := CSV.FieldByName('length').AsFloat;
+            Egg.Mass := CSV.FieldByName('_mass').AsFloat;
+            Egg.Volume := CSV.FieldByName('volume').AsFloat;
+            // Egg.EggStage := CSV.FieldByName('stage').AsString;
+            Egg.EggshellColor := CSV.FieldByName('color').AsString;
+            Egg.EggshellPattern := StrToEggPattern(CSV.FieldByName('pattern').AsString);
+            Egg.EggshellTexture := StrToEggTexture(CSV.FieldByName('texture').AsString);
+            Egg.EggHatched := CSV.FieldByName('hatched').AsBoolean;
             Egg.IndividualId := CSV.FieldByName('individual_id').AsInteger;
             Egg.ObserverId := aObserver;
             Egg.MeasureDate := StrToDate(aDate);

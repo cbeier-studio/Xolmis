@@ -22,8 +22,8 @@ unit io_ebird_csv;
 interface
 
 uses
-  Classes, SysUtils, Forms, Dialogs, StrUtils, ComCtrls, DateUtils, fgl,
-  DB, SQLDB, SdfData, fpjson, jsonparser, fpjsondataset,
+  Classes, SysUtils, Forms, Dialogs, StrUtils, ComCtrls, DateUtils,
+  DB, SQLDB, SdfData, fpjson, jsonparser,
   models_sampling, models_record_types;
 
 const
@@ -127,8 +127,8 @@ begin
   CSV := TSdfDataSet.Create(nil);
   try
     { Load CSV file using TSdfDataSet }
-    //LoadEbirdFile(aCSVFile, CSV);
-    Reg.FromCSV(CSV);
+    LoadEbirdFile(aCSVFile, CSV);
+    // Reg.FromCSV(CSV);
     LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
 
     dlgProgress.Position := 0;
@@ -177,7 +177,7 @@ begin
 
           { Check if the record already exists }
           SightRepo.FindByCombo(Survey.Id, Taxon.Id, 0, Sight);
-          if Sight.Id > 0 then
+          if Sight.Id = 0 then
           begin
             { Insert record if it does not exist }
             Sight.SurveyId := Survey.Id;
@@ -251,7 +251,7 @@ function ValidateEbirdSchema(const FileName: String): Boolean;
 var
   F: TextFile;
   Header: String;
-  Cols: TStringList;
+  Cols, SchemaCols: TStringList;
   i: Integer;
 begin
   Result := False;
@@ -266,18 +266,22 @@ begin
   AssignFile(F, FileName, CP_UTF8);  // open file with UTF8 encoding
   Reset(F);
   try
+    SchemaCols := TStringList.Create;
+    SchemaCols.Delimiter := ',';
+    SchemaCols.StrictDelimiter := True;
+    SchemaCols.DelimitedText := EBIRD_SCHEMA;
     ReadLn(F, Header);
     Cols := TStringList.Create;
     Cols.Delimiter := ',';
     Cols.StrictDelimiter := True;
     Cols.DelimitedText := Header;
     try
-      for i := Low(EBIRD_SCHEMA) to High(EBIRD_SCHEMA) do
+      for i := 0 to SchemaCols.Count - 1 do
       begin
-        if Cols.IndexOf(EBIRD_SCHEMA[i]) = -1 then
+        if Cols.IndexOf(SchemaCols[i]) = -1 then
         begin
-          LogError(Format('Required column "%s" not found', [EBIRD_SCHEMA[i]]));
-          MsgDlg(rsTitleValidateSchema, Format(rsRequiredColumnNotFound, []), mtError);
+          LogError(Format('Required column "%s" not found', [SchemaCols[i]]));
+          MsgDlg(rsTitleValidateSchema, Format(rsRequiredColumnNotFound, [SchemaCols[i]]), mtError);
           Exit;
         end;
       end;
@@ -285,6 +289,7 @@ begin
       LogDebug('CSV header is valid for eBird schema.');
     finally
       Cols.Free;
+      SchemaCols.Free;
     end;
   finally
     CloseFile(F);
