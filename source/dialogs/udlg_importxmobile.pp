@@ -1219,7 +1219,7 @@ var
   Species: TMobileSpecies;
   aRepo: TSightingRepository;
   aSighting, aOldSighting: TSighting;
-  aTaxonId, aObserverId: Integer;
+  aTaxonId, aObserverId, aLocalityId: Integer;
 begin
   if Inventory.FSpeciesList.Count > 0 then
   begin
@@ -1232,6 +1232,7 @@ begin
         aSighting.Clear;
         aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Species.FSpeciesName);
         aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+        aLocalityId := GetSiteKey(Inventory.FLocalityName);
 
         aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, aObserverId, aSighting);
         if aSighting.Id > 0 then
@@ -1242,6 +1243,7 @@ begin
           aRepo.GetById(aSighting.Id, aOldSighting);
           try
             Species.ToSighting(aSighting);
+            aSighting.LocalityId := aLocalityId;
             aSighting.ObserverId := aObserverId;
             if aSighting.SightingDate = NullDate then
               aSighting.SightingDate := Inventory.FStartTime;
@@ -1257,6 +1259,7 @@ begin
           // if sighting does not exist, insert it
           Species.ToSighting(aSighting);
           aSighting.SurveyId := Inventory.FSurveyKey;
+          aSighting.LocalityId := aLocalityId;
           aSighting.ObserverId := aObserverId;
           if aSighting.SightingDate = NullDate then
             aSighting.SightingDate := Inventory.FStartTime;
