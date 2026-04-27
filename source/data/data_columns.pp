@@ -541,6 +541,8 @@ resourcestring
     ACategoryField: String; AMetrics: TSummaryMetricSet);
   procedure BuildGroupStatsMeasure(aDataSet: TSQLQuery; const aWhereText, AGroupField, AValueField: String;
     AMetrics: TSummaryMetricSet);
+  procedure BuildStatsMeasure(aDataSet: TSQLQuery; const aWhereText, AValueField: String;
+    AMetrics: TSummaryMetricSet);
 
   procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
   procedure SaveFieldsSettings(aDataSet: TDataSet; const aFileName: String);
@@ -787,6 +789,51 @@ begin
   aDataSet.SQL.Add('WHERE ' + AValueField + ' IS NOT NULL');
   aDataSet.SQL.Add('GROUP BY ' + AGroupField);
   aDataSet.SQL.Add('ORDER BY ' + AGroupField + ' ASC');
+end;
+
+{ Builds a SELECT returning a single row of descriptive statistics for a numeric
+  field across all rows in aWhereText (no grouping by another column).
+  AValueField : the numeric column being measured
+  AMetrics    : which statistics to include
+
+  NOTE: smMedian, smQuartiles, smMode are NOT supported by SQLite natively
+  and require a custom aggregate extension — they are silently omitted here.
+}
+procedure BuildStatsMeasure(aDataSet: TSQLQuery;
+  const aWhereText, AValueField: String;
+  AMetrics: TSummaryMetricSet);
+var
+  SelectCols: String;
+  V, V2: String;
+begin
+  V  := AValueField;
+  V2 := V + ' * ' + V;
+
+  SelectCols := 'COUNT(' + V + ') AS tally';
+
+  if smMean in AMetrics then
+    SelectCols := SelectCols +
+      ', ROUND(AVG(' + V + '), 4) AS mean';
+
+  if smMin in AMetrics then
+    SelectCols := SelectCols +
+      ', MIN(' + V + ') AS min_val';
+
+  if smMax in AMetrics then
+    SelectCols := SelectCols +
+      ', MAX(' + V + ') AS max_val';
+
+  if smStdDev in AMetrics then
+    SelectCols := SelectCols +
+      ', ROUND(SQRT(MAX(AVG(' + V2 + ') - AVG(' + V + ') * AVG(' + V + '), 0)), 4) AS std_dev';
+
+  if smStdErr in AMetrics then
+    SelectCols := SelectCols +
+      ', ROUND(SQRT(MAX(AVG(' + V2 + ') - AVG(' + V + ') * AVG(' + V + '), 0)) / SQRT(COUNT(' + V + ')), 4) AS std_err';
+
+  aDataSet.SQL.Add('SELECT ' + SelectCols);
+  aDataSet.SQL.Add('FROM (' + aWhereText + ')');
+  aDataSet.SQL.Add('WHERE ' + V + ' IS NOT NULL');
 end;
 
 procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
@@ -3804,280 +3851,410 @@ begin
 end;
 
 procedure SummaryEggs(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+var
+  Tbl: TTableSchema;
+  F: TFieldSchema;
+  GroupExpr: String;
 begin
   with aDataSet, SQL do
   begin
     Close;
-
     Clear;
 
-    case aFieldName of
-      'full_name', 'egg_id', 'field_number', 'active_status', 'insert_date', 'update_date', 'egg_seq',
-      'user_inserted', 'user_updated':
-      begin
-        Clear;
-      end;
+    if aWhereText = '' then
+      Exit;
 
-      'egg_shape', 'eggshell_color', 'eggshell_pattern', 'eggshell_texture', 'egg_stage', 'measure_date':
-      begin
-        Add('SELECT %afield AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    Tbl := nil;
+    if Assigned(DBSchema) then
+      Tbl := DBSchema.GetTable(tbEggs);
+    if not Assigned(Tbl) then
+      Exit;
 
-      'egg_width', 'egg_length', 'egg_mass', 'egg_volume':
-      begin
-        Add('SELECT taxon_name AS name, AVG(%afield) AS mean');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY mean DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    F := Tbl.GetField(aFieldName);
+    if not Assigned(F) then
+      Exit;
+    if not F.SummaryEnabled then
+      Exit;
 
-      'nest_id', 'nest_name':
-      begin
-        Add('SELECT nest_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'taxon_id', 'taxon_name':
-      begin
-        Add('SELECT taxon_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'individual_id', 'individual_name':
-      begin
-        Add('SELECT individual_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'observer_id', 'observer_name':
-      begin
-        Add('SELECT observer_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
+    GroupExpr := F.GroupingField;
+    if GroupExpr = '' then
+      GroupExpr := F.Name;
 
-      'marked_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'exported_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'egg_hatched':
-      begin
-        Add('SELECT ' + QuotedStr(rscHatched) + ' AS name, SUM(egg_hatched) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'host_egg':
-      begin
-        Add('SELECT ' + QuotedStr(rscHostEgg) + ' AS name, SUM(host_egg) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-
-      'notes':
-      begin
-        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('WHERE ((notes != '''') OR (notes NOTNULL))');
-        Add('ORDER BY tally DESC');
-      end;
-      'description':
-      begin
-        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('WHERE ((description != '''') OR (description NOTNULL))');
-        Add('ORDER BY tally DESC');
-      end;
+    case F.SummaryKind of
+      skCount:
+        BuildCountGrouped(aDataSet, aWhereText, GroupExpr, GroupExpr);
+      skSum:
+        BuildBooleanSum(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skCountNotNull:
+        BuildCountNotNull(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skGroupStats:
+        BuildGroupStatsMeasure(aDataSet, aWhereText, GroupExpr, F.Name, F.SummaryMetrics);
+    else
+      Clear;
     end;
 
     if SQL.Count > 0 then
-    begin
-
       Open;
-    end;
   end;
+  //with aDataSet, SQL do
+  //begin
+  //  Close;
+  //
+  //  Clear;
+  //
+  //  case aFieldName of
+  //    'full_name', 'egg_id', 'field_number', 'active_status', 'insert_date', 'update_date', 'egg_seq',
+  //    'user_inserted', 'user_updated':
+  //    begin
+  //      Clear;
+  //    end;
+  //
+  //    'egg_shape', 'eggshell_color', 'eggshell_pattern', 'eggshell_texture', 'egg_stage', 'measure_date':
+  //    begin
+  //      Add('SELECT %afield AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'egg_width', 'egg_length', 'egg_mass', 'egg_volume':
+  //    begin
+  //      Add('SELECT taxon_name AS name, AVG(%afield) AS mean');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY mean DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'nest_id', 'nest_name':
+  //    begin
+  //      Add('SELECT nest_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'taxon_id', 'taxon_name':
+  //    begin
+  //      Add('SELECT taxon_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'individual_id', 'individual_name':
+  //    begin
+  //      Add('SELECT individual_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'observer_id', 'observer_name':
+  //    begin
+  //      Add('SELECT observer_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'marked_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'exported_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'egg_hatched':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscHatched) + ' AS name, SUM(egg_hatched) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'host_egg':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscHostEgg) + ' AS name, SUM(host_egg) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'notes':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('WHERE ((notes != '''') OR (notes NOTNULL))');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'description':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('WHERE ((description != '''') OR (description NOTNULL))');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //  end;
+  //
+  //  if SQL.Count > 0 then
+  //  begin
+  //
+  //    Open;
+  //  end;
+  //end;
 end;
 
 procedure SummaryExpeditions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+var
+  Tbl: TTableSchema;
+  F: TFieldSchema;
+  GroupExpr: String;
 begin
   with aDataSet, SQL do
   begin
     Close;
-
     Clear;
 
-    case aFieldName of
-      'expedition_name', 'expedition_id', 'active_status', 'insert_date', 'update_date',
-      'user_inserted', 'user_updated':
-      begin
-        Clear;
-      end;
+    if aWhereText = '' then
+      Exit;
 
-      'start_date', 'end_date':
-      begin
-        Add('SELECT %afield AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    Tbl := nil;
+    if Assigned(DBSchema) then
+      Tbl := DBSchema.GetTable(tbExpeditions);
+    if not Assigned(Tbl) then
+      Exit;
 
-      'duration':
-      begin
-        Add('SELECT ' + QuotedStr(rscDurationDays) + ' AS name, AVG(%afield) AS mean');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY mean DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    F := Tbl.GetField(aFieldName);
+    if not Assigned(F) then
+      Exit;
+    if not F.SummaryEnabled then
+      Exit;
 
-      'project_id', 'project_name':
-      begin
-        Add('SELECT project_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
+    GroupExpr := F.GroupingField;
+    if GroupExpr = '' then
+      GroupExpr := F.Name;
 
-      'marked_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'exported_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-
-      'description':
-      begin
-        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('WHERE ((description != '''') OR (description NOTNULL))');
-        Add('ORDER BY tally DESC');
-      end;
+    case F.SummaryKind of
+      skCount:
+        BuildCountGrouped(aDataSet, aWhereText, GroupExpr, GroupExpr);
+      skSum:
+        BuildBooleanSum(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skCountNotNull:
+        BuildCountNotNull(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skStats:
+        BuildStatsMeasure(aDataSet, aWhereText, F.Name, F.SummaryMetrics);
+    else
+      Clear;
     end;
 
     if SQL.Count > 0 then
-    begin
-
       Open;
-    end;
   end;
+  //with aDataSet, SQL do
+  //begin
+  //  Close;
+  //
+  //  Clear;
+  //
+  //  case aFieldName of
+  //    'expedition_name', 'expedition_id', 'active_status', 'insert_date', 'update_date',
+  //    'user_inserted', 'user_updated':
+  //    begin
+  //      Clear;
+  //    end;
+  //
+  //    'start_date', 'end_date':
+  //    begin
+  //      Add('SELECT %afield AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'duration':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscDurationDays) + ' AS name, AVG(%afield) AS mean');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY mean DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'project_id', 'project_name':
+  //    begin
+  //      Add('SELECT project_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'marked_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'exported_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'description':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('WHERE ((description != '''') OR (description NOTNULL))');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //  end;
+  //
+  //  if SQL.Count > 0 then
+  //  begin
+  //
+  //    Open;
+  //  end;
+  //end;
 end;
 
 procedure SummaryGazetteer(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+var
+  Tbl: TTableSchema;
+  F: TFieldSchema;
+  GroupExpr: String;
 begin
   with aDataSet, SQL do
   begin
     Close;
-
     Clear;
 
-    case aFieldName of
-      'full_name', 'site_id', 'abbreviation', 'active_status', 'insert_date', 'update_date', 'altitude',
-      'user_inserted', 'user_updated', 'longitude', 'latitude', 'ebird_name':
-      begin
-        Clear;
-      end;
+    if aWhereText = '' then
+      Exit;
 
-      'site_rank', 'language':
-      begin
-        Add('SELECT %afield AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    Tbl := nil;
+    if Assigned(DBSchema) then
+      Tbl := DBSchema.GetTable(tbGazetteer);
+    if not Assigned(Tbl) then
+      Exit;
 
-      'parent_site_id', 'parent_site_name':
-      begin
-        Add('SELECT parent_site_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
+    F := Tbl.GetField(aFieldName);
+    if not Assigned(F) then
+      Exit;
+    if not F.SummaryEnabled then
+      Exit;
 
-      'country_id', 'state_id', 'municipality_id':
-      begin
-        Add('SELECT g1.site_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('JOIN gazetteer AS g1 ON %afield = g1.site_id');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
-      'country_name', 'state_name', 'municipality_name':
-      begin
-        Add('SELECT %afield AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    GroupExpr := F.GroupingField;
+    if GroupExpr = '' then
+      GroupExpr := F.Name;
 
-      'marked_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'exported_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-
-      'notes':
-      begin
-        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('WHERE ((notes != '''') OR (notes NOTNULL))');
-        Add('ORDER BY tally DESC');
-      end;
-      'description':
-      begin
-        Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('WHERE ((description != '''') OR (description NOTNULL))');
-        Add('ORDER BY tally DESC');
-      end;
+    case F.SummaryKind of
+      skCount:
+        BuildCountGrouped(aDataSet, aWhereText, GroupExpr, GroupExpr);
+      skSum:
+        BuildBooleanSum(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skCountNotNull:
+        BuildCountNotNull(aDataSet, aWhereText, F.Name, F.DisplayName);
+    else
+      Clear;
     end;
 
     if SQL.Count > 0 then
-    begin
-
       Open;
-    end;
   end;
+  //with aDataSet, SQL do
+  //begin
+  //  Close;
+  //
+  //  Clear;
+  //
+  //  case aFieldName of
+  //    'full_name', 'site_id', 'site_name', 'abbreviation', 'active_status', 'insert_date', 'update_date', 'altitude',
+  //    'user_inserted', 'user_updated', 'longitude', 'latitude', 'ebird_name':
+  //    begin
+  //      Clear;
+  //    end;
+  //
+  //    'site_rank', 'language':
+  //    begin
+  //      Add('SELECT %afield AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'parent_site_id', 'parent_site_name':
+  //    begin
+  //      Add('SELECT parent_site_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'country_id', 'state_id', 'municipality_id':
+  //    begin
+  //      Add('SELECT g1.site_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('JOIN gazetteer AS g1 ON %afield = g1.site_id');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //    'country_name', 'state_name', 'municipality_name':
+  //    begin
+  //      Add('SELECT %afield AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'marked_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'exported_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'notes':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('WHERE ((notes != '''') OR (notes NOTNULL))');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'description':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscDescription) + ' AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('WHERE ((description != '''') OR (description NOTNULL))');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //  end;
+  //
+  //  if SQL.Count > 0 then
+  //  begin
+  //
+  //    Open;
+  //  end;
+  //end;
 end;
 
 procedure SummaryIndividuals(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
@@ -4758,148 +4935,192 @@ begin
 end;
 
 procedure SummaryFeathers(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+var
+  Tbl: TTableSchema;
+  F: TFieldSchema;
+  GroupExpr: String;
 begin
   with aDataSet, SQL do
   begin
     Close;
-
     Clear;
 
-    case aFieldName of
-      'full_name', 'feather_id', 'active_status', 'insert_date', 'update_date',
-      'user_inserted', 'user_updated':
-      begin
-        Clear;
-      end;
+    if aWhereText = '' then
+      Exit;
 
-      'sample_date', 'sample_time':
-      begin
-        Add('SELECT %afield AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    Tbl := nil;
+    if Assigned(DBSchema) then
+      Tbl := DBSchema.GetTable(tbFeathers);
+    if not Assigned(Tbl) then
+      Exit;
 
-      'taxon_id', 'taxon_name':
-      begin
-        Add('SELECT taxon_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'locality_id', 'locality_name':
-      begin
-        Add('SELECT locality_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'individual_id', 'individual_name':
-      begin
-        Add('SELECT individual_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'capture_id', 'capture_name':
-      begin
-        Add('SELECT capture_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'sighting_id', 'sighting_name':
-      begin
-        Add('SELECT sighting_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'observer_id', 'observer_name':
-      begin
-        Add('SELECT observer_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
+    F := Tbl.GetField(aFieldName);
+    if not Assigned(F) then
+      Exit;
+    if not F.SummaryEnabled then
+      Exit;
 
-      'country_id', 'state_id', 'municipality_id':
-      begin
-        Add('SELECT g.site_name AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('JOIN gazetteer AS g ON %afield = g.site_id');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
-      'country_name', 'state_name', 'municipality_name':
-      begin
-        Add('SELECT %afield AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
+    GroupExpr := F.GroupingField;
+    if GroupExpr = '' then
+      GroupExpr := F.Name;
 
-      'source_type', 'symmetrical', 'feather_trait', 'body_side', 'feather_age':
-      begin
-        Add('SELECT %afield AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
-
-      'feather_number':
-      begin
-        Add('SELECT feather_trait AS name, feather_number AS number, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name, number');
-        Add('ORDER BY tally DESC');
-        //MacroByName('AFIELD').Value := aFieldName;
-      end;
-
-      'grown_percent', 'feather_length', 'feather_area', 'feather_mass', 'rachis_width', 'growth_bar_width',
-        'barb_density':
-      begin
-        Add('SELECT taxon_name AS name, AVG(%afield) AS mean');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY mean DESC');
-        MacroByName('AFIELD').Value := aFieldName;
-      end;
-
-      'marked_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-      'exported_status':
-      begin
-        Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('GROUP BY name');
-        Add('ORDER BY tally DESC');
-      end;
-
-      'notes':
-      begin
-        Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
-        Add('FROM (' + aWhereText + ')');
-        Add('WHERE ((notes != '''') OR (notes NOTNULL))');
-        Add('ORDER BY tally DESC');
-      end;
+    case F.SummaryKind of
+      skCount:
+        BuildCountGrouped(aDataSet, aWhereText, GroupExpr, GroupExpr);
+      skSum:
+        BuildBooleanSum(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skCountNotNull:
+        BuildCountNotNull(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skGroupStats:
+        BuildGroupStatsMeasure(aDataSet, aWhereText, GroupExpr, F.Name, F.SummaryMetrics);
+    else
+      Clear;
     end;
 
     if SQL.Count > 0 then
-    begin
-
       Open;
-    end;
   end;
+  //with aDataSet, SQL do
+  //begin
+  //  Close;
+  //
+  //  Clear;
+  //
+  //  case aFieldName of
+  //    'full_name', 'feather_id', 'active_status', 'insert_date', 'update_date',
+  //    'user_inserted', 'user_updated':
+  //    begin
+  //      Clear;
+  //    end;
+  //
+  //    'sample_date', 'sample_time':
+  //    begin
+  //      Add('SELECT %afield AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'taxon_id', 'taxon_name':
+  //    begin
+  //      Add('SELECT taxon_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'locality_id', 'locality_name':
+  //    begin
+  //      Add('SELECT locality_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'individual_id', 'individual_name':
+  //    begin
+  //      Add('SELECT individual_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'capture_id', 'capture_name':
+  //    begin
+  //      Add('SELECT capture_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'sighting_id', 'sighting_name':
+  //    begin
+  //      Add('SELECT sighting_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'observer_id', 'observer_name':
+  //    begin
+  //      Add('SELECT observer_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'country_id', 'state_id', 'municipality_id':
+  //    begin
+  //      Add('SELECT g.site_name AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('JOIN gazetteer AS g ON %afield = g.site_id');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //    'country_name', 'state_name', 'municipality_name':
+  //    begin
+  //      Add('SELECT %afield AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'source_type', 'symmetrical', 'feather_trait', 'body_side', 'feather_age':
+  //    begin
+  //      Add('SELECT %afield AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'feather_number':
+  //    begin
+  //      Add('SELECT feather_trait AS name, feather_number AS number, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name, number');
+  //      Add('ORDER BY tally DESC');
+  //      //MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'grown_percent', 'feather_length', 'feather_area', 'feather_mass', 'rachis_width', 'growth_bar_width',
+  //      'barb_density':
+  //    begin
+  //      Add('SELECT taxon_name AS name, AVG(%afield) AS mean');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY mean DESC');
+  //      MacroByName('AFIELD').Value := aFieldName;
+  //    end;
+  //
+  //    'marked_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscMarkedStatus) + ' AS name, SUM(marked_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //    'exported_status':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscExportedStatus) + ' AS name, SUM(exported_status) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('GROUP BY name');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //
+  //    'notes':
+  //    begin
+  //      Add('SELECT ' + QuotedStr(rscNotes) + ' AS name, COUNT(*) AS tally');
+  //      Add('FROM (' + aWhereText + ')');
+  //      Add('WHERE ((notes != '''') OR (notes NOTNULL))');
+  //      Add('ORDER BY tally DESC');
+  //    end;
+  //  end;
+  //
+  //  if SQL.Count > 0 then
+  //  begin
+  //
+  //    Open;
+  //  end;
+  //end;
 end;
 
 procedure SummaryMethods(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);

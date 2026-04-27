@@ -1667,6 +1667,7 @@ begin
   // ID
   AddField(T, 'egg_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Nest ID
   AddField(T, 'nest_id', rscNestID, sdtInteger, False, 0, False, True, tbNests);
   T.Fields.Last.Aliases.CommaText := NEST_ALIASES;
@@ -1674,6 +1675,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_NEST_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
   // Nest
   AddField(T, 'nest_name', rscNest, sdtText, False, 0, False, False, tbNests);
   T.Fields.Last.ExportName := 'nest';
@@ -1684,19 +1688,27 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
   // Field number
   AddField(T, 'field_number', rscFieldNumber, sdtText, False, 20);
   T.Fields.Last.Aliases.CommaText := FIELD_NUMBER_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Egg sequence
   AddField(T, 'egg_seq', rscEggNumber, sdtInteger, True);
   T.Fields.Last.ExportName := 'egg_number';
   T.Fields.Last.Aliases.CommaText := 'number,egg number,egg nr.,número,número do ovo,nº do ovo';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Measure date
   AddField(T, 'measure_date', rscDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES + ',measure date,measurement date,data da medição';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MEASURE_DATE;
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger, False, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -1704,6 +1716,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, False, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
@@ -1714,11 +1729,17 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Host egg
   AddField(T, 'host_egg', rscHostEgg, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.Aliases.CommaText := 'host egg,ovo do hospedeiro';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscHostEgg;
   // Observer ID
   // renamed "researcher_id" -> "observer_id" - v2
   AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
@@ -1727,6 +1748,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Observer
   // renamed "researcher_name" -> "observer_name" - v2
   AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
@@ -1738,6 +1762,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Egg shape
   AddField(T, 'egg_shape', rscEggShape, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,S,E,O,P,C,B,Y,L';
@@ -1757,12 +1784,18 @@ begin
   T.Fields.Last.Aliases.CommaText := 'shape,formato,egg shape,formato do ovo';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Stage
   AddField(T, 'egg_stage', rscStage, sdtText, False, 5);
   T.Fields.Last.Aliases.CommaText := 'stage,estágio,egg stage,estágio do ovo';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Eggshell color
   AddField(T, 'eggshell_color', rscEggshellColor, sdtText, False, 40);
   T.Fields.Last.Aliases.CommaText := COLOR_ALIASES + ',eggshell color,cor da casca';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Eggshell pattern
   AddField(T, 'eggshell_pattern', rscEggshellPattern, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,P,B,S,T,W,PS,BS';
@@ -1781,6 +1814,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'pattern,padrão,eggshell pattern,padrão da casca';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Eggshell texture
   AddField(T, 'eggshell_texture', rscEggshellTexture, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,C,S,G,P';
@@ -1796,32 +1831,49 @@ begin
   T.Fields.Last.Aliases.CommaText := 'texture,textura,eggshell texture,textura da casca';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Width
   AddField(T, 'egg_width', rscWidth, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'width,largura,egg width,largura do ovo';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Length
   AddField(T, 'egg_length', rscLength, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'length,comprimento,egg length,comprimento do ovo';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Mass
   AddField(T, 'egg_mass', rscMass, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'mass,weight,massa,peso,egg mass,egg weight,massa do ovo,peso do ovo';
   T.Fields.Last.MeasurementUnit := 'g';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Volume
   AddField(T, 'egg_volume', rscVolume, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'volume,egg volume,volume do ovo';
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.MeasurementUnit := 'mm³';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Hatched
   AddField(T, 'egg_hatched', rscHatched, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.Aliases.CommaText := 'hatched,eclodiu,egg hatched,ovo eclodiu';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscHatched;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -1829,6 +1881,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Individual
   AddField(T, 'individual_name', rscIndividual, sdtText, False, 0, False, False, tbIndividuals);
   T.Fields.Last.ExportName := 'individual';
@@ -1839,36 +1892,55 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Description
   AddField(T, 'description', rscDescription, sdtText);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscDescription;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -1887,27 +1959,35 @@ begin
   // ID
   AddField(T, 'expedition_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Expedition name
   AddField(T, 'expedition_name', rscName, sdtText, True, 150);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := 'name,nome,expedition name,nome da expedição';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Start date
   AddField(T, 'start_date', rscStartDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := START_DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // End date
   AddField(T, 'end_date', rscEndDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := END_DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Duration
   AddField(T, 'duration', rscDurationDays, sdtInteger);
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.MeasurementUnit := rsUnitDays;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -1915,6 +1995,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Project
   AddField(T, 'project_name', rscProject, sdtText, False, 0, False, False, tbProjects);
   T.Fields.Last.ExportName := 'project';
@@ -1925,29 +2008,46 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Description
   AddField(T, 'description', rscDescription, sdtText);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscDescription;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -1966,16 +2066,21 @@ begin
   // ID
   AddField(T, 'feather_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Sample date
   AddField(T, 'sample_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Sample time
   AddField(T, 'sample_time', rscTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := TIME_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger, True, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -1983,6 +2088,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
@@ -1993,6 +2101,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -2000,6 +2111,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Locality
   AddField(T, 'locality_name', rscLocality, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'locality';
@@ -2010,6 +2124,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -2017,6 +2134,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Capture ID
   AddField(T, 'capture_id', rscCaptureID, sdtInteger, False, 0, False, True, tbCaptures);
   T.Fields.Last.Aliases.CommaText := CAPTURE_ALIASES;
@@ -2024,6 +2142,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_CAPTURE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Sighting ID
   AddField(T, 'sighting_id', rscSightingID, sdtInteger, False, 0, False, True, tbSightings);
   T.Fields.Last.Aliases.CommaText := SIGHTING_ALIASES;
@@ -2031,6 +2150,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SIGHTING_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Observer ID
   AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -2038,6 +2158,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Observer
   AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'observer';
@@ -2048,6 +2171,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Source
   AddField(T, 'source_type', rscSource, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,C,S,P';
@@ -2062,6 +2188,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'type,tipo,source type,tipo de origem,source,origem';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Symmetry
   AddField(T, 'symmetrical', rscSymmetry, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,S,A';
@@ -2075,6 +2203,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'symmetry,simetria';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Feather trait
   AddField(T, 'feather_trait', rscFeatherTrait, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'B,P,S,R,PC,GC,MC,LC,CC,AL';
@@ -2095,10 +2225,13 @@ begin
   T.Fields.Last.Aliases.CommaText := 'trait,trato,feather trait,trato de penas';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Feather number
   AddField(T, 'feather_number', rscFeatherNumber, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'number,número,feather number,feather nr.,número da pena,nº da pena';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Body side
   AddField(T, 'body_side', rscBodySide, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'NA,R,L';
@@ -2112,6 +2245,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'body side,side,lado do corpo,lado';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Percent grown
   AddField(T, 'grown_percent', rscPercentGrown, sdtFloat);
   T.Fields.Last.ExportName := 'percent_grown';
@@ -2119,30 +2254,51 @@ begin
   T.Fields.Last.Rules.MaxValue := 100;
   T.Fields.Last.Aliases.CommaText := 'percent grown,% grown,% crescida,porcentagem crescida';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Length
   AddField(T, 'feather_length', rscLength, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'length,feather length,comprimento,comprimento da pena';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Area
   AddField(T, 'feather_area', rscArea, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'area,área,feather area,área da pena';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Mass
   AddField(T, 'feather_mass', rscMass, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'mass,weight,feather mass,feather weight,massa,peso,massa da pena,peso da pena';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Rachis width
   AddField(T, 'rachis_width', rscRachisWidth, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'rachis width,largura da raque';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Growth bar width
   AddField(T, 'growth_bar_width', rscGrowthBarWidth, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'growth bar width,largura da barra de crescimento';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Barb density
   AddField(T, 'barb_density', rscBarbDensity, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'barb density,densidade de barbas';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Feather age
   AddField(T, 'feather_age', rscAge, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,N,F,J,A,Y,S,T,4,5';
@@ -2162,32 +2318,49 @@ begin
   T.Fields.Last.Aliases.CommaText := AGE_ALIASES + ',feather age,idade da pena';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 200);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -2206,16 +2379,19 @@ begin
   // ID
   AddField(T, 'site_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Site name
   AddField(T, 'site_name', rscSiteName, sdtText, True, 60);
   T.Fields.Last.Aliases.CommaText := 'site name,local,lugar,nome,nome do local,place,site,place name';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Abbreviation
   // renamed "site_acronym" -> "abbreviation" - v2
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, False, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Type
   AddField(T, 'site_rank', rscType, sdtList, True, 1);
   T.Fields.Last.Rules.ValueList := 'P,E,R,M,D,L';
@@ -2232,6 +2408,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'rank,tipo,nivel,nível,site type,level';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -2241,6 +2419,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -2250,10 +2429,12 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Altitude
   AddField(T, 'altitude', rscAltitude, sdtFloat);
   T.Fields.Last.Aliases.CommaText := ALTITUDE_ALIASES;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Parent toponym ID
   AddField(T, 'parent_site_id', rscParentSiteID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := 'parent,site parent,parent id,local pai,topônimo pai';
@@ -2261,6 +2442,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PARENT_SITE_NAME;
   // Parent toponym
   AddField(T, 'parent_site_name', rscParentSite, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'parent_site';
@@ -2271,6 +2455,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PARENT_SITE_NAME;
   // Country ID
   AddField(T, 'country_id', rscCountryID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := COUNTRY_ALIASES;
@@ -2278,6 +2465,22 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COUNTRY_NAME;
+  // Country
+  AddField(T, 'country_name', rscCountry, sdtText, False, 0, False, False, tbGazetteer);
+  T.Fields.Last.LookupInfo.LookupField := COL_COUNTRY_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COUNTRY_NAME;
   // State ID
   AddField(T, 'state_id', rscStateID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := STATE_ALIASES;
@@ -2285,6 +2488,22 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_STATE_NAME;
+  // State
+  AddField(T, 'state_name', rscState, sdtText, False, 0, False, False, tbGazetteer);
+  T.Fields.Last.LookupInfo.LookupField := COL_STATE_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_STATE_NAME;
   // Municipality ID
   AddField(T, 'municipality_id', rscMunicipalityID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := MUNICIPALITY_ALIASES;
@@ -2292,46 +2511,83 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MUNICIPALITY_NAME;
+  // Municipality
+  AddField(T, 'municipality_name', rscMunicipality, sdtText, False, 0, False, False, tbGazetteer);
+  T.Fields.Last.LookupInfo.LookupField := COL_MUNICIPALITY_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MUNICIPALITY_NAME;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, True, 180);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // eBird site name
   AddField(T, 'ebird_name', rscEBirdName, sdtText, False, 150);
   T.Fields.Last.Aliases.CommaText := 'ebird,ebird name,local ebird';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Language
   AddField(T, 'language', rscLanguage, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'lang,idioma,language code';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Description
   AddField(T, 'description', rscDescription, sdtText);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscDescription;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -2555,21 +2811,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -2697,21 +2964,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -2805,21 +3083,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -2872,21 +3161,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -3028,21 +3328,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -3352,21 +3663,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -3538,21 +3860,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -3778,21 +4111,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -3860,21 +4204,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -3960,21 +4315,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4084,21 +4450,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4148,21 +4525,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4239,21 +4627,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4314,21 +4713,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4375,21 +4785,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4486,21 +4907,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4577,21 +5009,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4736,21 +5179,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -4841,21 +5295,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -5138,21 +5603,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -5202,21 +5678,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -5425,21 +5912,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -5657,21 +6155,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -5722,21 +6231,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -5928,21 +6448,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
@@ -6056,21 +6587,32 @@ begin
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
   AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
   AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
 
   DB.Tables.Add(T);
 end;
