@@ -2606,6 +2606,7 @@ begin
   // ID
   AddField(T, 'individual_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger, True, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -2613,6 +2614,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
@@ -2622,6 +2626,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Band ID
   AddField(T, 'band_id', rscBandID, sdtInteger, False, 0, False, True, tbBands);
   T.Fields.Last.Aliases.CommaText := BAND_ALIASES;
@@ -2629,6 +2636,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_BAND_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Band
   AddField(T, 'band_name', rscBand, sdtText, False, 0, False, False, tbBands);
   T.Fields.Last.ExportName := 'band';
@@ -2639,11 +2647,14 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Banding date
   AddField(T, 'banding_date', rscBandingDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := 'banding date,date of banding,data de anilhamento';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Double band ID
   AddField(T, 'double_band_id', rscDoubleBandID, sdtInteger, False, 0, False, True, tbBands);
   T.Fields.Last.Aliases.CommaText := DOUBLE_BAND_ALIASES;
@@ -2651,6 +2662,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_BAND_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Double band
   AddField(T, 'double_band_name', rscDoubleBand, sdtText, False, 0, False, False, tbBands);
   T.Fields.Last.ExportName := 'double_band';
@@ -2660,6 +2672,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Removed band ID
   AddField(T, 'removed_band_id', rscRemovedBandID, sdtInteger, False, 0, False, True, tbBands);
   T.Fields.Last.Aliases.CommaText := REMOVED_BAND_ALIASES;
@@ -2667,6 +2680,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_BAND_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Removed band
   AddField(T, 'removed_band_name', rscRemovedBand, sdtText, False, 0, False, False, tbBands);
   T.Fields.Last.ExportName := 'removed_band';
@@ -2676,29 +2690,40 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Band change date
   AddField(T, 'band_change_date', rscBandChangeDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := 'band change date,data de troca da anilha';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Right tarsus
   // renamed "right_leg_below" -> "right_tarsus" - v2
   AddField(T, 'right_tarsus', rscRightTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TARSUS_ALIASES;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Left tarsus
   // renamed "left_leg_below" -> "left_tarsus" - v2
   AddField(T, 'left_tarsus', rscLeftTarsus, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TARSUS_ALIASES;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Right tibia
   // renamed "right_leg_above" -> "right_tibia" - v2
   AddField(T, 'right_tibia', rscRightTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := RIGHT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Left tibia
   // renamed "left_leg_above" -> "left_tibia" - v2
   AddField(T, 'left_tibia', rscLeftTibia, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := LEFT_TIBIA_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Sex
   AddField(T, 'individual_sex', rscSex, sdtList, False, 1);
   T.Fields.Last.ExportName := 'sex';
@@ -2707,6 +2732,8 @@ begin
   T.Fields.Last.Aliases.CommaText := SEX_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Age
   AddField(T, 'individual_age', rscAge, sdtList, False, 1);
   T.Fields.Last.ExportName := 'age';
@@ -2717,32 +2744,50 @@ begin
   T.Fields.Last.Aliases.CommaText := AGE_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Birth year
   AddField(T, 'birth_year', rscBirthYear, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'birth year,year of birth,ano do nascimento';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Birth month
   AddField(T, 'birth_month', rscBirthMonth, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'birth month,month of birth,mês do nascimento';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Birth day
   AddField(T, 'birth_day', rscBirthDay, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'birth day,day of birth,dia do nascimento';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Birth date
   AddField(T, 'birth_date', rscBirthDate, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := BIRTH_DATE_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Death year
   AddField(T, 'death_year', rscDeathYear, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'death year,year of death,ano do óbito,ano da morte';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Death month
   AddField(T, 'death_month', rscDeathMonth, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'death month,month of death,mês do óbito,mês da morte';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Death day
   AddField(T, 'death_day', rscDeathDay, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'death day,day of death,dia do óbito,dia da morte';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Death date
   AddField(T, 'death_date', rscDeathDate, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := DEATH_DATE_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Nest ID
   AddField(T, 'nest_id', rscNestID, sdtInteger, False, 0, False, True, tbNests);
   T.Fields.Last.Aliases.CommaText := NEST_ALIASES;
@@ -2750,6 +2795,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_NEST_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
   // Nest
   AddField(T, 'nest_name', rscNest, sdtText, False, 0, False, False, tbNests);
   T.Fields.Last.ExportName := 'nest';
@@ -2759,6 +2807,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
   // Father ID
   AddField(T, 'father_id', rscFatherID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := 'father,dad,pai';
@@ -2766,6 +2817,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_FATHER_NAME;
   // Father
   AddField(T, 'father_name', rscFather, sdtText, False, 0, False, False, tbIndividuals);
   T.Fields.Last.ExportName := 'father';
@@ -2775,6 +2829,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_FATHER_NAME;
   // Mother ID
   AddField(T, 'mother_id', rscMotherID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := 'mother,mom,mãe';
@@ -2782,6 +2839,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MOTHER_NAME;
   // Mother
   AddField(T, 'mother_name', rscMother, sdtText, False, 0, False, False, tbIndividuals);
   T.Fields.Last.ExportName := 'mother';
@@ -2791,23 +2851,34 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MOTHER_NAME;
   // Recognizable markings
   AddField(T, 'recognizable_markings', rscRecognizableMarkings, sdtText);
   T.Fields.Last.Aliases.CommaText := 'recognizable markings,marcas reconhecíveis,markings,marcas';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscRecognizableMarkings;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 120);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Formatted name
   AddField(T, 'formatted_name', rscFullNameFormatted, sdtText, False, 150);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -2855,56 +2926,67 @@ begin
   // ID
   AddField(T, 'institution_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, True, 100);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Abbreviation
   // renamed "acronym" -> "abbreviation" - v2
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 15);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Contact person
   AddField(T, 'manager_name', rscContactPerson, sdtText, False, 100);
   T.Fields.Last.ExportName := 'contact_person';
   T.Fields.Last.Aliases.CommaText := 'manager,gerente,administrador,admin,contact,contato';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // E-mail
   AddField(T, 'email_addr', rscEMail, sdtText, False, 60);
   T.Fields.Last.ExportName := 'email';
   T.Fields.Last.Aliases.CommaText := EMAIL_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Phone number
   AddField(T, 'phone_num', rscPhone, sdtText, False, 20);
   T.Fields.Last.ExportName := 'phone';
   T.Fields.Last.Aliases.CommaText := PHONE1_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Postal code
   // renamed "zip_code" -> "postal_code" - v2
   AddField(T, 'postal_code', rscPostalCode, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := POSTAL_CODE_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Address 1
   AddField(T, 'address_1', rscAddress1, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := ADDRESS1_ALIASES;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Address 2
   AddField(T, 'address_2', rscAddress2, sdtText, False, 40);
   T.Fields.Last.Aliases.CommaText := ADDRESS2_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Neighborhood
   AddField(T, 'neighborhood', rscNeighborhood, sdtText, False, 60);
   T.Fields.Last.Aliases.CommaText := NEIGHBORHOOD_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Municipality ID
   AddField(T, 'municipality_id', rscMunicipalityID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := MUNICIPALITY_ALIASES;
@@ -2912,6 +2994,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MUNICIPALITY_NAME;
   // Municipality
   AddField(T, 'municipality_name', rscMunicipality, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'municipality';
@@ -2922,6 +3007,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MUNICIPALITY_NAME;
   // State ID
   AddField(T, 'state_id', rscStateID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := STATE_ALIASES;
@@ -2929,6 +3017,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_STATE_NAME;
   // State
   AddField(T, 'state_name', rscState, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'state';
@@ -2939,6 +3030,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_STATE_NAME;
   // Country ID
   AddField(T, 'country_id', rscCountryID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := COUNTRY_ALIASES;
@@ -2946,6 +3040,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COUNTRY_NAME;
   // Country
   AddField(T, 'country_name', rscCountry, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'country';
@@ -2956,11 +3053,17 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COUNTRY_NAME;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -3011,16 +3114,19 @@ begin
   // ID
   AddField(T, 'method_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Name
   AddField(T, 'method_name', rscName, sdtText, True, 100);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := 'name,nome,method name,nome do método';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Abbreviation
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 20);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Category
   AddField(T, 'category', rscCategory, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'category,categoria,group,grupo';
@@ -3055,31 +3161,47 @@ begin
   finally
     FreeAndNil(Qry);
   end;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // eBird name
   AddField(T, 'ebird_name', rscEBirdName, sdtText, False, 60);
   T.Fields.Last.Aliases.CommaText := 'ebird,ebird name,name on ebird,nome no ebird';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Description
   AddField(T, 'description', rscDescription, sdtText);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount];
+  T.Fields.Last.GroupingField := rscDescription;
   // Recommended uses
   AddField(T, 'recommended_uses', rscRecommendedUses, sdtText);
   T.Fields.Last.Aliases.CommaText := 'recommended uses,usos recomendados';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscRecommendedUses;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Can delete
   AddField(T, 'can_delete', rscCanDelete, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
   T.Fields.Last.Visible := False;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscCanDelete;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -3127,6 +3249,7 @@ begin
   // ID
   AddField(T, 'nest_owner_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Nest ID
   AddField(T, 'nest_id', rscNestID, sdtInteger, True, 0, False, True, tbNests);
   T.Fields.Last.Aliases.CommaText := NEST_ALIASES;
@@ -3134,6 +3257,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_NEST_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Role
   AddField(T, 'role', rscRole, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'U,M,F,H,O';
@@ -3141,6 +3265,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'role,papel,função';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, True, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -3148,6 +3274,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INDIVIDUAL_NAME;
   // Individual
   AddField(T, 'individual_name', rscIndividual, sdtText, True, 0, False, False, tbIndividuals);
   T.Fields.Last.ExportName := 'individual';
@@ -3158,6 +3287,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INDIVIDUAL_NAME;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -3205,6 +3337,7 @@ begin
   // ID
   AddField(T, 'nest_revision_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Nest ID
   AddField(T, 'nest_id', rscNestID, sdtInteger, False, 0, False, True, tbNests);
   T.Fields.Last.Aliases.CommaText := NEST_ALIASES;
@@ -3212,20 +3345,41 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_NEST_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
+  // Nest
+  AddField(T, 'nest_name', rscNest, sdtText, True, 0, False, False, tbNests);
+  T.Fields.Last.ExportName := 'nest';
+  T.Fields.Last.LookupInfo.LookupField := COL_NEST_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_NEST_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Revision date
   AddField(T, 'revision_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES + ',revision date,data da revisão';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Revision time
   AddField(T, 'revision_time', rscTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := TIME_ALIASES + ',revision time,hora da revisão,horário da revisão';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Observer 1 ID
   AddField(T, 'observer_1_id', rscObserver1ID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES + ',observer 1,observador 1';
@@ -3233,6 +3387,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_1_NAME;
   // Observer 1
   AddField(T, 'observer_1_name', rscObserver1, sdtText, False, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'observer_1';
@@ -3243,6 +3400,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_1_NAME;
   // Observer 2 ID
   AddField(T, 'observer_2_id', rscObserver2ID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := 'observer 2,observador 2';
@@ -3250,6 +3410,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_2_NAME;
   // Observer 2
   AddField(T, 'observer_2_name', rscObserver2, sdtText, False, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'observer_2';
@@ -3260,6 +3423,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_2_NAME;
   // Nest stage
   AddField(T, 'nest_stage', rscNestStage, sdtList, False, 1);
   T.Fields.Last.Rules.ValueList := 'U,X,C,L,I,H,N';
@@ -3268,6 +3434,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'stage,estágio,etapa,fase,phase,nest phase,fase do ninho,nest stage,estágio do ninho';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Status
   AddField(T, 'nest_status', rscStatus, sdtList, False, 1);
   T.Fields.Last.Rules.ValueList := 'U,I,A';
@@ -3275,17 +3443,28 @@ begin
   T.Fields.Last.Aliases.CommaText := STATUS_ALIASES + ',nest status,estado do ninho,situação do ninho,status do ninho';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Host eggs
   AddField(T, 'host_eggs_tally', rscEggsHost, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'eggs,eggs quantity,eggs quant,# eggs,ovos,quantidade de ovos,quant de ovos,' +
     '# ovos,host eggs,ovos do hospedeiro,# host eggs,# ovos do hospedeiro';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
+  { #todo : Summary stats for host eggs and nestlings counts in nest revisions }
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Host nestlings
   AddField(T, 'host_nestlings_tally', rscNestlingsHost, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'nestlings,nestlings quantity,nestlings quant,# nestlings,ninhegos,' +
     'quantidade de ninhegos,quant de ninhegos,# ninhegos,host nestlings,ninhegos do hospedeiro,' +
     '# host nestlings,# ninhegos do hospedeiro';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Nidoparasite ID
   AddField(T, 'nidoparasite_id', rscNidoparasiteID, sdtInteger, False, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := 'nidoparasite,nidoparasita,parasite,parasita,parasita de ninhos';
@@ -3293,6 +3472,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NIDOPARASITE_NAME;
   // Nidoparasite
   AddField(T, 'nidoparasite_name', rscNidoparasite, sdtText, False, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'nidoparasite_taxon';
@@ -3303,28 +3485,43 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NIDOPARASITE_NAME;
   // Nidoparasite eggs
   AddField(T, 'nidoparasite_eggs_tally', rscEggsNidoparasite, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'nidoparasite eggs,parasite eggs,# nidoparasite eggs,# parasite eggs,' +
     'ovos do nidoparasita,ovos do parasita,# ovos do nidoparasita,# ovos do parasita';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_NIDOPARASITE_NAME;
   // Nidoparasite nestlings
   AddField(T, 'nidoparasite_nestlings_tally', rscNestlingsNidoparasite, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'nidoparasite nestlings,parasite nestlings,ninhegos do nidoparasita,' +
     'ninhegos do parasita,# nidoparasite nestlings,# parasite nestlings,# ninhegos do nidoparasita,' +
     '# ninhegos do parasita';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_NIDOPARASITE_NAME;
   // Parasitized by Philornis larvae
   AddField(T, 'have_philornis_larvae', rscHasPhilornisLarvae, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'philornis larvae,larvas de philornis,has philornis larvae,tem larvas de philornis,' +
     'botfly larvae,has botfly larvae,bernes,tem bernes,tem larvas,com larvas';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscHasPhilornisLarvae;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -3372,6 +3569,7 @@ begin
   // ID
   AddField(T, 'nest_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger, True, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -3379,6 +3577,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
@@ -3389,10 +3590,14 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Field number
   AddField(T, 'field_number', rscFieldNumber, sdtText, True, 20);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := FIELD_NUMBER_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Fate
   AddField(T, 'nest_fate', rscNestFate, sdtList, False, 1);
   T.Fields.Last.Rules.ValueList := 'U,L,S';
@@ -3400,6 +3605,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'fate,nest fate,destino,destino do ninho';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Loss cause
   AddField(T, 'loss_cause', rscLossCause, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'PRE,PAR,DIS,WEA,FIR,ABD,POL,HDT,IMN';
@@ -3409,12 +3616,18 @@ begin
   T.Fields.Last.Aliases.CommaText := 'loss cause,causa da perda,motivo da perda';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Nest encounter date
   AddField(T, 'found_date', rscFoundDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES + ',found date,data do encontro';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Last date
   AddField(T, 'last_date', rscLastDateActive, sdtDate);
   T.Fields.Last.Aliases.CommaText := 'last active date,último dia ativo,last date,última data';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -3422,6 +3635,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Project
   AddField(T, 'project_name', rscProject, sdtText, False, 0, False, False, tbProjects);
   T.Fields.Last.ExportName := 'project';
@@ -3432,6 +3648,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Observer ID
   AddField(T, 'observer_id', rscObserverID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -3439,6 +3658,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Observer
   AddField(T, 'observer_name', rscObserver, sdtText, True, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'observer';
@@ -3449,6 +3671,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, True, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -3456,6 +3681,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Locality
   AddField(T, 'locality_name', rscLocality, sdtText, True, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'locality';
@@ -3466,6 +3694,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -3475,6 +3706,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -3484,6 +3716,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -3493,15 +3726,23 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Nest description
   AddField(T, 'description', rscDescription, sdtText);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscDescription;
   // Productivity
   AddField(T, 'nest_productivity', rscNestProductivity, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'productivity,nest productivity,produtividade,produtividade do ninho';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Nest shape
   AddField(T, 'nest_shape', rscShape, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'SC,CP,PT,SP,PD,PL,MN,BR,CV';
@@ -3511,6 +3752,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'shape,nest shape,formato,forma,formato do ninho,forma do ninho,type,tipo';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Support type
   AddField(T, 'support_type', rscSupportType, sdtList, False, 10);
   T.Fields.Last.Rules.ValueList := 'G,H,F,L,D,C,R,B,A,O';
@@ -3521,6 +3764,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'support,support type,suporte,tipo de suporte';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Support plant 1 ID
   AddField(T, 'support_plant_1_id', rscSupportPlant1ID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'support plant,support plant 1,planta suporte,planta suporte 1';
@@ -3528,6 +3773,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SUPPORT_PLANT_1_NAME;
   // Support plant 1
   AddField(T, 'support_plant_1_name', rscSupportPlant1, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.ExportName := 'support_plant_1';
@@ -3538,6 +3786,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SUPPORT_PLANT_1_NAME;
   // Support plant 2 ID
   AddField(T, 'support_plant_2_id', rscSupportPlant2ID, sdtInteger, False, 0, False, True, tbBotanicTaxa);
   T.Fields.Last.Aliases.CommaText := 'support plant 2,planta suporte 2';
@@ -3545,6 +3796,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SUPPORT_PLANT_2_NAME;
   // Support plant 2
   AddField(T, 'support_plant_2_name', rscSupportPlant2, sdtText, False, 0, False, False, tbBotanicTaxa);
   T.Fields.Last.ExportName := 'support_plant_2';
@@ -3555,95 +3809,151 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SUPPORT_PLANT_2_NAME;
   // Other support
   AddField(T, 'other_support', rscOtherSupport, sdtText, False, 60);
   T.Fields.Last.Aliases.CommaText := 'other support,outro suporte';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Height at ground level
   AddField(T, 'height_above_ground', rscHeightAboveGround, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'height above ground,altura acima do solo';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Plant height
   AddField(T, 'plant_height', rscPlantHeight, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'plant height,support height,altura da planta,altura do suporte';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Stem thickness (plant)
   AddField(T, 'plant_dbh', rscPlantDBH, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'dbh,plant dbh,diameter at breast height,dap,dap da planta,diâmetro a altura do peito';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Greater plant diameter
   AddField(T, 'plant_max_diameter', rscMaxPlantDiameter, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'maximum plant diameter,max plant diameter,diâmetro máximo da planta';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Lesser plant diameter
   AddField(T, 'plant_min_diameter', rscMinPlantDiameter, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'minimum plant diameter,min plant diameter,diâmetro mínimo da planta';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Days building
   // renamed "construction_days" -> "building_days" - v3
   AddField(T, 'building_days', rscBuildingDays, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'building days,dias de construção';
   T.Fields.Last.MeasurementUnit := rsUnitDays;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Days incubating
   AddField(T, 'incubation_days', rscIncubationDays, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'incubation days,dias de incubação';
   T.Fields.Last.MeasurementUnit := rsUnitDays;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Nestling-days
   AddField(T, 'nestling_days', rscNestlingDays, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'nestling days,dias de ninhego';
   T.Fields.Last.MeasurementUnit := rsUnitDays;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Total active-days
   AddField(T, 'active_days', rscActiveDays, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'active days,dias ativo';
   T.Fields.Last.MeasurementUnit := rsUnitDays;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Lesser internal diameter
   AddField(T, 'internal_min_diameter', rscMinInternalDiameter, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'minimum internal diameter,min internal diameter,diâmetro interno mínimo';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Greater internal diameter
   AddField(T, 'internal_max_diameter', rscMaxInternalDiameter, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'maximum internal diameter,max internal diameter,diâmetro interno máximo';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Lesser external diameter
   AddField(T, 'external_min_diameter', rscMinExternalDiameter, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'minimum external diameter,min external diameter,diâmetro externo mínimo';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Greater external diameter
   AddField(T, 'external_max_diameter', rscMaxExternalDiameter, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'maximum external diameter,max external diameter,diâmetro externo máximo';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Internal height
   AddField(T, 'internal_height', rscInternalHeight, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'internal height,altura interna';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // External height
   AddField(T, 'external_height', rscExternalHeight, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'external height,altura externa';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Distance from plant edge
   AddField(T, 'edge_distance', rscPlantEdgeDistance, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'plant edge distance,support edge distance,distância da borda da planta,distância da borda do suporte';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Distance from plant center
   AddField(T, 'center_distance', rscPlantCenterDistance, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'plant center distance,support center distance,distância do centro da planta,distância do centro do suporte';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Nest cover
   AddField(T, 'nest_cover', rscCover, sdtInteger);
   T.Fields.Last.Rules.MinValue := 0;
@@ -3651,15 +3961,22 @@ begin
   T.Fields.Last.Aliases.CommaText := 'cover,nest cover,% cover,cobertura,cobertura do ninho,% cobertura';
   T.Fields.Last.MeasurementUnit := '%';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -3707,6 +4024,7 @@ begin
   // ID
   AddField(T, 'net_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Survey ID
   AddField(T, 'survey_id', rscSurveyID, sdtInteger, False, 0, False, True, tbSurveys);
   T.Fields.Last.Aliases.CommaText := SURVEY_ALIASES;
@@ -3714,6 +4032,8 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SURVEY_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Sampling plot ID
   AddField(T, 'net_station_id', rscSamplingPlotID, sdtInteger, False, 0, False, True, tbSamplingPlots);
   T.Fields.Last.Aliases.CommaText := SAMPLING_PLOTS_ALIASES;
@@ -3721,6 +4041,8 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SAMPLING_PLOT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Permanent net ID
   AddField(T, 'permanent_net_id', rscPermanentNetID, sdtInteger, False, 0, False, True, tbPermanentNets);
   T.Fields.Last.Aliases.CommaText := 'permanent net,permanent mist net,rede permanente';
@@ -3728,6 +4050,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_NET_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERMANENT_NET_NAME;
   // Permanent net
   AddField(T, 'permanent_net_name', rscPermanentNet, sdtText, False, 0, False, False, tbPermanentNets);
   T.Fields.Last.ExportName := 'permanent_net';
@@ -3738,10 +4063,14 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERMANENT_NET_NAME;
   // Net number
   AddField(T, 'net_number', rscMistnetNr, sdtInteger, True);
   T.Fields.Last.Aliases.CommaText := 'net number,net nr,mist net number,mist net nr,número da rede,nº da rede';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryEnabled := False;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -3751,6 +4080,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -3760,6 +4090,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -3769,94 +4100,120 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Net length
   AddField(T, 'net_length', rscMistnetLengthM, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'length,net length,mist net length,comprimento,comprimento da rede';
   T.Fields.Last.MeasurementUnit := 'm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Net height
   AddField(T, 'net_height', rscMistnetHeightM, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'height,net height,mist net height,altura,altura da rede';
   T.Fields.Last.MeasurementUnit := 'm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Net area
   AddField(T, 'net_area', rscMistnetAreaM, sdtFloat);
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.MeasurementUnit := 'm²';
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Net mesh
   AddField(T, 'net_mesh', rscMistnetMesh, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'mesh,net mesh,mist net mesh,trama,trama da rede';
   T.Fields.Last.MeasurementUnit := 'mm';
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Sample date
   AddField(T, 'sample_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Open time 1
   AddField(T, 'net_open_1', rscOpenTime1, sdtTime, True);
   T.Fields.Last.ExportName := 'open_time_1';
   T.Fields.Last.Aliases.CommaText := 'open time 1,time opened 1,open time,time opened,hora da abertura,hora da abertura 1';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Close time 1
   AddField(T, 'net_close_1', rscCloseTime1, sdtTime, True);
   T.Fields.Last.ExportName := 'close_time_1';
   T.Fields.Last.Aliases.CommaText := 'close time 1,time closed 1,hora do fechamento 1,close time,time closed,hora do fechamento';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Open time 2
   AddField(T, 'net_open_2', rscOpenTime2, sdtTime);
   T.Fields.Last.ExportName := 'open_time_2';
   T.Fields.Last.Aliases.CommaText := 'open time 2,time opened 2,hora da abertura 2';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Close time 2
   AddField(T, 'net_close_2', rscCloseTime2, sdtTime);
   T.Fields.Last.ExportName := 'close_time_2';
   T.Fields.Last.Aliases.CommaText := 'close time 2,time closed 2,hora do fechamento 2';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Open time 3
   AddField(T, 'net_open_3', rscOpenTime3, sdtTime);
   T.Fields.Last.ExportName := 'open_time_3';
   T.Fields.Last.Aliases.CommaText := 'open time 3,time opened 3,hora da abertura 3';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Close time 3
   AddField(T, 'net_close_3', rscCloseTime3, sdtTime);
   T.Fields.Last.ExportName := 'close_time_3';
   T.Fields.Last.Aliases.CommaText := 'close time 3,time closed 3,hora do fechamento 3';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Open time 4
   AddField(T, 'net_open_4', rscOpenTime4, sdtTime);
   T.Fields.Last.ExportName := 'open_time_4';
   T.Fields.Last.Aliases.CommaText := 'open time 4,time opened 4,hora da abertura 4';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Close time 4
   AddField(T, 'net_close_4', rscCloseTime4, sdtTime);
   T.Fields.Last.ExportName := 'close_time_4';
   T.Fields.Last.Aliases.CommaText := 'close time 4,time closed 4,hora do fechamento 4';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Total open time
   AddField(T, 'open_time_total', rscTotalTimeOpenedH, sdtFloat);
   T.Fields.Last.IsVirtual := True;
   T.Fields.Last.MeasurementUnit := 'h';
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 40);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -3904,21 +4261,25 @@ begin
   // ID
   AddField(T, 'person_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, True, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES + ',name,nome';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Citation
   AddField(T, 'citation', rscCitation, sdtText, True, 100);
   T.Fields.Last.Aliases.CommaText := 'citation,citação';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Abbreviation
   // renamed "acronym" -> "abbreviation" - v2
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Treatment
   AddField(T, 'title_treatment', rscTreatment, sdtText, False, 15);
   T.Fields.Last.ExportName := 'treatment';
@@ -3926,22 +4287,30 @@ begin
   T.Fields.Last.Aliases.CommaText := 'treatment,tratamento,title,título';
   T.Fields.Last.DisplayWidth := 150;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Gender
   AddField(T, 'gender', rscGender, sdtText, False, 15);
   T.Fields.Last.PickList.CommaText := rsGenderList;
   T.Fields.Last.Aliases.CommaText := 'gender,gênero';
   T.Fields.Last.DisplayWidth := 150;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Birth date
   AddField(T, 'birth_date', rscBirthDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := BIRTH_DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Death date
   AddField(T, 'death_date', rscDeathDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := DEATH_DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // RG
   // renamed "national_id_card" -> "id_document_1" - v2
   AddField(T, 'id_document_1', rscCPF, sdtText, False, 15);
@@ -3949,6 +4318,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'national id card,rg';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // CPF
   // renamed "social_security_number" -> "id_document_2" - v2
   AddField(T, 'id_document_2', rscRG, sdtText, False, 15);
@@ -3956,24 +4326,28 @@ begin
   T.Fields.Last.Aliases.CommaText := 'social security number,ssn,cpf';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // E-mail
   AddField(T, 'email_addr', rscEMail, sdtText, False, 60);
   T.Fields.Last.ExportName := 'email';
   T.Fields.Last.Aliases.CommaText := EMAIL_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Phone number
   AddField(T, 'phone_1', rscPhone, sdtText, False, 20);
   T.Fields.Last.ExportName := 'phone';
   T.Fields.Last.Aliases.CommaText := PHONE1_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Mobile phone number
   AddField(T, 'phone_2', rscMobilePhone, sdtText, False, 20);
   T.Fields.Last.ExportName := 'mobile_phone';
   T.Fields.Last.Aliases.CommaText := PHONE2_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Institution ID
   AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
   T.Fields.Last.Aliases.CommaText := INSTITUTION_ALIASES;
@@ -3981,6 +4355,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Institution
   AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
   T.Fields.Last.ExportName := 'institution';
@@ -3991,38 +4368,50 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Department
   AddField(T, 'department', rscDepartment, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := 'department,departamento';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Role
   AddField(T, 'job_role', rscRole, sdtText, False, 100);
   T.Fields.Last.ExportName := 'role';
   T.Fields.Last.Aliases.CommaText := 'role,job role,função,cargo';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Postal code
   // renamed "zip_code" -> "postal_code" - v2
   AddField(T, 'postal_code', rscPostalCode, sdtText, False, 15);
   T.Fields.Last.Aliases.CommaText := POSTAL_CODE_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Address 1
   AddField(T, 'address_1', rscAddress1, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := ADDRESS1_ALIASES;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Address 2
   AddField(T, 'address_2', rscAddress2, sdtText, False, 60);
   T.Fields.Last.Aliases.CommaText := ADDRESS2_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Neighborhood
   AddField(T, 'neighborhood', rscNeighborhood, sdtText, False, 60);
   T.Fields.Last.Aliases.CommaText := NEIGHBORHOOD_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Municipality ID
   AddField(T, 'municipality_id', rscMunicipalityID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := MUNICIPALITY_ALIASES;
@@ -4030,6 +4419,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MUNICIPALITY_NAME;
   // Municipality
   AddField(T, 'municipality_name', rscMunicipality, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'municipality';
@@ -4040,6 +4432,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_MUNICIPALITY_NAME;
   // State ID
   AddField(T, 'state_id', rscStateID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := STATE_ALIASES;
@@ -4047,6 +4442,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_STATE_NAME;
   // State
   AddField(T, 'state_name', rscState, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'state';
@@ -4057,6 +4455,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_STATE_NAME;
   // Country ID
   AddField(T, 'country_id', rscCountryID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := COUNTRY_ALIASES;
@@ -4064,6 +4465,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SITE_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COUNTRY_NAME;
   // Country
   AddField(T, 'country_name', rscCountry, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'country';
@@ -4074,31 +4478,49 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COUNTRY_NAME;
   // Lattes
   AddField(T, 'lattes_uri', rscLattes, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'lattes,currículo lattes';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscLattes;
   // Orcid
   AddField(T, 'orcid_uri', rscOrcid, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'orcid number,número orcid';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscOrcid;
   // X (Twitter)
   AddField(T, 'twitter_uri', rscXTwitter, sdtText, False, 50);
   T.Fields.Last.Aliases.CommaText := 'x,twitter,x (twitter)';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscXTwitter;
   // Instagram
   AddField(T, 'instagram_uri', rscInstagram, sdtText, False, 50);
   T.Fields.Last.Aliases.CommaText := 'instagram,insta';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscInstagram;
   // Website
   AddField(T, 'website_uri', rscWebsite, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := 'website,webpage,url,página da internet,site da internet';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscWebsite;
   // Profile color
   //AddField(T, 'profile_color', sdtText, False, 30);
   // Notes
@@ -4106,6 +4528,9 @@ begin
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Profile image
   //AddField('profile_image', sdtText);
   // Record audit
@@ -4155,6 +4580,7 @@ begin
   // ID
   AddField(T, 'permanent_net_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Sampling plot ID
   AddField(T, 'sampling_plot_id', rscSamplingPlotID, sdtInteger, True, 0, False, True, tbSamplingPlots);
   T.Fields.Last.Aliases.CommaText := SAMPLING_PLOTS_ALIASES;
@@ -4162,9 +4588,11 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SAMPLING_PLOT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Net number
   AddField(T, 'net_number', rscMistnetNr, sdtInteger, True);
   T.Fields.Last.Aliases.CommaText := 'number,net number,net nr,mist net number,mist net nr,número,número da rede';
+  T.Fields.Last.SummaryEnabled := False;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -4174,6 +4602,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -4183,6 +4612,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -4192,15 +4622,22 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COORDINATE_PRECISION;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText, False, 150);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 50);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4248,6 +4685,7 @@ begin
   // ID
   AddField(T, 'permit_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -4255,16 +4693,34 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
+  // Project
+  AddField(T, 'project_name', rscProject, sdtText, False, 0, False, False, tbProjects);
+  T.Fields.Last.ExportName := 'project';
+  T.Fields.Last.LookupInfo.LookupField := COL_PROJECT_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Permit name
   AddField(T, 'permit_name', rscName, sdtText, True, 150);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := 'name,nome,permit name,nome da licença';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Permit number
   AddField(T, 'permit_number', rscPermitNumber, sdtText, False, 30);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := 'number,número,permit number,número da licença,permit nr,nº da licença';
+  T.Fields.Last.SummaryEnabled := False;
   // Permit type
   AddField(T, 'permit_type', rscType, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'B,C,R,E,T,O';
@@ -4281,22 +4737,35 @@ begin
   T.Fields.Last.Aliases.CommaText := 'type,tipo,permit type,tipo de licença';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Dispatcher
   AddField(T, 'dispatcher_name', rscDispatcher, sdtText, True, 100);
   T.Fields.Last.Aliases.CommaText := 'dispatcher,emissor';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Dispatch date
   AddField(T, 'dispatch_date', rscDispatchDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := 'dispatch date,data de emissão';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_DISPATCH_DATE;
   // Expire date
   AddField(T, 'expire_date', rscExpireDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := 'expire date,data de vencimento,data de expiração';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_EXPIRE_DATE;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Permit status
   // added in v2
   AddField(T, 'permit_status', rscStatus, sdtList, True, 5);
@@ -4312,6 +4781,8 @@ begin
   T.Fields.Last.Aliases.CommaText := STATUS_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4359,21 +4830,29 @@ begin
   // ID
   AddField(T, 'poi_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Sample date
   AddField(T, 'sample_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SAMPLE_DATE;
   // Sample time
   AddField(T, 'sample_time', rscTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := TIME_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SAMPLE_TIME;
   // Name
   AddField(T, 'poi_name', rscName, sdtText, False, 60);
   T.Fields.Last.Aliases.CommaText := 'name,nome';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -4383,6 +4862,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -4392,12 +4872,14 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Altitude
   AddField(T, 'altitude', rscAltitude, sdtFloat);
   T.Fields.Last.Aliases.CommaText := ALTITUDE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -4407,6 +4889,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Observer ID
   AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -4414,6 +4898,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger, False, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -4421,6 +4906,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -4428,6 +4914,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Sighting ID
   AddField(T, 'sighting_id', rscSightingID, sdtInteger, False, 0, False, True, tbSightings);
   T.Fields.Last.Aliases.CommaText := SIGHTING_ALIASES;
@@ -4435,6 +4922,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SIGHTING_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Survey ID
   AddField(T, 'survey_id', rscSurveyID, sdtInteger, False, 0, False, True, tbSurveys);
   T.Fields.Last.Aliases.CommaText := SURVEY_ALIASES;
@@ -4442,11 +4930,15 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SURVEY_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4494,6 +4986,7 @@ begin
   // ID
   AddField(T, 'budget_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -4501,27 +4994,33 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Funding source
   AddField(T, 'funding_source', rscFundingSource, sdtText, True, 60);
   T.Fields.Last.Aliases.CommaText := 'funding,source,funding source,financiamento,financiador,origem,origem do financiamento';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Rubric
   AddField(T, 'rubric', rscRubric, sdtText, True, 60);
   T.Fields.Last.Aliases.CommaText := 'rubric,rúbrica';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Item name
   AddField(T, 'item_name', rscItem, sdtText, False, 60);
   T.Fields.Last.Aliases.CommaText := 'item,item name,nome do item,item description,descrição do item';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Amount
   AddField(T, 'amount', rscAmount, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'amount,montante,value,valor';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4569,6 +5068,7 @@ begin
   // ID
   AddField(T, 'chronogram_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -4576,11 +5076,13 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Description
   AddField(T, 'description', rscDescription, sdtText, True);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Status
   AddField(T, 'progress_status', rscStatus, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'T,P,F,C,D,R,B';
@@ -4598,15 +5100,26 @@ begin
   T.Fields.Last.Aliases.CommaText := 'status,estado,situação,progress,progresso';
   T.Fields.Last.DisplayWidth := 150;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Start date
   AddField(T, 'start_date', rscStartDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := START_DATE_ALIASES;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_START_DATE;
   // Target date
   AddField(T, 'target_date', rscTargetDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := 'target date,data planejada';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TARGET_DATE;
   // End date
   AddField(T, 'end_date', rscEndDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := END_DATE_ALIASES;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_END_DATE;
   // Goal ID
   AddField(T, 'goal_id', rscGoalID, sdtInteger, False, 0, False, True, tbProjectGoals);
   T.Fields.Last.Aliases.CommaText := 'goal,objetivo';
@@ -4614,8 +5127,11 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_GOAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_GOAL_DESCRIPTION;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_GOAL_DESCRIPTION;
   // Goal
-  AddField(T, 'goal_name', rscGoal, sdtText, False, 0, False, False, tbProjectGoals);
+  AddField(T, 'goal_description', rscGoal, sdtText, False, 0, False, False, tbProjectGoals);
   T.Fields.Last.ExportName := 'goal';
   T.Fields.Last.LookupInfo.LookupField := COL_GOAL_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_GOAL_ID;
@@ -4624,6 +5140,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_GOAL_DESCRIPTION;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4671,6 +5190,7 @@ begin
   // ID
   AddField(T, 'expense_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -4678,6 +5198,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Budget ID
   AddField(T, 'budget_id', rscBudgetID, sdtInteger, True, 0, False, True, tbProjectBudgets);
   T.Fields.Last.Aliases.CommaText := 'budget,orçamento';
@@ -4685,6 +5206,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_BUDGET_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_RUBRIC;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_RUBRIC;
   // Rubric
   AddField(T, 'rubric', rscRubric, sdtText, True, 0, False, False, tbProjectBudgets);
   T.Fields.Last.LookupInfo.LookupField := COL_BUDGET_ID;
@@ -4694,22 +5218,30 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_RUBRIC;
   // Item description
   AddField(T, 'item_description', rscItem, sdtText, True, 60);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES + ',item';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Expense date
   AddField(T, 'expense_date', rscDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := 'date,data,expense date,data da despesa';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_EXPENSE_DATE;
   // Amount
   AddField(T, 'amount', rscAmount, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'amount,montante,value,valor,price,preço';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4757,6 +5289,7 @@ begin
   // ID
   AddField(T, 'goal_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -4764,11 +5297,13 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Description
   AddField(T, 'goal_description', rscDescription, sdtText, True);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Status
   AddField(T, 'goal_status', rscStatus, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'P,R,C';
@@ -4782,6 +5317,8 @@ begin
   T.Fields.Last.Aliases.CommaText := STATUS_ALIASES;
   T.Fields.Last.DisplayWidth := 150;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4829,45 +5366,62 @@ begin
   // ID
   AddField(T, 'project_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Title
   AddField(T, 'project_title', rscTitle, sdtText, True, 150);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := 'title,título,long title,título longo';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Short title
   AddField(T, 'short_title', rscShortTitle, sdtText, True, 60);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := 'short title,título curto';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Protocol number
   AddField(T, 'protocol_number', rscProtocolNr, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'protocol,protocolo,protocol nr,protocol number,número do protocolo,nº do protocolo,number,número';
+  T.Fields.Last.SummaryEnabled := False;
   // Start date
   AddField(T, 'start_date', rscStartDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := START_DATE_ALIASES;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_START_DATE;
   // End date
   AddField(T, 'end_date', rscEndDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := END_DATE_ALIASES;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_END_DATE;
   // Website
   AddField(T, 'website_uri', rscWebsite, sdtText, False, 200);
   T.Fields.Last.ExportName := 'website';
   T.Fields.Last.Aliases.CommaText := 'website,webpage,url,página da internet,site da internet';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscWebsite;
   // E-mail
   AddField(T, 'email_addr', rscEMail, sdtText, False, 100);
   T.Fields.Last.ExportName := 'email';
   T.Fields.Last.Aliases.CommaText := EMAIL_ALIASES;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscEMail;
   // Contact person
   AddField(T, 'contact_name', rscContactPerson, sdtText, False, 100);
   T.Fields.Last.ExportName := 'contact_person';
   T.Fields.Last.Aliases.CommaText := 'contact,contato';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Project status
   // added in v2
   AddField(T, 'project_status', rscStatus, sdtList, True, 5);
@@ -4884,26 +5438,40 @@ begin
   T.Fields.Last.Aliases.CommaText := STATUS_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Main goal
   AddField(T, 'main_goal', rscMainGoal, sdtText);
   T.Fields.Last.Aliases.CommaText := 'main goal,objetivo principal,objetivo geral';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMainGoal;
   // Risks
   AddField(T, 'risks', rscRisks, sdtText);
   T.Fields.Last.Aliases.CommaText := 'risks,riscos';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscRisks;
   // Abstract
   AddField(T, 'project_abstract', rscAbstract, sdtText);
   T.Fields.Last.Aliases.CommaText := 'abstract,summary,resumo';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscAbstract;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -4951,6 +5519,7 @@ begin
   // ID
   AddField(T, 'project_member_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -4958,6 +5527,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Researcher ID
   AddField(T, 'person_id', rscPersonID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -4965,6 +5535,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERSON_NAME;
   // Researcher
   AddField(T, 'person_name', rscPerson, sdtText, True, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'person';
@@ -4975,6 +5548,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERSON_NAME;
   // Researcher abbreviation
   AddField(T, 'person_abbrev', rscPerson, sdtText, True, 0, False, False, tbPeople);
   T.Fields.Last.LookupInfo.LookupField := COL_PERSON_ID;
@@ -4984,11 +5560,17 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERSON_NAME;
   // Manager
   AddField(T, 'project_manager', rscManager, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'manager,gerente,administrador,admin,project manager,gerente do projeto,responsável';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscManager;
   // Institution ID
   AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
   T.Fields.Last.Aliases.CommaText := INSTITUTION_ALIASES;
@@ -4996,6 +5578,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_ABBREVIATION;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Institution
   AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
   T.Fields.Last.ExportName := 'institution';
@@ -5006,6 +5591,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -5053,6 +5641,7 @@ begin
   // ID
   AddField(T, 'sample_prep_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Specimen ID
   AddField(T, 'specimen_id', rscSpecimenID, sdtInteger, False, 0, False, True, tbSpecimens);
   T.Fields.Last.Aliases.CommaText := 'specimen,espécime';
@@ -5060,14 +5649,17 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SPECIMEN_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Accession number
   AddField(T, 'accession_num', rscAccessionNr, sdtText, False, 20);
   T.Fields.Last.Aliases.CommaText := 'accession,accession number,accession nr,tombo,número de tombo,nº de tombo';
+  T.Fields.Last.SummaryEnabled := False;
   // Duplicate number
   // renamed "accession_seq" -> "duplicate_seq" - v2
   AddField(T, 'duplicate_seq', rscDuplicateNr, sdtInteger);
   T.Fields.Last.ExportName := 'duplicate_number';
   T.Fields.Last.Aliases.CommaText := 'duplicate,duplicata,duplicate number,duplicate nr,número da duplicata,nº da duplicata';
+  T.Fields.Last.SummaryEnabled := False;
   // Type
   AddField(T, 'accession_type', rscType, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'NS,SS,MS,OW,WS,PS,N,EGG,P,F,BD,BL,BS,SX,GS,MC,TS,EYE,T,S,G,M';
@@ -5100,6 +5692,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'type,tipo,accession type,tipo de tombo,sample type,tipo de amostra';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -5107,6 +5701,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -5114,6 +5709,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Nest ID
   AddField(T, 'nest_id', rscNestID, sdtInteger);
   T.Fields.Last.Aliases.CommaText := NEST_ALIASES;
@@ -5121,6 +5717,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_NEST_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Egg ID
   AddField(T, 'egg_id', rscEggID, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'egg,ovo';
@@ -5128,9 +5725,13 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_EGG_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Preparation date
   AddField(T, 'preparation_date', rscPreparationDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES + ',preparation date,data da preparação';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PREPARATION_DATE;
   // Preparer ID
   AddField(T, 'preparer_id', rscPreparerID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES + ',preparer,preparador';
@@ -5138,6 +5739,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PREPARER_NAME;
   // Preparer
   AddField(T, 'preparer_name', rscPreparer, sdtText, True, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'preparer';
@@ -5148,6 +5752,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PREPARER_NAME;
   // Institution ID
   // added in v2
   AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
@@ -5156,6 +5763,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Institution
   // added in v2
   AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
@@ -5167,15 +5777,22 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -5223,17 +5840,20 @@ begin
   // ID
   AddField(T, 'sampling_plot_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Name
   AddField(T, 'full_name', rscFullName, sdtText, True, 100);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES + ',name,nome';
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
   // Abbreviation
   // renamed "acronym" -> "abbreviation" - v3
   AddField(T, 'abbreviation', rscAbbreviation, sdtText, True, 10);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, True, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -5241,6 +5861,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Locality
   AddField(T, 'locality_name', rscLocality, sdtText, True, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'locality';
@@ -5251,6 +5874,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -5260,6 +5886,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -5269,6 +5896,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -5278,20 +5906,30 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Area shape
   AddField(T, 'area_shape', rscAreaShape, sdtText, False, 5);
   T.Fields.Last.Aliases.CommaText := 'area shape,formato da área,shape,formato,forma';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Description
   AddField(T, 'description', rscDescription, sdtText);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscDescription;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -5339,6 +5977,7 @@ begin
   // ID
   AddField(T, 'sighting_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Survey ID
   AddField(T, 'survey_id', rscSurveyID, sdtInteger, False, 0, False, True, tbSurveys);
   T.Fields.Last.Aliases.CommaText := SURVEY_ALIASES;
@@ -5346,6 +5985,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SURVEY_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SURVEY_NAME;
   // Survey
   AddField(T, 'survey_name', rscSurvey, sdtText, False, 0, False, False, tbSurveys);
   T.Fields.Last.ExportName := 'survey';
@@ -5356,6 +5998,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SURVEY_NAME;
   // Observer ID
   AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -5363,6 +6008,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Observer
   AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'observer';
@@ -5373,6 +6021,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Method ID
   AddField(T, 'method_id', rscMethodID, sdtInteger, True, 0, False, True, tbMethods);
   T.Fields.Last.Aliases.CommaText := 'method,método';
@@ -5380,6 +6031,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_METHOD_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_METHOD_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_METHOD_NAME;
   // Method
   AddField(T, 'method_name', rscMethod, sdtText, True, 0, False, False, tbMethods);
   T.Fields.Last.ExportName := 'method';
@@ -5390,6 +6044,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_METHOD_NAME;
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -5397,6 +6054,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Locality
   AddField(T, 'locality_name', rscLocality, sdtText, False, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'locality';
@@ -5407,6 +6067,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -5416,6 +6079,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -5425,6 +6089,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -5434,17 +6099,25 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Date
   AddField(T, 'sighting_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES + ',sighting date,data da observação,data do avistamento,record date,data do registro';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SIGHTING_DATE;
   // Time
   AddField(T, 'sighting_time', rscTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := TIME_ALIASES + ',sighting time,record time,hora da observação,hora do avistamento,' +
     'hora do registro,horário da observação,horário do avistament,horário do registro';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SIGHTING_TIME;
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger, True, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -5452,6 +6125,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
@@ -5462,6 +6138,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -5469,6 +6148,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INDIVIDUAL_NAME;
   // Individual
   AddField(T, 'individual_name', rscIndividual, sdtText, False, 0, False, False, tbIndividuals);
   T.Fields.Last.ExportName := 'individual';
@@ -5479,127 +6161,189 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INDIVIDUAL_NAME;
   // Quantity
   AddField(T, 'subjects_tally', rscIndividuals, sdtInteger);
   T.Fields.Last.ExportName := 'total_quantity';
   T.Fields.Last.Aliases.CommaText := 'individuals,# individuals,individuals quantity,individuals quant,number of individuals,nr of individuals,' +
     'indivíduos,# indivíduos,quantidade de indivíduos,quant de indivíduos,número de indivíduos,nº de indivíduos';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Distance
   AddField(T, 'subject_distance', rscDistanceM, sdtFloat);
   T.Fields.Last.ExportName := 'distance';
   T.Fields.Last.Aliases.CommaText := 'distance,distance (m),distance_m,distance meters,distância,distância (m),distância_m,distância metros';
   T.Fields.Last.MeasurementUnit := 'm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Flight height
   AddField(T, 'flight_height', rscFlightHeight, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'height,flight height,height_m,height (m),flight height (m),altura,altura de voo,' +
     'altura_m,altura (m),altura de voo (m)';
   T.Fields.Last.MeasurementUnit := 'm';
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Flight direction
   AddField(T, 'flight_direction', rscFlightDirection, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'N,S,E,W,NE,NW,SE,SW';
   T.Fields.Last.PickList.CommaText := 'N,S,E,W,NE,NW,SE,SW';
   T.Fields.Last.Aliases.CommaText := 'direction,flight direction,direção,direção de voo';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Detection type
   AddField(T, 'detection_type', rscDetectionType, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'detection,detection type,detecção,tipo de detecção';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Breeding status
   AddField(T, 'breeding_status', rscBreedingCode, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'breeding code,breeding status,código reprodutivo,estado reprodutivo,status reprodutivo';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Mackinnon list number
   AddField(T, 'mackinnon_list_num', rscMackinnonList, sdtInteger);
   T.Fields.Last.ExportName := 'mackinnon_list_number';
   T.Fields.Last.Aliases.CommaText := 'mackinnon list,mackinnon list number,mackinnon list nr,list number,list nr,' +
     'lista de mackinnon,número da lista de mackinnon,nº da lista de mackinnon,número da lista,nº da lista';
+  T.Fields.Last.SummaryEnabled := False;
   // Captured
   AddField(T, 'subject_captured', rscCaptured, sdtBoolean);
   T.Fields.Last.ExportName := 'captured';
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'captured,capturado,capture,captura';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscCaptured;
   // Seen
   AddField(T, 'subject_seen', rscSeen, sdtBoolean);
   T.Fields.Last.ExportName := 'seen';
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'seen,visto,visual';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscSeen;
   // Heard
   AddField(T, 'subject_heard', rscHeard, sdtBoolean);
   T.Fields.Last.ExportName := 'heard';
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'heard,ouvido,sonoro,sound,som,voz,vocal';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscHeard;
   // Photographed
   AddField(T, 'subject_photographed', rscPhotographed, sdtBoolean);
   T.Fields.Last.ExportName := 'photographed';
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'photographed,fotografado,photo,foto,photos,fotos';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscPhotographed;
   // Recorded
   AddField(T, 'subject_recorded', rscRecorded, sdtBoolean);
   T.Fields.Last.ExportName := 'audio_recorded';
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'recorded,gravado,audio,áudio';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscRecorded;
   // New captures
   AddField(T, 'new_captures_tally', rscNewCaptures, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'captures,# captures,new captures,# new captures,capturas,# capturas,novas capturas,# novas capturas';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Recaptures
   AddField(T, 'recaptures_tally', rscRecaptures, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'recaptures,# recaptures,recapturas,# recapturas';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Unbanded
   AddField(T, 'unbanded_tally', rscUnbanded, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'unbanded,# unbanded,não anilhados,# não anilhados,sem anilha,# sem anilha';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skGroupStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Males
   AddField(T, 'males_tally', rscMales, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'males,# males,number of males,nr of males,machos,# machos,número de machos,nº de machos';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Females
   AddField(T, 'females_tally', rscFemales, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'females,#females,number of females,nr of females,fêmeas,# fêmeas,número de fêmeas,nº de fêmeas';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Not sexed
   AddField(T, 'not_sexed_tally', rscNotSexed, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'not sexed,# not sexed,não sexados,# não sexados';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Adults
   AddField(T, 'adults_tally', rscAdults, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'adults,# adults,adultos,# adultos';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Immatures
   AddField(T, 'immatures_tally', rscImmatures, sdtText, False, 10);
   T.Fields.Last.ExportName := 'juveniles_tally';
   T.Fields.Last.Aliases.CommaText := 'immatures,# immatures,imaturos,# imaturos,juveniles,# juveniles,jovens,# jovens';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Not aged
   AddField(T, 'not_aged_tally', rscNotAged, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'not aged,# not aged,não etariados,# não etariados';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Is in eBird
   AddField(T, 'ebird_available', rscIsInEBird, sdtBoolean);
   T.Fields.Last.ExportName := 'available_on_ebird';
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'ebird,is in ebird,está no ebird';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscIsInEBird;
   // Out of sample
   // renamed "not_surveying" -> "out_of_sample" - v3
   AddField(T, 'out_of_sample', rscOutOfSample, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'not surveying,out of sample,fora da amostra';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscOutOfSample;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -5647,6 +6391,7 @@ begin
   // ID
   AddField(T, 'collector_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Specimen ID
   AddField(T, 'specimen_id', rscSpecimenID, sdtInteger, False, 0, False, True, tbSpecimens);
   T.Fields.Last.Aliases.CommaText := 'specimen,espécime';
@@ -5654,6 +6399,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SPECIMEN_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Collector ID
   AddField(T, 'person_id', rscPersonID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -5661,6 +6407,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COLLECTOR_NAME;
   // Collector
   AddField(T, 'collector_name', rscCollector, sdtText, True, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'collector';
@@ -5671,10 +6420,14 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COLLECTOR_NAME;
   // Sequence
   AddField(T, 'collector_seq', rscSequence, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'sequence,order,sequência,ordem';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -5722,10 +6475,12 @@ begin
   // ID
   AddField(T, 'specimen_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Field number
   AddField(T, 'field_number', rscFieldNumber, sdtText, True, 20);
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := FIELD_NUMBER_ALIASES;
+  T.Fields.Last.SummaryEnabled := False;
   // Sample type
   AddField(T, 'sample_type', rscType, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'WS,PS,N,B,E,P,F,BS,C,S,T,D,R';
@@ -5749,22 +6504,30 @@ begin
   T.Fields.Last.Aliases.CommaText := 'type,tipo,sample type,tipo de amostra';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Collection year
   AddField(T, 'collection_year', rscCollectionYear, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'collection year,ano da coleta';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Collection month
   AddField(T, 'collection_month', rscCollectionMonth, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'collection month,mês da coleta';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Collection day
   AddField(T, 'collection_day', rscCollectionDay, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'collection day,dia da coleta';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Collection date
   AddField(T, 'collection_date', rscCollectionDate, sdtDate);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES + ',collection date,data da coleta';
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_COLLECTION_DATE;
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, True, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -5772,6 +6535,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Locality
   AddField(T, 'locality_name', rscLocality, sdtText, True, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'locality';
@@ -5782,6 +6548,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -5791,6 +6560,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -5800,6 +6570,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -5813,6 +6584,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Taxon ID
   AddField(T, 'taxon_id', rscTaxonID, sdtInteger, True, 0, False, True, tbZooTaxa);
   T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
@@ -5820,6 +6593,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Taxon
   AddField(T, 'taxon_name', rscTaxon, sdtText, True, 0, False, False, tbZooTaxa);
   T.Fields.Last.ExportName := 'taxon';
@@ -5830,6 +6606,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -5837,6 +6616,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INDIVIDUAL_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INDIVIDUAL_NAME;
   // Individual
   AddField(T, 'individual_name', rscIndividual, sdtText, False, 0, False, False, tbIndividuals);
   T.Fields.Last.ExportName := 'individual';
@@ -5847,6 +6629,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INDIVIDUAL_NAME;
   // Nest ID
   AddField(T, 'nest_id', rscNestID, sdtInteger, False, 0, False, True, tbNests);
   T.Fields.Last.Aliases.CommaText := NEST_ALIASES;
@@ -5854,6 +6639,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_NEST_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
   // Nest
   AddField(T, 'nest_name', rscNest, sdtText, False, 0, False, False, tbNests);
   T.Fields.Last.ExportName := 'nest';
@@ -5864,6 +6652,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NEST_NAME;
   // Egg ID
   AddField(T, 'egg_id', rscEggID, sdtInteger, False, 0, False, True, tbEggs);
   T.Fields.Last.Aliases.CommaText := 'egg,ovo';
@@ -5871,6 +6662,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_EGG_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_EGG_NAME;
   // Egg
   AddField(T, 'egg_name', rscEgg, sdtText, False, 0, False, False, tbEggs);
   T.Fields.Last.ExportName := 'egg';
@@ -5881,6 +6675,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_EGG_NAME;
   // Institution ID
   // added in v3
   AddField(T, 'institution_id', rscInstitutionID, sdtInteger, False, 0, False, True, tbInstitutions);
@@ -5889,6 +6686,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_INSTITUTION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Institution
   // added in v3
   AddField(T, 'institution_name', rscInstitution, sdtText, False, 0, False, False, tbInstitutions);
@@ -5900,15 +6700,22 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_INSTITUTION_NAME;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -5956,6 +6763,7 @@ begin
   // ID
   AddField(T, 'survey_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Expedition ID
   AddField(T, 'expedition_id', rscExpeditionID, sdtInteger, False, 0, False, True, tbExpeditions);
   T.Fields.Last.Aliases.CommaText := 'expedition,expedição,campaign,campanha,field trip,saída de campo';
@@ -5963,6 +6771,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_EXPEDITION_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_EXPEDITION_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_EXPEDITION_NAME;
   // Expedition
   AddField(T, 'expedition_name', rscExpedition, sdtText, False, 0, False, False, tbExpeditions);
   T.Fields.Last.ExportName := 'expedition';
@@ -5973,27 +6784,41 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_EXPEDITION_NAME;
   // Date
   AddField(T, 'survey_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES + ',survey date,data da amostragem,data do levantamento';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SURVEY_DATE;
   // Duration
   AddField(T, 'duration', rscDurationMin, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'duration,duração,duration_min,duração_min';
   T.Fields.Last.MeasurementUnit := 'min';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Start time
   AddField(T, 'start_time', rscStartTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := 'start time,hora de início,horário de início,initial time,hora inicial,horário inicial';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_START_TIME;
   // End time
   AddField(T, 'end_time', rscEndTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := 'end time,hora de término,horário de término,final time,hora final,horário final';
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_END_TIME;
   // Method ID
   AddField(T, 'method_id', rscMethodID, sdtInteger, True, 0, False, True, tbMethods);
   T.Fields.Last.Aliases.CommaText := 'method,método';
@@ -6001,6 +6826,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_METHOD_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_METHOD_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_METHOD_NAME;
   // Method
   AddField(T, 'method_name', rscMethod, sdtText, True, 0, False, False, tbMethods);
   T.Fields.Last.ExportName := 'method';
@@ -6011,6 +6839,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_METHOD_NAME;
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, True, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -6018,6 +6849,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SITE_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Locality
   AddField(T, 'locality_name', rscLocality, sdtText, True, 0, False, False, tbGazetteer);
   T.Fields.Last.ExportName := 'locality';
@@ -6028,6 +6862,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   // Net station ID
   AddField(T, 'net_station_id', rscSamplingPlotID, sdtInteger, False, 0, False, True, tbSamplingPlots);
   T.Fields.Last.Aliases.CommaText := SAMPLING_PLOTS_ALIASES;
@@ -6035,6 +6872,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SAMPLING_PLOT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NET_STATION_NAME;
   // Net station
   AddField(T, 'net_station_name', rscSamplingPlot, sdtText, False, 0, False, False, tbSamplingPlots);
   T.Fields.Last.ExportName := 'sampling_plot';
@@ -6045,6 +6885,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_NET_STATION_NAME;
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -6052,6 +6895,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PROJECT_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_SHORT_TITLE;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Project
   AddField(T, 'project_name', rscProject, sdtText, False, 0, False, False, tbProjects);
   T.Fields.Last.ExportName := 'project';
@@ -6062,6 +6908,9 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PROJECT_NAME;
   // Longitude (start)
   AddField(T, 'start_longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -6071,6 +6920,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude (start)
   AddField(T, 'start_latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -6080,6 +6930,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // End longitude
   AddField(T, 'end_longitude', rscEndLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -6090,6 +6941,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // End latitude
   AddField(T, 'end_latitude', rscEndLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -6099,6 +6951,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -6108,50 +6961,71 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Number of observers
   AddField(T, 'observers_tally', rscObservers, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'observers,# observers,observadores,# observadores';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Sample ID
   AddField(T, 'sample_id', rscSampleID, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'sample id,id da amostra,sample,amostra';
+  T.Fields.Last.SummaryEnabled := False;
   // Total area
   AddField(T, 'area_total', rscAreaHa, sdtFloat);
   T.Fields.Last.ExportName := 'area';
   T.Fields.Last.Aliases.CommaText := 'area,area (ha),area_ha,área,área (ha),área_ha,total area,área total';
   T.Fields.Last.MeasurementUnit := 'ha';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Total distance
   AddField(T, 'distance_total', rscDistanceKm, sdtFloat);
   T.Fields.Last.ExportName := 'distance';
   T.Fields.Last.Aliases.CommaText := 'distance,distance (m),distance_m,distância,distância (m),distância_m,total distance,distância total';
   T.Fields.Last.MeasurementUnit := 'km';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Total of nets
   AddField(T, 'nets_total', rscMistnets, sdtInteger);
   T.Fields.Last.ExportName := 'total_nets';
   T.Fields.Last.Aliases.CommaText := 'nets,# nets,mist nets,# mist nets,total nets,total mist nets,' +
     'redes,# redes,redes de neblina,# redes de neblina,total de redes,total de redes de neblina';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Habitat
   AddField(T, 'habitat', rscHabitat, sdtText);
   T.Fields.Last.Aliases.CommaText := 'environment,ambiente';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscHabitat;
   // Net rounds
   AddField(T, 'net_rounds', rscMistnetRounds, sdtText);
   T.Fields.Last.Aliases.CommaText := 'net rounds,mist net rounds,revisões de rede';
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMistnetRounds;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -6199,6 +7073,7 @@ begin
   // ID
   AddField(T, 'survey_member_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Survey ID
   AddField(T, 'survey_id', rscSurveyID, sdtInteger, False, 0, False, True, tbSurveys);
   T.Fields.Last.Aliases.CommaText := SURVEY_ALIASES;
@@ -6206,6 +7081,7 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SURVEY_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Researcher ID
   AddField(T, 'person_id', rscPersonID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -6213,6 +7089,9 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERSON_NAME;
   // Researcher
   AddField(T, 'person_name', rscResearcher, sdtText, True, 0, False, False, tbPeople);
   T.Fields.Last.ExportName := 'researcher';
@@ -6223,11 +7102,17 @@ begin
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERSON_NAME;
   // Visitor
   AddField(T, 'visitor', rscVisitor, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'visitor,visitante,auxiliar';
   T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscVisitor;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -6275,6 +7160,7 @@ begin
   // ID
   AddField(T, 'vegetation_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Survey ID
   AddField(T, 'survey_id', rscSurveyID, sdtInteger, False, 0, False, True, tbSurveys);
   T.Fields.Last.Aliases.CommaText := SURVEY_ALIASES;
@@ -6282,16 +7168,23 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SURVEY_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Date
   AddField(T, 'sample_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SAMPLE_DATE;
   // Time
   AddField(T, 'sample_time', rscTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := TIME_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SAMPLE_TIME;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -6301,6 +7194,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -6310,6 +7204,7 @@ begin
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryEnabled := False;
   // Coordinates precision - added in v2
   AddField(T, 'coordinate_precision', rscCoordinatePrecision, sdtText);
   T.Fields.Last.Rules.ValueList := 'E,A,R';
@@ -6319,6 +7214,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'coordinate precision,precisão da coordenada';
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Observer ID
   AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -6326,6 +7223,22 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
+  // Observer
+  AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
+  T.Fields.Last.ExportName := 'observer';
+  T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Herbs - distribution
   AddField(T, 'herbs_distribution', rscHerbsDistribution, sdtInteger, True);
   T.Fields.Last.Rules.ValueList := '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14';
@@ -6351,6 +7264,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'herbs distribution,distribuição de herbáceas';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Herbs - proportion
   AddField(T, 'herbs_proportion', rscProportionOfHerbs, sdtInteger);
   T.Fields.Last.Rules.MinValue := 0;
@@ -6358,12 +7273,16 @@ begin
   T.Fields.Last.Aliases.CommaText := 'herbs proportion,proportion of herbs,% herbs,proporção de herbáceas,% herbáceas';
   T.Fields.Last.MeasurementUnit := '%';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Herbs - average height
   AddField(T, 'herbs_avg_height', rscAvgHeightOfHerbs, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'herbs average height,herbs avg height,herbs height,avg height of herbs,average height of herbs' +
     'altura das herbáceas,altura média das herbáceas';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Shrubs - distribution
   AddField(T, 'shrubs_distribution', rscShrubsDistribution, sdtInteger);
   T.Fields.Last.Rules.ValueList := '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14';
@@ -6389,6 +7308,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'shrubs distribution,distribuição de arbustos';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Shrubs - proportion
   AddField(T, 'shrubs_proportion', rscProportionOfShrubs, sdtInteger);
   T.Fields.Last.Rules.MinValue := 0;
@@ -6396,12 +7317,16 @@ begin
   T.Fields.Last.Aliases.CommaText := 'shrubs proportion,proportion of shrubs,% shrubs,proporção de arbustos,% arbustos';
   T.Fields.Last.MeasurementUnit := '%';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Shrubs - average height
   AddField(T, 'shrubs_avg_height', rscAvgHeightOfShrubs, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'shrubs average height,shrubs avg height,shrubs height,avg height of shrubs,average height of shrubs' +
     'altura dos arbustos,altura média dos arbustos';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Trees - distribution
   AddField(T, 'trees_distribution', rscTreesDistribution, sdtInteger);
   T.Fields.Last.Rules.ValueList := '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14';
@@ -6427,6 +7352,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'trees distribution,distribuição de árvores';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Trees - proportion
   AddField(T, 'trees_proportion', rscProportionOfTrees, sdtInteger);
   T.Fields.Last.Rules.MinValue := 0;
@@ -6434,17 +7361,24 @@ begin
   T.Fields.Last.Aliases.CommaText := 'trees proportion,proportion of trees,% trees,proporção de árvores,% árvores';
   T.Fields.Last.MeasurementUnit :='%';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Trees - average height
   AddField(T, 'trees_avg_height', rscAvgHeightOfTrees, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'trees average height,trees avg height,trees height,avg height of trees,average height of trees' +
     'altura das árvores,altura média das árvores';
   T.Fields.Last.MeasurementUnit := 'cm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -6492,6 +7426,7 @@ begin
   // ID
   AddField(T, 'weather_id', rscId, sdtInteger, True, 0, True);
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Survey ID
   AddField(T, 'survey_id', rscSurveyID, sdtInteger, False, 0, False, True, tbSurveys);
   T.Fields.Last.Aliases.CommaText := SURVEY_ALIASES;
@@ -6499,16 +7434,23 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_SURVEY_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
   // Date
   AddField(T, 'sample_date', rscDate, sdtDate, True);
   T.Fields.Last.Aliases.CommaText := DATE_ALIASES;
   T.Fields.Last.DisplayWidth := 120;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SAMPLE_DATE;
   // Time
   AddField(T, 'sample_time', rscTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := TIME_ALIASES;
   T.Fields.Last.DisplayWidth := 80;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_SAMPLE_TIME;
   // Moment
   AddField(T, 'sample_moment', rscMoment, sdtList, True, 1);
   T.Fields.Last.Rules.ValueList := 'S,M,E';
@@ -6516,6 +7458,8 @@ begin
   T.Fields.Last.Aliases.CommaText := 'moment,momento';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Observer ID
   AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
@@ -6523,6 +7467,22 @@ begin
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
   T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
   T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
+  // Observer
+  AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
+  T.Fields.Last.ExportName := 'observer';
+  T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Cloud cover
   AddField(T, 'cloud_cover', rscCloudCover, sdtInteger);
   T.Fields.Last.Rules.MinValue := 0;
@@ -6530,11 +7490,15 @@ begin
   T.Fields.Last.Aliases.CommaText := 'cloud cover,% clouds,cobertura de nuvens,% nuvens,nebulosidade,cloudiness';
   T.Fields.Last.MeasurementUnit := '%';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Temperature
   AddField(T, 'temperature', rscTemperatureC, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'temperature,temperatura';
   T.Fields.Last.MeasurementUnit := '°C';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Precipitation
   AddField(T, 'precipitation', rscPrecipitation, sdtList, False, 1);
   T.Fields.Last.Rules.ValueList := 'N,F,M,D,R';
@@ -6546,11 +7510,15 @@ begin
   T.Fields.Last.Aliases.CommaText := 'precipitation,precipitação';
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Rainfall
   AddField(T, 'rainfall', rscRainfallMm, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'rainfall,pluviosidade';
   T.Fields.Last.MeasurementUnit := 'mm';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Wind speed (bft)
   AddField(T, 'wind_speed_bft', rscWindBft, sdtInteger);
   T.Fields.Last.Rules.MinValue := 0;
@@ -6558,15 +7526,21 @@ begin
   T.Fields.Last.Aliases.CommaText := 'wind,vento,wind bft,wind beaufort,vento bft,vento beaufort';
   T.Fields.Last.MeasurementUnit := 'bft';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Wind speed (km/h)
   AddField(T, 'wind_speed_kmh', rscWindKmH, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'wind speed,velocidade do vento,wind km/h,vento km/h';
   T.Fields.Last.MeasurementUnit := 'km/h';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Wind direction
   AddField(T, 'wind_direction', rscWindDirection, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'N,S,E,W,NE,NW,SE,SW';
   T.Fields.Last.Aliases.CommaText := 'wind direction,direção do vento';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Relative humidity
   AddField(T, 'relative_humidity', rscRelativeHumidity, sdtFloat);
   T.Fields.Last.Rules.MinValue := 0;
@@ -6574,16 +7548,23 @@ begin
   T.Fields.Last.Aliases.CommaText := 'humidity,umidade,relative humidity,umidade relativa';
   T.Fields.Last.MeasurementUnit := '%';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Atmospheric pressure
   AddField(T, 'atmospheric_pressure', rscAtmosphericPressureH, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'pressure,pressão,atmospheric pressure,pressão atmosférica';
   T.Fields.Last.MeasurementUnit := 'mPa';
   T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
   T.Fields.Last.DisplayWidth := 300;
   T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCountNotNull;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscNotes;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
