@@ -40,6 +40,10 @@ type
   function GetRankFromSite(aSiteKey: Integer): String;
   function GetRankFromTaxon(aTaxonKey: Integer): Integer;
   function GetRank(const aKey: Integer): TZooRank;
+  function GetValidTaxon(const aTaxonName: String): Integer;
+  function GetValidBotanicalTaxon(const aTaxonName: String): Integer;
+  function GetPersonKey(const aName: String): Integer;
+  function GetInstitutionKey(const aName: String): Integer;
   function GetProjectBalance(const aProjectId: Integer): Double;
   function GetProjectTotalBudget(const aProjectId: Integer): Double;
   function GetRubricBalance(const aRubricId: Integer): Double;
@@ -250,8 +254,8 @@ begin
         S := aNameValue;
 
       Add('SELECT site_id FROM gazetteer');
-      Add('WHERE ((site_name = :aname)');
-      Add('   OR (abbreviation = :aname))');
+      Add('WHERE ((abbreviation = :aname)');
+      Add('   OR (site_name = :aname))');
       if aCountryId > 0 then
         Add('  AND (country_id = :country_id)');
       if aStateId > 0 then
@@ -464,6 +468,110 @@ begin
   //    Result := TZooRank(i);
   //    Break;
   //  end;
+end;
+
+function GetValidTaxon(const aTaxonName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT taxon_id, valid_id FROM zoo_taxa WHERE scientific_name = :aname');
+    ParamByName('aname').AsString := aTaxonName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+    begin
+      if FieldByName('valid_id').AsInteger > 0 then
+        Result := FieldByName('valid_id').AsInteger
+      else
+        Result := FieldByName('taxon_id').AsInteger;
+    end
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetValidBotanicalTaxon(const aTaxonName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT taxon_id, valid_id FROM botanic_taxa WHERE scientific_name = :aname');
+    ParamByName('aname').AsString := aTaxonName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+    begin
+      if FieldByName('valid_id').AsInteger > 0 then
+        Result := FieldByName('valid_id').AsInteger
+      else
+        Result := FieldByName('taxon_id').AsInteger;
+    end
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetPersonKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT person_id FROM people');
+    Add('WHERE (abbreviation = :aname) OR (citation = :aname) OR (full_name = :aname)');
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+      Result := FieldByName('person_id').AsInteger
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetInstitutionKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT institution_id FROM institutions');
+    Add('WHERE (abbreviation = :aname) OR (full_name = :aname)');
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+      Result := FieldByName('institution_id').AsInteger
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 procedure GetTimeStamp(aField: TField; aTimeStampField: TDateTime);

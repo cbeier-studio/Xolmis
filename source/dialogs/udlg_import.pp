@@ -1253,14 +1253,14 @@ begin
     // Select the Importer
     case FFileFormat of
       iftCSV,
-      iftTSV: Importer := TCSVImporter.Create;
+      iftTSV:           Importer := TCSVImporter.Create;
       iftExcel,
-      iftExcelOOXML: Importer := TXLSXImporter.Create;
-      iftOpenDocument: Importer := TODSImporter.Create;
+      iftExcelOOXML:    Importer := TXLSXImporter.Create;
+      iftOpenDocument:  Importer := TODSImporter.Create;
       iftJSON,
-      iftNDJSON: Importer := TJSONImporter.Create;
-      iftDBF: Importer := TDBFImporter.Create;
-      iftXML: Importer := TXMLImporter.Create;
+      iftNDJSON:        Importer := TJSONImporter.Create;
+      iftDBF:           Importer := TDBFImporter.Create;
+      iftXML:           Importer := TXMLImporter.Create;
     else
       raise EImportError.CreateFmt(rsErrorFileFormatNotSupported, [Ext]);
     end;
@@ -1778,7 +1778,7 @@ end;
 
 procedure TdlgImport.sbCancelClick(Sender: TObject);
 begin
-  if FImportSettings.Cancel.IsCancellationRequested = False then
+  if (nbPages.PageIndex = 4) and (FImportSettings.Cancel.IsCancellationRequested = False) then
   begin
     TCancellationToken(FImportSettings.Cancel).RequestCancel;
   end

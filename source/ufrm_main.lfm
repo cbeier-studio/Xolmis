@@ -1014,7 +1014,7 @@ object frmMain: TfrmMain
     end
     object actImportXolmisMobile: TAction
       Category = 'Import'
-      Caption = 'Xolmis mobile'
+      Caption = 'Xolmis Mobile'
       ShortCut = 16461
       OnExecute = actImportXolmisMobileExecute
     end

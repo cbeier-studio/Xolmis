@@ -790,7 +790,7 @@ begin
       for Egg in Nest.FEggList do
       begin
         aEgg.Clear;
-        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Nest.FObserver);
+        aObserverId := GetPersonKey(Nest.FObserver);
         aDate := Egg.FSampleTime;
 
         Repo.FindByFieldNumber(Nest.FNestKey, Egg.FFieldNumber, DateToStr(aDate), aObserverId, aEgg);
@@ -889,7 +889,7 @@ begin
             ImportWeather(Inventory);
 
             mProgress.Lines.Add(Format(rsMobileSurveyUpdated,
-              [aSurveyKey, GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
+              [aSurveyKey, GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
           end
           else
           begin
@@ -912,7 +912,7 @@ begin
             ImportWeather(Inventory);
 
             mProgress.Lines.Add(Format(rsMobileSurveyCreated,
-              [aSurveyKey, GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
+              [aSurveyKey, GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
           end;
         end;
 
@@ -1020,7 +1020,7 @@ begin
             ImportEggs(Nest);
 
             mProgress.Lines.Add(Format(rsMobileNestUpdated,
-              [aNestKey, GetName('nests', COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
+              [aNestKey, GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
           end
           else
           begin
@@ -1038,7 +1038,7 @@ begin
             ImportEggs(Nest);
 
             mProgress.Lines.Add(Format(rsMobileNestCreated,
-              [aNestKey, GetName('nests', COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
+              [aNestKey, GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
           end;
         end;
 
@@ -1107,8 +1107,8 @@ begin
       for Poi in Species.FPoiList do
       begin
         aPoi.Clear;
-        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Species.FSpeciesName);
-        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+        aTaxonId := GetValidTaxon(Species.FSpeciesName);
+        aObserverId := GetPersonKey(Inventory.FObserver);
 
         aRepo.FindBy(COL_POI_NAME, Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]), aPoi);
         if aPoi.Id > 0 then
@@ -1178,7 +1178,7 @@ begin
       for Revision in Nest.FRevisionList do
       begin
         aRevision.Clear;
-        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Nest.FObserver);
+        aObserverId := GetPersonKey(Nest.FObserver);
         aDate := Revision.FSampleTime;
         aTime := Revision.FSampleTime;
 
@@ -1220,6 +1220,7 @@ var
   aRepo: TSightingRepository;
   aSighting, aOldSighting: TSighting;
   aTaxonId, aObserverId, aLocalityId: Integer;
+  Msg: String;
 begin
   if Inventory.FSpeciesList.Count > 0 then
   begin
@@ -1230,12 +1231,12 @@ begin
       for Species in Inventory.FSpeciesList do
       begin
         aSighting.Clear;
-        aTaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Species.FSpeciesName);
-        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+        aTaxonId := GetValidTaxon(Species.FSpeciesName);
+        aObserverId := GetPersonKey(Inventory.FObserver);
         aLocalityId := GetSiteKey(Inventory.FLocalityName);
 
         aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, aObserverId, aSighting);
-        if aSighting.Id > 0 then
+        if not aSighting.IsNew then
         begin
           // if sighting exists, update it
           Species.FSightingKey := aSighting.Id;
@@ -1247,6 +1248,8 @@ begin
             aSighting.ObserverId := aObserverId;
             if aSighting.SightingDate = NullDate then
               aSighting.SightingDate := Inventory.FStartTime;
+            if not aSighting.Validate(Msg) then
+              raise Exception.Create(Msg);
             aRepo.Update(aSighting);
             // write record history
             WriteDiff(tbSightings, aOldSighting, aSighting, rsEditedByImport);
@@ -1263,6 +1266,8 @@ begin
           aSighting.ObserverId := aObserverId;
           if aSighting.SightingDate = NullDate then
             aSighting.SightingDate := Inventory.FStartTime;
+          if not aSighting.Validate(Msg) then
+            raise Exception.Create(Msg);
           aRepo.Insert(aSighting);
           Species.FSightingKey := aSighting.Id;
           // write record history
@@ -1330,7 +1335,7 @@ begin
             end;
 
             mProgress.Lines.Add(Format(rsMobileSpecimenUpdated,
-              [aSpecimenKey, GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
+              [aSpecimenKey, GetName(TBL_SPECIMENS, COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
           end
           else
           begin
@@ -1342,7 +1347,7 @@ begin
             WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByImport);
 
             mProgress.Lines.Add(Format(rsMobileSpecimenCreated,
-              [aSpecimenKey, GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
+              [aSpecimenKey, GetName(TBL_SPECIMENS, COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
           end;
         end;
 
@@ -1443,7 +1448,7 @@ begin
         aVegetation.Clear;
         aDate := Vegetation.FSampleTime;
         aTime := Vegetation.FSampleTime;
-        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+        aObserverId := GetPersonKey(Inventory.FObserver);
 
         Repo.FindBySurvey(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), Vegetation.FLongitude, Vegetation.FLatitude, aObserverId, aVegetation);
         if (aVegetation.Id > 0) then
@@ -1497,7 +1502,7 @@ begin
         aWeather.Clear;
         aDate := Weather.FSampleTime;
         aTime := Weather.FSampleTime;
-        aObserverId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+        aObserverId := GetPersonKey(Inventory.FObserver);
 
         Repo.FindBySurvey(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), aObserverId, aWeather);
         if (aWeather.Id > 0) then

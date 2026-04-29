@@ -271,10 +271,12 @@ const
   MOBILE_QUALITATIVE_TIMED: String = 'Fixed-Time';
   MOBILE_QUALITATIVE_INTERVAL: String = 'Interval';
   MOBILE_MACKINNON_LIST: String = 'Mackinnon';
-  MOBILE_TRANSECTION_COUNT: String = 'Line';
+  MOBILE_TRANSECT_COUNT: String = 'Line';
   MOBILE_POINT_COUNT: String = 'Point';
   MOBILE_BANDING: String = 'Banding';
   MOBILE_CASUAL: String = 'Casual';
+  MOBILE_DETECTION_TRANSECT: String = 'T-Detection';
+  MOBILE_DETECTION_POINT: String = 'P-Detection';
 
 implementation
 
@@ -389,7 +391,7 @@ end;
 
 procedure TMobileSpecies.ToSighting(aSighting: TSighting);
 begin
-  aSighting.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
+  aSighting.TaxonId := GetValidTaxon(FSpeciesName);
   aSighting.OutOfSample := FIsOutOfInventory;
   aSighting.SubjectTally := FCount;
   aSighting.Notes := FNotes;
@@ -661,21 +663,25 @@ begin
   aSurvey.SampleId := FId;
   case FType of
     invQualitativeFree:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_FREE);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_FREE);
     invQualitativeTimed:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_TIMED);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_TIMED);
     invQualitativeInterval:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_INTERVAL);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_INTERVAL);
     invMackinnonList:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_MACKINNON_LIST);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_MACKINNON_LIST);
     invTransectCount:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_TRANSECTION_COUNT);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_TRANSECT_COUNT);
     invPointCount:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_POINT_COUNT);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_POINT_COUNT);
     invBanding:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_BANDING);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_BANDING);
     invCasual:
-      aSurvey.MethodId := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_CASUAL);
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_CASUAL);
+    invTransectDetection:
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_DETECTION_TRANSECT);
+    invPointDetection:
+      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_DETECTION_POINT);
   end;
   //aSurvey.Duration := FDuration;
   aSurvey.SurveyDate := FStartTime;
@@ -733,7 +739,7 @@ begin
   aEgg.Width := FWidth;
   aEgg.Length := FLength;
   aEgg.Mass := FMass;
-  aEgg.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
+  aEgg.TaxonId := GetValidTaxon(FSpeciesName);
 end;
 
 { TMobileNestRevision }
@@ -902,13 +908,19 @@ begin
 end;
 
 procedure TMobileNest.ToNest(aNest: TNest);
+var
+  S: Integer;
 begin
   aNest.FieldNumber := FFieldNumber;
-  aNest.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
+  aNest.TaxonId := GetValidTaxon(FSpeciesName);
   aNest.LocalityId := GetSiteKey(FLocalityName);
   aNest.Longitude := FLongitude;
   aNest.Latitude := FLatitude;
-  aNest.SupportPlant1Id := GetKey('botanic_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSupport);
+  S := GetValidBotanicalTaxon(FSupport);
+  if S > 0 then
+    aNest.SupportPlant1Id := S
+  else
+    aNest.OtherSupport := FSupport;
   aNest.HeightAboveGround := FHeightAboveGround;
   aNest.FoundDate := FFoundTime;
   aNest.LastDate := FLastTime;
@@ -981,7 +993,7 @@ begin
   aSpecimen.SampleType := FType;
   aSpecimen.Longitude := FLongitude;
   aSpecimen.Latitude := FLatitude;
-  aSpecimen.TaxonId := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, FSpeciesName);
+  aSpecimen.TaxonId := GetValidTaxon(FSpeciesName);
   aSpecimen.LocalityId := GetSiteKey(FLocality);
   aSpecimen.Notes := FNotes;
 end;

@@ -125,8 +125,8 @@ type
     CaptureType: String;
     BandSize: String;
     BandNumber: Integer;
-    RightLeg: String;
-    LeftLeg: String;
+    RightTarsus: String;
+    LeftTarsus: String;
     SpeciesCode: String;
     SpeciesName: String;
     CloacalProtuberance: String;
@@ -153,8 +153,8 @@ type
     RemovedBand: String;
     Photographer1: String;
     Photographer2: String;
-    StartPhotoNumber: Integer;
-    EndPhotoNumber: Integer;
+    InitialPhotoNumber: Integer;
+    FinalPhotoNumber: Integer;
     CameraName: String;
     PhotoNameFormula: String;
     SkullLength: Double;
@@ -189,7 +189,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_system, utils_validations,
-  data_types, data_management, data_getvalue, data_consts, data_services,
+  data_types, data_getvalue, data_consts, data_services,
   models_users, models_taxonomy, models_birds, models_geo, models_bands,
   models_sampling_plots, io_csv,
   udm_main, udlg_progress;
@@ -305,7 +305,7 @@ begin
 
           try
             Taxon := TTaxon.Create();
-            TaxonRepo.GetById(GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, Reg.SpeciesName), Taxon);
+            TaxonRepo.GetById(GetValidTaxon(Reg.SpeciesName), Taxon);
             NetStation := TSamplingPlot.Create;
             Toponimo := TSite.Create;
             NetSite := TNetEffort.Create;
@@ -389,7 +389,7 @@ begin
             else
               CodAnilha := Band.Id;
 
-            IndividualRepo.FindByBand(Taxon.Id, CodAnilha, Reg.RightLeg, Reg.LeftLeg, Individuo);
+            IndividualRepo.FindByBand(Taxon.Id, CodAnilha, Reg.RightTarsus, Reg.LeftTarsus, Individuo);
             if (Individuo.IsNew) then
             begin
               // If does not exist, insert the individual
@@ -399,8 +399,8 @@ begin
                 Individuo.BandName := Reg.RemovedBand
               else
                 Individuo.BandName := Format('%s %d', [Reg.BandSize, Reg.BandNumber]);
-              Individuo.RightTarsus := Reg.RightLeg;
-              Individuo.LeftTarsus := Reg.LeftLeg;
+              Individuo.RightTarsus := Reg.RightTarsus;
+              Individuo.LeftTarsus := Reg.LeftTarsus;
               Individuo.UserInserted := ActiveUser.Id;
 
               IndividualRepo.Insert(Individuo);
@@ -422,8 +422,8 @@ begin
               Captura.NetId := NetSite.Id;
               Captura.Latitude := NetLat;
               Captura.Longitude := NetLong;
-              Captura.BanderId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Bander);
-              Captura.AnnotatorId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Recorder);
+              Captura.BanderId := GetPersonKey(Reg.Bander);
+              Captura.AnnotatorId := GetPersonKey(Reg.Recorder);
               case Reg.SubjectStatus of
                 'N': Captura.SubjectStatus := sstNormal;
                 'I': Captura.SubjectStatus := sstInjured;
@@ -478,22 +478,22 @@ begin
               begin
                 Captura.SubjectPhotographed := True;
                 Captura.Photographer1Id :=
-                  GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Photographer1);
+                  GetPersonKey(Reg.Photographer1);
                 if (Trim(Reg.Photographer2) <> EmptyStr) then
                   Captura.Photographer2Id :=
-                    GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Reg.Photographer2);
+                    GetPersonKey(Reg.Photographer2);
               end else
               begin
                 Captura.SubjectPhotographed := False;
                 Captura.Photographer1Id := 0;
                 Captura.Photographer2Id := 0;
               end;
-              Captura.InitialPhotoNumber := IntToStr(Reg.StartPhotoNumber);
-              Captura.FinalPhotoNumber := IntToStr(Reg.EndPhotoNumber);
+              Captura.InitialPhotoNumber := IntToStr(Reg.InitialPhotoNumber);
+              Captura.FinalPhotoNumber := IntToStr(Reg.FinalPhotoNumber);
               Captura.CameraName := Reg.CameraName;
               Captura.RemovedBandId := RemovedBand.Id;
-              Captura.RightTarsus := Reg.RightLeg;
-              Captura.LeftTarsus := Reg.LeftLeg;
+              Captura.RightTarsus := Reg.RightTarsus;
+              Captura.LeftTarsus := Reg.LeftTarsus;
               Captura.Escaped := Reg.Escaped;
               Captura.Notes := Reg.Notes;
               Captura.UserInserted := ActiveUser.Id;
@@ -1370,8 +1370,8 @@ begin
   CaptureType := EmptyStr;
   BandSize := EmptyStr;
   BandNumber := 0;
-  RightLeg := EmptyStr;
-  LeftLeg := EmptyStr;
+  RightTarsus := EmptyStr;
+  LeftTarsus := EmptyStr;
   SpeciesCode := EmptyStr;
   SpeciesName := EmptyStr;
   CloacalProtuberance := EmptyStr;
@@ -1398,8 +1398,8 @@ begin
   RemovedBand := EmptyStr;
   Photographer1 := EmptyStr;
   Photographer2 := EmptyStr;
-  StartPhotoNumber := 0;
-  EndPhotoNumber := 0;
+  InitialPhotoNumber := 0;
+  FinalPhotoNumber := 0;
   CameraName := EmptyStr;
   SkullLength := 0.0;
   ExposedCulmen := 0.0;
@@ -1443,8 +1443,8 @@ begin
     BandSize := AnsiUpperCase(CSV.FieldByName('BAND_CODE').AsString);
   if (BandSize <> '') and (CaptureType <> 'U') then
     BandNumber := CSV.FieldByName('BAND NUMBER').AsInteger;
-  RightLeg := AnsiUpperCase(CSV.FieldByName('RIGHT LEG').AsString);
-  LeftLeg := AnsiUpperCase(CSV.FieldByName('LEFT LEG').AsString);
+  RightTarsus := AnsiUpperCase(CSV.FieldByName('RIGHT LEG').AsString);
+  LeftTarsus := AnsiUpperCase(CSV.FieldByName('LEFT LEG').AsString);
   SpeciesName := CSV.FieldByName('SPECIES NAME').AsString;
   CloacalProtuberance := AnsiUpperCase(CSV.FieldByName('CP').AsString);
   BroodPatch := AnsiUpperCase(CSV.FieldByName('BP').AsString);
@@ -1482,9 +1482,9 @@ begin
     Photographer1 := Trim(ExtractWord(1, Photographer1, ['/']));
   end;
   if (not CSV.FieldByName('INITIAL PHOTO NUMBER').IsNull) then
-    StartPhotoNumber := CSV.FieldByName('INITIAL PHOTO NUMBER').AsInteger;
+    InitialPhotoNumber := CSV.FieldByName('INITIAL PHOTO NUMBER').AsInteger;
   if (not CSV.FieldByName('FINAL PHOTO NUMBER').IsNull) then
-    EndPhotoNumber := CSV.FieldByName('FINAL PHOTO NUMBER').AsInteger;
+    FinalPhotoNumber := CSV.FieldByName('FINAL PHOTO NUMBER').AsInteger;
   CameraName := CSV.FieldByName('CAMERA NAME').AsString;
   PhotoNameFormula := CSV.FieldByName('PHOTO NAME FORMULA').AsString;
   if (not CSV.FieldByName('CRANIO').IsNull) then

@@ -118,7 +118,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('taxon').AsString), Taxon);
+            TaxonRepo.GetById(GetValidTaxon(CSV.FieldByName('taxon').AsString), Taxon);
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
@@ -126,7 +126,7 @@ begin
 
           // Get observer
           if (CSV.FieldByName('observer').AsString <> EmptyStr) then
-            FObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
+            FObserverId := GetPersonKey(CSV.FieldByName('observer').AsString);
 
 
           // Check if the nest exists
@@ -142,8 +142,8 @@ begin
             Nest.Longitude := CSV.FieldByName('longitude').AsFloat;
             Nest.TaxonId := Taxon.Id;
             Nest.SupportType := CSV.FieldByName('support_type').AsString;
-            Nest.SupportPlant1Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_1').AsString);
-            Nest.SupportPlant2Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('support_plant_2').AsString);
+            Nest.SupportPlant1Id := GetValidBotanicalTaxon(CSV.FieldByName('support_plant_1').AsString);
+            Nest.SupportPlant2Id := GetValidBotanicalTaxon(CSV.FieldByName('support_plant_2').AsString);
             Nest.OtherSupport := CSV.FieldByName('other_support').AsString;
             Nest.HeightAboveGround := CSV.FieldByName('height_above_ground').AsFloat;
             //Nest.ProjectId := GetKey('projects', 'project_id', 'project_title', CSV.FieldByName('project').AsString);
@@ -296,7 +296,7 @@ begin
 
         if Trim(CSV.FieldByName('observer').AsString) <> EmptyStr then
         begin
-          aObserver := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
+          aObserver := GetPersonKey(CSV.FieldByName('observer').AsString);
         end
         else
           aObserver := 0;
@@ -308,7 +308,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('nidoparasite').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
+            TaxonRepo.GetById(GetValidTaxon(CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then
@@ -458,7 +458,7 @@ begin
 
         if Trim(CSV.FieldByName('observer').AsString) <> EmptyStr then
         begin
-          aObserver := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_ABBREVIATION, CSV.FieldByName('observer').AsString);
+          aObserver := GetPersonKey(CSV.FieldByName('observer').AsString);
         end
         else
           aObserver := 0;
@@ -470,7 +470,7 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CSV.FieldByName('nidoparasite').AsString), Taxon);
+            TaxonRepo.GetById(GetValidTaxon(CSV.FieldByName('nidoparasite').AsString), Taxon);
 
           // Get nest
           if (CSV.FieldByName('nest').AsString <> EmptyStr) then

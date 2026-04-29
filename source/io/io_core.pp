@@ -544,12 +544,20 @@ var
   FS: TFormatSettings;
   ConvertedValue: Variant;
   dummyB: Boolean;
+  y, m: Integer;
 begin
   Result := TXRow.Create;
 
   FS := DefaultFormatSettings;
   FS.ShortDateFormat := FOptions.DateFormat;
   FS.DecimalSeparator := FOptions.DecimalSeparator;
+  if FOptions.DecimalSeparator = ',' then
+    FS.ThousandSeparator := '.'
+  else
+    FS.ThousandSeparator := ',';
+
+  TrueBoolStrs := ['true', '1', 'sim', 'yes', 'S', 'Y', 'verdadeiro', 'V', 'T', 'sí', 'on', 'wahr'];
+  FalseBoolStrs := ['false', '0', 'não', 'no', 'N', 'falso', 'F', 'off', 'falsch'];
 
   for I := 0 to FMap.Count - 1 do
   begin
@@ -599,12 +607,8 @@ begin
       DestValue := AnsiProperCase(DestValue, [' ']);
     if vtrBoolean in Mapping.Transformations then
     begin
-      if SameText(DestValue, 'true') or (DestValue = '1') or SameText(DestValue, 'sim') or
-        SameText(DestValue, 'yes') or SameText(DestValue, 'S') or SameText(DestValue, 'Y') or
-        SameText(DestValue, 'verdadeiro') or SameText(DestValue, 'T') then
-        DestValue := 'True'
-      else
-        DestValue := 'False';
+      if TryStrToBool(DestValue, dummyB) then
+        DestValue := BoolToStr(dummyB);
     end;
     if vtrScale in Mapping.Transformations then
     begin
@@ -629,25 +633,51 @@ begin
     end;
     if vtrExtractDay in Mapping.Transformations then
     begin
-      if TryStrToDate(DestValue, dateValue, FS) then
+      if (TryStrToDate(DestValue, dateValue, FS) or TryParseDateFlexible(DestValue, dateValue)) then
         DestValue := IntToStr(DayOf(dateValue));
     end;
     if vtrExtractMonth in Mapping.Transformations then
     begin
-      if TryStrToDate(DestValue, dateValue, FS) then
+      if (TryStrToDate(DestValue, dateValue, FS) or TryParseDateFlexible(DestValue, dateValue)) then
         DestValue := IntToStr(MonthOf(dateValue));
     end;
     if vtrExtractYear in Mapping.Transformations then
     begin
-      if TryStrToDate(DestValue, dateValue, FS) then
+      if (TryStrToDate(DestValue, dateValue, FS) or TryParseDateFlexible(DestValue, dateValue)) then
         DestValue := IntToStr(YearOf(dateValue));
     end;
 
     // 4. Lookup (if it is set)
     if (Mapping.LookupTable <> tbNone) then
     begin
-      DestValue := IntToStr(GetKey(TABLE_NAMES[Mapping.LookupTable], PRIMARY_KEY_FIELDS[Mapping.LookupTable],
-        Mapping.LookupField, DestValue));
+      if (Mapping.LookupTable = tbZooTaxa) and (Mapping.LookupField = COL_SCIENTIFIC_NAME) then
+        // Get valid taxon ID
+        DestValue := IntToStr(GetValidTaxon(DestValue))
+      else
+      if (Mapping.LookupTable = tbBotanicTaxa) and (Mapping.LookupField = COL_SCIENTIFIC_NAME) then
+        // Get valid botanical taxon ID
+        DestValue := IntToStr(GetValidBotanicalTaxon(DestValue))
+      else
+      if (Mapping.LookupTable = tbGazetteer) and
+        ((Mapping.LookupField = COL_ABBREVIATION) or (Mapping.LookupField = COL_SITE_NAME) or
+          (Mapping.LookupField = COL_FULL_NAME)) then
+        // Get locality ID
+        DestValue := IntToStr(GetSiteKey(DestValue))
+      else
+      if (Mapping.LookupTable = tbPeople) and
+        ((Mapping.LookupField = COL_ABBREVIATION) or (Mapping.LookupField = COL_CITATION) or
+          (Mapping.LookupField = COL_FULL_NAME)) then
+        // Get person ID
+        DestValue := IntToStr(GetPersonKey(DestValue))
+      else
+      if (Mapping.LookupTable = tbInstitutions) and
+        ((Mapping.LookupField = COL_ABBREVIATION) or (Mapping.LookupField = COL_FULL_NAME)) then
+        // Get institution ID
+        DestValue := IntToStr(GetInstitutionKey(DestValue))
+      else
+        // Get record ID from other tables
+        DestValue := IntToStr(GetKey(TABLE_NAMES[Mapping.LookupTable], PRIMARY_KEY_FIELDS[Mapping.LookupTable],
+          Mapping.LookupField, DestValue));
       if DestValue = '0' then
       begin
         case Mapping.NullHandling of
@@ -856,7 +886,21 @@ begin
             end;
           end;
 
-        sdtLookup, sdtList, sdtText, sdtMonthYear:
+        sdtMonthYear:
+          begin
+            if not TryParseMonthYearFlexible(DestValue, y, m) then
+            begin
+              case Mapping.TypeErrorHandling of
+                tehIgnore: ;
+                tehAbort:
+                  raise Exception.CreateFmt(rsInvalidDateTimeForField, [DestValue, Mapping.TargetField]);
+                //tehConvert:
+                //  ConvertedValue := 0; // fallback to epoch
+              end;
+            end;
+          end;
+
+        sdtLookup, sdtList, sdtText:
           begin
             ConvertedValue := DestValue;
           end;

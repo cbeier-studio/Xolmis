@@ -12546,8 +12546,8 @@ msgid "Import &wizard"
 msgstr "Assistente de &importação"
 
 #: tfrmmain.actimportxolmismobile.caption
-msgid "Xolmis mobile"
-msgstr "Xolmis mobile"
+msgid "Xolmis Mobile"
+msgstr "Xolmis Mobile"
 
 #: tfrmmain.actinsertrecord.caption
 msgctxt "tfrmmain.actinsertrecord.caption"

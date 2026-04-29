@@ -145,7 +145,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="500"/>
+      <BuildNr Value="501"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
