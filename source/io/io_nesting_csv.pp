@@ -47,8 +47,8 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_system, utils_fullnames, utils_conversions,
-  data_types, data_getvalue, data_consts, io_csv,
+  utils_locale, utils_global, utils_dialogs, utils_system, utils_fullnames, utils_conversions, utils_validations,
+  data_types, data_getvalue, data_consts, data_columns, io_csv,
   models_users, models_taxonomy, models_geo, models_breeding,
   udm_main, udlg_progress;
 
@@ -62,6 +62,8 @@ var
   NestRepo: TNestRepository;
   Nest: TNest;
   FObserverId: Integer;
+  dummyDT: TDateTime;
+  FS: TFormatSettings;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -82,6 +84,9 @@ begin
     dlgProgress.Title := rsTitleImportFile;
     dlgProgress.Text := rsLoadingCSVFile;
   end;
+
+  FS := DefaultFormatSettings;
+
   TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
   NestRepo := TNestRepository.Create(DMM.sqlCon);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
@@ -118,28 +123,45 @@ begin
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
-            TaxonRepo.GetById(GetValidTaxon(CSV.FieldByName('taxon').AsString), Taxon);
+            TaxonRepo.GetById(GetValidTaxon(CSV.FieldByName('taxon').AsString), Taxon)
+          else
+            raise Exception.CreateFmt(rsErrorInvalidIntegerForField, [CSV.FieldByName('taxon').AsString, rscTaxonID]);
 
           // Get locality
           if (CSV.FieldByName('locality').AsString <> EmptyStr) then
-            SiteRepo.GetById(GetSiteKey(CSV.FieldByName('locality').AsString), Toponimo);
+            SiteRepo.GetById(GetSiteKey(CSV.FieldByName('locality').AsString), Toponimo)
+          else
+            raise Exception.CreateFmt(rsErrorInvalidIntegerForField, [CSV.FieldByName('locality').AsString, rscLocalityID]);
 
           // Get observer
           if (CSV.FieldByName('observer').AsString <> EmptyStr) then
-            FObserverId := GetPersonKey(CSV.FieldByName('observer').AsString);
+            FObserverId := GetPersonKey(CSV.FieldByName('observer').AsString)
+          else
+            raise Exception.CreateFmt(rsErrorInvalidIntegerForField, [CSV.FieldByName('observer').AsString, rscObserverID]);
 
 
           // Check if the nest exists
           NestRepo.FindByFieldNumber(CSV.FieldByName('field_number').AsString, Taxon.Id, Toponimo.Id,
                     StrToDate(CSV.FieldByName('found_day').AsString), Nest);
-          if (Nest.Id = 0) then
+          if (Nest.IsNew) then
           begin
             // if not, create a new nest
             Nest.FieldNumber := CSV.FieldByName('field_number').AsString;
             Nest.ObserverId := FObserverId;
             Nest.LocalityId := Toponimo.Id;
-            Nest.Latitude := CSV.FieldByName('latitude').AsFloat;
-            Nest.Longitude := CSV.FieldByName('longitude').AsFloat;
+            if ((xSettings.AutoFillCoordinates) and
+              (CSV.FieldByName('longitude').AsFloat = 0) and (CSV.FieldByName('latitude').AsFloat = 0)) then
+            begin
+              Nest.Latitude := Toponimo.Latitude;
+              Nest.Longitude := Toponimo.Longitude;
+              Nest.CoordinatePrecision := cpReference;
+            end
+            else
+            begin
+              Nest.Latitude := CSV.FieldByName('latitude').AsFloat;
+              Nest.Longitude := CSV.FieldByName('longitude').AsFloat;
+              Nest.CoordinatePrecision := cpExact;
+            end;
             Nest.TaxonId := Taxon.Id;
             Nest.SupportType := CSV.FieldByName('support_type').AsString;
             Nest.SupportPlant1Id := GetValidBotanicalTaxon(CSV.FieldByName('support_plant_1').AsString);
@@ -166,8 +188,16 @@ begin
             Nest.ActiveDays := Nest.IncubationDays + Nest.NestlingDays;
             Nest.NestFate := StrToNestFate(CSV.FieldByName('nest_fate').AsString);
             Nest.NestProductivity := CSV.FieldByName('productivity').AsInteger;
-            Nest.FoundDate := StrToDate(CSV.FieldByName('found_day').AsString);
-            Nest.LastDate := StrToDate(CSV.FieldByName('last_day_active').AsString);
+            if (TryStrToDate(CSV.FieldByName('found_day').AsString, dummyDT, FS) or
+              TryParseDateFlexible(CSV.FieldByName('found_day').AsString, dummyDT)) then
+              Nest.FoundDate := dummyDT
+            else
+              raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('found_day').AsString, rscFoundDate]);
+            if (TryStrToDate(CSV.FieldByName('last_day_active').AsString, dummyDT, FS) or
+              TryParseDateFlexible(CSV.FieldByName('last_day_active').AsString, dummyDT)) then
+              Nest.LastDate := dummyDT
+            else
+              raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('last_day_active').AsString, rscLastDateActive]);
             Nest.Description := CSV.FieldByName('description').AsString;
             Nest.FullName := GetNestFullName(Nest.FoundDate, Nest.TaxonId, Nest.LocalityId, Nest.FieldNumber);
             Nest.UserInserted := ActiveUser.Id;

@@ -327,7 +327,7 @@ begin
     Transaction := DMM.sqlTrans;
 
     Add('SELECT COUNT(image_id) AS counter FROM images');
-    Add('WHERE (image_filename NOTNULL)');
+    Add('WHERE (file_path NOTNULL)');
     Open;
     ImageCounter := FieldByName('counter').AsInteger;
     Close;

@@ -150,11 +150,11 @@ begin
         RDate := FormatDateTime(MASK_ISO_DATE, Reg.RecordDate);
         Quant := StrToIntDef(Reg.Count, 0);
 
-        Toponimo := TSite.Create(GetKey('gazetteer', COL_SITE_ID, COL_EBIRD_NAME, Reg.LocationName));
+        Toponimo := TSite.Create(GetSiteKey(Reg.LocationName));
         Taxon := TTaxon.Create(GetValidTaxon(Reg.ScientificName));
         Survey := TSurvey.Create;
         Sight := TSighting.Create;
-        aMethod := GetKey('methods', COL_METHOD_ID, COL_EBIRD_NAME, Reg.Protocol);
+        aMethod := GetKey(TBL_METHODS, COL_METHOD_ID, COL_EBIRD_NAME, Reg.Protocol);
         try
           { Find survey (Amostragem) }
           SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.RecordDate, '', 0, Survey);
@@ -177,13 +177,25 @@ begin
 
           { Check if the record already exists }
           SightRepo.FindByCombo(Survey.Id, Taxon.Id, 0, Sight);
-          if Sight.Id = 0 then
+          if Sight.IsNew then
           begin
             { Insert record if it does not exist }
             Sight.SurveyId := Survey.Id;
             Sight.TaxonId := Taxon.Id;
             Sight.SightingDate := Reg.RecordDate;
             Sight.MethodId := aMethod;
+            if ((xSettings.AutoFillCoordinates) and (Reg.Longitude = 0) and (Reg.Latitude = 0)) then
+            begin
+              Sight.Latitude := Toponimo.Latitude;
+              Sight.Longitude := Toponimo.Longitude;
+              Sight.CoordinatePrecision := cpReference;
+            end
+            else
+            begin
+              Sight.Latitude := Reg.Latitude;
+              Sight.Longitude := Reg.Longitude;
+              Sight.CoordinatePrecision := cpExact;
+            end;
             Sight.Notes := Reg.ObservationDetails;
             Sight.BreedingStatus := Reg.BreedingCode;
             Sight.SubjectTally := Quant;
@@ -195,6 +207,18 @@ begin
           else
           begin
             { Update record if it exists }
+            if ((xSettings.AutoFillCoordinates) and (Reg.Longitude = 0) and (Reg.Latitude = 0)) then
+            begin
+              Sight.Latitude := Toponimo.Latitude;
+              Sight.Longitude := Toponimo.Longitude;
+              Sight.CoordinatePrecision := cpReference;
+            end
+            else
+            begin
+              Sight.Latitude := Reg.Latitude;
+              Sight.Longitude := Reg.Longitude;
+              Sight.CoordinatePrecision := cpExact;
+            end;
             Sight.Notes := Reg.ObservationDetails;
             Sight.BreedingStatus := Reg.BreedingCode;
             Sight.SubjectTally := Quant;

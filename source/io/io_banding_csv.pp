@@ -38,13 +38,13 @@ const
   NET_EFFORT_SCHEMA: String = 'LOCALITY;STATION;DATE;NET NUMBER;LONGITUDE;LATITUDE;' +
     'OPEN TIME 1;CLOSE TIME 1;OPEN TIME 2;CLOSE TIME 2;OPEN TIME 3;CLOSE TIME 3;OPEN TIME 4;CLOSE TIME 4;NOTES';
 
-  BANDING_SCHEMA: String = 'LOCALITY;STATION;DATA;RECORDER;BANDER;CAP TIME;NET SITE NAME;NEW_RECAP;' +
-    'BAND_CODE;BAND NUMBER;RIGHT LEG;LEFT LEG;SPECIES NAME;CP;BP;FAT;BODY MOLT;FF MOLT;FF WEAR;' +
+  BANDING_SCHEMA: String = 'LOCALITY;STATION;DATE;RECORDER;BANDER;CAP TIME;NET SITE NAME;TYPE;' +
+    'BAND CODE;BAND NUMBER;RIGHT TARSUS;LEFT TARSUS;SPECIES NAME;CP;BP;FAT;BODY MOLT;FF MOLT;FF WEAR;' +
     'RIGHT WING;FIRST SECONDARY;TAIL;TARSUS LENGTH;RIGHT TARSUS DIAMETER;WEIGHT;' +
     'MOLT LIMITS;SKULL;CYCLE CODE;HOW AGED;SEX;HOW SEXED;STATUS;ESCAPED;NOTES;' +
     'REMOVED BAND;PHOTOGRAPHER;INITIAL PHOTO NUMBER;FINAL PHOTO NUMBER;CAMERA NAME;PHOTO NAME FORMULA;' +
-    'CRANIO;CULMEN EXPOSTO;NP;LARGURA BICO;ALTURA BICO;SANGUE;PENAS;LONGITUDE;LATITUDE;' +
-    'KIPPS;GLICOSE;HEMOGLOBINA;HEMATOCRITO;GPS NUMBER';
+    'SKULL LENGTH;EXPOSED CULMEN;NP;BILL WIDTH;BILL HEIGHT;BLOOD SAMPLE;FEATHER SAMPLE;LONGITUDE;LATITUDE;' +
+    'KIPPS;GLUCOSE;HEMOGLOBIN;HEMATOCRIT;GPS NUMBER';
 
 type
   TWeatherSample = record
@@ -188,7 +188,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_system, utils_validations,
+  utils_locale, utils_global, utils_dialogs, utils_system, utils_validations, utils_conversions,
   data_types, data_getvalue, data_consts, data_services,
   models_users, models_taxonomy, models_birds, models_geo, models_bands,
   models_sampling_plots, io_csv,
@@ -317,12 +317,14 @@ begin
             aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
             // Get valid taxon
-            if Taxon.ValidId > 0 then
-              TaxonRepo.GetById(Taxon.ValidId, Taxon);
+            TaxonRepo.GetById(GetValidTaxon(Reg.SpeciesName), Taxon);
+
+            // Get toponym
+            SiteRepo.GetById(GetSiteKey(Reg.Locality), Toponimo);
 
             // Get net station and locality
             SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
-            if not NetStation.IsNew then
+            if not (NetStation.IsNew) and (Toponimo.IsNew) then
             begin
               SiteRepo.GetById(NetStation.LocalityId, Toponimo);
             end;
@@ -420,31 +422,41 @@ begin
               Captura.LocalityId := Toponimo.Id;
               Captura.NetStationId := NetStation.Id;
               Captura.NetId := NetSite.Id;
-              Captura.Latitude := NetLat;
-              Captura.Longitude := NetLong;
+              if ((xSettings.AutoFillCoordinates) and (NetLat = 0) and (NetLong = 0)) then
+              begin
+                if ((NetStation.Longitude <> 0) and (NetStation.Latitude <> 0)) then
+                begin
+                  Captura.Latitude := NetStation.Latitude;
+                  Captura.Longitude := NetStation.Longitude;
+                  Captura.CoordinatePrecision := cpApproximated;
+                end
+                else
+                if ((Survey.StartLongitude <> 0) and (Survey.StartLatitude <> 0)) then
+                begin
+                  Captura.Latitude := Survey.StartLatitude;
+                  Captura.Longitude := Survey.StartLongitude;
+                  Captura.CoordinatePrecision := cpApproximated;
+                end
+                else
+                if ((Toponimo.Longitude <> 0) and (Toponimo.Latitude <> 0)) then
+                begin
+                  Captura.Latitude := Toponimo.Latitude;
+                  Captura.Longitude := Toponimo.Longitude;
+                  Captura.CoordinatePrecision := cpReference;
+                end;
+              end
+              else
+              if ((NetLat <> 0) and (NetLong <> 0)) then
+              begin
+                Captura.Latitude := NetLat;
+                Captura.Longitude := NetLong;
+                Captura.CoordinatePrecision := cpExact;
+              end;
               Captura.BanderId := GetPersonKey(Reg.Bander);
               Captura.AnnotatorId := GetPersonKey(Reg.Recorder);
-              case Reg.SubjectStatus of
-                'N': Captura.SubjectStatus := sstNormal;
-                'I': Captura.SubjectStatus := sstInjured;
-                'W': Captura.SubjectStatus := sstWingSprain;
-                'X': Captura.SubjectStatus := sstStressed;
-                'D': Captura.SubjectStatus := sstDead;
-              end;
-              case Reg.CaptureType of
-                'N': Captura.CaptureType := cptNew;
-                'R': Captura.CaptureType := cptRecapture;
-                'S': Captura.CaptureType := cptSameDay;
-                'C': Captura.CaptureType := cptChangeBand;
-              else
-                Captura.CaptureType := cptUnbanded;
-              end;
-              case Reg.Sex of
-                'M': Captura.SubjectSex := sexMale;
-                'F': Captura.SubjectSex := sexFemale;
-              else
-                Captura.SubjectSex := sexUnknown;
-              end;
+              Captura.SubjectStatus := StrToSubjectStatus(Reg.SubjectStatus);
+              Captura.CaptureType := StrToCaptureType(Reg.CaptureType);
+              Captura.SubjectSex := StrToSex(Reg.Sex);
               Captura.HowSexed := Reg.HowSexed;
               Captura.BandId := Band.Id;
               Captura.Weight := Reg.Weight;
@@ -466,6 +478,7 @@ begin
               Captura.FlightFeathersWear := Reg.FlightFeathersWear;
               Captura.MoltLimits := Reg.MoltLimits;
               Captura.CycleCode := Reg.CycleCode;
+              { #todo : Get Age by Cycle Code and Molt Limits }
               Captura.HowAged := Reg.HowAged;
               Captura.SkullOssification := Reg.SkullOssification;
               Captura.KippsDistance := Reg.KippsIndex;
@@ -508,8 +521,29 @@ begin
               Captura.LocalityId := Toponimo.Id;
               Captura.NetStationId := NetStation.Id;
               Captura.NetId := NetSite.Id;
-              Captura.Latitude := NetLat;
-              Captura.Longitude := NetLong;
+              if ((xSettings.AutoFillCoordinates) and (NetLat = 0) and (NetLong = 0)) then
+              begin
+                if ((NetStation.Longitude <> 0) and (NetStation.Latitude <> 0)) then
+                begin
+                  Captura.Latitude := NetStation.Latitude;
+                  Captura.Longitude := NetStation.Longitude;
+                  Captura.CoordinatePrecision := cpApproximated;
+                end
+                else
+                if ((Toponimo.Longitude <> 0) and (Toponimo.Latitude <> 0)) then
+                begin
+                  Captura.Latitude := Toponimo.Latitude;
+                  Captura.Longitude := Toponimo.Longitude;
+                  Captura.CoordinatePrecision := cpReference;
+                end;
+              end
+              else
+              if ((NetLat <> 0) and (NetLong <> 0)) then
+              begin
+                Captura.Latitude := NetLat;
+                Captura.Longitude := NetLong;
+                Captura.CoordinatePrecision := cpExact;
+              end;
               Captura.CycleCode := Reg.CycleCode;
               Captura.Notes := Reg.Notes;
               Captura.UserUpdated := ActiveUser.Id;
@@ -811,8 +845,29 @@ begin
             Survey.MethodId := aMethod;
             Survey.NetStationId := NetStation.Id;
             Survey.LocalityId := Toponimo.Id;
-            Survey.StartLongitude := Reg.Longitude;
-            Survey.StartLatitude := Reg.Latitude;
+            if ((xSettings.AutoFillCoordinates) and (Reg.Longitude = 0) and (Reg.Latitude = 0)) then
+            begin
+              if ((NetStation.Longitude <> 0) and (NetStation.Latitude <> 0)) then
+              begin
+                Survey.StartLatitude := NetStation.Latitude;
+                Survey.StartLongitude := NetStation.Longitude;
+                Survey.CoordinatePrecision := cpApproximated;
+              end
+              else
+              if ((Toponimo.Longitude <> 0) and (Toponimo.Latitude <> 0)) then
+              begin
+                Survey.StartLatitude := Toponimo.Latitude;
+                Survey.StartLongitude := Toponimo.Longitude;
+                Survey.CoordinatePrecision := cpReference;
+              end;
+            end
+            else
+            if ((Reg.Longitude <> 0) and (Reg.Latitude <> 0)) then
+            begin
+              Survey.StartLatitude := Reg.Latitude;
+              Survey.StartLongitude := Reg.Longitude;
+              Survey.CoordinatePrecision := cpExact;
+            end;
             Survey.Notes := Reg.Notes;
 
             SurveyRepo.Insert(Survey);
@@ -1225,25 +1280,13 @@ begin
     Weather1.SamplingTime := CSV.FieldByName('WEATHER TIME 1').AsDateTime;
   { 10 - Weather Moment 1 }
   if (not CSV.FieldByName('WEATHER MOMENT 1').IsNull) then
-    case CSV.FieldByName('WEATHER MOMENT 1').AsString of
-      'S': Weather1.SamplingMoment := wmStart;
-      'M': Weather1.SamplingMoment := wmMiddle;
-      'E': Weather1.SamplingMoment := wmEnd;
-    else
-      Weather1.SamplingMoment := wmNone;
-    end;
+    Weather1.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 1').AsString);
   { 11 - Cloud Cover 1 }
   if (not CSV.FieldByName('CLOUD COVER 1').IsNull) then
     Weather1.CloudCover := CSV.FieldByName('CLOUD COVER 1').AsInteger;
   { 12 - Precipitation 1 }
   if (not CSV.FieldByName('PRECIPITATION 1').IsNull) then
-    case CSV.FieldByName('PRECIPITATION 1').AsString of
-      'N': Weather1.Precipitation := wpNone;
-      'F': Weather1.Precipitation := wpFog;
-      'M': Weather1.Precipitation := wpMist;
-      'D': Weather1.Precipitation := wpDrizzle;
-      'R': Weather1.Precipitation := wpRain;
-    end;
+    Weather1.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 1').AsString);
   { 13 - Temperature 1 }
   if (not CSV.FieldByName('TEMPERATURE 1').IsNull) then
     Weather1.Temperature := CSV.FieldByName('TEMPERATURE 1').AsFloat;
@@ -1258,25 +1301,13 @@ begin
     Weather2.SamplingTime := CSV.FieldByName('WEATHER TIME 2').AsDateTime;
   { 17 - Weather Moment 2 }
   if (not CSV.FieldByName('WEATHER MOMENT 2').IsNull) then
-    case CSV.FieldByName('WEATHER MOMENT 2').AsString of
-      'S': Weather2.SamplingMoment := wmStart;
-      'M': Weather2.SamplingMoment := wmMiddle;
-      'E': Weather2.SamplingMoment := wmEnd;
-    else
-      Weather2.SamplingMoment := wmNone;
-    end;
+    Weather2.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 2').AsString);
   { 18 - Cloud Cover 2 }
   if (not CSV.FieldByName('CLOUD COVER 2').IsNull) then
     Weather2.CloudCover := CSV.FieldByName('CLOUD COVER 2').AsInteger;
   { 19 - Precipitation 2 }
   if (not CSV.FieldByName('PRECIPITATION 2').IsNull) then
-    case CSV.FieldByName('PRECIPITATION 2').AsString of
-      'N': Weather2.Precipitation := wpNone;
-      'F': Weather2.Precipitation := wpFog;
-      'M': Weather2.Precipitation := wpMist;
-      'D': Weather2.Precipitation := wpDrizzle;
-      'R': Weather2.Precipitation := wpRain;
-    end;
+    Weather2.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 2').AsString);
   { 20 -Temperature 2 }
   if (not CSV.FieldByName('TEMPERATURE 2').IsNull) then
     Weather2.Temperature := CSV.FieldByName('TEMPERATURE 2').AsFloat;
@@ -1291,25 +1322,13 @@ begin
     Weather3.SamplingTime := CSV.FieldByName('WEATHER TIME 3').AsDateTime;
   { 24 - Weather Moment 3 }
   if (not CSV.FieldByName('WEATHER MOMENT 3').IsNull) then
-    case CSV.FieldByName('WEATHER MOMENT 3').AsString of
-      'S': Weather3.SamplingMoment := wmStart;
-      'M': Weather3.SamplingMoment := wmMiddle;
-      'E': Weather3.SamplingMoment := wmEnd;
-    else
-      Weather3.SamplingMoment := wmNone;
-    end;
+    Weather3.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 3').AsString);
   { 25 - Cloud Cover 3 }
   if (not CSV.FieldByName('CLOUD COVER 3').IsNull) then
     Weather3.CloudCover := CSV.FieldByName('CLOUD COVER 3').AsInteger;
   { 26 - Precipitation 3 }
   if (not CSV.FieldByName('PRECIPITATION 3').IsNull) then
-    case CSV.FieldByName('PRECIPITATION 3').AsString of
-      'N': Weather3.Precipitation := wpNone;
-      'F': Weather3.Precipitation := wpFog;
-      'M': Weather3.Precipitation := wpMist;
-      'D': Weather3.Precipitation := wpDrizzle;
-      'R': Weather3.Precipitation := wpRain;
-    end;
+    Weather3.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 3').AsString);
   { 27 - Temperature 3 }
   if (not CSV.FieldByName('TEMPERATURE 3').IsNull) then
     Weather3.Temperature := CSV.FieldByName('TEMPERATURE 3').AsFloat;
@@ -1324,25 +1343,13 @@ begin
     Weather4.SamplingTime := CSV.FieldByName('WEATHER TIME 4').AsDateTime;
   { 31 - Weather Moment 4 }
   if (not CSV.FieldByName('WEATHER MOMENT 4').IsNull) then
-    case CSV.FieldByName('WEATHER MOMENT 4').AsString of
-      'S': Weather4.SamplingMoment := wmStart;
-      'M': Weather4.SamplingMoment := wmMiddle;
-      'E': Weather4.SamplingMoment := wmEnd;
-    else
-      Weather4.SamplingMoment := wmNone;
-    end;
+    Weather4.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 4').AsString);
   { 32 - Cloud Cover 4 }
   if (not CSV.FieldByName('CLOUD COVER 4').IsNull) then
     Weather4.CloudCover := CSV.FieldByName('CLOUD COVER 4').AsInteger;
   { 33 - Precipitation 4 }
   if (not CSV.FieldByName('PRECIPITATION 4').IsNull) then
-    case CSV.FieldByName('PRECIPITATION 4').AsString of
-      'N': Weather4.Precipitation := wpNone;
-      'F': Weather4.Precipitation := wpFog;
-      'M': Weather4.Precipitation := wpMist;
-      'D': Weather4.Precipitation := wpDrizzle;
-      'R': Weather4.Precipitation := wpRain;
-    end;
+    Weather4.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 4').AsString);
   { 34 - Temperature 4 }
   if (not CSV.FieldByName('TEMPERATURE 4').IsNull) then
     Weather4.Temperature := CSV.FieldByName('TEMPERATURE 4').AsFloat;
@@ -1423,9 +1430,9 @@ var
 begin
   Locality := CSV.FieldByName('LOCALITY').AsString;
   NetStation := CSV.FieldByName('STATION').AsString;
-  if (not CSV.FieldByName('DATA').IsNull) then
-    if not TryParseDateFlexible(CSV.FieldByName('DATA').AsString, sDate) then
-      raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('DATA').AsString, 'TBandingData.CaptureDate'])
+  if (not CSV.FieldByName('DATE').IsNull) then
+    if not TryParseDateFlexible(CSV.FieldByName('DATE').AsString, sDate) then
+      raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('DATE').AsString, 'TBandingData.CaptureDate'])
     else
       CaptureDate := sDate;
   Recorder := AnsiUpperCase(CSV.FieldByName('RECORDER').AsString);
@@ -1438,13 +1445,13 @@ begin
     NetSiteName := '0'
   else
     NetSiteName := CSV.FieldByName('NET SITE NAME').AsString;
-  CaptureType := AnsiUpperCase(CSV.FieldByName('NEW_RECAP').AsString);
+  CaptureType := AnsiUpperCase(CSV.FieldByName('TYPE').AsString);
   if (CaptureType <> 'U') then
-    BandSize := AnsiUpperCase(CSV.FieldByName('BAND_CODE').AsString);
+    BandSize := AnsiUpperCase(CSV.FieldByName('BAND CODE').AsString);
   if (BandSize <> '') and (CaptureType <> 'U') then
     BandNumber := CSV.FieldByName('BAND NUMBER').AsInteger;
-  RightTarsus := AnsiUpperCase(CSV.FieldByName('RIGHT LEG').AsString);
-  LeftTarsus := AnsiUpperCase(CSV.FieldByName('LEFT LEG').AsString);
+  RightTarsus := AnsiUpperCase(CSV.FieldByName('RIGHT TARSUS').AsString);
+  LeftTarsus := AnsiUpperCase(CSV.FieldByName('LEFT TARSUS').AsString);
   SpeciesName := CSV.FieldByName('SPECIES NAME').AsString;
   CloacalProtuberance := AnsiUpperCase(CSV.FieldByName('CP').AsString);
   BroodPatch := AnsiUpperCase(CSV.FieldByName('BP').AsString);
@@ -1487,32 +1494,32 @@ begin
     FinalPhotoNumber := CSV.FieldByName('FINAL PHOTO NUMBER').AsInteger;
   CameraName := CSV.FieldByName('CAMERA NAME').AsString;
   PhotoNameFormula := CSV.FieldByName('PHOTO NAME FORMULA').AsString;
-  if (not CSV.FieldByName('CRANIO').IsNull) then
-    SkullLength := CSV.FieldByName('CRANIO').AsFloat;
-  if (not CSV.FieldByName('CULMEN EXPOSTO').IsNull) then
-    ExposedCulmen := CSV.FieldByName('CULMEN EXPOSTO').AsFloat;
+  if (not CSV.FieldByName('SKULL LENGTH').IsNull) then
+    SkullLength := CSV.FieldByName('SKULL LENGTH').AsFloat;
+  if (not CSV.FieldByName('EXPOSED CULMEN').IsNull) then
+    ExposedCulmen := CSV.FieldByName('EXPOSED CULMEN').AsFloat;
   if (not CSV.FieldByName('NP').IsNull) then
     NostrilBillTip := CSV.FieldByName('NP').AsFloat;
-  if (not CSV.FieldByName('LARGURA BICO').IsNull) then
-    BillWidth := CSV.FieldByName('LARGURA BICO').AsFloat;
-  if (not CSV.FieldByName('ALTURA BICO').IsNull) then
-    BillHeight := CSV.FieldByName('ALTURA BICO').AsFloat;
-  if (not CSV.FieldByName('SANGUE').IsNull) then
-    BloodSample := CSV.FieldByName('SANGUE').AsBoolean;
-  if (not CSV.FieldByName('PENAS').IsNull) then
-    FeatherSample := CSV.FieldByName('PENAS').AsBoolean;
+  if (not CSV.FieldByName('BILL WIDTH').IsNull) then
+    BillWidth := CSV.FieldByName('BILL WIDTH').AsFloat;
+  if (not CSV.FieldByName('BILL HEIGHT').IsNull) then
+    BillHeight := CSV.FieldByName('BILL HEIGHT').AsFloat;
+  if (not CSV.FieldByName('BLOOD SAMPLE').IsNull) then
+    BloodSample := CSV.FieldByName('BLOOD SAMPLE').AsBoolean;
+  if (not CSV.FieldByName('FEATHER SAMPLE').IsNull) then
+    FeatherSample := CSV.FieldByName('FEATHER SAMPLE').AsBoolean;
   if (not CSV.FieldByName('LONGITUDE').IsNull) then
     Longitude := CSV.FieldByName('LONGITUDE').AsFloat;
   if (not CSV.FieldByName('LATITUDE').IsNull) then
     Latitude := CSV.FieldByName('LATITUDE').AsFloat;
   if (not CSV.FieldByName('KIPPS').IsNull) then
     KippsIndex := CSV.FieldByName('KIPPS').AsFloat;
-  if (not CSV.FieldByName('GLICOSE').IsNull) then
-    Glucose := CSV.FieldByName('GLICOSE').AsFloat;
-  if (not CSV.FieldByName('HEMOGLOBINA').IsNull) then
-    Hemoglobin := CSV.FieldByName('HEMOGLOBINA').AsFloat;
-  if (not CSV.FieldByName('HEMATOCRITO').IsNull) then
-    Hematocrit := CSV.FieldByName('HEMATOCRITO').AsFloat;
+  if (not CSV.FieldByName('GLUCOSE').IsNull) then
+    Glucose := CSV.FieldByName('GLUCOSE').AsFloat;
+  if (not CSV.FieldByName('HEMOGLOBIN').IsNull) then
+    Hemoglobin := CSV.FieldByName('HEMOGLOBIN').AsFloat;
+  if (not CSV.FieldByName('HEMATOCRIT').IsNull) then
+    Hematocrit := CSV.FieldByName('HEMATOCRIT').AsFloat;
   GPSNumber := CSV.FieldByName('GPS NUMBER').AsString;
 end;
 

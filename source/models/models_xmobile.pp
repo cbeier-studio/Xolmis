@@ -454,6 +454,8 @@ begin
   aVegetation.SampleTime := FSampleTime;
   aVegetation.Longitude := FLongitude;
   aVegetation.Latitude := FLatitude;
+  if (FLongitude <> 0) and (FLatitude <> 0) then
+    aVegetation.CoordinatePrecision := cpExact;
   aVegetation.HerbsProportion := FHerbsProportion;
   aVegetation.HerbsDistribution := FHerbsDistribution;
   aVegetation.HerbsAvgHeight := FHerbsHeight;
@@ -690,6 +692,8 @@ begin
   aSurvey.Duration := MinutesBetween(FStartTime, FEndTime);
   aSurvey.StartLongitude := FStartLongitude;
   aSurvey.StartLatitude := FStartLatitude;
+  if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
+    aSurvey.CoordinatePrecision := cpExact;
   aSurvey.EndLongitude := FEndLongitude;
   aSurvey.EndLatitude := FEndLatitude;
   aSurvey.LocalityId := GetSiteKey(FLocalityName);
@@ -916,6 +920,9 @@ begin
   aNest.LocalityId := GetSiteKey(FLocalityName);
   aNest.Longitude := FLongitude;
   aNest.Latitude := FLatitude;
+  if (FLongitude <> 0) and (FLatitude <> 0) then
+    aNest.CoordinatePrecision := cpExact;
+  // If do not find botanical taxon, set other support
   S := GetValidBotanicalTaxon(FSupport);
   if S > 0 then
     aNest.SupportPlant1Id := S
@@ -993,6 +1000,8 @@ begin
   aSpecimen.SampleType := FType;
   aSpecimen.Longitude := FLongitude;
   aSpecimen.Latitude := FLatitude;
+  if (FLongitude <> 0) and (FLatitude <> 0) then
+    aSpecimen.CoordinatePrecision := cpExact;
   aSpecimen.TaxonId := GetValidTaxon(FSpeciesName);
   aSpecimen.LocalityId := GetSiteKey(FLocality);
   aSpecimen.Notes := FNotes;
