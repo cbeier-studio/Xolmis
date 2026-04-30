@@ -80,6 +80,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -124,6 +125,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -166,6 +168,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -216,6 +219,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -260,6 +264,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -304,6 +309,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -624,6 +630,32 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TProjectRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TProject) then
+    raise Exception.Create('FindByRow: Expected TProject');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Projects.SelectTable(swcNone));
+    Add('WHERE (project_title = :atitle)');
+
+    ParamByName('atitle').AsString := ARow.Values['project_title'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1046,6 +1078,34 @@ begin
   end;
 end;
 
+procedure TProjectMemberRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TProjectMember) then
+    raise Exception.Create('FindByRow: Expected TProjectMember');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.ProjectTeams.SelectTable(swcNone));
+    Add('WHERE (project_id = :aproject)');
+    Add('AND (person_id = :aperson)');
+
+    ParamByName('aproject').AsInteger := StrToIntDef(ARow.Values['project_id'], 0);
+    ParamByName('aperson').AsInteger := StrToIntDef(ARow.Values['person_id'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TProjectMemberRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -1407,6 +1467,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TProjectGoalRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TProjectGoal) then
+    raise Exception.Create('FindByRow: Expected TProjectGoal');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.ProjectGoals.SelectTable(swcNone));
+    Add('WHERE (project_id = :aproject)');
+    Add('AND (goal_description = :adescription)');
+
+    ParamByName('aproject').AsInteger := StrToIntDef(ARow.Values['project_id'], 0);
+    ParamByName('adescription').AsString := ARow.Values['goal_description'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1792,6 +1880,38 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TProjectActivityRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TProjectActivity) then
+    raise Exception.Create('FindByRow: Expected TProjectActivity');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.ProjectChronograms.SelectTable(swcNone));
+    Add('WHERE (project_id = :aproject)');
+    Add('AND (description = :adescription)');
+    Add('AND (goal_id = :agoal)');
+    Add('AND (date(start_date) = date(:adate))');
+
+    ParamByName('aproject').AsInteger := StrToIntDef(ARow.Values['project_id'], 0);
+    ParamByName('agoal').AsInteger := StrToIntDef(ARow.Values['goal_id'], 0);
+    ParamByName('adescription').AsString := ARow.Values['description'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['start_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -2189,6 +2309,38 @@ begin
   end;
 end;
 
+procedure TProjectRubricRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TProjectRubric) then
+    raise Exception.Create('FindByRow: Expected TProjectRubric');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.ProjectBudgets.SelectTable(swcNone));
+    Add('WHERE (project_id = :aproject)');
+    Add('AND (funding_source = :asource)');
+    Add('AND (rubric = :arubric)');
+    Add('AND (item_name = :aitem)');
+
+    ParamByName('aproject').AsInteger := StrToIntDef(ARow.Values['project_id'], 0);
+    ParamByName('asource').AsString := ARow.Values['funding_source'];
+    ParamByName('arubric').AsString := ARow.Values['rubric'];
+    ParamByName('aitem').AsString := ARow.Values['item_name'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TProjectRubricRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2570,6 +2722,38 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TProjectExpenseRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TProjectExpense) then
+    raise Exception.Create('FindByRow: Expected TProjectExpense');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.ProjectExpenses.SelectTable(swcNone));
+    Add('WHERE (project_id = :aproject)');
+    Add('AND (budget_id = :abudget)');
+    Add('AND (item_description = :aitem)');
+    Add('AND (date(expense_date) = date(:adate))');
+
+    ParamByName('aproject').AsInteger := StrToIntDef(ARow.Values['project_id'], 0);
+    ParamByName('abudget').AsInteger := StrToIntDef(ARow.Values['budget_id'], 0);
+    ParamByName('aitem').AsString := ARow.Values['item_description'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['expense_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

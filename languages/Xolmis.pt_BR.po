@@ -16228,6 +16228,10 @@ msgctxt "utils_locale.rsinsertedbyimport"
 msgid "Inserted by import"
 msgstr "Inserido por importação"
 
+#: utils_locale.rsinsertedbyquickentry
+msgid "Inserted by Quick Entry"
+msgstr ""
+
 #: utils_locale.rsinsertingtoponyms
 msgid "Inserting toponyms in Gazetteer..."
 msgstr "Inserindo topônimos no Gazetteer..."
@@ -17877,8 +17881,13 @@ msgstr "registro"
 #: utils_locale.rsrecordsfound
 #, object-pascal-format
 msgctxt "utils_locale.rsrecordsfound"
-msgid "%d %s found"
-msgstr "%d %s encontrado(s)"
+msgid "%d record found"
+msgstr "%d registro encontrado"
+
+#: utils_locale.rsrecordsfoundplural
+#, object-pascal-format
+msgid "%d records found"
+msgstr "%d registros encontrados"
 
 #: utils_locale.rsrecordsplural
 msgctxt "utils_locale.rsrecordsplural"
@@ -19376,3 +19385,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

@@ -123,6 +123,7 @@ type
 
     function Exists(const Id: Integer): Boolean; virtual; abstract;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); virtual; abstract;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); virtual; abstract;
     procedure GetById(const Id: Integer; E: TXolmisRecord); virtual; abstract;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); virtual; abstract;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); virtual; abstract;

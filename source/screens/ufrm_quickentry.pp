@@ -475,6 +475,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbBands, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -513,6 +516,9 @@ begin
         Obj.ValidId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_VALID_NAME, r));
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbBotanicTaxa, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -621,6 +627,9 @@ begin
 
         Repo.Insert(Obj);
 
+        // Insert record history
+        WriteRecHistory(tbCaptures, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
+
         // Update individual and bands
         // >> Remove old band and put a new one
         if Obj.CaptureType = cptChangeBand then
@@ -701,6 +710,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbEggs, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -736,6 +748,9 @@ begin
         Obj.Description := CellValue(COL_DESCRIPTION, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbExpeditions, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -785,6 +800,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbFeathers, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -824,6 +842,9 @@ begin
         Obj.EbirdName := CellValue(COL_EBIRD_NAME, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbGazetteer, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -881,6 +902,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbIndividuals, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
 
         // Update bands
         // >> Remove old band
@@ -944,6 +968,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbInstitutions, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -981,6 +1008,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbMethods, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1013,6 +1043,9 @@ begin
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbNestOwners, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1056,6 +1089,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbNestRevisions, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1124,6 +1160,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbNests, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1172,6 +1211,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbNetsEffort, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1207,6 +1249,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbPermanentNets, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1244,6 +1289,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbPermits, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1278,6 +1326,9 @@ begin
         Obj.Amount := StrToFloatDef(CellValue(COL_AMOUNT, r), 0.0);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbProjectBudgets, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1314,6 +1365,9 @@ begin
         Obj.GoalId := GetKey(TBL_PROJECT_GOALS, COL_GOAL_ID, COL_GOAL_DESCRIPTION, CellValue(COL_GOAL_DESCRIPTION, r));
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbProjectChronograms, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1348,6 +1402,9 @@ begin
         Obj.Amount := StrToFloatDef(CellValue(COL_AMOUNT, r), 0.0);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbProjectExpenses, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1380,6 +1437,9 @@ begin
         Obj.Status := StrToGoalStatus(CellValue(COL_GOAL_STATUS, r));
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbProjectGoals, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1422,6 +1482,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbProjects, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1455,6 +1518,9 @@ begin
         Obj.InstitutionId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_FULL_NAME, CellValue(COL_INSTITUTION_NAME, r));
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbProjectTeams, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1513,6 +1579,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbPeople, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1549,6 +1618,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbSamplePreps, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1587,6 +1659,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbSamplingPlots, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1650,6 +1725,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbSightings, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1681,6 +1759,9 @@ begin
         Obj.PersonId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PERSON_NAME, r));
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbSpecimenCollectors, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1725,6 +1806,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbSpecimens, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1777,6 +1861,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbSurveys, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1809,6 +1896,9 @@ begin
         Obj.Visitor := CellValue(COL_VISITOR, r) = '1';
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbSurveyTeams, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1854,6 +1944,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbVegetation, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1897,6 +1990,9 @@ begin
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbWeatherLogs, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;
@@ -1983,7 +2079,7 @@ begin
 
         if FileSchema <> FSchemaVersion then
         begin
-          MsgDlg(rsTitleCaution, rsWarningSchemaVersionMismatch, mtWarning);
+          MsgDlg(rsTitleCaution, Format(rsWarningSchemaVersionMismatch, [FileSchema, FSchemaVersion]), mtWarning);
           // Continue loading — or you can use Exit; if you want to block
         end;
 
@@ -2200,7 +2296,7 @@ begin
     end;
 
   if (FColField.DataType = sdtDate) then
-    if not TryStrToDate(NewValue, dValue) then
+    if not TryParseDateFlexible(NewValue, dValue) then
     begin
       ShowMessageFmt(rsMustBeAValidDate, [FColField.DisplayName]);
       NewValue := EmptyStr;
@@ -2208,7 +2304,7 @@ begin
     end;
 
   if (FColField.DataType = sdtTime) then
-    if not TryStrToTime(NewValue, dValue) then
+    if not TryParseTimeFlexible(NewValue, dValue) then
     begin
       ShowMessageFmt(rsMustBeAValidTime, [FColField.DisplayName]);
       NewValue := EmptyStr;
@@ -2461,12 +2557,39 @@ begin
   // Date and time
   if FColField.Rules.MaxDateTime <> NullDateTime then
   begin
-    if TryStrToDateTime(FCellValue, dummyDT) then
+    if FColField.DataType = sdtDate then
     begin
-      if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+      if TryParseDateFlexible(FCellValue, dummyDT) then
       begin
-        Result := False;
-        Exit;
+        if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+        begin
+          Result := False;
+          Exit;
+        end;
+      end;
+    end
+    else
+    if FColField.DataType = sdtTime then
+    begin
+      if TryParseTimeFlexible(FCellValue, dummyDT) then
+      begin
+        if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+        begin
+          Result := False;
+          Exit;
+        end;
+      end;
+    end
+    else
+    if FColField.DataType = sdtDateTime then
+    begin
+      if TryParseDateTimeFlexible(FCellValue, dummyDT) then
+      begin
+        if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+        begin
+          Result := False;
+          Exit;
+        end;
       end;
     end;
   end;
@@ -2586,14 +2709,45 @@ begin
     // Date and time
     if FColField.Rules.MaxDateTime <> NullDateTime then
     begin
-      if TryStrToDateTime(FCellValue, dummyDT) then
+      if FColField.DataType = sdtDate then
       begin
-        if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+        if TryParseDateFlexible(FCellValue, dummyDT) then
         begin
-          Result := False;
-          Msg := Format(rsDateTimeNotInRange, [FColField.DisplayName,
-            DateTimeToStr(FColField.Rules.MinDateTime), DateTimeToStr(FColField.Rules.MaxDateTime)]);
-          Break;
+          if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+          begin
+            Result := False;
+            Msg := Format(rsDateTimeNotInRange, [FColField.DisplayName,
+              DateTimeToStr(FColField.Rules.MinDateTime), DateTimeToStr(FColField.Rules.MaxDateTime)]);
+            Break;
+          end;
+        end;
+      end
+      else
+      if FColField.DataType = sdtTime then
+      begin
+        if TryParseTimeFlexible(FCellValue, dummyDT) then
+        begin
+          if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+          begin
+            Result := False;
+            Msg := Format(rsDateTimeNotInRange, [FColField.DisplayName,
+              DateTimeToStr(FColField.Rules.MinDateTime), DateTimeToStr(FColField.Rules.MaxDateTime)]);
+            Break;
+          end;
+        end;
+      end
+      else
+      if FColField.DataType = sdtDateTime then
+      begin
+        if TryParseDateTimeFlexible(FCellValue, dummyDT) then
+        begin
+          if (dummyDT < FColField.Rules.MinDateTime) or (dummyDT > FColField.Rules.MaxDateTime) then
+          begin
+            Result := False;
+            Msg := Format(rsDateTimeNotInRange, [FColField.DisplayName,
+              DateTimeToStr(FColField.Rules.MinDateTime), DateTimeToStr(FColField.Rules.MaxDateTime)]);
+            Break;
+          end;
         end;
       end;
     end;

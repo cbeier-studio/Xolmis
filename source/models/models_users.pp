@@ -66,6 +66,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -342,6 +343,32 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TUserRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TUser) then
+    raise Exception.Create('FindByRow: Expected TUser');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Users.SelectTable(swcNone));
+    Add('WHERE (user_name = :aname)');
+
+    ParamByName('aname').AsString := ARow.Values['user_name'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

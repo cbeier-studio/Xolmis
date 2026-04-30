@@ -16243,6 +16243,10 @@ msgctxt "utils_locale.rsinsertedbyimport"
 msgid "Inserted by import"
 msgstr ""
 
+#: utils_locale.rsinsertedbyquickentry
+msgid "Inserted by Quick Entry"
+msgstr ""
+
 #: utils_locale.rsinsertingtoponyms
 msgid "Inserting toponyms in Gazetteer..."
 msgstr ""
@@ -17734,7 +17738,12 @@ msgstr ""
 #: utils_locale.rsrecordsfound
 #, object-pascal-format
 msgctxt "utils_locale.rsrecordsfound"
-msgid "%d %s found"
+msgid "%d record found"
+msgstr ""
+
+#: utils_locale.rsrecordsfoundplural
+#, object-pascal-format
+msgid "%d records found"
 msgstr ""
 
 #: utils_locale.rsrecordsplural

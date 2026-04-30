@@ -697,6 +697,7 @@ uses
     rsInsertedByGrid = 'Inserted by grid';
     rsInsertedByBatch = 'Inserted by batch';
     rsInsertedByImport = 'Inserted by import';
+    rsInsertedByQuickEntry = 'Inserted by Quick Entry';
     rsInsertedByDrop = 'Inserted by drag and drop';
     rsEditedByForm = 'Edited by form';
     rsEditedByGrid = 'Edited by grid';
@@ -714,7 +715,8 @@ uses
     rsLoading = 'Loading';
     rsLoadingRecords = 'Loading records...';
     rsNoRecordsFound = 'No records found!';
-    rsRecordsFound = '%d %s found';
+    rsRecordsFound = '%d record found';
+    rsRecordsFoundPlural = '%d records found';
     rsRecords = 'record';
     rsRecordsPlural = 'records';
     rsMarked = 'marked';

@@ -83,6 +83,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -141,6 +142,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -541,6 +543,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TSiteRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSite) then
+    raise Exception.Create('FindByRow: Expected TSite');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Gazetteer.SelectTable(swcNone));
+    Add('WHERE (site_rank = :arank)');
+    Add('AND (site_name = :aname)');
+
+    ParamByName('arank').AsString := ARow.Values['site_rank'];
+    ParamByName('aname').AsString := ARow.Values['site_name'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1074,6 +1104,40 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TPoiRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TPoi) then
+    raise Exception.Create('FindByRow: Expected TPoi');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.PoiLibrary.SelectTable(swcNone));
+    Add('WHERE (poi_name = :aname)');
+    Add('AND (longitude = :alongitude)');
+    Add('AND (latitude = :alatitude)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+
+    ParamByName('aname').AsString := ARow.Values['poi_name'];
+    ParamByName('alongitude').AsFloat := StrToFloatDef(ARow.Values['longitude'], 0);
+    ParamByName('alatitude').AsFloat := StrToFloatDef(ARow.Values['latitude'], 0);
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+    ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

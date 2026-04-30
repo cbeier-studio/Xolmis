@@ -70,6 +70,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -346,6 +347,42 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TPermitRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TPermit) then
+    raise Exception.Create('FindByRow: Expected TPermit');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Permits.SelectTable(swcNone));
+    Add('WHERE (project_id = :aproject)');
+    Add('AND (permit_name = :aname)');
+    Add('AND (permit_number = :anumber)');
+    Add('AND (permit_type = :atype)');
+    Add('AND (dispatcher_name = :adispatcher)');
+    Add('AND (date(dispatch_date) = date(:adate))');
+
+    ParamByName('aproject').AsInteger := StrToIntDef(ARow.Values['project_id'], 0);
+    ParamByName('aname').AsString := ARow.Values['permit_name'];
+    ParamByName('anumber').AsString := ARow.Values['permit_number'];
+    ParamByName('atype').AsString := ARow.Values['permit_type'];
+    ParamByName('adispatcher').AsString := ARow.Values['dispatcher_name'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['dispatch_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

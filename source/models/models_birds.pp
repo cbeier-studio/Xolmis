@@ -106,6 +106,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindByBand(const aTaxon, aBand: Integer; aRightLeg: String = ''; aLeftLeg: String = ''; E: TIndividual = nil);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -307,6 +308,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindByBand(const aTaxon, aBand: Integer; aCaptureType, aDate, aTime: String; E: TCapture);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -389,6 +391,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -748,6 +751,44 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TFeatherRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TFeather) then
+    raise Exception.Create('FindByRow: Expected TFeather');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Feathers.SelectTable(swcNone));
+    Add('WHERE (taxon_id = :ataxon)');
+    Add('AND (locality_id = :alocality)');
+    Add('AND (feather_trait = :atrait)');
+    Add('AND (feather_number = :anumber)');
+    Add('AND (body_side = :aside)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+
+    ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
+    ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
+    ParamByName('atrait').AsString := ARow.Values['feather_trait'];
+    ParamByName('anumber').AsInteger := StrToIntDef(ARow.Values['feather_number'], 0);
+    ParamByName('aside').AsString := ARow.Values['body_side'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+    ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1683,6 +1724,40 @@ begin
   end;
 end;
 
+procedure TCaptureRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TCapture) then
+    raise Exception.Create('FindByRow: Expected TCapture');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Captures.SelectTable(swcNone, tbNone));
+    Add('WHERE (taxon_id = :ataxon)');
+    Add('AND (band_id = :aband)');
+    Add('AND (capture_type = :anature)');
+    Add('AND (date(capture_date) = date(:adate))');
+    Add('AND (time(capture_time) = time(:atime))');
+
+    ParamByName('ATAXON').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
+    ParamByName('ABAND').AsInteger := StrToIntDef(ARow.Values['band_id'], 0);
+    ParamByName('ANATURE').AsString := ARow.Values['capture_type'];
+    ParamByName('ADATE').AsDate := StrToDateDef(ARow.Values['capture_date'], NullDate);
+    ParamByName('ATIME').AsTime := StrToTimeDef(ARow.Values['capture_time'], NullTime);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TCaptureRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2558,6 +2633,34 @@ begin
     end;
     ParamByName('taxon_id').AsInteger := aTaxon;
     ParamByName('band_id').AsInteger := aBand;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TIndividualRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TIndividual) then
+    raise Exception.Create('FindByRow: Expected TIndividual');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Individuals.SelectTable(swcNone));
+    Add('WHERE (band_id = :aband)');
+    Add('AND (taxon_id = :ataxon)');
+
+    ParamByName('aband').AsInteger := StrToIntDef(ARow.Values['band_id'], 0);
+    ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
     Open;
     if not EOF then
     begin

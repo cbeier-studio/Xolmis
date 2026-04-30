@@ -130,6 +130,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate; E: TNest);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -172,6 +173,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -251,6 +253,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindByFieldNumber(aNest: Integer; aFieldNumber, aDate: String; aObserver: Integer; E: TEgg);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -318,6 +321,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindByDate(aNest: Integer; aDate, aTime: String; aObserver: Integer; E: TNestRevision);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -652,6 +656,38 @@ begin
     ParamByName('AOBSERVER').AsInteger := aObserver;
     ParamByName('ADATE').AsString := aDate;
     ParamByName('ATIME').AsString := aTime;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TNestRevisionRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TNestRevision) then
+    raise Exception.Create('FindByRow: Expected TNestRevision');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.NestRevisions.SelectTable(swcNone));
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (observer_1_id = :aobserver)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+
+    ParamByName('anest').AsInteger := StrToIntDef(ARow.Values['nest_id'], 0);
+    ParamByName('aobserver').AsInteger := StrToIntDef(ARow.Values['observer_1_id'], 0);
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+    ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
     Open;
     if not EOF then
     begin
@@ -1218,6 +1254,38 @@ begin
     ParamByName('AOBSERVER').AsInteger := aObserver;
     ParamByName('ADATE').AsString := aDate;
     ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TEggRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TEgg) then
+    raise Exception.Create('FindByRow: Expected TEgg');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Eggs.SelectTable(swcNone));
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (observer_id = :aobserver)');
+    Add('AND (field_number = :afieldnumber)');
+    Add('AND (date(measure_date) = date(:adate))');
+
+    ParamByName('anest').AsInteger := StrToIntDef(ARow.Values['nest_id'], 0);
+    ParamByName('aobserver').AsInteger := StrToIntDef(ARow.Values['observer_id'], 0);
+    ParamByName('afieldnumber').AsString := ARow.Values['field_number'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['measure_date'], NullDate);
     Open;
     if not EOF then
     begin
@@ -1934,6 +2002,38 @@ begin
   end;
 end;
 
+procedure TNestRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TNest) then
+    raise Exception.Create('FindByRow: Expected TNest');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Nests.SelectTable(swcNone));
+    Add('WHERE (taxon_id = :ataxon)');
+    Add('AND (locality_id = :alocality)');
+    Add('AND (field_number = :afieldnumber)');
+    Add('AND (date(found_date) = date(:adate))');
+
+    ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
+    ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
+    ParamByName('afieldnumber').AsString := ARow.Values['field_number'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['found_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TNestRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -2481,6 +2581,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TNestOwnerRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TNestOwner) then
+    raise Exception.Create('FindByRow: Expected TNestOwner');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.NestOwners.SelectTable(swcNone));
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (individual_id = :aindividual)');
+
+    ParamByName('anest').AsInteger := StrToIntDef(ARow.Values['nest_id'], 0);
+    ParamByName('aindividual').AsInteger := StrToIntDef(ARow.Values['individual_id'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

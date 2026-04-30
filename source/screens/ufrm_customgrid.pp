@@ -8939,10 +8939,10 @@ begin
 
   // Update the record count
   if dsLink.DataSet.RecordCount = 1 then
-    lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount, rsRecords])
+    lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount])
   else
   if dsLink.DataSet.RecordCount > 1 then
-    lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount, rsRecordsPlural])
+    lblRecordStatus.Caption := Format(rsRecordsFoundPlural, [dsLink.DataSet.RecordCount])
   else
     lblRecordStatus.Caption := rsNoRecordsFound;
 end;
@@ -9112,10 +9112,10 @@ begin
   DS := GetChildDataSet;
 
   if DS.RecordCount = 1 then
-    lblChildStatus.Caption := Format(rsRecordsFound, [DS.RecordCount, rsRecords])
+    lblChildStatus.Caption := Format(rsRecordsFound, [DS.RecordCount])
   else
   if DS.RecordCount > 1 then
-    lblChildStatus.Caption := Format(rsRecordsFound, [DS.RecordCount, rsRecordsPlural])
+    lblChildStatus.Caption := Format(rsRecordsFoundPlural, [DS.RecordCount])
   else
     lblChildStatus.Caption := rsNoRecordsFound;
 end;

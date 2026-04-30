@@ -302,12 +302,14 @@ uses
 
 procedure TdlgImport.AddImportRow(const XRow: TXRow);
 var
-  Rec: TXolmisRecord;
+  Rec, OldRec: TXolmisRecord;
   Repo: TXolmisRepository;
   Msg: string;
   Exists: Boolean;
   Id: Integer;
 begin
+  Exists := False;
+
   // 1. Validate fields
   if not ValidateFields(XRow) then
   begin
@@ -318,11 +320,20 @@ begin
 
   // 2. Create domain object
   Rec := CreateRecordForTable(FTableType);
+  OldRec := CreateRecordForTable(FTableType);
   try
     // 3. Create repository
     Repo := CreateRepositoryForTable(FTableType);
     try
-      // 4. Hydrate using repository
+      // 4. Check if record exists
+      Repo.FindByRow(XRow, OldRec);
+      if not OldRec.IsNew then
+      begin
+        Exists := True;
+        Rec.Assign(OldRec);
+      end;
+
+      // 5. Hydrate using repository
       Repo.HydrateFromRow(XRow, Rec);
 
       // 5. Validate object
@@ -334,32 +345,54 @@ begin
       //end;
 
       // 6. Check if record exists
-      Exists := False;
+      //Exists := False;
       { #todo : Improve the existing record checking }
-      if XRow.IndexOfName('id') >= 0 then
-      begin
-        Id := StrToIntDef(XRow.Values['id'], 0);
-        Exists := Repo.Exists(Id);
-      end;
+      //if not OldRec.IsNew then
+      //  Exists := True;
+      //if XRow.IndexOfName('id') >= 0 then
+      //begin
+      //  Id := StrToIntDef(XRow.Values['id'], 0);
+      //  Exists := Repo.Exists(Id);
+      //end;
 
       // 7. Apply writing policy
       case FImportSettings.ExistingRecordPolicy of
 
         erpInsertOnly:
           if not Exists then
+          begin
             Repo.Insert(Rec);
+            // Insert record history
+            WriteRecHistory(FTableType, haCreated, Rec.Id, '', '', '', rsInsertedByImport);
+          end;
 
         erpReplaceExisting:
           if Exists then
-            Repo.Update(Rec)
+          begin
+            Repo.Update(Rec);
+            // Insert record history
+            WriteDiff(FTableType, OldRec, Rec, rsEditedByImport);
+          end
           else
+          begin
             Repo.Insert(Rec);
+            // Insert record history
+            WriteRecHistory(FTableType, haCreated, Rec.Id, '', '', '', rsInsertedByImport);
+          end;
 
         erpInsertNewUpdateExisting:
           if Exists then
-            Repo.Update(Rec)
+          begin
+            Repo.Update(Rec);
+            // Insert record history
+            WriteDiff(FTableType, OldRec, Rec, rsEditedByImport);
+          end
           else
+          begin
             Repo.Insert(Rec);
+            // Insert record history
+            WriteRecHistory(FTableType, haCreated, Rec.Id, '', '', '', rsInsertedByImport);
+          end;
       end;
 
     finally
@@ -368,6 +401,7 @@ begin
 
   finally
     Rec.Free;
+    OldRec.Free;
   end;
 end;
 

@@ -65,6 +65,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -593,6 +594,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TBotanicalTaxonRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TBotanicalTaxon) then
+    raise Exception.Create('FindByRow: Expected TBotanicalTaxon');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.BotanicalTaxa.SelectTable(swcNone));
+    Add('WHERE (scientific_name = :aname)');
+    Add('AND (rank_id = :arank)');
+
+    ParamByName('aname').AsString := ARow.Values['scientific_name'];
+    ParamByName('arank').AsInteger := StrToIntDef(ARow.Values['rank_id'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

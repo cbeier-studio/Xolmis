@@ -198,7 +198,7 @@ var
 implementation
 
 uses
-  utils_locale, data_consts, data_columns, udm_main;
+  utils_locale, utils_global, data_consts, data_columns, udm_main;
 
 function AddField(ATableSchema: TTableSchema; const AName: String; ADisplayName: String; AType: TSearchDataType; ARequired: Boolean;
   AMaxLen: Integer; AIsPK: Boolean; AIsFK: Boolean; ALookup: TTableType; ALookupField: String): TFieldSchema;
@@ -210,6 +210,8 @@ begin
   Result.DataType := AType;
   Result.Rules.RequiredField := ARequired;
   Result.Rules.MaxLength := AMaxLen;
+  Result.Rules.MinDateTime := NullDateTime;
+  Result.Rules.MaxDateTime := NullDateTime;
   Result.IsPrimaryKey := AIsPK;
   Result.IsForeignKey := AIsFK;
   Result.IsVirtual := False;

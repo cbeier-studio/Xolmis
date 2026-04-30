@@ -94,6 +94,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindByNumber(const aSize: String; const aNumber: Integer; E: TBand);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -154,6 +155,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -484,6 +486,34 @@ begin
 
     ParamByName('ASIZE').AsString := aSize;
     ParamByName('ANUMBER').AsInteger := aNumber;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TBandRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TBand) then
+    raise Exception.Create('FindByRow: Expected TBand');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Bands.SelectTable(swcNone));
+    Add('WHERE (band_size = :asize)');
+    Add('AND (band_number = :anumber)');
+
+    ParamByName('ASIZE').AsString := ARow.Values['band_size'];
+    ParamByName('ANUMBER').AsInteger := StrToIntDef(ARow.Values['band_number'], 0);
     Open;
     if not EOF then
     begin
@@ -978,6 +1008,36 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TBandHistoryRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TBandHistory) then
+    raise Exception.Create('FindByRow: Expected TBandHistory');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.BandHistory.SelectTable(swcNone));
+    Add('WHERE (band_id = :aband)');
+    Add('AND (event_type = :atype)');
+    Add('AND (event_date = :adate)');
+
+    ParamByName('aband').AsInteger := StrToIntDef(ARow.Values['band_id'], 0);
+    ParamByName('atype').AsString := ARow.Values['event_type'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['event_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 4
+    PageIndex = 0
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560

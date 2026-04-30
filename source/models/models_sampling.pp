@@ -61,6 +61,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -144,6 +145,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindBySiteAndDate(aLocal, aMethod: Integer; aDate: TDateTime; aSampleId: String; aNetStation: Integer; E: TSurvey);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -211,6 +213,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindBySurvey(aSurvey: Integer; aDate, aTime: String; aObserver: Integer; E: TWeatherLog);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -254,6 +257,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindBySurvey(const aSurveyKey, aPersonKey: Integer; E: TSurveyMember);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -337,6 +341,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindBySurvey(aSurvey: Integer; aNetNumber: String; E: TNetEffort);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -408,6 +413,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindBySurvey(aSurvey: Integer; aDate, aTime: String; aLongitude, aLatitude: Extended; aObserver: Integer; E: TVegetation);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -708,6 +714,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TExpeditionRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TExpedition) then
+    raise Exception.Create('FindByRow: Expected TExpedition');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Expeditions.SelectTable(swcNone));
+    Add('WHERE (expedition_name = :aname)');
+    Add('AND (date(start_date) = date(:adate))');
+
+    ParamByName('aname').AsString := ARow.Values['expedition_name'];
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['start_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1212,6 +1246,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TNetEffortRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TNetEffort) then
+    raise Exception.Create('FindByRow: Expected TNetEffort');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.NetsEffort.SelectTable(swcNone));
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (net_number = :anet)');
+
+    ParamByName('asurvey').AsInteger := StrToIntDef(ARow.Values['survey_id'], 0);
+    ParamByName('anet').AsInteger := StrToIntDef(ARow.Values['net_number'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1789,6 +1851,38 @@ begin
   end;
 end;
 
+procedure TVegetationRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TVegetation) then
+    raise Exception.Create('FindByRow: Expected TVegetation');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Vegetations.SelectTable(swcNone));
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (observer_id = :aobserver)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+
+    ParamByName('asurvey').AsInteger := StrToIntDef(ARow.Values['survey_id'], 0);
+    ParamByName('aobserver').AsInteger := StrToIntDef(ARow.Values['observer_id'], 0);
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+    ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TVegetationRepository.FindBySurvey(aSurvey: Integer; aDate, aTime: String; aLongitude,
   aLatitude: Extended; aObserver: Integer; E: TVegetation);
 var
@@ -2258,6 +2352,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TSurveyMemberRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSurveyMember) then
+    raise Exception.Create('FindByRow: Expected TSurveyMember');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SurveyTeams.SelectTable(swcNone));
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (person_id = :aperson)');
+
+    ParamByName('asurvey').AsInteger := StrToIntDef(ARow.Values['survey_id'], 0);
+    ParamByName('aperson').AsInteger := StrToIntDef(ARow.Values['person_id'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -2776,6 +2898,40 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TSurveyRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSurvey) then
+    raise Exception.Create('FindByRow: Expected TSurvey');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Surveys.SelectTable(swcNone));
+    Add('WHERE (method_id = :amethod)');
+    Add('AND (locality_id = :alocality)');
+    Add('AND (sample_id = :asample)');
+    Add('AND (net_station_id = :astation)');
+    Add('AND (date(survey_date) = date(:adate))');
+
+    ParamByName('amethod').AsInteger := StrToIntDef(ARow.Values['method_id'], 0);
+    ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
+    ParamByName('asample').AsString := ARow.Values['sample_id'];
+    ParamByName('astation').AsInteger := StrToIntDef(ARow.Values['net_station_id'], 0);
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['survey_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -3348,6 +3504,38 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TWeatherLogRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TWeatherLog) then
+    raise Exception.Create('FindByRow: Expected TWeatherLog');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.WeatherLogs.SelectTable(swcNone));
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (observer_id = :aobserver)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+
+    ParamByName('asurvey').AsInteger := StrToIntDef(ARow.Values['survey_id'], 0);
+    ParamByName('aobserver').AsInteger := StrToIntDef(ARow.Values['observer_id'], 0);
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+    ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

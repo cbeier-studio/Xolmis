@@ -8,7 +8,7 @@ object frmCustomGrid: TfrmCustomGrid
   ClientHeight = 614
   ClientWidth = 1267
   ParentFont = True
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate

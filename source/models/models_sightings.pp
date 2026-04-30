@@ -122,6 +122,7 @@ type
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
     procedure FindByCombo(const aSurvey, aTaxon, aObserver: Integer; E: TSighting);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
@@ -579,6 +580,44 @@ begin
     ParamByName('ATAXON').AsInteger := aTaxon;
     if aObserver > 0 then
       ParamByName('AOBSERVER').AsInteger := aObserver;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSighting) then
+    raise Exception.Create('FindByRow: Expected TSighting');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Sightings.SelectTable(swcNone, tbNone));
+    Add('WHERE (survey_id = :asurvey)');
+    Add('AND (locality_id = :alocality)');
+    Add('AND (taxon_id = :ataxon)');
+    Add('AND (individual_id = :aindividual)');
+    Add('AND (observer_id = :aobserver)');
+    Add('AND (date(sighting_date) = date(:adate))');
+    Add('AND (time(sighting_time) = time(:atime))');
+
+    ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
+    ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
+    ParamByName('asurvey').AsInteger := StrToIntDef(ARow.Values['survey_id'], 0);
+    ParamByName('aindividual').AsInteger := StrToIntDef(ARow.Values['individual_id'], 0);
+    ParamByName('aobserver').AsInteger := StrToIntDef(ARow.Values['observer_id'], 0);
+    ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sighting_date'], NullDate);
+    ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sighting_time'], NullTime);
     Open;
     if not EOF then
     begin

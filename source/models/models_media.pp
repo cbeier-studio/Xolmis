@@ -21,7 +21,7 @@ unit models_media;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, utils_global;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, utils_global, io_core;
 
 type
   TAttachMediaType = (amtImages, amtAudios, amtVideos, amtDocuments);
@@ -125,6 +125,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
@@ -228,6 +229,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
@@ -318,6 +320,7 @@ type
     procedure FindBySamplingPlot(const aFilePath: String; const aSamplingPlotId: Integer; E: TDocumentData);
     procedure FindByProject(const aFilePath: String; const aProjectId: Integer; E: TDocumentData);
     procedure FindByPermit(const aFilePath: String; const aPermitId: Integer; E: TDocumentData);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
@@ -407,6 +410,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
     procedure Insert(E: TXolmisRecord); override;
@@ -778,6 +782,32 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TImageRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TImageData) then
+    raise Exception.Create('FindByRow: Expected TImageData');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Images.SelectTable(swcNone));
+    Add('WHERE (file_path = :apath)');
+
+    ParamByName('apath').AsString := ARow.Values['file_path'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -1398,6 +1428,32 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TAudioRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TAudioData) then
+    raise Exception.Create('FindByRow: Expected TAudioData');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Audios.SelectTable(swcNone));
+    Add('WHERE (file_path = :apath)');
+
+    ParamByName('apath').AsString := ARow.Values['file_path'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -2142,6 +2198,32 @@ begin
   end;
 end;
 
+procedure TDocumentRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TDocumentData) then
+    raise Exception.Create('FindByRow: Expected TDocumentData');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Documents.SelectTable(swcNone));
+    Add('WHERE (file_path = :apath)');
+
+    ParamByName('apath').AsString := ARow.Values['file_path'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TDocumentRepository.FindBySamplingPlot(const aFilePath: String; const aSamplingPlotId: Integer;
   E: TDocumentData);
 var
@@ -2805,6 +2887,32 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TVideoRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TVideoData) then
+    raise Exception.Create('FindByRow: Expected TVideoData');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Videos.SelectTable(swcNone));
+    Add('WHERE (file_path = :apath)');
+
+    ParamByName('apath').AsString := ARow.Values['file_path'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
