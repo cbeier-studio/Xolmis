@@ -374,11 +374,22 @@ begin
 
     if OpenJSON(FSourceFile) then
     begin
-      msgSourceFile.Caption := rsMobileFileSelectedAndLoaded;
-      msgSourceFile.Font.Color := clDefault;
-
       FContentType := GetContentType;
-      icoFileStatus.ImageIndex := 2;
+      if FContentType <> mctEmpty then
+      begin
+        msgSourceFile.Caption := rsMobileFileSelectedAndLoaded;
+        msgSourceFile.Font.Color := clDefault;
+        icoFileStatus.ImageIndex := 2;
+      end
+      else
+      begin
+        icoFileStatus.ImageIndex := 3;
+        msgSourceFile.Caption := rsMobileErrorInvalidFileFormat;
+        if IsDarkModeEnabled then
+          msgSourceFile.Font.Color := clSystemCriticalFGDark
+        else
+          msgSourceFile.Font.Color := clSystemCriticalFGLight;
+      end;
     end
     else
     begin
@@ -409,7 +420,7 @@ begin
       msgSourceFile.Font.Color := clSystemCriticalFGLight;
   end;
 
-  lblExpedition.Visible := (FContentType in [mctInventory, mctInventories]);
+  lblExpedition.Visible := (FContentType in [mctInventories]);
   eExpedition.Visible := lblExpedition.Visible;
   sbNext.Enabled := (FContentType <> mctEmpty) and IsRequiredFilledSource;
 end;
@@ -486,32 +497,43 @@ begin
 end;
 
 function TdlgImportXMobile.GetContentType: TMobileContentType;
+var
+  SchemaToken, SourceToken: String;
+  SchemaVersion: TJSONData;
+  FirstItem: TJSONData;
 begin
   Result := mctEmpty;
 
-  case JSONData.JSONType of
-    jtArray:
-      begin
-        if JSONArray.Count > 0 then
-        begin
-          if JSONArray.Objects[0].Find('duration') <> nil then
-            Result := mctInventories
-          else
-          if JSONArray.Objects[0].Find('support') <> nil then
-            Result := mctNests
-          else
-          if (JSONArray.Objects[0].Find('fieldNumber') <> nil) and (JSONArray.Objects[0].Find('type') <> nil) then
-            Result := mctSpecimens;
-        end;
-      end;
-    jtObject:
-      begin
-        if JSONObject.Find('duration') <> nil then
-          Result := mctInventory
-        else
-        if JSONObject.Find('support') <> nil then
-          Result := mctNest;
-      end;
+  if not Assigned(JSONObject) then
+    Exit;
+
+  SourceToken := JSONObject.Get('source', EmptyStr);
+  if SourceToken <> 'Xolmis Mobile' then
+    Exit;
+
+  SchemaToken := JSONObject.Get('schema', EmptyStr);
+  if SchemaToken = 'inventories' then
+    Result := mctInventories
+  else
+  if SchemaToken = 'nests' then
+    Result := mctNests
+  else
+  if SchemaToken = 'specimens' then
+    Result := mctSpecimens;
+
+  SchemaVersion := JSONObject.Find('schemaVersion');
+  if (not Assigned(SchemaVersion)) or (SchemaVersion.JSONType = jtNull) then
+    Exit;
+
+  JSONArray := JSONObject.FindPath(SchemaToken) as TJSONArray;
+  if not Assigned(JSONArray) then
+    Exit;
+
+  if JSONArray.Count > 0 then
+  begin
+    FirstItem := JSONArray.Items[0];
+    if (not Assigned(FirstItem)) or (FirstItem.JSONType <> jtObject) then
+      Exit;
   end;
 end;
 
@@ -618,9 +640,9 @@ begin
       aObserverName := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, aKey);
       case FContentType of
         mctEmpty: ;
-        mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
-        mctNest, mctNests:            FNestList[gridMap.Row - 1].FObserver := aObserverName;
-        mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
+        mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
+        mctNests:       FNestList[gridMap.Row - 1].FObserver := aObserverName;
+        mctSpecimens:   FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
       end;
       gridMap.Cells[gridMap.Col, gridMap.Row] := aObserverName;
     end;
@@ -634,9 +656,9 @@ begin
       aLocalityName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aKey);
       case FContentType of
         mctEmpty: ;
-        mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
-        mctNest, mctNests:            FNestList[gridMap.Row - 1].FLocalityName := aLocalityName;
-        mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FLocality := aLocalityName;
+        mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
+        mctNests:       FNestList[gridMap.Row - 1].FLocalityName := aLocalityName;
+        mctSpecimens:   FSpecimenList[gridMap.Row - 1].FLocality := aLocalityName;
       end;
       gridMap.Cells[gridMap.Col, gridMap.Row] := aLocalityName;
     end;
@@ -647,7 +669,7 @@ begin
   begin
     case FContentType of
       mctEmpty: ;
-      mctInventory, mctInventories:
+      mctInventories:
       begin
         if FindDlg(tbSurveys, gridMap, aKey) then
         begin
@@ -655,7 +677,7 @@ begin
           gridMap.Cells[gridMap.Col, gridMap.Row] := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aKey);
         end;
       end;
-      mctNest, mctNests:
+      mctNests:
       begin
         if FindDlg(tbNests, gridMap, aKey) then
         begin
@@ -695,9 +717,9 @@ begin
           aObserverName := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, aObserverKey);
           case FContentType of
             mctEmpty: ;
-            mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
-            mctNest, mctNests:            FNestList[gridMap.Row - 1].FObserver := aObserverName;
-            mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
+            mctInventories: FInventoryList[gridMap.Row - 1].FObserver := aObserverName;
+            mctNests:       FNestList[gridMap.Row - 1].FObserver := aObserverName;
+            mctSpecimens:   FSpecimenList[gridMap.Row - 1].FObserver := aObserverName;
           end;
         end;
       end
@@ -710,9 +732,9 @@ begin
           aLocalityName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
           case FContentType of
             mctEmpty: ;
-            mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
-            mctNest, mctNests:            FNestList[gridMap.Row - 1].FLocalityName := aLocalityName;
-            mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FLocality := aLocalityName;
+            mctInventories: FInventoryList[gridMap.Row - 1].FLocalityName := aLocalityName;
+            mctNests:       FNestList[gridMap.Row - 1].FLocalityName := aLocalityName;
+            mctSpecimens:   FSpecimenList[gridMap.Row - 1].FLocality := aLocalityName;
           end;
         end;
       end
@@ -724,9 +746,9 @@ begin
         begin
           case FContentType of
             mctEmpty: ;
-            mctInventory, mctInventories: FInventoryList[gridMap.Row - 1].FSurveyKey := aSurveyKey;
-            mctNest, mctNests:            FNestList[gridMap.Row - 1].FNestKey := aSurveyKey;
-            mctSpecimens:                 FSpecimenList[gridMap.Row - 1].FSpecimenKey := aSurveyKey;
+            mctInventories: FInventoryList[gridMap.Row - 1].FSurveyKey := aSurveyKey;
+            mctNests:       FNestList[gridMap.Row - 1].FNestKey := aSurveyKey;
+            mctSpecimens:   FSpecimenList[gridMap.Row - 1].FSpecimenKey := aSurveyKey;
           end;
         end;
       end;
@@ -1548,11 +1570,14 @@ function TdlgImportXMobile.LoadFromJSON(aJSON: TJSONData): Boolean;
 begin
   Result := False;
 
+  if not (aJSON is TJSONArray) then
+    Exit;
+
   case FContentType of
     mctEmpty: ;
-    mctInventory, mctInventories:
+    mctInventories:
       Result := LoadInventoriesFromJSON(aJSON);
-    mctNest, mctNests:
+    mctNests:
       Result := LoadNestsFromJSON(aJSON);
     mctSpecimens:
       Result := LoadSpecimensFromJSON(aJSON);
@@ -1562,6 +1587,7 @@ end;
 function TdlgImportXMobile.LoadInventoriesFromJSON(aJSON: TJSONData): Boolean;
 var
   InventoryObj: TMobileInventory;
+  Items: TJSONArray;
   i: Integer;
 begin
   Result := False;
@@ -1572,26 +1598,22 @@ begin
   if aJSON = nil then
     Exit;
 
+  if not (aJSON is TJSONArray) then
+    Exit;
+  Items := TJSONArray(aJSON);
+
   LogEvent(leaStart, 'Load inventories from JSON');
   try
-    if aJSON is TJSONObject then
-    begin
-      InventoryObj := TMobileInventory.Create;
-      InventoryObj.FromJSON(aJSON);
-      FInventoryList.Add(InventoryObj);
-      Result := True;
-    end
-    else
-    if aJSON is TJSONArray then
+    if Items.Count > 0 then
     begin
       dlgLoading.Show;
       dlgLoading.UpdateProgress(rsLoadingJSONFile, 0);
-      dlgLoading.Max := aJSON.Count;
+      dlgLoading.Max := Items.Count;
       Application.ProcessMessages;
-      for i := 0 to aJSON.Count - 1 do
+      for i := 0 to Items.Count - 1 do
       begin
         InventoryObj := TMobileInventory.Create;
-        InventoryObj.FromJSON(aJSON.Items[i]);
+        InventoryObj.FromJSON(Items.Items[i]);
         FInventoryList.Add(InventoryObj);
         dlgLoading.Progress := i + 1;
       end;
@@ -1623,7 +1645,7 @@ begin
   LogEvent(leaStart, 'Load map grid');
   case FContentType of
     mctEmpty: ;
-    mctInventory, mctInventories:
+    mctInventories:
     begin
       if FInventoryList.Count = 0 then Exit;
       gridMap.RowCount := FInventoryList.Count + 1;
@@ -1660,7 +1682,7 @@ begin
       dlgLoading.Hide;
       dlgLoading.Max := 100;
     end;
-    mctNest, mctNests:
+    mctNests:
     begin
       if FNestList.Count = 0 then Exit;
       gridMap.RowCount := FNestList.Count + 1;
@@ -1735,6 +1757,7 @@ end;
 function TdlgImportXMobile.LoadNestsFromJSON(aJSON: TJSONData): Boolean;
 var
   NestObj: TMobileNest;
+  Items: TJSONArray;
   i: Integer;
 begin
   Result := False;
@@ -1745,26 +1768,22 @@ begin
   if aJSON = nil then
     Exit;
 
+  if not (aJSON is TJSONArray) then
+    Exit;
+  Items := TJSONArray(aJSON);
+
   LogEvent(leaStart, 'Load nests from JSON');
   try
-    if aJSON is TJSONObject then
-    begin
-      NestObj := TMobileNest.Create;
-      NestObj.FromJSON(aJSON);
-      FNestList.Add(NestObj);
-      Result := True;
-    end
-    else
-    if aJSON is TJSONArray then
+    if Items.Count > 0 then
     begin
       dlgLoading.Show;
       dlgLoading.UpdateProgress(rsLoadingJSONFile, 0);
-      dlgLoading.Max := aJSON.Count;
+      dlgLoading.Max := Items.Count;
       Application.ProcessMessages;
-      for i := 0 to aJSON.Count - 1 do
+      for i := 0 to Items.Count - 1 do
       begin
         NestObj := TMobileNest.Create;
-        NestObj.FromJSON(aJSON.Items[i]);
+        NestObj.FromJSON(Items.Items[i]);
         FNestList.Add(NestObj);
       end;
       dlgLoading.Hide;
@@ -1784,6 +1803,7 @@ end;
 function TdlgImportXMobile.LoadSpecimensFromJSON(aJSON: TJSONData): Boolean;
 var
   SpecimenObj: TMobileSpecimen;
+  Items: TJSONArray;
   i: Integer;
 begin
   Result := False;
@@ -1794,18 +1814,22 @@ begin
   if aJSON = nil then
     Exit;
 
+  if not (aJSON is TJSONArray) then
+    Exit;
+  Items := TJSONArray(aJSON);
+
   LogEvent(leaStart, 'Load specimens from JSON');
   try
-    if aJSON is TJSONArray then
+    if Items.Count > 0 then
     begin
       dlgLoading.Show;
       dlgLoading.UpdateProgress(rsLoadingJSONFile, 0);
-      dlgLoading.Max := aJSON.Count;
+      dlgLoading.Max := Items.Count;
       Application.ProcessMessages;
-      for i := 0 to aJSON.Count - 1 do
+      for i := 0 to Items.Count - 1 do
       begin
         SpecimenObj := TMobileSpecimen.Create;
-        SpecimenObj.FromJSON(aJSON.Items[i]);
+        SpecimenObj.FromJSON(Items.Items[i]);
         FSpecimenList.Add(SpecimenObj);
       end;
       dlgLoading.Hide;
@@ -1866,12 +1890,17 @@ begin
     finally
       FreeAndNil(JSON);
     end;
-    case JSONData.JSONType of
-      jtObject: JSONObject := TJSONObject(JSONData);
-      jtArray: JSONArray := TJSONArray(JSONData);
+    if JSONData.JSONType = jtObject then
+    begin
+      JSONObject := TJSONObject(JSONData);
+      //if JSONObject.FindPath('inventories') <> nil then
+      //  JSONArray := JSONObject.FindPath('inventories') as TJSONArray;
+      //if JSONObject.FindPath('nests') <> nil then
+      //  JSONArray := JSONObject.FindPath('nests') as TJSONArray;
+      //if JSONObject.FindPath('specimens') <> nil then
+      //  JSONArray := JSONObject.FindPath('specimens') as TJSONArray;  
+      Result := True;
     end;
-
-    Result := True;
   except
     on E: Exception do
       MsgDlg(rsTitleError, Format(rsErrorReadingJSONFile, [E.Message]), mtError);
@@ -1910,16 +1939,16 @@ begin
 
     case FContentType of
       mctEmpty: ;
-      mctInventory, mctInventories: ImportInventories;
-      mctNest, mctNests: ImportNests;
-      mctSpecimens: ImportSpecimens;
+      mctInventories: ImportInventories;
+      mctNests:       ImportNests;
+      mctSpecimens:   ImportSpecimens;
     end;
   end;
 
   // Source page
   if nbPages.PageIndex = 0 then
   begin
-    if LoadFromJSON(JSONData) then
+    if LoadFromJSON(JSONArray) then
     begin
       nbPages.PageIndex := 1;
 

@@ -406,7 +406,7 @@ type
   );
 
   // Xolmis Mobile
-  TMobileContentType = (mctEmpty, mctInventory, mctInventories, mctNest, mctNests, mctSpecimens);
+  TMobileContentType = (mctEmpty, mctInventories, mctNests, mctSpecimens);
   TMobileInventoryType = (invQualitativeFree, invQualitativeTimed, invQualitativeInterval, invMackinnonList,
                           invTransectCount, invPointCount, invBanding, invCasual, invTransectDetection,
                           invPointDetection);

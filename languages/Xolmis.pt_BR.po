@@ -16230,7 +16230,7 @@ msgstr "Inserido por importação"
 
 #: utils_locale.rsinsertedbyquickentry
 msgid "Inserted by Quick Entry"
-msgstr ""
+msgstr "Inserido no Quick Entry"
 
 #: utils_locale.rsinsertingtoponyms
 msgid "Inserting toponyms in Gazetteer..."
@@ -16574,6 +16574,10 @@ msgstr "Observação casual"
 msgctxt "utils_locale.rsmobileeggexists"
 msgid "Egg already recorded: %s"
 msgstr "Ovo já registrado: %s"
+
+#: utils_locale.rsmobileerrorinvalidfileformat
+msgid "Invalid file format."
+msgstr "Formato de arquivo inválido."
 
 #: utils_locale.rsmobileerroropeningfile
 msgctxt "utils_locale.rsmobileerroropeningfile"
@@ -19385,4 +19389,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

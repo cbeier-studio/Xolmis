@@ -1367,6 +1367,7 @@ uses
     rsMobileFileNotSelected = 'File not selected.';
     rsMobileFileSelectedAndLoaded = 'File selected and loaded.';
     rsMobileErrorOpeningFile = 'Error opening file.';
+    rsMobileErrorInvalidFileFormat = 'Invalid file format.';
     rsMobileHaveMissingInvalidValuesOnGrid = 'The records have missing (required) or invalid values (highlighted in red) that need to be corrected before importing.';
 
     rsDistributionNone = 'None';

@@ -16590,6 +16590,10 @@ msgctxt "utils_locale.rsmobileeggexists"
 msgid "Egg already recorded: %s"
 msgstr ""
 
+#: utils_locale.rsmobileerrorinvalidfileformat
+msgid "Invalid file format."
+msgstr ""
+
 #: utils_locale.rsmobileerroropeningfile
 msgctxt "utils_locale.rsmobileerroropeningfile"
 msgid "Error opening file."

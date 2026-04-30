@@ -727,7 +727,7 @@ begin
     FNestId := JSONObj.Get('nestId', 0);
     FFieldNumber := JSONObj.Get('fieldNumber', '');
     FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
-    FEggShape := TEggShape(JSONObj.Get('cloudCover', Integer(esUnknown)));
+    FEggShape := TEggShape(JSONObj.Get('eggShape', Integer(esUnknown)));
     FWidth := JSONObj.Get('width', 0.0);
     FLength := JSONObj.Get('length', 0.0);
     FMass := JSONObj.Get('mass', 0.0);
