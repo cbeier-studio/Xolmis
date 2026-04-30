@@ -525,7 +525,7 @@ begin
   if (not Assigned(SchemaVersion)) or (SchemaVersion.JSONType = jtNull) then
     Exit;
 
-  JSONArray := JSONObject.FindPath(SchemaToken) as TJSONArray;
+  JSONArray := JSONObject.FindPath('records') as TJSONArray;
   if not Assigned(JSONArray) then
     Exit;
 
