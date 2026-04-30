@@ -33,6 +33,7 @@ A seguir estão os esquemas dos três tipos de CSV.
 | Coluna | Descrição |
 | --- | --- |
 | **field_number** | identificador de campo para o ninho |
+| **observer** | abreviação do observador |
 | **taxon** | táxon da espécie de ave |
 | **male** | identificador do indivíduo macho |
 | **female** | identificador do indivíduo fêmea |
@@ -66,8 +67,10 @@ A seguir estão os esquemas dos três tipos de CSV.
 | **last_day_active** | último dia em que o ninho esteve ativo |
 | **last_seen** | última data de observação |
 | **nest_age** | idade estimada do ninho |
+| **nest_days_building** | número de dias no estágio de construção |
 | **nest_days_egg** | número de dias no estágio de ovo |
 | **nest_days_nestling** | número de dias no estágio de ninhego |
+| **description** | descrição do ninho |
 | **notes** | qualquer informação adicional |
 
 ### 2. Esquema de revisão de ninho
@@ -78,8 +81,12 @@ A seguir estão os esquemas dos três tipos de CSV.
 | **date** | data da revisão |
 | **observer** | abreviação do observador |
 | **status** | status do ninho na revisão |
-| **eggs_tally** | número de ovos |
-| **nestlings_tally** | número de ninhegos |
+| **stage** | estágio do ninho na revisão |
+| **host_eggs_tally** | número de ovos dos donos do ninho |
+| **host_nestlings_tally** | número de ninhegos dos donos do ninho |
+| **nidoparasite_eggs_tally** | número de ovos do nidoparasita |
+| **nidoparasite_nestlings_tally** | número de ninhegos do nidoparasita |
+| **nidoparasite** | táxon do nidoparasita |
 | **photos** | referências fotográficas |
 | **notes** | qualquer informação adicional |
 
@@ -88,12 +95,17 @@ A seguir estão os esquemas dos três tipos de CSV.
 | Coluna | Descrição |
 | --- | --- |
 | **nest** | identificador do ninho |
+| **observer** | abreviação do observador |
 | **date** | data da medição |
 | **egg_num** | número do ovo |
+| **taxon** | táxon do ovo |
 | **length** | comprimento do ovo, em milímetros |
 | **width** | largura do ovo, em milímetros |
 | **mass** | massa do ovo, em gramas |
 | **shape** | descrição da forma do ovo |
+| **pattern** | categoria do padrão da casca do ovo |
+| **texture** | categoria da textura da casca do ovo |
 | **color** | descrição da cor do ovo |
+| **hatched** | se o ovo eclodiu ou não |
 | **photos** | referências fotográficas |
 | **notes** | qualquer informação adicional |

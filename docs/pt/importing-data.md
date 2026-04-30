@@ -197,7 +197,7 @@ O Xolmis possui um aplicativo móvel complementar, [Xolmis Mobile](xolmis-mobile
 
 Para importar arquivos JSON do Xolmis Mobile:
 
-1. Abra o assistente de importação no menu principal: **Arquivo → Importar → Xolmis mobile**.  
+1. Abra o assistente de importação no menu principal: **Arquivo → Importar → Xolmis Mobile**.  
 2. No diálogo, escolha o arquivo de origem. O sistema validará automaticamente o arquivo e indicará se ele é aceitável. Opcionalmente, você pode selecionar uma **expedição** para associar aos dados importados.  
 3. Clique em **Avançar** para prosseguir. Os registros do arquivo serão listados.  
       - Você pode desmarcar registros que não deseja importar.  

@@ -32,8 +32,8 @@ Abaixo estão os esquemas dos três tipos de CSV.
 | Coluna | Descrição |
 | --- | --- |
 | **LOCALITY** | nome do local de estudo |
-| **NET STATION** | nome da estação de anilhamento |
-| **SAMPLING DATE** | data do trabalho de campo |
+| **STATION** | nome da estação de anilhamento |
+| **DATE** | data do trabalho de campo |
 | **START TIME** | hora em que a primeira rede foi aberta |
 | **END TIME** | hora em que a última rede foi fechada |
 | **LONGITUDE** | em graus decimais |
@@ -74,8 +74,8 @@ Abaixo estão os esquemas dos três tipos de CSV.
 | Coluna | Descrição |
 | --- | --- |
 | **LOCALITY** | nome do local de estudo |
-| **NET STATION** | nome da estação de anilhamento |
-| **SAMPLING DATE** | data do esforço |
+| **STATION** | nome da estação de anilhamento |
+| **DATE** | data do esforço |
 | **NET NUMBER** | número da rede de neblina no campo |
 | **LONGITUDE** | em graus decimais |
 | **LATITUDE** | em graus decimais |
@@ -95,16 +95,16 @@ Abaixo estão os esquemas dos três tipos de CSV.
 | --- | --- |
 | **LOCALITY** | nome do local de estudo |
 | **STATION** | nome da estação de anilhamento |
-| **DATA** | data de anilhamento |
+| **DATE** | data de anilhamento |
 | **RECORDER** | abreviação do pesquisador responsável por registrar os dados |
 | **BANDER** | pessoa responsável pelo anilhamento |
 | **CAP TIME** | hora da captura |
 | **NET SITE NAME** | número ou nome da rede |
-| **NEW_RECAP** | natureza da captura (nova captura, recaptura, mesmo dia etc.) |
-| **BAND_CODE** | código alfabético do tamanho da anilha (uma letra) |
+| **TYPE** | natureza da captura (nova captura, recaptura, mesmo dia etc.) |
+| **BAND CODE** | código alfabético do tamanho da anilha (uma letra) |
 | **BAND NUMBER** | número único da anilha para o tamanho |
-| **RIGHT LEG** | combinação de anilhas na perna direita |
-| **LEFT LEG** | combinação de anilhas na perna esquerda |
+| **RIGHT TARSUS** | combinação de anilhas na perna direita |
+| **LEFT TARSUS** | combinação de anilhas na perna esquerda |
 | **SPECIES NAME** | nome científico |
 | **CP** | código de protuberância cloacal |
 | **BP** | código de placa de incubação |
@@ -133,17 +133,17 @@ Abaixo estão os esquemas dos três tipos de CSV.
 | **FINAL PHOTO NUMBER** | número do último arquivo de foto da ave |
 | **CAMERA NAME** | identificação da câmera utilizada |
 | **PHOTO NAME FORMULA** | nome de arquivo padronizado para renomear fotos |
-| **CRANIO** | comprimento do crânio, em milímetros |
-| **CULMEN EXPOSTO** | comprimento do culmen exposto, em milímetros |
+| **SKULL LENGTH** | comprimento do crânio, em milímetros |
+| **EXPOSED CULMEN** | comprimento do culmen exposto, em milímetros |
 | **NP** | distância da narina até a ponta do bico, em milímetros |
-| **LARGURA BICO** | largura do bico, em milímetros |
-| **ALTURA BICO** | altura do bico, em milímetros |
-| **SANGUE** | se foi coletada amostra de sangue |
-| **PENAS** | se foi coletada amostra de penas |
+| **BILL WIDTH** | largura do bico, em milímetros |
+| **BILL HEIGHT** | altura do bico, em milímetros |
+| **BLOOD SAMPLE** | se foi coletada amostra de sangue |
+| **FEATHER SAMPLE** | se foi coletada amostra de penas |
 | **LONGITUDE** | em graus decimais |
 | **LATITUDE** | em graus decimais |
 | **KIPPS** | distância de Kipp, em milímetros |
-| **GLICOSE** | medição de glicose |
-| **HEMOGLOBINA** | medição de hemoglobina |
-| **HEMATOCRITO** | medição de hematócrito |
+| **GLUCOSE** | medição de glicose |
+| **HEMOGLOBIN** | medição de hemoglobina |
+| **HEMATOCRIT** | medição de hematócrito |
 | **GPS NUMBER** | número do dispositivo de rastreamento GPS |

@@ -33,6 +33,7 @@ Below are the outlines of the three CSV schemas.
 | Column | Description |
 | --- | --- |
 | **field_number** | field identifier for the nest |
+| **observer** | abbreviation of the observer |
 | **taxon** | bird species taxon |
 | **male** | male individual identifier |
 | **female** | female individual identifier |
@@ -66,8 +67,10 @@ Below are the outlines of the three CSV schemas.
 | **last_day_active** | last day the nest was active |
 | **last_seen** | last observation date |
 | **nest_age** | estimated age of the nest |
+| **nest_days_building** | number of days in building stage |
 | **nest_days_egg** | number of days in egg stage |
 | **nest_days_nestling** | number of days in nestling stage |
+| **description** | description of the nest |
 | **notes** | any additional information |
 
 ### 2. Nest revision schema
@@ -78,8 +81,12 @@ Below are the outlines of the three CSV schemas.
 | **date** | revision date |
 | **observer** | abbreviation of the observer |
 | **status** | nest status at revision |
-| **eggs_tally** | number of eggs |
-| **nestlings_tally** | number of nestlings |
+| **stage** | nest stage at revision |
+| **host_eggs_tally** | number of eggs of the owners of the nest |
+| **host_nestlings_tally** | number of nestlings of the owners of the nest |
+| **nidoparasite_eggs_tally** | number of eggs of the nidoparasite |
+| **nidoparasite_nestlings_tally** | number of nestlings of the nidoparasite |
+| **nidoparasite** | taxon of the nidoparasite |
 | **photos** | photo references |
 | **notes** | any additional information |
 
@@ -88,12 +95,17 @@ Below are the outlines of the three CSV schemas.
 | Column | Description |
 | --- | --- |
 | **nest** | nest identifier |
+| **observer** | abbreviation of the observer |
 | **date** | date of measurement |
 | **egg_num** | egg number |
+| **taxon** | taxon of the egg |
 | **length** | egg length, in millimeters |
 | **width** | egg width, in millimeters |
 | **mass** | egg mass, in grams |
 | **shape** | egg shape description |
+| **pattern** | eggshell pattern category |
+| **texture** | eggshell texture category |
 | **color** | egg color description |
+| **hatched** | if the egg hatched or not |
 | **photos** | photo references |
 | **notes** | any additional information |

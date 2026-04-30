@@ -33,8 +33,8 @@ Below are the outlines of the three CSV schemas.
 | Column | Description |
 | --- | --- |
 | **LOCALITY** | study site name |
-| **NET STATION** | banding station name |
-| **SAMPLING DATE** | date of fieldwork |
+| **STATION** | banding station name |
+| **DATE** | date of fieldwork |
 | **START TIME** | time when the first net was opened |
 | **END TIME** | time when the last net was closed |
 | **LONGITUDE** | in decimal degrees |
@@ -75,8 +75,8 @@ Below are the outlines of the three CSV schemas.
 | Column | Description |
 | --- | --- |
 | **LOCALITY** | study site name |
-| **NET STATION** | banding station name |
-| **SAMPLING DATE** | date of effort |
+| **STATION** | banding station name |
+| **DATE** | date of effort |
 | **NET NUMBER** | number of the mist net in the field |
 | **LONGITUDE** | in decimal degrees |
 | **LATITUDE** | in decimal degrees |
@@ -96,16 +96,16 @@ Below are the outlines of the three CSV schemas.
 | --- | --- |
 | **LOCALITY** | study site name |
 | **STATION** | banding station name |
-| **DATA** | banding date |
+| **DATE** | banding date |
 | **RECORDER** | abbreviation of researcher which was writing down the data |
 | **BANDER** | person responsible for banding |
 | **CAP TIME** | time of capture |
 | **NET SITE NAME** | net number or name |
-| **NEW_RECAP** | nature of capture (new capture, recapture, same day, etc.) |
-| **BAND_CODE** | alphabetic code of band size (one letter) |
+| **TYPE** | nature of capture (new capture, recapture, same day, etc.) |
+| **BAND CODE** | alphabetic code of band size (one letter) |
 | **BAND NUMBER** | unique band number for the band size |
-| **RIGHT LEG** | bands combination in the right leg |
-| **LEFT LEG** | bands combination in the left leg |
+| **RIGHT TARSUS** | bands combination in the right leg |
+| **LEFT TARSUS** | bands combination in the left leg |
 | **SPECIES NAME** | scientific name |
 | **CP** | cloacal protuberance code |
 | **BP** | brood patch code |
@@ -134,17 +134,17 @@ Below are the outlines of the three CSV schemas.
 | **FINAL PHOTO NUMBER** | number of the last photo filename for this bird |
 | **CAMERA NAME** | identification of the camera used |
 | **PHOTO NAME FORMULA** | standardized filename to rename photo files |
-| **CRANIO** | length of skull, in millimeters |
-| **CULMEN EXPOSTO** | length of exposed culmen, in millimeters |
+| **SKULL LENGTH** | length of skull, in millimeters |
+| **EXPOSED CULMEN** | length of exposed culmen, in millimeters |
 | **NP** | distance of nostril to bill tip, in millimeters |
-| **LARGURA BICO** | bill width, in millimeters |
-| **ALTURA BICO** | bill height, in millimeters |
-| **SANGUE** | if a blood sample was collected |
-| **PENAS** | if a feather sample was collected |
+| **BILL WIDTH** | bill width, in millimeters |
+| **BILL HEIGHT** | bill height, in millimeters |
+| **BLOOD SAMPLE** | if a blood sample was collected |
+| **FEATHER SAMPLE** | if a feather sample was collected |
 | **LONGITUDE** | in decimal degrees |
 | **LATITUDE** | in decimal degrees |
 | **KIPPS** | Kipp's distance, in millimeters |
-| **GLICOSE** | glucose measurement |
-| **HEMOGLOBINA** | hemoglobin measurement |
-| **HEMATOCRITO** | hematocrit measurement |
+| **GLUCOSE** | glucose measurement |
+| **HEMOGLOBIN** | hemoglobin measurement |
+| **HEMATOCRIT** | hematocrit measurement |
 | **GPS NUMBER** | number of the GPS tracking device |
