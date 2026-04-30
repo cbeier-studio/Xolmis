@@ -346,7 +346,7 @@ begin
 
           // Check if the nest revision exists
           RevisionRepo.FindByDate(Nest.Id, aDate, aTime, aObserver, Revision);
-          if (Revision.Id = 0) then
+          if (Revision.IsNew) then
           begin
             Revision.NestId := Nest.Id;
             Revision.RevisionDate := CSV.FieldByName('date').AsDateTime;

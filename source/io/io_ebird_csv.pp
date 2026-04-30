@@ -100,7 +100,7 @@ var
   Toponimo: TSite;
   Survey: TSurvey;
   SurveyRepo: TSurveyRepository;
-  Sight: TSighting;
+  Sight, OldSight: TSighting;
   SightRepo: TSightingRepository;
   Quant, aMethod: Integer;
   RDate: String;
@@ -154,6 +154,7 @@ begin
         Taxon := TTaxon.Create(GetValidTaxon(Reg.ScientificName));
         Survey := TSurvey.Create;
         Sight := TSighting.Create;
+        OldSight := TSighting.Create;
         aMethod := GetKey(TBL_METHODS, COL_METHOD_ID, COL_EBIRD_NAME, Reg.Protocol);
         try
           { Find survey (Amostragem) }
@@ -172,6 +173,9 @@ begin
             Survey.UserInserted := ActiveUser.Id;
 
             SurveyRepo.Insert(Survey);
+
+            // Insert record history
+            WriteRecHistory(tbSurveys, haCreated, Survey.Id, '', '', '', rsInsertedByImport);
             LogInfo(Format('Survey record inserted with ID=%d', [Survey.Id]));
           end;
 
@@ -202,11 +206,16 @@ begin
             Sight.UserInserted := ActiveUser.Id;
 
             SightRepo.Insert(Sight);
+
+            // Insert record history
+            WriteRecHistory(tbSightings, haCreated, Sight.Id, '', '', '', rsInsertedByImport);
             LogInfo(Format('Sighting record inserted with ID=%d', [Sight.Id]));
           end
           else
           begin
             { Update record if it exists }
+            SightRepo.GetById(Sight.Id, OldSight);
+
             if ((xSettings.AutoFillCoordinates) and (Reg.Longitude = 0) and (Reg.Latitude = 0)) then
             begin
               Sight.Latitude := Toponimo.Latitude;
@@ -225,6 +234,9 @@ begin
             Sight.UserUpdated := ActiveUser.Id;
 
             SightRepo.Update(Sight);
+
+            // Insert record history
+            WriteDiff(tbSightings, OldSight, Sight, rsEditedByImport);
             LogInfo(Format('Sighting record with ID=%d updated', [Sight.Id]));
           end;
         finally
@@ -232,6 +244,7 @@ begin
           FreeAndNil(Toponimo);
           FreeAndNil(Survey);
           FreeAndNil(Sight);
+          FreeAndNil(OldSight);
         end;
 
         dlgProgress.Position := CSV.RecNo;

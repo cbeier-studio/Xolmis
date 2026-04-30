@@ -222,7 +222,7 @@ var
   IndividualRepo: TIndividualRepository;
   Individuo: TIndividual;
   CaptureRepo: TCaptureRepository;
-  Captura: TCapture;
+  Captura, OldCaptura: TCapture;
   NetStation: TSamplingPlot;
   SPlotRepo: TSamplingPlotRepository;
   NetRepo: TNetEffortRepository;
@@ -314,6 +314,7 @@ begin
             RemovedBand := TBand.Create;
             Individuo := TIndividual.Create;
             Captura := TCapture.Create;
+            OldCaptura := TCapture.Create;
             aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
 
             // Get valid taxon
@@ -358,6 +359,8 @@ begin
                 Band.UserInserted := ActiveUser.Id;
 
                 BandRepo.Insert(Band);
+                // Insert record history
+                WriteRecHistory(tbBands, haCreated, Band.Id, '', '', '', rsInsertedByImport);
                 LogInfo(Format('Band record inserted with ID=%d', [Band.Id]));
               end;
             end;
@@ -380,6 +383,8 @@ begin
                   RemovedBand.UserInserted := ActiveUser.Id;
 
                   BandRepo.Insert(RemovedBand);
+                  // Insert record history
+                  WriteRecHistory(tbBands, haCreated, RemovedBand.Id, '', '', '', rsInsertedByImport);
                   LogInfo(Format('Removed band record inserted with ID=%d', [RemovedBand.Id]));
                 end;
               end;
@@ -406,6 +411,8 @@ begin
               Individuo.UserInserted := ActiveUser.Id;
 
               IndividualRepo.Insert(Individuo);
+              // Insert record history
+              WriteRecHistory(tbIndividuals, haCreated, Individuo.Id, '', '', '', rsInsertedByImport);
               LogInfo(Format('Individual record inserted with ID=%d', [Individuo.Id]));
             end;
 
@@ -512,11 +519,15 @@ begin
               Captura.UserInserted := ActiveUser.Id;
 
               CaptureRepo.Insert(Captura);
+              // Insert record history
+              WriteRecHistory(tbCaptures, haCreated, Captura.Id, '', '', '', rsInsertedByImport);
               LogInfo(Format('Capture record inserted with ID=%d', [Captura.Id]));
             end
             else
             begin
               // If exists, update the record
+              CaptureRepo.GetById(Captura.Id, OldCaptura);
+
               Captura.SurveyId := Survey.Id;
               Captura.LocalityId := Toponimo.Id;
               Captura.NetStationId := NetStation.Id;
@@ -549,6 +560,9 @@ begin
               Captura.UserUpdated := ActiveUser.Id;
 
               CaptureRepo.Update(Captura);
+
+              // Insert record history
+              WriteDiff(tbCaptures, OldCaptura, Captura, rsEditedByImport);
               LogInfo(Format('Capture record with ID=%d updated', [Captura.Id]));
             end;
 
@@ -588,6 +602,7 @@ begin
             FreeAndNil(RemovedBand);
             FreeAndNil(Individuo);
             FreeAndNil(Captura);
+            FreeAndNil(OldCaptura);
             UpdInd.Free;
             MoveBand.Free;
             BandRepo.Free;
@@ -622,6 +637,8 @@ begin
                 Band.UserInserted := ActiveUser.Id;
 
                 BandRepo.Insert(Band);
+                // Insert record history
+                WriteRecHistory(tbBands, haCreated, Band.Id, '', '', '', rsInsertedByImport);
                 LogInfo(Format('Band record inserted with ID=%d', [Band.Id]));
               end;
             end;
