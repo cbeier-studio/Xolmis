@@ -298,7 +298,7 @@ constructor TProjectMembersSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectTeams;
-  FCaptionText := rsTitleProjectMembers;
+  FCaptionText := rsCaptionTeam;
   FDataSet := DMG.qProjectTeam;
   FGrid := TfrmCustomGrid(FOwner).gridChild1;
   FPageIndex := 0;
@@ -323,7 +323,7 @@ constructor TProjectGoalsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectGoals;
-  FCaptionText := rsTitleProjectGoals;
+  FCaptionText := rsCaptionGoals;
   FDataSet := DMG.qProjectGoals;
   FGrid := TfrmCustomGrid(FOwner).gridChild2;
   FPageIndex := 1;
@@ -348,7 +348,7 @@ constructor TProjectChronogramsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectChronograms;
-  FCaptionText := rsTitleProjectChronograms;
+  FCaptionText := rsCaptionChronogram;
   FDataSet := DMG.qProjectChronogram;
   FGrid := TfrmCustomGrid(FOwner).gridChild3;
   FPageIndex := 2;
@@ -501,7 +501,7 @@ constructor TProjectBudgetsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectBudgets;
-  FCaptionText := rsTitleProjectBudgets;
+  FCaptionText := rsCaptionBudget;
   FDataSet := DMG.qProjectBudget;
   FGrid := TfrmCustomGrid(FOwner).gridChild4;
   FPageIndex := 3;
@@ -527,7 +527,7 @@ constructor TProjectExpensesSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbProjectExpenses;
-  FCaptionText := rsTitleProjectExpenses;
+  FCaptionText := rsCaptionExpenses;
   FDataSet := DMG.qProjectExpenses;
   FGrid := TfrmCustomGrid(FOwner).gridChild5;
   FPageIndex := 4;

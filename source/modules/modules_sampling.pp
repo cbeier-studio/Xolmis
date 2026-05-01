@@ -597,7 +597,7 @@ constructor TSurveyMembersSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbSurveyTeams;
-  FCaptionText := rsTitleSurveyTeam;
+  FCaptionText := rsCaptionTeam;
   FDataSet := DMS.qSurveyTeam;
   FGrid := TfrmCustomGrid(FOwner).gridChild1;
   FPageIndex := 0;
@@ -708,7 +708,7 @@ constructor TVegetationsSubmoduleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FTableType := tbVegetation;
-  FCaptionText := rsTitleVegetation;
+  FCaptionText := rsCaptionVegetation;
   FDataSet := DMS.qVegetation;
   FGrid := TfrmCustomGrid(FOwner).gridChild6;
   FPageIndex := 5;

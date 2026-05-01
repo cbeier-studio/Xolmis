@@ -14124,6 +14124,11 @@ msgctxt "utils_locale.rscaptionband"
 msgid "Band"
 msgstr "Anilha"
 
+#: utils_locale.rscaptionbudget
+msgctxt "utils_locale.rscaptionbudget"
+msgid "Budget"
+msgstr "Orçamento"
+
 #: utils_locale.rscaptioncancel
 msgctxt "utils_locale.rscaptioncancel"
 msgid "Cancel"
@@ -14133,6 +14138,11 @@ msgstr "Cancelar"
 msgctxt "utils_locale.rscaptioncapture"
 msgid "Capture"
 msgstr "Captura"
+
+#: utils_locale.rscaptionchronogram
+msgctxt "utils_locale.rscaptionchronogram"
+msgid "Chronogram"
+msgstr "Cronograma"
 
 #: utils_locale.rscaptionclose
 msgctxt "utils_locale.rscaptionclose"
@@ -14194,6 +14204,11 @@ msgctxt "utils_locale.rscaptionexpeditions"
 msgid "Expeditions"
 msgstr "Expedições"
 
+#: utils_locale.rscaptionexpenses
+msgctxt "utils_locale.rscaptionexpenses"
+msgid "Expenses"
+msgstr "Gastos"
+
 #: utils_locale.rscaptionfamily
 msgctxt "utils_locale.rscaptionfamily"
 msgid "Family"
@@ -14223,6 +14238,11 @@ msgstr "Concluir"
 msgctxt "utils_locale.rscaptiongenus"
 msgid "Genus"
 msgstr "Gênero"
+
+#: utils_locale.rscaptiongoals
+msgctxt "utils_locale.rscaptiongoals"
+msgid "Goals"
+msgstr "Objetivos"
 
 #: utils_locale.rscaptionhigh
 msgctxt "utils_locale.rscaptionhigh"
@@ -14449,6 +14469,11 @@ msgctxt "utils_locale.rscaptiontaxon"
 msgid "Taxon"
 msgstr "Táxon"
 
+#: utils_locale.rscaptionteam
+msgctxt "utils_locale.rscaptionteam"
+msgid "Team"
+msgstr "Equipe"
+
 #: utils_locale.rscaptiontoponym
 msgctxt "utils_locale.rscaptiontoponym"
 msgid "Toponym"
@@ -14461,8 +14486,8 @@ msgstr "Usuário"
 
 #: utils_locale.rscaptionvegetation
 msgctxt "utils_locale.rscaptionvegetation"
-msgid "Vegetation sample"
-msgstr "Amostra de vegetação"
+msgid "Vegetation"
+msgstr "Vegetação"
 
 #: utils_locale.rscaptionversion
 msgctxt "utils_locale.rscaptionversion"

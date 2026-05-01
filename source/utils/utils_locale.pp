@@ -99,14 +99,6 @@ uses
     rsTitleBandsRunningOut = 'Bands running out';
     rsTitleAvgExpeditionDuration = 'Average expedition duration';
     rsTitleImportCoordinates = 'Import coordinates';
-    rsTabSampling = 'Sampling';
-    rsTabIndividuals = 'Individuals';
-    rsTabBreeding = 'Breeding';
-    rsTabEntities = 'Entities';
-    rsTabGeo = 'Geo';
-    rsTabTaxonomy = 'Taxonomy';
-    rsTabMedia = 'Media';
-    rsTabHelp = 'Help';
     rsTitleNew = 'New %s';
     rsTitleEditing = 'Editing %s';
     rsTitleError = 'Error';
@@ -144,9 +136,9 @@ uses
     { Error messages }
     rsErrorFound = '<p><b>%d error</b> found! Please fix it before proceeding.</p>';
     rsErrorsFound = '<p><b>%d errors</b> found! Please fix it before proceeding.</p>';
-    rsErrorConnectionNotFound = 'Connection ''%s'' not found.';
+    rsErrorConnectionNotFound = 'Connection "%s" not found.';
     rsErrorCreatingSystemDatabase = 'Unable to create the system database.';
-    rsErrorTableNotFound = 'Table ''%s'' not found.';
+    rsErrorTableNotFound = 'Table "%s" not found.';
     rsErrorDatabaseSweep = 'Error running database Sweep and Analyze';
     rsErrorDeletingFile = 'Error deleting file %s.';
     rsErrorCreateFolder = 'Not able to create folder:';
@@ -311,11 +303,6 @@ uses
     rsExportEmpty = 'No records found! Export canceled.';
     rsExportFinished = 'Export to %s: Finished!';
 
-    { LibreOffice messages }
-    rsLibreOfficeError = 'Error running LibreOffice: %d';
-    rsLibreOfficeNotFound = 'LibreOffice not found!';
-    rsLibreOfficeErrorWrongExt = 'File extension not supported: %s';
-
     { Image messages }
     rsImageNotSupported = 'Image type not supported: %s';
     rsImageNotFound = 'Image not found: %s';
@@ -397,7 +384,7 @@ uses
     rsPromptSelectSurvey = 'Select the survey to generate the report:';
 
     { Coordinates messages }
-    rsCoordinatesAvailableToUse = 'Coordinates are available at the Coordinates Editor.';
+    rsCoordinatesAvailableToUse = 'Coordinates are available at the GeoAssist.';
     rsSelectCoordinatesTypes = 'Select the origin and destination coordinate types.';
     rsInformUTMZone = 'Inform the origin UTM Zone and the Hemisphere.';
     rsSameCoordinateFormat = 'Please select a destination coordinate type that differs from the origin type.';
@@ -1442,7 +1429,7 @@ uses
     rsCaptionUser = 'User';
     rsCaptionWeatherLogEntry = 'Weather log entry';
     rsCaptionParentSite = 'Parent toponym';
-    rsCaptionVegetation = 'Vegetation sample';
+    rsCaptionVegetation = 'Vegetation';
     rsCaptionSurveyMember = 'Survey member';
     rsCaptionCollector = 'Collector';
     rsCaptionProjectMember = 'Project member';
@@ -1450,6 +1437,11 @@ uses
     rsCaptionProjectActivity = 'Activity';
     rsCaptionProjectRubric = 'Rubric';
     rsCaptionProjectExpense = 'Expense';
+    rsCaptionTeam = 'Team';
+    rsCaptionGoals = 'Goals';
+    rsCaptionChronogram = 'Chronogram';
+    rsCaptionBudget = 'Budget';
+    rsCaptionExpenses = 'Expenses';
     rsCaptionFeathers = 'Feathers';
     rsCaptionEnabled = 'Enabled';
     rsCaptionDisabled = 'Disabled';
