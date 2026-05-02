@@ -14708,8 +14708,8 @@ msgstr "Confirmação de senha incorreta. Tente redigitar."
 
 #: utils_locale.rscoordinatesavailabletouse
 msgctxt "utils_locale.rscoordinatesavailabletouse"
-msgid "Coordinates are available at the Coordinates Editor."
-msgstr "Coordenadas estão disponíveis no Editor de Coordenadas."
+msgid "Coordinates are available at the GeoAssist."
+msgstr "Coordenadas estão disponíveis no GeoAssist."
 
 #: utils_locale.rscoordinatesdecimal
 msgctxt "utils_locale.rscoordinatesdecimal"
@@ -15385,8 +15385,8 @@ msgstr "Não foi possível conectar ao banco de dados. Verifique se as opções 
 #: utils_locale.rserrorconnectionnotfound
 #, object-pascal-format
 msgctxt "utils_locale.rserrorconnectionnotfound"
-msgid "Connection '%s' not found."
-msgstr "Conexão '%s' não encontrada."
+msgid "Connection \"%s\" not found."
+msgstr "Conexão \"%s\" não encontrada."
 
 #: utils_locale.rserrorcreatefolder
 msgctxt "utils_locale.rserrorcreatefolder"
@@ -15643,8 +15643,8 @@ msgstr "<p><b>%d erros</b> encontrados! Corrija-os antes de continuar.</p>"
 #: utils_locale.rserrortablenotfound
 #, object-pascal-format
 msgctxt "utils_locale.rserrortablenotfound"
-msgid "Table '%s' not found."
-msgstr "Tabela '%s' não encontrada."
+msgid "Table \"%s\" not found."
+msgstr "Tabela \"%s\" não encontrada."
 
 #: utils_locale.rserrortablenotsupportedindocuments
 msgid "Table not supported in documents and links."
@@ -16382,23 +16382,6 @@ msgstr "e%s"
 msgctxt "utils_locale.rsleftlegempty"
 msgid "l-"
 msgstr "e-"
-
-#: utils_locale.rslibreofficeerror
-#, object-pascal-format
-msgctxt "utils_locale.rslibreofficeerror"
-msgid "Error running LibreOffice: %d"
-msgstr "Erro executando o LibreOffice: %d"
-
-#: utils_locale.rslibreofficeerrorwrongext
-#, object-pascal-format
-msgctxt "utils_locale.rslibreofficeerrorwrongext"
-msgid "File extension not supported: %s"
-msgstr "Extensão de arquivo não suportada: %s"
-
-#: utils_locale.rslibreofficenotfound
-msgctxt "utils_locale.rslibreofficenotfound"
-msgid "LibreOffice not found!"
-msgstr "LibreOffice não encontrado!"
 
 #: utils_locale.rslight
 msgctxt "utils_locale.rslight"
@@ -18619,46 +18602,6 @@ msgstr "Sinônimo"
 msgctxt "utils_locale.rssystemencoding"
 msgid "System encoding"
 msgstr "Codificação do sistema"
-
-#: utils_locale.rstabbreeding
-msgctxt "utils_locale.rstabbreeding"
-msgid "Breeding"
-msgstr "Reprodução"
-
-#: utils_locale.rstabentities
-msgctxt "utils_locale.rstabentities"
-msgid "Entities"
-msgstr "Entidades"
-
-#: utils_locale.rstabgeo
-msgctxt "utils_locale.rstabgeo"
-msgid "Geo"
-msgstr "Geo"
-
-#: utils_locale.rstabhelp
-msgctxt "utils_locale.rstabhelp"
-msgid "Help"
-msgstr "Ajuda"
-
-#: utils_locale.rstabindividuals
-msgctxt "utils_locale.rstabindividuals"
-msgid "Individuals"
-msgstr "Indivíduos"
-
-#: utils_locale.rstabmedia
-msgctxt "utils_locale.rstabmedia"
-msgid "Media"
-msgstr "Mídias"
-
-#: utils_locale.rstabsampling
-msgctxt "utils_locale.rstabsampling"
-msgid "Sampling"
-msgstr "Amostragem"
-
-#: utils_locale.rstabtaxonomy
-msgctxt "utils_locale.rstabtaxonomy"
-msgid "Taxonomy"
-msgstr "Taxonomia"
 
 #: utils_locale.rsteam
 msgctxt "utils_locale.rsteam"

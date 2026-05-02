@@ -188,16 +188,16 @@ begin
       2: aFate := 'P';
     end;
 
-    aDataSet.FieldByName('found_date').AsDateTime := StrToDate(JSONObject.Get('foundTime', ''));
-    aDataSet.FieldByName('last_date').AsDateTime := StrToDate(JSONObject.Get('lastTime', ''));
-    aDataSet.FieldByName('field_number').AsString := JSONObject.Get('fieldNumber', '');
-    aDataSet.FieldByName('taxon_id').AsInteger := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', JSONObject.Get('speciesName', ''));
-    aDataSet.FieldByName('locality_id').AsInteger := GetKey('gazetteer', 'site_id', 'site_name', JSONObject.Get('localityName', ''));
-    aDataSet.FieldByName('longitude').AsFloat := JSONObject.Get('longitude', 0.0);
-    aDataSet.FieldByName('latitude').AsFloat := JSONObject.Get('latitude', 0.0);
-    aDataSet.FieldByName('other_support').AsString := JSONObject.Get('support', '');
-    aDataSet.FieldByName('height_above_ground').AsFloat := JSONObject.Get('heightAboveGround', 0.0);
-    aDataSet.FieldByName('nest_fate').AsString := aFate;
+    aDataSet.FieldByName(COL_FOUND_DATE).AsDateTime := StrToDate(JSONObject.Get('foundTime', ''));
+    aDataSet.FieldByName(COL_LAST_DATE).AsDateTime := StrToDate(JSONObject.Get('lastTime', ''));
+    aDataSet.FieldByName(COL_FIELD_NUMBER).AsString := JSONObject.Get('fieldNumber', '');
+    aDataSet.FieldByName(COL_TAXON_ID).AsInteger := GetValidTaxon(JSONObject.Get('speciesName', ''));
+    aDataSet.FieldByName(COL_LOCALITY_ID).AsInteger := GetSiteKey(JSONObject.Get('localityName', ''));
+    aDataSet.FieldByName(COL_LONGITUDE).AsFloat := JSONObject.Get('longitude', 0.0);
+    aDataSet.FieldByName(COL_LATITUDE).AsFloat := JSONObject.Get('latitude', 0.0);
+    aDataSet.FieldByName(COL_OTHER_SUPPORT).AsString := JSONObject.Get('support', '');
+    aDataSet.FieldByName(COL_HEIGHT_ABOVE_GROUND).AsFloat := JSONObject.Get('heightAboveGround', 0.0);
+    aDataSet.FieldByName(COL_NEST_FATE).AsString := aFate;
 
     { #todo : AddNest - male, female, helpers }
 
@@ -250,16 +250,16 @@ begin
 
     etm := ExtractWord(2, JSONObject.Get('endTime', ''), ['T']);
 
-    aDataSet.FieldByName('survey_date').AsDateTime := StrToDate(sdt);
-    aDataSet.FieldByName('start_time').AsDateTime := StrToTime(ExtractWord(1, stm, ['.']));
-    aDataSet.FieldByName('end_time').AsDateTime := StrToTime(ExtractWord(1, etm, ['.']));
-    aDataSet.FieldByName('duration').AsInteger := MinutesBetween(aDataSet.FieldByName('start_time').AsDateTime,
-                                                          aDataSet.FieldByName('end_time').AsDateTime);
-    aDataSet.FieldByName('sample_id').AsString := JSONObject.Get('id', '');
-    aDataSet.FieldByName('start_longitude').AsFloat := JSONObject.Get('startLongitude', 0.0);
-    aDataSet.FieldByName('start_latitude').AsFloat := JSONObject.Get('startLatitude', 0.0);
-    aDataSet.FieldByName('end_longitude').AsFloat := JSONObject.Get('endLongitude', 0.0);
-    aDataSet.FieldByName('end_latitude').AsFloat := JSONObject.Get('endLatitude', 0.0);
+    aDataSet.FieldByName(COL_SURVEY_DATE).AsDateTime := StrToDate(sdt);
+    aDataSet.FieldByName(COL_START_TIME).AsDateTime := StrToTime(ExtractWord(1, stm, ['.']));
+    aDataSet.FieldByName(COL_END_TIME).AsDateTime := StrToTime(ExtractWord(1, etm, ['.']));
+    aDataSet.FieldByName(COL_DURATION).AsInteger := MinutesBetween(aDataSet.FieldByName(COL_START_TIME).AsDateTime,
+                                                          aDataSet.FieldByName(COL_END_TIME).AsDateTime);
+    aDataSet.FieldByName(COL_SAMPLE_ID).AsString := JSONObject.Get('id', '');
+    aDataSet.FieldByName(COL_START_LONGITUDE).AsFloat := JSONObject.Get('startLongitude', 0.0);
+    aDataSet.FieldByName(COL_START_LATITUDE).AsFloat := JSONObject.Get('startLatitude', 0.0);
+    aDataSet.FieldByName(COL_END_LONGITUDE).AsFloat := JSONObject.Get('endLongitude', 0.0);
+    aDataSet.FieldByName(COL_END_LATITUDE).AsFloat := JSONObject.Get('endLatitude', 0.0);
 
     if ShowModal = mrOk then
     begin
@@ -542,16 +542,16 @@ begin
   Result := 0;
 
   case aInventory.FType of
-    invQualitativeFree: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeFree);
-    invQualitativeTimed: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeTimed);
-    invQualitativeInterval: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeInterval);
-    invMackinnonList: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileMackinnonList);
-    invTransectCount: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectCount);
-    invPointCount: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointCount);
-    invBanding: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
-    invCasual: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileCasual);
-    invTransectDetection: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectDetection);
-    invPointDetection: Result := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointDetection);
+    invQualitativeFree: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeFree);
+    invQualitativeTimed: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeTimed);
+    invQualitativeInterval: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeInterval);
+    invMackinnonList: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileMackinnonList);
+    invTransectCount: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectCount);
+    invPointCount: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointCount);
+    invBanding: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
+    invCasual: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileCasual);
+    invTransectDetection: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectDetection);
+    invPointDetection: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointDetection);
   end;
 end;
 
@@ -567,7 +567,7 @@ begin
   Nest := TNest.Create();
   try
     aLocality := GetSiteKey(aNest.FLocalityName);
-    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, aNest.FSpeciesName);
+    aTaxon := GetValidTaxon(aNest.FSpeciesName);
 
     Repo.FindByFieldNumber(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime, Nest);
     if (Nest.Id > 0) then
@@ -591,7 +591,7 @@ begin
   Specimen := TSpecimen.Create();
   try
     aLocality := GetSiteKey(aSpecimen.FLocality);
-    aTaxon := GetKey('zoo_taxa', COL_TAXON_ID, COL_SCIENTIFIC_NAME, aSpecimen.FSpeciesName);
+    aTaxon := GetValidTaxon(aSpecimen.FSpeciesName);
     DecodeDate(aSpecimen.FSampleTime, y, m, d);
 
     Repo.FindByFieldNumber(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality, Specimen);
@@ -901,7 +901,7 @@ begin
               FreeAndNil(aOldSurvey);
             end;
             // insert survey member, if not exists
-            aObserverKey := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+            aObserverKey := GetPersonKey(Inventory.FObserver);
             ImportSurveyMember(aSurveyKey, aObserverKey);
             // insert or update sightings from species list
             ImportSpecies(Inventory);
@@ -924,7 +924,7 @@ begin
             // write record history
             WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByImport);
             // insert survey member, if not exists
-            aObserverKey := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, Inventory.FObserver);
+            aObserverKey := GetPersonKey(Inventory.FObserver);
             ImportSurveyMember(aSurveyKey, aObserverKey);
             // insert sightings from species list
             ImportSpecies(Inventory);
@@ -1472,7 +1472,8 @@ begin
         aTime := Vegetation.FSampleTime;
         aObserverId := GetPersonKey(Inventory.FObserver);
 
-        Repo.FindBySurvey(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime), Vegetation.FLongitude, Vegetation.FLatitude, aObserverId, aVegetation);
+        Repo.FindBySurvey(Inventory.FSurveyKey, DateToStr(aDate), TimeToStr(aTime),
+          Vegetation.FLongitude, Vegetation.FLatitude, aObserverId, aVegetation);
         if (aVegetation.Id > 0) then
         begin
           // if vegetation exists, update it
@@ -1667,14 +1668,14 @@ begin
         if Inventory.FLocalityName <> EmptyStr then
         begin
           aLocalityKey := GetSiteKey(Inventory.FLocalityName);
-          gridMap.Cells[4, r] := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
+          gridMap.Cells[4, r] := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
         end;
         // Survey record
         aSurveyKey := GetSurveyFromInventory(Inventory);
         if aSurveyKey > 0 then
         begin
           Inventory.FSurveyKey := aSurveyKey;
-          gridMap.Cells[5, r] := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey);
+          gridMap.Cells[5, r] := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey);
         end;
         dlgLoading.Progress := r;
         Inc(r);
@@ -1701,14 +1702,14 @@ begin
         if Nest.FLocalityName <> EmptyStr then
         begin
           aLocalityKey := GetSiteKey(Nest.FLocalityName);
-          gridMap.Cells[4, r] := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
+          gridMap.Cells[4, r] := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
         end;
         // Nest record
         aNestKey := GetNestFromMobile(Nest);
         if aNestKey > 0 then
         begin
           Nest.FNestKey := aNestKey;
-          gridMap.Cells[5, r] := GetName('nests', COL_FULL_NAME, COL_NEST_ID, aNestKey);
+          gridMap.Cells[5, r] := GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, aNestKey);
         end;
         dlgLoading.Progress := r;
         Inc(r);
@@ -1735,14 +1736,14 @@ begin
         if Specimen.FLocality <> EmptyStr then
         begin
           aLocalityKey := GetSiteKey(Specimen.FLocality);
-          gridMap.Cells[4, r] := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
+          gridMap.Cells[4, r] := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aLocalityKey);
         end;
         // Specimen record
         aSpecimenKey := GetSpecimenFromMobile(Specimen);
         if aSpecimenKey > 0 then
         begin
           Specimen.FSpecimenKey := aSpecimenKey;
-          gridMap.Cells[5, r] := GetName('specimens', COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey);
+          gridMap.Cells[5, r] := GetName(TBL_SPECIMENS, COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey);
         end;
         dlgLoading.Progress := r;
         Inc(r);
@@ -1848,15 +1849,14 @@ end;
 
 function TdlgImportXMobile.LocalityExists(aLocality: String): Boolean;
 var
-  aKeyName, aKeyAbbrev: Integer;
+  aKey: Integer;
 begin
   Result := False;
   if Trim(aLocality) = EmptyStr then
     Exit;
 
-  aKeyName := GetKey('gazetteer', COL_SITE_ID, COL_SITE_NAME, aLocality);
-  aKeyAbbrev := GetKey('gazetteer', COL_SITE_ID, COL_SITE_ABBREVIATION, aLocality);
-  Result := (aKeyName > 0) or (aKeyAbbrev > 0);
+  aKey := GetSiteKey(aLocality);
+  Result := (aKey > 0);
 end;
 
 function TdlgImportXMobile.ObserverExists(aObserver: String): Boolean;
@@ -1867,7 +1867,7 @@ begin
   if Trim(aObserver) = EmptyStr then
     Exit;
 
-  aKey := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION, aObserver);
+  aKey := GetPersonKey(aObserver);
   Result := (aKey > 0);
 end;
 
