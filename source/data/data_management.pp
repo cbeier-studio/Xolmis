@@ -22,7 +22,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Variants, DateUtils, RegExpr, fileutil,
+  Classes, SysUtils, Variants, DateUtils, RegExpr, fileutil, fpjson, jsonparser, LCLIntf, Translations,
   { VCL }
   Controls, ExtCtrls, Forms, Dialogs, StdCtrls, DBCtrls, ComCtrls,
   { Data }
@@ -100,6 +100,7 @@ const
   procedure CreateBandsRunningOutView(Connection: TSQLConnector);
   procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
 
+  procedure PopulateMethodsTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
   procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 
   { Database information and management }
@@ -144,7 +145,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_debug,
-  data_consts, data_schema, data_providers, models_users,
+  data_consts, data_schema, data_providers, data_getvalue, models_users, models_methods,
   udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
 
   {
@@ -656,6 +657,13 @@ begin
         DMM.scriptUserDBInit.DataBase := Conn;
         DMM.scriptUserDBInit.Transaction := Conn.Transaction;
         DMM.scriptUserDBInit.ExecuteScript;
+
+        Trans.CommitRetaining;
+        if not Trans.Active then
+          Trans.StartTransaction;
+
+        // Populate methods
+        PopulateMethodsTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
         if not Trans.Active then
@@ -1777,6 +1785,76 @@ begin
     ') ' +
     'SELECT avg(consecutive_dates) AS media_dias_expedicao ' +
     'FROM consecutivo;');
+end;
+
+procedure PopulateMethodsTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+var
+  FRepo: TMethodRepository;
+  FMethod: TMethod;
+  FFilePath: String;
+  JFile: TFileStream;
+  JData: TJSONData;
+  JArray: TJSONArray;
+  i: Integer;
+  currentLang: TLanguageID;
+begin
+  currentLang := GetLanguageID;
+  if SameText(currentLang.LanguageID, 'pt-BR') then
+    FFilePath := ConcatPaths([AppDataDir, 'methods_pt-BR.json'])
+  else
+    FFilePath := ConcatPaths([AppDataDir, 'methods_en-US.json']);
+
+  if not FileExists(FFilePath) then
+    raise Exception.CreateFmt(rsErrorFileNotFound, [FFilePath]);
+
+  LogEvent(leaStart, 'Populate methods table');
+
+  FRepo := TMethodRepository.Create(DMM.sqlCon);
+  FMethod := TMethod.Create();
+  try
+    try
+      JFile := TFileStream.Create(FFilePath, fmOpenRead);
+      JData := GetJSON(JFile);
+    finally
+      FreeAndNil(JFile);
+    end;
+    if not (JData is TJSONArray) then
+      Exit;
+    JArray := TJSONArray(JData);
+    try
+      if JArray.Count > 0 then
+      begin
+        aProgressBar.Position := 0;
+        aProgressBar.Style := TProgressBarStyle.pbstNormal;
+        aProgressBar.Max := JArray.Count;
+        Application.ProcessMessages;
+        for i := 0 to JArray.Count - 1 do
+        begin
+          FMethod.Clear;
+          FMethod.FromJSON(JArray.Items[i].AsString);
+          if GetMethodKey(FMethod.Name) > 0 then
+            FRepo.Update(FMethod)
+          else
+            FRepo.Insert(FMethod);
+
+          aProgressBar.Position := i + 1;
+        end;
+      end;
+    except
+      on E: Exception do
+      begin
+        MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
+      end;
+    end;
+  finally
+    FreeAndNil(FMethod);
+    FRepo.Free;
+    if Assigned(JData) then
+      FreeAndNil(JData);
+    JArray := nil;
+
+    LogEvent(leaFinish, 'Populate methods table');
+  end;
 end;
 
 procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);

@@ -129,6 +129,7 @@ var
 begin
   DMM.CSVExport.FileName := FFileName;
   DMM.CSVExport.Dataset := FDataSet;
+  DMM.CSVExport.ExportFields.Clear;
   // Set columns to export
   for i := 0 to cklbColumns.Count - 1 do
     if cklbColumns.Checked[i] then
@@ -150,6 +151,7 @@ var
 begin
   DMM.JSONExport.FileName := FFileName;
   DMM.JSONExport.Dataset := FDataSet;
+  DMM.JSONExport.ExportFields.Clear;
   // Set columns to export
   for i := 0 to cklbColumns.Count - 1 do
     if cklbColumns.Checked[i] then
@@ -172,6 +174,7 @@ begin
   DMM.FPSExport.FormatSettings.ExportFormat := efODS;
   DMM.FPSExport.FileName := FFileName;
   DMM.FPSExport.Dataset := FDataSet;
+  DMM.FPSExport.ExportFields.Clear;
   // Set columns to export
   for i := 0 to cklbColumns.Count - 1 do
     if cklbColumns.Checked[i] then
@@ -194,6 +197,7 @@ begin
   DMM.FPSExport.FormatSettings.ExportFormat := efXLSX;
   DMM.FPSExport.FileName := FFileName;
   DMM.FPSExport.Dataset := FDataSet;
+  DMM.FPSExport.ExportFields.Clear;
   // Set columns to export
   for i := 0 to cklbColumns.Count - 1 do
     if cklbColumns.Checked[i] then
@@ -215,6 +219,7 @@ var
 begin
   DMM.XMLExport.FileName := FFileName;
   DMM.XMLExport.Dataset := FDataSet;
+  DMM.XMLExport.ExportFields.Clear;
   // Set columns to export
   for i := 0 to cklbColumns.Count - 1 do
     if cklbColumns.Checked[i] then

@@ -42,7 +42,7 @@ type
 implementation
 
 uses
-  utils_locale, data_consts, data_columns, data_filters, data_getvalue, models_media,
+  utils_locale, data_consts, data_columns, data_filters, data_getvalue, models_record_types, models_media,
   udm_main, udm_grid, ufrm_customgrid;
 
 { TBotanicalTaxaModuleController }
