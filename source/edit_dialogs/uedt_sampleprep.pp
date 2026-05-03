@@ -299,7 +299,7 @@ begin
     begin
       FSamplePrep.PreparerId := xSettings.LastObserverId;
       FPreparerId := FSamplePrep.PreparerId;
-      ePreparer.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FPreparerId);
+      ePreparer.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FPreparerId);
     end;
   end
   else

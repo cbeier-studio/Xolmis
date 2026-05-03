@@ -669,7 +669,7 @@ begin
     R.FormattedName := FieldByName('formatted_name').AsString;
     R.VernacularName := FieldByName('vernacular_name').AsString;
     R.ValidId := FieldByName('valid_id').AsInteger;
-    FRankAbbrev := GetName('taxon_ranks', 'abbreviation', 'rank_id', FieldByName('rank_id').AsInteger);
+    FRankAbbrev := GetName(TBL_TAXON_RANKS, COL_ABBREVIATION, COL_RANK_ID, FieldByName('rank_id').AsInteger);
     R.RankId := StringToBotanicRank(FRankAbbrev);
     R.ParentTaxonId := FieldByName('parent_taxon_id').AsInteger;
     R.SpeciesId := FieldByName('species_id').AsInteger;
@@ -711,7 +711,7 @@ begin
     R.ValidId := StrToIntDef(ARow.Values['valid_id'], 0);
   if ARow.IndexOfName('rank_id') >= 0 then
   begin
-    FRankAbbrev := GetName('taxon_ranks', 'abbreviation', 'rank_id', StrToIntDef(ARow.Values['rank_id'], 0));
+    FRankAbbrev := GetName(TBL_TAXON_RANKS, COL_ABBREVIATION, COL_RANK_ID, StrToIntDef(ARow.Values['rank_id'], 0));
     R.RankId := StringToBotanicRank(FRankAbbrev);
   end;
   if ARow.IndexOfName('parent_taxon_id') >= 0 then
@@ -745,7 +745,7 @@ begin
     SetStrParam(ParamByName('authorship'), R.Authorship);
     SetStrParam(ParamByName('formatted_name'), R.FormattedName);
     SetStrParam(ParamByName('vernacular_name'), R.VernacularName);
-    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', BOTANICAL_RANKS[R.RankId]);
+    ParamByName('rank_id').AsInteger := GetRankKey(BOTANICAL_RANKS[R.RankId], ncBotanical);
     SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
     SetForeignParam(ParamByName('valid_id'), R.ValidId);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
@@ -821,7 +821,7 @@ begin
     SetStrParam(ParamByName('authorship'), R.Authorship);
     SetStrParam(ParamByName('formatted_name'), R.FormattedName);
     SetStrParam(ParamByName('vernacular_name'), R.VernacularName);
-    ParamByName('rank_id').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', BOTANICAL_RANKS[R.RankId]);
+    ParamByName('rank_id').AsInteger := GetRankKey(BOTANICAL_RANKS[R.RankId], ncBotanical);
     SetForeignParam(ParamByName('parent_taxon_id'), R.ParentTaxonId);
     SetForeignParam(ParamByName('valid_id'), R.ValidId);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;

@@ -607,13 +607,13 @@ begin
     begin
       FSurvey.LocalityId := xSettings.LastLocalityId;
       FLocalityId := FSurvey.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if (FSurvey.MethodId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FSurvey.MethodId := xSettings.LastMethodId;
       FMethodId := FSurvey.MethodId;
-      eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+      eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
     end;
   end
   else
@@ -633,7 +633,7 @@ end;
 procedure TedtSurvey.GetRecord;
 begin
   FExpeditionId := FSurvey.ExpeditionId;
-  eExpedition.Text := GetName('expeditions', COL_EXPEDITION_NAME, COL_EXPEDITION_ID, FExpeditionId);
+  eExpedition.Text := GetName(TBL_EXPEDITIONS, COL_EXPEDITION_NAME, COL_EXPEDITION_ID, FExpeditionId);
   if not DateIsNull(FSurvey.SurveyDate) then
     eDate.Text := DateToStr(FSurvey.SurveyDate);
   eDuration.Value := FSurvey.Duration;
@@ -642,13 +642,13 @@ begin
   if (FSurvey.EndTime <> NullTime) then
     eEndTime.Text := FormatDateTime('hh:nn', FSurvey.EndTime);
   FMethodId := FSurvey.MethodId;
-  eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+  eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
   FLocalityId := FSurvey.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   FSamplingPlotId := FSurvey.NetStationId;
-  eNetStation.Text := GetName('sampling_plots', COL_FULL_NAME, COL_SAMPLING_PLOT_ID, FSamplingPlotId);
+  eNetStation.Text := GetName(TBL_SAMPLING_PLOTS, COL_FULL_NAME, COL_SAMPLING_PLOT_ID, FSamplingPlotId);
   FProjectId := FSurvey.ProjectId;
-  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
+  eProject.Text := GetName(TBL_PROJECTS, COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   if (FSurvey.StartLongitude <> 0.0) or (FSurvey.StartLatitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FSurvey.StartLongitude);

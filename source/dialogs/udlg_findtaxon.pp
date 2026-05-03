@@ -88,7 +88,7 @@ var
 implementation
 
 uses
-  utils_global, data_getvalue, utils_conversions, utils_themes, uDarkStyleParams;
+  utils_global, data_getvalue, data_consts, utils_conversions, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -238,17 +238,17 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  lblName.DataField := 'scientific_name';
+  lblName.DataField := COL_SCIENTIFIC_NAME;
   Verna := xSettings.VernacularNamesLanguage;
   case Verna of
     0:
-      lblVernacular.DataField := 'portuguese_name';
+      lblVernacular.DataField := COL_PORTUGUESE_NAME;
     1:
-      lblVernacular.DataField := 'english_name';
+      lblVernacular.DataField := COL_ENGLISH_NAME;
     2:
-      lblVernacular.DataField := 'spanish_name';
+      lblVernacular.DataField := COL_SPANISH_NAME;
   end;
-  oOrder := 'scientific_name';
+  oOrder := COL_SCIENTIFIC_NAME;
   oDirection := 'ASC';
   EP.SetFocus;
   if Length(Init) > 0 then
@@ -518,15 +518,15 @@ procedure TdlgFindTaxon.pContentClick(Sender: TObject);
 begin
   if (qFind.RecordCount > 0) then
   begin
-    if (UsarValido) and (qFind.FieldByName('valid_id').AsInteger > 0) then
+    if (UsarValido) and (qFind.FieldByName(COL_VALID_ID).AsInteger > 0) then
     begin
-      Codigo := qFind.FieldByName('valid_id').AsInteger;
-      Nome := GetName('zoo_taxa', 'scientific_name', 'taxon_id', Codigo);
+      Codigo := qFind.FieldByName(COL_VALID_ID).AsInteger;
+      Nome := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, Codigo);
     end
     else
     begin
-      Codigo := qFind.FieldByName('taxon_id').AsInteger;
-      Nome := qFind.FieldByName('scientific_name').AsString;
+      Codigo := qFind.FieldByName(COL_TAXON_ID).AsInteger;
+      Nome := qFind.FieldByName(COL_SCIENTIFIC_NAME).AsString;
     end;
     CodigoStr := IntToStr(Codigo);
   end;

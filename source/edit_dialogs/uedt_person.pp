@@ -460,13 +460,13 @@ begin
   eAddress2.Text := FPerson.Address2;
   eNeighborhood.Text := FPerson.Neighborhood;
   FMunicipalityId := FPerson.MunicipalityId;
-  eMunicipality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FMunicipalityId);
+  eMunicipality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FMunicipalityId);
   FStateId := FPerson.StateId;
-  eState.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FStateId);
+  eState.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FStateId);
   FCountryId := FPerson.CountryId;
-  eCountry.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FCountryId);
+  eCountry.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FCountryId);
   FInstitutionId := FPerson.InstitutionId;
-  eInstitution.Text := GetName('institutions', COL_FULL_NAME, COL_INSTITUTION_ID, FInstitutionId);
+  eInstitution.Text := GetName(TBL_INSTITUTIONS, COL_FULL_NAME, COL_INSTITUTION_ID, FInstitutionId);
   eDepartment.Text := FPerson.Department;
   eJobRole.Text := FPerson.JobRole;
   eLattes.Text := FPerson.LattesUri;

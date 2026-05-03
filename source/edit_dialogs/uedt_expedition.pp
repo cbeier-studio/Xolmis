@@ -243,7 +243,7 @@ begin
   if (FExpedition.EndDate <> NullDate) then
     eEndDate.Text := DateToStr(FExpedition.EndDate);
   FProjectId := FExpedition.ProjectId;
-  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
+  eProject.Text := GetName(TBL_PROJECTS, COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   mDescription.Text := FExpedition.Description;
 end;
 

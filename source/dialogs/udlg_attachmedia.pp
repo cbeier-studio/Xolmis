@@ -178,7 +178,8 @@ var
 implementation
 
 uses
-  utils_global, utils_dialogs, utils_editdialogs, utils_finddialogs, models_record_types, data_types, data_getvalue,
+  utils_global, utils_dialogs, utils_editdialogs, utils_finddialogs, models_record_types,
+  data_types, data_getvalue, data_consts,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -887,37 +888,37 @@ begin
 
   // Load fields
   if FAuthorId > 0 then
-    eAuthor.Text := GetName('people', 'full_name', 'person_id', FAuthorId);
+    eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   if FLocalityId > 0 then
-    eLocality.Text := GetName('gazetteer', 'site_name', 'site_id', FLocalityId);
+    eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   if FTaxonId > 0 then
-    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   if FIndividualId > 0 then
-    eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+    eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   if FCaptureId > 0 then
-    eCapture.Text := GetName('captures', 'full_name', 'capture_id', FCaptureId);
+    eCapture.Text := GetName(TBL_CAPTURES, COL_FULL_NAME, COL_CAPTURE_ID, FCaptureId);
   if FFeatherId > 0 then
-    eFeather.Text := GetName('feathers', 'full_name', 'feather_id', FFeatherId);
+    eFeather.Text := GetName(TBL_FEATHERS, COL_FULL_NAME, COL_FEATHER_ID, FFeatherId);
   if FExpeditionId > 0 then
-    eExpedition.Text := GetName('expeditions', 'expedition_name', 'expedition_id', FExpeditionId);
+    eExpedition.Text := GetName(TBL_EXPEDITIONS, COL_EXPEDITION_NAME, COL_EXPEDITION_ID, FExpeditionId);
   if FSurveyId > 0 then
-    eSurvey.Text := GetName('surveys', 'full_name', 'survey_id', FSurveyId);
+    eSurvey.Text := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
   if FSightingId > 0 then
-    eSighting.Text := GetName('sightings', 'full_name', 'sighting_id', FSightingId);
+    eSighting.Text := GetName(TBL_SIGHTINGS, COL_FULL_NAME, COL_SIGHTING_ID, FSightingId);
   if FNestId > 0 then
-    eNest.Text := GetName('nests', 'full_name', 'nest_id', FNestId);
+    eNest.Text := GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, FNestId);
   if FNestRevisionId > 0 then
-    eNestRevision.Text := GetName('nest_revisions', 'full_name', 'nest_revision_id', FNestRevisionId);
+    eNestRevision.Text := GetName(TBL_NEST_REVISIONS, COL_FULL_NAME, COL_NEST_REVISION_ID, FNestRevisionId);
   if FEggId > 0 then
-    eEgg.Text := GetName('eggs', 'full_name', 'egg_id', FEggId);
+    eEgg.Text := GetName(TBL_EGGS, COL_FULL_NAME, COL_EGG_ID, FEggId);
   if FProjectId > 0 then
-    eProject.Text := GetName('projects', 'short_title', 'project_id', FProjectId);
+    eProject.Text := GetName(TBL_PROJECTS, COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   if FPermitId > 0 then
-    ePermit.Text := GetName('permits', 'permit_name', 'permit_id', FPermitId);
+    ePermit.Text := GetName(TBL_PERMITS, COL_PERMIT_NAME, COL_PERMIT_ID, FPermitId);
   if FSamplingPlotId > 0 then
-    eSamplingPlot.Text := GetName('sampling_plots', 'full_name', 'sampling_plot_id', FSamplingPlotId);
+    eSamplingPlot.Text := GetName(TBL_SAMPLING_PLOTS, COL_FULL_NAME, COL_SAMPLING_PLOT_ID, FSamplingPlotId);
   if FMethodId > 0 then
-    eMethod.Text := GetName('methods', 'method_name', 'method_id', FMethodId);
+    eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
 end;
 
 procedure TdlgAttachMedia.sbSaveClick(Sender: TObject);

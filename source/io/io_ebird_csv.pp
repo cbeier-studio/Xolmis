@@ -155,7 +155,7 @@ begin
         Survey := TSurvey.Create;
         Sight := TSighting.Create;
         OldSight := TSighting.Create;
-        aMethod := GetKey(TBL_METHODS, COL_METHOD_ID, COL_EBIRD_NAME, Reg.Protocol);
+        aMethod := GetMethodKey(Reg.Protocol);
         try
           { Find survey (Amostragem) }
           SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.RecordDate, '', 0, Survey);

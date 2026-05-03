@@ -181,7 +181,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_finddialogs, utils_dialogs, utils_editdialogs, utils_validations, utils_conversions,
-  data_types, data_getvalue, data_columns, models_record_types, models_birds, models_geo, models_taxonomy,
+  data_types, data_getvalue, data_columns, data_consts, models_record_types, models_birds, models_geo, models_taxonomy,
   udlg_loading, udlg_progress, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -488,16 +488,16 @@ begin
   begin
     if pIndividual.Visible then
     begin
-      FIndividualId := GetFieldValue('captures', 'individual_id', 'capture_id', FCaptureId);
+      FIndividualId := GetFieldValue(TBL_CAPTURES, COL_INDIVIDUAL_ID, COL_CAPTURE_ID, FCaptureId);
       if FIndividualId > 0 then
-        eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+        eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
     end;
-    FTaxonId := GetFieldValue('captures', 'taxon_id', 'capture_id', FCaptureId);
-    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
-    FLocalityId := GetFieldValue('captures', 'locality_id', 'capture_id', FCaptureId);
-    eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-    FObserverId := GetFieldValue('captures', 'bander_id', 'capture_id', FCaptureId);
-    eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+    FTaxonId := GetFieldValue(TBL_CAPTURES, COL_TAXON_ID, COL_CAPTURE_ID, FCaptureId);
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+    FLocalityId := GetFieldValue(TBL_CAPTURES, COL_LOCALITY_ID, COL_CAPTURE_ID, FCaptureId);
+    eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    FObserverId := GetFieldValue(TBL_CAPTURES, COL_BANDER_ID, COL_CAPTURE_ID, FCaptureId);
+    eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   end;
 end;
 
@@ -512,16 +512,16 @@ begin
     begin
       if pIndividual.Visible then
       begin
-        FIndividualId := GetFieldValue('captures', 'individual_id', 'capture_id', FCaptureId);
+        FIndividualId := GetFieldValue(TBL_CAPTURES, COL_INDIVIDUAL_ID, COL_CAPTURE_ID, FCaptureId);
         if FIndividualId > 0 then
-          eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+          eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
       end;
-      FTaxonId := GetFieldValue('captures', 'taxon_id', 'capture_id', FCaptureId);
-      eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
-      FLocalityId := GetFieldValue('captures', 'locality_id', 'capture_id', FCaptureId);
-      eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-      FObserverId := GetFieldValue('captures', 'bander_id', 'capture_id', FCaptureId);
-      eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+      FTaxonId := GetFieldValue(TBL_CAPTURES, COL_TAXON_ID, COL_CAPTURE_ID, FCaptureId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      FLocalityId := GetFieldValue(TBL_CAPTURES, COL_LOCALITY_ID, COL_CAPTURE_ID, FCaptureId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      FObserverId := GetFieldValue(TBL_CAPTURES, COL_BANDER_ID, COL_CAPTURE_ID, FCaptureId);
+      eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
     end;
     Key := #0;
   end;
@@ -575,8 +575,8 @@ procedure TbatchFeathers.eIndividualButtonClick(Sender: TObject);
 begin
   if FindDlg(tbIndividuals, eIndividual, FIndividualId) then
   begin
-    FTaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', FIndividualId);
-    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
+    FTaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, FIndividualId);
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   end;
 end;
 
@@ -589,8 +589,8 @@ begin
   begin
     if FindDlg(tbIndividuals, eIndividual, FIndividualId, Key) then
     begin
-      FTaxonId := GetFieldValue('individuals', 'taxon_id', 'individual_id', FIndividualId);
-      eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
+      FTaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, FIndividualId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     Key := #0;
   end;
@@ -687,16 +687,16 @@ begin
   begin
     if pIndividual.Visible then
     begin
-      FIndividualId := GetFieldValue('sightings', 'individual_id', 'sighting_id', FSightingId);
+      FIndividualId := GetFieldValue(TBL_SIGHTINGS, COL_INDIVIDUAL_ID, COL_SIGHTING_ID, FSightingId);
       if FIndividualId > 0 then
-        eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+        eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
     end;
-    FTaxonId := GetFieldValue('sightings', 'taxon_id', 'sighting_id', FSightingId);
-    eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
-    FLocalityId := GetFieldValue('sightings', 'locality_id', 'sighting_id', FSightingId);
-    eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-    FObserverId := GetFieldValue('sightings', 'observer_id', 'sighting_id', FSightingId);
-    eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+    FTaxonId := GetFieldValue(TBL_SIGHTINGS, COL_TAXON_ID, COL_SIGHTING_ID, FSightingId);
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+    FLocalityId := GetFieldValue(TBL_SIGHTINGS, COL_LOCALITY_ID, COL_SIGHTING_ID, FSightingId);
+    eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+    FObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, FSightingId);
+    eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   end;
 end;
 
@@ -711,16 +711,16 @@ begin
     begin
       if pIndividual.Visible then
       begin
-        FIndividualId := GetFieldValue('sightings', 'individual_id', 'sighting_id', FSightingId);
+        FIndividualId := GetFieldValue(TBL_SIGHTINGS, COL_INDIVIDUAL_ID, COL_SIGHTING_ID, FSightingId);
         if FIndividualId > 0 then
-          eIndividual.Text := GetName('individuals', 'full_name', 'individual_id', FIndividualId);
+          eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
       end;
-      FTaxonId := GetFieldValue('sightings', 'taxon_id', 'sighting_id', FSightingId);
-      eTaxon.Text := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FTaxonId);
-      FLocalityId := GetFieldValue('sightings', 'locality_id', 'sighting_id', FSightingId);
-      eLocality.Text := GetName('gazetteer', 'full_name', 'site_id', FLocalityId);
-      FObserverId := GetFieldValue('sightings', 'observer_id', 'sighting_id', FSightingId);
-      eObserver.Text := GetName('people', 'full_name', 'person_id', FObserverId);
+      FTaxonId := GetFieldValue(TBL_SIGHTINGS, COL_TAXON_ID, COL_SIGHTING_ID, FSightingId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      FLocalityId := GetFieldValue(TBL_SIGHTINGS, COL_LOCALITY_ID, COL_SIGHTING_ID, FSightingId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      FObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, FSightingId);
+      eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
     end;
     Key := #0;
   end;

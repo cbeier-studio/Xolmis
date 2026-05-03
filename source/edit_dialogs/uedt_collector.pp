@@ -194,7 +194,7 @@ end;
 procedure TedtCollector.GetRecord;
 begin
   FCollectorId := FCollector.PersonId;
-  eCollector.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FCollector.PersonId);
+  eCollector.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FCollector.PersonId);
 end;
 
 function TedtCollector.IsRequiredFilled: Boolean;

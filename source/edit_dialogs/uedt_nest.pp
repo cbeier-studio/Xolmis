@@ -638,20 +638,20 @@ begin
     if FNest.TaxonId > 0 then
     begin
       FTaxonId := FNest.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
 
     if (FNest.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FNest.LocalityId := xSettings.LastLocalityId;
       FLocalityId := FNest.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if (FNest.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FNest.ObserverId := xSettings.LastObserverId;
       FObserverId := FNest.ObserverId;
-      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+      eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
   end
   else
@@ -670,7 +670,7 @@ end;
 procedure TedtNest.GetRecord;
 begin
   FTaxonId := FNest.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   eFieldNumber.Text := FNest.FieldNumber;
   case FNest.NestFate of
     nfLoss:     cbNestFate.ItemIndex := cbNestFate.Items.IndexOf(rsNestLost);
@@ -682,11 +682,11 @@ begin
   if not DateIsNull(FNest.LastDate) then
     eLastDate.Text := DateToStr(FNest.LastDate);
   FProjectId := FNest.ProjectId;
-  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
+  eProject.Text := GetName(TBL_PROJECTS, COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   FObserverId := FNest.ObserverId;
-  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+  eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   FLocalityId := FNest.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   if (FNest.Longitude <> 0) and (FNest.Latitude <> 0) then
   begin
     eLongitude.Text := FloatToStr(FNest.Longitude);
@@ -738,9 +738,9 @@ begin
   end;
   eHeightAboveGround.Value := FNest.HeightAboveGround;
   FSupportPlant1Id := FNest.SupportPlant1Id;
-  eSupportPlant1.Text := GetName('botanic_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FSupportPlant1Id);
+  eSupportPlant1.Text := GetName(TBL_BOTANIC_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FSupportPlant1Id);
   FSupportPlant2Id := FNest.SupportPlant2Id;
-  eSupportPlant2.Text := GetName('botanic_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FSupportPlant2Id);
+  eSupportPlant2.Text := GetName(TBL_BOTANIC_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FSupportPlant2Id);
   eOtherSupport.Text := FNest.OtherSupport;
   ePlantHeight.Value := FNest.PlantHeight;
   ePlantDbh.Value := FNest.PlantDbh;

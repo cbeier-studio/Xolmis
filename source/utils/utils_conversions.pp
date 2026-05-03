@@ -23,6 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, RegExpr, DateUtils, models_record_types;
 
+  // Text treatment
   function WildcardWords(aText: String; aWildcard: String = '%'): String;
   function WildcardSyllables(aText: String; aWildcard: String = '%'): String;
 

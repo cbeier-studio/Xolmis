@@ -308,8 +308,8 @@ begin
   begin
     if (FTableType = tbIndividuals) and (FColField.Name = 'band') then
     begin
-      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue);
-      if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
+      cellKey := GetBandKey(FCellValue);
+      if (GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
       begin
         Result := Format(rsActiveRecordDuplicated, [FColField.DisplayName, FCellValue]);
         Exit;
@@ -469,9 +469,9 @@ begin
         Obj.Status := StrToBandStatus(CellValue(COL_BAND_STATUS, r));
         //Obj.Reported := CellValue(COL_BAND_REPORTED, r) = '1';
         Obj.Source := StrToBandSource(CellValue(COL_BAND_SOURCE, r));
-        Obj.SupplierId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_ABBREVIATION, CellValue(COL_SUPPLIER_NAME, r));
-        Obj.CarrierId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_CARRIER_NAME, r));
-        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_SHORT_TITLE, CellValue(COL_PROJECT_NAME, r));
+        Obj.SupplierId := GetInstitutionKey(CellValue(COL_SUPPLIER_NAME, r));
+        Obj.CarrierId := GetPersonKey(CellValue(COL_CARRIER_NAME, r));
+        Obj.ProjectId := GetProjectKey(CellValue(COL_PROJECT_NAME, r));
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
@@ -509,11 +509,11 @@ begin
         Obj.Clear;
         Obj.ScientificName := CellValue(COL_SCIENTIFIC_NAME, r);
         Obj.Authorship := CellValue(COL_AUTHORSHIP, r);
-        rankKey := GetKey(TBL_TAXON_RANKS, COL_RANK_ID, COL_RANK_NAME, CellValue(COL_RANK_NAME, r));
+        rankKey := GetRankKey(CellValue(COL_RANK_NAME, r), ncBotanical);
         Obj.RankId := StringToBotanicRank(GetName(TBL_TAXON_RANKS, COL_ABBREVIATION, COL_RANK_ID, rankKey));
         Obj.VernacularName := CellValue(COL_VERNACULAR_NAME, r);
-        Obj.ParentTaxonId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_PARENT_TAXON_NAME, r));
-        Obj.ValidId := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_VALID_NAME, r));
+        Obj.ParentTaxonId := GetValidBotanicalTaxon(CellValue(COL_PARENT_TAXON_NAME, r));
+        Obj.ValidId := GetValidBotanicalTaxon(CellValue(COL_VALID_NAME, r));
 
         Repo.Insert(Obj);
 
@@ -561,19 +561,19 @@ begin
         Obj.Clear;
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
         Obj.SurveyId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, CellValue(COL_SURVEY_NAME, r));
-        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
+        Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
         Obj.CaptureDate := StrToDateDef(CellValue(COL_CAPTURE_DATE, r), NullDate);
         Obj.CaptureTime := StrToTimeDef(CellValue(COL_CAPTURE_TIME, r), NullTime);
-        Obj.BanderId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_BANDER_NAME, r));
-        Obj.AnnotatorId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_ANNOTATOR_NAME, r));
+        Obj.BanderId := GetPersonKey(CellValue(COL_BANDER_NAME, r));
+        Obj.AnnotatorId := GetPersonKey(CellValue(COL_ANNOTATOR_NAME, r));
         Obj.CaptureType := StrToCaptureType(CellValue(COL_CAPTURE_TYPE, r));
         Obj.NetId := GetKey(TBL_NETS_EFFORT, COL_NET_ID, COL_FULL_NAME, CellValue(COL_NET_NUMBER, r));
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
-        Obj.BandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_BAND_NAME, r));
-        Obj.RemovedBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_REMOVED_BAND_NAME, r));
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.BandId := GetBandKey(CellValue(COL_BAND_NAME, r));
+        Obj.RemovedBandId := GetBandKey(CellValue(COL_REMOVED_BAND_NAME, r));
         Obj.RightTarsus := CellValue(COL_RIGHT_TARSUS, r);
         Obj.LeftTarsus := CellValue(COL_LEFT_TARSUS, r);
         Obj.SubjectAge := StrToAge(CellValue(COL_SUBJECT_AGE, r));
@@ -615,8 +615,8 @@ begin
         Obj.SubjectPhotographed := CellValue(COL_SUBJECT_PHOTOGRAPHED, r) = '1';
         Obj.ClawSample := CellValue(COL_CLAW_SAMPLE, r) = '1';
         Obj.SubjectCollected := CellValue(COL_SUBJECT_COLLECTED, r) = '1';
-        Obj.Photographer1Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PHOTOGRAPHER_1_NAME, r));
-        Obj.Photographer2Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PHOTOGRAPHER_2_NAME, r));
+        Obj.Photographer1Id := GetPersonKey(CellValue(COL_PHOTOGRAPHER_1_NAME, r));
+        Obj.Photographer2Id := GetPersonKey(CellValue(COL_PHOTOGRAPHER_2_NAME, r));
         Obj.CameraName := CellValue(COL_CAMERA_NAME, r);
         Obj.InitialPhotoNumber := CellValue(COL_INITIAL_PHOTO_NUMBER, r);
         Obj.FinalPhotoNumber := CellValue(COL_FINAL_PHOTO_NUMBER, r);
@@ -694,9 +694,9 @@ begin
         Obj.FieldNumber := CellValue(COL_FIELD_NUMBER, r);
         Obj.EggSeq := StrToIntDef(CellValue(COL_EGG_SEQUENCE, r), 0);
         Obj.MeasureDate := StrToDateDef(CellValue(COL_MEASURE_DATE, r), NullDate);
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
         Obj.HostEgg := CellValue(COL_HOST_EGG, r) = '1';
-        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_RESEARCHER_NAME, r));
+        Obj.ObserverId := GetPersonKey(CellValue(COL_RESEARCHER_NAME, r));
         Obj.EggShape := StrToEggShape(CellValue(COL_EGG_SHAPE, r));
         Obj.EggStage := CellValue(COL_EGG_STAGE, r);
         Obj.EggshellColor := CellValue(COL_EGGSHELL_COLOR, r);
@@ -744,7 +744,7 @@ begin
         Obj.Name := CellValue(COL_EXPEDITION_NAME, r);
         Obj.StartDate := StrToDateDef(CellValue(COL_START_DATE, r), NullDate);
         Obj.EndDate := StrToDateDef(CellValue(COL_END_DATE, r), NullDate);
-        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_PROJECT_TITLE, CellValue(COL_PROJECT_NAME, r));
+        Obj.ProjectId := GetProjectKey(CellValue(COL_PROJECT_NAME, r));
         Obj.Description := CellValue(COL_DESCRIPTION, r);
 
         Repo.Insert(Obj);
@@ -781,9 +781,9 @@ begin
         Obj.Clear;
         Obj.SampleDate := StrToDateDef(CellValue(COL_SAMPLE_DATE, r), NullDate);
         Obj.SampleTime := StrToTimeDef(CellValue(COL_SAMPLE_TIME, r), NullTime);
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
-        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
-        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_OBSERVER_NAME, r));
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
+        Obj.ObserverId := GetPersonKey(CellValue(COL_OBSERVER_NAME, r));
         Obj.SourceType := StrToFeatherSource(CellValue(COL_SOURCE_TYPE, r));
         Obj.Symmetrical := StrToSymmetry(CellValue(COL_SYMMETRICAL, r));
         Obj.FeatherTrait := StrToFeatherTrait(CellValue(COL_FEATHER_TRAIT, r));
@@ -837,7 +837,7 @@ begin
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.Altitude := StrToFloatDef(CellValue(COL_ALTITUDE, r), 0.0);
-        Obj.ParentSiteId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_PARENT_SITE_NAME, r));
+        Obj.ParentSiteId := GetSiteKey(CellValue(COL_PARENT_SITE_NAME, r));
         Obj.FullName := CellValue(COL_FULL_NAME, r);
         Obj.EbirdName := CellValue(COL_EBIRD_NAME, r);
 
@@ -879,11 +879,11 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
-        Obj.BandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_BAND_NAME, r));
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.BandId := GetBandKey(CellValue(COL_BAND_NAME, r));
         Obj.BandingDate := StrToDateDef(CellValue(COL_BANDING_DATE, r), NullDate);
-        Obj.DoubleBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_DOUBLE_BAND_NAME, r));
-        Obj.RemovedBandId := GetKey(TBL_BANDS, COL_BAND_ID, COL_FULL_NAME, CellValue(COL_REMOVED_BAND_NAME, r));
+        Obj.DoubleBandId := GetBandKey(CellValue(COL_DOUBLE_BAND_NAME, r));
+        Obj.RemovedBandId := GetBandKey(CellValue(COL_REMOVED_BAND_NAME, r));
         Obj.BandChangeDate := StrToDateDef(CellValue(COL_BAND_CHANGE_DATE, r), NullDate);
         Obj.RightTarsus := CellValue(COL_RIGHT_TARSUS, r);
         Obj.LeftTarsus := CellValue(COL_LEFT_TARSUS, r);
@@ -962,9 +962,9 @@ begin
         Obj.Address1 := CellValue(COL_ADDRESS_1, r);
         Obj.Address2 := CellValue(COL_ADDRESS_2, r);
         Obj.Neighborhood := CellValue(COL_NEIGHBORHOOD, r);
-        Obj.MunicipalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_MUNICIPALITY_NAME, r));
-        Obj.StateId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_STATE_NAME, r));
-        Obj.CountryId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_COUNTRY_NAME, r));
+        Obj.MunicipalityId := GetSiteKey(CellValue(COL_MUNICIPALITY_NAME, r));
+        Obj.StateId := GetSiteKey(CellValue(COL_STATE_NAME, r));
+        Obj.CountryId := GetSiteKey(CellValue(COL_COUNTRY_NAME, r));
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
@@ -1076,13 +1076,13 @@ begin
         Obj.Clear;
         Obj.RevisionDate := StrToDateDef(CellValue(COL_REVISION_DATE, r), NullDate);
         Obj.RevisionTime := StrToTimeDef(CellValue(COL_REVISION_TIME, r), NullTime);
-        Obj.Observer1Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_OBSERVER_1_NAME, r));
-        Obj.Observer2Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_OBSERVER_2_NAME, r));
+        Obj.Observer1Id := GetPersonKey(CellValue(COL_OBSERVER_1_NAME, r));
+        Obj.Observer2Id := GetPersonKey(CellValue(COL_OBSERVER_2_NAME, r));
         Obj.NestStage := StrToNestStage(CellValue(COL_NEST_STAGE, r));
         Obj.NestStatus := StrToNestStatus(CellValue(COL_NEST_STATUS, r));
         Obj.HostEggsTally := StrToIntDef(CellValue(COL_HOST_EGGS_TALLY, r), 0);
         Obj.HostNestlingsTally := StrToIntDef(CellValue(COL_HOST_NESTLINGS_TALLY, r), 0);
-        Obj.NidoparasiteId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_NIDOPARASITE_NAME, r));
+        Obj.NidoparasiteId := GetValidTaxon(CellValue(COL_NIDOPARASITE_NAME, r));
         Obj.NidoparasiteEggsTally := StrToIntDef(CellValue(COL_NIDOPARASITE_EGGS_TALLY, r), 0);
         Obj.NidoparasiteNestlingsTally := StrToIntDef(CellValue(COL_NIDOPARASITE_NESTLINGS_TALLY, r), 0);
         Obj.HavePhilornisLarvae := CellValue(COL_HAVE_PHILORNIS_LARVAE, r) = '1';
@@ -1120,15 +1120,15 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
         Obj.FieldNumber := CellValue(COL_FIELD_NUMBER, r);
         Obj.NestFate := StrToNestFate(CellValue(COL_NEST_FATE, r));
         Obj.LossCause := StrToLossCause(CellValue(COL_LOSS_CAUSE, r));
         Obj.FoundDate := StrToDateDef(CellValue(COL_FOUND_DATE, r), NullDate);
         Obj.LastDate := StrToDateDef(CellValue(COL_LAST_DATE, r), NullDate);
-        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_PROJECT_TITLE, CellValue(COL_PROJECT_NAME, r));
-        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_OBSERVER_NAME, r));
-        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
+        Obj.ProjectId := GetProjectKey(CellValue(COL_PROJECT_NAME, r));
+        Obj.ObserverId := GetPersonKey(CellValue(COL_OBSERVER_NAME, r));
+        Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
@@ -1137,8 +1137,8 @@ begin
         Obj.NestShape := StrToNestShape(CellValue(COL_NEST_SHAPE, r));
         Obj.SupportType := StrToSupportType(CellValue(COL_SUPPORT_TYPE, r));
         Obj.HeightAboveGround := StrToFloatDef(CellValue(COL_HEIGHT_ABOVE_GROUND, r), 0.0);
-        Obj.SupportPlant1Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_SUPPORT_PLANT_1_NAME, r));
-        Obj.SupportPlant2Id := GetKey(TBL_BOTANIC_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_SUPPORT_PLANT_2_NAME, r));
+        Obj.SupportPlant1Id := GetValidBotanicalTaxon(CellValue(COL_SUPPORT_PLANT_1_NAME, r));
+        Obj.SupportPlant2Id := GetValidBotanicalTaxon(CellValue(COL_SUPPORT_PLANT_2_NAME, r));
         Obj.OtherSupport := CellValue(COL_OTHER_SUPPORT, r);
         Obj.PlantHeight := StrToFloatDef(CellValue(COL_PLANT_HEIGHT, r), 0.0);
         Obj.PlantDbh := StrToFloatDef(CellValue(COL_PLANT_DBH, r), 0.0);
@@ -1513,9 +1513,9 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.PersonId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PERSON_NAME, r));
+        Obj.PersonId := GetPersonKey(CellValue(COL_PERSON_NAME, r));
         Obj.IsProjectManager := CellValue(COL_PROJECT_MANAGER, r) = '1';
-        Obj.InstitutionId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_FULL_NAME, CellValue(COL_INSTITUTION_NAME, r));
+        Obj.InstitutionId := GetInstitutionKey(CellValue(COL_INSTITUTION_NAME, r));
 
         Repo.Insert(Obj);
 
@@ -1561,16 +1561,16 @@ begin
         Obj.Email := CellValue(COL_EMAIL_ADDRESS, r);
         Obj.Phone1 := CellValue(COL_PHONE_1, r);
         Obj.Phone2 := CellValue(COL_PHONE_2, r);
-        Obj.InstitutionId := GetKey(TBL_INSTITUTIONS, COL_INSTITUTION_ID, COL_FULL_NAME, CellValue(COL_INSTITUTION_NAME, r));
+        Obj.InstitutionId := GetInstitutionKey(CellValue(COL_INSTITUTION_NAME, r));
         Obj.Department := CellValue(COL_DEPARTMENT, r);
         Obj.JobRole := CellValue(COL_JOB_ROLE, r);
         Obj.PostalCode := CellValue(COL_POSTAL_CODE, r);
         Obj.Address1 := CellValue(COL_ADDRESS_1, r);
         Obj.Address2 := CellValue(COL_ADDRESS_2, r);
         Obj.Neighborhood := CellValue(COL_NEIGHBORHOOD, r);
-        Obj.MunicipalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_MUNICIPALITY_NAME, r));
-        Obj.StateId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_STATE_NAME, r));
-        Obj.CountryId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_COUNTRY_NAME, r));
+        Obj.MunicipalityId := GetSiteKey(CellValue(COL_MUNICIPALITY_NAME, r));
+        Obj.StateId := GetSiteKey(CellValue(COL_STATE_NAME, r));
+        Obj.CountryId := GetSiteKey(CellValue(COL_COUNTRY_NAME, r));
         Obj.LattesUri := CellValue(COL_LATTES_URI, r);
         Obj.OrcidUri := CellValue(COL_ORCID_URI, r);
         Obj.XTwitterUri := CellValue(COL_TWITTER_URI, r);
@@ -1614,7 +1614,7 @@ begin
         Obj.AccessionSeq := StrToIntDef(CellValue(COL_ACCESSION_DUPLICATE, r), 0);
         Obj.AccessionType := StrToAccessionType(CellValue(COL_ACCESSION_TYPE, r));
         Obj.PreparationDate := StrToDateDef(CellValue(COL_PREPARATION_DATE, r), NullDate);
-        Obj.PreparerId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PREPARER_NAME, r));
+        Obj.PreparerId := GetPersonKey(CellValue(COL_PREPARER_NAME, r));
         Obj.Notes := CellValue(COL_NOTES, r);
 
         Repo.Insert(Obj);
@@ -1651,7 +1651,7 @@ begin
         Obj.Clear;
         Obj.FullName := CellValue(COL_FULL_NAME, r);
         Obj.Abbreviation := CellValue(COL_ABBREVIATION, r);
-        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
+        Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
@@ -1691,15 +1691,15 @@ begin
       begin
         Obj.Clear;
         Obj.SurveyId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, CellValue(COL_SURVEY_NAME, r));
-        Obj.ObserverId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_OBSERVER_NAME, r));
-        Obj.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, CellValue(COL_METHOD_NAME, r));
-        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
+        Obj.ObserverId := GetPersonKey(CellValue(COL_OBSERVER_NAME, r));
+        Obj.MethodId := GetMethodKey(CellValue(COL_METHOD_NAME, r));
+        Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
         Obj.SightingDate := StrToDateDef(CellValue(COL_SIGHTING_DATE, r), NullDate);
         Obj.SightingTime := StrToTimeDef(CellValue(COL_SIGHTING_TIME, r), NullTime);
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
         Obj.SubjectTally := StrToIntDef(CellValue(COL_SUBJECTS_TALLY, r), 0);
         Obj.SubjectDistance := StrToFloatDef(CellValue(COL_SUBJECT_DISTANCE, r), 0.0);
@@ -1756,7 +1756,7 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.PersonId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PERSON_NAME, r));
+        Obj.PersonId := GetPersonKey(CellValue(COL_PERSON_NAME, r));
 
         Repo.Insert(Obj);
 
@@ -1795,11 +1795,11 @@ begin
         Obj.CollectionYear := StrToIntDef(CellValue(COL_COLLECTION_YEAR, r), 0);
         Obj.CollectionMonth := StrToIntDef(CellValue(COL_COLLECTION_MONTH, r), 0);
         Obj.CollectionDay := StrToIntDef(CellValue(COL_COLLECTION_DAY, r), 0);
-        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
+        Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
         Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
-        Obj.TaxonId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, CellValue(COL_TAXON_NAME, r));
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
         Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, CellValue(COL_NEST_NAME, r));
         Obj.EggId := GetKey(TBL_EGGS, COL_EGG_ID, COL_FULL_NAME, CellValue(COL_EGG_NAME, r));
@@ -1842,10 +1842,10 @@ begin
         Obj.Duration := StrToIntDef(CellValue(COL_DURATION, r), 0);
         Obj.StartTime := StrToTimeDef(CellValue(COL_START_TIME, r), NullTime);
         Obj.EndTime := StrToTimeDef(CellValue(COL_END_TIME, r), NullTime);
-        Obj.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, CellValue(COL_METHOD_NAME, r));
-        Obj.LocalityId := GetKey(TBL_GAZETTEER, COL_SITE_ID, COL_FULL_NAME, CellValue(COL_LOCALITY_NAME, r));
-        Obj.NetStationId := GetKey(TBL_SAMPLING_PLOTS, COL_SAMPLING_PLOT_ID, COL_FULL_NAME, CellValue(COL_NET_STATION_NAME, r));
-        Obj.ProjectId := GetKey(TBL_PROJECTS, COL_PROJECT_ID, COL_PROJECT_TITLE, CellValue(COL_PROJECT_NAME, r));
+        Obj.MethodId := GetMethodKey(CellValue(COL_METHOD_NAME, r));
+        Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
+        Obj.NetStationId := GetSamplingPlotKey(CellValue(COL_NET_STATION_NAME, r));
+        Obj.ProjectId := GetProjectKey(CellValue(COL_PROJECT_NAME, r));
         Obj.StartLongitude := StrToFloatDef(CellValue(COL_START_LONGITUDE, r), 0.0);
         Obj.StartLatitude := StrToFloatDef(CellValue(COL_START_LATITUDE, r), 0.0);
         Obj.EndLongitude := StrToFloatDef(CellValue(COL_END_LONGITUDE, r), 0.0);
@@ -1892,7 +1892,7 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.PersonId := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_FULL_NAME, CellValue(COL_PERSON_NAME, r));
+        Obj.PersonId := GetSiteKey(CellValue(COL_PERSON_NAME, r));
         Obj.Visitor := CellValue(COL_VISITOR, r) = '1';
 
         Repo.Insert(Obj);
@@ -2511,8 +2511,8 @@ begin
   begin
     if (FTableType = tbIndividuals) and (FColField.Name = 'band') then
     begin
-      cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue);
-      if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
+      cellKey := GetBandKey(FCellValue);
+      if (GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
       begin
         Result := False;
         Exit;
@@ -2657,8 +2657,8 @@ begin
     begin
       if (FTableType = tbIndividuals) and (FColField.Name = 'band') then
       begin
-        cellKey := GetKey('bands', COL_BAND_ID, COL_FULL_NAME, FCellValue);
-        if (GetName('individuals', COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
+        cellKey := GetBandKey(FCellValue);
+        if (GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_BAND_ID, cellKey) <> EmptyStr) then
         begin
           Result := False;
           Msg := Format(rsActiveRecordDuplicated, [FColField.DisplayName, FCellValue]);

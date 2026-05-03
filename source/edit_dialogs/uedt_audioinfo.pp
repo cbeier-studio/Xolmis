@@ -509,7 +509,7 @@ procedure TedtAudioInfo.GetRecord;
 begin
   mSubtitle.Text := FAudio.Subtitle;
   FAuthorId := FAudio.AuthorId;
-  eAuthor.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
+  eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eRecordingDate.Text := DateToStr(FAudio.RecordingDate);
   eRecordingTime.Text := TimeToStr(FAudio.RecordingTime);
   case FAudio.AudioType of
@@ -530,7 +530,7 @@ begin
   end;
   eAudioFile.Text := FAudio.FilePath;
   FLocalityId := FAudio.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FAudio.Longitude);
   eLatitude.Text := FloatToStr(FAudio.Latitude);
   case FAudio.CoordinatePrecision of
@@ -541,7 +541,7 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FAudio.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FAudio.IndividualId;
   FSightingId := FAudio.SightingId;
   FSpecimenId := FAudio.SpecimenId;

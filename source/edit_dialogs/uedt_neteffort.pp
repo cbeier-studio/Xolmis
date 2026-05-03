@@ -472,9 +472,9 @@ end;
 procedure TedtNetEffort.GetRecord;
 begin
   FSurveyId := FNetEffort.SurveyId;
-  eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
+  eSurvey.Text := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
   FPermanentNetId := FNetEffort.PermanentNetId;
-  ePermanentNet.Text := GetName('permanent_nets', COL_FULL_NAME, COL_PERMANENT_NET_ID, FPermanentNetId);
+  ePermanentNet.Text := GetName(TBL_PERMANENT_NETS, COL_FULL_NAME, COL_PERMANENT_NET_ID, FPermanentNetId);
   eNetNumber.Text := IntToStr(FNetEffort.NetNumber);
   if (FNetEffort.Longitude <> 0.0) and (FNetEffort.Latitude <> 0.0) then
   begin

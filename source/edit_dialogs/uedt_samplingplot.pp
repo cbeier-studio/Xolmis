@@ -332,7 +332,7 @@ begin
     begin
       FSamplingPlot.LocalityId := xSettings.LastLocalityId;
       FLocalityId := FSamplingPlot.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
   end
   else
@@ -348,7 +348,7 @@ begin
   eName.Text := FSamplingPlot.FullName;
   eAbbreviation.Text := FSamplingPlot.Abbreviation;
   FLocalityId := FSamplingPlot.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   if (FSamplingPlot.Longitude <> 0.0) or (FSamplingPlot.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FSamplingPlot.Longitude);

@@ -286,6 +286,7 @@ const
   COL_RUBRIC = 'rubric';
   COL_ITEM_NAME = 'item_name';
   COL_AMOUNT = 'amount';
+  COL_RUBRIC_ITEM = 'rubric_item';
 
   // Project expenses columns
 const

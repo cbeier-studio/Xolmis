@@ -1522,7 +1522,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_management, data_columns, data_getvalue, utils_fullnames, utils_graphics,
+  utils_locale, utils_global, data_types, data_management, data_columns, data_consts, data_getvalue,
+  utils_fullnames, utils_graphics,
   utils_validations, models_record_types,
   udm_main;
 
@@ -3191,7 +3192,7 @@ begin
     Open;
     if RecordCount > 0 then
       raise ERecordDuplicated.CreateFmt(rsActiveRecordDuplicated,
-        [GetFieldDisplayName(tbIndividuals, 'band_name'), GetName('bands', 'full_name', 'band_id', Sender.AsInteger)]);
+        [GetFieldDisplayName(tbIndividuals, 'band_name'), GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, Sender.AsInteger)]);
   finally
     Close;
     FreeAndNil(Qry);

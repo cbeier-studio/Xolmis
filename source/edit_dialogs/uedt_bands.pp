@@ -421,13 +421,13 @@ begin
     begin
       FBand.RequesterId := xSettings.LastObserverId;
       FRequesterId := FBand.RequesterId;
-      eRequester.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FRequesterId);
+      eRequester.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FRequesterId);
     end;
     if (FBand.CarrierId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FBand.CarrierId := xSettings.LastObserverId;
       FCarrierId := FBand.CarrierId;
-      eCarrier.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FCarrierId);
+      eCarrier.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FCarrierId);
     end;
   end
   else
@@ -474,13 +474,13 @@ begin
     bscFoundLoose:                cbBandSource.ItemIndex := cbBandSource.Items.IndexOf(rsBandFoundLoose);
   end;
   FSupplierId := FBand.SupplierId;
-  eSupplier.Text := GetName('institutions', COL_ABBREVIATION, COL_INSTITUTION_ID, FSupplierId);
+  eSupplier.Text := GetName(TBL_INSTITUTIONS, COL_ABBREVIATION, COL_INSTITUTION_ID, FSupplierId);
   FRequesterId := FBand.RequesterId;
-  eRequester.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FRequesterId);
+  eRequester.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FRequesterId);
   FCarrierId := FBand.CarrierId;
-  eCarrier.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FCarrierId);
+  eCarrier.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FCarrierId);
   FProjectId := FBand.ProjectId;
-  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
+  eProject.Text := GetName(TBL_PROJECTS, COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   mNotes.Text := FBand.Notes;
 end;
 

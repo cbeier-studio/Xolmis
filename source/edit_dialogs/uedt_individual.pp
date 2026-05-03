@@ -547,17 +547,17 @@ end;
 procedure TedtIndividual.GetRecord;
 begin
   FTaxonId := FIndividual.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FBandId := FIndividual.BandId;
-  eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
+  eBand.Text := GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FBandId);
   if DateIsNull(FIndividual.BandingDate) then
     eBandingDate.Text := EmptyStr
   else
     eBandingDate.Text := DateToStr(FIndividual.BandingDate);
   FDoubleBandId := FIndividual.DoubleBandId;
-  eDoubleBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FDoubleBandId);
+  eDoubleBand.Text := GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FDoubleBandId);
   FRemovedBandId := FIndividual.RemovedBandId;
-  eRemovedBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FRemovedBandId);
+  eRemovedBand.Text := GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FRemovedBandId);
   if DateIsNull(FIndividual.BandChangeDate) then
     eBandChangeDate.Text := EmptyStr
   else
@@ -596,11 +596,11 @@ begin
     ageFifthYear: cbAge.ItemIndex := cbAge.Items.IndexOf(rsAgeFifthYear);
   end;
   FNestId := FIndividual.NestId;
-  eNest.Text := GetName('nests', COL_FULL_NAME, COL_NEST_ID, FNestId);
+  eNest.Text := GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, FNestId);
   FFatherId := FIndividual.FatherId;
-  eFather.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FFatherId);
+  eFather.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FFatherId);
   FMotherId := FIndividual.MotherId;
-  eMother.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FMotherId);
+  eMother.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FMotherId);
   mRecognizableMarkings.Text := FIndividual.RecognizableMarkings;
   mNotes.Text := FIndividual.Notes;
 end;

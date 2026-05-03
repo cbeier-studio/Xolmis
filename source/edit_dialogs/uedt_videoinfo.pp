@@ -479,7 +479,7 @@ procedure TedtVideoInfo.GetRecord;
 begin
   mSubtitle.Text := FVideo.Subtitle;
   FAuthorId := FVideo.AuthorId;
-  eAuthor.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
+  eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eRecordingDate.Text := DateToStr(FVideo.RecordingDate);
   eRecordingTime.Text := TimeToStr(FVideo.RecordingTime);
   case FVideo.VideoType of
@@ -504,7 +504,7 @@ begin
   end;
   eVideoFile.Text := FVideo.FilePath;
   FLocalityId := FVideo.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FVideo.Longitude);
   eLatitude.Text := FloatToStr(FVideo.Latitude);
   case FVideo.CoordinatePrecision of
@@ -515,7 +515,7 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FVideo.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FVideo.IndividualId;
   FCaptureId := FVideo.CaptureId;
   FSurveyId := FVideo.SurveyId;

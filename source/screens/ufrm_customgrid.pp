@@ -5843,7 +5843,7 @@ begin
   with dlgGazetteerAutofill do
   try
     AutofillType := gatCities;
-    CountryName := GetName('gazetteer', 'site_name', 'site_id', dsLink.DataSet.FieldByName('country_id').AsInteger);
+    CountryName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, dsLink.DataSet.FieldByName('country_id').AsInteger);
     StateName := dsLink.DataSet.FieldByName('site_name').AsString;
     if ShowModal = mrOK then
       sbRefreshRecordsClick(nil);

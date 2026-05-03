@@ -423,7 +423,7 @@ begin
     if FEgg.TaxonId > 0 then
     begin
       FTaxonId := FEgg.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     eMeasureDate.Text := DateToStr(Today);
     GetVolume;
@@ -432,7 +432,7 @@ begin
     begin
       FEgg.ObserverId := xSettings.LastObserverId;
       FObserverId := FEgg.ObserverId;
-      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+      eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
   end
   else
@@ -448,15 +448,15 @@ procedure TedtEgg.GetRecord;
 begin
   FNestId := FEgg.NestId;
   if pNest.Visible then
-    eNest.Text := GetName('nests', COL_FULL_NAME, COL_NEST_ID, FNestId);
+    eNest.Text := GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, FNestId);
   eFieldNumber.Text := FEgg.FieldNumber;
   eEggSeq.Value := FEgg.EggSeq;
   if not DateIsNull(FEgg.MeasureDate) then
     eMeasureDate.Text := DateToStr(FEgg.MeasureDate);
   FTaxonId := FEgg.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FObserverId := FEgg.ObserverId;
-  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+  eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   case FEgg.EggShape of
     esUnknown: cbShape.ItemIndex := cbShape.Items.IndexOf(rsEggUnknown);
     esSpherical: cbShape.ItemIndex := cbShape.Items.IndexOf(rsEggSpherical);
@@ -493,7 +493,7 @@ begin
   txtVolume.Caption := FormatFloat('##0.000', FEgg.Volume);
   ckHatched.Checked := FEgg.EggHatched;
   FIndividualId := FEgg.IndividualId;
-  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
+  eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   mNotes.Text := FEgg.Notes;
 end;
 

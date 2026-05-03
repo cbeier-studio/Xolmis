@@ -380,7 +380,7 @@ begin
     begin
       FRevision.Observer1Id := xSettings.LastObserverId;
       FObserver1Id := FRevision.Observer1Id;
-      eObserver1.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserver1Id);
+      eObserver1.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserver1Id);
     end;
   end
   else
@@ -399,15 +399,15 @@ procedure TedtNestRevision.GetRecord;
 begin
   FNestId := FRevision.NestId;
   if pNest.Visible then
-    eNest.Text := GetName('nests', COL_FULL_NAME, COL_NEST_ID, FNestId);
+    eNest.Text := GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, FNestId);
   if not DateIsNull(FRevision.RevisionDate) then
     eRevisionDate.Text := DateToStr(FRevision.RevisionDate);
   if not TimeIsNull(FRevision.RevisionTime) then
     eRevisionTime.Text := FormatDateTime('hh:nn', FRevision.RevisionTime);
   FObserver1Id := FRevision.Observer1Id;
-  eObserver1.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FRevision.Observer1Id);
+  eObserver1.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FRevision.Observer1Id);
   FObserver2Id := FRevision.Observer2Id;
-  eObserver2.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FRevision.Observer2Id);
+  eObserver2.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FRevision.Observer2Id);
   case FRevision.NestStage of
     nsgInactive:      cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestInactive);
     nsgConstruction:  cbNestStage.ItemIndex := cbNestStage.Items.IndexOf(rsNestBuilding);
@@ -425,7 +425,7 @@ begin
   eHostEggsTally.Value := FRevision.HostEggsTally;
   eHostNestlingsTally.Value := FRevision.HostNestlingsTally;
   FNidoparasiteId := FRevision.NidoparasiteId;
-  eNidoparasite.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FNidoparasiteId);
+  eNidoparasite.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FNidoparasiteId);
   eNidoparasiteEggsTally.Value := FRevision.NidoparasiteEggsTally;
   eNidoparasiteNestlingsTally.Value := FRevision.NidoparasiteNestlingsTally;
   ckHasPhilornisLarvae.Checked := FRevision.HavePhilornisLarvae;

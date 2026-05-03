@@ -253,10 +253,10 @@ end;
 procedure TedtProjectMember.GetRecord;
 begin
   FMemberId := FMember.PersonId;
-  ePerson.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FMember.PersonId);
+  ePerson.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FMember.PersonId);
   ckManager.Checked := FMember.IsProjectManager;
   FInstitutionId := FMember.InstitutionId;
-  eInstitution.Text := GetName('institutions', COL_ABBREVIATION, COL_INSTITUTION_ID, FMember.InstitutionId);
+  eInstitution.Text := GetName(TBL_INSTITUTIONS, COL_ABBREVIATION, COL_INSTITUTION_ID, FMember.InstitutionId);
 end;
 
 function TedtProjectMember.IsRequiredFilled: Boolean;

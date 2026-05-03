@@ -120,7 +120,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_conversions, utils_dialogs, utils_themes,
-  data_getvalue, data_providers,
+  data_getvalue, data_providers, data_consts,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -886,36 +886,36 @@ begin
 
   case FTableType of
     //tbNone: ;
-    tbUsers:          SetupFields('user_id', 'user_name');
+    tbUsers:          SetupFields(COL_USER_ID, COL_USER_NAME);
     //tbRecordHistory: ;
     //tbProjectTeams: ;
-    tbPermits:        SetupFields('permit_id', 'permit_name');
-    tbGazetteer:      SetupFields('site_id', 'full_name');
-    tbBotanicTaxa:    SetupFields('taxon_id', 'taxon_name', 'formatted_name');
-    tbNests:          SetupFields('nest_id', 'full_name');
-    tbNestRevisions:  SetupFields('nest_revision_id', 'full_name');
-    tbEggs:           SetupFields('egg_id', 'full_name');
-    tbSamplingPlots:  SetupFields('sampling_plot_id', 'full_name');
-    tbTaxonRanks:     SetupFields('rank_id', 'rank_name');
-    tbZooTaxa:        SetupFields('zoo_taxa', 'scientific_name', 'formatted_name');
-    tbProjects:       SetupFields('project_id', 'project_title');
-    tbProjectBudgets: SetupFields('budget_id', 'rubric_item');
-    tbProjectGoals:   SetupFields('goal_id', 'goal_description');
-    tbInstitutions:   SetupFields('institution_id', 'full_name');
-    tbPeople:         SetupFields('person_id', 'full_name');
-    tbExpeditions:    SetupFields('expedition_id', 'expedition_name');
-    tbSurveys:        SetupFields('survey_id', 'full_name');
-    tbMethods:        SetupFields('method_id', 'method_name');
+    tbPermits:        SetupFields(COL_PERMIT_ID, COL_PERMIT_NAME);
+    tbGazetteer:      SetupFields(COL_SITE_ID, COL_FULL_NAME);
+    tbBotanicTaxa:    SetupFields(COL_TAXON_ID, COL_SCIENTIFIC_NAME, COL_FORMATTED_NAME);
+    tbNests:          SetupFields(COL_NEST_ID, COL_FULL_NAME);
+    tbNestRevisions:  SetupFields(COL_NEST_REVISION_ID, COL_FULL_NAME);
+    tbEggs:           SetupFields(COL_EGG_ID, COL_FULL_NAME);
+    tbSamplingPlots:  SetupFields(COL_SAMPLING_PLOT_ID, COL_FULL_NAME);
+    tbTaxonRanks:     SetupFields(COL_RANK_ID, COL_RANK_NAME);
+    tbZooTaxa:        SetupFields(COL_TAXON_ID, COL_SCIENTIFIC_NAME, COL_FORMATTED_NAME);
+    tbProjects:       SetupFields(COL_PROJECT_ID, COL_PROJECT_TITLE);
+    tbProjectBudgets: SetupFields(COL_BUDGET_ID, COL_RUBRIC_ITEM);
+    tbProjectGoals:   SetupFields(COL_GOAL_ID, COL_GOAL_DESCRIPTION);
+    tbInstitutions:   SetupFields(COL_INSTITUTION_ID, COL_FULL_NAME);
+    tbPeople:         SetupFields(COL_PERSON_ID, COL_FULL_NAME);
+    tbExpeditions:    SetupFields(COL_EXPEDITION_ID, COL_EXPEDITION_NAME);
+    tbSurveys:        SetupFields(COL_SURVEY_ID, COL_FULL_NAME);
+    tbMethods:        SetupFields(COL_METHOD_ID, COL_METHOD_NAME);
     //tbSurveyTeams: ;
-    tbNetsEffort:     SetupFields('net_id', 'full_name');
-    tbSightings:      SetupFields('sighting_id', 'full_name');
-    tbSpecimens:      SetupFields('specimen_id', 'full_name');
-    tbSamplePreps:    SetupFields('sample_prep_id', 'full_name');
-    tbPermanentNets:  SetupFields('permanent_net_id', 'full_name');
-    tbBands:          SetupFields('band_id', 'full_name');
-    tbIndividuals:    SetupFields('individual_id', 'full_name');
-    tbCaptures:       SetupFields('capture_id', 'full_name');
-    tbFeathers:       SetupFields('feather_id', 'full_name');
+    tbNetsEffort:     SetupFields(COL_NET_ID, COL_FULL_NAME);
+    tbSightings:      SetupFields(COL_SIGHTING_ID, COL_FULL_NAME);
+    tbSpecimens:      SetupFields(COL_SPECIMEN_ID, COL_FULL_NAME);
+    tbSamplePreps:    SetupFields(COL_SAMPLE_PREP_ID, COL_FULL_NAME);
+    tbPermanentNets:  SetupFields(COL_PERMANENT_NET_ID, COL_FULL_NAME);
+    tbBands:          SetupFields(COL_BAND_ID, COL_FULL_NAME);
+    tbIndividuals:    SetupFields(COL_INDIVIDUAL_ID, COL_FULL_NAME);
+    tbCaptures:       SetupFields(COL_CAPTURE_ID, COL_FULL_NAME);
+    tbFeathers:       SetupFields(COL_FEATHER_ID, COL_FULL_NAME);
     //tbImages: ;
     //tbAudioLibrary: ;
   end;
@@ -1161,7 +1161,7 @@ begin
     FNameSelected := qFind.FieldByName(aNameField).AsString;
 
   if (FTableType = tbZooTaxa) then
-    FNameSelected := GetName('zoo_taxa', 'scientific_name', 'taxon_id', FKeySelected);
+    FNameSelected := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FKeySelected);
 end;
 
 procedure TdlgFind.TimerFindTimer(Sender: TObject);
@@ -1177,42 +1177,42 @@ begin
   begin
     case FTableType of
       //tbNone: ;
-      tbUsers:          SetupResult('user_id', 'user_name');
+      tbUsers:          SetupResult(COL_USER_ID, COL_USER_NAME);
       //tbRecordHistory: ;
       //tbProjectTeams: ;
-      tbPermits:        SetupResult('permit_id', 'permit_name');
-      tbGazetteer:      SetupResult('site_id', 'full_name');
-      tbBotanicTaxa:    SetupResult('taxon_id', 'taxon_name');
-      tbNests:          SetupResult('nest_id', 'full_name');
-      tbNestRevisions:  SetupResult('nest_revision_id', 'full_name');
-      tbEggs:           SetupResult('egg_id', 'full_name');
-      tbSamplingPlots:  SetupResult('sampling_plot_id', 'full_name');
-      tbTaxonRanks:     SetupResult('rank_id', 'rank_name');
+      tbPermits:        SetupResult(COL_PERMIT_ID, COL_PERMIT_NAME);
+      tbGazetteer:      SetupResult(COL_SITE_ID, COL_FULL_NAME);
+      tbBotanicTaxa:    SetupResult(COL_TAXON_ID, COL_SCIENTIFIC_NAME);
+      tbNests:          SetupResult(COL_NEST_ID, COL_FULL_NAME);
+      tbNestRevisions:  SetupResult(COL_NEST_REVISION_ID, COL_FULL_NAME);
+      tbEggs:           SetupResult(COL_EGG_ID, COL_FULL_NAME);
+      tbSamplingPlots:  SetupResult(COL_SAMPLING_PLOT_ID, COL_FULL_NAME);
+      tbTaxonRanks:     SetupResult(COL_RANK_ID, COL_RANK_NAME);
       tbZooTaxa:
       begin
-        if (qFind.FieldByName('valid_id').AsInteger > 0) then
-          SetupResult('valid_id', 'full_name')
+        if (qFind.FieldByName(COL_VALID_ID).AsInteger > 0) then
+          SetupResult(COL_VALID_ID, COL_SCIENTIFIC_NAME)
         else
-          SetupResult('taxon_id', 'full_name');
+          SetupResult(COL_TAXON_ID, COL_SCIENTIFIC_NAME);
       end;
-      tbProjects:       SetupResult('project_id', 'project_title');
-      tbProjectGoals:   SetupResult('goal_id', 'goal_description');
-      tbProjectBudgets: SetupResult('budget_id', 'rubric_item');
-      tbInstitutions:   SetupResult('institution_id', 'full_name');
-      tbPeople:         SetupResult('person_id', 'full_name');
-      tbExpeditions:    SetupResult('expedition_id', 'expedition_name');
-      tbSurveys:        SetupResult('survey_id', 'full_name');
-      tbMethods:        SetupResult('method_id', 'method_name');
+      tbProjects:       SetupResult(COL_PROJECT_ID, COL_PROJECT_TITLE);
+      tbProjectGoals:   SetupResult(COL_GOAL_ID, COL_GOAL_DESCRIPTION);
+      tbProjectBudgets: SetupResult(COL_BUDGET_ID, COL_RUBRIC_ITEM);
+      tbInstitutions:   SetupResult(COL_INSTITUTION_ID, COL_FULL_NAME);
+      tbPeople:         SetupResult(COL_PERSON_ID, COL_FULL_NAME);
+      tbExpeditions:    SetupResult(COL_EXPEDITION_ID, COL_EXPEDITION_NAME);
+      tbSurveys:        SetupResult(COL_SURVEY_ID, COL_FULL_NAME);
+      tbMethods:        SetupResult(COL_METHOD_ID, COL_METHOD_NAME);
       //tbSurveyTeams: ;
-      tbNetsEffort:     SetupResult('net_id', 'net_number');
-      tbSightings:      SetupResult('sighting_id', 'full_name');
-      tbSpecimens:      SetupResult('specimen_id', 'full_name');
-      tbSamplePreps:    SetupResult('sample_prep_id', 'full_name');
-      tbPermanentNets:  SetupResult('permanent_net_id', 'full_name');
-      tbBands:          SetupResult('band_id', 'full_name');
-      tbIndividuals:    SetupResult('individual_id', 'full_name');
-      tbCaptures:       SetupResult('capture_id', 'full_name');
-      tbFeathers:       SetupResult('feather_id', 'full_name');
+      tbNetsEffort:     SetupResult(COL_NET_ID, COL_NET_NUMBER);
+      tbSightings:      SetupResult(COL_SIGHTING_ID, COL_FULL_NAME);
+      tbSpecimens:      SetupResult(COL_SPECIMEN_ID, COL_FULL_NAME);
+      tbSamplePreps:    SetupResult(COL_SAMPLE_PREP_ID, COL_FULL_NAME);
+      tbPermanentNets:  SetupResult(COL_PERMANENT_NET_ID, COL_FULL_NAME);
+      tbBands:          SetupResult(COL_BAND_ID, COL_FULL_NAME);
+      tbIndividuals:    SetupResult(COL_INDIVIDUAL_ID, COL_FULL_NAME);
+      tbCaptures:       SetupResult(COL_CAPTURE_ID, COL_FULL_NAME);
+      tbFeathers:       SetupResult(COL_FEATHER_ID, COL_FULL_NAME);
       //tbImages: ;
       //tbAudioLibrary: ;
     end;

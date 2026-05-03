@@ -71,7 +71,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_graphics, utils_themes, utils_dialogs, data_getvalue, udm_main, LCLType,
+  utils_locale, utils_global, utils_graphics, utils_themes, utils_dialogs, data_getvalue, data_consts, udm_main, LCLType,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -175,7 +175,7 @@ begin
     if ForceUser > 0 then
     begin
       { If it needs authentication of a specific user }
-      eUsername.Text := GetName('users', 'user_name', 'user_id', ForceUser);
+      eUsername.Text := GetName(TBL_USERS, COL_USER_NAME, COL_USER_ID, ForceUser);
       eUsername.Color := clWhite;
       //eUsername.RightButton.ImageIndex:= 33;
       //eUsername.RightButton.Visible := True;

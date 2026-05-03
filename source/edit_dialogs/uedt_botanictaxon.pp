@@ -260,13 +260,13 @@ begin
   eName.Text := FTaxon.ScientificName;
   eAuthorship.Text := FTaxon.Authorship;
   eVernacularName.Text := FTaxon.VernacularName;
-  aRankId := GetKey('taxon_ranks', COL_RANK_ID, COL_ABBREVIATION, BOTANICAL_RANKS[FTaxon.RankId]);
-  FRankName := GetName('taxon_ranks', COL_RANK_NAME, COL_RANK_ID, aRankId);
+  aRankId := GetRankKey(BOTANICAL_RANKS[FTaxon.RankId], ncBotanical);
+  FRankName := GetName(TBL_TAXON_RANKS, COL_RANK_NAME, COL_RANK_ID, aRankId);
   cbRank.ItemIndex := cbRank.Items.IndexOf(FRankName);
   FParentTaxonId := FTaxon.ParentTaxonId;
-  eParentTaxon.Text := GetName('botanic_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FParentTaxonId);
+  eParentTaxon.Text := GetName(TBL_BOTANIC_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FParentTaxonId);
   FValidId := FTaxon.ValidId;
-  eValidName.Text := GetName('botanic_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FValidId);
+  eValidName.Text := GetName(TBL_BOTANIC_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FValidId);
 end;
 
 function TedtBotanicTaxon.IsRequiredFilled: Boolean;
@@ -299,8 +299,8 @@ begin
   FTaxon.ScientificName := eName.Text;
   FTaxon.Authorship := eAuthorship.Text;
   FTaxon.VernacularName := eVernacularName.Text;
-  aRankId := GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_NAME, cbRank.Text);
-  aRankAbbrev := GetName('taxon_ranks', COL_ABBREVIATION, COL_RANK_ID, aRankId);
+  aRankId := GetRankKey(cbRank.Text, ncBotanical);
+  aRankAbbrev := GetName(TBL_TAXON_RANKS, COL_ABBREVIATION, COL_RANK_ID, aRankId);
   FTaxon.RankId := StringToBotanicRank(aRankAbbrev);
   FTaxon.ParentTaxonId := FParentTaxonId;
   FTaxon.ValidId := FValidId;

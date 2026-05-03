@@ -688,36 +688,36 @@ begin
     if FSighting.MethodId > 0 then
     begin
       FMethodId := FSighting.MethodId;
-      eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+      eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
     end;
     if FSighting.LocalityId > 0 then
     begin
       FLocalityId := FSighting.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if FSighting.TaxonId > 0 then
     begin
       FTaxonId := FSighting.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
 
     if (FSighting.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FSighting.LocalityId := xSettings.LastLocalityId;
       FLocalityId := FSighting.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if (FSighting.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FSighting.ObserverId := xSettings.LastObserverId;
       FObserverId := FSighting.ObserverId;
-      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+      eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
     if (FSighting.MethodId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FSighting.MethodId := xSettings.LastMethodId;
       FMethodId := FSighting.MethodId;
-      eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+      eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
     end;
   end
   else
@@ -731,13 +731,13 @@ end;
 procedure TedtSighting.GetRecord;
 begin
   FSurveyId := FSighting.SurveyId;
-  eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
+  eSurvey.Text := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
   FObserverId := FSighting.ObserverId;
-  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+  eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   FMethodId := FSighting.MethodId;
-  eMethod.Text := GetName('methods', COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+  eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
   FLocalityId := FSighting.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   if (FSighting.Longitude <> 0.0) or (FSighting.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FSighting.Longitude);
@@ -755,9 +755,9 @@ begin
   if (FSighting.SightingTime <> NullTime) then
     eTime.Text := FormatDateTime('hh:nn', FSighting.SightingTime);
   FTaxonId := FSighting.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FSighting.IndividualId;
-  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
+  eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   eQuantity.Value := FSighting.SubjectTally;
   eDistance.Value := FSighting.SubjectDistance;
   eFlightHeight.Value := FSighting.FlightHeight;

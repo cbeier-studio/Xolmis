@@ -217,7 +217,7 @@ begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProjectExpense)]);
     eDate.Text := DateToStr(Today);
     if FRubricId > 0 then
-      eRubric.Text := GetName('project_budgets', COL_RUBRIC, COL_BUDGET_ID, FRubricId);
+      eRubric.Text := GetName(TBL_PROJECT_BUDGET, COL_RUBRIC, COL_BUDGET_ID, FRubricId);
   end
   else
   begin
@@ -230,7 +230,7 @@ end;
 procedure TedtProjectExpense.GetRecord;
 begin
   FRubricId := FExpense.BudgetId;
-  eRubric.Text := GetNameConcat('project_budgets', COL_RUBRIC, COL_ITEM_NAME, COL_BUDGET_ID, FRubricId);
+  eRubric.Text := GetNameConcat(TBL_PROJECT_BUDGET, COL_RUBRIC, COL_ITEM_NAME, COL_BUDGET_ID, FRubricId);
   eItem.Text := FExpense.Description;
   if not DateIsNull(FExpense.ExpenseDate) then
     eDate.Text := DateToStr(FExpense.ExpenseDate);

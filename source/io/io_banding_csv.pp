@@ -228,7 +228,7 @@ var
   NetRepo: TNetEffortRepository;
   NetSite: TNetEffort;
   strDate, strTime: String;
-  CodAnilha, aMethod: Integer;
+  CodAnilha, RemAnilha, aMethod: Integer;
   NetLat, NetLong: Extended;
   MoveBand: TBandMovementService;
   UpdInd: TIndividualUpdateService;
@@ -280,6 +280,7 @@ begin
         // Reset variables
         Reg.Clear;
         CodAnilha := 0;
+        RemAnilha := 0;
         NetLat := 500.0;
         NetLong := 500.0;
         strDate := '';
@@ -315,7 +316,7 @@ begin
             Individuo := TIndividual.Create;
             Captura := TCapture.Create;
             OldCaptura := TCapture.Create;
-            aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
+            aMethod := GetMethodKey(rsMobileBanding);
 
             // Get valid taxon
             TaxonRepo.GetById(GetValidTaxon(Reg.SpeciesName), Taxon);
@@ -368,25 +369,33 @@ begin
             // Get removed band
             if (Trim(Reg.RemovedBand) <> EmptyStr) then
             begin
-              if WordCount(Reg.RemovedBand, [' ']) = 2 then
+              Reg.RemovedBand := NormalizeWhitespace(Reg.RemovedBand, True);
+              RemAnilha := GetBandKey(Reg.RemovedBand);
+              if RemAnilha > 0 then
+                BandRepo.GetById(RemAnilha, RemovedBand);
+              if (RemovedBand.IsNew) then
               begin
-                BandRepo.FindByNumber(ExtractWord(1, Reg.RemovedBand, [' ']),
-                  StrToInt(ExtractWord(2, Reg.RemovedBand, [' '])), RemovedBand);
-                if (RemovedBand.IsNew) then
+                // If does not exist, insert the removed band
+                if WordCount(Reg.RemovedBand, [' ']) = 2 then
                 begin
-                  // If does not exist, insert the removed band
                   RemovedBand.Size := ExtractWord(1, Reg.RemovedBand, [' ']);
                   RemovedBand.Number := StrToInt(ExtractWord(2, Reg.RemovedBand, [' ']));
-                  RemovedBand.Status := bstAvailable;
-                  RemovedBand.SupplierId := xSettings.DefaultBandSupplier;
-                  RemovedBand.BandType := mkButtEndBand;
-                  RemovedBand.UserInserted := ActiveUser.Id;
-
-                  BandRepo.Insert(RemovedBand);
-                  // Insert record history
-                  WriteRecHistory(tbBands, haCreated, RemovedBand.Id, '', '', '', rsInsertedByImport);
-                  LogInfo(Format('Removed band record inserted with ID=%d', [RemovedBand.Id]));
+                end
+                else
+                if WordCount(Reg.RemovedBand, [' ']) = 1 then
+                begin
+                  RemovedBand.Size := Reg.RemovedBand[1];
+                  RemovedBand.Number := StrToInt(Copy(Reg.RemovedBand, 2, Length(Reg.RemovedBand)));
                 end;
+                RemovedBand.Status := bstAvailable;
+                RemovedBand.SupplierId := xSettings.DefaultBandSupplier;
+                RemovedBand.BandType := mkButtEndBand;
+                RemovedBand.UserInserted := ActiveUser.Id;
+
+                BandRepo.Insert(RemovedBand);
+                // Insert record history
+                WriteRecHistory(tbBands, haCreated, RemovedBand.Id, '', '', '', rsInsertedByImport);
+                LogInfo(Format('Removed band record inserted with ID=%d', [RemovedBand.Id]));
               end;
             end;
 
@@ -771,8 +780,7 @@ procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
       for i := 1 to WordCount(TeamStr, [',',';']) do
       begin
         Member.SurveyId := SurveyId;
-        Member.PersonId := GetKey('people', COL_PERSON_ID, COL_ABBREVIATION,
-                                  ExtractWord(i, TeamStr, [',',';']));
+        Member.PersonId := GetPersonKey(ExtractWord(i, TeamStr, [',',';']));
         MemberRepo.Insert(Member);
         LogInfo(Format('Survey member record inserted with ID=%d', [Member.Id]));
 
@@ -837,7 +845,7 @@ begin
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
     try
-      aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_ABBREVIATION, rsMobileBanding);
+      aMethod := GetMethodKey(rsMobileBanding);
       CSV.First;
       while not (CSV.Eof or stopProcess) do
       begin
@@ -1015,7 +1023,7 @@ begin
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
     try
-      aMethod := GetKey('methods', COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
+      aMethod := GetMethodKey(rsMobileBanding);
       CSV.First;
       repeat
         if Assigned(dlgProgress) then

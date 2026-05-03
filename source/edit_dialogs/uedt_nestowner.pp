@@ -231,7 +231,7 @@ begin
     nrlUnknown:   cbRole.ItemIndex := 4;
   end;
   FIndividualId := FNestOwner.IndividualId;
-  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FNestOwner.IndividualId);
+  eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FNestOwner.IndividualId);
 end;
 
 procedure TedtNestOwner.sbSaveClick(Sender: TObject);

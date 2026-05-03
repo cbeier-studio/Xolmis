@@ -665,25 +665,25 @@ begin
   aSurvey.SampleId := FId;
   case FType of
     invQualitativeFree:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_FREE);
+      aSurvey.MethodId := GetMethodKey(MOBILE_QUALITATIVE_FREE);
     invQualitativeTimed:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_TIMED);
+      aSurvey.MethodId := GetMethodKey(MOBILE_QUALITATIVE_TIMED);
     invQualitativeInterval:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_QUALITATIVE_INTERVAL);
+      aSurvey.MethodId := GetMethodKey(MOBILE_QUALITATIVE_INTERVAL);
     invMackinnonList:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_MACKINNON_LIST);
+      aSurvey.MethodId := GetMethodKey(MOBILE_MACKINNON_LIST);
     invTransectCount:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_TRANSECT_COUNT);
+      aSurvey.MethodId := GetMethodKey(MOBILE_TRANSECT_COUNT);
     invPointCount:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_POINT_COUNT);
+      aSurvey.MethodId := GetMethodKey(MOBILE_POINT_COUNT);
     invBanding:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_BANDING);
+      aSurvey.MethodId := GetMethodKey(MOBILE_BANDING);
     invCasual:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_CASUAL);
+      aSurvey.MethodId := GetMethodKey(MOBILE_CASUAL);
     invTransectDetection:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_DETECTION_TRANSECT);
+      aSurvey.MethodId := GetMethodKey(MOBILE_DETECTION_TRANSECT);
     invPointDetection:
-      aSurvey.MethodId := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_ABBREVIATION, MOBILE_DETECTION_POINT);
+      aSurvey.MethodId := GetMethodKey(MOBILE_DETECTION_POINT);
   end;
   //aSurvey.Duration := FDuration;
   aSurvey.SurveyDate := FStartTime;

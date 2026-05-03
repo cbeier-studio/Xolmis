@@ -542,16 +542,16 @@ begin
   Result := 0;
 
   case aInventory.FType of
-    invQualitativeFree: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeFree);
-    invQualitativeTimed: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeTimed);
-    invQualitativeInterval: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileQualitativeInterval);
-    invMackinnonList: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileMackinnonList);
-    invTransectCount: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectCount);
-    invPointCount: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointCount);
-    invBanding: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileBanding);
-    invCasual: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileCasual);
-    invTransectDetection: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobileTransectDetection);
-    invPointDetection: Result := GetKey(TBL_METHODS, COL_METHOD_ID, COL_METHOD_NAME, rsMobilePointDetection);
+    invQualitativeFree: Result := GetMethodKey(rsMobileQualitativeFree);
+    invQualitativeTimed: Result := GetMethodKey(rsMobileQualitativeTimed);
+    invQualitativeInterval: Result := GetMethodKey(rsMobileQualitativeInterval);
+    invMackinnonList: Result := GetMethodKey(rsMobileMackinnonList);
+    invTransectCount: Result := GetMethodKey(rsMobileTransectCount);
+    invPointCount: Result := GetMethodKey(rsMobilePointCount);
+    invBanding: Result := GetMethodKey(rsMobileBanding);
+    invCasual: Result := GetMethodKey(rsMobileCasual);
+    invTransectDetection: Result := GetMethodKey(rsMobileTransectDetection);
+    invPointDetection: Result := GetMethodKey(rsMobilePointDetection);
   end;
 end;
 

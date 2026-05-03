@@ -185,7 +185,7 @@ implementation
 
 uses
   utils_global, utils_locale, utils_themes, utils_conversions, utils_dialogs, utils_taxonomy,
-  data_search, data_getvalue,
+  data_search, data_getvalue, data_consts,
   models_record_types, models_taxonomy,
   ufrm_main, udm_main, udm_grid, udm_taxa,
   uDarkStyleParams;
@@ -1426,19 +1426,19 @@ begin
   tvHierarchy.Items.Clear;
   if dsLink.DataSet.FieldByName('order_id').AsInteger > 0 then
   begin
-    nOrder := tvHierarchy.Items.Add(nil, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('order_id').AsInteger));
+    nOrder := tvHierarchy.Items.Add(nil, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('order_id').AsInteger));
     if dsLink.DataSet.FieldByName('family_id').AsInteger > 0 then
     begin
-      nFamily := tvHierarchy.Items.AddChild(nOrder, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('family_id').AsInteger));
+      nFamily := tvHierarchy.Items.AddChild(nOrder, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('family_id').AsInteger));
       if dsLink.DataSet.FieldByName('genus_id').AsInteger > 0 then
       begin
-        nGenus := tvHierarchy.Items.AddChild(nFamily, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('genus_id').AsInteger));
+        nGenus := tvHierarchy.Items.AddChild(nFamily, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('genus_id').AsInteger));
         if dsLink.DataSet.FieldByName('species_id').AsInteger > 0 then
         begin
-          nSpecies := tvHierarchy.Items.AddChild(nGenus, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('species_id').AsInteger));
+          nSpecies := tvHierarchy.Items.AddChild(nGenus, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('species_id').AsInteger));
           if dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger > 0 then
           begin
-            nGroup := tvHierarchy.Items.AddChild(nSpecies, GetName('zoo_taxa', 'scientific_name', 'taxon_id', dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger));
+            nGroup := tvHierarchy.Items.AddChild(nSpecies, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger));
           end;
         end;
       end;

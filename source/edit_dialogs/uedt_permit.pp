@@ -259,7 +259,7 @@ end;
 procedure TedtPermit.GetRecord;
 begin
   FProjectId := FPermit.ProjectId;
-  eProject.Text := GetName('projects', COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
+  eProject.Text := GetName(TBL_PROJECTS, COL_SHORT_TITLE, COL_PROJECT_ID, FProjectId);
   eName.Text := FPermit.Name;
   ePermitNumber.Text := FPermit.Number;
   case FPermit.PermitType of

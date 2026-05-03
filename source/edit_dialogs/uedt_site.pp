@@ -340,7 +340,7 @@ begin
   if (Length(eParentSite.Text) > 0) then
   begin
     S := eName.Text + ', ';
-    S := S + GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FSite.ParentSiteId);
+    S := S + GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FSite.ParentSiteId);
   end
   else
     S := eName.Text;
@@ -369,7 +369,7 @@ begin
   if FSite.Altitude <> 0 then
     eAltitude.Text := FloatToStr(FSite.Altitude);
   FParentSiteId := FSite.ParentSiteId;
-  eParentSite.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FSite.ParentSiteId);
+  eParentSite.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FSite.ParentSiteId);
   eFullname.Text := FSite.FullName;
   eEbirdName.Text := FSite.EbirdName;
 end;

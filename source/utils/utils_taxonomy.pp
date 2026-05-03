@@ -74,7 +74,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_validations,
-  data_types, data_management, data_columns, data_getvalue,
+  data_types, data_management, data_columns, data_getvalue, data_consts,
   models_users, models_taxonomy,
   udm_main, udlg_progress;
 
@@ -613,14 +613,14 @@ begin
       MacroCheck := True;
       dlgProgress.PBar.Position := 0;
 
-      iOrder := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ord.');
-      iFamily := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'fam.');
-      iSubfamily := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'subfam.');
-      iGenus := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'g.');
-      iSpecies := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'sp.');
-      iMonoGroup := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'grp. (mono)');
-      iPoliGroup := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'grp. (poli)');
-      iSubspecies := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
+      iOrder := GetRankKey('ord.', ncZoological);
+      iFamily := GetRankKey('fam.', ncZoological);
+      iSubfamily := GetRankKey('subfam.', ncZoological);
+      iGenus := GetRankKey('g.', ncZoological);
+      iSpecies := GetRankKey('sp.', ncZoological);
+      iMonoGroup := GetRankKey('grp. (mono)', ncZoological);
+      iPoliGroup := GetRankKey('grp. (poli)', ncZoological);
+      iSubspecies := GetRankKey('ssp.', ncZoological);
 
       DMM.sqlTrans.StartTransaction;
       try
@@ -831,17 +831,17 @@ var
   Ssp: TTaxon;
 begin
   ExistingId := 0;
-  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSubspecies);
+  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSubspecies);
   NewName := ExtractWord(1, OldName, [' ']) + ' ' + ExtractWord(3, OldName, [' ']);
-  SpRank := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'sp.');
-  ParentGenus := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', ExtractWord(1, OldName, [' ']));
+  SpRank := GetRankKey('sp.', ncZoological);
+  ParentGenus := GetValidTaxon(ExtractWord(1, OldName, [' ']));
   Ssp := TTaxon.Create(aSubspecies);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
+    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
+      ExistingId := GetValidTaxon(NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -966,7 +966,7 @@ begin
     if ExistingId > 0 then
       ValidSp := ExistingId
     else
-      ValidSp := GetLastInsertedKey('zoo_taxa');
+      ValidSp := GetLastInsertedKey(TBL_ZOO_TAXA);
     with aDataset do
     begin
       if ExecNow then
@@ -1016,19 +1016,19 @@ var
   Ssp, LumpToSp: TTaxon;
 begin
   ExistingId := 0;
-  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSpecies);
-  LumpToName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', ToSpecies);
+  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSpecies);
+  LumpToName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, ToSpecies);
   NewName := LumpToName + ' ' + ExtractWord(2, OldName, [' ']);
-  SspRank := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
+  SspRank := GetRankKey('ssp.', ncZoological);
   ParentSp := ToSpecies;
   Ssp := TTaxon.Create(aSpecies);
   LumpToSp := TTaxon.Create(ToSpecies);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
+    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
+      ExistingId := GetValidTaxon(NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -1160,7 +1160,7 @@ begin
     if ExistingId > 0 then
       ValidSp := ExistingId
     else
-      ValidSp := GetLastInsertedKey('zoo_taxa');
+      ValidSp := GetLastInsertedKey(TBL_ZOO_TAXA);
     with aDataset do
     begin
       if ExecNow then
@@ -1218,23 +1218,23 @@ begin
   ExistingId := 0;
   OldRankId := GetRankFromTaxon(aSubspecies);
   OldRank := GetRankType(OldRankId);
-  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSubspecies);
-  MoveToName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', ToSpecies);
+  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSubspecies);
+  MoveToName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, ToSpecies);
   if OldRank = trPolitypicGroup then
     NewName := MoveToName + ' ' + Trim(ExtractWord(2, OldName, Brackets))
   else
     NewName := MoveToName + ' ' + ExtractWord(3, OldName, [' ']);
   ParentSp := ToSpecies;
   Ssp := TTaxon.Create(aSubspecies);
-  aRankId := GetKey('taxon_ranks', 'rank_id', 'abbreviation', ZOOLOGICAL_RANKS[Ssp.Rank]);
+  aRankId := GetRankKey(ZOOLOGICAL_RANKS[Ssp.Rank], ncZoological);
   MoveToSp := TTaxon.Create(ToSpecies);
   //GravaLog('MOVE TO SPECIES', OldName + ' -> ' + MoveToName + ' = ' + NewName);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
+    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
+      ExistingId := GetValidTaxon(NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -1373,7 +1373,7 @@ begin
         end;
         if (btIOC in aTaxonomy) then
         begin
-          ParamByName('ANIVELIOC').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
+          ParamByName('ANIVELIOC').AsInteger := GetRankKey('ssp.', ncZoological);
           ParamByName('ASUPIOC').AsInteger := ParentSp;
           ParamByName('AENGLISHIOC').AsString := Ssp.IocEnglishName;
           ParamByName('GEODISTIOC').DataType := ftMemo;
@@ -1381,7 +1381,7 @@ begin
         end;
         if (btCBRO in aTaxonomy) then
         begin
-          ParamByName('ANIVELCBRO').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
+          ParamByName('ANIVELCBRO').AsInteger := GetRankKey('ssp.', ncZoological);
           ParamByName('ASUPCBRO').AsInteger := ParentSp;
         end;
         ParamByName('AUSER').AsInteger := ActiveUser.Id;
@@ -1395,7 +1395,7 @@ begin
     if ExistingId > 0 then
       ValidSsp := ExistingId
     else
-      ValidSsp := GetLastInsertedKey('zoo_taxa');
+      ValidSsp := GetLastInsertedKey(TBL_ZOO_TAXA);
     with aDataset do
     begin
       if ExecNow then
@@ -1422,7 +1422,7 @@ begin
       SQL.Add('WHERE taxon_id = :ataxon;');
       if (Params.FindParam('ARANK') <> nil) then
       begin
-        ParamByName('ARANK').AsInteger := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'ssp.');
+        ParamByName('ARANK').AsInteger := GetRankKey('ssp.', ncZoological);
       end;
       if (Params.FindParam('AVALID') <> nil) then
       begin
@@ -1450,19 +1450,19 @@ var
   Ssp, Gen: TTaxon;
 begin
   ExistingId := 0;
-  OldName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', aSpecies);
-  MoveToName := GetName('zoo_taxa', 'scientific_name', 'taxon_id', ToGenus);
+  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSpecies);
+  MoveToName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, ToGenus);
   NewName := MoveToName + ' ' + ExtractWord(2, OldName, [' ']);
-  SpRank := GetKey('taxon_ranks', 'rank_id', 'abbreviation', 'sp.');
+  SpRank := GetRankKey('sp.', ncZoological);
   ParentGenus := ToGenus;
   Ssp := TTaxon.Create(aSpecies);
   Gen := TTaxon.Create(ToGenus);
 
   try
     // If taxon exists
-    if RecordExists(tbZooTaxa, 'scientific_name', NewName) = True then
+    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
     begin
-      ExistingId := GetKey('zoo_taxa', 'taxon_id', 'scientific_name', NewName);
+      ExistingId := GetValidTaxon(NewName);
       with aDataset do
       begin
         if ExecNow then
@@ -1596,7 +1596,7 @@ begin
     if ExistingId > 0 then
       ValidSp := ExistingId
     else
-      ValidSp := GetLastInsertedKey('zoo_taxa');
+      ValidSp := GetLastInsertedKey(TBL_ZOO_TAXA);
     with aDataset do
     begin
       if ExecNow then

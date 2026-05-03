@@ -169,6 +169,9 @@ type
     bscDeadBirdBandedByOthers, bscFoundLoose);
   TBandEvent = (bevOrder, bevReceive, bevTransfer, bevRetrieve, bevReport, bevUse, bevDischarge, bevReturn);
 
+  // Taxonomy
+  TNomenclatureCode = (ncBoth, ncBotanical, ncZoological);
+
   // Botanical taxnomy
   TQualifier = (qfNone, qfSpuh, qfConfer, qfAffinis, qfQuestion);
   TAddendum = (adNone, adGenus, adSpecies, adInfraspecies);

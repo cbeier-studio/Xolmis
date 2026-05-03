@@ -373,30 +373,30 @@ begin
     if FFeather.TaxonId > 0 then
     begin
       FTaxonId := FFeather.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FFeather.LocalityId > 0 then
     begin
       FLocalityId := FFeather.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
     end;
     if FFeather.ObserverId > 0 then
     begin
       FObserverId := FFeather.ObserverId;
-      eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+      eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
     end;
 
     if (FFeather.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FFeather.LocalityId := xSettings.LastLocalityId;
       FLocalityId := FFeather.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if (FFeather.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FFeather.ObserverId := xSettings.LastObserverId;
       FObserverId := FFeather.ObserverId;
-      eObserver.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+      eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
   end
   else
@@ -413,11 +413,11 @@ begin
   if not TimeIsNull(FFeather.SampleTime) then
     eTime.Text := TimeToStr(FFeather.SampleTime);
   FTaxonId := FFeather.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FLocalityId := FFeather.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   FObserverId := FFeather.ObserverId;
-  eObserver.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+  eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   FIndividualId := FFeather.IndividualId;
   FCaptureId := FFeather.CaptureId;
   FSightingId := FFeather.SightingId;

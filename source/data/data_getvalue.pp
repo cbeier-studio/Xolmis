@@ -40,10 +40,15 @@ type
   function GetRankFromSite(aSiteKey: Integer): String;
   function GetRankFromTaxon(aTaxonKey: Integer): Integer;
   function GetRank(const aKey: Integer): TZooRank;
+  function GetRankKey(const aName: String; aNomenclatureCode: TNomenclatureCode): Integer;
   function GetValidTaxon(const aTaxonName: String): Integer;
   function GetValidBotanicalTaxon(const aTaxonName: String): Integer;
   function GetPersonKey(const aName: String): Integer;
   function GetInstitutionKey(const aName: String): Integer;
+  function GetMethodKey(const aName: String): Integer;
+  function GetSamplingPlotKey(const aName: String): Integer;
+  function GetBandKey(const aName: String): Integer;
+  function GetProjectKey(const aName: String): Integer;
   function GetProjectBalance(const aProjectId: Integer): Double;
   function GetProjectTotalBudget(const aProjectId: Integer): Double;
   function GetRubricBalance(const aRubricId: Integer): Double;
@@ -64,7 +69,7 @@ type
 implementation
 
 uses
-  utils_taxonomy, udm_main;
+  utils_taxonomy, data_consts, udm_main;
 
 function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
 var
@@ -460,7 +465,7 @@ var
   i: Integer;
 begin
   Result := trSpecies;
-  ab := GetName('taxon_ranks', 'rank_id', 'abbreviation', aKey);
+  ab := GetName(TBL_TAXON_RANKS, COL_RANK_ID, COL_ABBREVIATION, aKey);
   Result := StringToZooRank(ab);
   //for i := 0 to (Length(ZOOLOGICAL_RANKS) - 1) do
   //  if (ab = ZOOLOGICAL_RANKS[i]) then
@@ -468,6 +473,35 @@ begin
   //    Result := TZooRank(i);
   //    Break;
   //  end;
+end;
+
+function GetRankKey(const aName: String; aNomenclatureCode: TNomenclatureCode): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT rank_id FROM taxon_ranks');
+    Add('WHERE ((abbreviation = :aname) OR (rank_name = :aname))');
+    case aNomenclatureCode of
+      ncBoth:       Add('AND ((icbn = 1) OR (iczn = 1))');
+      ncBotanical:  Add('AND (icbn = 1)');
+      ncZoological: Add('AND (iczn = 1)');
+    end;
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+      Result := FieldByName('rank_id').AsInteger
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 function GetValidTaxon(const aTaxonName: String): Integer;
@@ -566,6 +600,102 @@ begin
     Open;
     if not(IsEmpty) then
       Result := FieldByName('institution_id').AsInteger
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetMethodKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT method_id FROM methods');
+    Add('WHERE (abbreviation = :aname) OR (ebird_name = :aname) OR (method_name = :aname)');
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+      Result := FieldByName('method_id').AsInteger
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetSamplingPlotKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT sampling_plot_id FROM sampling_plots');
+    Add('WHERE (abbreviation = :aname) OR (full_name = :aname)');
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+      Result := FieldByName('sampling_plot_id').AsInteger
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetBandKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT band_id FROM bands');
+    Add('WHERE (CONCAT(band_size, band_number) = :aname) OR (CONCAT(band_size, '' '', band_number) = :aname) OR (full_name = :aname)');
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+      Result := FieldByName('band_id').AsInteger
+    else
+      Result := 0;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetProjectKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(DMM.sqlCon);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT project_id FROM projects');
+    Add('WHERE (protocol_number = :aname) OR (short_title = :aname) OR (project_title = :aname)');
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+      Result := FieldByName('project_id').AsInteger
     else
       Result := 0;
     Close;

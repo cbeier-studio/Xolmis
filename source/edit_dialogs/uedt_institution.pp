@@ -323,11 +323,11 @@ begin
   eComplement.Text := FInstitution.Address2;
   eNeighborhood.Text := FInstitution.Neighborhood;
   FMunicipalityId := FInstitution.MunicipalityId;
-  eMunicipality.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FMunicipalityId);
+  eMunicipality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FMunicipalityId);
   FStateId := FInstitution.StateId;
-  eState.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FStateId);
+  eState.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FStateId);
   FCountryId := FInstitution.CountryId;
-  eCountry.Text := GetName('gazetteer', COL_SITE_NAME, COL_SITE_ID, FCountryId);
+  eCountry.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FCountryId);
   eManagerName.Text := FInstitution.ManagerName;
   eEmail.Text := FInstitution.Email;
   ePhone.Text := FInstitution.Phone;

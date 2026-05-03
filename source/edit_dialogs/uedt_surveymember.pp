@@ -212,7 +212,7 @@ end;
 procedure TedtSurveyMember.GetRecord;
 begin
   FMemberId := FMember.PersonId;
-  ePerson.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FMember.PersonId);
+  ePerson.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FMember.PersonId);
   ckVisitor.Checked := FMember.Visitor;
 end;
 

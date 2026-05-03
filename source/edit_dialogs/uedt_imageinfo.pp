@@ -480,7 +480,7 @@ procedure TedtImageInfo.GetRecord;
 begin
   mSubtitle.Text := FImage.Subtitle;
   FAuthorId := FImage.AuthorId;
-  eAuthor.Text := GetName('people', COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
+  eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eImageDate.Text := DateToStr(FImage.ImageDate);
   eImageTime.Text := TimeToStr(FImage.ImageTime);
   case FImage.ImageType of
@@ -519,7 +519,7 @@ begin
   end;
   eImageFilename.Text := FImage.FilePath;
   FLocalityId := FImage.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   case FImage.CoordinatePrecision of
     cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
     cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
@@ -530,7 +530,7 @@ begin
   eLongitude.Text := FloatToStr(FImage.Longitude);
   eLatitude.Text := FloatToStr(FImage.Latitude);
   FTaxonId := FImage.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FImage.LicenseType);
   eLicenseYear.Text := IntToStr(FImage.LicenseYear);
   eLicenseOwner.Text := FImage.LicenseOwner;

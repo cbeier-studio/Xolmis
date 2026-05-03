@@ -59,7 +59,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_themes, data_getvalue, models_record_types, models_geo,
+  utils_locale, utils_global, utils_dialogs, utils_themes, data_getvalue, data_consts, models_record_types, models_geo,
   udm_main, udm_grid, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
@@ -140,7 +140,7 @@ begin
         lblHint.Caption := rsAutofillCities;
         lblState.Caption := FStateName;
         lblState.Visible := True;
-        CountryAbbrev := GetName('gazetteer', 'abbreviation', 'country_id', DMG.qGazetteer.FieldByName('country_id').AsInteger);
+        CountryAbbrev := GetName(TBL_GAZETTEER, COL_ABBREVIATION, COL_COUNTRY_ID, DMG.qGazetteer.FieldByName('country_id').AsInteger);
         aCountry := LoadCountryFromJSON(CountryAbbrev);
         CountryId := GetCountryKey(aCountry.Name);
         CountryIdPt := GetCountryKey(aCountry.NamePtbr);

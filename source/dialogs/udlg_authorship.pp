@@ -73,7 +73,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_getvalue, utils_themes, udlg_find, uDarkStyleParams;
+  utils_locale, utils_global, data_types, data_getvalue, data_consts, utils_themes, udlg_find, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -301,7 +301,7 @@ begin
   for i := 0 to lbColetor.Count - 1 do
   begin
     Autores[i].Citation := lbColetor.Items[i];
-    Autores[i].Id := GetKey('people', 'person_id', 'citation', lbColetor.Items[i]);
+    Autores[i].Id := GetKey(TBL_PEOPLE, COL_PERSON_ID, COL_CITATION, lbColetor.Items[i]);
   end;
 
   ModalResult := mrOK;

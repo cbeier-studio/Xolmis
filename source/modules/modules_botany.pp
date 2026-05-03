@@ -78,7 +78,7 @@ begin
       for i := 0 to clbTaxonRanksFilter.Count - 1 do
         if clbTaxonRanksFilter.Checked[i] then
           SearchConfig.QuickFilters.Items[sf].Fields.Add(TSearchField.Create(COL_RANK_ID, rscTaxonomicRank, sdtInteger,
-            crEqual, True, IntToStr(GetKey('taxon_ranks', COL_RANK_ID, COL_RANK_NAME, clbTaxonRanksFilter.Items[i]))));
+            crEqual, True, IntToStr(GetRankKey(clbTaxonRanksFilter.Items[i], ncBotanical))));
     end;
     // Is synonym
     if rbIsSynonymYes.Checked then

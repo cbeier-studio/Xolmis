@@ -10,7 +10,7 @@ object dlgGazetteerAutofill: TdlgGazetteerAutofill
   ClientWidth = 650
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object lblHint: TLabel

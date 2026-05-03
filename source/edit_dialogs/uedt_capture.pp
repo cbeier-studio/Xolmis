@@ -1007,7 +1007,7 @@ begin
       if Qry.RecordCount > 0 then
       begin
         FLocalityId := Qry.FieldByName(COL_LOCALITY_ID).AsInteger;
-        eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+        eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
         eCaptureDate.Text := DateToStr(Qry.FieldByName(COL_SURVEY_DATE).AsDateTime);
       end;
       Qry.Close;
@@ -1137,35 +1137,35 @@ begin
     if FCapture.LocalityId > 0 then
     begin
       FLocalityId := FCapture.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if FCapture.SurveyId > 0 then
     begin
       FSurveyId := FCapture.SurveyId;
-      eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
+      eSurvey.Text := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
     end;
     if FCapture.TaxonId > 0 then
     begin
       FTaxonId := FCapture.TaxonId;
-      eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
     if FCapture.BandId > 0 then
     begin
       FBandId := FCapture.BandId;
-      eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
+      eBand.Text := GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FBandId);
     end;
 
     if (FCapture.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FCapture.LocalityId := xSettings.LastLocalityId;
       FLocalityId := FCapture.LocalityId;
-      eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
     if (FCapture.BanderId = 0) and (xSettings.RememberCollectionInfo) then
     begin
       FCapture.BanderId := xSettings.LastObserverId;
       FBanderId := FCapture.BanderId;
-      eBander.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FBanderId);
+      eBander.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FBanderId);
     end;
   end
   else
@@ -1231,9 +1231,9 @@ begin
   FIndividual := TIndividual.Create(FIndividualId);
   try
     FTaxonId := FIndividual.TaxonId;
-    eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     FBandId := FIndividual.BandId;
-    eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
+    eBand.Text := GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FBandId);
     eRightTarsus.Text := FIndividual.RightTarsus;
     eLeftTarsus.Text := FIndividual.LeftTarsus;
     FCapture.SubjectAge := FIndividual.Age;
@@ -1267,19 +1267,19 @@ end;
 procedure TedtCapture.GetRecord;
 begin
   FIndividualId := FCapture.IndividualId;
-  eIndividual.Text := GetName('individuals', COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
+  eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   FSurveyId := FCapture.SurveyId;
-  eSurvey.Text := GetName('surveys', COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
+  eSurvey.Text := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
   FLocalityId := FCapture.LocalityId;
-  eLocality.Text := GetName('gazetteer', COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+  eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   if not DateIsNull(FCapture.CaptureDate) then
     eCaptureDate.Text := DateToStr(FCapture.CaptureDate);
   if (FCapture.CaptureTime <> NullTime) then
     eCaptureTime.Text := FormatDateTime('hh:nn', FCapture.CaptureTime);
   FBanderId := FCapture.BanderId;
-  eBander.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FBanderId);
+  eBander.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FBanderId);
   FAnnotatorId := FCapture.AnnotatorId;
-  eAnnotator.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FAnnotatorId);
+  eAnnotator.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FAnnotatorId);
   case FCapture.CaptureType of
     cptNew:         cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureNew);
     cptRecapture:   cbCaptureType.ItemIndex := cbCaptureType.Items.IndexOf(rsCaptureRecapture);
@@ -1290,7 +1290,7 @@ begin
     cbCaptureType.ItemIndex := -1;
   end;
   FNetId := FCapture.NetId;
-  eNet.Text := GetName('nets_effort', COL_NET_NUMBER, COL_NET_ID, FNetId);
+  eNet.Text := GetName(TBL_NETS_EFFORT, COL_NET_NUMBER, COL_NET_ID, FNetId);
   if (FCapture.Longitude <> 0.0) and (FCapture.Latitude <> 0.0) then
   begin
     eLongitude.Text := FloatToStr(FCapture.Longitude);
@@ -1304,11 +1304,11 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FCapture.TaxonId;
-  eTaxon.Text := GetName('zoo_taxa', COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FBandId := FCapture.BandId;
-  eBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FBandId);
+  eBand.Text := GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FBandId);
   FRemovedBandId := FCapture.RemovedBandId;
-  eRemovedBand.Text := GetName('bands', COL_FULL_NAME, COL_BAND_ID, FRemovedBandId);
+  eRemovedBand.Text := GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FRemovedBandId);
   eRightTarsus.Text := FCapture.RightTarsus;
   eLeftTarsus.Text := FCapture.LeftTarsus;
   case FCapture.SubjectAge of
@@ -1378,9 +1378,9 @@ begin
   ckClaw.Checked := FCapture.ClawSample;
   ckWholeSpecimen.Checked := FCapture.SubjectCollected;
   FPhotographer1Id := FCapture.Photographer1Id;
-  ePhotographer1.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FPhotographer1Id);
+  ePhotographer1.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FPhotographer1Id);
   FPhotographer2Id := FCapture.Photographer2Id;
-  ePhotographer2.Text := GetName('people', COL_ABBREVIATION, COL_PERSON_ID, FPhotographer2Id);
+  ePhotographer2.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FPhotographer2Id);
   cbCamera.ItemIndex := cbCamera.Items.IndexOf(FCapture.CameraName);
   if (FCapture.InitialPhotoNumber <> EmptyStr) and (FCapture.InitialPhotoNumber <> '0') then
     eStartPhoto.Text := FCapture.InitialPhotoNumber;
