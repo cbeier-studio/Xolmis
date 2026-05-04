@@ -196,6 +196,8 @@ procedure TdlgExport.cbDecimalSeparatorSelect(Sender: TObject);
 begin
   if SameText(cbDecimalSeparator.Text, cbDelimiter.Text) then
     cbDelimiter.ItemIndex := 0;
+
+  cbDelimiterSelect(nil);
 end;
 
 procedure TdlgExport.cbDelimiterSelect(Sender: TObject);
@@ -233,7 +235,7 @@ begin
     1: // JSON
     begin
       //pEncoding.Visible := True;
-      pTranslateFieldNames.Visible := True;
+      pTranslateFieldNames.Visible := False;
       //pTrimValues.Visible := True;
       //pForceNDJSON.Visible := True;
       //pIgnoreNulls.Visible := True;
@@ -296,7 +298,7 @@ begin
     4: // XML
     begin
       //pEncoding.Visible := True;
-      pTranslateFieldNames.Visible := True;
+      pTranslateFieldNames.Visible := False;
       //pTrimValues.Visible := True;
       //pForceNDJSON.Visible := False;
       //pIgnoreNulls.Visible := True;
@@ -486,12 +488,18 @@ begin
   // Translate comboboxes' items
   cbDelimiter.Items.Clear;
   cbDelimiter.Items.Add(rsDelimiterSemicolon);
-  cbDelimiter.Items.Add(rsDelimiterColon);
+  cbDelimiter.Items.Add(rsDelimiterComma);
   cbDelimiter.Items.Add(rsDelimiterTab);
   cbDelimiter.Items.Add(rsDelimiterOther);
   cbDecimalSeparator.Items.Clear;
-  cbDecimalSeparator.Items.Add(rsDecimalSeparatorColon);
+  cbDecimalSeparator.Items.Add(rsDecimalSeparatorComma);
   cbDecimalSeparator.Items.Add(rsDecimalSeparatorPeriod);
+  cbQuoteChar.Items.Clear;
+  cbQuoteChar.Items.Add(rsQuoteCharDouble);
+  cbQuoteChar.Items.Add(rsQuoteCharSingle);
+  cbDelimiter.ItemIndex := 0;
+  cbDecimalSeparator.ItemIndex := 0;
+  cbQuoteChar.ItemIndex := 0;
 
   // Fill the columns checklist
   with FDataSet do
@@ -519,7 +527,23 @@ begin
     if cklbColumns.Checked[i] then
       Inc(ColCount);
 
-  Result := (cbFiletype.ItemIndex >= 0) and (ColCount > 0);
+  if (cbFiletype.ItemIndex < 0) or (ColCount = 0) then
+    Exit;
+
+  case cbFileType.ItemIndex of
+    0: // CSV: custom delimiter must be filled when "Other..." is selected
+      Result := (cbDelimiter.ItemIndex <> 3) or (Length(Trim(eOther.Text)) > 0);
+    1: // JSON: row element name is required
+      Result := True;
+      //Result := Length(Trim(eRecordXPath.Text)) > 0;
+    2, 3: // ODS, XLSX: sheet name is required
+      Result := Length(Trim(eSheet.Text)) > 0;
+    4: // XML: root node path and record element name are both required
+      Result := True;
+      //Result := (Length(Trim(eRecordXPath.Text)) > 0) and (Length(Trim(eKeyPath.Text)) > 0);
+  else
+    Result := True;
+  end;
 end;
 
 procedure TdlgExport.sbRunClick(Sender: TObject);
@@ -621,7 +645,7 @@ begin
   end;
 
   { Records path }
-  FExportSettings.RootNodeName := eKeyPath.Text;
+  FExportSettings.RootNodeName := eRecordXPath.Text;
   { Indentation }
   FExportSettings.Indentation := StrToIntDef(cbIndentation.Text, 2);
 
@@ -629,7 +653,7 @@ begin
   FExportSettings.SheetName := eSheet.Text;
 
   { Record node }
-  FExportSettings.RecordNodeName := eRecordXPath.Text;
+  FExportSettings.RecordNodeName := eKeyPath.Text;
 end;
 
 end.

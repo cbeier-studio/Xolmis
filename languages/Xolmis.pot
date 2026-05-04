@@ -4465,6 +4465,7 @@ msgid "2"
 msgstr ""
 
 #: tdlgexport.cbquotechar.text
+msgctxt "tdlgexport.cbquotechar.text"
 msgid "Double quote"
 msgstr ""
 
@@ -15071,9 +15072,9 @@ msgctxt "utils_locale.rsdecimaldegrees"
 msgid "Decimal degrees"
 msgstr ""
 
-#: utils_locale.rsdecimalseparatorcolon
-msgctxt "utils_locale.rsdecimalseparatorcolon"
-msgid "Colon"
+#: utils_locale.rsdecimalseparatorcomma
+msgctxt "utils_locale.rsdecimalseparatorcomma"
+msgid "Comma"
 msgstr ""
 
 #: utils_locale.rsdecimalseparatorperiod
@@ -15143,9 +15144,9 @@ msgctxt "utils_locale.rsdeleterowtitle"
 msgid "Delete row"
 msgstr ""
 
-#: utils_locale.rsdelimitercolon
-msgctxt "utils_locale.rsdelimitercolon"
-msgid "Colon"
+#: utils_locale.rsdelimitercomma
+msgctxt "utils_locale.rsdelimitercomma"
+msgid "Comma"
 msgstr ""
 
 #: utils_locale.rsdelimiterother
@@ -17843,6 +17844,15 @@ msgstr ""
 
 #: utils_locale.rsquickexport
 msgid "Quick Export"
+msgstr ""
+
+#: utils_locale.rsquotechardouble
+msgctxt "utils_locale.rsquotechardouble"
+msgid "Double quote"
+msgstr ""
+
+#: utils_locale.rsquotecharsingle
+msgid "Single quote"
 msgstr ""
 
 #: utils_locale.rsrecnoempty

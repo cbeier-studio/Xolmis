@@ -474,6 +474,7 @@ object dlgExport: TdlgExport
           Anchors = [akTop, akRight]
           TabOrder = 1
           Visible = False
+          OnChange = cklbColumnsClickCheck
         end
       end
       object pSheet: TBCPanel
@@ -554,6 +555,7 @@ object dlgExport: TdlgExport
           Width = 269
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
+          OnChange = cklbColumnsClickCheck
         end
       end
       object pDecimalSeparator: TBCPanel
@@ -830,6 +832,7 @@ object dlgExport: TdlgExport
           Width = 269
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
+          OnChange = cklbColumnsClickCheck
         end
       end
       object pRootKey: TBCPanel
@@ -910,6 +913,7 @@ object dlgExport: TdlgExport
           Width = 269
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
+          OnChange = cklbColumnsClickCheck
         end
       end
       object pNumberFormat: TBCPanel

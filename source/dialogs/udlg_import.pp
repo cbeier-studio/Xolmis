@@ -1079,11 +1079,11 @@ begin
   cbEncoding.Items.Add(TEncoding.UTF8.EncodingName);
   cbDelimiter.Items.Clear;
   cbDelimiter.Items.Add(rsDelimiterSemicolon);
-  cbDelimiter.Items.Add(rsDelimiterColon);
+  cbDelimiter.Items.Add(rsDelimiterComma);
   cbDelimiter.Items.Add(rsDelimiterTab);
   cbDelimiter.Items.Add(rsDelimiterOther);
   cbDecimalSeparator.Items.Clear;
-  cbDecimalSeparator.Items.Add(rsDecimalSeparatorColon);
+  cbDecimalSeparator.Items.Add(rsDecimalSeparatorComma);
   cbDecimalSeparator.Items.Add(rsDecimalSeparatorPeriod);
   cbNullHandling.Items.Clear;
   cbNullHandling.Items.Add(rsNullIgnore);

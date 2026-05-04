@@ -1273,11 +1273,13 @@ uses
 
     { Import/export options }
     rsDelimiterSemicolon = 'Semicolon';
-    rsDelimiterColon = 'Colon';
+    rsDelimiterComma = 'Comma';
     rsDelimiterTab = 'Tab';
     rsDelimiterOther = 'Other...';
-    rsDecimalSeparatorColon = 'Colon';
+    rsDecimalSeparatorComma = 'Comma';
     rsDecimalSeparatorPeriod = 'Period';
+    rsQuoteCharDouble = 'Double quote';
+    rsQuoteCharSingle = 'Single quote';
     rsImportStrategyAppend = 'Append';
     rsImportStrategyReplace = 'Replace';
     rsImportStrategyUpdate = 'Update';
