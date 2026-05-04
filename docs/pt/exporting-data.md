@@ -18,9 +18,13 @@ O recurso de **Exportação rápida** foi projetado para tornar a exportação d
 
 ![Diálogo de exportação](img/export-dialog.png)
 
+### Selecionando colunas
+
+Selecione as **colunas** que deseja exportar. Essa etapa garante que apenas os dados relevantes sejam incluídos no arquivo de saída, reduzindo o tamanho do arquivo e simplificando a análise.
+
 ### Escolhendo o formato
 
-No painel esquerdo do diálogo, selecione o formato de arquivo para o qual deseja exportar. O Xolmis suporta múltiplos formatos, cada um adequado para diferentes casos de uso:
+No topo direito do diálogo, selecione o formato de arquivo para o qual deseja exportar. O Xolmis suporta múltiplos formatos, cada um adequado para diferentes casos de uso:
 
 #### CSV
 
@@ -72,18 +76,17 @@ Exemplo:
 
 ### Configurando opções
 
-Se o formato selecionado tiver opções configuráveis, clique no botão **Opções** para ajustá-las. Por exemplo, o diálogo de opções do CSV permite definir:
+Cada formato possui opções configuráveis específicas, que podem ser usadas para definir:
 
-![Diálogo de opções CSV](img/csv-options-dialog.png)
-
-- **Delimitador** (vírgula, ponto e vírgula, tabulação etc.)  
-- **Codificação de texto** (UTF-8 recomendado para compatibilidade internacional)  
-- **Separador decimal** (ponto ou vírgula)  
-- **Incluir cabeçalhos** (se os nomes das colunas devem ser exportados)  
-
-### Selecionando colunas
-
-Após configurar o formato, selecione as **colunas** que deseja exportar. Essa etapa garante que apenas os dados relevantes sejam incluídos no arquivo de saída, reduzindo o tamanho do arquivo e simplificando a análise.
+- **Traduzir nomes de campos:** usar nomes de campos traduzidos para nomear colunas no arquivo exportado.
+- **Delimitador:** vírgula, ponto e vírgula, tabulação etc.
+- **Caracter de aspas:** caracter a ser usado quando o valor estiver entre aspas.
+- **Separador decimal:** ponto ou vírgula.  
+- **Primeira linha como cabeçalho:** se os nomes das colunas devem ser exportados.
+- **Planilha ou aba:** qual planilha do documento usar para exportar os dados.
+- **Indentação:** número de espaços usados para formatar o conteúdo do arquivo exportado.
+- **Nome da chave raiz:** nome da chave contendo os registros.
+- **Nome da chave de registro:** nome da chave contendo os dados do registro
 
 ### Finalizando a exportação
 

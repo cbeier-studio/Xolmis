@@ -4411,26 +4411,151 @@ msgctxt "tdlgdiagnostic.sbcopy.caption"
 msgid "Copy"
 msgstr ""
 
-#: tdlgexport.btnoptions.caption
-msgctxt "tdlgexport.btnoptions.caption"
-msgid "Options"
-msgstr ""
-
 #: tdlgexport.caption
 msgctxt "tdlgexport.caption"
 msgid "Export data"
 msgstr ""
 
-#: tdlgexport.ckexportchildrecords.caption
-msgid "Export related records"
+#: tdlgexport.cbcoordinatesformat.text
+msgid "Decimal"
 msgstr ""
 
-#: tdlgexport.ckusedarwincoreformat.caption
-msgid "Use Darwin Core format"
+#: tdlgexport.cbdateformat.text
+msgctxt "tdlgexport.cbdateformat.text"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tdlgexport.cbdecimalseparator.text
+msgctxt "tdlgexport.cbdecimalseparator.text"
+msgid "Colon"
+msgstr ""
+
+#: tdlgexport.cbdelimiter.text
+msgctxt "tdlgexport.cbdelimiter.text"
+msgid "Semicolon"
+msgstr ""
+
+#: tdlgexport.cbencoding.text
+msgctxt "tdlgexport.cbencoding.text"
+msgid "System encoding"
+msgstr ""
+
+#: tdlgexport.cbfiletype.itemsex[0].caption
+msgid "CSV"
+msgstr ""
+
+#: tdlgexport.cbfiletype.itemsex[1].caption
+msgid "JSON"
+msgstr ""
+
+#: tdlgexport.cbfiletype.itemsex[2].caption
+msgid "ODS"
+msgstr ""
+
+#: tdlgexport.cbfiletype.itemsex[3].caption
+msgid "XLSX"
+msgstr ""
+
+#: tdlgexport.cbfiletype.itemsex[4].caption
+msgid "XML"
+msgstr ""
+
+#: tdlgexport.cbindentation.text
+msgid "2"
+msgstr ""
+
+#: tdlgexport.cbquotechar.text
+msgid "Double quote"
+msgstr ""
+
+#: tdlgexport.cbtimeformat.text
+msgid "HH:NN"
 msgstr ""
 
 #: tdlgexport.lblcolumns.caption
 msgid "Select the columns to export:"
+msgstr ""
+
+#: tdlgexport.lblcoordinatesformat.caption
+msgid "Coordinates format"
+msgstr ""
+
+#: tdlgexport.lbldateformat.caption
+msgctxt "tdlgexport.lbldateformat.caption"
+msgid "Date format"
+msgstr ""
+
+#: tdlgexport.lbldecimalseparator.caption
+msgctxt "tdlgexport.lbldecimalseparator.caption"
+msgid "Decimal separator"
+msgstr ""
+
+#: tdlgexport.lbldelimiter.caption
+msgctxt "tdlgexport.lbldelimiter.caption"
+msgid "Delimiter"
+msgstr ""
+
+#: tdlgexport.lblencoding.caption
+msgctxt "tdlgexport.lblencoding.caption"
+msgid "File encoding"
+msgstr ""
+
+#: tdlgexport.lblfiletype.caption
+msgid "Select the file format to export:"
+msgstr ""
+
+#: tdlgexport.lblforcendjson.caption
+msgid "Force NDJSON"
+msgstr ""
+
+#: tdlgexport.lblhaveheader.caption
+msgctxt "tdlgexport.lblhaveheader.caption"
+msgid "First row as header"
+msgstr ""
+
+#: tdlgexport.lblignorenulls.caption
+msgid "Ignore nulls"
+msgstr ""
+
+#: tdlgexport.lblincludechildrecords.caption
+msgid "Include related records"
+msgstr ""
+
+#: tdlgexport.lblindentation.caption
+msgid "Indentation"
+msgstr ""
+
+#: tdlgexport.lblkeypath.caption
+msgid "Record key name"
+msgstr ""
+
+#: tdlgexport.lblnumberformat.caption
+msgid "Number format"
+msgstr ""
+
+#: tdlgexport.lblquotechar.caption
+msgid "Quote char"
+msgstr ""
+
+#: tdlgexport.lblrecordxpath.caption
+msgid "Root key name"
+msgstr ""
+
+#: tdlgexport.lblsheet.caption
+msgctxt "tdlgexport.lblsheet.caption"
+msgid "Sheet or tab"
+msgstr ""
+
+#: tdlgexport.lbltimeformat.caption
+msgid "Time format"
+msgstr ""
+
+#: tdlgexport.lbltranslatefieldnames.caption
+msgid "Translate field names"
+msgstr ""
+
+#: tdlgexport.lbltrimvalues.caption
+msgid "Trim values"
 msgstr ""
 
 #: tdlgexport.sbcancel.caption
@@ -4744,6 +4869,7 @@ msgid "Data type"
 msgstr ""
 
 #: tdlgimport.lbldateformat.caption
+msgctxt "tdlgimport.lbldateformat.caption"
 msgid "Date format"
 msgstr ""
 
@@ -4758,6 +4884,7 @@ msgid "Delimiter"
 msgstr ""
 
 #: tdlgimport.lblencoding.caption
+msgctxt "tdlgimport.lblencoding.caption"
 msgid "File encoding"
 msgstr ""
 
@@ -4839,6 +4966,7 @@ msgid "Define source file and general import settings."
 msgstr ""
 
 #: tdlgimport.lblsheet.caption
+msgctxt "tdlgimport.lblsheet.caption"
 msgid "Sheet or tab"
 msgstr ""
 

@@ -4390,27 +4390,152 @@ msgctxt "tdlgdiagnostic.sbcopy.caption"
 msgid "Copy"
 msgstr "Copiar"
 
-#: tdlgexport.btnoptions.caption
-msgctxt "tdlgexport.btnoptions.caption"
-msgid "Options"
-msgstr "Opções"
-
 #: tdlgexport.caption
 msgctxt "tdlgexport.caption"
 msgid "Export data"
 msgstr "Exportar dados"
 
-#: tdlgexport.ckexportchildrecords.caption
-msgid "Export related records"
-msgstr "Exportar registros relacionados"
+#: tdlgexport.cbcoordinatesformat.text
+msgid "Decimal"
+msgstr "Decimal"
 
-#: tdlgexport.ckusedarwincoreformat.caption
-msgid "Use Darwin Core format"
-msgstr "Usar formato Darwin Core"
+#: tdlgexport.cbdateformat.text
+msgctxt "tdlgexport.cbdateformat.text"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tdlgexport.cbdecimalseparator.text
+msgctxt "tdlgexport.cbdecimalseparator.text"
+msgid "Colon"
+msgstr "Vírgula"
+
+#: tdlgexport.cbdelimiter.text
+msgctxt "tdlgexport.cbdelimiter.text"
+msgid "Semicolon"
+msgstr "Ponto e vírgula"
+
+#: tdlgexport.cbencoding.text
+msgctxt "tdlgexport.cbencoding.text"
+msgid "System encoding"
+msgstr "Codificação do sistema"
+
+#: tdlgexport.cbfiletype.itemsex[0].caption
+msgid "CSV"
+msgstr "CSV"
+
+#: tdlgexport.cbfiletype.itemsex[1].caption
+msgid "JSON"
+msgstr "JSON"
+
+#: tdlgexport.cbfiletype.itemsex[2].caption
+msgid "ODS"
+msgstr "ODS"
+
+#: tdlgexport.cbfiletype.itemsex[3].caption
+msgid "XLSX"
+msgstr "XLSX"
+
+#: tdlgexport.cbfiletype.itemsex[4].caption
+msgid "XML"
+msgstr "XML"
+
+#: tdlgexport.cbindentation.text
+msgid "2"
+msgstr ""
+
+#: tdlgexport.cbquotechar.text
+msgid "Double quote"
+msgstr ""
+
+#: tdlgexport.cbtimeformat.text
+msgid "HH:NN"
+msgstr ""
 
 #: tdlgexport.lblcolumns.caption
 msgid "Select the columns to export:"
 msgstr "Selecione as colunas a exportar:"
+
+#: tdlgexport.lblcoordinatesformat.caption
+msgid "Coordinates format"
+msgstr "Formato de coordenadas"
+
+#: tdlgexport.lbldateformat.caption
+msgctxt "tdlgexport.lbldateformat.caption"
+msgid "Date format"
+msgstr "Formato de data"
+
+#: tdlgexport.lbldecimalseparator.caption
+msgctxt "tdlgexport.lbldecimalseparator.caption"
+msgid "Decimal separator"
+msgstr "Separador decimal"
+
+#: tdlgexport.lbldelimiter.caption
+msgctxt "tdlgexport.lbldelimiter.caption"
+msgid "Delimiter"
+msgstr "Delimitador"
+
+#: tdlgexport.lblencoding.caption
+msgctxt "tdlgexport.lblencoding.caption"
+msgid "File encoding"
+msgstr "Codificação do arquivo"
+
+#: tdlgexport.lblfiletype.caption
+msgid "Select the file format to export:"
+msgstr "Selecione o formato de arquivo a exportar:"
+
+#: tdlgexport.lblforcendjson.caption
+msgid "Force NDJSON"
+msgstr "Forçar NDJSON"
+
+#: tdlgexport.lblhaveheader.caption
+msgctxt "tdlgexport.lblhaveheader.caption"
+msgid "First row as header"
+msgstr "Primeira linha como cabeçalho"
+
+#: tdlgexport.lblignorenulls.caption
+msgid "Ignore nulls"
+msgstr "Ignorar nulos"
+
+#: tdlgexport.lblincludechildrecords.caption
+msgid "Include related records"
+msgstr "Incluir registros relacionados"
+
+#: tdlgexport.lblindentation.caption
+msgid "Indentation"
+msgstr "Indentação"
+
+#: tdlgexport.lblkeypath.caption
+msgid "Record key name"
+msgstr "Nome da chave do registro"
+
+#: tdlgexport.lblnumberformat.caption
+msgid "Number format"
+msgstr "Formato de número"
+
+#: tdlgexport.lblquotechar.caption
+msgid "Quote char"
+msgstr "Caracter de aspas"
+
+#: tdlgexport.lblrecordxpath.caption
+msgid "Root key name"
+msgstr "Nome da chave raiz"
+
+#: tdlgexport.lblsheet.caption
+msgctxt "tdlgexport.lblsheet.caption"
+msgid "Sheet or tab"
+msgstr "Planilha ou aba"
+
+#: tdlgexport.lbltimeformat.caption
+msgid "Time format"
+msgstr "Formato de hora"
+
+#: tdlgexport.lbltranslatefieldnames.caption
+msgid "Translate field names"
+msgstr "Traduzir nomes de campos"
+
+#: tdlgexport.lbltrimvalues.caption
+msgid "Trim values"
+msgstr "Remover espaços"
 
 #: tdlgexport.sbcancel.caption
 msgctxt "tdlgexport.sbcancel.caption"
@@ -4723,6 +4848,7 @@ msgid "Data type"
 msgstr "Tipo de dados"
 
 #: tdlgimport.lbldateformat.caption
+msgctxt "tdlgimport.lbldateformat.caption"
 msgid "Date format"
 msgstr "Formato de data"
 
@@ -4737,6 +4863,7 @@ msgid "Delimiter"
 msgstr "Delimitador"
 
 #: tdlgimport.lblencoding.caption
+msgctxt "tdlgimport.lblencoding.caption"
 msgid "File encoding"
 msgstr "Codificação do arquivo"
 
@@ -4818,6 +4945,7 @@ msgid "Define source file and general import settings."
 msgstr "Defina as configurações gerais e do arquivo de origem."
 
 #: tdlgimport.lblsheet.caption
+msgctxt "tdlgimport.lblsheet.caption"
 msgid "Sheet or tab"
 msgstr "Planilha ou aba"
 

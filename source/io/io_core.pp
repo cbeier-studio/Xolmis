@@ -134,10 +134,12 @@ type
     ForceNDJSON: Boolean;     // JSON
     IgnoreNulls: Boolean;     // JSON
     RecordsPath: String;      // JSON
+    RootNodeName: String;     // XML
     RecordNodeName: String;   // XML
     SheetName: String;        // XLSX/ODS
     SheetIndex: Integer;      // XLSX/ODS
     DateFormat: String;       // parsing hints
+    TimeFormat: String;       // parsing hints
     DecimalSeparator: Char;   // parsing hints
     SRID: Integer;            // spatial data (e.g., 4326 = WGS84)
     OnProgress: TProgressProc;
@@ -147,17 +149,23 @@ type
   // Export options
   TExportOptions = record
     Encoding: String;         // 'UTF-8', 'latin1', 'Windows-1252' etc.
+    ExportFields: String;     // comma-separated list of fields to export
+    TranslateFieldNames: Boolean; // CSV/TSV, XLSX/ODS, JSON
+    IncludeChildRecords: Boolean; // JSON, XML
     Delimiter: Char;          // CSV/TSV
-    HasHeader: Boolean;       // CSV/TSV, XLSX/ODS
     QuoteChar: Char;          // CSV/TSV
+    HasHeader: Boolean;       // CSV/TSV, XLSX/ODS
     TrimFields: Boolean;      // CSV/TSV, XLSX/ODS
+    Indentation: Integer;     // JSON, XML
     ForceNDJSON: Boolean;     // JSON
     IgnoreNulls: Boolean;     // JSON
+    RootNodeName: String;     // XML, JSON
     RecordNodeName: String;   // XML
     SheetName: String;        // XLSX/ODS
     SheetIndex: Integer;      // XLSX/ODS
     AutoSizeColumns: Boolean; // XLSX/ODS
     DateFormat: String;       // parsing hints
+    TimeFormat: String;       // parsing hints
     DecimalSeparator: Char;   // parsing hints
     NumberFormat: String;     // parsing hints
     SRID: Integer;            // spatial data (e.g., 4326 = WGS84)

@@ -1,0 +1,292 @@
+[
+  {
+    "method_name": "Anilhamento",
+    "abbreviation": "Banding",
+    "category": "Captura",
+    "ebird_name": "PriMig - Pri Mig Banding Protocol",
+    "description": "Captura de aves com redes para anilhamento e coleta de dados biométricos.",
+    "recommended_uses": "Estudos de sobrevivência, fidelidade a áreas e movimentos, monitoramento de populações e dinâmica demográfica, coleta de dados biométricos e amostras biológicas, estudos de muda, idade e sexo",
+    "notes": null,
+    "method_id": 1
+  },
+  {
+    "method_name": "Captura com armadilha",
+    "abbreviation": "Trap",
+    "category": "Captura",
+    "ebird_name": null,
+    "description": "Uso de armadilhas específicas (ex.: gaiolas, armadilhas de queda, armadilhas de funil) para captura temporária de aves sem uso de redes.",
+    "recommended_uses": "Espécies terrestres ou granívoras, ambientes onde redes de neblina são pouco eficientes, estudos comportamentais ou de marcação individual",
+    "notes": null,
+    "method_id": 17
+  },
+  {
+    "method_name": "Censo por varredura visual",
+    "abbreviation": "Visual",
+    "category": "Contagens por área",
+    "ebird_name": null,
+    "description": "Observação sistemática de uma área aberta ou semiaberta, varrendo o campo de visão com binóculos ou telescópio para registrar todos os indivíduos detectados.",
+    "recommended_uses": "Ambientes abertos (campos, banhados, restingas), contagens de bandos, monitoramento de espécies conspícuas",
+    "notes": null,
+    "method_id": 20
+  },
+  {
+    "method_name": "Contagem de trajeto",
+    "abbreviation": "Traveling",
+    "category": "Contagens em trajeto",
+    "ebird_name": "eBird - Traveling Count",
+    "description": "Observador percorre uma rota, registrando aves ao longo do trajeto.",
+    "recommended_uses": "Monitoramento de comunidades em escalas locais e regionais, comparação de riqueza e abundância entre áreas, levantamentos rápidos em gradientes ambientais, protocolos compatíveis com eBird e outros sistemas de ciência cidadã",
+    "notes": null,
+    "method_id": 2
+  },
+  {
+    "method_name": "Contagem de trajeto com distância",
+    "abbreviation": "T-Distance",
+    "category": "Contagens em trajeto",
+    "ebird_name": null,
+    "description": "Percurso com registro de distâncias perpendiculares ou radiais para estimar detectabilidade e densidade populacional.",
+    "recommended_uses": "Estudos de densidade, modelos de detecção (Distance Sampling), ambientes abertos ou semiabertos",
+    "notes": null,
+    "method_id": 9
+  },
+  {
+    "method_name": "Contagem de transecto de banda",
+    "abbreviation": "T-Band",
+    "category": "Contagens em trajeto",
+    "ebird_name": "eBird - Traveling Count",
+    "description": "Registro de aves dentro de uma faixa de largura fixa ao longo de um percurso, permitindo estimativas de densidade.",
+    "recommended_uses": "Ambientes abertos, estudos de densidade, comparações entre habitats",
+    "notes": null,
+    "method_id": 14
+  },
+  {
+    "method_name": "Contagem de transecto linear",
+    "abbreviation": "Line",
+    "category": "Contagens em trajeto",
+    "ebird_name": "eBird - Traveling Count",
+    "description": "Percurso linear com registro contínuo de todas as aves detectadas, sem delimitação de faixa.",
+    "recommended_uses": "Inventários rápidos, monitoramento de comunidades, ambientes com boa visibilidade",
+    "notes": null,
+    "method_id": 13
+  },
+  {
+    "method_name": "Contagem em ponto fixo",
+    "abbreviation": "Stationary",
+    "category": "Contagens em ponto",
+    "ebird_name": "eBird - Stationary Count",
+    "description": "Observador permanece em um ponto fixo por um período definido, registrando todas as aves vistas ou ouvidas.",
+    "recommended_uses": "Monitoramento padronizado, comparação entre locais, estudos de abundância relativa",
+    "notes": null,
+    "method_id": 3
+  },
+  {
+    "method_name": "Contagem em área delimitada",
+    "abbreviation": "Area",
+    "category": "Contagens por área",
+    "ebird_name": "eBird - Area Count",
+    "description": "Observações realizadas dentro de uma área geográfica definida, com esforço padronizado de busca.",
+    "recommended_uses": "Comparação entre áreas, monitoramento de longo prazo, estudos de uso de habitat",
+    "notes": null,
+    "method_id": 11
+  },
+  {
+    "method_name": "Contagem exaustiva por área",
+    "abbreviation": "Ex-Area",
+    "category": "Contagens por área",
+    "ebird_name": "eBird - Exhaustive Area Count",
+    "description": "Busca intensiva em uma área delimitada, com objetivo de registrar todos os indivíduos presentes.",
+    "recommended_uses": "Censos completos, monitoramento de espécies raras, ilhas, fragmentos pequenos, áreas isoladas",
+    "notes": null,
+    "method_id": 4
+  },
+  {
+    "method_name": "Contagem por fotografia\/vídeo",
+    "abbreviation": "Photo",
+    "category": "Especiais",
+    "ebird_name": null,
+    "description": "Identificação e contagem de aves a partir de imagens ou vídeos obtidos em campo ou remotamente.",
+    "recommended_uses": "Ambientes de difícil acesso, grandes bandos, estudos de comportamento",
+    "notes": null,
+    "method_id": 21
+  },
+  {
+    "method_name": "Contagem por playback",
+    "abbreviation": "Playback",
+    "category": "Especiais",
+    "ebird_name": null,
+    "description": "Uso de sons gravados para atrair aves e facilitar detecção.",
+    "recommended_uses": "Espécies crípticas ou territoriais, inventários em florestas, estudos de resposta comportamental",
+    "notes": null,
+    "method_id": 18
+  },
+  {
+    "method_name": "Histórico",
+    "abbreviation": "Historical",
+    "category": "Qualitativos",
+    "ebird_name": "Historical",
+    "description": "Registros antigos ou provenientes de fontes secundárias, sem esforço padronizado.",
+    "recommended_uses": "Reconstrução histórica de distribuição, complemento de inventários, estudos de mudanças temporais",
+    "notes": null,
+    "method_id": 6
+  },
+  {
+    "method_name": "Lista Qualitativa Livre",
+    "abbreviation": "Free",
+    "category": "Qualitativos",
+    "ebird_name": null,
+    "description": "Registro livre de espécies sem esforço padronizado.",
+    "recommended_uses": "Inventários iniciais, registros oportunísticos, complemento de amostragem",
+    "notes": null,
+    "method_id": 27
+  },
+  {
+    "method_name": "Lista Qualitativa Temporizada",
+    "abbreviation": "Fixed-Time",
+    "category": "Qualitativos",
+    "ebird_name": null,
+    "description": "Registro de todas as espécies observadas em um intervalo de tempo fixo.",
+    "recommended_uses": "Comparação entre áreas, monitoramento rápido, protocolos de esforço padronizado",
+    "notes": null,
+    "method_id": 26
+  },
+  {
+    "method_name": "Lista Qualitativa por Intervalos",
+    "abbreviation": "Interval",
+    "category": "Qualitativos",
+    "ebird_name": null,
+    "description": "Registros qualitativos divididos em blocos de tempo (ex.: 10 min).",
+    "recommended_uses": "Monitoramento temporal, análise de atividade, comparação entre períodos",
+    "notes": null,
+    "method_id": 8
+  },
+  {
+    "method_name": "Listas de Mackinnon",
+    "abbreviation": "Mackinnon",
+    "category": "Qualitativos",
+    "ebird_name": null,
+    "description": "Listas sequenciais de tamanho fixo (ex.: 10 espécies), reiniciadas sempre que completadas.",
+    "recommended_uses": "Inventários rápidos, comparação entre habitats, monitoramento de riqueza",
+    "notes": null,
+    "method_id": 7
+  },
+  {
+    "method_name": "Mapeamento de territórios",
+    "abbreviation": "Spot-Map",
+    "category": "Especiais",
+    "ebird_name": null,
+    "description": "Método de mapeamento espacial de indivíduos territoriais ao longo da estação reprodutiva.",
+    "recommended_uses": "Estudos de densidade territorial, monitoramento de espécies residentes, áreas pequenas ou médias",
+    "notes": null,
+    "method_id": 30
+  },
+  {
+    "method_name": "Monitoramento de ninhos",
+    "abbreviation": "Nest",
+    "category": "Especiais",
+    "ebird_name": "eBird - Nest Monitoring",
+    "description": "Acompanhamento sistemático de ninhos ativos para registrar sucesso reprodutivo.",
+    "recommended_uses": "Estudos de reprodução, monitoramento de espécies sensíveis, avaliação de impacto ambiental",
+    "notes": null,
+    "method_id": 12
+  },
+  {
+    "method_name": "Monitoramento remoto acústico",
+    "abbreviation": "Auto-Acoustic",
+    "category": "Especiais",
+    "ebird_name": null,
+    "description": "Uso de gravadores autônomos para registrar vocalizações ao longo de longos períodos.",
+    "recommended_uses": "Monitoramento contínuo, espécies noturnas ou discretas, ambientes remotos",
+    "notes": null,
+    "method_id": 32
+  },
+  {
+    "method_name": "Nocturnal Flight Call Count",
+    "abbreviation": "NFC",
+    "category": "Especiais",
+    "ebird_name": null,
+    "description": "Registro de vocalizações de aves migratórias durante a noite, geralmente com microfones direcionais.",
+    "recommended_uses": "Monitoramento de migração, estudos de fenologia, identificação de rotas migratórias",
+    "notes": null,
+    "method_id": 25
+  },
+  {
+    "method_name": "Observação casual",
+    "abbreviation": "Casual",
+    "category": "Qualitativos",
+    "ebird_name": "eBird - Casual Observation",
+    "description": "Registros oportunísticos feitos sem protocolo definido.",
+    "recommended_uses": "Complemento de listas, registros de espécies raras, monitoramento participativo",
+    "notes": null,
+    "method_id": 5
+  },
+  {
+    "method_name": "Observação remota (camera-trap)",
+    "abbreviation": "Camera-Trap",
+    "category": "Especiais",
+    "ebird_name": null,
+    "description": "Uso de câmeras automáticas para registrar presença e comportamento de aves.",
+    "recommended_uses": "Espécies terrestres, ambientes fechados, estudos de comportamento e presença",
+    "notes": null,
+    "method_id": 22
+  },
+  {
+    "method_name": "Ponto ao longo de estrada",
+    "abbreviation": "Roadside",
+    "category": "Contagens em ponto",
+    "ebird_name": null,
+    "description": "Pontos de contagem distribuídos ao longo de estradas ou vias, geralmente com deslocamento motorizado entre pontos.",
+    "recommended_uses": "Monitoramentos de larga escala, aves de rapina e espécies de borda, protocolos de censos regionais",
+    "notes": null,
+    "method_id": 31
+  },
+  {
+    "method_name": "Ponto de contagem",
+    "abbreviation": "Point",
+    "category": "Contagens em ponto",
+    "ebird_name": "eBird - Stationary Count",
+    "description": "Ponto fixo com foco em detecção auditiva, geralmente com tempo padronizado e sem deslocamento.",
+    "recommended_uses": "Ambientes fechados (florestas), espécies vocais, monitoramento de riqueza e abundância",
+    "notes": null,
+    "method_id": 23
+  },
+  {
+    "method_name": "Ponto de contagem com distância",
+    "abbreviation": "P-Distance",
+    "category": "Contagens em ponto",
+    "ebird_name": null,
+    "description": "Ponto fixo com registro de distâncias radiais ou perpendiculares para estimar detectabilidade.",
+    "recommended_uses": "Distance Sampling, estudos de densidade, ambientes com boa percepção de distância",
+    "notes": null,
+    "method_id": 19
+  },
+  {
+    "method_name": "Ponto de detecções",
+    "abbreviation": "P-Detection",
+    "category": "Contagens em ponto",
+    "ebird_name": null,
+    "description": "Ponto fixo registrando cada indivíduo ou grupo separadamente, incluindo informações como altura, direção de voo e comportamento.",
+    "recommended_uses": "Estudos comportamentais, monitoramento de migração local, ambientes com alta atividade aérea",
+    "notes": null,
+    "method_id": 29
+  },
+  {
+    "method_name": "Protocolo pelágico do eBird",
+    "abbreviation": "Pelagic",
+    "category": "Especiais",
+    "ebird_name": null,
+    "description": "Contagens realizadas em mar aberto, geralmente com embarcação em movimento.",
+    "recommended_uses": "Monitoramento de aves marinhas, estudos de distribuição oceânica, levantamentos de biodiversidade",
+    "notes": null,
+    "method_id": 24
+  },
+  {
+    "method_name": "Transecto de detecções",
+    "abbreviation": "T-Detection",
+    "category": "Contagens em trajeto",
+    "ebird_name": null,
+    "description": "Transecto com registro individualizado de cada detecção, incluindo altura, direção e comportamento.",
+    "recommended_uses": "Estudos de comportamento, monitoramento de migração local, ambientes com alta atividade aérea",
+    "notes": null,
+    "method_id": 28
+  }
+]

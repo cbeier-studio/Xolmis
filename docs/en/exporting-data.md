@@ -18,9 +18,13 @@ The **Quick export** feature is designed to make exporting data fast and flexibl
 
 ![Export dialog](img/export-dialog.png)
 
+### Selecting columns
+
+Select the **columns** you want to export. This step ensures that only relevant data is included in the output file, reducing file size and simplifying analysis.
+
 ### Choosing the format
 
-On the left panel of the dialog, select the file format to which you want to export. Xolmis supports multiple formats, each suited to different use cases:
+On the top right of the dialog, select the file format to which you want to export. Xolmis supports multiple formats, each suited to different use cases:
 
 #### CSV
 
@@ -72,18 +76,17 @@ Example:
 
 ### Configuring options
 
-If the selected format has configurable options, click the **Options** button to adjust them. For example, the CSV options dialog allows you to define:
+Each format has specific configurable options, which allows you to define:
 
-![CSV options dialog](img/csv-options-dialog.png)
-
-- **Delimiter** (comma, semicolon, tab, etc.)  
-- **Text encoding** (UTF-8 recommended for international compatibility)  
-- **Decimal separator** (dot or comma)  
-- **Include headers** (whether to export column names)  
-
-### Selecting columns
-
-After configuring the format, select the **columns** you want to export. This step ensures that only relevant data is included in the output file, reducing file size and simplifying analysis.
+- **Translate field names:** use translated field names to name columns in the exported file.
+- **Delimiter:** comma, semicolon, tab, etc.  
+- **Quote char:** character to use when a value is quoted.  
+- **Decimal separator:** dot or comma.  
+- **First row as header:** whether to export column names.
+- **Sheet or tab:** which sheet of the spreadsheet use to export data.
+- **Indentation:** number of spaces used to format the exported file content.
+- **Root key name:** name of the root key containing the records.
+- **Record key name:** name of the key containig the record data.  
 
 ### Finalizing the export
 
