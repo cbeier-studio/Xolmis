@@ -1809,8 +1809,9 @@ begin
 
   LogEvent(leaStart, 'Populate methods table');
 
-  FRepo := TMethodRepository.Create(DMM.sqlCon);
+  FRepo := TMethodRepository.Create(Connection);
   FMethod := TMethod.Create();
+  JArray := nil;
   try
     try
       JFile := TFileStream.Create(FFilePath, fmOpenRead);
@@ -1831,7 +1832,7 @@ begin
         for i := 0 to JArray.Count - 1 do
         begin
           FMethod.Clear;
-          FMethod.FromJSON(JArray.Items[i].AsString);
+          FMethod.FromJSON(JArray.Items[i].AsJSON);
           if GetMethodKey(FMethod.Name) > 0 then
             FRepo.Update(FMethod)
           else
@@ -1852,9 +1853,8 @@ begin
     if Assigned(JData) then
       FreeAndNil(JData);
     JArray := nil;
-
-    LogEvent(leaFinish, 'Populate methods table');
   end;
+  LogEvent(leaFinish, 'Populate methods table');
 end;
 
 procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);

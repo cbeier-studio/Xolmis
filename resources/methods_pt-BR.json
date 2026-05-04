@@ -7,6 +7,7 @@
     "description": "Captura de aves com redes para anilhamento e coleta de dados biométricos.",
     "recommended_uses": "Estudos de sobrevivência, fidelidade a áreas e movimentos, monitoramento de populações e dinâmica demográfica, coleta de dados biométricos e amostras biológicas, estudos de muda, idade e sexo",
     "notes": null,
+    "can_delete": false,
     "method_id": 1
   },
   {
@@ -17,6 +18,7 @@
     "description": "Uso de armadilhas específicas (ex.: gaiolas, armadilhas de queda, armadilhas de funil) para captura temporária de aves sem uso de redes.",
     "recommended_uses": "Espécies terrestres ou granívoras, ambientes onde redes de neblina são pouco eficientes, estudos comportamentais ou de marcação individual",
     "notes": null,
+    "can_delete": false,
     "method_id": 17
   },
   {
@@ -27,6 +29,7 @@
     "description": "Observação sistemática de uma área aberta ou semiaberta, varrendo o campo de visão com binóculos ou telescópio para registrar todos os indivíduos detectados.",
     "recommended_uses": "Ambientes abertos (campos, banhados, restingas), contagens de bandos, monitoramento de espécies conspícuas",
     "notes": null,
+    "can_delete": false,
     "method_id": 20
   },
   {
@@ -37,6 +40,7 @@
     "description": "Observador percorre uma rota, registrando aves ao longo do trajeto.",
     "recommended_uses": "Monitoramento de comunidades em escalas locais e regionais, comparação de riqueza e abundância entre áreas, levantamentos rápidos em gradientes ambientais, protocolos compatíveis com eBird e outros sistemas de ciência cidadã",
     "notes": null,
+    "can_delete": false,
     "method_id": 2
   },
   {
@@ -47,6 +51,7 @@
     "description": "Percurso com registro de distâncias perpendiculares ou radiais para estimar detectabilidade e densidade populacional.",
     "recommended_uses": "Estudos de densidade, modelos de detecção (Distance Sampling), ambientes abertos ou semiabertos",
     "notes": null,
+    "can_delete": false,
     "method_id": 9
   },
   {
@@ -57,6 +62,7 @@
     "description": "Registro de aves dentro de uma faixa de largura fixa ao longo de um percurso, permitindo estimativas de densidade.",
     "recommended_uses": "Ambientes abertos, estudos de densidade, comparações entre habitats",
     "notes": null,
+    "can_delete": false,
     "method_id": 14
   },
   {
@@ -67,6 +73,7 @@
     "description": "Percurso linear com registro contínuo de todas as aves detectadas, sem delimitação de faixa.",
     "recommended_uses": "Inventários rápidos, monitoramento de comunidades, ambientes com boa visibilidade",
     "notes": null,
+    "can_delete": false,
     "method_id": 13
   },
   {
@@ -77,6 +84,7 @@
     "description": "Observador permanece em um ponto fixo por um período definido, registrando todas as aves vistas ou ouvidas.",
     "recommended_uses": "Monitoramento padronizado, comparação entre locais, estudos de abundância relativa",
     "notes": null,
+    "can_delete": false,
     "method_id": 3
   },
   {
@@ -87,6 +95,7 @@
     "description": "Observações realizadas dentro de uma área geográfica definida, com esforço padronizado de busca.",
     "recommended_uses": "Comparação entre áreas, monitoramento de longo prazo, estudos de uso de habitat",
     "notes": null,
+    "can_delete": false,
     "method_id": 11
   },
   {
@@ -97,6 +106,7 @@
     "description": "Busca intensiva em uma área delimitada, com objetivo de registrar todos os indivíduos presentes.",
     "recommended_uses": "Censos completos, monitoramento de espécies raras, ilhas, fragmentos pequenos, áreas isoladas",
     "notes": null,
+    "can_delete": false,
     "method_id": 4
   },
   {
@@ -107,6 +117,7 @@
     "description": "Identificação e contagem de aves a partir de imagens ou vídeos obtidos em campo ou remotamente.",
     "recommended_uses": "Ambientes de difícil acesso, grandes bandos, estudos de comportamento",
     "notes": null,
+    "can_delete": false,
     "method_id": 21
   },
   {
@@ -117,6 +128,7 @@
     "description": "Uso de sons gravados para atrair aves e facilitar detecção.",
     "recommended_uses": "Espécies crípticas ou territoriais, inventários em florestas, estudos de resposta comportamental",
     "notes": null,
+    "can_delete": false,
     "method_id": 18
   },
   {
@@ -127,6 +139,7 @@
     "description": "Registros antigos ou provenientes de fontes secundárias, sem esforço padronizado.",
     "recommended_uses": "Reconstrução histórica de distribuição, complemento de inventários, estudos de mudanças temporais",
     "notes": null,
+    "can_delete": false,
     "method_id": 6
   },
   {
@@ -137,6 +150,7 @@
     "description": "Registro livre de espécies sem esforço padronizado.",
     "recommended_uses": "Inventários iniciais, registros oportunísticos, complemento de amostragem",
     "notes": null,
+    "can_delete": false,
     "method_id": 27
   },
   {
@@ -147,6 +161,7 @@
     "description": "Registro de todas as espécies observadas em um intervalo de tempo fixo.",
     "recommended_uses": "Comparação entre áreas, monitoramento rápido, protocolos de esforço padronizado",
     "notes": null,
+    "can_delete": false,
     "method_id": 26
   },
   {
@@ -157,6 +172,7 @@
     "description": "Registros qualitativos divididos em blocos de tempo (ex.: 10 min).",
     "recommended_uses": "Monitoramento temporal, análise de atividade, comparação entre períodos",
     "notes": null,
+    "can_delete": false,
     "method_id": 8
   },
   {
@@ -167,6 +183,7 @@
     "description": "Listas sequenciais de tamanho fixo (ex.: 10 espécies), reiniciadas sempre que completadas.",
     "recommended_uses": "Inventários rápidos, comparação entre habitats, monitoramento de riqueza",
     "notes": null,
+    "can_delete": false,
     "method_id": 7
   },
   {
@@ -177,6 +194,7 @@
     "description": "Método de mapeamento espacial de indivíduos territoriais ao longo da estação reprodutiva.",
     "recommended_uses": "Estudos de densidade territorial, monitoramento de espécies residentes, áreas pequenas ou médias",
     "notes": null,
+    "can_delete": false,
     "method_id": 30
   },
   {
@@ -187,6 +205,7 @@
     "description": "Acompanhamento sistemático de ninhos ativos para registrar sucesso reprodutivo.",
     "recommended_uses": "Estudos de reprodução, monitoramento de espécies sensíveis, avaliação de impacto ambiental",
     "notes": null,
+    "can_delete": false,
     "method_id": 12
   },
   {
@@ -197,6 +216,7 @@
     "description": "Uso de gravadores autônomos para registrar vocalizações ao longo de longos períodos.",
     "recommended_uses": "Monitoramento contínuo, espécies noturnas ou discretas, ambientes remotos",
     "notes": null,
+    "can_delete": false,
     "method_id": 32
   },
   {
@@ -207,6 +227,7 @@
     "description": "Registro de vocalizações de aves migratórias durante a noite, geralmente com microfones direcionais.",
     "recommended_uses": "Monitoramento de migração, estudos de fenologia, identificação de rotas migratórias",
     "notes": null,
+    "can_delete": false,
     "method_id": 25
   },
   {
@@ -217,6 +238,7 @@
     "description": "Registros oportunísticos feitos sem protocolo definido.",
     "recommended_uses": "Complemento de listas, registros de espécies raras, monitoramento participativo",
     "notes": null,
+    "can_delete": false,
     "method_id": 5
   },
   {
@@ -227,6 +249,7 @@
     "description": "Uso de câmeras automáticas para registrar presença e comportamento de aves.",
     "recommended_uses": "Espécies terrestres, ambientes fechados, estudos de comportamento e presença",
     "notes": null,
+    "can_delete": false,
     "method_id": 22
   },
   {
@@ -237,6 +260,7 @@
     "description": "Pontos de contagem distribuídos ao longo de estradas ou vias, geralmente com deslocamento motorizado entre pontos.",
     "recommended_uses": "Monitoramentos de larga escala, aves de rapina e espécies de borda, protocolos de censos regionais",
     "notes": null,
+    "can_delete": false,
     "method_id": 31
   },
   {
@@ -247,6 +271,7 @@
     "description": "Ponto fixo com foco em detecção auditiva, geralmente com tempo padronizado e sem deslocamento.",
     "recommended_uses": "Ambientes fechados (florestas), espécies vocais, monitoramento de riqueza e abundância",
     "notes": null,
+    "can_delete": false,
     "method_id": 23
   },
   {
@@ -257,6 +282,7 @@
     "description": "Ponto fixo com registro de distâncias radiais ou perpendiculares para estimar detectabilidade.",
     "recommended_uses": "Distance Sampling, estudos de densidade, ambientes com boa percepção de distância",
     "notes": null,
+    "can_delete": false,
     "method_id": 19
   },
   {
@@ -267,6 +293,7 @@
     "description": "Ponto fixo registrando cada indivíduo ou grupo separadamente, incluindo informações como altura, direção de voo e comportamento.",
     "recommended_uses": "Estudos comportamentais, monitoramento de migração local, ambientes com alta atividade aérea",
     "notes": null,
+    "can_delete": false,
     "method_id": 29
   },
   {
@@ -277,6 +304,7 @@
     "description": "Contagens realizadas em mar aberto, geralmente com embarcação em movimento.",
     "recommended_uses": "Monitoramento de aves marinhas, estudos de distribuição oceânica, levantamentos de biodiversidade",
     "notes": null,
+    "can_delete": false,
     "method_id": 24
   },
   {
@@ -287,6 +315,7 @@
     "description": "Transecto com registro individualizado de cada detecção, incluindo altura, direção e comportamento.",
     "recommended_uses": "Estudos de comportamento, monitoramento de migração local, ambientes com alta atividade aérea",
     "notes": null,
+    "can_delete": false,
     "method_id": 28
   }
 ]
