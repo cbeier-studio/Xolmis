@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, LCLIntf, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
-  Buttons, IpHtml, StrUtils, atshapelinebgra, BCPanel;
+  Buttons, StrUtils, atshapelinebgra, BCPanel;
 
 type
 
@@ -33,19 +33,17 @@ type
     btnGenerateFiles: TButton;
     btnHelp: TBitBtn;
     iButtonsDark: TImageList;
+    icoImportFinished: TImage;
     iIcons: TImageList;
     iButtons: TImageList;
     iIconsDark: TImageList;
     imgFinishedDark: TImageList;
-    hvProgress: TIpHtmlPanel;
     lblGenerateFiles: TLabel;
-    pGenerateFiles: TBCPanel;
-    pRetry: TBCPanel;
-    imgFinished: TImageList;
-    icoImportFinished: TImage;
     lblSubtitleImportFinished: TLabel;
     lblTitleImportFinished: TLabel;
-    pContentProgress: TBCPanel;
+    mProgress: TMemo;
+    pGenerateFiles: TBCPanel;
+    imgFinished: TImageList;
     eCaptureFile: TFileNameEdit;
     eEffortFile: TFileNameEdit;
     eJournalFile: TFileNameEdit;
@@ -59,8 +57,6 @@ type
     lblTitleImportFiles: TLabel;
     lineBottom: TShapeLineBGRA;
     nbContent: TNotebook;
-    pContentFinished: TBCPanel;
-    pgImportFinished: TPage;
     pgImportProgress: TPage;
     pgImportFiles: TPage;
     pBottom: TPanel;
@@ -68,7 +64,6 @@ type
     pContentFiles: TPanel;
     pEffortFile: TBCPanel;
     pJournalFile: TBCPanel;
-    pProgress: TBCPanel;
     SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbClearEffortFile: TSpeedButton;
@@ -83,15 +78,12 @@ type
     procedure eEffortFileChange(Sender: TObject);
     procedure eJournalFileButtonClick(Sender: TObject);
     procedure eJournalFileChange(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearJournalFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
-    FProgressList: TStrings;
     procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
@@ -110,6 +102,14 @@ uses
 
 { TdlgImportCaptures }
 
+function HasImportFileSelected(const AFileName: String): Boolean;
+var
+  S: String;
+begin
+  S := Trim(AFileName);
+  Result := (S <> EmptyStr) and (S <> '.') and (S <> '..');
+end;
+
 procedure TdlgImportCaptures.ApplyDarkMode;
 begin
   eJournalFile.Images := iButtonsDark;
@@ -126,10 +126,6 @@ begin
   icoCaptureFile.Images := iIconsDark;
 
   icoImportFinished.Images := imgFinishedDark;
-
-  pProgress.Background.Color := clSolidBGSecondaryDark;
-  pProgress.Border.Color := clSystemSolidNeutralFGDark;
-  pProgress.Color := pContentProgress.Background.Color;
 
   pJournalFile.Background.Color := clSolidBGSecondaryDark;
   pJournalFile.Border.Color := clSystemSolidNeutralFGDark;
@@ -214,16 +210,6 @@ begin
   UpdateButtons;
 end;
 
-procedure TdlgImportCaptures.FormCreate(Sender: TObject);
-begin
-  FProgressList := TStringList.Create;
-end;
-
-procedure TdlgImportCaptures.FormDestroy(Sender: TObject);
-begin
-  FProgressList.Free;
-end;
-
 procedure TdlgImportCaptures.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
@@ -268,8 +254,14 @@ procedure TdlgImportCaptures.sbRunClick(Sender: TObject);
 begin
   { #todo : Validate fields }
 
+  sbRetry.Visible := False;
+  barProgress.Visible := True;
+  icoImportFinished.ImageIndex := 2;
+  lblTitleImportFinished.Caption := rsImportingFiles;
+  lblSubtitleImportFinished.Caption := rsPleaseWaitWhileImporting;
+
   stopProcess := False;
-  FProgressList.Clear;
+  mProgress.Lines.Clear;
 
   nbContent.PageIndex := 1;
 
@@ -277,30 +269,43 @@ begin
   sbClose.Visible := False;
   sbRun.Visible := False;
 
-  FProgressList.Add(rsProgressImportBandingJournal);
-  hvProgress.SetHtmlFromStr(FProgressList.Text);
-  ImportBandingJournalV1(eJournalFile.FileName, barProgress);
-
-  if not stopProcess then
-  begin
-    FProgressList.Add(rsProgressImportBandingEffort);
-    hvProgress.SetHtmlFromStr(FProgressList.Text);
-    ImportBandingEffortV1(eEffortFile.FileName, barProgress);
-
-    if not stopProcess then
+  try
+    if (not stopProcess) and HasImportFileSelected(eJournalFile.FileName) then
     begin
-      FProgressList.Add(rsProgressImportCaptures);
-      hvProgress.SetHtmlFromStr(FProgressList.Text);
+      mProgress.Lines.Add(rsProgressImportBandingJournal);
+      ImportBandingJournalV1(eJournalFile.FileName, barProgress);
+    end;
+
+    if (not stopProcess) and HasImportFileSelected(eEffortFile.FileName) then
+    begin
+      mProgress.Lines.Add(rsProgressImportBandingEffort);
+      ImportBandingEffortV1(eEffortFile.FileName, barProgress);
+    end;
+
+    if (not stopProcess) and HasImportFileSelected(eCaptureFile.FileName) then
+    begin
+      mProgress.Lines.Add(rsProgressImportCaptures);
       ImportBandingDataV1(eCaptureFile.FileName, barProgress);
+    end;
+  except
+    on E: Exception do
+    begin
+      mProgress.Lines.Add('Error: ' + E.Message);
+      lblTitleImportFinished.Caption := rsImportCanceled;
+      lblSubtitleImportFinished.Caption := rsImportCanceledByError;
+      icoImportFinished.ImageIndex := 1;
+      sbRetry.Visible := True;
+      barProgress.Visible := False;
     end;
   end;
 
-  nbContent.PageIndex := 2;
   if stopProcess then
   begin
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
+    sbRetry.Visible := True;
+    barProgress.Visible := False;
   end
   else
   begin
@@ -308,15 +313,17 @@ begin
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
+    sbRetry.Visible := True;
+    barProgress.Visible := False;
   end;
 
 end;
 
 procedure TdlgImportCaptures.UpdateButtons;
 begin
-  sbRun.Enabled := not IsEmptyStr(eJournalFile.FileName, [' ', '.']) or
-                   not IsEmptyStr(eEffortFile.FileName, [' ', '.']) or
-                   not IsEmptyStr(eCaptureFile.FileName, [' ', '.']);
+  sbRun.Enabled := HasImportFileSelected(eJournalFile.FileName) or
+                   HasImportFileSelected(eEffortFile.FileName) or
+                   HasImportFileSelected(eCaptureFile.FileName);
 end;
 
 end.

@@ -20,8 +20,8 @@
 {"hash":202137918,"name":"tdlgimportnests.lblsubtitleimportfiles.caption","sourcebytes":[83,101,108,101,99,116,32,97,116,32,108,101,97,115,116,32,111,110,101,32,102,105,108,101,32,116,111,32,115,116,97,114,116,32,105,109,112,111,114,116,105,110,103,46],"value":"Select at least one file to start importing."},
 {"hash":46643953,"name":"tdlgimportnests.lblgeneratefiles.caption","sourcebytes":[71,101,110,101,114,97,116,101,32,101,109,112,116,121,32,102,105,108,101,115,32,116,111,32,102,105,108,108,32,116,104,101,32,100,97,116,97],"value":"Generate empty files to fill the data"},
 {"hash":186683059,"name":"tdlgimportnests.btngeneratefiles.caption","sourcebytes":[71,101,110,101,114,97,116,101,32,102,105,108,101,115],"value":"Generate files"},
-{"hash":16714049,"name":"tdlgimportnests.lbltitleimportfinished.caption","sourcebytes":[70,105,110,105,115,104,101,100,32,105,109,112,111,114,116,105,110,103,33],"value":"Finished importing!"},
-{"hash":108267038,"name":"tdlgimportnests.lblsubtitleimportfinished.caption","sourcebytes":[84,104,101,32,115,101,108,101,99,116,101,100,32,102,105,108,101,40,115,41,32,119,101,114,101,32,115,117,99,101,115,115,102,117,108,108,121,32,105,109,112,111,114,116,101,100,46],"value":"The selected file(s) were sucessfully imported."},
+{"hash":2933118,"name":"tdlgimportnests.lbltitleimportfinished.caption","sourcebytes":[73,109,112,111,114,116,105,110,103,32,102,105,108,101,115,46,46,46],"value":"Importing files..."},
+{"hash":126010590,"name":"tdlgimportnests.lblsubtitleimportfinished.caption","sourcebytes":[80,108,101,97,115,101,32,119,97,105,116,32,119,104,105,108,101,32,116,104,101,32,115,101,108,101,99,116,101,100,32,102,105,108,101,115,32,97,114,101,32,98,101,105,110,103,32,105,109,112,111,114,116,101,100,46],"value":"Please wait while the selected files are being imported."},
 {"hash":191335534,"name":"tdlgimportnests.sbretry.caption","sourcebytes":[84,114,121,32,97,103,97,105,110],"value":"Try again"},
 {"hash":149677187,"name":"tdlgimportnests.savedlg.title","sourcebytes":[71,101,110,101,114,97,116,101,32,102,105,108,101,115,32,97,115],"value":"Generate files as"}
 ]}

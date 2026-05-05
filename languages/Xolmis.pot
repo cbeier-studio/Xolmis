@@ -5226,19 +5226,9 @@ msgctxt "tdlgimportnests.lblsubtitleimportfiles.caption"
 msgid "Select at least one file to start importing."
 msgstr ""
 
-#: tdlgimportnests.lblsubtitleimportfinished.caption
-msgctxt "tdlgimportnests.lblsubtitleimportfinished.caption"
-msgid "The selected file(s) were sucessfully imported."
-msgstr ""
-
 #: tdlgimportnests.lbltitleimportfiles.caption
 msgctxt "tdlgimportnests.lbltitleimportfiles.caption"
 msgid "Files to import"
-msgstr ""
-
-#: tdlgimportnests.lbltitleimportfinished.caption
-msgctxt "tdlgimportnests.lbltitleimportfinished.caption"
-msgid "Finished importing!"
 msgstr ""
 
 #: tdlgimportnests.savedlg.title
@@ -16262,6 +16252,10 @@ msgctxt "utils_locale.rsimportcanceled"
 msgid "Import canceled!"
 msgstr ""
 
+#: utils_locale.rsimportcanceledbyerror
+msgid "An error occurred and the import was canceled."
+msgstr ""
+
 #: utils_locale.rsimportcanceledbyuser
 msgctxt "utils_locale.rsimportcanceledbyuser"
 msgid "Import canceled by the user."
@@ -16289,6 +16283,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsimportingfile"
 msgid "Importing file %s"
+msgstr ""
+
+#: utils_locale.rsimportingfiles
+msgctxt "utils_locale.rsimportingfiles"
+msgid "Importing files..."
 msgstr ""
 
 #: utils_locale.rsimportstrategyappend
@@ -17577,6 +17576,10 @@ msgstr ""
 #: utils_locale.rsplantminergenusspeciesonly
 msgctxt "utils_locale.rsplantminergenusspeciesonly"
 msgid "Plantminer query works only for Genera and Species."
+msgstr ""
+
+#: utils_locale.rspleasewaitwhileimporting
+msgid "Please wait while importing the selected files."
 msgstr ""
 
 #: utils_locale.rsplumages

@@ -5205,20 +5205,10 @@ msgctxt "tdlgimportnests.lblsubtitleimportfiles.caption"
 msgid "Select at least one file to start importing."
 msgstr "Selecione ao menos um arquivo para iniciar a importação."
 
-#: tdlgimportnests.lblsubtitleimportfinished.caption
-msgctxt "tdlgimportnests.lblsubtitleimportfinished.caption"
-msgid "The selected file(s) were sucessfully imported."
-msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
-
 #: tdlgimportnests.lbltitleimportfiles.caption
 msgctxt "tdlgimportnests.lbltitleimportfiles.caption"
 msgid "Files to import"
 msgstr "Arquivos a importar"
-
-#: tdlgimportnests.lbltitleimportfinished.caption
-msgctxt "tdlgimportnests.lbltitleimportfinished.caption"
-msgid "Finished importing!"
-msgstr "Importação finalizada!"
 
 #: tdlgimportnests.savedlg.title
 msgctxt "tdlgimportnests.savedlg.title"
@@ -16247,6 +16237,10 @@ msgctxt "utils_locale.rsimportcanceled"
 msgid "Import canceled!"
 msgstr "Importação cancelada!"
 
+#: utils_locale.rsimportcanceledbyerror
+msgid "An error occurred and the import was canceled."
+msgstr "Um erro ocorreu e a importação foi cancelada."
+
 #: utils_locale.rsimportcanceledbyuser
 msgctxt "utils_locale.rsimportcanceledbyuser"
 msgid "Import canceled by the user."
@@ -16275,6 +16269,10 @@ msgstr "Importar imagens"
 msgctxt "utils_locale.rsimportingfile"
 msgid "Importing file %s"
 msgstr "Importando arquivo %s"
+
+#: utils_locale.rsimportingfiles
+msgid "Importing files..."
+msgstr "Importando arquivos..."
 
 #: utils_locale.rsimportstrategyappend
 msgctxt "utils_locale.rsimportstrategyappend"
@@ -17721,6 +17719,10 @@ msgstr "Fotografado"
 msgctxt "utils_locale.rsplantminergenusspeciesonly"
 msgid "Plantminer query works only for Genera and Species."
 msgstr "A pesquisa no Plantminer funciona somente para Gêneros e Espécies."
+
+#: utils_locale.rspleasewaitwhileimporting
+msgid "Please wait while importing the selected files."
+msgstr "Por favor aguarde enquanto os arquivos selecionados são importados."
 
 #: utils_locale.rsplumages
 msgctxt "utils_locale.rsplumages"

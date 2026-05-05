@@ -319,8 +319,11 @@ uses
     rsImportDocsTitle = 'Import documents';
     rsImportCanceled = 'Import canceled!';
     rsImportCanceledByUser = 'Import canceled by the user.';
+    rsImportCanceledByError = 'An error occurred and the import was canceled.';
     rsBatchCanceledByUser = 'Operation was canceled by user.';
     rsImportingFile = 'Importing file %s';
+    rsImportingFiles = 'Importing files...';
+    rsPleaseWaitWhileImporting = 'Please wait while importing the selected files.';
     rsModuleDoesNotSupportAttachments = 'This module does not support file attachments.';
     rsModuleDoesNotSupportSomeFilesBeingAttached = 'This module does not support some files being attached.';
 

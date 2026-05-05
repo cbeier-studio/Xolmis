@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, LCLIntf, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
-  Buttons, IpHtml, StrUtils, atshapelinebgra, BCPanel;
+  Buttons, StrUtils, atshapelinebgra, BCPanel;
 
 type
 
@@ -34,18 +34,16 @@ type
     btnHelp: TBitBtn;
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    icoImportFinished: TImage;
     iIcons: TImageList;
     iIconsDark: TImageList;
     imgFinishedDark: TImageList;
-    hvProgress: TIpHtmlPanel;
     lblGenerateFiles: TLabel;
-    pGenerateFiles: TBCPanel;
-    pRetry: TBCPanel;
-    imgFinished: TImageList;
-    icoImportFinished: TImage;
     lblSubtitleImportFinished: TLabel;
     lblTitleImportFinished: TLabel;
-    pContentProgress: TBCPanel;
+    mProgress: TMemo;
+    pGenerateFiles: TBCPanel;
+    imgFinished: TImageList;
     eEggFile: TFileNameEdit;
     eRevisionFile: TFileNameEdit;
     eNestFile: TFileNameEdit;
@@ -59,8 +57,6 @@ type
     lblTitleImportFiles: TLabel;
     lineBottom: TShapeLineBGRA;
     nbContent: TNotebook;
-    pContentFinished: TBCPanel;
-    pgImportFinished: TPage;
     pgImportProgress: TPage;
     pgImportFiles: TPage;
     pBottom: TPanel;
@@ -68,7 +64,6 @@ type
     pContentFiles: TPanel;
     pRevisionFile: TBCPanel;
     pNestFile: TBCPanel;
-    pProgress: TBCPanel;
     SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbClearRevisionFile: TSpeedButton;
@@ -83,15 +78,12 @@ type
     procedure eRevisionFileChange(Sender: TObject);
     procedure eNestFileButtonClick(Sender: TObject);
     procedure eNestFileChange(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearNestFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
-    FProgressList: TStrings;
     procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
@@ -110,6 +102,14 @@ uses
 
 { TdlgImportNests }
 
+function HasImportFileSelected(const AFileName: String): Boolean;
+var
+  S: String;
+begin
+  S := Trim(AFileName);
+  Result := (S <> EmptyStr) and (S <> '.') and (S <> '..');
+end;
+
 procedure TdlgImportNests.ApplyDarkMode;
 begin
   eNestFile.Images := iButtonsDark;
@@ -127,18 +127,15 @@ begin
 
   icoImportFinished.Images := imgFinishedDark;
 
-  pProgress.Background.Color := clSolidBGSecondaryDark;
-  pProgress.Border.Color := clSystemSolidNeutralFGDark;
-  pProgress.Color := pContentProgress.Background.Color;
-
   pNestFile.Background.Color := clSolidBGSecondaryDark;
   pNestFile.Border.Color := clSystemSolidNeutralFGDark;
   pRevisionFile.Background.Color := clSolidBGSecondaryDark;
   pRevisionFile.Border.Color := clSystemSolidNeutralFGDark;
   pEggFile.Background.Color := clSolidBGSecondaryDark;
   pEggFile.Border.Color := clSystemSolidNeutralFGDark;
-  pGenerateFiles.Background.Color := clSolidBGSecondaryDark;
-  pGenerateFiles.Border.Color := clSystemSolidNeutralFGDark;
+
+  pGenerateFiles.Background.Color := clSystemCautionBGDark;
+  pGenerateFiles.Border.Color := clSystemCautionFGDark;
 
   lblTitleImportFiles.Font.Color := clVioletFG1Dark;
   lblTitleImportFinished.Font.Color := clVioletFG1Dark;
@@ -207,16 +204,6 @@ begin
   UpdateButtons;
 end;
 
-procedure TdlgImportNests.FormCreate(Sender: TObject);
-begin
-  FProgressList := TStringList.Create;
-end;
-
-procedure TdlgImportNests.FormDestroy(Sender: TObject);
-begin
-  FProgressList.Free;
-end;
-
 procedure TdlgImportNests.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
@@ -261,8 +248,14 @@ procedure TdlgImportNests.sbRunClick(Sender: TObject);
 begin
   { #todo : Validate fields }
 
+  sbRetry.Visible := False;
+  barProgress.Visible := True;
+  icoImportFinished.ImageIndex := 2;
+  lblTitleImportFinished.Caption := rsImportingFiles;
+  lblSubtitleImportFinished.Caption := rsPleaseWaitWhileImporting;
+
   stopProcess := False;
-  FProgressList.Clear;
+  mProgress.Lines.Clear;
 
   nbContent.PageIndex := 1;
 
@@ -270,30 +263,43 @@ begin
   sbClose.Visible := False;
   sbRun.Visible := False;
 
-  FProgressList.Add(rsProgressImportBandingJournal);
-  hvProgress.SetHtmlFromStr(FProgressList.Text);
-  ImportNestDataV1(eNestFile.FileName, barProgress);
-
-  if not stopProcess then
-  begin
-    FProgressList.Add(rsProgressImportBandingEffort);
-    hvProgress.SetHtmlFromStr(FProgressList.Text);
-    ImportNestRevisionsV1(eRevisionFile.FileName, barProgress);
-
-    if not stopProcess then
+  try
+    if (not stopProcess) and HasImportFileSelected(eNestFile.FileName) then
     begin
-      FProgressList.Add(rsProgressImportCaptures);
-      hvProgress.SetHtmlFromStr(FProgressList.Text);
+      mProgress.Lines.Add(rsProgressImportBandingJournal);
+      ImportNestDataV1(eNestFile.FileName, barProgress);
+    end;
+
+    if (not stopProcess) and HasImportFileSelected(eRevisionFile.FileName) then
+    begin
+      mProgress.Lines.Add(rsProgressImportBandingEffort);
+      ImportNestRevisionsV1(eRevisionFile.FileName, barProgress);
+    end;
+
+    if (not stopProcess) and HasImportFileSelected(eEggFile.FileName) then
+    begin
+      mProgress.Lines.Add(rsProgressImportCaptures);
       ImportEggDataV1(eEggFile.FileName, barProgress);
+    end;
+  except
+    on E: Exception do
+    begin
+      mProgress.Lines.Add('Error: ' + E.Message);
+      lblTitleImportFinished.Caption := rsImportCanceled;
+      lblSubtitleImportFinished.Caption := rsImportCanceledByError;
+      icoImportFinished.ImageIndex := 1;
+      sbRetry.Visible := True;
+      barProgress.Visible := False;
     end;
   end;
 
-  nbContent.PageIndex := 2;
   if stopProcess then
   begin
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
+    sbRetry.Visible := True;
+    barProgress.Visible := False;
   end
   else
   begin
@@ -301,15 +307,17 @@ begin
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
+    sbRetry.Visible := True;
+    barProgress.Visible := False;
   end;
 
 end;
 
 procedure TdlgImportNests.UpdateButtons;
 begin
-  sbRun.Enabled := not IsEmptyStr(eNestFile.FileName, [' ', '.']) or
-                   not IsEmptyStr(eRevisionFile.FileName, [' ', '.']) or
-                   not IsEmptyStr(eEggFile.FileName, [' ', '.']);
+  sbRun.Enabled := HasImportFileSelected(eNestFile.FileName) or
+                   HasImportFileSelected(eRevisionFile.FileName) or
+                   HasImportFileSelected(eEggFile.FileName);
 end;
 
 end.
