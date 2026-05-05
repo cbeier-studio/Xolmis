@@ -21,7 +21,7 @@ unit io_json;
 interface
 
 uses
-  Classes, SysUtils, fpjson, jsonparser, jsonreader, LConvEncoding, Math, streamex, io_core;
+  Classes, SysUtils, fgl, fpjson, jsonparser, jsonreader, LConvEncoding, Math, streamex, io_core;
 
 type
 
@@ -45,6 +45,32 @@ type
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
     function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
     procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
+  end;
+
+  { TXolmisJSONExporter }
+
+  TXolmisJSONExporter = class(TExporter)
+  private
+    FRows: specialize TFPGObjectList<TXRow>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure AddRow(Row: TXRow);
+    function CanHandleExtension(const Ext: string): Boolean; override;
+    procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); override;
+  end;
+
+  { TXolmisNDJSONExporter }
+
+  TXolmisNDJSONExporter = class(TExporter)
+  private
+    FRows: specialize TFPGObjectList<TXRow>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure AddRow(Row: TXRow);
+    function CanHandleExtension(const Ext: string): Boolean; override;
+    procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); override;
   end;
 
 implementation
@@ -609,9 +635,236 @@ begin
     Exit(0);
 end;
 
+{ Helper }
+
+function BuildJSONObject(Row: TXRow; const Options: TExportOptions;
+  FieldList: TStringList): TJSONObject;
+var
+  j: Integer;
+  Key, Value: String;
+  BoolValue: Boolean;
+
+  function TryParseJSONBoolean(const S: String; out B: Boolean): Boolean;
+  var
+    V: String;
+  begin
+    V := Trim(S);
+    if SameText(V, 'true') then
+    begin
+      B := True;
+      Exit(True);
+    end;
+    if SameText(V, 'false') then
+    begin
+      B := False;
+      Exit(True);
+    end;
+    Result := False;
+  end;
+begin
+  Result := TJSONObject.Create;
+  for j := 0 to Row.Count - 1 do
+  begin
+    Key   := Row.Names[j];
+    Value := Row.ValueFromIndex[j];
+
+    if Assigned(FieldList) and (FieldList.IndexOf(Key) < 0) then
+      Continue;
+
+    if Options.IgnoreNulls and (Value = '') then
+      Continue;
+
+    if Options.TrimFields then
+      Value := Trim(Value);
+
+    if TryParseJSONBoolean(Value, BoolValue) then
+      Result.Add(Key, BoolValue)
+    else
+      Result.Add(Key, Value);
+  end;
+end;
+
+procedure WriteStringToStream(Stream: TStream; const S: String;
+  const Encoding: String);
+var
+  Encoded: String;
+begin
+  if S = '' then
+    Exit;
+
+  if (Encoding <> '') and not SameText(Encoding, 'utf-8') then
+    Encoded := ConvertEncoding(S, 'utf-8', Encoding)
+  else
+    Encoded := S;
+
+  Stream.WriteBuffer(Encoded[1], Length(Encoded));
+end;
+
+{ TXolmisJSONExporter }
+
+constructor TXolmisJSONExporter.Create;
+begin
+  inherited Create;
+  FRows := specialize TFPGObjectList<TXRow>.Create(True);
+end;
+
+destructor TXolmisJSONExporter.Destroy;
+begin
+  FRows.Free;
+  inherited Destroy;
+end;
+
+procedure TXolmisJSONExporter.AddRow(Row: TXRow);
+begin
+  FRows.Add(Row);
+end;
+
+function TXolmisJSONExporter.CanHandleExtension(const Ext: string): Boolean;
+begin
+  Result := SameText(Ext, 'json');
+end;
+
+procedure TXolmisJSONExporter.Export(Stream: TStream; const Options: TExportOptions;
+  RowOut: TXRowConsumer);
+var
+  FieldList: TStringList;
+  Arr: TJSONArray;
+  WrapObj: TJSONObject;
+  Obj: TJSONObject;
+  Row: TXRow;
+  i: Integer;
+  JsonStr: String;
+begin
+  LogEvent(leaStart, 'Export JSON file');
+
+  FieldList := nil;
+  if Options.ExportFields <> '' then
+  begin
+    FieldList := TStringList.Create;
+    FieldList.CommaText := Options.ExportFields;
+  end;
+
+  Arr := TJSONArray.Create;
+  WrapObj := nil;
+  try
+    for i := 0 to FRows.Count - 1 do
+    begin
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Row := FRows[i];
+      Obj := BuildJSONObject(Row, Options, FieldList);
+      Arr.Add(Obj);
+
+      if Assigned(RowOut) then
+        RowOut(Row);
+
+      if Assigned(Options.OnProgress) then
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando JSON');
+    end;
+
+    if Options.RootNodeName <> '' then
+    begin
+      WrapObj := TJSONObject.Create;
+      WrapObj.Add(Options.RootNodeName, Arr);
+      Arr := nil; // agora é de propriedade de WrapObj
+
+      if Options.Indentation > 0 then
+        JsonStr := WrapObj.FormatJSON
+      else
+        JsonStr := WrapObj.AsJSON;
+    end
+    else
+    begin
+      if Options.Indentation > 0 then
+        JsonStr := Arr.FormatJSON
+      else
+        JsonStr := Arr.AsJSON;
+    end;
+
+    WriteStringToStream(Stream, JsonStr, Options.Encoding);
+  finally
+    WrapObj.Free;
+    Arr.Free; // no-op quando Arr = nil
+    FieldList.Free;
+    LogEvent(leaFinish, 'Export JSON file');
+  end;
+end;
+
+{ TXolmisNDJSONExporter }
+
+constructor TXolmisNDJSONExporter.Create;
+begin
+  inherited Create;
+  FRows := specialize TFPGObjectList<TXRow>.Create(True);
+end;
+
+destructor TXolmisNDJSONExporter.Destroy;
+begin
+  FRows.Free;
+  inherited Destroy;
+end;
+
+procedure TXolmisNDJSONExporter.AddRow(Row: TXRow);
+begin
+  FRows.Add(Row);
+end;
+
+function TXolmisNDJSONExporter.CanHandleExtension(const Ext: string): Boolean;
+begin
+  Result := SameText(Ext, 'ndjson');
+end;
+
+procedure TXolmisNDJSONExporter.Export(Stream: TStream; const Options: TExportOptions;
+  RowOut: TXRowConsumer);
+var
+  FieldList: TStringList;
+  Obj: TJSONObject;
+  Row: TXRow;
+  i: Integer;
+  Line: String;
+begin
+  LogEvent(leaStart, 'Export NDJSON file');
+
+  FieldList := nil;
+  if Options.ExportFields <> '' then
+  begin
+    FieldList := TStringList.Create;
+    FieldList.CommaText := Options.ExportFields;
+  end;
+
+  try
+    for i := 0 to FRows.Count - 1 do
+    begin
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Row := FRows[i];
+      Obj := BuildJSONObject(Row, Options, FieldList);
+      try
+        Line := Obj.AsJSON + LineEnding;
+        WriteStringToStream(Stream, Line, Options.Encoding);
+      finally
+        Obj.Free;
+      end;
+
+      if Assigned(RowOut) then
+        RowOut(Row);
+
+      if Assigned(Options.OnProgress) then
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando NDJSON');
+    end;
+  finally
+    FieldList.Free;
+    LogEvent(leaFinish, 'Export NDJSON file');
+  end;
+end;
+
 initialization
   TImporterRegistry.RegisterImporter('json', TJSONImporter);
   TImporterRegistry.RegisterImporter('ndjson', TNDJSONImporter);
+  TExporterRegistry.RegisterExporter('json', TXolmisJSONExporter);
+  TExporterRegistry.RegisterExporter('ndjson', TXolmisNDJSONExporter);
 
 end.
 

@@ -130,7 +130,7 @@ var
 implementation
 
 uses
-  utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams;
+  utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams, io_json;
 
 {$R *.lfm}
 
@@ -216,8 +216,8 @@ begin
       //pEncoding.Visible := True;
       pTranslateFieldNames.Visible := True;
       //pTrimValues.Visible := True;
-      //pForceNDJSON.Visible := False;
-      //pIgnoreNulls.Visible := False;
+      pForceNDJSON.Visible := False;
+      pIgnoreNulls.Visible := False;
       //pIncludeChildRecords.Visible := False;
       pIndentation.Visible := False;
       pHaveHeader.Visible := True;
@@ -237,8 +237,8 @@ begin
       //pEncoding.Visible := True;
       pTranslateFieldNames.Visible := False;
       //pTrimValues.Visible := True;
-      //pForceNDJSON.Visible := True;
-      //pIgnoreNulls.Visible := True;
+      pForceNDJSON.Visible := True;
+      pIgnoreNulls.Visible := True;
       //pIncludeChildRecords.Visible := True;
       pIndentation.Visible := True;
       pHaveHeader.Visible := False;
@@ -258,8 +258,8 @@ begin
       //pEncoding.Visible := True;
       pTranslateFieldNames.Visible := True;
       //pTrimValues.Visible := True;
-      //pForceNDJSON.Visible := False;
-      //pIgnoreNulls.Visible := False;
+      pForceNDJSON.Visible := False;
+      pIgnoreNulls.Visible := False;
       //pIncludeChildRecords.Visible := False;
       pIndentation.Visible := False;
       pHaveHeader.Visible := True;
@@ -279,8 +279,8 @@ begin
       //pEncoding.Visible := True;
       pTranslateFieldNames.Visible := True;
       //pTrimValues.Visible := True;
-      //pForceNDJSON.Visible := False;
-      //pIgnoreNulls.Visible := False;
+      pForceNDJSON.Visible := False;
+      pIgnoreNulls.Visible := False;
       //pIncludeChildRecords.Visible := False;
       pIndentation.Visible := False;
       pHaveHeader.Visible := True;
@@ -300,8 +300,8 @@ begin
       //pEncoding.Visible := True;
       pTranslateFieldNames.Visible := False;
       //pTrimValues.Visible := True;
-      //pForceNDJSON.Visible := False;
-      //pIgnoreNulls.Visible := True;
+      pForceNDJSON.Visible := False;
+      pIgnoreNulls.Visible := True;
       //pIncludeChildRecords.Visible := True;
       pIndentation.Visible := True;
       pHaveHeader.Visible := False;
@@ -359,31 +359,67 @@ end;
 
 procedure TdlgExport.ExportToJSON;
 var
+  JSONExp: TXolmisJSONExporter;
+  NDJSONExp: TXolmisNDJSONExporter;
+  FS: TFileStream;
+  Row: TXRow;
   i: Integer;
-  expField: TExportFieldItem;
+  BM: TBookMark;
 begin
-  DMM.JSONExport.FileName := FFileName;
-  DMM.JSONExport.Dataset := FDataSet;
-  DMM.JSONExport.ExportFields.Clear;
-  // Set format settings
-  DMM.JSONExport.FormatSettings.IndentSize := FExportSettings.Indentation;
-  DMM.JSONExport.FormatSettings.RowElementName := FExportSettings.RootNodeName;
-  DMM.JSONExport.FormatSettings.DecimalSeparator := FExportSettings.DecimalSeparator;
-  //DMM.JSONExport.FormatSettings.DateFormat := FExportSettings.DateFormat;
-  //DMM.JSONExport.FormatSettings.TimeFormat := FExportSettings.TimeFormat;
-  //DMM.JSONExport.FormatSettings.DateTimeFormat := FExportSettings.DateFormat + ' ' + FExportSettings.TimeFormat;
-  // Set columns to export
-  for i := 0 to cklbColumns.Count - 1 do
-    if cklbColumns.Checked[i] then
-    begin
-      expField := DMM.JSONExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-      //expField.ExportedName := cklbColumns.Items[i];
-    end;
+  // Build ExportFields from checked columns
+  with TStringList.Create do
+  try
+    for i := 0 to cklbColumns.Count - 1 do
+      if cklbColumns.Checked[i] then
+        Add(FDataSet.Fields[i].FieldName);
+    FExportSettings.ExportFields := CommaText;
+  finally
+    Free;
+  end;
 
-  if DMM.JSONExport.Execute > 0 then
-    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-  else
-    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+  JSONExp   := nil;
+  NDJSONExp := nil;
+  FS        := nil;
+  BM := FDataSet.GetBookmark;
+  FDataSet.DisableControls;
+  try
+    try
+      if FExportSettings.ForceNDJSON then
+        NDJSONExp := TXolmisNDJSONExporter.Create
+      else
+        JSONExp := TXolmisJSONExporter.Create;
+
+      FDataSet.First;
+      while not FDataSet.EOF do
+      begin
+        Row := TXRow.Create;
+        for i := 0 to FDataSet.FieldCount - 1 do
+          Row.Values[FDataSet.Fields[i].FieldName] := FDataSet.Fields[i].AsString;
+        if Assigned(JSONExp) then
+          JSONExp.AddRow(Row)
+        else
+          NDJSONExp.AddRow(Row);
+        FDataSet.Next;
+      end;
+
+      FS := TFileStream.Create(FFileName, fmCreate);
+      if Assigned(JSONExp) then
+        JSONExp.Export(FS, FExportSettings, nil)
+      else
+        NDJSONExp.Export(FS, FExportSettings, nil);
+
+      MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation);
+    except
+      on E: Exception do
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+    end;
+  finally
+    FS.Free;
+    JSONExp.Free;
+    NDJSONExp.Free;
+    FDataSet.GotoBookmark(BM);
+    FDataSet.EnableControls;
+  end;
 end;
 
 procedure TdlgExport.ExportToODS;
@@ -552,8 +588,16 @@ begin
 
   // Open save dialog
   SaveDlg.InitialDir := xSettings.LastPathUsed;
-  SaveDlg.DefaultExt := EXPORT_FILE_EXTENSIONS[cbFiletype.ItemIndex];
-  SaveDlg.Filter := EXPORT_FILE_FILTERS[cbFiletype.ItemIndex];
+  if (cbFileType.ItemIndex = 1) and (FExportSettings.ForceNDJSON) then
+  begin
+    SaveDlg.DefaultExt := EXPORT_FILE_EXTENSIONS[5];
+    SaveDlg.Filter := EXPORT_FILE_FILTERS[5];
+  end
+  else
+  begin
+    SaveDlg.DefaultExt := EXPORT_FILE_EXTENSIONS[cbFiletype.ItemIndex];
+    SaveDlg.Filter := EXPORT_FILE_FILTERS[cbFiletype.ItemIndex];
+  end;
   if SaveDlg.Execute then
     FFileName := SaveDlg.FileName
   else

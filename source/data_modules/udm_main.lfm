@@ -8044,25 +8044,6 @@ object DMM: TDMM
     Left = 952
     Top = 112
   end
-  object JSONExport: TSimpleJSONExporter
-    ExportFields = <>
-    FromCurrent = False
-    RestorePosition = True
-    FormatSettings.IntegerFormat = '%d'
-    FormatSettings.DecimalSeparator = '.'
-    FormatSettings.CurrencyDigits = 0
-    FormatSettings.BooleanTrue = '1'
-    FormatSettings.BooleanFalse = '0'
-    FormatSettings.DateFormat = 'dd/MM/yyyy'
-    FormatSettings.TimeFormat = 'hh:nn'
-    FormatSettings.DateTimeFormat = 'dd/MM/yyyy hh:nn:ss'
-    FormatSettings.RowElementName = 'records'
-    FormatSettings.RowFormat = rfArray
-    FormatSettings.ColumnFormat = cfObject
-    FormatSettings.IndentSize = 2
-    Left = 952
-    Top = 173
-  end
   object FPSExport: TFPSExport
     ExportFields = <>
     FormatSettings.IntegerFormat = '%d'

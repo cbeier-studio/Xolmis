@@ -76,7 +76,6 @@ type
     qUsersallow_print: TBooleanField;
     qUsersuuid: TStringField;
     scriptUserDBInit: TSQLScript;
-    JSONExport: TSimpleJSONExporter;
     tabGeoBank1altitude: TFloatField;
     tabGeoBank1latitude: TFloatField;
     tabGeoBank1longitude: TFloatField;

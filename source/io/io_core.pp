@@ -223,8 +223,7 @@ type
   TExporter = class abstract
   public
     function CanHandleExtension(const Ext: string): Boolean; virtual; abstract;
-    procedure Export(Stream: TStream; const Options: TExportOptions; Rows: TStream); virtual; abstract;
-    // Tip: in real code pass an iterator or callback of rows instead of a TStream
+    procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); virtual; abstract;
   end;
 
   TImporterClass = class of TImporter;
@@ -259,10 +258,11 @@ type
   end;
 
 const
-  EXPORT_FILE_EXTENSIONS: array of String = ('.csv','.json','.ods','.xlsx','.xml');
+  EXPORT_FILE_EXTENSIONS: array of String = ('.csv','.json','.ods','.xlsx','.xml','.ndjson');
   EXPORT_FILE_FILTERS: array of String = ('Comma Separated Values (CSV)|*.csv',
     'JavaScript Object Notation (JSON)|*.json', 'Open Document Spreadsheet|*.ods',
-    'Microsoft Excel|*.xlsx', 'Extensible Markup Language (XML)|*.xml');
+    'Microsoft Excel|*.xlsx', 'Extensible Markup Language (XML)|*.xml',
+    'Newline Delimited JSON (NDJSON)|*.ndjson');
   VALUE_TRANSFORMATIONS: array of String = ('Trim', 'LowerCase', 'UpperCase', 'SentenceCase', 'TitleCase',
     'Boolean', 'RemoveAccents', 'NormalizeWhitespace', 'ReplaceChars', 'Scale', 'Round', 'ExtractYear',
     'ExtractMonth', 'ExtractDay', 'ConvertCoordinates', 'SplitCoordinates');
@@ -976,8 +976,10 @@ end;
 
 class constructor TImporterRegistry.Create;
 begin
-  FByExt := specialize TFPGMap<string, TImporterClass>.Create;
-  FAll := specialize TFPGList<TImporterClass>.Create;
+  if not Assigned(FByExt) then
+    FByExt := specialize TFPGMap<string, TImporterClass>.Create;
+  if not Assigned(FAll) then
+    FAll := specialize TFPGList<TImporterClass>.Create;
 end;
 
 class function TImporterRegistry.BestProbe(const FileName: string; Stream: TStream): TImporterClass;
@@ -985,6 +987,9 @@ var
   i, score, best: Integer;
   c: TImporterClass;
 begin
+  if not Assigned(FAll) then
+    Exit(nil);
+
   best := -1; Result := nil;
   for i := 0 to FAll.Count - 1 do
   begin
@@ -1000,6 +1005,11 @@ class procedure TImporterRegistry.RegisterImporter(const Ext: string; AClass: TI
 var
   k: String;
 begin
+  if not Assigned(FByExt) then
+    FByExt := specialize TFPGMap<string, TImporterClass>.Create;
+  if not Assigned(FAll) then
+    FAll := specialize TFPGList<TImporterClass>.Create;
+
   k := LowerCase(Ext);
   if FByExt.IndexOf(k) < 0 then
     FByExt.Add(k, AClass)
@@ -1013,6 +1023,9 @@ class function TImporterRegistry.ResolveByExt(const Ext: string): TImporterClass
 var
   idx: Integer;
 begin
+  if not Assigned(FByExt) then
+    Exit(nil);
+
   idx := FByExt.IndexOf(LowerCase(Ext));
   if idx >= 0 then
     Result := FByExt.Data[idx]
@@ -1030,14 +1043,21 @@ end;
 
 class constructor TExporterRegistry.Create;
 begin
-  FByExt := specialize TFPGMap<string, TExporterClass>.Create;
-  FAll := specialize TFPGList<TExporterClass>.Create;
+  if not Assigned(FByExt) then
+    FByExt := specialize TFPGMap<string, TExporterClass>.Create;
+  if not Assigned(FAll) then
+    FAll := specialize TFPGList<TExporterClass>.Create;
 end;
 
 class procedure TExporterRegistry.RegisterExporter(const Ext: string; AClass: TExporterClass);
 var
   k: String;
 begin
+  if not Assigned(FByExt) then
+    FByExt := specialize TFPGMap<string, TExporterClass>.Create;
+  if not Assigned(FAll) then
+    FAll := specialize TFPGList<TExporterClass>.Create;
+
   k := LowerCase(Ext);
   if FByExt.IndexOf(k) < 0 then
     FByExt.Add(k, AClass)
@@ -1051,6 +1071,8 @@ class function TExporterRegistry.Resolve(const Ext: string): TExporterClass;
 var
   idx: Integer;
 begin
+  if not Assigned(FByExt) then
+    Exit(nil);
   idx := FByExt.IndexOf(LowerCase(Ext));
   if idx >= 0 then
     Result := FByExt.Data[idx]
