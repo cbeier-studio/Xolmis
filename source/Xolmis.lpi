@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="114">
+      <ExcludedIdentifiers Count="120">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -139,6 +139,12 @@
         <Item112 Value="tdlgBigTip.lblTitle.Caption"/>
         <Item113 Value="tdlgGazetteerAutofill.lblHint.Caption"/>
         <Item114 Value="tdlgGazetteerAutofill.lblState.Caption"/>
+        <Item115 Value="tdlgExport.cbquotechar.Text"/>
+        <Item116 Value="tdlgExport.cbTimeFormat.Text"/>
+        <Item117 Value="tdlgExport.cbIndentation.Text"/>
+        <Item118 Value="tdlgExport.cbDateFormat.Text"/>
+        <Item119 Value="tdlgExport.cbDelimiter.Text"/>
+        <Item120 Value="tdlgExport.cbDecimalSeparator.Text"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>

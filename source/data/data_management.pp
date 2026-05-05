@@ -100,7 +100,9 @@ const
   procedure CreateBandsRunningOutView(Connection: TSQLConnector);
   procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
 
+  procedure CreateAdminUser(Connection: TSQLConnector);
   procedure PopulateMethodsTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+  procedure PopulateTaxonRanksTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
   procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 
   { Database information and management }
@@ -145,7 +147,8 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_debug,
-  data_consts, data_schema, data_providers, data_getvalue, models_users, models_methods,
+  data_consts, data_schema, data_providers, data_getvalue,
+  models_record_types, models_users, models_methods, models_taxonomy,
   udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
 
   {
@@ -653,7 +656,15 @@ begin
         dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
         Application.ProcessMessages;
         LogDebug('Populating database');
-        // Populate users (admin), taxon ranks, methods, botanic taxa
+
+        // Create admin user
+        CreateAdminUser(Conn);
+
+        Trans.CommitRetaining;
+        if not Trans.Active then
+          Trans.StartTransaction;
+
+        // Populate botanic taxa
         DMM.scriptUserDBInit.DataBase := Conn;
         DMM.scriptUserDBInit.Transaction := Conn.Transaction;
         DMM.scriptUserDBInit.ExecuteScript;
@@ -664,6 +675,13 @@ begin
 
         // Populate methods
         PopulateMethodsTable(Conn, dlgProgress.PBar);
+
+        Trans.CommitRetaining;
+        if not Trans.Active then
+          Trans.StartTransaction;
+
+        // Populate taxon ranks
+        PopulateTaxonRanksTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
         if not Trans.Active then
@@ -1787,6 +1805,29 @@ begin
     'FROM consecutivo;');
 end;
 
+procedure CreateAdminUser(Connection: TSQLConnector);
+var
+  FUser: TUser;
+  FRepo: TUserRepository;
+begin
+  FRepo := TUserRepository.Create(Connection);
+  FUser := TUser.Create();
+  try
+    FUser.FullName := rsSystemAdmin;
+    FUser.UserName := 'admin';
+    FUser.Rank := urAdministrator;
+    FUser.AllowManageCollection := True;
+    FUser.AllowExport := True;
+    FUser.AllowImport := True;
+    FUser.AllowPrint := True;
+
+    FRepo.Insert(FUser);
+  finally
+    FreeAndNil(FUser);
+    FRepo.Free;
+  end;
+end;
+
 procedure PopulateMethodsTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 var
   FRepo: TMethodRepository;
@@ -1855,6 +1896,76 @@ begin
     JArray := nil;
   end;
   LogEvent(leaFinish, 'Populate methods table');
+end;
+
+procedure PopulateTaxonRanksTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+var
+  FRepo: TRankRepository;
+  FRank: TRank;
+  FFilePath: String;
+  JFile: TFileStream;
+  JData: TJSONData;
+  JArray: TJSONArray;
+  i: Integer;
+  currentLang: TLanguageID;
+begin
+  currentLang := GetLanguageID;
+  if SameText(currentLang.LanguageID, 'pt-BR') then
+    FFilePath := ConcatPaths([AppDataDir, 'taxon_ranks_pt-BR.json'])
+  else
+    FFilePath := ConcatPaths([AppDataDir, 'taxon_ranks_en-US.json']);
+
+  if not FileExists(FFilePath) then
+    raise Exception.CreateFmt(rsErrorFileNotFound, [FFilePath]);
+
+  LogEvent(leaStart, 'Populate taxon_ranks table');
+
+  FRepo := TRankRepository.Create(Connection);
+  FRank := TRank.Create();
+  JArray := nil;
+  try
+    try
+      JFile := TFileStream.Create(FFilePath, fmOpenRead);
+      JData := GetJSON(JFile);
+    finally
+      FreeAndNil(JFile);
+    end;
+    if not (JData is TJSONArray) then
+      Exit;
+    JArray := TJSONArray(JData);
+    try
+      if JArray.Count > 0 then
+      begin
+        aProgressBar.Position := 0;
+        aProgressBar.Style := TProgressBarStyle.pbstNormal;
+        aProgressBar.Max := JArray.Count;
+        Application.ProcessMessages;
+        for i := 0 to JArray.Count - 1 do
+        begin
+          FRank.Clear;
+          FRank.FromJSON(JArray.Items[i].AsJSON);
+          if GetRankKey(FRank.Abbreviation, ncZoological) > 0 then
+            FRepo.Update(FRank)
+          else
+            FRepo.Insert(FRank);
+
+          aProgressBar.Position := i + 1;
+        end;
+      end;
+    except
+      on E: Exception do
+      begin
+        MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
+      end;
+    end;
+  finally
+    FreeAndNil(FRank);
+    FRepo.Free;
+    if Assigned(JData) then
+      FreeAndNil(JData);
+    JArray := nil;
+  end;
+  LogEvent(leaFinish, 'Populate taxon_ranks table');
 end;
 
 procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);

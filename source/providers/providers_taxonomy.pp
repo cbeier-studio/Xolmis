@@ -111,7 +111,31 @@ end;
 
 function TTaxonRanksSQL.Insert: String;
 begin
-  Result := '';
+  Result :=
+    'INSERT INTO taxon_ranks (' +
+      'rank_name, ' +
+      'abbreviation, ' +
+      'rank_seq, ' +
+      'main_rank, ' +
+      'subrank, ' +
+      'infrarank, ' +
+      'infraspecific, ' +
+      'iczn, ' +
+      'icbn, ' +
+      'user_inserted, ' +
+      'insert_date) ' +
+    'VALUES (' +
+      ':rank_name, ' +
+      ':abbreviation, ' +
+      ':rank_seq, ' +
+      ':main_rank, ' +
+      ':subrank, ' +
+      ':infrarank, ' +
+      ':infraspecific, ' +
+      ':iczn, ' +
+      ':icbn, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))';
 end;
 
 function TTaxonRanksSQL.SelectAll(aWhere: TSQLWhereClause): String;
@@ -185,7 +209,22 @@ end;
 
 function TTaxonRanksSQL.Update: String;
 begin
-  Result := '';
+  Result :=
+    'UPDATE taxon_ranks SET ' +
+      'rank_name = :rank_name, ' +
+      'abbreviation = :abbreviation, ' +
+      'rank_seq = :rank_seq, ' +
+      'main_rank = :main_rank, ' +
+      'subrank = :subrank, ' +
+      'infrarank = :infrarank, ' +
+      'infraspecific = :infraspecific, ' +
+      'iczn = :iczn, ' +
+      'icbn = :icbn, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ' +
+    'WHERE (rank_id = :rank_id) ';
 end;
 
 { TZooTaxaSQL }

@@ -70,13 +70,13 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
-    //procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
-    //procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
-    //procedure Insert(E: TXolmisRecord); override;
-    //procedure Update(E: TXolmisRecord); override;
-    //procedure Delete(E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
   end;
 
 type
@@ -718,7 +718,7 @@ begin
 
   R := TTaxon(E);
   if ARow.IndexOfName('scientific_name') >= 0 then
-    R.ScientificName := ARow.Values['full_name'];
+    R.ScientificName := ARow.Values['scientific_name'];
   if ARow.IndexOfName('formatted_name') >= 0 then
     R.FormattedName := ARow.Values['formatted_name'];
   if ARow.IndexOfName('parent_taxon_id') >= 0 then
@@ -926,7 +926,7 @@ begin
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
-    ParamByName('band_id').AsInteger := R.Id;
+    ParamByName('taxon_id').AsInteger := R.Id;
 
     ExecSQL;
 
@@ -1135,6 +1135,46 @@ end;
 
 { TRankRepository }
 
+procedure TRankRepository.Delete(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TRank;
+begin
+  if not (E is TRank) then
+    raise Exception.Create('Delete: Expected TRank');
+
+  R := TRank(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TRankRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_RANK_ID;
+      ParamByName('aid').AsInteger := R.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 function TRankRepository.Exists(const Id: Integer): Boolean;
 var
   Qry: TSQLQuery;
@@ -1198,6 +1238,32 @@ begin
   end;
 end;
 
+procedure TRankRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TRank) then
+    raise Exception.Create('FindByRow: Expected TRank');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.TaxonRanks.SelectTable(swcNone));
+    Add('WHERE (abbreviation = :aname)');
+
+    ParamByName('aname').AsString := ARow.Values['abbreviation'];
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TRankRepository.GetById(const Id: Integer; E: TXolmisRecord);
 var
   Qry: TSQLQuery;
@@ -1257,9 +1323,116 @@ begin
   end;
 end;
 
+procedure TRankRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TRank;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TRank) then
+    raise Exception.Create('HydrateFromRow: Expected TRank');
+
+  R := TRank(E);
+  if ARow.IndexOfName('rank_name') >= 0 then
+    R.Name := ARow.Values['rank_name'];
+  if ARow.IndexOfName('rank_seq') >= 0 then
+    R.RankIndex := StrToIntDef(ARow.Values['rank_seq'], 0);
+  if ARow.IndexOfName('abbreviation') >= 0 then
+    R.Abbreviation := ARow.Values['abbreviation'];
+  if ARow.IndexOfName('main_rank') >= 0 then
+    R.MainRank := StrToBoolDef(ARow.Values['main_rank'], True);
+  if ARow.IndexOfName('subrank') >= 0 then
+    R.Subrank := StrToBoolDef(ARow.Values['subrank'], False);
+  if ARow.IndexOfName('infrarank') >= 0 then
+    R.Infrarank := StrToBoolDef(ARow.Values['infrarank'], False);
+  if ARow.IndexOfName('infraspecific') >= 0 then
+    R.Infraspecific := StrToBoolDef(ARow.Values['infraspecific'], False);
+  if ARow.IndexOfName('iczn') >= 0 then
+    R.ZoologicalCode := StrToBoolDef(ARow.Values['iczn'], True);
+  if ARow.IndexOfName('icbn') >= 0 then
+    R.BotanicalCode := StrToBoolDef(ARow.Values['icbn'], True);
+end;
+
+procedure TRankRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TRank;
+begin
+  if not (E is TRank) then
+    raise Exception.Create('Insert: Expected TRank');
+
+  R := TRank(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.TaxonRanks.Insert);
+
+    ParamByName('rank_name').AsString := R.Name;
+    SetIntParam(ParamByName('rank_seq'), R.RankIndex);
+    SetStrParam(ParamByName('abbreviation'), R.Abbreviation);
+    ParamByName('main_rank').AsBoolean := R.MainRank;
+    ParamByName('subrank').AsBoolean := R.Subrank;
+    ParamByName('infrarank').AsBoolean := R.Infrarank;
+    ParamByName('infraspecific').AsBoolean := R.Infraspecific;
+    ParamByName('iczn').AsBoolean := R.ZoologicalCode;
+    ParamByName('icbn').AsBoolean := R.BotanicalCode;
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 function TRankRepository.TableName: string;
 begin
   Result := TBL_TAXON_RANKS;
+end;
+
+procedure TRankRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TRank;
+begin
+  if not (E is TRank) then
+    raise Exception.Create('Update: Expected TRank');
+
+  R := TRank(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TRankRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.TaxonRanks.Update);
+
+    ParamByName('rank_name').AsString := R.Name;
+    SetIntParam(ParamByName('rank_seq'), R.RankIndex);
+    SetStrParam(ParamByName('abbreviation'), R.Abbreviation);
+    ParamByName('main_rank').AsBoolean := R.MainRank;
+    ParamByName('subrank').AsBoolean := R.Subrank;
+    ParamByName('infrarank').AsBoolean := R.Infrarank;
+    ParamByName('infraspecific').AsBoolean := R.Infraspecific;
+    ParamByName('iczn').AsBoolean := R.ZoologicalCode;
+    ParamByName('icbn').AsBoolean := R.BotanicalCode;
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('rank_id').AsInteger := R.Id;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
 end;
 
 initialization

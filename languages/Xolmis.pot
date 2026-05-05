@@ -4420,21 +4420,6 @@ msgstr ""
 msgid "Decimal"
 msgstr ""
 
-#: tdlgexport.cbdateformat.text
-msgctxt "tdlgexport.cbdateformat.text"
-msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tdlgexport.cbdecimalseparator.text
-msgctxt "tdlgexport.cbdecimalseparator.text"
-msgid "Colon"
-msgstr ""
-
-#: tdlgexport.cbdelimiter.text
-msgctxt "tdlgexport.cbdelimiter.text"
-msgid "Semicolon"
-msgstr ""
-
 #: tdlgexport.cbencoding.text
 msgctxt "tdlgexport.cbencoding.text"
 msgid "System encoding"
@@ -4458,19 +4443,6 @@ msgstr ""
 
 #: tdlgexport.cbfiletype.itemsex[4].caption
 msgid "XML"
-msgstr ""
-
-#: tdlgexport.cbindentation.text
-msgid "2"
-msgstr ""
-
-#: tdlgexport.cbquotechar.text
-msgctxt "tdlgexport.cbquotechar.text"
-msgid "Double quote"
-msgstr ""
-
-#: tdlgexport.cbtimeformat.text
-msgid "HH:NN"
 msgstr ""
 
 #: tdlgexport.lblcolumns.caption
@@ -18585,6 +18557,10 @@ msgstr ""
 #: utils_locale.rssynonym
 msgctxt "utils_locale.rssynonym"
 msgid "Synonym"
+msgstr ""
+
+#: utils_locale.rssystemadmin
+msgid "System Administrator"
 msgstr ""
 
 #: utils_locale.rssystemencoding

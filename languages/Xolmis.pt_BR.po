@@ -4399,21 +4399,6 @@ msgstr "Exportar dados"
 msgid "Decimal"
 msgstr "Decimal"
 
-#: tdlgexport.cbdateformat.text
-msgctxt "tdlgexport.cbdateformat.text"
-msgid "DD/MM/YYYY"
-msgstr "DD/MM/AAAA"
-
-#: tdlgexport.cbdecimalseparator.text
-msgctxt "tdlgexport.cbdecimalseparator.text"
-msgid "Colon"
-msgstr "Vírgula"
-
-#: tdlgexport.cbdelimiter.text
-msgctxt "tdlgexport.cbdelimiter.text"
-msgid "Semicolon"
-msgstr "Ponto e vírgula"
-
 #: tdlgexport.cbencoding.text
 msgctxt "tdlgexport.cbencoding.text"
 msgid "System encoding"
@@ -4438,19 +4423,6 @@ msgstr "XLSX"
 #: tdlgexport.cbfiletype.itemsex[4].caption
 msgid "XML"
 msgstr "XML"
-
-#: tdlgexport.cbindentation.text
-msgid "2"
-msgstr ""
-
-#: tdlgexport.cbquotechar.text
-msgctxt "tdlgexport.cbquotechar.text"
-msgid "Double quote"
-msgstr ""
-
-#: tdlgexport.cbtimeformat.text
-msgid "HH:NN"
-msgstr ""
 
 #: tdlgexport.lblcolumns.caption
 msgid "Select the columns to export:"
@@ -18735,6 +18707,10 @@ msgstr "Simétrica"
 msgctxt "utils_locale.rssynonym"
 msgid "Synonym"
 msgstr "Sinônimo"
+
+#: utils_locale.rssystemadmin
+msgid "System Administrator"
+msgstr "Administrador do sistema"
 
 #: utils_locale.rssystemencoding
 msgctxt "utils_locale.rssystemencoding"

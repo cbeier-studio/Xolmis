@@ -697,6 +697,7 @@ uses
     rsGuestUser = 'Guest';
     rsNewPassword = 'New password';
     rsConfirmPassword = 'Confirm password';
+    rsSystemAdmin = 'System Administrator';
 
     { Loading and count }
     rsLoading = 'Loading';
