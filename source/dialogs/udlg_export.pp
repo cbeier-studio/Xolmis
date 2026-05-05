@@ -130,7 +130,8 @@ var
 implementation
 
 uses
-  utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams, io_json;
+  utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams, io_json,
+  io_xml;
 
 {$R *.lfm}
 
@@ -486,32 +487,55 @@ end;
 
 procedure TdlgExport.ExportToXML;
 var
+  XMLExp: TXolmisXMLExporter;
+  FS: TFileStream;
+  Row: TXRow;
   i: Integer;
-  expField: TExportFieldItem;
+  BM: TBookmark;
 begin
-  DMM.XMLExport.FileName := FFileName;
-  DMM.XMLExport.Dataset := FDataSet;
-  DMM.XMLExport.ExportFields.Clear;
-  // Set format settings
-  DMM.XMLExport.FormatSettings.StartNodePath := FExportSettings.RootNodeName;
-  DMM.XMLExport.FormatSettings.RowElementName := FExportSettings.RecordNodeName;
-  DMM.XMLExport.FormatSettings.IndentSize := FExportSettings.Indentation;
-  DMM.XMLExport.FormatSettings.DecimalSeparator := FExportSettings.DecimalSeparator;
-  //DMM.XMLExport.FormatSettings.DateFormat := FExportSettings.DateFormat;
-  //DMM.XMLExport.FormatSettings.TimeFormat := FExportSettings.TimeFormat;
-  //DMM.XMLExport.FormatSettings.DateTimeFormat := FExportSettings.DateFormat + ' ' + FExportSettings.TimeFormat;
-  // Set columns to export
-  for i := 0 to cklbColumns.Count - 1 do
-    if cklbColumns.Checked[i] then
-    begin
-      expField := DMM.XMLExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-      //expField.ExportedName := cklbColumns.Items[i];
-    end;
+  // Build ExportFields from checked columns
+  with TStringList.Create do
+  try
+    for i := 0 to cklbColumns.Count - 1 do
+      if cklbColumns.Checked[i] then
+        Add(FDataSet.Fields[i].FieldName);
+    FExportSettings.ExportFields := CommaText;
+  finally
+    Free;
+  end;
 
-  if DMM.XMLExport.Execute > 0 then
-    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-  else
-    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+  XMLExp := nil;
+  FS := nil;
+  BM := FDataSet.GetBookmark;
+  FDataSet.DisableControls;
+  try
+    try
+      XMLExp := TXolmisXMLExporter.Create;
+
+      FDataSet.First;
+      while not FDataSet.EOF do
+      begin
+        Row := TXRow.Create;
+        for i := 0 to FDataSet.FieldCount - 1 do
+          Row.Values[FDataSet.Fields[i].FieldName] := FDataSet.Fields[i].AsString;
+        XMLExp.AddRow(Row);
+        FDataSet.Next;
+      end;
+
+      FS := TFileStream.Create(FFileName, fmCreate);
+      XMLExp.Export(FS, FExportSettings, nil);
+
+      MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation);
+    except
+      on E: Exception do
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+    end;
+  finally
+    FS.Free;
+    XMLExp.Free;
+    FDataSet.GotoBookmark(BM);
+    FDataSet.EnableControls;
+  end;
 end;
 
 procedure TdlgExport.FormShow(Sender: TObject);

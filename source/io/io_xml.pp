@@ -21,7 +21,7 @@ unit io_xml;
 interface
 
 uses
-  Classes, SysUtils, DOM, XMLRead, LConvEncoding, io_core;
+  Classes, SysUtils, fgl, DOM, XMLRead, XMLWrite, LConvEncoding, Math, io_core;
 
 type
 
@@ -34,6 +34,20 @@ type
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
     function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
     procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
+  end;
+
+  { TXolmisXMLExporter }
+
+  TXolmisXMLExporter = class(TExporter)
+  private
+    FRows: specialize TFPGObjectList<TXRow>;
+    function SanitizeXMLName(const S: string): string;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure AddRow(Row: TXRow);
+    function CanHandleExtension(const Ext: string): Boolean; override;
+    procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); override;
   end;
 
 implementation
@@ -282,8 +296,131 @@ begin
   Result := 25;
 end;
 
+{ TXolmisXMLExporter }
+
+constructor TXolmisXMLExporter.Create;
+begin
+  inherited Create;
+  FRows := specialize TFPGObjectList<TXRow>.Create(True);
+end;
+
+destructor TXolmisXMLExporter.Destroy;
+begin
+  FRows.Free;
+  inherited Destroy;
+end;
+
+procedure TXolmisXMLExporter.AddRow(Row: TXRow);
+begin
+  FRows.Add(Row);
+end;
+
+function TXolmisXMLExporter.SanitizeXMLName(const S: string): string;
+var
+  i: Integer;
+  C: Char;
+begin
+  Result := Trim(S);
+  if Result = '' then
+    Exit('field');
+
+  for i := 1 to Length(Result) do
+  begin
+    C := Result[i];
+    if not (C in ['A'..'Z', 'a'..'z', '0'..'9', '_', '-', '.']) then
+      Result[i] := '_';
+  end;
+
+  if not (Result[1] in ['A'..'Z', 'a'..'z', '_']) then
+    Result := '_' + Result;
+end;
+
+function TXolmisXMLExporter.CanHandleExtension(const Ext: string): Boolean;
+begin
+  Result := SameText(Ext, 'xml');
+end;
+
+procedure TXolmisXMLExporter.Export(Stream: TStream; const Options: TExportOptions;
+  RowOut: TXRowConsumer);
+var
+  FieldList: TStringList;
+  Doc: TXMLDocument;
+  RootNode, RecordNode, FieldNode: TDOMElement;
+  Row: TXRow;
+  RootName, RecordName, FieldName, FieldValue: string;
+  i, j: Integer;
+begin
+  LogEvent(leaStart, 'Export XML file');
+
+  FieldList := nil;
+  if Options.ExportFields <> '' then
+  begin
+    FieldList := TStringList.Create;
+    FieldList.CommaText := Options.ExportFields;
+  end;
+
+  RootName := Trim(Options.RootNodeName);
+  if RootName = '' then
+    RootName := 'records';
+
+  RecordName := Trim(Options.RecordNodeName);
+  if RecordName = '' then
+    RecordName := 'record';
+
+  RootName := SanitizeXMLName(RootName);
+  RecordName := SanitizeXMLName(RecordName);
+
+  Doc := TXMLDocument.Create;
+  try
+    RootNode := Doc.CreateElement(RootName);
+    Doc.AppendChild(RootNode);
+
+    for i := 0 to FRows.Count - 1 do
+    begin
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Row := FRows[i];
+      RecordNode := Doc.CreateElement(RecordName);
+      RootNode.AppendChild(RecordNode);
+
+      for j := 0 to Row.Count - 1 do
+      begin
+        FieldName := Row.Names[j];
+        FieldValue := Row.ValueFromIndex[j];
+
+        if Assigned(FieldList) and (FieldList.IndexOf(FieldName) < 0) then
+          Continue;
+
+        if Options.TrimFields then
+          FieldValue := Trim(FieldValue);
+
+        if Options.IgnoreNulls and (FieldValue = '') then
+          Continue;
+
+        FieldNode := Doc.CreateElement(SanitizeXMLName(FieldName));
+        FieldNode.AppendChild(Doc.CreateTextNode(FieldValue));
+        RecordNode.AppendChild(FieldNode);
+      end;
+
+      if Assigned(RowOut) then
+        RowOut(Row);
+
+      if Assigned(Options.OnProgress) then
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando XML');
+    end;
+
+    WriteXMLFile(Doc, Stream);
+  finally
+    Doc.Free;
+    FieldList.Free;
+    LogEvent(leaFinish, 'Export XML file');
+  end;
+end;
+
 initialization
   TImporterRegistry.RegisterImporter('xml', TXMLImporter);
+  TExporterRegistry.RegisterExporter('xml', TXolmisXMLExporter);
 
 end.
 
