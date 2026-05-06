@@ -186,7 +186,7 @@ begin
         );
       end
       else
-      // ID
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
