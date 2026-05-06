@@ -211,8 +211,8 @@ begin
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(
-          TSearchField.Create(COL_START_DATE, rscDate, sdtDate, crBetween,
-            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+          TSearchField.Create(COL_START_DATE, rscDate, sdtDate, crIntersect,
+            False, PartialStart.ToStartDateString, PartialEnd.ToEndDateString, '', COL_END_DATE)
         );
       end
       else

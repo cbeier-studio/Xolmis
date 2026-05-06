@@ -105,7 +105,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, utils_themes, utils_validations,
+  utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
   modules_birds, modules_sightings,
   uDarkStyleParams,
@@ -196,6 +196,7 @@ var
   i, g, m, y: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -218,6 +219,16 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Date interval
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_START_DATE, rscDate, sdtDate, crIntersect,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString, '', COL_END_DATE)
+        );
+      end
+      else
       // ID
       if TryStrToInt(aValue, i) then
       begin
@@ -226,7 +237,7 @@ begin
           True, aValue));
         if IsLikelyYear(i) then
           SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_START_DATE, rscDate, sdtYear, crIntersect,
-            False, aValue, '', '', COL_END_DATE));
+            True, aValue, '', '', COL_END_DATE));
       end
       else
       // Date

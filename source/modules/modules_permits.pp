@@ -42,7 +42,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, utils_themes, utils_validations,
+  utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
   udm_main, udm_grid, ufrm_customgrid, uDarkStyleParams;
 
@@ -153,6 +153,7 @@ var
   i, g, m, y: Longint;
   dt: TDateTime;
   Crit: TCriteriaType;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -175,6 +176,16 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Date interval
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_DISPATCH_DATE, rscDate, sdtDate, crIntersect,
+            False, PartialStart.ToStartDateString, PartialEnd.ToEndDateString, '', COL_EXPIRE_DATE)
+        );
+      end
+      else
       // ID
       if TryStrToInt(aValue, i) then
       begin

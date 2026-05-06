@@ -108,7 +108,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_graphics, utils_themes, utils_validations,
+  utils_locale, utils_global, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
   udm_main, udm_grid, udm_breeding, udm_individuals, ufrm_customgrid;
@@ -320,6 +320,7 @@ var
   i, g, m, y: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -342,6 +343,20 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Date interval
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_FOUND_DATE, rscFoundDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_LAST_DATE, rscLastDateActive, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+      end
+      else
       // ID and year
       if TryStrToInt(aValue, i) then
       begin
@@ -691,8 +706,9 @@ end;
 function TNestRevisionsModuleController.Search(AValue: String): Boolean;
 var
   i, g, m, y: Longint;
-  Dt: TDateTime;
+  Dt, Tm1, Tm2: TDateTime;
   Crit: TCriteriaType;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -715,6 +731,26 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Date interval
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_REVISION_DATE, rscBandingDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+      end
+      else
+      // Time interval
+      if TryParseTimeIntervalFlexible(aValue, Tm1, Tm2) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_REVISION_TIME, rscTime, sdtTime, crBetween,
+            True, FormatDateTime('hh:nn:ss', Tm1), FormatDateTime('hh:nn:ss', Tm2))
+        );
+      end
+      else
       // ID and year
       if TryStrToInt(aValue, i) then
       begin
@@ -1008,6 +1044,7 @@ var
   i, g, m, y: Longint;
   Dt: TDateTime;
   Crit: TCriteriaType;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -1030,6 +1067,16 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Date interval
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_MEASURE_DATE, rscBandingDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+      end
+      else
       // ID and year
       if TryStrToInt(aValue, i) then
       begin

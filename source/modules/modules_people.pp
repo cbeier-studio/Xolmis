@@ -42,7 +42,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_graphics, utils_validations,
+  utils_locale, utils_graphics, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
   udm_main, udm_grid, ufrm_customgrid;
 
@@ -132,6 +132,7 @@ var
   i, g, m, y: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -154,7 +155,21 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
-      // ID
+      // Date interval
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_BIRTH_DATE, rscBirthDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_DEATH_DATE, rscDeathDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+      end
+      else
+      // ID and year
       if TryStrToInt(aValue, i) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
