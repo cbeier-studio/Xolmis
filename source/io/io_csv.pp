@@ -21,7 +21,7 @@ unit io_csv;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, SdfData, Math, LConvEncoding, io_core;
+  Classes, SysUtils, Dialogs, SdfData, Math, LConvEncoding, fgl, io_core;
 
 type
 
@@ -36,12 +36,69 @@ type
     procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
   end;
 
+  { TXolmisCSVExporter }
+
+  TXolmisCSVExporter = class(TExporter)
+  private
+    FRows: specialize TFPGObjectList<TXRow>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure AddRow(Row: TXRow);
+    function CanHandleExtension(const Ext: string): Boolean; override;
+    procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); override;
+  end;
+
+  { TXolmisTSVExporter }
+
+  TXolmisTSVExporter = class(TExporter)
+  private
+    FRows: specialize TFPGObjectList<TXRow>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure AddRow(Row: TXRow);
+    function CanHandleExtension(const Ext: string): Boolean; override;
+    procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); override;
+  end;
+
   function ValidateCSVSchema(const aCSVFile, aSchema, aSchemaName: String): Boolean;
 
 implementation
 
 uses
   LazUTF8, utils_locale, utils_global, utils_dialogs;
+
+function EscapeCSVValue(const Value: string; QuoteChar: Char; Delimiter: Char): string;
+var
+  NeedsQuote: Boolean;
+begin
+  NeedsQuote := (Pos(Delimiter, Value) > 0) or 
+                (Pos(QuoteChar, Value) > 0) or 
+                (Pos(#10, Value) > 0) or 
+                (Pos(#13, Value) > 0);
+
+  if NeedsQuote then
+    Result := QuoteChar + StringReplace(Value, QuoteChar, QuoteChar + QuoteChar, [rfReplaceAll]) + QuoteChar
+  else
+    Result := Value;
+end;
+
+procedure WriteStringToStream(Stream: TStream; const S: String; const Encoding: String = '');
+var
+  Encoded: String;
+begin
+  if S = '' then
+    Exit;
+
+  if (Encoding <> '') and not SameText(Encoding, 'utf-8') then
+    Encoded := ConvertEncoding(S, 'utf-8', Encoding)
+  else
+    Encoded := S;
+
+  if Length(Encoded) > 0 then
+    Stream.WriteBuffer(Encoded[1], Length(Encoded));
+end;
 
 function ValidateCSVSchema(const aCSVFile, aSchema, aSchemaName: String): Boolean;
 var
@@ -344,9 +401,276 @@ begin
   Result := Score;
 end;
 
+{ TXolmisCSVExporter }
+
+constructor TXolmisCSVExporter.Create;
+begin
+  inherited Create;
+  FRows := specialize TFPGObjectList<TXRow>.Create(True);
+end;
+
+destructor TXolmisCSVExporter.Destroy;
+begin
+  FRows.Free;
+  inherited Destroy;
+end;
+
+procedure TXolmisCSVExporter.AddRow(Row: TXRow);
+begin
+  FRows.Add(Row);
+end;
+
+function TXolmisCSVExporter.CanHandleExtension(const Ext: string): Boolean;
+begin
+  Result := SameText(Ext, 'csv');
+end;
+
+procedure TXolmisCSVExporter.Export(Stream: TStream; const Options: TExportOptions;
+  RowOut: TXRowConsumer);
+var
+  FieldList: TStringList;
+  Row: TXRow;
+  FieldNames: TStringList;
+  i, j: Integer;
+  FieldName, FieldValue, Line: String;
+  Delimiter: Char;
+  QuoteChar: Char;
+  Parts: TStringList;
+begin
+  LogEvent(leaStart, 'Export CSV file');
+
+  FieldList := nil;
+  if Options.ExportFields <> '' then
+  begin
+    FieldList := TStringList.Create;
+    FieldList.CommaText := Options.ExportFields;
+  end;
+
+  Delimiter := Options.Delimiter;
+  if Delimiter = #0 then
+    Delimiter := ',';
+
+  QuoteChar := Options.QuoteChar;
+  if QuoteChar = #0 then
+    QuoteChar := '"';
+
+  FieldNames := TStringList.Create;
+  Parts := TStringList.Create;
+
+  try
+    // Collect field names from all rows
+    for i := 0 to FRows.Count - 1 do
+    begin
+      Row := FRows[i];
+      for j := 0 to Row.Count - 1 do
+      begin
+        FieldName := Row.Names[j];
+        if (FieldNames.IndexOf(FieldName) < 0) then
+        begin
+          if not Assigned(FieldList) or (FieldList.IndexOf(FieldName) >= 0) then
+            FieldNames.Add(FieldName);
+        end;
+      end;
+    end;
+
+    // Write header if requested
+    if Options.HasHeader then
+    begin
+      Parts.Clear;
+      for i := 0 to FieldNames.Count - 1 do
+        Parts.Add(EscapeCSVValue(FieldNames[i], QuoteChar, Delimiter));
+      
+      Line := '';
+      for i := 0 to Parts.Count - 1 do
+      begin
+        if i > 0 then Line := Line + Delimiter;
+        Line := Line + Parts[i];
+      end;
+      WriteStringToStream(Stream, Line + LineEnding, Options.Encoding);
+    end;
+
+    // Write data rows
+    for i := 0 to FRows.Count - 1 do
+    begin
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Row := FRows[i];
+      Parts.Clear;
+
+      for j := 0 to FieldNames.Count - 1 do
+      begin
+        FieldName := FieldNames[j];
+        FieldValue := Row.Values[FieldName];
+
+        if Options.TrimFields then
+          FieldValue := Trim(FieldValue);
+
+        if not (Options.IgnoreNulls and (FieldValue = '')) then
+          FieldValue := EscapeCSVValue(FieldValue, QuoteChar, Delimiter);
+
+        Parts.Add(FieldValue);
+      end;
+
+      Line := '';
+      for j := 0 to Parts.Count - 1 do
+      begin
+        if j > 0 then Line := Line + Delimiter;
+        Line := Line + Parts[j];
+      end;
+      WriteStringToStream(Stream, Line + LineEnding, Options.Encoding);
+
+      if Assigned(RowOut) then
+        RowOut(Row);
+
+      if Assigned(Options.OnProgress) then
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando CSV');
+    end;
+
+  finally
+    FieldNames.Free;
+    Parts.Free;
+    FieldList.Free;
+    LogEvent(leaFinish, 'Export CSV file');
+  end;
+end;
+
+{ TXolmisTSVExporter }
+
+constructor TXolmisTSVExporter.Create;
+begin
+  inherited Create;
+  FRows := specialize TFPGObjectList<TXRow>.Create(True);
+end;
+
+destructor TXolmisTSVExporter.Destroy;
+begin
+  FRows.Free;
+  inherited Destroy;
+end;
+
+procedure TXolmisTSVExporter.AddRow(Row: TXRow);
+begin
+  FRows.Add(Row);
+end;
+
+function TXolmisTSVExporter.CanHandleExtension(const Ext: string): Boolean;
+begin
+  Result := SameText(Ext, 'tsv');
+end;
+
+procedure TXolmisTSVExporter.Export(Stream: TStream; const Options: TExportOptions;
+  RowOut: TXRowConsumer);
+var
+  FieldList: TStringList;
+  Row: TXRow;
+  FieldNames: TStringList;
+  i, j: Integer;
+  FieldName, FieldValue, Line: String;
+  Parts: TStringList;
+begin
+  LogEvent(leaStart, 'Export TSV file');
+
+  FieldList := nil;
+  if Options.ExportFields <> '' then
+  begin
+    FieldList := TStringList.Create;
+    FieldList.CommaText := Options.ExportFields;
+  end;
+
+  FieldNames := TStringList.Create;
+  Parts := TStringList.Create;
+
+  try
+    // Collect field names from all rows
+    for i := 0 to FRows.Count - 1 do
+    begin
+      Row := FRows[i];
+      for j := 0 to Row.Count - 1 do
+      begin
+        FieldName := Row.Names[j];
+        if (FieldNames.IndexOf(FieldName) < 0) then
+        begin
+          if not Assigned(FieldList) or (FieldList.IndexOf(FieldName) >= 0) then
+            FieldNames.Add(FieldName);
+        end;
+      end;
+    end;
+
+    // Write header if requested
+    if Options.HasHeader then
+    begin
+      Parts.Clear;
+      for i := 0 to FieldNames.Count - 1 do
+        Parts.Add(FieldNames[i]);
+      
+      Line := '';
+      for i := 0 to Parts.Count - 1 do
+      begin
+        if i > 0 then Line := Line + #9;
+        Line := Line + Parts[i];
+      end;
+      WriteStringToStream(Stream, Line + LineEnding, Options.Encoding);
+    end;
+
+    // Write data rows
+    for i := 0 to FRows.Count - 1 do
+    begin
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Row := FRows[i];
+      Parts.Clear;
+
+      for j := 0 to FieldNames.Count - 1 do
+      begin
+        FieldName := FieldNames[j];
+        FieldValue := Row.Values[FieldName];
+
+        if Options.TrimFields then
+          FieldValue := Trim(FieldValue);
+
+        if Options.IgnoreNulls and (FieldValue = '') then
+          FieldValue := ''
+        else
+        begin
+          // TSV: escape tabs and newlines by replacing with space
+          FieldValue := StringReplace(FieldValue, #9, ' ', [rfReplaceAll]);
+          FieldValue := StringReplace(FieldValue, #13#10, ' ', [rfReplaceAll]);
+          FieldValue := StringReplace(FieldValue, #10, ' ', [rfReplaceAll]);
+        end;
+
+        Parts.Add(FieldValue);
+      end;
+
+      Line := '';
+      for j := 0 to Parts.Count - 1 do
+      begin
+        if j > 0 then Line := Line + #9;
+        Line := Line + Parts[j];
+      end;
+      WriteStringToStream(Stream, Line + LineEnding, Options.Encoding);
+
+      if Assigned(RowOut) then
+        RowOut(Row);
+
+      if Assigned(Options.OnProgress) then
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando TSV');
+    end;
+
+  finally
+    FieldNames.Free;
+    Parts.Free;
+    FieldList.Free;
+    LogEvent(leaFinish, 'Export TSV file');
+  end;
+end;
+
 initialization
   TImporterRegistry.RegisterImporter('csv', TCSVImporter);
   TImporterRegistry.RegisterImporter('tsv', TCSVImporter);
+  TExporterRegistry.RegisterExporter('csv', TXolmisCSVExporter);
+  TExporterRegistry.RegisterExporter('tsv', TXolmisTSVExporter);
 
 end.
 

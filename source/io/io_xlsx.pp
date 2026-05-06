@@ -21,7 +21,7 @@ unit io_xlsx;
 interface
 
 uses
-  Classes, SysUtils, Math, fpsTypes, fpSpreadsheet, xlsxooxml, xlsbiff8, xlsbiff2, xlsxml, io_core;
+  Classes, SysUtils, Math, fgl, fpsTypes, fpSpreadsheet, xlsxooxml, xlsbiff8, xlsbiff2, xlsxml, io_core;
 
 type
 
@@ -34,6 +34,19 @@ type
     procedure Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer); override;
     function GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList; override;
     procedure PreviewRows(Stream: TStream; const Options: TImportOptions; MaxRows: Integer; RowOut: TXRowConsumer); override;
+  end;
+
+  { TXolmisXLSXExporter }
+
+  TXolmisXLSXExporter = class(TExporter)
+  private
+    FRows: specialize TFPGObjectList<TXRow>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure AddRow(Row: TXRow);
+    function CanHandleExtension(const Ext: string): Boolean; override;
+    procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); override;
   end;
 
 implementation
@@ -251,9 +264,140 @@ begin
   Result := 20;
 end;
 
+{ TXolmisXLSXExporter }
+
+constructor TXolmisXLSXExporter.Create;
+begin
+  inherited Create;
+  FRows := specialize TFPGObjectList<TXRow>.Create(True);
+end;
+
+destructor TXolmisXLSXExporter.Destroy;
+begin
+  FRows.Free;
+  inherited Destroy;
+end;
+
+procedure TXolmisXLSXExporter.AddRow(Row: TXRow);
+begin
+  FRows.Add(Row);
+end;
+
+function TXolmisXLSXExporter.CanHandleExtension(const Ext: string): Boolean;
+begin
+  Result := SameText(Ext, 'xlsx');
+end;
+
+procedure TXolmisXLSXExporter.Export(Stream: TStream; const Options: TExportOptions;
+  RowOut: TXRowConsumer);
+var
+  Workbook: TsWorkbook;
+  Worksheet: TsWorksheet;
+  FieldList: TStringList;
+  FieldNames: TStringList;
+  Row: TXRow;
+  FieldName, FieldValue, SheetName: String;
+  r, c, i, j: Integer;
+  TempFileName: String;
+  TempFile: TFileStream;
+begin
+  LogEvent(leaStart, 'Export XLSX file');
+
+  FieldList := nil;
+  if Options.ExportFields <> '' then
+  begin
+    FieldList := TStringList.Create;
+    FieldList.CommaText := Options.ExportFields;
+  end;
+
+  FieldNames := TStringList.Create;
+  Workbook := TsWorkbook.Create;
+  try
+    // Collect field names from all rows
+    for i := 0 to FRows.Count - 1 do
+    begin
+      Row := FRows[i];
+      for j := 0 to Row.Count - 1 do
+      begin
+        FieldName := Row.Names[j];
+        if (FieldNames.IndexOf(FieldName) < 0) then
+        begin
+          if not Assigned(FieldList) or (FieldList.IndexOf(FieldName) >= 0) then
+            FieldNames.Add(FieldName);
+        end;
+      end;
+    end;
+
+    if Options.SheetName <> '' then
+      SheetName := Options.SheetName
+    else
+      SheetName := 'Sheet1';
+
+    Worksheet := Workbook.AddWorksheet(SheetName);
+
+    r := 0;
+    if Options.HasHeader then
+    begin
+      for c := 0 to FieldNames.Count - 1 do
+        Worksheet.WriteText(r, c, FieldNames[c]);
+      Inc(r);
+    end;
+
+    for i := 0 to FRows.Count - 1 do
+    begin
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Row := FRows[i];
+      for c := 0 to FieldNames.Count - 1 do
+      begin
+        FieldName := FieldNames[c];
+        FieldValue := Row.Values[FieldName];
+
+        if Options.TrimFields then
+          FieldValue := Trim(FieldValue);
+
+        if Options.IgnoreNulls and (FieldValue = '') then
+          Continue;
+
+        Worksheet.WriteText(r, c, FieldValue);
+      end;
+
+      if Assigned(RowOut) then
+        RowOut(Row);
+
+      if Assigned(Options.OnProgress) then
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando XLSX');
+
+      Inc(r);
+    end;
+
+    // fpSpreadsheet writes XLSX to a file, then copy to the target stream.
+    TempFileName := GetTempFileName;
+    Workbook.WriteToFile(TempFileName, sfOOXML, True);
+
+    TempFile := TFileStream.Create(TempFileName, fmOpenRead or fmShareDenyWrite);
+    try
+      Stream.Position := 0;
+      Stream.Size := 0;
+      Stream.CopyFrom(TempFile, 0);
+      Stream.Position := 0;
+    finally
+      TempFile.Free;
+      DeleteFile(TempFileName);
+    end;
+  finally
+    Workbook.Free;
+    FieldNames.Free;
+    FieldList.Free;
+    LogEvent(leaFinish, 'Export XLSX file');
+  end;
+end;
+
 initialization
   TImporterRegistry.RegisterImporter('xlsx', TXLSXImporter);
   TImporterRegistry.RegisterImporter('xls',  TXLSXImporter);
+  TExporterRegistry.RegisterExporter('xlsx', TXolmisXLSXExporter);
 
 end.
 
