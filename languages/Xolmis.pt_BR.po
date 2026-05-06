@@ -4931,11 +4931,6 @@ msgstr "Arquivo de origem: *"
 msgid "Select a target table and a source file to import."
 msgstr "Selecione uma tabela destino e um arquivo de origem para importar."
 
-#: tdlgimport.lblsubtitleimportfinished.caption
-msgctxt "tdlgimport.lblsubtitleimportfinished.caption"
-msgid "The selected file(s) were sucessfully imported."
-msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
-
 #: tdlgimport.lbltarget.caption
 msgid "Target table: *"
 msgstr "Tabela destino: *"
@@ -4952,11 +4947,6 @@ msgstr "Pré-visualização"
 #: tdlgimport.lbltitlefields.caption
 msgid "Fields"
 msgstr "Campos"
-
-#: tdlgimport.lbltitleimportfinished.caption
-msgctxt "tdlgimport.lbltitleimportfinished.caption"
-msgid "Finished importing!"
-msgstr "Importação finalizada!"
 
 #: tdlgimport.lbltitleprogress.caption
 msgctxt "tdlgimport.lbltitleprogress.caption"
@@ -5325,16 +5315,6 @@ msgstr "Arquivo de origem: *"
 #: tdlgimportxmobile.lblsourceinstruction.caption
 msgid "Select a source file to import. Fields with asterisk are required."
 msgstr "Selecione um arquivo de origem para importar. Campos com asterisco são obrigatórios."
-
-#: tdlgimportxmobile.lblsubtitleimportfinished.caption
-msgctxt "tdlgimportxmobile.lblsubtitleimportfinished.caption"
-msgid "The selected file(s) were sucessfully imported."
-msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
-
-#: tdlgimportxmobile.lbltitleimportfinished.caption
-msgctxt "tdlgimportxmobile.lbltitleimportfinished.caption"
-msgid "Finished importing!"
-msgstr "Importação finalizada!"
 
 #: tdlgimportxmobile.lbltitlemap.caption
 msgid "Records"
@@ -15800,6 +15780,11 @@ msgstr "Exato"
 msgid "%s exceeded the maximum length (%d of %d)."
 msgstr "%s excedeu o comprimento máximo (%d de %d)."
 
+#: utils_locale.rsexistingrecordomitted
+#, object-pascal-format
+msgid "Existing record omitted: %s"
+msgstr "Registro existente omitido: %s"
+
 #: utils_locale.rsexportcanceled
 msgctxt "utils_locale.rsexportcanceled"
 msgid "Export canceled!"
@@ -16263,6 +16248,11 @@ msgstr "Importar arquivos"
 msgctxt "utils_locale.rsimportimagestitle"
 msgid "Import images"
 msgstr "Importar imagens"
+
+#: utils_locale.rsimporting
+msgctxt "utils_locale.rsimporting"
+msgid "Importing"
+msgstr "Importando"
 
 #: utils_locale.rsimportingfile
 #, object-pascal-format
@@ -17102,6 +17092,11 @@ msgstr "Novo banco de dados"
 msgctxt "utils_locale.rsnewpassword"
 msgid "New password"
 msgstr "Nova senha"
+
+#: utils_locale.rsnewrecordomitted
+#, object-pascal-format
+msgid "New record omitted: %s"
+msgstr "Novo registro omitido: %s"
 
 #: utils_locale.rsnewupdateavailable
 #, object-pascal-format
@@ -18017,6 +18012,11 @@ msgstr "%d registros encontrados"
 msgctxt "utils_locale.rsrecordsplural"
 msgid "records"
 msgstr "registros"
+
+#: utils_locale.rsrecordupdated
+#, object-pascal-format
+msgid "Updated existing record: %d"
+msgstr "Registro existente atualizado: %d"
 
 #: utils_locale.rsrecreatethumbnailsprompt
 msgctxt "utils_locale.rsrecreatethumbnailsprompt"

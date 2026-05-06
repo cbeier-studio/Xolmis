@@ -84,6 +84,7 @@ type
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
+    procedure AppendLog(const aMsg: String);
     procedure ApplyDarkMode;
     procedure UpdateButtons;
   public
@@ -108,6 +109,15 @@ var
 begin
   S := Trim(AFileName);
   Result := (S <> EmptyStr) and (S <> '.') and (S <> '..');
+end;
+
+procedure TdlgImportCaptures.AppendLog(const aMsg: String);
+begin
+  mProgress.Lines.Append(aMsg);
+
+  //mProgress.SelStart := Length(mProgress.Text);
+  //mProgress.SelLength := 0;
+  mProgress.CaretPos := Point(0, mProgress.Lines.Count - 1);
 end;
 
 procedure TdlgImportCaptures.ApplyDarkMode;
@@ -272,25 +282,25 @@ begin
   try
     if (not stopProcess) and HasImportFileSelected(eJournalFile.FileName) then
     begin
-      mProgress.Lines.Add(rsProgressImportBandingJournal);
+      AppendLog(rsProgressImportBandingJournal);
       ImportBandingJournalV1(eJournalFile.FileName, barProgress);
     end;
 
     if (not stopProcess) and HasImportFileSelected(eEffortFile.FileName) then
     begin
-      mProgress.Lines.Add(rsProgressImportBandingEffort);
+      AppendLog(rsProgressImportBandingEffort);
       ImportBandingEffortV1(eEffortFile.FileName, barProgress);
     end;
 
     if (not stopProcess) and HasImportFileSelected(eCaptureFile.FileName) then
     begin
-      mProgress.Lines.Add(rsProgressImportCaptures);
+      AppendLog(rsProgressImportCaptures);
       ImportBandingDataV1(eCaptureFile.FileName, barProgress);
     end;
   except
     on E: Exception do
     begin
-      mProgress.Lines.Add('Error: ' + E.Message);
+      AppendLog(Format(rsErrorImporting, [E.Message]));
       lblTitleImportFinished.Caption := rsImportCanceled;
       lblSubtitleImportFinished.Caption := rsImportCanceledByError;
       icoImportFinished.ImageIndex := 1;
@@ -301,6 +311,7 @@ begin
 
   if stopProcess then
   begin
+    AppendLog(rsImportCanceledByUser);
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
@@ -309,6 +320,7 @@ begin
   end
   else
   begin
+    AppendLog(rsSuccessfulImport);
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;

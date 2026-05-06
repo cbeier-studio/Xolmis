@@ -4952,11 +4952,6 @@ msgstr ""
 msgid "Select a target table and a source file to import."
 msgstr ""
 
-#: tdlgimport.lblsubtitleimportfinished.caption
-msgctxt "tdlgimport.lblsubtitleimportfinished.caption"
-msgid "The selected file(s) were sucessfully imported."
-msgstr ""
-
 #: tdlgimport.lbltarget.caption
 msgid "Target table: *"
 msgstr ""
@@ -4972,11 +4967,6 @@ msgstr ""
 
 #: tdlgimport.lbltitlefields.caption
 msgid "Fields"
-msgstr ""
-
-#: tdlgimport.lbltitleimportfinished.caption
-msgctxt "tdlgimport.lbltitleimportfinished.caption"
-msgid "Finished importing!"
 msgstr ""
 
 #: tdlgimport.lbltitleprogress.caption
@@ -5345,16 +5335,6 @@ msgstr ""
 
 #: tdlgimportxmobile.lblsourceinstruction.caption
 msgid "Select a source file to import. Fields with asterisk are required."
-msgstr ""
-
-#: tdlgimportxmobile.lblsubtitleimportfinished.caption
-msgctxt "tdlgimportxmobile.lblsubtitleimportfinished.caption"
-msgid "The selected file(s) were sucessfully imported."
-msgstr ""
-
-#: tdlgimportxmobile.lbltitleimportfinished.caption
-msgctxt "tdlgimportxmobile.lbltitleimportfinished.caption"
-msgid "Finished importing!"
 msgstr ""
 
 #: tdlgimportxmobile.lbltitlemap.caption
@@ -15815,6 +15795,11 @@ msgstr ""
 msgid "%s exceeded the maximum length (%d of %d)."
 msgstr ""
 
+#: utils_locale.rsexistingrecordomitted
+#, object-pascal-format
+msgid "Existing record omitted: %s"
+msgstr ""
+
 #: utils_locale.rsexportcanceled
 msgctxt "utils_locale.rsexportcanceled"
 msgid "Export canceled!"
@@ -16277,6 +16262,11 @@ msgstr ""
 #: utils_locale.rsimportimagestitle
 msgctxt "utils_locale.rsimportimagestitle"
 msgid "Import images"
+msgstr ""
+
+#: utils_locale.rsimporting
+msgctxt "utils_locale.rsimporting"
+msgid "Importing"
 msgstr ""
 
 #: utils_locale.rsimportingfile
@@ -17119,6 +17109,11 @@ msgctxt "utils_locale.rsnewpassword"
 msgid "New password"
 msgstr ""
 
+#: utils_locale.rsnewrecordomitted
+#, object-pascal-format
+msgid "New record omitted: %s"
+msgstr ""
+
 #: utils_locale.rsnewupdateavailable
 #, object-pascal-format
 msgctxt "utils_locale.rsnewupdateavailable"
@@ -17874,6 +17869,11 @@ msgstr ""
 #: utils_locale.rsrecordsplural
 msgctxt "utils_locale.rsrecordsplural"
 msgid "records"
+msgstr ""
+
+#: utils_locale.rsrecordupdated
+#, object-pascal-format
+msgid "Updated existing record: %d"
 msgstr ""
 
 #: utils_locale.rsrecreatethumbnailsprompt

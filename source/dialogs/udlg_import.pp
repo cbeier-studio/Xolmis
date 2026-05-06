@@ -63,8 +63,8 @@ type
     gridPreview: TStringGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
-    icoImportFinished: TImage;
     arrowReplaceChars: TImage;
+    icoImportFinished: TImage;
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
     lblCoordinateAxis: TLabel;
@@ -83,6 +83,7 @@ type
     lblEncoding: TLabel;
     lblPrimaryKey: TLabel;
     lblKeyPath: TLabel;
+    lblTitleProgress: TLabel;
     lblTrimValue: TLabel;
     lblSheet: TLabel;
     lblRecordXPath: TLabel;
@@ -97,12 +98,9 @@ type
     lblSourceFile: TLabel;
     lblSourceInstruction: TLabel;
     lblSettingsInstruction: TLabel;
-    lblSubtitleImportFinished: TLabel;
     lblTarget: TLabel;
     lblLookupTable: TLabel;
     lblLookupField: TLabel;
-    lblTitleImportFinished: TLabel;
-    lblTitleProgress: TLabel;
     lblTitleFields: TLabel;
     lblTitleConfirm: TLabel;
     lblTitleSource: TLabel;
@@ -135,9 +133,7 @@ type
     pgSettings: TPage;
     pHaveHeader: TBCPanel;
     pTarget: TBCPanel;
-    pContentFinished: TBCPanel;
     pImportSettings: TBCPanel;
-    pgFinished: TPage;
     pSourceFile: TBCPanel;
     pmfSelectAll: TMenuItem;
     pmfDeselectAll: TMenuItem;
@@ -155,11 +151,9 @@ type
     pgSource: TPage;
     PBar: TProgressBar;
     pmFields: TPopupMenu;
-    pRetry: TBCPanel;
     pSourceOptions: TPanel;
     pLookupTable: TBCPanel;
     pLookupField: TBCPanel;
-    pTitleProgress: TPanel;
     pTitleFields: TPanel;
     pTitleConfirm: TPanel;
     pTitleSource: TPanel;
@@ -171,12 +165,12 @@ type
     sbNext: TButton;
     sbPrior: TButton;
     gridFields: TStringGrid;
-    sbRetry: TBitBtn;
-    sbSaveLog: TBitBtn;
     sboxSettings: TScrollBox;
     sboxField: TScrollBox;
     eRoundPrecision: TSpinEdit;
     sbClearImportSettings: TSpeedButton;
+    sbRetry: TBitBtn;
+    sbSaveLog: TBitBtn;
     sbSaveProfile: TBitBtn;
     tsRemoveAccents: TToggleSwitch;
     tsNormalizeWhitespace: TToggleSwitch;
@@ -256,6 +250,7 @@ type
     ColStats: specialize TFPGObjectList<TColumnTypeStats>;
     procedure AddImportRow(const XRow: TXRow);
     procedure AddPreviewRow(const XRow: TXRow);
+    procedure AppendLog(const aMsg: String);
     procedure ApplyDarkMode;
     procedure CollectColumnStats(const Row: TXRow);
     function CreateRecordForTable(T: TTableType): TXolmisRecord;
@@ -364,6 +359,11 @@ begin
             Repo.Insert(Rec);
             // Insert record history
             WriteRecHistory(FTableType, haCreated, Rec.Id, '', '', '', rsInsertedByImport);
+          end
+          else
+          begin
+            // Log existing record omitted
+            AppendLog(Format(rsExistingRecordOmitted, [XRow.CommaText]));
           end;
 
         erpReplaceExisting:
@@ -372,12 +372,13 @@ begin
             Repo.Update(Rec);
             // Insert record history
             WriteDiff(FTableType, OldRec, Rec, rsEditedByImport);
+
+            AppendLog(Format(rsRecordUpdated, [Rec.Id]));
           end
           else
           begin
-            Repo.Insert(Rec);
-            // Insert record history
-            WriteRecHistory(FTableType, haCreated, Rec.Id, '', '', '', rsInsertedByImport);
+            // Log new record omitted
+            AppendLog(Format(rsNewRecordOmitted, [XRow.CommaText]));
           end;
 
         erpInsertNewUpdateExisting:
@@ -386,6 +387,9 @@ begin
             Repo.Update(Rec);
             // Insert record history
             WriteDiff(FTableType, OldRec, Rec, rsEditedByImport);
+
+            // Log updated record
+            AppendLog(Format(rsRecordUpdated, [Rec.Id]));
           end
           else
           begin
@@ -425,6 +429,15 @@ begin
       gridPreview.Cells[c, r] := XRow.Values[key];
     end;
   end;
+end;
+
+procedure TdlgImport.AppendLog(const aMsg: String);
+begin
+  mProgress.Lines.Append(aMsg);
+
+  //mProgress.SelStart := Length(mProgress.Text);
+  //mProgress.SelLength := 0;
+  mProgress.CaretPos := Point(0, mProgress.Lines.Count - 1);
 end;
 
 procedure TdlgImport.ApplyDarkMode;
@@ -504,7 +517,6 @@ begin
   lblTitleFields.Font.Color := clVioletFG1Dark;
   lblTitleConfirm.Font.Color := clVioletFG1Dark;
   lblTitleProgress.Font.Color := clVioletFG1Dark;
-  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
 
   tsHaveHeader.Color := pHaveHeader.Background.Color;
   tsPrimaryKey.Color := pPrimaryKey.Background.Color;
@@ -1279,6 +1291,13 @@ begin
 
   PBar.Position := 0;
   PBar.Max := 100;
+  mProgress.Lines.Clear;
+  lblTitleProgress.Caption := rsImporting;
+  lblProgressInstruction.Caption := rsPleaseWaitWhileImporting;
+  icoImportFinished.ImageIndex := 2;
+  sbRetry.Visible := False;
+  sbSaveLog.Visible := False;
+  sbSaveProfile.Visible := False;
 
   FileStream := TFileStream.Create(FSourceFile, fmOpenRead or fmShareDenyWrite);
   try
@@ -1309,46 +1328,50 @@ begin
         Importer.Mapper := FFieldMap;
         FImportSettings.OnProgress := @DoProgress;
 
-        mProgress.Lines.Append(rsProgressStarting);
+        AppendLog(rsProgressStarting);
         Importer.Import(FileStream, FImportSettings, @AddImportRow);
         LogEvent(leaFinish, 'Import data');
-        mProgress.Lines.Append(rsFinishedImporting);
+        AppendLog(rsFinishedImporting);
       finally
         Importer.Free;
       end;
     except
       on E: Exception do
       begin
-        mProgress.Append(Format(rsErrorImporting, [E.Message]));
+        AppendLog(Format(rsErrorImporting, [E.Message]));
         DMM.sqlTrans.RollbackRetaining;
-        lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+        lblProgressInstruction.Caption := rsErrorImportFinished;
         icoImportFinished.ImageIndex := 1;
         sbCancel.Caption := rsCaptionClose;
-        nbPages.PageIndex := 5;
+        sbRetry.Visible := True;
+        sbSaveLog.Visible := True;
+        sbSaveProfile.Visible := True;
       end;
     end;
 
     if Assigned(FImportSettings.Cancel) and FImportSettings.Cancel.IsCancellationRequested then
     begin
-      mProgress.Append(rsImportCanceledByUser);
+      AppendLog(rsImportCanceledByUser);
       DMM.sqlTrans.RollbackRetaining;
       LogInfo('Import canceled by user, transaction was rolled back');
-      lblTitleImportFinished.Caption := rsImportCanceled;
-      lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+      lblTitleProgress.Caption := rsImportCanceled;
+      lblProgressInstruction.Caption := rsImportCanceledByUser;
       icoImportFinished.ImageIndex := 1;
     end
     else
     begin
-      mProgress.Append(rsSuccessfulImport);
+      AppendLog(rsSuccessfulImport);
       DMM.sqlTrans.CommitRetaining;
       LogInfo('Import finished successfully, transaction committed');
       DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
       LogInfo('Database optimized');
-      lblTitleImportFinished.Caption := rsFinishedImporting;
-      lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+      lblTitleProgress.Caption := rsFinishedImporting;
+      lblProgressInstruction.Caption := rsSuccessfulImport;
       icoImportFinished.ImageIndex := 0;
     end;
-    nbPages.PageIndex := 5;
+    sbRetry.Visible := True;
+    sbSaveLog.Visible := True;
+    sbSaveProfile.Visible := True;
   finally
     FileStream.Free;
   end;

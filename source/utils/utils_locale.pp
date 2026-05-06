@@ -321,9 +321,13 @@ uses
     rsImportCanceledByUser = 'Import canceled by the user.';
     rsImportCanceledByError = 'An error occurred and the import was canceled.';
     rsBatchCanceledByUser = 'Operation was canceled by user.';
+    rsImporting = 'Importing';
     rsImportingFile = 'Importing file %s';
     rsImportingFiles = 'Importing files...';
     rsPleaseWaitWhileImporting = 'Please wait while importing the selected files.';
+    rsRecordUpdated = 'Updated existing record: %d';
+    rsNewRecordOmitted = 'New record omitted: %s';
+    rsExistingRecordOmitted = 'Existing record omitted: %s';
     rsModuleDoesNotSupportAttachments = 'This module does not support file attachments.';
     rsModuleDoesNotSupportSomeFilesBeingAttached = 'This module does not support some files being attached.';
 

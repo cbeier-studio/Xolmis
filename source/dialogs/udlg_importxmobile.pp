@@ -36,12 +36,13 @@ type
     eExpedition: TEditButton;
     iButtons: TImageList;
     iButtonsDark: TImageList;
-    icoImportFinished: TImage;
     icoFileStatus: TImage;
+    icoImportFinished: TImage;
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
     lblMapInstruction: TLabel;
     lblExpedition: TLabel;
+    lblTitleProgress: TLabel;
     msgSourceFile: TLabel;
     lblTitleMap: TLabel;
     mProgress: TMemo;
@@ -51,31 +52,24 @@ type
     pTitleMap: TPanel;
     SaveDlg: TSaveDialog;
     sbPrevious: TButton;
-    sbSaveLog: TBitBtn;
     gridMap: TStringGrid;
-    lblSubtitleImportFinished: TLabel;
     lblProgressInstruction: TLabel;
     lblSourceFile: TLabel;
     lblSourceInstruction: TLabel;
-    lblTitleImportFinished: TLabel;
-    lblTitleProgress: TLabel;
     lblTitleSource: TLabel;
     lineBottom: TShapeLineBGRA;
     nbPages: TNotebook;
     OpenDlg: TOpenDialog;
     pBottom: TPanel;
-    pContentFinished: TBCPanel;
     pContentProgress: TPanel;
     pContentSource: TPanel;
     pgProgress: TPage;
-    pgFinished: TPage;
     pgSource: TPage;
-    pRetry: TBCPanel;
-    pTitleProgress: TPanel;
     pTitleSource: TPanel;
     sbCancel: TButton;
     sbNext: TButton;
     sbRetry: TBitBtn;
+    sbSaveLog: TBitBtn;
     procedure btnHelpClick(Sender: TObject);
     procedure eExpeditionButtonClick(Sender: TObject);
     procedure eExpeditionKeyPress(Sender: TObject; var Key: char);
@@ -113,6 +107,7 @@ type
     procedure ApplyDarkMode;
     function AddSurvey: Integer;
     function AddNest: Integer;
+    procedure AppendLog(const aMsg: String);
     function GetContentType: TMobileContentType;
     function GetMethodFromInventory(aInventory: TMobileInventory): Integer;
     function GetNestFromMobile(aNest: TMobileNest): Integer;
@@ -276,6 +271,15 @@ begin
     aDataSet.Close;
 end;
 
+procedure TdlgImportXMobile.AppendLog(const aMsg: String);
+begin
+  mProgress.Lines.Append(aMsg);
+
+  //mProgress.SelStart := Length(mProgress.Text);
+  //mProgress.SelLength := 0;
+  mProgress.CaretPos := Point(0, mProgress.Lines.Count - 1);
+end;
+
 procedure TdlgImportXMobile.ApplyDarkMode;
 begin
   //pContentFinished.Background.Color := ;
@@ -290,7 +294,6 @@ begin
   lblTitleSource.Font.Color := clVioletFG1Dark;
   lblTitleMap.Font.Color := clVioletFG1Dark;
   lblTitleProgress.Font.Color := clVioletFG1Dark;
-  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
 
   icoFileStatus.Images := imgFinishedDark;
   icoImportFinished.Images := imgFinishedDark;
@@ -910,7 +913,7 @@ begin
             // insert of update weather logs
             ImportWeather(Inventory);
 
-            mProgress.Lines.Add(Format(rsMobileSurveyUpdated,
+            AppendLog(Format(rsMobileSurveyUpdated,
               [aSurveyKey, GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
           end
           else
@@ -933,7 +936,7 @@ begin
             // insert weather logs
             ImportWeather(Inventory);
 
-            mProgress.Lines.Add(Format(rsMobileSurveyCreated,
+            AppendLog(Format(rsMobileSurveyCreated,
               [aSurveyKey, GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
           end;
         end;
@@ -953,38 +956,40 @@ begin
   except
     on E: Exception do
     begin
-      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      AppendLog(Format(rsErrorImporting, [E.Message]));
       DMM.sqlTrans.RollbackRetaining;
-      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      lblProgressInstruction.Caption := rsErrorImportFinished;
       icoImportFinished.ImageIndex := 1;
       sbCancel.Caption := rsCaptionClose;
-      nbPages.PageIndex := 3;
+      sbRetry.Visible := True;
+      sbSaveLog.Visible := True;
     end;
   end;
   LogEvent(leaFinish, 'Import inventories from JSON');
 
   if stopProcess then
   begin
-    mProgress.Append(rsImportCanceledByUser);
+    AppendLog(rsImportCanceledByUser);
     DMM.sqlTrans.RollbackRetaining;
     LogInfo('Import canceled by user, transaction was rolled back');
-    lblTitleImportFinished.Caption := rsImportCanceled;
-    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    lblTitleProgress.Caption := rsImportCanceled;
+    lblProgressInstruction.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
   begin
-    mProgress.Append(rsSuccessfulImport);
+    AppendLog(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
     LogInfo('Import finished successfully, transaction committed');
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     LogInfo('Database optimized');
-    lblTitleImportFinished.Caption := rsFinishedImporting;
-    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    lblTitleProgress.Caption := rsFinishedImporting;
+    lblProgressInstruction.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
   end;
+  sbRetry.Visible := True;
+  sbSaveLog.Visible := True;
   sbCancel.Caption := rsCaptionClose;
-  nbPages.PageIndex := 3;
 end;
 
 procedure TdlgImportXMobile.ImportNests;
@@ -1041,7 +1046,7 @@ begin
             // insert or update eggs
             ImportEggs(Nest);
 
-            mProgress.Lines.Add(Format(rsMobileNestUpdated,
+            AppendLog(Format(rsMobileNestUpdated,
               [aNestKey, GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
           end
           else
@@ -1059,7 +1064,7 @@ begin
             // insert eggs
             ImportEggs(Nest);
 
-            mProgress.Lines.Add(Format(rsMobileNestCreated,
+            AppendLog(Format(rsMobileNestCreated,
               [aNestKey, GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
           end;
         end;
@@ -1079,38 +1084,40 @@ begin
   except
     on E: Exception do
     begin
-      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      AppendLog(Format(rsErrorImporting, [E.Message]));
       DMM.sqlTrans.RollbackRetaining;
-      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      lblProgressInstruction.Caption := rsErrorImportFinished;
       icoImportFinished.ImageIndex := 1;
       sbCancel.Caption := rsCaptionClose;
-      nbPages.PageIndex := 3;
+      sbRetry.Visible := True;
+      sbSaveLog.Visible := True;
     end;
   end;
   LogEvent(leaFinish, 'Import nests from JSON');
 
   if stopProcess then
   begin
-    mProgress.Append(rsImportCanceledByUser);
+    AppendLog(rsImportCanceledByUser);
     DMM.sqlTrans.RollbackRetaining;
     LogInfo('Import canceled by user, transaction was rolled back');
-    lblTitleImportFinished.Caption := rsImportCanceled;
-    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    lblTitleProgress.Caption := rsImportCanceled;
+    lblProgressInstruction.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
   begin
-    mProgress.Append(rsSuccessfulImport);
+    AppendLog(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
     LogInfo('Import finished successfully, transaction committed');
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     LogInfo('Database optimized');
-    lblTitleImportFinished.Caption := rsFinishedImporting;
-    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    lblTitleProgress.Caption := rsFinishedImporting;
+    lblProgressInstruction.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
   end;
   sbCancel.Caption := rsCaptionClose;
-  nbPages.PageIndex := 3;
+  sbRetry.Visible := True;
+  sbSaveLog.Visible := True;
 end;
 
 procedure TdlgImportXMobile.ImportPois(Inventory: TMobileInventory; Species: TMobileSpecies);
@@ -1356,7 +1363,7 @@ begin
               FreeAndNil(aOldSpecimen);
             end;
 
-            mProgress.Lines.Add(Format(rsMobileSpecimenUpdated,
+            AppendLog(Format(rsMobileSpecimenUpdated,
               [aSpecimenKey, GetName(TBL_SPECIMENS, COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
           end
           else
@@ -1368,7 +1375,7 @@ begin
             // write record history
             WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByImport);
 
-            mProgress.Lines.Add(Format(rsMobileSpecimenCreated,
+            AppendLog(Format(rsMobileSpecimenCreated,
               [aSpecimenKey, GetName(TBL_SPECIMENS, COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
           end;
         end;
@@ -1388,38 +1395,40 @@ begin
   except
     on E: Exception do
     begin
-      mProgress.Append(Format(rsErrorImporting, [E.Message]));
+      AppendLog(Format(rsErrorImporting, [E.Message]));
       DMM.sqlTrans.RollbackRetaining;
-      lblSubtitleImportFinished.Caption := rsErrorImportFinished;
+      lblProgressInstruction.Caption := rsErrorImportFinished;
       icoImportFinished.ImageIndex := 1;
       sbCancel.Caption := rsCaptionClose;
-      nbPages.PageIndex := 3;
+      sbRetry.Visible := True;
+      sbSaveLog.Visible := True;
     end;
   end;
   LogEvent(leaFinish, 'Import specimens from JSON');
 
   if stopProcess then
   begin
-    mProgress.Append(rsImportCanceledByUser);
+    AppendLog(rsImportCanceledByUser);
     DMM.sqlTrans.RollbackRetaining;
     LogInfo('Import canceled by user, transaction was rolled back');
-    lblTitleImportFinished.Caption := rsImportCanceled;
-    lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
+    lblTitleProgress.Caption := rsImportCanceled;
+    lblProgressInstruction.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
   begin
-    mProgress.Append(rsSuccessfulImport);
+    AppendLog(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
     LogInfo('Import finished successfully, transaction committed');
     DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
     LogInfo('Database optimized');
-    lblTitleImportFinished.Caption := rsFinishedImporting;
-    lblSubtitleImportFinished.Caption := rsSuccessfulImport;
+    lblTitleProgress.Caption := rsFinishedImporting;
+    lblProgressInstruction.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
   end;
   sbCancel.Caption := rsCaptionClose;
-  nbPages.PageIndex := 3;
+  sbRetry.Visible := True;
+  sbSaveLog.Visible := True;
 end;
 
 procedure TdlgImportXMobile.ImportSurveyMember(aSurvey, aObserver: Integer);
@@ -1931,6 +1940,12 @@ begin
       Exit;
     end;
 
+    lblTitleProgress.Caption := rsImporting;
+    lblProgressInstruction.Caption := rsPleaseWaitWhileImporting;
+    icoImportFinished.ImageIndex := 4;
+    sbRetry.Visible := False;
+    sbSaveLog.Visible := False;
+
     nbPages.PageIndex := 2;
 
     sbPrevious.Visible := False;
@@ -1971,6 +1986,7 @@ begin
   nbPages.PageIndex := 0;
   sbNext.Visible := True;
   sbCancel.Caption := rsCaptionCancel;
+  mProgress.Lines.Clear;
 end;
 
 procedure TdlgImportXMobile.sbSaveLogClick(Sender: TObject);
