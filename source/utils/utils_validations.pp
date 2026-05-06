@@ -67,6 +67,8 @@ type
   function TryParseRangeText(const AValue: String; out AStartValue, AEndValue: String): Boolean;
   function TryParseIntegerInterval(const AValue: String; out AOut1, AOut2: Integer): Boolean;
   function TryParseYearInterval(const AValue: String; out AYear1, AYear2: Integer): Boolean;
+  function TryParsePartialDateFlexible(const AValue: String; out ADate: TPartialDate): Boolean;
+  function TryParsePartialDateIntervalFlexible(const AValue: String; out ADate1, ADate2: TPartialDate): Boolean;
   function TryParseMonthYearFlexible(const AValue: String; out AYear, AMonth: Integer): Boolean;
   function TryParseMonthYearInterval(const AValue: String; out AYear1, AMonth1, AYear2, AMonth2: Integer): Boolean;
   function TryParseDateIntervalFlexible(const AValue: String; out ADate1, ADate2: TDateTime): Boolean;
@@ -798,6 +800,82 @@ begin
     T := AYear1;
     AYear1 := AYear2;
     AYear2 := T;
+  end;
+
+  Result := True;
+end;
+
+function TryParsePartialDateFlexible(const AValue: String; out ADate: TPartialDate): Boolean;
+var
+  S: String;
+  P1, P2, P3: String;
+begin
+  Result := False;
+  ADate.Clear;
+
+  S := Trim(AValue);
+  if S = EmptyStr then
+    Exit;
+
+  S := StringReplace(S, ' ', '', [rfReplaceAll]);
+  S := StringReplace(S, '.', '/', [rfReplaceAll]);
+  S := StringReplace(S, '-', '/', [rfReplaceAll]);
+
+  if ExecRegExpr('^\d{4}$', S) then
+  begin
+    ADate.Encode(StrToIntDef(S, 0), 0, 0, '-');
+    Exit(ValidPartialDate(ADate));
+  end;
+
+  if ExecRegExpr('^(\d{4}/\d{1,2}|\d{1,2}/\d{4})$', S) then
+  begin
+    P1 := ExtractDelimited(1, S, ['/']);
+    P2 := ExtractDelimited(2, S, ['/']);
+
+    if Length(P1) = 4 then
+      ADate.Encode(StrToIntDef(P1, 0), StrToIntDef(P2, 0), 0, '-')
+    else
+      ADate.Encode(StrToIntDef(P2, 0), StrToIntDef(P1, 0), 0, '-');
+
+    Exit(ValidPartialDate(ADate));
+  end;
+
+  if ExecRegExpr('^(\d{4}/\d{1,2}/\d{1,2}|\d{1,2}/\d{1,2}/\d{4})$', S) then
+  begin
+    P1 := ExtractDelimited(1, S, ['/']);
+    P2 := ExtractDelimited(2, S, ['/']);
+    P3 := ExtractDelimited(3, S, ['/']);
+
+    if Length(P1) = 4 then
+      ADate.Encode(StrToIntDef(P1, 0), StrToIntDef(P2, 0), StrToIntDef(P3, 0), '-')
+    else
+      ADate.Encode(StrToIntDef(P3, 0), StrToIntDef(P2, 0), StrToIntDef(P1, 0), '-');
+
+    Exit(ValidPartialDate(ADate));
+  end;
+end;
+
+function TryParsePartialDateIntervalFlexible(const AValue: String; out ADate1, ADate2: TPartialDate): Boolean;
+var
+  V1, V2: String;
+  T: TPartialDate;
+begin
+  Result := False;
+  ADate1.Clear;
+  ADate2.Clear;
+
+  if not TryParseRangeText(AValue, V1, V2) then
+    Exit;
+  if not TryParsePartialDateFlexible(V1, ADate1) then
+    Exit;
+  if not TryParsePartialDateFlexible(V2, ADate2) then
+    Exit;
+
+  if ADate1.ToSearchKey > ADate2.ToSearchKey then
+  begin
+    T := ADate1;
+    ADate1 := ADate2;
+    ADate2 := T;
   end;
 
   Result := True;

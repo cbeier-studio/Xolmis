@@ -88,7 +88,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_themes, utils_math, utils_graphics, utils_validations,
+  utils_locale, utils_global, utils_themes, utils_math, utils_graphics, utils_validations, utils_system,
   data_consts, data_columns, data_filters, data_getvalue,
   modules_sightings, modules_breeding, modules_specimens,
   models_media, models_record_types, uDarkStyleParams,
@@ -336,6 +336,7 @@ var
   dt: TDateTime;
   Crit: TCriteriaType;
   ano, mes, dia: Word;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -358,6 +359,28 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      // Date interval
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_BANDING_DATE, rscBandingDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_BAND_CHANGE_DATE, rscBandChangeDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_BIRTH_YEAR, rscBirthDate, sdtSplitDate, crBetween,
+            True, PartialStart.ToSearchKey, PartialEnd.ToSearchKey, '', COL_BIRTH_MONTH, COL_BIRTH_DAY)
+        );
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_DEATH_YEAR, rscDeathDate, sdtSplitDate, crBetween,
+            True, PartialStart.ToSearchKey, PartialEnd.ToSearchKey, '', COL_DEATH_MONTH, COL_DEATH_DAY)
+        );
+      end
+      else
       // ID and year
       if TryStrToInt(aValue, i) then
       begin
@@ -1084,6 +1107,7 @@ var
   Tm1, Tm2: TDateTime;
   Crit: TCriteriaType;
   V1, V2: String;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -1106,23 +1130,12 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
-      // Year interval
-      if TryParseYearInterval(aValue, y1, y2) then
-      begin
-        V1 := IntToStr(y1);
-        V2 := IntToStr(y2);
-        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtYear, crBetween,
-          True, V1, V2));
-      end
-      else
-      // Date interval
-      if TryParseDateIntervalFlexible(aValue, Dt1, Dt2) then
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
       begin
         g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
         SearchConfig.TextFilters[g].Fields.Add(
           TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtDate, crBetween,
-            True, FormatDateTime('yyyy-mm-dd', Dt1), FormatDateTime('yyyy-mm-dd', Dt2))
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
         );
       end
       else
@@ -1133,18 +1146,6 @@ begin
         SearchConfig.TextFilters[g].Fields.Add(
           TSearchField.Create(COL_CAPTURE_TIME, rscTime, sdtTime, crBetween,
             True, FormatDateTime('hh:nn:ss', Tm1), FormatDateTime('hh:nn:ss', Tm2))
-        );
-      end
-      else
-      // Month/year interval
-      if TryParseMonthYearInterval(aValue, Y1, M1, Y2, M2) then
-      begin
-        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
-        SearchConfig.TextFilters[g].Fields.Add(
-          TSearchField.Create(COL_CAPTURE_DATE, rscDate, sdtMonthYear, crBetween,
-            True,
-            Format('%.4d-%.2d', [Y1, M1]),
-            Format('%.4d-%.2d', [Y2, M2]))
         );
       end
       else
@@ -1781,6 +1782,7 @@ var
   i, g, m, y: Integer;
   dt: TDateTime;
   Crit: TCriteriaType;
+  PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
 
@@ -1803,6 +1805,15 @@ begin
 
     with TfrmCustomGrid(FOwner) do
     begin
+      if TryParsePartialDateIntervalFlexible(aValue, PartialStart, PartialEnd) then
+      begin
+        g := SearchConfig.TextFilters.Add(TSearchGroup.Create);
+        SearchConfig.TextFilters[g].Fields.Add(
+          TSearchField.Create(COL_SAMPLE_DATE, rscDate, sdtDate, crBetween,
+            True, PartialStart.ToStartDateString, PartialEnd.ToEndDateString)
+        );
+      end
+      else
       // ID and year
       if TryStrToInt(aValue, i) then
       begin

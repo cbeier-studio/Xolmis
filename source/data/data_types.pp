@@ -776,10 +776,18 @@ const
   MaskSplitDateV1: String = '(%s = %s)';
   MaskSplitDateV2: String = '(%s = %s AND %s = %s)';
   MaskSplitDateV3: String = '(%s = %s AND %s = %s AND %s = %s)';
+  MaskSplitDateBetween: String = '(%s BETWEEN %s AND %s)';
 var
   i, f: Integer;
   S, AndOrWhere, Msk, aSort: String;
   V1, V2, StartExpr, EndExpr: String;
+
+  function GetSplitDateRangeExpr(const aYearField, aMonthField, aDayField: String): String;
+  begin
+    Result := Format(
+      'CAST(printf(''%%04d%%02d%%02d'', coalesce(%s, 0), coalesce(%s, 0), coalesce(%s, 0)) AS INTEGER)',
+      [aYearField, aMonthField, aDayField]);
+  end;
 
   // Select mask using criteria and data type
   function GetValueMask(aCriteriaType: TCriteriaType; aDataType: TSearchDataType; aValue2, aValue3: String): String;
@@ -857,6 +865,9 @@ var
             end;
           sdtSplitDate:
             begin
+              if aCriteriaType = crBetween then
+                Result := MaskSplitDateBetween
+              else
               if aValue3 <> '' then
                 Result := MaskSplitDateV3
               else
@@ -997,6 +1008,15 @@ begin
               end;
               crBetween:
               begin
+                if FDataType = sdtSplitDate then
+                begin
+                  if not UseTablePrefix then
+                    S := S + Format(Msk, [GetSplitDateRangeExpr(FFieldName, FAuxField1, FAuxField2), V1, V2])
+                  else
+                    S := S + Format(Msk, [GetSplitDateRangeExpr(FTableAlias+'.'+FFieldName, FTableAlias+'.'+FAuxField1,
+                      FTableAlias+'.'+FAuxField2), V1, V2]);
+                end
+                else
                 if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2])
                 else
@@ -1130,6 +1150,15 @@ begin
               end;
               crBetween:
               begin
+                if FDataType = sdtSplitDate then
+                begin
+                  if not UseTablePrefix then
+                    S := S + Format(Msk, [GetSplitDateRangeExpr(FFieldName, FAuxField1, FAuxField2), V1, V2])
+                  else
+                    S := S + Format(Msk, [GetSplitDateRangeExpr(FTableAlias+'.'+FFieldName, FTableAlias+'.'+FAuxField1,
+                      FTableAlias+'.'+FAuxField2), V1, V2]);
+                end
+                else
                 if not UseTablePrefix then
                   S := S + Format(Msk, [FFieldName, CRITERIA_OPERATORS[FCriteria], V1, V2])
                 else

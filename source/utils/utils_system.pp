@@ -70,6 +70,10 @@ type
     YearFirst: Boolean;
     Separator: Char;
     function ToString: String;
+    function ToSqlString: String;
+    function ToSearchKey: String;
+    function ToStartDateString: String;
+    function ToEndDateString: String;
     procedure Encode(aYear, aMonth, aDay: Integer; aSeparator: Char);
     procedure Clear;
     procedure Today;
@@ -385,6 +389,56 @@ begin
     S := d + Separator + m + Separator + Y;
 
   Result := S;
+end;
+
+function TPartialDate.ToSqlString: String;
+begin
+  Result := EmptyStr;
+  if Year <= 0 then
+    Exit;
+
+  Result := Format('%.4d', [Year]);
+  if Month > 0 then
+  begin
+    Result := Result + '-' + Format('%.2d', [Month]);
+    if Day > 0 then
+      Result := Result + '-' + Format('%.2d', [Day]);
+  end;
+end;
+
+function TPartialDate.ToSearchKey: String;
+begin
+  Result := Format('%.4d%.2d%.2d', [Year, Month, Day]);
+end;
+
+function TPartialDate.ToStartDateString: String;
+begin
+  Result := EmptyStr;
+  if Year <= 0 then
+    Exit;
+
+  if Month <= 0 then
+    Result := Format('%.4d-01-01', [Year])
+  else
+  if Day <= 0 then
+    Result := Format('%.4d-%.2d-01', [Year, Month])
+  else
+    Result := Format('%.4d-%.2d-%.2d', [Year, Month, Day]);
+end;
+
+function TPartialDate.ToEndDateString: String;
+begin
+  Result := EmptyStr;
+  if Year <= 0 then
+    Exit;
+
+  if Month <= 0 then
+    Result := Format('%.4d-12-31', [Year])
+  else
+  if Day <= 0 then
+    Result := Format('%.4d-%.2d-%.2d', [Year, Month, DaysInAMonth(Year, Month)])
+  else
+    Result := Format('%.4d-%.2d-%.2d', [Year, Month, Day]);
 end;
 
 { TUsageStat }
