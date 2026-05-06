@@ -17,8 +17,7 @@ The wizard is divided into five steps:
 1. **Source and destination selection**  
 2. **General import settings**  
 3. **Field mapping**  
-4. **Import progress**  
-5. **Completion**
+4. **Import progress** and **completion**
 
 Each step is described in detail below.
 
@@ -101,41 +100,22 @@ You can adjust each mapping manually. For each field, the following options are 
 
 The goal of this step is to ensure that every imported value matches the structure and constraints of the Xolmis database.
 
-### 4. Import progress
+### 4. Import progress and completion
 
 Once the mapping is confirmed, the wizard begins the import process.
 
 The progress screen displays:
 
-- **Number of processed rows**  
-- **Warnings** (non-critical issues)  
-- **Errors** (rows that could not be imported)
+- **Progress bar**  
+- **Import log** (with main tasks and errors, if occurred)  
 
-If errors occur, the wizard provides:
+If errors occur, see the import log to investigate the cause. You can save the import log to review later. This allows you to correct issues and re-import only the affected rows if needed.
 
-- a list of problematic rows  
-- the reason for each error  
-- an option to export the error report for review
+When the import finishes, the wizard shows the import log and some buttons:
 
-This allows you to correct issues and re-import only the affected rows if needed.
-
-### 5. Completion
-
-When the import finishes, the wizard shows a summary:
-
-- Total rows processed  
-- Rows successfully imported  
-- Rows skipped  
-- Rows with errors  
-- Destination table  
-- Time elapsed
-
-You can then:
-
-- **Open the destination table** to review the imported data  
-- **Save the import profile** for future use  
-- **Export the error report** (if applicable)  
-- **Start a new import**
+- **Try again** to start over and import another file or re-import corrected rows  
+- **Save import profile** for future use  
+- **Save log** to review the import process and issues  
 
 ### Saving and reusing import profiles
 

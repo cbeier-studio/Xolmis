@@ -17,8 +17,7 @@ O assistente é dividido em cinco etapas:
 1. **Seleção da origem e destino**  
 2. **Configurações gerais de importação**  
 3. **Mapeamento de campos**  
-4. **Progresso da importação**  
-5. **Conclusão**
+4. **Progresso da importação** e **conclusão**
 
 Cada etapa é descrita em detalhes abaixo.
 
@@ -107,35 +106,16 @@ Após confirmar o mapeamento, o assistente inicia o processo de importação.
 
 A tela de progresso exibe:
 
-- **Número de linhas processadas**  
-- **Avisos** (problemas não críticos)  
-- **Erros** (linhas que não puderam ser importadas)
+- **Barra de progress**  
+- **Log de importação** (com as tarefas principais e erros, se ocorreram)  
 
-Se ocorrerem erros, o assistente fornece:
+Se ocorrerem erros, consulte o log de importação para investigar a causa. Você pode salvar o log de importação para revisar depois. Isso permite corrigir os problemas e reimportar apenas as linhas afetadas.
 
-- uma lista das linhas problemáticas  
-- o motivo de cada erro  
-- uma opção para exportar o relatório de erros
+Quando a importação termina, o assistente mostra o log de importação e alguns botões:
 
-Isso permite corrigir os problemas e reimportar apenas as linhas afetadas.
-
-### 5. Conclusão
-
-Quando a importação termina, o assistente mostra um resumo:
-
-- Total de linhas processadas  
-- Linhas importadas com sucesso  
-- Linhas ignoradas  
-- Linhas com erro  
-- Tabela de destino  
-- Tempo decorrido
-
-Você pode então:
-
-- **Abrir a tabela de destino** para revisar os dados importados  
-- **Salvar o perfil de importação** para uso futuro  
-- **Exportar o relatório de erros** (se houver)  
-- **Iniciar uma nova importação**
+- **Tentar de novo** para reiniciar e importar um outro arquivo ou reimportar registros corrigidos  
+- **Salvar perfil de importação** para uso futuro  
+- **Salvar log** para revisar o processo e problemas de importação
 
 ### Salvando e reutilizando perfis de importação
 
