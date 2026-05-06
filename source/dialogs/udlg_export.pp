@@ -22,7 +22,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, DB, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, EditBtn, CheckLst, StdCtrls,
-  Buttons, ComboEx, Spin, atshapelinebgra, BCPanel, BCComboBox, ToggleSwitch, fpDBExport, fpsexport, io_core;
+  Buttons, ComboEx, Spin, Menus, atshapelinebgra, BCPanel, BCComboBox, ToggleSwitch, fpDBExport, fpsexport,
+  io_core;
 
 type
 
@@ -70,6 +71,10 @@ type
     lblSheet: TLabel;
     lineBottom: TShapeLineBGRA;
     pDateFormat: TBCPanel;
+    pmMark: TPopupMenu;
+    pmmInvertMarked: TMenuItem;
+    pmmMarkAll: TMenuItem;
+    pmmUnmarkAll: TMenuItem;
     pNumberFormat: TBCPanel;
     pTimeFormat: TBCPanel;
     pCoordinatesFormat: TBCPanel;
@@ -107,6 +112,9 @@ type
     procedure cbFileTypeChange(Sender: TObject);
     procedure cklbColumnsClickCheck(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure pmmInvertMarkedClick(Sender: TObject);
+    procedure pmmMarkAllClick(Sender: TObject);
+    procedure pmmUnmarkAllClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
     FDataSet: TDataSet;
@@ -130,8 +138,9 @@ var
 implementation
 
 uses
+  {$IFDEF WINDOWS}Windows,{$ENDIF}
   utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams, io_json,
-  io_xml;
+  io_xml, io_csv;
 
 {$R *.lfm}
 
@@ -183,6 +192,7 @@ begin
   tsIncludeChildRecords.Color := pIncludeChildRecords.Background.Color;
   tsTranslateFieldNames.Color := pTranslateFieldNames.Background.Color;
 
+  pmMark.Images := iButtonsDark;
   cbFiletype.Images := iIconsDark;
 
   pBottom.Color := clSolidBGBaseDark;
@@ -214,9 +224,9 @@ begin
   case cbFileType.ItemIndex of
     0: // CSV
     begin
-      //pEncoding.Visible := True;
+      pEncoding.Visible := True;
       pTranslateFieldNames.Visible := True;
-      //pTrimValues.Visible := True;
+      pTrimValues.Visible := True;
       pForceNDJSON.Visible := False;
       pIgnoreNulls.Visible := False;
       //pIncludeChildRecords.Visible := False;
@@ -235,9 +245,9 @@ begin
     end;
     1: // JSON
     begin
-      //pEncoding.Visible := True;
+      pEncoding.Visible := True;
       pTranslateFieldNames.Visible := False;
-      //pTrimValues.Visible := True;
+      pTrimValues.Visible := True;
       pForceNDJSON.Visible := True;
       pIgnoreNulls.Visible := True;
       //pIncludeChildRecords.Visible := True;
@@ -256,9 +266,9 @@ begin
     end;
     2: // ODS
     begin
-      //pEncoding.Visible := True;
+      pEncoding.Visible := False;
       pTranslateFieldNames.Visible := True;
-      //pTrimValues.Visible := True;
+      pTrimValues.Visible := True;
       pForceNDJSON.Visible := False;
       pIgnoreNulls.Visible := False;
       //pIncludeChildRecords.Visible := False;
@@ -277,9 +287,9 @@ begin
     end;
     3: // XLSX
     begin
-      //pEncoding.Visible := True;
+      pEncoding.Visible := False;
       pTranslateFieldNames.Visible := True;
-      //pTrimValues.Visible := True;
+      pTrimValues.Visible := True;
       pForceNDJSON.Visible := False;
       pIgnoreNulls.Visible := False;
       //pIncludeChildRecords.Visible := False;
@@ -298,9 +308,9 @@ begin
     end;
     4: // XML
     begin
-      //pEncoding.Visible := True;
+      pEncoding.Visible := False;
       pTranslateFieldNames.Visible := False;
-      //pTrimValues.Visible := True;
+      pTrimValues.Visible := True;
       pForceNDJSON.Visible := False;
       pIgnoreNulls.Visible := True;
       //pIncludeChildRecords.Visible := True;
@@ -329,33 +339,68 @@ end;
 
 procedure TdlgExport.ExportToCSV;
 var
+  CSVExp: TXolmisCSVExporter;
+  FS: TFileStream;
+  Row: TXRow;
+  BM: TBookmark;
+  SelectedDbFields: TStringList;
+  SelectedOutFields: TStringList;
   i: Integer;
-  expField: TExportFieldItem;
 begin
-  DMM.CSVExport.FileName := FFileName;
-  DMM.CSVExport.Dataset := FDataSet;
-  DMM.CSVExport.ExportFields.Clear;
-  // Set format settings
-  DMM.CSVExport.FormatSettings.HeaderRow := FExportSettings.HasHeader;
-  DMM.CSVExport.FormatSettings.FieldDelimiter := FExportSettings.Delimiter;
-  DMM.CSVExport.FormatSettings.QuoteChar := FExportSettings.QuoteChar;
-  DMM.CSVExport.FormatSettings.DecimalSeparator := FExportSettings.DecimalSeparator;
-  //DMM.CSVExport.FormatSettings.DateFormat := FExportSettings.DateFormat;
-  //DMM.CSVExport.FormatSettings.TimeFormat := FExportSettings.TimeFormat;
-  //DMM.CSVExport.FormatSettings.DateTimeFormat := FExportSettings.DateFormat + ' ' + FExportSettings.TimeFormat;
-  // Set columns to export
-  for i := 0 to cklbColumns.Count - 1 do
-    if cklbColumns.Checked[i] then
-    begin
-      expField := DMM.CSVExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-      if FExportSettings.TranslateFieldNames then
-        expField.ExportedName := cklbColumns.Items[i];
-    end;
+  CSVExp := nil;
+  FS := nil;
+  SelectedDbFields := nil;
+  SelectedOutFields := nil;
 
-  if DMM.CSVExport.Execute > 0 then
-    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-  else
-    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+  BM := FDataSet.GetBookmark;
+  FDataSet.DisableControls;
+  try
+    try
+      CSVExp := TXolmisCSVExporter.Create;
+      SelectedDbFields := TStringList.Create;
+      SelectedOutFields := TStringList.Create;
+
+      // Build selected fields in UI order
+      for i := 0 to cklbColumns.Count - 1 do
+        if cklbColumns.Checked[i] then
+        begin
+          SelectedDbFields.Add(FDataSet.Fields[i].FieldName);
+          if FExportSettings.TranslateFieldNames then
+            SelectedOutFields.Add(cklbColumns.Items[i])
+          else
+            SelectedOutFields.Add(FDataSet.Fields[i].FieldName);
+        end;
+
+      // ExportFields controls which columns TXolmisCSVExporter will output
+      FExportSettings.ExportFields := SelectedOutFields.CommaText;
+
+      FDataSet.First;
+      while not FDataSet.EOF do
+      begin
+        Row := TXRow.Create;
+        for i := 0 to SelectedDbFields.Count - 1 do
+          Row.Values[SelectedOutFields[i]] := FDataSet.FieldByName(SelectedDbFields[i]).AsString;
+
+        CSVExp.AddRow(Row);
+        FDataSet.Next;
+      end;
+
+      FS := TFileStream.Create(FFileName, fmCreate);
+      CSVExp.Export(FS, FExportSettings, nil);
+
+      MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation);
+    except
+      on E: Exception do
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+    end;
+  finally
+    FS.Free;
+    CSVExp.Free;
+    SelectedDbFields.Free;
+    SelectedOutFields.Free;
+    FDataSet.GotoBookmark(BM);
+    FDataSet.EnableControls;
+  end;
 end;
 
 procedure TdlgExport.ExportToJSON;
@@ -606,6 +651,31 @@ begin
   end;
 end;
 
+procedure TdlgExport.pmmInvertMarkedClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  cklbColumns.Items.BeginUpdate;
+  try
+    for i := 0 to cklbColumns.Count - 1 do
+    begin
+      cklbColumns.Checked[i] := not cklbColumns.Checked[i];
+    end;
+  finally
+    cklbColumns.Items.EndUpdate;
+  end;
+end;
+
+procedure TdlgExport.pmmMarkAllClick(Sender: TObject);
+begin
+  cklbColumns.CheckAll(cbChecked);
+end;
+
+procedure TdlgExport.pmmUnmarkAllClick(Sender: TObject);
+begin
+  cklbColumns.CheckAll(cbUnchecked);
+end;
+
 procedure TdlgExport.sbRunClick(Sender: TObject);
 begin
   SetExportSettings;
@@ -656,12 +726,30 @@ procedure TdlgExport.SetExportSettings;
 var
   cOther: Char;
   sOther: String;
+  SysEncoding: String;
 begin
+  {$IFDEF WINDOWS}
+  SysEncoding := 'cp' + IntToStr(GetACP);
+  {$ELSE}
+  SysEncoding := 'cp' + IntToStr(DefaultSystemCodePage);
+  if DefaultSystemCodePage <= 0 then
+    SysEncoding := TEncoding.Default.EncodingName;
+  {$ENDIF}
+
   { Encoding }
   case cbEncoding.ItemIndex of
-    0: FExportSettings.Encoding := TEncoding.Default.EncodingName;
+    0: FExportSettings.Encoding := SysEncoding;
     1: FExportSettings.Encoding := TEncoding.UTF8.EncodingName;
+  else
+    FExportSettings.Encoding := SysEncoding;
   end;
+
+  // For XML/ODS/XLSX, encoding is effectively Unicode/UTF-8 by format/writer design.
+  // Ignore "System encoding" selection for these formats.
+  case cbFileType.ItemIndex of
+    2, 3, 4: FExportSettings.Encoding := TEncoding.UTF8.EncodingName; // ODS, XLSX, XML
+  end;
+
   { Translate field names }
   FExportSettings.TranslateFieldNames := tsTranslateFieldNames.Checked;
   { Header }

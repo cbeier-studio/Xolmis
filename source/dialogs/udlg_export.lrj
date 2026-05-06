@@ -34,5 +34,8 @@
 {"hash":50,"name":"tdlgexport.cbindentation.text","sourcebytes":[50],"value":"2"},
 {"hash":157485763,"name":"tdlgexport.lbltranslatefieldnames.caption","sourcebytes":[84,114,97,110,115,108,97,116,101,32,102,105,101,108,100,32,110,97,109,101,115],"value":"Translate field names"},
 {"hash":29748307,"name":"tdlgexport.lblincludechildrecords.caption","sourcebytes":[73,110,99,108,117,100,101,32,114,101,108,97,116,101,100,32,114,101,99,111,114,100,115],"value":"Include related records"},
-{"hash":254878570,"name":"tdlgexport.lblfiletype.caption","sourcebytes":[83,101,108,101,99,116,32,116,104,101,32,102,105,108,101,32,102,111,114,109,97,116,32,116,111,32,101,120,112,111,114,116,58],"value":"Select the file format to export:"}
+{"hash":254878570,"name":"tdlgexport.lblfiletype.caption","sourcebytes":[83,101,108,101,99,116,32,116,104,101,32,102,105,108,101,32,102,111,114,109,97,116,32,116,111,32,101,120,112,111,114,116,58],"value":"Select the file format to export:"},
+{"hash":143478044,"name":"tdlgexport.pmmmarkall.caption","sourcebytes":[38,77,97,114,107,32,97,108,108],"value":"&Mark all"},
+{"hash":124017252,"name":"tdlgexport.pmminvertmarked.caption","sourcebytes":[38,73,110,118,101,114,116,32,109,97,114,107,101,100],"value":"&Invert marked"},
+{"hash":145138460,"name":"tdlgexport.pmmunmarkall.caption","sourcebytes":[38,85,110,109,97,114,107,32,97,108,108],"value":"&Unmark all"}
 ]}

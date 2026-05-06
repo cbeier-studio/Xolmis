@@ -4510,6 +4510,21 @@ msgstr "Traduzir nomes de campos"
 msgid "Trim values"
 msgstr "Remover espaços"
 
+#: tdlgexport.pmminvertmarked.caption
+msgctxt "tdlgexport.pmminvertmarked.caption"
+msgid "&Invert marked"
+msgstr "&Inverter marcados"
+
+#: tdlgexport.pmmmarkall.caption
+msgctxt "tdlgexport.pmmmarkall.caption"
+msgid "&Mark all"
+msgstr "&Marcar todos"
+
+#: tdlgexport.pmmunmarkall.caption
+msgctxt "tdlgexport.pmmunmarkall.caption"
+msgid "&Unmark all"
+msgstr "&Desmarcar todos"
+
 #: tdlgexport.sbcancel.caption
 msgctxt "tdlgexport.sbcancel.caption"
 msgid "Cancel"
@@ -11305,6 +11320,7 @@ msgid "&View image"
 msgstr "&Visualizar imagem"
 
 #: tfrmcustomgrid.pmminvertmarked.caption
+msgctxt "tfrmcustomgrid.pmminvertmarked.caption"
 msgid "&Invert marked"
 msgstr "&Inverter marcados"
 
