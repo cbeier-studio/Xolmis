@@ -52,7 +52,168 @@ type
 implementation
 
 uses
-  utils_global;
+  StrUtils, data_consts, utils_global, utils_validations, utils_gis;
+
+function IsLongitudeField(const FieldName: String): Boolean;
+begin
+  Result := SameText(FieldName, COL_LONGITUDE) or
+            SameText(FieldName, COL_START_LONGITUDE) or
+            SameText(FieldName, COL_END_LONGITUDE);
+end;
+
+function IsLatitudeField(const FieldName: String): Boolean;
+begin
+  Result := SameText(FieldName, COL_LATITUDE) or
+            SameText(FieldName, COL_START_LATITUDE) or
+            SameText(FieldName, COL_END_LATITUDE);
+end;
+
+function IsCoordinateField(const FieldName: String): Boolean;
+begin
+  Result := IsLongitudeField(FieldName) or IsLatitudeField(FieldName);
+end;
+
+function IsTemporalField(const FieldName: String): Boolean;
+var
+  L: String;
+begin
+  L := LowerCase(FieldName);
+  Result := (Pos('date', L) > 0) or
+            (Pos('time', L) > 0) or
+            (Pos('hour', L) > 0) or
+            (Pos('datetime', L) > 0) or
+            (Pos('timestamp', L) > 0);
+end;
+
+function IsDecimalText(const S: String): Boolean;
+begin
+  Result := (Pos('.', S) > 0) or (Pos(',', S) > 0);
+end;
+
+function TryStrToFloatFlexible(const S: String; const FS: TFormatSettings; out V: Double): Boolean;
+var
+  Alt: String;
+begin
+  Result := TryStrToFloat(S, V, FS);
+  if Result then
+    Exit;
+
+  Alt := StringReplace(S, '.', FS.DecimalSeparator, [rfReplaceAll]);
+  Result := TryStrToFloat(Alt, V, FS);
+  if Result then
+    Exit;
+
+  Alt := StringReplace(S, ',', FS.DecimalSeparator, [rfReplaceAll]);
+  Result := TryStrToFloat(Alt, V, FS);
+end;
+
+function TryGetCoordinatePair(Row: TXRow; const FieldName: String; const FS: TFormatSettings;
+  out Lon, Lat: Double): Boolean;
+var
+  LonField, LatField: String;
+begin
+  Result := False;
+
+  if SameText(FieldName, COL_START_LONGITUDE) or SameText(FieldName, COL_START_LATITUDE) then
+  begin
+    LonField := COL_START_LONGITUDE;
+    LatField := COL_START_LATITUDE;
+  end
+  else
+  if SameText(FieldName, COL_END_LONGITUDE) or SameText(FieldName, COL_END_LATITUDE) then
+  begin
+    LonField := COL_END_LONGITUDE;
+    LatField := COL_END_LATITUDE;
+  end
+  else
+  begin
+    LonField := COL_LONGITUDE;
+    LatField := COL_LATITUDE;
+  end;
+
+  Result := TryStrToFloatFlexible(Row.Values[LonField], FS, Lon) and
+            TryStrToFloatFlexible(Row.Values[LatField], FS, Lat);
+end;
+
+function ApplyExportFormatting(Row: TXRow; const FieldName, FieldValue: String;
+  const Options: TExportOptions; const FS: TFormatSettings): String;
+var
+  Dt: TDateTime;
+  N, Lon, Lat: Double;
+  Coord: TMapPoint;
+  DMS: TDMSPoint;
+  UTM: TUTMPoint;
+begin
+  Result := FieldValue;
+
+  if Result = '' then
+    Exit;
+
+  // Coordinates are always stored in decimal degrees and can be exported as DMS/UTM.
+  if IsCoordinateField(FieldName) then
+  begin
+    case Options.CoordinatesFormat of
+      tcfDD: ;
+      tcfDMS:
+      begin
+        if TryGetCoordinatePair(Row, FieldName, FS, Lon, Lat) then
+        begin
+          Coord.X := Lon;
+          Coord.Y := Lat;
+          DMS := DecimalToDms(Coord);
+
+          if IsLongitudeField(FieldName) then
+            Result := DMS.X.ToString(True)
+          else
+            Result := DMS.Y.ToString(True);
+        end;
+      end;
+      tcfUTM:
+      begin
+        if TryGetCoordinatePair(Row, FieldName, FS, Lon, Lat) then
+        begin
+          Coord.X := Lon;
+          Coord.Y := Lat;
+          UTM := DecimalToUtm(Coord);
+
+          // Keep two columns: longitude column as Easting, latitude as Northing.
+          if IsLongitudeField(FieldName) then
+            Result := FormatFloat('#####0.000', UTM.X)
+          else
+            Result := FormatFloat('#######0.000', UTM.Y);
+        end;
+      end;
+    end;
+    Exit;
+  end;
+
+  if IsTemporalField(FieldName) then
+  begin
+    if (Options.DateFormat <> '') and
+      (TryParseDateFlexible(Result, Dt) or TryStrToDate(Result, Dt, FS)) then
+    begin
+      Result := FormatDateTime(Options.DateFormat, Dt);
+      Exit;
+    end;
+
+    if (Options.TimeFormat <> '') and
+      (TryParseTimeFlexible(Result, Dt) or TryStrToTime(Result, Dt, FS)) then
+    begin
+      Result := FormatDateTime(Options.TimeFormat, Dt);
+      Exit;
+    end;
+
+    if (Options.DateFormat <> '') and (Options.TimeFormat <> '') and
+      (TryParseDateTimeFlexible(Result, Dt) or TryStrToDateTime(Result, Dt, FS)) then
+    begin
+      Result := FormatDateTime(Options.DateFormat + ' ' + Options.TimeFormat, Dt);
+      Exit;
+    end;
+  end;
+
+  if (Options.NumberFormat <> '') and IsDecimalText(Result) and TryStrToFloatFlexible(Result, FS, N) then
+    Result := FormatFloat(Options.NumberFormat, N, FS);
+end;
 
 { TODSImporter }
 
@@ -300,8 +461,16 @@ var
   r, c, i, j: Integer;
   TempFileName: String;
   TempFile: TFileStream;
+  FS: TFormatSettings;
 begin
   LogEvent(leaStart, 'Export ODS file');
+
+  FS := DefaultFormatSettings;
+  FS.DecimalSeparator := Options.DecimalSeparator;
+  if Options.DecimalSeparator = ',' then
+    FS.ThousandSeparator := '.'
+  else
+    FS.ThousandSeparator := ',';
 
   FieldList := nil;
   if Options.ExportFields <> '' then
@@ -359,6 +528,8 @@ begin
 
         if Options.IgnoreNulls and (FieldValue = '') then
           Continue;
+
+        FieldValue := ApplyExportFormatting(Row, FieldName, FieldValue, Options, FS);
 
         Worksheet.WriteText(r, c, FieldValue);
       end;

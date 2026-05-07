@@ -1088,7 +1088,7 @@ begin
   cbErrorHandling.Items.Add(rsIgnoreErrors);
   cbEncoding.Items.Clear;
   cbEncoding.Items.Add(rsSystemEncoding);
-  cbEncoding.Items.Add(AnsiUpperCase(TEncoding.UTF8.EncodingName));
+  cbEncoding.Items.Add(UpperCase(TEncoding.UTF8.EncodingName));
   cbDelimiter.Items.Clear;
   cbDelimiter.Items.Add(rsDelimiterSemicolon);
   cbDelimiter.Items.Add(rsDelimiterComma);

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, DB, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, EditBtn, CheckLst, StdCtrls,
-  Buttons, ComboEx, Spin, Menus, atshapelinebgra, BCPanel, BCComboBox, ToggleSwitch, fpDBExport, fpsexport,
+  Buttons, ComboEx, Spin, Menus, atshapelinebgra, BCPanel, BCComboBox, ToggleSwitch,
   io_core;
 
 type
@@ -140,7 +140,7 @@ implementation
 uses
   {$IFDEF WINDOWS}Windows,{$ENDIF}
   utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams, io_json,
-  io_xml, io_csv;
+  io_xml, io_csv, io_ods, io_xlsx;
 
 {$R *.lfm}
 
@@ -238,10 +238,10 @@ begin
       pDecimalSeparator.Visible := True;
       pRootKey.Visible := False;
       pKeyPath.Visible := False;
-      //pDateFormat.Visible := True;
-      //pTimeFormat.Visible := True;
-      //pNumberFormat.Visible := True;
-      //pCoordinatesFormat.Visible := True;
+      pDateFormat.Visible := True;
+      pTimeFormat.Visible := True;
+      pNumberFormat.Visible := True;
+      pCoordinatesFormat.Visible := True;
     end;
     1: // JSON
     begin
@@ -259,10 +259,10 @@ begin
       pDecimalSeparator.Visible := True;
       pRootKey.Visible := True;
       pKeyPath.Visible := False;
-      //pDateFormat.Visible := True;
-      //pTimeFormat.Visible := True;
-      //pNumberFormat.Visible := True;
-      //pCoordinatesFormat.Visible := True;
+      pDateFormat.Visible := True;
+      pTimeFormat.Visible := True;
+      pNumberFormat.Visible := True;
+      pCoordinatesFormat.Visible := True;
     end;
     2: // ODS
     begin
@@ -280,10 +280,10 @@ begin
       pDecimalSeparator.Visible := True;
       pRootKey.Visible := False;
       pKeyPath.Visible := False;
-      //pDateFormat.Visible := True;
-      //pTimeFormat.Visible := True;
-      //pNumberFormat.Visible := True;
-      //pCoordinatesFormat.Visible := True;
+      pDateFormat.Visible := True;
+      pTimeFormat.Visible := True;
+      pNumberFormat.Visible := True;
+      pCoordinatesFormat.Visible := True;
     end;
     3: // XLSX
     begin
@@ -301,10 +301,10 @@ begin
       pDecimalSeparator.Visible := True;
       pRootKey.Visible := False;
       pKeyPath.Visible := False;
-      //pDateFormat.Visible := True;
-      //pTimeFormat.Visible := True;
-      //pNumberFormat.Visible := True;
-      //pCoordinatesFormat.Visible := True;
+      pDateFormat.Visible := True;
+      pTimeFormat.Visible := True;
+      pNumberFormat.Visible := True;
+      pCoordinatesFormat.Visible := True;
     end;
     4: // XML
     begin
@@ -322,10 +322,10 @@ begin
       pDecimalSeparator.Visible := True;
       pRootKey.Visible := True;
       pKeyPath.Visible := True;
-      //pDateFormat.Visible := True;
-      //pTimeFormat.Visible := True;
-      //pNumberFormat.Visible := True;
-      //pCoordinatesFormat.Visible := True;
+      pDateFormat.Visible := True;
+      pTimeFormat.Visible := True;
+      pNumberFormat.Visible := True;
+      pCoordinatesFormat.Visible := True;
     end;
   end;
 
@@ -470,64 +470,134 @@ end;
 
 procedure TdlgExport.ExportToODS;
 var
+  ODSExp: TXolmisODSExporter;
+  FS: TFileStream;
+  Row: TXRow;
+  BM: TBookmark;
+  SelectedDbFields: TStringList;
+  SelectedOutFields: TStringList;
   i: Integer;
-  expField: TExportFieldItem;
 begin
-  DMM.FPSExport.FormatSettings.ExportFormat := efODS;
-  DMM.FPSExport.FileName := FFileName;
-  DMM.FPSExport.Dataset := FDataSet;
-  DMM.FPSExport.ExportFields.Clear;
-  // Set format settings
-  DMM.FPSExport.FormatSettings.HeaderRow := FExportSettings.HasHeader;
-  DMM.FPSExport.FormatSettings.SheetName := FExportSettings.SheetName;
-  DMM.FPSExport.FormatSettings.DecimalSeparator := FExportSettings.DecimalSeparator;
-  //DMM.FPSExport.FormatSettings.DateFormat := FExportSettings.DateFormat;
-  //DMM.FPSExport.FormatSettings.TimeFormat := FExportSettings.TimeFormat;
-  //DMM.FPSExport.FormatSettings.DateTimeFormat := FExportSettings.DateFormat + ' ' + FExportSettings.TimeFormat;
-  // Set columns to export
-  for i := 0 to cklbColumns.Count - 1 do
-    if cklbColumns.Checked[i] then
-    begin
-      expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-      if FExportSettings.TranslateFieldNames then
-        expField.ExportedName := cklbColumns.Items[i];
-    end;
+  ODSExp := nil;
+  FS := nil;
+  SelectedDbFields := nil;
+  SelectedOutFields := nil;
 
-  if DMM.FPSExport.Execute > 0 then
-    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-  else
-    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+  BM := FDataSet.GetBookmark;
+  FDataSet.DisableControls;
+  try
+    try
+      ODSExp := TXolmisODSExporter.Create;
+      SelectedDbFields := TStringList.Create;
+      SelectedOutFields := TStringList.Create;
+
+      // Build selected fields in UI order
+      for i := 0 to cklbColumns.Count - 1 do
+        if cklbColumns.Checked[i] then
+        begin
+          SelectedDbFields.Add(FDataSet.Fields[i].FieldName);
+          if FExportSettings.TranslateFieldNames then
+            SelectedOutFields.Add(cklbColumns.Items[i])
+          else
+            SelectedOutFields.Add(FDataSet.Fields[i].FieldName);
+        end;
+
+      // ExportFields controls which columns TXolmisODSExporter will output
+      FExportSettings.ExportFields := SelectedOutFields.CommaText;
+
+      FDataSet.First;
+      while not FDataSet.EOF do
+      begin
+        Row := TXRow.Create;
+        for i := 0 to SelectedDbFields.Count - 1 do
+          Row.Values[SelectedOutFields[i]] := FDataSet.FieldByName(SelectedDbFields[i]).AsString;
+
+        ODSExp.AddRow(Row);
+        FDataSet.Next;
+      end;
+
+      FS := TFileStream.Create(FFileName, fmCreate);
+      ODSExp.Export(FS, FExportSettings, nil);
+
+      MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation);
+    except
+      on E: Exception do
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+    end;
+  finally
+    FS.Free;
+    ODSExp.Free;
+    SelectedDbFields.Free;
+    SelectedOutFields.Free;
+    FDataSet.GotoBookmark(BM);
+    FDataSet.EnableControls;
+  end;
 end;
 
 procedure TdlgExport.ExportToXLSX;
 var
+  XLSXExp: TXolmisXLSXExporter;
+  FS: TFileStream;
+  Row: TXRow;
+  BM: TBookmark;
+  SelectedDbFields: TStringList;
+  SelectedOutFields: TStringList;
   i: Integer;
-  expField: TExportFieldItem;
 begin
-  DMM.FPSExport.FormatSettings.ExportFormat := efXLSX;
-  DMM.FPSExport.FileName := FFileName;
-  DMM.FPSExport.Dataset := FDataSet;
-  DMM.FPSExport.ExportFields.Clear;
-  // Set format settings
-  DMM.FPSExport.FormatSettings.HeaderRow := FExportSettings.HasHeader;
-  DMM.FPSExport.FormatSettings.SheetName := FExportSettings.SheetName;
-  DMM.FPSExport.FormatSettings.DecimalSeparator := FExportSettings.DecimalSeparator;
-  //DMM.FPSExport.FormatSettings.DateFormat := FExportSettings.DateFormat;
-  //DMM.FPSExport.FormatSettings.TimeFormat := FExportSettings.TimeFormat;
-  //DMM.FPSExport.FormatSettings.DateTimeFormat := FExportSettings.DateFormat + ' ' + FExportSettings.TimeFormat;
-  // Set columns to export
-  for i := 0 to cklbColumns.Count - 1 do
-    if cklbColumns.Checked[i] then
-    begin
-      expField := DMM.FPSExport.ExportFields.AddField(FDataSet.Fields[i].FieldName);
-      if FExportSettings.TranslateFieldNames then
-        expField.ExportedName := cklbColumns.Items[i];
-    end;
+  XLSXExp := nil;
+  FS := nil;
+  SelectedDbFields := nil;
+  SelectedOutFields := nil;
 
-  if DMM.FPSExport.Execute > 0 then
-    MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation)
-  else
-    MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+  BM := FDataSet.GetBookmark;
+  FDataSet.DisableControls;
+  try
+    try
+      XLSXExp := TXolmisXLSXExporter.Create;
+      SelectedDbFields := TStringList.Create;
+      SelectedOutFields := TStringList.Create;
+
+      // Build selected fields in UI order
+      for i := 0 to cklbColumns.Count - 1 do
+        if cklbColumns.Checked[i] then
+        begin
+          SelectedDbFields.Add(FDataSet.Fields[i].FieldName);
+          if FExportSettings.TranslateFieldNames then
+            SelectedOutFields.Add(cklbColumns.Items[i])
+          else
+            SelectedOutFields.Add(FDataSet.Fields[i].FieldName);
+        end;
+
+      // ExportFields controls which columns TXolmisXLSXExporter will output
+      FExportSettings.ExportFields := SelectedOutFields.CommaText;
+
+      FDataSet.First;
+      while not FDataSet.EOF do
+      begin
+        Row := TXRow.Create;
+        for i := 0 to SelectedDbFields.Count - 1 do
+          Row.Values[SelectedOutFields[i]] := FDataSet.FieldByName(SelectedDbFields[i]).AsString;
+
+        XLSXExp.AddRow(Row);
+        FDataSet.Next;
+      end;
+
+      FS := TFileStream.Create(FFileName, fmCreate);
+      XLSXExp.Export(FS, FExportSettings, nil);
+
+      MsgDlg(rsExportDataTitle, Format(rsExportFinished, [FFileName]), mtInformation);
+    except
+      on E: Exception do
+        MsgDlg(rsExportDataTitle, Format(rsErrorExporting, [FFileName]), mtError);
+    end;
+  finally
+    FS.Free;
+    XLSXExp.Free;
+    SelectedDbFields.Free;
+    SelectedOutFields.Free;
+    FDataSet.GotoBookmark(BM);
+    FDataSet.EnableControls;
+  end;
 end;
 
 procedure TdlgExport.ExportToXML;
@@ -593,7 +663,7 @@ begin
   // Translate comboboxes' items
   cbEncoding.Items.Clear;
   cbEncoding.Items.Add(rsSystemEncoding);
-  cbEncoding.Items.Add(AnsiUpperCase(TEncoding.UTF8.EncodingName));
+  cbEncoding.Items.Add(UpperCase(TEncoding.UTF8.EncodingName));
   cbDelimiter.Items.Clear;
   cbDelimiter.Items.Add(rsDelimiterSemicolon);
   cbDelimiter.Items.Add(rsDelimiterComma);
