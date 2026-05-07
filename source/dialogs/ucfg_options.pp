@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls, lclintf,
-  ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider, Character;
+  LazFileUtils, ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider, Character;
 
 type
 
@@ -224,7 +224,14 @@ type
     procedure tsWriteLogsChange(Sender: TObject);
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
+    FLoadingConfig: Boolean;
+    FChangingMediaPath: Boolean;
     procedure ApplyDarkMode;
+    function IsLikelyUrl(const aValue: String): Boolean;
+    function MigrateMediaPaths(const aTableName, aIdField, aOldBaseFolder, aNewBaseFolder: String;
+      aSkipUrls: Boolean = False): Integer;
+    function ConfirmAndMigrateMediaPaths(const aMediaLabel, aOldBaseFolder, aNewBaseFolder,
+      aTableName, aIdField: String; aSkipUrls: Boolean = False): Boolean;
     procedure LoadConfig;
   public
 
@@ -237,10 +244,10 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_backup, utils_autoupdate, utils_system, utils_themes,
-  utils_finddialogs,
+  utils_finddialogs, utils_conversions,
   data_getvalue, data_types, data_consts,
   models_users, udm_main,
-  uDarkStyleParams;
+  uDarkStyleParams, SQLDB;
 
 {$R *.lfm}
 
@@ -419,15 +426,61 @@ begin
 end;
 
 procedure TcfgOptions.eAttachmentsPathChange(Sender: TObject);
+var
+  OldPath, NewPath: String;
 begin
-  xSettings.DocumentsFolder := eAttachmentsPath.Text;
-  { #todo : Update documents' file path if the folder changed }
+  if FChangingMediaPath then
+    Exit;
+
+  OldPath := xSettings.DocumentsFolder;
+  NewPath := eAttachmentsPath.Text;
+
+  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
+  begin
+    xSettings.DocumentsFolder := NewPath;
+    Exit;
+  end;
+
+  if ConfirmAndMigrateMediaPaths('documents', OldPath, NewPath, TBL_DOCUMENTS, COL_DOCUMENT_ID, True) then
+    xSettings.DocumentsFolder := NewPath
+  else
+  begin
+    FChangingMediaPath := True;
+    try
+      eAttachmentsPath.Text := OldPath;
+    finally
+      FChangingMediaPath := False;
+    end;
+  end;
 end;
 
 procedure TcfgOptions.eAudiosPathChange(Sender: TObject);
+var
+  OldPath, NewPath: String;
 begin
-  xSettings.AudiosFolder := eAudiosPath.Text;
-  { #todo : Update audio recordings' file path if the folder changed }
+  if FChangingMediaPath then
+    Exit;
+
+  OldPath := xSettings.AudiosFolder;
+  NewPath := eAudiosPath.Text;
+
+  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
+  begin
+    xSettings.AudiosFolder := NewPath;
+    Exit;
+  end;
+
+  if ConfirmAndMigrateMediaPaths('audio recordings', OldPath, NewPath, TBL_AUDIO_LIBRARY, COL_AUDIO_ID) then
+    xSettings.AudiosFolder := NewPath
+  else
+  begin
+    FChangingMediaPath := True;
+    try
+      eAudiosPath.Text := OldPath;
+    finally
+      FChangingMediaPath := False;
+    end;
+  end;
 end;
 
 procedure TcfgOptions.eBackupPathChange(Sender: TObject);
@@ -477,20 +530,163 @@ begin
 end;
 
 procedure TcfgOptions.eImagesPathChange(Sender: TObject);
+var
+  OldPath, NewPath: String;
 begin
-  xSettings.ImagesFolder := eImagesPath.Text;
-  { #todo : Update images' file path if the folder changed }
+  if FChangingMediaPath then
+    Exit;
+
+  OldPath := xSettings.ImagesFolder;
+  NewPath := eImagesPath.Text;
+
+  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
+  begin
+    xSettings.ImagesFolder := NewPath;
+    Exit;
+  end;
+
+  if ConfirmAndMigrateMediaPaths('images', OldPath, NewPath, TBL_IMAGES, COL_IMAGE_ID) then
+    xSettings.ImagesFolder := NewPath
+  else
+  begin
+    FChangingMediaPath := True;
+    try
+      eImagesPath.Text := OldPath;
+    finally
+      FChangingMediaPath := False;
+    end;
+  end;
 end;
 
 procedure TcfgOptions.eVideosPathChange(Sender: TObject);
+var
+  OldPath, NewPath: String;
 begin
-  xSettings.VideosFolder := eVideosPath.Text;
-  { #todo : Update videos' file path if the folder changed }
+  if FChangingMediaPath then
+    Exit;
+
+  OldPath := xSettings.VideosFolder;
+  NewPath := eVideosPath.Text;
+
+  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
+  begin
+    xSettings.VideosFolder := NewPath;
+    Exit;
+  end;
+
+  if ConfirmAndMigrateMediaPaths('videos', OldPath, NewPath, TBL_VIDEOS, COL_VIDEO_ID) then
+    xSettings.VideosFolder := NewPath
+  else
+  begin
+    FChangingMediaPath := True;
+    try
+      eVideosPath.Text := OldPath;
+    finally
+      FChangingMediaPath := False;
+    end;
+  end;
 end;
 
 procedure TcfgOptions.FormDestroy(Sender: TObject);
 begin
   xSettings.SaveToFile;
+end;
+
+function TcfgOptions.IsLikelyUrl(const aValue: String): Boolean;
+var
+  S: String;
+begin
+  S := LowerCase(Trim(aValue));
+  Result := (Pos('://', S) > 0) or (Pos('mailto:', S) = 1) or (Pos('www.', S) = 1);
+end;
+
+function TcfgOptions.MigrateMediaPaths(const aTableName, aIdField, aOldBaseFolder, aNewBaseFolder: String;
+  aSkipUrls: Boolean): Integer;
+var
+  QrySel, QryUpd: TSQLQuery;
+  PrevTransActive: Boolean;
+  OldRelPath, OldAbsPath, NewRelPath: String;
+begin
+  Result := 0;
+
+  PrevTransActive := DMM.sqlTrans.Active;
+  if not PrevTransActive then
+    DMM.sqlTrans.StartTransaction;
+
+  QrySel := TSQLQuery.Create(nil);
+  QryUpd := TSQLQuery.Create(nil);
+  try
+    QrySel.SQLConnection := DMM.sqlCon;
+    QryUpd.SQLConnection := DMM.sqlCon;
+
+    try
+      QrySel.SQL.Text := 'SELECT ' + aIdField + ', ' + COL_FILE_PATH + ' FROM ' + aTableName;
+      QrySel.Open;
+
+      QryUpd.SQL.Text := 'UPDATE ' + aTableName + ' SET ' + COL_FILE_PATH + ' = :new_path WHERE ' + aIdField + ' = :id';
+
+      while not QrySel.EOF do
+      begin
+        OldRelPath := Trim(QrySel.FieldByName(COL_FILE_PATH).AsString);
+        if (OldRelPath <> EmptyStr) and (not (aSkipUrls and IsLikelyUrl(OldRelPath))) then
+        begin
+          OldAbsPath := CreateAbsolutePath(OldRelPath, aOldBaseFolder);
+          NewRelPath := ExtractRelativePath(aNewBaseFolder, OldAbsPath);
+
+          if not SameText(OldRelPath, NewRelPath) then
+          begin
+            QryUpd.ParamByName('new_path').AsString := NewRelPath;
+            QryUpd.ParamByName('id').AsInteger := QrySel.FieldByName(aIdField).AsInteger;
+            QryUpd.ExecSQL;
+            Inc(Result);
+          end;
+        end;
+
+        QrySel.Next;
+      end;
+    finally
+      QrySel.Free;
+      QryUpd.Free;
+    end;
+
+    if not PrevTransActive then
+      DMM.sqlTrans.CommitRetaining;
+  except
+    if not PrevTransActive then
+      DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
+end;
+
+function TcfgOptions.ConfirmAndMigrateMediaPaths(const aMediaLabel, aOldBaseFolder, aNewBaseFolder,
+  aTableName, aIdField: String; aSkipUrls: Boolean): Boolean;
+var
+  UpdatedCount: Integer;
+  Msg: String;
+begin
+  Result := False;
+
+  Msg := Format('You changed the %s folder.' + LineEnding + LineEnding +
+    'Old: %s' + LineEnding +
+    'New: %s' + LineEnding + LineEnding +
+    'To keep existing links working, Xolmis needs to migrate stored relative paths now.' +
+    LineEnding + LineEnding +
+    'Run migration now?', [aMediaLabel, aOldBaseFolder, aNewBaseFolder]);
+
+  if not MsgDlg('Media folder changed', Msg, mtConfirmation) then
+    Exit(False);
+
+  try
+    UpdatedCount := MigrateMediaPaths(aTableName, aIdField, aOldBaseFolder, aNewBaseFolder, aSkipUrls);
+    MsgDlg('Migration completed', Format('%d %s path(s) were updated.', [UpdatedCount, aMediaLabel]), mtInformation);
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      MsgDlg('Migration error', 'Could not migrate media paths:' + LineEnding + E.Message, mtWarning);
+      Result := False;
+    end;
+  end;
 end;
 
 procedure TcfgOptions.FormShow(Sender: TObject);
@@ -560,6 +756,8 @@ end;
 
 procedure TcfgOptions.LoadConfig;
 begin
+  FLoadingConfig := True;
+  try
   { GENERAL PARAMETERS AND INTERFACE }
   cbStartPage.ItemIndex := xSettings.StartPage;
   tsConfirmCancel.Checked := xSettings.ConfirmCancel;
@@ -601,6 +799,9 @@ begin
   { BACKUP AND RESTORE }
   eBackupPath.Text := xSettings.BackupFolder;
   cbStartupBackup.ItemIndex := xSettings.AutomaticBackup;
+  finally
+    FLoadingConfig := False;
+  end;
 
 end;
 

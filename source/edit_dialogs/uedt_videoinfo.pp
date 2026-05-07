@@ -21,7 +21,7 @@ unit uedt_videoinfo;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
+  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils, LazFileUtils,
   StdCtrls, ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
 
 type
@@ -502,7 +502,7 @@ begin
   else
     cbVideoType.ItemIndex := -1;
   end;
-  eVideoFile.Text := FVideo.FilePath;
+  eVideoFile.Text := CreateAbsolutePath(FVideo.FilePath, xSettings.VideosFolder);
   FLocalityId := FVideo.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FVideo.Longitude);
@@ -570,7 +570,7 @@ begin
   FVideo.RecordingDate  := TextToDate(eRecordingDate.Text);
   FVideo.RecordingTime  := TextToTime(eRecordingTime.Text);
   FVideo.VideoType      := StrToVideoType(cbVideoType.Text);
-  FVideo.FilePath       := eVideoFile.Text;
+  FVideo.FilePath       := ExtractRelativePath(xSettings.VideosFolder, eVideoFile.Text);
   FVideo.LocalityId     := FLocalityId;
   FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);
   FVideo.Latitude       := StrToFloatOrZero(eLatitude.Text);

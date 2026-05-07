@@ -21,7 +21,7 @@ unit uedt_audioinfo;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
+  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils, LazFileUtils,
   StdCtrls, ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
 
 type
@@ -528,7 +528,7 @@ begin
   else
     cbAudioType.ItemIndex := -1;
   end;
-  eAudioFile.Text := FAudio.FilePath;
+  eAudioFile.Text := CreateAbsolutePath(FAudio.FilePath, xSettings.AudiosFolder);
   FLocalityId := FAudio.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FAudio.Longitude);
@@ -616,7 +616,7 @@ begin
   FAudio.RecordingDate := TextToDate(eRecordingDate.Text);
   FAudio.RecordingTime := TextToTime(eRecordingTime.Text);
   FAudio.AudioType     := StrToAudioType(cbAudioType.Text);
-  FAudio.FilePath      := eAudioFile.Text;
+  FAudio.FilePath      := ExtractRelativePath(xSettings.AudiosFolder, eAudioFile.Text);
   FAudio.LocalityId    := FLocalityId;
   FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
   FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);

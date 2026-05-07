@@ -21,7 +21,7 @@ unit uedt_imageinfo;
 interface
 
 uses
-  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils,
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils, LazFileUtils,
   ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
 
 type
@@ -517,7 +517,7 @@ begin
   else
     cbImageType.ItemIndex := -1;
   end;
-  eImageFilename.Text := FImage.FilePath;
+  eImageFilename.Text := CreateAbsolutePath(FImage.FilePath, xSettings.ImagesFolder);
   FLocalityId := FImage.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   case FImage.CoordinatePrecision of
@@ -581,7 +581,7 @@ begin
   FImage.ImageDate := TextToDate(eImageDate.Text);
   FImage.ImageTime := TextToTime(eImageTime.Text);
   FImage.ImageType := StrToImageType(cbImageType.Text);
-  FImage.FilePath   := eImageFilename.Text;
+  FImage.FilePath   := ExtractRelativePath(xSettings.ImagesFolder, eImageFilename.Text);
   FImage.LocalityId := FLocalityId;
   FImage.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FImage.Longitude := StrToFloatOrZero(eLongitude.Text);

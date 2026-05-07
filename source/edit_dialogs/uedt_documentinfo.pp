@@ -21,7 +21,7 @@ unit uedt_documentinfo;
 interface
 
 uses
-  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils,
+  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils, LazFileUtils,
   ExtCtrls, Buttons, Character, atshapelinebgra, models_media;
 
 type
@@ -302,7 +302,7 @@ begin
   eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FDocument.AuthorId);
   eDocumentDate.Text := DateToStr(FDocument.DocumentDate);
   eDocumentTime.Text := TimeToStr(FDocument.DocumentTime);
-  eDocumentPath.Text := FDocument.FilePath;
+  eDocumentPath.Text := CreateAbsolutePath(FDocument.FilePath, xSettings.DocumentsFolder);
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FDocument.LicenseType);
   eLicenseYear.Text := IntToStr(FDocument.LicenseYear);
   eLicenseOwner.Text := FDocument.LicenseOwner;
@@ -343,7 +343,7 @@ begin
   FDocument.AuthorId     := FAuthorId;
   FDocument.DocumentDate := TextToDate(eDocumentDate.Text);
   FDocument.DocumentTime := TextToTime(eDocumentTime.Text);
-  FDocument.FilePath     := eDocumentPath.Text;
+  FDocument.FilePath     := ExtractRelativePath(xSettings.DocumentsFolder, eDocumentPath.Text);
   FDocument.LicenseType  := cbLicenseType.Text;
   FDocument.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
   FDocument.LicenseOwner := eLicenseOwner.Text;
