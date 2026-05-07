@@ -58,6 +58,9 @@ type
     procedure MarkAsLost(ABand: TBand; ADate: TDate; const ANotes: String = '');
     procedure ReturnToSupplier(ABand: TBand; ASupplierId: Integer; ADate: TDate;
       const ANotes: String = '');
+
+    procedure UndoBandUse(ABand: TBand);
+    procedure UndoBandRemoval(ABand: TBand; AIndividualId: Integer);
   end;
 
   { TIndividualUpdateService }
@@ -73,6 +76,7 @@ type
     procedure ApplyBanding(Capture: TCapture);
     procedure ApplyBandRemoval(Capture: TCapture);
     procedure ApplyBandChange(OldCapture, NewCapture: TCapture);
+    procedure UndoCaptureFromIndividual(Capture: TCapture);
   end;
 
 
@@ -326,6 +330,50 @@ begin
   LogEvent(ABand, bevUse, ADate, 0, 0, 0, 0, ANotes);
 end;
 
+procedure TBandMovementService.UndoBandUse(ABand: TBand);
+var
+  FOldBand: TBand;
+begin
+  FOldBand := TBand.Create();
+  try
+    FOldBand.Assign(ABand);
+
+    ABand.IndividualId := 0;
+    ABand.Status := bstAvailable;
+    FBandRepo.Update(ABand);
+
+    // write the record history
+    WriteDiff(tbBands, FOldBand, ABand);
+  finally
+    FreeAndNil(FOldBand);
+  end;
+
+  // delete the last bevUse history entry for this band
+  FHistoryRepo.DeleteLastByBandAndEvent(ABand.Id, bevUse);
+end;
+
+procedure TBandMovementService.UndoBandRemoval(ABand: TBand; AIndividualId: Integer);
+var
+  FOldBand: TBand;
+begin
+  FOldBand := TBand.Create();
+  try
+    FOldBand.Assign(ABand);
+
+    ABand.IndividualId := AIndividualId;
+    ABand.Status := bstUsed;
+    FBandRepo.Update(ABand);
+
+    // write the record history
+    WriteDiff(tbBands, FOldBand, ABand);
+  finally
+    FreeAndNil(FOldBand);
+  end;
+
+  // delete the last bevDischarge history entry for this band
+  FHistoryRepo.DeleteLastByBandAndEvent(ABand.Id, bevDischarge);
+end;
+
 { TIndividualUpdateService }
 
 constructor TIndividualUpdateService.Create(ARepo: TIndividualRepository);
@@ -472,6 +520,53 @@ end;
 destructor TIndividualUpdateService.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TIndividualUpdateService.UndoCaptureFromIndividual(Capture: TCapture);
+var
+  FIndividual, FOldIndividual: TIndividual;
+begin
+  if Capture.IndividualId <= 0 then
+    Exit;
+
+  FIndividual := TIndividual.Create;
+  FOldIndividual := TIndividual.Create;
+  try
+    FIndRepo.GetById(Capture.IndividualId, FIndividual);
+    FOldIndividual.Assign(FIndividual);
+
+    // Undo band removal effect: restore the removed band as the current band
+    if (Capture.RemovedBandId > 0) and (FIndividual.RemovedBandId = Capture.RemovedBandId) then
+    begin
+      FIndividual.RemovedBandId := 0;
+      FIndividual.BandChangeDate := NullDate;
+      // Restore the removed band as the current band (undo the swap)
+      if FIndividual.BandId = Capture.BandId then
+        FIndividual.BandId := Capture.RemovedBandId;
+      FIndividual.RightTarsus := EmptyStr;
+      FIndividual.LeftTarsus := EmptyStr;
+      FIndividual.RightTibia := EmptyStr;
+      FIndividual.LeftTibia := EmptyStr;
+    end
+    // Undo initial banding effect: clear band and banding date
+    else if (Capture.BandId > 0) and (FIndividual.BandId = Capture.BandId) then
+    begin
+      FIndividual.BandId := 0;
+      FIndividual.BandingDate := NullDate;
+      FIndividual.RightTarsus := EmptyStr;
+      FIndividual.LeftTarsus := EmptyStr;
+      FIndividual.RightTibia := EmptyStr;
+      FIndividual.LeftTibia := EmptyStr;
+    end;
+
+    FIndRepo.Update(FIndividual);
+
+    // write the record history
+    WriteDiff(tbIndividuals, FOldIndividual, FIndividual);
+  finally
+    FOldIndividual.Free;
+    FIndividual.Free;
+  end;
 end;
 
 end.

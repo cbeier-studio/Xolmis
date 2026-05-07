@@ -579,25 +579,21 @@ begin
             if (Trim(Reg.RemovedBand) <> '') then
             begin
               MoveBand.RemoveFromIndividual(RemovedBand, Individuo.Id, Reg.CaptureDate);
-              //UpdateBand(RemovedBand.Id, Individuo.Id, 'R', Reg.CaptureDate);
               LogInfo(Format('Band ID=%d status updated to removed', [RemovedBand.Id]));
             end;
             MoveBand.UseInCapture(Band, Individuo.Id, Reg.CaptureDate);
-            //UpdateBand(Band.Id, Individuo.Id, 'U', Reg.CaptureDate);
             LogInfo(Format('Band ID=%d status updated to used', [Band.Id]));
 
             // Update individual band
             if Reg.CaptureType = 'N' then
             begin
               UpdInd.ApplyCaptureToIndividual(Captura);
-              //UpdateIndividual(Individuo.Id, Reg.CaptureDate);
               LogInfo(Format('Individual ID=%d banding date updated', [Individuo.Id]));
-            end;
+            end
+            else
             if Reg.CaptureType = 'C' then
             begin
               UpdInd.ApplyBandRemoval(Captura);
-              //ChangeIndividualBand(Individuo.Id, Band.Id, RemovedBand.Id, Reg.CaptureDate,
-              //  Reg.RemovedBand);
               LogInfo(Format('Individual ID=%d band updated with ID=%d (removed band ID=%d)',
                 [Individuo.Id, Band.Id, RemovedBand.Id]));
             end;

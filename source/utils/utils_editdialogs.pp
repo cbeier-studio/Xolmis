@@ -1140,11 +1140,18 @@ function EditIndividual(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
   FRecord, FOldRecord: TIndividual;
   FRepo: TIndividualRepository;
+  FBand, FRemovedBand: TBand;
+  FRepoBand: TBandRepository;
+  MoveBand: TBandMovementService;
 begin
   LogEvent(leaOpen, 'Individual edit dialog');
   Application.CreateForm(TedtIndividual, edtIndividual);
+  FRepoBand := TBandRepository.Create(DMM.sqlCon);
+  FBand := TBand.Create();
+  FRemovedBand := TBand.Create();
   FOldRecord := nil;
   FRepo := TIndividualRepository.Create(DMM.sqlCon);
+  MoveBand := TBandMovementService.Create(FRepoBand);
   with edtIndividual do
   try
     dsLink.DataSet := aDataSet;
@@ -1178,6 +1185,23 @@ begin
         else
           WriteRecHistory(tbIndividuals, haCreated, 0, '', '', '', rsInsertedByForm);
 
+        // Update band status
+        if IsNew then
+        begin
+          if (Individual.RemovedBandId > 0) then
+          begin
+            FRepoBand.GetById(Individual.RemovedBandId, FRemovedBand);
+            MoveBand.RemoveFromIndividual(FRemovedBand, Individual.Id, Individual.BandChangeDate);
+            LogInfo(Format('Band ID=%d status updated to removed', [FRemovedBand.Id]));
+          end;
+          if (Individual.BandId > 0) then
+          begin
+            FRepoBand.GetById(Individual.BandId, FBand);
+            MoveBand.UseInCapture(FBand, Individual.Id, Individual.BandingDate);
+            LogInfo(Format('Band ID=%d status updated to used', [FBand.Id]));
+          end;
+        end;
+
         DMM.sqlTrans.CommitRetaining;
       except
         DMM.sqlTrans.RollbackRetaining;
@@ -1200,6 +1224,10 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FRepo.Free;
+    FreeAndNil(FBand);
+    FreeAndNil(FRemovedBand);
+    FRepoBand.Free;
+    MoveBand.Free;
     FreeAndNil(edtIndividual);
     LogEvent(leaClose, 'Individual edit dialog');
   end;
@@ -1209,10 +1237,21 @@ function EditCapture(aDataSet: TDataSet; aIndividual: Integer; aSurvey: Integer;
 var
   FRecord, FOldRecord: TCapture;
   FRepo: TCaptureRepository;
+  FBand, FRemovedBand: TBand;
+  FRepoBand: TBandRepository;
+  MoveBand: TBandMovementService;
+  UpdInd: TIndividualUpdateService;
+  IndividualRepo: TIndividualRepository;
 begin
   LogEvent(leaOpen, 'Capture edit dialog');
   edtCapture := TedtCapture.Create(nil);
+  FRepoBand := TBandRepository.Create(DMM.sqlCon);
+  FBand := TBand.Create();
+  FRemovedBand := TBand.Create();
   FRepo := TCaptureRepository.Create(DMM.sqlCon);
+  IndividualRepo := TIndividualRepository.Create(DMM.sqlCon);
+  MoveBand := TBandMovementService.Create(FRepoBand);
+  UpdInd := TIndividualUpdateService.Create(IndividualRepo);
   FOldRecord := nil;
   with edtCapture do
   try
@@ -1262,6 +1301,52 @@ begin
         else
           WriteRecHistory(tbCaptures, haCreated, 0, '', '', '', rsInsertedByForm);
 
+        if not IsNew then
+        begin
+          { Undo band movement of the old capture before applying the new one }
+          if (FOldRecord.RemovedBandId > 0) then
+          begin
+            FRepoBand.GetById(FOldRecord.RemovedBandId, FRemovedBand);
+            MoveBand.UndoBandRemoval(FRemovedBand, aIndividual);
+            LogInfo(Format('Band ID=%d status reverted from removed', [FRemovedBand.Id]));
+          end;
+          if (FOldRecord.BandId > 0) then
+          begin
+            FRepoBand.GetById(FOldRecord.BandId, FBand);
+            MoveBand.UndoBandUse(FBand);
+            LogInfo(Format('Band ID=%d status reverted from used', [FBand.Id]));
+          end;
+          UpdInd.UndoCaptureFromIndividual(FOldRecord);
+        end;
+
+        // Update band status
+        if (Capture.RemovedBandId > 0) then
+        begin
+          FRepoBand.GetById(Capture.RemovedBandId, FRemovedBand);
+          MoveBand.RemoveFromIndividual(FRemovedBand, aIndividual, Capture.CaptureDate);
+          LogInfo(Format('Band ID=%d status updated to removed', [FRemovedBand.Id]));
+        end;
+        if (Capture.BandId > 0) then
+        begin
+          FRepoBand.GetById(Capture.BandId, FBand);
+          MoveBand.UseInCapture(FBand, aIndividual, Capture.CaptureDate);
+          LogInfo(Format('Band ID=%d status updated to used', [FBand.Id]));
+        end;
+
+        // Update individual band
+        if (Capture.CaptureType = cptNew) and (Capture.BandId > 0) then
+        begin
+          UpdInd.ApplyCaptureToIndividual(Capture);
+          LogInfo(Format('Individual ID=%d banding date updated', [aIndividual]));
+        end
+        else
+        if (Capture.CaptureType = cptChangeBand) and (Capture.RemovedBandId > 0) then
+        begin
+          UpdInd.ApplyBandRemoval(Capture);
+          LogInfo(Format('Individual ID=%d band updated with ID=%d (removed band ID=%d)',
+            [aIndividual, FBand.Id, FRemovedBand.Id]));
+        end;
+
         DMM.sqlTrans.CommitRetaining;
       except
         DMM.sqlTrans.RollbackRetaining;
@@ -1284,6 +1369,12 @@ begin
       FreeAndNil(FOldRecord);
     FRecord.Free;
     FRepo.Free;
+    FreeAndNil(FBand);
+    FreeAndNil(FRemovedBand);
+    FRepoBand.Free;
+    MoveBand.Free;
+    UpdInd.Free;
+    IndividualRepo.Free;
     FreeAndNil(edtCapture);
     LogEvent(leaClose, 'Capture edit dialog');
   end;

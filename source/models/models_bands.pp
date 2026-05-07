@@ -162,6 +162,7 @@ type
     procedure Insert(E: TXolmisRecord); override;
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
+    procedure DeleteLastByBandAndEvent(ABandId: Integer; AEventType: TBandEvent);
   end;
 
 implementation
@@ -938,6 +939,38 @@ begin
 
       ExecSQL;
 
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TBandHistoryRepository.DeleteLastByBandAndEvent(ABandId: Integer; AEventType: TBandEvent);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM band_history');
+      Add('WHERE event_id = (');
+      Add('  SELECT event_id FROM band_history');
+      Add('  WHERE band_id = :aband AND event_type = :aevent');
+      Add('  ORDER BY event_id DESC LIMIT 1');
+      Add(')');
+
+      ParamByName('aband').AsInteger := ABandId;
+      ParamByName('aevent').AsString := BAND_EVENTS[AEventType];
+
+      ExecSQL;
       FTrans.CommitRetaining;
     except
       FTrans.RollbackRetaining;
