@@ -86,8 +86,8 @@ resourcestring
   rscRole = 'Role';
   rscMobilePhone = 'Mobile phone';
   rscLattes = 'Lattes';
-  rscOrcid = 'Orcid';
-  rscXTwitter = 'X (Twitter)';
+  rscOrcid = 'ORCID';
+  rscXTwitter = 'X / Twitter';
   rscInstagram = 'Instagram';
   rscWebsite = 'Website';
   rscProfileImage = 'Profile image';

@@ -113,7 +113,7 @@ uses
     rsTitleRestore = 'Restore backup';
     rsTitleNewBandsBatch = 'New batch of bands';
     rsTitleTransferBands = 'Transfer bands';
-    rsTitleAutoUpdate = 'Autoupdate';
+    rsTitleAutoUpdate = 'Automatic updates';
     rsTitleUpgradeDatabase = 'Upgrade database';
     rsTitleTaxonHierarchy = 'Taxa hierarchy';
     rsTitleRecreateThumbnails = 'Recreate thumbnails';
@@ -149,7 +149,7 @@ uses
     rsErrorGeneratingMap = 'Error generating map.';
     rsErrorFolderNotFound = 'Directory %s not found.';
     rsErrorFileNotFound = 'File %s not found.';
-    rsErrorImporting = 'An error occurred importing: %s';
+    rsErrorImporting = 'An error occurred while importing: %s';
     rsErrorImportFinished = 'An error occurred while importing.';
     rsErrorExporting = 'An error occurred exporting: %s';
     rsErrorDatabaseNotFound = 'Database file not found: %s';
@@ -160,10 +160,10 @@ uses
     rsErrorBackupFailed = 'Backup file creation failed.';
     rsErrorBackupNotFound = 'Backup file not found: %s';
     rsErrorRestoreFailed = 'Backup restore failed.';
-    rsErrorMontaData = 'Error in year digits (%d). Send this issue to the Support.';
+    rsErrorMontaData = 'Invalid year digits (%d). Please report this issue to support.';
     rsErrorRewritingHierarchy = 'Error rewriting the hierarchy. All rewriting changes were discarded.';
     rsErrorEmptyFieldName = 'Error loading field info: the field name is blank.';
-    rsErrorCSVIndexNotFound = 'Field index of CSV record not exists!';
+    rsErrorCSVIndexNotFound = 'CSV field index does not exist!';
     rsErrorReadingJSONFile = 'Error reading the JSON file: %s';
     rsErrorDatabaseCreation = 'The database file was not created.';
     rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
@@ -242,7 +242,7 @@ uses
 
     { Success messages }
     rsSuccessfulUpdate = '%s was updated successfully!';
-    rsSuccessfulImport = 'The selected file(s) were sucessfully imported.';
+    rsSuccessfulImport = 'The selected file(s) were successfully imported.';
     rsSuccessfulImportEbird = 'eBird file imported successfully!';
     rsSuccessfulImportBandingJournal = 'Banding journals imported successfully!';
     rsSuccessfulImportBandingEffort = 'Banding effort imported successfully!';
@@ -254,7 +254,7 @@ uses
     rsSuccessfulRestore = 'Backup restored successfully: %s';
     rsSuccessfulImportCoordinates = 'Coordinates imported successfully!';
     rsSuccessfulNewBatch = 'New batch inserted successfully!';
-    rsSuccessfulTransferBands = 'Bands transfered successfully!';
+    rsSuccessfulTransferBands = 'Bands transferred successfully!';
     rsSuccessfulReceiveBands = 'Bands received successfully!';
     rsSuccessfulRecreateThumbnails = 'Image thumbnails recreated successfully!';
     rsSuccessfulConnectionTest = 'Connection to database was successful!';
