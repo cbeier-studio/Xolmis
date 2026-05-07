@@ -694,7 +694,7 @@ begin
       Exporter.Export(FileStream, ExportOptions, nil);
 
       LogInfo(Format('eBird export completed successfully (%d rows).', [ExportedCount]));
-      MsgDlg('Export eBird', 'Data exported successfully to: ' + aOutputFile, mtInformation);
+      MsgDlg(rsExportEbird, Format(rsSuccessfulExportEbird, [aOutputFile]), mtInformation);
 
     finally
       IdList.Free;
@@ -707,7 +707,7 @@ begin
     on E: Exception do
     begin
       LogError(Format('Exception during eBird export: %s', [E.Message]));
-      MsgDlg('Export eBird', Format('Error exporting eBird data: %s', [E.Message]), mtError);
+      MsgDlg(rsExportEbird, Format(rsErrorExportingEbird, [E.Message]), mtError);
     end;
   end;
 

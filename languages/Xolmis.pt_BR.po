@@ -1516,8 +1516,8 @@ msgstr "Hora de abertura 4"
 
 #: data_columns.rscorcid
 msgctxt "data_columns.rscorcid"
-msgid "Orcid"
-msgstr "Orcid"
+msgid "ORCID"
+msgstr "ORCID"
 
 #: data_columns.rscorderid
 msgctxt "data_columns.rscorderid"
@@ -2508,8 +2508,8 @@ msgstr "Vento (km/h)"
 
 #: data_columns.rscxtwitter
 msgctxt "data_columns.rscxtwitter"
-msgid "X (Twitter)"
-msgstr "X (Twitter)"
+msgid "X / Twitter"
+msgstr "X / Twitter"
 
 #: data_columns.rsczoologicalcode
 msgctxt "data_columns.rsczoologicalcode"
@@ -15499,8 +15499,8 @@ msgstr "Ocorreu um erro criando o usuário: %s"
 
 #: utils_locale.rserrorcsvindexnotfound
 msgctxt "utils_locale.rserrorcsvindexnotfound"
-msgid "Field index of CSV record not exists!"
-msgstr "Índice de campo do registro CSV não existe!"
+msgid "CSV field index does not exist!"
+msgstr "Índice de campo CSV não existe!"
 
 #: utils_locale.rserrordatabasecorrupted
 msgctxt "utils_locale.rserrordatabasecorrupted"
@@ -15544,6 +15544,11 @@ msgstr "ID está vazia"
 msgctxt "utils_locale.rserrorexporting"
 msgid "An error occurred exporting: %s"
 msgstr "Ocorreu um erro exportando: %s"
+
+#: utils_locale.rserrorexportingebird
+#, object-pascal-format
+msgid "Error exporting eBird data: %s"
+msgstr "Erro exportando dados eBird: %s"
 
 #: utils_locale.rserrorfieldsandvaluesdiffer
 msgctxt "utils_locale.rserrorfieldsandvaluesdiffer"
@@ -15597,7 +15602,7 @@ msgstr "Ocorreu um erro na importação."
 #: utils_locale.rserrorimporting
 #, object-pascal-format
 msgctxt "utils_locale.rserrorimporting"
-msgid "An error occurred importing: %s"
+msgid "An error occurred while importing: %s"
 msgstr "Um erro ocorreu ao importar: %s"
 
 #: utils_locale.rserrorinvalidbooleanforfield
@@ -15669,8 +15674,8 @@ msgstr "O módulo não é suportado."
 #: utils_locale.rserrormontadata
 #, object-pascal-format
 msgctxt "utils_locale.rserrormontadata"
-msgid "Error in year digits (%d). Send this issue to the Support."
-msgstr "Erro nos dígitos do ano (%d). Comunique o problema ao Suporte."
+msgid "Invalid year digits (%d). Please report this issue to support."
+msgstr "Dígitos do ano inválidos (%d). Por favor, comunique o problema ao suporte."
 
 #: utils_locale.rserrornoimporterregisteredforextension
 #, object-pascal-format
@@ -15770,6 +15775,10 @@ msgctxt "utils_locale.rserrorvalidatingpassword"
 msgid "Error validating password: %s"
 msgstr "Erro validando senha: %s"
 
+#: utils_locale.rserrorvalidationfailed
+msgid "Data validation found issues."
+msgstr "Validação de dados encontrou problemas."
+
 #: utils_locale.rserrorvalueexceededmaxlength
 #, object-pascal-format
 msgid "The value \"%s\" exceeds the allowed maximum length (%d) for the field \"%s\"."
@@ -15815,6 +15824,10 @@ msgstr "Exportação cancelada pelo usuário."
 msgctxt "utils_locale.rsexportdatatitle"
 msgid "Export data"
 msgstr "Exportar dados"
+
+#: utils_locale.rsexportebird
+msgid "Export to eBird"
+msgstr "Exportar para eBird"
 
 #: utils_locale.rsexportempty
 msgctxt "utils_locale.rsexportempty"
@@ -16661,6 +16674,26 @@ msgstr "O número máximo de autores (%d) foi atingido!"
 #: utils_locale.rsmeasurementsoutliers
 msgid "Measurement outliers"
 msgstr "Outliers de morfometria"
+
+#: utils_locale.rsmediafolderchanged
+msgid "Media folder changed"
+msgstr "Pasta de mídia alterada"
+
+#: utils_locale.rsmediamigrationcompleted
+msgid "Migration completed"
+msgstr "Migração concluída"
+
+#: utils_locale.rsmediamigrationerror
+#, object-pascal-format
+msgid ""
+"Could not migrate media paths:\n"
+"%s"
+msgstr "Não conseguiu migrar os caminhos de mídia: %s"
+
+#: utils_locale.rsmigratedmediapaths
+#, object-pascal-format
+msgid "%d %s path(s) were updated."
+msgstr "%d %s caminho(s) atualizado(s)."
 
 #: utils_locale.rsminpasswordlength
 msgctxt "utils_locale.rsminpasswordlength"
@@ -17955,6 +17988,27 @@ msgctxt "utils_locale.rspromptbackupnow"
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
 msgstr "O backup automático irá iniciar agora e pode demorar vários minutos. Você deseja continuar com o backup?"
 
+#: utils_locale.rspromptmigratemediapath
+#, object-pascal-format
+msgid ""
+"You changed the %s folder.\n"
+"\n"
+"Old: %s\n"
+"New: %s\n"
+"\n"
+"To keep existing links working, Xolmis needs to migrate stored relative paths now.\n"
+"\n"
+"Run migration now?"
+msgstr ""
+"Você alterou a pasta de %s.\n"
+"\n"
+"Anterior: %s\n"
+"Novo: %s\n"
+"\n"
+"Para manter os links existentes funcionando, o Xolmis precisa migrar os caminhos relativos armazenados agora.\n"
+"\n"
+"Executar migração agora?"
+
 #: utils_locale.rspromptselectsurvey
 msgctxt "utils_locale.rspromptselectsurvey"
 msgid "Select the survey to generate the report:"
@@ -18583,9 +18637,14 @@ msgctxt "utils_locale.rssuccessfuldatabasevacuum"
 msgid "The selected database was vacuumed!"
 msgstr "O banco de dados selecionado foi aspirado!"
 
+#: utils_locale.rssuccessfulexportebird
+#, object-pascal-format
+msgid "Data exported successfully to: %s"
+msgstr "Dados exportados com sucesso para: %s"
+
 #: utils_locale.rssuccessfulimport
 msgctxt "utils_locale.rssuccessfulimport"
-msgid "The selected file(s) were sucessfully imported."
+msgid "The selected file(s) were successfully imported."
 msgstr "O(s) arquivo(s) selecionado(s) foi/foram importado(s) com sucesso."
 
 #: utils_locale.rssuccessfulimportbandingeffort
@@ -18625,6 +18684,11 @@ msgstr "Revisões de ninho importadas com sucesso!"
 msgid "Nests imported successfully!"
 msgstr "Ninhos importados com sucesso!"
 
+#: utils_locale.rssuccessfulimportrecords
+#, object-pascal-format
+msgid "%d record(s) successfully imported!"
+msgstr "%d registro(s) importado(s) com sucesso!"
+
 #: utils_locale.rssuccessfulnewbatch
 msgctxt "utils_locale.rssuccessfulnewbatch"
 msgid "New batch inserted successfully!"
@@ -18647,7 +18711,7 @@ msgstr "Backup restaurado com sucesso: %s"
 
 #: utils_locale.rssuccessfultransferbands
 msgctxt "utils_locale.rssuccessfultransferbands"
-msgid "Bands transfered successfully!"
+msgid "Bands transferred successfully!"
 msgstr "Anilhas transferidas com sucesso!"
 
 #: utils_locale.rssuccessfulupdate
@@ -18777,8 +18841,8 @@ msgstr "Gravações de áudio"
 
 #: utils_locale.rstitleautoupdate
 msgctxt "utils_locale.rstitleautoupdate"
-msgid "Autoupdate"
-msgstr "Atualização automática"
+msgid "Automatic updates"
+msgstr "Atualizações automática"
 
 #: utils_locale.rstitleavgexpeditionduration
 msgctxt "utils_locale.rstitleavgexpeditionduration"

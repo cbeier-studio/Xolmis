@@ -1514,7 +1514,7 @@ msgstr ""
 
 #: data_columns.rscorcid
 msgctxt "data_columns.rscorcid"
-msgid "Orcid"
+msgid "ORCID"
 msgstr ""
 
 #: data_columns.rscorderid
@@ -2506,7 +2506,7 @@ msgstr ""
 
 #: data_columns.rscxtwitter
 msgctxt "data_columns.rscxtwitter"
-msgid "X (Twitter)"
+msgid "X / Twitter"
 msgstr ""
 
 #: data_columns.rsczoologicalcode
@@ -15514,7 +15514,7 @@ msgstr ""
 
 #: utils_locale.rserrorcsvindexnotfound
 msgctxt "utils_locale.rserrorcsvindexnotfound"
-msgid "Field index of CSV record not exists!"
+msgid "CSV field index does not exist!"
 msgstr ""
 
 #: utils_locale.rserrordatabasecorrupted
@@ -15558,6 +15558,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrorexporting"
 msgid "An error occurred exporting: %s"
+msgstr ""
+
+#: utils_locale.rserrorexportingebird
+#, object-pascal-format
+msgid "Error exporting eBird data: %s"
 msgstr ""
 
 #: utils_locale.rserrorfieldsandvaluesdiffer
@@ -15612,7 +15617,7 @@ msgstr ""
 #: utils_locale.rserrorimporting
 #, object-pascal-format
 msgctxt "utils_locale.rserrorimporting"
-msgid "An error occurred importing: %s"
+msgid "An error occurred while importing: %s"
 msgstr ""
 
 #: utils_locale.rserrorinvalidbooleanforfield
@@ -15684,7 +15689,7 @@ msgstr ""
 #: utils_locale.rserrormontadata
 #, object-pascal-format
 msgctxt "utils_locale.rserrormontadata"
-msgid "Error in year digits (%d). Send this issue to the Support."
+msgid "Invalid year digits (%d). Please report this issue to support."
 msgstr ""
 
 #: utils_locale.rserrornoimporterregisteredforextension
@@ -15785,6 +15790,10 @@ msgctxt "utils_locale.rserrorvalidatingpassword"
 msgid "Error validating password: %s"
 msgstr ""
 
+#: utils_locale.rserrorvalidationfailed
+msgid "Data validation found issues."
+msgstr ""
+
 #: utils_locale.rserrorvalueexceededmaxlength
 #, object-pascal-format
 msgid "The value \"%s\" exceeds the allowed maximum length (%d) for the field \"%s\"."
@@ -15829,6 +15838,10 @@ msgstr ""
 #: utils_locale.rsexportdatatitle
 msgctxt "utils_locale.rsexportdatatitle"
 msgid "Export data"
+msgstr ""
+
+#: utils_locale.rsexportebird
+msgid "Export to eBird"
 msgstr ""
 
 #: utils_locale.rsexportempty
@@ -16676,6 +16689,26 @@ msgstr ""
 
 #: utils_locale.rsmeasurementsoutliers
 msgid "Measurement outliers"
+msgstr ""
+
+#: utils_locale.rsmediafolderchanged
+msgid "Media folder changed"
+msgstr ""
+
+#: utils_locale.rsmediamigrationcompleted
+msgid "Migration completed"
+msgstr ""
+
+#: utils_locale.rsmediamigrationerror
+#, object-pascal-format
+msgid ""
+"Could not migrate media paths:\n"
+"%s"
+msgstr ""
+
+#: utils_locale.rsmigratedmediapaths
+#, object-pascal-format
+msgid "%d %s path(s) were updated."
 msgstr ""
 
 #: utils_locale.rsminpasswordlength
@@ -17813,6 +17846,19 @@ msgctxt "utils_locale.rspromptbackupnow"
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
 msgstr ""
 
+#: utils_locale.rspromptmigratemediapath
+#, object-pascal-format
+msgid ""
+"You changed the %s folder.\n"
+"\n"
+"Old: %s\n"
+"New: %s\n"
+"\n"
+"To keep existing links working, Xolmis needs to migrate stored relative paths now.\n"
+"\n"
+"Run migration now?"
+msgstr ""
+
 #: utils_locale.rspromptselectsurvey
 msgctxt "utils_locale.rspromptselectsurvey"
 msgid "Select the survey to generate the report:"
@@ -18435,9 +18481,14 @@ msgctxt "utils_locale.rssuccessfuldatabasevacuum"
 msgid "The selected database was vacuumed!"
 msgstr ""
 
+#: utils_locale.rssuccessfulexportebird
+#, object-pascal-format
+msgid "Data exported successfully to: %s"
+msgstr ""
+
 #: utils_locale.rssuccessfulimport
 msgctxt "utils_locale.rssuccessfulimport"
-msgid "The selected file(s) were sucessfully imported."
+msgid "The selected file(s) were successfully imported."
 msgstr ""
 
 #: utils_locale.rssuccessfulimportbandingeffort
@@ -18477,6 +18528,11 @@ msgstr ""
 msgid "Nests imported successfully!"
 msgstr ""
 
+#: utils_locale.rssuccessfulimportrecords
+#, object-pascal-format
+msgid "%d record(s) successfully imported!"
+msgstr ""
+
 #: utils_locale.rssuccessfulnewbatch
 msgctxt "utils_locale.rssuccessfulnewbatch"
 msgid "New batch inserted successfully!"
@@ -18499,7 +18555,7 @@ msgstr ""
 
 #: utils_locale.rssuccessfultransferbands
 msgctxt "utils_locale.rssuccessfultransferbands"
-msgid "Bands transfered successfully!"
+msgid "Bands transferred successfully!"
 msgstr ""
 
 #: utils_locale.rssuccessfulupdate
@@ -18629,7 +18685,7 @@ msgstr ""
 
 #: utils_locale.rstitleautoupdate
 msgctxt "utils_locale.rstitleautoupdate"
-msgid "Autoupdate"
+msgid "Automatic updates"
 msgstr ""
 
 #: utils_locale.rstitleavgexpeditionduration

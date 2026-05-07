@@ -441,7 +441,7 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths('documents', OldPath, NewPath, TBL_DOCUMENTS, COL_DOCUMENT_ID, True) then
+  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleDocuments), OldPath, NewPath, TBL_DOCUMENTS, COL_DOCUMENT_ID, True) then
     xSettings.DocumentsFolder := NewPath
   else
   begin
@@ -470,7 +470,7 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths('audio recordings', OldPath, NewPath, TBL_AUDIO_LIBRARY, COL_AUDIO_ID) then
+  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleAudioLibrary), OldPath, NewPath, TBL_AUDIO_LIBRARY, COL_AUDIO_ID) then
     xSettings.AudiosFolder := NewPath
   else
   begin
@@ -545,7 +545,7 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths('images', OldPath, NewPath, TBL_IMAGES, COL_IMAGE_ID) then
+  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleImages), OldPath, NewPath, TBL_IMAGES, COL_IMAGE_ID) then
     xSettings.ImagesFolder := NewPath
   else
   begin
@@ -574,7 +574,7 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths('videos', OldPath, NewPath, TBL_VIDEOS, COL_VIDEO_ID) then
+  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleVideos), OldPath, NewPath, TBL_VIDEOS, COL_VIDEO_ID) then
     xSettings.VideosFolder := NewPath
   else
   begin
@@ -666,24 +666,19 @@ var
 begin
   Result := False;
 
-  Msg := Format('You changed the %s folder.' + LineEnding + LineEnding +
-    'Old: %s' + LineEnding +
-    'New: %s' + LineEnding + LineEnding +
-    'To keep existing links working, Xolmis needs to migrate stored relative paths now.' +
-    LineEnding + LineEnding +
-    'Run migration now?', [aMediaLabel, aOldBaseFolder, aNewBaseFolder]);
+  Msg := Format(rsPromptMigrateMediaPath, [aMediaLabel, aOldBaseFolder, aNewBaseFolder]);
 
-  if not MsgDlg('Media folder changed', Msg, mtConfirmation) then
+  if not MsgDlg(rsMediaFolderChanged, Msg, mtConfirmation) then
     Exit(False);
 
   try
     UpdatedCount := MigrateMediaPaths(aTableName, aIdField, aOldBaseFolder, aNewBaseFolder, aSkipUrls);
-    MsgDlg('Migration completed', Format('%d %s path(s) were updated.', [UpdatedCount, aMediaLabel]), mtInformation);
+    MsgDlg(rsMediaMigrationCompleted, Format(rsMigratedMediaPaths, [UpdatedCount, aMediaLabel]), mtInformation);
     Result := True;
   except
     on E: Exception do
     begin
-      MsgDlg('Migration error', 'Could not migrate media paths:' + LineEnding + E.Message, mtWarning);
+      MsgDlg(rsTitleError, Format(rsMediaMigrationError, [E.Message]), mtWarning);
       Result := False;
     end;
   end;

@@ -199,6 +199,8 @@ uses
     rsErrorLoadingDatabaseSchema = 'The database schema was not loaded.';
     rsErrorLoadingTableSchema = 'The table schema was not loaded.';
     rsErrorLoadingFieldSchema = 'The field schema was not loaded.';
+    rsErrorExportingEbird = 'Error exporting eBird data: %s';
+    rsErrorValidationFailed = 'Data validation found issues.';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
@@ -250,6 +252,7 @@ uses
     rsSuccessfulImportNests = 'Nests imported successfully!';
     rsSuccessfulImportNestRevisions = 'Nest revisions imported successfully!';
     rsSuccessfulImportEggs = 'Eggs imported successfully!';
+    rsSuccessfulImportRecords = '%d record(s) successfully imported!';
     rsSuccessfulBackup = 'Backup file created successfully: %s';
     rsSuccessfulRestore = 'Backup restored successfully: %s';
     rsSuccessfulImportCoordinates = 'Coordinates imported successfully!';
@@ -264,6 +267,7 @@ uses
     rsSuccessfulDatabaseOptimization = 'The selected database was optimized!';
     rsSuccessfulDatabaseVacuum = 'The selected database was vacuumed!';
     rsSuccessfulDatabaseIntegrityCheck = 'The selected database integrity is OK!';
+    rsSuccessfulExportEbird = 'Data exported successfully to: %s';
 
     { Deletion messages }
     rsDeleteConnectionTitle = 'Delete connection';
@@ -302,6 +306,8 @@ uses
     rsExportFieldsNotFound = 'No fields selected to export!';
     rsExportEmpty = 'No records found! Export canceled.';
     rsExportFinished = 'Export to %s: Finished!';
+    rsExportEbird = 'Export to eBird';
+
 
     { Image messages }
     rsImageNotSupported = 'Image type not supported: %s';
@@ -774,6 +780,16 @@ uses
     rsAuto = 'Auto';
     rsDark = 'Dark';
     rsLight = 'Light';
+    rsPromptMigrateMediaPath = 'You changed the %s folder.' + LineEnding + LineEnding +
+      'Old: %s' + LineEnding +
+      'New: %s' + LineEnding + LineEnding +
+      'To keep existing links working, Xolmis needs to migrate stored relative paths now.' +
+      LineEnding + LineEnding +
+      'Run migration now?';
+    rsMediaFolderChanged = 'Media folder changed';
+    rsMediaMigrationCompleted = 'Migration completed';
+    rsMigratedMediaPaths = '%d %s path(s) were updated.';
+    rsMediaMigrationError = 'Could not migrate media paths:' + LineEnding + '%s';
 
     { Languages }
     rsEnglish = 'English';

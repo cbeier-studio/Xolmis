@@ -2418,11 +2418,11 @@ begin
   // Import data
   try
     ImportData;
-    MsgDlg(rsTitleSuccess, Format(rsImportedRecords, [qeGrid.RowCount - 1]), mtInformation);
+    MsgDlg(rsTitleInformation, Format(rsSuccessfulImportRecords, [qeGrid.RowCount - 1]), mtInformation);
   except
     on E: Exception do
     begin
-      MsgDlg(rsTitleError, Format(rsErrorDuringImport, [E.Message]), mtError);
+      MsgDlg(rsTitleError, Format(rsErrorImporting, [E.Message]), mtError);
     end;
   end;
 end;
