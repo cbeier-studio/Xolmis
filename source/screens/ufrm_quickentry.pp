@@ -893,7 +893,7 @@ begin
         Obj.BirthMonth := StrToIntDef(CellValue(COL_BIRTH_MONTH, r), 0);
         Obj.BirthDay := StrToIntDef(CellValue(COL_BIRTH_DAY, r), 0);
         Obj.DeathYear := StrToIntDef(CellValue(COL_DEATH_YEAR, r), 0);
-        Obj.DeathMonth := StrTointDef(CellValue(COL_DEATH_MONTH, r), 0);
+        Obj.DeathMonth := StrToIntDef(CellValue(COL_DEATH_MONTH, r), 0);
         Obj.DeathDay := StrToIntDef(CellValue(COL_DEATH_DAY, r), 0);
         Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, CellValue(COL_NEST_NAME, r));
         Obj.FatherId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_FATHER_NAME, r));
@@ -1039,6 +1039,7 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
+        Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, CellValue(COL_NEST_NAME, r));
         Obj.Role := StrToNestRole(CellValue(COL_ROLE, r));
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
 
@@ -1892,7 +1893,7 @@ begin
       for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
       begin
         Obj.Clear;
-        Obj.PersonId := GetSiteKey(CellValue(COL_PERSON_NAME, r));
+        Obj.PersonId := GetPersonKey(CellValue(COL_PERSON_NAME, r));
         Obj.Visitor := CellValue(COL_VISITOR, r) = '1';
 
         Repo.Insert(Obj);
@@ -2145,6 +2146,7 @@ var
   aIndividualKey: Integer;
   aNestKey, aEggKey: Integer;
   aBandKey: Integer;
+  aNetEffortKey: Integer;
 begin
   Grid := TStringGrid(Sender);
   if (Grid.EditorMode) and (ColIsSearchable(Grid.Col)) then
@@ -2189,7 +2191,7 @@ begin
         if (Title.Caption = rscSurvey) then
           FindDlg(tbSurveys, Grid, aSurveyKey, Key);
         if (Title.Caption = rscMistnet) then
-          FindDlg(tbNetsEffort, Grid, aSurveyKey, Key);
+          FindDlg(tbNetsEffort, Grid, aNetEffortKey, Key);
 
         if (Title.Caption = rscObserver) or
           (Title.Caption = rscObserver1) or
@@ -2408,10 +2410,21 @@ end;
 procedure TfrmQuickEntry.sbImportClick(Sender: TObject);
 begin
   if not ValidateAll then
+  begin
+    MsgDlg(rsTitleError, rsErrorValidationFailed, mtError);
     Exit;
+  end;
 
   // Import data
-  ImportData;
+  try
+    ImportData;
+    MsgDlg(rsTitleSuccess, Format(rsImportedRecords, [qeGrid.RowCount - 1]), mtInformation);
+  except
+    on E: Exception do
+    begin
+      MsgDlg(rsTitleError, Format(rsErrorDuringImport, [E.Message]), mtError);
+    end;
+  end;
 end;
 
 procedure TfrmQuickEntry.sbOpenClick(Sender: TObject);
