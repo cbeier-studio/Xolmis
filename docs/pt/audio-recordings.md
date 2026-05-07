@@ -4,11 +4,6 @@ O recurso de **Gravações de áudio** permite que pesquisadores anexem arquivos
 
 Abra o painel lateral de gravações de áudio clicando no ícone de microfone :material-microphone: na barra lateral direita (se disponível no módulo).
 
-!!! danger
-    Antes de adicionar qualquer gravação, vá em [Configurações](settings.md) na seção **Mídia** e defina o **local dos arquivos de áudio**. As gravações são salvas com um caminho relativo a esse local. Alterar o local posteriormente pode causar problemas no acesso aos arquivos.
-
-    {==Uma solução para realocação dinâmica está em desenvolvimento.==}
-
 ## Barra de ferramentas
 
 | Ícone | Botão | Função |

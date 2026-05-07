@@ -4,11 +4,6 @@ The **Videos** feature allows researchers to attach video recordings to records 
 
 Open the videos side panel by clicking the video camera icon :material-video: in the right toolbar (if available in the module).
 
-!!! danger
-    Before adding any recordings, go to [Settings](settings.md) in the **Media** section and set the **video files location**. Videos are saved with a file path relative to this location. Changing the location afterwards can cause problems in accessing files.
-
-    {==A solution for dynamic relocation is under development.==}
-
 ## Toolbar
 
 Icon | Button | Function

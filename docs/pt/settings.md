@@ -57,11 +57,6 @@ Esta seção define como arquivos de mídia (imagens, áudio, vídeo, documentos
 | **Local dos documentos** | Pasta para armazenar documentos. | `.\attachments\` |
 | **Abrir arquivos após exportar** | Se habilitado, abre arquivos exportados no aplicativo padrão. | Desabilitado |
 
-!!! danger
-    Alterar os locais de mídia após adicionar arquivos **não é recomendado**. Os caminhos de mídia são armazenados como referências relativas, e alterar a localização pode causar inconsistências.  
-
-    {==Uma solução para realocação dinâmica está em desenvolvimento.==}
-
 ## Segurança e privacidade
 
 Esta seção contém configurações relacionadas ao login e ao suporte técnico.

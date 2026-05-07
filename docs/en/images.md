@@ -6,11 +6,6 @@ Open the images side panel by clicking the image icon :material-image: on the ri
 
 ![Images view](img/images-view.png)
 
-!!! danger
-    Before adding any images, go to [Settings](settings.md) in the **Media** section and set the **images location**. Images are saved with a file path relative to this location. Changing the location afterwards can cause problems in accessing files.
-
-    {==A solution for dynamic relocation is under development.==}
-
 ## Toolbar
 
 | Icon | Button | Function |

@@ -6,11 +6,6 @@ Abra o painel lateral de imagens clicando no ícone de imagem :material-image: n
 
 ![Visualização de imagens](img/images-view.png)
 
-!!! danger
-    Antes de adicionar qualquer imagem, vá em [Configurações](settings.md) na seção **Mídia** e defina o **local das imagens**. As imagens são salvas com um caminho relativo a esse local. Alterar o local posteriormente pode causar problemas no acesso aos arquivos.
-
-    {==Uma solução para realocação dinâmica está em desenvolvimento.==}
-
 ## Barra de ferramentas
 
 | Ícone | Botão | Função |

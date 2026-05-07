@@ -4,11 +4,6 @@ The **Audio recordings** feature allows researchers to attach sound files to rec
 
 Open the audio recordings side panel by clicking the microphone icon :material-microphone: on the right toolbar (if available in the module).
 
-!!! danger
-    Before adding any recordings, go to [Settings](settings.md) in the **Media** section and set the audio files location. Recordings are saved with a file path relative to this location. Changing the location afterwards can cause problems in accessing files.
-
-    {==A solution for dynamic relocation is under development.==}
-
 ## Toolbar
 
 | Icon | Button | Function |

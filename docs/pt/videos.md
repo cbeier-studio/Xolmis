@@ -4,11 +4,6 @@ O recurso de **Vídeos** permite que pesquisadores anexem gravações em vídeo 
 
 Abra o painel lateral de vídeos clicando no ícone de câmera de vídeo :material-video: na barra lateral direita (se disponível no módulo).
 
-!!! danger
-    Antes de adicionar qualquer gravação, vá em [Configurações](settings.md) na seção **Mídia** e defina o **local dos arquivos de vídeo**. Os vídeos são salvos com um caminho relativo a esse local. Alterar o local posteriormente pode causar problemas no acesso aos arquivos.
-
-    {==Uma solução para realocação dinâmica está em desenvolvimento.==}
-
 ## Barra de ferramentas
 
 Ícone | Botão | Função  

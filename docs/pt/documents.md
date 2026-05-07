@@ -2,11 +2,6 @@
 
 O recurso de **Documentos e links** permite que pesquisadores anexem arquivos externos ou referências a registros no Xolmis. Isso garante que materiais de apoio, como relatórios, conjuntos de dados, apresentações ou recursos online, estejam diretamente vinculados aos dados ornitológicos, tornando o banco de dados um repositório abrangente de informações.
 
-!!! danger
-    Antes de adicionar qualquer documento, vá em [Configurações](settings.md) na seção **Mídia** e defina o **local dos documentos**. Os documentos são salvos com um caminho relativo a esse local. Alterar o local posteriormente pode causar problemas no acesso aos arquivos.
-
-    {==Uma solução para realocação dinâmica está em desenvolvimento.==}
-
 ## Barra de ferramentas
 
 | Ícone | Botão | Função |

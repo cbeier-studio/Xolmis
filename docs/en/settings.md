@@ -57,11 +57,6 @@ This section defines how media files (images, audio, video, documents) are store
 | **Documents location** | Folder path for storing documents. | `.\attachments\` |
 | **Open files after export** | If enabled, opens exported files in the default application. | Disabled |
 
-!!! danger
-    Changing media locations after adding files is **not recommended**. Media paths are stored as relative references, and altering the location may cause inconsistencies.
-    
-    {==A solution for dynamic relocation is under development.==}
-
 ## Security and privacy
 
 This section contains settings related to login and technical support.

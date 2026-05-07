@@ -2,11 +2,6 @@
 
 The **Documents and links** feature allows researchers to attach external files or references to records in Xolmis. This ensures that supporting materials such as reports, datasets, presentations, or online resources are directly linked to ornithological data, making the database a comprehensive repository of information.
 
-!!! danger
-    Before adding any documents, go to [Settings](settings.md) in the **Media** section and set the **documents location**. Documents are saved with a file path relative to this location. Changing the location afterwards can cause problems in accessing files.
-
-    {==A solution for dynamic relocation is under development.==}
-
 ## Toolbar
 
 | Icon | Button | Function |
