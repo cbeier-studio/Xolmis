@@ -22,6 +22,9 @@ The **Quick export** feature is designed to make exporting data fast and flexibl
 
 Select the **columns** you want to export. This step ensures that only relevant data is included in the output file, reducing file size and simplifying analysis.
 
+!!! tip
+    Right click the columns list for options to mark or unmark all and invert selection.
+
 ### Choosing the format
 
 On the top right of the dialog, select the file format to which you want to export. Xolmis supports multiple formats, each suited to different use cases:

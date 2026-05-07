@@ -66,7 +66,7 @@ begin
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowMap, gufShowSummary, gufShowDocs];
   FPrintUiFlags := [pufSamplingPlots, pufSamplingPlotsByLocality];
-  FFilterUiFlags := [fufMarked, fufSiteRank, fufSites];
+  FFilterUiFlags := [fufMarked, fufSites];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);
 

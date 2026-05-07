@@ -22,6 +22,13 @@ O recurso de **Exportação rápida** foi projetado para tornar a exportação d
 
 Selecione as **colunas** que deseja exportar. Essa etapa garante que apenas os dados relevantes sejam incluídos no arquivo de saída, reduzindo o tamanho do arquivo e simplificando a análise.
 
+!!! tip
+    Clique com o botão direito na lista de colunas para opções para marcar ou desmarcar todas e inverter a seleção.
+
+### Escolhendo o formato
+
+No canto superior direito do diálogo,olumns list for options to mark or unmark all and invert selection.
+
 ### Escolhendo o formato
 
 No topo direito do diálogo, selecione o formato de arquivo para o qual deseja exportar. O Xolmis suporta múltiplos formatos, cada um adequado para diferentes casos de uso:
