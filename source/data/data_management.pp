@@ -1725,12 +1725,16 @@ procedure CreateBandsRunningOutView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_bands_running_out view');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_running_out AS ' +
-    'WITH grupos AS ( ' +
-      'SELECT date(capture_date) AS capture_date, ' +
-        'date(capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date) ) || '' days'') AS grp ' +
+    'WITH capture_days AS ( ' +
+      'SELECT date(capture_date) AS capture_date ' +
       'FROM captures ' +
       'WHERE active_status = 1 ' +
-      'GROUP BY capture_date ' +
+      'GROUP BY date(capture_date) ' +
+    '), ' +
+    'grupos AS ( ' +
+      'SELECT capture_date, ' +
+        'date(capture_date, ''-'' || ROW_NUMBER() OVER (ORDER BY capture_date) || '' days'') AS grp ' +
+      'FROM capture_days ' +
     '), ' +
     'consecutivo AS ( ' +
       'SELECT COUNT(capture_date) AS consecutive_dates, ' +
@@ -1751,7 +1755,7 @@ begin
       'WHERE captures.capture_type = ''N'' AND ' +
         'captures.active_status = 1 ' +
       'GROUP BY tamanho, ' +
-        'capture_date ' +
+        'date(captures.capture_date) ' +
     '), ' +
     'DailyAverage AS ( ' +
       'SELECT ub.tamanho, ' +
@@ -1759,23 +1763,27 @@ begin
       'FROM UsedBands AS ub ' +
       'GROUP BY ub.tamanho ' +
     '), ' +
+    'BandSizes AS ( ' +
+      'SELECT band_size ' +
+      'FROM bands ' +
+      'GROUP BY band_size ' +
+    '), ' +
     'AvailableBands AS ( ' +
-      'SELECT b.band_size, ' +
-        'COUNT(b2.band_number) AS remaining_bands ' +
-      'FROM bands AS b ' +
-      'LEFT JOIN bands AS b2 ON b.band_size = b2.band_size AND b2.band_status = ''A'' ' +
-      'GROUP BY b.band_size ' +
+      'SELECT band_size, ' +
+        'SUM(CASE WHEN band_status = ''A'' THEN 1 ELSE 0 END) AS remaining_bands ' +
+      'FROM bands ' +
+      'GROUP BY band_size ' +
     ') ' +
-    'SELECT b1.band_size, ' +
+    'SELECT bs.band_size, ' +
       'IFNULL(ab.remaining_bands, 0) AS saldo, ' +
       'da.daily_use AS media_dia, ' +
       '(da.daily_use * e.media_dias_expedicao) AS media_expedicao ' +
-    'FROM bands AS b1 ' +
+    'FROM BandSizes AS bs ' +
     'JOIN expedicao AS e ' +
-    'LEFT JOIN AvailableBands AS ab ON b1.band_size = ab.band_size ' +
-    'LEFT JOIN DailyAverage AS da ON b1.band_size = da.tamanho ' +
+    'LEFT JOIN AvailableBands AS ab ON bs.band_size = ab.band_size ' +
+    'LEFT JOIN DailyAverage AS da ON bs.band_size = da.tamanho ' +
     'WHERE saldo < media_expedicao ' +
-    'GROUP BY b1.band_size ' +
+    'GROUP BY bs.band_size ' +
     'ORDER BY saldo ASC;');
 end;
 

@@ -333,6 +333,8 @@ type
   private
     //ActiveQuery: TSQLQuery;
     ActiveGrid: TfrmCustomGrid;
+    FBandStockCheckDone: Boolean;
+    FBandStockCheckTimer: TTimer;
     procedure OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponentClass; aCaption: String;
       Pinned: Boolean);
     procedure OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
@@ -341,6 +343,10 @@ type
     //  aCaption: String; aIcon: Integer = -1); overload;
     procedure CloseAllTabs(ClosePinned: Boolean = False; ExceptIndex: Integer = -1);
     procedure ApplyDarkMode;
+    procedure UpdateNotificationsButtonIcon;
+    procedure ScheduleBandStockCheck(DelayMs: Integer = 3000);
+    procedure BandStockCheckTimer(Sender: TObject);
+    procedure CheckBandStockNotifications;
   public
     procedure ApplyFormSettings;
     procedure RefreshNotifications;
@@ -379,6 +385,7 @@ uses
   utils_editdialogs, utils_themes, utils_gis,
   models_users, models_geo, models_taxonomy, models_record_types,
   data_management, data_schema, io_core, io_ebird_csv,
+  SQLDB,
   uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
@@ -426,12 +433,14 @@ procedure TfrmMain.actDBConnectExecute(Sender: TObject);
 begin
   if ConnectDatabase then
   begin
+    FBandStockCheckDone := False;
     LogDebug('Database connection changed');
     CloseAllTabs;
     sbHomeClick(nil);
 
     UpdateMenu(PGW.ActivePageComponent);
     UpdateStatusBar;
+    ScheduleBandStockCheck;
   end;
 end;
 
@@ -441,11 +450,13 @@ begin
   begin
     if ConnectDatabase then
     begin
+      FBandStockCheckDone := False;
       CloseAllTabs;
       sbHomeClick(nil);
 
       UpdateMenu(PGW.ActivePageComponent);
       UpdateStatusBar;
+      ScheduleBandStockCheck;
 
       ShowOnboardingBig(obtNewDatabase);
     end;
@@ -968,6 +979,8 @@ procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   isClosing := True;
   TimerScreen.Enabled := False;
+  if Assigned(FBandStockCheckTimer) then
+    FBandStockCheckTimer.Enabled := False;
 
   lblLoading.Caption := rsClosing;
   pSplash.Top := 0;
@@ -1055,6 +1068,8 @@ begin
   isClosing := False;
   isOpening := False;
   isWorking := False;
+  FBandStockCheckDone := False;
+  FBandStockCheckTimer := nil;
 
   {$IFDEF DEBUG}
   LogDebug('Opening the main form');
@@ -1080,6 +1095,9 @@ end;
 
 procedure TfrmMain.FormDestroy(Sender: TObject);
 begin
+  if Assigned(FBandStockCheckTimer) then
+    FreeAndNil(FBandStockCheckTimer);
+
   if Assigned(DMB) then
     FreeAndNil(DMB);
   if Assigned(DMI) then
@@ -1152,6 +1170,7 @@ begin
 
   { Initialize notification system }
   CreateNotificationList;
+  UpdateNotificationsButtonIcon;
 
   { Check if there are connections available }
   DMM.qsConn.Open;
@@ -1278,6 +1297,7 @@ begin
     xSettings.SaveToFile;
 
     pSplash.Visible := False;
+    ScheduleBandStockCheck;
 
     { Show onboarding tour }
     //with dlgTourTip do
@@ -1676,6 +1696,8 @@ var
 begin
   //pNotificationList.BeginUpdate;
   try
+    UpdateNotificationsButtonIcon;
+
     pNotificationList.AutoSize := False;
     pEmptyNotifications.Visible := xNotifications.Count = 0;
 
@@ -1705,18 +1727,19 @@ begin
         Rounding.RoundY := 8;
         if IsDarkModeEnabled then
         begin
-          Border.Color := clSolidBGSecondaryLight;
-          Background.Color := clCardBGDefaultLight;
+          Border.Color := clSystemSolidNeutralFGDark;
+          Background.Color := clSolidBGSecondaryDark;
         end
         else
         begin
-          Border.Color := clCardBGSecondaryDark;
-          Background.Color := clCardBGDefaultDark;
+          Border.Color := clSolidBGSecondaryLight;
+          Background.Color := clCardBGDefaultLight;
         end;
         ParentBackground := True;
-        ChildSizing.TopBottomSpacing := 8;
-        ChildSizing.LeftRightSpacing := 8;
+        ChildSizing.TopBottomSpacing := 16;
+        ChildSizing.LeftRightSpacing := 16;
         ChildSizing.HorizontalSpacing := 8;
+        ChildSizing.VerticalSpacing := 8;
         //BorderSpacing.Bottom := 2;
         B.Parent := pNotificationList;
       end;
@@ -1773,6 +1796,7 @@ begin
         AnchorSide[akRight].Control := B;
         Anchors := [akTop, akRight];
         AutoSize := True;
+
       end;
 
       // Create action buttons
@@ -1785,6 +1809,14 @@ begin
     pNotificationList.AutoSize := True;
     //pNotificationList.EndUpdate;
   end;
+end;
+
+procedure TfrmMain.UpdateNotificationsButtonIcon;
+begin
+  if Assigned(xNotifications) and (xNotifications.Count > 0) then
+    sbNotifications.ImageIndex := 46
+  else
+    sbNotifications.ImageIndex := 44;
 end;
 
 procedure TfrmMain.sbBackNotificationsClick(Sender: TObject);
@@ -1837,6 +1869,12 @@ end;
 procedure TfrmMain.sbNotificationsClick(Sender: TObject);
 begin
   pNotifications.Visible := sbNotifications.Down;
+
+  if pNotifications.Visible and FNotificationsNeedUpdate then
+  begin
+    RefreshNotifications;
+    FNotificationsNeedUpdate := False;
+  end;
 end;
 
 procedure TfrmMain.SBarDrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel; const Rect: TRect);
@@ -1910,6 +1948,142 @@ begin
     navTabs.OptScalePercents := 100;
     navTabs.OptFontScale := 100;
   end;
+end;
+
+procedure TfrmMain.ScheduleBandStockCheck(DelayMs: Integer);
+begin
+  if DelayMs < 1000 then
+    DelayMs := 1000;
+
+  if not Assigned(FBandStockCheckTimer) then
+  begin
+    FBandStockCheckTimer := TTimer.Create(Self);
+    FBandStockCheckTimer.Enabled := False;
+    FBandStockCheckTimer.OnTimer := @BandStockCheckTimer;
+  end;
+
+  FBandStockCheckTimer.Interval := DelayMs;
+  FBandStockCheckTimer.Enabled := True;
+end;
+
+procedure TfrmMain.BandStockCheckTimer(Sender: TObject);
+begin
+  if Assigned(FBandStockCheckTimer) then
+    FBandStockCheckTimer.Enabled := False;
+
+  CheckBandStockNotifications;
+end;
+
+procedure TfrmMain.CheckBandStockNotifications;
+var
+  Qry: TSQLQuery;
+  TotalRunningOut, TotalOutOfStock, TotalLowStock: Integer;
+  OutOfStockSizes, LowStockSizes, MsgText, SizeName: String;
+begin
+  if FBandStockCheckDone or isClosing then
+    Exit;
+
+  if (not Assigned(DMM)) or (not Assigned(DMM.sqlCon)) or (not Assigned(DMM.sqlTrans)) then
+  begin
+    // Database components may still be initializing; retry shortly.
+    ScheduleBandStockCheck(2000);
+    Exit;
+  end;
+
+  if (not DMM.sqlCon.Connected) or (not Assigned(xNotifications)) then
+  begin
+    ScheduleBandStockCheck(2000);
+    Exit;
+  end;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+
+    Qry.SQL.Text :=
+      'SELECT ' +
+      '  COUNT(*) AS total_running_out, ' +
+      '  SUM(CASE WHEN saldo <= 0 THEN 1 ELSE 0 END) AS total_out_of_stock ' +
+      'FROM get_bands_running_out';
+    Qry.Open;
+
+    TotalRunningOut := Qry.FieldByName('total_running_out').AsInteger;
+    TotalOutOfStock := Qry.FieldByName('total_out_of_stock').AsInteger;
+    TotalLowStock := TotalRunningOut - TotalOutOfStock;
+    Qry.Close;
+
+    if TotalRunningOut = 0 then
+    begin
+      FBandStockCheckDone := True;
+      Exit;
+    end;
+
+    Qry.SQL.Text :=
+      'SELECT band_size, saldo ' +
+      'FROM get_bands_running_out ' +
+      'ORDER BY saldo ASC, band_size';
+    Qry.Open;
+
+    OutOfStockSizes := EmptyStr;
+    LowStockSizes := EmptyStr;
+    while not Qry.EOF do
+    begin
+      SizeName := Qry.FieldByName('band_size').AsString;
+
+      if Qry.FieldByName('saldo').AsInteger <= 0 then
+      begin
+        if OutOfStockSizes = EmptyStr then
+          OutOfStockSizes := SizeName
+        else
+          OutOfStockSizes := OutOfStockSizes + ', ' + SizeName;
+      end
+      else
+      begin
+        if LowStockSizes = EmptyStr then
+          LowStockSizes := SizeName
+        else
+          LowStockSizes := LowStockSizes + ', ' + SizeName;
+      end;
+
+      Qry.Next;
+    end;
+    Qry.Close;
+
+    if TotalOutOfStock > 0 then
+    begin
+      MsgText := Format('Band stock is exhausted for %d size(s). Affected sizes: %s.',
+        [TotalOutOfStock, OutOfStockSizes]);
+      NewAlert('Band stock exhausted', MsgText, npImportant);
+      LogWarning('Band stock notification created: ' + MsgText);
+    end;
+
+    if TotalLowStock > 0 then
+    begin
+      MsgText := Format('Band stock is running low for %d size(s). Recommended to request more bands. Affected sizes: %s.',
+        [TotalLowStock, LowStockSizes]);
+      NewAlert('Band stock running low', MsgText, npImportant);
+      LogWarning('Band stock notification created: ' + MsgText);
+    end;
+
+    UpdateNotificationsButtonIcon;
+
+    if pNotifications.Visible then
+    begin
+      RefreshNotifications;
+      FNotificationsNeedUpdate := False;
+    end;
+
+    FBandStockCheckDone := True;
+  except
+    on E: Exception do
+    begin
+      LogWarning('Unable to check band stock notifications: ' + E.Message);
+      ScheduleBandStockCheck(3000);
+    end;
+  end;
+
+  FreeAndNil(Qry);
 end;
 
 procedure TfrmMain.UpdateMenu(aTab: TPage);
