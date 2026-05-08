@@ -321,6 +321,7 @@ type
     procedure pmtCloseTabClick(Sender: TObject);
     procedure pmtNextTabClick(Sender: TObject);
     procedure pmtPriorTabClick(Sender: TObject);
+    procedure NotificationDismissClick(Sender: TObject);
     procedure SBarMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure sbBackNotificationsClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
@@ -1690,6 +1691,7 @@ end;
 procedure TfrmMain.RefreshNotifications;
 var
   i: Integer;
+  VisibleCount: Integer;
   B: TBCPanel;
   N, S: TLabel;
   SB: TSpeedButton;
@@ -1699,7 +1701,11 @@ begin
     UpdateNotificationsButtonIcon;
 
     pNotificationList.AutoSize := False;
-    pEmptyNotifications.Visible := xNotifications.Count = 0;
+    VisibleCount := 0;
+    for i := 0 to xNotifications.Count - 1 do
+      if xNotifications[i].IsVisible then
+        Inc(VisibleCount);
+    pEmptyNotifications.Visible := VisibleCount = 0;
 
     // Clear notification list
     for i := (pNotificationList.ComponentCount - 1) downto 0 do
@@ -1707,12 +1713,15 @@ begin
         pNotificationList.Components[i].Free;
 
     // Do not create notification cards if list is empty
-    if xNotifications.Count = 0 then
+    if VisibleCount = 0 then
       Exit;
 
     // Create notification cards
     for i := 0 to xNotifications.Count - 1 do
     begin
+      if not xNotifications[i].IsVisible then
+        Continue;
+
       // Create card
       B := TBCPanel.Create(pNotificationList);
       with B do
@@ -1751,6 +1760,7 @@ begin
         //Align := alClient;
         Layout := tlCenter;
         Caption := xNotifications[i].Title;
+        Font.Size := 11;
         Font.Style := Font.Style + [fsBold];
         N.Parent := B;
         AnchorSide[akTop].Side := asrTop;
@@ -1796,6 +1806,7 @@ begin
         AnchorSide[akRight].Control := B;
         Anchors := [akTop, akRight];
         AutoSize := True;
+        OnClick := @NotificationDismissClick;
 
       end;
 
@@ -1811,9 +1822,38 @@ begin
   end;
 end;
 
-procedure TfrmMain.UpdateNotificationsButtonIcon;
+procedure TfrmMain.NotificationDismissClick(Sender: TObject);
+var
+  Idx: Integer;
 begin
-  if Assigned(xNotifications) and (xNotifications.Count > 0) then
+  if not (Sender is TSpeedButton) then
+    Exit;
+
+  Idx := (Sender as TSpeedButton).Tag;
+  if (Idx < 0) or (Idx >= xNotifications.Count) then
+    Exit;
+
+  DismissNotification(Idx);
+  RefreshNotifications;
+  FNotificationsNeedUpdate := False;
+end;
+
+procedure TfrmMain.UpdateNotificationsButtonIcon;
+var
+  i: Integer;
+  HasVisibleNotifications: Boolean;
+begin
+  HasVisibleNotifications := False;
+
+  if Assigned(xNotifications) then
+    for i := 0 to xNotifications.Count - 1 do
+      if xNotifications[i].IsVisible then
+      begin
+        HasVisibleNotifications := True;
+        Break;
+      end;
+
+  if HasVisibleNotifications then
     sbNotifications.ImageIndex := 46
   else
     sbNotifications.ImageIndex := 44;
@@ -1978,7 +2018,10 @@ procedure TfrmMain.CheckBandStockNotifications;
 var
   Qry: TSQLQuery;
   TotalRunningOut, TotalOutOfStock, TotalLowStock: Integer;
+  TotalExpiredPermits, TotalExpiringPermits: Integer;
   OutOfStockSizes, LowStockSizes, MsgText, SizeName: String;
+  ExpiredPermits, ExpiringPermits, PermitName: String;
+  DaysRemaining: Integer;
 begin
   if FBandStockCheckDone or isClosing then
     Exit;
@@ -2013,57 +2056,106 @@ begin
     TotalLowStock := TotalRunningOut - TotalOutOfStock;
     Qry.Close;
 
-    if TotalRunningOut = 0 then
+    if TotalRunningOut > 0 then
     begin
-      FBandStockCheckDone := True;
-      Exit;
+      Qry.SQL.Text :=
+        'SELECT band_size, saldo ' +
+        'FROM get_bands_running_out ' +
+        'ORDER BY saldo ASC, band_size';
+      Qry.Open;
+
+      OutOfStockSizes := EmptyStr;
+      LowStockSizes := EmptyStr;
+      while not Qry.EOF do
+      begin
+        SizeName := Qry.FieldByName('band_size').AsString;
+
+        if Qry.FieldByName('saldo').AsInteger <= 0 then
+        begin
+          if OutOfStockSizes = EmptyStr then
+            OutOfStockSizes := SizeName
+          else
+            OutOfStockSizes := OutOfStockSizes + ', ' + SizeName;
+        end
+        else
+        begin
+          if LowStockSizes = EmptyStr then
+            LowStockSizes := SizeName
+          else
+            LowStockSizes := LowStockSizes + ', ' + SizeName;
+        end;
+
+        Qry.Next;
+      end;
+      Qry.Close;
+
+      if TotalOutOfStock > 0 then
+      begin
+        MsgText := Format('Band stock is exhausted for %d size(s). Affected sizes: %s.',
+          [TotalOutOfStock, OutOfStockSizes]);
+        NewAlert('Band stock exhausted', MsgText, npImportant);
+        LogWarning('Band stock notification created: ' + MsgText);
+      end;
+
+      if TotalLowStock > 0 then
+      begin
+        MsgText := Format('Band stock is running low for %d size(s). Recommended to request more bands. Affected sizes: %s.',
+          [TotalLowStock, LowStockSizes]);
+        NewAlert('Band stock running low', MsgText, npImportant);
+        LogWarning('Band stock notification created: ' + MsgText);
+      end;
     end;
 
     Qry.SQL.Text :=
-      'SELECT band_size, saldo ' +
-      'FROM get_bands_running_out ' +
-      'ORDER BY saldo ASC, band_size';
+      'SELECT permit_name, days_remaining ' +
+      'FROM get_expired_permits ' +
+      'ORDER BY days_remaining ASC, permit_name';
     Qry.Open;
 
-    OutOfStockSizes := EmptyStr;
-    LowStockSizes := EmptyStr;
+    TotalExpiredPermits := 0;
+    TotalExpiringPermits := 0;
+    ExpiredPermits := EmptyStr;
+    ExpiringPermits := EmptyStr;
     while not Qry.EOF do
     begin
-      SizeName := Qry.FieldByName('band_size').AsString;
+      PermitName := Qry.FieldByName('permit_name').AsString;
+      DaysRemaining := Qry.FieldByName('days_remaining').AsInteger;
 
-      if Qry.FieldByName('saldo').AsInteger <= 0 then
+      if DaysRemaining < 0 then
       begin
-        if OutOfStockSizes = EmptyStr then
-          OutOfStockSizes := SizeName
+        if ExpiredPermits = EmptyStr then
+          ExpiredPermits := PermitName
         else
-          OutOfStockSizes := OutOfStockSizes + ', ' + SizeName;
+          ExpiredPermits := ExpiredPermits + ', ' + PermitName;
+        Inc(TotalExpiredPermits);
       end
       else
       begin
-        if LowStockSizes = EmptyStr then
-          LowStockSizes := SizeName
+        if ExpiringPermits = EmptyStr then
+          ExpiringPermits := PermitName
         else
-          LowStockSizes := LowStockSizes + ', ' + SizeName;
+          ExpiringPermits := ExpiringPermits + ', ' + PermitName;
+        Inc(TotalExpiringPermits);
       end;
 
       Qry.Next;
     end;
     Qry.Close;
 
-    if TotalOutOfStock > 0 then
+    if TotalExpiredPermits > 0 then
     begin
-      MsgText := Format('Band stock is exhausted for %d size(s). Affected sizes: %s.',
-        [TotalOutOfStock, OutOfStockSizes]);
-      NewAlert('Band stock exhausted', MsgText, npImportant);
-      LogWarning('Band stock notification created: ' + MsgText);
+      MsgText := Format('There are %d expired permit(s). Affected permits: %s.',
+        [TotalExpiredPermits, ExpiredPermits]);
+      NewAlert('Expired permits', MsgText, npImportant);
+      LogWarning('Permit notification created: ' + MsgText);
     end;
 
-    if TotalLowStock > 0 then
+    if TotalExpiringPermits > 0 then
     begin
-      MsgText := Format('Band stock is running low for %d size(s). Recommended to request more bands. Affected sizes: %s.',
-        [TotalLowStock, LowStockSizes]);
-      NewAlert('Band stock running low', MsgText, npImportant);
-      LogWarning('Band stock notification created: ' + MsgText);
+      MsgText := Format('There are %d permit(s) expiring soon. Affected permits: %s.',
+        [TotalExpiringPermits, ExpiringPermits]);
+      NewAlert('Permits expiring soon', MsgText, npImportant);
+      LogWarning('Permit notification created: ' + MsgText);
     end;
 
     UpdateNotificationsButtonIcon;
