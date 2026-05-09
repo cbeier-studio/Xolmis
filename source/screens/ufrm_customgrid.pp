@@ -26,7 +26,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
-  DBControlGrid, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA,
+  DBControlGrid, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA, ColorSpeedButton,
   mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class,
   data_types, data_filters, models_media, modules_core;
 
@@ -52,8 +52,12 @@ type
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
     dsVideos: TDataSource;
+    eSearch: TEdit;
     gridVideos: TDBGrid;
     icoCategoryFilter: TImage;
+    iconSearch: TImage;
+    iSearch: TImageList;
+    iSearchDark: TImageList;
     lblCategoryFilter: TLabel;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
@@ -73,6 +77,7 @@ type
     pmvPlayVideo: TMenuItem;
     pmvRefreshVideos: TMenuItem;
     pmVideos: TPopupMenu;
+    pSearch: TBCPanel;
     pVideosToolbar: TBCPanel;
     pmpBandsBalance: TMenuItem;
     pmgBandHistory: TMenuItem;
@@ -125,6 +130,7 @@ type
     qVideosvideo_type: TStringField;
     sbAddVideo: TSpeedButton;
     sbAddFeathersBatch: TSpeedButton;
+    sbClearSearch: TColorSpeedButton;
     sbVideoInfo: TSpeedButton;
     sbDelVideo: TSpeedButton;
     sbEmptyQuickEntry: TSpeedButton;
@@ -142,6 +148,7 @@ type
     Separator36: TMenuItem;
     Separator37: TMenuItem;
     Separator38: TMenuItem;
+    TimerFind: TTimer;
     TimerUpdate: TTimer;
     TimerOpen: TTimer;
     TimerChildUpdate: TTimer;
@@ -993,6 +1000,9 @@ type
     procedure eProjectFilterKeyPress(Sender: TObject; var Key: char);
     procedure eSamplingPlotFilterButtonClick(Sender: TObject);
     procedure eSamplingPlotFilterKeyPress(Sender: TObject; var Key: char);
+    procedure eSearchChange(Sender: TObject);
+    procedure eSearchEnter(Sender: TObject);
+    procedure eSearchExit(Sender: TObject);
     procedure eSurveyFilterButtonClick(Sender: TObject);
     procedure eSurveyFilterKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -1115,6 +1125,7 @@ type
     procedure sbCancelRecordClick(Sender: TObject);
     procedure sbChildVerificationsClick(Sender: TObject);
     procedure sbClearFiltersClick(Sender: TObject);
+    procedure sbClearSearchClick(Sender: TObject);
     procedure sbColumnHideClick(Sender: TObject);
     procedure sbColumnWidthAutoAdjustClick(Sender: TObject);
     procedure sbDelAudioClick(Sender: TObject);
@@ -1171,6 +1182,7 @@ type
     procedure SplitChildMoved(Sender: TObject);
     procedure SplitRightMoved(Sender: TObject);
     procedure TimerChildUpdateTimer(Sender: TObject);
+    procedure TimerFindTimer(Sender: TObject);
     procedure TimerOpenTimer(Sender: TObject);
     procedure TimerRecordUpdateTimer(Sender: TObject);
     procedure TimerUpdateTimer(Sender: TObject);
@@ -2225,6 +2237,17 @@ begin
   sbEmptyImport.Images := iButtonsDark;
   sbEmptyClearAll.Images := iButtonsDark;
   sbMoreOptions.Images := iButtonsDark;
+
+  // Search box
+  pSearch.Background.Color := clCardBGSecondaryDark;
+  pSearch.Border.Color := clSolidBGSecondaryDark;
+  pSearch.ParentBackground := True;
+  eSearch.Color := pSearch.Background.Color;
+  iconSearch.Images := iSearchDark;
+  sbClearSearch.Images := iSearchDark;
+  sbClearSearch.StateHover.Color := clSolidBGSecondaryDark;
+  sbClearSearch.StateActive.Color := clSolidBGTertiaryDark;
+  sbClearSearch.StateNormal.Color := pSearch.Background.Color;
 
   // Set filter cards colors
   pSiteFilters.Background.Color := clCardBGDefaultDark;
@@ -4208,6 +4231,58 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.eSearchChange(Sender: TObject);
+begin
+  TimerFind.Enabled := False;
+  TimerFind.Enabled := True;
+
+  sbClearSearch.Visible := Length(eSearch.Text) > 0;
+end;
+
+procedure TfrmCustomGrid.eSearchEnter(Sender: TObject);
+begin
+  if xSettings.FirstSearchUse then
+  begin
+    ShowOnboardingBig(obtSearch);
+    xSettings.FirstSearchUse := False;
+    xSettings.SaveOnboarding('/ONBOARDING/FirstSearchUse', False);
+  end;
+
+  if eSearch.Text = EmptyStr then
+    pSearch.Width := ClientWidth div 4;
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Background.Color := clSolidBGBaseDark;
+    pSearch.Border.Color := clAccentDark1; //clSolidBGTertiaryDark;
+  end
+  else
+  begin
+    pSearch.Background.Color := clWhite;
+    pSearch.Border.Color := clAccentFillTertiaryLight;
+  end;
+  eSearch.Color := pSearch.Background.Color;
+  sbClearSearch.StateNormal.Color := pSearch.Background.Color;
+end;
+
+procedure TfrmCustomGrid.eSearchExit(Sender: TObject);
+begin
+  if eSearch.Text = EmptyStr then
+    pSearch.Width := 148;
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Background.Color := clCardBGSecondaryDark;
+    pSearch.Border.Color := clSolidBGSecondaryDark;
+  end
+  else
+  begin
+    pSearch.Background.Color := $00FAFAFA;
+    pSearch.Border.Color := clDefaultBorderLight;
+  end;
+  pSearch.Border.Width := 1;
+  eSearch.Color := pSearch.Background.Color;
+  sbClearSearch.StateNormal.Color := pSearch.Background.Color;
+end;
+
 procedure TfrmCustomGrid.eSurveyFilterButtonClick(Sender: TObject);
 begin
   if not FCanToggle then
@@ -4536,8 +4611,10 @@ begin
     if (dsLink.State in [dsInsert, dsEdit]) then
       Exit;
 
-    if frmMain.eSearch.CanSetFocus then
-      frmMain.eSearch.SetFocus;
+    if eSearch.CanSetFocus then
+      eSearch.SetFocus;
+    //if frmMain.eSearch.CanSetFocus then
+    //  frmMain.eSearch.SetFocus;
   end;
   { SHOW/HIDE RELATED PANEL = Ctrl + J }
   if ([ssCtrl] = Shift) and (Key = Ord('J')) then
@@ -6968,6 +7045,17 @@ begin
   ClearSearch;
 end;
 
+procedure TfrmCustomGrid.sbClearSearchClick(Sender: TObject);
+begin
+  LogDebug('Search cleared');
+
+  eSearch.Clear;
+  if eSearch.CanSetFocus then
+    eSearch.SetFocus;
+
+  //ClearSearch;
+end;
+
 procedure TfrmCustomGrid.sbColumnHideClick(Sender: TObject);
 begin
   gridColumns.Cells[1, gridColumns.Row] := '0';
@@ -8521,6 +8609,13 @@ begin
         sbChildVerifications.Caption := Format(rsTotalProblems, [aTotalProblems]);
     end;
   end;
+end;
+
+procedure TfrmCustomGrid.TimerFindTimer(Sender: TObject);
+begin
+  TimerFind.Enabled := False;
+
+  SearchString := eSearch.Text;
 end;
 
 procedure TfrmCustomGrid.TimerOpenTimer(Sender: TObject);

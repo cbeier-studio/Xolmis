@@ -21,7 +21,7 @@ unit udlg_import;
 interface
 
 uses
-  BCPanel, Classes, SysUtils, fpjson, LCLIntf, fgl, BGRABitmapTypes,
+  BCPanel, Classes, SysUtils, fpjson, jsonparser, LCLIntf, fgl, BGRABitmapTypes,
   dbf, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, Spin, fpsTypes, fpSpreadsheet, xlsbiff8,
   xlsxooxml, atshapelinebgra,
@@ -260,6 +260,7 @@ type
     function ImportMapCount: Integer;
     function InferColumnType(Stats: TColumnTypeStats): TSearchDataType;
     function IsRequiredFilledSource: Boolean;
+    function IsXolmisMobileJSON(const AFileName: String): Boolean;
     procedure GetFieldSettings(AIndex: Integer);
     procedure GetSheetsList;
     procedure LoadFieldMap;
@@ -1044,6 +1045,14 @@ begin
           FFileFormat := iftGeoJSON;
         end;
     end;
+
+    if (FFileFormat = iftJSON) and IsXolmisMobileJSON(FSourceFile) then
+    begin
+      MessageDlg(rsImportUseXolmisMobileImporter, mtWarning, [mbOK], 0);
+      FSourceFile := EmptyStr;
+      eSourceFile.Text := EmptyStr;
+      Exit;
+    end;
   end;
 end;
 
@@ -1433,6 +1442,44 @@ begin
 
   if (eSourceFile.Text <> EmptyStr) and (cbTarget.ItemIndex >= 0) then
     Result := True;
+end;
+
+function TdlgImport.IsXolmisMobileJSON(const AFileName: String): Boolean;
+var
+  Stream: TFileStream;
+  Parser: TJSONParser;
+  Data: TJSONData;
+  SourceNode: TJSONData;
+begin
+  Result := False;
+
+  if not FileExists(AFileName) then
+    Exit;
+
+  try
+    Stream := TFileStream.Create(AFileName, fmOpenRead or fmShareDenyWrite);
+    try
+      Parser := TJSONParser.Create(Stream);
+      try
+        Data := Parser.Parse;
+        try
+          if Data.JSONType = jtObject then
+          begin
+            SourceNode := TJSONObject(Data).Find('source');
+            Result := Assigned(SourceNode) and SameText(Trim(SourceNode.AsString), 'Xolmis Mobile');
+          end;
+        finally
+          Data.Free;
+        end;
+      finally
+        Parser.Free;
+      end;
+    finally
+      Stream.Free;
+    end;
+  except
+    Result := False;
+  end;
 end;
 
 procedure TdlgImport.LoadFieldMap;

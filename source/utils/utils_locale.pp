@@ -529,6 +529,7 @@ uses
     rsQuickEntry = 'Quick Entry';
     rsImportWizard = 'Import Wizard';
     rsImportXolmisMobile = 'Import from Xolmis Mobile';
+    rsImportUseXolmisMobileImporter = 'This file was exported by Xolmis Mobile. Please use "Import from Xolmis Mobile" instead of the Import Wizard.';
     rsImportEbirdData = 'Import eBird data';
     rsDarkMode = 'Dark mode';
     rsMeasurementsOutliers = 'Measurement outliers';

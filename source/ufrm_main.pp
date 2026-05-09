@@ -1385,15 +1385,15 @@ begin
   UpdateMenu(PGW.ActivePageComponent);
   pEmptyTabs.Visible := navTabs.TabCount = 0;
 
-  if (ActiveGrid <> nil) then
-  begin
-    eSearch.Text := ActiveGrid.SearchString;
-    TimerFind.Enabled := False;
-  end else
-  begin
-    eSearch.Text := EmptyStr;
-    TimerFind.Enabled := False;
-  end;
+  //if (ActiveGrid <> nil) then
+  //begin
+  //  eSearch.Text := ActiveGrid.SearchString;
+  //  TimerFind.Enabled := False;
+  //end else
+  //begin
+  //  eSearch.Text := EmptyStr;
+  //  TimerFind.Enabled := False;
+  //end;
 end;
 
 procedure TfrmMain.navTabsTabClose(Sender: TObject; ATabIndex: integer; var ACanClose,
@@ -2180,21 +2180,21 @@ end;
 
 procedure TfrmMain.UpdateMenu(aTab: TPage);
 begin
-  if PGW.PageCount = 0 then
-  begin
-    pSearch.Visible := False;
-    Exit;
-  end;
+  //if PGW.PageCount = 0 then
+  //begin
+  //  pSearch.Visible := False;
+  //  Exit;
+  //end;
 
-  if (TTDIPage(aTab).FormInPage is TfrmCustomGrid) then
-  begin
-    pSearch.Visible := True;
+  //if (TTDIPage(aTab).FormInPage is TfrmCustomGrid) then
+  //begin
+  //  pSearch.Visible := True;
     //actOpenBandHistory.Visible := ActiveQuery = DMG.qBands;
-  end else
-  begin
-    pSearch.Visible := False;
+  //end else
+  //begin
+  //  pSearch.Visible := False;
     //actOpenBandHistory.Visible := False;
-  end;
+  //end;
 end;
 
 procedure TfrmMain.UpdateStatusBar;

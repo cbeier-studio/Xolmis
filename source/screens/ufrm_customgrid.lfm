@@ -2,11 +2,11 @@ object frmCustomGrid: TfrmCustomGrid
   Left = 352
   Height = 614
   Top = 33
-  Width = 1267
+  Width = 1434
   AllowDropFiles = True
   Caption = 'Grid'
   ClientHeight = 614
-  ClientWidth = 1267
+  ClientWidth = 1434
   ParentFont = True
   LCLVersion = '4.6.0.0'
   OnClose = FormClose
@@ -24,7 +24,7 @@ object frmCustomGrid: TfrmCustomGrid
     AnchorSideRight.Control = pSideToolbar
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 753
+    Left = 920
     Height = 614
     Top = 0
     Width = 464
@@ -88,7 +88,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnPrepareCanvas = gridRecordPrepareCanvas
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -8320,13 +8320,13 @@ object frmCustomGrid: TfrmCustomGrid
     Left = 0
     Height = 614
     Top = 0
-    Width = 753
+    Width = 920
     Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 8
     ChildSizing.TopBottomSpacing = 8
     ClientHeight = 614
-    ClientWidth = 753
+    ClientWidth = 920
     Color = 16250871
     ParentBackground = False
     ParentColor = False
@@ -8338,7 +8338,7 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 4
       Top = 366
-      Width = 737
+      Width = 904
       Align = alBottom
       ResizeAnchor = akBottom
       Visible = False
@@ -8348,11 +8348,11 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 236
       Top = 370
-      Width = 737
+      Width = 904
       Align = alBottom
       BevelOuter = bvNone
       ClientHeight = 236
-      ClientWidth = 737
+      ClientWidth = 904
       Constraints.MinWidth = 650
       ParentBackground = False
       TabOrder = 1
@@ -8361,7 +8361,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 40
         Top = 0
-        Width = 737
+        Width = 904
         Align = alTop
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -8429,7 +8429,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = pChildToolbar
           AnchorSideRight.Side = asrBottom
-          Left = 682
+          Left = 849
           Height = 34
           Hint = 'Delete selected record'
           Top = 3
@@ -8481,7 +8481,7 @@ object frmCustomGrid: TfrmCustomGrid
         object Separator16: TShapeLineBGRA
           AnchorSideTop.Control = pChildToolbar
           AnchorSideRight.Control = sbDelChild
-          Left = 658
+          Left = 825
           Height = 30
           Top = 5
           Width = 4
@@ -8542,7 +8542,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = Separator16
-          Left = 604
+          Left = 771
           Height = 34
           Hint = 'Show/hide details panel'
           Top = 3
@@ -8614,7 +8614,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 164
         Top = 40
-        Width = 504
+        Width = 671
         PageIndex = 0
         Align = alClient
         TabOrder = 1
@@ -8623,7 +8623,7 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 504
+            Width = 671
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -8780,7 +8780,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 32
         Top = 204
-        Width = 737
+        Width = 904
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -8835,7 +8835,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pChildStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbPriorChild
-          Left = 613
+          Left = 780
           Height = 26
           Hint = 'First record'
           Top = 3
@@ -8857,7 +8857,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pChildStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbNextChild
-          Left = 639
+          Left = 806
           Height = 26
           Hint = 'Previous record'
           Top = 3
@@ -8878,7 +8878,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pChildStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbLastChild
-          Left = 665
+          Left = 832
           Height = 26
           Hint = 'Next record'
           Top = 3
@@ -8900,7 +8900,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = pChildStatus
           AnchorSideRight.Side = asrBottom
-          Left = 691
+          Left = 858
           Height = 26
           Hint = 'Last record'
           Top = 3
@@ -8922,7 +8922,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pChildStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbFirstChild
-          Left = 567
+          Left = 734
           Height = 26
           Hint = 'Refresh related records'
           Top = 3
@@ -8945,7 +8945,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pChildStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbChildHistory
-          Left = 483
+          Left = 650
           Height = 26
           Hint = 'Record verifications'
           Top = 3
@@ -8968,7 +8968,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pChildStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbRefreshChild
-          Left = 517
+          Left = 684
           Height = 30
           Hint = 'View record history'
           Top = 1
@@ -8989,7 +8989,7 @@ object frmCustomGrid: TfrmCustomGrid
         end
       end
       object pChildRightPanel: TBCPanel
-        Left = 504
+        Left = 671
         Height = 164
         Top = 40
         Width = 233
@@ -9077,7 +9077,7 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 40
       Top = 8
-      Width = 737
+      Width = 904
       Align = alTop
       ChildSizing.LeftRightSpacing = 16
       ChildSizing.TopBottomSpacing = 4
@@ -9122,7 +9122,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = pRecordToolbar
         AnchorSideRight.Side = asrBottom
-        Left = 683
+        Left = 850
         Height = 34
         Hint = 'Delete selected record'
         Top = 3
@@ -9201,7 +9201,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Control = pRecordToolbar
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = sbDelRecord
-        Left = 659
+        Left = 826
         Height = 32
         Top = 4
         Width = 4
@@ -9283,7 +9283,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Control = pRecordToolbar
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = sbCancelRecord
-        Left = 412
+        Left = 579
         Height = 34
         Hint = 'Save changes'
         Top = 3
@@ -9305,7 +9305,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Control = pRecordToolbar
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = sbClearAllFilters
-        Left = 495
+        Left = 662
         Height = 34
         Hint = 'Cancel editing'
         Top = 3
@@ -9327,7 +9327,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Control = pRecordToolbar
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = Separator8
-        Left = 605
+        Left = 772
         Height = 34
         Hint = 'Clear all filters'
         Top = 3
@@ -9412,12 +9412,140 @@ object frmCustomGrid: TfrmCustomGrid
         ParentShowHint = False
         OnClick = sbMoreOptionsClick
       end
+      object pSearch: TBCPanel
+        AnchorSideLeft.Control = pRecordToolbar
+        AnchorSideLeft.Side = asrCenter
+        AnchorSideTop.Control = pRecordToolbar
+        AnchorSideTop.Side = asrCenter
+        AnchorSideBottom.Side = asrBottom
+        Left = 378
+        Height = 29
+        Top = 6
+        Width = 148
+        BorderSpacing.Left = 16
+        BorderSpacing.Top = 8
+        BorderSpacing.Right = 16
+        BorderSpacing.Bottom = 8
+        ChildSizing.LeftRightSpacing = 4
+        ChildSizing.TopBottomSpacing = 1
+        ChildSizing.HorizontalSpacing = 8
+        Background.Color = 16382457
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BevelWidth = 1
+        Border.Color = 13750737
+        Border.Style = bboSolid
+        BorderBCStyle = bpsBorder
+        Color = 15987699
+        Constraints.MinWidth = 148
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = []
+        FontEx.TextAlignment = bcaLeftCenter
+        FontEx.PaddingLeft = 42
+        ParentBackground = False
+        Rounding.RoundX = 4
+        Rounding.RoundY = 4
+        TabOrder = 2
+        object iconSearch: TImage
+          Left = 4
+          Height = 27
+          Top = 1
+          Width = 29
+          AntialiasingMode = amOn
+          Align = alLeft
+          Center = True
+          ImageWidth = 16
+          Images = iSearch
+          Proportional = True
+          Transparent = True
+        end
+        object eSearch: TEdit
+          AnchorSideTop.Side = asrCenter
+          Left = 41
+          Height = 24
+          Top = 3
+          Width = 75
+          Align = alClient
+          Anchors = [akLeft, akRight]
+          BorderSpacing.Top = 3
+          BorderSpacing.Bottom = 2
+          BorderStyle = bsNone
+          Color = 16382457
+          Font.Height = -15
+          ParentFont = False
+          TabOrder = 0
+          TextHint = 'Search'
+          OnChange = eSearchChange
+          OnEnter = eSearchEnter
+          OnExit = eSearchExit
+          OnKeyDown = FormKeyDown
+          OnKeyPress = FormKeyPress
+        end
+        object sbClearSearch: TColorSpeedButton
+          Left = 124
+          Height = 23
+          Hint = 'Clear search'
+          Top = 3
+          Width = 20
+          Align = alRight
+          BorderSpacing.Top = 3
+          BorderSpacing.Bottom = 3
+          Flat = True
+          Font.Color = clBlack
+          Images = iSearch
+          ImageIndex = 1
+          ImageWidth = 16
+          Visible = False
+          ShowCaption = False
+          ShowHint = True
+          ParentFont = False
+          ParentShowHint = False
+          OnClick = sbClearSearchClick
+          TextAutoSize = True
+          Toggle = False
+          Pressed = False
+          PopupMode = False
+          StateNormal.Color = 16382457
+          StateNormal.BorderColor = 11382189
+          StateNormal.BorderWidth = 0
+          StateHover.Color = 15987699
+          StateHover.BorderColor = 14120960
+          StateHover.BorderWidth = 0
+          StateActive.Color = 15658734
+          StateActive.BorderColor = 10048512
+          StateActive.BorderWidth = 0
+          StateDisabled.Color = 13158600
+          StateDisabled.BorderColor = 12566463
+          StateDisabled.BorderWidth = 0
+        end
+      end
     end
     object pChildsBar: TBCPanel
       Left = 8
       Height = 42
       Top = 320
-      Width = 737
+      Width = 904
       Align = alBottom
       AutoSize = True
       BorderSpacing.Left = 8
@@ -9609,7 +9737,7 @@ object frmCustomGrid: TfrmCustomGrid
       Left = 8
       Height = 264
       Top = 48
-      Width = 737
+      Width = 904
       Align = alClient
       Background.Color = 15066599
       Background.Gradient1.StartColor = clWhite
@@ -9649,7 +9777,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 232
         Top = 0
-        Width = 737
+        Width = 904
         Align = alClient
         Color = clWindow
         Columns = <>
@@ -9682,7 +9810,7 @@ object frmCustomGrid: TfrmCustomGrid
         Left = 0
         Height = 32
         Top = 232
-        Width = 737
+        Width = 904
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 4
@@ -9737,7 +9865,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pRecordStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbPriorRecord
-          Left = 613
+          Left = 780
           Height = 26
           Hint = 'First record'
           Top = 3
@@ -9759,7 +9887,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pRecordStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbNextRecord
-          Left = 639
+          Left = 806
           Height = 26
           Hint = 'Previous record'
           Top = 3
@@ -9780,7 +9908,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pRecordStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbLastRecord
-          Left = 665
+          Left = 832
           Height = 26
           Hint = 'Next record'
           Top = 3
@@ -9802,7 +9930,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = pRecordStatus
           AnchorSideRight.Side = asrBottom
-          Left = 691
+          Left = 858
           Height = 26
           Hint = 'Last record'
           Top = 3
@@ -9824,7 +9952,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pRecordStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbFirstRecord
-          Left = 567
+          Left = 734
           Height = 26
           Hint = 'Refresh records'
           Top = 3
@@ -9846,7 +9974,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pRecordStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbRecordHistory
-          Left = 483
+          Left = 650
           Height = 26
           Hint = 'Record verifications'
           Top = 3
@@ -9869,7 +9997,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideTop.Control = pRecordStatus
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = sbRefreshRecords
-          Left = 517
+          Left = 684
           Height = 30
           Hint = 'View record history'
           Top = 1
@@ -9894,7 +10022,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideLeft.Side = asrCenter
         AnchorSideTop.Control = DBG
         AnchorSideTop.Side = asrCenter
-        Left = 255
+        Left = 339
         Height = 187
         Top = 23
         Width = 226
@@ -10013,7 +10141,7 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object pSideToolbar: TPanel
-    Left = 1217
+    Left = 1384
     Height = 614
     Top = 0
     Width = 50
@@ -10240,7 +10368,7 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object lineRight: TShapeLineBGRA
-    Left = 1216
+    Left = 1383
     Height = 614
     Top = 0
     Width = 1
@@ -29235,5 +29363,116 @@ object frmCustomGrid: TfrmCustomGrid
       ImageIndex = 18
       OnClick = pmvRefreshVideosClick
     end
+  end
+  object iSearch: TImageList
+    Scaled = True
+    Left = 496
+    Top = 232
+    Bitmap = {
+      4C7A0200000010000000100000004F0100000000000078DA6360183CC0425797
+      09887380F82010BF80D2203E13117A998178A7B59ECEDE206B35F7EA40592510
+      0DE203C57780E409E82FB6D1D7D9F9B29799EFFB54065E1806F141E2207902FA
+      CF84D9AADA21EB8561A0B83D50FE3401FD5FA6278A4960D30F1207C913D07F36
+      DC4ED5169B7E903850FE0A01FD65407F6EC3E1FF6D40F97202FA5980781F50ED
+      8E101B35A7F6082959100D0DBBFF40EC45641C1602F151207E0BF21328DC81D8
+      19885F01B12B0569CB066A863B05665841CDF0A0C00C4B205ECB300A50808CF6
+      113920B626429D21102B60115705E29740EC8B47AF2310BF06627D1CF2A65033
+      BCB1C8D943F53A10709F3910BF02624F24313BA898139161610155EF0EC43650
+      B63389E16909F50B48AF0B19F16109D50BC2AE24EA25DBFD38C2CF9698F003CA
+      9B41D579911A7F4071156878F910917E0CB0C84981DC4E84FF40694C65B0E43B
+      002B3CCBAC
+    }
+    BitmapAdv = {
+      4C69020000004C7A0200000014000000140000008B0100000000000078DA6360
+      180516BABA5C405C03C47B80F819101F06E24E201622C32C1D20BE696BA0BD38
+      D05ACDABDC5F4E25C446CDC5DE507B2250FC31103B90601607105F7337D54CFA
+      3E9581171D0759ABB903E59F02B12891E69500DDB5129B5930EC60A8DD015437
+      9548F336F8586884E2332FCE51C51CA8EE2291E65D4F725132C467DEBA5C4151
+      A0BA1F40CC4884791B81EE0BC1EB3E276533A0BA1B44BAAF14187ECBF0879F56
+      2B50DD0C22CDE304D9ED65A61187CD2C50BA01CABF03624912D28C3E10DFB633
+      D09E074A1FF521320AA1B6AA0EC078ED018ABF05E25740EC45629AE606E20620
+      DE0FC4AF81F80C104F006231200685DF4B52CD2460DF503273FD68093A0AA805
+      64B48F1C01626B22D48503F10A22D4B901F12B20B6C2A32614889F03B12E916E
+      74879A6981452E18885F00B13E89FEF604E297406C8624160435CB80CCB0F482
+      9A690AC40150B30C298C1F1FA8DF41E61A5121BEA9661E50BF37927FFDA16C43
+      32CDC2161F81E4C40750BD07D48FE694A617A4F46C49203D83CCD4A3777E1B05
+      A40100858DFE174C7A020000001800000018000000300200000000000078DAED
+      95D92B447114C767EC941765493C1A0F63504A0C43229414B2BD789292E54161
+      EC92B2EFD9CA6EB2647B52FE01CF642722CBFF4092F13D756E6962DCDF9D1949
+      F3AB4FDD997BCEE7DCDFEF77CFEFAA54CEA164C4E9741EA00C2C801370014CA0
+      1278D9E88E0487C01CAF8BB84D8CD26E1AA2B51BB8BEA6FFB856AC42B70EBCC0
+      759FAB0FCF7A9E50F97E263F5193867B3788790371826E777080FC87EEE2E050
+      4BB7C44CA97F2062AE107B09BC05FCA534FF1C7D78F6776E8902832605B1EFA0
+      46C03F4BEBF2935B02B1B4EF1B02FE43ECE58E5C3FF67C0939B702FE23F8B705
+      FC8BC87912F0CF61CE7702EB738C9C3D013FF593392F4193F993BB2829CCC0FB
+      6B14ECD9239AC3484950F077EEF50ABF00C49CD3DA001FC11E8806AFD4B79847
+      86A5BBD010968C7B17DCC75B40ADA08763C0299F0F97D8C75560C2F519AFC923
+      58E31AA30A6B78822AB002A857EFC12EA8A3352127E8B3A5868C67F88F353A1D
+      F43DA21A2D8EF23B8773FCC608D1EEE7805AA016C8710346A097115B09CC6044
+      4E0DC4B88215CEC99511AF06431C3F64AD06BB4D1C5B2F305F353F3FE50D7C55
+      83DDCB1CD3A0601FA8C618E7F77DAEC1EE45BED764C35E538D71F6F4F06F1730
+      CFFFB5D8E17D22E724FBBAC02C5FB7D9F19DA5679E622FD161E79E20FFB423FC
+      56D6A7DD4E6E697FBBBFD8DF561BDDD2FBD96BF17E528D05BED7ACD02DF557BF
+      95FE5AE2984641F730E70D0A9C0F4699FE728E1F5670BEE5CB884F07D50ACEE7
+      3690EAFCC2FDADF101E8E4C3E2
+    }
+  end
+  object iSearchDark: TImageList
+    Scaled = True
+    Left = 496
+    Top = 320
+    Bitmap = {
+      4C7A020000001000000010000000510100000000000078DA6360183CE0D7AF5F
+      8C409C0CC43B80F83E9406F11989D0CB04C41B81F83F107FFCF9F3C75A100DE5
+      83C49908E8CF03A9FDF9FD4BEB8FE3B562DFA732F08268101F6A462E01FDA780
+      F8D58F1DE12220BD300CE283C481F82401FD5F7EFEF83617592F0C83C481F21F
+      08E83F0FC48FBFAFB11244D10FE483C4416140407F35D8FFDF3E167F5FAE2700
+      D60BA4417CA8FFE309E86705E22350B58F806E9E01A2A17C10EE25148F5033AA
+      80F81C107F82C65B02104F859AD1434C5A80A525B47435116A461FB16660499B
+      FD5033DA2848DFCD403C8B6114A0802533FF7B0271031033E351C308C48520B5
+      58E42280F83F102FC6660654EF54A89A541CE6976133034D6F2B888FC78D2866
+      90A217871924E9C5620608B793A817D9CD38C39408BD6D405C4EAC1958F43242
+      C5099A814B2F927C3981F4918C4B2F1633CAB1C81942D32023013F4602B1E360
+      C977000EFA1565
+    }
+    BitmapAdv = {
+      4C69020000004C7A020000001400000014000000880100000000000078DAED94
+      BB4A03411440B38AB1310A82A89D36A2AD9022F8057E4A2AB1B4B1168DAFC242
+      D04E41040DE203FF4054349A26A22868C08858189564677DC433A2615D363BB3
+      7974B9701866E772E6EEDC6102817A5896D50CA3B00557B00FE3D05A86AB0F92
+      5010C23C15666E95F180F93BDC42C4872B08E79011CF77C3F98540E80FF1988C
+      F03D05F7D0AEE91BF9A9CBE12A3A332783AC9B30AFE9DB84333757D129CC3839
+      094D5F4A98F9354F5FFE6D823C0186866F9BFD8F15F5AD9377AD59DF187C88A7
+      8B2157D7CD6E3FEB5958D6F4B5C8BDE1523C24C2FF5D7B03D476C8DA17F4FAB8
+      3361485BF29084B9C379C5183798BEC0A7ECBFECAFCEF9D99C6D3005479093F5
+      C212F4C064394E9BDB70CE2B75BAED5163677395DE21E90C55A3BE7AD43E5616
+      0B0DD00D86466E237429723AA100B35E4ED68210875785CF809897D3E6923951
+      8DFF28E9F4EBF27296EB2AE19CABC4E570CEFC7A2A72B99C97B2EF3E5C5155DF
+      FDB874EF92AECBCFFD74E437A9FAE8704E2B7C1D9055F5D1E64CD75FBDEAC637
+      88F191304C7A020000001800000018000000FC0100000000000078DAED954F28
+      44411CC7D79F84FC5B49A244E140890B07727354CAC1010717294A6E9292AB72
+      517B10F95F7B51E242EDB6CABF6437AC84A51C2822BB69977DF336B5BEEF35A4
+      657767E6ED96F4A63EF57AEF379FEFBC79336F0C06BD89B440209008DAC124D8
+      0307C0043A41B2467719D805C130D841A5A0BB02F8A8E75A7EF30CC8CFAE26F9
+      F9B201D7FDB877469F1150C3E94E02FB4A7F994866B23D982F990C99DF219BED
+      7932F14FD30C2748E1F077D17E2E62EBF9E1FE62AD391735C7B4B68FC33FA58E
+      FDCDDD1BD64D917D8F1DD46FE6F03B54FFA3B33EAAFF76ABEAF31B71F84F55FF
+      83A336AAFF7AB59CFAEF39FC73AAFFD5DD1DD5EF7D68A37E2B87BF57F5CBE450
+      3257E784F5CF18B35063A3FE610E7F2AB85033A4D70969B134FBD7B1FBBD63D4
+      FD043238F7401D78A7EFB18B79682517CB25E46CB6587EB96BC13DCBB77D7C0E
+      8C027BB851591711FE0F6E7043AF1D8219E96008AC2B6B0478C00E180559A0E0
+      732E453318C6F01F3336E2741E15D033635E3F9DF516AFB63C154C5010E9C758
+      670527A088C35D015C6081D11F0457A090D17D4FFB2C31D41B819D2523C46D01
+      E98CEF1B3543D4CD92A1D51D292356EE0819317387641C51AF822D56EE5FE69B
+      79ED0AB82DAC6B57D09DC6B33F78DD227B90D7AD3583C5AD250335A72CEE3019
+      5686FA7130CBE20EC9580123FA09FAB7DA077D76D208
+    }
+  end
+  object TimerFind: TTimer
+    Enabled = False
+    Interval = 300
+    OnTimer = TimerFindTimer
+    Left = 352
+    Top = 120
   end
 end

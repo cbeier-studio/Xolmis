@@ -10640,6 +10640,11 @@ msgstr ""
 msgid "Quick add"
 msgstr ""
 
+#: tfrmcustomgrid.esearch.texthint
+msgctxt "tfrmcustomgrid.esearch.texthint"
+msgid "Search"
+msgstr ""
+
 #: tfrmcustomgrid.gridaudios.columns[0].title.caption
 msgctxt "tfrmcustomgrid.gridaudios.columns[0].title.caption"
 msgid "Date"
@@ -11991,6 +11996,11 @@ msgstr ""
 
 #: tfrmcustomgrid.sbclearfilters.hint
 msgid "Clear all quick filters"
+msgstr ""
+
+#: tfrmcustomgrid.sbclearsearch.hint
+msgctxt "tfrmcustomgrid.sbclearsearch.hint"
+msgid "Clear search"
 msgstr ""
 
 #: tfrmcustomgrid.sbcolumnhide.hint
@@ -16321,6 +16331,10 @@ msgstr ""
 #: utils_locale.rsimportstrategyupdate
 msgctxt "utils_locale.rsimportstrategyupdate"
 msgid "Update"
+msgstr ""
+
+#: utils_locale.rsimportusexolmismobileimporter
+msgid "This file was exported by Xolmis Mobile. Please use \"Import from Xolmis Mobile\" instead of the Import Wizard."
 msgstr ""
 
 #: utils_locale.rsimportvideostitle

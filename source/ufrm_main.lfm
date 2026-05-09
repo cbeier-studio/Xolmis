@@ -296,6 +296,7 @@ object frmMain: TfrmMain
       Rounding.RoundX = 4
       Rounding.RoundY = 4
       TabOrder = 1
+      Visible = False
       object iconSearch: TImage
         Left = 4
         Height = 27

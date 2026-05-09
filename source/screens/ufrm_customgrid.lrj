@@ -251,6 +251,8 @@
 {"hash":219472905,"name":"tfrmcustomgrid.sbquickentry.hint","sourcebytes":[81,117,105,99,107,32,69,110,116,114,121],"value":"Quick Entry"},
 {"hash":248446488,"name":"tfrmcustomgrid.sbinsertbatch.hint","sourcebytes":[65,100,100,32,110,101,119,32,98,97,116,99,104],"value":"Add new batch"},
 {"hash":54297379,"name":"tfrmcustomgrid.sbmoreoptions.hint","sourcebytes":[77,111,114,101,32,111,112,116,105,111,110,115],"value":"More options"},
+{"hash":94079128,"name":"tfrmcustomgrid.esearch.texthint","sourcebytes":[83,101,97,114,99,104],"value":"Search"},
+{"hash":54079704,"name":"tfrmcustomgrid.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
 {"hash":5528252,"name":"tfrmcustomgrid.lblchildtag1.caption","sourcebytes":[77,111,100,101,108],"value":"Model"},
 {"hash":48,"name":"tfrmcustomgrid.lblchildcount1.caption","sourcebytes":[48],"value":"0"},
 {"hash":149928548,"name":"tfrmcustomgrid.sbaddchild.hint","sourcebytes":[78,101,119,32,114,101,108,97,116,101,100,32,114,101,99,111,114,100],"value":"New related record"},
