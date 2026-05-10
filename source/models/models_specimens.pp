@@ -202,7 +202,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
+  utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions, utils_system,
   data_columns, data_consts, data_setparam, data_getvalue, data_providers,
   models_users,
   udm_main;
@@ -1209,6 +1209,7 @@ procedure TSpecimenRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
   R: TSpecimen;
+  ColDate: TPartialDate;
 begin
   if not (E is TSpecimen) then
     raise Exception.Create('Insert: Expected TSpecimen');
@@ -1222,9 +1223,21 @@ begin
 
     ParamByName('field_number').AsString := R.FieldNumber;
     ParamByName('sample_type').AsString := SPECIMEN_TYPES[Ord(R.SampleType)];
-    ParamByName('collection_year').AsInteger := R.CollectionYear;
-    ParamByName('collection_month').AsInteger := R.CollectionMonth;
-    ParamByName('collection_day').AsInteger := R.CollectionDay;
+    if R.CollectionYear > 0 then
+    begin
+      ParamByName('collection_year').AsInteger := R.CollectionYear;
+      ParamByName('collection_month').AsInteger := R.CollectionMonth;
+      ParamByName('collection_day').AsInteger := R.CollectionDay;
+      ColDate.Encode(R.CollectionYear, R.CollectionMonth, R.CollectionDay, '.');
+      SetStrParam(ParamByName('collection_date'), ColDate.ToString);
+    end
+    else
+    begin
+      ParamByName('collection_year').Clear;
+      ParamByName('collection_month').Clear;
+      ParamByName('collection_day').Clear;
+      ParamByName('collection_date').Clear;
+    end;
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('nest_id'), R.NestId);
     SetForeignParam(ParamByName('egg_id'), R.EggId);
@@ -1260,6 +1273,7 @@ procedure TSpecimenRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
   R: TSpecimen;
+  ColDate: TPartialDate;
 begin
   if not (E is TSpecimen) then
     raise Exception.Create('Update: Expected TSpecimen');
@@ -1276,9 +1290,21 @@ begin
 
     ParamByName('field_number').AsString := R.FieldNumber;
     ParamByName('sample_type').AsString := SPECIMEN_TYPES[Ord(R.SampleType)];
-    ParamByName('collection_year').AsInteger := R.CollectionYear;
-    ParamByName('collection_month').AsInteger := R.CollectionMonth;
-    ParamByName('collection_day').AsInteger := R.CollectionDay;
+    if R.CollectionYear > 0 then
+    begin
+      ParamByName('collection_year').AsInteger := R.CollectionYear;
+      ParamByName('collection_month').AsInteger := R.CollectionMonth;
+      ParamByName('collection_day').AsInteger := R.CollectionDay;
+      ColDate.Encode(R.CollectionYear, R.CollectionMonth, R.CollectionDay, '.');
+      SetStrParam(ParamByName('collection_date'), ColDate.ToString);
+    end
+    else
+    begin
+      ParamByName('collection_year').Clear;
+      ParamByName('collection_month').Clear;
+      ParamByName('collection_day').Clear;
+      ParamByName('collection_date').Clear;
+    end;
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('nest_id'), R.NestId);
     SetForeignParam(ParamByName('egg_id'), R.EggId);
