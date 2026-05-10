@@ -134,6 +134,14 @@ begin
   Client := TFPHttpClient.Create(nil);
   Response := TStringStream.Create('');
   try
+    if not HasInternetConnection(CHECK_UPDATE_URL) then
+    begin
+      Result := ckrError;
+      LogDebug('Exception while checking Xolmis updates: No internet connection available.');
+      MsgDlg(rsCheckUpdates, rsErrorCheckingUpdates + LineEnding + rsErrorNoInternetConnection, mtError);
+      Exit;
+    end;
+
     { Allow redirections }
     //Client.AllowRedirect := true;
     try

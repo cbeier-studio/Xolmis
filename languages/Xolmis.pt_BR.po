@@ -15692,6 +15692,10 @@ msgstr "Dígitos do ano inválidos (%d). Por favor, comunique o problema ao supo
 msgid "No importer registered for %s"
 msgstr "Nenhum importador registrado para %s"
 
+#: utils_locale.rserrornointernetconnection
+msgid "No internet connection available. Check your network settings and try again."
+msgstr "Não há conexão disponível com a internet. Verifique suas configurações de rede e tente novamente."
+
 #: utils_locale.rserrornotfoundlookupvalue
 #, object-pascal-format
 msgid "Value \"%s\" was not found in the lookup table \"%s\"."
@@ -19088,6 +19092,10 @@ msgstr "Próximos aniversários"
 msgctxt "utils_locale.rstitlenoconnectionsfound"
 msgid "No connections found"
 msgstr "Nenhuma conexão encontrada"
+
+#: utils_locale.rstitlenointernetconnection
+msgid "No internet connection"
+msgstr "Sem conexão com a internet"
 
 #: utils_locale.rstitlepermanentnets
 msgctxt "utils_locale.rstitlepermanentnets"
