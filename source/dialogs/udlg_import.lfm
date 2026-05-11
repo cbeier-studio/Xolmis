@@ -3723,7 +3723,7 @@ object dlgImport: TdlgImport
   object OpenDlg: TOpenDialog
     Title = 'Select source file'
     DefaultExt = '.csv'
-    Filter = 'Supported files|*.csv;*.tsv;*xlsx;*.xls;*.ods;*.json;*.ndjson;*.xml;*.dbf|Comma Separated Values|*.csv;*.tsv|Microsoft Excel|*.xlsx;*.xls|Open Document Spreadsheet|*.ods|JSON|*.json|XML|*.xml|DBF|*.dbf|KML|*.kml;*kmz|GPX|*.gpx|GeoJSON|*.geojson|All files|*.*'
+    Filter = 'Supported files|*.csv;*.tsv;*xlsx;*.xls;*.ods;*.json;*.ndjson;*.jsonl;*.xml;*.dbf|Comma Separated Values|*.csv;*.tsv|Microsoft Excel|*.xlsx;*.xls|Open Document Spreadsheet|*.ods|JSON|*.json;*.ndjson;*.jsonl|XML|*.xml|DBF|*.dbf|KML|*.kml;*kmz|GPX|*.gpx|GeoJSON|*.geojson|All files|*.*'
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 176
     Top = 224
