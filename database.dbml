@@ -1,0 +1,1237 @@
+Project xolmis_desktop {
+    database_type: "sqlite"
+}
+
+TablePartial audit_fields {
+    user_inserted integer
+    user_updated integer
+    insert_date datetime
+    update_date datetime
+    exported_status boolean [default: false]
+    marked_status boolean [default: false]
+    active_status boolean [default: true]
+}
+
+Table audio_library {
+    audio_id integer [primary key, increment, unique, not null]
+    full_name varchar(100)
+    taxon_id integer
+    individual_id integer
+    specimen_id integer
+    sighting_id integer
+    audio_type varchar(15)
+    recording_date date
+    recording_time time
+    author_id integer
+    locality_id integer
+    coordinate_precision char(1)
+    longitude real
+    latitude real
+    temperature real
+    cloud_cover integer
+    precipitation char(1)
+    relative_humidity integer
+    wind_speed integer
+    recording_context varchar(60)
+    habitat varchar(60)
+    playback_used boolean [default: false]
+    subjects_tally integer
+    distance real
+    recorder_model varchar(60)
+    mic_model varchar(60)
+    filter_model varchar(60)
+    license_type varchar(20)
+    license_year integer
+    license_uri varchar(200)
+    license_notes varchar(100)
+    license_owner varchar(150)
+    file_path varchar(250)
+    subtitle text
+    notes text
+    ~audit_fields
+}
+
+Table band_history {
+    event_id integer [primary key, unique, increment, not null]
+    band_id integer [ref: > bands.band_id]
+    event_type char(5) [not null]
+    event_date date
+    order_number integer
+    supplier_id integer [ref: > institutions.institution_id]
+    sender_id integer [ref: > people.person_id]
+    requester_id integer [ref: > people.person_id]
+    notes text
+    individual_id integer [ref: > individuals.individual_id]
+    capture_id integer [ref: > captures.capture_id]
+    reported boolean [default: false]
+    report_date date
+    ~audit_fields
+
+    indexes {
+        event_date [name: 'idx_band_history_date', note: 'COLLATE BINARY ASC']
+    }
+}
+
+Ref: band_history.band_id > bands.band_id [delete: cascade, update: cascade]
+Ref: band_history.supplier_id > institutions.institution_id [update: cascade]
+Ref: band_history.sender_id > people.person_id [update: cascade]
+Ref: band_history.requester_id > people.person_id [update: cascade]
+Ref: band_history.individual_id > individuals.individual_id [update: cascade]
+Ref: band_history.capture_id > captures.capture_id [update: cascade]
+
+Table bands {
+    band_id integer [primary key, unique, increment, not null]
+    band_size varchar(5)
+    band_number integer
+    band_status varchar(5)
+    band_type varchar(5)
+    band_prefix varchar(10)
+    band_suffix varchar(10)
+    band_color varchar(10)
+    band_source varchar(5)
+    supplier_id integer [ref: > institutions.institution_id]
+    requester_id integer [ref: > people.person_id]
+    carrier_id integer [ref: > people.person_id]
+    individual_id integer [ref: > individuals.individual_id]
+    project_id integer
+    notes text
+    full_name varchar(40)
+    ~audit_fields
+
+    indexes {
+        full_name [name: 'idx_bands_fullname', note: 'COLLATE NOCASE']
+        band_number [name: 'idx_bands_number']
+    }
+}
+
+Ref: bands.supplier_id > institutions.institution_id [update: cascade]
+Ref: bands.requester_id > people.person_id [update: cascade]
+Ref: bands.carrier_id > people.person_id [update: cascade]
+Ref: bands.individual_id > individuals.individual_id [update: cascade]
+
+Table botanic_taxa {
+    taxon_id integer [primary key, unique, increment, not null]
+    scientific_name varchar(100) [not null, unique]
+    authorship varchar(100)
+    formatted_name varchar(180)
+    vernacular_name varchar(100)
+    rank_id integer [not null, ref: > taxon_ranks.rank_id]
+    parent_taxon_id integer
+    valid_id integer
+    order_id integer
+    family_id integer
+    genus_id integer
+    species_id integer
+    ~audit_fields
+
+    indexes {
+        authorship [name: 'idx_botanic_tax_authorship', note: 'COLLATE NOCASE']
+        vernacular_name [name: 'idx_botanic_taxa_vernacular_name', note: 'COLLATE NOCASE']
+        family_id [name: 'idx_botanic_taxa_family']
+        genus_id [name: 'idx_botanic_taxa_genus']
+        species_id [name: 'idx_botanic_taxa_species']
+        order_id [name: 'idx_botanic_taxa_order']
+        parent_taxon_id [name: 'idx_botanic_taxa_parent_taxon']
+        valid_id [name: 'idx_botanic_taxa_valid']
+    }
+}
+
+Ref: botanic_taxa.rank_id > taxon_ranks.rank_id [update: cascade]
+
+Table captures {
+    capture_id integer [primary key, unique, increment, not null]
+    survey_id integer
+    individual_id integer [ref: > individuals.individual_id]
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    full_name varchar(120)
+    project_id integer [ref: > projects.project_id]
+    capture_date date [not null]
+    capture_time time
+    locality_id integer [ref: > gazetteer.site_id]
+    net_station_id integer [ref: > sampling_plots.sampling_plot_id]
+    net_id integer [ref: > nets_effort.net_id]
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    bander_id integer [ref: > people.person_id]
+    annotator_id integer [ref: > people.person_id]
+    subject_status char(5)
+    capture_type char(5) [not null]
+    subject_sex char(5)
+    how_sexed varchar(10)
+    band_id integer [ref: > bands.band_id, null]
+    removed_band_id integer [ref: > bands.band_id, null]
+    right_tarsus varchar(10)
+    left_tarsus varchar(10)
+    right_tibia varchar(10)
+    left_tibia varchar(10)
+    weight real
+    tarsus_length real
+    tarsus_diameter real
+    culmen_length real
+    exposed_culmen real
+    bill_width real
+    bill_height real
+    nostril_bill_tip real
+    skull_length real
+    halux_length_total real
+    halux_length_finger real
+    halux_length_claw real
+    right_wing_chord real
+    first_secondary_chord real
+    tail_length real
+    central_retrix_length real
+    external_retrix_length real
+    total_length real
+    feather_mites varchar(15)
+    fat char(5)
+    brood_patch char(5)
+    cloacal_protuberance char(5)
+    body_molt char(5)
+    flight_feathers_molt char(5)
+    flight_feathers_wear char(5)
+    molt_limits varchar(20)
+    cycle_code char(10)
+    subject_age char(5)
+    how_aged char(10)
+    skull_ossification char(5)
+    kipps_distance real
+    glucose real
+    hemoglobin real
+    hematocrit real
+    philornis_larvae_tally integer
+    blood_sample boolean [default: false]
+    feather_sample boolean [default: false]
+    claw_sample boolean [default: false]
+    feces_sample boolean [default: false]
+    parasite_sample boolean [default: false]
+    subject_collected boolean [default: false]
+    subject_recorded boolean [default: false]
+    subject_photographed boolean [default: false]
+    field_number varchar(10)
+    photographer_1_id integer [ref: > people.person_id]
+    photographer_2_id integer [ref: > people.person_id]
+    initial_photo_number varchar(20)
+    final_photo_number varchar(20)
+    camera_name varchar(50)
+    escaped boolean [default: false]
+    needs_review boolean [default: false]
+    notes text
+    ~audit_fields
+
+    indexes {
+        capture_date [name: 'idx_captures_date']
+        full_name [name: 'idx_captures_fullname', note: 'COLLATE NOCASE']
+        taxon_id [name: 'idx_captures_taxon_id']
+    }
+}
+
+Ref: captures.individual_id > individuals.individual_id [update: cascade]
+Ref: captures.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: captures.project_id > projects.project_id [update: cascade]
+Ref: captures.locality_id > gazetteer.site_id [update: cascade]
+Ref: captures.net_station_id > sampling_plots.sampling_plot_id [update: cascade]
+Ref: captures.bander_id > people.person_id [update: cascade]
+Ref: captures.annotator_id > people.person_id [update: cascade]
+Ref: captures.band_id > bands.band_id [update: cascade]
+Ref: captures.removed_band_id > bands.band_id [update: cascade]
+Ref: captures.photographer_1_id > people.person_id [update: cascade]
+Ref: captures.photographer_2_id > people.person_id [update: cascade]
+
+Table db_metadata {
+    property_name varchar(50) [primary key, unique, not null]
+    property_value varchar(150)
+}
+
+Table documents {
+    document_id integer [primary key, increment, unique, not null]
+    permit_id integer [ref: > permits.permit_id]
+    project_id integer [ref: > projects.project_id]
+    person_id integer [ref: > people.person_id]
+    individual_id integer [ref: > individuals.individual_id]
+    capture_id integer [ref: > captures.capture_id]
+    sighting_id integer [ref: > sightings.sighting_id]
+    specimen_id integer [ref: > specimens.specimen_id]
+    expedition_id integer [ref: > expeditions.expedition_id]
+    survey_id integer [ref: > surveys.survey_id]
+    nest_id integer [ref: > nests.nest_id]
+    net_station_id integer [ref: > sampling_plots.sampling_plot_id]
+    method_id integer [ref: > methods.method_id]
+    author_id integer [ref: > people.person_id]
+    document_type char(5) [not null]
+    document_name varchar(120)
+    file_path varchar(250) [not null]
+    document_date date
+    document_time time
+    license_type varchar(20)
+    license_year integer
+    license_uri varchar(200)
+    license_notes varchar(100)
+    license_owner varchar(150)
+    ~audit_fields
+}
+
+Ref: documents.permit_id > permits.permit_id [update: cascade]
+Ref: documents.project_id > projects.project_id [update: cascade]
+Ref: documents.person_id > people.person_id [update: cascade]
+Ref: documents.individual_id > individuals.individual_id [update: cascade]
+Ref: documents.capture_id > captures.capture_id [update: cascade]
+Ref: documents.sighting_id > sightings.sighting_id [update: cascade]
+Ref: documents.specimen_id > specimens.specimen_id [update: cascade]
+Ref: documents.expedition_id > expeditions.expedition_id [update: cascade]
+Ref: documents.survey_id > surveys.survey_id [update: cascade]
+Ref: documents.nest_id > nests.nest_id [update: cascade]
+Ref: documents.net_station_id > sampling_plots.sampling_plot_id [update: cascade]
+Ref: documents.method_id > methods.method_id [update: cascade]
+Ref: documents.author_id > people.person_id [update: cascade]
+
+Table eggs {
+    egg_id integer [primary key, increment, not null, unique]
+    nest_id integer [ref: > nests.nest_id]
+    egg_seq integer
+    field_number varchar(20)
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    eggshell_color varchar(40)
+    eggshell_pattern char(5)
+    eggshell_texture char(5)
+    egg_shape char(5)
+    egg_width real
+    egg_length real
+    egg_mass real
+    egg_volume real
+    egg_stage char(5)
+    egg_hatched boolean [default: true]
+    measure_date date
+    observer_id integer [ref: > people.person_id]
+    individual_id integer [ref: > individuals.individual_id]
+    host_egg boolean [default: true]
+    description text
+    full_name varchar(100)
+    notes text
+    ~audit_fields
+}
+
+Ref: eggs.nest_id > nests.nest_id [delete: cascade, update: cascade]
+Ref: eggs.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: eggs.observer_id > people.person_id [update: cascade]
+Ref: eggs.individual_id > individuals.individual_id [update: cascade]
+
+Table expeditions {
+    expedition_id integer [primary key, increment, not null, unique]
+    expedition_name varchar(150) [not null]
+    start_date date
+    end_date date
+    duration integer [note: 'AS ((strftime(%j, end_date) - strftime(%j, start_date)) + 1) VIRTUAL']
+    project_id integer [ref: > projects.project_id]
+    description text
+    ~audit_fields
+
+    indexes {
+        expedition_name [name: 'idx_expeditions_name', note: 'COLLATE NOCASE']
+    }
+}
+
+Ref: expeditions.project_id > projects.project_id [update: cascade]
+
+Table feathers {
+    feather_id integer [primary key, increment, not null, unique]
+    sample_date date [not null]
+    sample_time time
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    locality_id integer [ref: > gazetteer.site_id]
+    individual_id integer [ref: > individuals.individual_id]
+    capture_id integer [ref: > captures.capture_id]
+    sighting_id integer [ref: > sightings.sighting_id]
+    observer_id integer [ref: > people.person_id]
+    source_type varchar(5)
+    symmetrical varchar(5)
+    feather_trait varchar(5)
+    feather_number integer
+    body_side varchar(5)
+    grown_percent real
+    feather_length real
+    feather_area real
+    feather_mass real
+    rachis_width real
+    growth_bar_width real
+    barb_density real
+    feather_age varchar(5)
+    full_name varchar(200)
+    notes text
+    ~audit_fields
+}
+
+Ref: feathers.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: feathers.locality_id > gazetteer.site_id [update: cascade]
+Ref: feathers.individual_id > individuals.individual_id [update: cascade]
+Ref: feathers.capture_id > captures.capture_id [update: cascade]
+Ref: feathers.sighting_id > sightings.sighting_id [update: cascade]
+Ref: feathers.observer_id > people.person_id [update: cascade]
+
+Table gazetteer {
+    site_id integer [primary key, increment, not null, unique]
+    site_name varchar(60) [not null]
+    abbreviation varchar(10)
+    longitude real
+    latitude real
+    altitude real
+    site_rank char(1)
+    parent_site_id integer
+    country_id integer
+    state_id integer
+    municipality_id integer
+    full_name varchar(180)
+    ebird_name varchar(150)
+    language varchar(10)
+    description text
+    notes text
+    ~audit_fields
+
+    indexes {
+        (longitude, latitude) [name: 'idx_gazetteer_coordinate']
+        ebird_name [name: 'idx_gazetteer_ebird_name', note: 'COLLATE NOCASE']
+        site_name [name: 'idx_gazetteer_site_name', note: 'COLLATE NOCASE']
+        full_name [name: 'idx_gazetteer_fullname', note: 'COLLATE NOCASE']
+        country_id [name: 'idx_gazetteer_country']
+        state_id [name: 'idx_gazetteer_state']
+        municipality_id [name: 'idx_gazetteer_municipality']
+        parent_site_id [name: 'idx_gazetteer_parent_site']
+    }
+}
+
+Table images {
+    image_id integer [primary key, increment, not null, unique]
+    image_date date
+    image_time time
+    image_type char(5)
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    individual_id integer [ref: > individuals.individual_id]
+    capture_id integer [ref: > captures.capture_id]
+    feather_id integer [ref: > feathers.feather_id]
+    locality_id integer [ref: > gazetteer.site_id]
+    author_id integer [ref: > people.person_id]
+    survey_id integer
+    sighting_id integer [ref: > sightings.sighting_id]
+    nest_id integer [ref: > nests.nest_id]
+    nest_revision_id integer [ref: > nest_revisions.nest_revision_id]
+    egg_id integer [ref: > eggs.egg_id]
+    specimen_id integer [ref: > specimens.specimen_id]
+    file_path varchar(300)
+    coordinate_precision char(1)
+    longitude real
+    latitude real
+    license_type varchar(20)
+    license_year integer
+    license_uri varchar(200)
+    license_notes varchar(100)
+    license_owner varchar(150)
+    subtitle text
+    image_thumbnail blob
+    ~audit_fields
+}
+
+Ref: images.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: images.individual_id > individuals.individual_id [update: cascade]
+Ref: images.capture_id > captures.capture_id [update: cascade]
+Ref: images.feather_id > feathers.feather_id [update: cascade]
+Ref: images.locality_id > gazetteer.site_id [update: cascade]
+Ref: images.author_id > people.person_id [update: cascade]
+Ref: images.sighting_id > sightings.sighting_id [update: cascade]
+Ref: images.nest_id > nests.nest_id [update: cascade]
+Ref: images.nest_revision_id > nest_revisions.nest_revision_id [update: cascade]
+Ref: images.egg_id > eggs.egg_id [update: cascade]
+Ref: images.specimen_id > specimens.specimen_id [update: cascade]
+
+Table individuals {
+    individual_id integer [primary key, increment, unique, not null]
+    formatted_name varchar(150)
+    full_name varchar(120)
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    individual_sex char(1)
+    individual_age char(1)
+    nest_id integer [ref: > nests.nest_id]
+    birth_date varchar(15)
+    birth_day integer
+    birth_month integer
+    birth_year integer
+    banding_date date
+    band_change_date date
+    band_id integer [ref: - bands.band_id, null]
+    double_band_id integer [ref: - bands.band_id, null]
+    removed_band_id integer [ref: - bands.band_id, null]
+    right_tarsus varchar(10)
+    left_tarsus varchar(10)
+    right_tibia varchar(10)
+    left_tibia varchar(10)
+    father_id integer
+    mother_id integer
+    death_date varchar(15)
+    death_day integer
+    death_month integer
+    death_year integer
+    recognizable_markings text
+    notes text
+    ~audit_fields
+
+    indexes {
+        full_name [name: 'idx_individuals_fullname', note: 'COLLATE NOCASE']
+        taxon_id [name: 'idx_individuals_taxon']
+    }
+}
+
+Ref: individuals.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: individuals.nest_id > nests.nest_id [update: cascade]
+Ref: individuals.band_id - bands.band_id [update: cascade]
+Ref: individuals.double_band_id - bands.band_id [update: cascade]
+Ref: individuals.removed_band_id - bands.band_id [update: cascade]
+
+Table institutions {
+    institution_id integer [primary key, increment, unique, not null]
+    full_name varchar(100) [unique, not null]
+    abbreviation varchar(15)
+    address_1 varchar(100)
+    address_2 varchar(40)
+    neighborhood varchar(60)
+    postal_code varchar(15)
+    municipality_id integer [ref: > gazetteer.site_id]
+    state_id integer [ref: > gazetteer.site_id]
+    country_id integer [ref: > gazetteer.site_id]
+    manager_name varchar(100)
+    email_addr varchar(60)
+    phone_num varchar(20)
+    notes text
+    ~audit_fields
+
+    indexes {
+        abbreviation [name: 'idx_institutions_acronym', note: 'COLLATE NOCASE']
+    }
+}
+
+Ref: institutions.municipality_id > gazetteer.site_id [update: cascade]
+Ref: institutions.state_id > gazetteer.site_id [update: cascade]
+Ref: institutions.country_id > gazetteer.site_id [update: cascade]
+
+Table methods {
+    method_id integer [primary key, increment, unique, not null]
+    method_name varchar(100) [unique, not null]
+    abbreviation varchar(20)
+    ebird_name varchar(60)
+    category varchar(30)
+    description text
+    recommended_uses text
+    notes text
+    can_delete boolean [default: true]
+    ~audit_fields
+
+    indexes {
+        abbreviation [name: 'idx_methods_acronym']
+        ebird_name [name: 'idx_methods_ebird_name', note: 'COLLATE NOCASE']
+    }
+}
+
+Table nest_owners {
+    nest_owner_id integer [primary key, increment, unique, not null]
+    nest_id integer [ref: > nests.nest_id]
+    role varchar(5)
+    individual_id integer
+    ~audit_fields
+}
+
+Ref: nest_owners.nest_id > nests.nest_id [delete: cascade, update: cascade]
+
+Table nest_revisions {
+    nest_revision_id integer [primary key, increment, unique, not null]
+    nest_id integer [ref: > nests.nest_id]
+    full_name varchar(100)
+    revision_date date
+    revision_time time
+    observer_1_id integer [ref: > people.person_id]
+    observer_2_id integer [ref: > people.person_id]
+    nest_status  char(1)
+    host_eggs_tally integer
+    host_nestlings_tally integer
+    nidoparasite_eggs_tally integer
+    nidoparasite_nestlings_tally integer
+    nidoparasite_id integer [ref: > zoo_taxa.taxon_id]
+    have_philornis_larvae boolean [default: false]
+    nest_stage char(1)
+    notes text
+    ~audit_fields
+}
+
+Ref: nest_revisions.nest_id > nests.nest_id [delete: cascade, update: cascade]
+Ref: nest_revisions.observer_1_id > people.person_id [update: cascade]
+Ref: nest_revisions.observer_2_id > people.person_id [update: cascade]
+Ref: nest_revisions.nidoparasite_id > zoo_taxa.taxon_id [update: cascade]
+
+Table nests {
+    nest_id integer [primary key, increment, unique, not null]
+    field_number varchar(20) [unique, not null]
+    observer_id integer [ref: > people.person_id]
+    project_id integer [ref: > projects.project_id]
+    locality_id integer [ref: > gazetteer.site_id]
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    nest_shape varchar(5)
+    support_type varchar(10)
+    support_plant_1_id integer [ref: > botanic_taxa.taxon_id]
+    support_plant_2_id integer [ref: > botanic_taxa.taxon_id]
+    other_support varchar(60)
+    height_above_ground real
+    internal_max_diameter real
+    internal_min_diameter real
+    external_max_diameter real
+    external_min_diameter real
+    internal_height real
+    external_height real
+    edge_distance real
+    center_distance real
+    nest_cover integer
+    plant_max_diameter real
+    plant_min_diameter real
+    plant_height real
+    plant_dbh real
+    building_days real
+    incubation_days real
+    nestling_days real
+    active_days real
+    nest_fate char(1)
+    loss_cause varchar(5)
+    nest_productivity integer
+    found_date date
+    last_date date
+    full_name varchar(100)
+    description text
+    notes text
+    ~audit_fields
+
+    indexes {
+        full_name [name: 'idx_nests_fullname', note: 'COLLATE NOCASE']
+    }
+}
+
+Ref: nests.observer_id > people.person_id [update: cascade]
+Ref: nests.project_id > projects.project_id [update: cascade]
+Ref: nests.locality_id > gazetteer.site_id [update: cascade]
+Ref: nests.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: nests.support_plant_1_id > botanic_taxa.taxon_id [update: cascade]
+Ref: nests.support_plant_2_id > botanic_taxa.taxon_id [update: cascade]
+
+Table nets_effort {
+    net_id integer [primary key, increment, unique, not null]
+    survey_id integer
+    net_station_id integer [ref: > sampling_plots.sampling_plot_id]
+    permanent_net_id integer [ref: > permanent_nets.permanent_net_id]
+    net_number integer
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    sample_date date
+    net_open_1 time
+    net_close_1 time
+    net_open_2 time
+    net_close_2 time
+    net_open_3 time
+    net_close_3 time
+    net_open_4 time
+    net_close_4 time
+    open_time_total real [note: 'AS (...) STORED']
+    net_length real
+    net_height real
+    net_area real [note: 'AS (ifnull(net_length, 0) * ifnull(net_height, 0)) STORED']
+    net_mesh integer
+    full_name varchar(40)
+    notes text
+    ~audit_fields
+
+    indexes {
+        (survey_id, net_number) [name: 'idx_nets_effort_survey_netnumber']
+    }
+}
+
+Ref: nets_effort.net_station_id > sampling_plots.sampling_plot_id [update: cascade]
+Ref: nets_effort.permanent_net_id > permanent_nets.permanent_net_id [update: cascade]
+
+Table people {
+    person_id integer [primary key, increment, unique, not null]
+    full_name varchar(100)
+    abbreviation varchar(10)
+    citation varchar(100)
+    title_treatment varchar(15)
+    id_document_1 varchar(15)
+    id_document_2 varchar(15)
+    gender varchar(15)
+    birth_date date
+    death_date date
+    email_addr varchar(60)
+    phone_1 varchar(20)
+    phone_2 varchar(20)
+    address_1 varchar(100)
+    address_2 varchar(60)
+    neighborhood varchar(60)
+    postal_code varchar(15)
+    country_id integer [ref: > gazetteer.site_id]
+    state_id integer [ref: > gazetteer.site_id]
+    municipality_id integer [ref: > gazetteer.site_id]
+    institution_id integer [ref: > institutions.institution_id]
+    department varchar(100)
+    job_role varchar(100)
+    lattes_uri varchar(30)
+    orcid_uri varchar(30)
+    twitter_uri varchar(50)
+    instagram_uri varchar(50)
+    website_uri varchar(100)
+    profile_color varchar(30)
+    notes text
+    profile_image blob
+    ~audit_fields
+
+    indexes {
+        birth_date [name: 'idx_people_birthday']
+        citation [name: 'idx_people_citation', note: 'COLLATE NOCASE']
+        full_name [name: 'idx_people_fullname', note: 'COLLATE NOCASE']
+    }
+}
+
+Ref: people.country_id > gazetteer.site_id [update: cascade]
+Ref: people.state_id > gazetteer.site_id [update: cascade]
+Ref: people.municipality_id > gazetteer.site_id [update: cascade]
+Ref: people.institution_id > institutions.institution_id [update: cascade]
+
+Table permanent_nets {
+    permanent_net_id integer [primary key, increment, unique, not null]
+    sampling_plot_id integer [not null, ref: > sampling_plots.sampling_plot_id]
+    net_number integer [not null]
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    notes varchar(150)
+    full_name varchar(50)
+    ~audit_fields
+}
+
+Ref: permanent_nets.sampling_plot_id > sampling_plots.sampling_plot_id [delete: cascade, update: cascade]
+
+Table permits {
+    permit_id integer [primary key, increment, unique, not null]
+    project_id integer [ref: > projects.project_id]
+    permit_name varchar(150)
+    permit_number varchar(30)
+    permit_type varchar(5)
+    dispatcher_name varchar(100) [not null]
+    dispatch_date date
+    expire_date date
+    permit_status varchar(5)
+    notes text
+    ~audit_fields
+}
+
+Ref: permits.project_id > projects.project_id [delete: cascade, update: cascade]
+
+Table poi_library {
+    poi_id integer [primary key, increment, unique, not null]
+    sample_date date [not null]
+    sample_time time
+    poi_name varchar(60)
+    longitude real
+    latitude real
+    altitude real
+    coordinate_precision varchar(3)
+    observer_id integer [ref: > people.person_id]
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    individual_id integer [ref: > individuals.individual_id]
+    sighting_id integer
+    survey_id integer [ref: > surveys.survey_id]
+    notes text
+    ~audit_fields
+}
+
+Ref: poi_library.observer_id > people.person_id [update: cascade]
+Ref: poi_library.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: poi_library.individual_id > individuals.individual_id [update: cascade]
+Ref: poi_library.survey_id > surveys.survey_id [update: cascade]
+
+Table project_budgets {
+    budget_id integer [primary key, increment, unique, not null]
+    project_id integer [ref: > projects.project_id]
+    funding_source varchar(60)
+    rubric varchar(60) [not null]
+    item_name varchar(60)
+    amount real
+    ~audit_fields
+}
+
+Ref: project_budgets.project_id > projects.project_id [update: cascade]
+
+Table project_chronograms {
+    chronogram_id integer [primary key, increment, unique, not null]
+    project_id integer [ref: > projects.project_id]
+    description text
+    start_date date
+    target_date date
+    end_date date
+    goal_id integer [ref: > project_goals.goal_id]
+    progress_status varchar(5)
+    ~audit_fields
+}
+
+Ref: project_chronograms.project_id > projects.project_id [update: cascade]
+Ref: project_chronograms.goal_id > project_goals.goal_id [update: cascade]
+
+Table project_expenses {
+    expense_id integer [primary key, increment, unique, not null]
+    project_id integer [ref: > projects.project_id]
+    budget_id integer [ref: > project_budgets.budget_id]
+    item_description varchar(60) [not null]
+    expense_date date
+    amount real
+    ~audit_fields
+}
+
+Ref: project_expenses.project_id > projects.project_id [update: cascade]
+Ref: project_expenses.budget_id > project_budgets.budget_id [update: cascade]
+
+Table project_goals {
+    goal_id integer [primary key, increment, unique, not null]
+    project_id integer [ref: > projects.project_id]
+    goal_description text
+    goal_status varchar(5)
+    ~audit_fields
+}
+
+Ref: project_goals.project_id > projects.project_id [update: cascade]
+
+Table project_team {
+    project_member_id integer [primary key, increment, unique, not null]
+    project_id integer [ref: > projects.project_id]
+    person_id integer [not null, ref: > people.person_id]
+    project_manager boolean [default: false]
+    institution_id integer [ref: > institutions.institution_id]
+    ~audit_fields
+}
+
+Ref: project_team.project_id > projects.project_id [delete: cascade, update: cascade]
+Ref: project_team.person_id > people.person_id [update: cascade]
+Ref: project_team.institution_id > institutions.institution_id [update: cascade]
+
+Table projects {
+    project_id integer [primary key, increment, unique, not null]
+    project_title varchar(150) [unique, not null]
+    short_title varchar(60)
+    start_date date
+    end_date date
+    website_uri varchar(200)
+    email_addr varchar(100)
+    contact_name varchar(100)
+    protocol_number varchar(30)
+    project_status varchar(5)
+    project_abstract text
+    main_goal text
+    risks text
+    notes text
+    ~audit_fields
+
+    indexes {
+        short_title [name: 'idx_projects_short_title', note: 'COLLATE NOCASE']
+    }
+}
+
+Table record_history {
+    event_id integer [primary key, increment, unique, not null]
+    event_date datetime
+    user_id integer
+    event_action varchar(30)
+    event_table varchar(40)
+    record_id integer
+    event_field varchar(60)
+    old_value text
+    new_value text
+    notes text
+
+    indexes {
+        event_date [name: 'idx_history_date']
+        (event_table, record_id) [name: 'idx_history_table_record']
+    }
+}
+
+Ref: record_history.user_id > users.user_id [delete: set null, update: cascade]
+
+Table record_verifications {
+    verification_id integer [primary key, increment, unique, not null]
+    table_name varchar(40) [not null]
+    record_id integer [not null]
+    verification_date datetime
+    verification_status varchar(5) [not null]
+    person_id integer
+    notes text
+}
+
+Table sample_preps {
+    sample_prep_id integer [primary key, increment, unique, not null]
+    specimen_id integer [ref: > specimens.specimen_id]
+    accession_num varchar(20)
+    full_name varchar(100)
+    accession_type char(5)
+    duplicate_seq integer
+    taxon_id integer
+    individual_id integer
+    nest_id integer
+    egg_id integer
+    preparation_date date
+    preparer_id integer
+    institution_id integer [ref: > institutions.institution_id]
+    notes text
+    ~audit_fields
+
+    indexes {
+        preparation_date [name: 'idx_preparation_date']
+    }
+}
+
+Table sampling_plots {
+    sampling_plot_id integer [primary key, increment, unique, not null]
+    full_name varchar(100) [unique, not null]
+    abbreviation varchar(10) [unique, not null]
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    area_shape varchar(5)
+    locality_id integer [ref: > gazetteer.site_id]
+    description text
+    notes text
+    ~audit_fields
+}
+
+Ref: sampling_plots.locality_id > gazetteer.site_id [update: cascade]
+
+Table sightings {
+    sighting_id integer [primary key, increment, unique, not null]
+    survey_id integer
+    individual_id integer [ref: > individuals.individual_id]
+    sighting_date date
+    sighting_time time
+    locality_id integer [ref: > gazetteer.site_id]
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    method_id integer [ref: > methods.method_id]
+    mackinnon_list_num integer
+    observer_id integer [ref: > people.person_id]
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    subjects_tally integer
+    subject_distance real
+    flight_height real
+    flight_direction varchar(5)
+    subject_seen boolean [default: false]
+    subject_heard boolean [default: false]
+    subject_photographed boolean [default: false]
+    subject_recorded boolean [default: false]
+    subject_captured boolean [default: false]
+    males_tally varchar(10)
+    females_tally varchar(10)
+    not_sexed_tally varchar(10)
+    adults_tally varchar(10)
+    immatures_tally varchar(10)
+    not_aged_tally varchar(10)
+    new_captures_tally integer
+    recaptures_tally integer
+    unbanded_tally integer
+    detection_type varchar(30)
+    breeding_status varchar(30)
+    out_of_sample boolean [default: false]
+    ebird_available boolean [default: false]
+    full_name varchar(100)
+    notes text
+    ~audit_fields
+
+    indexes {
+        sighting_date [name: 'idx_sightings_date']
+        full_name [name: 'idx_sightings_fullname', note: 'COLLATE NOCASE']
+        taxon_id [name: 'idx_sightings_taxon']
+    }
+}
+
+Ref: sightings.individual_id > individuals.individual_id [update: cascade]
+Ref: sightings.locality_id > gazetteer.site_id [update: cascade]
+Ref: sightings.method_id > methods.method_id [update: cascade]
+Ref: sightings.observer_id > people.person_id [update: cascade]
+Ref: sightings.taxon_id > zoo_taxa.taxon_id [update: cascade]
+
+Table specimen_collectors {
+    collector_id integer [primary key, increment, unique, not null]
+    specimen_id integer
+    person_id integer
+    collector_seq integer
+    ~audit_fields
+}
+
+Table specimens {
+    specimen_id integer [primary key, increment, unique, not null]
+    field_number varchar(20)
+    full_name varchar(100)
+    sample_type char(5)
+    taxon_id integer
+    individual_id integer
+    nest_id integer
+    egg_id integer
+    collection_date date
+    collection_day integer
+    collection_month integer
+    collection_year integer
+    locality_id integer
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    institution_id integer [ref: > institutions.institution_id]
+    notes text
+    ~audit_fields
+
+    indexes {
+        collection_date [name: 'idx_specimens_date']
+        field_number [name: 'idx_specimens_fieldnumber', note: 'COLLATE NOCASE']
+        full_name [name: 'idx_specimens_fullname', note: 'COLLATE NOCASE']
+    }
+}
+
+Ref: specimens.institution_id > institutions.institution_id [update: cascade]
+
+Table survey_team {
+    survey_team_id integer [primary key, increment, unique, not null]
+    survey_id integer
+    person_id integer [not null, ref: > people.person_id]
+    visitor boolean [default: false]
+    ~audit_fields
+}
+
+Ref: survey_team.person_id > people.person_id [update: cascade]
+
+Table surveys {
+    survey_id integer [primary key, increment, unique, not null]
+    survey_date date [not null]
+    start_time time
+    end_time time
+    duration integer
+    method_id integer [ref: > methods.method_id]
+    net_station_id integer [ref: > sampling_plots.sampling_plot_id]
+    expedition_id integer [ref: > expeditions.expedition_id]
+    project_id integer [ref: > projects.project_id]
+    locality_id integer [ref: > gazetteer.site_id]
+    sample_id varchar(30)
+    start_longitude real
+    start_latitude real
+    end_longitude real
+    end_latitude real
+    coordinate_precision varchar(3)
+    observers_tally integer
+    area_total real
+    distance_total real
+    nets_total integer
+    habitat text
+    net_rounds text
+    full_name varchar(100)
+    notes text
+    ~audit_fields
+
+    indexes {
+        survey_date [name: 'idx_surveys_date']
+        full_name [name: 'idx_surveys_fullname', note: 'COLLATE NOCASE']
+    }
+}
+
+Ref: surveys.method_id > methods.method_id [update: cascade]
+Ref: surveys.net_station_id > sampling_plots.sampling_plot_id [update: cascade]
+Ref: surveys.expedition_id > expeditions.expedition_id [update: cascade]
+Ref: surveys.project_id > projects.project_id [update: cascade]
+Ref: surveys.locality_id > gazetteer.site_id [update: cascade]
+
+Table taxon_ranks {
+    taxon_rank_id integer [primary key, increment, unique, not null]
+    rank_seq integer [not null]
+    rank_name varchar(30) [unique, not null]
+    rank_name_pt_br varchar(30)
+    abbreviation varchar(15)
+    main_rank boolean [default: true]
+    subrank boolean [default: false]
+    infrarank boolean [default: false]
+    infraspecific boolean [default: false]
+    iczn boolean [default: true]
+    icbn boolean [default: true]
+    ~audit_fields
+
+    indexes {
+        abbreviation [name: 'idx_rank_acronym']
+        rank_seq [name: 'idx_rank_seq']
+    }
+}
+
+Table users {
+    user_id integer [primary key, increment]
+    full_name varchar(60) [not null]
+    user_name varchar(30) [unique, not null]
+    user_password text
+    user_rank varchar(5)
+    allow_collection_edit boolean [default: true]
+    allow_print boolean [default: true]
+    allow_export boolean [default: true]
+    allow_import boolean [default: true]
+    uuid varchar(40)
+    ~audit_fields
+
+    indexes {
+        full_name [name: 'idx_user_fullname', note: 'COLLATE NOCASE']
+    }
+}
+
+Table vegetation {
+    vegetation_id integer [primary key, increment, unique, not null]
+    survey_id integer
+    sample_date date [not null]
+    sample_time time
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    observer_id integer
+    herbs_distribution integer
+    herbs_proportion integer
+    herbs_avg_height integer
+    shrubs_distribution integer
+    shrubs_proportion integer
+    shrubs_avg_height integer
+    trees_distribution integer
+    trees_proportion integer
+    trees_avg_height integer
+    notes text
+    ~audit_fields
+}
+
+Table videos {
+    video_id integer [primary key, increment, unique, not null]
+    full_name varchar(100)
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    individual_id integer [ref: > individuals.individual_id]
+    capture_id integer [ref: > captures.capture_id]
+    survey_id integer [ref: > surveys.survey_id]
+    sighting_id integer [ref: > sightings.sighting_id]
+    nest_id integer [ref: > nests.nest_id]
+    nest_revision_id integer [ref: > nest_revisions.nest_revision_id]
+    video_type varchar(15)
+    locality_id integer [ref: > gazetteer.site_id]
+    recording_date date
+    recording_time time
+    author_id integer [ref: > people.person_id]
+    longitude real
+    latitude real
+    coordinate_precision varchar(3)
+    recording_context varchar(60)
+    habitat varchar(60)
+    camera_model varchar(60)
+    distance real
+    license_type varchar(20)
+    license_year integer
+    license_uri varchar(200)
+    license_notes varchar(100)
+    license_owner varchar(150)
+    file_path varchar(250)
+    subtitle text
+    notes text
+    ~audit_fields
+}
+
+Ref: videos.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: videos.individual_id > individuals.individual_id [update: cascade]
+Ref: videos.capture_id > captures.capture_id [update: cascade]
+Ref: videos.survey_id > surveys.survey_id [update: cascade]
+Ref: videos.sighting_id > sightings.sighting_id [update: cascade]
+Ref: videos.nest_id > nests.nest_id [update: cascade]
+Ref: videos.nest_revision_id > nest_revisions.nest_revision_id [update: cascade]
+Ref: videos.locality_id > gazetteer.site_id [update: cascade]
+Ref: videos.author_id > people.person_id [update: cascade]
+
+Table weather_logs {
+    weather_id integer [primary key, increment, unique, not null]
+    survey_id integer
+    sample_date date
+    sample_time time
+    sample_moment char(1)
+    observer_id integer
+    cloud_cover integer
+    precipitation char(1)
+    rainfall integer
+    temperature real
+    wind_speed_bft integer
+    wind_speed_kmh real
+    wind_direction varchar(5)
+    relative_humidity real
+    atmospheric_pressure real
+    notes text
+    ~audit_fields
+}
+
+Table zoo_taxa {
+    taxon_id integer [primary key, increment, unique, not null]
+    scientific_name varchar(100) [unique, not null]
+    authorship varchar(150)
+    formatted_name varchar(250)
+    english_name varchar(100)
+    portuguese_name varchar(100)
+    spanish_name varchar(100)
+    quick_code varchar(10)
+    rank_id integer [not null, ref: > taxon_ranks.rank_id]
+    parent_taxon_id integer
+    valid_id integer
+    iucn_status varchar(5)
+    extinct boolean [default: false]
+    extinction_year varchar(25)
+    sort_num real
+    group_name varchar(40)
+    order_id integer
+    family_id integer
+    subfamily_id integer
+    genus_id integer
+    species_id integer
+    subspecies_group_id integer
+    incertae_sedis integer
+    ebird_code varchar(20)
+    taxon_concept_id varchar(30)
+    accepted_status boolean [default: true]
+    distribution text
+    clements_taxonomy boolean [default: false]
+    ioc_taxonomy boolean [default: false]
+    ioc_rank_id integer [ref: > taxon_ranks.rank_id]
+    ioc_parent_taxon_id integer
+    ioc_valid_id integer
+    ioc_sort_num real
+    ioc_english_name varchar(100)
+    ioc_distribution text
+    cbro_taxonomy boolean [default: false]
+    other_portuguese_names varchar(150)
+    ~audit_fields
+
+    indexes {
+        authorship [name: 'idx_zoo_taxa_authorship', note: 'COLLATE NOCASE']
+        ebird_code [name: 'idx_zoo_taxa_ebird_code']
+        english_name [name: 'idx_zoo_taxa_english_name', note: 'COLLATE NOCASE']
+        portuguese_name [name: 'idx_zoo_taxa_portuguese_name', note: 'COLLATE NOCASE']
+        spanish_name [name: 'idx_zoo_taxa_spanish_name', note: 'COLLATE NOCASE']
+        order_id [name: 'idx_zoo_taxa_order']
+        family_id [name: 'idx_zoo_taxa_family']
+        subfamily_id [name: 'idx_zoo_taxa_subfamily']
+        genus_id [name: 'idx_zoo_taxa_genus']
+        species_id [name: 'idx_zoo_taxa_species']
+        subspecies_group_id [name: 'idx_zoo_taxa_subspecies_group']
+        parent_taxon_id [name: 'idx_zoo_taxa_parent_taxon']
+        ioc_parent_taxon_id [name: 'idx_zoo_taxa_parent_taxon_ioc']
+        valid_id [name: 'idx_zoo_taxa_valid']
+        ioc_valid_id [name: 'idx_zoo_taxa_valid_ioc']
+        quick_code [name: 'idx_zoo_taxa_quickcodes']
+        rank_id [name: 'idx_zoo_taxa_rank']
+        ioc_rank_id [name: 'idx_zoo_taxa_rank_ioc']
+        sort_num [name: 'idx_zoo_taxa_sort_num']
+        ioc_sort_num [name: 'idx_zoo_taxa_sort_num_ioc']
+    }
+}
+
+Ref: zoo_taxa.rank_id > taxon_ranks.rank_id [update: cascade]
+Ref: zoo_taxa.ioc_rank_id > taxon_ranks.rank_id [update: cascade]
