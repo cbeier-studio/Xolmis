@@ -352,7 +352,7 @@ end;
 
 function TJSONImporter.CanHandleExtension(const Ext: string): Boolean;
 begin
-  Result := (LowerCase(Ext) = 'json') or (LowerCase(Ext) = 'ndjson');
+  Result := (LowerCase(Ext) = 'json') or (LowerCase(Ext) = 'ndjson') or (LowerCase(Ext) = 'jsonl');
 end;
 
 function TJSONImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
@@ -628,7 +628,7 @@ begin
       Result := 85; // json clássico tem prioridade
   end
   else
-  if Ext = '.ndjson' then
+  if (Ext = '.ndjson') or (Ext = '.jsonl') then
   begin
     Result := 40; // aceita, mas deixa espaço para TNDJSONImporter concorrer
   end
@@ -640,7 +640,7 @@ end;
 
 function TNDJSONImporter.CanHandleExtension(const Ext: string): Boolean;
 begin
-  Result := SameText(Ext, 'ndjson');
+  Result := (SameText(Ext, 'ndjson')) or (SameText(Ext, 'jsonl'));
 end;
 
 function TNDJSONImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
@@ -788,7 +788,7 @@ end;
 
 class function TNDJSONImporter.Probe(const FileName: string; Stream: TStream): Integer;
 begin
-  if SameText(ExtractFileExt(FileName), '.ndjson') then
+  if (SameText(ExtractFileExt(FileName), '.ndjson')) or (SameText(ExtractFileExt(FileName), '.jsonl')) then
     Exit(95)
   else
     Exit(0);
@@ -981,7 +981,7 @@ end;
 
 function TXolmisNDJSONExporter.CanHandleExtension(const Ext: string): Boolean;
 begin
-  Result := SameText(Ext, 'ndjson');
+  Result := (SameText(Ext, 'ndjson')) or (SameText(Ext, 'jsonl'));
 end;
 
 procedure TXolmisNDJSONExporter.Export(Stream: TStream; const Options: TExportOptions;
@@ -1032,8 +1032,10 @@ end;
 initialization
   TImporterRegistry.RegisterImporter('json', TJSONImporter);
   TImporterRegistry.RegisterImporter('ndjson', TNDJSONImporter);
+  TImporterRegistry.RegisterImporter('jsonl', TNDJSONImporter);
   TExporterRegistry.RegisterExporter('json', TXolmisJSONExporter);
   TExporterRegistry.RegisterExporter('ndjson', TXolmisNDJSONExporter);
+  TExporterRegistry.RegisterExporter('jsonl', TXolmisNDJSONExporter);
 
 end.
 

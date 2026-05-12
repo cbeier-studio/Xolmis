@@ -15707,6 +15707,10 @@ msgstr ""
 msgid "No importer registered for %s"
 msgstr ""
 
+#: utils_locale.rserrornointernetconnection
+msgid "No internet connection available. Check your network settings and try again."
+msgstr ""
+
 #: utils_locale.rserrornotfoundlookupvalue
 #, object-pascal-format
 msgid "Value \"%s\" was not found in the lookup table \"%s\"."
@@ -18931,6 +18935,10 @@ msgstr ""
 #: utils_locale.rstitlenoconnectionsfound
 msgctxt "utils_locale.rstitlenoconnectionsfound"
 msgid "No connections found"
+msgstr ""
+
+#: utils_locale.rstitlenointernetconnection
+msgid "No internet connection"
 msgstr ""
 
 #: utils_locale.rstitlepermanentnets

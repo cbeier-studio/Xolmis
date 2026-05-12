@@ -410,12 +410,16 @@ var
   { Help manipulation }
   procedure OpenHelp(aHelpFile: String; aTopic: String = '');
 
+  function HasInternetConnection(const AUrl: String): Boolean;
+
   function GetFileCategoryFromExt(aExtension: String): TFileCategory;
 
 
 implementation
 
 uses
+  {$IFDEF WINDOWS}WinSock2,{$ENDIF}
+  {$IFDEF UNIX}use BaseUnix, NetDB,{$ENDIF}
   utils_locale, utils_conversions, data_management, models_users, udlg_connect, udlg_newdatabase;
 
 { ---------------------------------------------------------------------------------------- }
@@ -883,6 +887,33 @@ begin
   OpenURL(HelpUrl);
 
   LogDebug('Help file opened: ' + aHelpFile);
+end;
+
+function HasInternetConnection(const AUrl: String): Boolean;
+var
+  Host, Url: String;
+  HostStart, HostEnd: Integer;
+begin
+  Result := False;
+  Url := Trim(AUrl);
+  if Url = EmptyStr then
+    Exit;
+
+  Host := Url;
+  HostStart := Pos('://', Host);
+  if HostStart > 0 then
+    Delete(Host, 1, HostStart + 2);
+
+  HostEnd := Pos('/', Host);
+  if HostEnd = 0 then
+    HostEnd := Pos('?', Host);
+  if HostEnd = 0 then
+    HostEnd := Pos('#', Host);
+  if HostEnd > 0 then
+    Host := Copy(Host, 1, HostEnd - 1);
+
+  if Host <> EmptyStr then
+    Result := Assigned(gethostbyname(PChar(Host)));
 end;
 
 function GetFileCategoryFromExt(aExtension: String): TFileCategory;

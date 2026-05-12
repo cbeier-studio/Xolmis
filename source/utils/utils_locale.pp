@@ -168,6 +168,8 @@ uses
     rsErrorDatabaseCreation = 'The database file was not created.';
     rsErrorUpdatingAdminPassword = 'An error occurred while updating the Admin password.';
     rsErrorCheckingUpdates = 'An error occurred while checking for updates.';
+    rsErrorNoInternetConnection = 'No internet connection available. Check your network settings and try again.';
+    rsTitleNoInternetConnection = 'No internet connection';
     rsErrorReportNotFound = 'Report template not found: %s';
     rsErrorOptimizingDatabase = 'An error occurred while optimizing the database: %s';
     rsErrorVacuumingDatabase = 'An error occurred while vacuuming the database: %s';

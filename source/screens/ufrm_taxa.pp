@@ -1147,9 +1147,16 @@ end;
 procedure TfrmTaxa.sbBirdsOfTheWorldClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
-  OpenUrl('https://birdsoftheworld.org/bow/species/' + FUrlSearch);
+  Url := 'https://birdsoftheworld.org/bow/species/' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbClearSearchClick(Sender: TObject);
@@ -1162,9 +1169,16 @@ end;
 procedure TfrmTaxa.sbEbirdClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
-  OpenUrl('https://ebird.org/species/' + FUrlSearch);
+  Url := 'https://ebird.org/species/' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbEmptyClearAllClick(Sender: TObject);
@@ -1182,41 +1196,76 @@ end;
 procedure TfrmTaxa.sbGBIFClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  OpenUrl('https://www.gbif.org/search?q=' + FUrlSearch);
+  Url := 'https://www.gbif.org/search?q=' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbGoogleImagesClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  OpenUrl('https://www.google.com/search?tbm=isch&q="' + FUrlSearch + '"');
+  Url := 'https://www.google.com/search?tbm=isch&q="' + FUrlSearch + '"';
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbGoogleScholarClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  OpenUrl('https://scholar.google.com/scholar?q="' + FUrlSearch + '"');
+  Url := 'https://scholar.google.com/scholar?q="' + FUrlSearch + '"';
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbGoogleSearchClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  OpenUrl('https://www.google.com/search?q="' + FUrlSearch + '"');
+  Url := 'https://www.google.com/search?q="' + FUrlSearch + '"';
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbIUCNRedListClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  OpenUrl('https://www.iucnredlist.org/search?query=' + FUrlSearch);
+  Url := 'https://www.iucnredlist.org/search?query=' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbOptionsSearchClick(Sender: TObject);
@@ -1239,12 +1288,19 @@ end;
 procedure TfrmTaxa.sbWikiavesClick(Sender: TObject);
 var
   FUrlSearch: String;
+  Url: String;
 begin
   if GetRankType(dsLink.DataSet.FieldByName('rank_id').AsInteger) = trSpecies then
     FUrlSearch := HTTPEncode(RemoveDiacritics(dsLink.DataSet.FieldByName('portuguese_name').AsString))
   else
     FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  OpenUrl('https://www.wikiaves.com.br/wiki/' + FUrlSearch);
+  Url := 'https://www.wikiaves.com.br/wiki/' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.scrollDataMouseWheel

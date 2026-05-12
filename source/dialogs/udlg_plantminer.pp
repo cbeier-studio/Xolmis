@@ -114,7 +114,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_system;
+uses utils_locale, utils_global, utils_system, utils_dialogs;
 
 {$R *.lfm}
 
@@ -272,6 +272,13 @@ procedure TdlgPlantminer.GetPlantminer;
 var
   CL, TS, N: String;
 begin
+  if not HasInternetConnection(LinkPM + ExtNome) then
+  begin
+    LogDebug('No internet connection available.');
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+
   { SSL initialization has to be done by hand here }
   InitSSLInterface;
 
