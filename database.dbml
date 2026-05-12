@@ -2,16 +2,6 @@ Project xolmis_desktop {
     database_type: "sqlite"
 }
 
-// Sugestões gerais de evolução do schema:
-// 1. Padronizar nomes de PK/FK (ex.: *_id) e garantir que o nome da PK exista exatamente como referenciado nas FKs.
-// 2. Criar tabelas de domínio para códigos curtos repetidos (char(1), char(5), varchar(5/10)) como status, tipo, sexo, idade e licença.
-// 3. Adicionar CHECK constraints para latitude/longitude, percentuais, datas coerentes e campos booleanos derivados de código.
-// 4. Indexar FKs mais consultadas; no SQLite, FK não cria índice automaticamente.
-// 5. Revisar campos full_name armazenados em várias tabelas: se forem derivados, preferir coluna gerada ou preenchimento centralizado.
-// 6. Evitar redundância entre data completa e partes separadas (dia/mês/ano) para não abrir espaço para inconsistência.
-// 7. Avaliar uma modelagem única para arquivos/mídias, já que documents/images/audio_library/videos repetem metadados muito parecidos.
-// 8. Considerar ON DELETE explícito para todas as FKs importantes, em vez de depender apenas do comportamento padrão.
-
 TablePartial audit_fields {
     user_inserted integer
     user_updated integer
@@ -33,23 +23,23 @@ TablePartial license_fields {
 Table audio_library {
     audio_id integer [primary key, increment, unique, not null]
     full_name varchar(100)
-    taxon_id integer // [ref: > zoo_taxa.taxon_id]
-    individual_id integer // [ref: > individuals.individual_id]
-    specimen_id integer // [ref: > specimens.specimen_id]
-    sighting_id integer // [ref: > sightings.sighting_id]
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    individual_id integer [ref: > individuals.individual_id]
+    specimen_id integer [ref: > specimens.specimen_id]
+    sighting_id integer [ref: > sightings.sighting_id]
     audio_type varchar(15)
     recording_date date
     recording_time time
-    author_id integer // [ref: > people.person_id]
-    locality_id integer // [ref: > gazetteer.site_id]
+    author_id integer [ref: > people.person_id]
+    locality_id integer [ref: > gazetteer.site_id]
     coordinate_precision char(1) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     temperature real
-    cloud_cover integer
-    precipitation char(1)
-    relative_humidity integer
-    wind_speed integer
+    cloud_cover integer // [check: `cloud_cover BETWEEN 0 AND 100`]
+    precipitation char(1) // [check: `precipitation IN ('N', 'F', 'M', 'D', 'R')`]
+    relative_humidity integer // [check: `relative_humidity BETWEEN 0 AND 100`]
+    wind_speed integer // [check: `wind_speed BETWEEN 0 AND 12`]
     recording_context varchar(60)
     habitat varchar(60)
     playback_used boolean [default: false]
@@ -64,17 +54,19 @@ Table audio_library {
     notes text
     ~audit_fields
 
-    /*
     indexes {
         recording_date [name: 'idx_audio_library_date']
-        taxon_id [name: 'idx_audio_library_taxon']
-        individual_id [name: 'idx_audio_library_individual']
-        locality_id [name: 'idx_audio_library_locality']
-        author_id [name: 'idx_audio_library_author']
         full_name [name: 'idx_audio_library_fullname', note: 'COLLATE NOCASE']
+        file_path [name: 'idx_audio_library_file_path', note: 'COLLATE NOCASE']
     }
-    */
 }
+
+Ref: audio_library.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: audio_library.individual_id > individuals.individual_id [update: cascade]
+Ref: audio_library.specimen_id > specimens.specimen_id [update: cascade]
+Ref: audio_library.sighting_id > sightings.sighting_id [update: cascade]
+Ref: audio_library.locality_id > gazetteer.site_id [update: cascade]
+Ref: audio_library.author_id > people.person_id [update: cascade]
 
 Table band_history {
     event_id integer [primary key, unique, increment, not null]
@@ -141,12 +133,12 @@ Table botanic_taxa {
     formatted_name varchar(180)
     vernacular_name varchar(100)
     rank_id integer [not null, ref: > taxon_ranks.rank_id]
-    parent_taxon_id integer
-    valid_id integer
-    order_id integer
-    family_id integer
-    genus_id integer
-    species_id integer
+    parent_taxon_id integer // [ref: > botanic_taxa.taxon_id]
+    valid_id integer // [ref: > botanic_taxa.taxon_id]
+    order_id integer // [ref: > botanic_taxa.taxon_id]
+    family_id integer // [ref: > botanic_taxa.taxon_id]
+    genus_id integer // [ref: > botanic_taxa.taxon_id]
+    species_id integer // [ref: > botanic_taxa.taxon_id]
     ~audit_fields
 
     indexes {
@@ -165,7 +157,7 @@ Ref: botanic_taxa.rank_id > taxon_ranks.rank_id [update: cascade]
 
 Table captures {
     capture_id integer [primary key, unique, increment, not null]
-    survey_id integer
+    survey_id integer [ref: > surveys.survey_id]
     individual_id integer [ref: > individuals.individual_id]
     taxon_id integer [ref: > zoo_taxa.taxon_id]
     full_name varchar(120)
@@ -175,8 +167,8 @@ Table captures {
     locality_id integer [ref: > gazetteer.site_id]
     net_station_id integer [ref: > sampling_plots.sampling_plot_id]
     net_id integer [ref: > nets_effort.net_id]
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     bander_id integer [ref: > people.person_id]
     annotator_id integer [ref: > people.person_id]
@@ -251,6 +243,7 @@ Table captures {
     }
 }
 
+Ref: captures.survey_id > surveys.survey_id [update: cascade]
 Ref: captures.individual_id > individuals.individual_id [update: cascade]
 Ref: captures.taxon_id > zoo_taxa.taxon_id [update: cascade]
 Ref: captures.project_id > projects.project_id [update: cascade]
@@ -269,9 +262,6 @@ Table db_metadata {
 }
 
 Table documents {
-    // Sugestão: esta tabela está atuando como associação polimórfica com muitas FKs opcionais.
-    // Se o volume crescer, vale separar em documents + document_links(document_id, entity_type, entity_id)
-    // ou em tabelas de ligação específicas para reduzir nulls e simplificar regras de integridade.
     document_id integer [primary key, increment, unique, not null]
     permit_id integer [ref: > permits.permit_id]
     project_id integer [ref: > projects.project_id]
@@ -294,19 +284,10 @@ Table documents {
     ~license_fields
     ~audit_fields
 
-    /*
-    // Índices sugeridos para localizar documentos por tipo, data, autor e entidade relacionada.
     indexes {
-        (document_type, document_date) [name: 'idx_documents_type_date']
-        author_id [name: 'idx_documents_author']
-        project_id [name: 'idx_documents_project']
-        person_id [name: 'idx_documents_person']
-        capture_id [name: 'idx_documents_capture']
-        sighting_id [name: 'idx_documents_sighting']
-        specimen_id [name: 'idx_documents_specimen']
-        file_path [name: 'idx_documents_file_path']
+        document_date [name: 'idx_documents_date']
+        file_path [name: 'idx_documents_file_path', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: documents.permit_id > permits.permit_id [update: cascade]
@@ -348,17 +329,10 @@ Table eggs {
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para histórico de ninhos e busca por sequência/táxon.
     indexes {
-        (nest_id, egg_seq) [unique, name: 'idx_eggs_nest_seq']
-        taxon_id [name: 'idx_eggs_taxon']
-        individual_id [name: 'idx_eggs_individual']
-        observer_id [name: 'idx_eggs_observer']
-        measure_date [name: 'idx_eggs_measure_date']
+        measure_date [name: 'idx_eggs_date']
         full_name [name: 'idx_eggs_fullname', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: eggs.nest_id > nests.nest_id [delete: cascade, update: cascade]
@@ -410,18 +384,9 @@ Table feathers {
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para filtros por amostra, indivíduo, captura/avistamento e local.
     indexes {
         sample_date [name: 'idx_feathers_date']
-        taxon_id [name: 'idx_feathers_taxon']
-        individual_id [name: 'idx_feathers_individual']
-        capture_id [name: 'idx_feathers_capture']
-        sighting_id [name: 'idx_feathers_sighting']
-        locality_id [name: 'idx_feathers_locality']
-        observer_id [name: 'idx_feathers_observer']
     }
-    */
 }
 
 Ref: feathers.taxon_id > zoo_taxa.taxon_id [update: cascade]
@@ -432,13 +397,11 @@ Ref: feathers.sighting_id > sightings.sighting_id [update: cascade]
 Ref: feathers.observer_id > people.person_id [update: cascade]
 
 Table gazetteer {
-    // Sugestão: parent_site_id/country_id/state_id/municipality_id parecem apontar para a própria gazetteer,
-    // mas hoje não têm FK explícita. Vale formalizar a hierarquia administrativa com self refs e regras de consistência.
     site_id integer [primary key, increment, not null, unique]
     site_name varchar(60) [not null]
     abbreviation varchar(10)
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     altitude real
     site_rank char(1)
     parent_site_id integer // [ref: > gazetteer.site_id]
@@ -475,7 +438,7 @@ Table images {
     feather_id integer [ref: > feathers.feather_id]
     locality_id integer [ref: > gazetteer.site_id]
     author_id integer [ref: > people.person_id]
-    survey_id integer // [ref: > surveys.survey_id]
+    survey_id integer [ref: > surveys.survey_id]
     sighting_id integer [ref: > sightings.sighting_id]
     nest_id integer [ref: > nests.nest_id]
     nest_revision_id integer [ref: > nest_revisions.nest_revision_id]
@@ -483,27 +446,17 @@ Table images {
     specimen_id integer [ref: > specimens.specimen_id]
     file_path varchar(300)
     coordinate_precision char(1) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     ~license_fields
     subtitle text
     image_thumbnail blob
     ~audit_fields
 
-    /*
-    // Índices sugeridos para galerias, filtros cronológicos e joins com registros de campo.
     indexes {
         image_date [name: 'idx_images_date']
-        taxon_id [name: 'idx_images_taxon']
-        individual_id [name: 'idx_images_individual']
-        capture_id [name: 'idx_images_capture']
-        sighting_id [name: 'idx_images_sighting']
-        survey_id [name: 'idx_images_survey']
-        locality_id [name: 'idx_images_locality']
-        author_id [name: 'idx_images_author']
-        file_path [name: 'idx_images_file_path']
+        file_path [name: 'idx_images_file_path', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: images.taxon_id > zoo_taxa.taxon_id [update: cascade]
@@ -512,16 +465,14 @@ Ref: images.capture_id > captures.capture_id [update: cascade]
 Ref: images.feather_id > feathers.feather_id [update: cascade]
 Ref: images.locality_id > gazetteer.site_id [update: cascade]
 Ref: images.author_id > people.person_id [update: cascade]
-// Ref: images.sighting_id > sightings.sighting_id [update: cascade]
+Ref: images.sighting_id > sightings.sighting_id [update: cascade]
+Ref: images.survey_id > surveys.survey_id [update: cascade]
 Ref: images.nest_id > nests.nest_id [update: cascade]
 Ref: images.nest_revision_id > nest_revisions.nest_revision_id [update: cascade]
 Ref: images.egg_id > eggs.egg_id [update: cascade]
 Ref: images.specimen_id > specimens.specimen_id [update: cascade]
 
 Table individuals {
-    // Sugestão: birth_date/death_date coexistem com birth_day/month/year e death_day/month/year.
-    // Isso tende a gerar divergência; prefira uma única fonte de verdade + um campo de precisão/certeza da data.
-    // father_id e mother_id também parecem autorreferências e poderiam virar FK para individuals.individual_id.
     individual_id integer [primary key, increment, unique, not null]
     formatted_name varchar(150)
     full_name varchar(120)
@@ -603,7 +554,7 @@ Table methods {
     ~audit_fields
 
     indexes {
-        abbreviation [name: 'idx_methods_acronym']
+        abbreviation [name: 'idx_methods_acronym'] // [note: 'COLLATE NOCASE']
         ebird_name [name: 'idx_methods_ebird_name', note: 'COLLATE NOCASE']
     }
 }
@@ -612,20 +563,16 @@ Table nest_owners {
     nest_owner_id integer [primary key, increment, unique, not null]
     nest_id integer [ref: > nests.nest_id]
     role varchar(5)
-    individual_id integer // [ref: > individuals.individual_id]
+    individual_id integer [ref: > individuals.individual_id]
     ~audit_fields
 
-    /*
-    // Índices sugeridos para impedir duplicidade de dono por ninho e acelerar joins.
     indexes {
         (nest_id, individual_id) [unique, name: 'idx_nest_owners_nest_individual']
-        individual_id [name: 'idx_nest_owners_individual']
     }
-    */
 }
 
 Ref: nest_owners.nest_id > nests.nest_id [delete: cascade, update: cascade]
-// Ref: nest_owners.individual_id > individuals.individual_id [update: cascade]
+Ref: nest_owners.individual_id > individuals.individual_id [update: cascade]
 
 Table nest_revisions {
     nest_revision_id integer [primary key, increment, unique, not null]
@@ -646,15 +593,9 @@ Table nest_revisions {
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para histórico do ninho e filtros por data, observador e parasitismo.
     indexes {
-        (nest_id, revision_date) [name: 'idx_nest_revisions_nest_date']
-        observer_1_id [name: 'idx_nest_revisions_observer_1']
-        observer_2_id [name: 'idx_nest_revisions_observer_2']
-        nidoparasite_id [name: 'idx_nest_revisions_nidoparasite']
+        full_name [name: 'idx_nest_revisions_fullname', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: nest_revisions.nest_id > nests.nest_id [delete: cascade, update: cascade]
@@ -668,8 +609,8 @@ Table nests {
     observer_id integer [ref: > people.person_id]
     project_id integer [ref: > projects.project_id]
     locality_id integer [ref: > gazetteer.site_id]
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     taxon_id integer [ref: > zoo_taxa.taxon_id]
     nest_shape varchar(5)
@@ -686,7 +627,7 @@ Table nests {
     external_height real
     edge_distance real
     center_distance real
-    nest_cover integer
+    nest_cover integer // [check: `nest_cover BETWEEN 0 AND 100`]
     plant_max_diameter real
     plant_min_diameter real
     plant_height real
@@ -719,12 +660,12 @@ Ref: nests.support_plant_2_id > botanic_taxa.taxon_id [update: cascade]
 
 Table nets_effort {
     net_id integer [primary key, increment, unique, not null]
-    survey_id integer // [ref: > surveys.survey_id]
+    survey_id integer [ref: > surveys.survey_id]
     net_station_id integer [ref: > sampling_plots.sampling_plot_id]
     permanent_net_id integer [ref: > permanent_nets.permanent_net_id]
     net_number integer
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     sample_date date
     net_open_1 time
@@ -749,7 +690,7 @@ Table nets_effort {
     }
 }
 
-// Ref: nets_effort.survey_id > surveys.survey_id [update: cascade]
+Ref: nets_effort.survey_id > surveys.survey_id [update: cascade]
 Ref: nets_effort.net_station_id > sampling_plots.sampling_plot_id [update: cascade]
 Ref: nets_effort.permanent_net_id > permanent_nets.permanent_net_id [update: cascade]
 
@@ -800,22 +741,19 @@ Ref: people.municipality_id > gazetteer.site_id [update: cascade]
 Ref: people.institution_id > institutions.institution_id [update: cascade]
 
 Table permanent_nets {
-    // Sugestão: sampling_plot_id + net_number provavelmente formam uma chave natural e deveriam ser UNIQUE.
     permanent_net_id integer [primary key, increment, unique, not null]
     sampling_plot_id integer [not null, ref: > sampling_plots.sampling_plot_id]
     net_number integer [not null]
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     notes varchar(150)
     full_name varchar(50)
     ~audit_fields
 
-    /*
     indexes {
         (sampling_plot_id, net_number) [unique, name: 'idx_permanent_nets_plot_net']
     }
-    */
 }
 
 Ref: permanent_nets.sampling_plot_id > sampling_plots.sampling_plot_id [delete: cascade, update: cascade]
@@ -833,15 +771,11 @@ Table permits {
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para telas administrativas e alertas de vencimento.
     indexes {
-        project_id [name: 'idx_permits_project']
-        permit_number [name: 'idx_permits_number']
-        permit_status [name: 'idx_permits_status']
+        permit_number [name: 'idx_permits_number', note: 'COLLATE NOCASE']
+        permit_status [name: 'idx_permits_status', note: 'COLLATE NOCASE']
         expire_date [name: 'idx_permits_expire_date']
     }
-    */
 }
 
 Ref: permits.project_id > projects.project_id [delete: cascade, update: cascade]
@@ -851,36 +785,29 @@ Table poi_library {
     sample_date date [not null]
     sample_time time
     poi_name varchar(60)
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     altitude real
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     observer_id integer [ref: > people.person_id]
     taxon_id integer [ref: > zoo_taxa.taxon_id]
     individual_id integer [ref: > individuals.individual_id]
-    sighting_id integer // [ref: > sightings.sighting_id]
+    sighting_id integer [ref: > sightings.sighting_id]
     survey_id integer [ref: > surveys.survey_id]
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para busca espacial básica e filtros por data/táxon/levantamento.
     indexes {
         sample_date [name: 'idx_poi_library_date']
         poi_name [name: 'idx_poi_library_name', note: 'COLLATE NOCASE']
-        taxon_id [name: 'idx_poi_library_taxon']
-        individual_id [name: 'idx_poi_library_individual']
-        survey_id [name: 'idx_poi_library_survey']
-        observer_id [name: 'idx_poi_library_observer']
         (longitude, latitude) [name: 'idx_poi_library_coordinate']
     }
-    */
 }
 
 Ref: poi_library.observer_id > people.person_id [update: cascade]
 Ref: poi_library.taxon_id > zoo_taxa.taxon_id [update: cascade]
 Ref: poi_library.individual_id > individuals.individual_id [update: cascade]
-// Ref: poi_library.sighting_id > sightings.sighting_id [update: cascade]
+Ref: poi_library.sighting_id > sightings.sighting_id [update: cascade]
 Ref: poi_library.survey_id > surveys.survey_id [update: cascade]
 
 Table project_budgets {
@@ -892,14 +819,10 @@ Table project_budgets {
     amount real
     ~audit_fields
 
-    /*
-    // Índices sugeridos para consultas por projeto e rubrica.
     indexes {
-        project_id [name: 'idx_project_budgets_project']
         rubric [name: 'idx_project_budgets_rubric', note: 'COLLATE NOCASE']
         item_name [name: 'idx_project_budgets_item', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: project_budgets.project_id > projects.project_id [update: cascade]
@@ -915,15 +838,10 @@ Table project_chronograms {
     progress_status varchar(5)
     ~audit_fields
 
-    /*
-    // Índices sugeridos para cronogramas por projeto, meta e situação.
     indexes {
-        project_id [name: 'idx_project_chronograms_project']
-        goal_id [name: 'idx_project_chronograms_goal']
         target_date [name: 'idx_project_chronograms_target_date']
-        progress_status [name: 'idx_project_chronograms_status']
+        progress_status [name: 'idx_project_chronograms_status', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: project_chronograms.project_id > projects.project_id [update: cascade]
@@ -938,14 +856,9 @@ Table project_expenses {
     amount real
     ~audit_fields
 
-    /*
-    // Índices sugeridos para consolidação por projeto/orçamento e séries temporais de gasto.
     indexes {
-        project_id [name: 'idx_project_expenses_project']
-        budget_id [name: 'idx_project_expenses_budget']
         expense_date [name: 'idx_project_expenses_date']
     }
-    */
 }
 
 Ref: project_expenses.project_id > projects.project_id [update: cascade]
@@ -958,19 +871,14 @@ Table project_goals {
     goal_status varchar(5)
     ~audit_fields
 
-    /*
-    // Índices sugeridos para painéis de metas por projeto e status.
     indexes {
-        project_id [name: 'idx_project_goals_project']
-        goal_status [name: 'idx_project_goals_status']
+        goal_status [name: 'idx_project_goals_status', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: project_goals.project_id > projects.project_id [update: cascade]
 
 Table project_team {
-    // Sugestão: criar UNIQUE(project_id, person_id) para evitar a mesma pessoa duplicada na mesma equipe.
     project_member_id integer [primary key, increment, unique, not null]
     project_id integer [ref: > projects.project_id]
     person_id integer [not null, ref: > people.person_id]
@@ -978,11 +886,9 @@ Table project_team {
     institution_id integer [ref: > institutions.institution_id]
     ~audit_fields
 
-    /*
     indexes {
         (project_id, person_id) [unique, name: 'idx_project_team_project_person']
     }
-    */
 }
 
 Ref: project_team.project_id > projects.project_id [delete: cascade, update: cascade]
@@ -1008,6 +914,7 @@ Table projects {
 
     indexes {
         short_title [name: 'idx_projects_short_title', note: 'COLLATE NOCASE']
+        protocol_number [name: 'idx_projects_protocol_number', note: 'COLLATE NOCASE']
     }
 }
 
@@ -1032,53 +939,53 @@ Table record_history {
 Ref: record_history.user_id > users.user_id [delete: set null, update: cascade]
 
 Table record_verifications {
-    // Sugestão: falta índice composto em (table_name, record_id); sem ele, consultar o status por registro tende a escalar mal.
-    // person_id também merece FK explícita se a verificação sempre for feita por uma pessoa cadastrada.
     verification_id integer [primary key, increment, unique, not null]
     table_name varchar(40) [not null]
     record_id integer [not null]
     verification_date datetime
     verification_status varchar(5) [not null]
-    person_id integer // [ref: > people.person_id]
+    person_id integer [ref: > people.person_id]
     notes text
-
-    /*
-    indexes {
-        (table_name, record_id) [unique, name: 'idx_verifications_table_record']
-    }
-    */
 }
 
+Ref: record_verifications.person_id > people.person_id [update: cascade]
+
 Table sample_preps {
-    // Sugestão: specimen_id já tem FK, mas taxon_id, individual_id, nest_id, egg_id e preparer_id parecem relacionais
-    // e hoje estão soltos. Vale criar FKs explícitas para manter integridade referencial.
     sample_prep_id integer [primary key, increment, unique, not null]
     specimen_id integer [ref: > specimens.specimen_id]
     accession_num varchar(20)
     full_name varchar(100)
     accession_type char(5)
     duplicate_seq integer
-    taxon_id integer // [ref: > zoo_taxa.taxon_id]
-    individual_id integer // [ref: > individuals.individual_id]
-    nest_id integer // [ref: > nests.nest_id]
-    egg_id integer // [ref: > eggs.egg_id]
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    individual_id integer [ref: > individuals.individual_id]
+    nest_id integer [ref: > nests.nest_id]
+    egg_id integer [ref: > eggs.egg_id]
     preparation_date date
-    preparer_id integer // [ref: > people.person_id]
+    preparer_id integer [ref: > people.person_id]
     institution_id integer [ref: > institutions.institution_id]
     notes text
     ~audit_fields
 
     indexes {
         preparation_date [name: 'idx_preparation_date']
+        // (specimen_id, accession_num, duplicate_seq) [unique, name: 'idx_specimen_accession_duplicate']
     }
 }
+
+Ref: sample_preps.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: sample_preps.individual_id > individuals.individual_id [update: cascade]
+Ref: sample_preps.nest_id > nests.nest_id [update: cascade]
+Ref: sample_preps.egg_id > eggs.egg_id [update: cascade]
+Ref: sample_preps.preparer_id > people.person_id [update: cascade]
+Ref: sample_preps.institution_id > institutions.institution_id [update: cascade]
 
 Table sampling_plots {
     sampling_plot_id integer [primary key, increment, unique, not null]
     full_name varchar(100) [unique, not null]
     abbreviation varchar(10) [unique, not null]
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     area_shape varchar(5)
     locality_id integer [ref: > gazetteer.site_id]
@@ -1087,9 +994,7 @@ Table sampling_plots {
     ~audit_fields
 
     /*
-    // Índices sugeridos para joins por localidade e busca espacial simples.
     indexes {
-        locality_id [name: 'idx_sampling_plots_locality']
         (longitude, latitude) [name: 'idx_sampling_plots_coordinate']
     }
     */
@@ -1099,13 +1004,13 @@ Ref: sampling_plots.locality_id > gazetteer.site_id [update: cascade]
 
 Table sightings {
     sighting_id integer [primary key, increment, unique, not null]
-    survey_id integer // [ref: > surveys.survey_id]
+    survey_id integer [ref: > surveys.survey_id]
     individual_id integer [ref: > individuals.individual_id]
     sighting_date date
     sighting_time time
     locality_id integer [ref: > gazetteer.site_id]
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     method_id integer [ref: > methods.method_id]
     mackinnon_list_num integer
@@ -1114,7 +1019,7 @@ Table sightings {
     subjects_tally integer
     subject_distance real
     flight_height real
-    flight_direction varchar(5)
+    flight_direction varchar(5) // [check: `flight_direction IN ('N', 'S', 'E', 'W', 'NE', 'SE', 'NW', 'SW')`]
     subject_seen boolean [default: false]
     subject_heard boolean [default: false]
     subject_photographed boolean [default: false]
@@ -1144,6 +1049,7 @@ Table sightings {
     }
 }
 
+Ref: sightings.survey_id > surveys.survey_id [update: cascade]
 Ref: sightings.individual_id > individuals.individual_id [update: cascade]
 Ref: sightings.locality_id > gazetteer.site_id [update: cascade]
 Ref: sightings.method_id > methods.method_id [update: cascade]
@@ -1151,36 +1057,36 @@ Ref: sightings.observer_id > people.person_id [update: cascade]
 Ref: sightings.taxon_id > zoo_taxa.taxon_id [update: cascade]
 
 Table specimen_collectors {
-    // Sugestão: esta é uma tabela de associação e ficaria mais segura com FKs + UNIQUE(specimen_id, person_id, collector_seq).
     collector_id integer [primary key, increment, unique, not null]
-    specimen_id integer // [ref: > specimens.specimen_id]
-    person_id integer // [ref: > people.person_id]
+    specimen_id integer [ref: > specimens.specimen_id]
+    person_id integer [ref: > people.person_id]
     collector_seq integer
     ~audit_fields
 
-    /*
     indexes {
         (specimen_id, person_id) [unique, name: 'idx_collectors_specimen_person']
     }
-    */
 }
+
+Ref: specimen_collectors.specimen_id > specimens.specimen_id [delete: cascade, update: cascade]
+Ref: specimen_collectors.person_id > people.person_id [update: cascade]
 
 Table specimens {
     specimen_id integer [primary key, increment, unique, not null]
     field_number varchar(20)
     full_name varchar(100)
     sample_type char(5)
-    taxon_id integer // [ref: > zoo_taxa.taxon_id]
-    individual_id integer // [ref: > individuals.individual_id]
-    nest_id integer // [ref: > nests.nest_id]
-    egg_id integer // [ref: > eggs.egg_id]
+    taxon_id integer [ref: > zoo_taxa.taxon_id]
+    individual_id integer [ref: > individuals.individual_id]
+    nest_id integer [ref: > nests.nest_id]
+    egg_id integer [ref: > eggs.egg_id]
     collection_date date // DROP COLUMN
     collection_day integer
     collection_month integer
     collection_year integer
-    locality_id integer // [ref: > gazetteer.site_id]
-    longitude real
-    latitude real
+    locality_id integer [ref: > gazetteer.site_id]
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     institution_id integer [ref: > institutions.institution_id]
     notes text
@@ -1191,41 +1097,33 @@ Table specimens {
         field_number [name: 'idx_specimens_fieldnumber', note: 'COLLATE NOCASE']
         full_name [name: 'idx_specimens_fullname', note: 'COLLATE NOCASE']
     }
-
-    /*
-    // Índices adicionais sugeridos para filtros relacionais, hoje ainda sem cobertura.
-    indexes {
-        taxon_id [name: 'idx_specimens_taxon']
-        individual_id [name: 'idx_specimens_individual']
-        nest_id [name: 'idx_specimens_nest']
-        egg_id [name: 'idx_specimens_egg']
-        locality_id [name: 'idx_specimens_locality']
-    }
-    */
 }
 
+Ref: specimens.taxon_id > zoo_taxa.taxon_id [update: cascade]
+Ref: specimens.individual_id > individuals.individual_id [update: cascade]
+Ref: specimens.nest_id > nests.nest_id [update: cascade]
+Ref: specimens.egg_id > eggs.egg_id [update: cascade]
+Ref: specimens.locality_id > gazetteer.site_id [update: cascade]
 Ref: specimens.institution_id > institutions.institution_id [update: cascade]
 
 Table survey_team {
-    // Sugestão: survey_id deveria ter FK explícita e a combinação (survey_id, person_id) provavelmente deveria ser UNIQUE.
     survey_team_id integer [primary key, increment, unique, not null]
-    survey_id integer // [ref: > surveys.survey_id]
+    survey_id integer [ref: > surveys.survey_id]
     person_id integer [not null, ref: > people.person_id]
     visitor boolean [default: false]
     ~audit_fields
 
-    /*
     indexes {
         (survey_id, person_id) [name: 'idx_survey_team_survey_person']
     }
-    */
 }
 
+Ref: survey_team.survey_id > surveys.survey_id [delete: cascade, update: cascade]
 Ref: survey_team.person_id > people.person_id [update: cascade]
 
 Table surveys {
     survey_id integer [primary key, increment, unique, not null]
-    survey_date date [not null] // [ref: > surveys.survey_id]
+    survey_date date [not null]
     start_time time
     end_time time
     duration integer
@@ -1235,10 +1133,10 @@ Table surveys {
     project_id integer [ref: > projects.project_id]
     locality_id integer [ref: > gazetteer.site_id]
     sample_id varchar(30)
-    start_longitude real
-    start_latitude real
-    end_longitude real
-    end_latitude real
+    start_longitude real // [check: `start_longitude BETWEEN -180 AND 180`]
+    start_latitude real // [check: `start_latitude BETWEEN -90 AND 90`]
+    end_longitude real // [check: `end_longitude BETWEEN -180 AND 180`]
+    end_latitude real // [check: `end_latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     observers_tally integer
     area_total real
@@ -1254,18 +1152,6 @@ Table surveys {
         survey_date [name: 'idx_surveys_date']
         full_name [name: 'idx_surveys_fullname', note: 'COLLATE NOCASE']
     }
-
-    /*
-    // Índices adicionais sugeridos para filtros operacionais por método, projeto e local.
-    indexes {
-        method_id [name: 'idx_surveys_method']
-        net_station_id [name: 'idx_surveys_net_station']
-        expedition_id [name: 'idx_surveys_expedition']
-        project_id [name: 'idx_surveys_project']
-        locality_id [name: 'idx_surveys_locality']
-        (project_id, survey_date) [name: 'idx_surveys_project_date']
-    }
-    */
 }
 
 Ref: surveys.method_id > methods.method_id [update: cascade]
@@ -1289,7 +1175,7 @@ Table taxon_ranks {
     ~audit_fields
 
     indexes {
-        abbreviation [name: 'idx_rank_acronym']
+        abbreviation [name: 'idx_rank_acronym'] // [note: 'COLLATE NOCASE']
         rank_seq [name: 'idx_rank_seq']
     }
 }
@@ -1314,13 +1200,13 @@ Table users {
 
 Table vegetation {
     vegetation_id integer [primary key, increment, unique, not null]
-    survey_id integer // [ref: > surveys.survey_id]
+    survey_id integer [ref: > surveys.survey_id]
     sample_date date [not null]
     sample_time time
-    longitude real
-    latitude real
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
-    observer_id integer // [ref: > people.person_id]
+    observer_id integer [ref: > people.person_id]
     herbs_distribution integer // [check: `herbs_distribution IN (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)`]
     herbs_proportion integer // [check: `0 > herbs_proportion or herbs_proportion > 100`]
     herbs_avg_height integer
@@ -1333,16 +1219,15 @@ Table vegetation {
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para séries temporais e correlação com survey/observador.
     indexes {
         sample_date [name: 'idx_vegetation_date']
-        survey_id [name: 'idx_vegetation_survey']
-        observer_id [name: 'idx_vegetation_observer']
-        (longitude, latitude) [name: 'idx_vegetation_coordinate']
+        // (longitude, latitude) [name: 'idx_vegetation_coordinate']
+        // (survey_id, sample_date, sample_time) [name: 'idx_vegetation_survey_moment']
     }
-    */
 }
+
+Ref: vegetation.survey_id > surveys.survey_id [delete: cascade, update: cascade]
+Ref: vegetation.observer_id > people.person_id [update: cascade]
 
 Table videos {
     video_id integer [primary key, increment, unique, not null]
@@ -1359,9 +1244,9 @@ Table videos {
     recording_date date
     recording_time time
     author_id integer [ref: > people.person_id]
-    longitude real
-    latitude real
-    coordinate_precision varchar(3)
+    longitude real // [check: `longitude BETWEEN -180 AND 180`]
+    latitude real // [check: `latitude BETWEEN -90 AND 90`]
+    coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     recording_context varchar(60)
     habitat varchar(60)
     camera_model varchar(60)
@@ -1372,20 +1257,10 @@ Table videos {
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para filtros cronológicos e navegação por táxon/registro relacionado.
     indexes {
         recording_date [name: 'idx_videos_date']
-        taxon_id [name: 'idx_videos_taxon']
-        individual_id [name: 'idx_videos_individual']
-        capture_id [name: 'idx_videos_capture']
-        survey_id [name: 'idx_videos_survey']
-        sighting_id [name: 'idx_videos_sighting']
-        locality_id [name: 'idx_videos_locality']
-        author_id [name: 'idx_videos_author']
-        file_path [name: 'idx_videos_file_path']
+        file_path [name: 'idx_videos_file_path', note: 'COLLATE NOCASE']
     }
-    */
 }
 
 Ref: videos.taxon_id > zoo_taxa.taxon_id [update: cascade]
@@ -1399,14 +1274,12 @@ Ref: videos.locality_id > gazetteer.site_id [update: cascade]
 Ref: videos.author_id > people.person_id [update: cascade]
 
 Table weather_logs {
-    // Sugestão: survey_id e observer_id parecem relacionais e merecem FK explícita;
-    // também vale CHECK para faixas como cloud_cover, umidade relativa e direção/velocidade do vento.
     weather_id integer [primary key, increment, unique, not null]
-    survey_id integer // [ref: > surveys.survey_id]
+    survey_id integer [ref: > surveys.survey_id]
     sample_date date
     sample_time time
     sample_moment char(1) // [check: `sample_moment IN ('S', 'M', 'E')`]
-    observer_id integer // [ref: > people.person_id]
+    observer_id integer [ref: > people.person_id]
     cloud_cover integer // [check: `0 > cloud_cover or cloud_cover > 100`]
     precipitation char(1) // [check: `precipitation IN ('N', 'F', 'M', 'D', 'R')`]
     rainfall integer
@@ -1419,16 +1292,14 @@ Table weather_logs {
     notes text
     ~audit_fields
 
-    /*
-    // Índices sugeridos para séries climáticas e cruzamento com survey.
     indexes {
         sample_date [name: 'idx_weather_logs_date']
-        survey_id [name: 'idx_weather_logs_survey']
-        observer_id [name: 'idx_weather_logs_observer']
-        (survey_id, sample_date, sample_time) [name: 'idx_weather_logs_survey_moment']
+        // (survey_id, sample_date, sample_time) [name: 'idx_weather_logs_survey_moment']
     }
-    */
 }
+
+Ref: weather_logs.survey_id > surveys.survey_id [delete: cascade, update: cascade]
+Ref: weather_logs.observer_id > people.person_id [update: cascade]
 
 Table zoo_taxa {
     taxon_id integer [primary key, increment, unique, not null]
@@ -1460,19 +1331,19 @@ Table zoo_taxa {
     distribution text
     clements_taxonomy boolean [default: false]
     ioc_taxonomy boolean [default: false]
-    ioc_rank_id integer [ref: > taxon_ranks.rank_id]
-    ioc_parent_taxon_id integer
-    ioc_valid_id integer
-    ioc_sort_num real
-    ioc_english_name varchar(100)
-    ioc_distribution text
+    ioc_rank_id integer [ref: > taxon_ranks.rank_id] // DROP COLUMN
+    ioc_parent_taxon_id integer // DROP COLUMN
+    ioc_valid_id integer // DROP COLUMN
+    ioc_sort_num real // DROP COLUMN
+    ioc_english_name varchar(100) // DROP COLUMN
+    ioc_distribution text // DROP COLUMN
     cbro_taxonomy boolean [default: false]
     other_portuguese_names varchar(150)
     ~audit_fields
 
     indexes {
         authorship [name: 'idx_zoo_taxa_authorship', note: 'COLLATE NOCASE']
-        ebird_code [name: 'idx_zoo_taxa_ebird_code']
+        ebird_code [name: 'idx_zoo_taxa_ebird_code'] // [note: 'COLLATE NOCASE']
         english_name [name: 'idx_zoo_taxa_english_name', note: 'COLLATE NOCASE']
         portuguese_name [name: 'idx_zoo_taxa_portuguese_name', note: 'COLLATE NOCASE']
         spanish_name [name: 'idx_zoo_taxa_spanish_name', note: 'COLLATE NOCASE']
@@ -1483,16 +1354,16 @@ Table zoo_taxa {
         species_id [name: 'idx_zoo_taxa_species']
         subspecies_group_id [name: 'idx_zoo_taxa_subspecies_group']
         parent_taxon_id [name: 'idx_zoo_taxa_parent_taxon']
-        ioc_parent_taxon_id [name: 'idx_zoo_taxa_parent_taxon_ioc']
+        ioc_parent_taxon_id [name: 'idx_zoo_taxa_parent_taxon_ioc'] // DROP INDEX
         valid_id [name: 'idx_zoo_taxa_valid']
-        ioc_valid_id [name: 'idx_zoo_taxa_valid_ioc']
-        quick_code [name: 'idx_zoo_taxa_quickcodes']
+        ioc_valid_id [name: 'idx_zoo_taxa_valid_ioc'] // DROP INDEX
+        quick_code [name: 'idx_zoo_taxa_quickcodes'] // [note: 'COLLATE NOCASE']
         rank_id [name: 'idx_zoo_taxa_rank']
-        ioc_rank_id [name: 'idx_zoo_taxa_rank_ioc']
+        ioc_rank_id [name: 'idx_zoo_taxa_rank_ioc'] // DROP INDEX
         sort_num [name: 'idx_zoo_taxa_sort_num']
-        ioc_sort_num [name: 'idx_zoo_taxa_sort_num_ioc']
+        ioc_sort_num [name: 'idx_zoo_taxa_sort_num_ioc'] // DROP INDEX
     }
 }
 
 Ref: zoo_taxa.rank_id > taxon_ranks.rank_id [update: cascade]
-Ref: zoo_taxa.ioc_rank_id > taxon_ranks.rank_id [update: cascade]
+Ref: zoo_taxa.ioc_rank_id > taxon_ranks.rank_id [update: cascade] // DROP CONSTRAINT
