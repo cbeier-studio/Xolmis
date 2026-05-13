@@ -280,7 +280,8 @@ uses
     rsDeleteRecordPrompt = 'Do you really want to delete this record?';
     rsDeleteRecordFooter = 'Deleted records remain in the recycle bin for a duration specified in the ' +
       'Settings before they are permanently deleted.';
-    rsDeleteImagePrompt = 'Dow you really want to delete this record?' + LineEnding +
+    rsDeleteSubmoduleRecordsPrompt = 'Do you want to also delete related records in the %s submodule?';
+    rsDeleteImagePrompt = 'Do you really want to delete this record?' + LineEnding +
       'This action cannot be undone.';
     rsDeleteProfilePicture = 'Do you really want to remove the profile picture?';
     rsClearAllTitle = 'Clear all';

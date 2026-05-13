@@ -240,6 +240,12 @@ object DMS: TDMS
         Precision = -1
       end    
       item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
         Name = 'taxon_name'
         DataType = ftString
         Precision = -1
@@ -1145,6 +1151,17 @@ object DMS: TDMS
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSightingsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 58
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsSightings: TDataSource
     DataSet = qSightings
@@ -1634,6 +1651,12 @@ object DMS: TDMS
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -3196,6 +3219,17 @@ object DMS: TDMS
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qCapturesinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 98
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsCaptures: TDataSource
     DataSet = qCaptures
@@ -3259,6 +3293,12 @@ object DMS: TDMS
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'person_abbrev'
@@ -3497,6 +3537,17 @@ object DMS: TDMS
       Visible = False
       Size = 30
     end
+    object qSurveyTeaminactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsSurveyTeam: TDataSource
     DataSet = qSurveyTeam
@@ -3662,6 +3713,12 @@ object DMS: TDMS
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'permanent_net_name'
@@ -4173,6 +4230,17 @@ object DMS: TDMS
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qNetsEffortinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 33
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsNetsEffort: TDataSource
     DataSet = qNetsEffort
@@ -4299,6 +4367,12 @@ object DMS: TDMS
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'observer_name'
@@ -4605,6 +4679,17 @@ object DMS: TDMS
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qWeatherLogsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsWeatherLogs: TDataSource
     DataSet = qWeatherLogs
@@ -4849,6 +4934,12 @@ object DMS: TDMS
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'expedition_name'
@@ -5559,6 +5650,17 @@ object DMS: TDMS
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSurveysinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 43
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsSurveys: TDataSource
     DataSet = qSurveys
@@ -5693,6 +5795,12 @@ object DMS: TDMS
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'observer_name'
@@ -6073,6 +6181,17 @@ object DMS: TDMS
       Required = False
       Visible = False
       DisplayValues = 'True;False'
+    end
+    object qVegetationinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
     end
   end
   object dsVegetation: TDataSource

@@ -76,7 +76,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN      DEFAULT (0),' +
       'marked_status   BOOLEAN      DEFAULT (0),' +
-      'active_status   BOOLEAN      DEFAULT (1)' +
+      'active_status   BOOLEAN      DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -240,7 +241,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS zoo_taxa (' +
       'taxon_id               INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'scientific_name              VARCHAR (100) NOT NULL UNIQUE,' +
+      'scientific_name        VARCHAR (100) NOT NULL UNIQUE,' +
       'authorship             VARCHAR (150),' +
       'formatted_name         VARCHAR (250),' +
       'english_name           VARCHAR (100),' +
@@ -263,6 +264,7 @@ begin
       'subspecies_group_id    INTEGER,' +
       'incertae_sedis         INTEGER,' +
       'ebird_code             VARCHAR (20),' +
+      'distribution           TEXT,' +
       'clements_taxonomy      BOOLEAN       DEFAULT (0),' +
       'ioc_taxonomy           BOOLEAN       DEFAULT (0),' +
       'ioc_rank_id            INTEGER       REFERENCES taxon_ranks (rank_id) ON UPDATE CASCADE,' +
@@ -270,6 +272,7 @@ begin
       'ioc_valid_id           INTEGER,' +
       'ioc_sort_num           REAL,' +
       'ioc_english_name       VARCHAR (100),' +
+      'ioc_distribution       TEXT,' +
       'cbro_taxonomy          BOOLEAN       DEFAULT (0),' +
       'other_portuguese_names VARCHAR (150),' +
       'user_inserted          INTEGER,' +
@@ -279,8 +282,7 @@ begin
       'exported_status        BOOLEAN       DEFAULT (0),' +
       'marked_status          BOOLEAN       DEFAULT (0),' +
       'active_status          BOOLEAN       DEFAULT (1),' +
-      'distribution           TEXT,' +
-      'ioc_distribution       TEXT' +
+      'inactivated_by         VARCHAR (5)' +
     ');';
 end;
 

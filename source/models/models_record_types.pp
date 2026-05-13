@@ -54,6 +54,7 @@ type
     FMarked: Boolean;
     FExported: Boolean;
     FActive: Boolean;
+    FInactivatedBy: String;
     procedure AssignTo(Dest: TPersistent); override;
   public
     constructor Create; virtual;
@@ -72,6 +73,7 @@ type
     property Marked: Boolean read FMarked write FMarked;
     property Exported: Boolean read FExported write FExported;
     property Active: Boolean read FActive write FActive;
+    property InactivatedBy: String read FInactivatedBy write FInactivatedBy;
   end;
 
   TXolmisRecordClass = class of TXolmisRecord;
@@ -679,6 +681,7 @@ begin
     FMarked := TXolmisRecord(Source).FMarked;
     FExported := TXolmisRecord(Source).FExported;
     FActive := TXolmisRecord(Source).FActive;
+    FInactivatedBy := TXolmisRecord(Source).FInactivatedBy;
   end
   else
     inherited Assign(Source);
@@ -703,6 +706,7 @@ begin
   FMarked := False;
   FExported := False;
   FActive := False;
+  FInactivatedBy := EmptyStr;
 end;
 
 function TXolmisRecord.Clone: TXolmisRecord;

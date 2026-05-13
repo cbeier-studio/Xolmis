@@ -42,7 +42,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS sightings (' +
       'sighting_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'survey_id            INTEGER,' +
+      'survey_id            INTEGER       REFERENCES surveys (survey_id) ON UPDATE CASCADE,' +
       'individual_id        INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
       'sighting_date        DATE,' +
       'sighting_time        TIME,' +
@@ -84,7 +84,8 @@ begin
       'update_date          DATETIME,' +
       'exported_status      BOOLEAN       DEFAULT (0),' +
       'marked_status        BOOLEAN       DEFAULT (0),' +
-      'active_status        BOOLEAN       DEFAULT (1)' +
+      'active_status        BOOLEAN       DEFAULT (1),' +
+      'inactivated_by       VARCHAR (5)' +
     ');';
 end;
 

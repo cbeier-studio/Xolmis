@@ -137,7 +137,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN       DEFAULT (0),' +
       'marked_status   BOOLEAN       DEFAULT (0),' +
-      'active_status   BOOLEAN       DEFAULT (1)' +
+      'active_status   BOOLEAN       DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -341,7 +342,8 @@ begin
       'update_date              DATETIME,' +
       'exported_status          BOOLEAN       DEFAULT (0),' +
       'marked_status            BOOLEAN       DEFAULT (0),' +
-      'active_status            BOOLEAN       DEFAULT (1)' +
+      'active_status            BOOLEAN       DEFAULT (1),' +
+      'inactivated_by           VARCHAR (5)' +
     ');';
 end;
 
@@ -607,7 +609,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS survey_team (' +
       'survey_member_id INTEGER  UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'survey_id        INTEGER,' +
+      'survey_id        INTEGER  REFERENCES surveys (survey_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
       'person_id        INTEGER  NOT NULL REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'visitor          BOOLEAN  DEFAULT (0),' +
       'user_inserted    INTEGER,' +
@@ -616,7 +618,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN  DEFAULT (0),' +
       'marked_status    BOOLEAN  DEFAULT (0),' +
-      'active_status    BOOLEAN  DEFAULT (1)' +
+      'active_status    BOOLEAN  DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 
@@ -742,7 +745,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS nets_effort (' +
       'net_id           INTEGER      UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'survey_id        INTEGER,' +
+      'survey_id        INTEGER      REFERENCES surveys (survey_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
       'net_station_id   INTEGER      REFERENCES sampling_plots (sampling_plot_id) ON UPDATE CASCADE,' +
       'permanent_net_id INTEGER      REFERENCES permanent_nets (permanent_net_id) ON UPDATE CASCADE,' +
       'net_number       INTEGER,' +
@@ -771,7 +774,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN      DEFAULT (0),' +
       'marked_status    BOOLEAN      DEFAULT (0),' +
-      'active_status    BOOLEAN      DEFAULT (1)' +
+      'active_status    BOOLEAN      DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 
@@ -986,13 +990,13 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS vegetation (' +
       'vegetation_id       INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
-      'survey_id           INTEGER,' +
+      'survey_id           INTEGER  REFERENCES surveys (survey_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
       'sample_date         DATE     NOT NULL,' +
       'sample_time         TIME,' +
       'longitude           REAL,' +
       'latitude            REAL,' +
       'coordinate_precision VARCHAR (3),' +
-      'observer_id         INTEGER,' +
+      'observer_id         INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'herbs_proportion    INTEGER,' +
       'herbs_distribution  INTEGER,' +
       'herbs_avg_height    INTEGER,' +
@@ -1009,7 +1013,8 @@ begin
       'update_date         DATETIME,' +
       'exported_status     BOOLEAN  DEFAULT (0),' +
       'marked_status       BOOLEAN  DEFAULT (0),' +
-      'active_status       BOOLEAN  DEFAULT (1)' +
+      'active_status       BOOLEAN  DEFAULT (1),' +
+      'inactivated_by      VARCHAR (5)' +
     ');';
 end;
 
@@ -1185,11 +1190,11 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS weather_logs (' +
       'weather_id           INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-      'survey_id            INTEGER,' +
+      'survey_id            INTEGER  REFERENCES surveys (survey_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
       'sample_date          DATE     NOT NULL,' +
       'sample_time          TIME,' +
       'sample_moment        CHAR (1),' +
-      'observer_id          INTEGER,' +
+      'observer_id          INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'cloud_cover          INTEGER,' +
       'precipitation        CHAR (1),' +
       'rainfall             INTEGER,' +
@@ -1206,7 +1211,8 @@ begin
       'update_date          DATETIME,' +
       'exported_status      BOOLEAN  DEFAULT (0),' +
       'marked_status        BOOLEAN  DEFAULT (0),' +
-      'active_status        BOOLEAN  DEFAULT (1)' +
+      'active_status        BOOLEAN  DEFAULT (1),' +
+      'inactivated_by       VARCHAR (5)' +
     ');';
 end;
 

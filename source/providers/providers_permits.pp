@@ -49,7 +49,7 @@ begin
       'dispatcher_name VARCHAR (100) NOT NULL,' +
       'dispatch_date   DATE,' +
       'expire_date     DATE,' +
-      'permit_status VARCHAR (5),' +
+      'permit_status   VARCHAR (5),' +
       'notes           TEXT,' +
       'user_inserted   INTEGER,' +
       'user_updated    INTEGER,' +
@@ -57,7 +57,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN       DEFAULT (0),' +
       'marked_status   BOOLEAN       DEFAULT (0),' +
-      'active_status   BOOLEAN       DEFAULT (1)' +
+      'active_status   BOOLEAN       DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 

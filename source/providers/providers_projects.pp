@@ -132,7 +132,7 @@ begin
       'email_addr       VARCHAR (100),' +
       'contact_name     VARCHAR (100),' +
       'protocol_number  VARCHAR (30),' +
-      'project_status VARCHAR (5),' +
+      'project_status   VARCHAR (5),' +
       'main_goal        TEXT,' +
       'risks            TEXT,' +
       'project_abstract TEXT,' +
@@ -143,7 +143,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN       DEFAULT (0),' +
       'marked_status    BOOLEAN       DEFAULT (0),' +
-      'active_status    BOOLEAN       DEFAULT (1)' +
+      'active_status    BOOLEAN       DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 
@@ -354,7 +355,8 @@ begin
       'update_date       DATETIME,' +
       'exported_status   BOOLEAN  DEFAULT (0),' +
       'marked_status     BOOLEAN  DEFAULT (0),' +
-      'active_status     BOOLEAN  DEFAULT (1)' +
+      'active_status     BOOLEAN  DEFAULT (1),' +
+      'inactivated_by    VARCHAR (5)' +
     ');';
 end;
 
@@ -493,7 +495,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN     DEFAULT (0),' +
       'marked_status    BOOLEAN     DEFAULT (0),' +
-      'active_status    BOOLEAN     DEFAULT (1)' +
+      'active_status    BOOLEAN     DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 
@@ -645,7 +648,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN     DEFAULT (0),' +
       'marked_status   BOOLEAN     DEFAULT (0),' +
-      'active_status   BOOLEAN     DEFAULT (1)' +
+      'active_status   BOOLEAN     DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -790,7 +794,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN      DEFAULT (0),' +
       'marked_status   BOOLEAN      DEFAULT (0),' +
-      'active_status   BOOLEAN      DEFAULT (1)' +
+      'active_status   BOOLEAN      DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -954,7 +959,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN      DEFAULT (0),' +
       'marked_status    BOOLEAN      DEFAULT (0),' +
-      'active_status    BOOLEAN      DEFAULT (1)' +
+      'active_status    BOOLEAN      DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 

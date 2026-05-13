@@ -268,7 +268,8 @@ begin
           'update_date           DATETIME,' +
           'exported_status       BOOLEAN      DEFAULT (0),' +
           'marked_status         BOOLEAN      DEFAULT (0),' +
-          'active_status         BOOLEAN      DEFAULT (1)' +
+          'active_status         BOOLEAN      DEFAULT (1),' +
+          'inactivated_by        VARCHAR (5)' +
         ');';
     dbFirebird:
       Result :=
@@ -289,7 +290,8 @@ begin
           'update_date           TIMESTAMP,' +
           'exported_status       BOOLEAN      DEFAULT FALSE,' +
           'marked_status         BOOLEAN      DEFAULT FALSE,' +
-          'active_status         BOOLEAN      DEFAULT TRUE' +
+          'active_status         BOOLEAN      DEFAULT TRUE,' +
+          'inactivated_by        VARCHAR(5)' +
         ');';
   end;
 end;
@@ -575,7 +577,7 @@ begin
         'CREATE TABLE IF NOT EXISTS record_history (' +
           'event_id     INTEGER      PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
           'event_date   DATETIME,' +
-          'user_id      INTEGER,' +
+          'user_id      INTEGER      REFERENCES users (user_id) ON DELETE SET NULL ON UPDATE CASCADE,' +
           'event_action VARCHAR (30),' +
           'event_table  VARCHAR (40),' +
           'record_id    INTEGER,' +
@@ -701,7 +703,7 @@ begin
           'record_id           INTEGER      NOT NULL,' +
           'verification_date   DATETIME,' +
           'verification_status VARCHAR (5)  NOT NULL,' +
-          'person_id           INTEGER,' +
+          'person_id           INTEGER      REFERENCES people (person_id) ON UPDATE CASCADE,' +
           'notes               TEXT' +
         ');';
     dbFirebird:
@@ -712,7 +714,7 @@ begin
           'record_id           INTEGER      NOT NULL,' +
           'verification_date   TIMESTAMP,' +
           'verification_status VARCHAR(5)   NOT NULL,' +
-          'person_id           INTEGER,' +
+          'person_id           INTEGER      REFERENCES people(person_id) ON UPDATE CASCADE,' +
           'notes               BLOB SUB_TYPE TEXT' +
         ');';
   end;

@@ -59,7 +59,7 @@ begin
     'CREATE TABLE IF NOT EXISTS sampling_plots (' +
       'sampling_plot_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'full_name        VARCHAR (100) NOT NULL UNIQUE,' +
-      'abbreviation          VARCHAR (10)  NOT NULL UNIQUE,' +
+      'abbreviation     VARCHAR (10)  NOT NULL UNIQUE,' +
       'longitude        REAL,' +
       'latitude         REAL,' +
       'coordinate_precision VARCHAR (3),' +
@@ -73,7 +73,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN       DEFAULT (0),' +
       'marked_status    BOOLEAN       DEFAULT (0),' +
-      'active_status    BOOLEAN       DEFAULT (1)' +
+      'active_status    BOOLEAN       DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 
@@ -263,7 +264,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN       DEFAULT (0),' +
       'marked_status    BOOLEAN       DEFAULT (0),' +
-      'active_status    BOOLEAN       DEFAULT (1)' +
+      'active_status    BOOLEAN       DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 

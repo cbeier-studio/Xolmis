@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 7;
+  SCHEMA_VERSION: Integer = 8;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -899,6 +899,157 @@ begin
         Result := True;
       end;
 
+      if OldVersion < 8 then
+      begin
+        LogDebug('Upgrading database schema to version 8');
+
+        // Create indexes
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_date ON audio_library (' +
+          'recording_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_fullname ON audio_library (' +
+          'full_name COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_file_path ON audio_library (' +
+          'file_path COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_date ON documents (' +
+          'document_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_file_path ON documents (' +
+          'file_path COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_eggs_date ON eggs (' +
+          'measure_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_eggs_fullname ON eggs (' +
+          'full_name COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_feathers_date ON feathers (' +
+          'sample_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_images_date ON images (' +
+          'image_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_images_file_path ON images (' +
+          'file_path COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_nest_owners_nest_individual ON nest_owners (' +
+          'nest_id, individual_id' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nest_revisions_fullname ON nest_revisions (' +
+          'full_name COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_permanent_nets_plot_net ON permanent_nets (' +
+          'sampling_plot_id, net_number' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_number ON permits (' +
+          'permit_number COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_status ON permits (' +
+          'permit_status COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_expire_date ON permits (' +
+          'expire_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_date ON poi_library (' +
+          'sample_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_name ON poi_library (' +
+          'poi_name COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_coordinate ON poi_library (' +
+          'longitude, latitude' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_budgets_rubric ON project_budgets (' +
+          'rubric COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_budgets_item ON project_budgets (' +
+          'item_name COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_chronograms_target_date ON project_chronograms (' +
+          'target_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_chronograms_status ON project_chronograms (' +
+          'progress_status COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_expenses_date ON project_expenses (' +
+          'expense_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_goals_status ON project_goals (' +
+          'goal_status COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_project_team_project_person ON project_team (' +
+          'project_id, person_id' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_protocol_number ON projects (' +
+          'protocol_number COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_collectors_specimen_person ON specimen_collectors (' +
+          'specimen_id, person_id' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_survey_team_survey_person ON survey_team (' +
+          'survey_id, person_id' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_vegetation_date ON vegetation (' +
+          'sample_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_date ON videos (' +
+          'recording_date COLLATE BINARY' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_file_path ON videos (' +
+          'file_path COLLATE NOCASE' +
+        ');');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_weather_logs_date ON weather_logs (' +
+          'sample_date COLLATE BINARY' +
+        ');');
+
+        // Create columns
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE audio_library ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE band_history ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE bands ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE botanic_taxa ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE documents ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE eggs ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE expeditions ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE feathers ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE gazetteer ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE images ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE individuals ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE institutions ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE methods ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nest_owners ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nest_revisions ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nests ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nets_effort ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE people ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE permanent_nets ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE permits ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE poi_library ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE project_budgets ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE project_chronograms ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE project_expenses ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE project_goals ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE project_team ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE projects ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sample_preps ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sampling_plots ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE specimen_collectors ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE specimens ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE survey_team ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE surveys ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE taxon_ranks ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE users ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE vegetation ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE videos ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE weather_logs ADD COLUMN inactivated_by VARCHAR (5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE zoo_taxa ADD COLUMN inactivated_by VARCHAR (5);');
+
+        Result := True;
+      end;
+
       if Result then
       begin
         WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
@@ -1237,12 +1388,28 @@ procedure CreatePermanentNetsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating permanent_nets table');
   Connection.ExecuteDirect(xProvider.PermanentNets.CreateTable);
+
+  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_permanent_nets_plot_net ON permanent_nets (' +
+    'sampling_plot_id, net_number' +
+  ');');
 end;
 
 procedure CreatePermitsTable(Connection: TSQLConnector);
 begin
-  LogDebug('Creating legal table');
+  LogDebug('Creating permits table');
   Connection.ExecuteDirect(xProvider.Permits.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_number ON permits (' +
+    'permit_number COLLATE NOCASE' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_status ON permits (' +
+    'permit_status COLLATE NOCASE' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_expire_date ON permits (' +
+    'expire_date COLLATE BINARY' +
+  ');');
 end;
 
 procedure CreateProjectsTable(Connection: TSQLConnector);
@@ -1253,36 +1420,68 @@ begin
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_short_title ON projects (' +
     'short_title COLLATE NOCASE' +
   ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_protocol_number ON projects (' +
+    'protocol_number COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateProjectTeamTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating project_team table');
   Connection.ExecuteDirect(xProvider.ProjectTeams.CreateTable);
+
+  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_project_team_project_person ON project_team (' +
+    'project_id, person_id' +
+  ');');
 end;
 
 procedure CreateProjectGoalsTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_goals table');
   Connection.ExecuteDirect(xProvider.ProjectGoals.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_goals_status ON project_goals (' +
+    'goal_status COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateProjectChronogramsTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_chronograms table');
   Connection.ExecuteDirect(xProvider.ProjectChronograms.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_chronograms_target_date ON project_chronograms (' +
+    'target_date COLLATE BINARY' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_chronograms_status ON project_chronograms (' +
+    'progress_status COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateProjectBudgetsTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_budgets table');
   Connection.ExecuteDirect(xProvider.ProjectBudgets.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_budgets_rubric ON project_budgets (' +
+    'rubric COLLATE NOCASE' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_budgets_item ON project_budgets (' +
+    'item_name COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateProjectExpensesTable(connection: TSQLConnector);
 begin
   LogDebug('Creating project_expenses table');
   Connection.ExecuteDirect(xProvider.ProjectExpenses.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_expenses_date ON project_expenses (' +
+    'expense_date COLLATE BINARY' +
+  ');');
 end;
 
 procedure CreateExpeditionsTable(Connection: TSQLConnector);
@@ -1313,6 +1512,10 @@ procedure CreateSurveyTeamTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating survey_team table');
   Connection.ExecuteDirect(xProvider.SurveyTeams.CreateTable);
+
+  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_survey_team_survey_person ON survey_team (' +
+    'survey_id, person_id' +
+  ');');
 end;
 
 procedure CreateNetsEffortTable(Connection: TSQLConnector);
@@ -1330,12 +1533,20 @@ procedure CreateWeatherLogsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating weather_logs table');
   Connection.ExecuteDirect(xProvider.WeatherLogs.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_weather_logs_date ON weather_logs (' +
+    'sample_date COLLATE BINARY' +
+  ');');
 end;
 
 procedure CreateVegetationTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating vegetation table');
   Connection.ExecuteDirect(xProvider.Vegetations.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_vegetation_date ON vegetation (' +
+    'sample_date COLLATE BINARY' +
+  ');');
 end;
 
 procedure CreateBandsTable(Connection: TSQLConnector);
@@ -1434,6 +1645,10 @@ procedure CreateFeathersTable(connection: TSQLConnector);
 begin
   LogDebug('Creating feathers table');
   connection.ExecuteDirect(xProvider.Feathers.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_feathers_date ON feathers (' +
+    'sample_date COLLATE BINARY' +
+  ');');
 end;
 
 procedure CreateMoltsTable(Connection: TSQLConnector);
@@ -1526,18 +1741,34 @@ procedure CreateNestOwnersTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating nest_owners table');
   Connection.ExecuteDirect(xProvider.NestOwners.CreateTable);
+
+  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_nest_owners_nest_individual ON nest_owners (' +
+    'nest_id, individual_id' +
+  ');');
 end;
 
 procedure CreateNestRevisionsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating nest_revisions table');
   Connection.ExecuteDirect(xProvider.NestRevisions.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nest_revisions_fullname ON nest_revisions (' +
+    'full_name COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateEggsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating eggs table');
   Connection.ExecuteDirect(xProvider.Eggs.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_eggs_date ON eggs (' +
+    'measure_date COLLATE BINARY' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_eggs_fullname ON eggs (' +
+    'full_name COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateSpecimensTable(Connection: TSQLConnector);
@@ -1562,6 +1793,10 @@ procedure CreateSpecimenCollectorsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating specimen_collectors table');
   Connection.ExecuteDirect(xProvider.SpecimenCollectors.CreateTable);
+
+  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_collectors_specimen_person ON specimen_collectors (' +
+    'specimen_id, person_id' +
+  ');');
 end;
 
 procedure CreateSamplePrepsTable(Connection: TSQLConnector);
@@ -1578,30 +1813,78 @@ procedure CreatePoiLibraryTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating poi_library table');
   Connection.ExecuteDirect(xProvider.PoiLibrary.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_date ON poi_library (' +
+    'sample_date COLLATE BINARY' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_name ON poi_library (' +
+    'poi_name COLLATE NOCASE' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_coordinate ON poi_library (' +
+    'longitude, latitude' +
+  ');');
 end;
 
 procedure CreateImagesTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating images table');
   Connection.ExecuteDirect(xProvider.Images.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_images_date ON images (' +
+    'image_date COLLATE BINARY' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_images_file_path ON images (' +
+    'file_path COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateDocumentsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating documents table');
   Connection.ExecuteDirect(xProvider.Documents.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_date ON documents (' +
+    'document_date COLLATE BINARY' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_file_path ON documents (' +
+    'file_path COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateAudioLibraryTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating audio_library table');
   Connection.ExecuteDirect(xProvider.Audios.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_date ON audio_library (' +
+    'recording_date COLLATE BINARY' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_fullname ON audio_library (' +
+    'full_name COLLATE NOCASE' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_file_path ON audio_library (' +
+    'file_path COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateVideosTable(connection: TSQLConnector);
 begin
   LogDebug('Creating videos table');
   connection.ExecuteDirect(xProvider.Videos.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_date ON videos (' +
+    'recording_date COLLATE BINARY' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_file_path ON videos (' +
+    'file_path COLLATE NOCASE' +
+  ');');
 end;
 
 procedure CreateNextBirthdaysView(Connection: TSQLConnector);
@@ -2599,10 +2882,11 @@ begin
       DMM.sqlTrans.StartTransaction;
     try
       Clear;
-      Add('UPDATE %tabname');
-      Add('SET active_status = 0,');
-      Add('update_date = datetime(''now'',''localtime''),');
-      Add('user_updated = :auser');
+      Add('UPDATE %tabname SET');
+      Add('  active_status = 0,');
+      Add('  update_date = datetime(''now'',''localtime''),');
+      Add('  inactivated_by = ''U'',');
+      Add('  user_updated = :auser');
       Add('WHERE %keyf = :cod');
       MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
       MacroByName('KEYF').Value := aKeyField;
@@ -2644,8 +2928,10 @@ begin
       Add('UPDATE %table_name SET');
       Add('  active_status = 0,');
       Add('  update_date = datetime(''now'',''localtime''),');
+      Add('  inactivated_by = ''C'',');
       Add('  user_updated = :auser');
       Add('WHERE %parent_key = :parent_id');
+      Add('  AND active_status = 1');
       MacroByName('table_name').Value := TABLE_NAMES[ChildTable];
       MacroByName('parent_key').Value := ParentField;
       ParamByName('auser').AsInteger := ActiveUser.Id;
@@ -2659,6 +2945,7 @@ begin
       Clear;
       Add('SELECT %child_key FROM %table_name');
       Add('WHERE %parent_key = :parent_id');
+      Add('  AND inactivated_by = ''C''');
       MacroByName('child_key').Value := GetPrimaryKey(ChildTable);
       MacroByName('table_name').Value := TABLE_NAMES[ChildTable];
       MacroByName('parent_key').Value := ParentField;
@@ -2711,10 +2998,11 @@ begin
       WriteRecHistory(aTable, haRestored, aKeyValue);
 
       Clear;
-      Add('UPDATE %tabname');
-      Add('SET active_status = 1,');
-      Add('update_date = datetime(''now'',''localtime''),');
-      Add('user_updated = :auser');
+      Add('UPDATE %tabname SET');
+      Add('  active_status = 1,');
+      Add('  update_date = datetime(''now'',''localtime''),');
+      Add('  inactivated_by = NULL,');
+      Add('  user_updated = :auser');
       Add('WHERE %keyf = :cod');
       MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
       MacroByName('KEYF').Value := aKeyField;
@@ -2754,25 +3042,11 @@ begin
     if not DMM.sqlTrans.Active then
       DMM.sqlTrans.StartTransaction;
     try
-      Clear;
-      Add('UPDATE %table_name SET');
-      Add('  active_status = 1,');
-      Add('  update_date = datetime(''now'',''localtime''),');
-      Add('  user_updated = :auser');
-      Add('WHERE %parent_key = :parent_id');
-      MacroByName('table_name').Value := TABLE_NAMES[ChildTable];
-      MacroByName('parent_key').Value := ParentField;
-      ParamByName('auser').AsInteger := ActiveUser.Id;
-      ParamByName('parent_id').AsInteger := ParentId;
-      //{$IFDEF DEBUG}
-      //LogSQL(SQL);
-      //{$ENDIF}
-      ExecSQL;
-
-      // Write the records history
+      // Write the records history first
       Clear;
       Add('SELECT %child_key FROM %table_name');
       Add('WHERE %parent_key = :parent_id');
+      Add('  AND inactivated_by = ''C''');
       MacroByName('child_key').Value := GetPrimaryKey(ChildTable);
       MacroByName('table_name').Value := TABLE_NAMES[ChildTable];
       MacroByName('parent_key').Value := ParentField;
@@ -2788,6 +3062,24 @@ begin
         until EOF;
       end;
       Close;
+
+      // Reactivate records
+      Clear;
+      Add('UPDATE %table_name SET');
+      Add('  active_status = 1,');
+      Add('  update_date = datetime(''now'',''localtime''),');
+      Add('  inactivated_by = NULL,');
+      Add('  user_updated = :auser');
+      Add('WHERE %parent_key = :parent_id');
+      Add('  AND inactivated_by = ''C''');
+      MacroByName('table_name').Value := TABLE_NAMES[ChildTable];
+      MacroByName('parent_key').Value := ParentField;
+      ParamByName('auser').AsInteger := ActiveUser.Id;
+      ParamByName('parent_id').AsInteger := ParentId;
+      //{$IFDEF DEBUG}
+      //LogSQL(SQL);
+      //{$ENDIF}
+      ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;
     except

@@ -490,6 +490,10 @@ msgctxt "data_columns.rscdeathyear"
 msgid "Death year"
 msgstr "Ano do óbito"
 
+#: data_columns.rscdeletedby
+msgid "Deleted by"
+msgstr "Apagado por"
+
 #: data_columns.rscdepartment
 msgctxt "data_columns.rscdepartment"
 msgid "Department"
@@ -15061,7 +15065,7 @@ msgstr "Apagar conexão"
 #: utils_locale.rsdeleteimageprompt
 msgctxt "utils_locale.rsdeleteimageprompt"
 msgid ""
-"Dow you really want to delete this record?\n"
+"Do you really want to delete this record?\n"
 "This action cannot be undone."
 msgstr ""
 "Deseja realmente apagar esse registro?\n"
@@ -15096,6 +15100,11 @@ msgstr "Deseja realmente apagar a linha selecionada?"
 msgctxt "utils_locale.rsdeleterowtitle"
 msgid "Delete row"
 msgstr "Apagar linha"
+
+#: utils_locale.rsdeletesubmodulerecordsprompt
+#, object-pascal-format
+msgid "Do you want to also delete related records in the %s submodule?"
+msgstr "Deseja apagar também os registros relacionados no submódulo %s?"
 
 #: utils_locale.rsdelimitercomma
 msgctxt "utils_locale.rsdelimitercomma"

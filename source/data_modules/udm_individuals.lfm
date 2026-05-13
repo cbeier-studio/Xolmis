@@ -490,6 +490,12 @@ object DMI: TDMI
         Precision = -1
       end    
       item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
         Name = 'taxon_name'
         DataType = ftString
         Precision = -1
@@ -2036,6 +2042,17 @@ object DMI: TDMI
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qCapturesinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 97
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsCaptures: TDataSource
     DataSet = qCaptures
@@ -2275,6 +2292,12 @@ object DMI: TDMI
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -3176,6 +3199,17 @@ object DMI: TDMI
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSightingsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 58
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsSightings: TDataSource
     DataSet = qSightings
@@ -3427,6 +3461,12 @@ object DMI: TDMI
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'observer_name'
@@ -4386,6 +4426,17 @@ object DMI: TDMI
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qNestsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 61
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsNests: TDataSource
     DataSet = qNests
@@ -4523,6 +4574,12 @@ object DMI: TDMI
         Name = 'institution_id'
         DataType = ftInteger
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -5135,6 +5192,17 @@ object DMI: TDMI
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSpecimensinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsSpecimens: TDataSource
     DataSet = qSpecimens
@@ -5304,6 +5372,12 @@ object DMI: TDMI
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -5967,6 +6041,17 @@ object DMI: TDMI
       Required = False
       Visible = False
       DisplayValues = 'True;False'
+    end
+    object qFeathersinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
     end
   end
   object dsFeathers: TDataSource

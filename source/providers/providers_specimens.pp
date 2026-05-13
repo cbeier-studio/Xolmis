@@ -78,10 +78,10 @@ begin
       'field_number     VARCHAR (20),' +
       'full_name        VARCHAR (100),' +
       'sample_type      CHAR (5),' +
-      'taxon_id         INTEGER,' +
-      'individual_id    INTEGER,' +
-      'nest_id          INTEGER,' +
-      'egg_id           INTEGER,' +
+      'taxon_id         INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+      'individual_id    INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
+      'nest_id          INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
+      'egg_id           INTEGER       REFERENCES eggs (egg_id) ON UPDATE CASCADE,' +
       'collection_date  DATE,' +
       'collection_day   INTEGER,' +
       'collection_month INTEGER,' +
@@ -90,7 +90,7 @@ begin
       'longitude        REAL,' +
       'latitude         REAL,' +
       'coordinate_precision VARCHAR (3),' +
-      'institution_id INTEGER REFERENCES institutions(institution_id) ON UPDATE CASCADE,' +
+      'institution_id   INTEGER       REFERENCES institutions(institution_id) ON UPDATE CASCADE,' +
       'notes            TEXT,' +
       'user_inserted    INTEGER,' +
       'user_updated     INTEGER,' +
@@ -98,7 +98,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN       DEFAULT (0),' +
       'marked_status    BOOLEAN       DEFAULT (0),' +
-      'active_status    BOOLEAN       DEFAULT (1)' +
+      'active_status    BOOLEAN       DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 
@@ -327,8 +328,8 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS specimen_collectors (' +
       'collector_id    INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
-      'specimen_id     INTEGER,' +
-      'person_id       INTEGER,' +
+      'specimen_id     INTEGER  REFERENCES specimens (specimen_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
+      'person_id       INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'collector_seq   INTEGER,' +
       'user_inserted   INTEGER,' +
       'user_updated    INTEGER,' +
@@ -336,7 +337,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN  DEFAULT (0),' +
       'marked_status   BOOLEAN  DEFAULT (0),' +
-      'active_status   BOOLEAN  DEFAULT (1)' +
+      'active_status   BOOLEAN  DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -460,13 +462,13 @@ begin
       'full_name        VARCHAR (100),' +
       'accession_type   CHAR (5),' +
       'accession_seq    INTEGER,' +
-      'taxon_id         INTEGER,' +
-      'individual_id    INTEGER,' +
-      'nest_id          INTEGER,' +
-      'egg_id           INTEGER,' +
+      'taxon_id         INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+      'individual_id    INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
+      'nest_id          INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
+      'egg_id           INTEGER       REFERENCES eggs (egg_id) ON UPDATE CASCADE,' +
       'preparation_date DATE,' +
-      'preparer_id      INTEGER,' +
-      'institution_id INTEGER REFERENCES institutions(institution_id) ON UPDATE CASCADE,' +
+      'preparer_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      'institution_id   INTEGER       REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
       'notes            TEXT,' +
       'user_inserted    INTEGER,' +
       'user_updated     INTEGER,' +
@@ -474,7 +476,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN       DEFAULT (0),' +
       'marked_status    BOOLEAN       DEFAULT (0),' +
-      'active_status    BOOLEAN       DEFAULT (1)' +
+      'active_status    BOOLEAN       DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 

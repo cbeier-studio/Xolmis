@@ -113,7 +113,8 @@ begin
       'exported_status       BOOLEAN       DEFAULT (0),' +
       'queued_status         BOOLEAN       DEFAULT (0),' +
       'marked_status         BOOLEAN       DEFAULT (0),' +
-      'active_status         BOOLEAN       DEFAULT (1)' +
+      'active_status         BOOLEAN       DEFAULT (1),' +
+      'inactivated_by        VARCHAR (5)' +
     ');';
 end;
 
@@ -448,7 +449,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS captures (' +
       'capture_id             INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'survey_id              INTEGER,' +
+      'survey_id              INTEGER       REFERENCES surveys (survey_id) ON UPDATE CASCADE,' +
       'individual_id          INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
       'taxon_id               INTEGER       NOT NULL REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
       'full_name              VARCHAR (120),' +
@@ -469,10 +470,10 @@ begin
       'how_sexed              VARCHAR (10),' +
       'band_id                INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
       'removed_band_id        INTEGER       REFERENCES bands (band_id) ON UPDATE CASCADE,' +
-      'right_tarsus        VARCHAR (10),' +
-      'left_tarsus         VARCHAR (10),' +
-      'right_tibia        VARCHAR (10),' +
-      'left_tibia         VARCHAR (10),' +
+      'right_tarsus           VARCHAR (10),' +
+      'left_tarsus            VARCHAR (10),' +
+      'right_tibia            VARCHAR (10),' +
+      'left_tibia             VARCHAR (10),' +
       'weight                 REAL,' +
       'tarsus_length          REAL,' +
       'tarsus_diameter        REAL,' +
@@ -508,7 +509,7 @@ begin
       'subject_age            CHAR (5),' +
       'how_aged               CHAR (10),' +
       'skull_ossification     CHAR (5),' +
-      'kipps_distance            REAL,' +
+      'kipps_distance         REAL,' +
       'glucose                REAL,' +
       'hemoglobin             REAL,' +
       'hematocrit             REAL,' +
@@ -524,8 +525,8 @@ begin
       'field_number           VARCHAR (10),' +
       'photographer_1_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'photographer_2_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-      'initial_photo_number     VARCHAR (20),' +
-      'final_photo_number       VARCHAR (20),' +
+      'initial_photo_number   VARCHAR (20),' +
+      'final_photo_number     VARCHAR (20),' +
       'camera_name            VARCHAR (50),' +
       'escaped                BOOLEAN       DEFAULT (0),' +
       'needs_review           BOOLEAN       DEFAULT (0),' +
@@ -536,7 +537,8 @@ begin
       'update_date            DATETIME,' +
       'exported_status        BOOLEAN       DEFAULT (0),' +
       'marked_status          BOOLEAN       DEFAULT (0),' +
-      'active_status          BOOLEAN       DEFAULT (1)' +
+      'active_status          BOOLEAN       DEFAULT (1),' +
+      'inactivated_by         VARCHAR (5)' +
     ');';
 end;
 
@@ -1039,7 +1041,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN     DEFAULT (0),' +
       'marked_status    BOOLEAN     DEFAULT (0),' +
-      'active_status    BOOLEAN     DEFAULT (1)' +
+      'active_status    BOOLEAN     DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 

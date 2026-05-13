@@ -862,6 +862,7 @@ begin
     R.Exported := FieldByName('exported_status').AsBoolean;
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
+    R.InactivatedBy := FieldByName('inactivated_by').AsString;
   end;
 end;
 
@@ -1888,6 +1889,7 @@ begin
     R.Exported := FieldByName('exported_status').AsBoolean;
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
+    R.InactivatedBy := FieldByName('inactivated_by').AsString;
   end;
 end;
 
@@ -2751,6 +2753,7 @@ begin
     R.Exported := FieldByName('exported_status').AsBoolean;
     R.Marked := FieldByName('marked_status').AsBoolean;
     R.Active := FieldByName('active_status').AsBoolean;
+    R.InactivatedBy := FieldByName('inactivated_by').AsString;
   end;
 end;
 

@@ -529,6 +529,7 @@ resourcestring
   rscMax    = 'Maximum';
   rscStdDev = 'Std. dev.';
   rscStdErr = 'Std. error';
+  rscDeletedBy = 'Deleted by';
 
   procedure AddPercentSelect(aDataSet: TSQLQuery);
   procedure AddTotalJoin(aDataSet: TSQLQuery; const aWhereText: String; const AFilterWhere: String = '');
@@ -954,6 +955,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1008,6 +1010,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1039,6 +1042,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1097,6 +1101,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1173,6 +1178,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1211,6 +1217,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1267,6 +1274,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1289,7 +1297,7 @@ begin
         'website_uri':            Fields[i].DisplayLabel := rscWebsite;
         'email_addr':             Fields[i].DisplayLabel := rscEmail;
         'contact_name':           Fields[i].DisplayLabel := rscContactPerson;
-        'project_status':           Fields[i].DisplayLabel := rscProjectStatus;
+        'project_status':         Fields[i].DisplayLabel := rscProjectStatus;
         'protocol_number':        Fields[i].DisplayLabel := rscProtocolNr;
         'main_goal':              Fields[i].DisplayLabel := rscMainGoal;
         'risks':                  Fields[i].DisplayLabel := rscRisks;
@@ -1302,6 +1310,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1320,7 +1329,7 @@ begin
         'project_id':             Fields[i].DisplayLabel := rscProjectID;
         'person_id':              Fields[i].DisplayLabel := rscPersonID;
         'person_name':            Fields[i].DisplayLabel := rscPerson;
-        'person_abbrev':         Fields[i].DisplayLabel := rscAbbreviation;
+        'person_abbrev':          Fields[i].DisplayLabel := rscAbbreviation;
         'project_manager':        Fields[i].DisplayLabel := rscManager;
         'institution_id':         Fields[i].DisplayLabel := rscInstitutionID;
         'institution_name':       Fields[i].DisplayLabel := rscInstitution;
@@ -1331,6 +1340,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1356,6 +1366,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1386,6 +1397,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1413,6 +1425,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1441,6 +1454,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1473,6 +1487,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1511,6 +1526,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1549,6 +1565,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1578,6 +1595,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1612,6 +1630,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1669,6 +1688,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1697,6 +1717,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1735,6 +1756,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1782,6 +1804,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1854,6 +1877,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1908,6 +1932,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -1945,6 +1970,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2008,6 +2034,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2126,6 +2153,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2180,6 +2208,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2255,6 +2284,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2281,6 +2311,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2321,6 +2352,7 @@ begin
         'update_date':                  Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':              Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':                Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2367,6 +2399,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2420,6 +2453,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2446,6 +2480,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2491,6 +2526,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -2553,6 +2589,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;
@@ -5411,6 +5448,7 @@ begin
         'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
         'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
         'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
       end;
     end;
   end;

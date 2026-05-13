@@ -78,6 +78,7 @@ type
     qCaptureshemoglobin: TFloatField;
     qCaptureshow_aged: TStringField;
     qCaptureshow_sexed: TStringField;
+    qCapturesinactivated_by: TStringField;
     qCapturesindividual_id: TLongintField;
     qCapturesinitial_photo_number: TStringField;
     qCapturesinsert_date: TDateTimeField;
@@ -190,6 +191,7 @@ type
     qNetsEffortcoordinate_precision: TStringField;
     qNetsEffortexported_status: TBooleanField;
     qNetsEffortfull_name: TStringField;
+    qNetsEffortinactivated_by: TStringField;
     qNetsEffortinsert_date: TDateTimeField;
     qNetsEffortlatitude: TFloatField;
     qNetsEffortlongitude: TFloatField;
@@ -235,6 +237,7 @@ type
     qSightingsfull_name: TStringField;
     qSightingsgenus_id: TLongintField;
     qSightingsimmatures_tally: TStringField;
+    qSightingsinactivated_by: TStringField;
     qSightingsindividual_id: TLongintField;
     qSightingsindividual_name: TStringField;
     qSightingsinsert_date: TDateTimeField;
@@ -331,6 +334,7 @@ type
     qSurveysexported_status: TBooleanField;
     qSurveysfull_name: TStringField;
     qSurveyshabitat: TMemoField;
+    qSurveysinactivated_by: TStringField;
     qSurveysinsert_date: TDateTimeField;
     qSurveyslocality_id: TLongintField;
     qSurveyslocality_name: TStringField;
@@ -362,6 +366,7 @@ type
     qSurveyTeam: TSQLQuery;
     qSurveyTeamactive_status: TBooleanField;
     qSurveyTeamexported_status: TBooleanField;
+    qSurveyTeaminactivated_by: TStringField;
     qSurveyTeaminsert_date: TDateTimeField;
     qSurveyTeammarked_status: TBooleanField;
     qSurveyTeamperson_abbrev: TStringField;
@@ -380,6 +385,7 @@ type
     qVegetationherbs_avg_height: TLongintField;
     qVegetationherbs_distribution: TLongintField;
     qVegetationherbs_proportion: TLongintField;
+    qVegetationinactivated_by: TStringField;
     qVegetationinsert_date: TDateTimeField;
     qVegetationlatitude: TFloatField;
     qVegetationlongitude: TFloatField;
@@ -406,6 +412,7 @@ type
     qWeatherLogsatmospheric_pressure: TFloatField;
     qWeatherLogscloud_cover: TLongintField;
     qWeatherLogsexported_status: TBooleanField;
+    qWeatherLogsinactivated_by: TStringField;
     qWeatherLogsinsert_date: TDateTimeField;
     qWeatherLogsmarked_status: TBooleanField;
     qWeatherLogsnotes: TMemoField;

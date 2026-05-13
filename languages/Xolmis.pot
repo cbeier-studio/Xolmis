@@ -488,6 +488,10 @@ msgctxt "data_columns.rscdeathyear"
 msgid "Death year"
 msgstr ""
 
+#: data_columns.rscdeletedby
+msgid "Deleted by"
+msgstr ""
+
 #: data_columns.rscdepartment
 msgctxt "data_columns.rscdepartment"
 msgid "Department"
@@ -15078,7 +15082,7 @@ msgstr ""
 #: utils_locale.rsdeleteimageprompt
 msgctxt "utils_locale.rsdeleteimageprompt"
 msgid ""
-"Dow you really want to delete this record?\n"
+"Do you really want to delete this record?\n"
 "This action cannot be undone."
 msgstr ""
 
@@ -15110,6 +15114,11 @@ msgstr ""
 #: utils_locale.rsdeleterowtitle
 msgctxt "utils_locale.rsdeleterowtitle"
 msgid "Delete row"
+msgstr ""
+
+#: utils_locale.rsdeletesubmodulerecordsprompt
+#, object-pascal-format
+msgid "Do you want to also delete related records in the %s submodule?"
 msgstr ""
 
 #: utils_locale.rsdelimitercomma

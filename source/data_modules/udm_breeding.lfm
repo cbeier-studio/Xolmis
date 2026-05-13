@@ -10,7 +10,7 @@ object DMB: TDMB
     FieldDefs = <    
       item
         Name = 'nest_revision_id'
-        DataType = ftAutoInc
+        DataType = ftInteger
         Precision = -1
       end    
       item
@@ -125,6 +125,30 @@ object DMB: TDMB
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'observer_1_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'observer_2_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'nidoparasite_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
       end>
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -525,6 +549,17 @@ object DMB: TDMB
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qNestRevisionsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qEggs: TSQLQuery
     PacketRecords = -1
@@ -680,6 +715,12 @@ object DMB: TDMB
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'observer_name'
@@ -1245,6 +1286,17 @@ object DMB: TDMB
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qEggsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsNestRevisions: TDataSource
     DataSet = qNestRevisions
@@ -1314,6 +1366,12 @@ object DMB: TDMB
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'individual_name'
@@ -1507,6 +1565,17 @@ object DMB: TDMB
       Required = False
       Visible = False
       DisplayValues = 'True;False'
+    end
+    object qNestOwnersinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
     end
   end
   object dsNestOwners: TDataSource

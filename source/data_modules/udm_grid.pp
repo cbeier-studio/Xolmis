@@ -124,6 +124,7 @@ type
     qBandHistoryevent_id: TLongintField;
     qBandHistoryevent_type: TStringField;
     qBandHistoryexported_status: TBooleanField;
+    qBandHistoryinactivated_by: TStringField;
     qBandHistoryindividual_id: TLongintField;
     qBandHistoryinsert_date: TDateTimeField;
     qBandHistorymarked_status: TBooleanField;
@@ -155,6 +156,7 @@ type
     qBandscarrier_name: TStringField;
     qBandsexported_status: TBooleanField;
     qBandsfull_name: TStringField;
+    qBandsinactivated_by: TStringField;
     qBandsindividual_id: TLongintField;
     qBandsindividual_name: TStringField;
     qBandsinsert_date: TDateTimeField;
@@ -175,6 +177,7 @@ type
     qBotanyfamily_id: TLongintField;
     qBotanyformatted_name: TStringField;
     qBotanygenus_id: TLongintField;
+    qBotanyinactivated_by: TStringField;
     qBotanyinsert_date: TDateTimeField;
     qBotanymarked_status: TBooleanField;
     qBotanyorder_id: TLongintField;
@@ -239,6 +242,7 @@ type
     qCaptureshemoglobin: TFloatField;
     qCaptureshow_aged: TStringField;
     qCaptureshow_sexed: TStringField;
+    qCapturesinactivated_by: TStringField;
     qCapturesindividual_id: TLongintField;
     qCapturesinitial_photo_number: TStringField;
     qCapturesinsert_date: TDateTimeField;
@@ -317,6 +321,7 @@ type
     qEggsfull_name: TStringField;
     qEggsgenus_id: TLongintField;
     qEggshost_egg: TBooleanField;
+    qEggsinactivated_by: TStringField;
     qEggsindividual_id: TLongintField;
     qEggsindividual_name: TStringField;
     qEggsinsert_date: TDateTimeField;
@@ -341,6 +346,7 @@ type
     qExpeditionsexpedition_id: TAutoIncField;
     qExpeditionsexpedition_name: TStringField;
     qExpeditionsexported_status: TBooleanField;
+    qExpeditionsinactivated_by: TStringField;
     qExpeditionsinsert_date: TDateTimeField;
     qExpeditionsmarked_status: TBooleanField;
     qExpeditionsproject_id: TLongintField;
@@ -367,6 +373,7 @@ type
     qFeathersgenus_id: TLongintField;
     qFeathersgrown_percent: TFloatField;
     qFeathersgrowth_bar_width: TFloatField;
+    qFeathersinactivated_by: TStringField;
     qFeathersindividual_id: TLongintField;
     qFeathersindividual_name: TStringField;
     qFeathersinsert_date: TDateTimeField;
@@ -399,6 +406,7 @@ type
     qGazetteerebird_name: TStringField;
     qGazetteerexported_status: TBooleanField;
     qGazetteerfull_name: TStringField;
+    qGazetteerinactivated_by: TStringField;
     qGazetteerinsert_date: TDateTimeField;
     qGazetteerlanguage: TStringField;
     qGazetteerlatitude: TFloatField;
@@ -475,6 +483,7 @@ type
     qIndividualsformatted_name: TStringField;
     qIndividualsfull_name: TStringField;
     qIndividualsgenus_id: TLongintField;
+    qIndividualsinactivated_by: TStringField;
     qIndividualsindividual_age: TStringField;
     qIndividualsindividual_id: TAutoIncField;
     qIndividualsindividual_sex: TStringField;
@@ -501,6 +510,7 @@ type
     qIndividualsuser_inserted: TLongintField;
     qIndividualsuser_updated: TLongintField;
     qInstitutionsabbreviation: TStringField;
+    qInstitutionsinactivated_by: TStringField;
     qInstitutionspostal_code: TStringField;
     qInstitutionsstate_name: TStringField;
     qInstitutionsactive_status: TBooleanField;
@@ -531,6 +541,7 @@ type
     qMethodsdescription: TMemoField;
     qMethodsebird_name: TStringField;
     qMethodsexported_status: TBooleanField;
+    qMethodsinactivated_by: TStringField;
     qMethodsinsert_date: TDateTimeField;
     qMethodsmarked_status: TBooleanField;
     qMethodsmethod_id: TLongintField;
@@ -638,6 +649,7 @@ type
     qNestRevisionshave_philornis_larvae: TBooleanField;
     qNestRevisionshost_eggs_tally: TLongintField;
     qNestRevisionshost_nestlings_tally: TLongintField;
+    qNestRevisionsinactivated_by: TStringField;
     qNestRevisionsinsert_date: TDateTimeField;
     qNestRevisionsmarked_status: TBooleanField;
     qNestRevisionsnest_id: TLongintField;
@@ -666,6 +678,7 @@ type
     qNestsexternal_min_diameter: TFloatField;
     qNestsfamily_id: TLongintField;
     qNestsgenus_id: TLongintField;
+    qNestsinactivated_by: TStringField;
     qNestsinternal_max_diameter: TFloatField;
     qNestsinternal_min_diameter: TFloatField;
     qNestsloss_cause: TStringField;
@@ -676,10 +689,13 @@ type
     qPeoplegender: TStringField;
     qPeopleid_document_1: TStringField;
     qPeopleid_document_2: TStringField;
+    qPeopleinactivated_by: TStringField;
     qPeoplepostal_code: TStringField;
     qPeopletitle_treatment: TStringField;
     qPermanentNetscoordinate_precision: TStringField;
+    qPermanentNetsinactivated_by: TStringField;
     qPermanentNetssampling_plot_id: TLongintField;
+    qPermitsinactivated_by: TStringField;
     qPermitsnotes: TMemoField;
     qPermitspermit_status: TStringField;
     qProjectBudgetactive_status: TBooleanField;
@@ -687,6 +703,7 @@ type
     qProjectBudgetbudget_id: TLongintField;
     qProjectBudgetexported_status: TBooleanField;
     qProjectBudgetfunding_source: TStringField;
+    qProjectBudgetinactivated_by: TStringField;
     qProjectBudgetinsert_date: TDateTimeField;
     qProjectBudgetitem_name: TStringField;
     qProjectBudgetmarked_status: TBooleanField;
@@ -702,6 +719,7 @@ type
     qProjectChronogramexported_status: TBooleanField;
     qProjectChronogramgoal_description: TMemoField;
     qProjectChronogramgoal_id: TLongintField;
+    qProjectChronograminactivated_by: TStringField;
     qProjectChronograminsert_date: TDateTimeField;
     qProjectChronogrammarked_status: TBooleanField;
     qProjectChronogramprogress_status: TStringField;
@@ -717,6 +735,7 @@ type
     qProjectExpensesexpense_date: TDateField;
     qProjectExpensesexpense_id: TLongintField;
     qProjectExpensesexported_status: TBooleanField;
+    qProjectExpensesinactivated_by: TStringField;
     qProjectExpensesinsert_date: TDateTimeField;
     qProjectExpensesitem_description: TStringField;
     qProjectExpensesmarked_status: TBooleanField;
@@ -730,16 +749,19 @@ type
     qProjectGoalsgoal_description: TMemoField;
     qProjectGoalsgoal_id: TLongintField;
     qProjectGoalsgoal_status: TStringField;
+    qProjectGoalsinactivated_by: TStringField;
     qProjectGoalsinsert_date: TDateTimeField;
     qProjectGoalsmarked_status: TBooleanField;
     qProjectGoalsproject_id: TLongintField;
     qProjectGoalsupdate_date: TDateTimeField;
     qProjectGoalsuser_inserted: TLongintField;
     qProjectGoalsuser_updated: TLongintField;
+    qProjectsinactivated_by: TStringField;
     qProjectsmain_goal: TMemoField;
     qProjectsproject_status: TStringField;
     qProjectsprotocol_number: TStringField;
     qProjectsrisks: TMemoField;
+    qProjectTeaminactivated_by: TStringField;
     qProjectTeaminstitution_id: TLongintField;
     qProjectTeaminstitution_name: TStringField;
     qProjectTeamperson_abbrev: TStringField;
@@ -749,6 +771,7 @@ type
     qSampleCollectorscollector_name: TStringField;
     qSampleCollectorscollector_seq: TLongintField;
     qSampleCollectorsexported_status: TBooleanField;
+    qSampleCollectorsinactivated_by: TStringField;
     qSampleCollectorsinsert_date: TDateTimeField;
     qSampleCollectorsmarked_status: TBooleanField;
     qSampleCollectorsperson_id: TLongintField;
@@ -757,6 +780,7 @@ type
     qSampleCollectorsuser_inserted: TLongintField;
     qSampleCollectorsuser_updated: TLongintField;
     qSamplePrepsduplicate_seq: TLongintField;
+    qSamplePrepsinactivated_by: TStringField;
     qSamplePrepsinstitution_id: TLongintField;
     qSamplePrepsinstitution_name: TStringField;
     qSamplePrepspreparer_name: TStringField;
@@ -765,6 +789,7 @@ type
     qSamplingPlotscountry_id: TLongintField;
     qSamplingPlotscountry_name: TStringField;
     qSamplingPlotsfull_name: TStringField;
+    qSamplingPlotsinactivated_by: TStringField;
     qSamplingPlotsmunicipality_id: TLongintField;
     qSamplingPlotsmunicipality_name: TStringField;
     qSamplingPlotssampling_plot_id: TLongintField;
@@ -776,6 +801,7 @@ type
     qSightingsflight_direction: TStringField;
     qSightingsflight_height: TFloatField;
     qSightingsgenus_id: TLongintField;
+    qSightingsinactivated_by: TStringField;
     qSightingsindividual_name: TStringField;
     qSightingslocality_name: TStringField;
     qSightingsmethod_name: TStringField;
@@ -792,6 +818,7 @@ type
     qSpecimenscountry_id: TLongintField;
     qSpecimensfamily_id: TLongintField;
     qSpecimensgenus_id: TLongintField;
+    qSpecimensinactivated_by: TStringField;
     qSpecimensinstitution_id: TLongintField;
     qSpecimensinstitution_name: TStringField;
     qSpecimensmunicipality_id: TLongintField;
@@ -802,6 +829,7 @@ type
     qSurveyscountry_id: TLongintField;
     qSurveyscountry_name: TStringField;
     qSurveysexpedition_name: TStringField;
+    qSurveysinactivated_by: TStringField;
     qSurveysmunicipality_id: TLongintField;
     qSurveysmunicipality_name: TStringField;
     qSurveysnet_effort: TFloatField;
@@ -811,6 +839,7 @@ type
     qTaxaaccepted_status: TBooleanField;
     qTaxafamily_name: TStringField;
     qTaxagenero_name: TStringField;
+    qTaxainactivated_by: TStringField;
     qTaxaioc_parent_name: TStringField;
     qTaxaioc_valid_name: TStringField;
     qTaxaiucn_status: TStringField;
@@ -1212,6 +1241,7 @@ type
     qTaxonRanksexported_status: TBooleanField;
     qTaxonRanksicbn: TBooleanField;
     qTaxonRanksiczn: TBooleanField;
+    qTaxonRanksinactivated_by: TStringField;
     qTaxonRanksinfrarank: TBooleanField;
     qTaxonRanksinfraspecific: TBooleanField;
     qTaxonRanksinsert_date: TDateTimeField;

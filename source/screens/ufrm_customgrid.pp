@@ -7213,6 +7213,10 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbDelRecordClick(Sender: TObject);
+var
+  aKeyField: String;
+  aKeyValue: Integer;
+  SM: TSubmoduleController;
 begin
   if isWorking then
     Exit;
@@ -7226,10 +7230,31 @@ begin
   end;
 
   try
+    aKeyField := GetPrimaryKey(dsLink.DataSet);
+    aKeyValue := dsLink.DataSet.FieldByName(aKeyField).AsInteger;
+
     // Inactivate the selected record
     DeleteRecord(FTableType, dsLink.DataSet);
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+
+    // Inactivate the child records
+    if FModule.Submodules.Count > 0 then
+    begin
+      for SM in FModule.Submodules do
+      begin
+        { #todo : Check if the submodule have records to delete }
+
+        if SM.TableType in [tbCaptures, tbSightings, tbNests, tbSpecimens] then
+        begin
+          if MsgDlg(rsDeleteRecordTitle, Format(rsDeleteSubmoduleRecordsPrompt, [SM.CaptionText]), mtConfirmation) then
+            DeleteChildRecords(SM.TableType, aKeyField, aKeyValue);
+        end else
+        begin
+          DeleteChildRecords(SM.TableType, aKeyField, aKeyValue);
+        end;
+      end;
+    end;
 
     // Update the recycle bin
     dsRecycle.DataSet.Refresh;
@@ -7757,16 +7782,33 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbRestoreRecordClick(Sender: TObject);
+var
+  SM: TSubmoduleController;
+  aKeyField: String;
+  aKeyValue: LongInt;
 begin
   if isWorking then
     Exit;
 
   isWorking := True;
   try
+    aKeyField := GetPrimaryKey(dsRecycle.DataSet);
+    aKeyValue := dsRecycle.DataSet.FieldByName(aKeyField).AsInteger;
+
     // Restore the selected record
     RestoreRecord(FTableType, dsRecycle.DataSet);
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+
+    // Restore the child records
+    if FModule.Submodules.Count > 0 then
+    begin
+      for SM in FModule.Submodules do
+      begin
+        RestoreChildRecords(SM.TableType, aKeyField, aKeyValue);
+      end;
+    end;
+
     // Update the recycle bin
     dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);

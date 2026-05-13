@@ -121,7 +121,7 @@ begin
       'plant_min_diameter    REAL,' +
       'plant_height          REAL,' +
       'plant_dbh             REAL,' +
-      'building_days     REAL,' +
+      'building_days         REAL,' +
       'incubation_days       REAL,' +
       'nestling_days         REAL,' +
       'active_days           REAL,' +
@@ -139,7 +139,8 @@ begin
       'update_date           DATETIME,' +
       'exported_status       BOOLEAN       DEFAULT (0),' +
       'marked_status         BOOLEAN       DEFAULT (0),' +
-      'active_status         BOOLEAN       DEFAULT (1)' +
+      'active_status         BOOLEAN       DEFAULT (1),' +
+      'inactivated_by        VARCHAR (5)' +
     ');';
 end;
 
@@ -474,7 +475,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN     DEFAULT (0),' +
       'marked_status   BOOLEAN     DEFAULT (0),' +
-      'active_status   BOOLEAN     DEFAULT (1)' +
+      'active_status   BOOLEAN     DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -617,7 +619,8 @@ begin
       'update_date                  DATETIME,' +
       'exported_status              BOOLEAN       DEFAULT (0),' +
       'marked_status                BOOLEAN       DEFAULT (0),' +
-      'active_status                BOOLEAN       DEFAULT (1)' +
+      'active_status                BOOLEAN       DEFAULT (1),' +
+      'inactivated_by               VARCHAR (5)' +
     ');';
 end;
 
@@ -845,7 +848,7 @@ begin
       'egg_stage        CHAR (5),' +
       'egg_hatched      BOOLEAN       DEFAULT (1),' +
       'measure_date     DATE,' +
-      'observer_id    INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      'observer_id      INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'individual_id    INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
       'host_egg         BOOLEAN       DEFAULT (1),' +
       'description      TEXT,' +
@@ -857,7 +860,8 @@ begin
       'update_date      DATETIME,' +
       'exported_status  BOOLEAN       DEFAULT (0),' +
       'marked_status    BOOLEAN       DEFAULT (0),' +
-      'active_status    BOOLEAN       DEFAULT (1)' +
+      'active_status    BOOLEAN       DEFAULT (1),' +
+      'inactivated_by   VARCHAR (5)' +
     ');';
 end;
 

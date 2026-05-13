@@ -81,7 +81,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN       DEFAULT (0),' +
       'marked_status   BOOLEAN       DEFAULT (0),' +
-      'active_status   BOOLEAN       DEFAULT (1)' +
+      'active_status   BOOLEAN       DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -508,7 +509,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN      DEFAULT (0),' +
       'marked_status   BOOLEAN      DEFAULT (0),' +
-      'active_status   BOOLEAN      DEFAULT (1)' +
+      'active_status   BOOLEAN      DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 

@@ -43,11 +43,11 @@ begin
     'CREATE TABLE IF NOT EXISTS people (' +
       'person_id              INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'full_name              VARCHAR (100) NOT NULL,' +
-      'abbreviation                VARCHAR (10)  UNIQUE NOT NULL,' +
+      'abbreviation           VARCHAR (10)  UNIQUE NOT NULL,' +
       'citation               VARCHAR (100),' +
       'title_treatment        VARCHAR (10),' +
-      'id_document_1       VARCHAR (15),' +
-      'id_document_2       VARCHAR (15),' +
+      'id_document_1          VARCHAR (15),' +
+      'id_document_2          VARCHAR (15),' +
       'gender                 VARCHAR (5),' +
       'birth_date             DATE,' +
       'death_date             DATE,' +
@@ -57,7 +57,7 @@ begin
       'address_1              VARCHAR (100),' +
       'address_2              VARCHAR (60),' +
       'neighborhood           VARCHAR (60),' +
-      'postal_code               VARCHAR (15),' +
+      'postal_code            VARCHAR (15),' +
       'country_id             INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'state_id               INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'municipality_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
@@ -78,7 +78,8 @@ begin
       'update_date            DATETIME,' +
       'exported_status        BOOLEAN       DEFAULT (0),' +
       'marked_status          BOOLEAN       DEFAULT (0),' +
-      'active_status          BOOLEAN       DEFAULT (1)' +
+      'active_status          BOOLEAN       DEFAULT (1),' +
+      'inactivated_by         VARCHAR (5)' +
     ');';
 end;
 

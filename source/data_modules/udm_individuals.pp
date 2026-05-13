@@ -77,6 +77,7 @@ type
     qCaptureshemoglobin: TFloatField;
     qCaptureshow_aged: TStringField;
     qCaptureshow_sexed: TStringField;
+    qCapturesinactivated_by: TStringField;
     qCapturesindividual_id: TLongintField;
     qCapturesinitial_photo_number: TStringField;
     qCapturesinsert_date: TDateTimeField;
@@ -151,6 +152,7 @@ type
     qFeathersgenus_id: TLongintField;
     qFeathersgrown_percent: TFloatField;
     qFeathersgrowth_bar_width: TFloatField;
+    qFeathersinactivated_by: TStringField;
     qFeathersindividual_id: TLongintField;
     qFeathersindividual_name: TStringField;
     qFeathersinsert_date: TDateTimeField;
@@ -322,6 +324,7 @@ type
     qNestsfull_name: TStringField;
     qNestsgenus_id: TLongintField;
     qNestsheight_above_ground: TFloatField;
+    qNestsinactivated_by: TStringField;
     qNestsincubation_days: TFloatField;
     qNestsinsert_date: TDateTimeField;
     qNestsinternal_height: TFloatField;
@@ -381,6 +384,7 @@ type
     qSightingsfull_name: TStringField;
     qSightingsgenus_id: TLongintField;
     qSightingsimmatures_tally: TStringField;
+    qSightingsinactivated_by: TStringField;
     qSightingsindividual_id: TLongintField;
     qSightingsindividual_name: TStringField;
     qSightingsinsert_date: TDateTimeField;
@@ -457,6 +461,7 @@ type
     qSpecimensfull_name1: TStringField;
     qSpecimensgenus_id: TLongintField;
     qSpecimensgenus_id1: TLongintField;
+    qSpecimensinactivated_by: TStringField;
     qSpecimensindividual_id: TLongintField;
     qSpecimensindividual_id1: TLongintField;
     qSpecimensindividual_name: TStringField;

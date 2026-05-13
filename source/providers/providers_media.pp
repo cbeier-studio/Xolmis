@@ -89,14 +89,14 @@ begin
     'CREATE TABLE IF NOT EXISTS audio_library (' +
       'audio_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'full_name         VARCHAR (100),' +
-      'taxon_id          INTEGER,' +
-      'individual_id     INTEGER,' +
-      'specimen_id       INTEGER,' +
-      'sighting_id       INTEGER,' +
+      'taxon_id          INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+      'individual_id     INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
+      'specimen_id       INTEGER       REFERENCES specimens (specimen_id) ON UPDATE CASCADE,' +
+      'sighting_id       INTEGER       REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
       'audio_type        VARCHAR (15),' +
-      'locality_id       INTEGER,' +
+      'locality_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'recording_date    DATE,' +
-      'author_id       INTEGER,' +
+      'author_id         INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'recording_time    TIME,' +
       'longitude         REAL,' +
       'latitude          REAL,' +
@@ -119,7 +119,7 @@ begin
       'license_uri       VARCHAR (200),' +
       'license_notes     VARCHAR (100),' +
       'license_owner     VARCHAR (150),' +
-      'file_path        VARCHAR (250),' +
+      'file_path         VARCHAR (250),' +
       'subtitle          TEXT,' +
       'notes             TEXT,' +
       'user_inserted     INTEGER,' +
@@ -128,7 +128,8 @@ begin
       'update_date       DATETIME,' +
       'exported_status   BOOLEAN       DEFAULT (0),' +
       'marked_status     BOOLEAN       DEFAULT (0),' +
-      'active_status     BOOLEAN       DEFAULT (1)' +
+      'active_status     BOOLEAN       DEFAULT (1),' +
+      'inactivated_by    VARCHAR (5)' +
     ');';
 end;
 
@@ -384,7 +385,7 @@ begin
       'author_id       INTEGER       REFERENCES people(person_id) ON UPDATE CASCADE,'+
       'document_type   CHAR (5)      NOT NULL,' +
       'document_name   VARCHAR (120),' +
-      'file_path   VARCHAR (250) NOT NULL,' +
+      'file_path       VARCHAR (250) NOT NULL,' +
       'document_date   DATE,' +
       'document_time   TIME,' +
       'license_type    VARCHAR (20),' +
@@ -398,7 +399,8 @@ begin
       'update_date     DATETIME,' +
       'exported_status BOOLEAN       DEFAULT (0),' +
       'marked_status   BOOLEAN       DEFAULT (0),' +
-      'active_status   BOOLEAN       DEFAULT (1)' +
+      'active_status   BOOLEAN       DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
     ');';
 end;
 
@@ -604,13 +606,13 @@ begin
       'feather_id           INTEGER       REFERENCES feathers (feather_id) ON UPDATE CASCADE,' +
       'locality_id          INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'author_id            INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
-      'survey_id            INTEGER,' +
+      'survey_id            INTEGER       REFERENCES surveys (survey_id) ON UPDATE CASCADE,' +
       'sighting_id          INTEGER       REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
       'nest_id              INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
       'nest_revision_id     INTEGER       REFERENCES nest_revisions (nest_revision_id) ON UPDATE CASCADE,' +
       'egg_id               INTEGER       REFERENCES eggs (egg_id) ON UPDATE CASCADE,' +
       'specimen_id          INTEGER       REFERENCES specimens (specimen_id) ON UPDATE CASCADE,' +
-      'file_path       VARCHAR (300),' +
+      'file_path            VARCHAR (300),' +
       'coordinate_precision CHAR (1),' +
       'longitude            REAL,' +
       'latitude             REAL,' +
@@ -627,7 +629,8 @@ begin
       'update_date          DATETIME,' +
       'exported_status      BOOLEAN       DEFAULT (0),' +
       'marked_status        BOOLEAN       DEFAULT (0),' +
-      'active_status        BOOLEAN       DEFAULT (1)' +
+      'active_status        BOOLEAN       DEFAULT (1),' +
+      'inactivated_by       VARCHAR (5)' +
     ');';
 end;
 
@@ -847,7 +850,7 @@ begin
       'locality_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'recording_date    DATE,' +
       'recording_time    TIME,' +
-      'author_id       INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      'author_id         INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'longitude         REAL,' +
       'latitude          REAL,' +
       'coordinate_precision VARCHAR (3),' +
@@ -869,7 +872,8 @@ begin
       'update_date       DATETIME,' +
       'exported_status   BOOLEAN       DEFAULT (0),' +
       'marked_status     BOOLEAN       DEFAULT (0),' +
-      'active_status     BOOLEAN       DEFAULT (1)' +
+      'active_status     BOOLEAN       DEFAULT (1),' +
+      'inactivated_by    VARCHAR (5)' +
     ');';
 end;
 

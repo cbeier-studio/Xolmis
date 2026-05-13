@@ -137,6 +137,12 @@ object DMG: TDMG
         Precision = -1
       end    
       item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
         Name = 'supplier_name'
         DataType = ftString
         Precision = -1
@@ -598,6 +604,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qBandsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qExpeditions: TSQLQuery
     PacketRecords = -1
@@ -630,11 +647,6 @@ object DMG: TDMG
       end    
       item
         Name = 'project_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'locality_id'
         DataType = ftInteger
         Precision = -1
       end    
@@ -679,43 +691,10 @@ object DMG: TDMG
         Precision = -1
       end    
       item
-        Name = 'locality_name'
+        Name = 'inactivated_by'
         DataType = ftString
         Precision = -1
-        Size = 180
-      end    
-      item
-        Name = 'country_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'state_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_id'
-        DataType = ftInteger
-        Precision = -1
-      end    
-      item
-        Name = 'municipality_name'
-        DataType = ftString
-        Precision = -1
-        Size = 60
-      end    
-      item
-        Name = 'state_name'
-        DataType = ftString
-        Precision = -1
-        Size = 60
-      end    
-      item
-        Name = 'country_name'
-        DataType = ftString
-        Precision = -1
-        Size = 60
+        Size = 5
       end    
       item
         Name = 'project_name'
@@ -955,6 +934,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qExpeditionsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qIndividuals: TSQLQuery
     PacketRecords = -1
@@ -1148,6 +1138,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -1930,6 +1926,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qIndividualsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 48
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qCaptures: TSQLQuery
     PacketRecords = -1
@@ -2414,6 +2421,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -4057,6 +4070,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qCapturesinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 104
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qImages: TSQLQuery
     PacketRecords = -1
@@ -4941,6 +4965,12 @@ object DMG: TDMG
         Precision = -1
       end    
       item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
         Name = 'expedition_name'
         DataType = ftString
         Precision = -1
@@ -5648,6 +5678,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSurveysinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 43
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qSightings: TSQLQuery
     PacketRecords = -1
@@ -5882,6 +5923,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -6788,6 +6835,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSightingsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 58
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qInstitutions: TSQLQuery
     PacketRecords = -1
@@ -6905,6 +6963,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'municipality_name'
@@ -7285,6 +7349,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qInstitutionsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qPeople: TSQLQuery
     PacketRecords = -1
@@ -7500,6 +7575,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'municipality_name'
@@ -8138,6 +8219,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qPeopleinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 42
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qNests: TSQLQuery
     PacketRecords = -1
@@ -8384,6 +8476,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'observer_name'
@@ -9298,6 +9396,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qNestsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 58
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qNestRevisions: TSQLQuery
     PacketRecords = -1
@@ -9419,6 +9528,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'nest_name'
@@ -9852,6 +9967,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qNestRevisionsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qEggs: TSQLQuery
     PacketRecords = -1
@@ -10007,6 +10133,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'observer_name'
@@ -10566,6 +10698,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qEggsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 36
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qGazetteer: TSQLQuery
     PacketRecords = -1
@@ -10690,6 +10833,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'parent_site_name'
@@ -11123,6 +11272,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qGazetteerinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qSamplingPlots: TSQLQuery
     PacketRecords = -1
@@ -11216,6 +11376,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'locality_name'
@@ -11608,6 +11774,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSamplingPlotsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qPermanentNets: TSQLQuery
     PacketRecords = -1
@@ -11689,6 +11866,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end>
     AfterCancel = qPermanentNetsAfterCancel
     AfterPost = qPermanentNetsAfterPost
@@ -11896,6 +12079,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qPermanentNetsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qProjects: TSQLQuery
     PacketRecords = -1
@@ -12008,6 +12202,12 @@ object DMG: TDMG
       end    
       item
         Name = 'project_status'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'inactivated_by'
         DataType = ftString
         Precision = -1
         Size = 5
@@ -12282,6 +12482,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qProjectsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qProjectTeam: TSQLQuery
     PacketRecords = -1
@@ -12345,6 +12556,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'person_abbrev'
@@ -12612,6 +12829,17 @@ object DMG: TDMG
       Visible = False
       Size = 30
     end
+    object qProjectTeaminactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qPermits: TSQLQuery
     PacketRecords = -1
@@ -12702,6 +12930,12 @@ object DMG: TDMG
       end    
       item
         Name = 'permit_status'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'inactivated_by'
         DataType = ftString
         Precision = -1
         Size = 5
@@ -12996,6 +13230,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qPermitsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qSpecimens: TSQLQuery
     PacketRecords = -1
@@ -13128,6 +13373,12 @@ object DMG: TDMG
         Name = 'institution_id'
         DataType = ftInteger
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -13741,6 +13992,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSpecimensinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qSamplePreps: TSQLQuery
     PacketRecords = -1
@@ -13852,6 +14114,12 @@ object DMG: TDMG
         Name = 'institution_id'
         DataType = ftInteger
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'preparer_name'
@@ -14154,6 +14422,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSamplePrepsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qBotany: TSQLQuery
     PacketRecords = -1
@@ -14256,6 +14535,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'parent_taxon_name'
@@ -14602,6 +14887,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qBotanyinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qTaxa: TSQLQuery
     PacketRecords = -1
@@ -14839,6 +15135,12 @@ object DMG: TDMG
         Name = 'accepted_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'rank_name'
@@ -15500,6 +15802,17 @@ object DMG: TDMG
       Required = False
       Visible = False
       DisplayValues = 'True;False'
+    end
+    object qTaxainactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 55
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
     end
   end
   object qSynonymTaxa: TSQLQuery
@@ -16466,6 +16779,12 @@ object DMG: TDMG
         Precision = -1
       end    
       item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
         Name = 'supplier_name'
         DataType = ftString
         Precision = -1
@@ -16821,6 +17140,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qBandHistoryinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsBandHistory: TDataSource
     DataSet = qBandHistory
@@ -16913,6 +17243,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end>
     AfterCancel = qMethodsAfterCancel
     AfterPost = qMethodsAfterPost
@@ -17122,6 +17458,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qMethodsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsMethods: TDataSource
     DataSet = qMethods
@@ -17217,6 +17564,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end>
     BeforePost = qTaxonRanksBeforePost
     Database = DMM.sqlCon
@@ -17421,6 +17774,17 @@ object DMG: TDMG
       Required = False
       DisplayValues = 'True;False'
     end
+    object qTaxonRanksinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsTaxonRanks: TDataSource
     DataSet = qTaxonRanks
@@ -17484,6 +17848,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'collector_name'
@@ -17680,6 +18050,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qSampleCollectorsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsSampleCollectors: TDataSource
     DataSet = qSampleCollectors
@@ -17743,6 +18124,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end>
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -17891,6 +18278,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qProjectGoalsinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qProjectChronogram: TSQLQuery
     FieldDefs = <    
@@ -17969,6 +18367,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'goal_description'
@@ -18180,6 +18584,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qProjectChronograminactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qProjectBudget: TSQLQuery
     FieldDefs = <    
@@ -18250,6 +18665,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end>
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
@@ -18418,6 +18839,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qProjectBudgetinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object qProjectExpenses: TSQLQuery
     FieldDefs = <    
@@ -18486,6 +18918,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'rubric'
@@ -18672,6 +19110,17 @@ object DMG: TDMG
       Visible = False
       DisplayValues = 'True;False'
     end
+    object qProjectExpensesinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
   end
   object dsTaxa: TDataSource
     AutoEdit = False
@@ -18842,6 +19291,12 @@ object DMG: TDMG
         Name = 'active_status'
         DataType = ftBoolean
         Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
       end    
       item
         Name = 'taxon_name'
@@ -19507,6 +19962,17 @@ object DMG: TDMG
       Required = False
       Visible = False
       DisplayValues = 'True;False'
+    end
+    object qFeathersinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
     end
   end
   object dsFeathers: TDataSource

@@ -36,6 +36,7 @@ type
     qEggsfull_name: TStringField;
     qEggsgenus_id: TLongintField;
     qEggshost_egg: TBooleanField;
+    qEggsinactivated_by: TStringField;
     qEggsindividual_id: TLongintField;
     qEggsindividual_name: TStringField;
     qEggsinsert_date: TDateTimeField;
@@ -55,6 +56,7 @@ type
     qNestOwners: TSQLQuery;
     qNestOwnersactive_status: TBooleanField;
     qNestOwnersexported_status: TBooleanField;
+    qNestOwnersinactivated_by: TStringField;
     qNestOwnersindividual_id: TLongintField;
     qNestOwnersindividual_name: TStringField;
     qNestOwnersinsert_date: TDateTimeField;
@@ -72,6 +74,7 @@ type
     qNestRevisionshave_philornis_larvae: TBooleanField;
     qNestRevisionshost_eggs_tally: TLongintField;
     qNestRevisionshost_nestlings_tally: TLongintField;
+    qNestRevisionsinactivated_by: TStringField;
     qNestRevisionsinsert_date: TDateTimeField;
     qNestRevisionsmarked_status: TBooleanField;
     qNestRevisionsnest_id: TLongintField;
