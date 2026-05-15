@@ -119,6 +119,8 @@ begin
   vlResult.Values['System logs'] := BoolToStr(xSettings.AllowWriteLogs, 'Enabled', 'Disabled');
   vlResult.Values['Settings file'] := XSettings.SettingsFile;
   vlResult.Values['Settings size'] := GetFileSizeReadable(xSettings.SettingsFile);
+
+  // DLLs
   if FileExists(ConcatPaths([InstallDir, 'sqlite3.dll'])) then
     vlResult.Values['sqlite3.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'sqlite3.dll']))
   else
@@ -131,6 +133,30 @@ begin
   //  vlResult.Values['libpq.dll'] := GetFileBuildAsString(ConcatPaths([InstallDir, 'libpq.dll']))
   //else
   //  vlResult.Values['libpq.dll'] := 'Not found';
+
+  // Data files
+  if FileExists(ConcatPaths([AppDataDir, 'methods_en-US.json'])) then
+    vlResult.Values['methods_en-US.json'] := GetFileSizeReadable(ConcatPaths([AppDataDir, 'methods_en-US.json']))
+  else
+    vlResult.Values['methods_en-US.json'] := 'Not found';
+  if FileExists(ConcatPaths([AppDataDir, 'methods_pt-BR.json'])) then
+    vlResult.Values['methods_pt-BR.json'] := GetFileSizeReadable(ConcatPaths([AppDataDir, 'methods_pt-BR.json']))
+  else
+    vlResult.Values['methods_pt-BR.json'] := 'Not found';
+  if FileExists(ConcatPaths([AppDataDir, 'taxon_ranks_en-US.json'])) then
+    vlResult.Values['taxon_ranks_en-US.json'] := GetFileSizeReadable(ConcatPaths([AppDataDir, 'taxon_ranks_en-US.json']))
+  else
+    vlResult.Values['taxon_ranks_en-US.json'] := 'Not found';
+  if FileExists(ConcatPaths([AppDataDir, 'methods_pt-BR.json'])) then
+    vlResult.Values['taxon_ranks_pt-BR.json'] := GetFileSizeReadable(ConcatPaths([AppDataDir, 'taxon_ranks_pt-BR.json']))
+  else
+    vlResult.Values['taxon_ranks_pt-BR.json'] := 'Not found';
+  if FileExists(ConcatPaths([AppDataDir, 'zoo_taxa_init.csv'])) then
+    vlResult.Values['zoo_taxa_init.csv'] := GetFileSizeReadable(ConcatPaths([AppDataDir, 'zoo_taxa_init.csv']))
+  else
+    vlResult.Values['zoo_taxa_init.csv'] := 'Not found';
+
+  // Fonts
   if IsFontInstalled('Fira Code') then
     vlResult.Values['Fira Code font'] := 'Installed'
   else
