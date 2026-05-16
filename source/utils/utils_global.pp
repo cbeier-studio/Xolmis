@@ -28,7 +28,9 @@ uses
 
 const
   APP_NAME: String           = 'Xolmis';
-  PRE_RELEASE_STAGE: String   = 'Beta';
+  PRE_RELEASE_STAGE: String  = 'Beta';
+  XOLMIS_MOBILE: String      = 'Xolmis Mobile';
+  XOLMIS_DESKTOP: String     = 'Xolmis Desktop';
 
 const
   DEFAULT_SETTINGS_FILE: String   = 'settings.json';

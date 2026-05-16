@@ -303,6 +303,8 @@ const
 var
   SizeInBytes: Int64;
 begin
+  if not DirectoryExists(ConcatPaths([AppDataDir, 'map-cache'])) then
+    CreateDir(ConcatPaths([AppDataDir, 'map-cache']));
   SizeInBytes := GetDirectorySize(ConcatPaths([AppDataDir, 'map-cache']));
 
   if SizeInBytes >= GB then

@@ -2145,7 +2145,7 @@ begin
         ProfileName := Trim(RootObj.Get('profile_name', EmptyStr));
         SettingsData := RootObj.Find('settings');
 
-        if SourceName <> 'Xolmis Desktop' then
+        if SourceName <> XOLMIS_DESKTOP then
           raise EImportError.Create(rsErrorImportProfileInvalidSource);
         if SchemaName <> 'import_profiles' then
           raise EImportError.Create(rsErrorImportProfileInvalidSchema);
@@ -2292,7 +2292,7 @@ begin
 
       RootObj := TJSONObject.Create;
       try
-        RootObj.Add('source', 'Xolmis Desktop');
+        RootObj.Add('source', XOLMIS_DESKTOP);
         RootObj.Add('schema', 'import_profiles');
         RootObj.Add('schema_version', 1);
         RootObj.Add('profile_name', ProfileName);

@@ -135,6 +135,10 @@ begin
   //  vlResult.Values['libpq.dll'] := 'Not found';
 
   // Data files
+  if FileExists(ConcatPaths([AppDataDir, 'countries+states+cities.json'])) then
+    vlResult.Values['countries+states+cities.json'] := GetFileSizeReadable(ConcatPaths([AppDataDir, 'countries+states+cities.json']))
+  else
+    vlResult.Values['countries+states+cities.json'] := 'Not found';
   if FileExists(ConcatPaths([AppDataDir, 'methods_en-US.json'])) then
     vlResult.Values['methods_en-US.json'] := GetFileSizeReadable(ConcatPaths([AppDataDir, 'methods_en-US.json']))
   else
