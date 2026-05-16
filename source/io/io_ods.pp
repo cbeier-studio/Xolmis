@@ -52,7 +52,7 @@ type
 implementation
 
 uses
-  StrUtils, data_consts, utils_global, utils_validations, utils_gis;
+  StrUtils, data_consts, utils_locale, utils_global, utils_validations, utils_gis;
 
 function IsLongitudeField(const FieldName: String): Boolean;
 begin
@@ -345,7 +345,7 @@ begin
       end;
 
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((r * 100.0) / Max(1, lastRow)), 'Importando planilha');
+        Options.OnProgress(Trunc((r * 100.0) / Max(1, lastRow)), rsImportingODS);
 
       if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
         Break;
@@ -538,7 +538,7 @@ begin
         RowOut(Row);
 
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando ODS');
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), rsExportingODS);
 
       Inc(r);
     end;

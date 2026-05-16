@@ -13996,6 +13996,19 @@ msgctxt "utils_locale.rsbandeventuse"
 msgid "Use"
 msgstr "Usada"
 
+#: utils_locale.rsbandexhaustedmessage
+#, object-pascal-format
+msgid ""
+"Band stock is exhausted for %d size(s).\n"
+"Affected sizes: %s."
+msgstr ""
+"Estoque de anilhas está esgotado para %d tamanho(s).\n"
+"Tamanhos afetados: %s."
+
+#: utils_locale.rsbandexhaustednotification
+msgid "Band stock exhausted"
+msgstr "Estoque de anilhas esgotado"
+
 #: utils_locale.rsbandflag
 msgctxt "utils_locale.rsbandflag"
 msgid "Flag"
@@ -14071,15 +14084,18 @@ msgctxt "utils_locale.rsbandrivet"
 msgid "Rivet"
 msgstr "Parafusada"
 
-#: utils_locale.rsbandrunnedoutnotification
-msgctxt "utils_locale.rsbandrunnedoutnotification"
-msgid "Band runned out"
-msgstr "Anilha acabou"
+#: utils_locale.rsbandrunninglowmessage
+#, object-pascal-format
+msgid ""
+"Band stock is running low for %d size(s). Recommended to request more bands.\n"
+"Affected sizes: %s."
+msgstr ""
+"Estoque de anilhas está baixo para %d tamanho(s). É recomendado solicitar mais anilhas.\n"
+"Tamanhos afetados: %s."
 
-#: utils_locale.rsbandrunningoutnotification
-msgctxt "utils_locale.rsbandrunningoutnotification"
-msgid "Band running out"
-msgstr "Anilha acabando"
+#: utils_locale.rsbandrunninglownotification
+msgid "Band stock running low"
+msgstr "Estoque de anilhas baixo"
 
 #: utils_locale.rsbandsreceivedwitherrors
 msgid "The receiving of bands was finished, but some bands have problems and were not received."
@@ -15947,6 +15963,34 @@ msgctxt "utils_locale.rsexportfinished"
 msgid "Export to %s: Finished!"
 msgstr "Exportar para %s: Concluído!"
 
+#: utils_locale.rsexportingcsv
+msgid "Exporting CSV"
+msgstr "Exportando CSV"
+
+#: utils_locale.rsexportingjson
+msgid "Exporting JSON"
+msgstr "Exportando JSON"
+
+#: utils_locale.rsexportingndjson
+msgid "Exporting NDJSON"
+msgstr "Exportando NDJSON"
+
+#: utils_locale.rsexportingods
+msgid "Exporting ODS"
+msgstr "Exportando ODS"
+
+#: utils_locale.rsexportingtsv
+msgid "Exporting TSV"
+msgstr "Exportando TSV"
+
+#: utils_locale.rsexportingxlsx
+msgid "Exporting XLSX"
+msgstr "Exportando XLSX"
+
+#: utils_locale.rsexportingxml
+msgid "Exporting XML"
+msgstr "Exportando XML"
+
 #: utils_locale.rsfactoryresetprompt
 msgctxt "utils_locale.rsfactoryresetprompt"
 msgid "Do you really want to reset settings to factory defaults?"
@@ -16393,6 +16437,14 @@ msgctxt "utils_locale.rsimporting"
 msgid "Importing"
 msgstr "Importando"
 
+#: utils_locale.rsimportingcsv
+msgid "Importing CSV"
+msgstr "Importando CSV"
+
+#: utils_locale.rsimportingdbf
+msgid "Importing DBF"
+msgstr "Importando DBF"
+
 #: utils_locale.rsimportingfile
 #, object-pascal-format
 msgctxt "utils_locale.rsimportingfile"
@@ -16402,6 +16454,26 @@ msgstr "Importando arquivo %s"
 #: utils_locale.rsimportingfiles
 msgid "Importing files..."
 msgstr "Importando arquivos..."
+
+#: utils_locale.rsimportingjson
+msgid "Importing JSON"
+msgstr "Importando JSON"
+
+#: utils_locale.rsimportingndjson
+msgid "Importing NDJSON"
+msgstr "Importando NDJSON"
+
+#: utils_locale.rsimportingods
+msgid "Importing ODS"
+msgstr "Importando ODS"
+
+#: utils_locale.rsimportingxlsx
+msgid "Importing XLSX"
+msgstr "Importando XLSX"
+
+#: utils_locale.rsimportingxml
+msgid "Importing XML"
+msgstr "Importando XML"
 
 #: utils_locale.rsimportstrategyappend
 msgctxt "utils_locale.rsimportstrategyappend"
@@ -17847,11 +17919,6 @@ msgctxt "utils_locale.rspermitcollection"
 msgid "Collection Permit"
 msgstr "Licença de coleta"
 
-#: utils_locale.rspermitduedatenotification
-msgctxt "utils_locale.rspermitduedatenotification"
-msgid "Permit due date"
-msgstr "Vencimento de licença"
-
 #: utils_locale.rspermitentry
 msgctxt "utils_locale.rspermitentry"
 msgid "Entry Permit"
@@ -17870,6 +17937,33 @@ msgstr "Substituída"
 msgctxt "utils_locale.rspermitresearch"
 msgid "Research Permit"
 msgstr "Licença de pesquisa"
+
+#: utils_locale.rspermitsexpiredmessage
+#, object-pascal-format
+msgid ""
+"There are %d expired permit(s).\n"
+"Affected permits: %s."
+msgstr ""
+"Há %d licença(s) vencida(s).\n"
+"Licenças afetadas: %s."
+
+#: utils_locale.rspermitsexpirednotification
+msgctxt "utils_locale.rspermitsexpirednotification"
+msgid "Expired permits"
+msgstr "Licenças vencidas"
+
+#: utils_locale.rspermitsexpiringsoonmessage
+#, object-pascal-format
+msgid ""
+"There are %d permit(s) expiring soon.\n"
+"Affected permits: %s."
+msgstr ""
+"Há %d licença(s) vencendo em breve.\n"
+"Licenças afetadas: %s."
+
+#: utils_locale.rspermitsexpiringsoonnotification
+msgid "Permits expiring soon"
+msgstr "Licenças vencendo em breve"
 
 #: utils_locale.rspermittransport
 msgctxt "utils_locale.rspermittransport"

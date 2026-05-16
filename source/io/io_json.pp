@@ -76,7 +76,7 @@ type
 implementation
 
 uses
-  data_consts, utils_global, utils_validations, utils_gis;
+  data_consts, utils_locale, utils_global, utils_validations, utils_gis;
 
 function IsLongitudeField(const FieldName: String): Boolean;
 begin
@@ -256,7 +256,7 @@ begin
         AddJSONToRow(key, child, Row);
       end;
     jtArray:
-      // estratégia: “flatten” primeiro nível com índice
+      // strategy: “flatten” first level with index
       for i := 0 to TJSONArray(AJSON).Count - 1 do
       begin
         child := TJSONArray(AJSON).Items[i];
@@ -294,7 +294,7 @@ begin
         row.Free;
       end;
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((i+1)*100.0 / Max(1, arr.Count)), 'Importando JSON');
+        Options.OnProgress(Trunc((i+1)*100.0 / Max(1, arr.Count)), rsImportingJSON);
 
       if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
         Break;
@@ -538,8 +538,8 @@ begin
         Inc(i);
         if Assigned(Options.OnProgress) then
         begin
-          progress := Trunc(i * 100.0 / Max(1, 1000)); // estimativa simples
-          Options.OnProgress(progress, 'Importando NDJSON');
+          progress := Trunc(i * 100.0 / Max(1, 1000)); // simple estimate
+          Options.OnProgress(progress, rsImportingJSON);
         end;
 
         if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
@@ -623,14 +623,14 @@ begin
   if Ext = '.json' then
   begin
     if IsNDJSON(Stream) then
-      Result := 80 // aceita NDJSON dentro do .json
+      Result := 80 // accept NDJSON within .json
     else
-      Result := 85; // json clássico tem prioridade
+      Result := 85; // classic json has priority
   end
   else
   if (Ext = '.ndjson') or (Ext = '.jsonl') then
   begin
-    Result := 40; // aceita, mas deixa espaço para TNDJSONImporter concorrer
+    Result := 40; // accept, but leave space to TNDJSONImporter concur
   end
   else
     Result := 10;
@@ -929,7 +929,7 @@ begin
         RowOut(Row);
 
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando JSON');
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), rsExportingJSON);
     end;
 
     if Options.RootNodeName <> '' then
@@ -1021,7 +1021,7 @@ begin
         RowOut(Row);
 
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando NDJSON');
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), rsExportingNDJSON);
     end;
   finally
     FieldList.Free;

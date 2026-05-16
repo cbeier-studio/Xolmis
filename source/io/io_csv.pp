@@ -693,7 +693,7 @@ begin
         RowOut(Row);
 
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando CSV');
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), rsExportingCSV);
     end;
 
   finally
@@ -834,7 +834,7 @@ begin
         RowOut(Row);
 
       if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), 'Exportando TSV');
+        Options.OnProgress(Trunc((i + 1) * 100.0 / Max(1, FRows.Count)), rsExportingTSV);
     end;
 
   finally

@@ -2091,17 +2091,15 @@ begin
 
       if TotalOutOfStock > 0 then
       begin
-        MsgText := Format('Band stock is exhausted for %d size(s). Affected sizes: %s.',
-          [TotalOutOfStock, OutOfStockSizes]);
-        NewAlert('Band stock exhausted', MsgText, npImportant);
+        MsgText := Format(rsBandExhaustedMessage, [TotalOutOfStock, OutOfStockSizes]);
+        NewAlert(rsBandExhaustedNotification, MsgText, npImportant);
         LogWarning('Band stock notification created: ' + MsgText);
       end;
 
       if TotalLowStock > 0 then
       begin
-        MsgText := Format('Band stock is running low for %d size(s). Recommended to request more bands. Affected sizes: %s.',
-          [TotalLowStock, LowStockSizes]);
-        NewAlert('Band stock running low', MsgText, npImportant);
+        MsgText := Format(rsBandRunningLowMessage, [TotalLowStock, LowStockSizes]);
+        NewAlert(rsBandRunningLowNotification, MsgText, npImportant);
         LogWarning('Band stock notification created: ' + MsgText);
       end;
     end;
@@ -2144,17 +2142,15 @@ begin
 
     if TotalExpiredPermits > 0 then
     begin
-      MsgText := Format('There are %d expired permit(s). Affected permits: %s.',
-        [TotalExpiredPermits, ExpiredPermits]);
-      NewAlert('Expired permits', MsgText, npImportant);
+      MsgText := Format(rsPermitsExpiredMessage, [TotalExpiredPermits, ExpiredPermits]);
+      NewAlert(rsPermitsExpiredNotification, MsgText, npImportant);
       LogWarning('Permit notification created: ' + MsgText);
     end;
 
     if TotalExpiringPermits > 0 then
     begin
-      MsgText := Format('There are %d permit(s) expiring soon. Affected permits: %s.',
-        [TotalExpiringPermits, ExpiringPermits]);
-      NewAlert('Permits expiring soon', MsgText, npImportant);
+      MsgText := Format(rsPermitsExpiringSoonMessage, [TotalExpiringPermits, ExpiringPermits]);
+      NewAlert(rsPermitsExpiringSoonNotification, MsgText, npImportant);
       LogWarning('Permit notification created: ' + MsgText);
     end;
 

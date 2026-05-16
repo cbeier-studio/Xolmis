@@ -328,7 +328,13 @@ uses
     rsExportEmpty = 'No records found! Export canceled.';
     rsExportFinished = 'Export to %s: Finished!';
     rsExportEbird = 'Export to eBird';
-
+    rsExportingCSV = 'Exporting CSV';
+    rsExportingJSON = 'Exporting JSON';
+    rsExportingNDJSON = 'Exporting NDJSON';
+    rsExportingODS = 'Exporting ODS';
+    rsExportingTSV = 'Exporting TSV';
+    rsExportingXLSX = 'Exporting XLSX';
+    rsExportingXML = 'Exporting XML';
 
     { Image messages }
     rsImageNotSupported = 'Image type not supported: %s';
@@ -351,6 +357,13 @@ uses
     rsImporting = 'Importing';
     rsImportingFile = 'Importing file %s';
     rsImportingFiles = 'Importing files...';
+    rsImportingCSV = 'Importing CSV';
+    rsImportingJSON = 'Importing JSON';
+    rsImportingNDJSON = 'Importing NDJSON';
+    rsImportingODS = 'Importing ODS';
+    rsImportingXLSX = 'Importing XLSX';
+    rsImportingXML = 'Importing XML';
+    rsImportingDBF = 'Importing DBF';
     rsPleaseWaitWhileImporting = 'Please wait while importing the selected files.';
     rsRecordUpdated = 'Updated existing record: %d';
     rsNewRecordOmitted = 'New record omitted: %s';
@@ -390,11 +403,8 @@ uses
     rsSoftwareUpdateNotification = 'Software update';
     rsNestsToCheckNotification = 'Nests to check';
     rsNestsToCheckMessage = 'Some nests were not checked recently.';
-    rsBandRunningOutNotification = 'Band running out';
-    rsBandRunnedOutNotification = 'Band runned out';
     rsBirthdayNotification = 'Birthday';
     rsActivityDueDateNotification = 'Activity due date';
-    rsPermitDueDateNotification = 'Permit due date';
     rsPeriodicReportNotification = 'Periodic report';
     rsSevereWeatherAlert = 'Severe weather alert';
     rsRemindLaterAction = 'Remind later';
@@ -403,6 +413,15 @@ uses
     rsViewAlertAction = 'View alert';
     rsViewReportAction = 'View report';
     rsIgnoreAction = 'Ignore';
+    rsBandExhaustedNotification = 'Band stock exhausted';
+    rsBandExhaustedMessage = 'Band stock is exhausted for %d size(s).' + LineEnding + 'Affected sizes: %s.';
+    rsBandRunningLowNotification = 'Band stock running low';
+    rsBandRunningLowMessage = 'Band stock is running low for %d size(s). Recommended to request more bands.' + LineEnding +
+      'Affected sizes: %s.';
+    rsPermitsExpiredNotification = 'Expired permits';
+    rsPermitsExpiredMessage = 'There are %d expired permit(s).' + LineEnding + 'Affected permits: %s.';
+    rsPermitsExpiringSoonNotification = 'Permits expiring soon';
+    rsPermitsExpiringSoonMessage = 'There are %d permit(s) expiring soon.' + LineEnding + 'Affected permits: %s.';
 
     { Cancel messages }
     rsPostBeforeClosePrompt = 'There are unsaved changes. Do you want to save it?';

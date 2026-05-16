@@ -1060,6 +1060,12 @@ begin
         Result := True;
       end;
 
+      if OldVersion < 9 then
+      begin
+        LogDebug('Upgrading database schema to version 9');
+
+      end;
+
       if Result then
       begin
         WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
