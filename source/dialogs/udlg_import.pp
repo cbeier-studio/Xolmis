@@ -22,7 +22,7 @@ interface
 
 uses
   BCPanel, Classes, SysUtils, fpjson, jsonparser, LCLIntf, fgl, BGRABitmapTypes,
-  dbf, DB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
+  dbf, DB, SQLDB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, Spin, fpsTypes, fpSpreadsheet, xlsbiff8,
   xlsxooxml, atshapelinebgra,
   io_core, io_csv, io_dbf, io_json, io_ods, io_xlsx, io_xml, data_types, models_record_types;
@@ -46,7 +46,7 @@ type
     cbSheet: TComboBox;
     cbDelimiter: TComboBox;
     cbTarget: TComboBox;
-    cbImportSettings: TComboBox;
+    cbImportProfile: TComboBox;
     cbLookupTable: TComboBox;
     cbLookupField: TComboBox;
     cbScaleOperation: TComboBox;
@@ -91,7 +91,7 @@ type
     lblErrorHandling: TLabel;
     lblDelimiter: TLabel;
     lblHaveHeader: TLabel;
-    lblImportSettings: TLabel;
+    lblImportProfiles: TLabel;
     lblProgressInstruction: TLabel;
     lblFieldsInstruction: TLabel;
     lblConfirmInstruction: TLabel;
@@ -133,7 +133,7 @@ type
     pgSettings: TPage;
     pHaveHeader: TBCPanel;
     pTarget: TBCPanel;
-    pImportSettings: TBCPanel;
+    pImportProfiles: TBCPanel;
     pSourceFile: TBCPanel;
     pmfSelectAll: TMenuItem;
     pmfDeselectAll: TMenuItem;
@@ -162,16 +162,19 @@ type
     pTextCase: TBCPanel;
     SaveDlg: TSaveDialog;
     sbCancel: TButton;
+    sbOpenImportProfile: TSpeedButton;
     sbNext: TButton;
+    sbExportImportProfile: TSpeedButton;
     sbPrior: TButton;
     gridFields: TStringGrid;
     sboxSettings: TScrollBox;
     sboxField: TScrollBox;
     eRoundPrecision: TSpinEdit;
-    sbClearImportSettings: TSpeedButton;
+    sbClearImportProfile: TSpeedButton;
     sbRetry: TBitBtn;
     sbSaveLog: TBitBtn;
     sbSaveProfile: TBitBtn;
+    sbSaveProfile1: TBitBtn;
     tsRemoveAccents: TToggleSwitch;
     tsNormalizeWhitespace: TToggleSwitch;
     tsReplaceChars: TToggleSwitch;
@@ -189,7 +192,7 @@ type
     procedure cbDataTypeSelect(Sender: TObject);
     procedure cbDelimiterSelect(Sender: TObject);
     procedure cbExtractDatePartSelect(Sender: TObject);
-    procedure cbImportSettingsSelect(Sender: TObject);
+    procedure cbImportProfileSelect(Sender: TObject);
     procedure cbLookupFieldSelect(Sender: TObject);
     procedure cbLookupTableSelect(Sender: TObject);
     procedure cbNullHandlingSelect(Sender: TObject);
@@ -214,11 +217,14 @@ type
     procedure pmfDeselectAllClick(Sender: TObject);
     procedure pmfSelectAllClick(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
-    procedure sbClearImportSettingsClick(Sender: TObject);
+    procedure sbClearImportProfileClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
+    procedure sbOpenImportProfileClick(Sender: TObject);
     procedure sbPriorClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
+    procedure sbExportImportProfileClick(Sender: TObject);
     procedure sbSaveLogClick(Sender: TObject);
+    procedure sbSaveProfileClick(Sender: TObject);
     procedure tsBooleanValueChange(Sender: TObject);
     procedure tsConvertCoordinatesChange(Sender: TObject);
     procedure tsExtractDatePartChange(Sender: TObject);
@@ -267,6 +273,7 @@ type
     procedure LoadFields;
     procedure LoadImportSettings;
     procedure LoadLookupFields;
+    procedure LoadProfilesList;
     procedure LoadSearchTables;
     procedure LoadTargetFields;
     procedure LoadTargetTables;
@@ -286,7 +293,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_themes, data_columns, data_schema,
+  utils_locale, utils_global, utils_themes, utils_dialogs, data_columns, data_schema, data_providers,
   models_bands, models_birds, models_botany, models_breeding, models_geo, models_institutions, models_methods,
   models_people, models_permits, models_projects, models_sampling, models_sampling_plots, models_sightings,
   models_specimens,
@@ -446,7 +453,9 @@ begin
   btnHelp.Images := iButtonsDark;
   eSourceFile.Images := iButtonsDark;
   pmFields.Images := iButtonsDark;
-  sbClearImportSettings.Images := iButtonsDark;
+  sbOpenImportProfile.Images := iButtonsDark;
+  sbExportImportProfile.Images := iButtonsDark;
+  sbClearImportProfile.Images := iButtonsDark;
   sbSaveProfile.Images := iButtonsDark;
   sbRetry.Images := iButtonsDark;
   sbSaveLog.Images := iButtonsDark;
@@ -456,8 +465,8 @@ begin
   pSourceFile.Border.Color := clSystemSolidNeutralFGDark;
   pTarget.Background.Color := clSolidBGSecondaryDark;
   pTarget.Border.Color := clSystemSolidNeutralFGDark;
-  pImportSettings.Background.Color := clSolidBGSecondaryDark;
-  pImportSettings.Border.Color := clSystemSolidNeutralFGDark;
+  pImportProfiles.Background.Color := clSolidBGSecondaryDark;
+  pImportProfiles.Border.Color := clSystemSolidNeutralFGDark;
   pExistingRecordPolicy.Background.Color := clSolidBGSecondaryDark;
   pExistingRecordPolicy.Border.Color := clSystemSolidNeutralFGDark;
   pErrorHandling.Background.Color := clSolidBGSecondaryDark;
@@ -606,9 +615,11 @@ begin
   end;
 end;
 
-procedure TdlgImport.cbImportSettingsSelect(Sender: TObject);
+procedure TdlgImport.cbImportProfileSelect(Sender: TObject);
 begin
-  FSavedSettings := cbImportSettings.Text;
+  FSavedSettings := cbImportProfile.Text;
+
+  sbExportImportProfile.Enabled := cbImportProfile.ItemIndex >= 0;
 end;
 
 procedure TdlgImport.cbLookupFieldSelect(Sender: TObject);
@@ -1086,6 +1097,7 @@ begin
     ApplyDarkMode;
 
   LoadTargetTables;
+  LoadProfilesList;
 
   // Translate comboboxes' items
   cbExistingRecordPolicy.Items.Clear;
@@ -1488,8 +1500,15 @@ var
   Importer: TImporter;
   FieldNames: TStringList;
   Mapping: TFieldMapping;
+  ProfileMapper: TFieldMapper;
+  Qry: TSQLQuery;
+  ProfileSettings: String;
+  FileFields: TStringList;
+  ProfileFields: TStringList;
+  MissingInProfile: TStringList;
+  MissingInFile: TStringList;
   Ext, A, Source: string;
-  i: Integer;
+  i, idx: Integer;
   S: TColumnTypeStats;
   T: TTableSchema;
   F: TFieldSchema;
@@ -1516,6 +1535,86 @@ begin
     try
       // Get field names
       FieldNames := Importer.GetFieldNames(Stream, FImportSettings);
+
+      if FSavedSettings <> EmptyStr then
+      begin
+        Qry := TSQLQuery.Create(nil);
+        try
+          Qry.SQLConnection := DMM.sqlCon;
+          Qry.Transaction := DMM.sqlTrans;
+          Qry.MacroCheck := True;
+
+          Qry.SQL.Clear;
+          Qry.SQL.Add(xProvider.ImportProfiles.SelectTable(swcFieldValue));
+          Qry.MacroByName('afield').Value := 'profile_name';
+          Qry.ParamByName('avalue').AsString := FSavedSettings;
+          Qry.Open;
+
+          if Qry.EOF then
+            raise EImportError.CreateFmt(rsErrorImportProfileNotFound, [FSavedSettings]);
+
+          ProfileSettings := Trim(Qry.FieldByName('settings').AsString);
+          Qry.Close;
+        finally
+          Qry.Free;
+        end;
+
+        if ProfileSettings = EmptyStr then
+          raise EImportError.CreateFmt(rsErrorImportProfileEmpty, [FSavedSettings]);
+
+        ProfileMapper := TFieldMapper.Create(FImportSettings);
+        FileFields := TStringList.Create;
+        ProfileFields := TStringList.Create;
+        MissingInProfile := TStringList.Create;
+        MissingInFile := TStringList.Create;
+        try
+          ProfileMapper.FromJSON(ProfileSettings);
+
+          FileFields.Sorted := True;
+          FileFields.CaseSensitive := False;
+          FileFields.Duplicates := dupIgnore;
+
+          ProfileFields.Sorted := True;
+          ProfileFields.CaseSensitive := False;
+          ProfileFields.Duplicates := dupIgnore;
+
+          for i := 0 to FieldNames.Count - 1 do
+            if Trim(FieldNames[i]) <> EmptyStr then
+              FileFields.Add(Trim(FieldNames[i]));
+
+          for i := 0 to ProfileMapper.Map.Count - 1 do
+            if Trim(ProfileMapper.Map[i].SourceField) <> EmptyStr then
+              ProfileFields.Add(Trim(ProfileMapper.Map[i].SourceField));
+
+          for i := 0 to FileFields.Count - 1 do
+            if ProfileFields.IndexOf(FileFields[i]) < 0 then
+              MissingInProfile.Add(FileFields[i]);
+
+          for i := 0 to ProfileFields.Count - 1 do
+            if FileFields.IndexOf(ProfileFields[i]) < 0 then
+              MissingInFile.Add(ProfileFields[i]);
+
+          if (MissingInProfile.Count > 0) or (MissingInFile.Count > 0) then
+          begin
+            if MissingInProfile.Count > 0 then
+              raise EImportError.CreateFmt(
+                rsErrorImportProfileMissingFieldInProfile,
+                [FSavedSettings, MissingInProfile.CommaText]
+              )
+            else
+              raise EImportError.CreateFmt(
+                rsErrorImportProfileMissingFieldInFile,
+                [FSavedSettings, MissingInFile.CommaText]
+              );
+          end;
+        finally
+          MissingInFile.Free;
+          MissingInProfile.Free;
+          ProfileFields.Free;
+          FileFields.Free;
+          ProfileMapper.Free;
+        end;
+      end;
 
       // Initialize column stats
       ColStats := specialize TFPGObjectList<TColumnTypeStats>.Create;
@@ -1675,6 +1774,45 @@ begin
 
   if FFieldMap.Map[FFieldIndex].LookupField <> EmptyStr then
     cbLookupField.ItemIndex := cbLookupField.Items.IndexOf(T.GetField(FFieldMap.Map[FFieldIndex].LookupField).DisplayName);
+end;
+
+procedure TdlgImport.LoadProfilesList;
+var
+  Qry: TSQLQuery;
+  ProfileName: String;
+  ProfileIdx: Integer;
+begin
+  cbImportProfile.Items.BeginUpdate;
+  try
+    cbImportProfile.Items.Clear;
+
+    Qry := TSQLQuery.Create(nil);
+    try
+      Qry.SQLConnection := DMM.sqlCon;
+      Qry.Transaction := DMM.sqlTrans;
+
+      Qry.SQL.Clear;
+      Qry.SQL.Add(xProvider.ImportProfiles.SelectTable(swcNone));
+      Qry.SQL.Add('ORDER BY profile_name');
+      Qry.Open;
+      while not Qry.EOF do
+      begin
+        ProfileName := Trim(Qry.FieldByName('profile_name').AsString);
+        if ProfileName <> EmptyStr then
+          cbImportProfile.Items.Add(ProfileName);
+        Qry.Next;
+      end;
+      Qry.Close;
+    finally
+      Qry.Free;
+    end;
+
+    ProfileIdx := cbImportProfile.Items.IndexOf(FSavedSettings);
+    cbImportProfile.ItemIndex := ProfileIdx;
+    sbExportImportProfile.Enabled := cbImportProfile.ItemIndex >= 0;
+  finally
+    cbImportProfile.Items.EndUpdate;
+  end;
 end;
 
 procedure TdlgImport.LoadSearchTables;
@@ -1892,10 +2030,12 @@ begin
   end;
 end;
 
-procedure TdlgImport.sbClearImportSettingsClick(Sender: TObject);
+procedure TdlgImport.sbClearImportProfileClick(Sender: TObject);
 begin
   FSavedSettings := EmptyStr;
-  cbImportSettings.ItemIndex := -1;
+  cbImportProfile.ItemIndex := -1;
+
+  sbExportImportProfile.Enabled := cbImportProfile.ItemIndex >= 0;
 end;
 
 procedure TdlgImport.sbNextClick(Sender: TObject);
@@ -1950,6 +2090,140 @@ begin
     sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
 end;
 
+procedure TdlgImport.sbOpenImportProfileClick(Sender: TObject);
+var
+  Dlg: TOpenDialog;
+  SL: TStringList;
+  Mapper: TFieldMapper;
+  Qry: TSQLQuery;
+  Parser: TJSONParser;
+  JsonData: TJSONData;
+  RootObj: TJSONObject;
+  SettingsData: TJSONData;
+  PrevTransActive: Boolean;
+  JsonText: String;
+  SourceName: String;
+  SchemaName: String;
+  SchemaVersion: Integer;
+  ProfileName: String;
+  SettingsText: String;
+  ExistingProfileId: Integer;
+begin
+  Dlg := TOpenDialog.Create(nil);
+  try
+    Dlg.Title := rsOpenImportProfile;
+    Dlg.DefaultExt := '.json';
+    Dlg.Filter := 'JSON files|*.json|All files|*.*';
+    Dlg.Options := [ofFileMustExist, ofEnableSizing, ofViewDetail];
+
+    if not Dlg.Execute then
+      Exit;
+
+    SL := TStringList.Create;
+    try
+      SL.LoadFromFile(Dlg.FileName);
+      JsonText := Trim(SL.Text);
+    finally
+      SL.Free;
+    end;
+
+    if JsonText = EmptyStr then
+      raise EImportError.Create(rsErrorImportProfileFileEmpty);
+
+    Parser := TJSONParser.Create(JsonText);
+    try
+      JsonData := Parser.Parse;
+      try
+        if JsonData.JSONType <> jtObject then
+          raise EImportError.Create(rsErrorImportProfileInvalidObject);
+
+        RootObj := TJSONObject(JsonData);
+
+        SourceName := RootObj.Get('source', EmptyStr);
+        SchemaName := RootObj.Get('schema', EmptyStr);
+        SchemaVersion := RootObj.Get('schema_version', 1);
+        ProfileName := Trim(RootObj.Get('profile_name', EmptyStr));
+        SettingsData := RootObj.Find('settings');
+
+        if SourceName <> 'Xolmis Desktop' then
+          raise EImportError.Create(rsErrorImportProfileInvalidSource);
+        if SchemaName <> 'import_profiles' then
+          raise EImportError.Create(rsErrorImportProfileInvalidSchema);
+        if ProfileName = EmptyStr then
+          raise EImportError.Create(rsErrorImportProfileInvalidName);
+        if (SettingsData = nil) or (SettingsData.JSONType <> jtObject) then
+          raise EImportError.Create(rsErrorImportProfileInvalidSettings);
+
+        Mapper := TFieldMapper.Create(FImportSettings);
+        try
+          Mapper.FromJSON(SettingsData.AsJSON);
+          SettingsText := Mapper.ToJSON;
+        finally
+          Mapper.Free;
+        end;
+      finally
+        JsonData.Free;
+      end;
+    finally
+      Parser.Free;
+    end;
+
+    PrevTransActive := DMM.sqlTrans.Active;
+    if not PrevTransActive then
+      DMM.sqlTrans.StartTransaction;
+
+    Qry := TSQLQuery.Create(nil);
+    try
+      Qry.SQLConnection := DMM.sqlCon;
+      Qry.Transaction := DMM.sqlTrans;
+      Qry.MacroCheck := True;
+
+      try
+        Qry.SQL.Clear;
+        Qry.SQL.Add(xProvider.ImportProfiles.SelectTable(swcFieldValue));
+        Qry.MacroByName('afield').Value := 'profile_name';
+        Qry.ParamByName('avalue').AsString := ProfileName;
+        Qry.Open;
+        if not Qry.EOF then
+          ExistingProfileId := Qry.FieldByName('profile_id').AsInteger
+        else
+          ExistingProfileId := 0;
+        Qry.Close;
+
+        Qry.SQL.Clear;
+        if ExistingProfileId > 0 then
+        begin
+          Qry.SQL.Add(xProvider.ImportProfiles.Update);
+          Qry.ParamByName('profile_id').AsInteger := ExistingProfileId;
+        end
+        else
+          Qry.SQL.Add(xProvider.ImportProfiles.Insert);
+
+        Qry.ParamByName('profile_name').AsString := ProfileName;
+        Qry.ParamByName('settings').AsString := SettingsText;
+        Qry.ExecSQL;
+
+        if not PrevTransActive then
+          DMM.sqlTrans.CommitRetaining;
+      except
+        if not PrevTransActive then
+          DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+    finally
+      Qry.Free;
+    end;
+
+    FSavedSettings := ProfileName;
+    LoadProfilesList;
+
+    MsgDlg(rsTitleImportProfiles, rsSuccessfulLoadImportProfile, mtInformation);
+  finally
+    Dlg.Free;
+  end;
+
+end;
+
 procedure TdlgImport.sbPriorClick(Sender: TObject);
 begin
   nbPages.PageIndex := nbPages.PageIndex - 1;
@@ -1967,6 +2241,97 @@ begin
   nbPages.PageIndex := 0;
 end;
 
+procedure TdlgImport.sbExportImportProfileClick(Sender: TObject);
+var
+  Qry: TSQLQuery;
+  ProfileName: String;
+  SettingsText: String;
+  Parser: TJSONParser;
+  SettingsData: TJSONData;
+  RootObj: TJSONObject;
+  SaveProfileDlg: TSaveDialog;
+  SL: TStringList;
+begin
+  ProfileName := Trim(cbImportProfile.Text);
+  if ProfileName = EmptyStr then
+    ProfileName := Trim(FSavedSettings);
+
+  if ProfileName = EmptyStr then
+    raise EImportError.Create(rsErrorImportProfileSelectBeforeSaving);
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.SQLConnection := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+    Qry.MacroCheck := True;
+
+    Qry.SQL.Clear;
+    Qry.SQL.Add(xProvider.ImportProfiles.SelectTable(swcFieldValue));
+    Qry.MacroByName('afield').Value := 'profile_name';
+    Qry.ParamByName('avalue').AsString := ProfileName;
+    Qry.Open;
+
+    if Qry.EOF then
+      raise EImportError.CreateFmt(rsErrorImportProfileNotFound, [ProfileName]);
+
+    SettingsText := Trim(Qry.FieldByName('settings').AsString);
+    Qry.Close;
+  finally
+    Qry.Free;
+  end;
+
+  if SettingsText = EmptyStr then
+    raise EImportError.CreateFmt(rsErrorImportProfileEmpty, [ProfileName]);
+
+  Parser := TJSONParser.Create(SettingsText);
+  try
+    SettingsData := Parser.Parse;
+    try
+      if SettingsData.JSONType <> jtObject then
+        raise EImportError.Create(rsErrorImportProfileInvalidObject);
+
+      RootObj := TJSONObject.Create;
+      try
+        RootObj.Add('source', 'Xolmis Desktop');
+        RootObj.Add('schema', 'import_profiles');
+        RootObj.Add('schema_version', 1);
+        RootObj.Add('profile_name', ProfileName);
+        RootObj.Add('settings', GetJSON(SettingsData.AsJSON));
+
+        SaveProfileDlg := TSaveDialog.Create(nil);
+        try
+          SaveProfileDlg.Title := rsSaveImportProfile;
+          SaveProfileDlg.DefaultExt := '.json';
+          SaveProfileDlg.Filter := 'JSON files|*.json|All files|*.*';
+          SaveProfileDlg.Options := [ofOverwritePrompt, ofPathMustExist, ofEnableSizing, ofViewDetail];
+          SaveProfileDlg.FileName := ProfileName + '.json';
+
+          if not SaveProfileDlg.Execute then
+            Exit;
+
+          SL := TStringList.Create;
+          try
+            SL.Text := RootObj.AsJSON;
+            SL.SaveToFile(SaveProfileDlg.FileName);
+          finally
+            SL.Free;
+          end;
+        finally
+          SaveProfileDlg.Free;
+        end;
+      finally
+        RootObj.Free;
+      end;
+    finally
+      SettingsData.Free;
+    end;
+  finally
+    Parser.Free;
+  end;
+
+  MsgDlg(rsTitleImportProfiles, rsSuccessfulExportImportProfile, mtInformation);
+end;
+
 procedure TdlgImport.sbSaveLogClick(Sender: TObject);
 begin
   if SaveDlg.Execute then
@@ -1974,6 +2339,97 @@ begin
     mProgress.Lines.SaveToFile(SaveDlg.FileName);
     OpenDocument(SaveDlg.FileName);
   end;
+end;
+
+procedure TdlgImport.sbSaveProfileClick(Sender: TObject);
+var
+  ProfileName: String;
+  SettingsText: String;
+  PrevTransActive: Boolean;
+  ExistingProfileId: Integer;
+  Qry: TSQLQuery;
+  SaveMapper: TFieldMapper;
+  Mapping, NewMapping: TFieldMapping;
+  i: Integer;
+begin
+  ProfileName := FSavedSettings;
+  if not InputQuery(rsSaveImportProfile, rsLabelProfileName, ProfileName) then
+    Exit;
+
+  ProfileName := Trim(ProfileName);
+  if ProfileName = EmptyStr then
+    raise EImportError.Create(rsErrorImportProfileNameCannotBeEmpty);
+
+  SetImportSettings;
+  SetMappings;
+
+  SaveMapper := TFieldMapper.Create(FImportSettings);
+  try
+    SaveMapper.TableType := FFieldMap.TableType;
+
+    for i := 0 to FFieldMap.Map.Count - 1 do
+    begin
+      Mapping := FFieldMap.Map[i];
+      NewMapping := TFieldMapping.Create;
+      NewMapping.FromJSON(Mapping.ToJSON);
+      SaveMapper.Map.Add(NewMapping);
+    end;
+
+    SettingsText := SaveMapper.ToJSON;
+  finally
+    SaveMapper.Free;
+  end;
+
+  PrevTransActive := DMM.sqlTrans.Active;
+  if not PrevTransActive then
+    DMM.sqlTrans.StartTransaction;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.SQLConnection := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+    Qry.MacroCheck := True;
+
+    try
+      Qry.SQL.Clear;
+      Qry.SQL.Add(xProvider.ImportProfiles.SelectTable(swcFieldValue));
+      Qry.MacroByName('afield').Value := 'profile_name';
+      Qry.ParamByName('avalue').AsString := ProfileName;
+      Qry.Open;
+      if not Qry.EOF then
+        ExistingProfileId := Qry.FieldByName('profile_id').AsInteger
+      else
+        ExistingProfileId := 0;
+      Qry.Close;
+
+      Qry.SQL.Clear;
+      if ExistingProfileId > 0 then
+      begin
+        Qry.SQL.Add(xProvider.ImportProfiles.Update);
+        Qry.ParamByName('profile_id').AsInteger := ExistingProfileId;
+      end
+      else
+        Qry.SQL.Add(xProvider.ImportProfiles.Insert);
+
+      Qry.ParamByName('profile_name').AsString := ProfileName;
+      Qry.ParamByName('settings').AsString := SettingsText;
+      Qry.ExecSQL;
+
+      if not PrevTransActive then
+        DMM.sqlTrans.CommitRetaining;
+    except
+      if not PrevTransActive then
+        DMM.sqlTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    Qry.Free;
+  end;
+
+  FSavedSettings := ProfileName;
+  LoadProfilesList;
+
+  MsgDlg(rsTitleImportProfiles, rsSuccessfulSaveImportProfile, mtInformation);
 end;
 
 procedure TdlgImport.SetImportSettings;

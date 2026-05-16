@@ -257,9 +257,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-Win64">
-        <MacroValues Count="1">
-          <Macro1 Name="LCLWidgetType" Value="win32"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -299,9 +296,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-MacOS">
-        <MacroValues Count="1">
-          <Macro2 Name="LCLWidgetType" Value="cocoa"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -347,9 +341,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-GTK">
-        <MacroValues Count="1">
-          <Macro3 Name="LCLWidgetType" Value="gtk2"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -395,9 +386,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-Qt">
-        <MacroValues Count="1">
-          <Macro4 Name="LCLWidgetType" Value="qt"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>

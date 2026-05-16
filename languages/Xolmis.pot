@@ -4901,7 +4901,8 @@ msgctxt "tdlgimport.lblhaveheader.caption"
 msgid "First row as header"
 msgstr ""
 
-#: tdlgimport.lblimportsettings.caption
+#: tdlgimport.lblimportprofiles.caption
+msgctxt "tdlgimport.lblimportprofiles.caption"
 msgid "Import profile:"
 msgstr ""
 
@@ -5028,9 +5029,21 @@ msgctxt "tdlgimport.sbcancel.caption"
 msgid "&Cancel"
 msgstr ""
 
+#: tdlgimport.sbclearimportprofile.hint
+msgid "Clear profile"
+msgstr ""
+
+#: tdlgimport.sbexportimportprofile.hint
+msgid "Export profile to file"
+msgstr ""
+
 #: tdlgimport.sbnext.caption
 msgctxt "tdlgimport.sbnext.caption"
 msgid "&Next"
+msgstr ""
+
+#: tdlgimport.sbopenimportprofile.hint
+msgid "Open profile from file"
 msgstr ""
 
 #: tdlgimport.sbprior.caption
@@ -5049,6 +5062,12 @@ msgid "Save log"
 msgstr ""
 
 #: tdlgimport.sbsaveprofile.caption
+msgctxt "tdlgimport.sbsaveprofile.caption"
+msgid "Save import profile"
+msgstr ""
+
+#: tdlgimport.sbsaveprofile1.caption
+msgctxt "tdlgimport.sbsaveprofile1.caption"
 msgid "Save import profile"
 msgstr ""
 
@@ -15639,6 +15658,58 @@ msgctxt "utils_locale.rserrorimporting"
 msgid "An error occurred while importing: %s"
 msgstr ""
 
+#: utils_locale.rserrorimportprofileempty
+#, object-pascal-format
+msgid "Saved import profile \"%s\" has empty settings."
+msgstr ""
+
+#: utils_locale.rserrorimportprofilefileempty
+msgid "Import profile file is empty."
+msgstr ""
+
+#: utils_locale.rserrorimportprofileinvalidname
+msgid "Invalid import profile file: missing profile_name."
+msgstr ""
+
+#: utils_locale.rserrorimportprofileinvalidobject
+msgid "Invalid import profile file: root node must be an object."
+msgstr ""
+
+#: utils_locale.rserrorimportprofileinvalidschema
+msgid "Invalid import profile file: unsupported schema."
+msgstr ""
+
+#: utils_locale.rserrorimportprofileinvalidsettings
+msgid "Invalid import profile file: missing settings object."
+msgstr ""
+
+#: utils_locale.rserrorimportprofileinvalidsource
+msgid "Invalid import profile file: unsupported source."
+msgstr ""
+
+#: utils_locale.rserrorimportprofilemissingfieldinfile
+#, object-pascal-format
+msgid "Saved profile \"%s\" does not match file fields. Missing in file: %s"
+msgstr ""
+
+#: utils_locale.rserrorimportprofilemissingfieldinprofile
+#, object-pascal-format
+msgid "Saved profile \"%s\" does not match file fields. Missing in profile: %s"
+msgstr ""
+
+#: utils_locale.rserrorimportprofilenamecannotbeempty
+msgid "Profile name cannot be empty."
+msgstr ""
+
+#: utils_locale.rserrorimportprofilenotfound
+#, object-pascal-format
+msgid "Saved import profile \"%s\" was not found."
+msgstr ""
+
+#: utils_locale.rserrorimportprofileselectbeforesaving
+msgid "Select an import profile before saving."
+msgstr ""
+
 #: utils_locale.rserrorinvalidbooleanforfield
 #, object-pascal-format
 msgid "Value \"%s\" is not a valid boolean for the field %s."
@@ -16520,6 +16591,10 @@ msgstr ""
 #: utils_locale.rslabelname
 msgctxt "utils_locale.rslabelname"
 msgid "Database name: *"
+msgstr ""
+
+#: utils_locale.rslabelprofilename
+msgid "Profile name:"
 msgstr ""
 
 #: utils_locale.rslatitude
@@ -17564,6 +17639,10 @@ msgctxt "utils_locale.rsopendatabase"
 msgid "Open database"
 msgstr ""
 
+#: utils_locale.rsopenimportprofile
+msgid "Open import profile"
+msgstr ""
+
 #: utils_locale.rsoriginalsearch
 msgctxt "utils_locale.rsoriginalsearch"
 msgid "Original search"
@@ -18244,6 +18323,11 @@ msgctxt "utils_locale.rssampletongue"
 msgid "Tongue"
 msgstr ""
 
+#: utils_locale.rssaveimportprofile
+msgctxt "utils_locale.rssaveimportprofile"
+msgid "Save import profile"
+msgstr ""
+
 #: utils_locale.rsscaledivide
 msgid "Divide"
 msgstr ""
@@ -18513,6 +18597,10 @@ msgstr ""
 msgid "Data exported successfully to: %s"
 msgstr ""
 
+#: utils_locale.rssuccessfulexportimportprofile
+msgid "Import profile exported successfully."
+msgstr ""
+
 #: utils_locale.rssuccessfulimport
 msgctxt "utils_locale.rssuccessfulimport"
 msgid "The selected file(s) were successfully imported."
@@ -18560,6 +18648,10 @@ msgstr ""
 msgid "%d record(s) successfully imported!"
 msgstr ""
 
+#: utils_locale.rssuccessfulloadimportprofile
+msgid "Import profile loaded successfully."
+msgstr ""
+
 #: utils_locale.rssuccessfulnewbatch
 msgctxt "utils_locale.rssuccessfulnewbatch"
 msgid "New batch inserted successfully!"
@@ -18578,6 +18670,10 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rssuccessfulrestore"
 msgid "Backup restored successfully: %s"
+msgstr ""
+
+#: utils_locale.rssuccessfulsaveimportprofile
+msgid "Import profile saved to database successfully."
 msgstr ""
 
 #: utils_locale.rssuccessfultransferbands
@@ -18863,6 +18959,10 @@ msgstr ""
 #: utils_locale.rstitleimportfile
 msgctxt "utils_locale.rstitleimportfile"
 msgid "Import file"
+msgstr ""
+
+#: utils_locale.rstitleimportprofiles
+msgid "Import profiles"
 msgstr ""
 
 #: utils_locale.rstitleindividuals

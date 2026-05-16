@@ -158,6 +158,15 @@ type
     function Delete: string;
   end;
 
+  IImportProfilesSQL = interface ['{397A5C95-D10E-4E5F-AC44-621894E7D4F7}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+  end;
+
   IIndividualsSQL = interface ['{A4C9C5C4-9E4E-4E0F-9F4E-0C3F7C1B1A11}']
     function CreateTable: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
@@ -497,6 +506,7 @@ type
     function Feathers: IFeathersSQL;
     function Gazetteer: IGazetteerSQL;
     function Images: IImagesSQL;
+    function ImportProfiles: IImportProfilesSQL;
     function Individuals: IIndividualsSQL;
     function Institutions: IInstitutionsSQL;
     function Methods: IMethodsSQL;
@@ -550,6 +560,7 @@ type
     FFeathers: IFeathersSQL;
     FGazetteer: IGazetteerSQL;
     FImages: IImagesSQL;
+    FImportProfiles: IImportProfilesSQL;
     FIndividuals: IIndividualsSQL;
     FInstitutions: IInstitutionsSQL;
     FMethods: IMethodsSQL;
@@ -600,6 +611,7 @@ type
     function Feathers: IFeathersSQL;
     function Gazetteer: IGazetteerSQL;
     function Images: IImagesSQL;
+    function ImportProfiles: IImportProfilesSQL;
     function Individuals: IIndividualsSQL;
     function Institutions: IInstitutionsSQL;
     function Methods: IMethodsSQL;
@@ -663,6 +675,7 @@ begin
   FFeathers           := TFeathersSQL.Create(FBackend);
   FGazetteer          := TGazetteerSQL.Create(FBackend);
   FImages             := TImagesSQL.Create(FBackend);
+  FImportProfiles     := TImportProfilesSQL.Create(FBackend);
   FIndividuals        := TIndividualsSQL.Create(FBackend);
   FInstitutions       := TInstitutionsSQL.Create(FBackend);
   FMethods            := TMethodsSQL.Create(FBackend);
@@ -765,6 +778,11 @@ end;
 function TSQLProvider.Images: IImagesSQL;
 begin
   Result := FImages;
+end;
+
+function TSQLProvider.ImportProfiles: IImportProfilesSQL;
+begin
+  Result := FImportProfiles;
 end;
 
 function TSQLProvider.Individuals: IIndividualsSQL;

@@ -123,6 +123,7 @@ uses
     rsTitleNoConnectionsFound = 'No connections found';
     rsTitleProfilePicture = 'Profile picture';
     rsTitleValidateSchema = 'Validate schema';
+    rsTitleImportProfiles = 'Import profiles';
     rsClosing = 'Closing...';
 
     { Input messages }
@@ -132,6 +133,8 @@ uses
     rsSelectAnOptionToProceed = 'Select an option to proceed:';
     rsNewDatabase = 'New database';
     rsOpenDatabase = 'Open database';
+    rsOpenImportProfile = 'Open import profile';
+    rsSaveImportProfile = 'Save import profile';
 
     { Error messages }
     rsErrorFound = '<p><b>%d error</b> found! Please fix it before proceeding.</p>';
@@ -151,6 +154,18 @@ uses
     rsErrorFileNotFound = 'File %s not found.';
     rsErrorImporting = 'An error occurred while importing: %s';
     rsErrorImportFinished = 'An error occurred while importing.';
+    rsErrorImportProfileNotFound = 'Saved import profile "%s" was not found.';
+    rsErrorImportProfileEmpty = 'Saved import profile "%s" has empty settings.';
+    rsErrorImportProfileFileEmpty = 'Import profile file is empty.';
+    rsErrorImportProfileInvalidObject = 'Invalid import profile file: root node must be an object.';
+    rsErrorImportProfileInvalidSource = 'Invalid import profile file: unsupported source.';
+    rsErrorImportProfileInvalidSchema = 'Invalid import profile file: unsupported schema.';
+    rsErrorImportProfileInvalidName = 'Invalid import profile file: missing profile_name.';
+    rsErrorImportProfileInvalidSettings = 'Invalid import profile file: missing settings object.';
+    rsErrorImportProfileMissingFieldInProfile = 'Saved profile "%s" does not match file fields. Missing in profile: %s';
+    rsErrorImportProfileMissingFieldInFile = 'Saved profile "%s" does not match file fields. Missing in file: %s';
+    rsErrorImportProfileSelectBeforeSaving = 'Select an import profile before saving.';
+    rsErrorImportProfileNameCannotBeEmpty = 'Profile name cannot be empty.';
     rsErrorExporting = 'An error occurred exporting: %s';
     rsErrorDatabaseNotFound = 'Database file not found: %s';
     rsErrorDatabaseCorrupted = 'The database file is corrupted. Restoring a database backup is recommended.';
@@ -270,6 +285,9 @@ uses
     rsSuccessfulDatabaseVacuum = 'The selected database was vacuumed!';
     rsSuccessfulDatabaseIntegrityCheck = 'The selected database integrity is OK!';
     rsSuccessfulExportEbird = 'Data exported successfully to: %s';
+    rsSuccessfulLoadImportProfile = 'Import profile loaded successfully.';
+    rsSuccessfulSaveImportProfile = 'Import profile saved to database successfully.';
+    rsSuccessfulExportImportProfile = 'Import profile exported successfully.';
 
     { Deletion messages }
     rsDeleteConnectionTitle = 'Delete connection';
@@ -1406,6 +1424,7 @@ uses
     { Varied captions }
     rsLabelName = 'Database name: *';
     rsLabelFile = 'Database file: *';
+    rsLabelProfileName = 'Profile name:';
     rsCaptionClose = 'Close';
     rsCaptionCancel = 'Cancel';
     rsCaptionSpecies = 'Species';

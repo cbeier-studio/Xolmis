@@ -50,6 +50,7 @@ const
   procedure CreateUsersTable(Connection: TSQLConnector);
   procedure CreateRecordHistoryTable(Connection: TSQLConnector);
   procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
+  procedure CreateImportProfilesTable(Connection: TSQLConnector);
   procedure CreateTaxonRanksTable(Connection: TSQLConnector);
   procedure CreateZooTaxaTable(Connection: TSQLConnector);
   procedure CreateBotanicTaxaTable(Connection: TSQLConnector);
@@ -304,7 +305,7 @@ begin
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := 51; // Number of tables and views to create
+    dlgProgress.Max := 52; // Number of tables and views to create
     dlgProgress.Position := 0;
     dlgProgress.Show;
     Application.ProcessMessages;
@@ -362,6 +363,12 @@ begin
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVerifications, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateRecordVerificationsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Import profiles
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleImportProfiles, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateImportProfilesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Taxon ranks
@@ -1047,6 +1054,9 @@ begin
         DMM.sqlCon.ExecuteDirect('ALTER TABLE weather_logs ADD COLUMN inactivated_by VARCHAR (5);');
         DMM.sqlCon.ExecuteDirect('ALTER TABLE zoo_taxa ADD COLUMN inactivated_by VARCHAR (5);');
 
+        // Create tables
+        CreateImportProfilesTable(DMM.sqlCon);
+
         Result := True;
       end;
 
@@ -1161,6 +1171,12 @@ procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating record_verifications table');
   Connection.ExecuteDirect(xProvider.RecordVerifications.CreateTable);
+end;
+
+procedure CreateImportProfilesTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating import profiles table');
+  Connection.ExecuteDirect(xProvider.ImportProfiles.CreateTable);
 end;
 
 procedure CreateTaxonRanksTable(Connection: TSQLConnector);
