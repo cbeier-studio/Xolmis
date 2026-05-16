@@ -231,7 +231,7 @@ type
     function MigrateMediaPaths(const aTableName, aIdField, aOldBaseFolder, aNewBaseFolder: String;
       aSkipUrls: Boolean = False): Integer;
     function ConfirmAndMigrateMediaPaths(const aMediaLabel, aOldBaseFolder, aNewBaseFolder,
-      aTableName, aIdField: String; aSkipUrls: Boolean = False): Boolean;
+      aTableName, aIdField: String; aSkipUrls: Boolean = False): Integer;
     procedure LoadConfig;
   public
 
@@ -441,15 +441,17 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleDocuments), OldPath, NewPath, TBL_DOCUMENTS, COL_DOCUMENT_ID, True) then
-    xSettings.DocumentsFolder := NewPath
-  else
-  begin
-    FChangingMediaPath := True;
-    try
-      eAttachmentsPath.Text := OldPath;
-    finally
-      FChangingMediaPath := False;
+  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleDocuments), OldPath, NewPath, TBL_DOCUMENTS, COL_DOCUMENT_ID, True) of
+    mrYes, mrNo:
+      xSettings.DocumentsFolder := NewPath;
+    else
+    begin
+      FChangingMediaPath := True;
+      try
+        eAttachmentsPath.Text := OldPath;
+      finally
+        FChangingMediaPath := False;
+      end;
     end;
   end;
 end;
@@ -470,15 +472,17 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleAudioLibrary), OldPath, NewPath, TBL_AUDIO_LIBRARY, COL_AUDIO_ID) then
-    xSettings.AudiosFolder := NewPath
-  else
-  begin
-    FChangingMediaPath := True;
-    try
-      eAudiosPath.Text := OldPath;
-    finally
-      FChangingMediaPath := False;
+  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleAudioLibrary), OldPath, NewPath, TBL_AUDIO_LIBRARY, COL_AUDIO_ID) of
+    mrYes, mrNo:
+      xSettings.AudiosFolder := NewPath;
+    else
+    begin
+      FChangingMediaPath := True;
+      try
+        eAudiosPath.Text := OldPath;
+      finally
+        FChangingMediaPath := False;
+      end;
     end;
   end;
 end;
@@ -545,15 +549,17 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleImages), OldPath, NewPath, TBL_IMAGES, COL_IMAGE_ID) then
-    xSettings.ImagesFolder := NewPath
-  else
-  begin
-    FChangingMediaPath := True;
-    try
-      eImagesPath.Text := OldPath;
-    finally
-      FChangingMediaPath := False;
+  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleImages), OldPath, NewPath, TBL_IMAGES, COL_IMAGE_ID) of
+    mrYes, mrNo:
+      xSettings.ImagesFolder := NewPath;
+    else
+    begin
+      FChangingMediaPath := True;
+      try
+        eImagesPath.Text := OldPath;
+      finally
+        FChangingMediaPath := False;
+      end;
     end;
   end;
 end;
@@ -574,15 +580,17 @@ begin
     Exit;
   end;
 
-  if ConfirmAndMigrateMediaPaths(LowerCase(rsTitleVideos), OldPath, NewPath, TBL_VIDEOS, COL_VIDEO_ID) then
-    xSettings.VideosFolder := NewPath
-  else
-  begin
-    FChangingMediaPath := True;
-    try
-      eVideosPath.Text := OldPath;
-    finally
-      FChangingMediaPath := False;
+  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleVideos), OldPath, NewPath, TBL_VIDEOS, COL_VIDEO_ID) of
+    mrYes, mrNo:
+      xSettings.VideosFolder := NewPath;
+    else
+    begin
+      FChangingMediaPath := True;
+      try
+        eVideosPath.Text := OldPath;
+      finally
+        FChangingMediaPath := False;
+      end;
     end;
   end;
 end;
@@ -659,27 +667,53 @@ begin
 end;
 
 function TcfgOptions.ConfirmAndMigrateMediaPaths(const aMediaLabel, aOldBaseFolder, aNewBaseFolder,
-  aTableName, aIdField: String; aSkipUrls: Boolean): Boolean;
+  aTableName, aIdField: String; aSkipUrls: Boolean): Integer;
 var
   UpdatedCount: Integer;
   Msg: String;
+  Dlg: TTaskDialog;
 begin
-  Result := False;
+  Result := mrCancel;
 
   Msg := Format(rsPromptMigrateMediaPath, [aMediaLabel, aOldBaseFolder, aNewBaseFolder]);
 
-  if not MsgDlg(rsMediaFolderChanged, Msg, mtConfirmation) then
-    Exit(False);
-
+  Dlg := TTaskDialog.Create(Self);
   try
-    UpdatedCount := MigrateMediaPaths(aTableName, aIdField, aOldBaseFolder, aNewBaseFolder, aSkipUrls);
-    MsgDlg(rsMediaMigrationCompleted, Format(rsMigratedMediaPaths, [UpdatedCount, aMediaLabel]), mtInformation);
-    Result := True;
-  except
-    on E: Exception do
+    Dlg.Caption := APP_NAME;
+    Dlg.Title := rsMediaFolderChanged;
+    Dlg.Text := Msg;
+    Dlg.CommonButtons := [tcbCancel];
+    Dlg.Flags := Dlg.Flags + [tfUseCommandLinks];
+    with TTaskDialogButtonItem(Dlg.Buttons.Add) do
     begin
-      MsgDlg(rsTitleError, Format(rsMediaMigrationError, [E.Message]), mtWarning);
-      Result := False;
+      Caption := rsChangeFolderAndMigrate;
+      CommandLinkHint := rsHintChangeFolderAndMigrate;
+      ModalResult := mrYes;
+    end;
+    with TTaskDialogButtonItem(Dlg.Buttons.Add) do
+    begin
+      Caption := rsChangeFolderOnly;
+      CommandLinkHint := rsHintChangeFolderOnly;
+      ModalResult := mrNo;
+    end;
+    if not Dlg.Execute then
+      Exit(mrCancel);
+    Result := Dlg.ModalResult;
+  finally
+    Dlg.Free;
+  end;
+
+  if Result = mrYes then
+  begin
+    try
+      UpdatedCount := MigrateMediaPaths(aTableName, aIdField, aOldBaseFolder, aNewBaseFolder, aSkipUrls);
+      MsgDlg(rsMediaMigrationCompleted, Format(rsMigratedMediaPaths, [UpdatedCount, aMediaLabel]), mtInformation);
+    except
+      on E: Exception do
+      begin
+        MsgDlg(rsTitleError, Format(rsMediaMigrationError, [E.Message]), mtWarning);
+        Result := mrCancel;
+      end;
     end;
   end;
 end;

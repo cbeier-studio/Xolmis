@@ -3351,7 +3351,7 @@ msgstr "Usar padrão"
 
 #: tcfgoptions.caption
 msgid "Settings"
-msgstr "Opções"
+msgstr "Configurações"
 
 #: tcfgoptions.ebandsupplier.buttonhint
 msgid "Find band supplier"
@@ -5046,7 +5046,6 @@ msgid "Save import profile"
 msgstr "Salvar perfil de importação"
 
 #: tdlgimport.sbsaveprofile1.caption
-#, fuzzy
 msgctxt "tdlgimport.sbsaveprofile1.caption"
 msgid "Save import profile"
 msgstr "Salvar perfil de importação"
@@ -12841,7 +12840,7 @@ msgstr "Notas da versão"
 #: tfrmmain.actsettings.caption
 msgctxt "tfrmmain.actsettings.caption"
 msgid "&Settings"
-msgstr "&Opções"
+msgstr "&Configurações"
 
 #: tfrmmain.actviewbandsbalance.caption
 msgctxt "tfrmmain.actviewbandsbalance.caption"
@@ -14660,6 +14659,14 @@ msgctxt "utils_locale.rscaptureunbanded"
 msgid "Unbanded"
 msgstr "Não anilhado"
 
+#: utils_locale.rschangefolderandmigrate
+msgid "Change folder and migrate paths"
+msgstr "Modificar pasta e migrar caminhos"
+
+#: utils_locale.rschangefolderonly
+msgid "Change folder only"
+msgstr "Modificar pasta apenas"
+
 #: utils_locale.rscheckingdatabaseintegrity
 msgid "Checking database integrity..."
 msgstr "Verificando a integridade do banco de dados..."
@@ -16261,6 +16268,14 @@ msgstr "Backup automático realizado"
 msgctxt "utils_locale.rshintbackupenablednotdone"
 msgid "Automatic backup not done"
 msgstr "Backup automático não realizado"
+
+#: utils_locale.rshintchangefolderandmigrate
+msgid "Update the folder setting and rewrite all stored relative paths to match the new location."
+msgstr "Atualiza a opção da pasta e rescreve todos caminhos relativos armazenados para corresponder ao novo local."
+
+#: utils_locale.rshintchangefolderonly
+msgid "Update the folder setting without modifying the existing paths stored in the database."
+msgstr "Atualiza a opção da pasta sem modificar os caminhos existentes armazenados no banco de dados."
 
 #: utils_locale.rshintcheckuncheckall
 msgctxt "utils_locale.rshintcheckuncheckall"
@@ -18103,18 +18118,14 @@ msgid ""
 "Old: %s\n"
 "New: %s\n"
 "\n"
-"To keep existing links working, Xolmis needs to migrate stored relative paths now.\n"
-"\n"
-"Run migration now?"
+"To keep existing links working, Xolmis can migrate the stored relative paths to the new location."
 msgstr ""
 "Você alterou a pasta de %s.\n"
 "\n"
 "Anterior: %s\n"
 "Novo: %s\n"
 "\n"
-"Para manter os links existentes funcionando, o Xolmis precisa migrar os caminhos relativos armazenados agora.\n"
-"\n"
-"Executar migração agora?"
+"Para manter os links existentes funcionando, o Xolmis pode migrar os caminhos relativos armazenados para o novo local."
 
 #: utils_locale.rspromptselectsurvey
 msgctxt "utils_locale.rspromptselectsurvey"
@@ -18481,7 +18492,6 @@ msgid "Tongue"
 msgstr "Língua"
 
 #: utils_locale.rssaveimportprofile
-#, fuzzy
 msgctxt "utils_locale.rssaveimportprofile"
 msgid "Save import profile"
 msgstr "Salvar perfil de importação"

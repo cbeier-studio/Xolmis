@@ -14676,6 +14676,14 @@ msgctxt "utils_locale.rscaptureunbanded"
 msgid "Unbanded"
 msgstr ""
 
+#: utils_locale.rschangefolderandmigrate
+msgid "Change folder and migrate paths"
+msgstr ""
+
+#: utils_locale.rschangefolderonly
+msgid "Change folder only"
+msgstr ""
+
 #: utils_locale.rscheckingdatabaseintegrity
 msgid "Checking database integrity..."
 msgstr ""
@@ -16274,6 +16282,14 @@ msgstr ""
 #: utils_locale.rshintbackupenablednotdone
 msgctxt "utils_locale.rshintbackupenablednotdone"
 msgid "Automatic backup not done"
+msgstr ""
+
+#: utils_locale.rshintchangefolderandmigrate
+msgid "Update the folder setting and rewrite all stored relative paths to match the new location."
+msgstr ""
+
+#: utils_locale.rshintchangefolderonly
+msgid "Update the folder setting without modifying the existing paths stored in the database."
 msgstr ""
 
 #: utils_locale.rshintcheckuncheckall
@@ -17960,9 +17976,7 @@ msgid ""
 "Old: %s\n"
 "New: %s\n"
 "\n"
-"To keep existing links working, Xolmis needs to migrate stored relative paths now.\n"
-"\n"
-"Run migration now?"
+"To keep existing links working, Xolmis can migrate the stored relative paths to the new location."
 msgstr ""
 
 #: utils_locale.rspromptselectsurvey

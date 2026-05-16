@@ -805,13 +805,15 @@ uses
     rsPromptMigrateMediaPath = 'You changed the %s folder.' + LineEnding + LineEnding +
       'Old: %s' + LineEnding +
       'New: %s' + LineEnding + LineEnding +
-      'To keep existing links working, Xolmis needs to migrate stored relative paths now.' +
-      LineEnding + LineEnding +
-      'Run migration now?';
+      'To keep existing links working, Xolmis can migrate the stored relative paths to the new location.';
     rsMediaFolderChanged = 'Media folder changed';
     rsMediaMigrationCompleted = 'Migration completed';
     rsMigratedMediaPaths = '%d %s path(s) were updated.';
     rsMediaMigrationError = 'Could not migrate media paths:' + LineEnding + '%s';
+    rsChangeFolderOnly = 'Change folder only';
+    rsHintChangeFolderOnly = 'Update the folder setting without modifying the existing paths stored in the database.';
+    rsChangeFolderAndMigrate = 'Change folder and migrate paths';
+    rsHintChangeFolderAndMigrate = 'Update the folder setting and rewrite all stored relative paths to match the new location.';
 
     { Languages }
     rsEnglish = 'English';
