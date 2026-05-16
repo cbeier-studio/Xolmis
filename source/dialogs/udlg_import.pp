@@ -294,6 +294,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_themes, utils_dialogs, data_columns, data_schema, data_providers,
+  data_getvalue,
   models_bands, models_birds, models_botany, models_breeding, models_geo, models_institutions, models_methods,
   models_people, models_permits, models_projects, models_sampling, models_sampling_plots, models_sightings,
   models_specimens,
@@ -338,6 +339,10 @@ begin
 
       // 5. Hydrate using repository
       Repo.HydrateFromRow(XRow, Rec);
+
+      // 5.1 Fill missing coordinates from fallback sources when enabled
+      if xSettings.AutoFillCoordinates then
+        TryAutoFillCoordinates(Rec);
 
       // 5. Validate object
       //if not Rec.Validate(Msg) then

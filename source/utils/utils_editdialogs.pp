@@ -254,6 +254,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(SamplingPlot);
         FRepo.Save(SamplingPlot);
 
         { Save changes to the record history }
@@ -1291,6 +1293,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(Capture);
         FRepo.Save(Capture);
 
         { Save changes to the record history }
@@ -1419,6 +1423,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(Nest);
         FRepo.Save(Nest);
 
         { Save changes to the record history }
@@ -1787,6 +1793,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(Survey);
         FRepo.Save(Survey);
 
         { Save changes to the record history }
@@ -1930,6 +1938,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(NetEffort);
         FRepo.Save(NetEffort);
 
         { Save changes to the record history }
@@ -2085,6 +2095,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(Sighting);
         FRepo.Save(Sighting);
 
         { Save changes to the record history }
@@ -2160,6 +2172,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(Specimen);
         FRepo.Save(Specimen);
 
         { Save changes to the record history }
@@ -2797,6 +2811,8 @@ begin
       if not DMM.sqlTrans.Active then
         DMM.sqlTrans.StartTransaction;
       try
+        if xSettings.AutoFillCoordinates then
+          TryAutoFillCoordinates(Vegetation);
         FRepo.Save(Vegetation);
 
         { Save changes to the record history }

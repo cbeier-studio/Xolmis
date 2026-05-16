@@ -33,6 +33,7 @@ type
   function GetFieldValue(aTable, aField, aKeyField: String; aKeyValue: Integer): Variant;
   function GetLatLong(aTable, aLongField, aLatField, aNameField, aKeyField: String;
     aKeyValue: Integer; var aMapPoint: TMapPoint): Boolean;
+  function TryAutoFillCoordinates(ARecord: TXolmisRecord): Boolean;
   function GetSiteKey(aNameValue: String; aCountryId: Integer = 0; aStateId: Integer = 0; aMunicipalityId: Integer = 0): Integer;
   function GetCountryKey(aNameValue: String): Integer;
   function GetStateKey(aNameValue: String; aCountryId: Integer): Integer;
@@ -69,7 +70,8 @@ type
 implementation
 
 uses
-  utils_taxonomy, data_consts, udm_main;
+  utils_taxonomy, data_consts, data_columns, udm_main,
+  models_birds, models_breeding, models_sampling_plots, models_sightings, models_specimens;
 
 function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
 var
@@ -233,6 +235,273 @@ begin
     finally
       FreeAndNil(Qry);
     end;
+  end;
+end;
+
+function CoordsAreEmpty(const ALongitude, ALatitude: Extended): Boolean;
+begin
+  Result := (ALongitude = 0.0) and (ALatitude = 0.0);
+end;
+
+function CoordsAreValid(const ALongitude, ALatitude: Extended): Boolean;
+begin
+  Result := (ALongitude <> 0.0) and (ALatitude <> 0.0);
+end;
+
+function TryGetCoordsFromTable(const ATable, ALongField, ALatField, AKeyField: String;
+  const AKeyValue: Integer; out ALongitude, ALatitude: Extended): Boolean;
+var
+  P: TMapPoint;
+begin
+  ALongitude := 0.0;
+  ALatitude := 0.0;
+  Result := GetLatLong(ATable, ALongField, ALatField, COL_FULL_NAME, AKeyField, AKeyValue, P);
+  if not Result then
+    Exit;
+
+  ALongitude := P.X;
+  ALatitude := P.Y;
+  Result := CoordsAreValid(ALongitude, ALatitude);
+end;
+
+function TryAutoFillCoordinates(ARecord: TXolmisRecord): Boolean;
+var
+  Lng, Lat: Extended;
+  RSamplingPlot: TSamplingPlot;
+  RNest: TNest;
+  RSpecimen: TSpecimen;
+  RSighting: TSighting;
+  RSurvey: TSurvey;
+  RVegetation: TVegetation;
+  RNetEffort: TNetEffort;
+  RCapture: TCapture;
+begin
+  Result := False;
+  if not Assigned(ARecord) then
+    Exit;
+
+  if ARecord is TSamplingPlot then
+  begin
+    RSamplingPlot := TSamplingPlot(ARecord);
+    if not CoordsAreEmpty(RSamplingPlot.Longitude, RSamplingPlot.Latitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_GAZETTEER, COL_LONGITUDE, COL_LATITUDE, COL_SITE_ID,
+      RSamplingPlot.LocalityId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RSamplingPlot.Longitude := Lng;
+        RSamplingPlot.Latitude := Lat;
+        RSamplingPlot.CoordinatePrecision := cpReference;
+        Result := True;
+      end;
+    Exit;
+  end;
+
+  if ARecord is TNest then
+  begin
+    RNest := TNest(ARecord);
+    if not CoordsAreEmpty(RNest.Longitude, RNest.Latitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_GAZETTEER, COL_LONGITUDE, COL_LATITUDE, COL_SITE_ID,
+      RNest.LocalityId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RNest.Longitude := Lng;
+        RNest.Latitude := Lat;
+        RNest.CoordinatePrecision := cpReference;
+        Result := True;
+      end;
+    Exit;
+  end;
+
+  if ARecord is TSpecimen then
+  begin
+    RSpecimen := TSpecimen(ARecord);
+    if not CoordsAreEmpty(RSpecimen.Longitude, RSpecimen.Latitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_NESTS, COL_LONGITUDE, COL_LATITUDE, COL_NEST_ID,
+      RSpecimen.NestId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RSpecimen.Longitude := Lng;
+        RSpecimen.Latitude := Lat;
+        RSpecimen.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_GAZETTEER, COL_LONGITUDE, COL_LATITUDE, COL_SITE_ID,
+      RSpecimen.LocalityId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RSpecimen.Longitude := Lng;
+        RSpecimen.Latitude := Lat;
+        RSpecimen.CoordinatePrecision := cpReference;
+        Result := True;
+      end;
+    Exit;
+  end;
+
+  if ARecord is TSighting then
+  begin
+    RSighting := TSighting(ARecord);
+    if not CoordsAreEmpty(RSighting.Longitude, RSighting.Latitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_SURVEYS, COL_START_LONGITUDE, COL_START_LATITUDE, COL_SURVEY_ID,
+      RSighting.SurveyId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RSighting.Longitude := Lng;
+        RSighting.Latitude := Lat;
+        RSighting.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_GAZETTEER, COL_LONGITUDE, COL_LATITUDE, COL_SITE_ID,
+      RSighting.LocalityId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RSighting.Longitude := Lng;
+        RSighting.Latitude := Lat;
+        RSighting.CoordinatePrecision := cpReference;
+        Result := True;
+      end;
+    Exit;
+  end;
+
+  if ARecord is TSurvey then
+  begin
+    RSurvey := TSurvey(ARecord);
+    if not CoordsAreEmpty(RSurvey.StartLongitude, RSurvey.StartLatitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_SAMPLING_PLOTS, COL_LONGITUDE, COL_LATITUDE, COL_SAMPLING_PLOT_ID,
+      RSurvey.NetStationId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RSurvey.StartLongitude := Lng;
+        RSurvey.StartLatitude := Lat;
+        RSurvey.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_GAZETTEER, COL_LONGITUDE, COL_LATITUDE, COL_SITE_ID,
+      RSurvey.LocalityId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RSurvey.StartLongitude := Lng;
+        RSurvey.StartLatitude := Lat;
+        RSurvey.CoordinatePrecision := cpReference;
+        Result := True;
+      end;
+    Exit;
+  end;
+
+  if ARecord is TVegetation then
+  begin
+    RVegetation := TVegetation(ARecord);
+    if not CoordsAreEmpty(RVegetation.Longitude, RVegetation.Latitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_SURVEYS, COL_START_LONGITUDE, COL_START_LATITUDE, COL_SURVEY_ID,
+      RVegetation.SurveyId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RVegetation.Longitude := Lng;
+        RVegetation.Latitude := Lat;
+        RVegetation.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end;
+    Exit;
+  end;
+
+  if ARecord is TNetEffort then
+  begin
+    RNetEffort := TNetEffort(ARecord);
+    if not CoordsAreEmpty(RNetEffort.Longitude, RNetEffort.Latitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_PERMANENT_NETS, COL_LONGITUDE, COL_LATITUDE, COL_PERMANENT_NET_ID,
+      RNetEffort.PermanentNetId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RNetEffort.Longitude := Lng;
+        RNetEffort.Latitude := Lat;
+        RNetEffort.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_SAMPLING_PLOTS, COL_LONGITUDE, COL_LATITUDE, COL_SAMPLING_PLOT_ID,
+      RNetEffort.NetStationId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RNetEffort.Longitude := Lng;
+        RNetEffort.Latitude := Lat;
+        RNetEffort.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_SURVEYS, COL_START_LONGITUDE, COL_START_LATITUDE, COL_SURVEY_ID,
+      RNetEffort.SurveyId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RNetEffort.Longitude := Lng;
+        RNetEffort.Latitude := Lat;
+        RNetEffort.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end;
+    Exit;
+  end;
+
+  if ARecord is TCapture then
+  begin
+    RCapture := TCapture(ARecord);
+    if not CoordsAreEmpty(RCapture.Longitude, RCapture.Latitude) then
+      Exit;
+
+    if TryGetCoordsFromTable(TBL_NETS_EFFORT, COL_LONGITUDE, COL_LATITUDE, COL_NET_ID,
+      RCapture.NetId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RCapture.Longitude := Lng;
+        RCapture.Latitude := Lat;
+        RCapture.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_SAMPLING_PLOTS, COL_LONGITUDE, COL_LATITUDE, COL_SAMPLING_PLOT_ID,
+      RCapture.NetStationId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RCapture.Longitude := Lng;
+        RCapture.Latitude := Lat;
+        RCapture.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_SURVEYS, COL_START_LONGITUDE, COL_START_LATITUDE, COL_SURVEY_ID,
+      RCapture.SurveyId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RCapture.Longitude := Lng;
+        RCapture.Latitude := Lat;
+        RCapture.CoordinatePrecision := cpApproximated;
+        Result := True;
+      end
+    else
+    if TryGetCoordsFromTable(TBL_GAZETTEER, COL_LONGITUDE, COL_LATITUDE, COL_SITE_ID,
+      RCapture.LocalityId, Lng, Lat) then
+      if CoordsAreValid(Lng, Lat) then
+      begin
+        RCapture.Longitude := Lng;
+        RCapture.Latitude := Lat;
+        RCapture.CoordinatePrecision := cpReference;
+        Result := True;
+      end;
+    Exit;
   end;
 end;
 
