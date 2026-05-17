@@ -16394,14 +16394,18 @@ msgstr "Ignorar e logar erros"
 #: utils_locale.rsimagenotfound
 #, object-pascal-format
 msgctxt "utils_locale.rsimagenotfound"
-msgid "Image not found: %s"
-msgstr "Imagem não encontrada: %s"
+msgid "Image file not found: %s"
+msgstr "Arquivo da imagem não encontrado: %s"
 
 #: utils_locale.rsimagenotsupported
 #, object-pascal-format
 msgctxt "utils_locale.rsimagenotsupported"
 msgid "Image type not supported: %s"
 msgstr "Formato de imagem não suportado: %s"
+
+#: utils_locale.rsimagepathisempty
+msgid "No image file path"
+msgstr "Sem caminho da imagem"
 
 #: utils_locale.rsimportaudiostitle
 msgctxt "utils_locale.rsimportaudiostitle"

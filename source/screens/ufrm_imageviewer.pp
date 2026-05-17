@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, ComCtrls, StdCtrls, BCButton,
-  BCFluentSlider, LCLIntf, ExtDlgs, Menus, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types;
+  BCFluentSlider, LCLIntf, ExtDlgs, Menus, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types, Math;
 
 type
 
@@ -91,9 +91,18 @@ type
     FOriginal, FZoomed: TBGRABitmap;
     FOrigWidth, FOrigHeight: Integer;
     FZoomWidth, FZoomHeight: Integer;
+    FZoomCacheValue: Integer;
+    FHasImage: Boolean;
+    FPreserveZoomAnchor: Boolean;
+    FZoomAnchorClient: TPoint;
+    FZoomAnchorRatioX, FZoomAnchorRatioY: Double;
     FNeedRedraw: Boolean;
     procedure ApplyDarkMode;
+    procedure SetImageActionsEnabled(const AEnabled: Boolean);
+    procedure SetImageUnavailable(const AMessage: String);
     procedure LoadImage;
+    procedure RememberZoomAnchor(const MousePosScreen: TPoint);
+    procedure RestoreZoomAnchor;
     procedure UpdateZoom;
   public
 
@@ -105,7 +114,7 @@ var
 implementation
 
 uses
-  Clipbrd, utils_global, utils_locale, uDarkStyleParams, FPImage, FPCanvas, FPImgCanv,
+  Clipbrd, data_consts, utils_global, utils_locale, uDarkStyleParams, FPImage, FPCanvas, FPImgCanv,
   fpeMetadata, fpeGlobal, fpeTags, fpeExifData;
 
 {$R *.lfm}
@@ -133,8 +142,55 @@ begin
   pmImage.Images := iButtonsDark;
 end;
 
+procedure TfrmImageViewer.SetImageActionsEnabled(const AEnabled: Boolean);
+begin
+  sbOpen.Enabled := AEnabled;
+  sbRotateLeft.Enabled := AEnabled;
+  sbRotateRight.Enabled := AEnabled;
+  sbFlipHorizontal.Enabled := AEnabled;
+  sbFlipVertical.Enabled := AEnabled;
+  sbCopyImage.Enabled := AEnabled;
+  sbSaveAs.Enabled := AEnabled;
+  sbZoomAdjust.Enabled := AEnabled;
+  sbZoom100.Enabled := AEnabled;
+  sbZoomOut.Enabled := AEnabled;
+  sbZoomIn.Enabled := AEnabled;
+  tbZoom.Enabled := AEnabled;
+
+  pmOpenExternal.Enabled := AEnabled;
+  pmRotateLeft.Enabled := AEnabled;
+  pmRotateRight.Enabled := AEnabled;
+  pmFlipHorizontal.Enabled := AEnabled;
+  pmFlipVertical.Enabled := AEnabled;
+  pmCopy.Enabled := AEnabled;
+  pmSaveAs.Enabled := AEnabled;
+end;
+
+procedure TfrmImageViewer.SetImageUnavailable(const AMessage: String);
+begin
+  FHasImage := False;
+  FOrigWidth := 0;
+  FOrigHeight := 0;
+  FZoomWidth := 0;
+  FZoomHeight := 0;
+  FZoomCacheValue := -1;
+  FNeedRedraw := True;
+
+  FOriginal.SetSize(0, 0);
+  FZoomed.SetSize(0, 0);
+  imgView.Picture.Clear;
+  imgView.Width := 0;
+  imgView.Height := 0;
+  lblSize.Caption := AMessage;
+
+  SetImageActionsEnabled(False);
+end;
+
 procedure TfrmImageViewer.btnNextClick(Sender: TObject);
 begin
+  if (dsLink.DataSet = nil) or (not dsLink.DataSet.Active) or dsLink.DataSet.IsEmpty then
+    Exit;
+
   dsLink.DataSet.Next;
 
   LoadImage;
@@ -142,6 +198,9 @@ end;
 
 procedure TfrmImageViewer.btnPriorClick(Sender: TObject);
 begin
+  if (dsLink.DataSet = nil) or (not dsLink.DataSet.Active) or dsLink.DataSet.IsEmpty then
+    Exit;
+
   dsLink.DataSet.Prior;
 
   LoadImage;
@@ -149,6 +208,13 @@ end;
 
 procedure TfrmImageViewer.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
+  if (dsLink.DataSet = nil) or (not dsLink.DataSet.Active) or dsLink.DataSet.IsEmpty then
+  begin
+    btnPrior.Enabled := False;
+    btnNext.Enabled := False;
+    Exit;
+  end;
+
   btnPrior.Enabled := dsLink.DataSet.RecNo > 1;
   btnNext.Enabled := dsLink.DataSet.RecNo < dsLink.DataSet.RecordCount;
 end;
@@ -158,6 +224,9 @@ begin
   FImage := TBitmap.Create;
   FOriginal := TBGRABitmap.Create;
   FZoomed := TBGRABitmap.Create;
+  FZoomCacheValue := -1;
+  FHasImage := False;
+  FPreserveZoomAnchor := False;
   FNeedRedraw := False;
 end;
 
@@ -174,27 +243,52 @@ begin
     ApplyDarkMode;
 
   LoadImage;
-  tbZoom.Value := (scrollView.Height * 100) div FOrigHeight;
+  if FOrigHeight > 0 then
+    tbZoom.Value := EnsureRange((scrollView.Height * 100) div FOrigHeight, tbZoom.MinValue, tbZoom.MaxValue)
+  else
+    tbZoom.Value := 100;
 end;
 
 procedure TfrmImageViewer.LoadImage;
 var
-  FPath: String;
+  FPath, relPath: String;
   imgExif: TImgInfo;
   imgOrientation: TExifOrientation;
 begin
-  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, xSettings.ImagesFolder);
+  if (dsLink.DataSet = nil) or (not dsLink.DataSet.Active) or dsLink.DataSet.IsEmpty then
+  begin
+    SetImageUnavailable('0 × 0 px');
+    Exit;
+  end;
+
+  relPath := Trim(dsLink.DataSet.FieldByName(COL_FILE_PATH).AsString);
+  if relPath = '' then
+  begin
+    SetImageUnavailable(rsImagePathIsEmpty);
+    LogWarning('Image viewer: empty image path in dataset');
+    Exit;
+  end;
+
+  FPath := CreateAbsolutePath(relPath, xSettings.ImagesFolder);
   if not FileExists(FPath) then
-    raise EFileNotFoundException.CreateFmt(rsErrorFileNotFound, [FPath]);
+  begin
+    SetImageUnavailable(Format(rsImageNotFound, [FPath]));
+    LogWarning('Image viewer: file not found: ' + FPath);
+    Exit;
+  end;
 
   { Load image EXIF data }
+  imgOrientation := eoNormal;
   imgExif := TImgInfo.Create;
   with imgExif do
   try
-    LoadFromFile(FPath);
-    if HasEXIF then
-    begin
-      imgOrientation := ExifData.ImgOrientation;
+    try
+      LoadFromFile(FPath);
+      if HasEXIF then
+        imgOrientation := ExifData.ImgOrientation;
+    except
+      on E: Exception do
+        LogWarning('Could not read EXIF metadata from image: ' + E.Message);
     end;
   finally
     FreeAndNil(imgExif);
@@ -240,7 +334,10 @@ begin
   FOrigWidth := FOriginal.Width;
   FOrigHeight := FOriginal.Height;
   lblSize.Caption := Format('%d × %d px', [FOrigWidth, FOrigHeight]);
+  FHasImage := True;
+  SetImageActionsEnabled(True);
 
+  FZoomCacheValue := -1;
   FNeedRedraw := True;
 
   UpdateZoom;
@@ -253,6 +350,9 @@ end;
 
 procedure TfrmImageViewer.sbCopyImageClick(Sender: TObject);
 begin
+  if not FHasImage then
+    Exit;
+
   FImage.Width := FOrigWidth;
   FImage.Height := FOrigHeight;
   FOriginal.Draw(FImage.Canvas, 0, 0);
@@ -263,16 +363,24 @@ end;
 
 procedure TfrmImageViewer.sbFlipHorizontalClick(Sender: TObject);
 begin
+  if not FHasImage then
+    Exit;
+
   FOriginal.HorizontalFlip;
 
+  FZoomCacheValue := -1;
   FNeedRedraw := True;
   UpdateZoom;
 end;
 
 procedure TfrmImageViewer.sbFlipVerticalClick(Sender: TObject);
 begin
+  if not FHasImage then
+    Exit;
+
   FOriginal.VerticalFlip;
 
+  FZoomCacheValue := -1;
   FNeedRedraw := True;
   UpdateZoom;
 end;
@@ -281,7 +389,10 @@ procedure TfrmImageViewer.sbOpenClick(Sender: TObject);
 var
   FPath: String;
 begin
-  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName('image_filename').AsString, xSettings.ImagesFolder);
+  if not FHasImage then
+    Exit;
+
+  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName(COL_FILE_PATH).AsString, xSettings.ImagesFolder);
 
   OpenDocument(FPath);
   LogDebug('Image opened externally');
@@ -289,28 +400,39 @@ end;
 
 procedure TfrmImageViewer.sbRotateLeftClick(Sender: TObject);
 begin
+  if not FHasImage then
+    Exit;
+
   BGRAReplace(FOriginal, FOriginal.RotateCCW);
   FOrigWidth := FOriginal.Width;
   FOrigHeight := FOriginal.Height;
   lblSize.Caption := Format('%d × %d px', [FOrigWidth, FOrigHeight]);
 
+  FZoomCacheValue := -1;
   FNeedRedraw := True;
   UpdateZoom;
 end;
 
 procedure TfrmImageViewer.sbRotateRightClick(Sender: TObject);
 begin
+  if not FHasImage then
+    Exit;
+
   BGRAReplace(FOriginal, FOriginal.RotateCW);
   FOrigWidth := FOriginal.Width;
   FOrigHeight := FOriginal.Height;
   lblSize.Caption := Format('%d × %d px', [FOrigWidth, FOrigHeight]);
 
+  FZoomCacheValue := -1;
   FNeedRedraw := True;
   UpdateZoom;
 end;
 
 procedure TfrmImageViewer.sbSaveAsClick(Sender: TObject);
 begin
+  if not FHasImage then
+    Exit;
+
   SaveDlg.InitialDir := xSettings.LastPathUsed;
   if SaveDlg.Execute then
   begin
@@ -326,7 +448,10 @@ end;
 
 procedure TfrmImageViewer.sbZoomAdjustClick(Sender: TObject);
 begin
-  tbZoom.Value := (scrollView.Height * 100) div FOrigHeight;
+  if FOrigHeight > 0 then
+    tbZoom.Value := EnsureRange((scrollView.Height * 100) div FOrigHeight, tbZoom.MinValue, tbZoom.MaxValue)
+  else
+    tbZoom.Value := 100;
 end;
 
 procedure TfrmImageViewer.sbZoomInClick(Sender: TObject);
@@ -350,6 +475,14 @@ end;
 procedure TfrmImageViewer.scrollViewMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
   MousePos: TPoint; var Handled: Boolean);
 begin
+  if not FHasImage then
+  begin
+    Handled := False;
+    Exit;
+  end;
+
+  RememberZoomAnchor(MousePos);
+
   if WheelDelta > 0 then
     sbZoomInClick(Sender)
   else
@@ -365,27 +498,70 @@ begin
   UpdateZoom;
 end;
 
+procedure TfrmImageViewer.RememberZoomAnchor(const MousePosScreen: TPoint);
+var
+  clientPt: TPoint;
+begin
+  FPreserveZoomAnchor := False;
+  if (not FHasImage) or (imgView.Width <= 0) or (imgView.Height <= 0) then
+    Exit;
+
+  clientPt := scrollView.ScreenToClient(MousePosScreen);
+  if (clientPt.X < imgView.Left) or (clientPt.X > imgView.Left + imgView.Width) or
+     (clientPt.Y < imgView.Top) or (clientPt.Y > imgView.Top + imgView.Height) then
+    Exit;
+
+  FZoomAnchorClient := clientPt;
+  FZoomAnchorRatioX := (clientPt.X - imgView.Left) / Max(1, imgView.Width);
+  FZoomAnchorRatioY := (clientPt.Y - imgView.Top) / Max(1, imgView.Height);
+  FPreserveZoomAnchor := True;
+end;
+
+procedure TfrmImageViewer.RestoreZoomAnchor;
+var
+  contentX, contentY: Integer;
+  maxHPos, maxVPos: Integer;
+begin
+  if not FPreserveZoomAnchor then
+    Exit;
+
+  contentX := imgView.Left + Round(FZoomAnchorRatioX * imgView.Width);
+  contentY := imgView.Top + Round(FZoomAnchorRatioY * imgView.Height);
+
+  maxHPos := Max(0, scrollView.HorzScrollBar.Range - scrollView.HorzScrollBar.Page);
+  maxVPos := Max(0, scrollView.VertScrollBar.Range - scrollView.VertScrollBar.Page);
+
+  scrollView.HorzScrollBar.Position := EnsureRange(contentX - FZoomAnchorClient.X, 0, maxHPos);
+  scrollView.VertScrollBar.Position := EnsureRange(contentY - FZoomAnchorClient.Y, 0, maxVPos);
+  FPreserveZoomAnchor := False;
+end;
+
 procedure TfrmImageViewer.UpdateZoom;
 begin
-  FZoomWidth := Round(FOrigWidth * (tbZoom.Value / 100));
-  FZoomHeight := Round(FOrigHeight * (tbZoom.Value / 100));
-
-  //BGRAReplace(FZoomed, FOriginal.Resample(FZoomWidth, FZoomHeight));
-  if FNeedRedraw then
+  if (not FHasImage) or (FOrigWidth <= 0) or (FOrigHeight <= 0) then
   begin
     imgView.Picture.Clear;
-    //imgView.Picture.Bitmap.Width := FZoomWidth;
-    //imgView.Picture.Bitmap.Height := FZoomHeight;
-    imgView.Picture.Bitmap.Width := FOrigWidth;
-    imgView.Picture.Bitmap.Height := FOrigHeight;
-    //FZoomed.Draw(imgView.Picture.Bitmap.Canvas, 0, 0);
-    FOriginal.Draw(imgView.Picture.Bitmap.Canvas, 0, 0);
+    Exit;
+  end;
+
+  FZoomWidth := Max(1, Round(FOrigWidth * (tbZoom.Value / 100)));
+  FZoomHeight := Max(1, Round(FOrigHeight * (tbZoom.Value / 100)));
+
+  if FNeedRedraw or (FZoomCacheValue <> tbZoom.Value) then
+  begin
+    BGRAReplace(FZoomed, FOriginal.Resample(FZoomWidth, FZoomHeight));
+
+    imgView.Picture.Clear;
+    imgView.Picture.Bitmap.Width := FZoomWidth;
+    imgView.Picture.Bitmap.Height := FZoomHeight;
+    FZoomed.Draw(imgView.Picture.Bitmap.Canvas, 0, 0);
+
+    FZoomCacheValue := tbZoom.Value;
     FNeedRedraw := False;
   end;
-  //imgView.Stretch := True;
-  //imgView.Proportional := True;
-  imgView.Width := Round(imgView.Picture.Width * (tbZoom.Value / 100));
-  imgView.Height := Round(imgView.Picture.Height * (tbZoom.Value / 100));
+
+  imgView.Width := imgView.Picture.Width;
+  imgView.Height := imgView.Picture.Height;
   if imgView.Width > scrollView.ClientWidth then
     imgView.Left := 0
   else
@@ -393,7 +569,9 @@ begin
   if imgView.Height > scrollView.ClientHeight then
     imgView.Top := 0
   else
-  imgView.Top := (scrollView.ClientHeight - imgView.Height) div 2;
+    imgView.Top := (scrollView.ClientHeight - imgView.Height) div 2;
+
+  RestoreZoomAnchor;
 end;
 
 end.

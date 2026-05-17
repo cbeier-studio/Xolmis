@@ -340,7 +340,9 @@ uses
 
     { Image messages }
     rsImageNotSupported = 'Image type not supported: %s';
-    rsImageNotFound = 'Image not found: %s';
+    rsImageNotFound = 'Image file not found: %s';
+    rsImagePathIsEmpty = 'No image file path';
+
 
     { Preparation messages }
     rsPreparingBackup = 'Preparing backup...';

@@ -16405,13 +16405,17 @@ msgstr ""
 #: utils_locale.rsimagenotfound
 #, object-pascal-format
 msgctxt "utils_locale.rsimagenotfound"
-msgid "Image not found: %s"
+msgid "Image file not found: %s"
 msgstr ""
 
 #: utils_locale.rsimagenotsupported
 #, object-pascal-format
 msgctxt "utils_locale.rsimagenotsupported"
 msgid "Image type not supported: %s"
+msgstr ""
+
+#: utils_locale.rsimagepathisempty
+msgid "No image file path"
 msgstr ""
 
 #: utils_locale.rsimportaudiostitle
