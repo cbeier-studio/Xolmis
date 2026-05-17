@@ -282,15 +282,15 @@ var
   imgOrientation: TExifOrientation;
   sthumb: TStream;
   imgThumb: TBGRABitmap;
-  rotAngle: Single;
-  jpgThumb: TJpegImage;
-  bmpCenter: TPointF;
 begin
   if not (FileExists(aFileName)) then
   begin
     LogError(Format(rsImageNotFound, [aFileName]));
     Exit;
   end;
+
+  { Initialize with default value to prevent undefined behavior }
+  imgOrientation := eoNormal;
 
   { Load image EXIF data }
   imgExif := TImgInfo.Create;
@@ -299,7 +299,17 @@ begin
     LoadFromFile(aFileName);
     if HasEXIF then
     begin
-      imgOrientation := ExifData.ImgOrientation;
+      try
+        imgOrientation := ExifData.ImgOrientation;
+      except
+        on E: Exception do
+        begin
+          {$IFDEF DEBUG}
+          LogDebug(Format('Error reading EXIF orientation from %s: %s', [aFileName, E.Message]));
+          {$ENDIF}
+          imgOrientation := eoNormal;
+        end;
+      end;
     end;
   finally
     FreeAndNil(imgExif);
@@ -307,6 +317,13 @@ begin
 
   imgThumb := TBGRABitmap.Create(aFileName);
   try
+    { Validate image dimensions to prevent division by zero }
+    if (imgThumb.Width = 0) or (imgThumb.Height = 0) then
+    begin
+      LogError(Format('Invalid image dimensions (zero size): %s', [aFileName]));
+      Exit;
+    end;
+
     // Get the scale factor for thumbnail image using the larger side
     if imgThumb.Height > imgThumb.Width then
       bmpFactor := THUMB_SIZE / imgThumb.Height
@@ -317,46 +334,31 @@ begin
 
     { Correct image orientation }
     case imgOrientation of
-      eoUnknown: rotAngle := 0;            // Unknown - do nothing
-      eoNormal: rotAngle := 0;             // Horizontal - No rotation required
-      eoMirrorHor:                         // Flip horizontal
+      eoUnknown: ;                          // Unknown - do nothing
+      eoNormal: ;                           // Horizontal - No rotation required
+      eoMirrorHor:                          // Flip horizontal
+        imgThumb.HorizontalFlip;
+      eoRotate180:                          // Rotate 180 CW
         begin
-          imgThumb.HorizontalFlip;
-          rotAngle := 0;
-        end;
-      eoRotate180:                         // Rotate 180 CW
-        begin
-          rotAngle := 180;
           imgThumb.HorizontalFlip;
           imgThumb.VerticalFlip;
         end;
-      eoMirrorVert:                        // Rotate 180 CW and flip horizontal (Flip vertical)
-        begin
-          imgThumb.VerticalFlip;
-          rotAngle := 0;
-        end;
-      eoMirrorHorRot270:                   // Rotate 270 CW and flip horizontal
+      eoMirrorVert:                         // Flip vertical
+        imgThumb.VerticalFlip;
+      eoMirrorHorRot270:                    // Rotate 270 CW and flip horizontal
         begin
           imgThumb.HorizontalFlip;
-          rotAngle := 270;
           BGRAReplace(imgThumb, imgThumb.RotateCCW);
         end;
-      eoRotate90:                          // Rotate 90 CW
-        begin
-          rotAngle := 90;
-          BGRAReplace(imgThumb, imgThumb.RotateCW);
-        end;
-      eoMirrorHorRot90:                    // Rotate 90 CW and flip horizontal
+      eoRotate90:                           // Rotate 90 CW
+        BGRAReplace(imgThumb, imgThumb.RotateCW);
+      eoMirrorHorRot90:                     // Rotate 90 CW and flip horizontal
         begin
           imgThumb.HorizontalFlip;
-          rotAngle := 90;
           BGRAReplace(imgThumb, imgThumb.RotateCW);
         end;
-      eoRotate270:                         // Rotate 270 CW
-        begin
-          rotAngle := 270;
-          BGRAReplace(imgThumb, imgThumb.RotateCCW);
-        end;
+      eoRotate270:                          // Rotate 270 CW
+        BGRAReplace(imgThumb, imgThumb.RotateCCW);
     end;
 
     { Encode image as JPEG }
@@ -379,10 +381,8 @@ end;
 procedure RecreateThumbnails;
 var
   Qry: TSQLQuery;
-  sthumb: TStream;
   imgPath: String;
-  imgThumb: TBGRABitmap;
-  jpgThumb: TJpegImage;
+  ChunkSize: Integer = 50;  // Commit every N images to minimize locks
   {$IFDEF DEBUG}
   Usage: TElapsedTimer;
   {$ENDIF}
@@ -401,41 +401,66 @@ begin
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
     Qry.Options := Qry.Options + [sqoKeepOpenOnCommit];
-    Add('SELECT image_id, file_path, image_thumbnail FROM images');
-    Add('WHERE file_path NOTNULL');
+    { OPTIMIZATION: Removed unused image_id column, fixed WHERE clause }
+    Add('SELECT file_path, image_thumbnail FROM images');
+    Add('WHERE file_path IS NOT NULL');
     Open;
     {$IFDEF DEBUG}
     Usage := TElapsedTimer.Create(Format('Recreate thumbnails for %d images', [Qry.RecordCount]));
-    //LogDebug(Format('Recreate thumbnails for %d images', [Qry.RecordCount]));
     {$ENDIF}
     if Qry.RecordCount > 0 then
     begin
       First;
-      DMM.sqlTrans.EndTransaction;
-      DMM.sqlTrans.StartTransaction;
+      dlgProgress.Position := 0;
+      dlgProgress.Max := Qry.RecordCount;
+      
       try
-        dlgProgress.Position := 0;
-        dlgProgress.Max := Qry.RecordCount;
+        { OPTIMIZATION: Process without long-lived transaction }
         repeat
           dlgProgress.Text := Format(rsProgressImportImages, [Qry.RecNo, Qry.RecordCount]);
           imgPath := CreateAbsolutePath(Qry.FieldByName(COL_FILE_PATH).AsString, xSettings.ImagesFolder);
+
           if (FileExists(imgPath)) then
           begin
-            Edit;
-            FieldByName(COL_IMAGE_THUMBNAIL).Clear;
-            CreateImageThumbnail(imgPath, Qry);
-
-            Post;
-            ApplyUpdates;
+            try
+              Edit;
+              FieldByName(COL_IMAGE_THUMBNAIL).Clear;
+              CreateImageThumbnail(imgPath, Qry);
+              Post;
+              
+              { OPTIMIZATION: Commit every N images instead of per-image }
+              if (Qry.RecNo mod ChunkSize) = 0 then
+              begin
+                DMM.sqlTrans.CommitRetaining;
+                if not DMM.sqlTrans.Active then
+                  DMM.sqlTrans.StartTransaction;
+              end;
+            except
+              on E: Exception do
+              begin
+                LogError(Format('Error processing image %s: %s', [imgPath, E.Message]));
+                Cancel;  { Cancel edit but don't revert entire transaction }
+              end;
+            end;
+          end
+          else
+          begin
+            LogWarning(Format('Image file not found: %s', [imgPath]));
           end;
+
           dlgProgress.Position := Qry.RecNo;
           Application.ProcessMessages;
           Next;
         until Eof or stopProcess;
 
+        { Commit final chunk if any data pending }
+        if DMM.sqlTrans.Active then
+        begin
+          DMM.sqlTrans.CommitRetaining;
+        end;
+
         if stopProcess then
         begin
-          DMM.sqlTrans.RollbackRetaining;
           MsgDlg(rsTitleRecreateThumbnails, rsBatchCanceledByUser, mtWarning);
           LogDebug('Thumbnails remake canceled by user');
         end
@@ -444,13 +469,13 @@ begin
           LogDebug('Thumbnails remake successful');
           dlgProgress.Text := rsProgressFinishing;
           Application.ProcessMessages;
-          DMM.sqlTrans.CommitRetaining;
           MsgDlg(rsTitleRecreateThumbnails, rsSuccessfulRecreateThumbnails, mtInformation);
         end;
       except
         on E: Exception do
         begin
-          DMM.sqlTrans.RollbackRetaining;
+          if DMM.sqlTrans.Active then
+            DMM.sqlTrans.RollbackRetaining;
           MsgDlg(rsTitleError, Format('Error remaking thumbnails: %s', [E.Message]), mtError);
         end;
       end;
