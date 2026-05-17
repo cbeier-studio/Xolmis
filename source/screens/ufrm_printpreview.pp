@@ -159,11 +159,25 @@ begin
 
   if FReportName <> EmptyStr then
   begin
-    Report.DoublePass := True;
-    Report.LoadFromFile(FReportName);
+    try
+      Report.DoublePass := True;
+      Report.LoadFromFile(FReportName);
 
-    Report.PrepareReport;
-    Report.ShowPreparedReport;
+      if not Report.PrepareReport then
+      begin
+        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
+        Exit;
+      end;
+
+      Report.ShowPreparedReport;
+    except
+      on E: Exception do
+      begin
+        LogError('Unable to prepare report preview: ' + E.Message);
+        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
+        Exit;
+      end;
+    end;
 
     sbZoomAdjustWidthClick(nil);
   end;
@@ -274,7 +288,13 @@ begin
     if (Printer.PrinterIndex <> nPrinter ) or // verify if selected printer has changed
         Report.CanRebuild or // ... only makes sense if we can reformat the report
         Report.ChangePrinter(nPrinter, Printer.PrinterIndex) then //... then change printer
-      Report.PrepareReport //... and reformat for new printer
+    begin
+      if not Report.PrepareReport then //... and reformat for new printer
+      begin
+        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
+        Exit;
+      end;
+    end
     else
       Exit; // we couldn't honour the printer change
 
@@ -292,15 +312,26 @@ procedure TfrmPrintPreview.sbSavePDFClick(Sender: TObject);
 begin
   if SaveDlg.Execute then
   begin
-    Report.DoublePass := True;
-    if Report.PrepareReport then
-    begin
+    try
+      Report.DoublePass := True;
+      if not Report.PrepareReport then
+      begin
+        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
+        Exit;
+      end;
+
       Report.ExportFilename := SaveDlg.FileName;
       Report.ExportTo(TlrPdfExportFilter, SaveDlg.FileName);
       LogInfo('Report exported to PDF: ' + SaveDlg.FileName);
 
       if xSettings.OpenFileAfterExport then
         OpenDocument(SaveDlg.FileName);
+    except
+      on E: Exception do
+      begin
+        LogError('Unable to export report to PDF: ' + E.Message);
+        MsgDlg(rsTitleError, rsErrorSavingPDF, mtError);
+      end;
     end;
   end;
 end;
@@ -379,8 +410,8 @@ end;
 procedure TfrmPrintPreview.SetReportName(AValue: String);
 begin
   FReportName := ConcatPaths([InstallDir, 'reports\', AValue]);
-  if not FileExists(FReportName) then
-    MsgDlg(rsTitleError, Format(rsErrorReportNotFound, [AValue]), mtError);
+  // if not FileExists(FReportName) then
+  //   MsgDlg(rsTitleError, Format(rsErrorReportNotFound, [AValue]), mtError);
 end;
 
 procedure TfrmPrintPreview.tbZoomChangeValue(Sender: TObject);
@@ -404,8 +435,8 @@ begin
   sbZoomAdjustWidth.Enabled := frPreview.AllPages > 0;
   sbZoomAdjust.Enabled := frPreview.AllPages > 0;
   sbZoom100.Enabled := frPreview.AllPages > 0;
-  sbZoomOut.Enabled := (frPreview.AllPages > 0) or (tbZoom.Value > tbZoom.MinValue);
-  sbZoomIn.Enabled := (frPreview.AllPages > 0) or (tbZoom.Value < tbZoom.MaxValue);
+  sbZoomOut.Enabled := (frPreview.AllPages > 0) and (tbZoom.Value > tbZoom.MinValue);
+  sbZoomIn.Enabled := (frPreview.AllPages > 0) and (tbZoom.Value < tbZoom.MaxValue);
   tbZoom.Enabled := frPreview.AllPages > 0;
 
   pmPrint.Enabled := sbPrint.Enabled;

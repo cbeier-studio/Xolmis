@@ -15768,6 +15768,10 @@ msgstr "Erro carregando dados do arquivo JSON: %s"
 msgid "The field schema was not loaded."
 msgstr "O esquema do campo não foi carregado."
 
+#: utils_locale.rserrorloadingreport
+msgid "Error loading report."
+msgstr "Erro carregando relatório."
+
 #: utils_locale.rserrorloadingtableschema
 msgid "The table schema was not loaded."
 msgstr "O esquema da tabela não foi carregado."
@@ -15843,6 +15847,10 @@ msgstr "Restauração de backup falhou."
 msgctxt "utils_locale.rserrorrewritinghierarchy"
 msgid "Error rewriting the hierarchy. All rewriting changes were discarded."
 msgstr "Erro ao regravar a hierarquia. Todas alterações foram descartadas."
+
+#: utils_locale.rserrorsavingpdf
+msgid "Error saving PDF."
+msgstr "Erro salvando PDF."
 
 #: utils_locale.rserrorsfound
 #, object-pascal-format
@@ -17763,18 +17771,20 @@ msgid ""
 "The exported content will match exactly what you see in the data grid, including any filters or search criteria applied.\n"
 "\n"
 "To proceed:\n"
-"1. Select the desired file format from the list on the left.\n"
-"2. Check or uncheck the columns to include or exclude them from the export.\n"
+"1. Check or uncheck the columns to include or exclude them from the export.\n"
+"2. Select the desired file format from the list on the top right.\n"
+"3. Configure the export using the options on the right.\n"
 "\n"
-"This ensures you have full control over the structure and scope of the exported dataset."
+"This ensures you have full control over the structure, scope and format of the exported dataset."
 msgstr ""
 "O conteúdo exportado irá corresponder exatamente o que você vê na grade de dados, incluindo quaisquer filtros ou critérios de busca aplicados.\n"
 "\n"
 "Para prosseguir:\n"
-"1. Selecione o formato de arquivo desejado na lista da esquerda.\n"
-"2. Marque ou desmarque as colunas para incluir ou excluir da exportação.\n"
+"1. Marque ou desmarque as colunas para incluir ou excluir da exportação.\n"
+"2. Selecione o formato de arquivo desejado na lista da esquerda.\n"
+"3. Configure a exportação usando as opções na direita.\n"
 "\n"
-"Isso garante que você tenha controle total sobre a estrutura e escopo do conjunto de dados exportado."
+"Isso garante que você tenha controle total sobre a estrutura, escopo e formato do conjunto de dados exportado."
 
 #: utils_locale.rsonboardingsearch
 msgid ""

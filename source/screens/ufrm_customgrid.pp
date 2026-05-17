@@ -1383,6 +1383,25 @@ uses
 
 {$R *.lfm}
 
+function ReplaceTrailingOrderBy(const ASQL: String; const AOrderBy: String): String;
+var
+  RegEx: TRegExpr;
+begin
+  Result := TrimRight(ASQL);
+
+  RegEx := TRegExpr.Create;
+  try
+    RegEx.ModifierI := True;
+    RegEx.Expression := '\s+ORDER\s+BY\s+[\s\S]*$';
+    if RegEx.Exec(Result) then
+      Result := TrimRight(Copy(Result, 1, RegEx.MatchPos[0] - 1));
+  finally
+    FreeAndNil(RegEx);
+  end;
+
+  Result := Result + LineEnding + 'ORDER BY ' + AOrderBy;
+end;
+
 { TStringMemoEditor }
 
 procedure TStringMemoEditor.msgGetValue(var Msg: TGridMessage);
@@ -5976,24 +5995,16 @@ end;
 
 procedure TfrmCustomGrid.pmPrintBandsByCarrierClick(Sender: TObject);
 begin
-  DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
-
-  // Reorder records
-  if Pos('ORDER BY', DMR.qBands.SQL.Text) > 0 then
-    DMR.qBands.SQL.Delete(DMR.qBands.SQL.Count - 1);
-  DMR.qBands.SQL.Add('ORDER BY carrier_name ASC, b.band_size ASC, b.band_number ASC');
+  DMR.qBands.SQL.Text := ReplaceTrailingOrderBy(TSQLQuery(dsLink.DataSet).SQL.Text,
+    'carrier_name ASC, b.band_size ASC, b.band_number ASC');
 
   PrintPreview(BANDS_BY_CARRIER_REPORT_FILE, DMR.dsBands);
 end;
 
 procedure TfrmCustomGrid.pmPrintBandsByStatusClick(Sender: TObject);
 begin
-  DMR.qBands.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
-
-  // Reorder records
-  if Pos('ORDER BY', DMR.qBands.SQL.Text) > 0 then
-    DMR.qBands.SQL.Delete(DMR.qBands.SQL.Count - 1);
-  DMR.qBands.SQL.Add('ORDER BY b.band_status ASC, b.band_size ASC, b.band_number ASC');
+  DMR.qBands.SQL.Text := ReplaceTrailingOrderBy(TSQLQuery(dsLink.DataSet).SQL.Text,
+    'b.band_status ASC, b.band_size ASC, b.band_number ASC');
 
   PrintPreview(BANDS_BY_STATUS_REPORT_FILE, DMR.dsBands);
 end;
@@ -6051,24 +6062,16 @@ end;
 
 procedure TfrmCustomGrid.pmPrintPermitsByExpirationClick(Sender: TObject);
 begin
-  DMR.qPermits.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
-
-  // Reorder records
-  if Pos('ORDER BY', DMR.qPermits.SQL.Text) > 0 then
-    DMR.qPermits.SQL.Delete(DMR.qPermits.SQL.Count - 1);
-  DMR.qPermits.SQL.Add('ORDER BY l.expire_date ASC, l.permit_name ASC');
+  DMR.qPermits.SQL.Text := ReplaceTrailingOrderBy(TSQLQuery(dsLink.DataSet).SQL.Text,
+    'l.expire_date ASC, l.permit_name ASC');
 
   PrintPreview(PERMITS_BY_EXPIRATION_REPORT_FILE, DMR.dsPermits);
 end;
 
 procedure TfrmCustomGrid.pmPrintPermitsByProjectClick(Sender: TObject);
 begin
-  DMR.qPermits.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
-
-  // Reorder records
-  if Pos('ORDER BY', DMR.qPermits.SQL.Text) > 0 then
-    DMR.qPermits.SQL.Delete(DMR.qPermits.SQL.Count - 1);
-  DMR.qPermits.SQL.Add('ORDER BY project_name ASC, l.permit_name ASC');
+  DMR.qPermits.SQL.Text := ReplaceTrailingOrderBy(TSQLQuery(dsLink.DataSet).SQL.Text,
+    'project_name ASC, l.permit_name ASC');
 
   PrintPreview(PERMITS_BY_PROJECT_REPORT_FILE, DMR.dsPermits);
 end;
@@ -6097,12 +6100,8 @@ end;
 
 procedure TfrmCustomGrid.pmPrintSamplingPlotsByLocalityClick(Sender: TObject);
 begin
-  DMR.qSamplingPlots.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
-
-  // Reorder records
-  if Pos('ORDER BY', DMR.qSamplingPlots.SQL.Text) > 0 then
-    DMR.qSamplingPlots.SQL.Delete(DMR.qSamplingPlots.SQL.Count - 1);
-  DMR.qSamplingPlots.SQL.Add('ORDER BY locality_name ASC, pl.full_name ASC');
+  DMR.qSamplingPlots.SQL.Text := ReplaceTrailingOrderBy(TSQLQuery(dsLink.DataSet).SQL.Text,
+    'locality_name ASC, pl.full_name ASC');
 
   PrintPreview(SAMPLING_PLOTS_BY_LOCALITY_REPORT_FILE, DMR.dsSamplingPlots);
 end;
@@ -6144,7 +6143,7 @@ begin
     // Load the list of distinct observers from sightings
     qObservers.SQL.Text := 'SELECT DISTINCT s.observer_id, p.abbreviation FROM sightings AS s ' +
       'LEFT JOIN people AS p ON s.observer_id = p.person_id ' +
-      'WHERE (s.survey_id = :survey_id) and (s.observer_id NOT NULL);';
+      'WHERE (s.survey_id = :survey_id) and (s.observer_id IS NOT NULL);';
     qObservers.ParamByName('survey_id').AsInteger := aSurvey;
     qObservers.Open;
 
@@ -6162,12 +6161,15 @@ begin
     begin
       Qry.SQL.Add('MAX(CASE WHEN s.observer_id = ''' + qObservers.FieldByName('observer_id').AsString +
         ''' THEN ''X'' ELSE '' '' END) AS ' + qObservers.FieldByName('abbreviation').AsString + ', ');
+      
+      qObservers.Next;
     end;
     Qry.SQL.Add('COUNT(DISTINCT s.observer_id) AS X_Count');
     Qry.SQL.Add('FROM sightings AS s');
     Qry.SQL.Add('LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id');
     Qry.SQL.Add('WHERE s.survey_id = :survey_id');
     Qry.SQL.Add('GROUP BY s.taxon_id;');
+    Qry.ParamByName('survey_id').AsInteger := aSurvey;
 
     Qry.Open;
 

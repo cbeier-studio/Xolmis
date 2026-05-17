@@ -66,7 +66,7 @@ begin
   if not aDataSource.DataSet.Active then
     aDataSource.DataSet.Open;
 
-  if aDataSource.DataSet.RecordCount > 0 then
+  if not aDataSource.DataSet.IsEmpty then
   begin
     LogEvent(leaOpen, 'Print preview: ' + aReportFile);
     frmPrintPreview := TfrmPrintPreview.Create(nil);

@@ -15779,6 +15779,10 @@ msgstr ""
 msgid "The field schema was not loaded."
 msgstr ""
 
+#: utils_locale.rserrorloadingreport
+msgid "Error loading report."
+msgstr ""
+
 #: utils_locale.rserrorloadingtableschema
 msgid "The table schema was not loaded."
 msgstr ""
@@ -15853,6 +15857,10 @@ msgstr ""
 #: utils_locale.rserrorrewritinghierarchy
 msgctxt "utils_locale.rserrorrewritinghierarchy"
 msgid "Error rewriting the hierarchy. All rewriting changes were discarded."
+msgstr ""
+
+#: utils_locale.rserrorsavingpdf
+msgid "Error saving PDF."
 msgstr ""
 
 #: utils_locale.rserrorsfound
@@ -17652,10 +17660,11 @@ msgid ""
 "The exported content will match exactly what you see in the data grid, including any filters or search criteria applied.\n"
 "\n"
 "To proceed:\n"
-"1. Select the desired file format from the list on the left.\n"
-"2. Check or uncheck the columns to include or exclude them from the export.\n"
+"1. Check or uncheck the columns to include or exclude them from the export.\n"
+"2. Select the desired file format from the list on the top right.\n"
+"3. Configure the export using the options on the right.\n"
 "\n"
-"This ensures you have full control over the structure and scope of the exported dataset."
+"This ensures you have full control over the structure, scope and format of the exported dataset."
 msgstr ""
 
 #: utils_locale.rsonboardingsearch
