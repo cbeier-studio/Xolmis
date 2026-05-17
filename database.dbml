@@ -259,7 +259,7 @@ Ref: captures.photographer_2_id > people.person_id [update: cascade]
 
 Table db_metadata {
     property_name varchar(50) [primary key, unique, not null]
-    property_value varchar(150)
+    property_value varchar(1024)
 }
 
 Table documents {

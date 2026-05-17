@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 8;
+  SCHEMA_VERSION: Integer = 9;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -1063,6 +1063,29 @@ begin
       if OldVersion < 9 then
       begin
         LogDebug('Upgrading database schema to version 9');
+
+        case aProtocol of
+          dbSqlite:
+          begin
+            // Recreate table to update declared column size in SQLite.
+            DMM.sqlCon.ExecuteDirect('ALTER TABLE db_metadata RENAME TO db_metadata_old;');
+            DMM.sqlCon.ExecuteDirect('CREATE TABLE db_metadata (' +
+              'property_name VARCHAR (40) PRIMARY KEY UNIQUE NOT NULL, ' +
+              'property_value VARCHAR (1024)' +
+            ');');
+            DMM.sqlCon.ExecuteDirect('INSERT INTO db_metadata (property_name, property_value) ' +
+              'SELECT property_name, property_value FROM db_metadata_old;');
+            DMM.sqlCon.ExecuteDirect('DROP TABLE db_metadata_old;');
+          end;
+          dbPostgre:
+            DMM.sqlCon.ExecuteDirect('ALTER TABLE db_metadata ALTER COLUMN property_value TYPE VARCHAR(1024);');
+          dbMaria:
+            DMM.sqlCon.ExecuteDirect('ALTER TABLE db_metadata MODIFY property_value VARCHAR(1024);');
+          dbFirebird:
+            DMM.sqlCon.ExecuteDirect('ALTER TABLE db_metadata ALTER property_value TYPE VARCHAR(1024);');
+        end;
+
+        Result := True;
 
       end;
 

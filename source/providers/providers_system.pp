@@ -476,12 +476,12 @@ begin
       Result :=
         'CREATE TABLE IF NOT EXISTS db_metadata (' +
           'property_name  VARCHAR (40)  PRIMARY KEY UNIQUE NOT NULL, ' +
-          'property_value VARCHAR (150) );';
+          'property_value VARCHAR (1024) );';
     dbFirebird:
       Result :=
         'CREATE TABLE db_metadata (' +
           'property_name VARCHAR(40) PRIMARY KEY, ' +
-          'property_value VARCHAR(150)' +
+          'property_value VARCHAR(1024)' +
         ');';
   end;
 end;

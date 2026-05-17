@@ -264,6 +264,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure LoadFromFile;
+    procedure LoadMediaFoldersFromDatabase;
     procedure SaveOnboarding(aPath: String; aValue: Boolean);
     procedure SaveToFile;
     procedure Reset;
@@ -423,6 +424,53 @@ uses
   {$IFDEF WINDOWS}WinSock2,{$ENDIF}
   {$IFDEF UNIX}use BaseUnix, NetDB,{$ENDIF}
   utils_locale, utils_conversions, data_management, models_users, udlg_connect, udlg_newdatabase;
+
+const
+  DBMETA_MEDIA_IMAGES_FOLDER = 'media_images_folder';
+  DBMETA_MEDIA_AUDIOS_FOLDER = 'media_audios_folder';
+  DBMETA_MEDIA_VIDEOS_FOLDER = 'media_videos_folder';
+  DBMETA_MEDIA_DOCUMENTS_FOLDER = 'media_documents_folder';
+
+function DefaultMediaFolder(const aSubFolder: String): String;
+begin
+  Result := IncludeTrailingPathDelimiter(ConcatPaths([InstallDir, aSubFolder]));
+end;
+
+procedure WriteMetadataValue(const aKey, aValue: String);
+var
+  PrevTransActive: Boolean;
+begin
+  if (not Assigned(DMM)) or (not DMM.sqlCon.Connected) then
+    Exit;
+
+  PrevTransActive := DMM.sqlTrans.Active;
+  if not PrevTransActive then
+    DMM.sqlTrans.StartTransaction;
+
+  try
+    WriteDatabaseMetadata(DMM.sqlCon, aKey, aValue);
+    if not PrevTransActive then
+      DMM.sqlTrans.CommitRetaining;
+  except
+    if not PrevTransActive then
+      DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
+end;
+
+function ReadMediaFolderValue(const aKey, aDefaultSubFolder: String): String;
+var
+  ValueFromDb: String;
+begin
+  Result := DefaultMediaFolder(aDefaultSubFolder);
+
+  if (not Assigned(DMM)) or (not DMM.sqlCon.Connected) then
+    Exit;
+
+  ValueFromDb := Trim(ReadDatabaseMetadata(DMM.sqlCon, aKey));
+  if ValueFromDb <> EmptyStr then
+    Result := IncludeTrailingPathDelimiter(ValueFromDb);
+end;
 
 { ---------------------------------------------------------------------------------------- }
 { System logging }
@@ -779,7 +827,10 @@ begin
       end;
 
       if DMM.sqlCon.Connected then
+      begin
         UpgradeDatabaseSchema(databaseConnection.Backend);
+        xSettings.LoadMediaFoldersFromDatabase;
+      end;
     end;
   finally
     FreeAndNil(dlgConnect);
@@ -998,6 +1049,7 @@ end;
 procedure TXolmisSettings.SetImagesFolder(aValue: String);
 begin
   FImagesFolder := IncludeTrailingPathDelimiter(aValue);
+  WriteMetadataValue(DBMETA_MEDIA_IMAGES_FOLDER, FImagesFolder);
 end;
 
 procedure TXolmisSettings.SetLastPathUsed(aValue: String);
@@ -1008,16 +1060,19 @@ end;
 procedure TXolmisSettings.SetVideosFolder(aValue: String);
 begin
   FVideosFolder := IncludeTrailingPathDelimiter(aValue);
+  WriteMetadataValue(DBMETA_MEDIA_VIDEOS_FOLDER, FVideosFolder);
 end;
 
 procedure TXolmisSettings.SetAudiosFolder(aValue: String);
 begin
   FAudiosFolder := IncludeTrailingPathDelimiter(aValue);
+  WriteMetadataValue(DBMETA_MEDIA_AUDIOS_FOLDER, FAudiosFolder);
 end;
 
 procedure TXolmisSettings.SetDocumentsFolder(aValue: String);
 begin
   FDocumentsFolder := IncludeTrailingPathDelimiter(aValue);
+  WriteMetadataValue(DBMETA_MEDIA_DOCUMENTS_FOLDER, FDocumentsFolder);
 end;
 
 procedure TXolmisSettings.SetBackupFolder(aValue: String);
@@ -1057,10 +1112,10 @@ begin
   FEnterAsTab := FConfig.GetValue('/GENERAL/EnterAsTab', True);
   FTerminatedOk := FConfig.GetValue('/GENERAL/TerminatedOk', True);
   FClearDeletedPeriod := FConfig.GetValue('/GENERAL/ClearDeletedPeriod', 2);
-  FLastClearDeleted := FConfig.GetValue('/GENERAL/LastClearDeleted', StrToDateTime('30/12/1500 00:00:00'));
-  FLastDatabaseOptimization := FConfig.GetValue('/GENERAL/LastDatabaseOptimization', StrToDateTime('30/12/1500 00:00:00'));
+  FLastClearDeleted := FConfig.GetValue('/GENERAL/LastClearDeleted', NullDateTime);
+  FLastDatabaseOptimization := FConfig.GetValue('/GENERAL/LastDatabaseOptimization', NullDateTime);
   FAutoUpdates := FConfig.GetValue('/GENERAL/AutoUpdates', 2);
-  FLastAutoUpdate := FConfig.GetValue('/GENERAL/LastAutoUpdate', StrToDateTime('30/12/1500 00:00:00'));
+  FLastAutoUpdate := FConfig.GetValue('/GENERAL/LastAutoUpdate', NullDateTime);
   { Appearance }
   FSelectedTheme := FConfig.GetValue('/APPEARANCE/SelectedTheme', 1);
   FShowGridLines := FConfig.GetValue('/APPEARANCE/ShowGridLines', True);
@@ -1083,7 +1138,7 @@ begin
   FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
   FAudiosFolder := FConfig.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
   FVideosFolder := FConfig.GetValue('/MEDIA/VideosFolder', ConcatPaths([InstallDir, 'videos']));
-  FDocumentsFolder := FConfig.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'attachments']));
+  FDocumentsFolder := FConfig.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'documents']));
   FOpenAfterExport := FConfig.GetValue('/MEDIA/OpenAfterExport', True);
   { Security }
   FRememberUser := FConfig.GetValue('/SECURITY/RememberUser', False);
@@ -1134,6 +1189,17 @@ begin
   FirstDeletedRecordsCleaning := FConfig.GetValue('/ONBOARDING/FirstDeletedRecordsCleaning', True);
   FirstSearchUse := FConfig.GetValue('/ONBOARDING/FirstSearchUse', True);
   FirstFeedback := FConfig.GetValue('/ONBOARDING/FirstFeedback', True);
+end;
+
+procedure TXolmisSettings.LoadMediaFoldersFromDatabase;
+begin
+  if (not Assigned(DMM)) or (not DMM.sqlCon.Connected) then
+    Exit;
+
+  ImagesFolder := ReadMediaFolderValue(DBMETA_MEDIA_IMAGES_FOLDER, 'images');
+  AudiosFolder := ReadMediaFolderValue(DBMETA_MEDIA_AUDIOS_FOLDER, 'sounds');
+  VideosFolder := ReadMediaFolderValue(DBMETA_MEDIA_VIDEOS_FOLDER, 'videos');
+  DocumentsFolder := ReadMediaFolderValue(DBMETA_MEDIA_DOCUMENTS_FOLDER, 'documents');
 end;
 
 procedure TXolmisSettings.SaveToFile;

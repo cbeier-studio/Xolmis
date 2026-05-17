@@ -195,7 +195,6 @@ uses
     rsErrorImageNotSupported = 'Image format not supported! Supported formats: JPEG and Bitmap.';
     rsErrorValidatingPassword = 'Error validating password: %s';
     rsErrorFieldsAndValuesDiffer = 'The length of field and value lists do not match.';
-    rsErrorLoadingDataFromJSONFile = 'Error loading data from the JSON file: %s';
     rsErrorModuleNotSupported = 'The module is not supported.';
     rsErrorModuleIsDifferent = 'The file module is different from the Quick Entry module.';
     rsErrorNoImporterRegisteredForExtension = 'No importer registered for %s';
@@ -216,8 +215,11 @@ uses
     rsErrorLoadingDatabaseSchema = 'The database schema was not loaded.';
     rsErrorLoadingTableSchema = 'The table schema was not loaded.';
     rsErrorLoadingFieldSchema = 'The field schema was not loaded.';
+    rsErrorLoadingDataFromJSONFile = 'Error loading data from the JSON file: %s';
+    rsErrorLoadingReport = 'Error loading report.';
     rsErrorExportingEbird = 'Error exporting eBird data: %s';
     rsErrorValidationFailed = 'Data validation found issues.';
+    rsErrorSavingPDF = 'Error saving PDF.';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
@@ -596,9 +598,10 @@ uses
         'Use these options to tailor the grid layout to your needs and make data exploration more efficient.';
     rsOnboardingQuickExport = 'The exported content will match exactly what you see in the data grid, including any filters or search criteria applied.' + LineEnding + LineEnding +
         'To proceed:' + LineEnding +
-        '1. Select the desired file format from the list on the left.' + LineEnding +
-        '2. Check or uncheck the columns to include or exclude them from the export.' + LineEnding + LineEnding +
-        'This ensures you have full control over the structure and scope of the exported dataset.';
+        '1. Check or uncheck the columns to include or exclude them from the export.' + LineEnding +
+        '2. Select the desired file format from the list on the top right.' + LineEnding +
+        '3. Configure the export using the options on the right.' + LineEnding + LineEnding +
+        'This ensures you have full control over the structure, scope and format of the exported dataset.';
     rsOnboardingMap = 'The Map view lets you explore the geographic distribution of your records.' + LineEnding + LineEnding +
         'If you need to export coordinates, use the Export button located in the side panel above the map. ' +
         'This allows you to save the geographic data for use in other applications or analyses.';
