@@ -107,6 +107,7 @@ type
     procedure ApplyDarkMode;
     function AddSurvey: Integer;
     function AddNest: Integer;
+    function AddNestOwner(aNestId, aIndividualId: Integer; aRole: TNestRole): Integer;
     procedure AppendLog(const aMsg: String);
     function GetContentType: TMobileContentType;
     function GetMethodFromInventory(aInventory: TMobileInventory): Integer;
@@ -143,9 +144,10 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_management, utils_dialogs, utils_finddialogs, data_getvalue, models_geo,
-  models_sightings, data_consts, utils_themes, uDarkStyleParams, models_specimens,
-  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading;
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes,
+  data_types, data_management, data_getvalue, data_consts,
+  models_geo, models_sightings, models_specimens,
+  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -194,8 +196,6 @@ begin
     aDataSet.FieldByName(COL_HEIGHT_ABOVE_GROUND).AsFloat := JSONObject.Get('heightAboveGround', 0.0);
     aDataSet.FieldByName(COL_NEST_FATE).AsString := aFate;
 
-    { #todo : AddNest - male, female, helpers }
-
     if ShowModal = mrOk then
     begin
       aDataSet.Post;
@@ -209,6 +209,32 @@ begin
 
   if CloseQueryAfter then
     aDataSet.Close;
+end;
+
+function TdlgImportXMobile.AddNestOwner(aNestId, aIndividualId: Integer; aRole: TNestRole): Integer;
+var
+  FRepo: TNestOwnerRepository;
+  FOwner: TNestOwner;
+begin
+  Result := 0;
+
+  FRepo := TNestOwnerRepository.Create(DMM.sqlCon);
+  FOwner := TNestOwner.Create();
+  try
+    FRepo.FindByNest(aNestId, aIndividualId, FOwner);
+    if not FOwner.IsNew then
+      Exit;
+
+    FOwner.NestId := aNestId;
+    FOwner.IndividualId := aIndividualId;
+    FOwner.Role := aRole;
+    FRepo.Insert(FOwner);
+
+    Result := FOwner.Id;
+  finally
+    FreeAndNil(FOwner);
+    FRepo.Free;
+  end;
 end;
 
 function TdlgImportXMobile.AddSurvey: Integer;
@@ -998,6 +1024,35 @@ var
   aNest, aOldNest: TNest;
   Repo: TNestRepository;
   Nest: TMobileNest;
+
+  procedure ImportHelperOwners(const ANestId: Integer; const AHelpers: String);
+  var
+    HelperItems: TStringList;
+    HelperName: String;
+    HelperId: Integer;
+  begin
+    if Trim(AHelpers) = EmptyStr then
+      Exit;
+
+    HelperItems := TStringList.Create;
+    try
+      HelperItems.StrictDelimiter := True;
+      HelperItems.Delimiter := ';';
+      HelperItems.DelimitedText := AHelpers;
+
+      for HelperName in HelperItems do
+      begin
+        if Trim(HelperName) = EmptyStr then
+          Continue;
+
+        HelperId := GetIndividualKey(Trim(HelperName));
+        if HelperId > 0 then
+          AddNestOwner(ANestId, HelperId, nrlHelper);
+      end;
+    finally
+      HelperItems.Free;
+    end;
+  end;
 begin
   nbPages.PageIndex := 2;
 
@@ -1041,6 +1096,13 @@ begin
             finally
               FreeAndNil(aOldNest);
             end;
+            // insert nest owners
+            if Trim(Nest.FMale) <> EmptyStr then
+              AddNestOwner(aNestKey, GetIndividualKey(Nest.FMale), nrlMale);
+            if Trim(Nest.FFemale) <> EmptyStr then
+              AddNestOwner(aNestKey, GetIndividualKey(Nest.FFemale), nrlFemale);
+            if Trim(Nest.FHelpers) <> EmptyStr then
+              ImportHelperOwners(aNestKey, Nest.FHelpers);
             // insert or update nest revisions
             ImportRevisions(Nest);
             // insert or update eggs
@@ -1058,6 +1120,14 @@ begin
             Nest.FNestKey := aNestKey;
             // write record history
             WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByImport);
+
+            // insert nest owners
+            if Nest.FMale <> EmptyStr then
+              AddNestOwner(aNestKey, GetIndividualKey(Nest.FMale), nrlMale);
+            if Nest.FFemale <> EmptyStr then
+              AddNestOwner(aNestKey, GetIndividualKey(Nest.FFemale), nrlFemale);
+            if Trim(Nest.FHelpers) <> EmptyStr then
+              ImportHelperOwners(aNestKey, Nest.FHelpers);
 
             // insert nest revisions
             ImportRevisions(Nest);

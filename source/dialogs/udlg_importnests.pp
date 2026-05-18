@@ -87,6 +87,7 @@ type
     procedure AppendLog(const aMsg: String);
     procedure ApplyDarkMode;
     procedure UpdateButtons;
+    function ValidateFields: Boolean;
   public
 
   end;
@@ -97,7 +98,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, io_core, io_nesting_csv, utils_themes, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_themes,
+  io_core, io_nesting_csv,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -256,7 +259,8 @@ end;
 
 procedure TdlgImportNests.sbRunClick(Sender: TObject);
 begin
-  { #todo : Validate fields }
+  if not ValidateFields then
+    Exit;
 
   sbRetry.Visible := False;
   barProgress.Visible := True;
@@ -330,6 +334,31 @@ begin
   sbRun.Enabled := HasImportFileSelected(eNestFile.FileName) or
                    HasImportFileSelected(eRevisionFile.FileName) or
                    HasImportFileSelected(eEggFile.FileName);
+end;
+
+function TdlgImportNests.ValidateFields: Boolean;
+var
+  Msgs: TStrings;
+begin
+  Result := True;
+  Msgs := TStringList.Create;
+
+  if HasImportFileSelected(eNestFile.FileName) then
+    if not FileExists(eNestFile.FileName) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eNestFile.FileName]));
+  if HasImportFileSelected(eRevisionFile.FileName) then
+    if not FileExists(eRevisionFile.FileName) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eRevisionFile.FileName]));
+  if HasImportFileSelected(eEggFile.FileName) then
+    if not FileExists(eEggFile.FileName) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eEggFile.FileName]));
+
+  if Msgs.Count > 0 then
+  begin
+    Result := False;
+    ValidateDlg(Msgs);
+  end;
+  Msgs.Free;
 end;
 
 end.

@@ -89,7 +89,7 @@ type
     aMessageList: TStrings = nil): Boolean; overload;
   function RecordDuplicated(aTable: TTableType; FieldsSet: array of String; ValuesSet: array of Variant;
     aKeyField: String; aKeyValue: Integer; aMessageList: TStrings = nil): Boolean; overload;
-  function IsRecordActive(aTable: TTableType; aFieldName, aValue: String): Boolean;
+  function IsRecordActive(aTable: TTableType; aFieldName: String; aValue: Integer): Boolean;
   function SpuhAllowed(aDataset: TDataset; aTaxon, aQualifier: String; aMessageList: TStrings = nil): Boolean;
   function EpithetIsEmpty(aDataset: TDataset; aRank, aEpithet: String; aMessageList: TStrings = nil): Boolean;
   function IsCoordinateOk(aDataset: TDataset; aAxisValue: String; aAxis: TMapAxis;
@@ -99,6 +99,29 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_themes, data_management, udm_main;
+
+function KeepOnlyDigits(const AValue: String): String;
+var
+  I: Integer;
+begin
+  Result := EmptyStr;
+  for I := 1 to Length(AValue) do
+    if AValue[I] in ['0'..'9'] then
+      Result := Result + AValue[I];
+end;
+
+function AllCharsEqual(const AValue: String): Boolean;
+var
+  I: Integer;
+begin
+  Result := Length(AValue) > 0;
+  if not Result then
+    Exit;
+
+  for I := 2 to Length(AValue) do
+    if AValue[I] <> AValue[1] then
+      Exit(False);
+end;
 
 function CheckEmail(const aEmailAddress: String; aMessageList: TStrings): Boolean;
 var
@@ -185,46 +208,90 @@ end;
 
 function CheckCPF(aCPF: String; aMessageList: TStrings): Boolean;
 var
+  I: Integer;
   n1, n2, n3, n4, n5, n6, n7, n8, n9: Integer;
   d1, d2: Integer;
   digitado, calculado, m: string;
 begin
   Result := True;
+  aCPF := Trim(aCPF);
   if Length(aCPF) = 0 then
   begin
     Result := True;
     Exit;
   end;
-  if Length(aCPF) < 11 then
-  begin
-    LogError('CPF is less than 11 digits');
-    MsgDlg('', rsCPFTooShort, mtError);
-    Result := False;
-    Exit;
-  end;
+
   if ExecRegExpr('^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}\-[0-9]{2}$', aCPF) then
   begin
     LogError('CNPJ informed in CPF field');
-    MsgDlg('', rsCNPJInCPF, mtError);
+    if Assigned(aMessageList) then
+      aMessageList.Add(rsCNPJInCPF)
+    else
+      MsgDlg('', rsCNPJInCPF, mtError);
     Result := False;
     Exit;
   end;
 
-  if ExecRegExpr('^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$', aCPF) then
+  aCPF := KeepOnlyDigits(aCPF);
+  if Length(aCPF) <> 11 then
   begin
-    aCPF := StringReplace(aCPF, '.', '', [rfReplaceAll]);
-    aCPF := StringReplace(aCPF, '/', '', [rfReplaceAll]);
-    aCPF := StringReplace(aCPF, '-', '', [rfReplaceAll]);
+    LogError('CPF must have exactly 11 digits');
+    if Assigned(aMessageList) then
+    begin
+      if Length(aCPF) < 11 then
+        aMessageList.Add(rsCPFTooShort)
+      else
+        aMessageList.Add(rsInvalidCPF);
+    end
+    else
+    begin
+      if Length(aCPF) < 11 then
+        MsgDlg('', rsCPFTooShort, mtError)
+      else
+        MsgDlg('', rsInvalidCPF, mtError);
+    end;
+    Result := False;
+    Exit;
   end;
-  n1 := StrToInt(aCPF[1]);
-  n2 := StrToInt(aCPF[2]);
-  n3 := StrToInt(aCPF[3]);
-  n4 := StrToInt(aCPF[4]);
-  n5 := StrToInt(aCPF[5]);
-  n6 := StrToInt(aCPF[6]);
-  n7 := StrToInt(aCPF[7]);
-  n8 := StrToInt(aCPF[8]);
-  n9 := StrToInt(aCPF[9]);
+
+  if AllCharsEqual(aCPF) then
+  begin
+    m := rsInvalidCPF;
+    if Assigned(aMessageList) then
+    begin
+      LogError(m);
+      aMessageList.Add(m);
+    end
+    else
+      MsgDlg('', m, mtInformation);
+    Result := False;
+    Exit;
+  end;
+
+  for I := 1 to Length(aCPF) do
+    if not (aCPF[I] in ['0'..'9']) then
+    begin
+      m := rsInvalidCPF;
+      if Assigned(aMessageList) then
+      begin
+        LogError(m);
+        aMessageList.Add(m);
+      end
+      else
+        MsgDlg('', m, mtInformation);
+      Result := False;
+      Exit;
+    end;
+
+  n1 := Ord(aCPF[1]) - Ord('0');
+  n2 := Ord(aCPF[2]) - Ord('0');
+  n3 := Ord(aCPF[3]) - Ord('0');
+  n4 := Ord(aCPF[4]) - Ord('0');
+  n5 := Ord(aCPF[5]) - Ord('0');
+  n6 := Ord(aCPF[6]) - Ord('0');
+  n7 := Ord(aCPF[7]) - Ord('0');
+  n8 := Ord(aCPF[8]) - Ord('0');
+  n9 := Ord(aCPF[9]) - Ord('0');
   d1 := (n9 * 2) + (n8 * 3) + (n7 * 4) + (n6 * 5) + (n5 * 6) + (n4 * 7) + (n3 * 8) + (n2 * 9) + (n1 * 10);
   d1 := 11 - (d1 mod 11);
   if d1 >= 10 then
@@ -234,7 +301,7 @@ begin
   if d2 >= 10 then
     d2 := 0;
   calculado := IntToStr(d1) + IntToStr(d2);
-  digitado := aCPF[10] + aCPF[11];
+  digitado := Copy(aCPF, 10, 2);
   if calculado = digitado then
     Result := True
   else
@@ -255,12 +322,14 @@ end;
 
 function CheckCNPJ(aCNPJ: String): Boolean;
 var
+  I: Integer;
   d1, d4, xx, nCount, Fator, Resto, Digito1, Digito2: Integer;
   Check: String;
 begin
+  aCNPJ := Trim(aCNPJ);
   if Length(aCNPJ) = 0 then
   begin
-    Result := False;
+    Result := True;
     Exit;
   end;
   if ExecRegExpr('^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$', aCNPJ) then
@@ -270,19 +339,31 @@ begin
     Result := False;
     Exit;
   end;
-  if Length(aCNPJ) < 14 then
+
+  aCNPJ := KeepOnlyDigits(aCNPJ);
+  if Length(aCNPJ) <> 14 then
   begin
-    LogError('CNPJ is less than 14 digits');
+    LogError('CNPJ must have exactly 14 digits');
     MsgDlg('', rsCNPJTooShort, mtError);
     Result := False;
     Exit;
   end;
-  if ExecRegExpr('^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}\-[0-9]{2}$', aCNPJ) then
+
+  if AllCharsEqual(aCNPJ) then
   begin
-    aCNPJ := StringReplace(aCNPJ, '.', '', [rfReplaceAll]);
-    aCNPJ := StringReplace(aCNPJ, '/', '', [rfReplaceAll]);
-    aCNPJ := StringReplace(aCNPJ, '-', '', [rfReplaceAll]);
+    LogError('CNPJ with repeated digits is invalid');
+    Result := False;
+    Exit;
   end;
+
+  for I := 1 to Length(aCNPJ) do
+    if not (aCNPJ[I] in ['0'..'9']) then
+    begin
+      LogError('CNPJ contains invalid characters');
+      Result := False;
+      Exit;
+    end;
+
   d1 := 0;
   d4 := 0;
   xx := 1;
@@ -296,7 +377,7 @@ begin
     begin
       Fator := 14 - xx;
     end;
-    d1 := d1 + StrToInt(aCNPJ[nCount]) * Fator;
+    d1 := d1 + (Ord(aCNPJ[nCount]) - Ord('0')) * Fator;
     if xx < 6 then
     begin
       Fator := 7 - xx;
@@ -305,7 +386,7 @@ begin
     begin
       Fator := 15 - xx;
     end;
-    d4 := d4 + StrToInt(aCNPJ[nCount]) * Fator;
+    d4 := d4 + (Ord(aCNPJ[nCount]) - Ord('0')) * Fator;
     xx := xx + 1;
   end;
   Resto := (d1 mod 11);
@@ -355,7 +436,7 @@ var
   FDay, FMonth, FYear: Word;
   aDate: TDateTime;
 begin
-  Result := TryStrToDate(aDateStr, aDate);
+  Result := TryParseDateFlexible(aDateStr, aDate);
 
   if Result = True then
   begin
@@ -571,11 +652,11 @@ begin
   if S = EmptyStr then
     Exit;
 
-  // ISO primeiro: evita ambiguidade
+  // ISO first: prevents ambiguity
   if TryISO8601ToDate(S, ADate, False) then
     Exit(True);
 
-  // Normaliza separadores para reduzir combinações
+  // Normalize separators to reduce combinations
   S := StringReplace(S, '.', '/', [rfReplaceAll]);
   S := StringReplace(S, '-', '/', [rfReplaceAll]);
 
@@ -692,16 +773,16 @@ begin
   if S = EmptyStr then
     Exit;
 
-  // 1) ISO 8601 primeiro (mais determinístico)
+  // 1) ISO 8601 first (more deterministic)
   if TryISO8601ToDate(S, ADateTime, False) then
     Exit(True);
 
-  // 2) Tenta parser padrão de datetime
+  // 2) Try default datetime parser
   FS := DefaultFormatSettings;
   if TryStrToDateTime(S, ADateTime, FS) then
     Exit(True);
 
-  // 3) Tenta quebrar em data + hora e reaproveitar os parsers flexíveis existentes
+  // 3) Try split date + time and use the existent flexible parsers
   P := Pos('T', S);
   if P <= 0 then
     P := LastDelimiter(' ', S);
@@ -711,7 +792,7 @@ begin
     DatePart := Trim(Copy(S, 1, P - 1));
     TimePart := Trim(Copy(S, P + 1, MaxInt));
 
-    // remove sufixo Z comum em timestamps
+    // remove Z suffix common in timestamps
     if (TimePart <> EmptyStr) and (UpCase(TimePart[Length(TimePart)]) = 'Z') then
       Delete(TimePart, Length(TimePart), 1);
 
@@ -1056,15 +1137,23 @@ begin
 
   if (aField.IsNull) or (Trim(aField.AsString) = EmptyStr) then
   begin
-    aControl.Color := clSystemCriticalBGLight;
-    aControl.Font.Color := clSystemCriticalFGLight;
-    aLabel.Font.Color := clSystemCriticalFGLight;
+    if Assigned(aControl) then
+    begin
+      aControl.Color := clSystemCriticalBGLight;
+      aControl.Font.Color := clSystemCriticalFGLight;
+    end;
+    if Assigned(aLabel) then
+      aLabel.Font.Color := clSystemCriticalFGLight;
   end
   else
   begin
-    aControl.Color := clDefaultBGLight;
-    aControl.Font.Color := clTextPrimaryLight;
-    aLabel.Font.Color := clTextSecondaryLight;
+    if Assigned(aControl) then
+    begin
+      aControl.Color := clDefaultBGLight;
+      aControl.Font.Color := clTextPrimaryLight;
+    end;
+    if Assigned(aLabel) then
+      aLabel.Font.Color := clTextSecondaryLight;
     Result := True;
   end;
 end;
@@ -1114,7 +1203,8 @@ begin
     begin
       aLabel.Hint := Format(rsRequiredField, [GetFieldDisplayName(aTable, aFieldName)]);
       aLabel.ShowHint := True;
-      aLabel.Caption := aLabel.Caption + ': ' + #$26A0;
+      if Pos(#$26A0, aLabel.Caption) = 0 then
+        aLabel.Caption := aLabel.Caption + ': ' + #$26A0;
       aLabel.Font.Color := clSystemCriticalFGLight;
     end;
   end;
@@ -1204,7 +1294,7 @@ begin
 
   if Result then
   begin
-    if IsRecordActive(aTable, aNameField, aNameValue) then
+    if IsRecordActive(aTable, aKeyField, aKeyValue) then
       M := Format(rsActiveRecordDuplicated, [GetFieldDisplayName(aTable, aNameField), aNameValue])
     else
       M := Format(rsInactiveRecordDuplicated, [GetFieldDisplayName(aTable, aNameField), aNameValue]);
@@ -1242,8 +1332,8 @@ begin
     SQLText := SQLText + '(%field' + IntToStr(i) + ' = :value' + IntToStr(i) + ')';
   end;
 
-  // Remove key value from SELECT, if not null
-  if not VarIsNull(aKeyValue) then
+  // Ignore current record when an existing key was provided
+  if aKeyValue > 0 then
   begin
     SQLText := SQLText + ' AND (%key_field <> :key_value)';
   end;
@@ -1269,21 +1359,24 @@ begin
       if VarIsStr(ValuesSet[i]) then
         Qry.ParamByName('value' + IntToStr(i)).AsString := ValuesSet[i]
       else
-      if VarIsNumeric (ValuesSet[i]) then
-        Qry.ParamByName('value' + IntToStr(i)).AsInteger := ValuesSet[i]
-      else
       if VarIsFloat(ValuesSet[i]) then
         Qry.ParamByName('value' + IntToStr(i)).AsFloat := ValuesSet[i]
+      else
+      if VarIsNumeric(ValuesSet[i]) then
+        Qry.ParamByName('value' + IntToStr(i)).AsInteger := ValuesSet[i]
       else
       if VarIsBool(ValuesSet[i]) then
         Qry.ParamByName('value' + IntToStr(i)).AsBoolean := ValuesSet[i]
       else
-      if (VarIsEmpty(ValuesSet[i])) or (VarIsNull(ValuesSet[i])) or (ValuesSet[i] = 'NULL') then
+      if (VarIsEmpty(ValuesSet[i])) or (VarIsNull(ValuesSet[i])) then
+        Qry.ParamByName('value' + IntToStr(i)).Clear
+      else
+      if VarIsStr(ValuesSet[i]) and SameText(Trim(VarToStr(ValuesSet[i])), 'NULL') then
         Qry.ParamByName('value' + IntToStr(i)).Clear;
     end;
 
-    // Assign key value param, if not null
-    if not VarIsNull(aKeyValue) then
+    // Assign key value param, if key was provided
+    if aKeyValue > 0 then
     begin
       Qry.ParamByName('key_value').Value := aKeyValue;
     end;
@@ -1309,7 +1402,7 @@ begin
   end;
 end;
 
-function IsRecordActive(aTable: TTableType; aFieldName, aValue: String): Boolean;
+function IsRecordActive(aTable: TTableType; aFieldName: String; aValue: Integer): Boolean;
 var
   a: Boolean;
   Qry: TSQLQuery;
@@ -1324,10 +1417,10 @@ begin
     Add('SELECT active_status FROM %tabname WHERE (%keyf = :keyv)');
     MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
     MacroByName('KEYF').Value := aFieldName;
-    ParamByName('KEYV').AsInteger := StrToInt(aValue);
+    ParamByName('KEYV').AsInteger := aValue;
     // GravaLogSQL(SQL);
     Open;
-    a := FieldByName('reg_ativo').AsBoolean;
+    a := FieldByName('active_status').AsBoolean;
     Close;
   finally
     FreeAndNil(Qry);

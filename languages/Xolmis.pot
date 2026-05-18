@@ -13970,6 +13970,11 @@ msgctxt "utils_locale.rsaudiounknown"
 msgid "Unknown"
 msgstr ""
 
+#: utils_locale.rsauthentication
+msgctxt "utils_locale.rsauthentication"
+msgid "Authentication"
+msgstr ""
+
 #: utils_locale.rsauthorship
 msgctxt "utils_locale.rsauthorship"
 msgid "Authorship"
@@ -16186,6 +16191,10 @@ msgstr ""
 
 #: utils_locale.rsfileextxml
 msgid "Extensible Markup Language (XML)"
+msgstr ""
+
+#: utils_locale.rsfillonemeasurement
+msgid "Fill at least one measurement."
 msgstr ""
 
 #: utils_locale.rsfilterand

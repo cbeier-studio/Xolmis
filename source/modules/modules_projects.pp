@@ -457,7 +457,7 @@ begin
           TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
         end;
       end;
-      'F':   // Done
+      'F':   // Activity Done
       begin
         if IsDarkModeEnabled then
         begin

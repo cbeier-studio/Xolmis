@@ -13955,6 +13955,11 @@ msgctxt "utils_locale.rsaudiounknown"
 msgid "Unknown"
 msgstr "Desconhecido"
 
+#: utils_locale.rsauthentication
+msgctxt "utils_locale.rsauthentication"
+msgid "Authentication"
+msgstr "Autenticação"
+
 #: utils_locale.rsauthorship
 msgctxt "utils_locale.rsauthorship"
 msgid "Authorship"
@@ -16180,6 +16185,10 @@ msgstr "Microsoft Excel"
 #: utils_locale.rsfileextxml
 msgid "Extensible Markup Language (XML)"
 msgstr "Linguagem de marcação extensível (XML)"
+
+#: utils_locale.rsfillonemeasurement
+msgid "Fill at least one measurement."
+msgstr "Preencha ao menos uma medida."
 
 #: utils_locale.rsfilterand
 msgctxt "utils_locale.rsfilterand"

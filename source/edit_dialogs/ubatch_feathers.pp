@@ -882,7 +882,16 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscTaxon]));
   if (FLocalityId = 0) then
     Msgs.Add(Format(rsRequiredField, [rscLocality]));
-  { #todo : Require at least on feather measurement }
+  // Require at least one measurement
+  if (eP1.Value = 0) and (eP2.Value = 0) and (eP3.Value = 0) and
+    (eP4.Value = 0) and (eP5.Value = 0) and (eP6.Value = 0) and
+    (eP7.Value = 0) and (eP8.Value = 0) and (eP9.Value = 0) and (eP10.Value = 0) and
+    (eS1.Value = 0) and (eS2.Value = 0) and (eS3.Value = 0) and
+    (eS4.Value = 0) and (eS5.Value = 0) and (eS6.Value = 0) and
+    (eS7.Value = 0) and (eS8.Value = 0) and (eS9.Value = 0) and
+    (eR1.Value = 0) and (eR2.Value = 0) and (eR3.Value = 0) and
+    (eR4.Value = 0) and (eR5.Value = 0) and (eR6.Value = 0) then
+    Msgs.Add(rsFillOneMeasurement);
 
   // Dates
   if eDate.Text <> EmptyStr then

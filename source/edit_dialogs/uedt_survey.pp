@@ -796,7 +796,11 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscEndLatitude]));
   if (eEndLatitude.Text <> EmptyStr) and (eEndLongitude.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscEndLongitude]));
-  { #todo : Required Number of mistnets if the Method is Banding }
+  if (FMethodId > 0) then
+  begin
+    if (FMethodId = GetMethodKey(rsMobileBanding)) and (eTotalNets.Value = 0) then
+      Msgs.Add(Format(rsRequiredField, [rscMistnets]));
+  end;
 
   // Dates
   if eDate.Text <> EmptyStr then

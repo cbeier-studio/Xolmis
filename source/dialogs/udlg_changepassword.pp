@@ -92,6 +92,8 @@ procedure TdlgChangePassword.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  sbSave.Enabled := False;
 end;
 
 procedure TdlgChangePassword.ApplyDarkMode;
@@ -149,10 +151,8 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
-  eNewPassword.Text := Trim(eNewPassword.Text);
-  eConfirmPassword.Text := Trim(eConfirmPassword.Text);
 
-  if (DMM.qUsers.State = dsInsert) and (eNewPassword.Text = EmptyStr) then
+  if (eNewPassword.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rsNewPassword]));
   if (eConfirmPassword.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rsConfirmPassword]));

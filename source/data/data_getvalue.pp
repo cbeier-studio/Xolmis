@@ -49,6 +49,7 @@ type
   function GetMethodKey(const aName: String): Integer;
   function GetSamplingPlotKey(const aName: String): Integer;
   function GetBandKey(const aName: String): Integer;
+  function GetIndividualKey(const aName: String): Integer;
   function GetProjectKey(const aName: String): Integer;
   function GetProjectBalance(const aProjectId: Integer): Double;
   function GetProjectTotalBudget(const aProjectId: Integer): Double;
@@ -946,6 +947,138 @@ begin
     Close;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+function GetIndividualKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+  SearchName: String;
+  BandKey: Integer;
+  RightTarsus: String;
+  LeftTarsus: String;
+
+  function NormalizeBandComboValue(const AValue: String): String;
+  begin
+    Result := Trim(StringReplace(AValue, ' ', '', [rfReplaceAll]));
+    if Result = '-' then
+      Result := EmptyStr;
+  end;
+
+  function ParseBandCombo(const AValue: String; out ARightTarsus, ALeftTarsus: String): Boolean;
+  var
+    Parts: TStringList;
+    I: Integer;
+    Part: String;
+    SidePrefix: String;
+    SideValue: String;
+    HasRight: Boolean;
+    HasLeft: Boolean;
+  begin
+    Result := False;
+    ARightTarsus := EmptyStr;
+    ALeftTarsus := EmptyStr;
+    HasRight := False;
+    HasLeft := False;
+
+    Parts := TStringList.Create;
+    try
+      Parts.StrictDelimiter := True;
+      Parts.Delimiter := '/';
+      Parts.DelimitedText := Trim(StringReplace(AValue, ' ', '', [rfReplaceAll]));
+      if Parts.Count <> 2 then
+        Exit;
+
+      for I := 0 to Parts.Count - 1 do
+      begin
+        Part := Trim(Parts[I]);
+        if Part = EmptyStr then
+          Exit;
+
+        SidePrefix := LowerCase(Copy(Part, 1, 1));
+        SideValue := NormalizeBandComboValue(Copy(Part, 2, Length(Part)));
+
+        if (SidePrefix = 'r') or (SidePrefix = 'd') then
+        begin
+          if HasRight then
+            Exit;
+          ARightTarsus := SideValue;
+          HasRight := True;
+        end
+        else
+        if (SidePrefix = 'l') or (SidePrefix = 'e') then
+        begin
+          if HasLeft then
+            Exit;
+          ALeftTarsus := SideValue;
+          HasLeft := True;
+        end
+        else
+          Exit;
+      end;
+
+      Result := HasRight and HasLeft;
+    finally
+      FreeAndNil(Parts);
+    end;
+  end;
+begin
+  Result := 0;
+  SearchName := Trim(aName);
+  if SearchName = EmptyStr then
+    Exit;
+
+  // 1) Full name.
+  Result := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, SearchName);
+  if Result > 0 then
+    Exit;
+
+  // 2) Band number (current or removed band).
+  BandKey := GetBandKey(SearchName);
+  if BandKey > 0 then
+  begin
+    Qry := TSQLQuery.Create(DMM.sqlCon);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Clear;
+      Add('SELECT individual_id FROM individuals');
+      Add('WHERE (band_id = :band_id) OR (removed_band_id = :band_id)');
+      ParamByName('band_id').AsInteger := BandKey;
+      Open;
+      if not(IsEmpty) then
+      begin
+        Result := FieldByName('individual_id').AsInteger;
+        Exit;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+
+  // 3) Combination of right/left tarsus color codes: rX/lY (also dX/eY), '-' means empty.
+  if ParseBandCombo(SearchName, RightTarsus, LeftTarsus) then
+  begin
+    Qry := TSQLQuery.Create(DMM.sqlCon);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Clear;
+      Add('SELECT individual_id FROM individuals');
+      Add('WHERE (COALESCE(NULLIF(right_tarsus, ''-''), '''') = :right_tarsus)');
+      Add('  AND (COALESCE(NULLIF(left_tarsus, ''-''), '''') = :left_tarsus)');
+      ParamByName('right_tarsus').AsString := RightTarsus;
+      ParamByName('left_tarsus').AsString := LeftTarsus;
+      Open;
+      if not(IsEmpty) then
+        Result := FieldByName('individual_id').AsInteger
+      else
+        Result := 0;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
   end;
 end;
 

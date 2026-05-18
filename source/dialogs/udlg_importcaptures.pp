@@ -87,6 +87,7 @@ type
     procedure AppendLog(const aMsg: String);
     procedure ApplyDarkMode;
     procedure UpdateButtons;
+    function ValidateFields: Boolean;
   public
 
   end;
@@ -97,7 +98,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, io_core, io_banding_csv, utils_themes, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, utils_themes,
+  io_core, io_banding_csv,
+  udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -262,7 +265,8 @@ end;
 
 procedure TdlgImportCaptures.sbRunClick(Sender: TObject);
 begin
-  { #todo : Validate fields }
+  if not ValidateFields then
+    Exit;
 
   sbRetry.Visible := False;
   barProgress.Visible := True;
@@ -336,6 +340,31 @@ begin
   sbRun.Enabled := HasImportFileSelected(eJournalFile.FileName) or
                    HasImportFileSelected(eEffortFile.FileName) or
                    HasImportFileSelected(eCaptureFile.FileName);
+end;
+
+function TdlgImportCaptures.ValidateFields: Boolean;
+var
+  Msgs: TStrings;
+begin
+  Result := True;
+  Msgs := TStringList.Create;
+
+  if HasImportFileSelected(eJournalFile.FileName) then
+    if not FileExists(eJournalFile.FileName) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eJournalFile.FileName]));
+  if HasImportFileSelected(eEffortFile.FileName) then
+    if not FileExists(eEffortFile.FileName) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eEffortFile.FileName]));
+  if HasImportFileSelected(eCaptureFile.FileName) then
+    if not FileExists(eCaptureFile.FileName) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eCaptureFile.FileName]));
+
+  if Msgs.Count > 0 then
+  begin
+    Result := False;
+    ValidateDlg(Msgs);
+  end;
+  Msgs.Free;
 end;
 
 end.

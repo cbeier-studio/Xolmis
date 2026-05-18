@@ -76,6 +76,7 @@ object dlgConnect: TdlgConnect
       Spacing = 0
       TabOrder = 2
       OnButtonClick = ePasswordButtonClick
+      OnChange = eUsernameChange
       OnKeyDown = eUsernameKeyDown
       OnKeyPress = eUsernameKeyPress
     end

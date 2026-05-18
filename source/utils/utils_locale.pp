@@ -462,6 +462,7 @@ uses
     rsIntegrityCheckReturnedErrors = 'The database integrity check returned some errors.';
 
     { Authentication messages }
+    rsAuthentication = 'Authentication';
     rsInvalidLogin = 'User not found.';
     rsIncorrectPassword = 'Incorrect password.';
 
@@ -543,6 +544,7 @@ uses
     rsColumnMismatch = 'Column %d mismatch. Expected "%s", got "%s".';
     rsRequiredColumnNotFound = 'Required column "%s" not found.';
     rsUnexpectedColumnFound = 'Unexpected column "%s" found in CSV header.';
+    rsFillOneMeasurement = 'Fill at least one measurement.';
 
     { HTML validation messages }
     //rsForeignNotExist = 'Selected <b>%s</b> does not exist. Select a valid record.';

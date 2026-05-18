@@ -1634,7 +1634,7 @@ begin
   if IsDarkModeEnabled then
     Self.Background.Color := ActiveTheme.Interactive.SelectionBackground // clVioletBG1Dark
   else
-    Self.Background.Color := $00E0C0C0;  { #todo : add color to the themes }
+    Self.Background.Color := $00E0C0C0;  { #todo : add color $00E0C0C0 to the themes }
   FCounterBadge.Color := Self.Background.Color;
 
   FParentForm.eAddChild.Visible := False;

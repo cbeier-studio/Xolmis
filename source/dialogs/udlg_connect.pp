@@ -163,8 +163,6 @@ begin
   // Clear edits
   eUsername.Clear;
   ePassword.Clear;
-
-  //CloseAction := caFree;
 end;
 
 procedure TdlgConnect.FormShow(Sender: TObject);
@@ -232,7 +230,7 @@ begin
     while not C.Eof do
     begin
       cbConnection.Items.Add(C.FieldByName('connection_name').AsString);
-      //Application.ProcessMessages;
+
       C.Next;
     end;
     C.First;
@@ -316,13 +314,9 @@ begin
 
   if xSettings.RememberConnection then
     xSettings.LastConnection := SelectedConnection;
-  //else
-  //  DelPreference('SECURITY', 'LastConnection');
 
   if xSettings.RememberUser then
     xSettings.LastUser := eUsername.Text;
-  //else
-  //  DelPreference('SECURITY', 'LastUser');
 
   dlgConnect.ModalResult := mrOk;
 end;

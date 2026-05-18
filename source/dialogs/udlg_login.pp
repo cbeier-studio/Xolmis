@@ -157,16 +157,16 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  eUsername.ReadOnly := False;
+
   { If it needs administrator permission }
   if NeedAdmin then
   begin
     eUsername.ReadOnly := True;
     eUsername.Text := 'admin';
     { yellow }
-    eUsername.Font.Color := clSystemCautionFGLight;
-    eUsername.Color := clSystemCautionBGLight;
-    //eUsername.RightButton.ImageIndex := 14;
-    //eUsername.RightButton.Visible := True;
+    eUsername.Font.Color := ActiveTheme.System.CautionFG;
+    eUsername.Color := ActiveTheme.System.CautionBG;
     lblLogin.Caption := rsAdminUser;
     sbOK.Caption := 'OK';
   end
@@ -175,14 +175,12 @@ begin
     if ForceUser > 0 then
     begin
       { If it needs authentication of a specific user }
+      eUsername.ReadOnly := True;
       eUsername.Text := GetName(TBL_USERS, COL_USER_NAME, COL_USER_ID, ForceUser);
-      eUsername.Color := clWhite;
-      //eUsername.RightButton.ImageIndex:= 33;
-      //eUsername.RightButton.Visible := True;
+      eUsername.Font.Color := clDefault;
+      eUsername.Color := clDefault;
     end;
-    //Caption := Format('%s - %s', [APP_NAME, rsTitleLogin]);
     sbOK.Caption := rsLoginButton;
-    //eUsername.RightButton.Visible := False;
   end;
 
   if (eUsername.Text <> EmptyStr) then
@@ -205,8 +203,6 @@ begin
   if not NeedAdmin then
     if xSettings.RememberUser then
       xSettings.LastUser := eUsername.Text;
-    //else
-    //  DelPreference('SECURITY', 'LastUser');
 
   { Close dialog }
   if LoginOK then
@@ -222,7 +218,6 @@ var
 begin
   Result := False;
   eUsername.Text := Trim(eUsername.Text);
-  ePassword.Text := Trim(ePassword.Text);
   S := EmptyStr;
 
   { Check user }
@@ -239,7 +234,16 @@ begin
     if (IsEmpty) then
     begin
       LogError('User not found');
-      MsgDlg('', rsInvalidLogin, mtError);
+      MsgDlg(rsAuthentication, rsInvalidLogin, mtError);
+      if eUsername.CanSetFocus then
+        eUsername.SetFocus;
+      Exit;
+    end;
+
+    if (ForceUser > 0) and (FieldByName('user_id').AsInteger <> ForceUser) then
+    begin
+      LogError('Forced user mismatch');
+      MsgDlg(rsAuthentication, rsInvalidLogin, mtError);
       if eUsername.CanSetFocus then
         eUsername.SetFocus;
       Exit;
@@ -253,7 +257,7 @@ begin
       (FieldByName('user_password').AsString <> EmptyStr) then
     begin
       LogError('Incorrect password');
-      MsgDlg('', rsIncorrectPassword, mtError);
+      MsgDlg(rsAuthentication, rsIncorrectPassword, mtError);
       ePassword.SetFocus;
       Exit;
     end;

@@ -296,7 +296,11 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscDate]));
   if (cbSampleMoment.ItemIndex < 0) then
     Msgs.Add(Format(rsRequiredField, [rscMoment]));
-  { #todo : Required at least one measurement of weather log }
+  // Require at least on measurement
+  //if (eCloudCover.Value = 0) and (eTemperature.Value = 0) and (cbPrecipitation.ItemIndex < 0) and
+  //  (eRainfall.Value = 0) and (eWindSpeedBft.Value = 0) and (eWindSpeedKmh.Value = 0) and
+  //  (cbWindDirection.ItemIndex < 0) and (eRelativeHumidity.Value = 0) and (eAtmosphericPressure.Value = 0) then
+  //  Msgs.Add(rsFillOneMeasurement);
 
   // Dates
   if (eSampleDate.Text <> EmptyStr) then

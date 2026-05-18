@@ -316,6 +316,9 @@ function TedtBotanicTaxon.ValidateFields: Boolean;
 var
   Msgs: TStrings;
   D: TDataSet;
+  aRankId: Integer;
+  aRankAbbrev: String;
+  BotRank: TBotanicalRank;
 begin
   Result := True;
   Msgs := TStringList.Create;
@@ -327,7 +330,14 @@ begin
   if (cbRank.ItemIndex < 0) then
     Msgs.Add(Format(rsRequiredField, [rscTaxonomicRank]));
   // Conditional required fields
-  { #todo : Required Parent taxon when Rank is lower than Order }
+  if (cbRank.ItemIndex >= 0) then
+  begin
+    aRankId := GetRankKey(cbRank.Text, ncBotanical);
+    aRankAbbrev := GetName(TBL_TAXON_RANKS, COL_ABBREVIATION, COL_RANK_ID, aRankId);
+    BotRank := StringToBotanicRank(aRankAbbrev);
+    if (BotRank > brOrder) and (FParentTaxonId = 0) then
+      Msgs.Add(Format(rsRequiredField, [rscParentTaxon]));
+  end;
 
   // Unique fields
   if (eName.Text <> EmptyStr) then

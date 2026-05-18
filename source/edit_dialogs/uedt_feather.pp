@@ -550,7 +550,14 @@ begin
   if (FLocalityId = 0) then
     Msgs.Add(Format(rsRequiredField, [rscLocality]));
   // Conditional required fields
-  { #todo : Required Feather number when Feather trait is Primary, Secondary or Retrix }
+  if (cbFeatherTrait.ItemIndex >= 0) then
+  begin
+    if ((cbFeatherTrait.Text = rsTraitPrimary) or
+      (cbFeatherTrait.Text = rsTraitSecondary) or
+      (cbFeatherTrait.Text = rsTraitRectrix))  and
+      (eFeatherNumber.Value = 0) then
+      Msgs.Add(Format(rsRequiredField, [rscFeatherNumber]));
+  end;
 
   // Dates
   if (eDate.Text <> EmptyStr) then

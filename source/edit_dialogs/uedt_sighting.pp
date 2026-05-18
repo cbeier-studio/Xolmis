@@ -900,7 +900,11 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscLatitude]));
   if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscLongitude]));
-  { #todo : Required Mackinnon list number if Method is Mackinnon list }
+  if (FMethodId > 0) then
+  begin
+    if (FMethodId = GetMethodKey(rsMobileMackinnonList)) and (eMackinnonListNumber.Text = EmptyStr) then
+      Msgs.Add(Format(rsRequiredField, [rscMackinnonList]));
+  end;
 
   // Dates
   if eDate.Text <> EmptyStr then

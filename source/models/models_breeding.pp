@@ -173,6 +173,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByNest(aNestId, aIndividualId: Integer; E: TXolmisRecord);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -2584,6 +2585,34 @@ begin
     Close;
   finally
     Qry.Free;
+  end;
+end;
+
+procedure TNestOwnerRepository.FindByNest(aNestId, aIndividualId: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TNestOwner) then
+    raise Exception.Create('FindByNest: Expected TNestOwner');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.NestOwners.SelectTable(swcNone));
+    Add('WHERE (nest_id = :anest)');
+    Add('AND (individual_id = :aindividual)');
+
+    ParamByName('anest').AsInteger := aNestId;
+    ParamByName('aindividual').AsInteger := aIndividualId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

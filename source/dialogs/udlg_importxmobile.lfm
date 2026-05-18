@@ -110,7 +110,7 @@ object dlgImportXMobile: TdlgImportXMobile
     Height = 430
     Top = 0
     Width = 813
-    PageIndex = 2
+    PageIndex = 0
     Align = alTop
     TabOrder = 1
     object pgSource: TPage
