@@ -392,7 +392,7 @@ uses
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
   udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
-  udlg_importxmobile, udlg_import, udlg_splash, udlg_loading, udlg_tourtip,
+  udlg_importxmobile, udlg_import, udlg_splash, udlg_loading, udlg_tourtip, udlg_onboarding,
   ufrm_geoconverter, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}
@@ -1177,46 +1177,17 @@ begin
   DMM.qsConn.Open;
   if DMM.qsConn.RecordCount = 0 then
   begin
-    with TTaskDialog.Create(Self) do
+    dlgOnboarding := TdlgOnboarding.Create(Self);
     try
-      Caption := 'Xolmis';
-      Title := rsTitleNoConnectionsFound;
-      Text := rsSelectAnOptionToProceed;
-      CommonButtons := [];
-      Flags := Flags + [tfUseCommandLinks];
-      //MainIcon := tdiQuestion;
-      with TTaskDialogButtonItem(Buttons.Add) do
-      begin
-        Caption := rsNewDatabase;
-        CommandLinkHint := rsHintNewDatabase;
-        ModalResult := mrYes;
-      end;
-      with TTaskDialogButtonItem(Buttons.Add) do
-      begin
-        Caption := rsOpenDatabase;
-        CommandLinkHint := rsHintOpenDatabase;
-        ModalResult := mrNo;
-      end;
-
-      if Execute then
-      begin
-        if ModalResult = mrYes then
-        begin
-          if not NewDatabase then
-            Application.Terminate;
-        end
-        else
-        if ModalResult = mrNo then
-        begin
-          if not EditConnection(DMM.qsConn, True) then
-            Application.Terminate;
-        end
-        else
-          Application.Terminate;
-      end;
+      if dlgOnboarding.ShowModal <> mrOK then
+        Application.Terminate;
     finally
-      Free;
+      FreeAndNil(dlgOnboarding);
     end;
+
+    DMM.qsConn.Refresh;
+    if DMM.qsConn.RecordCount = 0 then
+      Application.Terminate;
   end;
   DMM.qsConn.Refresh;
   Application.ProcessMessages;

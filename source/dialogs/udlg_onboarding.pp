@@ -123,7 +123,7 @@ var
 implementation
 
 uses
-  utils_global, utils_locale, utils_themes, utils_dialogs, uDarkStyleParams,
+  utils_global, utils_locale, utils_themes, utils_dialogs, data_types, uDarkStyleParams,
   udm_main, udlg_newdatabase, uedt_database;
 
 {$R *.lfm}
@@ -138,7 +138,6 @@ begin
   btnSavePreferences.Images := iButtonsDark;
 
   imgWelcome.Images := iFinishedDark;
-  imgFinished.Images := iFinishedDark;
   icoNewDatabase.Images := iButtonsDark;
   icoOpenDatabase.Images := iButtonsDark;
   arrowNewDatabase.Images := iButtonsDark;
