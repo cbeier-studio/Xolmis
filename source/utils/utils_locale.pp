@@ -193,6 +193,7 @@ uses
     rsErrorWritingAdminPassword = 'An error occurred while writing the Admin user password: %s';
     rsErrorEmptyId = 'ID is empty';
     rsErrorImageNotSupported = 'Image format not supported! Supported formats: JPEG and Bitmap.';
+    rsErrorValidatingUser = 'Error validating user: %s';
     rsErrorValidatingPassword = 'Error validating password: %s';
     rsErrorFieldsAndValuesDiffer = 'The length of field and value lists do not match.';
     rsErrorModuleNotSupported = 'The module is not supported.';
@@ -220,6 +221,7 @@ uses
     rsErrorExportingEbird = 'Error exporting eBird data: %s';
     rsErrorValidationFailed = 'Data validation found issues.';
     rsErrorSavingPDF = 'Error saving PDF.';
+    rsErrorSavingMediaPaths = 'Error saving the media paths: %s';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';

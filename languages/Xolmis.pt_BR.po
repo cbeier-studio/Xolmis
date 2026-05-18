@@ -3382,6 +3382,7 @@ msgid "Auto size columns to fit the content"
 msgstr "Ajustar largura das colunas ao conteúdo automaticamente"
 
 #: tcfgoptions.lblbackuppath.caption
+msgctxt "tcfgoptions.lblbackuppath.caption"
 msgid "Backup files folder"
 msgstr "Pasta dos arquivos de backup"
 
@@ -3394,10 +3395,12 @@ msgid "When importing data, if a band (ring) does not exist in the database, Xol
 msgstr "Ao importar dados, se a anilha não existir no banco de dados, o Xolmis tentará criá-la usando o fornecedor de anilhas padrão. No Brasil, o CEMAVE é o fornecedor de anilhas."
 
 #: tcfgoptions.lblcheckupdates.caption
+msgctxt "tcfgoptions.lblcheckupdates.caption"
 msgid "Check for Xolmis updates"
 msgstr "Verificar atualizações do Xolmis"
 
 #: tcfgoptions.lblcleardeleted.caption
+msgctxt "tcfgoptions.lblcleardeleted.caption"
 msgid "Clear deleted records automatically (in days)"
 msgstr "Limpar os registros apagados automaticamente (em dias)"
 
@@ -3458,10 +3461,12 @@ msgid "Show synonyms in search results"
 msgstr "Mostrar sinônimos nos resultados da busca"
 
 #: tcfgoptions.lblstartpage.caption
+msgctxt "tcfgoptions.lblstartpage.caption"
 msgid "Start page"
 msgstr "Página de início"
 
 #: tcfgoptions.lblstartupbackup.caption
+msgctxt "tcfgoptions.lblstartupbackup.caption"
 msgid "Create backup when Xolmis closes"
 msgstr "Criar backup quando o Xolmis encerrar"
 
@@ -5467,6 +5472,10 @@ msgctxt "tdlgnewdatabase.eusernewpass.buttonhint"
 msgid "Show/hide password"
 msgstr "Mostrar/ocultar senha"
 
+#: tdlgnewdatabase.lblaudiospath.caption
+msgid "Audio recordings path:"
+msgstr "Caminho das gravações de áudio:"
+
 #: tdlgnewdatabase.lblauthor.caption
 msgid "Author name:"
 msgstr "Nome do autor:"
@@ -5484,6 +5493,14 @@ msgstr "Arquivo do banco de dados: *"
 #: tdlgnewdatabase.lbldescription.caption
 msgid "Database description:"
 msgstr "Descrição do banco de dados:"
+
+#: tdlgnewdatabase.lbldocumentspath.caption
+msgid "Documents path:"
+msgstr "Caminho dos documentos:"
+
+#: tdlgnewdatabase.lblimagespath.caption
+msgid "Images path:"
+msgstr "Caminho das imagens:"
 
 #: tdlgnewdatabase.lblname.caption
 msgctxt "tdlgnewdatabase.lblname.caption"
@@ -5508,6 +5525,10 @@ msgstr "Defina uma senha para o usuário Admin. "
 msgid "Inform a file name and metadata to create the new database."
 msgstr "Informe um arquivo e os metadados para criar um novo banco de dados."
 
+#: tdlgnewdatabase.lblsubtitlemedia.caption
+msgid "Choose where Xolmis will store images, audios, videos, and documents. These folders can be changed later."
+msgstr "Escolha onde o Xolmis vai armazenar imagens, áudios, vídeos, e documentos. Estas pastas podem ser modificadas depois."
+
 #: tdlgnewdatabase.lblsubtitleuser.caption
 msgctxt "tdlgnewdatabase.lblsubtitleuser.caption"
 msgid "Create your user to access the database. "
@@ -5522,6 +5543,11 @@ msgstr "Senha do admin"
 msgctxt "tdlgnewdatabase.lbltitleconnection.caption"
 msgid "New database"
 msgstr "Novo banco de dados"
+
+#: tdlgnewdatabase.lbltitlemedia.caption
+msgctxt "tdlgnewdatabase.lbltitlemedia.caption"
+msgid "Media"
+msgstr "Mídias"
 
 #: tdlgnewdatabase.lbltitleuser.caption
 msgctxt "tdlgnewdatabase.lbltitleuser.caption"
@@ -5545,12 +5571,21 @@ msgstr "Nome de usuário: *"
 msgid "New password: *"
 msgstr "Nova senha: *"
 
+#: tdlgnewdatabase.lblvideospath.caption
+msgid "Videos path:"
+msgstr "Caminho dos vídeos:"
+
 #: tdlgnewdatabase.savedlg.title
 msgid "Create database file"
 msgstr "Criar arquivo de banco de dados"
 
 #: tdlgnewdatabase.sbapplyadmin.caption
 msgctxt "tdlgnewdatabase.sbapplyadmin.caption"
+msgid "Apply"
+msgstr "Aplicar"
+
+#: tdlgnewdatabase.sbapplymedia.caption
+msgctxt "tdlgnewdatabase.sbapplymedia.caption"
 msgid "Apply"
 msgstr "Aplicar"
 
@@ -5569,15 +5604,35 @@ msgctxt "tdlgnewdatabase.sbcreateuser.caption"
 msgid "Create user"
 msgstr "Criar usuário"
 
+#: tdlgonboarding.btnbackbackup.caption
+msgctxt "tdlgonboarding.btnbackbackup.caption"
+msgid "Prior"
+msgstr "Anterior"
+
+#: tdlgonboarding.btnbackpreferences.caption
+msgctxt "tdlgonboarding.btnbackpreferences.caption"
+msgid "Prior"
+msgstr "Anterior"
+
 #: tdlgonboarding.btnhelp.caption
 msgctxt "tdlgonboarding.btnhelp.caption"
 msgid "&Help"
 msgstr "A&juda"
 
-#: tdlgonboarding.btnsavelocations.caption
-msgctxt "tdlgonboarding.btnsavelocations.caption"
-msgid "Save"
-msgstr "Salvar"
+#: tdlgonboarding.btnnextdatabase.caption
+msgctxt "tdlgonboarding.btnnextdatabase.caption"
+msgid "Next"
+msgstr "Próximo"
+
+#: tdlgonboarding.btnsavebackup.caption
+msgctxt "tdlgonboarding.btnsavebackup.caption"
+msgid "Next"
+msgstr "Próximo"
+
+#: tdlgonboarding.btnsavepreferences.caption
+msgctxt "tdlgonboarding.btnsavepreferences.caption"
+msgid "Next"
+msgstr "Próximo"
 
 #: tdlgonboarding.btnstart.caption
 msgid "Start setup"
@@ -5587,36 +5642,51 @@ msgstr "Iniciar configuração"
 msgid "Setup Xolmis"
 msgstr "Configurar o Xolmis"
 
-#: tdlgonboarding.lblaudiospath.caption
-msgid "Audio files"
-msgstr "Arquivos de áudio"
+#: tdlgonboarding.lblbackupinstruction.caption
+msgid "Set the backup folder and how often backups should run."
+msgstr "Defina a pasta de backup e a frequência que os backups devem ser executados."
+
+#: tdlgonboarding.lblbackuppath.caption
+msgctxt "tdlgonboarding.lblbackuppath.caption"
+msgid "Backup files folder"
+msgstr "Pasta dos arquivos de backup"
+
+#: tdlgonboarding.lblbackupwhenclosing.caption
+msgctxt "tdlgonboarding.lblbackupwhenclosing.caption"
+msgid "Create backup when Xolmis closes"
+msgstr "Criar backup quando o Xolmis encerrar"
+
+#: tdlgonboarding.lblcheckupdates.caption
+msgctxt "tdlgonboarding.lblcheckupdates.caption"
+msgid "Check for Xolmis updates"
+msgstr "Verificar atualizações do Xolmis"
+
+#: tdlgonboarding.lblcleardeleted.caption
+msgctxt "tdlgonboarding.lblcleardeleted.caption"
+msgid "Clear deleted records automatically (in days)"
+msgstr "Limpar os registros apagados automaticamente (em dias)"
 
 #: tdlgonboarding.lbldatabaseinstruction.caption
 msgid "Select an option to setup your database."
 msgstr "Selecione uma opção para configurar o seu banco de dados."
 
-#: tdlgonboarding.lbldocumentspath.caption
-msgid "Documents"
-msgstr "Documentos"
-
 #: tdlgonboarding.lblfinishedinstruction.caption
 msgid ""
 "Your configuration is done!\n"
+"You can start using Xolmis and all its features.\n"
 "\n"
-"You can start using Xolmis and all its features."
+"To get started, you should enter the core information in the following order:\n"
+"1. Gazetteer → 2. Sampling plots → 3. Institutions → 4. Researchers\n"
+"\n"
+"Optionally, you may also add: Projects, Permits, Bands, and Methods."
 msgstr ""
 "A sua configuração foi concluída!\n"
+"Você pode começar a usar o Xolmis e todos os seus recursos.\n"
 "\n"
-"Você pode começar a usar o Xolmis e todos os seus recursos."
-
-#: tdlgonboarding.lblimagespath.caption
-msgctxt "tdlgonboarding.lblimagespath.caption"
-msgid "Images"
-msgstr "Imagens"
-
-#: tdlgonboarding.lblmediainstruction.caption
-msgid "Set the location of attachment files."
-msgstr "Defina o local dos arquivos anexos."
+"Para iniciar, você deve entrar as informações nucleares na seguinte ordem:\n"
+"1. Gazetteer → 2. Parcelas amostrais → 3. Instituições → 4. Pesquisadores\n"
+"\n"
+"Opcionalmente, você também pode incluir: Projetos, Licenças, Anilhas, e Métodos."
 
 #: tdlgonboarding.lblnewdatabase.caption
 msgctxt "tdlgonboarding.lblnewdatabase.caption"
@@ -5627,6 +5697,20 @@ msgstr "Novo banco de dados"
 msgid "Open an existing database"
 msgstr "Abrir um banco de dados existente"
 
+#: tdlgonboarding.lblpreferencesinstruction.caption
+msgid "Set some basic use preferences."
+msgstr "Defina algumas preferências de uso básicas."
+
+#: tdlgonboarding.lblstartpage.caption
+msgctxt "tdlgonboarding.lblstartpage.caption"
+msgid "Start page"
+msgstr "Página de início"
+
+#: tdlgonboarding.lbltitlebackup.caption
+msgctxt "tdlgonboarding.lbltitlebackup.caption"
+msgid "Backup"
+msgstr "Backup"
+
 #: tdlgonboarding.lbltitledatabase.caption
 msgctxt "tdlgonboarding.lbltitledatabase.caption"
 msgid "Database"
@@ -5634,31 +5718,26 @@ msgstr "Banco de dados"
 
 #: tdlgonboarding.lbltitlefinished.caption
 msgctxt "tdlgonboarding.lbltitlefinished.caption"
-msgid "Finished"
-msgstr "Concluído"
+msgid "Setup Complete"
+msgstr "Configuração concluída"
 
-#: tdlgonboarding.lbltitlemedia.caption
-msgid "Attachments"
-msgstr "Anexos"
+#: tdlgonboarding.lbltitlepreferences.caption
+msgid "Preferences"
+msgstr "Preferências"
 
 #: tdlgonboarding.lbltitlewelcome.caption
 msgid "Welcome to Xolmis"
 msgstr "Bem-vindo(a) ao Xolmis"
 
-#: tdlgonboarding.lblvideospath.caption
-msgctxt "tdlgonboarding.lblvideospath.caption"
-msgid "Videos"
-msgstr "Vídeos"
-
 #: tdlgonboarding.lblwelcomeinstruction.caption
 msgid ""
-"Your companion app for ornithological data management.\n"
+"Xolmis helps you manage and organize ornithological data.\n"
 "\n"
-"You need to complete just a few steps to setup your database and environment and start using Xolmis."
+"This quick setup will prepare your database, backups, and basic preferences so you can start using the system smoothly."
 msgstr ""
-"O seu app parceiro para gerenciamento de dados ornitológicos.\n"
+"O Xolmis auxilia você a gerenciar e organizar dados ornitológicos.\n"
 "\n"
-"Você precisa completar alguns passos para configurar o seu banco de dados e ambiente e começar a usar o Xolmis."
+"Esta rápida configuração irá preparar o seu banco de dados, backups, e preferências básicas para você poder começar a usar o sistema sem complicações."
 
 #: tdlgonboarding.sbcancel.caption
 msgctxt "tdlgonboarding.sbcancel.caption"
@@ -5666,8 +5745,8 @@ msgid "&Cancel"
 msgstr "&Cancelar"
 
 #: tdlgonboarding.sbclose.caption
-msgid "C&lose"
-msgstr "&Fechar"
+msgid "&Start Xolmis"
+msgstr "&Iniciar o Xolmis"
 
 #: tdlgonboarding.txtnewdatabase.caption
 msgid "Create a new database file. Recommended if you never used Xolmis or want a fresh start."
@@ -15848,6 +15927,11 @@ msgctxt "utils_locale.rserrorrewritinghierarchy"
 msgid "Error rewriting the hierarchy. All rewriting changes were discarded."
 msgstr "Erro ao regravar a hierarquia. Todas alterações foram descartadas."
 
+#: utils_locale.rserrorsavingmediapaths
+#, object-pascal-format
+msgid "Error saving the media paths: %s"
+msgstr "Erro salvando os caminhos de mídias: %s"
+
 #: utils_locale.rserrorsavingpdf
 msgid "Error saving PDF."
 msgstr "Erro salvando PDF."
@@ -15900,6 +15984,11 @@ msgstr "Um erro ocorreu ao aspirar o banco de dados: %s"
 msgctxt "utils_locale.rserrorvalidatingpassword"
 msgid "Error validating password: %s"
 msgstr "Erro validando senha: %s"
+
+#: utils_locale.rserrorvalidatinguser
+#, object-pascal-format
+msgid "Error validating user: %s"
+msgstr "Erro validando usuário: %s"
 
 #: utils_locale.rserrorvalidationfailed
 msgid "Data validation found issues."

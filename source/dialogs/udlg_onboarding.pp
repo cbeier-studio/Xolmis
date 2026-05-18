@@ -22,41 +22,52 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, EditBtn,
-  ATShapeLineBGRA, BCPanel;
+  ATShapeLineBGRA, BCPanel, ColorSpeedButton, BCButton, ATLinkLabel;
 
 type
 
   { TdlgOnboarding }
 
   TdlgOnboarding = class(TForm)
-    btnSaveLocations: TBitBtn;
+    btnBackBackup: TBitBtn;
+    btnNextDatabase: TBitBtn;
+    btnSavePreferences: TBitBtn;
+    btnSaveBackup: TBitBtn;
+    btnBackPreferences: TBitBtn;
+    cbBackupWhenClosing: TComboBox;
+    cbCheckUpdates: TComboBox;
+    cbClearDeleted: TComboBox;
+    cbStartPage: TComboBox;
     dsConn: TDataSource;
-    eVideosPath: TDirectoryEdit;
-    eDocumentsPath: TDirectoryEdit;
-    eAudiosPath: TDirectoryEdit;
-    eImagesPath: TDirectoryEdit;
-    icoAudiosPath: TImage;
-    icoVideosPath: TImage;
-    icoDocumentsPath: TImage;
-    icoImagesPath: TImage;
+    eBackupPath: TDirectoryEdit;
+    icoBackupPath: TImage;
+    icoBackupWhenClosing: TImage;
+    icoCheckUpdates: TImage;
+    icoClearDeleted: TImage;
+    icoStartPage: TImage;
+    icoFinished: TImage;
     imgWelcome: TImage;
     iFinished: TImageList;
     iFinishedDark: TImageList;
-    imgFinished: TImage;
-    lblVideosPath: TLabel;
+    lblBackupInstruction: TLabel;
+    lblBackupPath: TLabel;
+    lblCheckUpdates: TLabel;
+    lblClearDeleted: TLabel;
+    lblPreferencesInstruction: TLabel;
+    lblBackupWhenClosing: TLabel;
+    lblStartPage: TLabel;
+    lblTitleBackup: TLabel;
+    lblTitlePreferences: TLabel;
     lblFinishedInstruction: TLabel;
-    lblDocumentsPath: TLabel;
-    lblAudiosPath: TLabel;
-    lblMediaInstruction: TLabel;
-    lblImagesPath: TLabel;
     lblTitleFinished: TLabel;
-    lblTitleMedia: TLabel;
-    pVideosPath: TBCPanel;
+    pBackupPath: TBCPanel;
+    pCheckUpdates: TBCPanel;
+    pClearDeleted: TBCPanel;
+    pgPreferences: TPage;
+    pgBackup: TPage;
+    pBackupWhenClosing: TBCPanel;
+    pStartPage: TBCPanel;
     pgFinished: TPage;
-    pgMedia: TPage;
-    pDocumentsPath: TBCPanel;
-    pAudiosPath: TBCPanel;
-    pImagesPath: TBCPanel;
     pNewDatabase: TBCPanel;
     pOpenDatabase: TBCPanel;
     btnStart: TBitBtn;
@@ -82,8 +93,13 @@ type
     pgWelcome: TPage;
     pBottom: TPanel;
     sbCancel: TButton;
+    procedure btnBackBackupClick(Sender: TObject);
+    procedure btnBackMediaClick(Sender: TObject);
+    procedure btnBackPreferencesClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
-    procedure btnSaveLocationsClick(Sender: TObject);
+    procedure btnNextDatabaseClick(Sender: TObject);
+    procedure btnSaveBackupClick(Sender: TObject);
+    procedure btnSavePreferencesClick(Sender: TObject);
     procedure btnStartClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -94,6 +110,8 @@ type
     procedure pOpenDatabaseMouseEnter(Sender: TObject);
     procedure pOpenDatabaseMouseLeave(Sender: TObject);
   private
+    FConnectionName: String;
+    FNewDB: Boolean;
     procedure ApplyDarkMode;
   public
 
@@ -105,7 +123,8 @@ var
 implementation
 
 uses
-  utils_global, utils_locale, utils_themes, utils_dialogs, udm_main, uDarkStyleParams, udlg_newdatabase, uedt_database;
+  utils_global, utils_locale, utils_themes, utils_dialogs, uDarkStyleParams,
+  udm_main, udlg_newdatabase, uedt_database;
 
 {$R *.lfm}
 
@@ -115,7 +134,8 @@ procedure TdlgOnboarding.ApplyDarkMode;
 begin
   btnHelp.Images := iButtonsDark;
   btnStart.Images := iButtonsDark;
-  btnSaveLocations.Images := iButtonsDark;
+  btnSaveBackup.Images := iButtonsDark;
+  btnSavePreferences.Images := iButtonsDark;
 
   imgWelcome.Images := iFinishedDark;
   imgFinished.Images := iFinishedDark;
@@ -123,33 +143,51 @@ begin
   icoOpenDatabase.Images := iButtonsDark;
   arrowNewDatabase.Images := iButtonsDark;
   arrowOpenDatabase.Images := iButtonsDark;
-  icoImagesPath.Images := iButtonsDark;
-  icoAudiosPath.Images := iButtonsDark;
-  icoVideosPath.Images := iButtonsDark;
-  icoDocumentsPath.Images := iButtonsDark;
+  icoBackupPath.Images := iButtonsDark;
+  icoBackupWhenClosing.Images := iButtonsDark;
+  icoStartPage.Images := iButtonsDark;
+  icoClearDeleted.Images := iButtonsDark;
+  icoCheckUpdates.Images := iButtonsDark;
+  icoFinished.Images := iFinishedDark;
 
-  eImagesPath.Images := DMM.iEditsDark;
-  eAudiosPath.Images := DMM.iEditsDark;
-  eVideosPath.Images := DMM.iEditsDark;
-  eDocumentsPath.Images := DMM.iEditsDark;
+  eBackupPath.Images := DMM.iEditsDark;
 
   pNewDatabase.Background.Color := clSolidBGSecondaryDark;
   pNewDatabase.Border.Color := clSystemSolidNeutralFGDark;
   pOpenDatabase.Background.Color := clSolidBGSecondaryDark;
   pOpenDatabase.Border.Color := clSystemSolidNeutralFGDark;
-  pImagesPath.Background.Color := clSolidBGSecondaryDark;
-  pImagesPath.Border.Color := clSystemSolidNeutralFGDark;
-  pAudiosPath.Background.Color := clSolidBGSecondaryDark;
-  pAudiosPath.Border.Color := clSystemSolidNeutralFGDark;
-  pVideosPath.Background.Color := clSolidBGSecondaryDark;
-  pVideosPath.Border.Color := clSystemSolidNeutralFGDark;
-  pDocumentsPath.Background.Color := clSolidBGSecondaryDark;
-  pDocumentsPath.Border.Color := clSystemSolidNeutralFGDark;
+  pBackupPath.Background.Color := clSolidBGSecondaryDark;
+  pBackupPath.Border.Color := clSystemSolidNeutralFGDark;
+  pBackupWhenClosing.Background.Color := clSolidBGSecondaryDark;
+  pBackupWhenClosing.Border.Color := clSystemSolidNeutralFGDark;
+  pStartPage.Background.Color := clSolidBGSecondaryDark;
+  pStartPage.Border.Color := clSystemSolidNeutralFGDark;
+  pClearDeleted.Background.Color := clSolidBGSecondaryDark;
+  pClearDeleted.Border.Color := clSystemSolidNeutralFGDark;
+  pCheckUpdates.Background.Color := clSolidBGSecondaryDark;
+  pCheckUpdates.Border.Color := clSystemSolidNeutralFGDark;
 
   lblTitleWelcome.Font.Color := clVioletFG1Dark;
   lblTitleDatabase.Font.Color := clVioletFG1Dark;
-  lblTitleMedia.Font.Color := clVioletFG1Dark;
+  lblTitleBackup.Font.Color := clVioletFG1Dark;
+  lblTitlePreferences.Font.Color := clVioletFG1Dark;
   lblTitleFinished.Font.Color := clVioletFG1Dark;
+end;
+
+procedure TdlgOnboarding.btnBackBackupClick(Sender: TObject);
+begin
+  nbPages.PageIndex := pgDatabase.PageIndex;
+end;
+
+procedure TdlgOnboarding.btnBackMediaClick(Sender: TObject);
+begin
+  nbPages.PageIndex := pgDatabase.PageIndex;
+  btnNextDatabase.Visible := FConnectionName <> EmptyStr;
+end;
+
+procedure TdlgOnboarding.btnBackPreferencesClick(Sender: TObject);
+begin
+  nbPages.PageIndex := pgBackup.PageIndex;
 end;
 
 procedure TdlgOnboarding.btnHelpClick(Sender: TObject);
@@ -157,15 +195,40 @@ begin
   OpenHelp(HELP_INSTALLING, 'first-steps');
 end;
 
-procedure TdlgOnboarding.btnSaveLocationsClick(Sender: TObject);
+procedure TdlgOnboarding.btnNextDatabaseClick(Sender: TObject);
 begin
-  xSettings.ImagesFolder := eImagesPath.Directory;
-  xSettings.AudiosFolder := eAudiosPath.Directory;
-  xSettings.VideosFolder := eVideosPath.Directory;
-  xSettings.DocumentsFolder := eDocumentsPath.Directory;
+  nbPages.PageIndex := pgBackup.PageIndex;
+end;
+
+procedure TdlgOnboarding.btnSaveBackupClick(Sender: TObject);
+begin
+  xSettings.BackupFolder := eBackupPath.Directory;
+  xSettings.AutomaticBackup := cbBackupWhenClosing.ItemIndex;
   xSettings.SaveToFile;
 
+  nbPages.PageIndex := pgPreferences.PageIndex;
+end;
+
+procedure TdlgOnboarding.btnSavePreferencesClick(Sender: TObject);
+begin
+  xSettings.StartPage := cbStartPage.ItemIndex;
+  xSettings.ClearDeletedPeriod := cbClearDeleted.ItemIndex;
+  xSettings.AutoUpdates := cbCheckUpdates.ItemIndex;
+  xSettings.SaveToFile;
+
+  if FNewDB then
+  begin
+    //lblFinishedInstruction.Caption := ;
+  end
+  else
+  begin
+    //lblFinishedInstruction.Caption := ;
+  end;
+
   nbPages.PageIndex := pgFinished.PageIndex;
+
+  sbCancel.Visible := False;
+  sbClose.Visible := True;
 end;
 
 procedure TdlgOnboarding.btnStartClick(Sender: TObject);
@@ -181,20 +244,78 @@ end;
 
 procedure TdlgOnboarding.FormShow(Sender: TObject);
 begin
-  eImagesPath.Directory := xSettings.ImagesFolder;
-  eAudiosPath.Directory := xSettings.AudiosFolder;
-  eVideosPath.Directory := xSettings.VideosFolder;
-  eDocumentsPath.Directory := xSettings.DocumentsFolder;
+  FNewDB := False;
+
+  // Translate lists
+  cbStartPage.Items.Clear;
+  cbStartPage.Items.Add(rsCaptionExpeditions);
+  cbStartPage.Items.Add(rsTitleSurveys);
+  cbStartPage.Items.Add(rsTitleSightings);
+  cbStartPage.Items.Add(rsTitleSpecimens);
+  cbStartPage.Items.Add(rsTitleBands);
+  cbStartPage.Items.Add(rsTitleIndividuals);
+  cbStartPage.Items.Add(rsTitleCaptures);
+  cbStartPage.Items.Add(rsTitleNests);
+  cbStartPage.Items.Add(rsTitleResearchers);
+  cbStartPage.Items.Add(rsTitleProjects);
+  cbStartPage.Items.Add(rsTitlePermits);
+  cbStartPage.Items.Add(rsTitleGazetteer);
+  cbStartPage.Items.Add(rsTitleCoordinateConverter);
+
+  cbClearDeleted.Items[0] := rsNever;
+
+  cbCheckUpdates.Items.Clear;
+  cbCheckUpdates.Items.Add(rsNever);
+  cbCheckUpdates.Items.Add(rsDaily);
+  cbCheckUpdates.Items.Add(rsWeekly);
+  cbCheckUpdates.Items.Add(rsMonthly);
+
+  cbBackupWhenClosing.Items.Assign(cbCheckUpdates.Items);
+
+  // Load settings
+  eBackupPath.Text := xSettings.BackupFolder;
+  cbBackupWhenClosing.ItemIndex := xSettings.AutomaticBackup;
+
+  cbStartPage.ItemIndex := xSettings.StartPage;
+  cbClearDeleted.ItemIndex := xSettings.ClearDeletedPeriod;
+  cbCheckUpdates.ItemIndex := xSettings.AutoUpdates;
 end;
 
 procedure TdlgOnboarding.pNewDatabaseClick(Sender: TObject);
+var
+  Conn: TDBParams;
 begin
+  // Paint panel clicked
   pNewDatabase.Border.Color := clVioletFGLight;
   pNewDatabase.Border.Width := 2;
 
-  if NewDatabase then
-    nbPages.PageIndex := pgMedia.PageIndex;
+  // Open new database dialog
+  LogEvent(leaOpen, 'New database');
+  Application.CreateForm(TdlgNewDatabase, dlgNewDatabase);
+  with dlgNewDatabase do
+  try
+    if ShowModal = mrOK then
+    begin
+      // Test connection
+      Conn.Name := ConnectionName;
+      Conn.LoadParams;
 
+      if Conn.TestConnection then
+      begin
+        //MsgDlg(rsTitleConnectionTest, rsSuccessfulConnectionTest, mtInformation)
+        FConnectionName := ConnectionName;
+        FNewDB := True;
+        nbPages.PageIndex := pgBackup.PageIndex;
+      end
+      else
+        MsgDlg(rsTitleConnectionTest, rsErrorConnectingDatabase, mtError);
+    end;
+  finally
+    FreeAndNil(dlgNewDatabase);
+    LogEvent(leaClose, 'New database');
+  end;
+
+  // Paint panel normal
   if IsDarkModeEnabled then
     pNewDatabase.Border.Color := clSolidBGTertiaryDark
   else
@@ -219,10 +340,14 @@ begin
 end;
 
 procedure TdlgOnboarding.pOpenDatabaseClick(Sender: TObject);
+var
+  Conn: TDBParams;
 begin
+  // Paint panel clicked
   pOpenDatabase.Border.Color := clVioletFGLight;
   pOpenDatabase.Border.Width := 2;
 
+  // Open new connection dialog
   if not dsConn.DataSet.Active then
     dsConn.DataSet.Open;
 
@@ -241,7 +366,19 @@ begin
       else
         dsConn.DataSet.Post;
 
-      nbPages.PageIndex := pgMedia.PageIndex;
+      // Test connection
+      Conn.Name := ConnectionName;
+      Conn.LoadParams;
+
+      if Conn.TestConnection then
+      begin
+        //MsgDlg(rsTitleConnectionTest, rsSuccessfulConnectionTest, mtInformation)
+        FConnectionName := ConnectionName;
+        FNewDB := False;
+        nbPages.PageIndex := pgBackup.PageIndex;
+      end
+      else
+        MsgDlg(rsTitleConnectionTest, rsErrorConnectingDatabase, mtError);
     end
     else
       dsConn.DataSet.Cancel;
@@ -249,6 +386,7 @@ begin
     FreeAndNil(edtDatabase);
   end;
 
+  // Paint panel normal
   if IsDarkModeEnabled then
     pOpenDatabase.Border.Color := clSolidBGTertiaryDark
   else

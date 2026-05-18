@@ -1,23 +1,23 @@
 object dlgNewDatabase: TdlgNewDatabase
   Left = 362
-  Height = 383
+  Height = 422
   Top = 250
   Width = 390
   AutoSize = True
   BorderStyle = bsDialog
   Caption = 'New database'
-  ClientHeight = 383
+  ClientHeight = 422
   ClientWidth = 390
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 340
+    Top = 355
     Width = 390
     Align = alTop
     LineColor = 9276813
@@ -26,10 +26,10 @@ object dlgNewDatabase: TdlgNewDatabase
   end
   object nbPages: TNotebook
     Left = 0
-    Height = 340
+    Height = 355
     Top = 0
     Width = 390
-    PageIndex = 0
+    PageIndex = 3
     Align = alTop
     AutoSize = True
     TabOrder = 0
@@ -573,11 +573,215 @@ object dlgNewDatabase: TdlgNewDatabase
         end
       end
     end
+    object pgMedia: TPage
+      object pContentMedia: TPanel
+        Left = 0
+        Height = 355
+        Top = 0
+        Width = 390
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 16
+        ClientHeight = 355
+        ClientWidth = 390
+        Constraints.MinWidth = 390
+        TabOrder = 0
+        object pTitleUser1: TPanel
+          Left = 16
+          Height = 28
+          Top = 16
+          Width = 358
+          Align = alTop
+          Alignment = taLeftJustify
+          AutoSize = True
+          BorderSpacing.Top = 16
+          BorderSpacing.Bottom = 8
+          BevelOuter = bvNone
+          ClientHeight = 28
+          ClientWidth = 358
+          Font.Color = 13066075
+          Font.Height = -20
+          ParentBackground = False
+          ParentFont = False
+          TabOrder = 0
+          object lblTitleMedia: TLabel
+            Left = 0
+            Height = 28
+            Top = 0
+            Width = 55
+            Align = alLeft
+            Caption = 'Media'
+          end
+        end
+        object lblVideosPath: TLabel
+          Left = 16
+          Height = 15
+          Top = 198
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Videos path:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object lblDocumentsPath: TLabel
+          Left = 16
+          Height = 15
+          Top = 248
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Documents path:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object pApplyMedia: TPanel
+          Left = 16
+          Height = 41
+          Top = 298
+          Width = 358
+          Align = alTop
+          BevelOuter = bvNone
+          ChildSizing.TopBottomSpacing = 8
+          ChildSizing.HorizontalSpacing = 8
+          ClientHeight = 41
+          ClientWidth = 358
+          ParentBackground = False
+          TabOrder = 1
+          object sbApplyMedia: TBitBtn
+            AnchorSideLeft.Side = asrCenter
+            AnchorSideTop.Side = asrCenter
+            Left = 114
+            Height = 26
+            Top = 7
+            Width = 130
+            AutoSize = True
+            Caption = 'Apply'
+            Constraints.MinWidth = 130
+            Images = iButtons
+            ImageIndex = 4
+            TabOrder = 0
+            OnClick = sbApplyMediaClick
+            OnKeyPress = FormKeyPress
+          end
+        end
+        object lblSubtitleMedia: TLabel
+          Left = 16
+          Height = 30
+          Top = 52
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 16
+          Caption = 'Choose where Xolmis will store images, audios, videos, and documents. These folders can be changed later.'
+          WordWrap = True
+        end
+        object lblImagesPath: TLabel
+          Left = 16
+          Height = 15
+          Top = 98
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Images path:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object lblAudiosPath: TLabel
+          Left = 16
+          Height = 15
+          Top = 148
+          Width = 358
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          Caption = 'Audio recordings path:'
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object eImagesPath: TDirectoryEdit
+          Left = 16
+          Height = 23
+          Top = 117
+          Width = 358
+          DialogOptions = [ofPathMustExist, ofEnableSizing]
+          ShowHidden = False
+          ButtonWidth = 24
+          DirectInput = False
+          NumGlyphs = 1
+          Images = DMM.iEdits
+          ImageIndex = 6
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          Color = clDefault
+          MaxLength = 0
+          TabOrder = 2
+          Spacing = 0
+        end
+        object eAudiosPath: TDirectoryEdit
+          Left = 16
+          Height = 23
+          Top = 167
+          Width = 358
+          DialogOptions = [ofPathMustExist, ofEnableSizing]
+          ShowHidden = False
+          ButtonWidth = 24
+          DirectInput = False
+          NumGlyphs = 1
+          Images = DMM.iEdits
+          ImageIndex = 6
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          Color = clDefault
+          MaxLength = 0
+          TabOrder = 3
+          Spacing = 0
+        end
+        object eVideosPath: TDirectoryEdit
+          Left = 16
+          Height = 23
+          Top = 217
+          Width = 358
+          DialogOptions = [ofPathMustExist, ofEnableSizing]
+          ShowHidden = False
+          ButtonWidth = 24
+          DirectInput = False
+          NumGlyphs = 1
+          Images = DMM.iEdits
+          ImageIndex = 6
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          Color = clDefault
+          MaxLength = 0
+          TabOrder = 4
+          Spacing = 0
+        end
+        object eDocumentsPath: TDirectoryEdit
+          Left = 16
+          Height = 23
+          Top = 267
+          Width = 358
+          DialogOptions = [ofPathMustExist, ofEnableSizing]
+          ShowHidden = False
+          ButtonWidth = 24
+          DirectInput = False
+          NumGlyphs = 1
+          Images = DMM.iEdits
+          ImageIndex = 6
+          Align = alTop
+          BorderSpacing.Bottom = 8
+          Color = clDefault
+          MaxLength = 0
+          TabOrder = 5
+          Spacing = 0
+        end
+      end
+    end
   end
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 342
+    Top = 357
     Width = 390
     Align = alTop
     AutoSize = True

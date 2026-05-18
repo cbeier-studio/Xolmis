@@ -24,6 +24,13 @@
 {"hash":163848080,"name":"tdlgnewdatabase.lblsubtitleuser.caption","sourcebytes":[67,114,101,97,116,101,32,121,111,117,114,32,117,115,101,114,32,116,111,32,97,99,99,101,115,115,32,116,104,101,32,100,97,116,97,98,97,115,101,46,32],"value":"Create your user to access the database. "},
 {"hash":30034010,"name":"tdlgnewdatabase.lblusername.caption","sourcebytes":[85,115,101,114,32,110,97,109,101,58,32,42],"value":"User name: *"},
 {"hash":242270122,"name":"tdlgnewdatabase.lbluserfullname.caption","sourcebytes":[70,117,108,108,32,110,97,109,101,58],"value":"Full name:"},
+{"hash":5487345,"name":"tdlgnewdatabase.lbltitlemedia.caption","sourcebytes":[77,101,100,105,97],"value":"Media"},
+{"hash":12134106,"name":"tdlgnewdatabase.lblvideospath.caption","sourcebytes":[86,105,100,101,111,115,32,112,97,116,104,58],"value":"Videos path:"},
+{"hash":263357530,"name":"tdlgnewdatabase.lbldocumentspath.caption","sourcebytes":[68,111,99,117,109,101,110,116,115,32,112,97,116,104,58],"value":"Documents path:"},
+{"hash":4749113,"name":"tdlgnewdatabase.sbapplymedia.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":246966862,"name":"tdlgnewdatabase.lblsubtitlemedia.caption","sourcebytes":[67,104,111,111,115,101,32,119,104,101,114,101,32,88,111,108,109,105,115,32,119,105,108,108,32,115,116,111,114,101,32,105,109,97,103,101,115,44,32,97,117,100,105,111,115,44,32,118,105,100,101,111,115,44,32,97,110,100,32,100,111,99,117,109,101,110,116,115,46,32,84,104,101,115,101,32,102,111,108,100,101,114,115,32,99,97,110,32,98,101,32,99,104,97,110,103,101,100,32,108,97,116,101,114,46],"value":"Choose where Xolmis will store images, audios, videos, and documents. These folders can be changed later."},
+{"hash":7731066,"name":"tdlgnewdatabase.lblimagespath.caption","sourcebytes":[73,109,97,103,101,115,32,112,97,116,104,58],"value":"Images path:"},
+{"hash":65834602,"name":"tdlgnewdatabase.lblaudiospath.caption","sourcebytes":[65,117,100,105,111,32,114,101,99,111,114,100,105,110,103,115,32,112,97,116,104,58],"value":"Audio recordings path:"},
 {"hash":77089212,"name":"tdlgnewdatabase.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":210423604,"name":"tdlgnewdatabase.lblrequired.caption","sourcebytes":[42,32,114,101,113,117,105,114,101,100],"value":"* required"},
 {"hash":189011301,"name":"tdlgnewdatabase.savedlg.title","sourcebytes":[67,114,101,97,116,101,32,100,97,116,97,98,97,115,101,32,102,105,108,101],"value":"Create database file"}

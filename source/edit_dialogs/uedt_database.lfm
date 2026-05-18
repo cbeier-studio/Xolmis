@@ -13,7 +13,7 @@ object edtDatabase: TedtDatabase
   PopupMode = pmExplicit
   PopupParent = cfgDatabase.Owner
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -119,6 +119,7 @@ object edtDatabase: TedtDatabase
       ParentBackground = False
       ParentFont = False
       TabOrder = 6
+      Visible = False
       object lblTitleAuthentication: TLabel
         Left = 0
         Height = 28
@@ -150,6 +151,7 @@ object edtDatabase: TedtDatabase
       Caption = 'Server:'
       Layout = tlCenter
       ParentColor = False
+      Visible = False
     end
     object lblDBPort: TLabel
       Left = 16
@@ -161,6 +163,7 @@ object edtDatabase: TedtDatabase
       Caption = 'Port:'
       Layout = tlCenter
       ParentColor = False
+      Visible = False
     end
     object lblDBFile: TLabel
       Left = 16
@@ -183,6 +186,7 @@ object edtDatabase: TedtDatabase
       Caption = 'Username:'
       Layout = tlCenter
       ParentColor = False
+      Visible = False
     end
     object eDBPass: TEditButton
       Left = 16
@@ -199,6 +203,7 @@ object edtDatabase: TedtDatabase
       PasswordChar = '*'
       Spacing = 0
       TabOrder = 8
+      Visible = False
       OnButtonClick = eDBPassButtonClick
       OnKeyDown = FormKeyDown
       OnKeyPress = eNameKeyPress
@@ -213,6 +218,7 @@ object edtDatabase: TedtDatabase
       Caption = 'Password:'
       Layout = tlCenter
       ParentColor = False
+      Visible = False
     end
     object lblName: TLabel
       Left = 16
@@ -250,6 +256,7 @@ object edtDatabase: TedtDatabase
       BorderSpacing.Bottom = 8
       MaxLength = 0
       TabOrder = 3
+      Visible = False
       OnKeyDown = FormKeyDown
       OnKeyPress = eNameKeyPress
     end
@@ -264,6 +271,7 @@ object edtDatabase: TedtDatabase
       BorderSpacing.Bottom = 8
       MaxLength = 0
       TabOrder = 4
+      Visible = False
       OnKeyDown = FormKeyDown
       OnKeyPress = eNameKeyPress
     end
@@ -278,6 +286,7 @@ object edtDatabase: TedtDatabase
       BorderSpacing.Bottom = 8
       MaxLength = 0
       TabOrder = 7
+      Visible = False
       OnKeyDown = FormKeyDown
       OnKeyPress = eNameKeyPress
     end
@@ -291,6 +300,7 @@ object edtDatabase: TedtDatabase
       Caption = 'Remote database'
       Enabled = False
       TabOrder = 2
+      Visible = False
       OnChange = ckRemoteDBChange
       OnKeyPress = eNameKeyPress
       OnKeyDown = FormKeyDown

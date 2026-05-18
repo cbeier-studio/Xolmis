@@ -62,6 +62,7 @@ type
     procedure ApplyDarkMode;
     procedure LoadConnectionList;
     procedure UpdateButtons;
+    function IsDevAuthBypassEnabled: Boolean;
     function ValidatePassword: Boolean;
   public
     property SelectedConnection: String read sConnect write sConnect;
@@ -87,6 +88,18 @@ begin
 
   lblLogin.Font.Color := clVioletFG1Dark;
   linkManageConn.Font.Color := clVioletFG1Dark;
+end;
+
+function TdlgConnect.IsDevAuthBypassEnabled: Boolean;
+var
+  EnvValue: String;
+begin
+  {$IFDEF DEBUG}
+  EnvValue := UpperCase(Trim(GetEnvironmentVariable('XOLMIS_DEV_AUTH_BYPASS')));
+  Result := (EnvValue = '1') or (EnvValue = 'TRUE') or (EnvValue = 'YES');
+  {$ELSE}
+  Result := False;
+  {$ENDIF}
 end;
 
 procedure TdlgConnect.cbConnectionChange(Sender: TObject);
@@ -162,6 +175,11 @@ begin
     ApplyDarkMode;
 
   LoadConnectionList;
+  if cbConnection.Items.Count = 1 then
+  begin
+    cbConnection.ItemIndex := 0;
+    eUsername.SetFocus;
+  end;
 
   // Load connection of last session
   if (xSettings.RememberConnection) then
@@ -171,15 +189,19 @@ begin
     begin
       cbConnection.ItemIndex := LastConn;
       eUsername.SetFocus;
+      // Load username of last session
+      if (xSettings.RememberUser) then
+        eUsername.Text := xSettings.LastUser;
     end;
   end;
 
-  // Load username of last session
-  if (xSettings.RememberUser) then
-    eUsername.Text := xSettings.LastUser;
-
   if (eUsername.Text <> EmptyStr) then
     ePassword.SetFocus;
+
+  if IsDevAuthBypassEnabled and (Pos('[DEV BYPASS]', lblLogin.Caption) = 0) then
+    lblLogin.Caption := lblLogin.Caption + ' [DEV BYPASS]';
+
+  UpdateButtons;
 end;
 
 procedure TdlgConnect.linkManageConnClick(Sender: TObject);
@@ -210,13 +232,13 @@ begin
     while not C.Eof do
     begin
       cbConnection.Items.Add(C.FieldByName('connection_name').AsString);
-      Application.ProcessMessages;
+      //Application.ProcessMessages;
       C.Next;
     end;
     C.First;
-    C.EnableControls;
     cbConnection.Sorted := True;
   finally
+    C.EnableControls;
     cbConnection.Items.EndUpdate;
   end;
 end;
@@ -229,7 +251,10 @@ end;
 
 procedure TdlgConnect.sbOKClick(Sender: TObject);
 var
+  uCon: TSQLConnector;
+  uTrans: TSQLTransaction;
   Repo: TUserRepository;
+  UserLoaded: Boolean;
 begin
   //GravaStat(Name, 'sbOK', 'click');
 
@@ -241,11 +266,52 @@ begin
   sbOK.Enabled := False;
 
   SelectedConnection := cbConnection.Text;
-  Repo := TUserRepository.Create(DMM.sqlCon);
+
+  uTrans := nil;
+  UserLoaded := False;
+  uCon := TSQLConnector.Create(nil);
   try
-    Repo.GetById(sUser, ActiveUser);
+    LoadDatabaseParams(cbConnection.Text, uCon);
+
+    try
+      uTrans := TSQLTransaction.Create(uCon);
+      uCon.Transaction := uTrans;
+
+      if not uCon.Connected then
+        uCon.Open;
+      if not uTrans.Active then
+        uTrans.StartTransaction;
+
+      Repo := TUserRepository.Create(uCon);
+      try
+        Repo.GetById(sUser, ActiveUser);
+        UserLoaded := True;
+      finally
+        Repo.Free;
+      end;
+
+      uTrans.CommitRetaining;
+
+    except
+      on E: Exception do
+      begin
+        if Assigned(uTrans) and uTrans.Active then
+          uTrans.RollbackRetaining;
+        LogError(Format(rsErrorValidatingUser, [E.Message]));
+        MsgDlg('', Format(rsErrorValidatingUser, [E.Message]), mtError);
+      end;
+    end;
   finally
-    Repo.Free;
+    if uCon.Connected then
+      uCon.Close;
+    FreeAndNil(uTrans);
+    FreeAndNil(uCon);
+  end;
+
+  if not UserLoaded then
+  begin
+    UpdateButtons;
+    Exit;
   end;
 
   if xSettings.RememberConnection then
@@ -264,7 +330,9 @@ end;
 procedure TdlgConnect.UpdateButtons;
 begin
   { Enable/disable OK button }
-  sbOK.Enabled := (cbConnection.ItemIndex >= 0) and (Length(eUsername.Text) > 0);
+  sbOK.Enabled := (cbConnection.ItemIndex >= 0) and
+    (Length(Trim(eUsername.Text)) > 0) and
+    (IsDevAuthBypassEnabled or (Length(ePassword.Text) > 0));
 end;
 
 function TdlgConnect.ValidatePassword: Boolean;
@@ -272,28 +340,29 @@ var
   uCon: TSQLConnector;
   uTrans: TSQLTransaction;
   Qry: TSQLQuery;
-  S: String;
+  S, StoredHash: String;
 begin
   Result := False;
   sUser := 0;
   eUsername.Text := Trim(eUsername.Text);
-  ePassword.Text := Trim(ePassword.Text);
+  ePassword.Text := ePassword.Text;
   S := EmptyStr;
 
   { Check user }
   uCon := TSQLConnector.Create(nil);
+  uTrans := TSQLTransaction.Create(uCon);
   try
+    uCon.Transaction := uTrans;
     LoadDatabaseParams(cbConnection.Text, uCon);
 
     try
-      uTrans := TSQLTransaction.Create(uCon);
-      uCon.Transaction := uTrans;
       //try
       //  uCon.Connected := True;
       //except
       //  raise Exception.CreateFmt('Unable to connect to database %s', [uCon.DatabaseName]);
       //end;
-      uTrans.StartTransaction;
+      if not uTrans.Active then
+        uTrans.StartTransaction;
       Qry := TSQLQuery.Create(uCon);
       with Qry, SQL do
       try
@@ -316,8 +385,18 @@ begin
         BCrypt.InitStr(BF_KEY, TDCP_sha256);
         S := BCrypt.EncryptString(ePassword.Text);
         BCrypt.Burn;
-        if (FieldByName('user_password').AsString <> EmptyStr) and
-          (FieldByName('user_password').AsString <> S) then
+        StoredHash := FieldByName('user_password').AsString;
+        if StoredHash = EmptyStr then
+        begin
+          if not IsDevAuthBypassEnabled then
+          begin
+            LogError('Empty password is only allowed with development bypass');
+            MsgDlg('', rsIncorrectPassword, mtError);
+            ePassword.SetFocus;
+            Exit;
+          end;
+        end
+        else if StoredHash <> S then
         begin
           LogError('Incorrect password');
           MsgDlg('', rsIncorrectPassword, mtError);

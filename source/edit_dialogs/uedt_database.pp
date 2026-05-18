@@ -71,10 +71,11 @@ type
     procedure sbCancelClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
+    FConnectionName: String;
     function IsRequiredFilled: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property ConnectionName: String read FConnectionName write FConnectionName;
   end;
 
 var
@@ -316,6 +317,8 @@ end;
 procedure TedtDatabase.sbSaveClick(Sender: TObject);
 begin
   { #todo : Test database connection }
+
+  FConnectionName := dsConn.DataSet.FieldByName('connection_name').AsString;
 
   edtDatabase.ModalResult := mrOk;
 end;

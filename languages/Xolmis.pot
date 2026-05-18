@@ -3405,6 +3405,7 @@ msgid "Auto size columns to fit the content"
 msgstr ""
 
 #: tcfgoptions.lblbackuppath.caption
+msgctxt "tcfgoptions.lblbackuppath.caption"
 msgid "Backup files folder"
 msgstr ""
 
@@ -3417,10 +3418,12 @@ msgid "When importing data, if a band (ring) does not exist in the database, Xol
 msgstr ""
 
 #: tcfgoptions.lblcheckupdates.caption
+msgctxt "tcfgoptions.lblcheckupdates.caption"
 msgid "Check for Xolmis updates"
 msgstr ""
 
 #: tcfgoptions.lblcleardeleted.caption
+msgctxt "tcfgoptions.lblcleardeleted.caption"
 msgid "Clear deleted records automatically (in days)"
 msgstr ""
 
@@ -3481,10 +3484,12 @@ msgid "Show synonyms in search results"
 msgstr ""
 
 #: tcfgoptions.lblstartpage.caption
+msgctxt "tcfgoptions.lblstartpage.caption"
 msgid "Start page"
 msgstr ""
 
 #: tcfgoptions.lblstartupbackup.caption
+msgctxt "tcfgoptions.lblstartupbackup.caption"
 msgid "Create backup when Xolmis closes"
 msgstr ""
 
@@ -5488,6 +5493,10 @@ msgctxt "tdlgnewdatabase.eusernewpass.buttonhint"
 msgid "Show/hide password"
 msgstr ""
 
+#: tdlgnewdatabase.lblaudiospath.caption
+msgid "Audio recordings path:"
+msgstr ""
+
 #: tdlgnewdatabase.lblauthor.caption
 msgid "Author name:"
 msgstr ""
@@ -5504,6 +5513,14 @@ msgstr ""
 
 #: tdlgnewdatabase.lbldescription.caption
 msgid "Database description:"
+msgstr ""
+
+#: tdlgnewdatabase.lbldocumentspath.caption
+msgid "Documents path:"
+msgstr ""
+
+#: tdlgnewdatabase.lblimagespath.caption
+msgid "Images path:"
 msgstr ""
 
 #: tdlgnewdatabase.lblname.caption
@@ -5529,6 +5546,10 @@ msgstr ""
 msgid "Inform a file name and metadata to create the new database."
 msgstr ""
 
+#: tdlgnewdatabase.lblsubtitlemedia.caption
+msgid "Choose where Xolmis will store images, audios, videos, and documents. These folders can be changed later."
+msgstr ""
+
 #: tdlgnewdatabase.lblsubtitleuser.caption
 msgctxt "tdlgnewdatabase.lblsubtitleuser.caption"
 msgid "Create your user to access the database. "
@@ -5542,6 +5563,11 @@ msgstr ""
 #: tdlgnewdatabase.lbltitleconnection.caption
 msgctxt "tdlgnewdatabase.lbltitleconnection.caption"
 msgid "New database"
+msgstr ""
+
+#: tdlgnewdatabase.lbltitlemedia.caption
+msgctxt "tdlgnewdatabase.lbltitlemedia.caption"
+msgid "Media"
 msgstr ""
 
 #: tdlgnewdatabase.lbltitleuser.caption
@@ -5566,12 +5592,21 @@ msgstr ""
 msgid "New password: *"
 msgstr ""
 
+#: tdlgnewdatabase.lblvideospath.caption
+msgid "Videos path:"
+msgstr ""
+
 #: tdlgnewdatabase.savedlg.title
 msgid "Create database file"
 msgstr ""
 
 #: tdlgnewdatabase.sbapplyadmin.caption
 msgctxt "tdlgnewdatabase.sbapplyadmin.caption"
+msgid "Apply"
+msgstr ""
+
+#: tdlgnewdatabase.sbapplymedia.caption
+msgctxt "tdlgnewdatabase.sbapplymedia.caption"
 msgid "Apply"
 msgstr ""
 
@@ -5590,14 +5625,34 @@ msgctxt "tdlgnewdatabase.sbcreateuser.caption"
 msgid "Create user"
 msgstr ""
 
+#: tdlgonboarding.btnbackbackup.caption
+msgctxt "tdlgonboarding.btnbackbackup.caption"
+msgid "Prior"
+msgstr ""
+
+#: tdlgonboarding.btnbackpreferences.caption
+msgctxt "tdlgonboarding.btnbackpreferences.caption"
+msgid "Prior"
+msgstr ""
+
 #: tdlgonboarding.btnhelp.caption
 msgctxt "tdlgonboarding.btnhelp.caption"
 msgid "&Help"
 msgstr ""
 
-#: tdlgonboarding.btnsavelocations.caption
-msgctxt "tdlgonboarding.btnsavelocations.caption"
-msgid "Save"
+#: tdlgonboarding.btnnextdatabase.caption
+msgctxt "tdlgonboarding.btnnextdatabase.caption"
+msgid "Next"
+msgstr ""
+
+#: tdlgonboarding.btnsavebackup.caption
+msgctxt "tdlgonboarding.btnsavebackup.caption"
+msgid "Next"
+msgstr ""
+
+#: tdlgonboarding.btnsavepreferences.caption
+msgctxt "tdlgonboarding.btnsavepreferences.caption"
+msgid "Next"
 msgstr ""
 
 #: tdlgonboarding.btnstart.caption
@@ -5608,32 +5663,43 @@ msgstr ""
 msgid "Setup Xolmis"
 msgstr ""
 
-#: tdlgonboarding.lblaudiospath.caption
-msgid "Audio files"
+#: tdlgonboarding.lblbackupinstruction.caption
+msgid "Set the backup folder and how often backups should run."
+msgstr ""
+
+#: tdlgonboarding.lblbackuppath.caption
+msgctxt "tdlgonboarding.lblbackuppath.caption"
+msgid "Backup files folder"
+msgstr ""
+
+#: tdlgonboarding.lblbackupwhenclosing.caption
+msgctxt "tdlgonboarding.lblbackupwhenclosing.caption"
+msgid "Create backup when Xolmis closes"
+msgstr ""
+
+#: tdlgonboarding.lblcheckupdates.caption
+msgctxt "tdlgonboarding.lblcheckupdates.caption"
+msgid "Check for Xolmis updates"
+msgstr ""
+
+#: tdlgonboarding.lblcleardeleted.caption
+msgctxt "tdlgonboarding.lblcleardeleted.caption"
+msgid "Clear deleted records automatically (in days)"
 msgstr ""
 
 #: tdlgonboarding.lbldatabaseinstruction.caption
 msgid "Select an option to setup your database."
 msgstr ""
 
-#: tdlgonboarding.lbldocumentspath.caption
-msgid "Documents"
-msgstr ""
-
 #: tdlgonboarding.lblfinishedinstruction.caption
 msgid ""
 "Your configuration is done!\n"
+"You can start using Xolmis and all its features.\n"
 "\n"
-"You can start using Xolmis and all its features."
-msgstr ""
-
-#: tdlgonboarding.lblimagespath.caption
-msgctxt "tdlgonboarding.lblimagespath.caption"
-msgid "Images"
-msgstr ""
-
-#: tdlgonboarding.lblmediainstruction.caption
-msgid "Set the location of attachment files."
+"To get started, you should enter the core information in the following order:\n"
+"1. Gazetteer → 2. Sampling plots → 3. Institutions → 4. Researchers\n"
+"\n"
+"Optionally, you may also add: Projects, Permits, Bands, and Methods."
 msgstr ""
 
 #: tdlgonboarding.lblnewdatabase.caption
@@ -5645,6 +5711,20 @@ msgstr ""
 msgid "Open an existing database"
 msgstr ""
 
+#: tdlgonboarding.lblpreferencesinstruction.caption
+msgid "Set some basic use preferences."
+msgstr ""
+
+#: tdlgonboarding.lblstartpage.caption
+msgctxt "tdlgonboarding.lblstartpage.caption"
+msgid "Start page"
+msgstr ""
+
+#: tdlgonboarding.lbltitlebackup.caption
+msgctxt "tdlgonboarding.lbltitlebackup.caption"
+msgid "Backup"
+msgstr ""
+
 #: tdlgonboarding.lbltitledatabase.caption
 msgctxt "tdlgonboarding.lbltitledatabase.caption"
 msgid "Database"
@@ -5652,27 +5732,22 @@ msgstr ""
 
 #: tdlgonboarding.lbltitlefinished.caption
 msgctxt "tdlgonboarding.lbltitlefinished.caption"
-msgid "Finished"
+msgid "Setup Complete"
 msgstr ""
 
-#: tdlgonboarding.lbltitlemedia.caption
-msgid "Attachments"
+#: tdlgonboarding.lbltitlepreferences.caption
+msgid "Preferences"
 msgstr ""
 
 #: tdlgonboarding.lbltitlewelcome.caption
 msgid "Welcome to Xolmis"
 msgstr ""
 
-#: tdlgonboarding.lblvideospath.caption
-msgctxt "tdlgonboarding.lblvideospath.caption"
-msgid "Videos"
-msgstr ""
-
 #: tdlgonboarding.lblwelcomeinstruction.caption
 msgid ""
-"Your companion app for ornithological data management.\n"
+"Xolmis helps you manage and organize ornithological data.\n"
 "\n"
-"You need to complete just a few steps to setup your database and environment and start using Xolmis."
+"This quick setup will prepare your database, backups, and basic preferences so you can start using the system smoothly."
 msgstr ""
 
 #: tdlgonboarding.sbcancel.caption
@@ -5681,7 +5756,7 @@ msgid "&Cancel"
 msgstr ""
 
 #: tdlgonboarding.sbclose.caption
-msgid "C&lose"
+msgid "&Start Xolmis"
 msgstr ""
 
 #: tdlgonboarding.txtnewdatabase.caption
@@ -15859,6 +15934,11 @@ msgctxt "utils_locale.rserrorrewritinghierarchy"
 msgid "Error rewriting the hierarchy. All rewriting changes were discarded."
 msgstr ""
 
+#: utils_locale.rserrorsavingmediapaths
+#, object-pascal-format
+msgid "Error saving the media paths: %s"
+msgstr ""
+
 #: utils_locale.rserrorsavingpdf
 msgid "Error saving PDF."
 msgstr ""
@@ -15910,6 +15990,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrorvalidatingpassword"
 msgid "Error validating password: %s"
+msgstr ""
+
+#: utils_locale.rserrorvalidatinguser
+#, object-pascal-format
+msgid "Error validating user: %s"
 msgstr ""
 
 #: utils_locale.rserrorvalidationfailed

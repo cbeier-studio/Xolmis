@@ -32,7 +32,21 @@ type
   TdlgNewDatabase = class(TForm)
     BCrypt: TDCP_blowfish;
     btnHelp: TSpeedButton;
+    eAudiosPath: TDirectoryEdit;
+    eDocumentsPath: TDirectoryEdit;
+    eImagesPath: TDirectoryEdit;
+    eVideosPath: TDirectoryEdit;
     lblRequired: TLabel;
+    lblSubtitleMedia: TLabel;
+    lblTitleMedia: TLabel;
+    lblDocumentsPath: TLabel;
+    lblAudiosPath: TLabel;
+    lblImagesPath: TLabel;
+    lblVideosPath: TLabel;
+    pContentMedia: TPanel;
+    pApplyMedia: TPanel;
+    pgMedia: TPage;
+    pTitleUser1: TPanel;
     SaveDlg: TSaveDialog;
     sbCreateDB: TBitBtn;
     sbCreateUser: TBitBtn;
@@ -81,6 +95,7 @@ type
     pTitleUser: TPanel;
     pTitleConnection: TPanel;
     sbCancel: TButton;
+    sbApplyMedia: TBitBtn;
     procedure btnHelpClick(Sender: TObject);
     procedure eConfirmPassButtonClick(Sender: TObject);
     procedure eDBFileButtonClick(Sender: TObject);
@@ -98,10 +113,11 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbApplyAdminClick(Sender: TObject);
+    procedure sbApplyMediaClick(Sender: TObject);
     procedure sbCreateDBClick(Sender: TObject);
     procedure sbCreateUserClick(Sender: TObject);
   private
-    FPass: String;
+    FConnectionName, FPass: String;
     function IsRequiredAdminFilled: Boolean;
     function IsRequiredConnectionFilled: Boolean;
     function IsRequiredUserFilled: Boolean;
@@ -111,7 +127,7 @@ type
     function ValidateUser: Boolean;
     procedure ApplyDarkMode;
   public
-
+    property ConnectionName: String read FConnectionName write FConnectionName;
   end;
 
 var
@@ -133,9 +149,15 @@ begin
   eNewPass.Images := iButtonsDark;
   eConfirmPass.Images := iButtonsDark;
 
+  sbCreateDB.Images := iButtonsDark;
+  sbApplyAdmin.Images := iButtonsDark;
+  sbCreateUser.Images := iButtonsDark;
+  sbApplyMedia.Images := iButtonsDark;
+
   lblTitleConnection.Font.Color := clVioletFG1Dark;
   lblTitleAuthentication.Font.Color := clVioletFG1Dark;
   lblTitleUser.Font.Color := clVioletFG1Dark;
+  lblTitleMedia.Font.Color := clVioletFG1Dark;
 end;
 
 procedure TdlgNewDatabase.btnHelpClick(Sender: TObject);
@@ -247,6 +269,11 @@ procedure TdlgNewDatabase.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  eImagesPath.Directory := xSettings.ImagesFolder;
+  eAudiosPath.Directory := xSettings.AudiosFolder;
+  eVideosPath.Directory := xSettings.VideosFolder;
+  eDocumentsPath.Directory := xSettings.DocumentsFolder;
 end;
 
 function TdlgNewDatabase.IsRequiredAdminFilled: Boolean;
@@ -272,8 +299,8 @@ begin
   Result := False;
 
   if (eUserName.Text <> EmptyStr) and
-    (eNewPass.Text <> EmptyStr) and
-    (eConfirmPass.Text <> EmptyStr) then
+    (eUserNewPass.Text <> EmptyStr) and
+    (eUserConfirmPass.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -290,17 +317,66 @@ begin
     nbPages.PageIndex := nbPages.PageIndex + 1;
   end
   else
+  begin
     MsgDlg(rsTitleAdminPassword, rsErrorUpdatingAdminPassword, mtError);
+    sbApplyAdmin.Enabled := True;
+  end;
+end;
+
+procedure TdlgNewDatabase.sbApplyMediaClick(Sender: TObject);
+var
+  uCon: TSQLConnector;
+  uTrans: TSQLTransaction;
+begin
+
+  uCon := TSQLConnector.Create(nil);
+  uTrans := TSQLTransaction.Create(uCon);
+  try
+    uTrans.Action := caRollbackRetaining;
+    uCon.Transaction := uTrans;
+    uTrans.DataBase := uCon;
+    uCon.CharSet := 'UTF-8';
+    uCon.ConnectorType := 'SQLite3';
+    uCon.LoginPrompt := False;
+    uCon.DatabaseName := eDBFile.Text;
+
+    try
+      uCon.Open;
+      if not uTrans.Active then
+        uTrans.StartTransaction;
+
+      WriteDatabaseMetadata(uCon, 'media_images_folder', eImagesPath.Directory);
+      WriteDatabaseMetadata(uCon, 'media_audios_folder', eAudiosPath.Directory);
+      WriteDatabaseMetadata(uCon, 'media_videos_folder', eVideosPath.Directory);
+      WriteDatabaseMetadata(uCon, 'media_documents_folder', eDocumentsPath.Directory);
+
+      uTrans.CommitRetaining;
+      Self.ModalResult := mrOK;
+    except
+      on E: Exception do
+      begin
+        uTrans.Rollback;
+        MsgDlg(rsTitleError, Format(rsErrorSavingMediaPaths, [E.Message]), mtError);
+        LogError(E.Message);
+      end;
+    end;
+  finally
+    if uCon.Connected then
+      uCon.Close;
+
+    FreeAndNil(uTrans);
+    FreeAndNil(uCon);
+  end;
 end;
 
 procedure TdlgNewDatabase.sbCreateDBClick(Sender: TObject);
 var
   Qry: TSQLQuery;
 begin
-  sbCreateDB.Enabled := False;
-
   if not ValidateDatabase then
     Exit;
+
+  sbCreateDB.Enabled := False;
 
   if not FileExists(eDBFile.Text) then
     if CreateUserDatabase(dbSqlite, eDBFile.Text, eName.Text, eAuthor.Text, eDescription.Text) then
@@ -325,9 +401,13 @@ begin
 
       //MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
       nbPages.PageIndex := nbPages.PageIndex + 1;
+      FConnectionName := eName.Text;
     end
     else
+    begin
       MsgDlg(rsTitleCreateDatabase, rsErrorDatabaseCreation, mtError);
+      sbCreateDB.Enabled := True;
+    end;
 end;
 
 procedure TdlgNewDatabase.sbCreateUserClick(Sender: TObject);
@@ -337,10 +417,10 @@ var
   Qry: TSQLQuery;
   aPass: String;
 begin
-  sbCreateUser.Enabled := False;
-
-  if not ValidateDatabase then
+  if not ValidateUser then
     Exit;
+
+  sbCreateUser.Enabled := False;
 
   BCrypt.InitStr(BF_KEY, TDCP_sha256);
   aPass := BCrypt.EncryptString(eUserNewPass.Text);
@@ -376,10 +456,11 @@ begin
       ExecSQL;
 
       uTrans.CommitRetaining;
-      Self.ModalResult := mrOK;
+      nbPages.PageIndex := nbPages.PageIndex + 1;
     except
       on E: Exception do
       begin
+        sbCreateUser.Enabled := True;
         uTrans.Rollback;
         MsgDlg(rsTitleError, Format(rsErrorCreatingUser, [E.Message]), mtError);
         LogError(E.Message);
@@ -465,19 +546,7 @@ begin
   eName.Text := Trim(eName.Text);
   eDBFile.Text := Trim(eDBFile.Text);
 
-  //if (Length(eDBFile.Text) = 0) then
-  //begin
-  //  // Check if the connection name exists
-  //  if (Length(eNewPass.Text) < 8) then
-  //  begin
-  //    Msgs.Add(rsMinPasswordLength);
-  //  end;
-  //  // Check if the database file exists
-  //  if not(eNewPass.Text = eConfirmPass.Text) then
-  //  begin
-  //    Msgs.Add(rsConfirmPasswordError);
-  //  end;
-  //end;
+
 
   if Msgs.Count > 0 then
   begin
