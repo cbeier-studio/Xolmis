@@ -60,6 +60,8 @@ type
     TimerFind: TTimer;
     procedure dsUsersStateChange(Sender: TObject);
     procedure eSearchChange(Sender: TObject);
+    procedure eSearchEnter(Sender: TObject);
+    procedure eSearchExit(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -163,6 +165,30 @@ begin
   TimerFind.Enabled := True;
 
   sbClearSearch.Visible := Length(eSearch.Text) > 0;
+end;
+
+procedure TcfgUsers.eSearchEnter(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Border.Color := ActiveTheme.AccentPalette.Dark1;
+  end
+  else
+  begin
+    pSearch.Border.Color := ActiveTheme.AccentFill.Tertiary;
+  end;
+end;
+
+procedure TcfgUsers.eSearchExit(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Border.Color := ActiveTheme.Background.SolidSecondary;
+  end
+  else
+  begin
+    pSearch.Border.Color := ActiveTheme.Border.Default;
+  end;
 end;
 
 procedure TcfgUsers.FormDestroy(Sender: TObject);

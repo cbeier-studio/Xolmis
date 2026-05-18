@@ -1076,6 +1076,11 @@ begin
   LogDebug('Opening the main form');
   {$ENDIF}
 
+  if IsDarkModeEnabled then
+    SetupDarkTheme
+  else
+    SetupLightTheme;
+
   // Create the loading dialog
   // >> use it with (potentially) time demanding tasks
   dlgLoading := TdlgLoading.Create(nil);

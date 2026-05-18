@@ -45,7 +45,7 @@ const
   clAccentFillDisabledLight   = TColor($00C8C8C8); // rgb(200, 200, 200)
   clAccentSelectedTextBGLight = TColor($00D47800); // rgb(0, 120, 212)
 
-  clDefaultBGLight         = TColor($00FFFFFF); // RGB(255, 255, 255)
+  clDefaultBGLight         = TColor($00FFFFFF); // rgb(255, 255, 255)
   clDefaultFG2Light        = TColor($00616161); // rgb(97, 97, 97)
   clDefaultFG1Light        = TColor($00424242); // rgb(66, 66, 66)
   clDefaultFGLight         = TColor($00242424); // rgb(36, 36, 36)
@@ -53,20 +53,20 @@ const
   clDefaultBG2Light        = TColor($00F5F5F5);
   clDefaultFGDisabledLight = TColor($00C7C7C7);
 
-  clTextPrimaryLight   = TColor($001B1B1B); // RGB(27, 27, 27)
-  clTextSecondaryLight = TColor($00646464); // RGB(100, 100, 100)
-  clTextTertiaryLight  = TColor($008D8D8D); // RGB(141, 141, 141)
-  clTextDisabledLight  = TColor($00A3A3A3); // RGB(163, 163, 163)
+  clTextPrimaryLight   = TColor($001B1B1B); // rgb(27, 27, 27)
+  clTextSecondaryLight = TColor($00646464); // rgb(100, 100, 100)
+  clTextTertiaryLight  = TColor($008D8D8D); // rgb(141, 141, 141)
+  clTextDisabledLight  = TColor($00A3A3A3); // rgb(163, 163, 163)
 
   clAccentTextPrimaryLight   = TColor($00923E00); // rgb(0, 62, 146)
   clAccentTextSecondaryLight = TColor($00681A00); // rgb(0, 26, 104)
   clAccentTextTertiaryLight  = TColor($00B85F00); // rgb(0, 95, 184)
-  clAccentTextDisabledLight  = TColor($00A3A3A3); // RGB(163, 163, 163)
+  clAccentTextDisabledLight  = TColor($00A3A3A3); // rgb(163, 163, 163)
 
-  clTextOnAccentPrimaryLight   = TColor($00FFFFFF); // RGB(255, 255, 255)
-  clTextOnAccentSecondaryLight = TColor($00FFFFFF); // RGB(255, 255, 255)
-  clTextOnAccentTertiaryLight  = TColor($00FFFFFF); // RGB(255, 255, 255)
-  clTextOnAccentDisabledLight  = TColor($00FFFFFF); // RGB(255, 255, 255)
+  clTextOnAccentPrimaryLight   = TColor($00FFFFFF); // rgb(255, 255, 255)
+  clTextOnAccentSecondaryLight = TColor($00FFFFFF); // rgb(255, 255, 255)
+  clTextOnAccentTertiaryLight  = TColor($00FFFFFF); // rgb(255, 255, 255)
+  clTextOnAccentDisabledLight  = TColor($00FFFFFF); // rgb(255, 255, 255)
 
   clSystemAttentionFGLight    = TColor($00B75F00); // rgb(0, 95, 183)
   clSystemSuccessFGLight      = TColor($000F7B0F); // rgb(15, 123, 15)
@@ -156,7 +156,7 @@ const
   clCardBGDefaultDark     = TColor($00373737); // rgb(55, 55, 55)
   clCardBGSecondaryDark   = TColor($00333333); // rgb(51, 51, 51)
 
-  clDefaultFGDark    = TColor($00FFFFFF); // RGB(255, 255, 255)
+  clDefaultFGDark    = TColor($00FFFFFF); // rgb(255, 255, 255)
   clDefaultBG1Dark   = TColor($00242424); // rgb(36, 36, 36)
   clDefaultBG6Dark   = TColor($001F1F1F); // rgb(31, 31, 31)
   clDefaultBRDFWDark = TColor($00000000); // rgb(0, 0, 0)
@@ -194,9 +194,14 @@ const
   clSystemMediumBGDark         = TColor($0000376F);
 
   clVioletFG1Dark    = TColor($00F5857F); // rgb(127, 133, 245)
+  clVioletFG2Dark    = TColor($00F79992); // rgb(146, 153, 247)
+  clVioletFG3Dark    = TColor($00FAEBE8); // rgb(232, 235, 250)
   clVioletBG2Dark    = TColor($00783E3D); // rgb(61, 62, 120)
   clVioletBG1Dark    = TColor($004A2F2F); // rgb(47, 47, 74)
   clVioletBrand1Dark = TColor($00914744); // rgb(68, 71, 145)
+  clVioletBrandBG1Dark = TColor($004A2F2F); // rgb(47, 47, 74)
+  clVioletBrandBG4Dark = TColor($00914744); // rgb(68, 71, 145)
+  clVioletBrandBG2Dark = TColor($00783E3D); // rgb(61, 62, 120)
   clRedFGDark        = TColor($006B52F9); // rgb(249, 82, 107)
   clRedBG1Dark       = TColor($00251F3E); // rgb(62, 31, 37)
   clRedBG2Dark       = TColor($005035E7); // rgb(231, 53, 80)
@@ -286,7 +291,36 @@ const
   clTagTealBGDark = TColor($00383226);
   clTagTealFGDark = TColor($00F1EFEC);
 
+const
+  { Dark mode - extended default/control colors }
+  clDefaultBGDark             = TColor($00242424); // = clDefaultBG1Dark
+  clDefaultBG2Dark            = TColor($001F1F1F); // = clDefaultBG6Dark
+  clDefaultFG1Dark            = TColor($00E3E3E3); // rgb(227, 227, 227)
+  clDefaultFG2Dark            = TColor($00C3C3C3); // rgb(195, 195, 195)
+  clDefaultFGDisabledDark     = TColor($00656565); // rgb(101, 101, 101)
+
+  { Dark mode - border colors }
+  clDefaultBorderDark         = TColor($00484848); // rgb(72, 72, 72)
+  clFocusedBorderLight        = TColor($00D47800); // = clAccentBase
+  clFocusedBorderDark         = TColor($00F99300); // = clAccentLight1
+  clDisabledBorderLight       = TColor($00E0E0E0); // rgb(224, 224, 224)
+  clDisabledBorderDark        = TColor($00383838); // rgb(56, 56, 56)
+
+  { Dark mode - accent fill colors }
+  clAccentFillDefaultDark     = TColor($00F99300); // = clAccentLight1
+  clAccentFillSecondaryDark   = TColor($00D47800); // = clAccentBase
+  clAccentFillTertiaryDark    = TColor($00B75E00); // = clAccentDark1
+  clAccentFillDisabledDark    = TColor($00515151); // rgb(81, 81, 81)
+  clAccentSelectedTextBGDark  = TColor($00F99300); // = clAccentLight1
+
 type
+  { A pair of background + foreground colors, used for tag/badge components }
+  TTagColorPair = record
+    Background: TColor;
+    Foreground: TColor;
+  end;
+
+  { Solid/card/smoke window background layers }
   TBackgroundColors = record
     SolidBase: TColor;
     SolidSecondary: TColor;
@@ -295,15 +329,9 @@ type
     SmokeDefault: TColor;
     CardDefault: TColor;
     CardSecondary: TColor;
-    SystemAttention: TColor;
-    SystemSolidAttention: TColor;
-    SystemSuccess: TColor;
-    SystemCaution: TColor;
-    SystemCritical: TColor;
-    SystemNeutral: TColor;
-    SystemSolidNeutral: TColor;
   end;
 
+  { Text and on-accent foreground colors }
   TForegroundColors = record
     TextPrimary: TColor;
     TextSecondary: TColor;
@@ -319,13 +347,116 @@ type
     TextOnAccentDisabled: TColor;
   end;
 
-  { TColorTheme }
+  { System status colors (attention, success, caution, critical, neutral) }
+  TSystemColors = record
+    AttentionFG: TColor;
+    SuccessFG: TColor;
+    CautionFG: TColor;
+    CriticalFG: TColor;
+    NeutralFG: TColor;
+    SolidNeutralFG: TColor;
+    MediumFG: TColor;
+    AttentionBG: TColor;
+    SolidAttentionBG: TColor;
+    SuccessBG: TColor;
+    CautionBG: TColor;
+    CriticalBG: TColor;
+    NeutralBG: TColor;
+    SolidNeutralBG: TColor;
+    MediumBG: TColor;
+  end;
 
+  { Accent fill colors for interactive/highlighted elements }
+  TAccentFillColors = record
+    Default: TColor;
+    Secondary: TColor;
+    Tertiary: TColor;
+    Disabled: TColor;
+    SelectedTextBG: TColor;
+  end;
+
+  { Full 7-step accent color ramp, from lightest to darkest }
+  TAccentPalette = record
+    Light3: TColor;
+    Light2: TColor;
+    Light1: TColor;
+    Base: TColor;
+    Dark1: TColor;
+    Dark2: TColor;
+    Dark3: TColor;
+  end;
+
+  { Colors for interactive text and selection states }
+  TInteractiveColors = record
+    WindowTitle: TColor;
+    Link: TColor;
+    LinkHover: TColor;
+    SelectionText: TColor;
+    SelectionBackground: TColor;
+    SelectionBackgroundStrong: TColor;
+    SelectionBorder: TColor;
+    { Text drawn on top of an interactive/accent background — contrasts with SelectionBackground }
+    AccentText: TColor;
+  end;
+
+  { Border/stroke colors for controls }
+  TBorderColors = record
+    Default: TColor;
+    Focused: TColor;
+    Disabled: TColor;
+  end;
+
+  { Generic control surface colors (backgrounds, foregrounds, disabled states) }
+  TControlColors = record
+    DefaultBG: TColor;
+    DefaultBG2: TColor;
+    DefaultFG: TColor;
+    DefaultFG1: TColor;
+    DefaultFG2: TColor;
+    FGDisabled: TColor;
+  end;
+
+  { Tag/badge color pairs for all available tag variants }
+  TTagColors = record
+    Blue: TTagColorPair;
+    LeafGreen: TTagColorPair;
+    Gold: TTagColorPair;
+    BurntOrange: TTagColorPair;
+    Red: TTagColorPair;
+    Violet: TTagColorPair;
+    Cyan: TTagColorPair;
+    WaterGreen: TTagColorPair;
+    Grey: TTagColorPair;
+    Terracota: TTagColorPair;
+    NavyBlue: TTagColorPair;
+    MossGreen: TTagColorPair;
+    Pink: TTagColorPair;
+    BrightOrange: TTagColorPair;
+    Teal: TTagColorPair;
+  end;
+
+  { Complete color theme — all groups that UI controls should reference }
   TColorTheme = record
     Name: String;
     IsDark: Boolean;
+    { Window and panel background layers }
     Background: TBackgroundColors;
+    { Text and foreground colors }
     Foreground: TForegroundColors;
+    { System status colors (attention, success, caution, critical) }
+    System: TSystemColors;
+    { Accent fill colors for interactive elements }
+    AccentFill: TAccentFillColors;
+    { 7-step accent color ramp }
+    AccentPalette: TAccentPalette;
+    { Titles, links and selection colors }
+    Interactive: TInteractiveColors;
+    { Control border/stroke colors }
+    Border: TBorderColors;
+    { Generic control surface colors }
+    Control: TControlColors;
+    { Tag/badge background+foreground pairs }
+    Tags: TTagColors;
   end;
 
 var
@@ -420,77 +551,289 @@ end;
 
 procedure SetupDarkTheme;
 begin
-  // Backgroud colors
+  ActiveTheme.Name   := 'Xolmis Dark';
+  ActiveTheme.IsDark := True;
+
+  // Background layers
   with ActiveTheme.Background do
   begin
-    SolidBase :=            clSolidBGBaseDark;
-    SolidSecondary :=       clSolidBGSecondaryDark;
-    SolidTertiary :=        clSolidBGTertiaryDark;
-    SolidQuaternary :=      clSolidBGQuaternaryDark;
-    SmokeDefault :=         clSmokeBGDefaultDark;
-    CardDefault :=          clCardBGDefaultDark;
-    CardSecondary :=        clCardBGSecondaryDark;
-    SystemAttention :=      clSystemAttentionBGDark;
-    SystemSolidAttention := clSystemSolidAttentionBGDark;
-    SystemSuccess :=        clSystemSuccessBGDark;
-    SystemCaution :=        clSystemCautionBGDark;
-    SystemCritical :=       clSystemCriticalBGDark;
-    SystemNeutral :=        clSystemNeutralBGDark;
-    SystemSolidNeutral :=   clSystemSolidNeutralBGDark;
+    SolidBase      := clSolidBGBaseDark;
+    SolidSecondary := clSolidBGSecondaryDark;
+    SolidTertiary  := clSolidBGTertiaryDark;
+    SolidQuaternary:= clSolidBGQuaternaryDark;
+    SmokeDefault   := clSmokeBGDefaultDark;
+    CardDefault    := clCardBGDefaultDark;
+    CardSecondary  := clCardBGSecondaryDark;
   end;
-  // Foreground colors
+
+  // Text / foreground
   with ActiveTheme.Foreground do
   begin
-    TextPrimary :=            clTextPrimaryDark;
-    TextSecondary :=          clTextSecondaryDark;
-    TextTertiary :=           clTextTertiaryDark;
-    TextDisabled :=           clTextDisabledDark;
-    AccentTextPrimary :=      clAccentTextPrimaryDark;
-    AccentTextSecondary :=    clAccentTextSecondaryDark;
-    AccentTextTertiary :=     clAccentTextTertiaryDark;
-    AccentTextDisabled :=     clAccentTextDisabledDark;
-    TextOnAccentPrimary :=    clTextOnAccentPrimaryDark;
-    TextOnAccentSecondary :=  clTextOnAccentSecondaryDark;
-    TextOnAccentTertiary :=   clTextOnAccentTertiaryDark;
-    TextOnAccentDisabled :=   clTextOnAccentDisabledDark;
+    TextPrimary          := clTextPrimaryDark;
+    TextSecondary        := clTextSecondaryDark;
+    TextTertiary         := clTextTertiaryDark;
+    TextDisabled         := clTextDisabledDark;
+    AccentTextPrimary    := clAccentTextPrimaryDark;
+    AccentTextSecondary  := clAccentTextSecondaryDark;
+    AccentTextTertiary   := clAccentTextTertiaryDark;
+    AccentTextDisabled   := clAccentTextDisabledDark;
+    TextOnAccentPrimary  := clTextOnAccentPrimaryDark;
+    TextOnAccentSecondary:= clTextOnAccentSecondaryDark;
+    TextOnAccentTertiary := clTextOnAccentTertiaryDark;
+    TextOnAccentDisabled := clTextOnAccentDisabledDark;
+  end;
+
+  // System status colors
+  with ActiveTheme.System do
+  begin
+    AttentionFG    := clSystemAttentionFGDark;
+    SuccessFG      := clSystemSuccessFGDark;
+    CautionFG      := clSystemCautionFGDark;
+    CriticalFG     := clSystemCriticalFGDark;
+    NeutralFG      := clSystemNeutralFGDark;
+    SolidNeutralFG := clSystemSolidNeutralFGDark;
+    MediumFG       := clSystemMediumFGDark;
+    AttentionBG     := clSystemAttentionBGDark;
+    SolidAttentionBG:= clSystemSolidAttentionBGDark;
+    SuccessBG       := clSystemSuccessBGDark;
+    CautionBG       := clSystemCautionBGDark;
+    CriticalBG      := clSystemCriticalBGDark;
+    NeutralBG       := clSystemNeutralBGDark;
+    SolidNeutralBG  := clSystemSolidNeutralBGDark;
+    MediumBG        := clSystemMediumBGDark;
+  end;
+
+  // Accent fill
+  with ActiveTheme.AccentFill do
+  begin
+    Default       := clAccentFillDefaultDark;
+    Secondary     := clAccentFillSecondaryDark;
+    Tertiary      := clAccentFillTertiaryDark;
+    Disabled      := clAccentFillDisabledDark;
+    SelectedTextBG:= clAccentSelectedTextBGDark;
+  end;
+
+  // Accent palette (same ramp for all themes)
+  with ActiveTheme.AccentPalette do
+  begin
+    Light3 := clAccentLight3;
+    Light2 := clAccentLight2;
+    Light1 := clAccentLight1;
+    Base   := clAccentBase;
+    Dark1  := clAccentDark1;
+    Dark2  := clAccentDark2;
+    Dark3  := clAccentDark3;
+  end;
+
+  // Interactive colors (titles, links and selection)
+  with ActiveTheme.Interactive do
+  begin
+    WindowTitle               := clVioletFG1Dark;
+    Link                      := clVioletFG2Dark;
+    LinkHover                 := clVioletFG1Dark;
+    SelectionText             := clVioletFG2Dark;
+    SelectionBackground       := clVioletBG1Dark; // clVioletBrandBG1Dark;
+    SelectionBackgroundStrong := clVioletBrandBG4Dark;
+    SelectionBorder           := clVioletBrandBG2Dark;
+    AccentText                := clVioletFG3Dark;   // light text on dark violet background
+  end;
+
+  // Borders
+  with ActiveTheme.Border do
+  begin
+    Default  := clDefaultBorderDark;
+    Focused  := clFocusedBorderDark;
+    Disabled := clDisabledBorderDark;
+  end;
+
+  // Control surface colors
+  with ActiveTheme.Control do
+  begin
+    DefaultBG  := clDefaultBGDark;
+    DefaultBG2 := clDefaultBG2Dark;
+    DefaultFG  := clDefaultFGDark;
+    DefaultFG1 := clDefaultFG1Dark;
+    DefaultFG2 := clDefaultFG2Dark;
+    FGDisabled := clDefaultFGDisabledDark;
+  end;
+
+  // Tag color pairs
+  with ActiveTheme.Tags do
+  begin
+    Blue.Background        := clTagBlueBGDark;
+    Blue.Foreground        := clTagBlueFGDark;
+    LeafGreen.Background   := clTagLeafGreenBGDark;
+    LeafGreen.Foreground   := clTagLeafGreenFGDark;
+    Gold.Background        := clTagGoldBGDark;
+    Gold.Foreground        := clTagGoldFGDark;
+    BurntOrange.Background := clTagBurntOrangeBGDark;
+    BurntOrange.Foreground := clTagBurntOrangeFGDark;
+    Red.Background         := clTagRedBGDark;
+    Red.Foreground         := clTagRedFGDark;
+    Violet.Background      := clTagVioletBGDark;
+    Violet.Foreground      := clTagVioletFGDark;
+    Cyan.Background        := clTagCyanBGDark;
+    Cyan.Foreground        := clTagCyanFGDark;
+    WaterGreen.Background  := clTagWaterGreenBGDark;
+    WaterGreen.Foreground  := clTagWaterGreenFGDark;
+    Grey.Background        := clTagGreyBGDark;
+    Grey.Foreground        := clTagGreyFGDark;
+    Terracota.Background   := clTagTerracotaBGDark;
+    Terracota.Foreground   := clTagTerracotaFGDark;
+    NavyBlue.Background    := clTagNavyBlueBGDark;
+    NavyBlue.Foreground    := clTagNavyBlueFGDark;
+    MossGreen.Background   := clTagMossGreenBGDark;
+    MossGreen.Foreground   := clTagMossGreenFGDark;
+    Pink.Background        := clTagPinkBGDark;
+    Pink.Foreground        := clTagPinkFGDark;
+    BrightOrange.Background:= clTagBrightOrangeBGDark;
+    BrightOrange.Foreground:= clTagBrightOrangeFGDark;
+    Teal.Background        := clTagTealBGDark;
+    Teal.Foreground        := clTagTealFGDark;
   end;
 end;
 
 procedure SetupLightTheme;
 begin
-  // Backgroud colors
+  ActiveTheme.Name   := 'Xolmis Light';
+  ActiveTheme.IsDark := False;
+
+  // Background layers
   with ActiveTheme.Background do
   begin
-    SolidBase :=            clSolidBGBaseLight;
-    SolidSecondary :=       clSolidBGSecondaryLight;
-    SolidTertiary :=        clSolidBGTertiaryLight;
-    SolidQuaternary :=      clSolidBGQuaternaryLight;
-    SmokeDefault :=         clSmokeBGDefaultLight;
-    CardDefault :=          clCardBGDefaultLight;
-    CardSecondary :=        clCardBGSecondaryLight;
-    SystemAttention :=      clSystemAttentionBGLight;
-    SystemSolidAttention := clSystemSolidAttentionBGLight;
-    SystemSuccess :=        clSystemSuccessBGLight;
-    SystemCaution :=        clSystemCautionBGLight;
-    SystemCritical :=       clSystemCriticalBGLight;
-    SystemNeutral :=        clSystemNeutralBGLight;
-    SystemSolidNeutral :=   clSystemSolidNeutralBGLight;
+    SolidBase      := clSolidBGBaseLight;
+    SolidSecondary := clSolidBGSecondaryLight;
+    SolidTertiary  := clSolidBGTertiaryLight;
+    SolidQuaternary:= clSolidBGQuaternaryLight;
+    SmokeDefault   := clSmokeBGDefaultLight;
+    CardDefault    := clCardBGDefaultLight;
+    CardSecondary  := clCardBGSecondaryLight;
   end;
-  // Foreground colors
+
+  // Text / foreground
   with ActiveTheme.Foreground do
   begin
-    TextPrimary :=            clTextPrimaryLight;
-    TextSecondary :=          clTextSecondaryLight;
-    TextTertiary :=           clTextTertiaryLight;
-    TextDisabled :=           clTextDisabledLight;
-    AccentTextPrimary :=      clAccentTextPrimaryLight;
-    AccentTextSecondary :=    clAccentTextSecondaryLight;
-    AccentTextTertiary :=     clAccentTextTertiaryLight;
-    AccentTextDisabled :=     clAccentTextDisabledLight;
-    TextOnAccentPrimary :=    clTextOnAccentPrimaryLight;
-    TextOnAccentSecondary :=  clTextOnAccentSecondaryLight;
-    TextOnAccentTertiary :=   clTextOnAccentTertiaryLight;
-    TextOnAccentDisabled :=   clTextOnAccentDisabledLight;
+    TextPrimary          := clTextPrimaryLight;
+    TextSecondary        := clTextSecondaryLight;
+    TextTertiary         := clTextTertiaryLight;
+    TextDisabled         := clTextDisabledLight;
+    AccentTextPrimary    := clAccentTextPrimaryLight;
+    AccentTextSecondary  := clAccentTextSecondaryLight;
+    AccentTextTertiary   := clAccentTextTertiaryLight;
+    AccentTextDisabled   := clAccentTextDisabledLight;
+    TextOnAccentPrimary  := clTextOnAccentPrimaryLight;
+    TextOnAccentSecondary:= clTextOnAccentSecondaryLight;
+    TextOnAccentTertiary := clTextOnAccentTertiaryLight;
+    TextOnAccentDisabled := clTextOnAccentDisabledLight;
+  end;
+
+  // System status colors
+  with ActiveTheme.System do
+  begin
+    AttentionFG    := clSystemAttentionFGLight;
+    SuccessFG      := clSystemSuccessFGLight;
+    CautionFG      := clSystemCautionFGLight;
+    CriticalFG     := clSystemCriticalFGLight;
+    NeutralFG      := clSystemNeutralFGLight;
+    SolidNeutralFG := clSystemSolidNeutralFGLight;
+    MediumFG       := clSystemMediumFGLight;
+    AttentionBG     := clSystemAttentionBGLight;
+    SolidAttentionBG:= clSystemSolidAttentionBGLight;
+    SuccessBG       := clSystemSuccessBGLight;
+    CautionBG       := clSystemCautionBGLight;
+    CriticalBG      := clSystemCriticalBGLight;
+    NeutralBG       := clSystemNeutralBGLight;
+    SolidNeutralBG  := clSystemSolidNeutralBGLight;
+    MediumBG        := clSystemMediumBGLight;
+  end;
+
+  // Accent fill
+  with ActiveTheme.AccentFill do
+  begin
+    Default       := clAccentFillDefaultLight;
+    Secondary     := clAccentFillSecondaryLight;
+    Tertiary      := clAccentFillTertiaryLight;
+    Disabled      := clAccentFillDisabledLight;
+    SelectedTextBG:= clAccentSelectedTextBGLight;
+  end;
+
+  // Accent palette (same ramp for all themes)
+  with ActiveTheme.AccentPalette do
+  begin
+    Light3 := clAccentLight3;
+    Light2 := clAccentLight2;
+    Light1 := clAccentLight1;
+    Base   := clAccentBase;
+    Dark1  := clAccentDark1;
+    Dark2  := clAccentDark2;
+    Dark3  := clAccentDark3;
+  end;
+
+  // Interactive colors (titles, links and selection)
+  with ActiveTheme.Interactive do
+  begin
+    WindowTitle               := clVioletFGLight;
+    Link                      := clVioletFG2Light;
+    LinkHover                 := clVioletBrand1Light;
+    SelectionText             := clVioletBrandBG4Light;
+    SelectionBackground       := clVioletBG1Light; // clVioletBrandBG1Light;
+    SelectionBackgroundStrong := clVioletBrand1Light;
+    SelectionBorder           := clVioletBrandBG2Light;
+    AccentText                := clVioletBG1Light; // light/contrasting text on dark violet background
+  end;
+
+  // Borders
+  with ActiveTheme.Border do
+  begin
+    Default  := clDefaultBorderLight;
+    Focused  := clFocusedBorderLight;
+    Disabled := clDisabledBorderLight;
+  end;
+
+  // Control surface colors
+  with ActiveTheme.Control do
+  begin
+    DefaultBG  := clDefaultBGLight;
+    DefaultBG2 := clDefaultBG2Light;
+    DefaultFG  := clDefaultFGLight;
+    DefaultFG1 := clDefaultFG1Light;
+    DefaultFG2 := clDefaultFG2Light;
+    FGDisabled := clDefaultFGDisabledLight;
+  end;
+
+  // Tag color pairs
+  with ActiveTheme.Tags do
+  begin
+    Blue.Background        := clTagBlueBGLight;
+    Blue.Foreground        := clTagBlueFGLight;
+    LeafGreen.Background   := clTagLeafGreenBGLight;
+    LeafGreen.Foreground   := clTagLeafGreenFGLight;
+    Gold.Background        := clTagGoldBGLight;
+    Gold.Foreground        := clTagGoldFGLight;
+    BurntOrange.Background := clTagBurntOrangeBGLight;
+    BurntOrange.Foreground := clTagBurntOrangeFGLight;
+    Red.Background         := clTagRedBGLight;
+    Red.Foreground         := clTagRedFGLight;
+    Violet.Background      := clTagVioletBGLight;
+    Violet.Foreground      := clTagVioletFGLight;
+    Cyan.Background        := clTagCyanBGLight;
+    Cyan.Foreground        := clTagCyanFGLight;
+    WaterGreen.Background  := clTagWaterGreenBGLight;
+    WaterGreen.Foreground  := clTagWaterGreenFGLight;
+    Grey.Background        := clTagGreyBGLight;
+    Grey.Foreground        := clTagGreyFGLight;
+    Terracota.Background   := clTagTerracotaBGLight;
+    Terracota.Foreground   := clTagTerracotaFGLight;
+    NavyBlue.Background    := clTagNavyBlueBGLight;
+    NavyBlue.Foreground    := clTagNavyBlueFGLight;
+    MossGreen.Background   := clTagMossGreenBGLight;
+    MossGreen.Foreground   := clTagMossGreenFGLight;
+    Pink.Background        := clTagPinkBGLight;
+    Pink.Foreground        := clTagPinkFGLight;
+    BrightOrange.Background:= clTagBrightOrangeBGLight;
+    BrightOrange.Foreground:= clTagBrightOrangeFGLight;
+    Teal.Background        := clTagTealBGLight;
+    Teal.Foreground        := clTagTealFGLight;
   end;
 end;
 

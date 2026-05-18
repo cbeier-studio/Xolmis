@@ -154,10 +154,10 @@ begin
   sbCreateUser.Images := iButtonsDark;
   sbApplyMedia.Images := iButtonsDark;
 
-  lblTitleConnection.Font.Color := clVioletFG1Dark;
-  lblTitleAuthentication.Font.Color := clVioletFG1Dark;
-  lblTitleUser.Font.Color := clVioletFG1Dark;
-  lblTitleMedia.Font.Color := clVioletFG1Dark;
+  lblTitleConnection.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleAuthentication.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleUser.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleMedia.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgNewDatabase.btnHelpClick(Sender: TObject);

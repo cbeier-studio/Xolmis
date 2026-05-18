@@ -151,26 +151,26 @@ begin
 
   eBackupPath.Images := DMM.iEditsDark;
 
-  pNewDatabase.Background.Color := clSolidBGSecondaryDark;
-  pNewDatabase.Border.Color := clSystemSolidNeutralFGDark;
-  pOpenDatabase.Background.Color := clSolidBGSecondaryDark;
-  pOpenDatabase.Border.Color := clSystemSolidNeutralFGDark;
-  pBackupPath.Background.Color := clSolidBGSecondaryDark;
-  pBackupPath.Border.Color := clSystemSolidNeutralFGDark;
-  pBackupWhenClosing.Background.Color := clSolidBGSecondaryDark;
-  pBackupWhenClosing.Border.Color := clSystemSolidNeutralFGDark;
-  pStartPage.Background.Color := clSolidBGSecondaryDark;
-  pStartPage.Border.Color := clSystemSolidNeutralFGDark;
-  pClearDeleted.Background.Color := clSolidBGSecondaryDark;
-  pClearDeleted.Border.Color := clSystemSolidNeutralFGDark;
-  pCheckUpdates.Background.Color := clSolidBGSecondaryDark;
-  pCheckUpdates.Border.Color := clSystemSolidNeutralFGDark;
+  pNewDatabase.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pNewDatabase.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
+  pOpenDatabase.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pOpenDatabase.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
+  pBackupPath.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pBackupPath.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
+  pBackupWhenClosing.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pBackupWhenClosing.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
+  pStartPage.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pStartPage.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
+  pClearDeleted.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pClearDeleted.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
+  pCheckUpdates.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pCheckUpdates.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
 
-  lblTitleWelcome.Font.Color := clVioletFG1Dark;
-  lblTitleDatabase.Font.Color := clVioletFG1Dark;
-  lblTitleBackup.Font.Color := clVioletFG1Dark;
-  lblTitlePreferences.Font.Color := clVioletFG1Dark;
-  lblTitleFinished.Font.Color := clVioletFG1Dark;
+  lblTitleWelcome.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  lblTitleDatabase.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  lblTitleBackup.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  lblTitlePreferences.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  lblTitleFinished.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
 end;
 
 procedure TdlgOnboarding.btnBackBackupClick(Sender: TObject);

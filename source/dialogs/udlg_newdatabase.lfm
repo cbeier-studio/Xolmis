@@ -29,7 +29,7 @@ object dlgNewDatabase: TdlgNewDatabase
     Height = 355
     Top = 0
     Width = 390
-    PageIndex = 3
+    PageIndex = 0
     Align = alTop
     AutoSize = True
     TabOrder = 0

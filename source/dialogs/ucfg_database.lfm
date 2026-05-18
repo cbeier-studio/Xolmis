@@ -9,7 +9,7 @@ object cfgDatabase: TcfgDatabase
   ClientWidth = 344
   Font.Height = -12
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pClient: TPanel
@@ -318,6 +318,8 @@ object cfgDatabase: TcfgDatabase
         TabOrder = 0
         TextHint = 'Search'
         OnChange = eSearchChange
+        OnEnter = eSearchEnter
+        OnExit = eSearchExit
         OnKeyPress = FormKeyPress
       end
       object sbClearSearch: TColorSpeedButton

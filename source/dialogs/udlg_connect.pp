@@ -86,8 +86,8 @@ begin
   pBottom.ParentBackground := True;
   ePassword.Images := iButtonsDark;
 
-  lblLogin.Font.Color := clVioletFG1Dark;
-  linkManageConn.Font.Color := clVioletFG1Dark;
+  lblLogin.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  linkManageConn.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 function TdlgConnect.IsDevAuthBypassEnabled: Boolean;

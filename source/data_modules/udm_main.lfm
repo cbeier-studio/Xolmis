@@ -452,6 +452,7 @@ object DMM: TDMM
     Transaction = sysTrans
     SQL.Strings = (
       'SELECT * FROM connections'
+      'ORDER BY connection_name'
     )
     Options = [sqoAutoApplyUpdates]
     Params = <>

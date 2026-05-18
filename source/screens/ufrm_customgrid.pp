@@ -1474,15 +1474,15 @@ begin
   Self.Border.Style := bboSolid;
   if IsDarkModeEnabled then
   begin
-    Self.Background.Color := clCardBGSecondaryDark;
-    Self.Border.Color := clSolidBGTertiaryDark;
-    Self.Color := clCardBGDefaultDark;
+    Self.Background.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+    Self.Border.Color := ActiveTheme.Border.Default; // clSolidBGTertiaryDark;
+    Self.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
   end
   else
   begin
-    Self.Border.Color := $00D1D1D1;
-    Self.Background.Color := $00FAFAFA;
-    Self.Color := $00F3F3F3;
+    Self.Border.Color := ActiveTheme.Border.Default; // $00D1D1D1;
+    Self.Background.Color := ActiveTheme.Background.CardSecondary; // $00FAFAFA;
+    Self.Color := ActiveTheme.Background.SolidBase; // $00F3F3F3;
   end;
 
   // Title label
@@ -1521,16 +1521,16 @@ begin
   FCounterBadge.OnMouseEnter := @TabMouseEnter;
   FCounterBadge.OnMouseLeave := @TabMouseLeave;
   FCounterBadge.Border.Style := bboNone;
-  if IsDarkModeEnabled then
-  begin
-    FCounterBadge.Border.Color := $00C75F5B;
-    FCounterBadge.Background.Color := $00C75F5B;
-  end
-  else
-  begin
-    FCounterBadge.Border.Color := $00C75F5B;
-    FCounterBadge.Background.Color := $00C75F5B;
-  end;
+  //if IsDarkModeEnabled then
+  //begin
+    FCounterBadge.Border.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
+    FCounterBadge.Background.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
+  //end
+  //else
+  //begin
+  //  FCounterBadge.Border.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
+  //  FCounterBadge.Background.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
+  //end;
   FCounterBadge.Color := Self.Background.Color;
   FCounterBadge.AnchorVerticalCenterTo(Self);
   FCounterBadge.AnchorSide[akLeft].Side := asrRight;
@@ -1550,7 +1550,7 @@ begin
   FCounterLabel.BorderSpacing.Top := 2;
   FCounterLabel.BorderSpacing.Bottom := 2;
   FCounterLabel.Font.Style := [fsBold];
-  FCounterLabel.Font.Color := $00FAEBE8;
+  FCounterLabel.Font.Color := ActiveTheme.Interactive.AccentText; // $00FAEBE8;
   FCounterLabel.AutoSize := True;
   FCounterLabel.Layout := tlCenter;
   FCounterLabel.Align := alClient;
@@ -1569,15 +1569,15 @@ begin
     FIsActive := Value;
     if FIsActive then
     begin
-      Self.Border.Color := clVioletFGLight;
+      Self.Border.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFGLight;
       Self.Border.Width := 2;
     end
     else
     begin
-      if IsDarkModeEnabled then
-        Self.Border.Color := clSolidBGTertiaryDark
-      else
-        Self.Border.Color := $00D1D1D1;
+      //if IsDarkModeEnabled then
+        Self.Border.Color := ActiveTheme.Border.Default; // clSolidBGTertiaryDark
+      //else
+      //  Self.Border.Color := $00D1D1D1;
       Self.Border.Width := 1;
     end;
   end;
@@ -1604,19 +1604,19 @@ begin
     end;
   end;
 
-  if IsDarkModeEnabled then
-    Self.Background.Color := clVioletBG1Dark
-  else
-    Self.Background.Color := clVioletBG1Light;
+  //if IsDarkModeEnabled then
+    Self.Background.Color := ActiveTheme.Interactive.SelectionBackground; // clVioletBG1Dark
+  //else
+  //  Self.Background.Color := clVioletBG1Light;
   FCounterBadge.Color := Self.Background.Color;
   if (FParentForm.pChild.Visible) and (Self.PageIndex = FParentForm.nbChilds.PageIndex) then
   begin
     // Hide child grid, if clicked then activate tab
     FParentForm.pChild.Visible := False;
-    if IsDarkModeEnabled then
-      Self.Border.Color := clSolidBGTertiaryDark
-    else
-      Self.Border.Color := $00D1D1D1;
+    //if IsDarkModeEnabled then
+      Self.Border.Color := ActiveTheme.Border.Default; // clSolidBGTertiaryDark
+    //else
+    //  Self.Border.Color := $00D1D1D1;
     Self.Border.Width := 1;
   end
   else
@@ -1632,9 +1632,9 @@ begin
   end;
   //splitChild.Visible := pChild.Visible;
   if IsDarkModeEnabled then
-    Self.Background.Color := clVioletBG1Dark
+    Self.Background.Color := ActiveTheme.Interactive.SelectionBackground // clVioletBG1Dark
   else
-    Self.Background.Color := $00E0C0C0;
+    Self.Background.Color := $00E0C0C0;  { #todo : add color to the themes }
   FCounterBadge.Color := Self.Background.Color;
 
   FParentForm.eAddChild.Visible := False;
@@ -1738,7 +1738,7 @@ end;
 procedure TCustomPanelTab.TabMouseEnter(Sender: TObject);
 begin
   if IsDarkModeEnabled then
-    Self.Background.Color := clVioletBG1Dark
+    Self.Background.Color := ActiveTheme.Interactive.SelectionBackground // clVioletBG1Dark
   else
     Self.Background.Color := $00E0C0C0;
   FCounterBadge.Color := Self.Background.Color;
@@ -1746,10 +1746,10 @@ end;
 
 procedure TCustomPanelTab.TabMouseLeave(Sender: TObject);
 begin
-  if IsDarkModeEnabled then
-    Self.Background.Color := clCardBGSecondaryDark
-  else
-    Self.Background.Color := clCardBGSecondaryLight;
+  //if IsDarkModeEnabled then
+    Self.Background.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark
+  //else
+  //  Self.Background.Color := clCardBGSecondaryLight;
   FCounterBadge.Color := Self.Background.Color;
 end;
 
@@ -2105,63 +2105,63 @@ end;
 procedure TfrmCustomGrid.ApplyDarkMode;
 begin
   // Set panels colors
-  pClient.Color := clSolidBGBaseDark;
-  pSide.Color := clSolidBGTertiaryDark;
-  scrollFilter.Color := clSolidBGTertiaryDark;
-  pQuickFiltersContent.Background.Color := clSolidBGTertiaryDark;
-  pFiltersToolbar.Background.Color := clCardBGDefaultDark;
-  pFiltersToolbar.Border.Color := clCardBGSecondaryDark;
-  pImagesToolbar.Background.Color := clCardBGDefaultDark;
-  pImagesToolbar.Border.Color := clCardBGSecondaryDark;
-  pAudiosToolbar.Background.Color := clCardBGDefaultDark;
-  pAudiosToolbar.Border.Color := clCardBGSecondaryDark;
-  pVideosToolbar.Background.Color := clCardBGDefaultDark;
-  pVideosToolbar.Border.Color := clCardBGSecondaryDark;
-  pDocsToolbar.Background.Color := clCardBGDefaultDark;
-  pDocsToolbar.Border.Color := clCardBGSecondaryDark;
-  pMapToolbar.Background.Color := clCardBGDefaultDark;
-  pMapToolbar.Border.Color := clCardBGSecondaryDark;
-  pColumnsToolbar.Background.Color := clCardBGDefaultDark;
-  pColumnsToolbar.Border.Color := clCardBGSecondaryDark;
-  pRecycleToolbar.Background.Color := clCardBGDefaultDark;
-  pRecycleToolbar.Border.Color := clCardBGSecondaryDark;
-  pRecycleWarning.Background.Color := clSystemAttentionBGDark;
-  pRecycleWarning.Border.Color := clSystemAttentionFGDark;
-  pMsgSummary.Background.Color := clCardBGDefaultDark;
-  pMsgSummary.Border.Color := clCardBGSecondaryDark;
-  pMsgSummary.FontEx.Color := clTextPrimaryDark;
+  pClient.Color := ActiveTheme.Background.SolidBase; // clSolidBGBaseDark;
+  pSide.Color := ActiveTheme.Background.SolidTertiary; // clSolidBGTertiaryDark;
+  scrollFilter.Color := ActiveTheme.Background.SolidTertiary; // clSolidBGTertiaryDark;
+  pQuickFiltersContent.Background.Color := ActiveTheme.Background.SolidTertiary; // clSolidBGTertiaryDark;
+  pFiltersToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pFiltersToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pImagesToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pImagesToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pAudiosToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pAudiosToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pVideosToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pVideosToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pDocsToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pDocsToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pMapToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMapToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pColumnsToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pColumnsToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pRecycleToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pRecycleToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pRecycleWarning.Background.Color := ActiveTheme.System.AttentionBG; // clSystemAttentionBGDark;
+  pRecycleWarning.Border.Color := ActiveTheme.System.AttentionFG; // clSystemAttentionFGDark;
+  pMsgSummary.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMsgSummary.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pMsgSummary.FontEx.Color := ActiveTheme.Foreground.TextPrimary; // clTextPrimaryDark;
   pMsgSummary.Color := gridSummary.Color;
 
-  pEmptyQuery.Background.Color := clCardBGDefaultDark;
-  pEmptyQuery.Border.Color := clCardBGSecondaryDark;
+  pEmptyQuery.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pEmptyQuery.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
   pEmptyQuery.Color := DBG.Color;
 
-  pRecordToolbar.Background.Color := clCardBGDefaultDark;
-  pRecordToolbar.Border.Color := clCardBGSecondaryDark;
-  pRecordStatus.Background.Color := clCardBGDefaultDark;
-  pRecordStatus.Border.Color := clCardBGSecondaryDark;
-  pChildToolbar.Background.Color := clCardBGDefaultDark;
-  pChildToolbar.Border.Color := clCardBGSecondaryDark;
-  pChildStatus.Background.Color := clCardBGDefaultDark;
-  pChildStatus.Border.Color := clCardBGSecondaryDark;
-  pChildsBar.Background.Color := clCardBGDefaultDark;
-  pChildsBar.Border.Color := clCardBGSecondaryDark;
-  pChildRightPanel.Background.Color := clSolidBGSecondaryDark;
-  pChildRightPanel.Border.Color := clCardBGSecondaryDark;
+  pRecordToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pRecordToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pRecordStatus.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pRecordStatus.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pChildToolbar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pChildToolbar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pChildStatus.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pChildStatus.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pChildsBar.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pChildsBar.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pChildRightPanel.Background.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  pChildRightPanel.Border.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
 
-  pSideToolbar.Color := clSolidBGQuaternaryDark;
+  pSideToolbar.Color := ActiveTheme.Background.SolidQuaternary; // clSolidBGQuaternaryDark;
 
   // Set font colors
-  titleViewRecord.Font.Color := clVioletFG1Dark;
-  titleQuickFilters.Font.Color := clVioletFG1Dark;
-  titleImages.Font.Color := clVioletFG1Dark;
-  titleAudios.Font.Color := clVioletFG1Dark;
-  titleVideos.Font.Color := clVioletFG1Dark;
-  titleDocs.Font.Color := clVioletFG1Dark;
-  titleMap.Font.Color := clVioletFG1Dark;
-  titleSummary.Font.Color := clVioletFG1Dark;
-  titleColumns.Font.Color := clVioletFG1Dark;
-  titleRecycle.Font.Color := clVioletFG1Dark;
+  titleViewRecord.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleQuickFilters.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleImages.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleAudios.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleVideos.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleDocs.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleMap.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleSummary.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleColumns.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
+  titleRecycle.Font.Color := ActiveTheme.Interactive.WindowTitle; // clVioletFG1Dark;
 
   // Set images
   DBG.TitleImageList := iHeadersDark;
@@ -2258,151 +2258,151 @@ begin
   sbMoreOptions.Images := iButtonsDark;
 
   // Search box
-  pSearch.Background.Color := clCardBGSecondaryDark;
-  pSearch.Border.Color := clSolidBGSecondaryDark;
+  pSearch.Background.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pSearch.Border.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
   pSearch.ParentBackground := True;
   eSearch.Color := pSearch.Background.Color;
   iconSearch.Images := iSearchDark;
   sbClearSearch.Images := iSearchDark;
-  sbClearSearch.StateHover.Color := clSolidBGSecondaryDark;
-  sbClearSearch.StateActive.Color := clSolidBGTertiaryDark;
+  sbClearSearch.StateHover.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
+  sbClearSearch.StateActive.Color := ActiveTheme.Background.SolidTertiary; // clSolidBGTertiaryDark;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
 
   // Set filter cards colors
-  pSiteFilters.Background.Color := clCardBGDefaultDark;
-  pSiteFilters.Border.Color := clSystemSolidNeutralFGDark;
-  pTitleSiteFilter.Color := clCardBGDefaultDark;
-  pSiteRankFilter.Background.Color := clCardBGDefaultDark;
-  pSiteRankFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pTaxonRanksFilters.Background.Color := clCardBGDefaultDark;
-  pTaxonRanksFilters.Border.Color := clSystemSolidNeutralFGDark;
-  pTitleTaxonRanksFilter.Color := clCardBGDefaultDark;
-  pMaterialFilter.Background.Color := clCardBGDefaultDark;
-  pMaterialFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pMethodFilter.Background.Color := clCardBGDefaultDark;
-  pMethodFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pCategoryFilter.Background.Color := clCardBGDefaultDark;
-  pCategoryFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pBandSizeFilter.Background.Color := clCardBGDefaultDark;
-  pBandSizeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pWithRecapturesFilter.Background.Color := clCardBGDefaultDark;
-  pWithRecapturesFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pFatFilter.Background.Color := clCardBGDefaultDark;
-  pFatFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pBandStatusFilter.Background.Color := clCardBGDefaultDark;
-  pBandStatusFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pDatesFilters.Background.Color := clCardBGDefaultDark;
-  pDatesFilters.Border.Color := clSystemSolidNeutralFGDark;
-  pDateFilter.Color := clCardBGDefaultDark;
-  pNestFateFilter.Background.Color := clCardBGDefaultDark;
-  pNestFateFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pNestSupportFilter.Background.Color := clCardBGDefaultDark;
-  pNestSupportFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pTaxonFilters.Background.Color := clCardBGDefaultDark;
-  pTaxonFilters.Border.Color := clSystemSolidNeutralFGDark;
-  pTitleTaxonFilter.Color := clCardBGDefaultDark;
-  pExtinctFilter.Background.Color := clCardBGDefaultDark;
-  pExtinctFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pWithColorBandsFilter.Background.Color := clCardBGDefaultDark;
-  pWithColorBandsFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pSexFilter.Background.Color := clCardBGDefaultDark;
-  pSexFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pCloacalProtuberanceFilter.Background.Color := clCardBGDefaultDark;
-  pCloacalProtuberanceFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pBroodPatchFilter.Background.Color := clCardBGDefaultDark;
-  pBroodPatchFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pHowSexedFilter.Background.Color := clCardBGDefaultDark;
-  pHowSexedFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pReportedFilter.Background.Color := clCardBGDefaultDark;
-  pReportedFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pIsSynonymFilter.Background.Color := clCardBGDefaultDark;
-  pIsSynonymFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pHasSynonymsFilter.Background.Color := clCardBGDefaultDark;
-  pHasSynonymsFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pBodyMoltFilter.Background.Color := clCardBGDefaultDark;
-  pBodyMoltFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pFFMoltFilter.Background.Color := clCardBGDefaultDark;
-  pFFMoltFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pFFWearFilter.Background.Color := clCardBGDefaultDark;
-  pFFWearFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pMoltLimitsFilter.Background.Color := clCardBGDefaultDark;
-  pMoltLimitsFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pMoltCycleFilter.Background.Color := clCardBGDefaultDark;
-  pMoltCycleFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pTaxonomyClementsFilter.Background.Color := clCardBGDefaultDark;
-  pTaxonomyClementsFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pTaxonomyIocFilter.Background.Color := clCardBGDefaultDark;
-  pTaxonomyIocFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pTaxonomyCbroFilter.Background.Color := clCardBGDefaultDark;
-  pTaxonomyCbroFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pStartTimeFilter.Background.Color := clCardBGDefaultDark;
-  pStartTimeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pEndTimeFilter.Background.Color := clCardBGDefaultDark;
-  pEndTimeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pAgeFilter.Background.Color := clCardBGDefaultDark;
-  pAgeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pSkullOssificationFilter.Background.Color := clCardBGDefaultDark;
-  pSkullOssificationFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pHowAgedFilter.Background.Color := clCardBGDefaultDark;
-  pHowAgedFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pMarkedFilter.Background.Color := clCardBGDefaultDark;
-  pMarkedFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pPersonFilter.Background.Color := clCardBGDefaultDark;
-  pPersonFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pInstitutionFilter.Background.Color := clCardBGDefaultDark;
-  pInstitutionFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pSurveyFilter.Background.Color := clCardBGDefaultDark;
-  pSurveyFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pProjectFilter.Background.Color := clCardBGDefaultDark;
-  pProjectFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pNestFilter.Background.Color := clCardBGDefaultDark;
-  pNestFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pIndividualFilter.Background.Color := clCardBGDefaultDark;
-  pIndividualFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pSamplingPlotFilter.Background.Color := clCardBGDefaultDark;
-  pSamplingPlotFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pExpeditionFilter.Background.Color := clCardBGDefaultDark;
-  pExpeditionFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pPlantFilter.Background.Color := clCardBGDefaultDark;
-  pPlantFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pNeedsReviewFilter.Background.Color := clCardBGDefaultDark;
-  pNeedsReviewFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pEscapedFilter.Background.Color := clCardBGDefaultDark;
-  pEscapedFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pRecordInEbirdFilter.Background.Color := clCardBGDefaultDark;
-  pRecordInEbirdFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pEggFilter.Background.Color := clCardBGDefaultDark;
-  pEggFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pOutOfSampleFilter.Background.Color := clCardBGDefaultDark;
-  pOutOfSampleFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pNidoparasiteFilter.Background.Color := clCardBGDefaultDark;
-  pNidoparasiteFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pHatchedFilter.Background.Color := clCardBGDefaultDark;
-  pHatchedFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pPhilornisFilter.Background.Color := clCardBGDefaultDark;
-  pPhilornisFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pCaptureTypeFilter.Background.Color := clCardBGDefaultDark;
-  pCaptureTypeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pCaptureStatusFilter.Background.Color := clCardBGDefaultDark;
-  pCaptureStatusFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pBandTypeFilter.Background.Color := clCardBGDefaultDark;
-  pBandTypeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pBandSourceFilter.Background.Color := clCardBGDefaultDark;
-  pBandSourceFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pNestStatusFilter.Background.Color := clCardBGDefaultDark;
-  pNestStatusFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pNestStageFilter.Background.Color := clCardBGDefaultDark;
-  pNestStageFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pEggPatternFilter.Background.Color := clCardBGDefaultDark;
-  pEggPatternFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pEggTextureFilter.Background.Color := clCardBGDefaultDark;
-  pEggTextureFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pEggShapeFilter.Background.Color := clCardBGDefaultDark;
-  pEggShapeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pPermitTypeFilter.Background.Color := clCardBGDefaultDark;
-  pPermitTypeFilter.Border.Color := clSystemSolidNeutralFGDark;
-  pReplacedBandFilter.Background.Color := clCardBGDefaultDark;
-  pReplacedBandFilter.Border.Color := clSystemSolidNeutralFGDark;
+  pSiteFilters.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pSiteFilters.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTitleSiteFilter.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pSiteRankFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pSiteRankFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTaxonRanksFilters.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pTaxonRanksFilters.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTitleTaxonRanksFilter.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMaterialFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMaterialFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pMethodFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMethodFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pCategoryFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pCategoryFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pBandSizeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pBandSizeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pWithRecapturesFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pWithRecapturesFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pFatFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pFatFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pBandStatusFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pBandStatusFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pDatesFilters.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pDatesFilters.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pDateFilter.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNestFateFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNestFateFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pNestSupportFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNestSupportFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTaxonFilters.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pTaxonFilters.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTitleTaxonFilter.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pExtinctFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pExtinctFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pWithColorBandsFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pWithColorBandsFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pSexFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pSexFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pCloacalProtuberanceFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pCloacalProtuberanceFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pBroodPatchFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pBroodPatchFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pHowSexedFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pHowSexedFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pReportedFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pReportedFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pIsSynonymFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pIsSynonymFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pHasSynonymsFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pHasSynonymsFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pBodyMoltFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pBodyMoltFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pFFMoltFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pFFMoltFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pFFWearFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pFFWearFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pMoltLimitsFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMoltLimitsFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pMoltCycleFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMoltCycleFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTaxonomyClementsFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pTaxonomyClementsFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTaxonomyIocFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pTaxonomyIocFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pTaxonomyCbroFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pTaxonomyCbroFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pStartTimeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pStartTimeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pEndTimeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pEndTimeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pAgeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pAgeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pSkullOssificationFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pSkullOssificationFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pHowAgedFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pHowAgedFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pMarkedFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pMarkedFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pPersonFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pPersonFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pInstitutionFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pInstitutionFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pSurveyFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pSurveyFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pProjectFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pProjectFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pNestFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNestFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pIndividualFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pIndividualFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pSamplingPlotFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pSamplingPlotFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pExpeditionFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pExpeditionFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pPlantFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pPlantFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pNeedsReviewFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNeedsReviewFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pEscapedFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pEscapedFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pRecordInEbirdFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pRecordInEbirdFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pEggFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pEggFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pOutOfSampleFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pOutOfSampleFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pNidoparasiteFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNidoparasiteFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pHatchedFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pHatchedFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pPhilornisFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pPhilornisFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pCaptureTypeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pCaptureTypeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pCaptureStatusFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pCaptureStatusFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pBandTypeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pBandTypeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pBandSourceFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pBandSourceFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pNestStatusFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNestStatusFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pNestStageFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pNestStageFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pEggPatternFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pEggPatternFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pEggTextureFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pEggTextureFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pEggShapeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pEggShapeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pPermitTypeFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pPermitTypeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
+  pReplacedBandFilter.Background.Color := ActiveTheme.Background.CardDefault; // clCardBGDefaultDark;
+  pReplacedBandFilter.Border.Color := ActiveTheme.System.SolidNeutralFG; // clSystemSolidNeutralFGDark;
 
   // Set filter edits images
   eEggFilter.Images := DMM.iEditsDark;
@@ -2424,9 +2424,9 @@ begin
   eMethodFilter.Images := DMM.iEditsDark;
 
   // Set filter trees colors
-  tvSiteFilter.Colors.TreeLineColor := clTextSecondaryDark;
-  tvDateFilter.Colors.TreeLineColor := clTextSecondaryDark;
-  tvTaxaFilter.Colors.TreeLineColor := clTextSecondaryDark;
+  tvSiteFilter.Colors.TreeLineColor := ActiveTheme.Foreground.TextSecondary; // clTextSecondaryDark;
+  tvDateFilter.Colors.TreeLineColor := ActiveTheme.Foreground.TextSecondary; // clTextSecondaryDark;
+  tvTaxaFilter.Colors.TreeLineColor := ActiveTheme.Foreground.TextSecondary; // clTextSecondaryDark;
   tsTaxonomyClements.Color := pTaxonomyClementsFilter.Background.Color;
   tsTaxonomyIoc.Color := pTaxonomyIocFilter.Background.Color;
   tsTaxonomyCbro.Color := pTaxonomyCbroFilter.Background.Color;
@@ -4271,13 +4271,13 @@ begin
     pSearch.Width := ClientWidth div 4;
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := clSolidBGBaseDark;
-    pSearch.Border.Color := clAccentDark1; //clSolidBGTertiaryDark;
+    pSearch.Background.Color := ActiveTheme.Background.SolidBase;
+    pSearch.Border.Color := ActiveTheme.AccentPalette.Dark1; //clSolidBGTertiaryDark;
   end
   else
   begin
     pSearch.Background.Color := clWhite;
-    pSearch.Border.Color := clAccentFillTertiaryLight;
+    pSearch.Border.Color := ActiveTheme.AccentFill.Tertiary;
   end;
   eSearch.Color := pSearch.Background.Color;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
@@ -4289,13 +4289,13 @@ begin
     pSearch.Width := 148;
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := clCardBGSecondaryDark;
-    pSearch.Border.Color := clSolidBGSecondaryDark;
+    pSearch.Background.Color := ActiveTheme.Background.CardSecondary;
+    pSearch.Border.Color := ActiveTheme.Background.SolidSecondary;
   end
   else
   begin
-    pSearch.Background.Color := $00FAFAFA;
-    pSearch.Border.Color := clDefaultBorderLight;
+    pSearch.Background.Color := ActiveTheme.Background.CardSecondary;
+    pSearch.Border.Color := ActiveTheme.Border.Default;
   end;
   pSearch.Border.Width := 1;
   eSearch.Color := pSearch.Background.Color;
@@ -5018,10 +5018,7 @@ begin
   begin
     if (gridRecord.Cells[1, aRow] = 'True') then
     begin
-      if IsDarkModeEnabled then
-        gridRecord.Canvas.Font.Color := clSystemCriticalFGDark
-      else
-        gridRecord.Canvas.Font.Color := clSystemCriticalFGLight;
+      gridRecord.Canvas.Font.Color := ActiveTheme.System.CriticalFG;
     end;
 
     if (colField = rscTaxon) then
@@ -5034,16 +5031,8 @@ begin
       if (FTableType = tbSurveys) and (gridRecord.Cells[1, aRow] <> EmptyStr) and
         (StrToDate(gridRecord.Cells[1, aRow]) > Today) then
       begin
-        if IsDarkModeEnabled then
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemNeutralBGDark;
-          gridRecord.Canvas.Font.Color := clSystemNeutralFGDark;
-        end
-        else
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemNeutralBGLight;
-          gridRecord.Canvas.Font.Color := clSystemNeutralFGLight;
-        end;
+        gridRecord.Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        gridRecord.Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
     end
     else
@@ -5052,16 +5041,8 @@ begin
       if (gridRecord.Cells[1, aRow] <> EmptyStr) and
         (StrToDate(gridRecord.Cells[1, aRow]) > Today) then
       begin
-        if IsDarkModeEnabled then
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemNeutralBGDark;
-          gridRecord.Canvas.Font.Color := clSystemNeutralFGDark;
-        end
-        else
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemNeutralBGLight;
-          gridRecord.Canvas.Font.Color := clSystemNeutralFGLight;
-        end;
+        gridRecord.Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        gridRecord.Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
     end
     else
@@ -5070,16 +5051,8 @@ begin
       if (gridRecord.Cells[1, aRow] <> EmptyStr) and
         (StrToDate(gridRecord.Cells[1, aRow]) < Today) then
       begin
-        if IsDarkModeEnabled then
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemCriticalBGDark;
-          gridRecord.Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemCriticalBGLight;
-          gridRecord.Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        gridRecord.Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        gridRecord.Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
     end
     else
@@ -5088,16 +5061,8 @@ begin
       if (gridRecord.Cells[1, aRow] <> EmptyStr) and
         (StrToDate(gridRecord.Cells[1, aRow]) < Today) then
       begin
-        if IsDarkModeEnabled then
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemCriticalBGDark;
-          gridRecord.Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          gridRecord.Canvas.Brush.Color := clSystemCriticalBGLight;
-          gridRecord.Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        gridRecord.Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        gridRecord.Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
     end;
   end;
@@ -9219,10 +9184,7 @@ begin
       FormatFloat(MASK_TWO_DECIMAL, GetProjectTotalBudget(aProjectId))]);
     if ProjectBalance < 0 then
     begin
-      if IsDarkModeEnabled then
-        txtProjectBalance.Font.Color := clSystemCriticalFGDark
-      else
-        txtProjectBalance.Font.Color := clSystemCriticalFGLight;
+      txtProjectBalance.Font.Color := ActiveTheme.System.CriticalFG;
     end
     else
       txtProjectBalance.Font.Color := clDefault;
@@ -9230,10 +9192,7 @@ begin
       FormatFloat(MASK_TWO_DECIMAL, dsLink4.DataSet.FieldByName(COL_AMOUNT).AsFloat)]);
     if RubricBalance < 0 then
     begin
-      if IsDarkModeEnabled then
-        txtRubricBalance.Font.Color := clSystemCriticalFGDark
-      else
-        txtRubricBalance.Font.Color := clSystemCriticalFGLight;
+      txtRubricBalance.Font.Color := ActiveTheme.System.CriticalFG;
     end
     else
       txtRubricBalance.Font.Color := clDefault;

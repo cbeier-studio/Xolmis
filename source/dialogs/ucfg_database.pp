@@ -70,6 +70,8 @@ type
     vtConnections: TVirtualDBGrid;
     procedure dsConnStateChange(Sender: TObject);
     procedure eSearchChange(Sender: TObject);
+    procedure eSearchEnter(Sender: TObject);
+    procedure eSearchExit(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure mmOptimizeDBClick(Sender: TObject);
@@ -110,9 +112,9 @@ uses
 
 procedure TcfgDatabase.ApplyDarkMode;
 begin
-  pChildToolbar.Background.Color := clCardBGDefaultDark;
-  pChildToolbar.Border.Color := clCardBGSecondaryDark;
-  pClient.Color := clSolidBGBaseDark;
+  pChildToolbar.Background.Color := ActiveTheme.Background.CardDefault;
+  pChildToolbar.Border.Color := ActiveTheme.Background.CardSecondary;
+  pClient.Color := ActiveTheme.Background.SolidBase;
 
   sbNew.Images := iButtonsDark;
   sbEdit.Images := iButtonsDark;
@@ -123,14 +125,14 @@ begin
   pmTools.Images := iButtonsDark;
   pmGrid.Images := iButtonsDark;
 
-  pSearch.Background.Color := clCardBGDefaultDark;
-  pSearch.Border.Color := clSolidBGSecondaryDark;
+  pSearch.Background.Color := ActiveTheme.Background.CardDefault;
+  pSearch.Border.Color := ActiveTheme.Background.SolidSecondary;
   pSearch.ParentBackground := True;
   eSearch.Color := pSearch.Background.Color;
   iconSearch.Images := iButtonsDark;
   sbClearSearch.Images := iButtonsDark;
-  sbClearSearch.StateHover.Color := clSolidBGSecondaryDark;
-  sbClearSearch.StateActive.Color := clSolidBGTertiaryDark;
+  sbClearSearch.StateHover.Color := ActiveTheme.Background.SolidSecondary;
+  sbClearSearch.StateActive.Color := ActiveTheme.Background.SolidTertiary;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
 end;
 
@@ -145,6 +147,30 @@ begin
   TimerFind.Enabled := True;
 
   sbClearSearch.Visible := Length(eSearch.Text) > 0;
+end;
+
+procedure TcfgDatabase.eSearchEnter(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Border.Color := ActiveTheme.AccentPalette.Dark1;
+  end
+  else
+  begin
+    pSearch.Border.Color := ActiveTheme.AccentFill.Tertiary;
+  end;
+end;
+
+procedure TcfgDatabase.eSearchExit(Sender: TObject);
+begin
+  if IsDarkModeEnabled then
+  begin
+    pSearch.Border.Color := ActiveTheme.Background.SolidSecondary;
+  end
+  else
+  begin
+    pSearch.Border.Color := ActiveTheme.Border.Default;
+  end;
 end;
 
 procedure TcfgDatabase.FormKeyPress(Sender: TObject; var Key: char);
