@@ -22,14 +22,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, DB, SQLDB, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn,
-  ATLinkLabel, DCPblowfish, DCPsha256, atshapelinebgra, LCLType;
+  ATLinkLabel, atshapelinebgra, LCLType;
 
 type
 
   { TdlgConnect }
 
   TdlgConnect = class(TForm)
-    BCrypt: TDCP_blowfish;
     cbConnection: TComboBox;
     ePassword: TEditButton;
     eUsername: TEdit;
@@ -75,7 +74,7 @@ implementation
 
 uses
   utils_locale, utils_global, models_users, utils_dialogs, utils_graphics, utils_themes,
-  udm_main, ucfg_database, uDarkStyleParams;
+  udm_main, ucfg_database, uDarkStyleParams, utils_passwords;
 
 {$R *.lfm}
 
@@ -334,13 +333,12 @@ var
   uCon: TSQLConnector;
   uTrans: TSQLTransaction;
   Qry: TSQLQuery;
-  S, StoredHash: String;
+  StoredHash: String;
 begin
   Result := False;
   sUser := 0;
   eUsername.Text := Trim(eUsername.Text);
   ePassword.Text := ePassword.Text;
-  S := EmptyStr;
 
   { Check user }
   uCon := TSQLConnector.Create(nil);
@@ -376,9 +374,6 @@ begin
         end;
 
         { Check password }
-        BCrypt.InitStr(BF_KEY, TDCP_sha256);
-        S := BCrypt.EncryptString(ePassword.Text);
-        BCrypt.Burn;
         StoredHash := FieldByName('user_password').AsString;
         if StoredHash = EmptyStr then
         begin
@@ -390,7 +385,7 @@ begin
             Exit;
           end;
         end
-        else if StoredHash <> S then
+        else if not VerifyPasswordArgon2id(ePassword.Text, StoredHash) then
         begin
           LogError('Incorrect password');
           MsgDlg('', rsIncorrectPassword, mtError);

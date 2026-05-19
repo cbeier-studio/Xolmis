@@ -22,14 +22,13 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, EditBtn, Buttons, DCPblowfish, DCPsha256, atshapelinebgra;
+  StdCtrls, EditBtn, Buttons, atshapelinebgra;
 
 type
 
   { TdlgLogin }
 
   TdlgLogin = class(TForm)
-    BCrypt: TDCP_blowfish;
     ePassword: TEditButton;
     eUsername: TEdit;
     iButtons: TImageList;
@@ -72,7 +71,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_graphics, utils_themes, utils_dialogs, data_getvalue, data_consts, udm_main, LCLType,
-  uDarkStyleParams;
+  uDarkStyleParams, utils_passwords;
 
 {$R *.lfm}
 
@@ -214,11 +213,9 @@ end;
 function TdlgLogin.ValidatePassword: Boolean;
 var
   Qry: TSQLQuery;
-  S: String;
 begin
   Result := False;
   eUsername.Text := Trim(eUsername.Text);
-  S := EmptyStr;
 
   { Check user }
   Qry := TSQLQuery.Create(DMM.sqlCon);
@@ -250,10 +247,7 @@ begin
     end;
 
     { Check password }
-    BCrypt.InitStr(BF_KEY, TDCP_sha256);
-    S := BCrypt.EncryptString(ePassword.Text);
-    BCrypt.Burn;
-    if (FieldByName('user_password').AsString <> S) and
+    if (not VerifyPasswordArgon2id(ePassword.Text, FieldByName('user_password').AsString)) and
       (FieldByName('user_password').AsString <> EmptyStr) then
     begin
       LogError('Incorrect password');

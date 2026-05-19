@@ -37,7 +37,6 @@ const
   DEBUG_SETTINGS_FILE: String     = 'settings_debug.json';
   LOG_FILE: String                = 'xlmslog.txt';
   GEO_BANK_FILE: String           = 'geobank.dat';
-  BF_KEY: String                  = 'support lottery birds sample';
   NULL_DATE_STR: String           = '30/12/1500';
   NULL_TIME_STR: String           = '00:00:00';
 

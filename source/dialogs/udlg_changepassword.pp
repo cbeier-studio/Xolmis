@@ -21,15 +21,14 @@ unit udlg_changepassword;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, DBCtrls, DCPblowfish,
-  DCPsha256, atshapelinebgra, StdCtrls, DB;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn,
+  DBCtrls, atshapelinebgra, StdCtrls, DB;
 
 type
 
   { TdlgChangePassword }
 
   TdlgChangePassword = class(TForm)
-    BCrypt: TDCP_blowfish;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     lblUsername: TDBText;
@@ -64,7 +63,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_graphics, utils_dialogs, utils_themes, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, utils_graphics, utils_dialogs, utils_themes,
+  udm_main, uDarkStyleParams, utils_passwords;
 
 {$R *.lfm}
 
@@ -138,9 +138,7 @@ begin
   if not ValidatePassword then
     Exit;
 
-  BCrypt.InitStr(BF_KEY, TDCP_sha256);
-  Pass := BCrypt.EncryptString(eNewPassword.Text);
-  BCrypt.Burn;
+  Pass := HashPasswordArgon2id(eNewPassword.Text);
 
   ModalResult := mrOk;
 end;

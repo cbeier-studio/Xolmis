@@ -22,14 +22,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, DBCtrls, EditBtn,
-  atshapelinebgra, DCPblowfish, DCPsha256, DB, SQLDB;
+  atshapelinebgra, DB, SQLDB;
 
 type
 
   { TdlgNewDatabase }
 
   TdlgNewDatabase = class(TForm)
-    BCrypt: TDCP_blowfish;
     eConfirmPass: TEditButton;
     eUserConfirmPass: TEditButton;
     eDBFile: TEditButton;
@@ -112,7 +111,8 @@ var
 implementation
 
 uses
-  cbs_global, cbs_locale, cbs_datatypes, cbs_data, cbs_graphics, cbs_dialogs, udm_main, uDarkStyleParams;
+  cbs_global, cbs_locale, cbs_datatypes, cbs_data, cbs_graphics, cbs_dialogs,
+  udm_main, uDarkStyleParams, utils_passwords;
 
 {$R *.lfm}
 
@@ -323,9 +323,7 @@ begin
   if not ValidateDatabase then
     Exit;
 
-  BCrypt.InitStr(BFKey, TDCP_sha256);
-  aPass := BCrypt.EncryptString(eNewPass.Text);
-  BCrypt.Burn;
+  aPass := HashPasswordArgon2id(eNewPass.Text);
 
   uCon := TSQLConnector.Create(nil);
   uTrans := TSQLTransaction.Create(uCon);
@@ -375,9 +373,7 @@ var
 begin
   Result := False;
 
-  BCrypt.InitStr(BFKey, TDCP_sha256);
-  FPass := BCrypt.EncryptString(eNewPass.Text);
-  BCrypt.Burn;
+  FPass := HashPasswordArgon2id(eNewPass.Text);
 
   uCon := TSQLConnector.Create(nil);
   uTrans := TSQLTransaction.Create(uCon);

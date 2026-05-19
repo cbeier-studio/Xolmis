@@ -553,14 +553,6 @@ object dlgNewDatabase: TdlgNewDatabase
     Left = 288
     Top = 80
   end
-  object BCrypt: TDCP_blowfish
-    Id = 5
-    Algorithm = 'Blowfish'
-    MaxKeySize = 448
-    BlockSize = 64
-    Left = 232
-    Top = 80
-  end
   object iButtons: TImageList
     Scaled = True
     Left = 28

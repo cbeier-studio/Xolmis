@@ -148,7 +148,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="505"/>
+      <BuildNr Value="506"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -461,6 +461,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="HashLib4PascalPackage"/>
+      </Item>
+      <Item>
         <PackageName Value="TurboPowerIPro"/>
       </Item>
       <Item>
@@ -541,9 +544,6 @@
       </Item>
       <Item>
         <PackageName Value="lazMapViewerPkg"/>
-      </Item>
-      <Item>
-        <PackageName Value="dcpcrypt"/>
       </Item>
       <Item>
         <PackageName Value="laz.virtualtreeview_package"/>
@@ -1647,6 +1647,10 @@
       </Unit>
       <Unit>
         <Filename Value="providers\providers_taxonomy.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\utils_passwords.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

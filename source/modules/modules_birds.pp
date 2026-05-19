@@ -559,7 +559,6 @@ begin
     // Cycle code
     if eCycleCodeFilter.Text <> EmptyStr then
     begin
-      { #todo : Add filter for 3-letters cycle code within a text field }
       sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
       SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_CYCLE_CODE, rscMoltCycle, sdtText,
         crLike, True, eCycleCodeFilter.Text));

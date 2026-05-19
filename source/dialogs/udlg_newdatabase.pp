@@ -22,7 +22,7 @@ interface
 
 uses
   Buttons, Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, DBCtrls, EditBtn, atshapelinebgra, DCPblowfish, DCPsha256, DB,
+  StdCtrls, DBCtrls, EditBtn, atshapelinebgra, DB,
   SQLDB;
 
 type
@@ -30,7 +30,6 @@ type
   { TdlgNewDatabase }
 
   TdlgNewDatabase = class(TForm)
-    BCrypt: TDCP_blowfish;
     btnHelp: TSpeedButton;
     eAudiosPath: TDirectoryEdit;
     eDocumentsPath: TDirectoryEdit;
@@ -137,7 +136,7 @@ implementation
 
 uses
   utils_global, utils_locale, data_types, data_management, utils_graphics, utils_dialogs, utils_themes,
-  udm_main, uDarkStyleParams;
+  udm_main, uDarkStyleParams, utils_passwords;
 
 {$R *.lfm}
 
@@ -422,9 +421,7 @@ begin
 
   sbCreateUser.Enabled := False;
 
-  BCrypt.InitStr(BF_KEY, TDCP_sha256);
-  aPass := BCrypt.EncryptString(eUserNewPass.Text);
-  BCrypt.Burn;
+  aPass := HashPasswordArgon2id(eUserNewPass.Text);
 
   uCon := TSQLConnector.Create(nil);
   uTrans := TSQLTransaction.Create(uCon);
@@ -484,9 +481,7 @@ var
 begin
   Result := False;
 
-  BCrypt.InitStr(BF_KEY, TDCP_sha256);
-  FPass := BCrypt.EncryptString(eNewPass.Text);
-  BCrypt.Burn;
+  FPass := HashPasswordArgon2id(eNewPass.Text);
 
   uCon := TSQLConnector.Create(nil);
   uTrans := TSQLTransaction.Create(uCon);

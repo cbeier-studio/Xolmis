@@ -173,14 +173,6 @@ object dlgLogin: TdlgLogin
       ParentColor = False
     end
   end
-  object BCrypt: TDCP_blowfish
-    Id = 5
-    Algorithm = 'Blowfish'
-    MaxKeySize = 448
-    BlockSize = 64
-    Left = 16
-    Top = 136
-  end
   object iButtons: TImageList
     Scaled = True
     Left = 240

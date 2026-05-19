@@ -220,14 +220,6 @@ object dlgConnect: TdlgConnect
     ArrowColor = clBlack
     LineWidth = 1
   end
-  object BCrypt: TDCP_blowfish
-    Id = 5
-    Algorithm = 'Blowfish'
-    MaxKeySize = 448
-    BlockSize = 64
-    Left = 16
-    Top = 144
-  end
   object iButtons: TImageList
     Scaled = True
     Left = 240
