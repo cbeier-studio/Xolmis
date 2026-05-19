@@ -13944,6 +13944,7 @@ msgid "Duet"
 msgstr ""
 
 #: utils_locale.rsaudioenvironmental
+msgctxt "utils_locale.rsaudioenvironmental"
 msgid "Environmental"
 msgstr ""
 
@@ -19675,6 +19676,16 @@ msgstr ""
 msgid "Courtship/display"
 msgstr ""
 
+#: utils_locale.rsvideoenvironmental
+msgctxt "utils_locale.rsvideoenvironmental"
+msgid "Environmental"
+msgstr ""
+
+#: utils_locale.rsvideofieldwork
+msgctxt "utils_locale.rsvideofieldwork"
+msgid "Fieldwork"
+msgstr ""
+
 #: utils_locale.rsvideoflight
 msgid "Flight"
 msgstr ""
@@ -19710,6 +19721,11 @@ msgstr ""
 
 #: utils_locale.rsvideonestlings
 msgid "Nestlings"
+msgstr ""
+
+#: utils_locale.rsvideoother
+msgctxt "utils_locale.rsvideoother"
+msgid "Other"
 msgstr ""
 
 #: utils_locale.rsvideoparentalcare

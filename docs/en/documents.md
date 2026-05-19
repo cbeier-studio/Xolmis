@@ -66,15 +66,27 @@ To edit document or link information:
 Documents can be classified into the following types:
 
 - **URL** – External web link (e.g., article, dataset, online resource).  
-- **Document** – Text documents (DOC, TXT, ODT).  
-- **Spreadsheet** – Data tables (XLSX, ODS, CSV).  
-- **Presentation** – Slides (PPT, ODP).  
-- **PDF** – Portable Document Format files.  
-- **Code** – Scripts or source code files.  
+- **Document** – Text documents and notes (e.g., DOC, TXT, ODT, Markdown).  
+- **Spreadsheet** – Data tables (e.g., XLSX, ODS, CSV).  
+- **Presentation** – Slides (e.g., PPT, ODP).  
+- **PDF document** – Portable Document Format files.  
+- **Source code** – Software source code files (e.g., Java, C, Pascal, Swift).  
 - **Image** – Photographs, diagrams, or figures.  
-- **Audio** – Sound or voice recordings.  
-- **Database** – External database files.  
-- **GIS** – Geographic Information System files (e.g., shapefiles, GeoJSON).  
+- **Audio file** – Sound or voice recordings. 
+- **Video** – Video recordings. 
+- **Database** – External database files (e.g., DBF, SQLite, Access, DuckDB).  
+- **GIS file** – Geographic Information System files (e.g., shapefiles, KML, GeoJSON).
+- **Script** – Script files (e.g., bash, SQL, Python, R, PowerShell).
+- **Webpage** – Webpage files (e.g., HTML, CSS, PHP).
+- **Dataset** – Interoperable dataset files (e.g., JSON, XML, RDF, DWC, Parquet).
+- **Statistic** – Statistical dataset files (e.g., RData, SAV, FITS, DAT).
+- **Vectorial** – Vectorial image files (e.g., SVG, Adobe Illustrator, Corel Draw, Affinity).
+- **Archive** – Compressed files (e.g., ZIP, 7Z, TAR, GZ, RAR).
+- **Bibliography** – Bibliographical files (e.g., Zotero, Mendeley, EndNote).
+- **Metadata** – File or image metadata (e.g., EXIF, TDMS).
+- **Bioinformatic** – Genetic and phylogenetic files (e.g., FASTA, Mesquite, GenBank).
+- **eBook** – eBook documents (e.g., EPUB, Kindle, Apple Books, DJVU).
+- **Note** – Note libraries (e.g., OneNote, Evernote).
 - **Other** – Any other type not listed above.  
 
 ### License types

@@ -68,11 +68,23 @@ Para editar informações de um vídeo:
 
 Os tipos de gravação classificam a natureza do vídeo capturado. Exemplos incluem:
 
-- **Comportamental** – Exibe comportamentos específicos como forrageamento, vocalização, acasalamento ou construção de ninho.  
+- **Comportamento geral** – Mostra comportamento típico e genérico.  
+- **Forrageando/Comendo** – Mostra aves procurando comida e/ou comendo.
+- **Vocalizando** – Mostra aves vocalizando.
+- **Côrte** – Documenta exibição de côrte.
+- **Agressão/territorialidade** – Mostra comportamento agonístico e/ou territorial.
+- **Interação social** – Documenta interações sociais.
+- **Cuidado parental** – Mostra aves adultas cuidando de jovens.
+- **Construção de ninho** – Documenta comportamento de construção de ninho.
+- **Incubação** – Monitora aves incubando.
+- **Ninhegos** – Mostra comportamento dos ninhegos.
+- **Voo** – Mostra aves em voo.
+- **Locomoção** – Mostra aves se movendo pelo substrato.
+- **Preening/banho/higiene** – Documenta higiene e cuidado das penas.
+- **Predação** – Documento eventos de predação.
+- **Ave morta** – Mostra uma ave morta. 
 - **Ambiental** – Mostra condições de habitat, vegetação ou contexto climático.  
-- **Trabalho de campo** – Documenta atividades de pesquisa, montagem de redes de neblina ou operações da equipe.  
-- **Morfológico** – Foca em características físicas dos indivíduos (ex.: plumagem, processo de anilhamento).  
-- **Monitoramento de ninho** – Registra atividade no ninho, ovos ou filhotes.  
+- **Trabalho de campo** – Documenta atividades de pesquisa, montagem de redes de neblina ou operações da equipe.
 - **Outro** – Qualquer vídeo não coberto pelas categorias acima.  
 
 ### Tipos de licença

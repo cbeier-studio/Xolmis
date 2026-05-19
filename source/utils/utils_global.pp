@@ -166,9 +166,9 @@ const
   VIDEO_EXTENSIONS: array of String = ('.mp4','.mpg','.mpeg','.wmv','.avi','.mov','.m4v','.mkv','.webm','.3gp',
     '.vob','.mts','.m2ts','.avif');
   VECTORIAL_EXTENSIONS: array of String = ('.ai','.cdr','.svg','.svgz','.dwg','.dxf','.emf','.wmf','.wmz','.eps',
-    '.odg','.skp','.indd','.idml','.afdesign','.afpub','.cnv','.dia','.ccdx');
+    '.odg','.skp','.indd','.idml','.af','.afdesign','.afpub','.cnv','.dia','.ccdx');
   DATABASE_EXTENSIONS: array of String = ('.db','.db3','.dbf','.sqlite','.sqlite3','.sdb3','.fdb','.gdb',
-    '.accdb','.mdb','.odb','.myd','.myi','.ibd','.pgsql','.bson','.tpy');
+    '.accdb','.mdb','.odb','.myd','.myi','.ibd','.pgsql','.bson','.tpy','.duckdb');
   ARCHIVE_EXTENSIONS: array of String = ('.zip','.7z','.rar','.tar','.gz','.bz2','.zoo','.arc','.lzma','.xz','.pea');
   BIBLIOGRAPHY_EXTENSIONS: array of String = ('.bib','.ris','.endnote','.enl','.csl','.cff');
   STATISTIC_EXTENSIONS: array of String = ('.sav','.dta','.sas7bdat','.mat','.m','.rdata','.rds','.h5','.hdf5',

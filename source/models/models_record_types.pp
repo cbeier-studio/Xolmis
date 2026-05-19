@@ -410,7 +410,10 @@ type
     vtLocomotion,     // "LOC" - Locomotion in the ground/vegetation
     vtHygiene,        // "HYG" - Bath / Preening / Hygiene
     vtPredation,      // "PRD" - Predation (as predator or prey)
-    vtMortality       // "MOR" - Dead bird / anomalous behavior
+    vtMortality,      // "MOR" - Dead bird / anomalous behavior
+    vtEnvironmental,  // "ENV" - Environmental
+    vtFieldwork,      // "FLD" - Fieldwork
+    vtOther           // "OTH" - Other
   );
 
   // Xolmis Mobile
@@ -585,7 +588,10 @@ const
     'LOC',  // vtLocomotion
     'HYG',  // vtHygiene
     'PRD',  // vtPredation
-    'MOR'   // vtMortality
+    'MOR',  // vtMortality
+    'ENV',  // vtEnvironmental
+    'FLD',  // vtFieldwork
+    'OTH'   // vtOther
   );
 
 implementation

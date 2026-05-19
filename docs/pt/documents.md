@@ -66,15 +66,26 @@ Para editar informações do documento ou link:
 Os documentos podem ser classificados nos seguintes tipos:
 
 - **URL** – Link externo (ex.: artigo, conjunto de dados, recurso online).  
-- **Documento** – Documentos de texto (DOC, TXT, ODT).  
-- **Planilha** – Tabelas de dados (XLSX, ODS, CSV).  
-- **Apresentação** – Slides (PPT, ODP).  
+- **Documento** – Documentos de texto (ex.: DOC, TXT, ODT, Markdown).  
+- **Planilha** – Tabelas de dados (ex.: XLSX, ODS, CSV).  
+- **Apresentação** – Slides (ex.: PPT, ODP).  
 - **PDF** – Arquivos em formato PDF.  
-- **Código** – Scripts ou arquivos de código-fonte.  
+- **Código fonte** – Arquivos de código-fonte de software (ex.: Java, C, Pascal, Swift).  
 - **Imagem** – Fotografias, diagramas ou figuras.  
-- **Áudio** – Gravações de som ou voz.  
-- **Banco de dados** – Arquivos de banco de dados externos.  
-- **GIS** – Arquivos de Sistemas de Informação Geográfica (ex.: shapefiles, GeoJSON).  
+- **Arquivo de áudio** – Gravações de som ou voz.  
+- **Banco de dados** – Arquivos de banco de dados externos (ex.: DBF, SQLite, Access, DuckDB).  
+- **Arquivo GIS** – Arquivos de Sistemas de Informação Geográfica (ex.: shapefiles, KML, GeoJSON).  
+- **Script** – Arquivos de script (ex.: bash, SQL, Python, R, PowerShell).
+- **Página da internet** – Arquivos de páginas da internet (ex.: HTML, CSS, PHP).
+- **Conjunto de dados** – Conjuntos de dados interoperáveis (ex.: JSON, XML, RDF, DWC, Parquet).
+- **Estatística** – Conjuntos de dados estatísticos (ex.: RData, SAV, FITS, DAT).
+- **Vetorial** – Imagens vetoriais (ex.: SVG, Adobe Illustrator, Corel Draw, Affinity).
+- **Arquivo comprimido** – Arquivos comprimidos (ex.: ZIP, 7Z, TAR, GZ, RAR).
+- **Bibliografia** – Arquivos bibliográficos (ex.: Zotero, Mendeley, EndNote).
+- **Metadados** – Metadados de arquivos ou imagens (ex.: EXIF, TDMS).
+- **Bioinformática** – Arquivos de genética e filogenética (ex.: FASTA, Mesquite, GenBank).
+- **eBook** – Documentos eBook (ex.: EPUB, Kindle, Apple Books, DJVU).
+- **Nota** – Conjuntos de anotações (ex.: OneNote, Evernote).
 - **Outro** – Qualquer outro tipo não listado acima.  
 
 ### Tipos de licença

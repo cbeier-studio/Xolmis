@@ -1361,6 +1361,9 @@ uses
     rsVideoHygiene = 'Preening/bath/hygiene';
     rsVideoPredation = 'Predation';
     rsVideoMortality = 'Dead bird';
+    rsVideoEnvironmental = 'Environmental';
+    rsVideoFieldwork = 'Fieldwork';
+    rsVideoOther = 'Other';
 
     { Import/export options }
     rsDelimiterSemicolon = 'Semicolon';

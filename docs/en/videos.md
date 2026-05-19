@@ -68,11 +68,23 @@ To edit video information:
 
 Recording types classify the nature of the video captured. Examples include:
 
-- **Behavioral** – Displays specific behaviors such as foraging, vocalizing, mating, or nest building.  
+- **General behavior** – Shows typical and generic behavior.  
+- **Foraging/feeding** – Shows birds searching food and/or feeding.
+- **Vocalizing** – Shows birds vocalizing.
+- **Courtship** – Documents courtship display.
+- **Aggression/territoriality** – Shows agonistic and/or territorial behavior.
+- **Social interaction** – Documents social interactions.
+- **Parental care** – Shows adult birds taking care of young.
+- **Nest building** – Documents nest building behavior.
+- **Incubation** – Monitors of birds incubating.
+- **Nestlings** – Shows nestlings behavior.
+- **Flight** – Shows birds in flight.
+- **Locomotion** – Shows birds moving on the subtrate.
+- **Preening/bath/hygiene** – Documents hygiene and feather care.
+- **Predation** – Documents predation events.
+- **Dead bird** – Shows a dead bird.
 - **Environmental** – Shows habitat conditions, vegetation, or weather context.  
-- **Fieldwork** – Documents research activities, mist net setup, or team operations.  
-- **Morphological** – Focuses on physical traits of individuals (e.g., plumage, banding process).  
-- **Nest monitoring** – Records nest activity, eggs, or nestlings.  
+- **Fieldwork** – Documents research activities, mist net setup, or team operations.
 - **Other** – Any video not covered by the categories above.  
 
 ### License types

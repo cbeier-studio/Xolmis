@@ -1446,6 +1446,15 @@ begin
   if (AValue = rsVideoMortality) or (AValue = 'MOR') then
     Result := vtMortality
   else
+  if (AValue = rsVideoEnvironmental) or (AValue = 'ENV') then
+    Result := vtEnvironmental
+  else
+  if (AValue = rsVideoFieldwork) or (AValue = 'FLD') then
+    Result := vtFieldwork
+  else
+  if (AValue = rsVideoOther) or (AValue = 'OTH') then
+    Result := vtOther
+  else
     Result := vtUnknown;
 end;
 

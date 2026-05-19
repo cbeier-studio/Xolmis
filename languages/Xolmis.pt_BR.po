@@ -13929,6 +13929,7 @@ msgid "Duet"
 msgstr "Dueto"
 
 #: utils_locale.rsaudioenvironmental
+msgctxt "utils_locale.rsaudioenvironmental"
 msgid "Environmental"
 msgstr "Ambiental"
 
@@ -19842,6 +19843,18 @@ msgstr "Agressão/territorialidade"
 msgid "Courtship/display"
 msgstr "Corte/exibição"
 
+#: utils_locale.rsvideoenvironmental
+#, fuzzy
+msgctxt "utils_locale.rsvideoenvironmental"
+msgid "Environmental"
+msgstr "Ambiental"
+
+#: utils_locale.rsvideofieldwork
+#, fuzzy
+msgctxt "utils_locale.rsvideofieldwork"
+msgid "Fieldwork"
+msgstr "Trabalho de campo"
+
 #: utils_locale.rsvideoflight
 msgid "Flight"
 msgstr "Voo"
@@ -19878,6 +19891,12 @@ msgstr "Construção de ninho"
 #: utils_locale.rsvideonestlings
 msgid "Nestlings"
 msgstr "Ninhegos"
+
+#: utils_locale.rsvideoother
+#, fuzzy
+msgctxt "utils_locale.rsvideoother"
+msgid "Other"
+msgstr "Outro"
 
 #: utils_locale.rsvideoparentalcare
 msgid "Parental care"
@@ -19960,3 +19979,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

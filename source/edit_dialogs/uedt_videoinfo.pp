@@ -462,6 +462,9 @@ begin
     Add(rsVideoHygiene);
     Add(rsVideoPredation);
     Add(rsVideoMortality);
+    Add(rsVideoEnvironmental);
+    Add(rsVideoFieldwork);
+    Add(rsVideoOther);
   end;
 
   with cbCoordinatePrecision.Items do
@@ -512,6 +515,9 @@ begin
     vtHygiene:      cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoHygiene);
     vtPredation:    cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoPredation);
     vtMortality:    cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoMortality);
+    vtEnvironmental: cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoEnvironmental);
+    vtFieldwork:    cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoFieldwork);
+    vtOther:        cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoOther);
   else
     cbVideoType.ItemIndex := -1;
   end;
